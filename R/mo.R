@@ -281,6 +281,43 @@ exec_as.mo <- function(x,
                        reference_data_to_use = MO_lookup) {
   
   check_dataset_integrity()
+  
+  lookup <- function(needle, column = property, haystack = reference_data_to_use, n = 1, debug_mode = debug, input = "") {
+    # `column` can be NULL for all columns, or a selection
+    # returns a character (vector) - if `column` > length 1 then with columns as names
+    if (isTRUE(debug_mode)) {
+      cat(font_silver("looking up: ", substitute(needle), "\n", collapse = ""))
+    }
+    if (length(column) == 1) {
+      res_df <- haystack[which(eval(substitute(needle), envir = haystack, enclos = parent.frame())), , drop = FALSE]
+      res <- as.character(res_df[, column, drop = TRUE])
+      if (length(res) == 0) {
+        NA_character_ 
+      } else {
+        if (length(res) > n) {
+          # save the other possible results as well
+          uncertainties <<- rbind(uncertainties,
+                                  format_uncertainty_as_df(uncertainty_level = 1,
+                                                           input = x_backup[i],
+                                                           result_mo = res_df[1, "mo", drop = TRUE],
+                                                           candidates = as.character(res_df[, "fullname", drop = TRUE])))
+        }
+        res[seq_len(min(n, length(res)))]
+      }
+    } else {
+      if (is.null(column)) {
+        column <- names(haystack)
+      }
+      res <- haystack[which(eval(substitute(needle), envir = haystack, enclos = parent.frame())), , drop = FALSE]
+      res <- res[seq_len(min(n, nrow(res))), column, drop = TRUE]
+      if (NROW(res) == 0) {
+        res <- rep(NA_character_, length(column))
+      }
+      res <- as.character(res)
+      names(res) <- column
+      res
+    }
+  }
 
   # start off with replaced language-specific non-ASCII characters with ASCII characters
   x <- parse_and_convert(x)
@@ -382,43 +419,6 @@ exec_as.mo <- function(x,
                    drop = TRUE]
     
   } else if (!all(x %in% microorganisms[, property])) {
-    
-    lookup <- function(needle, column = property, haystack = reference_data_to_use, n = 1, debug_mode = debug, input = "") {
-      # `column` can be NULL for all columns, or a selection
-      # returns a character (vector) - if `column` > length 1 then with columns as names
-      if (isTRUE(debug_mode)) {
-        cat(font_silver("looking up: ", substitute(needle), "\n", collapse = ""))
-      }
-      if (length(column) == 1) {
-        res_df <- haystack[which(eval(substitute(needle), envir = haystack, enclos = parent.frame())), , drop = FALSE]
-        res <- as.character(res_df[, column, drop = TRUE])
-        if (length(res) == 0) {
-          NA_character_ 
-        } else {
-          if (length(res) > n) {
-            # save the other possible results as well
-            uncertainties <<- rbind(uncertainties,
-                                    format_uncertainty_as_df(uncertainty_level = 1,
-                                                             input = x_backup[i],
-                                                             result_mo = res_df[1, "mo", drop = TRUE],
-                                                             candidates = as.character(res_df[, "fullname", drop = TRUE])))
-          }
-          res[seq_len(min(n, length(res)))]
-        }
-      } else {
-        if (is.null(column)) {
-          column <- names(haystack)
-        }
-        res <- haystack[which(eval(substitute(needle), envir = haystack, enclos = parent.frame())), , drop = FALSE]
-        res <- res[seq_len(min(n, nrow(res))), column, drop = TRUE]
-        if (NROW(res) == 0) {
-          res <- rep(NA_character_, length(column))
-        }
-        res <- as.character(res)
-        names(res) <- column
-        res
-      }
-    }
     
     strip_whitespace <- function(x, dyslexia_mode) {
       # all whitespaces (tab, new lines, etc.) should be one space
