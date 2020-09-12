@@ -32,8 +32,9 @@
          value = sort(c("en", unique(translations_file$lang))),
          envir = asNamespace("AMR"))
 
-  # support for tibble headers (type_sum) and tibble columns content (pillar_shaft)
-  # without the need to depend on other packages
+  # support for tibble headers (type_sum) and tibble columns content (pillar_shaft) without the need to depend on other packages
+  # this was suggested by the developers of the vctrs package: 
+  # https://github.com/r-lib/vctrs/blob/05968ce8e669f73213e3e894b5f4424af4f46316/R/register-s3.R
   s3_register("pillar::pillar_shaft", "ab")
   s3_register("tibble::type_sum", "ab")
   s3_register("pillar::pillar_shaft", "mo")

@@ -194,7 +194,7 @@ catalogue_of_life <- list(
 
 #' Data set with `r format(nrow(WHONET), big.mark = ",")` isolates - WHONET example
 #'
-#' This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The antibiotic results are based on our [example_isolates] data set. All patient names are created using online surname generators and are only in place for practice purposes.
+#' This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The antibiotic results are from our [example_isolates] data set. All patient names are created using online surname generators and are only in place for practice purposes.
 #' @format A [`data.frame`] with `r format(nrow(WHONET), big.mark = ",")` observations and `r ncol(WHONET)` variables:
 #' - `Identification number`\cr ID of the sample
 #' - `Specimen number`\cr ID of the specimen

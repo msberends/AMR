@@ -39,7 +39,7 @@ A \code{\link{data.frame}} with 500 observations and 53 variables:
 WHONET
 }
 \description{
-This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The antibiotic results are based on our \link{example_isolates} data set. All patient names are created using online surname generators and are only in place for practice purposes.
+This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The antibiotic results are from our \link{example_isolates} data set. All patient names are created using online surname generators and are only in place for practice purposes.
 }
 \section{Reference data publicly available}{
 

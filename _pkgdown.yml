@@ -138,6 +138,7 @@ reference:
     - "`as.mic`"
     - "`as.disk`"
     - "`eucast_rules`"
+    - "`plot`"
     
   - title: "Analysing data: antimicrobial resistance"
     desc: >

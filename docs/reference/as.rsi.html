@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9016</span>
       </span>
     </div>
 
@@ -340,12 +340,14 @@
 <li><p>For <strong>cleaning raw / untransformed data</strong>. The data will be cleaned to only contain values S, I and R and will try its best to determine this with some intelligence. For example, mixed values with R/SI interpretations and MIC values such as <code>"&lt;0.25; S"</code> will be coerced to <code>"S"</code>. Combined interpretations for multiple test methods (as seen in laboratory records) such as <code>"S; S"</code> will be coerced to <code>"S"</code>, but a value like <code>"S; I"</code> will return <code>NA</code> with a warning that the input is unclear.</p></li>
 <li><p>For <strong>interpreting minimum inhibitory concentration (MIC) values</strong> according to EUCAST or CLSI. You must clean your MIC values first using <code><a href='as.mic.html'>as.mic()</a></code>, that also gives your columns the new data class <code><a href='as.mic.html'>mic</a></code>. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the <code>mo</code> parameter.</p><ul>
 <li><p>Using <code>dplyr</code>, R/SI interpretation can be done very easily with either:</p><pre><span class='kw'>your_data</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_if</a></span>(<span class='kw'>is.mic</span>, <span class='kw'>as.rsi</span>)             <span class='co'># until dplyr 1.0.0</span>
-<span class='kw'>your_data</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span>(<span class='fu'>where</span>(<span class='kw'>is.mic</span>), <span class='kw'>as.rsi</span>)) <span class='co'># since dplyr 1.0.0</span></pre></li>
+<span class='kw'>your_data</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span>(<span class='fu'>where</span>(<span class='kw'>is.mic</span>), <span class='kw'>as.rsi</span>)) <span class='co'># since dplyr 1.0.0</span>
+</pre></li>
 <li><p>Operators like "&lt;=" will be stripped before interpretation. When using <code>conserve_capped_values = TRUE</code>, an MIC value of e.g. "&gt;2" will always return "R", even if the breakpoint according to the chosen guideline is "&gt;=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (<code>conserve_capped_values = FALSE</code>) considers "&gt;2" to be lower than "&gt;=4" and might in this case return "S" or "I".</p></li>
 </ul></li>
 <li><p>For <strong>interpreting disk diffusion diameters</strong> according to EUCAST or CLSI. You must clean your disk zones first using <code><a href='as.disk.html'>as.disk()</a></code>, that also gives your columns the new data class <code><a href='as.disk.html'>disk</a></code>. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the <code>mo</code> parameter.</p><ul>
 <li><p>Using <code>dplyr</code>, R/SI interpretation can be done very easily with either:</p><pre><span class='kw'>your_data</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_if</a></span>(<span class='kw'>is.disk</span>, <span class='kw'>as.rsi</span>)             <span class='co'># until dplyr 1.0.0</span>
-<span class='kw'>your_data</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span>(<span class='fu'>where</span>(<span class='kw'>is.disk</span>), <span class='kw'>as.rsi</span>)) <span class='co'># since dplyr 1.0.0</span></pre></li>
+<span class='kw'>your_data</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span>(<span class='fu'>where</span>(<span class='kw'>is.disk</span>), <span class='kw'>as.rsi</span>)) <span class='co'># since dplyr 1.0.0</span>
+</pre></li>
 </ul></li>
 <li><p>For <strong>interpreting a complete data set</strong>, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running <code>as.rsi(data)</code>.</p></li>
 </ol>
@@ -468,7 +470,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
 <span class='kw'>rsi_data</span> <span class='op'>&lt;-</span> <span class='fu'>as.rsi</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"S"</span>, <span class='fl'>474</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"I"</span>, <span class='fl'>36</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"R"</span>, <span class='fl'>370</span>)))
 <span class='fu'>is.rsi</span>(<span class='kw'>rsi_data</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>rsi_data</span>)    <span class='co'># for percentages</span>
+<span class='fu'><a href='plot.html'>plot</a></span>(<span class='kw'>rsi_data</span>)    <span class='co'># for percentages</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/barplot.html'>barplot</a></span>(<span class='kw'>rsi_data</span>) <span class='co'># for frequencies</span>
 
 <span class='co'>if</span> (<span class='fl'>FALSE</span>) {
@@ -487,7 +489,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <span class='co'># default threshold of `is.rsi.eligible` is 5%.</span>
 <span class='fu'>is.rsi.eligible</span>(<span class='kw'>WHONET</span><span class='op'>$</span><span class='kw'>`First name`</span>) <span class='co'># fails, &gt;80% is invalid</span>
 <span class='fu'>is.rsi.eligible</span>(<span class='kw'>WHONET</span><span class='op'>$</span><span class='kw'>`First name`</span>, threshold = <span class='fl'>0.99</span>) <span class='co'># succeeds</span>
-}</pre>
+}
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

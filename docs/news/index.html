@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9016</span>
       </span>
     </div>
 
@@ -236,13 +236,13 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1309015" class="section level1">
-<h1 class="page-header" data-toc-text="1.3.0.9015">
-<a href="#amr-1309015" class="anchor"></a>AMR 1.3.0.9015<small> Unreleased </small>
+    <div id="amr-1309016" class="section level1">
+<h1 class="page-header" data-toc-text="1.3.0.9016">
+<a href="#amr-1309016" class="anchor"></a>AMR 1.3.0.9016<small> Unreleased </small>
 </h1>
-<div id="last-updated-3-september-2020" class="section level2">
+<div id="last-updated-12-september-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-3-september-2020" class="anchor"></a><small>Last updated: 3 September 2020</small>
+<a href="#last-updated-12-september-2020" class="anchor"></a><small>Last updated: 12 September 2020</small>
 </h2>
 <p>Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscipt to. We are those reviewers very grateful for going through our code so thoroughly!</p>
 <div id="new" class="section level3">
@@ -299,6 +299,7 @@
 <li>
 <p>Improvements for <code><a href="../reference/as.mo.html">as.mo()</a></code>:</p>
 <ul>
+<li>Any user input value that could mean more than one taxonomic entry is now considered ‘uncertain’. Instead of a warning, a message will be thrown and the accompanying <code><a href="../reference/as.mo.html">mo_uncertainties()</a></code> has been changed completely; it now prints all possible candidates with their score.</li>
 <li>Big speed improvement for already valid microorganism ID. This also means an significant speed improvement for using <code>mo_*</code> functions like <code><a href="../reference/mo_property.html">mo_name()</a></code> on microoganism IDs.</li>
 <li>Added parameter <code>ignore_pattern</code> to <code><a href="../reference/as.mo.html">as.mo()</a></code> which can also be given to <code>mo_*</code> functions like <code><a href="../reference/mo_property.html">mo_name()</a></code>, to exclude known non-relevant input from analysing. This can also be set with the option <code>AMR_ignore_pattern</code>.</li>
 </ul>
@@ -310,6 +311,7 @@
 <li><p>BORSA is now recognised as an abbreviation for <em>Staphylococcus aureus</em>, meaning that e.g. <code><a href="../reference/mo_property.html">mo_genus("BORSA")</a></code> will return “Staphylococcus”</p></li>
 <li><p>Added a feature from AMR 1.1.0 and earlier again, but now without other package dependencies: <code>tibble</code> printing support for classes <code>&lt;rsi&gt;</code>, <code>&lt;mic&gt;</code>, <code>&lt;disk&gt;</code>, <code>&lt;ab&gt;</code> and <code>&lt;mo&gt;</code>. When using <code>tibble</code>s containing antimicrobial columns (class <code>&lt;rsi&gt;</code>), “S” will print in green, “I” will print in yellow and “R” will print in red. Microbial IDs (class <code>&lt;mo&gt;</code>) will emphasise on the genus and species, not on the kingdom.</p></li>
 <li><p>Names of antiviral agents in data set <code>antivirals</code> now have a starting capital letter, like it is the case in the <code>antibiotics</code> data set</p></li>
+<li><p>Updated the documentation of the <code>WHONET</code> data set to clarify that all patient names are fictitious</p></li>
 </ul>
 </div>
 <div id="other" class="section level3">
@@ -961,7 +963,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li>Fixed bug where not all old taxonomic names would be printed, when using a vector as input for <code><a href="../reference/as.mo.html">as.mo()</a></code>
 </li>
 <li>Manually added <em>Trichomonas vaginalis</em> from the kingdom of Protozoa, which is missing from the Catalogue of Life</li>
-<li>Small improvements to <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="https://rdrr.io/r/graphics/barplot.html">barplot()</a></code> for MIC and RSI classes</li>
+<li>Small improvements to <code><a href="../reference/plot.html">plot()</a></code> and <code><a href="https://rdrr.io/r/graphics/barplot.html">barplot()</a></code> for MIC and RSI classes</li>
 <li>Allow Catalogue of Life IDs to be coerced by <code><a href="../reference/as.mo.html">as.mo()</a></code>
 </li>
 </ul>
@@ -1169,10 +1171,10 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li><p>New function <code><a href="../reference/age.html">age()</a></code> to calculate the (patients) age in years</p></li>
 <li><p>New function <code><a href="../reference/age_groups.html">age_groups()</a></code> to split ages into custom or predefined groups (like children or elderly). This allows for easier demographic antimicrobial resistance analysis per age group.</p></li>
 <li>
-<p>New function <code><a href="../reference/resistance_predict.html">ggplot_rsi_predict()</a></code> as well as the base R <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function can now be used for resistance prediction calculated with <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>:</p>
+<p>New function <code><a href="../reference/resistance_predict.html">ggplot_rsi_predict()</a></code> as well as the base R <code><a href="../reference/plot.html">plot()</a></code> function can now be used for resistance prediction calculated with <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit">
 <span class="kw">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span>(<span class="kw">septic_patients</span>, col_ab = <span class="st">"amox"</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">x</span>)
+<span class="fu"><a href="../reference/plot.html">plot</a></span>(<span class="kw">x</span>)
 <span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span>(<span class="kw">x</span>)
 </pre></div>
 </li>

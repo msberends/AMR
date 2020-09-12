@@ -210,7 +210,7 @@ summary.mic <- function(object, ...) {
 #' @method plot mic
 #' @export
 #' @importFrom graphics barplot axis par
-#' @noRd
+#' @rdname plot
 plot.mic <- function(x,
                      main = paste("MIC values of", deparse(substitute(x))),
                      ylab = "Frequency",
@@ -229,7 +229,7 @@ plot.mic <- function(x,
 #' @method barplot mic
 #' @export
 #' @importFrom graphics barplot axis
-#' @noRd
+#' @rdname plot
 barplot.mic <- function(height,
                         main = paste("MIC values of", deparse(substitute(height))),
                         ylab = "Frequency",

@@ -86,7 +86,7 @@
 #' - `"Fluoroquinolone-resistant Neisseria gonorrhoeae"`. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result *Neisseria gonorrhoeae* (``r as.mo("Neisseria gonorrhoeae")``) needs review.
 #' 
 #' There are three helper functions that can be run after using the [as.mo()] function:
-#' - Use [mo_uncertainties()] to get a [`data.frame`] with all values that were coerced to a valid value, but with uncertainty. The output contains a score, that is calculated as \eqn{(n - 0.5 * L) / n}, where *n* is the number of characters of the full taxonomic name of the microorganism, and *L* is the [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) between that full name and the user input.
+#' - Use [mo_uncertainties()] to get a [`data.frame`] that prints in a pretty format with all taxonomic names that were guessed. The output contains a score that is based on the human pathogenic prevalence and the [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) between the full taxonomic name and the user input.
 #' - Use [mo_failures()] to get a [`character`] [`vector`] with all values that could not be coerced to a valid value.
 #' - Use [mo_renamed()] to get a [`data.frame`] with all values that could be coerced based on old, previously accepted taxonomic names.
 #'
@@ -178,6 +178,14 @@ as.mo <- function(x,
                   ...) {
   
   check_dataset_integrity()
+  
+  if (tryCatch(all(x %in% MO_lookup$mo, na.rm = TRUE)
+               & isFALSE(Becker)
+               & isFALSE(Lancefield), error = function(e) FALSE)) {
+    # don't look into valid MO codes, just return them
+    # is.mo() won't work - codes might change between package versions
+    return(to_class_mo(x))
+  }
        
   if (tryCatch(all(tolower(x) %in% MO_lookup$fullname_lower, na.rm = TRUE)
                & isFALSE(Becker)
@@ -273,36 +281,7 @@ exec_as.mo <- function(x,
                        reference_data_to_use = MO_lookup) {
   
   check_dataset_integrity()
-  
-  lookup <- function(needle, column = property, haystack = reference_data_to_use, n = 1, debug_mode = debug) {
-    # `column` can be NULL for all columns, or a selection
-    # returns a character (vector) - if `column` > length 1 then with columns as names
-    if (isTRUE(debug_mode)) {
-      cat(font_silver("looking up: ", substitute(needle), "\n", collapse = ""))
-    }
-    if (length(column) == 1) {
-      res <- haystack[which(eval(substitute(needle), envir = haystack, enclos = parent.frame())), column, drop = TRUE]
-      res <- as.character(res)
-      if (length(res) == 0) {
-        NA_character_
-      } else {
-        res[seq_len(min(n, length(res)))]
-      }
-    } else {
-      if (is.null(column)) {
-        column <- names(haystack)
-      }
-      res <- haystack[which(eval(substitute(needle), envir = haystack, enclos = parent.frame())), , drop = FALSE]
-      res <- res[seq_len(min(n, nrow(res))), column, drop = TRUE]
-      if (NROW(res) == 0) {
-        res <- rep(NA_character_, length(column))
-      }
-      res <- as.character(res)
-      names(res) <- column
-      res
-    }
-  }
-  
+
   # start off with replaced language-specific non-ASCII characters with ASCII characters
   x <- parse_and_convert(x)
   # replace mo codes used in older package versions
@@ -323,14 +302,15 @@ exec_as.mo <- function(x,
   }
   options(mo_renamed_last_run = NULL)
   
+  failures <- character(0)
+  uncertainty_level <- translate_allow_uncertain(allow_uncertain)
   uncertainties <- data.frame(uncertainty = integer(0),
                               input = character(0),
                               fullname = character(0),
                               renamed_to = character(0),
-                              mo = character(0), 
+                              mo = character(0),
+                              candidates = character(0),
                               stringsAsFactors = FALSE)
-  failures <- character(0)
-  uncertainty_level <- translate_allow_uncertain(allow_uncertain)
   old_mo_warning <- FALSE
   
   x_input <- x
@@ -402,6 +382,43 @@ exec_as.mo <- function(x,
                    drop = TRUE]
     
   } else if (!all(x %in% microorganisms[, property])) {
+    
+    lookup <- function(needle, column = property, haystack = reference_data_to_use, n = 1, debug_mode = debug, input = "") {
+      # `column` can be NULL for all columns, or a selection
+      # returns a character (vector) - if `column` > length 1 then with columns as names
+      if (isTRUE(debug_mode)) {
+        cat(font_silver("looking up: ", substitute(needle), "\n", collapse = ""))
+      }
+      if (length(column) == 1) {
+        res_df <- haystack[which(eval(substitute(needle), envir = haystack, enclos = parent.frame())), , drop = FALSE]
+        res <- as.character(res_df[, column, drop = TRUE])
+        if (length(res) == 0) {
+          NA_character_ 
+        } else {
+          if (length(res) > n) {
+            # save the other possible results as well
+            uncertainties <<- rbind(uncertainties,
+                                    format_uncertainty_as_df(uncertainty_level = 1,
+                                                             input = x_backup[i],
+                                                             result_mo = res_df[1, "mo", drop = TRUE],
+                                                             candidates = as.character(res_df[, "fullname", drop = TRUE])))
+          }
+          res[seq_len(min(n, length(res)))]
+        }
+      } else {
+        if (is.null(column)) {
+          column <- names(haystack)
+        }
+        res <- haystack[which(eval(substitute(needle), envir = haystack, enclos = parent.frame())), , drop = FALSE]
+        res <- res[seq_len(min(n, nrow(res))), column, drop = TRUE]
+        if (NROW(res) == 0) {
+          res <- rep(NA_character_, length(column))
+        }
+        res <- as.character(res)
+        names(res) <- column
+        res
+      }
+    }
     
     strip_whitespace <- function(x, dyslexia_mode) {
       # all whitespaces (tab, new lines, etc.) should be one space
@@ -1387,9 +1404,7 @@ exec_as.mo <- function(x,
     }
     msg <- paste0("Result", plural[1], " of ", nr2char(NROW(uncertainties)), " value", plural[1],
                   " ", plural[3], " guessed with uncertainty. Use mo_uncertainties() to review ", plural[2], ".")
-    warning(font_red(paste0("\n", msg)),
-            call. = FALSE,
-            immediate. = TRUE) # thus will always be shown, even if >= warnings
+    message(font_blue(msg))
   }
   
   # Becker ----
@@ -1514,25 +1529,25 @@ was_renamed <- function(name_old, name_new, ref_old = "", ref_new = "", mo = "")
 
 format_uncertainty_as_df <- function(uncertainty_level,
                                      input,
-                                     result_mo) {
+                                     result_mo,
+                                     candidates = NULL) {
+  
   if (!is.null(getOption("mo_renamed_last_run", default = NULL))) {
-    # was found as a renamed mo
-    df <- data.frame(uncertainty = uncertainty_level,
-                     input = input,
-                     fullname = getOption("mo_renamed_last_run"),
-                     renamed_to = MO_lookup[which(MO_lookup$mo == result_mo), "fullname"][1],
-                     mo = result_mo,
-                     stringsAsFactors = FALSE)
+    fullname <- getOption("mo_renamed_last_run")
     options(mo_renamed_last_run = NULL)
+    renamed_to <- MO_lookup[match(result_mo, MO_lookup$mo), "fullname", drop = TRUE][1]
   } else {
-    df <- data.frame(uncertainty = uncertainty_level,
-                     input = input,
-                     fullname = MO_lookup[which(MO_lookup$mo == result_mo), "fullname"][1],
-                     renamed_to = NA_character_,
-                     mo = result_mo,
-                     stringsAsFactors = FALSE)
+    fullname <- MO_lookup[match(result_mo, MO_lookup$mo), "fullname", drop = TRUE][1]
+    renamed_to <- NA_character_
   }
-  df
+  data.frame(uncertainty = uncertainty_level,
+             input = input,
+             fullname = fullname,
+             renamed_to = renamed_to,
+             mo = result_mo,
+             # save max 25 entries
+             candidates = if (length(candidates) > 1) paste(candidates[c(2:min(25, length(candidates)))], collapse = ", ") else "",
+             stringsAsFactors = FALSE)
 }
 
 # will be exported using s3_register() in R/zzz.R
@@ -1714,13 +1729,27 @@ print.mo_uncertainties <- function(x, ...) {
       colour1 <- font_red
       colour2 <- function(...) font_red_bg(font_white(...))
     }
+    if (x[i, "candidates"] != "") {
+      candidates <- unlist(strsplit(x[i, "candidates"], ", ", fixed = TRUE))
+      scores <- finding_score(x[i, "input"], candidates)
+      # sort on descending scores
+      candidates <- candidates[order(1 - scores)]
+      candidates <- paste0(font_italic(candidates, collapse = NULL), 
+                           " (", trimws(percentage(scores[order(1 - scores)], digits = 1)), ")")
+      candidates <- paste(candidates, collapse = ", ")
+      # align with input after arrow
+      candidates <- paste0("\n", strrep(" ", nchar(x[i, "input"]) + 12), "Other: ", candidates)
+    } else {
+      candidates <- ""
+    }
     msg <- paste(msg,
                  paste0(colour2(paste0(" [", x[i, "uncertainty"], "] ")), ' "', x[i, "input"], '" -> ',
                         colour1(paste0(font_italic(x[i, "fullname"]),
                                        ifelse(!is.na(x[i, "renamed_to"]), paste(", renamed to", font_italic(x[i, "renamed_to"])), ""),
                                        " (", x[i, "mo"],
-                                       ", score: ", percentage(levenshtein_fraction(x[i, "input"], x[i, "fullname"]), digits = 1),
-                                       ")"))),
+                                       ", score: ", trimws(percentage(finding_score(x[i, "input"], x[i, "fullname"]), digits = 1)),
+                                       ")")),
+                        candidates),
                  sep = "\n")
   }
   cat(msg)
@@ -1729,7 +1758,7 @@ print.mo_uncertainties <- function(x, ...) {
 #' @rdname as.mo
 #' @export
 mo_renamed <- function() {
-  items <- getOption("mo_renamed")
+  items <- getOption("mo_renamed", default = NULL)
   if (is.null(items)) {
     items <- data.frame()
   } else {
@@ -1805,15 +1834,25 @@ load_mo_failures_uncertainties_renamed <- function(metadata) {
   options("mo_renamed" = metadata$renamed)
 }
 
-levenshtein_fraction <- function(input, output) {
+finding_score <- function(input, output) {
+  # output is always a valid fullname
   levenshtein <- double(length = length(input))
+  if (length(output) == 1) {
+    output <- rep(output, length(input))
+  }
+  if (length(input) == 1) {
+    input <- rep(input, length(output))
+  }
   for (i in seq_len(length(input))) {
     # determine Levenshtein distance, but maximise to nchar of output
     levenshtein[i] <- min(as.double(utils::adist(input[i], output[i], ignore.case = TRUE)),
-                                nchar(output[i]))
+                          nchar(output[i]))
   }
   # self-made score between 0 and 1 (for % certainty, so 0 means huge distance, 1 means no distance)
-  (nchar(output) - 0.5 * levenshtein) / nchar(output)
+  dist <- (nchar(output) - 0.5 * levenshtein) / nchar(output)
+  index_in_MO_lookup <- tryCatch((nrow(MO_lookup) - match(output, MO_lookup$fullname)) / nrow(MO_lookup),
+                                 error = function(e) rep(1, length(output)))
+  dist * index_in_MO_lookup
 }
 
 trimws2 <- function(x) {

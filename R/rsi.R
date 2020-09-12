@@ -755,7 +755,7 @@ summary.rsi <- function(object, ...) {
 #' @method plot rsi
 #' @export
 #' @importFrom graphics text axis
-#' @noRd
+#' @rdname plot
 plot.rsi <- function(x,
                      lwd = 2,
                      ylim = NULL,
@@ -812,7 +812,7 @@ plot.rsi <- function(x,
 #' @method barplot rsi
 #' @export
 #' @importFrom graphics barplot axis par
-#' @noRd
+#' @rdname plot
 barplot.rsi <- function(height,
                         col = c("chartreuse4", "chartreuse3", "brown3"),
                         xlab = ifelse(beside, "Antimicrobial Interpretation", ""),

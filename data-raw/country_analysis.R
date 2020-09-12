@@ -168,7 +168,8 @@ data %>%
   left_join(ip_tbl, by = c("ipaddress" = "ip")) %>% 
   group_by(country = countrycode::countrycode(country, 
                                               origin = 'iso2c', 
-                                              destination = 'country.name')) %>%
+                                              destination = 'country.name',
+                                              custom_match = c(XK = "Kosovo"))) %>%
   summarise(first = min(timestamp_server)) %>%
   arrange(desc(first)) %>% 
   mutate(frame = case_when(first <= as.POSIXct("2019-06-30") ~ "Q1-Q2 2019",

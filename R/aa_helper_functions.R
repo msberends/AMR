@@ -492,7 +492,8 @@ create_pillar_column <- function(x, ...) {
   }
 }
 
-# copied from vctrs::s3_register by their permission
+# copied from vctrs::s3_register by their permission:
+# https://github.com/r-lib/vctrs/blob/05968ce8e669f73213e3e894b5f4424af4f46316/R/register-s3.R
 s3_register <- function(generic, class, method = NULL) {
   stopifnot(is.character(generic), length(generic) == 1)
   stopifnot(is.character(class), length(class) == 1)

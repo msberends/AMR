@@ -63,13 +63,18 @@
 #' mo_name("CoNS", language = "pt")
 #' #> "Staphylococcus coagulase negativo (CoNS)"
 get_locale <- function() {
+  # AMR versions prior to 1.3.0 used the environmental variable:
+  if (!identical("", Sys.getenv("AMR_locale"))) {
+    options(AMR_locale = Sys.getenv("AMR_locale"))
+  }
+  
   if (!is.null(getOption("AMR_locale", default = NULL))) {
-    if (!language %in% LANGUAGES_SUPPORTED) {
-      stop_("unsupported language: '", language, "' - use one of: ",
-             paste0("'", LANGUAGES_SUPPORTED, "'", collapse = ", "),
-             call = FALSE)
+    lang <- getOption("AMR_locale")
+    if (lang %in% LANGUAGES_SUPPORTED) {
+      return(lang)
     } else {
-      return(getOption("AMR_locale"))  
+      stop_("unsupported language: '", lang, "' - use one of: ",
+            paste0("'", LANGUAGES_SUPPORTED, "'", collapse = ", "))
     }
   }
   
