@@ -30,7 +30,7 @@
 #' Please suggest your own translations [by creating a new issue on our repository](https://github.com/msberends/AMR/issues/new?title=Translations).
 #'
 #' ## Changing the default language
-#' The system language will be used at default (as returned by [Sys.getenv("LANG")] or, if `LANG` is not set, [Sys.getlocale()]), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:
+#' The system language will be used at default (as returned by `Sys.getenv("LANG")` or, if `LANG` is not set, [Sys.getlocale()]), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:
 #' 
 #'   1. Setting the R option `AMR_locale`, e.g. by running `options(AMR_locale = "de")`
 #'   2. Setting the system variable `LANGUAGE` or `LANG`, e.g. by adding `LANGUAGE="de_DE.utf8"` to your `.Renviron` file in your home directory

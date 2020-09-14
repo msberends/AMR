@@ -150,6 +150,7 @@ mdro <- function(x,
     col_mo <- "mo"
   }
   stop_if(is.null(col_mo), "`col_mo` must be set")
+  stop_ifnot(col_mo %in% colnames(x), "column '", col_mo, "' (`col_mo`) not found")
   
   if (guideline$code == "cmi2012") {
     guideline$name <- "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance."

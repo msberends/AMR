@@ -288,6 +288,7 @@ exec_as.mo <- function(x,
                        actual_uncertainty = 1,
                        actual_input = NULL,
                        language = get_locale()) {
+  
   check_dataset_integrity()
   
   lookup <- function(needle, 
@@ -298,7 +299,7 @@ exec_as.mo <- function(x,
                      initial = initial_search,
                      uncertainty = actual_uncertainty,
                      input_actual = actual_input) {
-    
+
     if (!is.null(input_actual)) {
       input <- input_actual
     } else {
@@ -312,7 +313,7 @@ exec_as.mo <- function(x,
     }
     if (length(column) == 1) {
       res_df <- haystack[which(eval(substitute(needle), envir = haystack, enclos = parent.frame())), , drop = FALSE]
-      if (NROW(res_df) > 1) {
+      if (NROW(res_df) > 1 & uncertainty != -1) {
         # sort the findings on matching score
         res_df <- res_df[order(mo_matching_score(input, res_df[, "fullname", drop = TRUE]), decreasing = TRUE), , drop = FALSE]
       }
@@ -326,8 +327,8 @@ exec_as.mo <- function(x,
         if (isTRUE(debug_mode)) {
           cat(font_green(paste0(" **MATCH** (", NROW(res_df), " results)\n")))
         }
-        if (length(res) > n | uncertainty > 1) {
-          # save the other possible results as well
+        if ((length(res) > n | uncertainty > 1) & uncertainty != -1) {
+          # save the other possible results as well, but not for forced certain results (then uncertainty == -1)
           uncertainties <<- rbind(uncertainties,
                                   format_uncertainty_as_df(uncertainty_level = uncertainty,
                                                            input = input,
@@ -437,7 +438,7 @@ exec_as.mo <- function(x,
     # we need special treatment for very prevalent full names, they are likely!
     # e.g. as.mo("Staphylococcus aureus")
     x <- MO_lookup[match(tolower(x), MO_lookup$fullname_lower), property, drop = TRUE]
-    
+
   } else if (all(x %in% reference_data_to_use$fullname)) {
     # we need special treatment for very prevalent full names, they are likely!
     # e.g. as.mo("Staphylococcus aureus")
@@ -702,18 +703,18 @@ exec_as.mo <- function(x,
       # translate known trivial abbreviations to genus + species ----
       if (toupper(x_backup_without_spp[i]) %in% c("MRSA", "MSSA", "VISA", "VRSA", "BORSA")
           | x_backup_without_spp[i] %like_case% " (mrsa|mssa|visa|vrsa) ") {
-        x[i] <- lookup(fullname == "Staphylococcus aureus")
+        x[i] <- lookup(fullname == "Staphylococcus aureus", uncertainty = -1)
         next
       }
       if (toupper(x_backup_without_spp[i]) %in% c("MRSE", "MSSE")
           | x_backup_without_spp[i] %like_case% " (mrse|msse) ") {
-        x[i] <- lookup(fullname == "Staphylococcus epidermidis")
+        x[i] <- lookup(fullname == "Staphylococcus epidermidis", uncertainty = -1)
         next
       }
       if (toupper(x_backup_without_spp[i]) == "VRE"
           | x_backup_without_spp[i] %like_case% " vre "
           | x_backup_without_spp[i] %like_case% "(enterococci|enterokok|enterococo)[a-z]*?$")  {
-        x[i] <- lookup(genus == "Enterococcus")
+        x[i] <- lookup(genus == "Enterococcus", uncertainty = -1)
         next
       }
       # support for:
@@ -731,50 +732,50 @@ exec_as.mo <- function(x,
       if (toupper(x_backup_without_spp[i]) %in% c("AIEC", "ATEC", "DAEC", "EAEC", "EHEC", "EIEC", "EPEC", "ETEC", "NMEC", "STEC", "UPEC")
           # also support O-antigens of E. coli: O26, O103, O104, O111, O121, O145, O157
           | x_backup_without_spp[i] %like_case% "o?(26|103|104|111|121|145|157)") {
-        x[i] <- lookup(fullname == "Escherichia coli")
+        x[i] <- lookup(fullname == "Escherichia coli", uncertainty = -1)
         next
       }
       if (toupper(x_backup_without_spp[i]) == "MRPA"
           | x_backup_without_spp[i] %like_case% " mrpa ") {
         # multi resistant P. aeruginosa
-        x[i] <- lookup(fullname == "Pseudomonas aeruginosa")
+        x[i] <- lookup(fullname == "Pseudomonas aeruginosa", uncertainty = -1)
         next
       }
       if (toupper(x_backup_without_spp[i]) == "CRSM") {
         # co-trim resistant S. maltophilia
-        x[i] <- lookup(fullname == "Stenotrophomonas maltophilia")
+        x[i] <- lookup(fullname == "Stenotrophomonas maltophilia", uncertainty = -1)
         next
       }
       if (toupper(x_backup_without_spp[i]) %in% c("PISP", "PRSP", "VISP", "VRSP")
           | x_backup_without_spp[i] %like_case% " (pisp|prsp|visp|vrsp) ") {
         # peni I, peni R, vanco I, vanco R: S. pneumoniae
-        x[i] <- lookup(fullname == "Streptococcus pneumoniae")
+        x[i] <- lookup(fullname == "Streptococcus pneumoniae", uncertainty = -1)
         next
       }
       if (x_backup_without_spp[i] %like_case% "^g[abcdfghk]s$") {
         # Streptococci, like GBS = Group B Streptococci (B_STRPT_GRPB)
         x[i] <- lookup(mo == toupper(gsub("g([abcdfghk])s",
                                           "B_STRPT_GRP\\1",
-                                          x_backup_without_spp[i])))
+                                          x_backup_without_spp[i])), uncertainty = -1)
         next
       }
       if (x_backup_without_spp[i] %like_case% "(streptococ|streptokok).* [abcdfghk]$") {
         # Streptococci in different languages, like "estreptococos grupo B"
         x[i] <- lookup(mo == toupper(gsub(".*(streptococ|streptokok|estreptococ).* ([abcdfghk])$", 
                                           "B_STRPT_GRP\\2",
-                                          x_backup_without_spp[i])))
+                                          x_backup_without_spp[i])), uncertainty = -1)
         next
       }
       if (x_backup_without_spp[i] %like_case% "group [abcdfghk] (streptococ|streptokok|estreptococ)") {
         # Streptococci in different languages, like "Group A Streptococci"
         x[i] <- lookup(mo == toupper(gsub(".*group ([abcdfghk]) (streptococ|streptokok|estreptococ).*", 
                                           "B_STRPT_GRP\\1",
-                                          x_backup_without_spp[i])))
+                                          x_backup_without_spp[i])), uncertainty = -1)
         next
       }
       if (x_backup_without_spp[i] %like_case% "haemoly.*strept") {
         # Haemolytic streptococci in different languages
-        x[i] <- lookup(mo == "B_STRPT_HAEM")
+        x[i] <- lookup(mo == "B_STRPT_HAEM", uncertainty = -1)
         next
       }
       # CoNS/CoPS in different languages (support for German, Dutch, Spanish, Portuguese) ----
@@ -782,14 +783,14 @@ exec_as.mo <- function(x,
           | x_trimmed[i] %like_case% "[ck]oagulas[ea] negatie?[vf]"
           | x_backup_without_spp[i] %like_case% "[ck]o?ns[^a-z]?$") {
         # coerce S. coagulase negative
-        x[i] <- lookup(mo == "B_STPHY_CONS")
+        x[i] <- lookup(mo == "B_STPHY_CONS", uncertainty = -1)
         next
       }
       if (x_backup_without_spp[i] %like_case% "[ck]oagulas[ea] positie?[vf]"
           | x_trimmed[i] %like_case% "[ck]oagulas[ea] positie?[vf]"
           | x_backup_without_spp[i] %like_case% "[ck]o?ps[^a-z]?$") {
         # coerce S. coagulase positive
-        x[i] <- lookup(mo == "B_STPHY_COPS")
+        x[i] <- lookup(mo == "B_STPHY_COPS", uncertainty = -1)
         next
       }
       # streptococcal groups: milleri and viridans
@@ -797,50 +798,50 @@ exec_as.mo <- function(x,
           | x_backup_without_spp[i] %like_case% "strepto.* mil+er+i"
           | x_backup_without_spp[i] %like_case% "mgs[^a-z]?$") {
         # Milleri Group Streptococcus (MGS)
-        x[i] <- lookup(mo == "B_STRPT_MILL")
+        x[i] <- lookup(mo == "B_STRPT_MILL", uncertainty = -1)
         next
       }
       if (x_trimmed[i] %like_case% "strepto.* viridans"
           | x_backup_without_spp[i] %like_case% "strepto.* viridans"
           | x_backup_without_spp[i] %like_case% "vgs[^a-z]?$") {
         # Viridans Group Streptococcus (VGS)
-        x[i] <- lookup(mo == "B_STRPT_VIRI")
+        x[i] <- lookup(mo == "B_STRPT_VIRI", uncertainty = -1)
         next
       }
       if (x_backup_without_spp[i] %like_case% "gram[ -]?neg.*"
           | x_backup_without_spp[i] %like_case% "negatie?[vf]"
           | x_trimmed[i] %like_case% "gram[ -]?neg.*") {
         # coerce Gram negatives
-        x[i] <- lookup(mo == "B_GRAMN")
+        x[i] <- lookup(mo == "B_GRAMN", uncertainty = -1)
         next
       }
       if (x_backup_without_spp[i] %like_case% "gram[ -]?pos.*"
           | x_backup_without_spp[i] %like_case% "positie?[vf]"
           | x_trimmed[i] %like_case% "gram[ -]?pos.*") {
         # coerce Gram positives
-        x[i] <- lookup(mo == "B_GRAMP")
+        x[i] <- lookup(mo == "B_GRAMP", uncertainty = -1)
         next
       }
       if (x_backup_without_spp[i] %like_case% "mycoba[ck]teri.[nm]?$") {
         # coerce mycobacteria in multiple languages
-        x[i] <- lookup(genus == "Mycobacterium")
+        x[i] <- lookup(genus == "Mycobacterium", uncertainty = -1)
         next
       }
       
       if (x_backup_without_spp[i] %like_case% "salmonella [a-z]+ ?.*") {
         if (x_backup_without_spp[i] %like_case% "salmonella group") {
           # Salmonella Group A to Z, just return S. species for now
-          x[i] <- lookup(genus == "Salmonella")
+          x[i] <- lookup(genus == "Salmonella", uncertainty = -1)
           next
         } else if (grepl("[sS]almonella [A-Z][a-z]+ ?.*", x_backup[i], ignore.case = FALSE) &
                    !x_backup[i] %like% "t[iy](ph|f)[iy]") {
           # Salmonella with capital letter species like "Salmonella Goettingen" - they're all S. enterica
           # except for S. typhi, S. paratyphi, S. typhimurium
-          x[i] <- lookup(fullname == "Salmonella enterica")
+          x[i] <- lookup(fullname == "Salmonella enterica", uncertainty = -1)
           uncertainties <- rbind(uncertainties,
                                  format_uncertainty_as_df(uncertainty_level = 1,
                                                           input = x_backup[i],
-                                                          result_mo = lookup(fullname == "Salmonella enterica", "mo")))
+                                                          result_mo = lookup(fullname == "Salmonella enterica", "mo", uncertainty = -1)))
           next
         }
       }
@@ -848,17 +849,17 @@ exec_as.mo <- function(x,
       # trivial names known to the field:
       if ("meningococcus" %like_case% x_trimmed[i]) {
         # coerce Neisseria meningitidis
-        x[i] <- lookup(fullname == "Neisseria meningitidis")
+        x[i] <- lookup(fullname == "Neisseria meningitidis", uncertainty = -1)
         next
       }
       if ("gonococcus" %like_case% x_trimmed[i]) {
         # coerce Neisseria gonorrhoeae
-        x[i] <- lookup(fullname == "Neisseria gonorrhoeae")
+        x[i] <- lookup(fullname == "Neisseria gonorrhoeae", uncertainty = -1)
         next
       }
       if ("pneumococcus" %like_case% x_trimmed[i]) {
         # coerce Streptococcus penumoniae
-        x[i] <- lookup(fullname == "Streptococcus pneumoniae")
+        x[i] <- lookup(fullname == "Streptococcus pneumoniae", uncertainty = -1)
         next
       }
       # }
@@ -1246,13 +1247,11 @@ exec_as.mo <- function(x,
                 }
                 if (!empty_result(found)) {
                   found_result <- found
-                  found <- lookup(mo == found)
                   # uncertainty level 2 only if searched part contains a space (otherwise it will be found with lvl 3)
                   if (x_strip_collapsed %like_case% " ") {
                     uncertainties <<- rbind(uncertainties,
-                                            format_uncertainty_as_df(uncertainty_level = now_checks_for_uncertainty_level,
-                                                                     input = a.x_backup,
-                                                                     result_mo = found_result))
+                                            attr(found, which = "uncertainties", exact = TRUE))
+                    found <- lookup(mo == found)
                     return(found)
                   }
                 }
@@ -1283,11 +1282,9 @@ exec_as.mo <- function(x,
                 }
                 if (!empty_result(found)) {
                   found_result <- found
-                  found <- lookup(mo == found)
                   uncertainties <<- rbind(uncertainties,
-                                          format_uncertainty_as_df(uncertainty_level = now_checks_for_uncertainty_level,
-                                                                   input = a.x_backup,
-                                                                   result_mo = found_result))
+                                          attr(found, which = "uncertainties", exact = TRUE))
+                  found <- lookup(mo == found)
                   return(found)
                 }
               }
@@ -1311,11 +1308,9 @@ exec_as.mo <- function(x,
                 }
                 if (!empty_result(found)) {
                   found_result <- found
-                  found <- lookup(mo == found)
                   uncertainties <<- rbind(uncertainties,
-                                          format_uncertainty_as_df(uncertainty_level = now_checks_for_uncertainty_level,
-                                                                   input = a.x_backup,
-                                                                   result_mo = found_result))
+                                          attr(found, which = "uncertainties", exact = TRUE))
+                  found <- lookup(mo == found)
                   return(found)
                 }
               }
@@ -1332,9 +1327,8 @@ exec_as.mo <- function(x,
             if (!is.na(found) & nchar(g.x_backup_without_spp) >= 6) {
               found_result <- lookup(mo == found)
               uncertainties <<- rbind(uncertainties,
-                                      format_uncertainty_as_df(uncertainty_level = now_checks_for_uncertainty_level,
-                                                               input = a.x_backup,
-                                                               result_mo = found_result))
+                                      attr(found, which = "uncertainties", exact = TRUE))
+              found <- lookup(mo == found)
               return(found)
             }
           }
@@ -1388,7 +1382,7 @@ exec_as.mo <- function(x,
       
       
       # no results found: make them UNKNOWN ----
-      x[i] <- lookup(mo == "UNKNOWN")
+      x[i] <- lookup(mo == "UNKNOWN", uncertainty = -1)
       if (initial_search == TRUE) {
         failures <- c(failures, x_backup[i])
       }
@@ -1478,33 +1472,33 @@ exec_as.mo <- function(x,
               immediate. = TRUE)
     }
     
-    x[x %in% CoNS] <- lookup(mo == "B_STPHY_CONS")
-    x[x %in% CoPS] <- lookup(mo == "B_STPHY_COPS")
+    x[x %in% CoNS] <- lookup(mo == "B_STPHY_CONS", uncertainty = -1)
+    x[x %in% CoPS] <- lookup(mo == "B_STPHY_COPS", uncertainty = -1)
     if (Becker == "all") {
-      x[x %in% lookup(fullname %like_case% "^Staphylococcus aureus", n = Inf)] <- lookup(mo == "B_STPHY_COPS")
+      x[x %in% lookup(fullname %like_case% "^Staphylococcus aureus", n = Inf)] <- lookup(mo == "B_STPHY_COPS", uncertainty = -1)
     }
   }
   
   # Lancefield ----
   if (Lancefield == TRUE | Lancefield == "all") {
     # group A - S. pyogenes
-    x[x %in% lookup(genus == "Streptococcus" & species == "pyogenes", n = Inf)] <- lookup(fullname == "Streptococcus group A")
+    x[x %in% lookup(genus == "Streptococcus" & species == "pyogenes", n = Inf)] <- lookup(fullname == "Streptococcus group A", uncertainty = -1)
     # group B - S. agalactiae
-    x[x %in% lookup(genus == "Streptococcus" & species == "agalactiae", n = Inf)] <- lookup(fullname == "Streptococcus group B")
+    x[x %in% lookup(genus == "Streptococcus" & species == "agalactiae", n = Inf)] <- lookup(fullname == "Streptococcus group B", uncertainty = -1)
     # group C
     x[x %in% lookup(genus == "Streptococcus" &
                       species %in% c("equisimilis", "equi", "zooepidemicus", "dysgalactiae"),
-                    n = Inf)] <- lookup(fullname == "Streptococcus group C")
+                    n = Inf)] <- lookup(fullname == "Streptococcus group C", uncertainty = -1)
     if (Lancefield == "all") {
       # all Enterococci
-      x[x %in% lookup(genus == "Enterococcus", n = Inf)] <- lookup(fullname == "Streptococcus group D")
+      x[x %in% lookup(genus == "Enterococcus", n = Inf)] <- lookup(fullname == "Streptococcus group D", uncertainty = -1)
     }
     # group F - S. anginosus
-    x[x %in% lookup(genus == "Streptococcus" & species == "anginosus", n = Inf)] <- lookup(fullname == "Streptococcus group F")
+    x[x %in% lookup(genus == "Streptococcus" & species == "anginosus", n = Inf)] <- lookup(fullname == "Streptococcus group F", uncertainty = -1)
     # group H - S. sanguinis
-    x[x %in% lookup(genus == "Streptococcus" & species == "sanguinis", n = Inf)] <- lookup(fullname == "Streptococcus group H")
+    x[x %in% lookup(genus == "Streptococcus" & species == "sanguinis", n = Inf)] <- lookup(fullname == "Streptococcus group H", uncertainty = -1)
     # group K - S. salivarius
-    x[x %in% lookup(genus == "Streptococcus" & species == "salivarius", n = Inf)] <- lookup(fullname == "Streptococcus group K")
+    x[x %in% lookup(genus == "Streptococcus" & species == "salivarius", n = Inf)] <- lookup(fullname == "Streptococcus group K", uncertainty = -1)
   }
   
   # Wrap up ----------------------------------------------------------------
@@ -1533,10 +1527,20 @@ exec_as.mo <- function(x,
     print(mo_renamed())
   }
   
-  if (NROW(uncertainties) > 0 & initial_search == FALSE) {
+  if (initial_search == FALSE) {
+    # we got here from uncertain_fn().
+    if (NROW(uncertainties) == 0) {
+      # the stripped/transformed version of x_backup is apparently a full hit, like with: as.mo("Escherichia (hello there) coli")
+      uncertainties <- rbind(uncertainties, 
+                             format_uncertainty_as_df(uncertainty_level = actual_uncertainty, 
+                                                      input = actual_input, 
+                                                      result_mo = x,
+                                                      candidates = ""))
+    }
     # this will save the uncertain items as attribute, so they can be bound to `uncertainties` in the uncertain_fn() function
     x <- structure(x, uncertainties = uncertainties)
   }
+
   
   if (old_mo_warning == TRUE & property != "mo") {
     warning("The input contained old microorganism IDs from previous versions of this package.\nPlease use `as.mo()` on these old IDs to transform them to the new format.\nSUPPORT FOR THIS WILL BE DROPPED IN A FUTURE VERSION.", call. = FALSE)
@@ -1748,7 +1752,8 @@ print.mo_uncertainties <- function(x, ...) {
   if (NROW(x) == 0) {
     return(NULL)
   }
-  cat(font_blue("Scores are based on human pathogenic prevalence and the resemblance between the input and the full taxonomic name.\n"))
+  cat(font_blue(strwrap(c("Scores are based on human pathogenic prevalence and the resemblance between the input and the full taxonomic name. Furthermore, an indication is given about the likelihood of the match - the more transformations are needed for coercion, the more unlikely the result.")), collapse = "\n"))
+  cat("\n")
   
   msg <- ""
   for (i in seq_len(nrow(x))) {
@@ -1763,9 +1768,16 @@ print.mo_uncertainties <- function(x, ...) {
       candidates <- paste(candidates, collapse = ", ")
       # align with input after arrow
       candidates <- paste0("\n", strrep(" ", nchar(x[i, ]$input) + 6), 
-                           "Other", ifelse(n_candidates == 25, " (max 25)", ""), ": ", candidates)
+                           "Less likely", ifelse(n_candidates == 25, " (max 25)", ""), ": ", candidates)
     } else {
       candidates <- ""
+    }
+    if (x[i, ]$uncertainty == 1) {
+      uncertainty_interpretation <- font_green("* VERY LIKELY *")
+    } else if (x[i, ]$uncertainty == 1) {
+      uncertainty_interpretation <- font_orange("* LIKELY *")
+    } else {
+      uncertainty_interpretation <- font_red("* UNLIKELY *")
     }
     msg <- paste(msg,
                  paste0('"', x[i, ]$input, '" -> ',
@@ -1773,7 +1785,8 @@ print.mo_uncertainties <- function(x, ...) {
                                ifelse(!is.na(x[i, ]$renamed_to), paste(", renamed to", font_italic(x[i, ]$renamed_to)), ""),
                                " (", x[i, ]$mo,
                                ", score: ", trimws(percentage(mo_matching_score(x[i, ]$input, x[i, ]$fullname) * (1 / x[i, ]$uncertainty), digits = 1)),
-                               ")"),
+                               ") "),
+                        uncertainty_interpretation,
                         candidates),
                  sep = "\n")
   }
@@ -1877,7 +1890,7 @@ mo_matching_score <- function(input, fullname) {
   dist <- (nchar(fullname) - 0.5 * levenshtein) / nchar(fullname)
   index_in_MO_lookup <- tryCatch((nrow(MO_lookup) - match(fullname, MO_lookup$fullname)) / nrow(MO_lookup),
                                  error = function(e) rep(1, length(fullname)))
-  dist * index_in_MO_lookup
+  (0.25 * dist) + (0.75 * index_in_MO_lookup)
 }
 
 trimws2 <- function(x) {

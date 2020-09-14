@@ -205,8 +205,8 @@ test_that("as.mo works", {
   expect_equal(suppressWarnings(as.character(as.mo("staaur extratest", allow_uncertain = FALSE))), "UNKNOWN")
   expect_message(as.mo("e coli extra_text", allow_uncertain = TRUE))
   expect_equal(suppressMessages(as.character(as.mo("unexisting aureus", allow_uncertain = 3))), "B_STPHY_AURS")
-  expect_equal(suppressMessages(as.character(as.mo("unexisting staphy", allow_uncertain = 3))), "B_STPHY")
-  expect_equal(suppressMessages(as.character(as.mo("Staphylococcus aureus unexisting", allow_uncertain = 3))), "B_STPHY_AURS")
+  expect_equal(suppressMessages(as.character(as.mo("unexisting staphy", allow_uncertain = 3))), "B_STPHY_COPS")
+  expect_equal(suppressMessages(as.character(as.mo("Staphylococcus aureus unexisting", allow_uncertain = 3))), "B_STPHY_AURS_ANRB")
   
   # predefined reference_df
   expect_equal(as.character(as.mo("TestingOwnID",
@@ -228,15 +228,15 @@ test_that("as.mo works", {
     c("B_PROTS_MRBL", "B_BCLLS_CERS", "B_ESCHR_COLI"))
   
   # hard to find
-  expect_equal(as.character(suppressWarnings(as.mo(
+  expect_equal(as.character(suppressMessages(as.mo(
     c("Microbacterium paraoxidans",
       "Streptococcus suis (bovis gr)",
       "Raoultella (here some text) terrigena")))),
     c("B_MCRBC_PRXY", "B_STRPT_SUIS", "B_RLTLL_TRRG"))
   expect_output(print(mo_uncertainties()))
-  
+
   # Salmonella (City) are all actually Salmonella enterica spp (City)
-  expect_equal(suppressWarnings(mo_name(c("Salmonella Goettingen", "Salmonella Typhimurium", "Salmonella Group A"))),
+  expect_equal(suppressMessages(mo_name(c("Salmonella Goettingen", "Salmonella Typhimurium", "Salmonella Group A"))),
                c("Salmonella enterica", "Salmonella enterica", "Salmonella"))
   
   # no virusses

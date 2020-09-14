@@ -221,6 +221,7 @@ eucast_rules <- function(x,
     col_mo <- search_type_in_df(x = x, type = "mo")
   }
   stop_if(is.null(col_mo), "`col_mo` must be set")
+  stop_ifnot(col_mo %in% colnames(x), "column '", col_mo, "' (`col_mo`) not found")
   
   stop_ifnot(all(rules %in% c("breakpoints", "expert", "other", "all")),
              '`rules` must be one or more of: "breakpoints", "expert", "other", "all".')

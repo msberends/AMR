@@ -50,7 +50,7 @@
 
 <meta property="og:title" content="Translate strings from AMR package — translate" />
 <meta property="og:description" content="For language-dependent output of AMR functions, like mo_name(), mo_gramstain(), mo_type() and ab_name()." />
-<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9018</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9020</span>
       </span>
     </div>
 
@@ -252,7 +252,7 @@
 <p>Please suggest your own translations <a href='https://github.com/msberends/AMR/issues/new?title=Translations'>by creating a new issue on our repository</a>.</p><h3>Changing the default language</h3>
 
 
-<p>The system language will be used at default (as returned by Sys.getenv("LANG") or, if <code>LANG</code> is not set, <code><a href='https://rdrr.io/r/base/locales.html'>Sys.getlocale()</a></code>), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:</p><ol>
+<p>The system language will be used at default (as returned by <code><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv("LANG")</a></code> or, if <code>LANG</code> is not set, <code><a href='https://rdrr.io/r/base/locales.html'>Sys.getlocale()</a></code>), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:</p><ol>
 <li><p>Setting the R option <code>AMR_locale</code>, e.g. by running <code><a href='https://rdrr.io/r/base/options.html'>options(AMR_locale = "de")</a></code></p></li>
 <li><p>Setting the system variable <code>LANGUAGE</code> or <code>LANG</code>, e.g. by adding <code>LANGUAGE="de_DE.utf8"</code> to your <code>.Renviron</code> file in your home directory</p></li>
 </ol>

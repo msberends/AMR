@@ -18,7 +18,7 @@ Currently supported languages are: Dutch, English, French, German, Italian, Port
 Please suggest your own translations \href{https://github.com/msberends/AMR/issues/new?title=Translations}{by creating a new issue on our repository}.
 \subsection{Changing the default language}{
 
-The system language will be used at default (as returned by \link{Sys.getenv("LANG")} or, if \code{LANG} is not set, \code{\link[=Sys.getlocale]{Sys.getlocale()}}), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:
+The system language will be used at default (as returned by \code{Sys.getenv("LANG")} or, if \code{LANG} is not set, \code{\link[=Sys.getlocale]{Sys.getlocale()}}), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:
 \enumerate{
 \item Setting the R option \code{AMR_locale}, e.g. by running \code{options(AMR_locale = "de")}
 \item Setting the system variable \code{LANGUAGE} or \code{LANG}, e.g. by adding \code{LANGUAGE="de_DE.utf8"} to your \code{.Renviron} file in your home directory
