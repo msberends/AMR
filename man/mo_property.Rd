@@ -55,23 +55,23 @@ mo_type(x, language = get_locale(), ...)
 
 mo_gramstain(x, language = get_locale(), ...)
 
-mo_snomed(x, ...)
+mo_snomed(x, language = get_locale(), ...)
 
-mo_ref(x, ...)
+mo_ref(x, language = get_locale(), ...)
 
-mo_authors(x, ...)
+mo_authors(x, language = get_locale(), ...)
 
-mo_year(x, ...)
+mo_year(x, language = get_locale(), ...)
 
-mo_rank(x, ...)
+mo_rank(x, language = get_locale(), ...)
 
 mo_taxonomy(x, language = get_locale(), ...)
 
-mo_synonyms(x, ...)
+mo_synonyms(x, language = get_locale(), ...)
 
 mo_info(x, language = get_locale(), ...)
 
-mo_url(x, open = FALSE, ...)
+mo_url(x, open = FALSE, language = get_locale(), ...)
 
 mo_property(x, property = "fullname", language = get_locale(), ...)
 }

@@ -23,13 +23,19 @@
 #'
 #' For language-dependent output of AMR functions, like [mo_name()], [mo_gramstain()], [mo_type()] and [ab_name()].
 #' @inheritSection lifecycle Stable lifecycle
-#' @details Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: <https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv>. This file will be read by all functions where a translated output can be desired, like all [mo_property()] functions ([mo_name()], [mo_gramstain()], [mo_type()], etc.).
+#' @details Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: <https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv>. This file will be read by all functions where a translated output can be desired, like all [mo_property()] functions ([mo_name()], [mo_gramstain()], [mo_type()], etc.) and [ab_property()] functions ([ab_name()], [ab_group()] etc.). 
 #'
 #' Currently supported languages are: `r paste(sort(gsub(";.*", "", ISOcodes::ISO_639_2[which(ISOcodes::ISO_639_2$Alpha_2 %in% LANGUAGES_SUPPORTED), "Name"])), collapse = ", ")`. Please note that currently not all these languages have translations available for all antimicrobial agents and colloquial microorganism names. 
 #'
 #' Please suggest your own translations [by creating a new issue on our repository](https://github.com/msberends/AMR/issues/new?title=Translations).
 #'
-#' The system language will be used at default (as returned by [Sys.getlocale()]), if that language is supported. The language to be used can be overwritten by setting the option `AMR_locale`, e.g. `options(AMR_locale = "de")`.
+#' ## Changing the default language
+#' The system language will be used at default (as returned by [Sys.getenv("LANG")] or, if `LANG` is not set, [Sys.getlocale()]), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:
+#' 
+#'   1. Setting the R option `AMR_locale`, e.g. by running `options(AMR_locale = "de")`
+#'   2. Setting the system variable `LANGUAGE` or `LANG`, e.g. by adding `LANGUAGE="de_DE.utf8"` to your `.Renviron` file in your home directory
+#' 
+#' So if the R option `AMR_locale` is set, the system variables `LANGUAGE` and `LANG` will be ignored.
 #' @inheritSection AMR Read more on our website!
 #' @rdname translate
 #' @name translate
@@ -73,17 +79,24 @@ get_locale <- function() {
     if (lang %in% LANGUAGES_SUPPORTED) {
       return(lang)
     } else {
-      stop_("unsupported language: '", lang, "' - use one of: ",
+      stop_("unsupported language set as option 'AMR_locale': '", lang, "' - use one of: ",
             paste0("'", LANGUAGES_SUPPORTED, "'", collapse = ", "))
+    }
+  } else {
+    # we now support the LANGUAGE system variable - return it if set
+    if (!identical("", Sys.getenv("LANGUAGE"))) {
+      return(coerce_language_setting(Sys.getenv("LANGUAGE")))
+    }
+    if (!identical("", Sys.getenv("LANG"))) {
+      return(coerce_language_setting(Sys.getenv("LANG")))
     }
   }
   
-  lang <- Sys.getlocale()
-  
-  # Check the locale settings for a start with one of these languages:
-  
+  coerce_language_setting(Sys.getlocale())
+}
+
+coerce_language_setting <- function(lang) {
   # grepl() with ignore.case = FALSE is faster than %like%
-  
   if (grepl("^(English|en_|EN_)", lang, ignore.case = FALSE)) {
     # as first option to optimise speed
     "en"

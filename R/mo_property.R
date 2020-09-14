@@ -141,7 +141,7 @@
 #' mo_info("E. coli")
 #' }
 mo_name <- function(x, language = get_locale(), ...) {
-  translate_AMR(mo_validate(x = x, property = "fullname", ...), language = language, only_unknown = FALSE)
+  translate_AMR(mo_validate(x = x, property = "fullname", language = language, ...), language = language, only_unknown = FALSE)
 }
 
 #' @rdname mo_property
@@ -151,7 +151,7 @@ mo_fullname <- mo_name
 #' @rdname mo_property
 #' @export
 mo_shortname <- function(x, language = get_locale(), ...) {
-  x.mo <- as.mo(x, ...)
+  x.mo <- as.mo(x, language = language, ...)
   
   metadata <- get_mo_failures_uncertainties_renamed()
   
@@ -181,49 +181,49 @@ mo_shortname <- function(x, language = get_locale(), ...) {
 #' @rdname mo_property
 #' @export
 mo_subspecies <- function(x, language = get_locale(), ...) {
-  translate_AMR(mo_validate(x = x, property = "subspecies", ...), language = language, only_unknown = TRUE)
+  translate_AMR(mo_validate(x = x, property = "subspecies", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_species <- function(x, language = get_locale(), ...) {
-  translate_AMR(mo_validate(x = x, property = "species", ...), language = language, only_unknown = TRUE)
+  translate_AMR(mo_validate(x = x, property = "species", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_genus <- function(x, language = get_locale(), ...) {
-  translate_AMR(mo_validate(x = x, property = "genus", ...), language = language, only_unknown = TRUE)
+  translate_AMR(mo_validate(x = x, property = "genus", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_family <- function(x, language = get_locale(), ...) {
-  translate_AMR(mo_validate(x = x, property = "family", ...), language = language, only_unknown = TRUE)
+  translate_AMR(mo_validate(x = x, property = "family", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_order <- function(x, language = get_locale(), ...) {
-  translate_AMR(mo_validate(x = x, property = "order", ...), language = language, only_unknown = TRUE)
+  translate_AMR(mo_validate(x = x, property = "order", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_class <- function(x, language = get_locale(), ...) {
-  translate_AMR(mo_validate(x = x, property = "class", ...), language = language, only_unknown = TRUE)
+  translate_AMR(mo_validate(x = x, property = "class", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_phylum <- function(x, language = get_locale(), ...) {
-  translate_AMR(mo_validate(x = x, property = "phylum", ...), language = language, only_unknown = TRUE)
+  translate_AMR(mo_validate(x = x, property = "phylum", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_kingdom <- function(x, language = get_locale(), ...) {
-  translate_AMR(mo_validate(x = x, property = "kingdom", ...), language = language, only_unknown = TRUE)
+  translate_AMR(mo_validate(x = x, property = "kingdom", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
@@ -233,13 +233,13 @@ mo_domain <- mo_kingdom
 #' @rdname mo_property
 #' @export
 mo_type <- function(x, language = get_locale(), ...) {
-  translate_AMR(mo_validate(x = x, property = "kingdom", ...), language = language, only_unknown = FALSE)
+  translate_AMR(mo_validate(x = x, property = "kingdom", language = language, ...), language = language, only_unknown = FALSE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_gramstain <- function(x, language = get_locale(), ...) {
-  x.mo <- as.mo(x, ...)
+  x.mo <- as.mo(x, language = language, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
   
   x.phylum <- mo_phylum(x.mo)
@@ -269,20 +269,20 @@ mo_gramstain <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_snomed <- function(x, ...) {
-  mo_validate(x = x, property = "snomed", ...)
+mo_snomed <- function(x, language = get_locale(), ...) {
+  mo_validate(x = x, property = "snomed", language = language, ...)
 }
 
 #' @rdname mo_property
 #' @export
-mo_ref <- function(x, ...) {
-  mo_validate(x = x, property = "ref", ...)
+mo_ref <- function(x, language = get_locale(), ...) {
+  mo_validate(x = x, property = "ref", language = language, ...)
 }
 
 #' @rdname mo_property
 #' @export
-mo_authors <- function(x, ...) {
-  x <- mo_validate(x = x, property = "ref", ...)
+mo_authors <- function(x, language = get_locale(), ...) {
+  x <- mo_validate(x = x, property = "ref", language = language, ...)
   # remove last 4 digits and presumably the comma and space that preceed them
   x[!is.na(x)] <- gsub(",? ?[0-9]{4}", "", x[!is.na(x)])
   suppressWarnings(x)
@@ -290,8 +290,8 @@ mo_authors <- function(x, ...) {
 
 #' @rdname mo_property
 #' @export
-mo_year <- function(x, ...) {
-  x <- mo_validate(x = x, property = "ref", ...)
+mo_year <- function(x, language = get_locale(), ...) {
+  x <- mo_validate(x = x, property = "ref", language = language, ...)
   # get last 4 digits
   x[!is.na(x)] <- gsub(".*([0-9]{4})$", "\\1", x[!is.na(x)])
   suppressWarnings(as.integer(x))
@@ -299,14 +299,14 @@ mo_year <- function(x, ...) {
 
 #' @rdname mo_property
 #' @export
-mo_rank <- function(x, ...) {
-  mo_validate(x = x, property = "rank", ...)
+mo_rank <- function(x, language = get_locale(), ...) {
+  mo_validate(x = x, property = "rank", language = language, ...)
 }
 
 #' @rdname mo_property
 #' @export
 mo_taxonomy <- function(x, language = get_locale(),  ...) {
-  x <- as.mo(x, ...)
+  x <- as.mo(x, language = language, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
   
   result <- list(kingdom = mo_kingdom(x, language = language),
@@ -324,8 +324,8 @@ mo_taxonomy <- function(x, language = get_locale(),  ...) {
 
 #' @rdname mo_property
 #' @export
-mo_synonyms <- function(x, ...) {
-  x <- as.mo(x, ...)
+mo_synonyms <- function(x, language = get_locale(), ...) {
+  x <- as.mo(x, language = language, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
   
   IDs <- mo_name(x = x, language = NULL)
@@ -351,7 +351,7 @@ mo_synonyms <- function(x, ...) {
 #' @rdname mo_property
 #' @export
 mo_info <- function(x, language = get_locale(),  ...) {
-  x <- as.mo(x, ...)
+  x <- as.mo(x, language = language, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
   
   info <- lapply(x, function(y)
@@ -373,8 +373,8 @@ mo_info <- function(x, language = get_locale(),  ...) {
 
 #' @rdname mo_property
 #' @export
-mo_url <- function(x, open = FALSE, ...) {
-  mo <- as.mo(x = x, ... = ...)
+mo_url <- function(x, open = FALSE, language = get_locale(), ...) {
+  mo <- as.mo(x = x, language = language, ... = ...)
   mo_names <- mo_name(mo)
   metadata <- get_mo_failures_uncertainties_renamed()
   
@@ -407,10 +407,10 @@ mo_property <- function(x, property = "fullname", language = get_locale(), ...) 
   stop_ifnot(property %in% colnames(microorganisms),
              "invalid property: '", property, "' - use a column name of the `microorganisms` data set")
   
-  translate_AMR(mo_validate(x = x, property = property, ...), language = language, only_unknown = TRUE)
+  translate_AMR(mo_validate(x = x, property = property, language = language, ...), language = language, only_unknown = TRUE)
 }
 
-mo_validate <- function(x, property, ...) {
+mo_validate <- function(x, property, language, ...) {
   
   check_dataset_integrity()
   
@@ -439,11 +439,11 @@ mo_validate <- function(x, property, ...) {
       & !Lancefield %in% c(TRUE, "all")) {
     # this will not reset mo_uncertainties and mo_failures
     # because it's already a valid MO
-    x <- exec_as.mo(x, property = property, initial_search = FALSE, ...)
+    x <- exec_as.mo(x, property = property, initial_search = FALSE, language = language, ...)
   } else if (!all(x %in% MO_lookup[, property, drop = TRUE])
              | Becker %in% c(TRUE, "all")
              | Lancefield %in% c(TRUE, "all")) {
-    x <- exec_as.mo(x, property = property, ...)
+    x <- exec_as.mo(x, property = property, language = language, ...)
   }
   
   if (property == "mo") {

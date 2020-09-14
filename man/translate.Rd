@@ -11,13 +11,21 @@ get_locale()
 For language-dependent output of AMR functions, like \code{\link[=mo_name]{mo_name()}}, \code{\link[=mo_gramstain]{mo_gramstain()}}, \code{\link[=mo_type]{mo_type()}} and \code{\link[=ab_name]{ab_name()}}.
 }
 \details{
-Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: \url{https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv}. This file will be read by all functions where a translated output can be desired, like all \code{\link[=mo_property]{mo_property()}} functions (\code{\link[=mo_name]{mo_name()}}, \code{\link[=mo_gramstain]{mo_gramstain()}}, \code{\link[=mo_type]{mo_type()}}, etc.).
+Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: \url{https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv}. This file will be read by all functions where a translated output can be desired, like all \code{\link[=mo_property]{mo_property()}} functions (\code{\link[=mo_name]{mo_name()}}, \code{\link[=mo_gramstain]{mo_gramstain()}}, \code{\link[=mo_type]{mo_type()}}, etc.) and \code{\link[=ab_property]{ab_property()}} functions (\code{\link[=ab_name]{ab_name()}}, \code{\link[=ab_group]{ab_group()}} etc.).
 
 Currently supported languages are: Dutch, English, French, German, Italian, Portuguese, Spanish. Please note that currently not all these languages have translations available for all antimicrobial agents and colloquial microorganism names.
 
 Please suggest your own translations \href{https://github.com/msberends/AMR/issues/new?title=Translations}{by creating a new issue on our repository}.
+\subsection{Changing the default language}{
 
-The system language will be used at default (as returned by \code{\link[=Sys.getlocale]{Sys.getlocale()}}), if that language is supported. The language to be used can be overwritten by setting the option \code{AMR_locale}, e.g. \code{options(AMR_locale = "de")}.
+The system language will be used at default (as returned by \link{Sys.getenv("LANG")} or, if \code{LANG} is not set, \code{\link[=Sys.getlocale]{Sys.getlocale()}}), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:
+\enumerate{
+\item Setting the R option \code{AMR_locale}, e.g. by running \code{options(AMR_locale = "de")}
+\item Setting the system variable \code{LANGUAGE} or \code{LANG}, e.g. by adding \code{LANGUAGE="de_DE.utf8"} to your \code{.Renviron} file in your home directory
+}
+
+So if the R option \code{AMR_locale} is set, the system variables \code{LANGUAGE} and \code{LANG} will be ignored.
+}
 }
 \section{Stable lifecycle}{
 

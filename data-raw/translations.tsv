@@ -27,6 +27,7 @@ de	vegetative	vegetativ	FALSE	FALSE
 de	([([ ]*?)group	\\1Gruppe	FALSE	FALSE
 de	([([ ]*?)Group	\\1Gruppe	FALSE	FALSE
 de	no .*growth	keine? .*wachstum	FALSE	TRUE
+de	no|not	keine?	FALSE	TRUE
 
 nl	Coagulase-negative Staphylococcus	Coagulase-negatieve Staphylococcus	FALSE	FALSE
 nl	Coagulase-positive Staphylococcus	Coagulase-positieve Staphylococcus	FALSE	FALSE
@@ -58,6 +59,8 @@ nl	antibiotic	antibioticum	FALSE	FALSE
 nl	Antibiotic	Antibioticum	FALSE	FALSE
 nl	Drug Middel	FALSE	FALSE
 nl	drug middel	FALSE	FALSE
+nl	no .*growth	geen .*groei	FALSE	TRUE
+nl	no|not	geen|niet	FALSE	TRUE
 
 es	Coagulase-negative Staphylococcus	Staphylococcus coagulasa negativo	FALSE	FALSE
 es	Coagulase-positive Staphylococcus	Staphylococcus coagulasa positivo	FALSE	FALSE
@@ -86,6 +89,8 @@ es	biotype	biotipo	FALSE	FALSE
 es	vegetative	vegetativo	FALSE	FALSE
 es	([([ ]*?)group	\\1grupo	FALSE	FALSE
 es	([([ ]*?)Group	\\1Grupo	FALSE	FALSE
+es	no .*growth	no .*crecimientonon	FALSE	TRUE
+es	no|not	no|sin	FALSE	TRUE
 
 it	Coagulase-negative Staphylococcus	Staphylococcus negativo coagulasi	FALSE	FALSE
 it	Coagulase-positive Staphylococcus	Staphylococcus positivo coagulasi	FALSE	FALSE
@@ -112,6 +117,8 @@ it	biotype	biotipo	FALSE	FALSE
 it	vegetative	vegetativo	FALSE	FALSE
 it	([([ ]*?)group	\\1gruppo	FALSE	FALSE
 it	([([ ]*?)Group	\\1Gruppo	FALSE	FALSE
+it	no .*growth	sem .*crescimento	FALSE	TRUE
+it	no|not	sem	FALSE	TRUE
 
 fr	Coagulase-negative Staphylococcus	Staphylococcus à coagulase négative	FALSE	FALSE
 fr	Coagulase-positive Staphylococcus	Staphylococcus à coagulase positif	FALSE	FALSE
@@ -137,6 +144,8 @@ fr	biogroup	biogroupe	FALSE	FALSE
 fr	vegetative	végétatif	FALSE	FALSE
 fr	([([ ]*?)group	\\1groupe	FALSE	FALSE
 fr	([([ ]*?)Group	\\1Groupe	FALSE	FALSE
+fr	no .*growth	pas .*croissance	FALSE	TRUE
+fr	no|not	non	FALSE	TRUE
 
 pt	Coagulase-negative Staphylococcus	Staphylococcus coagulase negativo	FALSE	FALSE
 pt	Coagulase-positive Staphylococcus	Staphylococcus coagulase positivo	FALSE	FALSE
@@ -163,6 +172,8 @@ pt	biotype	biótipo	FALSE	FALSE
 pt	vegetative	vegetativo	FALSE	FALSE
 pt	([([ ]*?)group	\\1grupo	FALSE	FALSE
 pt	([([ ]*?)Group	\\1Grupo	FALSE	FALSE
+pt	no .*growth	sem .*crescimento	FALSE	TRUE
+pt	no|not	sem	FALSE	TRUE
 
 de	clavulanic acid	Clavulansäure	FALSE	TRUE
 

@@ -16,6 +16,7 @@ as.mo(
   allow_uncertain = TRUE,
   reference_df = get_mo_source(),
   ignore_pattern = getOption("AMR_ignore_pattern"),
+  language = get_locale(),
   ...
 )
 
@@ -43,6 +44,8 @@ This excludes \emph{Enterococci} at default (who are in group D), use \code{Lanc
 \item{reference_df}{a \code{\link{data.frame}} to be used for extra reference when translating \code{x} to a valid \code{\link{mo}}. See \code{\link[=set_mo_source]{set_mo_source()}} and \code{\link[=get_mo_source]{get_mo_source()}} to automate the usage of your own codes (e.g. used in your analysis or organisation).}
 
 \item{ignore_pattern}{a regular expression (case-insensitive) of which all matches in \code{x} must return \code{NA}. This can be convenient to exclude known non-relevant input and can also be set with the option \code{AMR_ignore_pattern}, e.g. \code{options(AMR_ignore_pattern = "(not reported|contaminated flora)")}.}
+
+\item{language}{language to translate text like "no growth", which defaults to the system language (see \code{\link[=get_locale]{get_locale()}})}
 
 \item{...}{other parameters passed on to functions}
 }
@@ -106,7 +109,7 @@ With the default setting (\code{allow_uncertain = TRUE}, level 2), below example
 
 There are three helper functions that can be run after using the \code{\link[=as.mo]{as.mo()}} function:
 \itemize{
-\item Use \code{\link[=mo_uncertainties]{mo_uncertainties()}} to get a \code{\link{data.frame}} that prints in a pretty format with all taxonomic names that were guessed. The output contains a score that is based on the human pathogenic prevalence and the \href{https://en.wikipedia.org/wiki/Levenshtein_distance}{Levenshtein distance} between the full taxonomic name and the user input.
+\item Use \code{\link[=mo_uncertainties]{mo_uncertainties()}} to get a \code{\link{data.frame}} that prints in a pretty format with all taxonomic names that were guessed. The output contains a score that is based on the human pathogenic prevalence and the \href{https://en.wikipedia.org/wiki/Levenshtein_distance}{Levenshtein distance} between the user input and the full taxonomic name.
 \item Use \code{\link[=mo_failures]{mo_failures()}} to get a \code{\link{character}} \code{\link{vector}} with all values that could not be coerced to a valid value.
 \item Use \code{\link[=mo_renamed]{mo_renamed()}} to get a \code{\link{data.frame}} with all values that could be coerced based on old, previously accepted taxonomic names.
 }

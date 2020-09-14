@@ -1,5 +1,5 @@
-# AMR 1.3.0.9017
-## <small>Last updated: 12 September 2020</small>
+# AMR 1.3.0.9018
+## <small>Last updated: 14 September 2020</small>
 
 Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscipt to. We are those reviewers very grateful for going through our code so thoroughly!
 
@@ -39,10 +39,10 @@ Note: some changes in this version were suggested by anonymous reviewers from th
   #> [1] 24 24
   ```
 * Improvements for `as.mo()`:
-  * Any user input value that could mean more than one taxonomic entry is now considered 'uncertain'. Instead of a warning, a message will be thrown and the accompanying `mo_uncertainties()` has been changed completely; it now prints all possible candidates with their score.
+  * Any user input value that could mean more than one taxonomic entry is now considered 'uncertain'. Instead of a warning, a message will be thrown and the accompanying `mo_uncertainties()` has been changed completely; it now prints all possible candidates with their matching score.
   * Big speed improvement for already valid microorganism ID. This also means an significant speed improvement for using `mo_*` functions like `mo_name()` on microoganism IDs.
   * Added parameter `ignore_pattern` to `as.mo()` which can also be given to `mo_*` functions like `mo_name()`, to exclude known non-relevant input from analysing. This can also be set with the option `AMR_ignore_pattern`.
-* `get_locale()` now uses `Sys.getlocale()` instead of `Sys.getlocale("LC_COLLATE")`
+* `get_locale()` now uses at default `Sys.getenv("LANG")` or, if `LANG` is not set, `Sys.getlocale()`. This can be overwritten by setting the option `AMR_locale`.
 * Speed improvement for `eucast_rules()`
 * Overall speed improvement by tweaking joining functions
 * Function `mo_shortname()` now returns the genus for input where the species is unknown
