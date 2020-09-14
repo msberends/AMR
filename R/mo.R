@@ -1775,7 +1775,7 @@ print.mo_uncertainties <- function(x, ...) {
     if (x[i, ]$uncertainty == 1) {
       uncertainty_interpretation <- font_green("* VERY LIKELY *")
     } else if (x[i, ]$uncertainty == 1) {
-      uncertainty_interpretation <- font_orange("* LIKELY *")
+      uncertainty_interpretation <- font_yellow("* LIKELY *")
     } else {
       uncertainty_interpretation <- font_red("* UNLIKELY *")
     }
