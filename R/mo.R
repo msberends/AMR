@@ -314,7 +314,7 @@ exec_as.mo <- function(x,
       res_df <- haystack[which(eval(substitute(needle), envir = haystack, enclos = parent.frame())), , drop = FALSE]
       if (NROW(res_df) > 1) {
         # sort the findings on matching score
-        res_df <- res_df[order(mo_matching_score(x_backup[i], res_df[, "fullname", drop = TRUE]), decreasing = TRUE), , drop = FALSE]
+        res_df <- res_df[order(mo_matching_score(input, res_df[, "fullname", drop = TRUE]), decreasing = TRUE), , drop = FALSE]
       }
       res <- as.character(res_df[, column, drop = TRUE])
       if (length(res) == 0) {
