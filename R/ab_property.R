@@ -38,10 +38,10 @@
 #' @rdname ab_property
 #' @name ab_property
 #' @return 
-#' - An [`integer`] in case of [ab_cid()]
-#' - A named [`list`] in case of [ab_info()] and multiple [ab_synonyms()]/[ab_tradenames()]
-#' - A [`double`] in case of [ab_ddd()]
-#' - A [`character`] in all other cases
+#' - An [integer] in case of [ab_cid()]
+#' - A named [list] in case of [ab_info()] and multiple [ab_synonyms()]/[ab_tradenames()]
+#' - A [double] in case of [ab_ddd()]
+#' - A [character] in all other cases
 #' @export
 #' @seealso [antibiotics]
 #' @inheritSection AMR Reference data publicly available
@@ -231,9 +231,9 @@ ab_validate <- function(x, property, ...) {
            error = function(e) stop(e$message, call. = FALSE))
   x_bak <- x
   if (!all(x %in% antibiotics[, property])) {
-    x <- data.frame(ab = as.ab(x, ...), stringsAsFactors = FALSE) %>%
-      left_join(antibiotics, by = "ab") %>%
-      pull(property)
+    x <- data.frame(ab = as.ab(x, ...), stringsAsFactors = FALSE) %pm>%
+      pm_left_join(antibiotics, by = "ab") %pm>%
+     pm_pull(property)
   }
   if (property == "ab") {
     return(structure(x, class = property))

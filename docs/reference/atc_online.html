@@ -49,8 +49,8 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Get ATC properties from WHOCC website — atc_online_property" />
-<meta property="og:description" content="Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit." />
-<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
+<meta property="og:description" content="Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic), such as the name, defined daily dose (DDD) or standard unit." />
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9016</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9022</span>
       </span>
     </div>
 
@@ -239,14 +239,15 @@
     </div>
 
     <div class="ref-description">
-    <p>Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit.</p>
+    <p>Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic), such as the name, defined daily dose (DDD) or standard unit.</p>
     </div>
 
     <pre class="usage"><span class='fu'>atc_online_property</span>(
   <span class='kw'>atc_code</span>,
   <span class='kw'>property</span>,
   administration = <span class='st'>"O"</span>,
-  url = <span class='st'>"https://www.whocc.no/atc_ddd_index/?code=%s&amp;showdescription=no"</span>
+  url = <span class='st'>"https://www.whocc.no/atc_ddd_index/?code=%s&amp;showdescription=no"</span>,
+  url_vet = <span class='st'>"https://www.whocc.no/atcvet/atcvet_index/?code=%s&amp;showdescription=no"</span>
 )
 
 <span class='fu'>atc_online_groups</span>(<span class='kw'>atc_code</span>, <span class='kw'>...</span>)
@@ -270,7 +271,11 @@
     </tr>
     <tr>
       <th>url</th>
-      <td><p>url of website of the WHO. The sign <code>%s</code> can be used as a placeholder for ATC codes.</p></td>
+      <td><p>url of website of the WHOCC. The sign <code>%s</code> can be used as a placeholder for ATC codes.</p></td>
+    </tr>
+    <tr>
+      <th>url_vet</th>
+      <td><p>url of website of the WHOCC for veterinary medicine. The sign <code>%s</code> can be used as a placeholder for ATC_vet codes (that all start with "Q").</p></td>
     </tr>
     <tr>
       <th>...</th>

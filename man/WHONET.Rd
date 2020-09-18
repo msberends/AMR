@@ -5,7 +5,7 @@
 \alias{WHONET}
 \title{Data set with 500 isolates - WHONET example}
 \format{
-A \code{\link{data.frame}} with 500 observations and 53 variables:
+A \link{data.frame} with 500 observations and 53 variables:
 \itemize{
 \item \verb{Identification number}\cr ID of the sample
 \item \verb{Specimen number}\cr ID of the specimen

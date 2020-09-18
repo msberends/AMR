@@ -29,11 +29,13 @@
 #' @rdname mo_source
 #' @name mo_source
 #' @aliases set_mo_source get_mo_source
-#' @details The reference file can be a text file seperated with commas (CSV) or tabs or pipes, an Excel file (either 'xls' or 'xlsx' format) or an R object file (extension '.rds'). To use an Excel file, you need to have the `readxl` package installed.
+#' @details The reference file can be a text file separated with commas (CSV) or tabs or pipes, an Excel file (either 'xls' or 'xlsx' format) or an R object file (extension '.rds'). To use an Excel file, you will need to have the `readxl` package installed.
 #'
-#' [set_mo_source()] will check the file for validity: it must be a [`data.frame`], must have a column named `"mo"` which contains values from [`microorganisms$mo`][microorganisms] and must have a reference column with your own defined values. If all tests pass, [set_mo_source()] will read the file into R and export it to `"~/.mo_source.rds"`. This compressed data file will then be used at default for MO determination (function [as.mo()] and consequently all `mo_*` functions like [mo_genus()] and [mo_gramstain()]). The location of the original file will be saved as option with `options(mo_source = path)`. Its timestamp will be saved with `options(mo_source_datetime = ...)`.
-#'
-#' [get_mo_source()] will return the data set by reading `"~/.mo_source.rds"` with [readRDS()]. If the original file has changed (the file defined with `path`), it will call [set_mo_source()] to update the data file automatically.
+#' [set_mo_source()] will check the file for validity: it must be a [data.frame], must have a column named `"mo"` which contains values from [`microorganisms$mo`][microorganisms] and must have a reference column with your own defined values. If all tests pass, [set_mo_source()] will read the file into R and export it to `"~/.mo_source.rds"` after the user **specifically confirms and allows** that this file will be created. For this reason, this function only works in interactive sessions.
+#' 
+#' The created compressed data file `"~/.mo_source.rds"` will be used at default for MO determination (function [as.mo()] and consequently all `mo_*` functions like [mo_genus()] and [mo_gramstain()]). The location of the original file will be saved as an R option with `options(mo_source = path)`. Its timestamp will be saved with `options(mo_source_datetime = ...)`. 
+#' 
+#' The function [get_mo_source()] will return the data set by reading `"~/.mo_source.rds"` with [readRDS()]. If the original file has changed (by checking the aforementioned options `mo_source` and `mo_source_datetime`), it will call [set_mo_source()] to update the data file automatically.
 #'
 #' Reading an Excel file (`.xlsx`) with only one row has a size of 8-9 kB. The compressed file created with [set_mo_source()] will then have a size of 0.1 kB and can be read by [get_mo_source()] in only a couple of microseconds (millionths of a second).
 #' 

@@ -50,7 +50,7 @@
 
 <meta property="og:title" content="Check availability of columns — availability" />
 <meta property="og:description" content="Easy check for data availability of all columns in a data set. This makes it easy to get an idea of which antimicrobial combinations can be used for calculation with e.g. susceptibility() and resistance()." />
-<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9022</span>
       </span>
     </div>
 
@@ -249,7 +249,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>tbl</th>
-      <td><p>a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> or <code><a href='https://rdrr.io/r/base/list.html'>list</a></code></p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> or <a href='https://rdrr.io/r/base/list.html'>list</a></p></td>
     </tr>
     <tr>
       <th>width</th>
@@ -259,10 +259,10 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with column names of <code>tbl</code> as row names</p>
+    <p><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with column names of <code>tbl</code> as row names</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The function returns a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with columns <code>"resistant"</code> and <code>"visual_resistance"</code>. The values in that columns are calculated with <code><a href='proportion.html'>resistance()</a></code>.</p>
+    <p>The function returns a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with columns <code>"resistant"</code> and <code>"visual_resistance"</code>. The values in that columns are calculated with <code><a href='proportion.html'>resistance()</a></code>.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
 
     
@@ -291,7 +291,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw'>mo</span> <span class='op'>==</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"E. coli"</span>)) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select_all.html'>select_if</a></span>(<span class='kw'>is.rsi</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>availability</span>()
-}</pre>
+}
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

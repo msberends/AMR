@@ -492,6 +492,8 @@ antibiotics[which(antibiotics$ab == "VOR"), "abbreviations"][[1]] <- list(c(anti
 antibiotics[which(antibiotics$ab == "FOS"), "synonyms"][[1]] <- list(sort(c(antibiotics[which(antibiotics$ab == "FOS"), "synonyms"][[1]], "Monuril")))
 antibiotics[which(antibiotics$ab == "FOS"), "synonyms"][[1]] <- list(sort(c(antibiotics[which(antibiotics$ab == "FOS"), "synonyms"][[1]], "Monurol")))
 
+antibiotics[which(antibiotics$ab == "TZP"), "abbreviations"][[1]] <- list(sort(c(antibiotics[which(antibiotics$ab == "TZP"), "abbreviations"][[1]], "piptazo")))
+
 antibiotics <- antibiotics %>% 
   mutate(ab = as.character(ab)) %>% 
   rbind(antibiotics %>% 
@@ -612,5 +614,5 @@ for (i in 1:nrow(antibiotics)) {
 
 # REFER TO data-raw/loinc.R FOR ADDING LOINC CODES
 
-usethis::use_data(antibiotics, overwrite = TRUE)
+usethis::use_data(antibiotics, overwrite = TRUE, version = 2)
 rm(antibiotics)

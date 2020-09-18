@@ -21,6 +21,7 @@ ggplot_rsi(
   translate_ab = "name",
   combine_SI = TRUE,
   combine_IR = FALSE,
+  minimum = 30,
   language = get_locale(),
   nrow = NULL,
   colours = c(S = "#61a8ff", SI = "#61a8ff", I = "#61f7ff", IR = "#ff6961", R =
@@ -41,6 +42,7 @@ geom_rsi(
   x = c("antibiotic", "interpretation"),
   fill = "interpretation",
   translate_ab = "name",
+  minimum = 30,
   language = get_locale(),
   combine_SI = TRUE,
   combine_IR = FALSE,
@@ -62,6 +64,8 @@ labels_rsi_count(
   position = NULL,
   x = "antibiotic",
   translate_ab = "name",
+  minimum = 30,
+  language = get_locale(),
   combine_SI = TRUE,
   combine_IR = FALSE,
   datalabels.size = 3,
@@ -69,7 +73,7 @@ labels_rsi_count(
 )
 }
 \arguments{
-\item{data}{a \code{\link{data.frame}} with column(s) of class \code{\link{rsi}} (see \code{\link[=as.rsi]{as.rsi()}})}
+\item{data}{a \link{data.frame} with column(s) of class \code{\link{rsi}} (see \code{\link[=as.rsi]{as.rsi()}})}
 
 \item{position}{position adjustment of bars, either \code{"fill"}, \code{"stack"} or \code{"dodge"}}
 
@@ -88,6 +92,8 @@ labels_rsi_count(
 \item{combine_SI}{a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is \code{TRUE}.}
 
 \item{combine_IR}{a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see parameter \code{combine_SI}.}
+
+\item{minimum}{the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.}
 
 \item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 

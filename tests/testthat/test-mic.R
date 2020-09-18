@@ -42,9 +42,10 @@ test_that("mic works", {
   barplot(as.mic(c(1, 2, 4, 8)))
   plot(as.mic(c(1, 2, 4, 8)))
   print(as.mic(c(1, 2, 4, 8)))
-
-  expect_equal(summary(as.mic(c(2, 8))), c("Class" = "mic",
-                                           "<NA>" = "0",
-                                           "Min." = "2",
-                                           "Max." = "8"))
+  
+  expect_equal(summary(as.mic(c(2, 8))), 
+               structure(c("Class" = "mic",
+                           "<NA>" = "0",
+                           "Min." = "2",
+                           "Max." = "8"), class = c("summaryDefault", "table")))
 })

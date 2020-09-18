@@ -23,7 +23,7 @@
 #'
 #' This tries to find a column name in a data set based on information from the [antibiotics] data set. Also supports WHONET abbreviations.
 #' @inheritSection lifecycle Maturing lifecycle
-#' @param x a [`data.frame`]
+#' @param x a [data.frame]
 #' @param search_string a text to search `x` for, will be checked with [as.ab()] if this value is not a column in `x`
 #' @param verbose a logical to indicate whether additional info should be printed
 #' @details You can look for an antibiotic (trade) name or abbreviation and it will search `x` and the [antibiotics] data set for any column containing a name or code of that antibiotic. **Longer columns names take precendence over shorter column names.**
@@ -82,7 +82,7 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE) {
       
     } else {
       # sort colnames on length - longest first
-      cols <- colnames(x[, x %>% colnames() %>% nchar() %>% order() %>% rev()])
+      cols <- colnames(x[, x %pm>% colnames() %pm>% nchar() %pm>% order() %pm>% rev()])
       df_trans <- data.frame(cols = cols,
                              abs = suppressWarnings(as.ab(cols)),
                              stringsAsFactors = FALSE)
@@ -147,7 +147,7 @@ get_column_abx <- function(x,
   names(x) <- df_trans$abcode
   
   # add from self-defined dots (...):
-  # such as get_column_abx(example_isolates %>% rename(thisone = AMX), amox = "thisone")
+  # such as get_column_abx(example_isolates %pm>% rename(thisone = AMX), amox = "thisone")
   dots <- list(...)
   if (length(dots) > 0) {
     newnames <- suppressWarnings(as.ab(names(dots), info = FALSE))

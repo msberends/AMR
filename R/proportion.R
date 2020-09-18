@@ -29,7 +29,7 @@
 #' @param minimum the minimum allowed number of available (tested) isolates. Any isolate count lower than `minimum` will return `NA` with a warning. The default number of `30` isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.
 #' @param as_percent a logical to indicate whether the output must be returned as a hundred fold with % sign (a character). A value of `0.123456` will then be returned as `"12.3%"`.
 #' @param only_all_tested (for combination therapies, i.e. using more than one variable for `...`): a logical to indicate that isolates must be tested for all antibiotics, see section *Combination therapy* below
-#' @param data a [`data.frame`] containing columns with class [`rsi`] (see [as.rsi()])
+#' @param data a [data.frame] containing columns with class [`rsi`] (see [as.rsi()])
 #' @param translate_ab a column name of the [antibiotics] data set to translate the antibiotic abbreviations to, using [ab_property()]. Use a value 
 #' @inheritParams ab_property
 #' @param combine_SI a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter `combine_IR`, but this now follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is `TRUE`.
@@ -79,7 +79,7 @@
 #' Using `only_all_tested` has no impact when only using one antibiotic as input.
 #' @source **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition**, 2014, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
 #' @seealso [AMR::count()] to count resistant and susceptible isolates.
-#' @return A [`double`] or, when `as_percent = TRUE`, a [`character`].
+#' @return A [double] or, when `as_percent = TRUE`, a [character].
 #' @rdname proportion
 #' @aliases portion
 #' @name proportion

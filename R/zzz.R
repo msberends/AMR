@@ -20,6 +20,10 @@
 # ==================================================================== #
 
 .onLoad <- function(libname, pkgname) {
+  assign(x = "AB_lookup",
+         value = create_AB_lookup(),
+         envir = asNamespace("AMR"))
+  
   assign(x = "MO_lookup",
          value = create_MO_lookup(),
          envir = asNamespace("AMR"))
@@ -60,14 +64,27 @@
                         "\n[ prevent his notice with suppressPackageStartupMessages(library(AMR)) or use options(AMR_silentstart = TRUE) ]")
 }
 
+create_AB_lookup <- function() {
+  AB_lookup <- AMR::antibiotics
+  AB_lookup$generalised_name <- generalise_antibiotic_name(AB_lookup$name)
+  AB_lookup$generalised_synonyms <- lapply(AB_lookup$synonyms, generalise_antibiotic_name)
+  AB_lookup$generalised_abbreviations <- lapply(AB_lookup$abbreviations, generalise_antibiotic_name)
+  AB_lookup$generalised_loinc <- lapply(AB_lookup$loinc, generalise_antibiotic_name)
+  AB_lookup
+}
+
 create_MO_lookup <- function() {
   MO_lookup <- AMR::microorganisms
   
-  MO_lookup$kingdom_index <- 99
+  MO_lookup$kingdom_index <- NA_real_
   MO_lookup[which(MO_lookup$kingdom == "Bacteria" | MO_lookup$mo == "UNKNOWN"), "kingdom_index"] <- 1
   MO_lookup[which(MO_lookup$kingdom == "Fungi"), "kingdom_index"] <- 2
   MO_lookup[which(MO_lookup$kingdom == "Protozoa"), "kingdom_index"] <- 3
   MO_lookup[which(MO_lookup$kingdom == "Archaea"), "kingdom_index"] <- 4
+  # all the rest
+  MO_lookup[which(is.na(MO_lookup$kingdom_index)), "kingdom_index"] <- 5
+  
+  MO_lookup$prevalence_kingdom_index <- MO_lookup$prevalence * MO_lookup$kingdom_index
   
   # use this paste instead of `fullname` to work with Viridans Group Streptococci, etc.
   MO_lookup$fullname_lower <- tolower(trimws(paste(MO_lookup$genus, 

@@ -18,7 +18,7 @@ x \%like_case\% pattern
 \arguments{
 \item{x}{a character vector where matches are sought, or an object which can be coerced by \code{\link[=as.character]{as.character()}} to a character vector.}
 
-\item{pattern}{a character string containing a regular expression (or \code{\link{character}} string for \code{fixed = TRUE}) to be matched in the given character vector. Coerced by \code{\link[=as.character]{as.character()}} to a character string if possible.  If a \code{\link{character}} vector of length 2 or more is supplied, the first element is used with a warning.}
+\item{pattern}{a character string containing a regular expression (or \link{character} string for \code{fixed = TRUE}) to be matched in the given character vector. Coerced by \code{\link[=as.character]{as.character()}} to a character string if possible.  If a \link{character} vector of length 2 or more is supplied, the first element is used with a warning.}
 
 \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case sensitive} and if \code{TRUE}, case is ignored during matching.}
 }

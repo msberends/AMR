@@ -37,7 +37,7 @@
 #' The function [count_df()] takes any variable from `data` that has an [`rsi`] class (created with [as.rsi()]) and counts the number of S's, I's and R's. It also supports grouped variables. The function [rsi_df()] works exactly like [count_df()], but adds the percentage of S, I and R.
 #' @inheritSection proportion Combination therapy
 #' @seealso [`proportion_*`][proportion] to calculate microbial resistance and susceptibility.
-#' @return An [`integer`]
+#' @return An [integer]
 #' @rdname count
 #' @name count
 #' @export

@@ -47,7 +47,7 @@
 #' With using `collapse`, this function will return a [character]:\cr
 #' `df %>% mutate(abx = ab_from_text(clinical_text, collapse = "|"))` 
 #' @export
-#' @return A [list], or a [character] if `collapse` is not `NULL`
+#' @return A [list], or a  [character] if `collapse` is not `NULL`
 #' @inheritSection AMR Read more on our website!
 #' @examples 
 #' # mind the bad spelling of amoxicillin in this line, 
@@ -97,7 +97,7 @@ ab_from_text <- function(text,
   
   text <- tolower(as.character(text))
   text_split_all <- strsplit(text, "[ ;.,:\\|]")
-  progress <- progress_estimated(n = length(text_split_all), n_min = 5)
+  progress <- progress_ticker(n = length(text_split_all), n_min = 5)
   on.exit(close(progress))
   
   if (type %like% "(drug|ab|anti)") {

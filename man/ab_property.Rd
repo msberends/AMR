@@ -62,10 +62,10 @@ ab_property(x, property = "name", language = get_locale(), ...)
 }
 \value{
 \itemize{
-\item An \code{\link{integer}} in case of \code{\link[=ab_cid]{ab_cid()}}
-\item A named \code{\link{list}} in case of \code{\link[=ab_info]{ab_info()}} and multiple \code{\link[=ab_synonyms]{ab_synonyms()}}/\code{\link[=ab_tradenames]{ab_tradenames()}}
-\item A \code{\link{double}} in case of \code{\link[=ab_ddd]{ab_ddd()}}
-\item A \code{\link{character}} in all other cases
+\item An \link{integer} in case of \code{\link[=ab_cid]{ab_cid()}}
+\item A named \link{list} in case of \code{\link[=ab_info]{ab_info()}} and multiple \code{\link[=ab_synonyms]{ab_synonyms()}}/\code{\link[=ab_tradenames]{ab_tradenames()}}
+\item A \link{double} in case of \code{\link[=ab_ddd]{ab_ddd()}}
+\item A \link{character} in all other cases
 }
 }
 \description{

@@ -50,7 +50,7 @@
 
 <meta property="og:title" content="Join microorganisms to a data set — join" />
 <meta property="og:description" content="Join the data set microorganisms easily to an existing table or character vector." />
-<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9022</span>
       </span>
     </div>
 
@@ -277,7 +277,7 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><strong>Note:</strong> As opposed to the <code>join()</code> functions of <code>dplyr</code>, <code><a href='https://rdrr.io/r/base/character.html'>character</a></code> vectors are supported and at default existing columns will get a suffix <code>"2"</code> and the newly joined columns will not get a suffix.</p>
+    <p><strong>Note:</strong> As opposed to the <code>join()</code> functions of <code>dplyr</code>, <a href='https://rdrr.io/r/base/character.html'>character</a> vectors are supported and at default existing columns will get a suffix <code>"2"</code> and the newly joined columns will not get a suffix.</p>
 <p>These functions rely on <code><a href='https://rdrr.io/r/base/merge.html'>merge()</a></code>, a base R function to do joins.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
 
@@ -309,7 +309,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='kw'>df</span>)
 <span class='kw'>df_joined</span> <span class='op'>&lt;-</span> <span class='fu'>left_join_microorganisms</span>(<span class='kw'>df</span>, <span class='st'>"bacteria"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='kw'>df_joined</span>)
-}</pre>
+}
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

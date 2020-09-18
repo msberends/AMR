@@ -47,9 +47,9 @@
 #'
 #' European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{http://ec.europa.eu/health/documents/community-register/html/atc.htm}
 #' @aliases ab
-#' @return Character (vector) with class [`ab`]. Unknown values will return `NA`.
+#' @return A [character] [vector] with additional class [`ab`]
 #' @seealso 
-#' * [antibiotics] for the dataframe that is being used to determine ATCs
+#' * [antibiotics] for the [data.frame] that is being used to determine ATCs
 #' * [ab_from_text()] for a function to retrieve antimicrobial drugs from clinical text (from health care records)
 #' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
@@ -101,23 +101,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
   x <- gsub('"', "", x, fixed = TRUE)
   x_bak_clean <- x
   if (already_regex == FALSE) {
-    # remove suffices
-    x_bak_clean <- gsub("_(MIC|RSI|DIS[CK])$", "", x_bak_clean)
-    # remove disk concentrations, like LVX_NM -> LVX
-    x_bak_clean <- gsub("_[A-Z]{2}[0-9_.]{0,3}$", "", x_bak_clean)
-    # remove part between brackets if that's followed by another string
-    x_bak_clean <- gsub("(.*)+ [(].*[)]", "\\1", x_bak_clean)
-    # keep only max 1 space
-    x_bak_clean <- trimws(gsub(" +", " ", x_bak_clean))
-    # non-character, space or number should be a slash
-    x_bak_clean <- gsub("[^A-Z0-9 -]", "/", x_bak_clean)
-    # spaces around non-characters must be removed: amox + clav -> amox/clav
-    x_bak_clean <- gsub("(.*[A-Z0-9]) ([^A-Z0-9].*)", "\\1\\2", x_bak_clean)
-    x_bak_clean <- gsub("(.*[^A-Z0-9]) ([A-Z0-9].*)", "\\1\\2", x_bak_clean)
-    # remove hyphen after a starting "co"
-    x_bak_clean <- gsub("^CO-", "CO", x_bak_clean)
-    # replace text 'and' with a slash
-    x_bak_clean <- gsub(" AND ", "/", x_bak_clean)
+    x_bak_clean <- generalise_antibiotic_name(x_bak_clean)
   }
   
   x <- unique(x_bak_clean)
@@ -133,7 +117,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
   }
   
   if (initial_search == TRUE) {
-    progress <- progress_estimated(n = length(x), n_min = ifelse(isTRUE(info), 25, length(x) + 1)) # start if n >= 25
+    progress <- progress_ticker(n = length(x), n_min = ifelse(isTRUE(info), 25, length(x) + 1)) # start if n >= 25
     on.exit(close(progress))
   }
   
@@ -161,7 +145,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
     }
     
     # exact name
-    found <- antibiotics[which(toupper(antibiotics$name) == x[i]), ]$ab
+    found <- antibiotics[which(AB_lookup$generalised_name == x[i]), ]$ab
     if (length(found) > 0) {
       x_new[i] <- found[1L]
       next
@@ -189,8 +173,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
     }
     
     # exact LOINC code
-    loinc_found <- unlist(lapply(antibiotics$loinc,
-                                 function(s) x[i] %in% s))
+    loinc_found <- unlist(lapply(AB_lookup$generalised_loinc,
+                                 function(s) generalise_antibiotic_name(x[i]) %in% s))
     found <- antibiotics$ab[loinc_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
@@ -198,8 +182,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
     }
     
     # exact synonym
-    synonym_found <- unlist(lapply(antibiotics$synonyms,
-                                   function(s) x[i] %in% toupper(s)))
+    synonym_found <- unlist(lapply(AB_lookup$generalised_synonyms,
+                                   function(s) generalise_antibiotic_name(x[i]) %in% s))
     found <- antibiotics$ab[synonym_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
@@ -207,8 +191,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
     }
     
     # exact abbreviation
-    abbr_found <- unlist(lapply(antibiotics$abbreviations,
-                                function(a) x[i] %in% toupper(a)))
+    abbr_found <- unlist(lapply(AB_lookup$generalised_abbreviations,
+                                function(s) generalise_antibiotic_name(x[i]) %in% s))
     found <- antibiotics$ab[abbr_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
@@ -246,21 +230,21 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
     }
     
     # try if name starts with it
-    found <- antibiotics[which(antibiotics$name %like% paste0("^", x_spelling)), ]$ab
+    found <- antibiotics[which(AB_lookup$generalised_name %like% paste0("^", x_spelling)), ]$ab
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
     # try if name ends with it
-    found <- antibiotics[which(antibiotics$name %like% paste0(x_spelling, "$")), ]$ab
+    found <- antibiotics[which(AB_lookup$generalised_name %like% paste0(x_spelling, "$")), ]$ab
     if (nchar(x[i]) >= 4 & length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
     
     # and try if any synonym starts with it
-    synonym_found <- unlist(lapply(antibiotics$synonyms,
-                                   function(s) any(s %like% paste0("^", x_spelling))))
+    synonym_found <- unlist(lapply(AB_lookup$generalised_synonyms,
+                                   function(s) any(generalise_antibiotic_name(s) %like% paste0("^", x_spelling))))
     found <- antibiotics$ab[synonym_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
@@ -291,7 +275,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
       }
       
       # transform back from other languages and try again
-      x_translated <- paste(lapply(strsplit(x[i], "[^A-Z0-9 ]"),
+      x_translated <- paste(lapply(strsplit(x[i], "[^A-Z0-9]"),
                                    function(y) {
                                      for (i in seq_len(length(y))) {
                                        y[i] <- ifelse(tolower(y[i]) %in% tolower(translations_file$replacement),
@@ -299,7 +283,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
                                                                                 !isFALSE(translations_file$fixed)), "pattern"],
                                                       y[i])
                                      }
-                                     y
+                                     generalise_antibiotic_name(y)
                                    })[[1]],
                             collapse = "/")
       x_translated_guess <- suppressWarnings(as.ab(x_translated, initial_search = FALSE))
@@ -317,7 +301,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
                                                       y_name,
                                                       y[i])
                                      }
-                                     y
+                                     generalise_antibiotic_name(y)
                                    })[[1]],
                             collapse = "/")
       x_translated_guess <- suppressWarnings(as.ab(x_translated, initial_search = FALSE))
@@ -449,9 +433,9 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
             call. = FALSE)
   }
   
-  x_result <- data.frame(x = x_bak_clean, stringsAsFactors = FALSE) %>%
-    left_join(data.frame(x = x, x_new = x_new, stringsAsFactors = FALSE), by = "x") %>%
-    pull(x_new)
+  x_result <- data.frame(x = x_bak_clean, stringsAsFactors = FALSE) %pm>%
+    pm_left_join(data.frame(x = x, x_new = x_new, stringsAsFactors = FALSE), by = "x") %pm>%
+   pm_pull(x_new)
   
   if (length(x_result) == 0) {
     x_result <- NA_character_
@@ -537,4 +521,26 @@ c.ab <- function(x, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(x)
   class_integrity_check(y, "antimicrobial code", antibiotics$ab)
+}
+
+generalise_antibiotic_name <- function(x) {
+  x <- toupper(x)
+  # remove suffices
+  x <- gsub("_(MIC|RSI|DIS[CK])$", "", x)
+  # remove disk concentrations, like LVX_NM -> LVX
+  x <- gsub("_[A-Z]{2}[0-9_.]{0,3}$", "", x)
+  # remove part between brackets if that's followed by another string
+  x <- gsub("(.*)+ [(].*[)]", "\\1", x)
+  # keep only max 1 space
+  x <- trimws(gsub(" +", " ", x))
+  # non-character, space or number should be a slash
+  x <- gsub("[^A-Z0-9 -]", "/", x)
+  # spaces around non-characters must be removed: amox + clav -> amox/clav
+  x <- gsub("(.*[A-Z0-9]) ([^A-Z0-9].*)", "\\1\\2", x)
+  x <- gsub("(.*[^A-Z0-9]) ([A-Z0-9].*)", "\\1\\2", x)
+  # remove hyphen after a starting "co"
+  x <- gsub("^CO-", "CO", x)
+  # replace operators with a space
+  x <- gsub("(/| AND | WITH | W/|[+]|[-])+", " ", x)
+  x
 }

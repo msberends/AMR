@@ -23,7 +23,7 @@
 #'
 #' Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type.
 #' @inheritSection lifecycle Stable lifecycle
-#' @param x a [`data.frame`] containing isolates.
+#' @param x a [data.frame] containing isolates.
 #' @param col_date column name of the result date (or date that is was received on the lab), defaults to the first column of with a date class
 #' @param col_patient_id column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' or 'patid' (case insensitive)
 #' @param col_mo column name of the IDs of the microorganisms (see [as.mo()]), defaults to the first column of class [`mo`]. Values will be coerced using [as.mo()].
@@ -147,7 +147,7 @@ first_isolate <- function(x,
   dots <- unlist(list(...))
   if (length(dots) != 0) {
     # backwards compatibility with old parameters
-    dots.names <- dots %>% names()
+    dots.names <- dots %pm>% names()
     if ("filter_specimen" %in% dots.names) {
       specimen_group <- dots[which(dots.names == "filter_specimen")]
     }
@@ -269,16 +269,16 @@ first_isolate <- function(x,
     row.end <- nrow(x)
   } else {
     # filtering on specimen and only analyse these rows to save time
-    x <- x[order(pull(x, col_specimen),
+    x <- x[order(pm_pull(x, col_specimen),
                  x$newvar_patient_id, 
                  x$newvar_genus_species,
                  x$newvar_date), ]
     rownames(x) <- NULL
     suppressWarnings(
-      row.start <- which(x %>% pull(col_specimen) == specimen_group) %>% min(na.rm = TRUE)
+      row.start <- which(x %pm>% pm_pull(col_specimen) == specimen_group) %pm>% min(na.rm = TRUE)
     )
     suppressWarnings(
-      row.end <- which(x %>% pull(col_specimen) == specimen_group) %>% max(na.rm = TRUE)
+      row.end <- which(x %pm>% pm_pull(col_specimen) == specimen_group) %pm>% max(na.rm = TRUE)
     )
   }
   
@@ -319,8 +319,8 @@ first_isolate <- function(x,
   }
   
   # Analysis of first isolate ----
-  x$other_pat_or_mo <- ifelse(x$newvar_patient_id == lag(x$newvar_patient_id) &
-                                x$newvar_genus_species == lag(x$newvar_genus_species),
+  x$other_pat_or_mo <- ifelse(x$newvar_patient_id == pm_lag(x$newvar_patient_id) &
+                                x$newvar_genus_species == pm_lag(x$newvar_genus_species),
                               FALSE,
                               TRUE)
   x$episode_group <- paste(x$newvar_patient_id, x$newvar_genus_species)
@@ -349,13 +349,13 @@ first_isolate <- function(x,
     type_param <- type
     
     x$other_key_ab <- !key_antibiotics_equal(y = x$newvar_key_ab,
-                                             z = lag(x$newvar_key_ab),
+                                             z = pm_lag(x$newvar_key_ab),
                                              type = type_param,
                                              ignore_I = ignore_I,
                                              points_threshold = points_threshold,
                                              info = info)
     # with key antibiotics
-    x$newvar_first_isolate <- if_else(x$newvar_row_index_sorted >= row.start &
+    x$newvar_first_isolate <- pm_if_else(x$newvar_row_index_sorted >= row.start &
                                         x$newvar_row_index_sorted <= row.end &
                                         x$newvar_genus_species != "" & 
                                         (x$other_pat_or_mo | x$more_than_episode_ago | x$other_key_ab),
@@ -364,7 +364,7 @@ first_isolate <- function(x,
     
   } else {
     # no key antibiotics
-    x$newvar_first_isolate <- if_else(x$newvar_row_index_sorted >= row.start &
+    x$newvar_first_isolate <- pm_if_else(x$newvar_row_index_sorted >= row.start &
                                         x$newvar_row_index_sorted <= row.end &
                                         x$newvar_genus_species != "" & 
                                         (x$other_pat_or_mo | x$more_than_episode_ago),
@@ -413,8 +413,14 @@ first_isolate <- function(x,
   
   if (info == TRUE) {
     n_found <- sum(x$newvar_first_isolate, na.rm = TRUE)
-    p_found_total <- percentage(n_found / nrow(x[which(!is.na(x$newvar_mo)), , drop = FALSE]))
-    p_found_scope <- percentage(n_found / scope.size)
+    p_found_total <- percentage(n_found / nrow(x[which(!is.na(x$newvar_mo)), , drop = FALSE]), digits = 1)
+    p_found_scope <- percentage(n_found / scope.size, digits = 1)
+    if (!p_found_total %like% "[.]") {
+      p_found_total <- gsub("%", ".0%", p_found_total, fixed = TRUE)
+    }
+    if (!p_found_scope %like% "[.]") {
+      p_found_scope <- gsub("%", ".0%", p_found_scope, fixed = TRUE)
+    }
     # mark up number of found
     n_found <- format(n_found, big.mark = big.mark, decimal.mark = decimal.mark)
     if (p_found_total != p_found_scope) {

@@ -19,41 +19,12 @@
 # Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
-# functions from dplyr, will perhaps become poorman
-distinct <- function(.data, ..., .keep_all = FALSE) {
-  check_is_dataframe(.data)
-  if ("grouped_data" %in% class(.data)) {
-    distinct.grouped_data(.data, ..., .keep_all = .keep_all)
-  } else {
-    distinct.default(.data, ..., .keep_all = .keep_all)
-  }
-}
-distinct.default <- function(.data, ..., .keep_all = FALSE) {
-  names <- rownames(.data)
-  rownames(.data) <- NULL
-  if (length(deparse_dots(...)) == 0) {
-    selected <- .data
-  } else {
-    selected <- select(.data, ...)
-  }
-  rows <- as.integer(rownames(unique(selected)))
-  if (isTRUE(.keep_all)) {
-    res <- .data[rows, , drop = FALSE]
-  } else {
-    res <- selected[rows, , drop = FALSE]
-  }
-  rownames(res) <- names[rows]
-  res
-}
-distinct.grouped_data <- function(.data, ..., .keep_all = FALSE) {
-  apply_grouped_function(.data, "distinct", ..., .keep_all = .keep_all)
-}
 # faster implementation of left_join than using merge() by poorman - we use match():
-left_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
+pm_left_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
   if (is.null(by)) {
     by <- intersect(names(x), names(y))[1L]
     if (is.na(by)) {
-      stop_("no common column found for left_join()")
+      stop_("no common column found for pm_left_join()")
     }
     join_message(by)
   } else if (!is.null(names(by))) {
@@ -77,17 +48,28 @@ left_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
   rownames(merged) <- NULL
   merged
 }
-filter_join_worker <- function(x, y, by = NULL, type = c("anti", "semi")) {
-  type <- match.arg(type, choices = c("anti", "semi"), several.ok = FALSE)
-  if (is.null(by)) {
-    by <- intersect(names(x), names(y))
-    join_message(by)
+# pm_filter_join_worker <- function(x, y, by = NULL, type = c("anti", "semi")) {
+#   type <- match.arg(type, choices = c("anti", "semi"), several.ok = FALSE)
+#   if (is.null(by)) {
+#     by <- intersect(names(x), names(y))
+#     join_message(by)
+#   }
+#   rows <- interaction(x[, by]) %in% interaction(y[, by])
+#   if (type == "anti") rows <- !rows
+#   res <- x[rows, , drop = FALSE]
+#   rownames(res) <- NULL
+#   res
+# }
+
+quick_case_when <- function(...) {
+  vectors <- list(...)
+  split <- lapply(vectors, function(x) unlist(strsplit(paste(deparse(x), collapse = ""), "~", fixed = TRUE)))
+  for (i in seq_len(length(vectors))) {
+    if (eval(parse(text = split[[i]][1]), envir = parent.frame())) {
+      return(eval(parse(text = split[[i]][2]), envir = parent.frame()))
+    }
   }
-  rows <- interaction(x[, by]) %in% interaction(y[, by])
-  if (type == "anti") rows <- !rows
-  res <- x[rows, , drop = FALSE]
-  rownames(res) <- NULL
-  res
+  return(NA)
 }
 
 # No export, no Rd
@@ -165,7 +147,7 @@ search_type_in_df <- function(x, type) {
     if (any(colnames(x) %like% "^(specimen date|specimen_date|spec_date)")) {
       # WHONET support
       found <- sort(colnames(x)[colnames(x) %like% "^(specimen date|specimen_date|spec_date)"])[1]
-      if (!any(class(pull(x, found)) %in% c("Date", "POSIXct"))) {
+      if (!any(class(pm_pull(x, found)) %in% c("Date", "POSIXct"))) {
         stop(font_red(paste0("ERROR: Found column `", font_bold(found), "` to be used as input for `col_", type,
                              "`, but this column contains no valid dates. Transform its values to valid dates first.")),
              call. = FALSE)
@@ -461,7 +443,7 @@ font_stripstyle <- function(x) {
   gsub("(?:(?:\\x{001b}\\[)|\\x{009b})(?:(?:[0-9]{1,3})?(?:(?:;[0-9]{0,3})*)?[A-M|f-m])|\\x{001b}[A-M]", "", x, perl = TRUE)
 }
 
-progress_estimated <- function(n = 1, n_min = 0, ...) {
+progress_ticker <- function(n = 1, n_min = 0, ...) {
   if (!interactive() || n < n_min) {
     pb <- list()
     pb$tick <- function() {

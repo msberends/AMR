@@ -81,7 +81,7 @@ test_that("mic2rsi works", {
            mo = "B_STRPT_PNMN",
            ab = "AMX",
            guideline = "EUCAST")),
-    "R")
+    "I")
 
   expect_true(example_isolates %>%
                 mutate(amox_mic = as.mic(2)) %>%

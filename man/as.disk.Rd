@@ -16,7 +16,7 @@ is.disk(x)
 \item{na.rm}{a logical indicating whether missing values should be removed}
 }
 \value{
-An \code{\link{integer}} with additional new class \code{\link{disk}}
+An \link{integer} with additional class \code{\link{disk}}
 }
 \description{
 This transforms a vector to a new class \code{\link{disk}}, which is a disk diffusion growth zone size (around an antibiotic disk) in millimetres between 6 and 50.

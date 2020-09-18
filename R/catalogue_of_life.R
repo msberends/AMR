@@ -80,7 +80,7 @@ NULL
 #' This function returns information about the included data from the Catalogue of Life.
 #' @seealso [microorganisms]
 #' @details For DSMZ, see [microorganisms].
-#' @return a [`list`], which prints in pretty format
+#' @return a [list], which prints in pretty format
 #' @inheritSection catalogue_of_life Catalogue of Life
 #' @inheritSection AMR Read more on our website!
 #' @export
@@ -92,12 +92,12 @@ catalogue_of_life_version <- function() {
   lst <- list(catalogue_of_life =
                 list(version = gsub("{year}", catalogue_of_life$year, catalogue_of_life$version, fixed = TRUE),
                      url = gsub("{year}", catalogue_of_life$year, catalogue_of_life$url_CoL, fixed = TRUE),
-                     n = nrow(filter(microorganisms, source == "CoL"))),
+                     n = nrow(pm_filter(microorganisms, source == "CoL"))),
               deutsche_sammlung_von_mikroorganismen_und_zellkulturen =
                 list(version = "Prokaryotic Nomenclature Up-to-Date from DSMZ",
                      url = catalogue_of_life$url_DSMZ,
                      yearmonth = catalogue_of_life$yearmonth_DSMZ,
-                     n = nrow(filter(microorganisms, source == "DSMZ"))),
+                     n = nrow(pm_filter(microorganisms, source == "DSMZ"))),
               total_included =
                 list(
                   n_total_species = nrow(microorganisms),

@@ -51,7 +51,7 @@
 <meta property="og:title" content="User-defined reference data set for microorganisms — mo_source" />
 <meta property="og:description" content="These functions can be used to predefine your own reference to be used in as.mo() and consequently all mo_* functions like mo_genus() and mo_gramstain().
 This is the fastest way to have your organisation (or analysis) specific codes picked up and translated by this package." />
-<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
 
@@ -83,7 +83,7 @@ This is the fastest way to have your organisation (or analysis) specific codes p
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9022</span>
       </span>
     </div>
 
@@ -259,9 +259,10 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The reference file can be a text file seperated with commas (CSV) or tabs or pipes, an Excel file (either 'xls' or 'xlsx' format) or an R object file (extension '.rds'). To use an Excel file, you need to have the <code>readxl</code> package installed.</p>
-<p><code>set_mo_source()</code> will check the file for validity: it must be a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code>, must have a column named <code>"mo"</code> which contains values from <code><a href='microorganisms.html'>microorganisms$mo</a></code> and must have a reference column with your own defined values. If all tests pass, <code>set_mo_source()</code> will read the file into R and export it to <code>"~/.mo_source.rds"</code>. This compressed data file will then be used at default for MO determination (function <code><a href='as.mo.html'>as.mo()</a></code> and consequently all <code>mo_*</code> functions like <code><a href='mo_property.html'>mo_genus()</a></code> and <code><a href='mo_property.html'>mo_gramstain()</a></code>). The location of the original file will be saved as option with <code><a href='https://rdrr.io/r/base/options.html'>options(mo_source = path)</a></code>. Its timestamp will be saved with <code><a href='https://rdrr.io/r/base/options.html'>options(mo_source_datetime = ...)</a></code>.</p>
-<p><code>get_mo_source()</code> will return the data set by reading <code>"~/.mo_source.rds"</code> with <code><a href='https://rdrr.io/r/base/readRDS.html'>readRDS()</a></code>. If the original file has changed (the file defined with <code>path</code>), it will call <code>set_mo_source()</code> to update the data file automatically.</p>
+    <p>The reference file can be a text file separated with commas (CSV) or tabs or pipes, an Excel file (either 'xls' or 'xlsx' format) or an R object file (extension '.rds'). To use an Excel file, you will need to have the <code>readxl</code> package installed.</p>
+<p><code>set_mo_source()</code> will check the file for validity: it must be a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>, must have a column named <code>"mo"</code> which contains values from <code><a href='microorganisms.html'>microorganisms$mo</a></code> and must have a reference column with your own defined values. If all tests pass, <code>set_mo_source()</code> will read the file into R and export it to <code>"~/.mo_source.rds"</code> after the user <strong>specifically confirms and allows</strong> that this file will be created. For this reason, this function only works in interactive sessions.</p>
+<p>The created compressed data file <code>"~/.mo_source.rds"</code> will be used at default for MO determination (function <code><a href='as.mo.html'>as.mo()</a></code> and consequently all <code>mo_*</code> functions like <code><a href='mo_property.html'>mo_genus()</a></code> and <code><a href='mo_property.html'>mo_gramstain()</a></code>). The location of the original file will be saved as an R option with <code><a href='https://rdrr.io/r/base/options.html'>options(mo_source = path)</a></code>. Its timestamp will be saved with <code><a href='https://rdrr.io/r/base/options.html'>options(mo_source_datetime = ...)</a></code>.</p>
+<p>The function <code>get_mo_source()</code> will return the data set by reading <code>"~/.mo_source.rds"</code> with <code><a href='https://rdrr.io/r/base/readRDS.html'>readRDS()</a></code>. If the original file has changed (by checking the aforementioned options <code>mo_source</code> and <code>mo_source_datetime</code>), it will call <code>set_mo_source()</code> to update the data file automatically.</p>
 <p>Reading an Excel file (<code>.xlsx</code>) with only one row has a size of 8-9 kB. The compressed file created with <code>set_mo_source()</code> will then have a size of 0.1 kB and can be read by <code>get_mo_source()</code> in only a couple of microseconds (millionths of a second).</p>
     <h2 class="hasAnchor" id="how-to-setup"><a class="anchor" href="#how-to-setup"></a>How to setup</h2>
 
@@ -278,7 +279,8 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 
 <p>We save it as <code>"home/me/ourcodes.xlsx"</code>. Now we have to set it as a source:</p><pre><span class='fu'>set_mo_source</span>(<span class='st'>"home/me/ourcodes.xlsx"</span>)
 <span class='co'>#&gt; NOTE: Created mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'</span>
-<span class='co'>#&gt;       (columns "Organisation XYZ" and "mo")</span></pre>
+<span class='co'>#&gt;       (columns "Organisation XYZ" and "mo")</span>
+</pre>
 
 <p>It has now created a file <code>"~/.mo_source.rds"</code> with the contents of our Excel file. Only the first column with foreign values and the 'mo' column will be kept when creating the RDS file.</p>
 <p>And now we can use it in our functions:</p><pre><span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"lab_mo_ecoli"</span>)
@@ -289,7 +291,8 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 
 <span class='co'># other input values still work too</span>
 <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Escherichia coli"</span>, <span class='st'>"E. coli"</span>, <span class='st'>"lab_mo_ecoli"</span>))
-<span class='co'>#&gt; [1] B_ESCHR_COLI B_ESCHR_COLI B_ESCHR_COLI</span></pre>
+<span class='co'>#&gt; [1] B_ESCHR_COLI B_ESCHR_COLI B_ESCHR_COLI</span>
+</pre>
 
 <p>If we edit the Excel file by, let's say, adding row 4 like this:</p><pre>  |         A          |       B      |
 --|--------------------|--------------|
@@ -306,10 +309,12 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 <span class='co'>#&gt; [1] B_ESCHR_COLI</span>
 
 <span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='st'>"lab_Staph_aureus"</span>)
-<span class='co'>#&gt; [1] "Staphylococcus"</span></pre>
+<span class='co'>#&gt; [1] "Staphylococcus"</span>
+</pre>
 
 <p>To delete the reference data file, just use <code>""</code>, <code>NULL</code> or <code>FALSE</code> as input for <code>set_mo_source()</code>:</p><pre><span class='fu'>set_mo_source</span>(<span class='kw'>NULL</span>)
-<span class='co'># Removed mo_source file '~/.mo_source.rds'.</span></pre>
+<span class='co'># Removed mo_source file '~/.mo_source.rds'.</span>
+</pre>
 
 <p>If the original Excel file is moved or deleted, the mo_source file will be removed upon the next use of <code><a href='as.mo.html'>as.mo()</a></code>. If the mo_source file is manually deleted (i.e. without using <code>set_mo_source()</code>), the references to the mo_source file will be removed upon the next use of <code><a href='as.mo.html'>as.mo()</a></code>.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>

@@ -5,7 +5,7 @@
 \alias{example_isolates}
 \title{Data set with 2,000 example isolates}
 \format{
-A \code{\link{data.frame}} with 2,000 observations and 49 variables:
+A \link{data.frame} with 2,000 observations and 49 variables:
 \itemize{
 \item \code{date}\cr date of receipt at the laboratory
 \item \code{hospital_id}\cr ID of the hospital, from A to D

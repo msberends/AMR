@@ -25,7 +25,7 @@
 #'
 #' When negative: the left tail is longer; the mass of the distribution is concentrated on the right of the figure. When positive: the right tail is longer; the mass of the distribution is concentrated on the left of the figure.
 #' @inheritSection lifecycle Questioning lifecycle
-#' @param x a vector of values, a [`matrix`] or a [`data.frame`]
+#' @param x a vector of values, a [`matrix`] or a [data.frame]
 #' @param na.rm a logical value indicating whether `NA` values should be stripped before the computation proceeds.
 #' @seealso [kurtosis()]
 #' @rdname skewness

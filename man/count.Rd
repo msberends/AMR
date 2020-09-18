@@ -45,7 +45,7 @@ count_df(
 
 \item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}): a logical to indicate that isolates must be tested for all antibiotics, see section \emph{Combination therapy} below}
 
-\item{data}{a \code{\link{data.frame}} containing columns with class \code{\link{rsi}} (see \code{\link[=as.rsi]{as.rsi()}})}
+\item{data}{a \link{data.frame} containing columns with class \code{\link{rsi}} (see \code{\link[=as.rsi]{as.rsi()}})}
 
 \item{translate_ab}{a column name of the \link{antibiotics} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}. Use a value}
 
@@ -56,7 +56,7 @@ count_df(
 \item{combine_IR}{a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see parameter \code{combine_SI}.}
 }
 \value{
-An \code{\link{integer}}
+An \link{integer}
 }
 \description{
 These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in \code{summarise()} from the \code{dplyr} package and also support grouped variables, please see \emph{Examples}.

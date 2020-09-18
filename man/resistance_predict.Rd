@@ -47,7 +47,7 @@ ggplot_rsi_predict(
 )
 }
 \arguments{
-\item{x}{a \code{\link{data.frame}} containing isolates.}
+\item{x}{a \link{data.frame} containing isolates.}
 
 \item{col_ab}{column name of \code{x} containing antimicrobial interpretations (\code{"R"}, \code{"I"} and \code{"S"})}
 
@@ -76,7 +76,7 @@ ggplot_rsi_predict(
 \item{ribbon}{a logical to indicate whether a ribbon should be shown (default) or error bars}
 }
 \value{
-A \code{\link{data.frame}} with extra class \code{\link{resistance_predict}} with columns:
+A \link{data.frame} with extra class \code{\link{resistance_predict}} with columns:
 \itemize{
 \item \code{year}
 \item \code{value}, the same as \code{estimated} when \code{preserve_measurements = FALSE}, and a combination of \code{observed} and \code{estimated} otherwise

@@ -54,7 +54,7 @@ rsi_calc <- function(...,
   ndots <- length(dots)
   
   if (is.data.frame(dots_df)) {
-    # data.frame passed with other columns, like: example_isolates %>% proportion_S(AMC, GEN)
+    # data.frame passed with other columns, like: example_isolates %pm>% proportion_S(AMC, GEN)
     
     dots <- as.character(dots)
     # remove first element, it's the data.frame
@@ -64,12 +64,12 @@ rsi_calc <- function(...,
       dots <- dots[2:length(dots)]
     }
     if (length(dots) == 0 | all(dots == "df")) {
-      # for complete data.frames, like example_isolates %>% select(AMC, GEN) %>% proportion_S()
+     # for complete data.frames, like example_isolates %pm>% select(AMC, GEN) %pm>% proportion_S()
       # and the old rsi function, which has "df" as name of the first parameter
       x <- dots_df
     } else {
       # get dots that are in column names already, and the ones that will be once evaluated using dots_df or global env
-      # this is to support susceptibility(example_isolates, AMC, dplyr::all_of(some_vector_with_AB_names))
+      # this is to support susceptibility(example_isolates, AMC, any_of(some_vector_with_AB_names))
       dots <- c(dots[dots %in% colnames(dots_df)],
                 eval(parse(text = dots[!dots %in% colnames(dots_df)]), envir = dots_df, enclos = globalenv()))
       dots_not_exist <- dots[!dots %in% colnames(dots_df)]
@@ -77,14 +77,14 @@ rsi_calc <- function(...,
       x <- dots_df[, dots, drop = FALSE]
     }
   } else if (ndots == 1) {
-    # only 1 variable passed (can also be data.frame), like: proportion_S(example_isolates$AMC) and example_isolates$AMC %>% proportion_S()
+    # only 1 variable passed (can also be data.frame), like: proportion_S(example_isolates$AMC) and example_isolates$AMC %pm>% proportion_S()
     x <- dots_df
   } else {
     # multiple variables passed without pipe, like: proportion_S(example_isolates$AMC, example_isolates$GEN)
     x <- NULL
     try(x <- as.data.frame(dots, stringsAsFactors = FALSE), silent = TRUE)
     if (is.null(x)) {
-      # support for example_isolates %>% group_by(hospital_id) %>% summarise(amox = susceptibility(GEN, AMX))
+      # support for example_isolates %pm>% group_by(hospital_id) %pm>% summarise(amox = susceptibility(GEN, AMX))
       x <- as.data.frame(list(...), stringsAsFactors = FALSE)
     }
   }
@@ -138,7 +138,7 @@ rsi_calc <- function(...,
   }
   
   if (print_warning == TRUE) {
-    warning("Increase speed by transforming to class <rsi> on beforehand: your_data %>% mutate_if(is.rsi.eligible, as.rsi)",
+    warning("Increase speed by transforming to class <rsi> on beforehand: your_data %pm>% mutate_if(is.rsi.eligible, as.rsi)",
             call. = FALSE)
   }
   
@@ -187,9 +187,9 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   translate_ab <- get_translate_ab(translate_ab)
   
   # select only groups and antibiotics
-  if (has_groups(data)) {
+  if (pm_has_groups(data)) {
     data_has_groups <- TRUE
-    groups <- setdiff(names(get_groups(data)), ".rows") # get_groups is from poorman.R
+    groups <- setdiff(names(pm_get_group_details(data)), ".rows")
     data <- data[, c(groups, colnames(data)[sapply(data, is.rsi)]), drop = FALSE]
   } else {
     data_has_groups <- FALSE
@@ -261,13 +261,14 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
     out
   }
   
-  # support dplyr groups
-  apply_group <- function(.data, fn, groups, ...) {
-    grouped <- split(x = .data, f = lapply(groups, function(x, .data) as.factor(.data[, x]), .data))
+  # based on pm_apply_grouped_function
+  apply_group <- function(.data, fn, groups, drop = FALSE, ...) {
+    #groups <- get_groups(.data)
+    grouped <- pm_split_into_groups(.data, groups, drop)
     res <- do.call(rbind, unname(lapply(grouped, fn, ...)))
     if (any(groups %in% colnames(res))) {
       class(res) <- c("grouped_data", class(res))
-      attr(res, "groups") <- groups[groups %in% colnames(res)]
+      res <- set_groups(res, groups[groups %in% colnames(res)])
     }
     res
   }
@@ -291,7 +292,7 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   
   if (data_has_groups) {
     # ordering by the groups and two more: "antibiotic" and "interpretation"
-    out <- ungroup(out[do.call("order", out[, seq_len(length(groups) + 2)]), ])
+   out <-  pm_ungroup(out[do.call("order", out[, seq_len(length(groups) + 2)]), ])
   } else {
     out <- out[order(out$antibiotic, out$interpretation), ]
   }

@@ -165,14 +165,15 @@ reference:
       them may also be suitable for your analysis. Especially the
       'like' function can be useful: `if (x %like% y) {...}`.
     contents:
-    - "`get_locale`"
-    - "`like`"
     - "`age_groups`"
     - "`age`"
-    - "`join`"
     - "`availability`"
-    - "`pca`"
+    - "`get_locale`"
     - "`ggplot_pca`"
+    - "`join`"
+    - "`like`"
+    - "`mo_matching_score"
+    - "`pca`"
   
   - title: "Other: statistical tests"
     desc: >

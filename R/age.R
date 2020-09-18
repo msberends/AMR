@@ -135,7 +135,7 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE) {
 #'   filter(mo == as.mo("E. coli")) %>%
 #'   group_by(age_group = age_groups(age)) %>%
 #'   select(age_group, CIP) %>%
-#'   ggplot_rsi(x = "age_group")
+#'   ggplot_rsi(x = "age_group", minimum = 0)
 #' }
 age_groups <- function(x, split_at = c(12, 25, 55, 75), na.rm = FALSE) {
   stop_ifnot(is.numeric(x), "`x` must be numeric, not ", paste0(class(x), collapse = "/"))

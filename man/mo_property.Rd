@@ -88,11 +88,11 @@ mo_property(x, property = "fullname", language = get_locale(), ...)
 }
 \value{
 \itemize{
-\item An \code{\link{integer}} in case of \code{\link[=mo_year]{mo_year()}}
-\item A \code{\link{list}} in case of \code{\link[=mo_taxonomy]{mo_taxonomy()}} and \code{\link[=mo_info]{mo_info()}}
-\item A named \code{\link{character}} in case of \code{\link[=mo_url]{mo_url()}}
-\item A \code{\link{double}} in case of \code{\link[=mo_snomed]{mo_snomed()}}
-\item A \code{\link{character}} in all other cases
+\item An \link{integer} in case of \code{\link[=mo_year]{mo_year()}}
+\item A \link{list} in case of \code{\link[=mo_taxonomy]{mo_taxonomy()}} and \code{\link[=mo_info]{mo_info()}}
+\item A named \link{character} in case of \code{\link[=mo_url]{mo_url()}}
+\item A \link{double} in case of \code{\link[=mo_snomed]{mo_snomed()}}
+\item A \link{character} in all other cases
 }
 }
 \description{

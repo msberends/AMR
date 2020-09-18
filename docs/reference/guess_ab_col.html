@@ -50,7 +50,7 @@
 
 <meta property="og:title" content="Guess antibiotic column — guess_ab_col" />
 <meta property="og:description" content="This tries to find a column name in a data set based on information from the antibiotics data set. Also supports WHONET abbreviations." />
-<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9022</span>
       </span>
     </div>
 
@@ -249,7 +249,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code></p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></p></td>
     </tr>
     <tr>
       <th>search_string</th>
@@ -306,7 +306,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(AMP_ED2 = <span class='st'>"S"</span>,
                  AMP_ED20 = <span class='st'>"S"</span>)
 <span class='fu'>guess_ab_col</span>(<span class='kw'>df</span>, <span class='st'>"ampicillin"</span>)
-<span class='co'># [1] "AMP_ED20"</span></pre>
+<span class='co'># [1] "AMP_ED20"</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

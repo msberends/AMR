@@ -50,7 +50,7 @@
 
 <meta property="og:title" content="Determine bug-drug combinations — bug_drug_combinations" />
 <meta property="og:description" content="Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use format() on the result to prettify it to a publicable/printable format, see Examples." />
-<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9016</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9022</span>
       </span>
     </div>
 
@@ -324,7 +324,7 @@
     <p><strong>M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition</strong>, 2014, <em>Clinical and Laboratory Standards Institute (CLSI)</em>. <a href='https://clsi.org/standards/products/microbiology/documents/m39/'>https://clsi.org/standards/products/microbiology/documents/m39/</a>.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The function <code>bug_drug_combinations()</code> returns a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with columns "mo", "ab", "S", "I", "R" and "total".</p>
+    <p>The function <code>bug_drug_combinations()</code> returns a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with columns "mo", "ab", "S", "I", "R" and "total".</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The function <code><a href='https://rdrr.io/r/base/format.html'>format()</a></code> calculates the resistance per bug-drug combination. Use <code>combine_IR = FALSE</code> (default) to test R vs. S+I and <code>combine_IR = TRUE</code> to test R+I vs. S.</p>

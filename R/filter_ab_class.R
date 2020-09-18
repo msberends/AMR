@@ -336,14 +336,14 @@ find_ab_group <- function(ab_class) {
                          "macrolide",
                          "tetracycline"),
          paste0(ab_class, "s"),
-         antibiotics %>%
+         antibiotics %pm>%
            subset(group %like% ab_class | 
                     atc_group1 %like% ab_class | 
-                    atc_group2 %like% ab_class) %>%
-           pull(group) %>%
-           unique() %>%
-           tolower() %>%
-           sort() %>% 
+                    atc_group2 %like% ab_class) %pm>%
+          pm_pull(group) %pm>%
+           unique() %pm>%
+           tolower() %pm>%
+           sort() %pm>% 
            paste(collapse = "/")
   )
 }

@@ -16,7 +16,7 @@ kurtosis(x, na.rm = FALSE)
 \method{kurtosis}{data.frame}(x, na.rm = FALSE)
 }
 \arguments{
-\item{x}{a vector of values, a \code{\link{matrix}} or a \code{\link{data.frame}}}
+\item{x}{a vector of values, a \code{\link{matrix}} or a \link{data.frame}}
 
 \item{na.rm}{a logical value indicating whether \code{NA} values should be stripped before the computation proceeds.}
 }

@@ -27,7 +27,7 @@ ab_from_text(
 \item{...}{parameters passed on to \code{\link[=as.ab]{as.ab()}}}
 }
 \value{
-A \link{list}, or a \link{character} if \code{collapse} is not \code{NULL}
+A \link{list}, or a  \link{character} if \code{collapse} is not \code{NULL}
 }
 \description{
 Use this function on e.g. clinical texts from health care records. It returns a \link{list} with all antimicrobial drugs, doses and forms of administration found in the texts.

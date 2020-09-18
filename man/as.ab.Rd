@@ -20,7 +20,7 @@ is.ab(x)
 \item{...}{arguments passed on to internal functions}
 }
 \value{
-Character (vector) with class \code{\link{ab}}. Unknown values will return \code{NA}.
+A \link{character} \link{vector} with additional class \code{\link{ab}}
 }
 \description{
 Use this function to determine the antibiotic code of one or more antibiotics. The data set \link{antibiotics} will be searched for abbreviations, official names and synonyms (brand names).
@@ -101,7 +101,7 @@ ab_name("eryt")       # "Erythromycin"
 }
 \seealso{
 \itemize{
-\item \link{antibiotics} for the dataframe that is being used to determine ATCs
+\item \link{antibiotics} for the \link{data.frame} that is being used to determine ATCs
 \item \code{\link[=ab_from_text]{ab_from_text()}} for a function to retrieve antimicrobial drugs from clinical text (from health care records)
 }
 }

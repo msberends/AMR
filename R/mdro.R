@@ -52,13 +52,13 @@
 #' @inheritSection as.rsi Interpretation of R and S/I
 #' @return
 #' - CMI 2012 paper - function [mdr_cmi2012()] or [mdro()]:\cr
-#'   Ordered [`factor`] with levels `Negative` < `Multi-drug-resistant (MDR)` < `Extensively drug-resistant (XDR)` < `Pandrug-resistant (PDR)`
+#'   Ordered [factor] with levels `Negative` < `Multi-drug-resistant (MDR)` < `Extensively drug-resistant (XDR)` < `Pandrug-resistant (PDR)`
 #' - TB guideline - function [mdr_tb()] or [`mdro(..., guideline = "TB")`][mdro()]:\cr
-#'   Ordered [`factor`] with levels `Negative` < `Mono-resistant` < `Poly-resistant` < `Multi-drug-resistant` < `Extensively drug-resistant`
+#'   Ordered [factor] with levels `Negative` < `Mono-resistant` < `Poly-resistant` < `Multi-drug-resistant` < `Extensively drug-resistant`
 #' - German guideline - function [mrgn()] or [`mdro(..., guideline = "MRGN")`][mdro()]:\cr
-#'   Ordered [`factor`] with levels `Negative` < `3MRGN` < `4MRGN`
+#'   Ordered [factor] with levels `Negative` < `3MRGN` < `4MRGN`
 #' - Everything else:\cr
-#'   Ordered [`factor`] with levels `Negative` < `Positive, unconfirmed` < `Positive`. The value `"Positive, unconfirmed"` means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. molecular) tests
+#'   Ordered [factor] with levels `Negative` < `Positive, unconfirmed` < `Positive`. The value `"Positive, unconfirmed"` means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. molecular) tests
 #' @rdname mdro
 #' @aliases MDR XDR PDR BRMO 3MRGN 4MRGN
 #' @export

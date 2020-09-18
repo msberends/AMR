@@ -125,7 +125,7 @@ key_antibiotics <- function(x,
   dots <- unlist(list(...))
   if (length(dots) != 0) {
     # backwards compatibility with old parameters
-    dots.names <- dots %>% names()
+    dots.names <- dots %pm>% names()
     if ("info" %in% dots.names) {
       warnings <- dots[which(dots.names == "info")]
     }
@@ -162,7 +162,7 @@ key_antibiotics <- function(x,
     if (!all(col.list %in% colnames(x))) {
       if (warnings == TRUE) {
         warning("Some columns do not exist and will be ignored: ",
-                col.list.bak[!(col.list %in% colnames(x))] %>% toString(),
+                col.list.bak[!(col.list %in% colnames(x))] %pm>% toString(),
                 ".\nTHIS MAY STRONGLY INFLUENCE THE OUTCOME.",
                 immediate. = TRUE,
                 call. = FALSE)
@@ -218,7 +218,7 @@ key_antibiotics <- function(x,
   x$key_ab <- NA_character_
   
   # Gram +
-  x$key_ab <- if_else(x$gramstain == "Gram-positive",
+  x$key_ab <- pm_if_else(x$gramstain == "Gram-positive",
                       tryCatch(apply(X = x[, gram_positive],
                                      MARGIN = 1,
                                      FUN = function(x) paste(x, collapse = "")),
@@ -226,7 +226,7 @@ key_antibiotics <- function(x,
                       x$key_ab)
   
   # Gram -
-  x$key_ab <- if_else(x$gramstain == "Gram-negative",
+  x$key_ab <- pm_if_else(x$gramstain == "Gram-negative",
                       tryCatch(apply(X = x[, gram_negative],
                                      MARGIN = 1,
                                      FUN = function(x) paste(x, collapse = "")),
@@ -236,7 +236,7 @@ key_antibiotics <- function(x,
   # format
   key_abs <- toupper(gsub("[^SIR]", ".", gsub("(NA|NULL)", ".", x$key_ab)))
   
-  if (n_distinct(key_abs) == 1) {
+  if (pm_n_distinct(key_abs) == 1) {
     warning("No distinct key antibiotics determined.", call. = FALSE)
   }
   
@@ -266,7 +266,7 @@ key_antibiotics_equal <- function(y,
   result <- logical(length(x))
   
   if (info_needed == TRUE) {
-    p <- progress_estimated(length(x))
+    p <- progress_ticker(length(x))
     on.exit(close(p))
   }
   
@@ -315,10 +315,10 @@ key_antibiotics_equal <- function(y,
         # - S|R <-> R|S is 1 point
         # use the levels of as.rsi (S = 1, I = 2, R = 3)
         
-        suppressWarnings(x_split <- x_split %>% as.rsi() %>% as.double())
-        suppressWarnings(y_split <- y_split %>% as.rsi() %>% as.double())
+        suppressWarnings(x_split <- x_split %pm>% as.rsi() %pm>% as.double())
+        suppressWarnings(y_split <- y_split %pm>% as.rsi() %pm>% as.double())
         
-        points <- (x_split - y_split) %>% abs() %>% sum(na.rm = TRUE) / 2
+        points <- (x_split - y_split) %pm>% abs() %pm>% sum(na.rm = TRUE) / 2
         result[i] <- points >= points_threshold
         
       } else {

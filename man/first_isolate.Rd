@@ -50,7 +50,7 @@ filter_first_weighted_isolate(
 )
 }
 \arguments{
-\item{x}{a \code{\link{data.frame}} containing isolates.}
+\item{x}{a \link{data.frame} containing isolates.}
 
 \item{col_date}{column name of the result date (or date that is was received on the lab), defaults to the first column of with a date class}
 

@@ -5,7 +5,7 @@
 \alias{microorganisms}
 \title{Data set with 67,151 microorganisms}
 \format{
-A \code{\link{data.frame}} with 67,151 observations and 16 variables:
+A \link{data.frame} with 67,151 observations and 16 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}

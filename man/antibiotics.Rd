@@ -6,7 +6,7 @@
 \alias{antivirals}
 \title{Data sets with 558 antimicrobials}
 \format{
-\subsection{For the \link{antibiotics} data set: a \code{\link{data.frame}} with 456 observations and 14 variables:}{
+\subsection{For the \link{antibiotics} data set: a \link{data.frame} with 456 observations and 14 variables:}{
 \itemize{
 \item \code{ab}\cr Antibiotic ID as used in this package (like \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
 \item \code{atc}\cr ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC, like \code{J01CR02}
@@ -25,7 +25,7 @@
 }
 }
 
-\subsection{For the \link{antivirals} data set: a \code{\link{data.frame}} with 102 observations and 9 variables:}{
+\subsection{For the \link{antivirals} data set: a \link{data.frame} with 102 observations and 9 variables:}{
 \itemize{
 \item \code{atc}\cr ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC
 \item \code{cid}\cr Compound ID as found in PubChem

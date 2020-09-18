@@ -19,43 +19,19 @@
 # Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
-#' Kurtosis of the sample
-#'
-#' @description Kurtosis is a measure of the "tailedness" of the probability distribution of a real-valued random variable.
-#' @inheritSection lifecycle Questioning lifecycle
-#' @param x a vector of values, a [`matrix`] or a [data.frame]
-#' @param na.rm a logical value indicating whether `NA` values should be stripped before the computation proceeds.
-#' @seealso [skewness()]
-#' @rdname kurtosis
-#' @inheritSection AMR Read more on our website!
-#' @export
-kurtosis <- function(x, na.rm = FALSE) {
-  UseMethod("kurtosis")
-}
-
-#' @method kurtosis default
-#' @rdname kurtosis
-#' @export
-kurtosis.default <- function(x, na.rm = FALSE) {
-  x <- as.vector(x)
-  if (na.rm == TRUE) {
-    x <- x[!is.na(x)]
-  }
-  n <- length(x)
-  n * sum((x - mean(x, na.rm = na.rm))^4, na.rm = na.rm) /
-    (sum((x - mean(x, na.rm = na.rm))^2, na.rm = na.rm)^2)
-}
-
-#' @method kurtosis matrix
-#' @rdname kurtosis
-#' @export
-kurtosis.matrix <- function(x, na.rm = FALSE) {
-  apply(x, 2, kurtosis.default, na.rm = na.rm)
-}
-
-#' @method kurtosis data.frame
-#' @rdname kurtosis
-#' @export
-kurtosis.data.frame <- function(x, na.rm = FALSE) {
-  sapply(x, kurtosis.default, na.rm = na.rm)
-}
+# context("All examples")
+# 
+# # run all examples (will take forever)
+# exported_functions <- ls("package:AMR")
+# 
+# for (i in seq_len(length(exported_functions))) {
+#   test_that(paste(exported_functions[i], "works"), {
+#     skip_on_cran()
+#     expect_output(suppressWarnings(example(exported_functions[i], 
+#                                            package = "AMR", 
+#                                            give.lines = TRUE,
+#                                            run.dontrun = TRUE,
+#                                            run.donttest = TRUE)),
+#                   label = paste0("Examples of function ", exported_functions[i]))
+#   })
+# }

@@ -7,7 +7,7 @@
 guess_ab_col(x = NULL, search_string = NULL, verbose = FALSE)
 }
 \arguments{
-\item{x}{a \code{\link{data.frame}}}
+\item{x}{a \link{data.frame}}
 
 \item{search_string}{a text to search \code{x} for, will be checked with \code{\link[=as.ab]{as.ab()}} if this value is not a column in \code{x}}
 

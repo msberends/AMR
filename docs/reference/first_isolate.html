@@ -50,7 +50,7 @@
 
 <meta property="og:title" content="Determine first (weighted) isolates — first_isolate" />
 <meta property="og:description" content="Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type." />
-<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9022</span>
       </span>
     </div>
 
@@ -285,7 +285,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> containing isolates.</p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> containing isolates.</p></td>
     </tr>
     <tr>
       <th>col_date</th>
@@ -369,14 +369,16 @@
     <p><strong>WHY THIS IS SO IMPORTANT</strong> <br />
 To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode <a href='https://www.ncbi.nlm.nih.gov/pubmed/17304462'>(ref)</a>. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all <em>S. aureus</em> isolates would be overestimated, because you included this MRSA more than once. It would be <a href='https://en.wikipedia.org/wiki/Selection_bias'>selection bias</a>.</p>
 <p>All isolates with a microbial ID of <code>NA</code> will be excluded as first isolate.</p>
-<p>The functions <code>filter_first_isolate()</code> and <code>filter_first_weighted_isolate()</code> are helper functions to quickly filter on first isolates. The function <code>filter_first_isolate()</code> is essentially equal to one of:</p><pre> <span class='kw'>x</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'>first_isolate</span>(<span class='kw'>.</span>, <span class='kw'>...</span>))</pre>
+<p>The functions <code>filter_first_isolate()</code> and <code>filter_first_weighted_isolate()</code> are helper functions to quickly filter on first isolates. The function <code>filter_first_isolate()</code> is essentially equal to one of:</p><pre> <span class='kw'>x</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'>first_isolate</span>(<span class='kw'>.</span>, <span class='kw'>...</span>))
+</pre>
 
 <p>The function <code>filter_first_weighted_isolate()</code> is essentially equal to:</p><pre> <span class='kw'>x</span> <span class='op'>%&gt;%</span>
    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(keyab = <span class='fu'><a href='key_antibiotics.html'>key_antibiotics</a></span>(<span class='kw'>.</span>)) <span class='op'>%&gt;%</span>
    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(only_weighted_firsts = <span class='fu'>first_isolate</span>(<span class='kw'>x</span>,
                                                col_keyantibiotics = <span class='st'>"keyab"</span>, <span class='kw'>...</span>)) <span class='op'>%&gt;%</span>
    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw'>only_weighted_firsts</span> <span class='op'>==</span> <span class='fl'>TRUE</span>) <span class='op'>%&gt;%</span>
-   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='op'>-</span><span class='kw'>only_weighted_firsts</span>, <span class='op'>-</span><span class='kw'>keyab</span>)</pre>
+   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='op'>-</span><span class='kw'>only_weighted_firsts</span>, <span class='op'>-</span><span class='kw'>keyab</span>)
+</pre>
 
     <h2 class="hasAnchor" id="key-antibiotics"><a class="anchor" href="#key-antibiotics"></a>Key antibiotics</h2>
 
@@ -452,7 +454,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <span class='kw'>x</span><span class='op'>$</span><span class='kw'>first_isolate_weighed</span> <span class='op'>&lt;-</span> <span class='fu'>first_isolate</span>(<span class='kw'>x</span>, col_keyantibiotics = <span class='st'>'keyab'</span>)
 
 <span class='kw'>x</span><span class='op'>$</span><span class='kw'>first_blood_isolate</span> <span class='op'>&lt;-</span> <span class='fu'>first_isolate</span>(<span class='kw'>x</span>, specimen_group = <span class='st'>"Blood"</span>)
-}</pre>
+}
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

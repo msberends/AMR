@@ -78,7 +78,7 @@ pca <- function(x,
                                 error = function(e) stop(e$message, call. = FALSE))
       if (length(new_list[[i]]) == 1) {
         if (is.character(new_list[[i]]) & new_list[[i]] %in% colnames(x)) {
-          # this is to support quoted variables: df %>% pca("mycol1", "mycol2")
+          # this is to support quoted variables: df %pm>% pca("mycol1", "mycol2")
           new_list[[i]] <- x[, new_list[[i]]]
         } else {
           # remove item - it's a parameter like `center`
@@ -102,7 +102,7 @@ pca <- function(x,
     x <- cbind(x.bak[, sapply(x.bak, function(y) !is.numeric(y) & !all(is.na(y))), drop = FALSE], x)
   }
   
-  x <- ungroup(x)  # would otherwise select the grouping vars
+ x <-  pm_ungroup(x)  # would otherwise select the grouping vars
   x <- x[rowSums(is.na(x)) == 0, ] # remove columns containing NAs
   
   pca_data <- x[, which(sapply(x, function(x) is.numeric(x)))]

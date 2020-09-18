@@ -59,13 +59,13 @@ eucast_exceptional_phenotypes(x, guideline = "EUCAST", ...)
 \value{
 \itemize{
 \item CMI 2012 paper - function \code{\link[=mdr_cmi2012]{mdr_cmi2012()}} or \code{\link[=mdro]{mdro()}}:\cr
-Ordered \code{\link{factor}} with levels \code{Negative} < \code{Multi-drug-resistant (MDR)} < \verb{Extensively drug-resistant (XDR)} < \code{Pandrug-resistant (PDR)}
+Ordered \link{factor} with levels \code{Negative} < \code{Multi-drug-resistant (MDR)} < \verb{Extensively drug-resistant (XDR)} < \code{Pandrug-resistant (PDR)}
 \item TB guideline - function \code{\link[=mdr_tb]{mdr_tb()}} or \code{\link[=mdro]{mdro(..., guideline = "TB")}}:\cr
-Ordered \code{\link{factor}} with levels \code{Negative} < \code{Mono-resistant} < \code{Poly-resistant} < \code{Multi-drug-resistant} < \verb{Extensively drug-resistant}
+Ordered \link{factor} with levels \code{Negative} < \code{Mono-resistant} < \code{Poly-resistant} < \code{Multi-drug-resistant} < \verb{Extensively drug-resistant}
 \item German guideline - function \code{\link[=mrgn]{mrgn()}} or \code{\link[=mdro]{mdro(..., guideline = "MRGN")}}:\cr
-Ordered \code{\link{factor}} with levels \code{Negative} < \verb{3MRGN} < \verb{4MRGN}
+Ordered \link{factor} with levels \code{Negative} < \verb{3MRGN} < \verb{4MRGN}
 \item Everything else:\cr
-Ordered \code{\link{factor}} with levels \code{Negative} < \verb{Positive, unconfirmed} < \code{Positive}. The value \code{"Positive, unconfirmed"} means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. molecular) tests
+Ordered \link{factor} with levels \code{Negative} < \verb{Positive, unconfirmed} < \code{Positive}. The value \code{"Positive, unconfirmed"} means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. molecular) tests
 }
 }
 \description{

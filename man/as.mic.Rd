@@ -4,7 +4,7 @@
 \alias{as.mic}
 \alias{mic}
 \alias{is.mic}
-\title{Transform input to minimum inhibitory concentrations}
+\title{Transform input to minimum inhibitory concentrations (MIC)}
 \usage{
 as.mic(x, na.rm = FALSE)
 
@@ -16,10 +16,10 @@ is.mic(x)
 \item{na.rm}{a logical indicating whether missing values should be removed}
 }
 \value{
-Ordered \code{\link{factor}} with new class \code{\link{mic}}
+Ordered \link{factor} with additional class \code{\link{mic}}
 }
 \description{
-This transforms a vector to a new class \code{\link{mic}}, which is an ordered \code{\link{factor}} with valid minimum inhibitory concentrations (MIC) as levels. Invalid MIC values will be translated as \code{NA} with a warning.
+This transforms a vector to a new class \code{\link{mic}}, which is an ordered \link{factor} with valid minimum inhibitory concentrations (MIC) as levels. Invalid MIC values will be translated as \code{NA} with a warning.
 }
 \details{
 To interpret MIC values as RSI values, use \code{\link[=as.rsi]{as.rsi()}} on MIC values. It supports guidelines from EUCAST and CLSI.

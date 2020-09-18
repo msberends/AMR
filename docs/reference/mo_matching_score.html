@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Data set with previously accepted taxonomic names — microorganisms.old • AMR (for R)</title>
+<title>Calculate the matching score for microorganisms — mo_matching_score • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Data set with previously accepted taxonomic names — microorganisms.old" />
-<meta property="og:description" content="A data set containing old (previously valid or accepted) taxonomic names according to the Catalogue of Life. This data set is used internally by as.mo()." />
+<meta property="og:title" content="Calculate the matching score for microorganisms — mo_matching_score" />
+<meta property="og:description" content="This helper function is used by as.mo() to determine the most probable match of taxonomic records, based on user input." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
@@ -233,52 +233,51 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Data set with previously accepted taxonomic names</h1>
-    <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>microorganisms.old.Rd</code></div>
+    <h1>Calculate the matching score for microorganisms</h1>
+    <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/mo_matching_score.R'><code>R/mo_matching_score.R</code></a></small>
+    <div class="hidden name"><code>mo_matching_score.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A data set containing old (previously valid or accepted) taxonomic names according to the Catalogue of Life. This data set is used internally by <code><a href='as.mo.html'>as.mo()</a></code>.</p>
+    <p>This helper function is used by <code><a href='as.mo.html'>as.mo()</a></code> to determine the most probable match of taxonomic records, based on user input.</p>
     </div>
 
-    <pre class="usage"><span class='kw'>microorganisms.old</span></pre>
+    <pre class="usage"><span class='fu'>mo_matching_score</span>(<span class='kw'>x</span>, <span class='kw'>fullname</span>, uncertainty = <span class='fl'>1</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>Any user input value(s)</p></td>
+    </tr>
+    <tr>
+      <th>fullname</th>
+      <td><p>A full taxonomic name, that exists in <code><a href='microorganisms.html'>microorganisms$fullname</a></code></p></td>
+    </tr>
+    <tr>
+      <th>uncertainty</th>
+      <td><p>The level of uncertainty set in <code><a href='as.mo.html'>as.mo()</a></code>, see <code>allow_uncertain</code> in that function (here, it defaults to 1, but is automatically determined in <code><a href='as.mo.html'>as.mo()</a></code> based on the number of transformations needed to get to a result)</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>A <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with 12,708 observations and 4 variables:</p><ul>
-<li><p><code>fullname</code><br /> Old full taxonomic name of the microorganism</p></li>
-<li><p><code>fullname_new</code><br /> New full taxonomic name of the microorganism</p></li>
-<li><p><code>ref</code><br /> Author(s) and year of concerning scientific publication</p></li>
-<li><p><code>prevalence</code><br /> Prevalence of the microorganism, see <code><a href='as.mo.html'>as.mo()</a></code></p></li>
-</ul>
+    <p>The matching score is based on four parameters:</p><ol>
+<li><p>A human pathogenic prevalence \(P\), that is categorised into group 1, 2 and 3 (see <code><a href='as.mo.html'>as.mo()</a></code>);</p></li>
+<li><p>A kingdom index \(K\) is set as follows: Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, and all others = 5;</p></li>
+<li><p>The level of uncertainty \(U\) that is needed to get to a result (1 to 3, see <code><a href='as.mo.html'>as.mo()</a></code>);</p></li>
+<li><p>The <a href='https://en.wikipedia.org/wiki/Levenshtein_distance'>Levenshtein distance</a> \(L\) is the distance between the user input and all taxonomic full names, with the text length of the user input being the maximum distance. A modified version of the Levenshtein distance \(L'\) based on the text length of the full name \(F\) is calculated as:</p></li>
+</ol>
 
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+<p>$$L' = F - \frac{0.5 \times L}{F}$$</p>
+<p>The final matching score \(M\) is calculated as:
+$$M = L' \times \frac{1}{P \times K} * \frac{1}{U}$$</p>
 
-    <p>Catalogue of Life: Annual Checklist (public online taxonomic database), <a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a> (check included annual version with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version()</a></code>).</p>
-<p>Parte, A.C. (2018). LPSN — List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; doi: 10.1099/ijsem.0.002786</p>
-    <h2 class="hasAnchor" id="catalogue-of-life"><a class="anchor" href="#catalogue-of-life"></a>Catalogue of Life</h2>
-
-    
-
-<p><img src='figures/logo_col.png' height=40px style=margin-bottom:5px /> <br />
-This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (<a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). The Catalogue of Life is the most comprehensive and authoritative global index of species currently available.</p>
-<p><a href='catalogue_of_life.html'>Click here</a> for more information about the included taxa. Check which version of the Catalogue of Life was included in this package with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version()</a></code>.</p>
-    <h2 class="hasAnchor" id="reference-data-publicly-available"><a class="anchor" href="#reference-data-publicly-available"></a>Reference data publicly available</h2>
-
-    
-
-<p>All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this <code>AMR</code> package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find <a href='https://msberends.github.io/AMR/articles/datasets.html'>all download links on our website</a>, which is automatically updated with every code change.</p>
-    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
-
-    
-
-<p>On our website <a href='https://msberends.github.io/AMR'>https://msberends.github.io/AMR</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.github.io/AMR/reference'>complete documentation of all functions</a> (which reads a lot easier than here in R) and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>. As we would like to better understand the backgrounds and needs of our users, please <a href='https://msberends.github.io/AMR/survey.html'>participate in our survey</a>!</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='as.mo.html'>as.mo()</a></code> <code><a href='mo_property.html'>mo_property()</a></code> <a href='microorganisms.html'>microorganisms</a></p></div>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"E. coli"</span>)
+<span class='fu'><a href='as.mo.html'>mo_uncertainties</a></span>()
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

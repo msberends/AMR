@@ -23,7 +23,7 @@
 #'
 #' Use this function to determine a valid microorganism ID ([`mo`]). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like `"Staphylococcus aureus"`), an abbreviated name (like `"S. aureus"`), an abbreviation known in the field (like `"MRSA"`), or just a genus. Please see *Examples*.
 #' @inheritSection lifecycle Stable lifecycle
-#' @param x a character vector or a [`data.frame`] with one or two columns
+#' @param x a character vector or a [data.frame] with one or two columns
 #' @param Becker a logical to indicate whether *Staphylococci* should be categorised into coagulase-negative *Staphylococci* ("CoNS") and coagulase-positive *Staphylococci* ("CoPS") instead of their own species, according to Karsten Becker *et al.* (1,2). Note that this does not include species that were newly named after these publications, like *S. caeli*.
 #'
 #' This excludes *Staphylococcus aureus* at default, use `Becker = "all"` to also categorise *S. aureus* as "CoPS".
@@ -31,7 +31,7 @@
 #'
 #' This excludes *Enterococci* at default (who are in group D), use `Lancefield = "all"` to also categorise all *Enterococci* as group D.
 #' @param allow_uncertain a number between `0` (or `"none"`) and `3` (or `"all"`), or `TRUE` (= `2`) or `FALSE` (= `0`) to indicate whether the input should be checked for less probable results, please see *Details*
-#' @param reference_df a [`data.frame`] to be used for extra reference when translating `x` to a valid [`mo`]. See [set_mo_source()] and [get_mo_source()] to automate the usage of your own codes (e.g. used in your analysis or organisation).
+#' @param reference_df a [data.frame] to be used for extra reference when translating `x` to a valid [`mo`]. See [set_mo_source()] and [get_mo_source()] to automate the usage of your own codes (e.g. used in your analysis or organisation).
 #' @param ignore_pattern a regular expression (case-insensitive) of which all matches in `x` must return `NA`. This can be convenient to exclude known non-relevant input and can also be set with the option `AMR_ignore_pattern`, e.g. `options(AMR_ignore_pattern = "(not reported|contaminated flora)")`.
 #' @param language language to translate text like "no growth", which defaults to the system language (see [get_locale()])
 #' @param ... other parameters passed on to functions
@@ -69,7 +69,7 @@
 #' 2. Taxonomic kingdom: the function starts with determining Bacteria, then Fungi, then Protozoa, then others;
 #' 3. Breakdown of input values to identify possible matches.
 #'
-#' This will lead to the effect that e.g. `"E. coli"` (a microorganism highly prevalent in humans) will return the microbial ID of *Escherichia coli* and not *Entamoeba coli* (a microorganism less prevalent in humans), although the latter would alphabetically come first. 
+#' This will lead to the effect that e.g. `"E. coli"` (a microorganism highly prevalent in humans) will return the microbial ID of *Escherichia coli* and not *Entamoeba coli* (a microorganism less prevalent in humans), although the latter would alphabetically come first.
 #' 
 #' ## Coping with uncertain results
 #' 
@@ -87,9 +87,9 @@
 #' - `"Fluoroquinolone-resistant Neisseria gonorrhoeae"`. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result *Neisseria gonorrhoeae* (``r as.mo("Neisseria gonorrhoeae")``) needs review.
 #' 
 #' There are three helper functions that can be run after using the [as.mo()] function:
-#' - Use [mo_uncertainties()] to get a [`data.frame`] that prints in a pretty format with all taxonomic names that were guessed. The output contains a score that is based on the human pathogenic prevalence and the [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) between the user input and the full taxonomic name.
-#' - Use [mo_failures()] to get a [`character`] [`vector`] with all values that could not be coerced to a valid value.
-#' - Use [mo_renamed()] to get a [`data.frame`] with all values that could be coerced based on old, previously accepted taxonomic names.
+#' - Use [mo_uncertainties()] to get a [data.frame] that prints in a pretty format with all taxonomic names that were guessed. The output contains the matching score for all matches (see *Background on matching score*).
+#' - Use [mo_failures()] to get a [character] [vector] with all values that could not be coerced to a valid value.
+#' - Use [mo_renamed()] to get a [data.frame] with all values that could be coerced based on old, previously accepted taxonomic names.
 #'
 #' ## Microbial prevalence of pathogens in humans
 #' 
@@ -100,6 +100,21 @@
 #' Group 2 consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is *Aspergillus*, *Bacteroides*, *Candida*, *Capnocytophaga*, *Chryseobacterium*, *Cryptococcus*, *Elisabethkingia*, *Flavobacterium*, *Fusobacterium*, *Giardia*, *Leptotrichia*, *Mycoplasma*, *Prevotella*, *Rhodotorula*, *Treponema*, *Trichophyton* or *Ureaplasma*. This group consequently contains all less common and rare human pathogens.
 #' 
 #' Group 3 (least prevalent microorganisms) consists of all other microorganisms. This group contains microorganisms most probably not found in humans.
+#' 
+#' ## Background on matching scores
+#' With ambiguous user input, the returned results are chosen based on their matching score using [mo_matching_score()]. This matching score is based on four parameters:
+#' 
+#' 1. The prevalence \eqn{P} is categorised into group 1, 2 and 3 as stated above;
+#' 2. A kingdom index \eqn{K} is set as follows: Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, and all others = 5;
+#' 3. The level of uncertainty \eqn{U} needed to get to the result, as stated above (1 to 3);
+#' 4. The [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) \eqn{L} is the distance between the user input and all taxonomic full names, with the text length of the user input being the maximum distance. A modified version of the Levenshtein distance \eqn{L'} based on the text length of the full name \eqn{F} is calculated as:
+#' 
+#' \deqn{L' = F - \frac{0.5 \times L}{F}}{L' = F - (0.5 * L) / F}
+#'   
+#' The final matching score \eqn{M} is calculated as:
+#' \deqn{M = L' \times \frac{1}{P \times K} * \frac{1}{U}}{M = L' * (1 / (P * K)) * (1 / U)}
+#' 
+#' All matches are sorted descending on their matching score and for all user input values, the top match will be returned.
 #' @inheritSection catalogue_of_life Catalogue of Life
 #  (source as a section here, so it can be inherited by other man pages:)
 #' @section Source:
@@ -108,8 +123,8 @@
 #' 3. Lancefield RC **A serological differentiation of human and other groups of hemolytic streptococci**. 1933. J Exp Med. 57(4): 571–95. <https://dx.doi.org/10.1084/jem.57.4.571>
 #' 4. Catalogue of Life: Annual Checklist (public online taxonomic database), <http://www.catalogueoflife.org> (check included annual version with [catalogue_of_life_version()]).
 #' @export
-#' @return A [`character`] [`vector`] with additional class [`mo`]
-#' @seealso [microorganisms] for the [`data.frame`] that is being used to determine ID's.
+#' @return A [character] [vector] with additional class [`mo`]
+#' @seealso [microorganisms] for the [data.frame] that is being used to determine ID's.
 #' 
 #' The [mo_property()] functions (like [mo_genus()], [mo_gramstain()]) to get properties based on the returned code.
 #' @inheritSection AMR Reference data publicly available
@@ -218,7 +233,7 @@ as.mo <- function(x,
     
     # has valid own reference_df
     # (data.table not faster here)
-    reference_df <- reference_df %>% filter(!is.na(mo))
+    reference_df <- reference_df %pm>% pm_filter(!is.na(mo))
     # keep only first two columns, second must be mo
     if (colnames(reference_df)[1] == "mo") {
       reference_df <- reference_df[, c(2, 1)]
@@ -231,9 +246,9 @@ as.mo <- function(x,
       reference_df[] <- lapply(reference_df, as.character)
     )
     suppressWarnings(
-      y <- data.frame(x = x, stringsAsFactors = FALSE) %>%
-        left_join(reference_df, by = "x") %>%
-        pull("mo")
+      y <- data.frame(x = x, stringsAsFactors = FALSE) %pm>%
+        pm_left_join(reference_df, by = "x") %pm>%
+        pm_pull("mo")
     )
     
   } else if (all(x %in% MO_lookup$mo)
@@ -315,7 +330,10 @@ exec_as.mo <- function(x,
       res_df <- haystack[which(eval(substitute(needle), envir = haystack, enclos = parent.frame())), , drop = FALSE]
       if (NROW(res_df) > 1 & uncertainty != -1) {
         # sort the findings on matching score
-        res_df <- res_df[order(mo_matching_score(input, res_df[, "fullname", drop = TRUE]), decreasing = TRUE), , drop = FALSE]
+        scores <- mo_matching_score(x = input, 
+                                    fullname = res_df[, "fullname", drop = TRUE],
+                                    uncertainty = uncertainty)
+        res_df <- res_df[order(scores, decreasing = TRUE), , drop = FALSE]
       }
       res <- as.character(res_df[, column, drop = TRUE])
       if (length(res) == 0) {
@@ -402,7 +420,7 @@ exec_as.mo <- function(x,
   if (!is.null(reference_df)) {
     mo_source_isvalid(reference_df)
     
-    reference_df <- reference_df %>% filter(!is.na(mo))
+    reference_df <- reference_df %pm>% pm_filter(!is.na(mo))
     # keep only first two columns, second must be mo
     if (colnames(reference_df)[1] == "mo") {
       reference_df <- reference_df[, c(2, 1)]
@@ -580,7 +598,7 @@ exec_as.mo <- function(x,
     }
     
     if (initial_search == TRUE) {
-      progress <- progress_estimated(n = length(x), n_min = 25) # start if n >= 25
+      progress <- progress_ticker(n = length(x), n_min = 25) # start if n >= 25
       on.exit(close(progress))
     }
     
@@ -955,9 +973,9 @@ exec_as.mo <- function(x,
         if (nchar(g.x_backup_without_spp) <= 6) {
           x_length <- nchar(g.x_backup_without_spp)
           x_split <- paste0("^",
-                            g.x_backup_without_spp %>% substr(1, x_length / 2),
+                            g.x_backup_without_spp %pm>% substr(1, x_length / 2),
                             ".* ",
-                            g.x_backup_without_spp %>% substr((x_length / 2) + 1, x_length))
+                            g.x_backup_without_spp %pm>% substr((x_length / 2) + 1, x_length))
           found <- lookup(fullname_lower %like_case% x_split,
                           haystack = data_to_check)
           if (!is.na(found)) {
@@ -1149,7 +1167,7 @@ exec_as.mo <- function(x,
             if (isTRUE(debug)) {
               cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (6) try to strip off half an element from end and check the remains\n"))
             }
-            x_strip <- a.x_backup %>% strsplit("[ .]") %>% unlist()
+            x_strip <- a.x_backup %pm>% strsplit("[ .]") %pm>% unlist()
             if (length(x_strip) > 1) {
               for (i in seq_len(length(x_strip) - 1)) {
                 lastword <- x_strip[length(x_strip) - i + 1]
@@ -1232,7 +1250,7 @@ exec_as.mo <- function(x,
             if (isTRUE(debug)) {
               cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (9) try to strip off one element from start and check the remains (only allow >= 2-part name outcome)\n"))
             }
-            x_strip <- a.x_backup %>% strsplit("[ .]") %>% unlist()
+            x_strip <- a.x_backup %pm>% strsplit("[ .]") %pm>% unlist()
             if (length(x_strip) > 1 & nchar(g.x_backup_without_spp) >= 6) {
               for (i in 2:(length(x_strip))) {
                 x_strip_collapsed <- paste(x_strip[i:length(x_strip)], collapse = " ")
@@ -1267,7 +1285,7 @@ exec_as.mo <- function(x,
             if (isTRUE(debug)) {
               cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (10) try to strip off one element from start and check the remains (any text size)\n"))
             }
-            x_strip <- a.x_backup %>% strsplit("[ .]") %>% unlist()
+            x_strip <- a.x_backup %pm>% strsplit("[ .]") %pm>% unlist()
             if (length(x_strip) > 1 & nchar(g.x_backup_without_spp) >= 6) {
               for (i in 2:(length(x_strip))) {
                 x_strip_collapsed <- paste(x_strip[i:length(x_strip)], collapse = " ")
@@ -1398,16 +1416,16 @@ exec_as.mo <- function(x,
   if (length(failures) > 0 & initial_search == TRUE) {
     options(mo_failures = sort(unique(failures)))
     plural <- c("value", "it", "was")
-    if (n_distinct(failures) > 1) {
+    if (pm_n_distinct(failures) > 1) {
       plural <- c("values", "them", "were")
     }
     x_input_clean <- trimws2(x_input)
     total_failures <- length(x_input_clean[as.character(x_input_clean) %in% as.character(failures) & !x_input %in% c(NA, NULL, NaN)])
     total_n <- length(x_input[!x_input %in% c(NA, NULL, NaN)])
-    msg <- paste0(nr2char(n_distinct(failures)), " unique ", plural[1],
+    msg <- paste0(nr2char(pm_n_distinct(failures)), " unique ", plural[1],
                   " (covering ", percentage(total_failures / total_n),
                   ") could not be coerced and ", plural[3], " considered 'unknown'")
-    if (n_distinct(failures) <= 10) {
+    if (pm_n_distinct(failures) <= 10) {
       msg <- paste0(msg, ": ", paste('"', unique(failures), '"', sep = "", collapse = ", "))
     }
     msg <- paste0(msg,
@@ -1421,7 +1439,7 @@ exec_as.mo <- function(x,
   }
   # handling uncertainties ----
   if (NROW(uncertainties) > 0 & initial_search == TRUE) {
-    uncertainties <- as.list(distinct(uncertainties, input, .keep_all = TRUE))
+    uncertainties <- as.list(pm_distinct(uncertainties, input, .keep_all = TRUE))
     options(mo_uncertainties = uncertainties)
     
     plural <- c("", "it", "was")
@@ -1633,8 +1651,8 @@ freq.mo <- function(x, ...) {
                                                                   decimal.mark = "."),
                                                            " (", percentage(sum(grams == "Gram-positive", na.rm = TRUE) / length(grams), digits = digits),
                                                            ")"),
-                                  `No. of genera` = n_distinct(mo_genus(x_noNA, language = NULL)),
-                                  `No. of species` = n_distinct(paste(mo_genus(x_noNA, language = NULL),
+                                  `No. of genera` = pm_n_distinct(mo_genus(x_noNA, language = NULL)),
+                                  `No. of species` = pm_n_distinct(paste(mo_genus(x_noNA, language = NULL),
                                                                       mo_species(x_noNA, language = NULL)))))
 }
 
@@ -1662,7 +1680,7 @@ summary.mo <- function(object, ...) {
   top_3 <- top[order(-top$n), 1][1:3]
   value <- c("Class" = "mo",
              "<NA>" = length(x[is.na(x)]),
-             "Unique" = n_distinct(x[!is.na(x)]),
+             "Unique" = pm_n_distinct(x[!is.na(x)]),
              "#1" = top_3[1],
              "#2" = top_3[2],
              "#3" = top_3[3])
@@ -1752,14 +1770,16 @@ print.mo_uncertainties <- function(x, ...) {
   if (NROW(x) == 0) {
     return(NULL)
   }
-  cat(font_blue(strwrap(c("Scores are based on human pathogenic prevalence and the resemblance between the input and the full taxonomic name. Furthermore, an indication is given about the likelihood of the match - the more transformations are needed for coercion, the more unlikely the result.")), collapse = "\n"))
+  cat(font_blue(strwrap(c("Matching scores are based on human pathogenic prevalence and the resemblance between the input and the full taxonomic name. Furthermore, an indication is given about the probability of the match - the more transformations are needed for coercion, the more improbable the result.")), collapse = "\n"))
   cat("\n")
   
   msg <- ""
   for (i in seq_len(nrow(x))) {
     if (x[i, ]$candidates != "") {
       candidates <- unlist(strsplit(x[i, ]$candidates, ", ", fixed = TRUE))
-      scores <- mo_matching_score(x[i, ]$input, candidates) * (1 / x[i, ]$uncertainty)
+      scores <- mo_matching_score(x = x[i, ]$input,
+                                  fullname = candidates,
+                                  uncertainty = x[i, ]$uncertainty)
       # sort on descending scores
       candidates <- candidates[order(1 - scores)]
       n_candidates <- length(candidates)
@@ -1768,23 +1788,26 @@ print.mo_uncertainties <- function(x, ...) {
       candidates <- paste(candidates, collapse = ", ")
       # align with input after arrow
       candidates <- paste0("\n", strrep(" ", nchar(x[i, ]$input) + 6), 
-                           "Less likely", ifelse(n_candidates == 25, " (max 25)", ""), ": ", candidates)
+                           "Also matched", ifelse(n_candidates == 25, " (max 25)", ""), ": ", candidates)
     } else {
       candidates <- ""
     }
     if (x[i, ]$uncertainty == 1) {
-      uncertainty_interpretation <- font_green("* VERY LIKELY *")
+      uncertainty_interpretation <- font_green("* MOST PROBABLE *")
     } else if (x[i, ]$uncertainty == 1) {
-      uncertainty_interpretation <- font_yellow("* LIKELY *")
+      uncertainty_interpretation <- font_yellow("* PROBABLE *")
     } else {
-      uncertainty_interpretation <- font_red("* UNLIKELY *")
+      uncertainty_interpretation <- font_red("* IMPROBABLE *")
     }
     msg <- paste(msg,
                  paste0('"', x[i, ]$input, '" -> ',
                         paste0(font_bold(font_italic(x[i, ]$fullname)),
                                ifelse(!is.na(x[i, ]$renamed_to), paste(", renamed to", font_italic(x[i, ]$renamed_to)), ""),
                                " (", x[i, ]$mo,
-                               ", score: ", trimws(percentage(mo_matching_score(x[i, ]$input, x[i, ]$fullname) * (1 / x[i, ]$uncertainty), digits = 1)),
+                               ", matching score = ", trimws(percentage(mo_matching_score(x = x[i, ]$input,
+                                                                                fullname = x[i, ]$fullname,
+                                                                                uncertainty = x[i, ]$uncertainty),
+                                                              digits = 1)),
                                ") "),
                         uncertainty_interpretation,
                         candidates),
@@ -1800,7 +1823,7 @@ mo_renamed <- function() {
   if (is.null(items)) {
     items <- data.frame()
   } else {
-    items <- distinct(items, old_name, .keep_all = TRUE)
+    items <- pm_distinct(items, old_name, .keep_all = TRUE)
   }
   structure(.Data = items,
             class = c("mo_renamed", "data.frame"))
@@ -1872,27 +1895,6 @@ load_mo_failures_uncertainties_renamed <- function(metadata) {
   options("mo_renamed" = metadata$renamed)
 }
 
-mo_matching_score <- function(input, fullname) {
-  # fullname is always a taxonomically valid full name
-  levenshtein <- double(length = length(input))
-  if (length(fullname) == 1) {
-    fullname <- rep(fullname, length(input))
-  }
-  if (length(input) == 1) {
-    input <- rep(input, length(fullname))
-  }
-  for (i in seq_len(length(input))) {
-    # determine Levenshtein distance, but maximise to nchar of fullname
-    levenshtein[i] <- min(as.double(utils::adist(input[i], fullname[i], ignore.case = FALSE)),
-                          nchar(fullname[i]))
-  }
-  # self-made score between 0 and 1 (for % certainty, so 0 means huge distance, 1 means no distance)
-  dist <- (nchar(fullname) - 0.5 * levenshtein) / nchar(fullname)
-  index_in_MO_lookup <- tryCatch((nrow(MO_lookup) - match(fullname, MO_lookup$fullname)) / nrow(MO_lookup),
-                                 error = function(e) rep(1, length(fullname)))
-  (0.25 * dist) + (0.75 * index_in_MO_lookup)
-}
-
 trimws2 <- function(x) {
   trimws(gsub("[\\s]+", " ", x, perl = TRUE))
 }
@@ -1903,13 +1905,13 @@ parse_and_convert <- function(x) {
       if (NCOL(x) > 2) {
         stop("a maximum of two columns is allowed", call. = FALSE)
       } else if (NCOL(x) == 2) {
-        # support Tidyverse selection like: df %>% select(colA, colB)
+        # support Tidyverse selection like: df %pm>% select(colA, colB)
         # paste these columns together
         x <- as.data.frame(x, stringsAsFactors = FALSE)
         colnames(x) <- c("A", "B")
         x <- paste(x$A, x$B)
       } else {
-        # support Tidyverse selection like: df %>% select(colA)
+        # support Tidyverse selection like: df %pm>% select(colA)
         x <- as.data.frame(x, stringsAsFactors = FALSE)[[1]]
       }
     }
@@ -1950,8 +1952,8 @@ replace_ignore_pattern <- function(x, ignore_pattern) {
 }
 
 left_join_MO_lookup <- function(x, ...) {
-  left_join(x = x, y = MO_lookup, ...)
+  pm_left_join(x = x, y = MO_lookup, ...)
 }
 left_join_MO.old_lookup <- function(x, ...) {
-  left_join(x = x, y = MO.old_lookup, ...)
+  pm_left_join(x = x, y = MO.old_lookup, ...)
 }

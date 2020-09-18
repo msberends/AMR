@@ -50,7 +50,7 @@
 
 <meta property="og:title" content="AMR plots with ggplot2 — ggplot_rsi" />
 <meta property="og:description" content="Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on ggplot2 functions." />
-<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9022</span>
       </span>
     </div>
 
@@ -253,6 +253,7 @@
   translate_ab = <span class='st'>"name"</span>,
   combine_SI = <span class='fl'>TRUE</span>,
   combine_IR = <span class='fl'>FALSE</span>,
+  minimum = <span class='fl'>30</span>,
   language = <span class='fu'><a href='translate.html'>get_locale</a></span>(),
   nrow = <span class='kw'>NULL</span>,
   colours = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(S = <span class='st'>"#61a8ff"</span>, SI = <span class='st'>"#61a8ff"</span>, I = <span class='st'>"#61f7ff"</span>, IR = <span class='st'>"#ff6961"</span>, R =
@@ -273,6 +274,7 @@
   x = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"antibiotic"</span>, <span class='st'>"interpretation"</span>),
   fill = <span class='st'>"interpretation"</span>,
   translate_ab = <span class='st'>"name"</span>,
+  minimum = <span class='fl'>30</span>,
   language = <span class='fu'><a href='translate.html'>get_locale</a></span>(),
   combine_SI = <span class='fl'>TRUE</span>,
   combine_IR = <span class='fl'>FALSE</span>,
@@ -294,6 +296,8 @@
   position = <span class='kw'>NULL</span>,
   x = <span class='st'>"antibiotic"</span>,
   translate_ab = <span class='st'>"name"</span>,
+  minimum = <span class='fl'>30</span>,
+  language = <span class='fu'><a href='translate.html'>get_locale</a></span>(),
   combine_SI = <span class='fl'>TRUE</span>,
   combine_IR = <span class='fl'>FALSE</span>,
   datalabels.size = <span class='fl'>3</span>,
@@ -305,7 +309,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with column(s) of class <code><a href='as.rsi.html'>rsi</a></code> (see <code><a href='as.rsi.html'>as.rsi()</a></code>)</p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with column(s) of class <code><a href='as.rsi.html'>rsi</a></code> (see <code><a href='as.rsi.html'>as.rsi()</a></code>)</p></td>
     </tr>
     <tr>
       <th>position</th>
@@ -342,6 +346,10 @@
     <tr>
       <th>combine_IR</th>
       <td><p>a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see parameter <code>combine_SI</code>.</p></td>
+    </tr>
+    <tr>
+      <th>minimum</th>
+      <td><p>the minimum allowed number of available (tested) isolates. Any isolate count lower than <code>minimum</code> will return <code>NA</code> with a warning. The default number of <code>30</code> isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.</p></td>
     </tr>
     <tr>
       <th>language</th>
@@ -492,7 +500,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
              title = <span class='st'>"AMR of Anti-UTI Drugs Per Hospital"</span>,
              x.title = <span class='st'>"Hospital"</span>,
              datalabels = <span class='fl'>FALSE</span>)
-}</pre>
+}
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

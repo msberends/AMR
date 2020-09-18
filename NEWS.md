@@ -1,5 +1,5 @@
-# AMR 1.3.0.9021
-## <small>Last updated: 14 September 2020</small>
+# AMR 1.3.0.9022
+## <small>Last updated: 18 September 2020</small>
 
 Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscipt to. We are those reviewers very grateful for going through our code so thoroughly!
 
@@ -16,6 +16,7 @@ Note: some changes in this version were suggested by anonymous reviewers from th
     pull(microorganism)
   #> [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"   
   ```
+* Support for veterinary ATC codes
 
 ### Changed
 * Although advertised that this package should work under R 3.0.0, we still had a dependency on R 3.6.0. This is fixed, meaning that our package should now work under R 3.0.0.
@@ -32,6 +33,7 @@ Note: some changes in this version were suggested by anonymous reviewers from th
     ```
   * Big speed improvement for interpreting MIC values and disk zone diameters. When interpreting 5,000 MIC values of two antibiotics (10,000 values in total), our benchmarks showed a total run time going from 80.7-85.1 seconds to 1.8-2.0 seconds.
   * Added parameter 'add_intrinsic_resistance' (defaults to `FALSE`), that considers intrinsic resistance according to EUCAST
+  * Fixed a bug where in EUCAST rules the breakpoint for R would be interpreted as ">=" while this should have been "<"
 * Added intelligent data cleaning to `as.disk()`, so numbers can also be extracted from text and decimal numbers will always be rounded up:
   ```r
   as.disk(c("disk zone: 23.4 mm", 23.4))
@@ -39,7 +41,7 @@ Note: some changes in this version were suggested by anonymous reviewers from th
   #> [1] 24 24
   ```
 * Improvements for `as.mo()`:
-  * Any user input value that could mean more than one taxonomic entry is now considered 'uncertain'. Instead of a warning, a message will be thrown and the accompanying `mo_uncertainties()` has been changed completely; it now prints all possible candidates with their matching score.
+  * A completely new matching score for ambiguous user input, using `mo_matching_score()`. Any user input value that could mean more than one taxonomic entry is now considered 'uncertain'. Instead of a warning, a message will be thrown and the accompanying `mo_uncertainties()` has been changed completely; it now prints all possible candidates with their matching score.
   * Big speed improvement for already valid microorganism ID. This also means an significant speed improvement for using `mo_*` functions like `mo_name()` on microoganism IDs.
   * Added parameter `ignore_pattern` to `as.mo()` which can also be given to `mo_*` functions like `mo_name()`, to exclude known non-relevant input from analysing. This can also be set with the option `AMR_ignore_pattern`.
 * `get_locale()` now uses at default `Sys.getenv("LANG")` or, if `LANG` is not set, `Sys.getlocale()`. This can be overwritten by setting the option `AMR_locale`.
@@ -50,6 +52,10 @@ Note: some changes in this version were suggested by anonymous reviewers from th
 * Added a feature from AMR 1.1.0 and earlier again, but now without other package dependencies: `tibble` printing support for classes `<rsi>`, `<mic>`, `<disk>`, `<ab>` and `<mo>`. When using `tibble`s containing antimicrobial columns (class `<rsi>`), "S" will print in green, "I" will print in yellow and "R" will print in red. Microbial IDs (class `<mo>`) will emphasise on the genus and species, not on the kingdom.
 * Names of antiviral agents in data set `antivirals` now have a starting capital letter, like it is the case in the `antibiotics` data set
 * Updated the documentation of the `WHONET` data set to clarify that all patient names are fictitious
+* Small `as.ab()` algorithm improvements
+* Fix for combining MIC values with raw numbers, i.e. `c(as.mic(2), 2)` previously failed but now returns a valid MIC class
+* `ggplot_rsi()` and `geom_rsi()` gained parameters `minimum` and `language`, to influence the internal use of `rsi_df()`
+* Added abbreviation "piptazo" to piperacillin/tazobactam (TZP)
 
 ### Other
 * Removed unnecessary references to the `base` package

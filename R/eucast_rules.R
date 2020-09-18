@@ -136,7 +136,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' @aliases EUCAST
 #' @rdname eucast_rules
 #' @export
-#' @return The input of `x`, possibly with edited values of antibiotics. Or, if `verbose = TRUE`, a [`data.frame`] with all original and new values of the affected bug-drug combinations.
+#' @return The input of `x`, possibly with edited values of antibiotics. Or, if `verbose = TRUE`, a [data.frame] with all original and new values of the affected bug-drug combinations.
 #' @source
 #' - EUCAST Expert Rules. Version 2.0, 2012. \cr
 #'   Leclercq et al. **EUCAST expert rules in antimicrobial susceptibility testing.** *Clin Microbiol Infect.* 2013;19(2):141-60. \cr
@@ -442,8 +442,8 @@ eucast_rules <- function(x,
         warning = function(w) {
           if (w$message %like% "invalid factor level") {
             xyz <- sapply(cols, function(col) {
-              x_original[, col] <<- factor(x = as.character(pull(x_original, col)), levels = c(to, levels(pull(x_original, col))))
-              x[, col] <<- factor(x = as.character(pull(x, col)), levels = c(to, levels(pull(x, col))))
+              x_original[, col] <<- factor(x = as.character(pm_pull(x_original, col)), levels = c(to, levels(pm_pull(x_original, col))))
+              x[, col] <<- factor(x = as.character(pm_pull(x, col)), levels = c(to, levels(pm_pull(x, col))))
               invisible()
             })
             x_original[rows, cols] <<- to
@@ -492,12 +492,12 @@ eucast_rules <- function(x,
                                   rule_name = font_stripstyle(rule[3]),
                                   stringsAsFactors = FALSE)
         colnames(verbose_new) <- c("row", "col", "mo_fullname", "old", "new", "rule", "rule_group", "rule_name")
-        verbose_new <- verbose_new %>% filter(old != new | is.na(old))
+        verbose_new <- verbose_new %pm>% pm_filter(old != new | is.na(old))
         # save changes to data set 'verbose_info'
         verbose_info <<- rbind(verbose_info, verbose_new)
         # count adds and changes
-        track_changes$added <- track_changes$added + verbose_new %>% filter(is.na(old)) %>% nrow()
-        track_changes$changed <- track_changes$changed + verbose_new %>% filter(!is.na(old)) %>% nrow()
+        track_changes$added <- track_changes$added + verbose_new %pm>% pm_filter(is.na(old)) %pm>% nrow()
+        track_changes$changed <- track_changes$changed + verbose_new %pm>% pm_filter(!is.na(old)) %pm>% nrow()
       }
       # after the applied changes: return list with counts of added and changed
       return(track_changes)
@@ -520,13 +520,13 @@ eucast_rules <- function(x,
   # save original table, with the new .rowid column
   x_original.bak <- x
   # keep only unique rows for MO and ABx
-  x <- x %>% distinct(`.rowid`, .keep_all = TRUE)
+  x <- x %pm>% pm_distinct(`.rowid`, .keep_all = TRUE)
   x_original <- x
   
   # join to microorganisms data set
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   x[, col_mo] <- as.mo(x[, col_mo, drop = TRUE])
-  x <- x %>%
+  x <- x %pm>%
     left_join_microorganisms(by = col_mo, suffix = c("_oldcols", ""))
   x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL)
   x$genus_species <- paste(x$genus, x$species)
@@ -568,12 +568,12 @@ eucast_rules <- function(x,
     y[y != "" & y %in% colnames(df)]
   }
   get_antibiotic_names <- function(x) {
-    x <- x %>%
-      strsplit(",") %>%
-      unlist() %>%
-      trimws() %>%
-      sapply(function(x) if (x %in% antibiotics$ab) ab_name(x, language = NULL, tolower = TRUE) else x) %>%
-      sort() %>%
+    x <- x %pm>%
+      strsplit(",") %pm>%
+      unlist() %pm>%
+      trimws() %pm>%
+      sapply(function(x) if (x %in% antibiotics$ab) ab_name(x, language = NULL, tolower = TRUE) else x) %pm>%
+      sort() %pm>%
       paste(collapse = ", ")
     x <- gsub("_", " ", x, fixed = TRUE)
     x <- gsub("except CAZ", paste("except", ab_name("CAZ", language = NULL, tolower = TRUE)), x, fixed = TRUE)
@@ -856,17 +856,17 @@ eucast_rules <- function(x,
       wouldve <- ""
     }
     
-    verbose_info <- verbose_info %>%
-      arrange(row, rule_group, rule_name, col)
+    verbose_info <- verbose_info %pm>%
+      pm_arrange(row, rule_group, rule_name, col)
     
     cat(paste0("\n", font_grey(strrep("-", options()$width - 1)), "\n"))
     cat(font_bold(paste("The rules", paste0(wouldve, "affected"),
-                        formatnr(n_distinct(verbose_info$row)),
+                        formatnr(pm_n_distinct(verbose_info$row)),
                         "out of", formatnr(nrow(x_original)),
                         "rows, making a total of", formatnr(nrow(verbose_info)), "edits\n")))
     
-    n_added <- verbose_info %>% filter(is.na(old)) %>% nrow()
-    n_changed <- verbose_info %>% filter(!is.na(old)) %>% nrow()
+    n_added <- verbose_info %pm>% pm_filter(is.na(old)) %pm>% nrow()
+    n_changed <- verbose_info %pm>% pm_filter(!is.na(old)) %pm>% nrow()
     
     # print added values ----
     if (n_added == 0) {
@@ -875,15 +875,15 @@ eucast_rules <- function(x,
       colour <- font_green # is function
     }
     cat(colour(paste0("=> ", wouldve, "added ",
-                      font_bold(formatnr(verbose_info %>%
-                                           filter(is.na(old)) %>%
+                      font_bold(formatnr(verbose_info %pm>%
+                                           pm_filter(is.na(old)) %pm>%
                                            nrow()), "test results"),
                       "\n")))
     if (n_added > 0) {
-      added_summary <- verbose_info %>%
-        filter(is.na(old)) %>%
-        group_by(new) %>%
-        summarise(n = n())
+      added_summary <- verbose_info %pm>%
+        pm_filter(is.na(old)) %pm>%
+        pm_group_by(new) %pm>%
+        pm_summarise(n = pm_n())
       cat(paste("   -", 
                 paste0(formatnr(added_summary$n), " test result", ifelse(added_summary$n > 1, "s", ""), 
                        " added as ", added_summary$new), collapse = "\n"))
@@ -899,15 +899,15 @@ eucast_rules <- function(x,
       cat("\n")
     }
     cat(colour(paste0("=> ", wouldve, "changed ",
-                      font_bold(formatnr(verbose_info %>%
-                                           filter(!is.na(old)) %>%
+                      font_bold(formatnr(verbose_info %pm>%
+                                           pm_filter(!is.na(old)) %pm>%
                                            nrow()), "test results"),
                       "\n")))
     if (n_changed > 0) {
-      changed_summary <- verbose_info %>%
-        filter(!is.na(old)) %>%
-        group_by(old, new) %>%
-        summarise(n = n())
+      changed_summary <- verbose_info %pm>%
+        pm_filter(!is.na(old)) %pm>%
+        pm_group_by(old, new) %pm>%
+        pm_summarise(n = pm_n())
       cat(paste("   -", 
                 paste0(formatnr(changed_summary$n), " test result", ifelse(changed_summary$n > 1, "s", ""), " changed from ", 
                        changed_summary$old, " to ", changed_summary$new), collapse = "\n"))
@@ -936,8 +936,8 @@ eucast_rules <- function(x,
     # reset original attributes
     x_original <- x_original[, c(col_mo, cols_ab, ".rowid"), drop = FALSE]
     x_original.bak <- x_original.bak[, setdiff(colnames(x_original.bak), c(col_mo, cols_ab)), drop = FALSE]
-    x_original.bak <- x_original.bak %>% 
-      left_join(x_original, by = ".rowid")
+    x_original.bak <- x_original.bak %pm>% 
+      pm_left_join(x_original, by = ".rowid")
     x_original.bak <- x_original.bak[, old_cols, drop = FALSE]
     attributes(x_original.bak) <- old_attributes
     x_original.bak

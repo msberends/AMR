@@ -51,7 +51,7 @@
 <meta property="og:title" content="Count available isolates — count" />
 <meta property="og:description" content="These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in summarise() from the dplyr package and also support grouped variables, please see Examples.
 count_resistant() should be used to count resistant isolates, count_susceptible() should be used to count susceptible isolates." />
-<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
 
@@ -83,7 +83,7 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9022</span>
       </span>
     </div>
 
@@ -283,7 +283,7 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
     </tr>
     <tr>
       <th>data</th>
-      <td><p>a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> containing columns with class <code><a href='as.rsi.html'>rsi</a></code> (see <code><a href='as.rsi.html'>as.rsi()</a></code>)</p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> containing columns with class <code><a href='as.rsi.html'>rsi</a></code> (see <code><a href='as.rsi.html'>as.rsi()</a></code>)</p></td>
     </tr>
     <tr>
       <th>translate_ab</th>
@@ -305,7 +305,7 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An <code><a href='https://rdrr.io/r/base/integer.html'>integer</a></code></p>
+    <p>An <a href='https://rdrr.io/r/base/integer.html'>integer</a></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>These functions are meant to count isolates. Use the <code><a href='proportion.html'>resistance()</a></code>/<code><a href='proportion.html'>susceptibility()</a></code> functions to calculate microbial resistance/susceptibility.</p>
@@ -356,10 +356,12 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 </pre>
 
 <p>Please note that, in combination therapies, for <code>only_all_tested = TRUE</code> applies that:</p><pre>    <span class='fu'>count_S</span>()    <span class='op'>+</span>   <span class='fu'>count_I</span>()    <span class='op'>+</span>   <span class='fu'>count_R</span>()    <span class='op'>=</span> <span class='fu'>count_all</span>()
-  <span class='fu'><a href='proportion.html'>proportion_S</a></span>() <span class='op'>+</span> <span class='fu'><a href='proportion.html'>proportion_I</a></span>() <span class='op'>+</span> <span class='fu'><a href='proportion.html'>proportion_R</a></span>() <span class='op'>=</span> <span class='fl'>1</span></pre>
+  <span class='fu'><a href='proportion.html'>proportion_S</a></span>() <span class='op'>+</span> <span class='fu'><a href='proportion.html'>proportion_I</a></span>() <span class='op'>+</span> <span class='fu'><a href='proportion.html'>proportion_R</a></span>() <span class='op'>=</span> <span class='fl'>1</span>
+</pre>
 
 <p>and that, in combination therapies, for <code>only_all_tested = FALSE</code> applies that:</p><pre>    <span class='fu'>count_S</span>()    <span class='op'>+</span>   <span class='fu'>count_I</span>()    <span class='op'>+</span>   <span class='fu'>count_R</span>()    <span class='op'>&gt;=</span> <span class='fu'>count_all</span>()
-  <span class='fu'><a href='proportion.html'>proportion_S</a></span>() <span class='op'>+</span> <span class='fu'><a href='proportion.html'>proportion_I</a></span>() <span class='op'>+</span> <span class='fu'><a href='proportion.html'>proportion_R</a></span>() <span class='op'>&gt;=</span> <span class='fl'>1</span></pre>
+  <span class='fu'><a href='proportion.html'>proportion_S</a></span>() <span class='op'>+</span> <span class='fu'><a href='proportion.html'>proportion_I</a></span>() <span class='op'>+</span> <span class='fu'><a href='proportion.html'>proportion_R</a></span>() <span class='op'>&gt;=</span> <span class='fl'>1</span>
+</pre>
 
 <p>Using <code>only_all_tested</code> has no impact when only using one antibiotic as input.</p>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
@@ -430,7 +432,8 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>hospital_id</span>, <span class='kw'>AMX</span>, <span class='kw'>CIP</span>) <span class='op'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>hospital_id</span>) <span class='op'>%&gt;%</span>
     <span class='fu'>count_df</span>(translate = <span class='fl'>FALSE</span>)
-}</pre>
+}
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

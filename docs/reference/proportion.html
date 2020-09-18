@@ -51,7 +51,7 @@
 <meta property="og:title" content="Calculate microbial resistance — proportion" />
 <meta property="og:description" content="These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in summarise() from the dplyr package and also support grouped variables, please see Examples.
 resistance() should be used to calculate resistance, susceptibility() should be used to calculate susceptibility." />
-<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
 
@@ -83,7 +83,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9022</span>
       </span>
     </div>
 
@@ -299,7 +299,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
     </tr>
     <tr>
       <th>data</th>
-      <td><p>a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> containing columns with class <code><a href='as.rsi.html'>rsi</a></code> (see <code><a href='as.rsi.html'>as.rsi()</a></code>)</p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> containing columns with class <code><a href='as.rsi.html'>rsi</a></code> (see <code><a href='as.rsi.html'>as.rsi()</a></code>)</p></td>
     </tr>
     <tr>
       <th>translate_ab</th>
@@ -324,7 +324,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
     <p><strong>M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition</strong>, 2014, <em>Clinical and Laboratory Standards Institute (CLSI)</em>. <a href='https://clsi.org/standards/products/microbiology/documents/m39/'>https://clsi.org/standards/products/microbiology/documents/m39/</a>.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code><a href='https://rdrr.io/r/base/double.html'>double</a></code> or, when <code>as_percent = TRUE</code>, a <code><a href='https://rdrr.io/r/base/character.html'>character</a></code>.</p>
+    <p>A <a href='https://rdrr.io/r/base/double.html'>double</a> or, when <code>as_percent = TRUE</code>, a <a href='https://rdrr.io/r/base/character.html'>character</a>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The function <code>resistance()</code> is equal to the function <code>proportion_R()</code>. The function <code>susceptibility()</code> is equal to the function <code>proportion_SI()</code>.</p>
@@ -354,10 +354,12 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 </pre>
 
 <p>Please note that, in combination therapies, for <code>only_all_tested = TRUE</code> applies that:</p><pre>    <span class='fu'><a href='count.html'>count_S</a></span>()    <span class='op'>+</span>   <span class='fu'><a href='count.html'>count_I</a></span>()    <span class='op'>+</span>   <span class='fu'><a href='count.html'>count_R</a></span>()    <span class='op'>=</span> <span class='fu'><a href='count.html'>count_all</a></span>()
-  <span class='fu'>proportion_S</span>() <span class='op'>+</span> <span class='fu'>proportion_I</span>() <span class='op'>+</span> <span class='fu'>proportion_R</span>() <span class='op'>=</span> <span class='fl'>1</span></pre>
+  <span class='fu'>proportion_S</span>() <span class='op'>+</span> <span class='fu'>proportion_I</span>() <span class='op'>+</span> <span class='fu'>proportion_R</span>() <span class='op'>=</span> <span class='fl'>1</span>
+</pre>
 
 <p>and that, in combination therapies, for <code>only_all_tested = FALSE</code> applies that:</p><pre>    <span class='fu'><a href='count.html'>count_S</a></span>()    <span class='op'>+</span>   <span class='fu'><a href='count.html'>count_I</a></span>()    <span class='op'>+</span>   <span class='fu'><a href='count.html'>count_R</a></span>()    <span class='op'>&gt;=</span> <span class='fu'><a href='count.html'>count_all</a></span>()
-  <span class='fu'>proportion_S</span>() <span class='op'>+</span> <span class='fu'>proportion_I</span>() <span class='op'>+</span> <span class='fu'>proportion_R</span>() <span class='op'>&gt;=</span> <span class='fl'>1</span></pre>
+  <span class='fu'>proportion_S</span>() <span class='op'>+</span> <span class='fu'>proportion_I</span>() <span class='op'>+</span> <span class='fu'>proportion_R</span>() <span class='op'>&gt;=</span> <span class='fl'>1</span>
+</pre>
 
 <p>Using <code>only_all_tested</code> has no impact when only using one antibiotic as input.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
@@ -470,7 +472,8 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
            <span class='kw'>genus</span> <span class='op'>==</span> <span class='st'>"Helicobacter"</span>) <span class='op'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(p = <span class='fu'>susceptibility</span>(<span class='kw'>AMX</span>, <span class='kw'>MTR</span>),  <span class='co'># amoxicillin with metronidazole</span>
               n = <span class='fu'><a href='count.html'>count_all</a></span>(<span class='kw'>AMX</span>, <span class='kw'>MTR</span>))
-}</pre>
+}
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

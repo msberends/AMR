@@ -24,9 +24,11 @@
 # Source file: data-raw/reproduction_of_poorman.R
 # ------------------------------------------------
 
-# Poorman: a package to replace all dplyr functions with base R so we can lose dependency on dplyr.
+# poorman: a package to replace all dplyr functions with base R so we can lose dependency on dplyr.
 # These functions were downloaded from https://github.com/nathaneastwood/poorman,
-# from this commit: https://github.com/nathaneastwood/poorman/tree/{commit}
+# from this commit: https://github.com/nathaneastwood/poorman/tree/{commit}.
+#
+# All functions are prefixed with 'pm_' to make it obvious that they are dplyr substitutes.
 #
 # All code below was released under MIT license, that permits 'free of charge, to any person obtaining a 
 # copy of the software and associated documentation files (the "Software"), to deal in the Software
@@ -34,7 +36,5 @@
 # distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software 
 # is furnished to do so', given that a copyright notice is given in the software.
 #
-# Copyright notice as found on https://github.com/nathaneastwood/poorman/blob/master/LICENSE on 2 May 2020:
-# YEAR: 2020
-# COPYRIGHT HOLDER: Nathan Eastwood
-
+# Copyright notice on {date}, the day this code was downloaded, as found on
+# https://github.com/nathaneastwood/poorman/blob/{commit}/LICENSE:

@@ -13,7 +13,8 @@ atc_online_property(
   atc_code,
   property,
   administration = "O",
-  url = "https://www.whocc.no/atc_ddd_index/?code=\%s&showdescription=no"
+  url = "https://www.whocc.no/atc_ddd_index/?code=\%s&showdescription=no",
+  url_vet = "https://www.whocc.no/atcvet/atcvet_index/?code=\%s&showdescription=no"
 )
 
 atc_online_groups(atc_code, ...)
@@ -27,12 +28,14 @@ atc_online_ddd(atc_code, ...)
 
 \item{administration}{type of administration when using \code{property = "Adm.R"}, see Details}
 
-\item{url}{url of website of the WHO. The sign \verb{\%s} can be used as a placeholder for ATC codes.}
+\item{url}{url of website of the WHOCC. The sign \verb{\%s} can be used as a placeholder for ATC codes.}
+
+\item{url_vet}{url of website of the WHOCC for veterinary medicine. The sign \verb{\%s} can be used as a placeholder for ATC_vet codes (that all start with "Q").}
 
 \item{...}{parameters to pass on to \code{atc_property}}
 }
 \description{
-Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic) like name, defined daily dose (DDD) or standard unit.
+Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic), such as the name, defined daily dose (DDD) or standard unit.
 }
 \details{
 Options for parameter \code{administration}:

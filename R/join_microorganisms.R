@@ -30,7 +30,7 @@
 #' @param by a variable to join by - if left empty will search for a column with class [`mo`] (created with [as.mo()]) or will be `"mo"` if that column name exists in `x`, could otherwise be a column name of `x` with values that exist in `microorganisms$mo` (like `by = "bacteria_id"`), or another column in [microorganisms] (but then it should be named, like `by = c("my_genus_species" = "fullname")`)
 #' @param suffix if there are non-joined duplicate variables in `x` and `y`, these suffixes will be added to the output to disambiguate them. Should be a character vector of length 2.
 #' @param ... ignored
-#' @details **Note:** As opposed to the `join()` functions of `dplyr`, [`character`] vectors are supported and at default existing columns will get a suffix `"2"` and the newly joined columns will not get a suffix. 
+#' @details **Note:** As opposed to the `join()` functions of `dplyr`, [character] vectors are supported and at default existing columns will get a suffix `"2"` and the newly joined columns will not get a suffix. 
 #' 
 #' These functions rely on [merge()], a base R function to do joins.
 #' @inheritSection AMR Read more on our website!
@@ -61,7 +61,7 @@ inner_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
-    inner_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
+    pm_inner_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
   )
   if (NROW(join) > NROW(x)) {
     warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
@@ -80,7 +80,7 @@ left_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
-    left_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
+    pm_left_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
   )
   if (NROW(join) > NROW(x)) {
     warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
@@ -99,7 +99,7 @@ right_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
-    right_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
+    pm_right_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
   )
   if (NROW(join) > NROW(x)) {
     warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
@@ -118,7 +118,7 @@ full_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
-    full_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
+    pm_full_join(x = x, y = microorganisms, by = by, suffix = suffix, ...)
   )
   if (NROW(join) > NROW(x)) {
     warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
@@ -137,7 +137,7 @@ semi_join_microorganisms <- function(x, by = NULL, ...) {
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
-    semi_join(x = x, y = microorganisms, by = by, ...)
+    pm_semi_join(x = x, y = microorganisms, by = by, ...)
   )
   class(join) <- x_class
   join
@@ -153,7 +153,7 @@ anti_join_microorganisms <- function(x, by = NULL, ...) {
   x <- checked$x
   by <- checked$by
   join <- suppressWarnings(
-    anti_join(x = x, y = microorganisms, by = by, ...)
+    pm_anti_join(x = x, y = microorganisms, by = by, ...)
   )
   class(join) <- x_class
   join

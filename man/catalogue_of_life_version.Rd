@@ -7,7 +7,7 @@
 catalogue_of_life_version()
 }
 \value{
-a \code{\link{list}}, which prints in pretty format
+a \link{list}, which prints in pretty format
 }
 \description{
 This function returns information about the included data from the Catalogue of Life.

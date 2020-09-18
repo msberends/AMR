@@ -215,8 +215,9 @@ is.rsi.eligible <- function(x, threshold = 0.05) {
 as.rsi.default <- function(x, ...) {
   if (is.rsi(x)) {
     x
-  } else if (identical(levels(x), c("S", "I", "R"))) {
-    structure(x, class = c("rsi", "ordered", "factor"))
+  } else if (all(is.na(x)) || identical(levels(x), c("S", "I", "R"))) {
+    structure(.Data = factor(x, levels = c("S", "I", "R"), ordered = TRUE),
+              class =  c("rsi", "ordered", "factor"))
   } else if (inherits(x, "integer") & all(x %in% c(1:3, NA))) {
     x[x == 1] <- "S"
     x[x == 2] <- "I"
@@ -263,8 +264,8 @@ as.rsi.default <- function(x, ...) {
     
     if (!isFALSE(list(...)$warn)) { # so as.rsi(..., warn = FALSE) will never throw a warning
       if (na_before != na_after) {
-        list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ""] %>%
-          unique() %>%
+        list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ""] %pm>%
+          unique() %pm>%
           sort()
         list_missing <- paste0('"', list_missing, '"', collapse = ", ")
         warning(na_after - na_before, " results truncated (",
@@ -324,7 +325,7 @@ as.rsi.mic <- function(x,
   mo_coerced <- suppressWarnings(as.mo(mo))
   guideline_coerced <- get_guideline(guideline)
   if (is.na(ab_coerced)) {
-    message(font_red(paste0("Unknown drug: `", font_bold(ab), "`. Rename this column to a drug name or code, and check the output with as.ab().")))
+    message(font_red(paste0("Returning NAs for unknown drug: `", font_bold(ab), "`. Rename this column to a drug name or code, and check the output with as.ab().")))
     return(as.rsi(rep(NA, length(x))))
   }
   if (length(mo_coerced) == 1) {
@@ -394,7 +395,7 @@ as.rsi.disk <- function(x,
   mo_coerced <- suppressWarnings(as.mo(mo))
   guideline_coerced <- get_guideline(guideline)
   if (is.na(ab_coerced)) {
-    message(font_red(paste0("Unknown drug: `", font_bold(ab), "`. Rename this column to a drug name or code, and check the output with as.ab().")))
+    message(font_red(paste0("Returning NAs for unknown drug: `", font_bold(ab), "`. Rename this column to a drug name or code, and check the output with as.ab().")))
     return(as.rsi(rep(NA, length(x))))
   }
   if (length(mo_coerced) == 1) {
@@ -509,15 +510,15 @@ as.rsi.data.frame <- function(x,
   
   for (i in seq_len(length(ab_cols))) {
     if (types[i] == "mic") {
-      x[, ab_cols[i]] <- as.rsi.mic(x = x %>% pull(ab_cols[i]),
-                                    mo = x %>% pull(col_mo),
+      x[, ab_cols[i]] <- as.rsi.mic(x = x %pm>% pm_pull(ab_cols[i]),
+                                    mo = x %pm>% pm_pull(col_mo),
                                     ab = ab_cols[i],
                                     guideline = guideline,
                                     uti = uti,
                                     conserve_capped_values = conserve_capped_values)
     } else if (types[i] == "disk") {
-      x[, ab_cols[i]] <- as.rsi.disk(x = x %>% pull(ab_cols[i]),
-                                     mo = x %>% pull(col_mo),
+      x[, ab_cols[i]] <- as.rsi.disk(x = x %pm>% pm_pull(ab_cols[i]),
+                                     mo = x %pm>% pm_pull(col_mo),
                                      ab = ab_cols[i],
                                      guideline = guideline,
                                      uti = uti)
@@ -554,6 +555,8 @@ exec_as.rsi <- function(method,
                         conserve_capped_values, 
                         add_intrinsic_resistance) {
   
+  metadata_mo <- get_mo_failures_uncertainties_renamed()
+  
   x_bak <- data.frame(x_mo = paste0(x, mo))
   df <- unique(data.frame(x, mo), stringsAsFactors = FALSE)
   x <- df$x
@@ -582,7 +585,7 @@ exec_as.rsi <- function(method,
   
   new_rsi <- rep(NA_character_, length(x))
   ab_param <- ab
-  trans <- rsi_translation %>%
+  trans <- rsi_translation %pm>%
     subset(guideline == guideline_coerced & method == method_param & ab == ab_param)
   trans$lookup <- paste(trans$mo, trans$ab)
   
@@ -614,7 +617,7 @@ exec_as.rsi <- function(method,
       }
     }
     
-    get_record <- trans %>%
+    get_record <- trans %pm>%
       # no subsetting to UTI for now
       subset(lookup %in% c(lookup_mo[i],
                            lookup_genus[i],
@@ -625,14 +628,14 @@ exec_as.rsi <- function(method,
                            lookup_other[i]))
     
     if (isTRUE(uti[i])) {
-      get_record <- get_record %>% 
+      get_record <- get_record %pm>% 
         # be as specific as possible (i.e. prefer species over genus):
-        # desc(uti) = TRUE on top and FALSE on bottom
-        arrange(desc(uti), desc(nchar(mo))) # 'uti' is a column in data set 'rsi_translation'
+        # pm_desc(uti) = TRUE on top and FALSE on bottom
+        pm_arrange(pm_desc(uti), pm_desc(nchar(mo))) # 'uti' is a column in data set 'rsi_translation'
     } else {
-      get_record <- get_record %>% 
-        filter(uti == FALSE) %>% # 'uti' is a column in rsi_translation
-        arrange(desc(nchar(mo)))
+      get_record <- get_record %pm>% 
+        pm_filter(uti == FALSE) %pm>% # 'uti' is a column in rsi_translation
+        pm_arrange(pm_desc(nchar(mo)))
     }
     get_record <- get_record[1L, ]
     
@@ -643,28 +646,42 @@ exec_as.rsi <- function(method,
         mic_input <- x[i]
         mic_S <- as.mic(get_record$breakpoint_S)
         mic_R <- as.mic(get_record$breakpoint_R)
-        new_rsi[i] <- ifelse(isTRUE(conserve_capped_values) & mic_input %like% "^<[0-9]", "S",
-                             ifelse(isTRUE(conserve_capped_values) & mic_input %like% "^>[0-9]", "R",
-                                    ifelse(isTRUE(which(levels(mic_input) == mic_input) <= which(levels(mic_S) == mic_S)), "S",
-                                           ifelse(isTRUE(which(levels(mic_input) == mic_input) >= which(levels(mic_R) == mic_R)), "R",
-                                                  ifelse(!is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R), "I",
-                                                         NA_character_)))))
+        new_rsi[i] <- quick_case_when(isTRUE(conserve_capped_values) & mic_input %like% "^<[0-9]" ~ "S",
+                                      isTRUE(conserve_capped_values) & mic_input %like% "^>[0-9]" ~ "R",
+                                      # start interpreting: EUCAST uses <= S and > R, CLSI uses <=S and >= R
+                                      isTRUE(which(levels(mic_input) == mic_input) <= which(levels(mic_S) == mic_S)) ~ "S",
+                                      guideline_coerced %like% "ECUAST" &
+                                        isTRUE(which(levels(mic_input) == mic_input) > which(levels(mic_R) == mic_R)) ~ "R",
+                                      guideline_coerced %like% "CLSI" &
+                                        isTRUE(which(levels(mic_input) == mic_input) >= which(levels(mic_R) == mic_R)) ~ "R",
+                                      # return "I" when not match the bottom or top
+                                      !is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R) ~ "I",
+                                      # and NA otherwise
+                                      TRUE ~ NA_character_)
       } else if (method == "disk") {
-        new_rsi[i] <- ifelse(isTRUE(as.double(x[i]) >= as.double(get_record$breakpoint_S)), "S",
-                             ifelse(isTRUE(as.double(x[i]) <= as.double(get_record$breakpoint_R)), "R",
-                                    ifelse(!is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R), "I",
-                                           NA_character_)))
+        new_rsi[i] <- quick_case_when(isTRUE(as.double(x[i]) >= as.double(get_record$breakpoint_S)) ~ "S",
+                                      # start interpreting: EUCAST uses >= S and < R, CLSI uses >=S and <= R
+                                      guideline_coerced %like% "ECUAST" &
+                                        isTRUE(as.double(x[i]) < as.double(get_record$breakpoint_R)) ~ "R",
+                                      guideline_coerced %like% "CLSI" &
+                                        isTRUE(as.double(x[i]) <= as.double(get_record$breakpoint_R)) ~ "R",
+                                      # return "I" when not match the bottom or top
+                                      !is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R) ~ "I",
+                                      # and NA otherwise
+                                      TRUE ~ NA_character_)
       }
     }
   }
   
-  new_rsi <- x_bak %>%
-    left_join(data.frame(x_mo = paste0(df$x, df$mo), new_rsi), by = "x_mo") %>%
-    pull(new_rsi)
+  new_rsi <- x_bak %pm>%
+    pm_left_join(data.frame(x_mo = paste0(df$x, df$mo), new_rsi), by = "x_mo") %pm>%
+    pm_pull(new_rsi)
   
   if (warned == FALSE) {
     message(font_green("OK."))
   }
+  
+  load_mo_failures_uncertainties_renamed(metadata_mo)
   
   structure(.Data = factor(new_rsi, levels = c("S", "I", "R"), ordered = TRUE),
             class =  c("rsi", "ordered", "factor"))
@@ -781,7 +798,7 @@ plot.rsi <- function(x,
   # don't use as.rsi() here, it will confuse plot()
   data$x <- factor(data$x, levels = c("S", "I", "R"), ordered = TRUE)
   
-  ymax <- if_else(max(data$s) > 95, 105, 100)
+  ymax <- pm_if_else(max(data$s) > 95, 105, 100)
   
   # get plot() generic; this was moved from the 'graphics' pkg to the 'base' pkg in R 4.0.0
   if (as.integer(R.Version()$major) >= 4) {
@@ -799,7 +816,7 @@ plot.rsi <- function(x,
        axes = axes,
        ...)
   # x axis
-  axis(side = 1, at = 1:n_distinct(data$x), labels = levels(data$x), lwd = 0)
+  axis(side = 1, at = 1:pm_n_distinct(data$x), labels = levels(data$x), lwd = 0)
   # y axis, 0-100%
   axis(side = 2, at = seq(0, 100, 5))
   

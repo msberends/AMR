@@ -27,7 +27,7 @@
 #' @param x vector
 #' @param na.rm a logical indicating whether missing values should be removed
 #' @details Interpret disk values as RSI values with [as.rsi()]. It supports guidelines from EUCAST and CLSI.
-#' @return An [`integer`] with additional new class [`disk`]
+#' @return An [integer] with additional class [`disk`]
 #' @aliases disk
 #' @export
 #' @seealso [as.rsi()]
@@ -54,7 +54,7 @@
 #' }
 as.disk <- function(x, na.rm = FALSE) {
   if (!is.disk(x)) {
-    x <- x %>% unlist()
+    x <- x %pm>% unlist()
     if (na.rm == TRUE) {
       x <- x[!is.na(x)]
     }
@@ -89,8 +89,8 @@ as.disk <- function(x, na.rm = FALSE) {
     na_after <- length(x[is.na(x)])
     
     if (na_before != na_after) {
-      list_missing <- x.bak[is.na(x) & !is.na(x.bak)] %>%
-        unique() %>%
+      list_missing <- x.bak[is.na(x) & !is.na(x.bak)] %pm>%
+        unique() %pm>%
         sort()
       list_missing <- paste0('"', list_missing, '"', collapse = ", ")
       warning(na_after - na_before, " results truncated (",

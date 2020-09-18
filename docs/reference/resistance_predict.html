@@ -50,7 +50,7 @@
 
 <meta property="og:title" content="Predict antimicrobial resistance — resistance_predict" />
 <meta property="og:description" content="Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns se_min and se_max. See Examples for a real live example." />
-<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9022</span>
       </span>
     </div>
 
@@ -273,7 +273,7 @@
 )
 
 <span class='co'># S3 method for resistance_predict</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>x</span>, main = <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"Resistance Prediction of"</span>, <span class='kw'>x_name</span>), <span class='kw'>...</span>)
+<span class='fu'><a href='plot.html'>plot</a></span>(<span class='kw'>x</span>, main = <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"Resistance Prediction of"</span>, <span class='kw'>x_name</span>), <span class='kw'>...</span>)
 
 <span class='fu'>ggplot_rsi_predict</span>(
   <span class='kw'>x</span>,
@@ -287,7 +287,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> containing isolates.</p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> containing isolates.</p></td>
     </tr>
     <tr>
       <th>col_ab</th>
@@ -345,7 +345,7 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with extra class <code>resistance_predict</code> with columns:</p><ul>
+    <p>A <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with extra class <code>resistance_predict</code> with columns:</p><ul>
 <li><p><code>year</code></p></li>
 <li><p><code>value</code>, the same as <code>estimated</code> when <code>preserve_measurements = FALSE</code>, and a combination of <code>observed</code> and <code>estimated</code> otherwise</p></li>
 <li><p><code>se_min</code>, the lower bound of the standard error with a minimum of <code>0</code> (so the standard error will never go below 0%)</p></li>
@@ -399,7 +399,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
                         col_ab = <span class='st'>"AMX"</span>,
                         year_min = <span class='fl'>2010</span>,
                         model = <span class='st'>"binomial"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>x</span>)
+<span class='fu'><a href='plot.html'>plot</a></span>(<span class='kw'>x</span>)
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='http://ggplot2.tidyverse.org'>"ggplot2"</a></span>)) {
   <span class='fu'>ggplot_rsi_predict</span>(<span class='kw'>x</span>)
 }
@@ -410,7 +410,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
     <span class='fu'><a href='first_isolate.html'>filter_first_isolate</a></span>() <span class='op'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='kw'>mo</span>) <span class='op'>==</span> <span class='st'>"Staphylococcus"</span>) <span class='op'>%&gt;%</span>
     <span class='fu'>resistance_predict</span>(<span class='st'>"PEN"</span>, model = <span class='st'>"binomial"</span>)
-  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>x</span>)
+  <span class='fu'><a href='plot.html'>plot</a></span>(<span class='kw'>x</span>)
 
   <span class='co'># get the model from the object</span>
   <span class='kw'>mymodel</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span>(<span class='kw'>x</span>)<span class='op'>$</span><span class='kw'>model</span>
@@ -445,7 +445,8 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
          y = <span class='st'>"%R"</span>,
          x = <span class='st'>"Year"</span>) <span class='op'>+</span>
     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span>(base_size = <span class='fl'>13</span>)
-}</pre>
+}
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

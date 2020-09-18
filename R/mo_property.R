@@ -47,11 +47,11 @@
 #' @rdname mo_property
 #' @name mo_property
 #' @return
-#' - An [`integer`] in case of [mo_year()]
-#' - A [`list`] in case of [mo_taxonomy()] and [mo_info()]
-#' - A named [`character`] in case of [mo_url()]
-#' - A [`double`] in case of [mo_snomed()]
-#' - A [`character`] in all other cases
+#' - An [integer] in case of [mo_year()]
+#' - A [list] in case of [mo_taxonomy()] and [mo_info()]
+#' - A named [character] in case of [mo_url()]
+#' - A [double] in case of [mo_snomed()]
+#' - A [character] in all other cases
 #' @export
 #' @seealso [microorganisms]
 #' @inheritSection AMR Reference data publicly available
@@ -378,8 +378,8 @@ mo_url <- function(x, open = FALSE, language = get_locale(), ...) {
   mo_names <- mo_name(mo)
   metadata <- get_mo_failures_uncertainties_renamed()
   
-  df <- data.frame(mo, stringsAsFactors = FALSE) %>%
-    left_join(select(microorganisms, mo, source, species_id), by = "mo")
+  df <- data.frame(mo, stringsAsFactors = FALSE) %pm>%
+   pm_left_join(pm_select(microorganisms, mo, source, species_id), by = "mo")
   df$url <- ifelse(df$source == "CoL",
                    paste0(catalogue_of_life$url_CoL, "details/species/id/", df$species_id, "/"),
                    ifelse(df$source == "DSMZ",

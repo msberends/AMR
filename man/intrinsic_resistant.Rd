@@ -5,7 +5,7 @@
 \alias{intrinsic_resistant}
 \title{Data set with bacterial intrinsic resistance}
 \format{
-A \code{\link{data.frame}} with 49,462 observations and 2 variables:
+A \link{data.frame} with 49,462 observations and 2 variables:
 \itemize{
 \item \code{microorganism}\cr Name of the microorganism
 \item \code{antibiotic}\cr Name of the antibiotic drug

@@ -37,7 +37,7 @@ test_that("as.ab works", {
                rep("ERY", 10))
 
   expect_identical(class(as.ab("amox")), c("ab", "character"))
-  expect_identical(class(pull(antibiotics, ab)), c("ab", "character"))
+  expect_identical(class(antibiotics$ab), c("ab", "character"))
   expect_true(is.ab(as.ab("amox")))
   expect_output(print(as.ab("amox")))
   expect_output(print(data.frame(a = as.ab("amox"))))

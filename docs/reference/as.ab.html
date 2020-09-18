@@ -50,7 +50,7 @@
 
 <meta property="og:title" content="Transform input to an antibiotic ID — as.ab" />
 <meta property="og:description" content="Use this function to determine the antibiotic code of one or more antibiotics. The data set antibiotics will be searched for abbreviations, official names and synonyms (brand names)." />
-<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9016</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9022</span>
       </span>
     </div>
 
@@ -269,7 +269,7 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Character (vector) with class <code>ab</code>. Unknown values will return <code>NA</code>.</p>
+    <p>A <a href='https://rdrr.io/r/base/character.html'>character</a> <a href='https://rdrr.io/r/base/vector.html'>vector</a> with additional class <code>ab</code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>All entries in the <a href='antibiotics.html'>antibiotics</a> data set have three different identifiers: a human readable EARS-Net code (column <code>ab</code>, used by ECDC and WHONET), an ATC code (column <code>atc</code>, used by WHO), and a CID code (column <code>cid</code>, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem.</p>
@@ -317,7 +317,7 @@ This package contains <strong>all ~550 antibiotic, antimycotic and antiviral dru
 
     <div class='dont-index'>
 <ul>
-<li><p><a href='antibiotics.html'>antibiotics</a> for the dataframe that is being used to determine ATCs</p></li>
+<li><p><a href='antibiotics.html'>antibiotics</a> for the <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> that is being used to determine ATCs</p></li>
 <li><p><code><a href='ab_from_text.html'>ab_from_text()</a></code> for a function to retrieve antimicrobial drugs from clinical text (from health care records)</p></li>
 </ul>
 </div>

@@ -51,7 +51,7 @@
 <meta property="og:title" content="Apply EUCAST rules — eucast_rules" />
 <meta property="og:description" content="Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, http://eucast.org), see Source. This includes (1) expert rules and intrinsic resistance and (2) inferred resistance as defined in their breakpoint tables.
 To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules are applied at default, see Details." />
-<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
 
@@ -83,7 +83,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9022</span>
       </span>
     </div>
 
@@ -297,7 +297,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The input of <code>x</code>, possibly with edited values of antibiotics. Or, if <code>verbose = TRUE</code>, a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> with all original and new values of the affected bug-drug combinations.</p>
+    <p>The input of <code>x</code>, possibly with edited values of antibiotics. Or, if <code>verbose = TRUE</code>, a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with all original and new values of the affected bug-drug combinations.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><strong>Note:</strong> This function does not translate MIC values to RSI values. Use <code><a href='as.rsi.html'>as.rsi()</a></code> for that. <br />
@@ -451,7 +451,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 <span class='co'># do not apply EUCAST rules, but rather get a data.frame</span>
 <span class='co'># with 18 rows, containing all details about the transformations:</span>
 <span class='kw'>c</span> <span class='op'>&lt;-</span> <span class='fu'>eucast_rules</span>(<span class='kw'>a</span>, verbose = <span class='fl'>TRUE</span>)
-<span class='co'># }</span></pre>
+<span class='co'># }</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
