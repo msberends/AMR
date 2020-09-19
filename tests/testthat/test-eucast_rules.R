@@ -30,7 +30,8 @@ test_that("EUCAST rules work", {
                c("if_mo_property", "like.is.one_of", "this_value",
                  "and_these_antibiotics", "have_these_values",
                  "then_change_these_antibiotics", "to_value",
-                 "reference.rule", "reference.rule_group"))
+                 "reference.rule", "reference.rule_group",
+                 "reference.version"))
   
   expect_error(suppressWarnings(eucast_rules(example_isolates, col_mo = "Non-existing")))
   expect_error(eucast_rules(x = "text"))

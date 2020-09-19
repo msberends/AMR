@@ -35,8 +35,9 @@ test_that("prediction of rsi works", {
   expect_true(AMX_R[3] < AMX_R[20])
 
   x <- resistance_predict(example_isolates, col_ab = "AMX", year_min = 2010, model = "binomial")
-  expect_success(y <- plot(x))
-  expect_success(y <- ggplot_rsi_predict(x))
+  pdf(NULL) # prevent Rplots.pdf being created
+  expect_silent(plot(x))
+  expect_silent(ggplot_rsi_predict(x))
   expect_error(ggplot_rsi_predict(example_isolates))
 
   library(dplyr)

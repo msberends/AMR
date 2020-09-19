@@ -28,10 +28,10 @@ test_that("rsi works", {
   expect_true(as.rsi("I") < as.rsi("R"))
   expect_true(is.rsi(as.rsi("S")))
   
-  # print plots, should not raise errors
-  expect_success(x <- barplot(as.rsi(c("S", "I", "R"))))
-  expect_success(x <- plot(as.rsi(c("S", "I", "R"))))
-  expect_success(x <- print(as.rsi(c("S", "I", "R"))))
+  pdf(NULL) # prevent Rplots.pdf being created
+  expect_silent(barplot(as.rsi(c("S", "I", "R"))))
+  expect_silent(plot(as.rsi(c("S", "I", "R"))))
+  expect_output(print(as.rsi(c("S", "I", "R"))))
   
   expect_equal(as.character(as.rsi(c(1:3))), c("S", "I", "R"))
   

@@ -38,10 +38,10 @@ test_that("mic works", {
 
   expect_warning(as.mic("INVALID VALUE"))
 
-  # print plots
-  expect_success(x <- barplot(as.mic(c(1, 2, 4, 8))))
-  expect_success(x <- plot(as.mic(c(1, 2, 4, 8))))
-  expect_success(x <- print(as.mic(c(1, 2, 4, 8))))
+  pdf(NULL) # prevent Rplots.pdf being created
+  expect_silent(barplot(as.mic(c(1, 2, 4, 8))))
+  expect_silent(plot(as.mic(c(1, 2, 4, 8))))
+  expect_output(print(as.mic(c(1, 2, 4, 8))))
   
   expect_equal(summary(as.mic(c(2, 8))), 
                structure(c("Class" = "mic",
