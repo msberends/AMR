@@ -32,10 +32,10 @@
 #' 3. The level of uncertainty \eqn{U} that is needed to get to a result (1 to 3, see [as.mo()]);
 #' 4. The [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) \eqn{L} is the distance between the user input and all taxonomic full names, with the text length of the user input being the maximum distance. A modified version of the Levenshtein distance \eqn{L'} based on the text length of the full name \eqn{F} is calculated as:
 #'  
-#' \deqn{L' = F - \frac{0.5 \times L}{F}}{L' = F - (0.5 * L) / F}
+#' \deqn{L' = F - \frac{0.5L}{F}}{L' = (F - 0.5L) / F}
 #'   
 #' The final matching score \eqn{M} is calculated as:
-#' \deqn{M = L' \times \frac{1}{P \times K} * \frac{1}{U}}{M = L' * (1 / (P * K)) * (1 / U)}
+#' \deqn{M = L' \times \frac{1}{P K U} = \frac{F - 0.5L}{F P K U}}{M = L' * (1 / (P * K * U)) = (F - 0.5L) / (F * P * K * U)}
 #' 
 #' @export
 #' @examples 
@@ -55,9 +55,18 @@ mo_matching_score <- function(x, fullname, uncertainty = 1) {
     levenshtein[i] <- min(as.double(utils::adist(x[i], fullname[i], ignore.case = FALSE)),
                           nchar(fullname[i]))
   }
-  # self-made score between 0 and 1 (for % certainty, so 0 means huge distance, 1 means no distance)
-  dist <- (nchar(fullname) - 0.5 * levenshtein) / nchar(fullname)
-  prevalence_kingdom_index <- tryCatch(MO_lookup[match(fullname, MO_lookup$fullname), "prevalence_kingdom_index", drop = TRUE],
-                                       error = function(e) rep(1, length(fullname)))
-  dist * (1 / prevalence_kingdom_index) * (1 / uncertainty)
+  
+  # F = length of fullname
+  var_F <- nchar(fullname)
+  # L = modified Levenshtein distance
+  var_L <- levenshtein
+  # P = Prevalence (1 to 3)
+  var_P <- MO_lookup[match(fullname, MO_lookup$fullname), "prevalence", drop = TRUE]
+  # K = kingdom index (Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5)
+  var_K <- MO_lookup[match(fullname, MO_lookup$fullname), "kingdom_index", drop = TRUE]
+  # U = uncertainty level (1 to 3), as per as.mo()
+  var_U <- uncertainty
+  
+  # matching score:
+  (var_F - 0.5 * L) / (var_F * var_P * var_K * var_U)
 }

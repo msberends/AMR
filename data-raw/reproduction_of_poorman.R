@@ -7,9 +7,11 @@ files <- xml2::read_html(paste0("https://github.com/nathaneastwood/poorman/tree/
   rvest::html_attr("href")
 
 # get full URLs of all raw R files
-files <- paste0("https://raw.githubusercontent.com", gsub("blob/", "", files[files %like% "/R/.*.R$"]))
+files <- sort(paste0("https://raw.githubusercontent.com", gsub("blob/", "", files[files %like% "/R/.*.R$"])))
 # remove files with only pkg specific code
-files <- files[!files %like% "(zzz.R|init.R)"]
+files <- files[!files %like% "(zzz|init)[.]R$"]
+# also, there's a lot of functions we don't use
+files <- files[!files %like% "(slice|glimpse|recode|replace_na|coalesce)[.]R$"]
 
 # add our prepend file, containing info about the source of the data
 intro <- readLines("data-raw/poorman_prepend.R")
@@ -68,8 +70,6 @@ contents <- gsub("context", "pm_context", contents, fixed = TRUE)
 contents <- gsub("(pm_)+", "pm_", contents)
 # special case for pm_distinct(), we need '.keep_all' to work
 contents <- gsub("pm_distinct <- function(.data, ..., .keep_all = FALSE)", "pm_distinct <- function(.data, ...)", contents, fixed = TRUE)
-# removes unnecessary calls to package
-contents <- gsub("poorman::", "AMR:::", contents, fixed = TRUE)
 
 # who needs US spelling?
 contents <- contents[!grepl("summarize", contents)]

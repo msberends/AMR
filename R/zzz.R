@@ -84,8 +84,6 @@ create_MO_lookup <- function() {
   # all the rest
   MO_lookup[which(is.na(MO_lookup$kingdom_index)), "kingdom_index"] <- 5
   
-  MO_lookup$prevalence_kingdom_index <- MO_lookup$prevalence * MO_lookup$kingdom_index
-  
   # use this paste instead of `fullname` to work with Viridans Group Streptococci, etc.
   MO_lookup$fullname_lower <- tolower(trimws(paste(MO_lookup$genus, 
                                                    MO_lookup$species,

@@ -26,7 +26,7 @@ pm_left_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
     if (is.na(by)) {
       stop_("no common column found for pm_left_join()")
     }
-    join_message(by)
+    pm_join_message(by)
   } else if (!is.null(names(by))) {
     by <- unname(c(names(by), by))
   }

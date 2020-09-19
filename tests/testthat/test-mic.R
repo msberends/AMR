@@ -38,10 +38,10 @@ test_that("mic works", {
 
   expect_warning(as.mic("INVALID VALUE"))
 
-  # print plots, should not raise errors
-  barplot(as.mic(c(1, 2, 4, 8)))
-  plot(as.mic(c(1, 2, 4, 8)))
-  print(as.mic(c(1, 2, 4, 8)))
+  # print plots
+  expect_success(x <- barplot(as.mic(c(1, 2, 4, 8))))
+  expect_success(x <- plot(as.mic(c(1, 2, 4, 8))))
+  expect_success(x <- print(as.mic(c(1, 2, 4, 8))))
   
   expect_equal(summary(as.mic(c(2, 8))), 
                structure(c("Class" = "mic",

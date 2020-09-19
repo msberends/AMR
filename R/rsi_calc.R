@@ -268,7 +268,7 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
     res <- do.call(rbind, unname(lapply(grouped, fn, ...)))
     if (any(groups %in% colnames(res))) {
       class(res) <- c("grouped_data", class(res))
-      res <- set_groups(res, groups[groups %in% colnames(res)])
+      res <- pm_set_groups(res, groups[groups %in% colnames(res)])
     }
     res
   }

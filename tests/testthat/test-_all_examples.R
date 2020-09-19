@@ -19,19 +19,3 @@
 # Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
-# context("All examples")
-# 
-# # run all examples (will take forever)
-# exported_functions <- ls("package:AMR")
-# 
-# for (i in seq_len(length(exported_functions))) {
-#   test_that(paste(exported_functions[i], "works"), {
-#     skip_on_cran()
-#     expect_output(suppressWarnings(example(exported_functions[i], 
-#                                            package = "AMR", 
-#                                            give.lines = TRUE,
-#                                            run.dontrun = TRUE,
-#                                            run.donttest = TRUE)),
-#                   label = paste0("Examples of function ", exported_functions[i]))
-#   })
-# }

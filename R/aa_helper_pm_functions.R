@@ -36,7 +36,7 @@
 # distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software 
 # is furnished to do so', given that a copyright notice is given in the software.
 #
-# Copyright notice on 18 September 2020, the day this code was downloaded, as found on
+# Copyright notice on 19 September 2020, the day this code was downloaded, as found on
 # https://github.com/nathaneastwood/poorman/blob/52eb6947e0b4430cd588976ed8820013eddf955f/LICENSE:
 # YEAR: 2020
 # COPYRIGHT HOLDER: Nathan Eastwood
@@ -66,28 +66,6 @@ pm_between <- function(x, left, right) {
   }
   if (!is.double(x)) x <- as.numeric(x)
   x >= as.numeric(left) & x <= as.numeric(right)
-}
-pm_coalesce <- function(...) {
-  if (missing(..1)) stop("At least one argument must be supplied.")
-
-  vectors <- list(...)
-  vectors_lens <- unique(lengths(vectors))
-  if (length(vectors_lens) > 2L || (length(vectors_lens) == 2L & !1 %in% vectors_lens)) {
-    stop("Vectors must all be of length 1 and/or pm_n")
-  }
-  max_len <- max(vectors_lens)
-
-  len_one <- lengths(vectors) == 1L
-  vectors[len_one] <- lapply(vectors[len_one], function(x) rep(x, max_len))
-
-  x <- vectors[[1]]
-  vectors <- vectors[-1]
-
-  for (i in seq_along(vectors)) {
-    x_miss <- is.na(x)
-    x[x_miss] <- vectors[[i]][x_miss]
-  }
-  x
 }
 pm_context <- new.env()
 
@@ -288,23 +266,6 @@ pm_filter.grouped_data <- function(.data, ...) {
   res <- pm_apply_grouped_function("pm_filter", .data, drop = TRUE, ...)
   res[rows[rows %in% rownames(res)], ]
 }
-pm_glimpse <- function(x, width = getOption("width"), ...) {
-  if ("grouped_data" %in% class(.data)) {
-    pm_glimpse.grouped_data(.data, ...)
-  } else {
-    pm_glimpse.default(.data, ...)
-  }
-}
-
-pm_glimpse.default <- function (x, width = getOption("width"), max.level = 3, ...) {
-  utils::str(x, width = width, max.level = max.level, ...)
-  invisible(x)
-}
-
-pm_glimpse.data.frame <- function(x, width = getOption("width"), ...) {
-  utils::str(x, width = width, ...)
-  invisible(x)
-}
 pm_group_by <- function(.data, ..., .add = FALSE) {
   pm_check_is_dataframe(.data)
   pre_groups <- pm_get_groups(.data)
@@ -481,6 +442,27 @@ pm_if_else <- function(condition, true, false, missing = NULL) {
   res
 }
 
+pm_anti_join <- function(x, y, by = NULL) {
+  pm_filter_join_worker(x, y, by, type = "anti")
+}
+
+pm_semi_join <- function(x, y, by = NULL) {
+  pm_filter_join_worker(x, y, by, type = "semi")
+}
+
+pm_filter_join_worker <- function(x, y, by = NULL, type = c("anti", "semi")) {
+  type <- match.arg(type, choices = c("anti", "semi"), several.ok = FALSE)
+  if (is.null(by)) {
+    by <- intersect(names(x), names(y))
+    pm_join_message(by)
+  }
+  rows <- interaction(x[, by]) %in% interaction(y[, by])
+  if (type == "anti") rows <- !rows
+  res <- x[rows, , drop = FALSE]
+  rownames(res) <- NULL
+  res
+}
+
 pm_inner_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
   pm_join_worker(x = x, y = y, by = by, suffix = suffix, sort = FALSE)
 }
@@ -519,27 +501,6 @@ pm_join_message <- function(by) {
   } else {
     message("Joining, by = \"", by, "\"\n", sep = "")
   }
-}
-
-pm_anti_join <- function(x, y, by = NULL) {
-  pm_filter_join_worker(x, y, by, type = "anti")
-}
-
-pm_semi_join <- function(x, y, by = NULL) {
-  pm_filter_join_worker(x, y, by, type = "semi")
-}
-
-pm_filter_join_worker <- function(x, y, by = NULL, type = c("anti", "semi")) {
-  type <- match.arg(type, choices = c("anti", "semi"), several.ok = FALSE)
-  if (is.null(by)) {
-    by <- intersect(names(x), names(y))
-    pm_join_message(by)
-  }
-  rows <- interaction(x[, by]) %in% interaction(y[, by])
-  if (type == "anti") rows <- !rows
-  res <- x[rows,, drop = FALSE]
-  rownames(res) <- NULL
-  res
 }
 pm_lag <- function(x, pm_n = 1L, default = NA) {
   if (inherits(x, "ts")) stop("`x` must be a vector, not a `ts` object, do you want `stats::pm_lag()`?")
@@ -630,163 +591,6 @@ pm_pull <- function(.data, var = -1) {
   }
   .data[, var]
 }
-pm_recode <- function(.x, ..., .default = NULL, .missing = NULL) {
-  if ("grouped_data" %in% class(.data)) {
-    pm_recode.grouped_data(.data, ...)
-  } else {
-    pm_recode.default(.data, ...)
-  }
-}
-
-pm_recode.numeric <- function(.x, ..., .default = NULL, .missing = NULL) {
-  values <- pm_dotdotdot(...)
-
-  nms <- pm_have_name(values)
-  if (all(nms)) {
-    vals <- as.double(names(values))
-  } else if (all(!nms)) {
-    vals <- seq_along(values)
-  } else {
-    stop("Either all values must be named, or none must be named.")
-  }
-
-  pm_n <- length(.x)
-  template <- pm_find_template(values, .default, .missing)
-  res <- template[rep(NA_integer_, pm_n)]
-  replaced <- rep(FALSE, pm_n)
-
-  for (i in seq_along(values)) {
-    res <- pm_replace_with(res, .x == vals[i], values[[i]], paste0("Vector ", i))
-    replaced[.x == vals[i]] <- TRUE
-  }
-
-  .default <- pm_validate_recode_default(.default, .x, res, replaced)
-  res <- pm_replace_with(res, !replaced & !is.na(.x), .default, "`.default`")
-  res <- pm_replace_with(res, is.na(.x), .missing, "`.missing`")
-  res
-}
-
-pm_recode.character <- function(.x, ..., .default = NULL, .missing = NULL) {
-  .x <- as.character(.x)
-  values <- pm_dotdotdot(...)
-  val_names <- names(values)
-  have_names <- pm_have_name(values)
-  if (!all(have_names)) {
-    bad <- which(!have_names) + 1L
-    stop("Argument", if (length(bad) > 1L) "s", " ", paste(bad, sep = ", "), " must be named, not unnamed.")
-  }
-
-  pm_n <- length(.x)
-  template <- pm_find_template(values, .default, .missing)
-  res <- template[rep(NA_integer_, pm_n)]
-  replaced <- rep(FALSE, pm_n)
-
-  for (nm in val_names) {
-    res <- pm_replace_with(res, .x == nm, values[[nm]], paste0("`", nm, "`"))
-    replaced[.x == nm] <- TRUE
-  }
-
-  .default <- pm_validate_recode_default(.default, .x, res, replaced)
-  res <- pm_replace_with(res, !replaced & !is.na(.x), .default, "`.default`")
-  res <- pm_replace_with(res, is.na(.x), .missing, "`.missing`")
-  res
-}
-
-pm_recode.factor <- function(.x, ..., .default = NULL, .missing = NULL) {
-  values <- pm_dotdotdot(...)
-  if (length(values) == 0) stop("No replacements provided.")
-
-  have_names <- pm_have_name(values)
-  if (!all(have_names)) {
-    bad <- which(!have_names) + 1
-    stop(bad, " must be named, not unnamed.")
-  }
-  if (!is.null(.missing)) {
-    stop("`.missing` is not supported for factors.")
-  }
-
-  pm_n <- length(levels(.x))
-  template <- pm_find_template(values, .default, .missing)
-  res <- template[rep(NA_integer_, pm_n)]
-  replaced <- rep(FALSE, pm_n)
-
-  for (nm in names(values)) {
-    res <- pm_replace_with(res, levels(.x) == nm, values[[nm]], paste0("`", nm, "`"))
-    replaced[levels(.x) == nm] <- TRUE
-  }
-  .default <- pm_validate_recode_default(.default, .x, res, replaced)
-  res <- pm_replace_with(res, !replaced, .default, "`.default`")
-
-  if (is.character(res)) {
-    levels(.x) <- res
-    .x
-  } else {
-    res[as.integer(.x)]
-  }
-}
-
-pm_have_name <- function(x) {
-  nms <- names(x)
-  if (is.null(nms)) rep(FALSE, length(x)) else !(nms == "" | is.na(nms))
-}
-
-pm_compact <- function(.x) Filter(length, .x)
-
-pm_find_template <- function(values, .default = NULL, .missing = NULL) {
-  x <- pm_compact(c(values, .default, .missing))
-  if (length(x) == 0L) {
-    stop("No replacements provided.")
-  }
-  x[[1]]
-}
-
-pm_validate_recode_default <- function(default, x, res, replaced) {
-  default <- pm_recode_default(x, default, res)
-  if (is.null(default) && sum(replaced & !is.na(x)) < length(res[!is.na(x)])) {
-    warning(
-      "Unreplaced values treated as NA as .x is not compatible. ",
-      "Please specify replacements exhaustively or supply .default",
-      call. = FALSE
-    )
-  }
-  default
-}
-
-pm_recode_default <- function(x, default, res) {
-  if ("grouped_data" %in% class(.data)) {
-    pm_recode_default.grouped_data(.data, ...)
-  } else {
-    pm_recode_default.default(.data, ...)
-  }
-}
-
-pm_recode_default.default <- function(x, default, res) {
-  same_type <- identical(typeof(x), typeof(res))
-  if (is.null(default) && same_type) x else default
-}
-
-pm_recode_default.factor <- function(x, default, res) {
-  if (is.null(default)) {
-    if ((is.character(res) || is.factor(res)) && is.factor(x)) {
-      levels(x)
-    } else {
-      res[NA_integer_]
-    }
-  } else {
-    default
-  }
-}
-
-pm_recode_factor <- function(.x, ..., .default = NULL, .missing = NULL, .ordered = FALSE) {
-  recoded <- pm_recode(.x, ..., .default = .default, .missing = .missing)
-
-  values <- pm_dotdotdot(...)
-  all_levels <- unique(c(values, pm_recode_default(.x, .default, recoded), .missing))
-  recoded_levels <- if (is.factor(recoded)) levels(recoded) else unique(recoded)
-  levels <- intersect(all_levels, recoded_levels)
-
-  factor(recoded, levels, ordered = .ordered)
-}
 pm_set_names <- function(object = nm, nm) {
   names(object) <- nm
   object
@@ -860,35 +664,6 @@ pm_rename_with <- function(.data, .fn, .cols = pm_everything(), ...) {
   if (grouped) .data <- pm_set_groups(.data, colnames(.data)[grp_pos])
   .data
 }
-pm_replace_na <- function(data, replace, ...) {
-  if ("grouped_data" %in% class(.data)) {
-    pm_replace_na.grouped_data(.data, ...)
-  } else {
-    pm_replace_na.default(.data, ...)
-  }
-}
-
-pm_replace_na.default <- function(data, replace = NA, ...) {
-  pm_check_replacement(replace, deparse(substitute(data)))
-  data[is.na(data)] <- replace
-  data
-}
-
-pm_replace_na.data.frame <- function(data, replace = list(), ...) {
-  stopifnot(is.list(replace))
-  replace_vars <- intersect(names(replace), names(data))
-  for (var in replace_vars) {
-    pm_check_replacement(replace[[var]], var)
-    data[[var]][is.na(data[[var]])] <- replace[[var]]
-  }
-  data
-}
-
-pm_check_replacement <- function(x, var) {
-  pm_n <- length(x)
-  if (pm_n == 1L) return()
-  stop("Replacement for `", var, "` is length ", pm_n, ", not length 1")
-}
 pm_replace_with <- function(x, i, val, arg_name) {
   if (is.null(val)) return(x)
   pm_check_length(val, x, arg_name)
@@ -936,20 +711,6 @@ pm_rownames_to_column <- function(.data, var = "rowname") {
   .data[, var] <- rownames(.data)
   rownames(.data) <- NULL
   .data[, c(var, setdiff(col_names, var))]
-}
-
-pm_select <- function(.data, ...) {
-  col_pos <- pm_select_positions(.data, ..., .group_pos = TRUE)
-  map_names <- names(col_pos)
-  map_names_length <- nchar(map_names)
-  if (any(map_names_length == 0L)) {
-    no_new_names <- which(map_names_length == 0L)
-    map_names[no_new_names] <- colnames(.data)[no_new_names]
-  }
-  res <- .data[, col_pos, drop = FALSE]
-  if (!is.null(map_names) && all(col_pos > 0L)) colnames(res) <- map_names
-  if (pm_has_groups(.data)) res <- pm_set_groups(res, pm_get_groups(.data))
-  res
 }
 pm_starts_with <- function(match, ignore.case = TRUE, vars = pm_peek_vars()) {
   grep(pattern = paste0("^", paste0(match, collapse = "|^")), x = vars, ignore.case = ignore.case)
@@ -1161,243 +922,18 @@ pm_select_env$get_colnames <- function() colnames(pm_select_env$.data)
 pm_select_env$get_nrow <- function() nrow(pm_select_env$.data)
 pm_select_env$get_ncol <- function() ncol(pm_select_env$.data)
 
-pm_slice <- function(.data, ...) {
-  pm_check_is_dataframe(.data)
-  if ("grouped_data" %in% class(.data)) {
-    pm_slice.grouped_data(.data, ...)
-  } else {
-    pm_slice.default(.data, ...)
+pm_select <- function(.data, ...) {
+  col_pos <- pm_select_positions(.data, ..., .group_pos = TRUE)
+  map_names <- names(col_pos)
+  map_names_length <- nchar(map_names)
+  if (any(map_names_length == 0L)) {
+    no_new_names <- which(map_names_length == 0L)
+    map_names[no_new_names] <- colnames(.data)[no_new_names]
   }
-}
-
-pm_slice.data.frame <- function(.data, ...) {
-  if (nrow(.data) == 0L) return(.data)
-  pos <- pm_slice_positions(.data, ...)
-  .data[pos, , drop = FALSE]
-}
-
-pm_slice.grouped_data <- function(.data, ...) {
-  pm_apply_grouped_function("pm_slice", .data, drop = TRUE, ...)
-}
-
-
-pm_slice_head <- function(.data, ..., pm_n, prop) {
-  if ("grouped_data" %in% class(.data)) {
-    pm_slice_head.grouped_data(.data, ...)
-  } else {
-    pm_slice_head.default(.data, ...)
-  }
-}
-
-pm_slice_head.data.frame <- function(.data, ..., pm_n, prop) {
-  size <- pm_check_slice_size(pm_n, prop)
-  idx <- switch(
-    size$type,
-    pm_n = function(pm_n) seq2(1, min(size$pm_n, pm_n)),
-    prop = function(pm_n) seq2(1, min(size$prop * pm_n, pm_n))
-  )
-  pm_slice(.data, idx(AMR:::pm_n()))
-}
-
-pm_slice_head.grouped_data <- function(.data, ..., pm_n, prop) {
-  pm_apply_grouped_function("pm_slice_head", .data, drop = TRUE, pm_n = pm_n, prop = prop, ...)
-}
-
-pm_slice_tail <- function(.data, ..., pm_n, prop) {
-  if ("grouped_data" %in% class(.data)) {
-    pm_slice_tail.grouped_data(.data, ...)
-  } else {
-    pm_slice_tail.default(.data, ...)
-  }
-}
-
-pm_slice_tail.data.frame <- function(.data, ..., pm_n, prop) {
-  size <- pm_check_slice_size(pm_n, prop)
-  idx <- switch(
-    size$type,
-    pm_n = function(pm_n) seq2(max(pm_n - size$pm_n + 1, 1), pm_n),
-    prop = function(pm_n) seq2(max(ceiling(pm_n - size$prop * pm_n) + 1, 1), pm_n)
-  )
-  pm_slice(.data, idx(AMR:::pm_n()))
-}
-
-pm_slice_tail.grouped_data <- function(.data, ..., pm_n, prop) {
-  pm_apply_grouped_function("pm_slice_tail", .data, drop = TRUE, pm_n = pm_n, prop = prop, ...)
-}
-
-pm_slice_min <- function(.data, order_by, ..., pm_n, prop, with_ties = TRUE) {
-  if ("grouped_data" %in% class(.data)) {
-    pm_slice_min.grouped_data(.data, ...)
-  } else {
-    pm_slice_min.default(.data, ...)
-  }
-}
-
-pm_slice_min.data.frame <- function(.data, order_by, ..., pm_n, prop, with_ties = TRUE) {
-  if (missing(order_by)) stop("argument `order_by` is missing, with no default.")
-
-  size <- pm_check_slice_size(pm_n, prop)
-  idx <- if (isTRUE(with_ties)) {
-    switch(
-      size$type,
-      pm_n = function(x, pm_n) pm_vec_head(order(x), pm_smaller_ranks(x, size$pm_n)),
-      prop = function(x, pm_n) pm_vec_head(order(x), pm_smaller_ranks(x, size$prop * pm_n))
-    )
-  } else {
-    switch(
-      size$type,
-      pm_n = function(x, pm_n) pm_vec_head(order(x), size$pm_n),
-      prop = function(x, pm_n) pm_vec_head(order(x), size$prop * pm_n)
-    )
-  }
-  order_by <- .data[, pm_deparse_var(order_by)]
-  pm_slice(.data, idx(order_by, AMR:::pm_n()))
-}
-
-pm_slice_min.grouped_data <- function(.data, order_by, ..., pm_n, prop, with_ties = TRUE) {
-  pm_eval_env$env <- environment()
-  on.exit(rm(list = "env", envir = pm_eval_env), add = TRUE)
-  pm_apply_grouped_function(
-    "pm_slice_min", .data, drop = TRUE, order_by = order_by, pm_n = pm_n, prop = prop, with_ties = with_ties, ...
-  )
-}
-
-pm_slice_max <- function(.data, order_by, ..., pm_n, prop, with_ties = TRUE) {
-  if ("grouped_data" %in% class(.data)) {
-    pm_slice_max.grouped_data(.data, ...)
-  } else {
-    pm_slice_max.default(.data, ...)
-  }
-}
-
-pm_slice_max.data.frame <- function(.data, order_by, ..., pm_n, prop, with_ties = TRUE) {
-  if (missing(order_by)) stop("argument `order_by` is missing, with no default.")
-
-  size <- pm_check_slice_size(pm_n, prop)
-  idx <- if (isTRUE(with_ties)) {
-    switch(
-      size$type,
-      pm_n = function(x, pm_n) pm_vec_head(order(x, decreasing = TRUE), pm_smaller_ranks(pm_desc(x), size$pm_n)),
-      prop = function(x, pm_n) pm_vec_head(order(x, decreasing = TRUE), pm_smaller_ranks(pm_desc(x), size$prop * pm_n))
-    )
-  } else {
-    switch(
-      size$type,
-      pm_n = function(x, pm_n) pm_vec_head(order(x, decreasing = TRUE), size$pm_n),
-      prop = function(x, pm_n) pm_vec_head(order(x, decreasing = TRUE), size$prop * pm_n)
-    )
-  }
-  order_by <- .data[, pm_deparse_var(order_by)]
-  pm_slice(.data, idx(order_by, AMR:::pm_n()))
-}
-
-pm_slice_max.grouped_data <- function(.data, order_by, ..., pm_n, prop, with_ties = TRUE) {
-  pm_eval_env$env <- environment()
-  on.exit(rm(list = "env", envir = pm_eval_env), add = TRUE)
-  pm_apply_grouped_function(
-    "pm_slice_max", .data, drop = TRUE, order_by = order_by, pm_n = pm_n, prop = prop, with_ties = with_ties, ...
-  )
-}
-
-pm_slice_sample <- function(.data, ..., pm_n, prop, weight_by = NULL, replace = FALSE) {
-  if ("grouped_data" %in% class(.data)) {
-    pm_slice_sample.grouped_data(.data, ...)
-  } else {
-    pm_slice_sample.default(.data, ...)
-  }
-}
-
-pm_slice_sample.data.frame <- function(.data, ..., pm_n, prop, weight_by = NULL, replace = FALSE) {
-  size <- pm_check_slice_size(pm_n, prop)
-  idx <- switch(
-    size$type,
-    pm_n = function(x, pm_n) pm_sample_int(pm_n, size$pm_n, replace = replace, wt = x),
-    prop = function(x, pm_n) pm_sample_int(pm_n, size$prop * pm_n, replace = replace, wt = x),
-  )
-  weight_by <- pm_deparse_var(weight_by)
-  if (!is.null(weight_by)) weight_by <- .data[, weight_by]
-  pm_slice(.data, idx(weight_by, AMR:::pm_n()))
-}
-
-pm_slice_sample.grouped_data <- function(.data, ..., pm_n, prop, weight_by = NULL, replace = FALSE) {
-  pm_eval_env$env <- environment()
-  on.exit(rm(list = "env", envir = pm_eval_env), add = TRUE)
-  pm_apply_grouped_function(
-    "pm_slice_sample", .data, drop = TRUE, pm_n = pm_n, prop = prop, weight_by = weight_by, replace = replace, ...
-  )
-}
-
-# helpers ----------------------------------------------------------------------
-
-pm_slice_positions <- function(.data, ...) {
-  conditions <- pm_dotdotdot(...)
-  pm_context$setup(.data)
-  on.exit(pm_context$clean(), add = TRUE)
-  if (length(conditions) == 0L) return(seq_len(pm_n()))
-
-  frame <- parent.frame(2L)
-  rows <- lapply(
-    conditions,
-    function(cond, frame) {
-      res <- eval(cond, pm_context$.data, frame)
-      if (is.logical(res) && all(is.na(res))) {
-        res <- integer()
-      } else if (is.numeric(res)) {
-        res <- as.integer(res)
-      } else if (!is.integer(res)) {
-        stop("`pm_slice()` expressions should return indices (positive or negative integers).")
-      }
-    },
-    frame = frame
-  )
-  rows <- do.call(c, rows)
-  if (length(rows) == 0L) {
-    # do nothing
-  } else if (all(rows >= 0, na.rm = TRUE)) {
-    rows <- rows[!is.na(rows) & rows <= pm_n() & rows > 0]
-  } else if (all(rows <= 0, na.rm = TRUE)) {
-    rows <- setdiff(seq_len(pm_n()), -rows)
-  } else {
-    stop("`pm_slice()` expressions should return either all positive or all negative.")
-  }
-  rows
-}
-
-pm_check_slice_size <- function(pm_n, prop) {
-  if (missing(pm_n) && missing(prop)) {
-    list(type = "pm_n", pm_n = 1L)
-  } else if (!missing(pm_n) && missing(prop)) {
-    if (!is.numeric(pm_n) || length(pm_n) != 1) {
-      stop("`pm_n` must be a single number.")
-    }
-    if (is.na(pm_n) || pm_n < 0) {
-      stop("`pm_n` must be a non-missing positive number.")
-    }
-
-    list(type = "pm_n", pm_n = pm_n)
-  } else if (!missing(prop) && missing(pm_n)) {
-    if (!is.numeric(prop) || length(prop) != 1) {
-      stop("`prop` must be a single number.")
-    }
-    if (is.na(prop) || prop < 0) {
-      stop("`prop` must be a non-missing positive number.")
-    }
-    list(type = "prop", prop = prop)
-  } else {
-    stop("Must supply exactly one of `pm_n` and `prop` arguments.")
-  }
-}
-
-pm_sample_int <- function(pm_n, size, replace = FALSE, wt = NULL) {
-  if (isTRUE(replace)) {
-    sample.int(pm_n, size, prob = wt, replace = TRUE)
-  } else {
-    sample.int(pm_n, min(size, pm_n), prob = wt)
-  }
-}
-
-pm_smaller_ranks <- function(x, y) {
-  sum(pm_min_rank(x) <= y, na.rm = TRUE)
+  res <- .data[, col_pos, drop = FALSE]
+  if (!is.null(map_names) && all(col_pos > 0L)) colnames(res) <- map_names
+  if (pm_has_groups(.data)) res <- pm_set_groups(res, pm_get_groups(.data))
+  res
 }
 pm_summarise <- function(.data, ...) {
   pm_check_is_dataframe(.data)

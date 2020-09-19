@@ -104,7 +104,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
     x_bak_clean <- generalise_antibiotic_name(x_bak_clean)
   }
   
-  x <- unique(x_bak_clean)
+  x <- unique(x_bak_clean) # this means that every x is in fact generalise_antibiotic_name(x)
   x_new <- rep(NA_character_, length(x))
   x_unknown <- character(0)
   
@@ -174,7 +174,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
     
     # exact LOINC code
     loinc_found <- unlist(lapply(AB_lookup$generalised_loinc,
-                                 function(s) generalise_antibiotic_name(x[i]) %in% s))
+                                 function(s) x[i] %in% s))
     found <- antibiotics$ab[loinc_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
@@ -183,7 +183,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
     
     # exact synonym
     synonym_found <- unlist(lapply(AB_lookup$generalised_synonyms,
-                                   function(s) generalise_antibiotic_name(x[i]) %in% s))
+                                   function(s) x[i] %in% s))
     found <- antibiotics$ab[synonym_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
@@ -192,7 +192,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
     
     # exact abbreviation
     abbr_found <- unlist(lapply(AB_lookup$generalised_abbreviations,
-                                function(s) generalise_antibiotic_name(x[i]) %in% s))
+                                function(s) x[i] %in% s))
     found <- antibiotics$ab[abbr_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
@@ -244,7 +244,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
     
     # and try if any synonym starts with it
     synonym_found <- unlist(lapply(AB_lookup$generalised_synonyms,
-                                   function(s) any(generalise_antibiotic_name(s) %like% paste0("^", x_spelling))))
+                                   function(s) any(s %like% paste0("^", x_spelling))))
     found <- antibiotics$ab[synonym_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
@@ -532,7 +532,7 @@ generalise_antibiotic_name <- function(x) {
   # remove part between brackets if that's followed by another string
   x <- gsub("(.*)+ [(].*[)]", "\\1", x)
   # keep only max 1 space
-  x <- trimws(gsub(" +", " ", x))
+  x <- trimws2(gsub(" +", " ", x))
   # non-character, space or number should be a slash
   x <- gsub("[^A-Z0-9 -]", "/", x)
   # spaces around non-characters must be removed: amox + clav -> amox/clav

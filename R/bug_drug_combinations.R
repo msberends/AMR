@@ -199,7 +199,7 @@ format.bug_drug_combinations <- function(x,
     select_ab_vars() %pm>% 
     pm_arrange(ab_group, ab_txt)
   y <- y %pm>% 
-    create_var(ab_group = ifelse(y$ab_group != lag(y$ab_group) | is.na(pm_lag(y$ab_group)), y$ab_group, ""))
+    create_var(ab_group = ifelse(y$ab_group != pm_lag(y$ab_group) | is.na(pm_lag(y$ab_group)), y$ab_group, ""))
   
   if (add_ab_group == FALSE) {
     y <- y %pm>% 
