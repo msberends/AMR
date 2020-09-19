@@ -172,7 +172,7 @@ reference:
     - "`ggplot_pca`"
     - "`join`"
     - "`like`"
-    - "`mo_matching_score"
+    - "`mo_matching_score`"
     - "`pca`"
   
   - title: "Other: statistical tests"

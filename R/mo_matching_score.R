@@ -68,5 +68,5 @@ mo_matching_score <- function(x, fullname, uncertainty = 1) {
   var_U <- uncertainty
   
   # matching score:
-  (var_F - 0.5 * L) / (var_F * var_P * var_K * var_U)
+  (var_F - 0.5 * var_L) / (var_F * var_P * var_K * var_U)
 }

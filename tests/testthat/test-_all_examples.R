@@ -18,4 +18,3 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 # Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
-

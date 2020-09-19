@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------------------------------------
-# For editing this EUCAST reference file, these values can all be used for target antibiotics:
+# For editing this EUCAST reference file, these values can all be used for targeting antibiotics:
 # 'all_betalactams', 'aminoglycosides', 'aminopenicillins', 'carbapenems', 'cephalosporins', 'cephalosporins_except_CAZ',
 # 'fluoroquinolones', 'glycopeptides', 'macrolides', 'polymyxins', 'streptogramins', 'tetracyclines', 'ureidopenicillins'
 # and all separate EARS-Net letter codes like 'AMC'. They can be separated by comma: 'AMC, fluoroquinolones'.
@@ -8,7 +8,7 @@
 # The EUCAST guideline contains references to the 'Burkholderia cepacia complex'. All species in this group are noted on the 'B.cepacia' sheet of the EUCAST Clinical Breakpoint v.10.0 Excel file of 2020 (v_10.0_Breakpoint_Tables.xlsx).
 # >>>>> IF YOU WANT TO IMPORT THIS FILE INTO YOUR OWN SOFTWARE, HAVE THE FIRST 10 LINES SKIPPED <<<<<
 # -------------------------------------------------------------------------------------------------------------------------------
-if_mo_property	like.is.one_of	this_value	and_these_antibiotics	have_these_values	then_change_these_antibiotics	to_value	reference.rule	reference.rule_group
+if_mo_property	like.is.one_of	this_value	and_these_antibiotics	have_these_values	then_change_these_antibiotics	to_value	reference.rule	reference.rule_group	reference.version
 order	is	Enterobacterales	AMP	S	AMX	S	Enterobacterales (Order)	Breakpoints
 order	is	Enterobacterales	AMP	I	AMX	I	Enterobacterales (Order)	Breakpoints
 order	is	Enterobacterales	AMP	R	AMX	R	Enterobacterales (Order)	Breakpoints
