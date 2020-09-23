@@ -149,7 +149,7 @@ ab_selector <- function(ab_class, function_name) {
   vars_vct <- peek_vars_tidyselect(fn = function_name)
   vars_df <- data.frame(as.list(vars_vct))[0, , drop = FALSE]
   colnames(vars_df) <- vars_vct
-  ab_in_data <- suppressMessages(get_column_abx(vars_df))
+  ab_in_data <- get_column_abx(vars_df, info = FALSE)
   
   if (length(ab_in_data) == 0) {
     message(font_blue("NOTE: no antimicrobial agents found."))

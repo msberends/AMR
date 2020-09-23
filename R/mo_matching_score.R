@@ -32,7 +32,7 @@
 #' 3. The level of uncertainty \eqn{U} that is needed to get to a result (1 to 3, see [as.mo()]);
 #' 4. The [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) \eqn{L} is the distance between the user input and all taxonomic full names, with the text length of the user input being the maximum distance. A modified version of the Levenshtein distance \eqn{L'} based on the text length of the full name \eqn{F} is calculated as:
 #'  
-#' \deqn{L' = F - \frac{0.5L}{F}}{L' = (F - 0.5L) / F}
+#' \deqn{L' = 1 - \frac{0.5L}{F}}{L' = 1 - ((0.5 * L) / F)}
 #'   
 #' The final matching score \eqn{M} is calculated as:
 #' \deqn{M = L' \times \frac{1}{P K U} = \frac{F - 0.5L}{F P K U}}{M = L' * (1 / (P * K * U)) = (F - 0.5L) / (F * P * K * U)}

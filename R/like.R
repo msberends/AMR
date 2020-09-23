@@ -64,7 +64,7 @@
 #' }
 like <- function(x, pattern, ignore.case = TRUE) {
   # set to fixed if no regex found
-  fixed <- all(!grepl("[\\[$.^*?+-}{|)(]", pattern))
+  fixed <- !any(is_possibly_regex(pattern))
   if (ignore.case == TRUE) {
     # set here, otherwise if fixed = TRUE, this warning will be thrown: argument 'ignore.case = TRUE' will be ignored
     x <- tolower(x)
@@ -139,4 +139,14 @@ like <- function(x, pattern, ignore.case = TRUE) {
 #' @export
 "%like_case%" <- function(x, pattern) {
   like(x, pattern, ignore.case = FALSE)
+}
+
+# don't export his one, it's just for convenience in eucast_rules()
+# match all Klebsiella and Raoultella, but not K. aerogenes: fullname %like_perl% "^(Klebsiella(?! aerogenes)|Raoultella)"
+"%like_perl%" <- function(x, pattern) {
+  grepl(x = tolower(x),
+        pattern = tolower(pattern),
+        perl = TRUE,
+        fixed = FALSE,
+        ignore.case = TRUE)
 }

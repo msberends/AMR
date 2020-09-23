@@ -54,10 +54,8 @@ download_txt <- function(filename) {
   stata <- paste0(filename, ".dta")
   sas <- paste0(filename, ".sas")
   excel <- paste0(filename, ".xlsx")
-  create_txt <- function(filename, type) {
-    paste0('<a class="dataset-download-button" href="', github_base, filename, '" target="_blank">',
-           '<img src="download_', type, '.png" width="50px" title="', file_size(filename), '">',
-           '</a>')
+  create_txt <- function(filename, type, software) {
+    paste0("* Download as [", software, " file](", github_base, filename, ") (", file_size(filename), ")  \n")
   }
 
   if (any(file.exists(rds),
@@ -66,15 +64,14 @@ download_txt <- function(filename) {
           file.exists(sas),
           file.exists(spss),
           file.exists(stata))) {
-    msg <- c(msg, "\n**Direct download links:**  \n")
+    msg <- c(msg, "\n**Direct download links:**\n\n")
   }
-  if (file.exists(rds)) msg <- c(msg, create_txt(rds, "rds"))
-  if (file.exists(excel)) msg <- c(msg, create_txt(excel, "xlsx"))
-  if (file.exists(txt)) msg <- c(msg, create_txt(txt, "txt"))
-  if (file.exists(sas)) msg <- c(msg, create_txt(sas, "sas"))
-  if (file.exists(spss)) msg <- c(msg, create_txt(spss, "sav"))
-  if (file.exists(stata)) msg <- c(msg, create_txt(stata, "dta"))
-  msg[length(msg)] <- gsub(" --", ".", msg[length(msg)], fixed = TRUE)
+  if (file.exists(rds)) msg <- c(msg, create_txt(rds, "rds", "R"))
+  if (file.exists(excel)) msg <- c(msg, create_txt(excel, "xlsx", "Excel"))
+  if (file.exists(txt)) msg <- c(msg, create_txt(txt, "txt", "plain text"))
+  if (file.exists(sas)) msg <- c(msg, create_txt(sas, "sas", "SAS"))
+  if (file.exists(spss)) msg <- c(msg, create_txt(spss, "sav", "SPSS"))
+  if (file.exists(stata)) msg <- c(msg, create_txt(stata, "dta", "Stata"))
   paste0(msg, collapse = "")
 }
 
@@ -230,7 +227,7 @@ This data set is in R available as `intrinsic_resistant`, after you load the `AM
 
 ### Source
 
-This data set contains all defined intrinsic resistance by EUCAST of all bug-drug combinations, and is based on 'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes', version `r AMR:::EUCAST_VERSION_EXPERT_RULES`.
+This data set contains all defined intrinsic resistance by EUCAST of all bug-drug combinations, and is based on '`r AMR:::EUCAST_VERSION_EXPERT_RULES[["3.2"]]$title`', `r AMR:::EUCAST_VERSION_EXPERT_RULES[["3.2"]]$version_txt` from `r AMR:::EUCAST_VERSION_EXPERT_RULES[["3.2"]]$year`.
 
 ### Example content
 

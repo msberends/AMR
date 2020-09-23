@@ -27,15 +27,17 @@ for (i in seq_len(nrow(antibiotics))) {
 }
 
 int_resis <- eucast_rules(int_resis, 
-                          eucast_rules_df = subset(AMR:::eucast_rules_file, is.na(have_these_values)))
+                          eucast_rules_df = subset(AMR:::eucast_rules_file,
+                                                   is.na(have_these_values) & reference.version == 3.2),
+                          info = FALSE)
 
-int_resis <- int_resis[, sapply(int_resis, function(x) any(!is.rsi(x) | x == "R"))] %>% 
+int_resis2 <- int_resis[, sapply(int_resis, function(x) any(!is.rsi(x) | x == "R"))] %>% 
   tidyr::pivot_longer(-microorganism) %>%
   filter(value == "R") %>% 
   select(microorganism, antibiotic = name)
 
-int_resis$microorganism <- mo_name(int_resis$microorganism, language = NULL)
+int_resis2$microorganism <- mo_name(int_resis2$microorganism, language = NULL)
 
-intrinsic_resistant <- as.data.frame(int_resis, stringsAsFactors = FALSE)
-usethis::use_data(intrinsic_resistant, internal = FALSE, overwrite = TRUE, version = 2)
+intrinsic_resistant <- as.data.frame(int_resis2, stringsAsFactors = FALSE)
+usethis::use_data(intrinsic_resistant, internal = FALSE, overwrite = TRUE, version = 2, compress = "xz")
 rm(intrinsic_resistant)

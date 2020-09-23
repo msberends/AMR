@@ -64,7 +64,8 @@ is.rsi.eligible(x, threshold = 0.05)
 
 \item{conserve_capped_values}{a logical to indicate that MIC values starting with \code{">"} (but not \code{">="}) must always return "R" , and that MIC values starting with \code{"<"} (but not \code{"<="}) must always return "S"}
 
-\item{add_intrinsic_resistance}{\emph{(only useful when using a EUCAST guideline)} a logical to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in \emph{Klebsiella} species. Determination is based on the \link{intrinsic_resistant} data set, that itself is based on 'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes', version 3.1, 2016.}
+\item{add_intrinsic_resistance}{\emph{(only useful when using a EUCAST guideline)} a logical to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in \emph{Klebsiella} species. Determination is based on the \link{intrinsic_resistant} data set, that itself is based on 'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes', version list(version_txt = "v3.1", year = 2016, title = "EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes")
+list(version_txt = "v3.2", year = 2020, title = "EUCAST Expert Rules / EUCAST Intrinsic Resistance and Unusual Phenotypes").}
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 }

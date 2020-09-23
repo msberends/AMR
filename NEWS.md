@@ -1,9 +1,10 @@
-# AMR 1.3.0.9025
-## <small>Last updated: 19 September 2020</small>
+# AMR 1.3.0.9026
+## <small>Last updated: 24 September 2020</small>
 
 Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscipt to. We are those reviewers very grateful for going through our code so thoroughly!
 
 ### New
+* Support for 'EUCAST Expert Rules' / 'EUCAST Intrinsic Resistance and Unusual Phenotypes' version 3.2 of May 2020. With this addition to the previously implemented version 3.1 of 2016, the `eucast_rules()` function can now correct for more than 180 different antibiotics. All previously implemented versions of the EUCAST rules are now maintained and kept available in this package. The `eucast_rules()` function consequently gained the parameters `version_breakpoints` (at the moment defaults to v10.0, 2020) and `version_expertrules` (at the moment defaults to v3.2, 2020). The `example_isolates` data set now also reflects the change from v3.1 to v3.2.
 * A new vignette and website page with info about all our public and freely available data sets, that can be downloaded as flat files or in formats for use in R, SPSS, SAS, Stata and Excel: https://msberends.github.io/AMR/articles/datasets.html
 * Data set `intrinsic_resistant`. This data set contains all bug-drug combinations where the 'bug' is intrinsic resistant to the 'drug' according to the latest EUCAST insights. It contains just two columns: `microorganism` and `antibiotic`.
 
@@ -45,7 +46,7 @@ Note: some changes in this version were suggested by anonymous reviewers from th
   * Big speed improvement for already valid microorganism ID. This also means an significant speed improvement for using `mo_*` functions like `mo_name()` on microoganism IDs.
   * Added parameter `ignore_pattern` to `as.mo()` which can also be given to `mo_*` functions like `mo_name()`, to exclude known non-relevant input from analysing. This can also be set with the option `AMR_ignore_pattern`.
 * `get_locale()` now uses at default `Sys.getenv("LANG")` or, if `LANG` is not set, `Sys.getlocale()`. This can be overwritten by setting the option `AMR_locale`.
-* Speed improvement for `eucast_rules()`
+* Big speed improvement for `eucast_rules()`
 * Overall speed improvement by tweaking joining functions
 * Function `mo_shortname()` now returns the genus for input where the species is unknown
 * BORSA is now recognised as an abbreviation for *Staphylococcus aureus*, meaning that e.g. `mo_genus("BORSA")` will return "Staphylococcus"
@@ -55,7 +56,12 @@ Note: some changes in this version were suggested by anonymous reviewers from th
 * Small `as.ab()` algorithm improvements
 * Fix for combining MIC values with raw numbers, i.e. `c(as.mic(2), 2)` previously failed but now returns a valid MIC class
 * `ggplot_rsi()` and `geom_rsi()` gained parameters `minimum` and `language`, to influence the internal use of `rsi_df()`
-* Added abbreviation "piptazo" to piperacillin/tazobactam (TZP)
+* Changes in the `antibiotics` data set:
+  * Updated oral and parental DDDs from the WHOCC
+  * Added abbreviation "piptazo" to 'Piperacillin/tazobactam' (TZP)
+  * 'Penicillin G' (for intravenous use) is now named 'Benzylpenicillin' (code `PEN`)
+  * 'Penicillin V' (for oral use, code `PNV`) was removed, since its actual entry 'Phenoxymethylpenicillin' (code `PHN`) already existed
+  * The group name (`antibiotics$group`) of 'Linezolid' (`LNZ`), 'Cycloserine' (`CYC`), 'Tedizolid' (`TZD`) and 'Thiacetazone' (`THA`) is now "Oxazolidinones" instead of "Other antibacterials"
 
 ### Other
 * Removed unnecessary references to the `base` package

@@ -110,16 +110,21 @@ get_column_abx <- function(x,
                            soft_dependencies = NULL,
                            hard_dependencies = NULL,
                            verbose = FALSE,
+                           info = TRUE,
                            ...) {
   
-  message(font_blue("NOTE: Auto-guessing columns suitable for analysis"), appendLF = FALSE)
+  if (info == TRUE) {
+    message(font_blue("NOTE: Auto-guessing columns suitable for analysis"), appendLF = FALSE)
+  }
   
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   if (NROW(x) > 10000) {
     # only test maximum of 10,000 values per column
-    message(font_blue(paste0(" (using only ", font_bold("the first 10,000 rows"), ")...")), appendLF = FALSE)
+    if (info == TRUE) {
+      message(font_blue(paste0(" (using only ", font_bold("the first 10,000 rows"), ")...")), appendLF = FALSE)
+    }
     x <- x[1:10000, , drop = FALSE]
-  } else {
+  } else if (info == TRUE) {
     message(font_blue("..."), appendLF = FALSE)
   }
   x_bak <- x
@@ -130,8 +135,8 @@ get_column_abx <- function(x,
   vectr_antibiotics <- vectr_antibiotics[!is.na(vectr_antibiotics) & nchar(vectr_antibiotics) >= 3]
   x_columns <- sapply(colnames(x), function(col, df = x_bak) {
     if (toupper(col) %in% vectr_antibiotics | 
-        is.rsi(as.data.frame(df)[, col]) |
-        is.rsi.eligible(as.data.frame(df)[, col], threshold = 0.5)) {
+        is.rsi(as.data.frame(df)[, col, drop = TRUE]) |
+        is.rsi.eligible(as.data.frame(df)[, col, drop = TRUE], threshold = 0.5)) {
       return(col)
     } else {
       return(NA_character_)
@@ -142,7 +147,7 @@ get_column_abx <- function(x,
   
   df_trans <- data.frame(colnames = colnames(x),
                          abcode = suppressWarnings(as.ab(colnames(x), info = FALSE)))
-  df_trans <- df_trans[!is.na(df_trans$abcode), ]
+  df_trans <- df_trans[!is.na(df_trans$abcode), , drop = FALSE]
   x <- as.character(df_trans$colnames)
   names(x) <- df_trans$abcode
   
@@ -166,7 +171,9 @@ get_column_abx <- function(x,
   }
   
   if (length(x) == 0) {
-    message(font_blue("No columns found."))
+    if (info == TRUE) {
+      message(font_blue("No columns found."))
+    }
     return(x)
   }
   
@@ -178,14 +185,16 @@ get_column_abx <- function(x,
   x <- x[order(names(x), x)]
   
   # succeeded with auto-guessing
-  message(font_blue("OK."))
+  if (info == TRUE) {
+    message(font_blue("OK."))
+  }
   
   for (i in seq_len(length(x))) {
-    if (verbose == TRUE & !names(x[i]) %in% names(duplicates)) {
+    if (info == TRUE & verbose == TRUE & !names(x[i]) %in% names(duplicates)) {
       message(font_blue(paste0("NOTE: Using column `", font_bold(x[i]), "` as input for `", names(x)[i],
                                "` (", ab_name(names(x)[i], tolower = TRUE, language = NULL), ").")))
     }
-    if (names(x[i]) %in% names(duplicates)) {
+    if (info == TRUE & names(x[i]) %in% names(duplicates)) {
       warning(font_red(paste0("Using column `", font_bold(x[i]), "` as input for `", names(x)[i],
                               "` (", ab_name(names(x)[i], tolower = TRUE, language = NULL),
                               "), although it was matched for multiple antibiotics or columns.")), 
@@ -206,14 +215,19 @@ get_column_abx <- function(x,
   }
   if (!is.null(soft_dependencies)) {
     soft_dependencies <- unique(soft_dependencies)
-    if (!all(soft_dependencies %in% names(x))) {
+    if (info == TRUE & !all(soft_dependencies %in% names(x))) {
       # missing a soft dependency may lower the reliability
       missing <- soft_dependencies[!soft_dependencies %in% names(x)]
-      missing_txt <- paste(paste0(ab_name(missing, tolower = TRUE, language = NULL), 
-                                  " (", font_bold(missing, collapse = NULL), ")"), 
+      missing_msg <- paste(paste0(ab_name(missing, tolower = TRUE, language = NULL), 
+                                  " (", missing, ")"), 
                            collapse = ", ")
-      message(font_blue("NOTE: Reliability would be improved if these antimicrobial results would be available too:",
-                        missing_txt))
+      missing_msg <- paste("NOTE: Reliability would be improved if these antimicrobial results would be available too:",
+                           missing_msg)
+      wrapped <- strwrap(missing_msg,
+                         width = 0.95 * getOption("width"),
+                         exdent = 6)
+      wrapped <- gsub("\\((.*?)\\)", paste0("(", font_bold("\\1"), ")"), wrapped) # add bold abbreviations
+      message(font_blue(wrapped, collapse = "\n"))
     }
   }
   x

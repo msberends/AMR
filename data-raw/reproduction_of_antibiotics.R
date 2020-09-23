@@ -543,6 +543,12 @@ old_sym <- old_sym[!old_sym %in% c("Cotrimoxazole", "Bactrimel")]
 antibiotics[which(antibiotics$ab == "SMX"), "synonyms"][[1]] <- list(old_sym)
 antibiotics[which(antibiotics$ab == "SXT"), "synonyms"][[1]] <- list(sort(unique(c(antibiotics[which(antibiotics$ab == "COL"), "synonyms"][[1]], "Cotrimoxazole", "Bactrimel", "Septra", "Bactrim", "Cotrimazole"))))
 
+# Fix penicillins
+antibiotics[which(antibiotics$ab == "PEN"), "abbreviations"][[1]] <- list(c("bepe", "pg", "pen", "peni", "peni g", "penicillin", "penicillin g"))
+antibiotics[which(antibiotics$ab == "PEN"), "name"] <- "Benzylpenicillin"
+antibiotics[which(antibiotics$ab == "PHN"), "abbreviations"][[1]] <- list(c("fepe", "peni v", "pv", "penicillin v", "PNV"))
+antibiotics <- subset(antibiotics, antibiotics$ab != "PNV")
+
 # New DDDs
 antibiotics[which(antibiotics$ab == "PEN"), "iv_ddd"] <- 3.6
 antibiotics[which(antibiotics$ab == "PEN"), "iv_units"] <- "g"
@@ -594,6 +600,25 @@ antibiotics <- antibiotics %>%
     name == "Ceftolozane/tazobactam" ~ "Cephalosporins (5th gen.)",
     name == "Cefuroxime axetil" ~ "Cephalosporins (2nd gen.)",
     TRUE ~ group))
+antibiotics[which(antibiotics$ab %in% c("CYC", "LNZ", "THA", "TZD")), "group"] <- "Oxazolidinones"
+
+# update DDDs from WHOCC website
+ddd_oral <- double(length = nrow(antibiotics))
+ddd_iv <- double(length = nrow(antibiotics))
+progress <- progress_ticker(nrow(antibiotics))
+for (i in seq_len(nrow(antibiotics))) {
+  on.exit(close(progress))
+  progress$tick()
+  if (!is.na(antibiotics$atc[i])) {
+    ddd_oral[i] <- atc_online_ddd(antibiotics$atc[i], administration = "O")
+    ddd_iv[i] <- atc_online_ddd(antibiotics$atc[i], administration = "P") # parenteral
+    Sys.sleep(1)
+  }
+}
+ddd_oral[ddd_oral == 0] <- NA_real_
+ddd_iv[ddd_iv == 0] <- NA_real_
+antibiotics$oral_ddd <- ddd_oral
+antibiotics$iv_ddd <- ddd_iv
 
 # set as data.frame again
 antibiotics <- as.data.frame(antibiotics, stringsAsFactors = FALSE)

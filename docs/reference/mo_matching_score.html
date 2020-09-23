@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9023</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9026</span>
       </span>
     </div>
 
@@ -270,7 +270,7 @@
 <li><p>The <a href='https://en.wikipedia.org/wiki/Levenshtein_distance'>Levenshtein distance</a> \(L\) is the distance between the user input and all taxonomic full names, with the text length of the user input being the maximum distance. A modified version of the Levenshtein distance \(L'\) based on the text length of the full name \(F\) is calculated as:</p></li>
 </ol>
 
-<p>$$L' = F - \frac{0.5L}{F}$$</p>
+<p>$$L' = 1 - \frac{0.5L}{F}$$</p>
 <p>The final matching score \(M\) is calculated as:
 $$M = L' \times \frac{1}{P K U} = \frac{F - 0.5L}{F P K U}$$</p>
 

@@ -24,21 +24,25 @@
 # --------------------------------------------------------------------------
 
 # See 'data-raw/eucast_rules.tsv' for the EUCAST reference file
+library(dplyr, warn.conflicts = FALSE)
 eucast_rules_file <- utils::read.delim(file = "data-raw/eucast_rules.tsv",
                                        skip = 10,
                                        sep = "\t",
                                        stringsAsFactors = FALSE,
                                        header = TRUE,
                                        strip.white = TRUE,
-                                       na = c(NA, "", NULL))
-# take the order of the reference.rule_group column in the original data file
-eucast_rules_file$reference.rule_group <- factor(eucast_rules_file$reference.rule_group,
-                                                 levels = unique(eucast_rules_file$reference.rule_group),
-                                                 ordered = TRUE)
-eucast_rules_file <- dplyr::arrange(eucast_rules_file,
-                                    reference.rule_group,
-                                    reference.rule)
-eucast_rules_file$reference.rule_group <- as.character(eucast_rules_file$reference.rule_group)
+                                       na = c(NA, "", NULL)) %>% 
+  # take the order of the reference.rule_group column in the original data file
+  mutate(reference.rule_group = factor(reference.rule_group,
+                                       levels = unique(reference.rule_group),
+                                       ordered = TRUE),
+         sorting_rule = ifelse(grepl("^Table", reference.rule, ignore.case = TRUE), 1, 2)) %>% 
+  arrange(reference.rule_group,
+          reference.version,
+          sorting_rule,
+          reference.rule) %>% 
+  mutate(reference.rule_group = as.character(reference.rule_group)) %>% 
+  select(-sorting_rule)
 
 # Translations ----
 translations_file <- utils::read.delim(file = "data-raw/translations.tsv",
@@ -72,7 +76,9 @@ rm(microorganisms.translation)
 
 # Save to raw data to repository ----
 write_md5 <- function(object) {
-  writeLines(digest::digest(object, "md5"), file(paste0("data-raw/", deparse(substitute(object)), ".md5")))
+  conn <- file(paste0("data-raw/", deparse(substitute(object)), ".md5"))
+  writeLines(digest::digest(object, "md5"), conn)
+  close(conn)
 }
 changed_md5 <- function(object) {
   tryCatch({

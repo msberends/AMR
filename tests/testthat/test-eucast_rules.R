@@ -31,7 +31,12 @@ test_that("EUCAST rules work", {
                  "and_these_antibiotics", "have_these_values",
                  "then_change_these_antibiotics", "to_value",
                  "reference.rule", "reference.rule_group",
-                 "reference.version"))
+                 "reference.version",
+                 "note"))
+  MOs_mentioned <- unique(eucast_rules_file$this_value)
+  MOs_mentioned <- sort(trimws(unlist(strsplit(MOs_mentioned[!is_possibly_regex(MOs_mentioned)], ",", fixed = TRUE))))
+  MOs_test <- suppressWarnings(suppressMessages(mo_name(MOs_mentioned)))
+  expect_length(MOs_mentioned[MOs_test != MOs_mentioned], 0)
   
   expect_error(suppressWarnings(eucast_rules(example_isolates, col_mo = "Non-existing")))
   expect_error(eucast_rules(x = "text"))
@@ -72,7 +77,7 @@ test_that("EUCAST rules work", {
     example_isolates %>%
       mutate(TIC = as.rsi("R"),
              PIP = as.rsi("S")) %>%
-      eucast_rules(col_mo = "mo") %>%
+      eucast_rules(col_mo = "mo", version_expertrules = 3.1) %>%
       left_join_microorganisms() %>%
       filter(family == "Enterobacteriaceae") %>%
       pull(PIP) %>%
@@ -85,7 +90,8 @@ test_that("EUCAST rules work", {
                                ERY = example_isolates$ERY,
                                AZM = as.rsi("R"),
                                CLR = as.rsi("R"),
-                               stringsAsFactors = FALSE))$CLR
+                               stringsAsFactors = FALSE),
+                    version_expertrules = 3.1)$CLR
   b <- example_isolates$ERY
   expect_identical(a[!is.na(b)],
                    b[!is.na(b)])

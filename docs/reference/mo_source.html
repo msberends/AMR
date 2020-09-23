@@ -83,7 +83,7 @@ This is the fastest way to have your organisation (or analysis) specific codes p
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9022</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9026</span>
       </span>
     </div>
 
@@ -262,7 +262,7 @@ This is the fastest way to have your organisation (or analysis) specific codes p
     <p>The reference file can be a text file separated with commas (CSV) or tabs or pipes, an Excel file (either 'xls' or 'xlsx' format) or an R object file (extension '.rds'). To use an Excel file, you will need to have the <code>readxl</code> package installed.</p>
 <p><code>set_mo_source()</code> will check the file for validity: it must be a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>, must have a column named <code>"mo"</code> which contains values from <code><a href='microorganisms.html'>microorganisms$mo</a></code> and must have a reference column with your own defined values. If all tests pass, <code>set_mo_source()</code> will read the file into R and export it to <code>"~/.mo_source.rds"</code> after the user <strong>specifically confirms and allows</strong> that this file will be created. For this reason, this function only works in interactive sessions.</p>
 <p>The created compressed data file <code>"~/.mo_source.rds"</code> will be used at default for MO determination (function <code><a href='as.mo.html'>as.mo()</a></code> and consequently all <code>mo_*</code> functions like <code><a href='mo_property.html'>mo_genus()</a></code> and <code><a href='mo_property.html'>mo_gramstain()</a></code>). The location of the original file will be saved as an R option with <code><a href='https://rdrr.io/r/base/options.html'>options(mo_source = path)</a></code>. Its timestamp will be saved with <code><a href='https://rdrr.io/r/base/options.html'>options(mo_source_datetime = ...)</a></code>.</p>
-<p>The function <code>get_mo_source()</code> will return the data set by reading <code>"~/.mo_source.rds"</code> with <code><a href='https://rdrr.io/r/base/readRDS.html'>readRDS()</a></code>. If the original file has changed (by checking the aforementioned options <code>mo_source</code> and <code>mo_source_datetime</code>), it will call <code>set_mo_source()</code> to update the data file automatically.</p>
+<p>The function <code>get_mo_source()</code> will return the data set by reading <code>"~/.mo_source.rds"</code> with <code><a href='https://rdrr.io/r/base/readRDS.html'>readRDS()</a></code>. If the original file has changed (by checking the aforementioned options <code>mo_source</code> and <code>mo_source_datetime</code>), it will call <code>set_mo_source()</code> to update the data file automatically if used in an interactive session.</p>
 <p>Reading an Excel file (<code>.xlsx</code>) with only one row has a size of 8-9 kB. The compressed file created with <code>set_mo_source()</code> will then have a size of 0.1 kB and can be read by <code>get_mo_source()</code> in only a couple of microseconds (millionths of a second).</p>
     <h2 class="hasAnchor" id="how-to-setup"><a class="anchor" href="#how-to-setup"></a>How to setup</h2>
 

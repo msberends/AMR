@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9025</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9026</span>
       </span>
     </div>
 
@@ -236,19 +236,20 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1309025" class="section level1">
-<h1 class="page-header" data-toc-text="1.3.0.9025">
-<a href="#amr-1309025" class="anchor"></a>AMR 1.3.0.9025<small> Unreleased </small>
+    <div id="amr-1309026" class="section level1">
+<h1 class="page-header" data-toc-text="1.3.0.9026">
+<a href="#amr-1309026" class="anchor"></a>AMR 1.3.0.9026<small> Unreleased </small>
 </h1>
-<div id="last-updated-19-september-2020" class="section level2">
+<div id="last-updated-24-september-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-19-september-2020" class="anchor"></a><small>Last updated: 19 September 2020</small>
+<a href="#last-updated-24-september-2020" class="anchor"></a><small>Last updated: 24 September 2020</small>
 </h2>
 <p>Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscipt to. We are those reviewers very grateful for going through our code so thoroughly!</p>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h3>
 <ul>
+<li><p>Support for ‘EUCAST Expert Rules’ / ‘EUCAST Intrinsic Resistance and Unusual Phenotypes’ version 3.2 of May 2020. With this addition to the previously implemented version 3.1 of 2016, the <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function can now correct for more than 180 different antibiotics. All previously implemented versions of the EUCAST rules are now maintained and kept available in this package. The <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function consequently gained the parameters <code>version_breakpoints</code> (at the moment defaults to v10.0, 2020) and <code>version_expertrules</code> (at the moment defaults to v3.2, 2020). The <code>example_isolates</code> data set now also reflects the change from v3.1 to v3.2.</p></li>
 <li><p>A new vignette and website page with info about all our public and freely available data sets, that can be downloaded as flat files or in formats for use in R, SPSS, SAS, Stata and Excel: <a href="https://msberends.github.io/AMR/articles/datasets.html" class="uri">https://msberends.github.io/AMR/articles/datasets.html</a></p></li>
 <li>
 <p>Data set <code>intrinsic_resistant</code>. This data set contains all bug-drug combinations where the ‘bug’ is intrinsic resistant to the ‘drug’ according to the latest EUCAST insights. It contains just two columns: <code>microorganism</code> and <code>antibiotic</code>.</p>
@@ -307,7 +308,7 @@
 </ul>
 </li>
 <li><p><code><a href="../reference/translate.html">get_locale()</a></code> now uses at default <code><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv("LANG")</a></code> or, if <code>LANG</code> is not set, <code><a href="https://rdrr.io/r/base/locales.html">Sys.getlocale()</a></code>. This can be overwritten by setting the option <code>AMR_locale</code>.</p></li>
-<li><p>Speed improvement for <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code></p></li>
+<li><p>Big speed improvement for <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code></p></li>
 <li><p>Overall speed improvement by tweaking joining functions</p></li>
 <li><p>Function <code><a href="../reference/mo_property.html">mo_shortname()</a></code> now returns the genus for input where the species is unknown</p></li>
 <li><p>BORSA is now recognised as an abbreviation for <em>Staphylococcus aureus</em>, meaning that e.g. <code><a href="../reference/mo_property.html">mo_genus("BORSA")</a></code> will return “Staphylococcus”</p></li>
@@ -317,7 +318,16 @@
 <li><p>Small <code><a href="../reference/as.ab.html">as.ab()</a></code> algorithm improvements</p></li>
 <li><p>Fix for combining MIC values with raw numbers, i.e. <code><a href="https://rdrr.io/r/base/c.html">c(as.mic(2), 2)</a></code> previously failed but now returns a valid MIC class</p></li>
 <li><p><code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> and <code><a href="../reference/ggplot_rsi.html">geom_rsi()</a></code> gained parameters <code>minimum</code> and <code>language</code>, to influence the internal use of <code><a href="../reference/proportion.html">rsi_df()</a></code></p></li>
-<li><p>Added abbreviation “piptazo” to piperacillin/tazobactam (TZP)</p></li>
+<li>
+<p>Changes in the <code>antibiotics</code> data set:</p>
+<ul>
+<li>Updated oral and parental DDDs from the WHOCC</li>
+<li>Added abbreviation “piptazo” to ‘Piperacillin/tazobactam’ (TZP)</li>
+<li>‘Penicillin G’ (for intravenous use) is now named ‘Benzylpenicillin’ (code <code>PEN</code>)</li>
+<li>‘Penicillin V’ (for oral use, code <code>PNV</code>) was removed, since its actual entry ‘Phenoxymethylpenicillin’ (code <code>PHN</code>) already existed</li>
+<li>The group name (<code>antibiotics$group</code>) of ‘Linezolid’ (<code>LNZ</code>), ‘Cycloserine’ (<code>CYC</code>), ‘Tedizolid’ (<code>TZD</code>) and ‘Thiacetazone’ (<code>THA</code>) is now “Oxazolidinones” instead of “Other antibacterials”</li>
+</ul>
+</li>
 </ul>
 </div>
 <div id="other" class="section level3">

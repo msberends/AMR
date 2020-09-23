@@ -19,120 +19,55 @@
 # Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
-# global variables
-EUCAST_VERSION_BREAKPOINTS <- "10.0, 2020"
-EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
+# add new version numbers here, and add the rules themselves to "data-raw/eucast_rules.tsv"
+# (running "data-raw/internals.R" will process that TSV file)
+EUCAST_VERSION_BREAKPOINTS <- list("10.0" = list(version_txt = "v10.0",
+                                                 year = 2020, 
+                                                 title = "EUCAST Clinical Breakpoints"))
+EUCAST_VERSION_EXPERT_RULES <- list("3.1" = list(version_txt = "v3.1",
+                                                 year = 2016, 
+                                                 title = "EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes"),
+                                    "3.2" = list(version_txt = "v3.2",
+                                                 year = 2020, 
+                                                 title = "EUCAST Expert Rules / EUCAST Intrinsic Resistance and Unusual Phenotypes"))
 
 #' Apply EUCAST rules
 #' 
 #' @description
-#' Apply susceptibility rules as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <http://eucast.org>), see *Source*. This includes (1) expert rules and intrinsic resistance and (2) inferred resistance as defined in their breakpoint tables. 
+#' Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <https://eucast.org>), see *Source*.
 #' 
-#' To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules are applied at default, see Details.
-#' @inheritSection lifecycle Maturing lifecycle
-#' @param x data with antibiotic columns, like e.g. `AMX` and `AMC`
+#' To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see Details.
+#' @inheritSection lifecycle Stable lifecycle
+#' @param x data with antibiotic columns, such as `amox`, `AMX` and `AMC`
 #' @param info print progress
-#' @param rules a character vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expert"`, `"other"`, `"all"`, and defaults to `c("breakpoints", "expert")`. The default value can be set to another value using e.g. `options(AMR.eucast_rules = "all")`.
-#' @param verbose a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way.
+#' @param rules a character vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expert"`, `"other"`, `"all"`, and defaults to `c("breakpoints", "expert")`. The default value can be set to another value, e.g. using `options(AMR_eucastrules = "all")`.
+#' @param verbose a [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.
+#' @param version_breakpoints the version number to use for the EUCAST Clinical Breakpoints guideline
+#' @param version_expertrules the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline
 #' @param ... column name of an antibiotic, please see section *Antibiotics* below
 #' @inheritParams first_isolate
 #' @details
 #' **Note:** This function does not translate MIC values to RSI values. Use [as.rsi()] for that. \cr
 #' **Note:** When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.
 #'
-#' Before further processing, two non-EUCAST rules about drug combinations can be applied to improve the efficacy of the EUCAST rules. These rules are:
-#' 
-#' 1. A drug **with** enzyme inhibitor will be set to S if the drug **without** enzyme inhibitor is S
-#' 2. A drug **without** enzyme inhibitor will be set to R if the drug **with** enzyme inhibitor is R
-#' 
-#' These rules are not applied at default, since they are not approved by EUCAST. To use these rules, use `eucast_rules(..., rules = "all")`, or set the default behaviour of the `[eucast_rules()]` function with `options(AMR.eucast_rules = "all")` (or any other valid input value(s) to the `rules` parameter).
-#'
 #' The file containing all EUCAST rules is located here: <https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv>.
-#'
+#' 
+#' ## 'Other' rules
+#' 
+#' Before further processing, two non-EUCAST rules about drug combinations can be applied to improve the efficacy of the EUCAST rules, and the reliability of your data (analysis). These rules are:
+#' 
+#' 1. A drug **with** enzyme inhibitor will be set to S if the same drug **without** enzyme inhibitor is S
+#' 2. A drug **without** enzyme inhibitor will be set to R if the same drug **with** enzyme inhibitor is R
+#' 
+#' Important examples include amoxicillin and amoxicillin/clavulanic acid, and trimethoprim and trimethoprim/sulfamethoxazole. Needless to say, for these rules to work, both drugs must be available in the data set.
+#' 
+#' Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include `"other"` to the `rules` parameter, or use `eucast_rules(..., rules = "all")`.
 #' @section Antibiotics:
 #' To define antibiotics column names, leave as it is to determine it automatically with [guess_ab_col()] or input a text (case-insensitive), or use `NULL` to skip a column (e.g. `TIC = NULL` to skip ticarcillin). Manually defined but non-existing columns will be skipped with a warning.
 #'
-#' The following antibiotics are used for the functions [eucast_rules()] and [mdro()]. These are shown below in the format '**antimicrobial ID**: name ([ATC code](https://www.whocc.no/atc/structure_and_principles/))', sorted by name:
+#' The following antibiotics are used for the functions [eucast_rules()] and [mdro()]. These are shown below in the format 'name (`antimicrobial ID`, [ATC code](https://www.whocc.no/atc/structure_and_principles/))', sorted alphabetically:
 #'
-#'  **AMK**: amikacin ([J01GB06](https://www.whocc.no/atc_ddd_index/?code=J01GB06)),
-#'  **AMX**: amoxicillin ([J01CA04](https://www.whocc.no/atc_ddd_index/?code=J01CA04)),
-#'  **AMC**: amoxicillin/clavulanic acid ([J01CR02](https://www.whocc.no/atc_ddd_index/?code=J01CR02)),
-#'  **AMP**: ampicillin ([J01CA01](https://www.whocc.no/atc_ddd_index/?code=J01CA01)),
-#'  **SAM**: ampicillin/sulbactam ([J01CR01](https://www.whocc.no/atc_ddd_index/?code=J01CR01)),
-#'  **AZM**: azithromycin ([J01FA10](https://www.whocc.no/atc_ddd_index/?code=J01FA10)),
-#'  **AZL**: azlocillin ([J01CA09](https://www.whocc.no/atc_ddd_index/?code=J01CA09)),
-#'  **ATM**: aztreonam ([J01DF01](https://www.whocc.no/atc_ddd_index/?code=J01DF01)),
-#'  **CAP**: capreomycin ([J04AB30](https://www.whocc.no/atc_ddd_index/?code=J04AB30)),
-#'  **RID**: cefaloridine ([J01DB02](https://www.whocc.no/atc_ddd_index/?code=J01DB02)),
-#'  **CZO**: cefazolin ([J01DB04](https://www.whocc.no/atc_ddd_index/?code=J01DB04)),
-#'  **FEP**: cefepime ([J01DE01](https://www.whocc.no/atc_ddd_index/?code=J01DE01)),
-#'  **CTX**: cefotaxime ([J01DD01](https://www.whocc.no/atc_ddd_index/?code=J01DD01)),
-#'  **CTT**: cefotetan ([J01DC05](https://www.whocc.no/atc_ddd_index/?code=J01DC05)),
-#'  **FOX**: cefoxitin ([J01DC01](https://www.whocc.no/atc_ddd_index/?code=J01DC01)),
-#'  **CPT**: ceftaroline ([J01DI02](https://www.whocc.no/atc_ddd_index/?code=J01DI02)),
-#'  **CAZ**: ceftazidime ([J01DD02](https://www.whocc.no/atc_ddd_index/?code=J01DD02)),
-#'  **CRO**: ceftriaxone ([J01DD04](https://www.whocc.no/atc_ddd_index/?code=J01DD04)),
-#'  **CXM**: cefuroxime ([J01DC02](https://www.whocc.no/atc_ddd_index/?code=J01DC02)),
-#'  **CED**: cephradine ([J01DB09](https://www.whocc.no/atc_ddd_index/?code=J01DB09)),
-#'  **CHL**: chloramphenicol ([J01BA01](https://www.whocc.no/atc_ddd_index/?code=J01BA01)),
-#'  **CIP**: ciprofloxacin ([J01MA02](https://www.whocc.no/atc_ddd_index/?code=J01MA02)),
-#'  **CLR**: clarithromycin ([J01FA09](https://www.whocc.no/atc_ddd_index/?code=J01FA09)),
-#'  **CLI**: clindamycin ([J01FF01](https://www.whocc.no/atc_ddd_index/?code=J01FF01)),
-#'  **COL**: colistin ([J01XB01](https://www.whocc.no/atc_ddd_index/?code=J01XB01)),
-#'  **DAP**: daptomycin ([J01XX09](https://www.whocc.no/atc_ddd_index/?code=J01XX09)),
-#'  **DOR**: doripenem ([J01DH04](https://www.whocc.no/atc_ddd_index/?code=J01DH04)),
-#'  **DOX**: doxycycline ([J01AA02](https://www.whocc.no/atc_ddd_index/?code=J01AA02)),
-#'  **ETP**: ertapenem ([J01DH03](https://www.whocc.no/atc_ddd_index/?code=J01DH03)),
-#'  **ERY**: erythromycin ([J01FA01](https://www.whocc.no/atc_ddd_index/?code=J01FA01)),
-#'  **ETH**: ethambutol ([J04AK02](https://www.whocc.no/atc_ddd_index/?code=J04AK02)),
-#'  **FLC**: flucloxacillin ([J01CF05](https://www.whocc.no/atc_ddd_index/?code=J01CF05)),
-#'  **FOS**: fosfomycin ([J01XX01](https://www.whocc.no/atc_ddd_index/?code=J01XX01)),
-#'  **FUS**: fusidic acid ([J01XC01](https://www.whocc.no/atc_ddd_index/?code=J01XC01)),
-#'  **GAT**: gatifloxacin ([J01MA16](https://www.whocc.no/atc_ddd_index/?code=J01MA16)),
-#'  **GEN**: gentamicin ([J01GB03](https://www.whocc.no/atc_ddd_index/?code=J01GB03)),
-#'  **GEH**: gentamicin-high (no ATC code),
-#'  **IPM**: imipenem ([J01DH51](https://www.whocc.no/atc_ddd_index/?code=J01DH51)),
-#'  **INH**: isoniazid ([J04AC01](https://www.whocc.no/atc_ddd_index/?code=J04AC01)),
-#'  **KAN**: kanamycin ([J01GB04](https://www.whocc.no/atc_ddd_index/?code=J01GB04)),
-#'  **LVX**: levofloxacin ([J01MA12](https://www.whocc.no/atc_ddd_index/?code=J01MA12)),
-#'  **LIN**: lincomycin ([J01FF02](https://www.whocc.no/atc_ddd_index/?code=J01FF02)),
-#'  **LNZ**: linezolid ([J01XX08](https://www.whocc.no/atc_ddd_index/?code=J01XX08)),
-#'  **MEM**: meropenem ([J01DH02](https://www.whocc.no/atc_ddd_index/?code=J01DH02)),
-#'  **MTR**: metronidazole ([J01XD01](https://www.whocc.no/atc_ddd_index/?code=J01XD01)),
-#'  **MEZ**: mezlocillin ([J01CA10](https://www.whocc.no/atc_ddd_index/?code=J01CA10)),
-#'  **MNO**: minocycline ([J01AA08](https://www.whocc.no/atc_ddd_index/?code=J01AA08)),
-#'  **MFX**: moxifloxacin ([J01MA14](https://www.whocc.no/atc_ddd_index/?code=J01MA14)),
-#'  **NAL**: nalidixic acid ([J01MB02](https://www.whocc.no/atc_ddd_index/?code=J01MB02)),
-#'  **NEO**: neomycin ([J01GB05](https://www.whocc.no/atc_ddd_index/?code=J01GB05)),
-#'  **NET**: netilmicin ([J01GB07](https://www.whocc.no/atc_ddd_index/?code=J01GB07)),
-#'  **NIT**: nitrofurantoin ([J01XE01](https://www.whocc.no/atc_ddd_index/?code=J01XE01)),
-#'  **NOR**: norfloxacin ([J01MA06](https://www.whocc.no/atc_ddd_index/?code=J01MA06)),
-#'  **NOV**: novobiocin ([QJ01XX95](https://www.whocc.no/atc_ddd_index/?code=QJ01XX95)),
-#'  **OFX**: ofloxacin ([J01MA01](https://www.whocc.no/atc_ddd_index/?code=J01MA01)),
-#'  **OXA**: oxacillin ([J01CF04](https://www.whocc.no/atc_ddd_index/?code=J01CF04)),
-#'  **PEN**: penicillin G ([J01CE01](https://www.whocc.no/atc_ddd_index/?code=J01CE01)),
-#'  **PIP**: piperacillin ([J01CA12](https://www.whocc.no/atc_ddd_index/?code=J01CA12)),
-#'  **TZP**: piperacillin/tazobactam ([J01CR05](https://www.whocc.no/atc_ddd_index/?code=J01CR05)),
-#'  **PLB**: polymyxin B ([J01XB02](https://www.whocc.no/atc_ddd_index/?code=J01XB02)),
-#'  **PRI**: pristinamycin ([J01FG01](https://www.whocc.no/atc_ddd_index/?code=J01FG01)),
-#'  **PZA**: pyrazinamide ([J04AK01](https://www.whocc.no/atc_ddd_index/?code=J04AK01)),
-#'  **QDA**: quinupristin/dalfopristin ([J01FG02](https://www.whocc.no/atc_ddd_index/?code=J01FG02)),
-#'  **RIB**: rifabutin ([J04AB04](https://www.whocc.no/atc_ddd_index/?code=J04AB04)),
-#'  **RIF**: rifampicin ([J04AB02](https://www.whocc.no/atc_ddd_index/?code=J04AB02)),
-#'  **RFP**: rifapentine ([J04AB05](https://www.whocc.no/atc_ddd_index/?code=J04AB05)),
-#'  **RXT**: roxithromycin ([J01FA06](https://www.whocc.no/atc_ddd_index/?code=J01FA06)),
-#'  **SIS**: sisomicin ([J01GB08](https://www.whocc.no/atc_ddd_index/?code=J01GB08)),
-#'  **STH**: streptomycin-high (no ATC code),
-#'  **TEC**: teicoplanin ([J01XA02](https://www.whocc.no/atc_ddd_index/?code=J01XA02)),
-#'  **TLV**: telavancin ([J01XA03](https://www.whocc.no/atc_ddd_index/?code=J01XA03)),
-#'  **TCY**: tetracycline ([J01AA07](https://www.whocc.no/atc_ddd_index/?code=J01AA07)),
-#'  **TIC**: ticarcillin ([J01CA13](https://www.whocc.no/atc_ddd_index/?code=J01CA13)),
-#'  **TCC**: ticarcillin/clavulanic acid ([J01CR03](https://www.whocc.no/atc_ddd_index/?code=J01CR03)),
-#'  **TGC**: tigecycline ([J01AA12](https://www.whocc.no/atc_ddd_index/?code=J01AA12)),
-#'  **TOB**: tobramycin ([J01GB01](https://www.whocc.no/atc_ddd_index/?code=J01GB01)),
-#'  **TMP**: trimethoprim ([J01EA01](https://www.whocc.no/atc_ddd_index/?code=J01EA01)),
-#'  **SXT**: trimethoprim/sulfamethoxazole ([J01EE01](https://www.whocc.no/atc_ddd_index/?code=J01EE01)),
-#'  **VAN**: vancomycin ([J01XA01](https://www.whocc.no/atc_ddd_index/?code=J01XA01)).
+#' `r create_ab_documentation(c("AMC", "AMK", "AMP", "AMX", "ATM", "AVO", "AZL", "AZM", "BAM", "BPR", "CAC", "CAP", "CAT", "CAZ", "CCV", "CDR", "CDZ", "CEC", "CED", "CEI", "CEP", "CFM", "CFM1", "CFP", "CFR", "CFS", "CHL", "CID", "CIP", "CLI", "CLR", "CMX", "CMZ", "CND", "COL", "CPD", "CPM", "CPO", "CPR", "CPT", "CRB", "CRD", "CRN", "CRO", "CSL", "CTB", "CTF", "CTL", "CTT", "CTX", "CTZ", "CXM", "CYC", "CZD", "CZO", "CZX", "DAL", "DAP", "DIR", "DIT", "DIZ", "DKB", "DOR", "DOX", "ENX", "EPC", "ERY", "ETH", "ETP", "FEP", "FLC", "FLE", "FLR1", "FOS", "FOX", "FOX1", "FUS", "GAT", "GEH", "GEM", "GEN", "GRX", "HAP", "HET", "INH", "IPM", "ISE", "JOS", "KAN", "LEX", "LIN", "LNZ", "LOM", "LOR", "LTM", "LVX", "MAN", "MCM", "MEC", "MEM", "MEV", "MEZ", "MFX", "MID", "MNO", "MTM", "NAL", "NEO", "NET", "NIT", "NOR", "NOV", "NVA", "OFX", "OLE", "ORI", "OXA", "PAZ", "PEF", "PEN", "PHN", "PIP", "PLB", "PME", "PRI", "PRL", "PRU", "PVM", "PZA", "QDA", "RAM", "RFL", "RFP", "RIB", "RID", "RIF", "ROK", "RST", "RXT", "SAM", "SBC", "SDI", "SDM", "SIS", "SLF", "SLF1", "SLF10", "SLF11", "SLF12", "SLF13", "SLF2", "SLF3", "SLF4", "SLF5", "SLF6", "SLF7", "SLF8", "SLF9", "SLT1", "SLT2", "SLT3", "SLT4", "SLT5", "SMX", "SPI", "SPX", "STH", "STR", "STR1", "SUD", "SUT", "SXT", "SZO", "TAL", "TCC", "TCM", "TCY", "TEC", "TEM", "TGC", "THA", "TIC", "TLT", "TLV", "TMP", "TMX", "TOB", "TRL", "TVA", "TZD", "TZP", "VAN"))`
 #' @aliases EUCAST
 #' @rdname eucast_rules
 #' @export
@@ -142,9 +77,13 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #'   Leclercq et al. **EUCAST expert rules in antimicrobial susceptibility testing.** *Clin Microbiol Infect.* 2013;19(2):141-60. \cr
 #'   <https://doi.org/10.1111/j.1469-0691.2011.03703.x>
 #' - EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes Tables. Version 3.1, 2016.  \cr
-#'   <http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf>
+#'   <https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf>
+#' - EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.2, 2020.  \cr
+#'   <https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf>
 #' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 9.0, 2019. \cr
-#'   <http://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx>
+#'   <https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx>
+#' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 10.0, 2020. \cr
+#'   <https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_10.0_Breakpoint_Tables.xlsx>
 #' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
 #' @examples
@@ -159,7 +98,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #'                 COL = "-",       # Colistin
 #'                 CAZ = "-",       # Ceftazidime
 #'                 CXM = "-",       # Cefuroxime
-#'                 PEN = "S",       # Penicillin G
+#'                 PEN = "S",       # Benzylpenicillin
 #'                 FOX = "S",       # Cefoxitin
 #'                 stringsAsFactors = FALSE)
 #'
@@ -172,7 +111,7 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #' # 5 Pseudomonas aeruginosa    -    -    -    -    -    S    S
 #'
 #'
-#' # apply EUCAST rules: 18 results are forced as R or S
+#' # apply EUCAST rules: some results wil be changed
 #' b <- eucast_rules(a)
 #'
 #' b
@@ -185,24 +124,40 @@ EUCAST_VERSION_EXPERT_RULES <- "3.1, 2016"
 #'
 #'
 #' # do not apply EUCAST rules, but rather get a data.frame
-#' # with 18 rows, containing all details about the transformations:
+#' # containing all details about the transformations:
 #' c <- eucast_rules(a, verbose = TRUE)
 #' }
 eucast_rules <- function(x,
                          col_mo = NULL,
                          info = interactive(),
-                         rules = getOption("AMR.eucast_rules", default = c("breakpoints", "expert")),
+                         rules = getOption("AMR_eucastrules", default = c("breakpoints", "expert")),
                          verbose = FALSE,
+                         version_breakpoints = 10.0,
+                         version_expertrules = 3.2,
                          ...) {
   
   check_dataset_integrity()
   
-  if (verbose == TRUE & interactive()) {
+  version_breakpoints <- as.double(version_breakpoints)
+  version_expertrules <- as.double(version_expertrules)
+  stop_ifnot(version_breakpoints %in% as.double(names(EUCAST_VERSION_BREAKPOINTS)),
+             "EUCAST version ", version_breakpoints, " for clinical breakpoints not found")
+  stop_ifnot(version_expertrules %in% as.double(names(EUCAST_VERSION_EXPERT_RULES)),
+             "EUCAST version ", version_expertrules, " for expert rules/intrinsic resistance not found")
+  breakpoints_info <- EUCAST_VERSION_BREAKPOINTS[[which(as.double(names(EUCAST_VERSION_BREAKPOINTS)) == version_breakpoints)]]
+  expertrules_info <- EUCAST_VERSION_EXPERT_RULES[[which(as.double(names(EUCAST_VERSION_EXPERT_RULES)) == version_expertrules)]]
+  
+  # support old setting (until AMR v1.3.0)
+  if (missing(rules) & !is.null(getOption("AMR.eucast_rules", default = NULL))) {
+    rules <- getOption("AMR.eucast_rules")
+  }
+  
+  if (verbose == TRUE & info == TRUE) {
     txt <- paste0("WARNING: In Verbose mode, the eucast_rules() function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way.",
                   "\n\nThis may overwrite your existing data if you use e.g.:",
                   "\ndata <- eucast_rules(data, verbose = TRUE)\n\nDo you want to continue?")
-    if ("rstudioapi" %in% rownames(utils::installed.packages())) {
-      showQuestion <- import_fn("showQuestion", "rstudioapi")
+    showQuestion <- import_fn("showQuestion", "rstudioapi", error_on_fail = FALSE)
+    if (!is.null(showQuestion)) {
       q_continue <- showQuestion("Using verbose = TRUE with eucast_rules()", txt)
     } else {
       q_continue <- utils::menu(choices = c("OK", "Cancel"), graphics = FALSE, title = txt)
@@ -218,7 +173,7 @@ eucast_rules <- function(x,
   # try to find columns based on type
   # -- mo
   if (is.null(col_mo)) {
-    col_mo <- search_type_in_df(x = x, type = "mo")
+    col_mo <- search_type_in_df(x = x, type = "mo", info = info)
   }
   stop_if(is.null(col_mo), "`col_mo` must be set")
   stop_ifnot(col_mo %in% colnames(x), "column '", col_mo, "' (`col_mo`) not found")
@@ -234,41 +189,31 @@ eucast_rules <- function(x,
   
   warned <- FALSE
   warn_lacking_rsi_class <- FALSE
-  
-  txt_error <- function() {
-    if (info == TRUE) cat("", font_red_bg(font_white(" ERROR ")), "\n\n") 
-  }
-  txt_warning <- function() {
+  txt_ok <- function(n_added, n_changed, warned = FALSE) {
     if (warned == FALSE) {
-      if (info == TRUE) cat("", font_yellow_bg(font_black(" WARNING ")))
-    }
-    warned <<- TRUE 
-  }
-  txt_ok <- function(no_added, no_changed) {
-    if (warned == FALSE) {
-      if (no_added + no_changed == 0) {
+      if (n_added + n_changed == 0) {
         cat(font_subtle(" (no changes)\n"))
       } else {
         # opening
         cat(font_grey(" ("))
         # additions
-        if (no_added > 0) {
-          if (no_added == 1) {
+        if (n_added > 0) {
+          if (n_added == 1) {
             cat(font_green("1 value added"))
           } else {
-            cat(font_green(formatnr(no_added), "values added"))
+            cat(font_green(formatnr(n_added), "values added"))
           }
         }
         # separator
-        if (no_added > 0 & no_changed > 0) {
+        if (n_added > 0 & n_changed > 0) {
           cat(font_grey(", "))
         }
         # changes
-        if (no_changed > 0) {
-          if (no_changed == 1) {
+        if (n_changed > 0) {
+          if (n_changed == 1) {
             cat(font_blue("1 value changed"))
           } else {
-            cat(font_blue(formatnr(no_changed), "values changed"))
+            cat(font_blue(formatnr(n_changed), "values changed"))
           }
         } 
         # closing
@@ -280,137 +225,209 @@ eucast_rules <- function(x,
   
   cols_ab <- get_column_abx(x = x,
                             soft_dependencies = c("AMC",
-                                                  "AMK",
-                                                  "AMX",
                                                   "AMP",
-                                                  "AZM",
-                                                  "AZL",
-                                                  "ATM",
-                                                  "RID",
-                                                  "FEP",
-                                                  "CTX",
-                                                  "FOX",
-                                                  "CED",
-                                                  "CAZ",
-                                                  "CRO",
-                                                  "CXM",
-                                                  "CHL",
+                                                  "AMX",
                                                   "CIP",
-                                                  "CLR",
-                                                  "CLI",
-                                                  "FLC",
-                                                  "COL",
-                                                  "CZO",
-                                                  "DAP",
-                                                  "DOX",
-                                                  "ETP",
                                                   "ERY",
-                                                  "FOS",
-                                                  "FUS",
+                                                  "FOX1",
                                                   "GEN",
-                                                  "IPM",
-                                                  "KAN",
-                                                  "LVX",
-                                                  "LIN",
-                                                  "LNZ",
-                                                  "MEM",
-                                                  "MEZ",
-                                                  "MNO",
                                                   "MFX",
                                                   "NAL",
-                                                  "NEO",
-                                                  "NET",
-                                                  "NIT",
                                                   "NOR",
-                                                  "NOV",
-                                                  "OFX",
-                                                  "OXA",
                                                   "PEN",
                                                   "PIP",
-                                                  "TZP",
-                                                  "PLB",
-                                                  "PRI",
-                                                  "QDA",
-                                                  "RIF",
-                                                  "RXT",
-                                                  "SIS",
-                                                  "TEC",
                                                   "TCY",
                                                   "TIC",
-                                                  "TGC",
-                                                  "TOB",
-                                                  "TMP",
-                                                  "SXT",
-                                                  "VAN"),
+                                                  "TOB"),
                             hard_dependencies = NULL,
                             verbose = verbose,
+                            info = info,
                             ...)
-  
-  # data preparation ----
-  message(font_blue("NOTE: Preparing data..."), appendLF = FALSE)
   
   AMC <- cols_ab["AMC"]
   AMK <- cols_ab["AMK"]
   AMP <- cols_ab["AMP"]
   AMX <- cols_ab["AMX"]
   ATM <- cols_ab["ATM"]
+  AVO <- cols_ab["AVO"]
   AZL <- cols_ab["AZL"]
   AZM <- cols_ab["AZM"]
+  BAM <- cols_ab["BAM"]
+  BPR <- cols_ab["BPR"]
+  CAC <- cols_ab["CAC"]
+  CAT <- cols_ab["CAT"]
   CAZ <- cols_ab["CAZ"]
+  CCV <- cols_ab["CCV"]
+  CDR <- cols_ab["CDR"]
+  CDZ <- cols_ab["CDZ"]
+  CEC <- cols_ab["CEC"]
   CED <- cols_ab["CED"]
+  CEI <- cols_ab["CEI"]
+  CEP <- cols_ab["CEP"]
+  CFM <- cols_ab["CFM"]
+  CFM1 <- cols_ab["CFM1"]
+  CFP <- cols_ab["CFP"]
+  CFR <- cols_ab["CFR"]
+  CFS <- cols_ab["CFS"]
   CHL <- cols_ab["CHL"]
+  CID <- cols_ab["CID"]
   CIP <- cols_ab["CIP"]
   CLI <- cols_ab["CLI"]
+  CLI <- cols_ab["CLI"]
   CLR <- cols_ab["CLR"]
+  CMX <- cols_ab["CMX"]
+  CMZ <- cols_ab["CMZ"]
+  CND <- cols_ab["CND"]
   COL <- cols_ab["COL"]
+  CPD <- cols_ab["CPD"]
+  CPM <- cols_ab["CPM"]
+  CPO <- cols_ab["CPO"]
+  CPR <- cols_ab["CPR"]
+  CPT <- cols_ab["CPT"]
+  CRB <- cols_ab["CRB"]
+  CRD <- cols_ab["CRD"]
+  CRN <- cols_ab["CRN"]
   CRO <- cols_ab["CRO"]
+  CSL <- cols_ab["CSL"]
+  CTB <- cols_ab["CTB"]
+  CTF <- cols_ab["CTF"]
+  CTL <- cols_ab["CTL"]
+  CTT <- cols_ab["CTT"]
   CTX <- cols_ab["CTX"]
+  CTZ <- cols_ab["CTZ"]
   CXM <- cols_ab["CXM"]
+  CYC <- cols_ab["CYC"]
+  CZD <- cols_ab["CZD"]
   CZO <- cols_ab["CZO"]
+  CZX <- cols_ab["CZX"]
+  DAL <- cols_ab["DAL"]
   DAP <- cols_ab["DAP"]
+  DIR <- cols_ab["DIR"]
+  DIT <- cols_ab["DIT"]
+  DIZ <- cols_ab["DIZ"]
+  DKB <- cols_ab["DKB"]
+  DOR <- cols_ab["DOR"]
   DOX <- cols_ab["DOX"]
+  ENX <- cols_ab["ENX"]
+  EPC <- cols_ab["EPC"]
   ERY <- cols_ab["ERY"]
   ETP <- cols_ab["ETP"]
   FEP <- cols_ab["FEP"]
   FLC <- cols_ab["FLC"]
+  FLE <- cols_ab["FLE"]
+  FLR1 <- cols_ab["FLR1"]
   FOS <- cols_ab["FOS"]
   FOX <- cols_ab["FOX"]
+  FOX1 <- cols_ab["FOX1"]
   FUS <- cols_ab["FUS"]
+  GAT <- cols_ab["GAT"]
+  GEM <- cols_ab["GEM"]
   GEN <- cols_ab["GEN"]
+  GRX <- cols_ab["GRX"]
+  HAP <- cols_ab["HAP"]
+  HET <- cols_ab["HET"]
   IPM <- cols_ab["IPM"]
+  ISE <- cols_ab["ISE"]
+  JOS <- cols_ab["JOS"]
   KAN <- cols_ab["KAN"]
+  LEX <- cols_ab["LEX"]
   LIN <- cols_ab["LIN"]
   LNZ <- cols_ab["LNZ"]
+  LOM <- cols_ab["LOM"]
+  LOR <- cols_ab["LOR"]
+  LTM <- cols_ab["LTM"]
   LVX <- cols_ab["LVX"]
+  MAN <- cols_ab["MAN"]
+  MCM <- cols_ab["MCM"]
+  MEC <- cols_ab["MEC"]
   MEM <- cols_ab["MEM"]
+  MEV <- cols_ab["MEV"]
   MEZ <- cols_ab["MEZ"]
   MFX <- cols_ab["MFX"]
+  MID <- cols_ab["MID"]
   MNO <- cols_ab["MNO"]
+  MTM <- cols_ab["MTM"]
   NAL <- cols_ab["NAL"]
   NEO <- cols_ab["NEO"]
   NET <- cols_ab["NET"]
   NIT <- cols_ab["NIT"]
   NOR <- cols_ab["NOR"]
   NOV <- cols_ab["NOV"]
+  NVA <- cols_ab["NVA"]
   OFX <- cols_ab["OFX"]
+  OLE <- cols_ab["OLE"]
+  ORI <- cols_ab["ORI"]
   OXA <- cols_ab["OXA"]
+  PAZ <- cols_ab["PAZ"]
+  PEF <- cols_ab["PEF"]
   PEN <- cols_ab["PEN"]
+  PHN <- cols_ab["PHN"]
   PIP <- cols_ab["PIP"]
   PLB <- cols_ab["PLB"]
+  PME <- cols_ab["PME"]
   PRI <- cols_ab["PRI"]
+  PRL <- cols_ab["PRL"]
+  PRU <- cols_ab["PRU"]
+  PVM <- cols_ab["PVM"]
   QDA <- cols_ab["QDA"]
+  QDA <- cols_ab["QDA"]
+  RAM <- cols_ab["RAM"]
+  RFL <- cols_ab["RFL"]
   RID <- cols_ab["RID"]
   RIF <- cols_ab["RIF"]
+  ROK <- cols_ab["ROK"]
+  RST <- cols_ab["RST"]
   RXT <- cols_ab["RXT"]
   SAM <- cols_ab["SAM"]
+  SBC <- cols_ab["SBC"]
+  SDI <- cols_ab["SDI"]
+  SDM <- cols_ab["SDM"]
   SIS <- cols_ab["SIS"]
+  SLF <- cols_ab["SLF"]
+  SLF1 <- cols_ab["SLF1"]
+  SLF10 <- cols_ab["SLF10"]
+  SLF11 <- cols_ab["SLF11"]
+  SLF12 <- cols_ab["SLF12"]
+  SLF13 <- cols_ab["SLF13"]
+  SLF2 <- cols_ab["SLF2"]
+  SLF3 <- cols_ab["SLF3"]
+  SLF4 <- cols_ab["SLF4"]
+  SLF5 <- cols_ab["SLF5"]
+  SLF6 <- cols_ab["SLF6"]
+  SLF7 <- cols_ab["SLF7"]
+  SLF8 <- cols_ab["SLF8"]
+  SLF9 <- cols_ab["SLF9"]
+  SLT1 <- cols_ab["SLT1"]
+  SLT2 <- cols_ab["SLT2"]
+  SLT3 <- cols_ab["SLT3"]
+  SLT4 <- cols_ab["SLT4"]
+  SLT5 <- cols_ab["SLT5"]
+  SMX <- cols_ab["SMX"]
+  SPI <- cols_ab["SPI"]
+  SPX <- cols_ab["SPX"]
+  STR <- cols_ab["STR"]
+  STR1 <- cols_ab["STR1"]
+  SUD <- cols_ab["SUD"]
+  SUT <- cols_ab["SUT"]
   SXT <- cols_ab["SXT"]
+  SZO <- cols_ab["SZO"]
+  TAL <- cols_ab["TAL"]
+  TCC <- cols_ab["TCC"]
+  TCM <- cols_ab["TCM"]
   TCY <- cols_ab["TCY"]
   TEC <- cols_ab["TEC"]
+  TEM <- cols_ab["TEM"]
   TGC <- cols_ab["TGC"]
+  THA <- cols_ab["THA"]
   TIC <- cols_ab["TIC"]
+  TLT <- cols_ab["TLT"]
+  TLV <- cols_ab["TLV"]
   TMP <- cols_ab["TMP"]
+  TMX <- cols_ab["TMX"]
   TOB <- cols_ab["TOB"]
+  TRL <- cols_ab["TRL"]
+  TVA <- cols_ab["TVA"]
+  TZD <- cols_ab["TZD"]
   TZP <- cols_ab["TZP"]
   VAN <- cols_ab["VAN"]
   
@@ -418,144 +435,43 @@ eucast_rules <- function(x,
     all(ab %in% c(NULL, NA))
   }
   
-  verbose_info <- data.frame(row = integer(0),
-                             col = character(0),
-                             mo_fullname = character(0),
-                             old = as.rsi(character(0)),
-                             new = as.rsi(character(0)),
-                             rule = character(0),
-                             rule_group = character(0),
-                             rule_name = character(0),
-                             stringsAsFactors = FALSE)
-  
-  # helper function for editing the table ----
-  edit_rsi <- function(to, rule, rows, cols) {
-    cols <- unique(cols[!is.na(cols) & !is.null(cols)])
-    if (length(rows) > 0 & length(cols) > 0) {
-      before_df <- x_original
-      if (any(!sapply(x[, cols, drop = FALSE], is.rsi), na.rm = TRUE)) {
-        warn_lacking_rsi_class <<- TRUE
-      }
-      tryCatch(
-        # insert into original table
-        x_original[rows, cols] <<- to,
-        warning = function(w) {
-          if (w$message %like% "invalid factor level") {
-            xyz <- sapply(cols, function(col) {
-              x_original[, col] <<- factor(x = as.character(pm_pull(x_original, col)), levels = c(to, levels(pm_pull(x_original, col))))
-              x[, col] <<- factor(x = as.character(pm_pull(x, col)), levels = c(to, levels(pm_pull(x, col))))
-              invisible()
-            })
-            x_original[rows, cols] <<- to
-            warning('Value "', to, '" added to the factor levels of column(s) `', paste(cols, collapse = "`, `"), "` because this value was not an existing factor level.\nA better way is to use as.rsi() on beforehand on antimicrobial columns to guarantee the right structure.", call. = FALSE)
-            txt_warning()
-            warned <<- FALSE
-          } else {
-            warning(w$message, call. = FALSE)
-            txt_warning()
-            cat("\n") # txt_warning() does not append a "\n" on itself
-          }
-        },
-        error = function(e) {
-          txt_error()
-          stop(paste0("In row(s) ", paste(rows[1:min(length(rows), 10)], collapse = ","), 
-                      ifelse(length(rows) > 10, "...", ""),
-                      " while writing value '", to, 
-                      "' to column(s) `", paste(cols, collapse = "`, `"), 
-                      "`:\n", e$message),
-               call. = FALSE)
-        }
-      )
-      
-      tryCatch(
-        x[rows, cols] <<- x_original[rows, cols],
-        error = function(e) {
-          stop(paste0("In row(s) ", paste(rows[1:min(length(rows), 10)], collapse = ","),
-                      "... while writing value '", to, 
-                      "' to column(s) `", paste(cols, collapse = "`, `"), 
-                      "`:\n", e$message), call. = FALSE)
-        }
-      )
-      
-      # before_df might not be a data.frame, but a tibble or data.table instead
-      old <- as.data.frame(before_df, stringsAsFactors = FALSE)[rows, ]
-      track_changes <- list(added = 0,
-                            changed = 0)
-      for (i in seq_len(length(cols))) {
-        verbose_new <- data.frame(row = rows,
-                                  col = cols[i],
-                                  mo_fullname = x[rows, "fullname"],
-                                  old = as.rsi(as.character(old[, cols[i]]), warn = FALSE),
-                                  new = as.rsi(as.character(x[rows, cols[i]])),
-                                  rule = font_stripstyle(rule[1]),
-                                  rule_group = font_stripstyle(rule[2]),
-                                  rule_name = font_stripstyle(rule[3]),
-                                  stringsAsFactors = FALSE)
-        colnames(verbose_new) <- c("row", "col", "mo_fullname", "old", "new", "rule", "rule_group", "rule_name")
-        verbose_new <- verbose_new %pm>% pm_filter(old != new | is.na(old))
-        # save changes to data set 'verbose_info'
-        verbose_info <<- rbind(verbose_info, verbose_new)
-        # count adds and changes
-        track_changes$added <- track_changes$added + verbose_new %pm>% pm_filter(is.na(old)) %pm>% nrow()
-        track_changes$changed <- track_changes$changed + verbose_new %pm>% pm_filter(!is.na(old)) %pm>% nrow()
-      }
-      # after the applied changes: return list with counts of added and changed
-      return(track_changes)
-    }
-    # no changes were applied: return number of (new) changes: none.
-    return(list(added = 0,
-                changed = 0))
-  }
-  
-
-  old_cols <- colnames(x)
-  old_attributes <- attributes(x)
-  x <- as.data.frame(x, stringsAsFactors = FALSE) # no tibbles, data.tables, etc.
-  # create unique row IDs - combination of the MO and all ABx columns (so they will only run once per unique combination)
-  x$`.rowid` <- sapply(as.list(as.data.frame(t(x[, c(col_mo, cols_ab), drop = FALSE]))), function(x) {
-    x[is.na(x)] <- "."
-    paste0(x, collapse = "")
-  })
-  
-  # save original table, with the new .rowid column
-  x_original.bak <- x
-  # keep only unique rows for MO and ABx
-  x <- x %pm>% pm_distinct(`.rowid`, .keep_all = TRUE)
-  x_original <- x
-  
-  # join to microorganisms data set
-  x <- as.data.frame(x, stringsAsFactors = FALSE)
-  x[, col_mo] <- as.mo(x[, col_mo, drop = TRUE])
-  x <- x %pm>%
-    left_join_microorganisms(by = col_mo, suffix = c("_oldcols", ""))
-  x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL)
-  x$genus_species <- paste(x$genus, x$species)
-  message(font_blue("OK."))
-  
   if (ab_missing(AMP) & !ab_missing(AMX)) {
     # ampicillin column is missing, but amoxicillin is available
-    message(font_blue(paste0("NOTE: Using column `", font_bold(AMX), "` as input for ampicillin (J01CA01) since many EUCAST rules depend on it.")))
+    if (info == TRUE) {
+      message(font_blue(paste0("NOTE: Using column `", font_bold(AMX), "` as input for ampicillin since many EUCAST rules depend on it.")))
+    }
     AMP <- AMX
   }
   
+  # data preparation ----
+  if (info == TRUE & NROW(x) > 10000) {
+    message(font_blue("NOTE: Preparing data..."), appendLF = FALSE)
+  }
+
   # nolint start
   # antibiotic classes ----
-  aminoglycosides <- c(TOB, GEN, KAN, NEO, NET, SIS)
-  tetracyclines <- c(DOX, MNO, TCY) # since EUCAST v3.1 tigecycline (TGC) is set apart
-  polymyxins <- c(PLB, COL)
-  macrolides <- c(ERY, AZM, RXT, CLR) # since EUCAST v3.1 clinda is set apart
-  glycopeptides <- c(VAN, TEC)
-  streptogramins <- c(QDA, PRI) # should officially also be quinupristin/dalfopristin
+  aminoglycosides <- c(AMK, DKB, GEN, ISE, KAN, NEO, NET, RST, SIS, STR, STR1, TOB)
   aminopenicillins <- c(AMP, AMX)
-  cephalosporins <- c(FEP, CTX, FOX, CED, CAZ, CRO, CXM, CZO)
+  carbapenems <- c(DOR, ETP, IPM, MEM, MEV)
+  cephalosporins <- c(CDZ, CAC, CEC, CFR, RID, MAN, CTZ, CZD, CZO, CDR, DIT, FEP, CAT, CFM, CMX, CMZ, DIZ, CID, CFP, CSL, CND, CTX, CTT, CTF, FOX, CPM, CPO, CPD, CPR, CRD, CFS, CPT, CAZ, CCV, CTL, CTB, CZX, BPR, CFM1, CEI, CRO, CXM, LEX, CEP, HAP, CED, LTM, LOR)
+  cephalosporins_1st <- c(CAC, CFR, RID, CTZ, CZD, CZO, CRD, CTL, LEX, CEP, HAP, CED)
+  cephalosporins_2nd <- c(CEC, MAN, CMZ, CID, CND, CTT, CTF, FOX, CPR, CXM, LOR)
   cephalosporins_except_CAZ <- cephalosporins[cephalosporins != ifelse(is.null(CAZ), "", CAZ)]
-  carbapenems <- c(ETP, IPM, MEM)
+  fluoroquinolones <- c(CIP, ENX, FLE, GAT, GEM, GRX, LVX, LOM, MFX, NOR, OFX, PAZ, PEF, PRU, RFL, SPX, TMX, TVA)
+  glycopeptides <- c(AVO, NVA, RAM, TEC, TCM, VAN) # dalba/orita/tela are in lipoglycopeptides
+  lincosamides <- c(CLI, LIN, PRL)
+  lipoglycopeptides <- c(DAL, ORI, TLV)
+  macrolides <- c(AZM, CLR, DIR, ERY, FLR1, JOS, MID, MCM, OLE, ROK, RXT, SPI, TLT, TRL)
+  oxazolidinones <- c(CYC, LNZ, THA, TZD)
+  polymyxins <- c(PLB, COL)
+  streptogramins <- c(QDA, PRI)
+  tetracyclines <- c(DOX, MNO, TCY) # since EUCAST v3.1 tigecycline (TGC) is set apart
   ureidopenicillins <- c(PIP, TZP, AZL, MEZ)
   all_betalactams <- c(aminopenicillins, cephalosporins, carbapenems, ureidopenicillins, AMC, OXA, FLC, PEN)
-  fluoroquinolones <- c(OFX, CIP, NOR, LVX, MFX)
   # nolint end
   
-  # help function to get available antibiotic column names ------------------
+  
+  # Some helper functions ---------------------------------------------------
   get_antibiotic_columns <- function(x, df) {
     x <- trimws(unlist(strsplit(x, ",", fixed = TRUE)))
     y <- character(0)
@@ -566,6 +482,17 @@ eucast_rules <- function(x,
       y <- c(y, tryCatch(get(x[i]), error = function(e) ""))
     }
     y[y != "" & y %in% colnames(df)]
+  }
+  markup_italics_where_needed <- function(x) {
+    # returns names found in family, genus or species as italics
+    if (!has_colour()) {
+      return(x)
+    }
+    x <- unlist(strsplit(x, " "))
+    ind <- gsub("[)(:]", "", x) %in% c(MO_lookup[which(MO_lookup$rank %in% c("family", "genus")), ]$fullname,
+                                       MO_lookup[which(MO_lookup$rank == "species"), ]$species)
+    x[ind] <- font_italic(x[ind], collapse = NULL)
+    paste(x, collapse = " ")
   }
   get_antibiotic_names <- function(x) {
     x <- x %pm>%
@@ -607,10 +534,62 @@ eucast_rules <- function(x,
       }
     }
   }
+  as.rsi_no_warning <- function(x) {
+    if (is.rsi(x)) {
+      return(x)
+    }
+    suppressWarnings(as.rsi(x))
+  }
   
-  as.rsi_no_warning <- function(x) suppressWarnings(as.rsi(x))
-  no_added <- 0
-  no_changed <- 0
+  verbose_info <- data.frame(rowid = character(0),
+                             col = character(0),
+                             mo_fullname = character(0),
+                             old = as.rsi(character(0)),
+                             new = as.rsi(character(0)),
+                             rule = character(0),
+                             rule_group = character(0),
+                             rule_name = character(0),
+                             rule_source = character(0),
+                             stringsAsFactors = FALSE)
+  
+  old_cols <- colnames(x)
+  old_attributes <- attributes(x)
+  x <- as.data.frame(x, stringsAsFactors = FALSE) # no tibbles, data.tables, etc.
+  rownames(x) <- NULL # will later be restored with old_attributes
+  # create unique row IDs - combination of the MO and all ABx columns (so they will only run once per unique combination)
+  x$`.rowid` <- sapply(as.list(as.data.frame(t(x[, c(col_mo, cols_ab), drop = FALSE]))), function(x) {
+    x[is.na(x)] <- "."
+    paste0(x, collapse = "")
+  })
+
+  # save original table, with the new .rowid column
+  x.bak <- x
+  # keep only unique rows for MO and ABx
+  x <- x %pm>% 
+    pm_arrange(`.rowid`) %pm>% 
+    # big speed gain! only analyse unique rows:
+    pm_distinct(`.rowid`, .keep_all = TRUE) %pm>% 
+    as.data.frame(stringsAsFactors = FALSE)
+  x[, col_mo] <- as.mo(x[, col_mo, drop = TRUE])
+  x <- x %pm>%
+    left_join_microorganisms(by = col_mo, suffix = c("_oldcols", ""))
+  x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL)
+  x$genus_species <- paste(x$genus, x$species)
+  if (info == TRUE & NROW(x) > 10000) {
+    message(font_blue("OK."))
+  }
+  
+  if (any(x$genus == "Staphylococcus", na.rm = TRUE)) {
+    all_staph <- MO_lookup[which(MO_lookup$genus == "Staphylococcus"), ]
+    all_staph$CNS_CPS <- suppressWarnings(mo_name(all_staph$mo, Becker = "all", language = NULL))
+  }
+  if (any(x$genus == "Streptococcus", na.rm = TRUE)) {
+    all_strep <- MO_lookup[which(MO_lookup$genus == "Streptococcus"), ]
+    all_strep$Lancefield <- suppressWarnings(mo_name(all_strep$mo, Lancefield = TRUE, language = NULL))
+  }
+  
+  n_added <- 0
+  n_changed <- 0
   
   # Other rules: enzyme inhibitors ------------------------------------------
   if (any(c("all", "other") %in% rules)) {
@@ -634,19 +613,28 @@ eucast_rules <- function(x,
         if (info == TRUE) {
           cat(rule_current)
         }
-        run_changes <- edit_rsi(to = "R",
-                                rule = c(rule_current, "Other rules", ""),
+        run_changes <- edit_rsi(x = x,
+                                col_mo = col_mo,
+                                to = "R",
+                                rule = c(rule_current, "Other rules", "", paste0("Non-EUCAST: AMR package v", utils::packageVersion("AMR"))),
                                 rows = which(as.rsi_no_warning(x[, cols_ab[ab_enzyme[i, ]$ab]]) == "R"),
-                                cols = cols_ab[ab_enzyme[i, ]$base_ab])
-        no_added <- no_added + run_changes$added
-        no_changed <- no_changed + run_changes$changed
+                                cols = cols_ab[ab_enzyme[i, ]$base_ab],
+                                last_verbose_info = verbose_info,
+                                original_data = x.bak,
+                                warned = warned,
+                                info = info)
+        n_added <- n_added + run_changes$added
+        n_changed <- n_changed + run_changes$changed
+        verbose_info <- run_changes$verbose_info
+        x <- run_changes$output
+        warn_lacking_rsi_class <- warn_lacking_rsi_class | run_changes$rsi_warn
         # Print number of new changes
         if (info == TRUE) {
           # print only on last one of rules in this group
-          txt_ok(no_added = no_added, no_changed = no_changed)
+          txt_ok(n_added = n_added, n_changed = n_changed, warned = warned)
           # and reset counters
-          no_added <- 0
-          no_changed <- 0
+          n_added <- 0
+          n_changed <- 0
         }
         
         # Set base + enzyme inhibitor to S where base is S
@@ -655,19 +643,28 @@ eucast_rules <- function(x,
         if (info == TRUE) {
           cat(rule_current)
         }
-        run_changes <- edit_rsi(to = "S",
-                                rule = c(rule_current, "Other rules", ""),
+        run_changes <- edit_rsi(x = x,
+                                col_mo = col_mo,
+                                to = "S",
+                                rule = c(rule_current, "Other rules", "", paste0("Non-EUCAST: AMR package v", utils::packageVersion("AMR"))),
                                 rows = which(as.rsi_no_warning(x[, cols_ab[ab_enzyme[i, ]$base_ab]]) == "S"),
-                                cols = cols_ab[ab_enzyme[i, ]$ab])
-        no_added <- no_added + run_changes$added
-        no_changed <- no_changed + run_changes$changed
+                                cols = cols_ab[ab_enzyme[i, ]$ab],
+                                last_verbose_info = verbose_info,
+                                original_data = x.bak,
+                                warned = warned,
+                                info = info)
+        n_added <- n_added + run_changes$added
+        n_changed <- n_changed + run_changes$changed
+        verbose_info <- run_changes$verbose_info
+        x <- run_changes$output
+        warn_lacking_rsi_class <- warn_lacking_rsi_class | run_changes$rsi_warn
         # Print number of new changes
         if (info == TRUE) {
           # print only on last one of rules in this group
-          txt_ok(no_added = no_added, no_changed = no_changed)
+          txt_ok(n_added = n_added, n_changed = n_changed, warned = warned)
           # and reset counters
-          no_added <- 0
-          no_changed <- 0
+          n_added <- 0
+          n_changed <- 0
         }
       }
     }
@@ -681,26 +678,43 @@ eucast_rules <- function(x,
   # Official EUCAST rules ---------------------------------------------------
   eucast_notification_shown <- FALSE
   if (!is.null(list(...)$eucast_rules_df)) {
-    # this allows: eucast_rules(x, eucast_rules_df = AMR:::eucast_rules_file %>% filter(is.na(have_these_values)))
+    # this allows: eucast_rules(x, eucast_rules_df = AMR:::eucast_rules_file %pm>% filter(is.na(have_these_values)))
     eucast_rules_df <- list(...)$eucast_rules_df
   } else {
     # otherwise internal data file, created in data-raw/internals.R
     eucast_rules_df <- eucast_rules_file
   }
+  
+  # filter on user-set guideline versions ----
+  if (any(c("all", "breakpoints") %in% rules)) {
+    eucast_rules_df <- subset(eucast_rules_df,
+                              !reference.rule_group %like% "breakpoint" |
+                              (reference.rule_group %like% "breakpoint" & reference.version == version_breakpoints))
+  }
+  if (any(c("all", "expert") %in% rules)) {
+    eucast_rules_df <- subset(eucast_rules_df,
+                              !reference.rule_group %like% "expert" |
+                                (reference.rule_group %like% "expert" & reference.version == version_expertrules))
+  }
+  
   for (i in seq_len(nrow(eucast_rules_df))) {
     
-    rule_previous <- eucast_rules_df[max(1, i - 1), "reference.rule"]
-    rule_current <- eucast_rules_df[i, "reference.rule"]
-    rule_next <- eucast_rules_df[min(nrow(eucast_rules_df), i + 1), "reference.rule"]
-    rule_group_previous <- eucast_rules_df[max(1, i - 1), "reference.rule_group"]
-    rule_group_current <- eucast_rules_df[i, "reference.rule_group"]
-    if (is.na(eucast_rules_df[i, 4])) {
-      rule_text <- paste0("always report as '", eucast_rules_df[i, 7], "': ", get_antibiotic_names(eucast_rules_df[i, 6]))
+    rule_previous <- eucast_rules_df[max(1, i - 1), "reference.rule", drop = TRUE]
+    rule_current <- eucast_rules_df[i, "reference.rule", drop = TRUE]
+    rule_next <- eucast_rules_df[min(nrow(eucast_rules_df), i + 1), "reference.rule", drop = TRUE]
+    rule_group_previous <- eucast_rules_df[max(1, i - 1), "reference.rule_group", drop = TRUE]
+    rule_group_current <- eucast_rules_df[i, "reference.rule_group", drop = TRUE]
+    if (isFALSE(info) | isFALSE(verbose)) {
+      rule_text <- ""
     } else {
-      rule_text <- paste0("report as '", eucast_rules_df[i, 7], "' when ",
-                          format_antibiotic_names(ab_names = get_antibiotic_names(eucast_rules_df[i, 4]),
-                                                  ab_results = eucast_rules_df[i, 5]), ": ",
-                          get_antibiotic_names(eucast_rules_df[i, 6]))
+      if (is.na(eucast_rules_df[i, "and_these_antibiotics", drop = TRUE])) {
+        rule_text <- paste0("always report as '", eucast_rules_df[i, "to_value", drop = TRUE], "': ", get_antibiotic_names(eucast_rules_df[i, "then_change_these_antibiotics", drop = TRUE]))
+      } else {
+        rule_text <- paste0("report as '", eucast_rules_df[i, "to_value", drop = TRUE], "' when ",
+                            format_antibiotic_names(ab_names = get_antibiotic_names(eucast_rules_df[i, "and_these_antibiotics", drop = TRUE]),
+                                                    ab_results = eucast_rules_df[i, "have_these_values", drop = TRUE]), ": ",
+                            get_antibiotic_names(eucast_rules_df[i, "then_change_these_antibiotics", drop = TRUE]))
+      }
     }
     if (i == 1) {
       rule_previous <- ""
@@ -718,87 +732,89 @@ eucast_rules <- function(x,
       next
     }
     
-    if (info == TRUE & !rule_group_current %like% "other" & eucast_notification_shown == FALSE) {
-      cat(paste0("\n", font_grey(strrep("-", options()$width - 1)),
-                 "\nRules by the ", font_bold("European Committee on Antimicrobial Susceptibility Testing (EUCAST)"),
-                 "\n", font_blue("http://eucast.org/"), "\n"))
-      eucast_notification_shown <- TRUE
-    }
-    
     if (info == TRUE) {
+      # Print EUCAST intro ------------------------------------------------------
+      if (!rule_group_current %like% "other" & eucast_notification_shown == FALSE) {
+        cat(paste0("\n", font_grey(strrep("-", 0.95 * options()$width)),
+                   "\nRules by the ", font_bold("European Committee on Antimicrobial Susceptibility Testing (EUCAST)"),
+                   "\n", font_blue("https://eucast.org/"), "\n"))
+        eucast_notification_shown <- TRUE
+      }
+      
       # Print rule (group) ------------------------------------------------------
       if (rule_group_current != rule_group_previous) {
         # is new rule group, one of Breakpoints, Expert Rules and Other
         cat(font_bold(
           ifelse(
             rule_group_current %like% "breakpoint",
-            paste0("\nEUCAST Clinical Breakpoints (",
-                   font_red(paste0("v", EUCAST_VERSION_BREAKPOINTS)), ")\n"),
+            paste0("\n", breakpoints_info$title, " (",
+                   font_red(paste0(breakpoints_info$version_txt, ", ", breakpoints_info$year)), ")\n"),
             ifelse(
               rule_group_current %like% "expert",
-              paste0("\nEUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes (", 
-                     font_red(paste0("v", EUCAST_VERSION_EXPERT_RULES)), ")\n"),
+              paste0("\n", expertrules_info$title, " (",
+                     font_red(paste0(expertrules_info$version_txt, ", ", expertrules_info$year)), ")\n"),
               ""))))
       }
       # Print rule  -------------------------------------------------------------
       if (rule_current != rule_previous) {
         # is new rule within group, print its name
-        if (rule_current %in% c(microorganisms$family,
-                                microorganisms$fullname)) {
-          cat(font_italic(rule_current))
-        } else {
-          cat(rule_current)
-        }
+        cat(markup_italics_where_needed(rule_current))
         warned <- FALSE
       }
     }
     
     # Get rule from file ------------------------------------------------------
-    col_mo_property <- eucast_rules_df[i, 1]
-    like_is_one_of <- eucast_rules_df[i, 2]
+    if_mo_property <- trimws(eucast_rules_df[i, "if_mo_property", drop = TRUE])
+    like_is_one_of <- trimws(eucast_rules_df[i, "like.is.one_of", drop = TRUE])
+    mo_value <- trimws(eucast_rules_df[i, "this_value", drop = TRUE])
     
     # be sure to comprise all coagulase-negative/-positive Staphylococci when they are mentioned
-    if (eucast_rules_df[i, 3] %like% "coagulase") {
-      all_staph <- microorganisms[which(microorganisms$genus == "Staphylococcus"), ]
-      all_staph$CNS_CPS <- suppressWarnings(mo_name(all_staph$mo, Becker = "all", language = NULL))
-      if (eucast_rules_df[i, 3] %like% "coagulase") {
-        eucast_rules_df[i, 3] <- paste0("^(", paste0(all_staph[which(all_staph$CNS_CPS %like% "negative"),
-                                                               "fullname", 
-                                                               drop = TRUE],
-                                                     collapse = "|"),
-                                        ")$")
+    if (mo_value %like% "coagulase" && any(x$genus == "Staphylococcus", na.rm = TRUE)) {
+      if (mo_value %like% "negative") {
+        eucast_rules_df[i, "this_value"] <- paste0("^(", paste0(all_staph[which(all_staph$CNS_CPS %like% "negative"),
+                                                                          "fullname", 
+                                                                          drop = TRUE],
+                                                                collapse = "|"),
+                                                   ")$")
       } else {
-        eucast_rules_df[i, 3] <- paste0("^(", paste0(all_staph[which(all_staph$CNS_CPS %like% "positive"),
-                                                               "fullname", 
-                                                               drop = TRUE],
-                                                     collapse = "|"),
-                                        ")$")
+        eucast_rules_df[i, "this_value"] <- paste0("^(", paste0(all_staph[which(all_staph$CNS_CPS %like% "positive"),
+                                                                          "fullname", 
+                                                                          drop = TRUE],
+                                                                collapse = "|"),
+                                                   ")$")
       }
+      like_is_one_of <- "like"
+    }
+    # be sure to comprise all beta-haemolytic Streptococci (Lancefield groups A, B, C and G) when they are mentioned
+    if (mo_value %like% "group [ABCG]" && any(x$genus == "Streptococcus", na.rm = TRUE)) {
+      eucast_rules_df[i, "this_value"] <- paste0("^(", paste0(all_strep[which(all_strep$Lancefield %like% "group [ABCG]"),
+                                                                        "fullname", 
+                                                                        drop = TRUE],
+                                                              collapse = "|"),
+                                                 ")$")
       like_is_one_of <- "like"
     }
     
     if (like_is_one_of == "is") {
       # so e.g. 'Enterococcus' will turn into '^Enterococcus$'
-      mo_value <- paste0("^", eucast_rules_df[i, 3], "$")
+      mo_value <- paste0("^", mo_value, "$")
     } else if (like_is_one_of == "one_of") {
       # so 'Clostridium, Actinomyces, ...' will turn into '^(Clostridium|Actinomyces|...)$'
       mo_value <- paste0("^(",
-                         paste(trimws(unlist(strsplit(eucast_rules_df[i, 3], ",", fixed = TRUE))),
+                         paste(trimws(unlist(strsplit(mo_value, ",", fixed = TRUE))),
                                collapse = "|"),
                          ")$")
-    } else if (like_is_one_of == "like") {
-      mo_value <- eucast_rules_df[i, 3]
-    } else {
+    } else if (like_is_one_of != "like") {
       stop("invalid value for column 'like.is.one_of'", call. = FALSE)
     }
     
-    source_antibiotics <- eucast_rules_df[i, 4]
-    source_value <- trimws(unlist(strsplit(eucast_rules_df[i, 5], ",", fixed = TRUE)))
-    target_antibiotics <- eucast_rules_df[i, 6]
-    target_value <- eucast_rules_df[i, 7]
+    source_antibiotics <- eucast_rules_df[i, "and_these_antibiotics", drop = TRUE]
+    source_value <- trimws(unlist(strsplit(eucast_rules_df[i, "have_these_values", drop = TRUE], ",", fixed = TRUE)))
+    target_antibiotics <- eucast_rules_df[i, "then_change_these_antibiotics", drop = TRUE]
+    target_value <- eucast_rules_df[i, "to_value", drop = TRUE]
     
     if (is.na(source_antibiotics)) {
-      rows <- tryCatch(which(x[, col_mo_property] %like% mo_value),
+      rows <- tryCatch(which(x[, if_mo_property, drop = TRUE] %like_perl% mo_value),
                        error = function(e) integer(0))
     } else {
       source_antibiotics <- get_antibiotic_columns(source_antibiotics, x)
@@ -808,68 +824,86 @@ eucast_rules <- function(x,
       if (length(source_antibiotics) == 0) {
         rows <- integer(0)
       } else if (length(source_antibiotics) == 1) {
-        rows <-  tryCatch(which(x[, col_mo_property] %like% mo_value
+        rows <-  tryCatch(which(x[, if_mo_property, drop = TRUE] %like_perl% mo_value
                                 & as.rsi_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]),
                           error = function(e) integer(0))
       } else if (length(source_antibiotics) == 2) {
-        rows <-  tryCatch(which(x[, col_mo_property] %like% mo_value
+        rows <-  tryCatch(which(x[, if_mo_property, drop = TRUE] %like_perl% mo_value
                                 & as.rsi_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]
                                 & as.rsi_no_warning(x[, source_antibiotics[2L]]) == source_value[2L]),
                           error = function(e) integer(0))
       } else if (length(source_antibiotics) == 3) {
-        rows <-  tryCatch(which(x[, col_mo_property] %like% mo_value
+        rows <-  tryCatch(which(x[, if_mo_property, drop = TRUE] %like_perl% mo_value
                                 & as.rsi_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]
                                 & as.rsi_no_warning(x[, source_antibiotics[2L]]) == source_value[2L]
                                 & as.rsi_no_warning(x[, source_antibiotics[3L]]) == source_value[3L]),
                           error = function(e) integer(0))
       } else {
-        stop("only 3 antibiotics supported for source_antibiotics ", call. = FALSE)
+        stop_("only 3 antibiotics supported for source_antibiotics")
       }
     }
     
     cols <- get_antibiotic_columns(target_antibiotics, x)
-    
+
     # Apply rule on data ------------------------------------------------------
     # this will return the unique number of changes
-    run_changes <- edit_rsi(to = target_value,
-                            rule = c(rule_text, rule_group_current, rule_current),
+    run_changes <- edit_rsi(x = x,
+                            col_mo = col_mo,
+                            to = target_value,
+                            rule = c(rule_text, rule_group_current, rule_current, 
+                                     ifelse(rule_group_current %like% "breakpoint",
+                                            paste0(breakpoints_info$title, " ", breakpoints_info$version_txt, ", ", breakpoints_info$year),
+                                            paste0(expertrules_info$title, " ", expertrules_info$version_txt, ", ", expertrules_info$year))),
                             rows = rows,
-                            cols = cols)
-    no_added <- no_added + run_changes$added
-    no_changed <- no_changed + run_changes$changed
-    
+                            cols = cols,
+                            last_verbose_info = verbose_info,
+                            original_data = x.bak,
+                            warned = warned,
+                            info = info)
+    n_added <- n_added + run_changes$added
+    n_changed <- n_changed + run_changes$changed
+    verbose_info <- run_changes$verbose_info
+    x <- run_changes$output
+    warn_lacking_rsi_class <- warn_lacking_rsi_class | run_changes$rsi_warn
     # Print number of new changes ---------------------------------------------
     if (info == TRUE & rule_next != rule_current) {
       # print only on last one of rules in this group
-      txt_ok(no_added = no_added, no_changed = no_changed)
+      txt_ok(n_added = n_added, n_changed = n_changed, warned = warned)
       # and reset counters
-      no_added <- 0
-      no_changed <- 0
+      n_added <- 0
+      n_changed <- 0
     }
   }
   
   # Print overview ----------------------------------------------------------
   if (info == TRUE) {
+    
+    rownames(verbose_info) <- NULL
+    affected <- x.bak[which(x.bak$`.rowid` %in% x$`.rowid`), , drop = FALSE]
+    rows_affected <- as.integer(rownames(affected))
+    verbose_info <- data.frame(row = rows_affected, rowid = affected[, ".rowid", drop = TRUE]) %pm>% 
+      pm_left_join(verbose_info, by = "rowid") %pm>% 
+      pm_select(-rowid) %pm>% 
+      pm_filter(!is.na(new)) %pm>%
+      pm_arrange(row, rule_group, rule_name, col)
+    
     if (verbose == TRUE) {
       wouldve <- "would have "
     } else {
       wouldve <- ""
     }
     
-    verbose_info <- verbose_info %pm>%
-      pm_arrange(row, rule_group, rule_name, col)
-    
-    cat(paste0("\n", font_grey(strrep("-", options()$width - 1)), "\n"))
+    cat(paste0("\n", font_grey(strrep("-", 0.95 * options()$width)), "\n"))
     cat(font_bold(paste("The rules", paste0(wouldve, "affected"),
                         formatnr(pm_n_distinct(verbose_info$row)),
-                        "out of", formatnr(nrow(x_original)),
+                        "out of", formatnr(nrow(x.bak)),
                         "rows, making a total of", formatnr(nrow(verbose_info)), "edits\n")))
     
-    n_added <- verbose_info %pm>% pm_filter(is.na(old)) %pm>% nrow()
-    n_changed <- verbose_info %pm>% pm_filter(!is.na(old)) %pm>% nrow()
+    total_n_added <- verbose_info %pm>% pm_filter(is.na(old)) %pm>% nrow()
+    total_n_changed <- verbose_info %pm>% pm_filter(!is.na(old)) %pm>% nrow()
     
-    # print added values ----
-    if (n_added == 0) {
+    # print added values
+    if (total_n_added == 0) {
       colour <- cat # is function
     } else {
       colour <- font_green # is function
@@ -879,23 +913,22 @@ eucast_rules <- function(x,
                                            pm_filter(is.na(old)) %pm>%
                                            nrow()), "test results"),
                       "\n")))
-    if (n_added > 0) {
+    if (total_n_added > 0) {
       added_summary <- verbose_info %pm>%
         pm_filter(is.na(old)) %pm>%
-        pm_group_by(new) %pm>%
-        pm_summarise(n = pm_n())
+        pm_count(new, name = "n")
       cat(paste("   -", 
                 paste0(formatnr(added_summary$n), " test result", ifelse(added_summary$n > 1, "s", ""), 
                        " added as ", added_summary$new), collapse = "\n"))
     }
     
-    # print changed values ----
-    if (n_changed == 0) {
+    # print changed values
+    if (total_n_changed == 0) {
       colour <- cat # is function
     } else {
       colour <- font_blue # is function
     }
-    if (n_added + n_changed > 0) {
+    if (total_n_added + total_n_changed > 0) {
       cat("\n")
     }
     cat(colour(paste0("=> ", wouldve, "changed ",
@@ -903,19 +936,19 @@ eucast_rules <- function(x,
                                            pm_filter(!is.na(old)) %pm>%
                                            nrow()), "test results"),
                       "\n")))
-    if (n_changed > 0) {
+    if (total_n_changed > 0) {
       changed_summary <- verbose_info %pm>%
         pm_filter(!is.na(old)) %pm>%
-        pm_group_by(old, new) %pm>%
-        pm_summarise(n = pm_n())
+        pm_count(old, new, name = "n")
       cat(paste("   -", 
                 paste0(formatnr(changed_summary$n), " test result", ifelse(changed_summary$n > 1, "s", ""), " changed from ", 
                        changed_summary$old, " to ", changed_summary$new), collapse = "\n"))
       cat("\n")
     }
-    cat(paste0(font_grey(strrep("-", options()$width - 1)), "\n"))
     
-    if (verbose == FALSE & nrow(verbose_info) > 0) {
+    cat(paste0(font_grey(strrep("-", 0.95 * options()$width)), "\n"))
+    
+    if (verbose == FALSE & total_n_added + total_n_changed > 0) {
       cat(paste("\nUse", font_bold("eucast_rules(..., verbose = TRUE)"), "(on your original data) to get a data.frame with all specified edits instead.\n\n"))
     } else if (verbose == TRUE) {
       cat(paste0("\nUsed 'Verbose mode' (", font_bold("verbose = TRUE"), "), which returns a data.frame with all specified edits.\nUse ", font_bold("verbose = FALSE"), " to apply the rules on your data.\n\n"))
@@ -924,22 +957,126 @@ eucast_rules <- function(x,
   
   if (isTRUE(warn_lacking_rsi_class)) {
     warning("Not all columns with antimicrobial results are of class <rsi>.\n",
-            "Transform eligible columns to class <rsi> on beforehand: your_data %>% mutate_if(is.rsi.eligible, as.rsi)",
+            "Transform eligible columns to class <rsi> on beforehand: your_data %pm>% mutate_if(is.rsi.eligible, as.rsi)",
             call. = FALSE)
   }
   
   # Return data set ---------------------------------------------------------
   if (verbose == TRUE) {
-    rownames(verbose_info) <- NULL
     verbose_info
   } else {
+    # x was analysed with only unique rows, so join everything together again
+    x <- x[, c(cols_ab, ".rowid"), drop = FALSE]
+    x.bak <- x.bak[, setdiff(colnames(x.bak), cols_ab), drop = FALSE]
+    x.bak <- x.bak %pm>% 
+      pm_left_join(x, by = ".rowid")
+    x.bak <- x.bak[, old_cols, drop = FALSE]
     # reset original attributes
-    x_original <- x_original[, c(col_mo, cols_ab, ".rowid"), drop = FALSE]
-    x_original.bak <- x_original.bak[, setdiff(colnames(x_original.bak), c(col_mo, cols_ab)), drop = FALSE]
-    x_original.bak <- x_original.bak %pm>% 
-      pm_left_join(x_original, by = ".rowid")
-    x_original.bak <- x_original.bak[, old_cols, drop = FALSE]
-    attributes(x_original.bak) <- old_attributes
-    x_original.bak
+    attributes(x.bak) <- old_attributes
+    x.bak
   }
+}
+
+# helper function for editing the table ----
+edit_rsi <- function(x, 
+                     col_mo,
+                     to, 
+                     rule, 
+                     rows,
+                     cols,
+                     last_verbose_info, 
+                     original_data,
+                     warned,
+                     info) {
+  cols <- unique(cols[!is.na(cols) & !is.null(cols)])
+  
+  # for Verbose Mode, keep track of all changes and return them
+  track_changes <- list(added = 0,
+                        changed = 0,
+                        output = x,
+                        verbose_info = last_verbose_info,
+                        rsi_warn = FALSE)
+  
+  txt_error <- function() {
+    if (info == TRUE) cat("", font_red_bg(font_white(" ERROR ")), "\n\n") 
+  }
+  txt_warning <- function() {
+    if (warned == FALSE) {
+      if (info == TRUE) cat("", font_yellow_bg(font_black(" WARNING ")))
+    }
+    warned <<- TRUE 
+  }
+  
+  if (length(rows) > 0 & length(cols) > 0) {
+    new_edits <- x
+    if (any(!sapply(x[, cols, drop = FALSE], is.rsi), na.rm = TRUE)) {
+      track_changes$warn <- TRUE
+    }
+    tryCatch(
+      # insert into original table
+      new_edits[rows, cols] <- to,
+      warning = function(w) {
+        if (w$message %like% "invalid factor level") {
+          xyz <- sapply(cols, function(col) {
+            new_edits[, col] <- factor(x = as.character(pm_pull(new_edits, col)), levels = c(to, levels(pm_pull(new_edits, col))))
+            # x[, col] <<- factor(x = as.character(pm_pull(x, col)), levels = c(to, levels(pm_pull(x, col))))
+            invisible()
+          })
+          new_edits[rows, cols] <- to
+          warning('Value "', to, '" added to the factor levels of column(s) `', paste(cols, collapse = "`, `"), "` because this value was not an existing factor level.\nA better way is to use as.rsi() on beforehand on antimicrobial columns to guarantee the right structure.", call. = FALSE)
+          txt_warning()
+          warned <- FALSE
+        } else {
+          warning(w$message, call. = FALSE)
+          txt_warning()
+          cat("\n") # txt_warning() does not append a "\n" on itself
+        }
+      },
+      error = function(e) {
+        txt_error()
+        stop(paste0("In row(s) ", paste(rows[1:min(length(rows), 10)], collapse = ","), 
+                    ifelse(length(rows) > 10, "...", ""),
+                    " while writing value '", to, 
+                    "' to column(s) `", paste(cols, collapse = "`, `"), 
+                    "`:\n", e$message),
+             call. = FALSE)
+      }
+    )
+    
+    track_changes$output <- new_edits
+    if (isTRUE(info) && isFALSE(all.equal(x, track_changes$output))) {
+      get_original_rows <- function(rowids) {
+        as.integer(rownames(original_data[which(original_data$.rowid %in% rowids), , drop = FALSE]))
+      }
+      for (i in seq_len(length(cols))) {
+        verbose_new <- data.frame(rowid = new_edits[rows, ".rowid", drop = TRUE],
+                                  col = cols[i],
+                                  mo_fullname = new_edits[rows, "fullname", drop = TRUE],
+                                  old = x[rows, cols[i], drop = TRUE],
+                                  new = to,
+                                  rule = font_stripstyle(rule[1]),
+                                  rule_group = font_stripstyle(rule[2]),
+                                  rule_name = font_stripstyle(rule[3]),
+                                  rule_source = font_stripstyle(rule[4]),
+                                  stringsAsFactors = FALSE)
+        colnames(verbose_new) <- c("rowid", "col", "mo_fullname", "old", "new",
+                                   "rule", "rule_group", "rule_name", "rule_source")
+        verbose_new <- verbose_new %pm>% pm_filter(old != new | is.na(old))
+        # save changes to data set 'verbose_info'
+        track_changes$verbose_info <- rbind(track_changes$verbose_info, verbose_new)
+        # count adds and changes
+        track_changes$added <- track_changes$added + verbose_new %pm>%
+          pm_filter(is.na(old)) %pm>%
+          pm_pull(rowid) %pm>% 
+          get_original_rows() %pm>% 
+          length()
+        track_changes$changed <- track_changes$changed + verbose_new %pm>%
+          pm_filter(!is.na(old)) %pm>%
+          pm_pull(rowid) %pm>% 
+          get_original_rows() %pm>% 
+          length()
+      }
+    }
+  }
+  return(track_changes)
 }

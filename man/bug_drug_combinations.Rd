@@ -25,7 +25,7 @@ bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname, ...)
 )
 }
 \arguments{
-\item{x}{data with antibiotic columns, like e.g. \code{AMX} and \code{AMC}}
+\item{x}{data with antibiotic columns, such as \code{amox}, \code{AMX} and \code{AMC}}
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 

@@ -25,7 +25,7 @@ The reference file can be a text file separated with commas (CSV) or tabs or pip
 
 The created compressed data file \code{"~/.mo_source.rds"} will be used at default for MO determination (function \code{\link[=as.mo]{as.mo()}} and consequently all \verb{mo_*} functions like \code{\link[=mo_genus]{mo_genus()}} and \code{\link[=mo_gramstain]{mo_gramstain()}}). The location of the original file will be saved as an R option with \code{options(mo_source = path)}. Its timestamp will be saved with \code{options(mo_source_datetime = ...)}.
 
-The function \code{\link[=get_mo_source]{get_mo_source()}} will return the data set by reading \code{"~/.mo_source.rds"} with \code{\link[=readRDS]{readRDS()}}. If the original file has changed (by checking the aforementioned options \code{mo_source} and \code{mo_source_datetime}), it will call \code{\link[=set_mo_source]{set_mo_source()}} to update the data file automatically.
+The function \code{\link[=get_mo_source]{get_mo_source()}} will return the data set by reading \code{"~/.mo_source.rds"} with \code{\link[=readRDS]{readRDS()}}. If the original file has changed (by checking the aforementioned options \code{mo_source} and \code{mo_source_datetime}), it will call \code{\link[=set_mo_source]{set_mo_source()}} to update the data file automatically if used in an interactive session.
 
 Reading an Excel file (\code{.xlsx}) with only one row has a size of 8-9 kB. The compressed file created with \code{\link[=set_mo_source]{set_mo_source()}} will then have a size of 0.1 kB and can be read by \code{\link[=get_mo_source]{get_mo_source()}} in only a couple of microseconds (millionths of a second).
 }

@@ -141,7 +141,7 @@ mdro <- function(x,
   # try to find columns based on type
   # -- mo
   if (is.null(col_mo)) {
-    col_mo <- search_type_in_df(x = x, type = "mo")
+    col_mo <- search_type_in_df(x = x, type = "mo", info = info)
   }
   if (is.null(col_mo) & guideline$code == "tb") {
     message(font_blue("NOTE: No column found as input for `col_mo`,",
@@ -303,7 +303,9 @@ mdro <- function(x,
                                 "TCY",
                                 "DOX",
                                 "MNO"),
-                              verbose = verbose, ...)
+                              verbose = verbose,
+                              info = info,
+                              ...)
   } else if (guideline$code == "tb") {
     cols_ab <- get_column_abx(x = x,
                               soft_dependencies = c("CAP",
@@ -314,7 +316,9 @@ mdro <- function(x,
                                                     "RIF",
                                                     "RIB",
                                                     "RFP"),
-                              verbose = verbose, ...)
+                              info = info,
+                              verbose = verbose,
+                              ...)
   } else if (guideline$code == "mrgn") {
     cols_ab <- get_column_abx(x = x,
                               soft_dependencies = c("PIP",
@@ -323,9 +327,14 @@ mdro <- function(x,
                                                     "IPM",
                                                     "MEM",
                                                     "CIP"),
-                              verbose = verbose, ...)
+                              verbose = verbose,
+                              info = info,
+                              ...)
   } else {
-    cols_ab <- get_column_abx(x = x, verbose = verbose, ...)
+    cols_ab <- get_column_abx(x = x,
+                              verbose = verbose,
+                              info = info,
+                              ...)
   }
   
   AMC <- cols_ab["AMC"]

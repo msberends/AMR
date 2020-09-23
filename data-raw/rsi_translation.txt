@@ -1095,85 +1095,85 @@
 "EUCAST 2020"	"MIC"		"Streptococcus salivarius"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus sanguinis"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
 "EUCAST 2020"	"MIC"		"(unknown name)"	"Oritavancin"	"PK PD breakpoints"		0.125	0.125	FALSE
-"EUCAST 2020"	"DISK"		"Aerococcus sanguinicola"	"Penicillin G"	"A.sanguinicola_A.urinae"	"1ug"	21	21	FALSE
-"EUCAST 2020"	"MIC"		"Aerococcus sanguinicola"	"Penicillin G"	"A.sanguinicola_A.urinae"		0.125	0.125	FALSE
-"EUCAST 2020"	"DISK"		"Aerococcus urinae"	"Penicillin G"	"A.sanguinicola_A.urinae"	"1ug"	21	21	FALSE
-"EUCAST 2020"	"MIC"		"Aerococcus urinae"	"Penicillin G"	"A.sanguinicola_A.urinae"		0.125	0.125	FALSE
-"EUCAST 2020"	"MIC"		"Actinomyces"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
-"EUCAST 2020"	"MIC"		"Bacteroides"	"Penicillin G"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
-"EUCAST 2020"	"MIC"		"Bifidobacterium"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
-"EUCAST 2020"	"MIC"		"Bilophila"	"Penicillin G"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
-"EUCAST 2020"	"MIC"		"Clostridioides"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
-"EUCAST 2020"	"DISK"		"Corynebacterium"	"Penicillin G"	"Corynebacterium"	"1ug"	29	29	FALSE
-"EUCAST 2020"	"MIC"		"Corynebacterium"	"Penicillin G"	"Corynebacterium"		0.125	0.125	FALSE
-"EUCAST 2020"	"MIC"		"Cutibacterium"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
-"EUCAST 2020"	"MIC"		"Clostridium"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
-"EUCAST 2020"	"MIC"		"Eubacterium"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
-"EUCAST 2020"	"MIC"		"Eggerthella"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
-"EUCAST 2020"	"MIC"		"Fusobacterium"	"Penicillin G"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
-"EUCAST 2020"	"DISK"		"Kingella kingae"	"Penicillin G"	"K.kingae"	"1ug"	25	25	FALSE
-"EUCAST 2020"	"MIC"		"Kingella kingae"	"Penicillin G"	"K.kingae"		0.03	0.03	FALSE
-"EUCAST 2020"	"MIC"		"Lactobacillus"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
-"EUCAST 2020"	"DISK"		"Listeria monocytogenes"	"Penicillin G"	"L.monocytogenes"	"1ug"	13	13	FALSE
-"EUCAST 2020"	"MIC"		"Listeria monocytogenes"	"Penicillin G"	"L.monocytogenes"		1	1	FALSE
-"EUCAST 2020"	"MIC"		"Mobiluncus"	"Penicillin G"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
-"EUCAST 2020"	"MIC"		"Neisseria gonorrhoeae"	"Penicillin G"	"N.gonorrhoeae"		0.06	1	FALSE
-"EUCAST 2020"	"MIC"		"Neisseria meningitidis"	"Penicillin G"	"N.meningitidis"		0.06	0.25	FALSE
-"EUCAST 2020"	"MIC"		"Parabacteroides"	"Penicillin G"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
-"EUCAST 2020"	"MIC"		"Porphyromonas"	"Penicillin G"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
-"EUCAST 2020"	"MIC"		"Propionibacterium"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
-"EUCAST 2020"	"MIC"		"Prevotella"	"Penicillin G"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
-"EUCAST 2020"	"DISK"		"Pasteurella multocida"	"Penicillin G"	"P.multocida"	"1ug"	17	17	FALSE
-"EUCAST 2020"	"MIC"		"Pasteurella multocida"	"Penicillin G"	"P.multocida"		0.5	0.5	FALSE
-"EUCAST 2020"	"DISK"		"Staphylococcus aureus"	"Penicillin G"	"Staphylococcus"	"1ug"	26	26	FALSE
-"EUCAST 2020"	"MIC"		"Staphylococcus aureus"	"Penicillin G"	"Staphylococcus"		0.125	0.125	FALSE
-"EUCAST 2020"	"DISK"		"Staphylococcus lugdunensis"	"Penicillin G"	"Staphylococcus"	"1ug"	26	26	FALSE
-"EUCAST 2020"	"MIC"		"Staphylococcus lugdunensis"	"Penicillin G"	"Staphylococcus"		0.125	0.125	FALSE
-"EUCAST 2020"	"MIC"		"Staphylococcus saccharolyticus"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
-"EUCAST 2020"	"DISK"		"Streptococcus agalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus agalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2020"	"DISK"		"Streptococcus anginosus"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2020"	"DISK"		"Streptococcus equi"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"DISK"		"Streptococcus equi"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2020"	"DISK"		"Streptococcus equi ruminatorum"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2020"	"DISK"		"Streptococcus equi zooepidemicus"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus equi zooepidemicus"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2020"	"DISK"		"Streptococcus group A"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group A"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2020"	"DISK"		"Streptococcus group B"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group B"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2020"	"DISK"		"Streptococcus group C"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group C"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2020"	"DISK"		"Streptococcus group D"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group D"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2020"	"DISK"		"Streptococcus group F"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group F"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2020"	"DISK"		"Streptococcus group G"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group G"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2020"	"DISK"		"Streptococcus group H"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group H"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2020"	"DISK"		"Streptococcus group K"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus group K"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus pneumoniae"	"Penicillin G"	"S.pneumoniae"		0.06	2	FALSE
-"EUCAST 2020"	"DISK"		"Streptococcus pyogenes"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus pyogenes"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2020"	"DISK"		"Streptococcus salivarius"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus salivarius"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2020"	"DISK"		"Streptococcus sanguinis"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2020"	"MIC"		"Streptococcus sanguinis"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2020"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Viridans group streptococci"	"1ug"	18	12	FALSE
-"EUCAST 2020"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Viridans group streptococci"		0.25	2	FALSE
-"EUCAST 2020"	"MIC"		"(unknown name)"	"Penicillin G"	"PK PD breakpoints"		0.25	2	FALSE
+"EUCAST 2020"	"DISK"		"Aerococcus sanguinicola"	"Benzylpenicillin"	"A.sanguinicola_A.urinae"	"1ug"	21	21	FALSE
+"EUCAST 2020"	"MIC"		"Aerococcus sanguinicola"	"Benzylpenicillin"	"A.sanguinicola_A.urinae"		0.125	0.125	FALSE
+"EUCAST 2020"	"DISK"		"Aerococcus urinae"	"Benzylpenicillin"	"A.sanguinicola_A.urinae"	"1ug"	21	21	FALSE
+"EUCAST 2020"	"MIC"		"Aerococcus urinae"	"Benzylpenicillin"	"A.sanguinicola_A.urinae"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Actinomyces"	"Benzylpenicillin"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Bacteroides"	"Benzylpenicillin"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Bifidobacterium"	"Benzylpenicillin"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Bilophila"	"Benzylpenicillin"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Clostridioides"	"Benzylpenicillin"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
+"EUCAST 2020"	"DISK"		"Corynebacterium"	"Benzylpenicillin"	"Corynebacterium"	"1ug"	29	29	FALSE
+"EUCAST 2020"	"MIC"		"Corynebacterium"	"Benzylpenicillin"	"Corynebacterium"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Cutibacterium"	"Benzylpenicillin"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Clostridium"	"Benzylpenicillin"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Eubacterium"	"Benzylpenicillin"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Eggerthella"	"Benzylpenicillin"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Fusobacterium"	"Benzylpenicillin"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
+"EUCAST 2020"	"DISK"		"Kingella kingae"	"Benzylpenicillin"	"K.kingae"	"1ug"	25	25	FALSE
+"EUCAST 2020"	"MIC"		"Kingella kingae"	"Benzylpenicillin"	"K.kingae"		0.03	0.03	FALSE
+"EUCAST 2020"	"MIC"		"Lactobacillus"	"Benzylpenicillin"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
+"EUCAST 2020"	"DISK"		"Listeria monocytogenes"	"Benzylpenicillin"	"L.monocytogenes"	"1ug"	13	13	FALSE
+"EUCAST 2020"	"MIC"		"Listeria monocytogenes"	"Benzylpenicillin"	"L.monocytogenes"		1	1	FALSE
+"EUCAST 2020"	"MIC"		"Mobiluncus"	"Benzylpenicillin"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"N.gonorrhoeae"		0.06	1	FALSE
+"EUCAST 2020"	"MIC"		"Neisseria meningitidis"	"Benzylpenicillin"	"N.meningitidis"		0.06	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Parabacteroides"	"Benzylpenicillin"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Porphyromonas"	"Benzylpenicillin"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Propionibacterium"	"Benzylpenicillin"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
+"EUCAST 2020"	"MIC"		"Prevotella"	"Benzylpenicillin"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
+"EUCAST 2020"	"DISK"		"Pasteurella multocida"	"Benzylpenicillin"	"P.multocida"	"1ug"	17	17	FALSE
+"EUCAST 2020"	"MIC"		"Pasteurella multocida"	"Benzylpenicillin"	"P.multocida"		0.5	0.5	FALSE
+"EUCAST 2020"	"DISK"		"Staphylococcus aureus"	"Benzylpenicillin"	"Staphylococcus"	"1ug"	26	26	FALSE
+"EUCAST 2020"	"MIC"		"Staphylococcus aureus"	"Benzylpenicillin"	"Staphylococcus"		0.125	0.125	FALSE
+"EUCAST 2020"	"DISK"		"Staphylococcus lugdunensis"	"Benzylpenicillin"	"Staphylococcus"	"1ug"	26	26	FALSE
+"EUCAST 2020"	"MIC"		"Staphylococcus lugdunensis"	"Benzylpenicillin"	"Staphylococcus"		0.125	0.125	FALSE
+"EUCAST 2020"	"MIC"		"Staphylococcus saccharolyticus"	"Benzylpenicillin"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
+"EUCAST 2020"	"DISK"		"Streptococcus agalactiae"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus agalactiae"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"DISK"		"Streptococcus anginosus"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus anginosus"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"DISK"		"Streptococcus equi"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"DISK"		"Streptococcus equi"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"DISK"		"Streptococcus equi ruminatorum"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi ruminatorum"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"DISK"		"Streptococcus equi zooepidemicus"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus equi zooepidemicus"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"DISK"		"Streptococcus group A"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group A"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"DISK"		"Streptococcus group B"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group B"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"DISK"		"Streptococcus group C"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group C"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"DISK"		"Streptococcus group D"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group D"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"DISK"		"Streptococcus group F"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group F"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"DISK"		"Streptococcus group G"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group G"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"DISK"		"Streptococcus group H"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group H"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"DISK"		"Streptococcus group K"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus group K"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus pneumoniae"	"Benzylpenicillin"	"S.pneumoniae"		0.06	2	FALSE
+"EUCAST 2020"	"DISK"		"Streptococcus pyogenes"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus pyogenes"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"DISK"		"Streptococcus salivarius"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus salivarius"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"DISK"		"Streptococcus sanguinis"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2020"	"MIC"		"Streptococcus sanguinis"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2020"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Viridans group streptococci"	"1ug"	18	12	FALSE
+"EUCAST 2020"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Viridans group streptococci"		0.25	2	FALSE
+"EUCAST 2020"	"MIC"		"(unknown name)"	"Benzylpenicillin"	"PK PD breakpoints"		0.25	2	FALSE
 "EUCAST 2020"	"DISK"		"Enterobacterales"	"Piperacillin"	"Enterobacterales"	"30ug"	20	17	FALSE
 "EUCAST 2020"	"MIC"		"Enterobacterales"	"Piperacillin"	"Enterobacterales"		8	1	FALSE
 "EUCAST 2020"	"MIC"		"Actinomyces"	"Piperacillin"	"Anaerobes, Grampositive"		8	1	FALSE
@@ -2794,85 +2794,85 @@
 "EUCAST 2019"	"MIC"		"Streptococcus sanguinis"	"Oritavancin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
 "EUCAST 2019"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Oritavancin"	"Viridans group streptococci"		0.25	0.25	FALSE
 "EUCAST 2019"	"MIC"		"(unknown name)"	"Oritavancin"	"PK PD breakpoints"		0.125	0.125	FALSE
-"EUCAST 2019"	"DISK"		"Aerococcus sanguinicola"	"Penicillin G"	"A.sanguinicola_A.urinae"	"1ug"	21	21	FALSE
-"EUCAST 2019"	"MIC"		"Aerococcus sanguinicola"	"Penicillin G"	"A.sanguinicola_A.urinae"		0.125	0.125	FALSE
-"EUCAST 2019"	"DISK"		"Aerococcus urinae"	"Penicillin G"	"A.sanguinicola_A.urinae"	"1ug"	21	21	FALSE
-"EUCAST 2019"	"MIC"		"Aerococcus urinae"	"Penicillin G"	"A.sanguinicola_A.urinae"		0.125	0.125	FALSE
-"EUCAST 2019"	"MIC"		"Actinomyces"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
-"EUCAST 2019"	"MIC"		"Bacteroides"	"Penicillin G"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
-"EUCAST 2019"	"MIC"		"Bifidobacterium"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
-"EUCAST 2019"	"MIC"		"Bilophila"	"Penicillin G"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
-"EUCAST 2019"	"MIC"		"Clostridioides"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
-"EUCAST 2019"	"DISK"		"Corynebacterium"	"Penicillin G"	"Corynebacterium"	"1ug"	29	29	FALSE
-"EUCAST 2019"	"MIC"		"Corynebacterium"	"Penicillin G"	"Corynebacterium"		0.125	0.125	FALSE
-"EUCAST 2019"	"MIC"		"Cutibacterium"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
-"EUCAST 2019"	"MIC"		"Clostridium"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
-"EUCAST 2019"	"MIC"		"Eubacterium"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
-"EUCAST 2019"	"MIC"		"Eggerthella"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
-"EUCAST 2019"	"MIC"		"Fusobacterium"	"Penicillin G"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
-"EUCAST 2019"	"DISK"		"Kingella kingae"	"Penicillin G"	"K.kingae"	"1ug"	25	25	FALSE
-"EUCAST 2019"	"MIC"		"Kingella kingae"	"Penicillin G"	"K.kingae"		0.03	0.03	FALSE
-"EUCAST 2019"	"MIC"		"Lactobacillus"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
-"EUCAST 2019"	"DISK"		"Listeria monocytogenes"	"Penicillin G"	"L.monocytogenes"	"1ug"	13	13	FALSE
-"EUCAST 2019"	"MIC"		"Listeria monocytogenes"	"Penicillin G"	"L.monocytogenes"		1	1	FALSE
-"EUCAST 2019"	"MIC"		"Mobiluncus"	"Penicillin G"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
-"EUCAST 2019"	"MIC"		"Neisseria gonorrhoeae"	"Penicillin G"	"N.gonorrhoeae"		0.06	1	FALSE
-"EUCAST 2019"	"MIC"		"Neisseria meningitidis"	"Penicillin G"	"N.meningitidis"		0.06	0.25	FALSE
-"EUCAST 2019"	"MIC"		"Parabacteroides"	"Penicillin G"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
-"EUCAST 2019"	"MIC"		"Porphyromonas"	"Penicillin G"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
-"EUCAST 2019"	"MIC"		"Propionibacterium"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
-"EUCAST 2019"	"MIC"		"Prevotella"	"Penicillin G"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
-"EUCAST 2019"	"DISK"		"Pasteurella multocida"	"Penicillin G"	"P.multocida"	"1ug"	17	17	FALSE
-"EUCAST 2019"	"MIC"		"Pasteurella multocida"	"Penicillin G"	"P.multocida"		0.5	0.5	FALSE
-"EUCAST 2019"	"DISK"		"Staphylococcus aureus"	"Penicillin G"	"Staphylococcus"	"1ug"	26	26	FALSE
-"EUCAST 2019"	"MIC"		"Staphylococcus aureus"	"Penicillin G"	"Staphylococcus"		0.125	0.125	FALSE
-"EUCAST 2019"	"DISK"		"Staphylococcus lugdunensis"	"Penicillin G"	"Staphylococcus"	"1ug"	26	26	FALSE
-"EUCAST 2019"	"MIC"		"Staphylococcus lugdunensis"	"Penicillin G"	"Staphylococcus"		0.125	0.125	FALSE
-"EUCAST 2019"	"MIC"		"Staphylococcus saccharolyticus"	"Penicillin G"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
-"EUCAST 2019"	"DISK"		"Streptococcus agalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus agalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2019"	"DISK"		"Streptococcus anginosus"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus anginosus"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2019"	"DISK"		"Streptococcus equi"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"DISK"		"Streptococcus equi"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2019"	"DISK"		"Streptococcus equi ruminatorum"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus equi ruminatorum"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2019"	"DISK"		"Streptococcus equi zooepidemicus"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus equi zooepidemicus"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2019"	"DISK"		"Streptococcus group A"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus group A"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2019"	"DISK"		"Streptococcus group B"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus group B"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2019"	"DISK"		"Streptococcus group C"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus group C"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2019"	"DISK"		"Streptococcus group D"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus group D"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2019"	"DISK"		"Streptococcus group F"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus group F"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2019"	"DISK"		"Streptococcus group G"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus group G"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2019"	"DISK"		"Streptococcus group H"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus group H"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2019"	"DISK"		"Streptococcus group K"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus group K"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus pneumoniae"	"Penicillin G"	"S.pneumoniae"		0.06	2	FALSE
-"EUCAST 2019"	"DISK"		"Streptococcus pyogenes"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus pyogenes"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2019"	"DISK"		"Streptococcus salivarius"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus salivarius"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2019"	"DISK"		"Streptococcus sanguinis"	"Penicillin G"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
-"EUCAST 2019"	"MIC"		"Streptococcus sanguinis"	"Penicillin G"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
-"EUCAST 2019"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Viridans group streptococci"	"1ug"	18	12	FALSE
-"EUCAST 2019"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Viridans group streptococci"		0.25	2	FALSE
-"EUCAST 2019"	"MIC"		"(unknown name)"	"Penicillin G"	"PK PD breakpoints"		0.25	2	FALSE
+"EUCAST 2019"	"DISK"		"Aerococcus sanguinicola"	"Benzylpenicillin"	"A.sanguinicola_A.urinae"	"1ug"	21	21	FALSE
+"EUCAST 2019"	"MIC"		"Aerococcus sanguinicola"	"Benzylpenicillin"	"A.sanguinicola_A.urinae"		0.125	0.125	FALSE
+"EUCAST 2019"	"DISK"		"Aerococcus urinae"	"Benzylpenicillin"	"A.sanguinicola_A.urinae"	"1ug"	21	21	FALSE
+"EUCAST 2019"	"MIC"		"Aerococcus urinae"	"Benzylpenicillin"	"A.sanguinicola_A.urinae"		0.125	0.125	FALSE
+"EUCAST 2019"	"MIC"		"Actinomyces"	"Benzylpenicillin"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
+"EUCAST 2019"	"MIC"		"Bacteroides"	"Benzylpenicillin"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
+"EUCAST 2019"	"MIC"		"Bifidobacterium"	"Benzylpenicillin"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
+"EUCAST 2019"	"MIC"		"Bilophila"	"Benzylpenicillin"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
+"EUCAST 2019"	"MIC"		"Clostridioides"	"Benzylpenicillin"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
+"EUCAST 2019"	"DISK"		"Corynebacterium"	"Benzylpenicillin"	"Corynebacterium"	"1ug"	29	29	FALSE
+"EUCAST 2019"	"MIC"		"Corynebacterium"	"Benzylpenicillin"	"Corynebacterium"		0.125	0.125	FALSE
+"EUCAST 2019"	"MIC"		"Cutibacterium"	"Benzylpenicillin"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
+"EUCAST 2019"	"MIC"		"Clostridium"	"Benzylpenicillin"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
+"EUCAST 2019"	"MIC"		"Eubacterium"	"Benzylpenicillin"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
+"EUCAST 2019"	"MIC"		"Eggerthella"	"Benzylpenicillin"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
+"EUCAST 2019"	"MIC"		"Fusobacterium"	"Benzylpenicillin"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
+"EUCAST 2019"	"DISK"		"Kingella kingae"	"Benzylpenicillin"	"K.kingae"	"1ug"	25	25	FALSE
+"EUCAST 2019"	"MIC"		"Kingella kingae"	"Benzylpenicillin"	"K.kingae"		0.03	0.03	FALSE
+"EUCAST 2019"	"MIC"		"Lactobacillus"	"Benzylpenicillin"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
+"EUCAST 2019"	"DISK"		"Listeria monocytogenes"	"Benzylpenicillin"	"L.monocytogenes"	"1ug"	13	13	FALSE
+"EUCAST 2019"	"MIC"		"Listeria monocytogenes"	"Benzylpenicillin"	"L.monocytogenes"		1	1	FALSE
+"EUCAST 2019"	"MIC"		"Mobiluncus"	"Benzylpenicillin"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
+"EUCAST 2019"	"MIC"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"N.gonorrhoeae"		0.06	1	FALSE
+"EUCAST 2019"	"MIC"		"Neisseria meningitidis"	"Benzylpenicillin"	"N.meningitidis"		0.06	0.25	FALSE
+"EUCAST 2019"	"MIC"		"Parabacteroides"	"Benzylpenicillin"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
+"EUCAST 2019"	"MIC"		"Porphyromonas"	"Benzylpenicillin"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
+"EUCAST 2019"	"MIC"		"Propionibacterium"	"Benzylpenicillin"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
+"EUCAST 2019"	"MIC"		"Prevotella"	"Benzylpenicillin"	"Anaerobes, Gramnegative"		0.25	0.5	FALSE
+"EUCAST 2019"	"DISK"		"Pasteurella multocida"	"Benzylpenicillin"	"P.multocida"	"1ug"	17	17	FALSE
+"EUCAST 2019"	"MIC"		"Pasteurella multocida"	"Benzylpenicillin"	"P.multocida"		0.5	0.5	FALSE
+"EUCAST 2019"	"DISK"		"Staphylococcus aureus"	"Benzylpenicillin"	"Staphylococcus"	"1ug"	26	26	FALSE
+"EUCAST 2019"	"MIC"		"Staphylococcus aureus"	"Benzylpenicillin"	"Staphylococcus"		0.125	0.125	FALSE
+"EUCAST 2019"	"DISK"		"Staphylococcus lugdunensis"	"Benzylpenicillin"	"Staphylococcus"	"1ug"	26	26	FALSE
+"EUCAST 2019"	"MIC"		"Staphylococcus lugdunensis"	"Benzylpenicillin"	"Staphylococcus"		0.125	0.125	FALSE
+"EUCAST 2019"	"MIC"		"Staphylococcus saccharolyticus"	"Benzylpenicillin"	"Anaerobes, Grampositive"		0.25	0.5	FALSE
+"EUCAST 2019"	"DISK"		"Streptococcus agalactiae"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus agalactiae"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2019"	"DISK"		"Streptococcus anginosus"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus anginosus"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2019"	"DISK"		"Streptococcus dysgalactiae equisimilis"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus dysgalactiae equisimilis"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2019"	"DISK"		"Streptococcus equi"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"DISK"		"Streptococcus equi"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus equi"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2019"	"DISK"		"Streptococcus equi ruminatorum"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus equi ruminatorum"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2019"	"DISK"		"Streptococcus equi zooepidemicus"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus equi zooepidemicus"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2019"	"DISK"		"Streptococcus group A"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus group A"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2019"	"DISK"		"Streptococcus group B"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus group B"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2019"	"DISK"		"Streptococcus group C"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus group C"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2019"	"DISK"		"Streptococcus group D"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus group D"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2019"	"DISK"		"Streptococcus group F"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus group F"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2019"	"DISK"		"Streptococcus group G"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus group G"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2019"	"DISK"		"Streptococcus group H"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus group H"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2019"	"DISK"		"Streptococcus group K"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus group K"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus pneumoniae"	"Benzylpenicillin"	"S.pneumoniae"		0.06	2	FALSE
+"EUCAST 2019"	"DISK"		"Streptococcus pyogenes"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus pyogenes"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2019"	"DISK"		"Streptococcus salivarius"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus salivarius"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2019"	"DISK"		"Streptococcus sanguinis"	"Benzylpenicillin"	"Streptococcus A,B,C,G"	"1ug"	18	18	FALSE
+"EUCAST 2019"	"MIC"		"Streptococcus sanguinis"	"Benzylpenicillin"	"Streptococcus A,B,C,G"		0.25	0.25	FALSE
+"EUCAST 2019"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Viridans group streptococci"	"1ug"	18	12	FALSE
+"EUCAST 2019"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Viridans group streptococci"		0.25	2	FALSE
+"EUCAST 2019"	"MIC"		"(unknown name)"	"Benzylpenicillin"	"PK PD breakpoints"		0.25	2	FALSE
 "EUCAST 2019"	"DISK"		"Enterobacterales"	"Piperacillin"	"Enterobacterales"	"30ug"	20	17	FALSE
 "EUCAST 2019"	"MIC"		"Enterobacterales"	"Piperacillin"	"Enterobacterales"		8	1	FALSE
 "EUCAST 2019"	"MIC"		"Actinomyces"	"Piperacillin"	"Anaerobes, Grampositive"		8	1	FALSE
@@ -3736,19 +3736,19 @@
 "EUCAST 2018"	"MIC"		"Coagulase-negative Staphylococcus (CoNS)"	"Oxacillin"	"Staphs"		0.25	0.5	FALSE
 "EUCAST 2018"	"MIC"		"Staphylococcus epidermidis"	"Oxacillin"	"Staphs"		0.25	0.5	FALSE
 "EUCAST 2018"	"MIC"		"Staphylococcus lugdunensis"	"Oxacillin"	"Staphs"		2	4	FALSE
-"EUCAST 2018"	"MIC"		"Aerococcus"	"Penicillin G"	"Aerococcus"		0.125	0.25	FALSE
-"EUCAST 2018"	"MIC"		"Corynebacterium"	"Penicillin G"	"Corynebacterium spp."		0.125	0.25	FALSE
-"EUCAST 2018"	"MIC"		"Kingella kingae"	"Penicillin G"	"Kingella"		0.032	0.06	FALSE
-"EUCAST 2018"	"MIC"		"Listeria monocytogenes"	"Penicillin G"	"Listeria monocytogenes"		1	2	FALSE
-"EUCAST 2018"	"MIC"		"Neisseria gonorrhoeae"	"Penicillin G"	"N. gonorrhoeae"		0.064	2	FALSE
-"EUCAST 2018"	"MIC"		"Neisseria meningitidis"	"Penicillin G"	"N. meningitidis"		0.064	0.5	FALSE
-"EUCAST 2018"	"MIC"		"Pasteurella multocida"	"Penicillin G"	"Pasteurella multocida"		0.5	1	FALSE
-"EUCAST 2018"	"MIC"		"Staphylococcus aureus"	"Penicillin G"	"Staphs"		0.125	0.25	FALSE
-"EUCAST 2018"	"MIC"		"Staphylococcus lugdunensis"	"Penicillin G"	"Staphs"		0.125	0.25	FALSE
-"EUCAST 2018"	"MIC"		"Streptococcus"	"Penicillin G"	"Strep A, B, C, G"		0.25	0.5	FALSE
-"EUCAST 2018"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Pneumo"		0.064	4	FALSE
-"EUCAST 2018"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Pneumo"		0.064	0.12	FALSE
-"EUCAST 2018"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Viridans strept"		0.25	4	FALSE
+"EUCAST 2018"	"MIC"		"Aerococcus"	"Benzylpenicillin"	"Aerococcus"		0.125	0.25	FALSE
+"EUCAST 2018"	"MIC"		"Corynebacterium"	"Benzylpenicillin"	"Corynebacterium spp."		0.125	0.25	FALSE
+"EUCAST 2018"	"MIC"		"Kingella kingae"	"Benzylpenicillin"	"Kingella"		0.032	0.06	FALSE
+"EUCAST 2018"	"MIC"		"Listeria monocytogenes"	"Benzylpenicillin"	"Listeria monocytogenes"		1	2	FALSE
+"EUCAST 2018"	"MIC"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"N. gonorrhoeae"		0.064	2	FALSE
+"EUCAST 2018"	"MIC"		"Neisseria meningitidis"	"Benzylpenicillin"	"N. meningitidis"		0.064	0.5	FALSE
+"EUCAST 2018"	"MIC"		"Pasteurella multocida"	"Benzylpenicillin"	"Pasteurella multocida"		0.5	1	FALSE
+"EUCAST 2018"	"MIC"		"Staphylococcus aureus"	"Benzylpenicillin"	"Staphs"		0.125	0.25	FALSE
+"EUCAST 2018"	"MIC"		"Staphylococcus lugdunensis"	"Benzylpenicillin"	"Staphs"		0.125	0.25	FALSE
+"EUCAST 2018"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"Strep A, B, C, G"		0.25	0.5	FALSE
+"EUCAST 2018"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Pneumo"		0.064	4	FALSE
+"EUCAST 2018"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Pneumo"		0.064	0.12	FALSE
+"EUCAST 2018"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Viridans strept"		0.25	4	FALSE
 "EUCAST 2018"	"MIC"		"Enterobacteriaceae"	"Piperacillin"	"Enterobacteriaceae"		8	32	FALSE
 "EUCAST 2018"	"MIC"		"Pseudomonas"	"Piperacillin"	"Pseudo"		16	32	FALSE
 "EUCAST 2018"	"MIC"		"Aspergillus fumigatus"	"Posaconazole"	"Aspergillus"		0.125	0.25	FALSE
@@ -4152,19 +4152,19 @@
 "EUCAST 2017"	"MIC"		"Coagulase-negative Staphylococcus (CoNS)"	"Oxacillin"	"Staphs"		0.25	0.5	FALSE
 "EUCAST 2017"	"MIC"		"Staphylococcus epidermidis"	"Oxacillin"	"Staphs"		0.25	0.5	FALSE
 "EUCAST 2017"	"MIC"		"Staphylococcus lugdunensis"	"Oxacillin"	"Staphs"		2	4	FALSE
-"EUCAST 2017"	"MIC"		"Aerococcus"	"Penicillin G"	"Aerococcus"		0.125	0.25	FALSE
-"EUCAST 2017"	"MIC"		"Corynebacterium"	"Penicillin G"	"Corynebacterium spp."		0.125	0.25	FALSE
-"EUCAST 2017"	"MIC"		"Kingella kingae"	"Penicillin G"	"Kingella"		0.032	0.06	FALSE
-"EUCAST 2017"	"MIC"		"Listeria monocytogenes"	"Penicillin G"	"Listeria monocytogenes"		1	2	FALSE
-"EUCAST 2017"	"MIC"		"Neisseria gonorrhoeae"	"Penicillin G"	"N. gonorrhoeae"		0.064	2	FALSE
-"EUCAST 2017"	"MIC"		"Neisseria meningitidis"	"Penicillin G"	"N. meningitidis"		0.064	0.5	FALSE
-"EUCAST 2017"	"MIC"		"Pasteurella multocida"	"Penicillin G"	"Pasteurella multocida"		0.5	1	FALSE
-"EUCAST 2017"	"MIC"		"Staphylococcus aureus"	"Penicillin G"	"Staphs"		0.125	0.25	FALSE
-"EUCAST 2017"	"MIC"		"Staphylococcus lugdunensis"	"Penicillin G"	"Staphs"		0.125	0.25	FALSE
-"EUCAST 2017"	"MIC"		"Streptococcus"	"Penicillin G"	"Strep A, B, C, G"		0.25	0.5	FALSE
-"EUCAST 2017"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Pneumo"		0.064	4	FALSE
-"EUCAST 2017"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Pneumo"		0.064	0.12	FALSE
-"EUCAST 2017"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Viridans strept"		0.25	4	FALSE
+"EUCAST 2017"	"MIC"		"Aerococcus"	"Benzylpenicillin"	"Aerococcus"		0.125	0.25	FALSE
+"EUCAST 2017"	"MIC"		"Corynebacterium"	"Benzylpenicillin"	"Corynebacterium spp."		0.125	0.25	FALSE
+"EUCAST 2017"	"MIC"		"Kingella kingae"	"Benzylpenicillin"	"Kingella"		0.032	0.06	FALSE
+"EUCAST 2017"	"MIC"		"Listeria monocytogenes"	"Benzylpenicillin"	"Listeria monocytogenes"		1	2	FALSE
+"EUCAST 2017"	"MIC"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"N. gonorrhoeae"		0.064	2	FALSE
+"EUCAST 2017"	"MIC"		"Neisseria meningitidis"	"Benzylpenicillin"	"N. meningitidis"		0.064	0.5	FALSE
+"EUCAST 2017"	"MIC"		"Pasteurella multocida"	"Benzylpenicillin"	"Pasteurella multocida"		0.5	1	FALSE
+"EUCAST 2017"	"MIC"		"Staphylococcus aureus"	"Benzylpenicillin"	"Staphs"		0.125	0.25	FALSE
+"EUCAST 2017"	"MIC"		"Staphylococcus lugdunensis"	"Benzylpenicillin"	"Staphs"		0.125	0.25	FALSE
+"EUCAST 2017"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"Strep A, B, C, G"		0.25	0.5	FALSE
+"EUCAST 2017"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Pneumo"		0.064	4	FALSE
+"EUCAST 2017"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Pneumo"		0.064	0.12	FALSE
+"EUCAST 2017"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Viridans strept"		0.25	4	FALSE
 "EUCAST 2017"	"MIC"		"Enterobacteriaceae"	"Piperacillin"	"Enterobacteriaceae"		8	32	FALSE
 "EUCAST 2017"	"MIC"		"Pseudomonas"	"Piperacillin"	"Pseudo"		16	32	FALSE
 "EUCAST 2017"	"MIC"		"Aspergillus fumigatus"	"Posaconazole"	"Aspergillus"		0.125	0.25	FALSE
@@ -4539,17 +4539,17 @@
 "EUCAST 2016"	"MIC"		"Staphylococcus"	"Oritavancin"	"PK/PD"		0.125	0.25	FALSE
 "EUCAST 2016"	"MIC"		"Streptococcus"	"Oritavancin"	"Strep A, B, C, G"		0.25	0.5	FALSE
 "EUCAST 2016"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Oritavancin"	"Viridans strept"		0.25	0.5	FALSE
-"EUCAST 2016"	"MIC"		"Corynebacterium"	"Penicillin G"	"Corynebacterium spp."		0.125	0.25	FALSE
-"EUCAST 2016"	"MIC"		"Listeria monocytogenes"	"Penicillin G"	"Listeria monocytogenes"		1	2	FALSE
-"EUCAST 2016"	"MIC"		"Neisseria gonorrhoeae"	"Penicillin G"	"N. gonorrhoeae"		0.064	2	FALSE
-"EUCAST 2016"	"MIC"		"Neisseria meningitidis"	"Penicillin G"	"N. meningitidis"		0.064	0.5	FALSE
-"EUCAST 2016"	"MIC"		"Pasteurella multocida"	"Penicillin G"	"Pasteurella multocida"		0.5	1	FALSE
-"EUCAST 2016"	"MIC"		"Staphylococcus aureus"	"Penicillin G"	"Staphs"		0.125	0.25	FALSE
-"EUCAST 2016"	"MIC"		"Staphylococcus lugdunensis"	"Penicillin G"	"Staphs"		0.125	0.25	FALSE
-"EUCAST 2016"	"MIC"		"Streptococcus"	"Penicillin G"	"Strep A, B, C, G"		0.25	0.5	FALSE
-"EUCAST 2016"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Pneumo"		0.064	4	FALSE
-"EUCAST 2016"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Pneumo"		0.064	0.12	FALSE
-"EUCAST 2016"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Viridans strept"		0.25	4	FALSE
+"EUCAST 2016"	"MIC"		"Corynebacterium"	"Benzylpenicillin"	"Corynebacterium spp."		0.125	0.25	FALSE
+"EUCAST 2016"	"MIC"		"Listeria monocytogenes"	"Benzylpenicillin"	"Listeria monocytogenes"		1	2	FALSE
+"EUCAST 2016"	"MIC"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"N. gonorrhoeae"		0.064	2	FALSE
+"EUCAST 2016"	"MIC"		"Neisseria meningitidis"	"Benzylpenicillin"	"N. meningitidis"		0.064	0.5	FALSE
+"EUCAST 2016"	"MIC"		"Pasteurella multocida"	"Benzylpenicillin"	"Pasteurella multocida"		0.5	1	FALSE
+"EUCAST 2016"	"MIC"		"Staphylococcus aureus"	"Benzylpenicillin"	"Staphs"		0.125	0.25	FALSE
+"EUCAST 2016"	"MIC"		"Staphylococcus lugdunensis"	"Benzylpenicillin"	"Staphs"		0.125	0.25	FALSE
+"EUCAST 2016"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"Strep A, B, C, G"		0.25	0.5	FALSE
+"EUCAST 2016"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Pneumo"		0.064	4	FALSE
+"EUCAST 2016"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Pneumo"		0.064	0.12	FALSE
+"EUCAST 2016"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Viridans strept"		0.25	4	FALSE
 "EUCAST 2016"	"MIC"		"Enterobacteriaceae"	"Piperacillin"	"Enterobacteriaceae"		8	32	FALSE
 "EUCAST 2016"	"MIC"		"Pseudomonas"	"Piperacillin"	"Pseudo"		16	32	FALSE
 "EUCAST 2016"	"MIC"		"Aspergillus fumigatus"	"Posaconazole"	"Aspergillus"		0.125	0.25	FALSE
@@ -4904,17 +4904,17 @@
 "EUCAST 2015"	"MIC"		"Neisseria gonorrhoeae"	"Ofloxacin"	"N. gonorrhoeae"		0.125	0.5	FALSE
 "EUCAST 2015"	"MIC"		"Staphylococcus"	"Ofloxacin"	"Staphs"		1	2	FALSE
 "EUCAST 2015"	"MIC"		"Streptococcus pneumoniae"	"Ofloxacin"	"Pneumo"		0.125	8	FALSE
-"EUCAST 2015"	"MIC"		"Corynebacterium"	"Penicillin G"	"Corynebacterium spp."		0.125	0.25	FALSE
-"EUCAST 2015"	"MIC"		"Listeria monocytogenes"	"Penicillin G"	"Listeria monocytogenes"		1	2	FALSE
-"EUCAST 2015"	"MIC"		"Neisseria gonorrhoeae"	"Penicillin G"	"N. gonorrhoeae"		0.064	2	FALSE
-"EUCAST 2015"	"MIC"		"Neisseria meningitidis"	"Penicillin G"	"N. meningitidis"		0.064	0.5	FALSE
-"EUCAST 2015"	"MIC"		"Pasteurella multocida"	"Penicillin G"	"Pasteurella multocida"		0.5	1	FALSE
-"EUCAST 2015"	"MIC"		"Staphylococcus aureus"	"Penicillin G"	"Staphs"		0.125	0.25	FALSE
-"EUCAST 2015"	"MIC"		"Staphylococcus lugdunensis"	"Penicillin G"	"Staphs"		0.125	0.25	FALSE
-"EUCAST 2015"	"MIC"		"Streptococcus"	"Penicillin G"	"Strep A, B, C, G"		0.25	0.5	FALSE
-"EUCAST 2015"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Pneumo"		0.064	4	FALSE
-"EUCAST 2015"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Pneumo"		0.064	0.12	FALSE
-"EUCAST 2015"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Viridans strept"		0.25	4	FALSE
+"EUCAST 2015"	"MIC"		"Corynebacterium"	"Benzylpenicillin"	"Corynebacterium spp."		0.125	0.25	FALSE
+"EUCAST 2015"	"MIC"		"Listeria monocytogenes"	"Benzylpenicillin"	"Listeria monocytogenes"		1	2	FALSE
+"EUCAST 2015"	"MIC"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"N. gonorrhoeae"		0.064	2	FALSE
+"EUCAST 2015"	"MIC"		"Neisseria meningitidis"	"Benzylpenicillin"	"N. meningitidis"		0.064	0.5	FALSE
+"EUCAST 2015"	"MIC"		"Pasteurella multocida"	"Benzylpenicillin"	"Pasteurella multocida"		0.5	1	FALSE
+"EUCAST 2015"	"MIC"		"Staphylococcus aureus"	"Benzylpenicillin"	"Staphs"		0.125	0.25	FALSE
+"EUCAST 2015"	"MIC"		"Staphylococcus lugdunensis"	"Benzylpenicillin"	"Staphs"		0.125	0.25	FALSE
+"EUCAST 2015"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"Strep A, B, C, G"		0.25	0.5	FALSE
+"EUCAST 2015"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Pneumo"		0.064	4	FALSE
+"EUCAST 2015"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Pneumo"		0.064	0.12	FALSE
+"EUCAST 2015"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Viridans strept"		0.25	4	FALSE
 "EUCAST 2015"	"MIC"		"Enterobacteriaceae"	"Piperacillin"	"Enterobacteriaceae"		8	32	FALSE
 "EUCAST 2015"	"MIC"		"Pseudomonas"	"Piperacillin"	"Pseudo"		16	32	FALSE
 "EUCAST 2015"	"MIC"		"Aspergillus fumigatus"	"Posaconazole"	"Aspergillus"		0.125	0.25	FALSE
@@ -5260,17 +5260,17 @@
 "EUCAST 2014"	"MIC"		"Neisseria gonorrhoeae"	"Ofloxacin"	"N. gonorrhoeae"		0.125	0.5	FALSE
 "EUCAST 2014"	"MIC"		"Staphylococcus"	"Ofloxacin"	"Staphs"		1	2	FALSE
 "EUCAST 2014"	"MIC"		"Streptococcus pneumoniae"	"Ofloxacin"	"Pneumo"		0.125	8	FALSE
-"EUCAST 2014"	"MIC"		"Corynebacterium"	"Penicillin G"	"Corynebacterium spp."		0.125	0.25	FALSE
-"EUCAST 2014"	"MIC"		"Listeria monocytogenes"	"Penicillin G"	"Listeria monocytogenes"		1	2	FALSE
-"EUCAST 2014"	"MIC"		"Neisseria gonorrhoeae"	"Penicillin G"	"N. gonorrhoeae"		0.064	2	FALSE
-"EUCAST 2014"	"MIC"		"Neisseria meningitidis"	"Penicillin G"	"N. meningitidis"		0.064	0.5	FALSE
-"EUCAST 2014"	"MIC"		"Pasteurella multocida"	"Penicillin G"	"Pasteurella multocida"		0.5	1	FALSE
-"EUCAST 2014"	"MIC"		"Staphylococcus aureus"	"Penicillin G"	"Staphs"		0.125	0.25	FALSE
-"EUCAST 2014"	"MIC"		"Staphylococcus lugdunensis"	"Penicillin G"	"Staphs"		0.125	0.25	FALSE
-"EUCAST 2014"	"MIC"		"Streptococcus"	"Penicillin G"	"Strep A, B, C, G"		0.25	0.5	FALSE
-"EUCAST 2014"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Pneumo"		0.064	4	FALSE
-"EUCAST 2014"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Pneumo"		0.064	0.12	FALSE
-"EUCAST 2014"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Viridans strept"		0.25	4	FALSE
+"EUCAST 2014"	"MIC"		"Corynebacterium"	"Benzylpenicillin"	"Corynebacterium spp."		0.125	0.25	FALSE
+"EUCAST 2014"	"MIC"		"Listeria monocytogenes"	"Benzylpenicillin"	"Listeria monocytogenes"		1	2	FALSE
+"EUCAST 2014"	"MIC"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"N. gonorrhoeae"		0.064	2	FALSE
+"EUCAST 2014"	"MIC"		"Neisseria meningitidis"	"Benzylpenicillin"	"N. meningitidis"		0.064	0.5	FALSE
+"EUCAST 2014"	"MIC"		"Pasteurella multocida"	"Benzylpenicillin"	"Pasteurella multocida"		0.5	1	FALSE
+"EUCAST 2014"	"MIC"		"Staphylococcus aureus"	"Benzylpenicillin"	"Staphs"		0.125	0.25	FALSE
+"EUCAST 2014"	"MIC"		"Staphylococcus lugdunensis"	"Benzylpenicillin"	"Staphs"		0.125	0.25	FALSE
+"EUCAST 2014"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"Strep A, B, C, G"		0.25	0.5	FALSE
+"EUCAST 2014"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Pneumo"		0.064	4	FALSE
+"EUCAST 2014"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Pneumo"		0.064	0.12	FALSE
+"EUCAST 2014"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Viridans strept"		0.25	4	FALSE
 "EUCAST 2014"	"MIC"		"Enterobacteriaceae"	"Piperacillin"	"Enterobacteriaceae"		8	32	FALSE
 "EUCAST 2014"	"MIC"		"Pseudomonas"	"Piperacillin"	"Pseudo"		16	32	FALSE
 "EUCAST 2014"	"MIC"		"Aspergillus fumigatus"	"Posaconazole"	"Aspergillus"		0.125	0.25	FALSE
@@ -5778,22 +5778,22 @@
 "EUCAST 2013"	"MIC"		"Coagulase-negative Staphylococcus (CoNS)"	"Oxacillin"	"Staphs"		0.25	0.5	FALSE
 "EUCAST 2013"	"MIC"		"Staphylococcus lugdunensis"	"Oxacillin"	"Staphs"		2	4	FALSE
 "EUCAST 2013"	"DISK"		"Streptococcus pneumoniae"	"Oxacillin"	"Pneumo"	"1ug"	20		FALSE
-"EUCAST 2013"	"DISK"		"Haemophilus influenzae"	"Penicillin G"	"H.influenzae"	"1unit"	12		FALSE
-"EUCAST 2013"	"DISK"		"Listeria monocytogenes"	"Penicillin G"	"Listeria"	"1unit"	13	12	FALSE
-"EUCAST 2013"	"MIC"		"Listeria monocytogenes"	"Penicillin G"	"Listeria"		1	2	FALSE
-"EUCAST 2013"	"MIC"		"Neisseria gonorrhoeae"	"Penicillin G"	"N.gonorrhoeae"		0.064	2	FALSE
-"EUCAST 2013"	"MIC"		"Neisseria meningitidis"	"Penicillin G"	"N.meningitidis"		0.064	0.5	FALSE
-"EUCAST 2013"	"DISK"		"Pasteurella multocida"	"Penicillin G"	"Pasteurella"	"1unit"	17	16	FALSE
-"EUCAST 2013"	"MIC"		"Pasteurella multocida"	"Penicillin G"	"Pasteurella"		0.5	1	FALSE
-"EUCAST 2013"	"DISK"		"Staphylococcus aureus"	"Penicillin G"	"Staphs"	"1unit"	26	25	FALSE
-"EUCAST 2013"	"MIC"		"Staphylococcus aureus"	"Penicillin G"	"Staphs"		0.125	0.25	FALSE
-"EUCAST 2013"	"DISK"		"Streptococcus"	"Penicillin G"	"Strept A,B,C,G"	"1unit"	18	17	FALSE
-"EUCAST 2013"	"MIC"		"Streptococcus"	"Penicillin G"	"Strept A,B,C,G"		0.25	0.5	FALSE
-"EUCAST 2013"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Pneumo"		0.064	0.12	FALSE
-"EUCAST 2013"	"MIC"	"Nonmeningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Pneumo"		0.064	4	FALSE
-"EUCAST 2013"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Viridans strept"	"1unit"	18	11	FALSE
-"EUCAST 2013"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Viridans strept"	"1unit"	18		FALSE
-"EUCAST 2013"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Viridans strept"		0.25	4	FALSE
+"EUCAST 2013"	"DISK"		"Haemophilus influenzae"	"Benzylpenicillin"	"H.influenzae"	"1unit"	12		FALSE
+"EUCAST 2013"	"DISK"		"Listeria monocytogenes"	"Benzylpenicillin"	"Listeria"	"1unit"	13	12	FALSE
+"EUCAST 2013"	"MIC"		"Listeria monocytogenes"	"Benzylpenicillin"	"Listeria"		1	2	FALSE
+"EUCAST 2013"	"MIC"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"N.gonorrhoeae"		0.064	2	FALSE
+"EUCAST 2013"	"MIC"		"Neisseria meningitidis"	"Benzylpenicillin"	"N.meningitidis"		0.064	0.5	FALSE
+"EUCAST 2013"	"DISK"		"Pasteurella multocida"	"Benzylpenicillin"	"Pasteurella"	"1unit"	17	16	FALSE
+"EUCAST 2013"	"MIC"		"Pasteurella multocida"	"Benzylpenicillin"	"Pasteurella"		0.5	1	FALSE
+"EUCAST 2013"	"DISK"		"Staphylococcus aureus"	"Benzylpenicillin"	"Staphs"	"1unit"	26	25	FALSE
+"EUCAST 2013"	"MIC"		"Staphylococcus aureus"	"Benzylpenicillin"	"Staphs"		0.125	0.25	FALSE
+"EUCAST 2013"	"DISK"		"Streptococcus"	"Benzylpenicillin"	"Strept A,B,C,G"	"1unit"	18	17	FALSE
+"EUCAST 2013"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"Strept A,B,C,G"		0.25	0.5	FALSE
+"EUCAST 2013"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Pneumo"		0.064	0.12	FALSE
+"EUCAST 2013"	"MIC"	"Nonmeningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Pneumo"		0.064	4	FALSE
+"EUCAST 2013"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Viridans strept"	"1unit"	18	11	FALSE
+"EUCAST 2013"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Viridans strept"	"1unit"	18		FALSE
+"EUCAST 2013"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Viridans strept"		0.25	4	FALSE
 "EUCAST 2013"	"DISK"		"Enterobacteriaceae"	"Piperacillin"	"Enterobacteriaceae"	"30ug"	20	16	FALSE
 "EUCAST 2013"	"MIC"		"Enterobacteriaceae"	"Piperacillin"	"Enterobacteriaceae"		8	32	FALSE
 "EUCAST 2013"	"DISK"		"Pseudomonas"	"Piperacillin"	"Pseud"	"30ug"	19	18	FALSE
@@ -6260,21 +6260,21 @@
 "EUCAST 2012"	"MIC"		"Staphylococcus aureus"	"Oxacillin"			2	4	FALSE
 "EUCAST 2012"	"MIC"		"Staphylococcus lugdunensis"	"Oxacillin"			2	4	FALSE
 "EUCAST 2012"	"DISK"		"Streptococcus pneumoniae"	"Oxacillin"		"1ug"	20	19	FALSE
-"EUCAST 2012"	"MIC"		"Anaerorhabdus"	"Penicillin G"			0.25	1	FALSE
-"EUCAST 2012"	"DISK"		"Haemophilus influenzae"	"Penicillin G"		"1 unit"	12	11	FALSE
-"EUCAST 2012"	"DISK"		"Listeria monocytogenes"	"Penicillin G"		"1 unit"	13	12	FALSE
-"EUCAST 2012"	"MIC"		"Listeria monocytogenes"	"Penicillin G"			1	2	FALSE
-"EUCAST 2012"	"MIC"		"Neisseria gonorrhoeae"	"Penicillin G"			0.064	2	FALSE
-"EUCAST 2012"	"MIC"		"Neisseria meningitidis"	"Penicillin G"			0.064	0.5	FALSE
-"EUCAST 2012"	"DISK"		"Staphylococcus"	"Penicillin G"		"1 unit"	26	25	FALSE
-"EUCAST 2012"	"MIC"		"Staphylococcus"	"Penicillin G"			0.125	0.25	FALSE
-"EUCAST 2012"	"DISK"		"Beta-haemolytic Streptococcus"	"Penicillin G"		"1 unit"	18	17	FALSE
-"EUCAST 2012"	"MIC"		"Beta-haemolytic Streptococcus"	"Penicillin G"			0.25	0.5	FALSE
-"EUCAST 2012"	"MIC"	"Other infections"	"Streptococcus pneumoniae"	"Penicillin G"			0.064	4	FALSE
-"EUCAST 2012"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Penicillin G"			0.064	0.12	FALSE
-"EUCAST 2012"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"		"1 unit"	18	11	FALSE
-"EUCAST 2012"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"		"1 unit"	18	17	FALSE
-"EUCAST 2012"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"			0.25	4	FALSE
+"EUCAST 2012"	"MIC"		"Anaerorhabdus"	"Benzylpenicillin"			0.25	1	FALSE
+"EUCAST 2012"	"DISK"		"Haemophilus influenzae"	"Benzylpenicillin"		"1 unit"	12	11	FALSE
+"EUCAST 2012"	"DISK"		"Listeria monocytogenes"	"Benzylpenicillin"		"1 unit"	13	12	FALSE
+"EUCAST 2012"	"MIC"		"Listeria monocytogenes"	"Benzylpenicillin"			1	2	FALSE
+"EUCAST 2012"	"MIC"		"Neisseria gonorrhoeae"	"Benzylpenicillin"			0.064	2	FALSE
+"EUCAST 2012"	"MIC"		"Neisseria meningitidis"	"Benzylpenicillin"			0.064	0.5	FALSE
+"EUCAST 2012"	"DISK"		"Staphylococcus"	"Benzylpenicillin"		"1 unit"	26	25	FALSE
+"EUCAST 2012"	"MIC"		"Staphylococcus"	"Benzylpenicillin"			0.125	0.25	FALSE
+"EUCAST 2012"	"DISK"		"Beta-haemolytic Streptococcus"	"Benzylpenicillin"		"1 unit"	18	17	FALSE
+"EUCAST 2012"	"MIC"		"Beta-haemolytic Streptococcus"	"Benzylpenicillin"			0.25	0.5	FALSE
+"EUCAST 2012"	"MIC"	"Other infections"	"Streptococcus pneumoniae"	"Benzylpenicillin"			0.064	4	FALSE
+"EUCAST 2012"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"			0.064	0.12	FALSE
+"EUCAST 2012"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"		"1 unit"	18	11	FALSE
+"EUCAST 2012"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"		"1 unit"	18	17	FALSE
+"EUCAST 2012"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"			0.25	4	FALSE
 "EUCAST 2012"	"MIC"		"Anaerorhabdus"	"Piperacillin"			16	32	FALSE
 "EUCAST 2012"	"DISK"		"Pseudomonas"	"Piperacillin"		"30ug"	19	18	FALSE
 "EUCAST 2012"	"MIC"		"Pseudomonas"	"Piperacillin"			16	32	FALSE
@@ -6792,27 +6792,27 @@
 "EUCAST 2011"	"MIC"		"Staphylococcus aureus"	"Oxacillin"			2	4	FALSE
 "EUCAST 2011"	"MIC"		"Staphylococcus lugdunensis"	"Oxacillin"			2	4	FALSE
 "EUCAST 2011"	"DISK"		"Streptococcus pneumoniae"	"Oxacillin"		"1ug"	18	17	FALSE
-"EUCAST 2011"	"MIC"		"Neisseria gonorrhoeae"	"Penicillin G"			0.064	2	FALSE
-"EUCAST 2011"	"MIC"		"Neisseria meningitidis"	"Penicillin G"			0.064	0.5	FALSE
-"EUCAST 2011"	"DISK"		"Staphylococcus"	"Penicillin G"		"1ug"	26	25	FALSE
-"EUCAST 2011"	"MIC"		"Staphylococcus"	"Penicillin G"			0.125	0.25	FALSE
-"EUCAST 2011"	"DISK"		"Streptococcus"	"Penicillin G"		"1ug"	18	11	FALSE
-"EUCAST 2011"	"MIC"		"Streptococcus"	"Penicillin G"			0.25	4	FALSE
-"EUCAST 2011"	"DISK"		"Streptococcus group A"	"Penicillin G"		"1ug"	18	17	FALSE
-"EUCAST 2011"	"MIC"		"Streptococcus group A"	"Penicillin G"			0.25	0.5	FALSE
-"EUCAST 2011"	"DISK"		"Streptococcus group B"	"Penicillin G"		"1ug"	18	17	FALSE
-"EUCAST 2011"	"MIC"		"Streptococcus group B"	"Penicillin G"			0.25	0.5	FALSE
-"EUCAST 2011"	"DISK"		"Streptococcus group C"	"Penicillin G"		"1ug"	18	17	FALSE
-"EUCAST 2011"	"MIC"		"Streptococcus group C"	"Penicillin G"			0.25	0.5	FALSE
-"EUCAST 2011"	"DISK"		"Streptococcus group G"	"Penicillin G"		"1ug"	18	17	FALSE
-"EUCAST 2011"	"MIC"		"Streptococcus group G"	"Penicillin G"			0.25	0.5	FALSE
-"EUCAST 2011"	"DISK"		"Beta-haemolytic Streptococcus"	"Penicillin G"		"1ug"	18	17	FALSE
-"EUCAST 2011"	"DISK"		"Beta-haemolytic Streptococcus"	"Penicillin G"		"1ug"	18	17	FALSE
-"EUCAST 2011"	"MIC"		"Beta-haemolytic Streptococcus"	"Penicillin G"			0.25	0.5	FALSE
-"EUCAST 2011"	"MIC"		"Beta-haemolytic Streptococcus"	"Penicillin G"			0.25	0.5	FALSE
-"EUCAST 2011"	"MIC"		"Streptococcus pneumoniae"	"Penicillin G"			0.064	4	FALSE
-"EUCAST 2011"	"DISK"		"Streptococcus pyogenes"	"Penicillin G"		"1ug"	18	17	FALSE
-"EUCAST 2011"	"MIC"		"Streptococcus pyogenes"	"Penicillin G"			0.25	0.5	FALSE
+"EUCAST 2011"	"MIC"		"Neisseria gonorrhoeae"	"Benzylpenicillin"			0.064	2	FALSE
+"EUCAST 2011"	"MIC"		"Neisseria meningitidis"	"Benzylpenicillin"			0.064	0.5	FALSE
+"EUCAST 2011"	"DISK"		"Staphylococcus"	"Benzylpenicillin"		"1ug"	26	25	FALSE
+"EUCAST 2011"	"MIC"		"Staphylococcus"	"Benzylpenicillin"			0.125	0.25	FALSE
+"EUCAST 2011"	"DISK"		"Streptococcus"	"Benzylpenicillin"		"1ug"	18	11	FALSE
+"EUCAST 2011"	"MIC"		"Streptococcus"	"Benzylpenicillin"			0.25	4	FALSE
+"EUCAST 2011"	"DISK"		"Streptococcus group A"	"Benzylpenicillin"		"1ug"	18	17	FALSE
+"EUCAST 2011"	"MIC"		"Streptococcus group A"	"Benzylpenicillin"			0.25	0.5	FALSE
+"EUCAST 2011"	"DISK"		"Streptococcus group B"	"Benzylpenicillin"		"1ug"	18	17	FALSE
+"EUCAST 2011"	"MIC"		"Streptococcus group B"	"Benzylpenicillin"			0.25	0.5	FALSE
+"EUCAST 2011"	"DISK"		"Streptococcus group C"	"Benzylpenicillin"		"1ug"	18	17	FALSE
+"EUCAST 2011"	"MIC"		"Streptococcus group C"	"Benzylpenicillin"			0.25	0.5	FALSE
+"EUCAST 2011"	"DISK"		"Streptococcus group G"	"Benzylpenicillin"		"1ug"	18	17	FALSE
+"EUCAST 2011"	"MIC"		"Streptococcus group G"	"Benzylpenicillin"			0.25	0.5	FALSE
+"EUCAST 2011"	"DISK"		"Beta-haemolytic Streptococcus"	"Benzylpenicillin"		"1ug"	18	17	FALSE
+"EUCAST 2011"	"DISK"		"Beta-haemolytic Streptococcus"	"Benzylpenicillin"		"1ug"	18	17	FALSE
+"EUCAST 2011"	"MIC"		"Beta-haemolytic Streptococcus"	"Benzylpenicillin"			0.25	0.5	FALSE
+"EUCAST 2011"	"MIC"		"Beta-haemolytic Streptococcus"	"Benzylpenicillin"			0.25	0.5	FALSE
+"EUCAST 2011"	"MIC"		"Streptococcus pneumoniae"	"Benzylpenicillin"			0.064	4	FALSE
+"EUCAST 2011"	"DISK"		"Streptococcus pyogenes"	"Benzylpenicillin"		"1ug"	18	17	FALSE
+"EUCAST 2011"	"MIC"		"Streptococcus pyogenes"	"Benzylpenicillin"			0.25	0.5	FALSE
 "EUCAST 2011"	"DISK"		"Pseudomonas"	"Piperacillin"		"30ug"	19	18	FALSE
 "EUCAST 2011"	"MIC"		"Pseudomonas"	"Piperacillin"			16	32	FALSE
 "EUCAST 2011"	"MIC"		"Enterococcus faecium"	"Quinupristin/dalfopristin"			1	8	FALSE
@@ -8009,45 +8009,45 @@
 "CLSI 2019"	"MIC"		"Pseudallescheria"	"Oxacillin"	"Table 2C"		0.25	0.5	FALSE
 "CLSI 2019"	"MIC"		"Pseudallescheria"	"Oxacillin"	"Table 2C"		0.25	0.5	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Oxacillin"	"Generic CLSI rules"	"1ug"	0.25	0.5	FALSE
-"CLSI 2019"	"MIC"		"Abiotrophia"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2019"	"MIC"		"Aerococcus"	"Penicillin G"	"M45 Table 2"		0.125	4	FALSE
-"CLSI 2019"	"MIC"		"Aggregatibacter"	"Penicillin G"	"M45 Table 9"		1	4	FALSE
-"CLSI 2019"	"MIC"		"Anaerosalibacter"	"Penicillin G"	"Table 2J"		0.5	2	FALSE
-"CLSI 2019"	"MIC"		"Bacillus"	"Penicillin G"	"M45 Table 4"		0.125	0.25	FALSE
-"CLSI 2019"	"MIC"		"Bacillus anthracis"	"Penicillin G"	"M45 Table 21"		0.5	1	FALSE
-"CLSI 2019"	"MIC"		"Cardiobacterium"	"Penicillin G"	"M45 Table 9"		1	4	FALSE
-"CLSI 2019"	"MIC"		"Eikenella corrodens"	"Penicillin G"	"M45 Table 9"		1	4	FALSE
-"CLSI 2019"	"DISK"		"Enterococcus"	"Penicillin G"	"Table 2D"	"10units"	15	14	FALSE
-"CLSI 2019"	"MIC"		"Enterococcus"	"Penicillin G"	"Table 2D"		8	16	FALSE
-"CLSI 2019"	"MIC"		"Gemella"	"Penicillin G"	"M45 Table 8"		0.125	4	FALSE
-"CLSI 2019"	"MIC"		"Granulicatella"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2019"	"MIC"		"Kingella"	"Penicillin G"	"M45 Table 9"		1	4	FALSE
-"CLSI 2019"	"MIC"		"Leuconostoc"	"Penicillin G"	"M45 Table 13"		8		FALSE
-"CLSI 2019"	"MIC"		"Lactobacillus"	"Penicillin G"	"M45 Table 11"		8		FALSE
-"CLSI 2019"	"MIC"		"Lactococcus"	"Penicillin G"	"M45 Table 12"		1	4	FALSE
-"CLSI 2019"	"MIC"		"Listeria monocytogenes"	"Penicillin G"	"M45 Table 14"		2		FALSE
-"CLSI 2019"	"MIC"		"Micrococcus"	"Penicillin G"	"M45 Table 15"		0.125	0.25	FALSE
-"CLSI 2019"	"DISK"		"Neisseria gonorrhoeae"	"Penicillin G"	"Table 2F"	"10units"	47	26	FALSE
-"CLSI 2019"	"MIC"		"Neisseria gonorrhoeae"	"Penicillin G"	"Table 2F"		0.064	2	FALSE
-"CLSI 2019"	"DISK"		"Neisseria meningitidis"	"Penicillin G"	"Table 2I"	"10units"			FALSE
-"CLSI 2019"	"MIC"		"Neisseria meningitidis"	"Penicillin G"	"Table 2I"		0.064	0.5	FALSE
-"CLSI 2019"	"MIC"		"Pediococcus"	"Penicillin G"	"M45 Table 18"		8		FALSE
-"CLSI 2019"	"DISK"		"Pasteurella"	"Penicillin G"	"M45 Table 17"	"10 Units"	25		FALSE
-"CLSI 2019"	"MIC"		"Pasteurella"	"Penicillin G"	"M45 Table 17"		0.5		FALSE
-"CLSI 2019"	"MIC"		"Rothia"	"Penicillin G"	"M45 Table 19"		0.125	4	FALSE
-"CLSI 2019"	"DISK"		"Staphylococcus"	"Penicillin G"	"Table 2C"	"10ug"	29	28	FALSE
-"CLSI 2019"	"MIC"		"Staphylococcus"	"Penicillin G"	"Table 2C"		0.125	0.25	FALSE
-"CLSI 2019"	"DISK"		"Streptococcus"	"Penicillin G"	"Table 2H-1"	"10units"	24		FALSE
-"CLSI 2019"	"MIC"		"Streptococcus"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2019"	"MIC"		"Streptococcus"	"Penicillin G"	"Table 2H-1"		0.125		FALSE
-"CLSI 2019"	"DISK"		"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"	"10units"			FALSE
-"CLSI 2019"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		0.064	0.12	FALSE
-"CLSI 2019"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		2	8	FALSE
-"CLSI 2019"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		0.064	2	FALSE
-"CLSI 2019"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Table 2H-2"	"10units"			FALSE
-"CLSI 2019"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Table 2H-2"		0.125	4	FALSE
-"CLSI 2019"	"DISK"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	29	28	FALSE
-"CLSI 2019"	"MIC"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
+"CLSI 2019"	"MIC"		"Abiotrophia"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2019"	"MIC"		"Aerococcus"	"Benzylpenicillin"	"M45 Table 2"		0.125	4	FALSE
+"CLSI 2019"	"MIC"		"Aggregatibacter"	"Benzylpenicillin"	"M45 Table 9"		1	4	FALSE
+"CLSI 2019"	"MIC"		"Anaerosalibacter"	"Benzylpenicillin"	"Table 2J"		0.5	2	FALSE
+"CLSI 2019"	"MIC"		"Bacillus"	"Benzylpenicillin"	"M45 Table 4"		0.125	0.25	FALSE
+"CLSI 2019"	"MIC"		"Bacillus anthracis"	"Benzylpenicillin"	"M45 Table 21"		0.5	1	FALSE
+"CLSI 2019"	"MIC"		"Cardiobacterium"	"Benzylpenicillin"	"M45 Table 9"		1	4	FALSE
+"CLSI 2019"	"MIC"		"Eikenella corrodens"	"Benzylpenicillin"	"M45 Table 9"		1	4	FALSE
+"CLSI 2019"	"DISK"		"Enterococcus"	"Benzylpenicillin"	"Table 2D"	"10units"	15	14	FALSE
+"CLSI 2019"	"MIC"		"Enterococcus"	"Benzylpenicillin"	"Table 2D"		8	16	FALSE
+"CLSI 2019"	"MIC"		"Gemella"	"Benzylpenicillin"	"M45 Table 8"		0.125	4	FALSE
+"CLSI 2019"	"MIC"		"Granulicatella"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2019"	"MIC"		"Kingella"	"Benzylpenicillin"	"M45 Table 9"		1	4	FALSE
+"CLSI 2019"	"MIC"		"Leuconostoc"	"Benzylpenicillin"	"M45 Table 13"		8		FALSE
+"CLSI 2019"	"MIC"		"Lactobacillus"	"Benzylpenicillin"	"M45 Table 11"		8		FALSE
+"CLSI 2019"	"MIC"		"Lactococcus"	"Benzylpenicillin"	"M45 Table 12"		1	4	FALSE
+"CLSI 2019"	"MIC"		"Listeria monocytogenes"	"Benzylpenicillin"	"M45 Table 14"		2		FALSE
+"CLSI 2019"	"MIC"		"Micrococcus"	"Benzylpenicillin"	"M45 Table 15"		0.125	0.25	FALSE
+"CLSI 2019"	"DISK"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"Table 2F"	"10units"	47	26	FALSE
+"CLSI 2019"	"MIC"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"Table 2F"		0.064	2	FALSE
+"CLSI 2019"	"DISK"		"Neisseria meningitidis"	"Benzylpenicillin"	"Table 2I"	"10units"			FALSE
+"CLSI 2019"	"MIC"		"Neisseria meningitidis"	"Benzylpenicillin"	"Table 2I"		0.064	0.5	FALSE
+"CLSI 2019"	"MIC"		"Pediococcus"	"Benzylpenicillin"	"M45 Table 18"		8		FALSE
+"CLSI 2019"	"DISK"		"Pasteurella"	"Benzylpenicillin"	"M45 Table 17"	"10 Units"	25		FALSE
+"CLSI 2019"	"MIC"		"Pasteurella"	"Benzylpenicillin"	"M45 Table 17"		0.5		FALSE
+"CLSI 2019"	"MIC"		"Rothia"	"Benzylpenicillin"	"M45 Table 19"		0.125	4	FALSE
+"CLSI 2019"	"DISK"		"Staphylococcus"	"Benzylpenicillin"	"Table 2C"	"10ug"	29	28	FALSE
+"CLSI 2019"	"MIC"		"Staphylococcus"	"Benzylpenicillin"	"Table 2C"		0.125	0.25	FALSE
+"CLSI 2019"	"DISK"		"Streptococcus"	"Benzylpenicillin"	"Table 2H-1"	"10units"	24		FALSE
+"CLSI 2019"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2019"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"Table 2H-1"		0.125		FALSE
+"CLSI 2019"	"DISK"		"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"	"10units"			FALSE
+"CLSI 2019"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		0.064	0.12	FALSE
+"CLSI 2019"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		2	8	FALSE
+"CLSI 2019"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		0.064	2	FALSE
+"CLSI 2019"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Table 2H-2"	"10units"			FALSE
+"CLSI 2019"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Table 2H-2"		0.125	4	FALSE
+"CLSI 2019"	"DISK"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	29	28	FALSE
+"CLSI 2019"	"MIC"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
 "CLSI 2019"	"DISK"		"Acinetobacter"	"Piperacillin"	"Table 2B-2"	"100ug"	21	17	FALSE
 "CLSI 2019"	"MIC"		"Acinetobacter"	"Piperacillin"	"Table 2B-2"		16	128	FALSE
 "CLSI 2019"	"MIC"		"Anaerosalibacter"	"Piperacillin"	"Table 2J"		32	128	FALSE
@@ -8064,8 +8064,8 @@
 "CLSI 2019"	"MIC"		"(unknown name)"	"Polymyxin B"	"Generic CLSI rules"	"300units"	2	8	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30ug"	18	14	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30ug"	1	4	FALSE
-"CLSI 2019"	"DISK"		"Streptococcus pneumoniae"	"Penicillin V"	"Table 2G"	"10ug"			FALSE
-"CLSI 2019"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Penicillin V"	"Table 2G"		0.064	2	FALSE
+"CLSI 2019"	"DISK"		"Streptococcus pneumoniae"		"Table 2G"	"10ug"			FALSE
+"CLSI 2019"	"MIC"	"Oral"	"Streptococcus pneumoniae"		"Table 2G"		0.064	2	FALSE
 "CLSI 2019"	"DISK"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2ug"	13	12	FALSE
 "CLSI 2019"	"MIC"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2ug"	2	4	FALSE
 "CLSI 2019"	"DISK"		"Enterococcus"	"Quinupristin/dalfopristin"	"Table 2D"	"15ug"	19	15	FALSE
@@ -9353,42 +9353,42 @@
 "CLSI 2018"	"DISK"		"Streptococcus pneumoniae"	"Oxacillin"	"Table 2G"	"1ug"	20		FALSE
 "CLSI 2018"	"MIC"		"Pseudallescheria"	"Oxacillin"	"Table 2C"		0.25	0.5	FALSE
 "CLSI 2018"	"MIC"		"(unknown name)"	"Oxacillin"	"Generic CLSI rules"	"1ug"	0.25	0.5	FALSE
-"CLSI 2018"	"MIC"		"Abiotrophia"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2018"	"MIC"		"Aggregatibacter"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2018"	"MIC"		"Anaerosalibacter"	"Penicillin G"	"Table 2J"		0.5	2	FALSE
-"CLSI 2018"	"MIC"		"Bacillus"	"Penicillin G"	"M45 Table 3"		0.125	0.25	FALSE
-"CLSI 2018"	"MIC"		"Bacillus anthracis"	"Penicillin G"	"M45 Table 16"		0.125	0.25	FALSE
-"CLSI 2018"	"MIC"		"Cardiobacterium"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2018"	"MIC"		"Eikenella"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2018"	"DISK"		"Enterococcus"	"Penicillin G"	"Table 2D"	"10units"	15	14	FALSE
-"CLSI 2018"	"MIC"		"Enterococcus"	"Penicillin G"	"Table 2D"		8	16	FALSE
-"CLSI 2018"	"MIC"		"Erysipelothrix rhusiopathiae"	"Penicillin G"	"M45 Table 6"		0.125		FALSE
-"CLSI 2018"	"MIC"		"Granulicatella"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2018"	"MIC"		"Kingella"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2018"	"MIC"		"Leuconostoc"	"Penicillin G"	"M45 Table 10"		8		FALSE
-"CLSI 2018"	"MIC"		"Lactobacillus"	"Penicillin G"	"M45 Table 9"		8		FALSE
-"CLSI 2018"	"DISK"		"Listeria monocytogenes"	"Penicillin G"	"M45 Table 11"	"10units"			FALSE
-"CLSI 2018"	"MIC"		"Listeria monocytogenes"	"Penicillin G"	"M45 Table 11"		2		FALSE
-"CLSI 2018"	"DISK"		"Neisseria gonorrhoeae"	"Penicillin G"	"Table 2F"	"10units"	47	26	FALSE
-"CLSI 2018"	"MIC"		"Neisseria gonorrhoeae"	"Penicillin G"	"Table 2F"		0.064	2	FALSE
-"CLSI 2018"	"DISK"		"Neisseria meningitidis"	"Penicillin G"	"Table 2I"	"10units"			FALSE
-"CLSI 2018"	"MIC"		"Neisseria meningitidis"	"Penicillin G"	"Table 2I"		0.064	0.5	FALSE
-"CLSI 2018"	"MIC"		"Pediococcus"	"Penicillin G"	"M45 Table 14"		8		FALSE
-"CLSI 2018"	"DISK"		"Pasteurella"	"Penicillin G"	"M45 Table 13"	"10 Units"	25		FALSE
-"CLSI 2018"	"MIC"		"Pasteurella"	"Penicillin G"	"M45 Table 13"		0.5		FALSE
-"CLSI 2018"	"DISK"		"Staphylococcus"	"Penicillin G"	"Table 2C"	"10ug"	29	28	FALSE
-"CLSI 2018"	"MIC"		"Staphylococcus"	"Penicillin G"	"Table 2C"		0.125	0.25	FALSE
-"CLSI 2018"	"DISK"		"Streptococcus"	"Penicillin G"	"Table 2H-1"	"10units"	24		FALSE
-"CLSI 2018"	"MIC"		"Streptococcus"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2018"	"MIC"		"Streptococcus"	"Penicillin G"	"Table 2H-1"		0.125		FALSE
-"CLSI 2018"	"DISK"		"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"	"10units"			FALSE
-"CLSI 2018"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		0.064	0.12	FALSE
-"CLSI 2018"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		2	8	FALSE
-"CLSI 2018"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		0.064	2	FALSE
-"CLSI 2018"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Table 2H-2"	"10units"			FALSE
-"CLSI 2018"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Table 2H-2"		0.125	4	FALSE
-"CLSI 2018"	"DISK"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	29	28	FALSE
-"CLSI 2018"	"MIC"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
+"CLSI 2018"	"MIC"		"Abiotrophia"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2018"	"MIC"		"Aggregatibacter"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2018"	"MIC"		"Anaerosalibacter"	"Benzylpenicillin"	"Table 2J"		0.5	2	FALSE
+"CLSI 2018"	"MIC"		"Bacillus"	"Benzylpenicillin"	"M45 Table 3"		0.125	0.25	FALSE
+"CLSI 2018"	"MIC"		"Bacillus anthracis"	"Benzylpenicillin"	"M45 Table 16"		0.125	0.25	FALSE
+"CLSI 2018"	"MIC"		"Cardiobacterium"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2018"	"MIC"		"Eikenella"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2018"	"DISK"		"Enterococcus"	"Benzylpenicillin"	"Table 2D"	"10units"	15	14	FALSE
+"CLSI 2018"	"MIC"		"Enterococcus"	"Benzylpenicillin"	"Table 2D"		8	16	FALSE
+"CLSI 2018"	"MIC"		"Erysipelothrix rhusiopathiae"	"Benzylpenicillin"	"M45 Table 6"		0.125		FALSE
+"CLSI 2018"	"MIC"		"Granulicatella"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2018"	"MIC"		"Kingella"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2018"	"MIC"		"Leuconostoc"	"Benzylpenicillin"	"M45 Table 10"		8		FALSE
+"CLSI 2018"	"MIC"		"Lactobacillus"	"Benzylpenicillin"	"M45 Table 9"		8		FALSE
+"CLSI 2018"	"DISK"		"Listeria monocytogenes"	"Benzylpenicillin"	"M45 Table 11"	"10units"			FALSE
+"CLSI 2018"	"MIC"		"Listeria monocytogenes"	"Benzylpenicillin"	"M45 Table 11"		2		FALSE
+"CLSI 2018"	"DISK"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"Table 2F"	"10units"	47	26	FALSE
+"CLSI 2018"	"MIC"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"Table 2F"		0.064	2	FALSE
+"CLSI 2018"	"DISK"		"Neisseria meningitidis"	"Benzylpenicillin"	"Table 2I"	"10units"			FALSE
+"CLSI 2018"	"MIC"		"Neisseria meningitidis"	"Benzylpenicillin"	"Table 2I"		0.064	0.5	FALSE
+"CLSI 2018"	"MIC"		"Pediococcus"	"Benzylpenicillin"	"M45 Table 14"		8		FALSE
+"CLSI 2018"	"DISK"		"Pasteurella"	"Benzylpenicillin"	"M45 Table 13"	"10 Units"	25		FALSE
+"CLSI 2018"	"MIC"		"Pasteurella"	"Benzylpenicillin"	"M45 Table 13"		0.5		FALSE
+"CLSI 2018"	"DISK"		"Staphylococcus"	"Benzylpenicillin"	"Table 2C"	"10ug"	29	28	FALSE
+"CLSI 2018"	"MIC"		"Staphylococcus"	"Benzylpenicillin"	"Table 2C"		0.125	0.25	FALSE
+"CLSI 2018"	"DISK"		"Streptococcus"	"Benzylpenicillin"	"Table 2H-1"	"10units"	24		FALSE
+"CLSI 2018"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2018"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"Table 2H-1"		0.125		FALSE
+"CLSI 2018"	"DISK"		"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"	"10units"			FALSE
+"CLSI 2018"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		0.064	0.12	FALSE
+"CLSI 2018"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		2	8	FALSE
+"CLSI 2018"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		0.064	2	FALSE
+"CLSI 2018"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Table 2H-2"	"10units"			FALSE
+"CLSI 2018"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Table 2H-2"		0.125	4	FALSE
+"CLSI 2018"	"DISK"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	29	28	FALSE
+"CLSI 2018"	"MIC"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
 "CLSI 2018"	"DISK"		"Acinetobacter"	"Piperacillin"	"Table 2B-2"	"100ug"	21	17	FALSE
 "CLSI 2018"	"MIC"		"Acinetobacter"	"Piperacillin"	"Table 2B-2"		16	128	FALSE
 "CLSI 2018"	"MIC"		"Anaerosalibacter"	"Piperacillin"	"Table 2J"		32	128	FALSE
@@ -9403,8 +9403,8 @@
 "CLSI 2018"	"MIC"		"(unknown name)"	"Polymyxin B"	"Generic CLSI rules"	"300units"	2	8	FALSE
 "CLSI 2018"	"DISK"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30ug"	18	14	FALSE
 "CLSI 2018"	"MIC"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30ug"	1	4	FALSE
-"CLSI 2018"	"DISK"		"Streptococcus pneumoniae"	"Penicillin V"	"Table 2G"	"10ug"			FALSE
-"CLSI 2018"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Penicillin V"	"Table 2G"		0.064	2	FALSE
+"CLSI 2018"	"DISK"		"Streptococcus pneumoniae"		"Table 2G"	"10ug"			FALSE
+"CLSI 2018"	"MIC"	"Oral"	"Streptococcus pneumoniae"		"Table 2G"		0.064	2	FALSE
 "CLSI 2018"	"DISK"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2ug"	13	12	FALSE
 "CLSI 2018"	"MIC"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2ug"	2	4	FALSE
 "CLSI 2018"	"DISK"		"Enterococcus"	"Quinupristin/dalfopristin"	"Table 2D"	"15ug"	19	15	FALSE
@@ -10658,42 +10658,42 @@
 "CLSI 2017"	"DISK"		"Streptococcus pneumoniae"	"Oxacillin"	"Table 2G"	"1ug"	20		FALSE
 "CLSI 2017"	"MIC"		"Pseudallescheria"	"Oxacillin"	"Table 2C"		0.25	0.5	FALSE
 "CLSI 2017"	"MIC"		"(unknown name)"	"Oxacillin"	"Generic CLSI rules"	"1ug"	0.25	0.5	FALSE
-"CLSI 2017"	"MIC"		"Abiotrophia"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2017"	"MIC"		"Aggregatibacter"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2017"	"MIC"		"Anaerosalibacter"	"Penicillin G"	"Table 2J"		0.5	2	FALSE
-"CLSI 2017"	"MIC"		"Bacillus"	"Penicillin G"	"M45 Table 3"		0.125	0.25	FALSE
-"CLSI 2017"	"MIC"		"Bacillus anthracis"	"Penicillin G"	"M45 Table 16"		0.125	0.25	FALSE
-"CLSI 2017"	"MIC"		"Cardiobacterium"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2017"	"MIC"		"Eikenella"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2017"	"DISK"		"Enterococcus"	"Penicillin G"	"Table 2D"	"10units"	15	14	FALSE
-"CLSI 2017"	"MIC"		"Enterococcus"	"Penicillin G"	"Table 2D"		8	16	FALSE
-"CLSI 2017"	"MIC"		"Erysipelothrix rhusiopathiae"	"Penicillin G"	"M45 Table 6"		0.125		FALSE
-"CLSI 2017"	"MIC"		"Granulicatella"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2017"	"MIC"		"Kingella"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2017"	"MIC"		"Leuconostoc"	"Penicillin G"	"M45 Table 10"		8		FALSE
-"CLSI 2017"	"MIC"		"Lactobacillus"	"Penicillin G"	"M45 Table 9"		8		FALSE
-"CLSI 2017"	"DISK"		"Listeria monocytogenes"	"Penicillin G"	"M45 Table 11"	"10units"			FALSE
-"CLSI 2017"	"MIC"		"Listeria monocytogenes"	"Penicillin G"	"M45 Table 11"		2		FALSE
-"CLSI 2017"	"DISK"		"Neisseria gonorrhoeae"	"Penicillin G"	"Table 2F"	"10units"	47	26	FALSE
-"CLSI 2017"	"MIC"		"Neisseria gonorrhoeae"	"Penicillin G"	"Table 2F"		0.064	2	FALSE
-"CLSI 2017"	"DISK"		"Neisseria meningitidis"	"Penicillin G"	"Table 2I"	"10units"			FALSE
-"CLSI 2017"	"MIC"		"Neisseria meningitidis"	"Penicillin G"	"Table 2I"		0.064	0.5	FALSE
-"CLSI 2017"	"MIC"		"Pediococcus"	"Penicillin G"	"M45 Table 14"		8		FALSE
-"CLSI 2017"	"DISK"		"Pasteurella"	"Penicillin G"	"M45 Table 13"	"10 Units"	25		FALSE
-"CLSI 2017"	"MIC"		"Pasteurella"	"Penicillin G"	"M45 Table 13"		0.5		FALSE
-"CLSI 2017"	"DISK"		"Staphylococcus"	"Penicillin G"	"Table 2C"	"10ug"	29	28	FALSE
-"CLSI 2017"	"MIC"		"Staphylococcus"	"Penicillin G"	"Table 2C"		0.125	0.25	FALSE
-"CLSI 2017"	"DISK"		"Streptococcus"	"Penicillin G"	"Table 2H-1"	"10units"	24		FALSE
-"CLSI 2017"	"MIC"		"Streptococcus"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2017"	"MIC"		"Streptococcus"	"Penicillin G"	"Table 2H-1"		0.125		FALSE
-"CLSI 2017"	"DISK"		"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"	"10units"			FALSE
-"CLSI 2017"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		0.064	0.12	FALSE
-"CLSI 2017"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		2	8	FALSE
-"CLSI 2017"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		0.064	2	FALSE
-"CLSI 2017"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Table 2H-2"	"10units"			FALSE
-"CLSI 2017"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Table 2H-2"		0.125	4	FALSE
-"CLSI 2017"	"DISK"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	29	28	FALSE
-"CLSI 2017"	"MIC"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
+"CLSI 2017"	"MIC"		"Abiotrophia"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2017"	"MIC"		"Aggregatibacter"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2017"	"MIC"		"Anaerosalibacter"	"Benzylpenicillin"	"Table 2J"		0.5	2	FALSE
+"CLSI 2017"	"MIC"		"Bacillus"	"Benzylpenicillin"	"M45 Table 3"		0.125	0.25	FALSE
+"CLSI 2017"	"MIC"		"Bacillus anthracis"	"Benzylpenicillin"	"M45 Table 16"		0.125	0.25	FALSE
+"CLSI 2017"	"MIC"		"Cardiobacterium"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2017"	"MIC"		"Eikenella"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2017"	"DISK"		"Enterococcus"	"Benzylpenicillin"	"Table 2D"	"10units"	15	14	FALSE
+"CLSI 2017"	"MIC"		"Enterococcus"	"Benzylpenicillin"	"Table 2D"		8	16	FALSE
+"CLSI 2017"	"MIC"		"Erysipelothrix rhusiopathiae"	"Benzylpenicillin"	"M45 Table 6"		0.125		FALSE
+"CLSI 2017"	"MIC"		"Granulicatella"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2017"	"MIC"		"Kingella"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2017"	"MIC"		"Leuconostoc"	"Benzylpenicillin"	"M45 Table 10"		8		FALSE
+"CLSI 2017"	"MIC"		"Lactobacillus"	"Benzylpenicillin"	"M45 Table 9"		8		FALSE
+"CLSI 2017"	"DISK"		"Listeria monocytogenes"	"Benzylpenicillin"	"M45 Table 11"	"10units"			FALSE
+"CLSI 2017"	"MIC"		"Listeria monocytogenes"	"Benzylpenicillin"	"M45 Table 11"		2		FALSE
+"CLSI 2017"	"DISK"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"Table 2F"	"10units"	47	26	FALSE
+"CLSI 2017"	"MIC"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"Table 2F"		0.064	2	FALSE
+"CLSI 2017"	"DISK"		"Neisseria meningitidis"	"Benzylpenicillin"	"Table 2I"	"10units"			FALSE
+"CLSI 2017"	"MIC"		"Neisseria meningitidis"	"Benzylpenicillin"	"Table 2I"		0.064	0.5	FALSE
+"CLSI 2017"	"MIC"		"Pediococcus"	"Benzylpenicillin"	"M45 Table 14"		8		FALSE
+"CLSI 2017"	"DISK"		"Pasteurella"	"Benzylpenicillin"	"M45 Table 13"	"10 Units"	25		FALSE
+"CLSI 2017"	"MIC"		"Pasteurella"	"Benzylpenicillin"	"M45 Table 13"		0.5		FALSE
+"CLSI 2017"	"DISK"		"Staphylococcus"	"Benzylpenicillin"	"Table 2C"	"10ug"	29	28	FALSE
+"CLSI 2017"	"MIC"		"Staphylococcus"	"Benzylpenicillin"	"Table 2C"		0.125	0.25	FALSE
+"CLSI 2017"	"DISK"		"Streptococcus"	"Benzylpenicillin"	"Table 2H-1"	"10units"	24		FALSE
+"CLSI 2017"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2017"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"Table 2H-1"		0.125		FALSE
+"CLSI 2017"	"DISK"		"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"	"10units"			FALSE
+"CLSI 2017"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		0.064	0.12	FALSE
+"CLSI 2017"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		2	8	FALSE
+"CLSI 2017"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		0.064	2	FALSE
+"CLSI 2017"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Table 2H-2"	"10units"			FALSE
+"CLSI 2017"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Table 2H-2"		0.125	4	FALSE
+"CLSI 2017"	"DISK"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	29	28	FALSE
+"CLSI 2017"	"MIC"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
 "CLSI 2017"	"DISK"		"Acinetobacter"	"Piperacillin"	"Table 2B-2"	"100ug"	21	17	FALSE
 "CLSI 2017"	"MIC"		"Acinetobacter"	"Piperacillin"	"Table 2B-2"		16	128	FALSE
 "CLSI 2017"	"MIC"		"Anaerosalibacter"	"Piperacillin"	"Table 2J"		32	128	FALSE
@@ -10708,8 +10708,8 @@
 "CLSI 2017"	"MIC"		"(unknown name)"	"Polymyxin B"	"Generic CLSI rules"	"300units"	2	8	FALSE
 "CLSI 2017"	"DISK"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30ug"	18	14	FALSE
 "CLSI 2017"	"MIC"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30ug"	1	4	FALSE
-"CLSI 2017"	"DISK"		"Streptococcus pneumoniae"	"Penicillin V"	"Table 2G"	"10ug"			FALSE
-"CLSI 2017"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Penicillin V"	"Table 2G"		0.064	2	FALSE
+"CLSI 2017"	"DISK"		"Streptococcus pneumoniae"		"Table 2G"	"10ug"			FALSE
+"CLSI 2017"	"MIC"	"Oral"	"Streptococcus pneumoniae"		"Table 2G"		0.064	2	FALSE
 "CLSI 2017"	"DISK"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2ug"	13	12	FALSE
 "CLSI 2017"	"MIC"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2ug"	2	4	FALSE
 "CLSI 2017"	"DISK"		"Enterococcus"	"Quinupristin/dalfopristin"	"Table 2D"	"15ug"	19	15	FALSE
@@ -11962,42 +11962,42 @@
 "CLSI 2016"	"DISK"		"Streptococcus pneumoniae"	"Oxacillin"	"Table 2G"	"1ug"	20		FALSE
 "CLSI 2016"	"MIC"		"Pseudallescheria"	"Oxacillin"	"Table 2C"		0.25	0.5	FALSE
 "CLSI 2016"	"MIC"		"(unknown name)"	"Oxacillin"	"Generic CLSI rules"	"1ug"	0.25	0.5	FALSE
-"CLSI 2016"	"MIC"		"Abiotrophia"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2016"	"MIC"		"Aggregatibacter"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2016"	"MIC"		"Anaerosalibacter"	"Penicillin G"	"Table 2J"		0.5	2	FALSE
-"CLSI 2016"	"MIC"		"Bacillus"	"Penicillin G"	"M45 Table 3"		0.125	0.25	FALSE
-"CLSI 2016"	"MIC"		"Bacillus anthracis"	"Penicillin G"	"M45 Table 16"		0.125	0.25	FALSE
-"CLSI 2016"	"MIC"		"Cardiobacterium"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2016"	"MIC"		"Eikenella"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2016"	"DISK"		"Enterococcus"	"Penicillin G"	"Table 2D"	"10units"	15	14	FALSE
-"CLSI 2016"	"MIC"		"Enterococcus"	"Penicillin G"	"Table 2D"		8	16	FALSE
-"CLSI 2016"	"MIC"		"Erysipelothrix rhusiopathiae"	"Penicillin G"	"M45 Table 6"		0.125		FALSE
-"CLSI 2016"	"MIC"		"Granulicatella"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2016"	"MIC"		"Kingella"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2016"	"MIC"		"Leuconostoc"	"Penicillin G"	"M45 Table 10"		8		FALSE
-"CLSI 2016"	"MIC"		"Lactobacillus"	"Penicillin G"	"M45 Table 9"		8		FALSE
-"CLSI 2016"	"DISK"		"Listeria monocytogenes"	"Penicillin G"	"M45 Table 11"	"10units"			FALSE
-"CLSI 2016"	"MIC"		"Listeria monocytogenes"	"Penicillin G"	"M45 Table 11"		2		FALSE
-"CLSI 2016"	"DISK"		"Neisseria gonorrhoeae"	"Penicillin G"	"Table 2F"	"10units"	47	26	FALSE
-"CLSI 2016"	"MIC"		"Neisseria gonorrhoeae"	"Penicillin G"	"Table 2F"		0.064	2	FALSE
-"CLSI 2016"	"DISK"		"Neisseria meningitidis"	"Penicillin G"	"Table 2I"	"10units"			FALSE
-"CLSI 2016"	"MIC"		"Neisseria meningitidis"	"Penicillin G"	"Table 2I"		0.064	0.5	FALSE
-"CLSI 2016"	"MIC"		"Pediococcus"	"Penicillin G"	"M45 Table 14"		8		FALSE
-"CLSI 2016"	"DISK"		"Pasteurella"	"Penicillin G"	"M45 Table 13"	"10 Units"	25		FALSE
-"CLSI 2016"	"MIC"		"Pasteurella"	"Penicillin G"	"M45 Table 13"		0.5		FALSE
-"CLSI 2016"	"DISK"		"Staphylococcus"	"Penicillin G"	"Table 2C"	"10ug"	29	28	FALSE
-"CLSI 2016"	"MIC"		"Staphylococcus"	"Penicillin G"	"Table 2C"		0.125	0.25	FALSE
-"CLSI 2016"	"DISK"		"Streptococcus"	"Penicillin G"	"Table 2H-1"	"10units"	24		FALSE
-"CLSI 2016"	"MIC"		"Streptococcus"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2016"	"MIC"		"Streptococcus"	"Penicillin G"	"Table 2H-1"		0.125		FALSE
-"CLSI 2016"	"DISK"		"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"	"10units"			FALSE
-"CLSI 2016"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		0.064	0.12	FALSE
-"CLSI 2016"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		2	8	FALSE
-"CLSI 2016"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		0.064	2	FALSE
-"CLSI 2016"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Table 2H-2"	"10units"			FALSE
-"CLSI 2016"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Table 2H-2"		0.125	4	FALSE
-"CLSI 2016"	"DISK"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	29	28	FALSE
-"CLSI 2016"	"MIC"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
+"CLSI 2016"	"MIC"		"Abiotrophia"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2016"	"MIC"		"Aggregatibacter"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2016"	"MIC"		"Anaerosalibacter"	"Benzylpenicillin"	"Table 2J"		0.5	2	FALSE
+"CLSI 2016"	"MIC"		"Bacillus"	"Benzylpenicillin"	"M45 Table 3"		0.125	0.25	FALSE
+"CLSI 2016"	"MIC"		"Bacillus anthracis"	"Benzylpenicillin"	"M45 Table 16"		0.125	0.25	FALSE
+"CLSI 2016"	"MIC"		"Cardiobacterium"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2016"	"MIC"		"Eikenella"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2016"	"DISK"		"Enterococcus"	"Benzylpenicillin"	"Table 2D"	"10units"	15	14	FALSE
+"CLSI 2016"	"MIC"		"Enterococcus"	"Benzylpenicillin"	"Table 2D"		8	16	FALSE
+"CLSI 2016"	"MIC"		"Erysipelothrix rhusiopathiae"	"Benzylpenicillin"	"M45 Table 6"		0.125		FALSE
+"CLSI 2016"	"MIC"		"Granulicatella"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2016"	"MIC"		"Kingella"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2016"	"MIC"		"Leuconostoc"	"Benzylpenicillin"	"M45 Table 10"		8		FALSE
+"CLSI 2016"	"MIC"		"Lactobacillus"	"Benzylpenicillin"	"M45 Table 9"		8		FALSE
+"CLSI 2016"	"DISK"		"Listeria monocytogenes"	"Benzylpenicillin"	"M45 Table 11"	"10units"			FALSE
+"CLSI 2016"	"MIC"		"Listeria monocytogenes"	"Benzylpenicillin"	"M45 Table 11"		2		FALSE
+"CLSI 2016"	"DISK"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"Table 2F"	"10units"	47	26	FALSE
+"CLSI 2016"	"MIC"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"Table 2F"		0.064	2	FALSE
+"CLSI 2016"	"DISK"		"Neisseria meningitidis"	"Benzylpenicillin"	"Table 2I"	"10units"			FALSE
+"CLSI 2016"	"MIC"		"Neisseria meningitidis"	"Benzylpenicillin"	"Table 2I"		0.064	0.5	FALSE
+"CLSI 2016"	"MIC"		"Pediococcus"	"Benzylpenicillin"	"M45 Table 14"		8		FALSE
+"CLSI 2016"	"DISK"		"Pasteurella"	"Benzylpenicillin"	"M45 Table 13"	"10 Units"	25		FALSE
+"CLSI 2016"	"MIC"		"Pasteurella"	"Benzylpenicillin"	"M45 Table 13"		0.5		FALSE
+"CLSI 2016"	"DISK"		"Staphylococcus"	"Benzylpenicillin"	"Table 2C"	"10ug"	29	28	FALSE
+"CLSI 2016"	"MIC"		"Staphylococcus"	"Benzylpenicillin"	"Table 2C"		0.125	0.25	FALSE
+"CLSI 2016"	"DISK"		"Streptococcus"	"Benzylpenicillin"	"Table 2H-1"	"10units"	24		FALSE
+"CLSI 2016"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2016"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"Table 2H-1"		0.125		FALSE
+"CLSI 2016"	"DISK"		"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"	"10units"			FALSE
+"CLSI 2016"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		0.064	0.12	FALSE
+"CLSI 2016"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		2	8	FALSE
+"CLSI 2016"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		0.064	2	FALSE
+"CLSI 2016"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Table 2H-2"	"10units"			FALSE
+"CLSI 2016"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Table 2H-2"		0.125	4	FALSE
+"CLSI 2016"	"DISK"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	29	28	FALSE
+"CLSI 2016"	"MIC"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
 "CLSI 2016"	"DISK"		"Acinetobacter"	"Piperacillin"	"Table 2B-2"	"100ug"	21	17	FALSE
 "CLSI 2016"	"MIC"		"Acinetobacter"	"Piperacillin"	"Table 2B-2"		16	128	FALSE
 "CLSI 2016"	"MIC"		"Anaerosalibacter"	"Piperacillin"	"Table 2J"		32	128	FALSE
@@ -12013,8 +12013,8 @@
 "CLSI 2016"	"MIC"		"(unknown name)"	"Polymyxin B"	"Generic CLSI rules"	"300units"	2	8	FALSE
 "CLSI 2016"	"DISK"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30ug"	18	14	FALSE
 "CLSI 2016"	"MIC"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30ug"	1	4	FALSE
-"CLSI 2016"	"DISK"		"Streptococcus pneumoniae"	"Penicillin V"	"Table 2G"	"10ug"			FALSE
-"CLSI 2016"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Penicillin V"	"Table 2G"		0.064	2	FALSE
+"CLSI 2016"	"DISK"		"Streptococcus pneumoniae"		"Table 2G"	"10ug"			FALSE
+"CLSI 2016"	"MIC"	"Oral"	"Streptococcus pneumoniae"		"Table 2G"		0.064	2	FALSE
 "CLSI 2016"	"DISK"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2ug"	13	12	FALSE
 "CLSI 2016"	"MIC"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2ug"	2	4	FALSE
 "CLSI 2016"	"DISK"		"Enterococcus"	"Quinupristin/dalfopristin"	"Table 2D"	"15ug"	19	15	FALSE
@@ -13264,42 +13264,42 @@
 "CLSI 2015"	"MIC"		"Staphylococcus lugdunensis"	"Oxacillin"	"Table 2C"		2	4	FALSE
 "CLSI 2015"	"DISK"		"Streptococcus pneumoniae"	"Oxacillin"	"Table 2G"	"1ug"	20		FALSE
 "CLSI 2015"	"MIC"		"(unknown name)"	"Oxacillin"	"Generic CLSI rules"	"1ug"	0.25	0.5	FALSE
-"CLSI 2015"	"MIC"		"Abiotrophia"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2015"	"MIC"		"Aggregatibacter"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2015"	"MIC"		"Anaerosalibacter"	"Penicillin G"	"Table 2J"		0.5	2	FALSE
-"CLSI 2015"	"MIC"		"Bacillus"	"Penicillin G"	"M45 Table 3"		0.125	0.25	FALSE
-"CLSI 2015"	"MIC"		"Bacillus anthracis"	"Penicillin G"	"M45 Table 16"		0.125	0.25	FALSE
-"CLSI 2015"	"MIC"		"Cardiobacterium"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2015"	"MIC"		"Eikenella"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2015"	"DISK"		"Enterococcus"	"Penicillin G"	"Table 2D"	"10units"	15	14	FALSE
-"CLSI 2015"	"MIC"		"Enterococcus"	"Penicillin G"	"Table 2D"		8	16	FALSE
-"CLSI 2015"	"MIC"		"Erysipelothrix rhusiopathiae"	"Penicillin G"	"M45 Table 6"		0.125		FALSE
-"CLSI 2015"	"MIC"		"Granulicatella"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2015"	"MIC"		"Kingella"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2015"	"MIC"		"Leuconostoc"	"Penicillin G"	"M45 Table 10"		8		FALSE
-"CLSI 2015"	"MIC"		"Lactobacillus"	"Penicillin G"	"M45 Table 9"		8		FALSE
-"CLSI 2015"	"DISK"		"Listeria monocytogenes"	"Penicillin G"	"M45 Table 11"	"10units"			FALSE
-"CLSI 2015"	"MIC"		"Listeria monocytogenes"	"Penicillin G"	"M45 Table 11"		2		FALSE
-"CLSI 2015"	"DISK"		"Neisseria gonorrhoeae"	"Penicillin G"	"Table 2F"	"10units"	47	26	FALSE
-"CLSI 2015"	"MIC"		"Neisseria gonorrhoeae"	"Penicillin G"	"Table 2F"		0.064	2	FALSE
-"CLSI 2015"	"DISK"		"Neisseria meningitidis"	"Penicillin G"	"Table 2I"	"10units"			FALSE
-"CLSI 2015"	"MIC"		"Neisseria meningitidis"	"Penicillin G"	"Table 2I"		0.064	0.5	FALSE
-"CLSI 2015"	"MIC"		"Pediococcus"	"Penicillin G"	"M45 Table 14"		8		FALSE
-"CLSI 2015"	"DISK"		"Pasteurella"	"Penicillin G"	"M45 Table 13"	"10 Units"	25		FALSE
-"CLSI 2015"	"MIC"		"Pasteurella"	"Penicillin G"	"M45 Table 13"		0.5		FALSE
-"CLSI 2015"	"DISK"		"Staphylococcus"	"Penicillin G"	"Table 2C"	"10ug"	29	28	FALSE
-"CLSI 2015"	"MIC"		"Staphylococcus"	"Penicillin G"	"Table 2C"		0.125	0.25	FALSE
-"CLSI 2015"	"DISK"		"Streptococcus"	"Penicillin G"	"Table 2H-1"	"10units"	24		FALSE
-"CLSI 2015"	"MIC"		"Streptococcus"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2015"	"MIC"		"Streptococcus"	"Penicillin G"	"Table 2H-1"		0.125		FALSE
-"CLSI 2015"	"DISK"		"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"	"10units"			FALSE
-"CLSI 2015"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		0.064	0.12	FALSE
-"CLSI 2015"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		2	8	FALSE
-"CLSI 2015"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		0.064	2	FALSE
-"CLSI 2015"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Table 2H-2"	"10units"			FALSE
-"CLSI 2015"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Table 2H-2"		0.125	4	FALSE
-"CLSI 2015"	"DISK"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	29	28	FALSE
-"CLSI 2015"	"MIC"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
+"CLSI 2015"	"MIC"		"Abiotrophia"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2015"	"MIC"		"Aggregatibacter"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2015"	"MIC"		"Anaerosalibacter"	"Benzylpenicillin"	"Table 2J"		0.5	2	FALSE
+"CLSI 2015"	"MIC"		"Bacillus"	"Benzylpenicillin"	"M45 Table 3"		0.125	0.25	FALSE
+"CLSI 2015"	"MIC"		"Bacillus anthracis"	"Benzylpenicillin"	"M45 Table 16"		0.125	0.25	FALSE
+"CLSI 2015"	"MIC"		"Cardiobacterium"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2015"	"MIC"		"Eikenella"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2015"	"DISK"		"Enterococcus"	"Benzylpenicillin"	"Table 2D"	"10units"	15	14	FALSE
+"CLSI 2015"	"MIC"		"Enterococcus"	"Benzylpenicillin"	"Table 2D"		8	16	FALSE
+"CLSI 2015"	"MIC"		"Erysipelothrix rhusiopathiae"	"Benzylpenicillin"	"M45 Table 6"		0.125		FALSE
+"CLSI 2015"	"MIC"		"Granulicatella"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2015"	"MIC"		"Kingella"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2015"	"MIC"		"Leuconostoc"	"Benzylpenicillin"	"M45 Table 10"		8		FALSE
+"CLSI 2015"	"MIC"		"Lactobacillus"	"Benzylpenicillin"	"M45 Table 9"		8		FALSE
+"CLSI 2015"	"DISK"		"Listeria monocytogenes"	"Benzylpenicillin"	"M45 Table 11"	"10units"			FALSE
+"CLSI 2015"	"MIC"		"Listeria monocytogenes"	"Benzylpenicillin"	"M45 Table 11"		2		FALSE
+"CLSI 2015"	"DISK"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"Table 2F"	"10units"	47	26	FALSE
+"CLSI 2015"	"MIC"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"Table 2F"		0.064	2	FALSE
+"CLSI 2015"	"DISK"		"Neisseria meningitidis"	"Benzylpenicillin"	"Table 2I"	"10units"			FALSE
+"CLSI 2015"	"MIC"		"Neisseria meningitidis"	"Benzylpenicillin"	"Table 2I"		0.064	0.5	FALSE
+"CLSI 2015"	"MIC"		"Pediococcus"	"Benzylpenicillin"	"M45 Table 14"		8		FALSE
+"CLSI 2015"	"DISK"		"Pasteurella"	"Benzylpenicillin"	"M45 Table 13"	"10 Units"	25		FALSE
+"CLSI 2015"	"MIC"		"Pasteurella"	"Benzylpenicillin"	"M45 Table 13"		0.5		FALSE
+"CLSI 2015"	"DISK"		"Staphylococcus"	"Benzylpenicillin"	"Table 2C"	"10ug"	29	28	FALSE
+"CLSI 2015"	"MIC"		"Staphylococcus"	"Benzylpenicillin"	"Table 2C"		0.125	0.25	FALSE
+"CLSI 2015"	"DISK"		"Streptococcus"	"Benzylpenicillin"	"Table 2H-1"	"10units"	24		FALSE
+"CLSI 2015"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2015"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"Table 2H-1"		0.125		FALSE
+"CLSI 2015"	"DISK"		"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"	"10units"			FALSE
+"CLSI 2015"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		0.064	0.12	FALSE
+"CLSI 2015"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		2	8	FALSE
+"CLSI 2015"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		0.064	2	FALSE
+"CLSI 2015"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Table 2H-2"	"10units"			FALSE
+"CLSI 2015"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Table 2H-2"		0.125	4	FALSE
+"CLSI 2015"	"DISK"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	29	28	FALSE
+"CLSI 2015"	"MIC"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
 "CLSI 2015"	"DISK"		"Acinetobacter"	"Piperacillin"	"Table 2B-2"	"100ug"	21	17	FALSE
 "CLSI 2015"	"MIC"		"Acinetobacter"	"Piperacillin"	"Table 2B-2"		16	128	FALSE
 "CLSI 2015"	"MIC"		"Anaerosalibacter"	"Piperacillin"	"Table 2J"		32	128	FALSE
@@ -13315,8 +13315,8 @@
 "CLSI 2015"	"MIC"		"(unknown name)"	"Polymyxin B"	"Generic CLSI rules"	"300units"	2	8	FALSE
 "CLSI 2015"	"DISK"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30ug"	18	14	FALSE
 "CLSI 2015"	"MIC"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30ug"	1	4	FALSE
-"CLSI 2015"	"DISK"		"Streptococcus pneumoniae"	"Penicillin V"	"Table 2G"	"10ug"			FALSE
-"CLSI 2015"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Penicillin V"	"Table 2G"		0.064	2	FALSE
+"CLSI 2015"	"DISK"		"Streptococcus pneumoniae"		"Table 2G"	"10ug"			FALSE
+"CLSI 2015"	"MIC"	"Oral"	"Streptococcus pneumoniae"		"Table 2G"		0.064	2	FALSE
 "CLSI 2015"	"DISK"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2ug"	13	12	FALSE
 "CLSI 2015"	"MIC"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2ug"	2	4	FALSE
 "CLSI 2015"	"DISK"		"Enterococcus"	"Quinupristin/dalfopristin"	"Table 2D"	"15ug"	19	15	FALSE
@@ -14560,42 +14560,42 @@
 "CLSI 2014"	"MIC"		"Staphylococcus lugdunensis"	"Oxacillin"	"Table 2C"		2	4	FALSE
 "CLSI 2014"	"DISK"		"Streptococcus pneumoniae"	"Oxacillin"	"Table 2G"	"1ug"	20		FALSE
 "CLSI 2014"	"MIC"		"(unknown name)"	"Oxacillin"	"Generic CLSI rules"	"1ug"	0.25	0.5	FALSE
-"CLSI 2014"	"MIC"		"Abiotrophia"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2014"	"MIC"		"Aggregatibacter"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2014"	"MIC"		"Anaerosalibacter"	"Penicillin G"	"Table 2J"		0.5	2	FALSE
-"CLSI 2014"	"MIC"		"Bacillus"	"Penicillin G"	"M45 Table 3"		0.125	0.25	FALSE
-"CLSI 2014"	"MIC"		"Bacillus anthracis"	"Penicillin G"	"M45 Table 16"		0.125	0.25	FALSE
-"CLSI 2014"	"MIC"		"Cardiobacterium"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2014"	"MIC"		"Eikenella"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2014"	"DISK"		"Enterococcus"	"Penicillin G"	"Table 2D"	"10units"	15	14	FALSE
-"CLSI 2014"	"MIC"		"Enterococcus"	"Penicillin G"	"Table 2D"		8	16	FALSE
-"CLSI 2014"	"MIC"		"Erysipelothrix rhusiopathiae"	"Penicillin G"	"M45 Table 6"		0.125		FALSE
-"CLSI 2014"	"MIC"		"Granulicatella"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2014"	"MIC"		"Kingella"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2014"	"MIC"		"Leuconostoc"	"Penicillin G"	"M45 Table 10"		8		FALSE
-"CLSI 2014"	"MIC"		"Lactobacillus"	"Penicillin G"	"M45 Table 9"		8		FALSE
-"CLSI 2014"	"DISK"		"Listeria monocytogenes"	"Penicillin G"	"M45 Table 11"	"10units"			FALSE
-"CLSI 2014"	"MIC"		"Listeria monocytogenes"	"Penicillin G"	"M45 Table 11"		2		FALSE
-"CLSI 2014"	"DISK"		"Neisseria gonorrhoeae"	"Penicillin G"	"Table 2F"	"10units"	47	26	FALSE
-"CLSI 2014"	"MIC"		"Neisseria gonorrhoeae"	"Penicillin G"	"Table 2F"		0.064	2	FALSE
-"CLSI 2014"	"DISK"		"Neisseria meningitidis"	"Penicillin G"	"Table 2I"	"10units"			FALSE
-"CLSI 2014"	"MIC"		"Neisseria meningitidis"	"Penicillin G"	"Table 2I"		0.064	0.5	FALSE
-"CLSI 2014"	"MIC"		"Pediococcus"	"Penicillin G"	"M45 Table 14"		8		FALSE
-"CLSI 2014"	"DISK"		"Pasteurella"	"Penicillin G"	"M45 Table 13"	"10 Units"	25		FALSE
-"CLSI 2014"	"MIC"		"Pasteurella"	"Penicillin G"	"M45 Table 13"		0.5		FALSE
-"CLSI 2014"	"DISK"		"Staphylococcus"	"Penicillin G"	"Table 2C"	"10ug"	29	28	FALSE
-"CLSI 2014"	"MIC"		"Staphylococcus"	"Penicillin G"	"Table 2C"		0.125	0.25	FALSE
-"CLSI 2014"	"DISK"		"Streptococcus"	"Penicillin G"	"Table 2H-1"	"10units"	24		FALSE
-"CLSI 2014"	"MIC"		"Streptococcus"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2014"	"MIC"		"Streptococcus"	"Penicillin G"	"Table 2H-1"		0.125		FALSE
-"CLSI 2014"	"DISK"		"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"	"10units"			FALSE
-"CLSI 2014"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		0.064	0.12	FALSE
-"CLSI 2014"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		2	8	FALSE
-"CLSI 2014"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		0.064	2	FALSE
-"CLSI 2014"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Table 2H-2"	"10units"			FALSE
-"CLSI 2014"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Table 2H-2"		0.125	4	FALSE
-"CLSI 2014"	"DISK"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	29	28	FALSE
-"CLSI 2014"	"MIC"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
+"CLSI 2014"	"MIC"		"Abiotrophia"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2014"	"MIC"		"Aggregatibacter"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2014"	"MIC"		"Anaerosalibacter"	"Benzylpenicillin"	"Table 2J"		0.5	2	FALSE
+"CLSI 2014"	"MIC"		"Bacillus"	"Benzylpenicillin"	"M45 Table 3"		0.125	0.25	FALSE
+"CLSI 2014"	"MIC"		"Bacillus anthracis"	"Benzylpenicillin"	"M45 Table 16"		0.125	0.25	FALSE
+"CLSI 2014"	"MIC"		"Cardiobacterium"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2014"	"MIC"		"Eikenella"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2014"	"DISK"		"Enterococcus"	"Benzylpenicillin"	"Table 2D"	"10units"	15	14	FALSE
+"CLSI 2014"	"MIC"		"Enterococcus"	"Benzylpenicillin"	"Table 2D"		8	16	FALSE
+"CLSI 2014"	"MIC"		"Erysipelothrix rhusiopathiae"	"Benzylpenicillin"	"M45 Table 6"		0.125		FALSE
+"CLSI 2014"	"MIC"		"Granulicatella"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2014"	"MIC"		"Kingella"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2014"	"MIC"		"Leuconostoc"	"Benzylpenicillin"	"M45 Table 10"		8		FALSE
+"CLSI 2014"	"MIC"		"Lactobacillus"	"Benzylpenicillin"	"M45 Table 9"		8		FALSE
+"CLSI 2014"	"DISK"		"Listeria monocytogenes"	"Benzylpenicillin"	"M45 Table 11"	"10units"			FALSE
+"CLSI 2014"	"MIC"		"Listeria monocytogenes"	"Benzylpenicillin"	"M45 Table 11"		2		FALSE
+"CLSI 2014"	"DISK"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"Table 2F"	"10units"	47	26	FALSE
+"CLSI 2014"	"MIC"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"Table 2F"		0.064	2	FALSE
+"CLSI 2014"	"DISK"		"Neisseria meningitidis"	"Benzylpenicillin"	"Table 2I"	"10units"			FALSE
+"CLSI 2014"	"MIC"		"Neisseria meningitidis"	"Benzylpenicillin"	"Table 2I"		0.064	0.5	FALSE
+"CLSI 2014"	"MIC"		"Pediococcus"	"Benzylpenicillin"	"M45 Table 14"		8		FALSE
+"CLSI 2014"	"DISK"		"Pasteurella"	"Benzylpenicillin"	"M45 Table 13"	"10 Units"	25		FALSE
+"CLSI 2014"	"MIC"		"Pasteurella"	"Benzylpenicillin"	"M45 Table 13"		0.5		FALSE
+"CLSI 2014"	"DISK"		"Staphylococcus"	"Benzylpenicillin"	"Table 2C"	"10ug"	29	28	FALSE
+"CLSI 2014"	"MIC"		"Staphylococcus"	"Benzylpenicillin"	"Table 2C"		0.125	0.25	FALSE
+"CLSI 2014"	"DISK"		"Streptococcus"	"Benzylpenicillin"	"Table 2H-1"	"10units"	24		FALSE
+"CLSI 2014"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2014"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"Table 2H-1"		0.125		FALSE
+"CLSI 2014"	"DISK"		"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"	"10units"			FALSE
+"CLSI 2014"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		0.064	0.12	FALSE
+"CLSI 2014"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		2	8	FALSE
+"CLSI 2014"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		0.064	2	FALSE
+"CLSI 2014"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Table 2H-2"	"10units"			FALSE
+"CLSI 2014"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Table 2H-2"		0.125	4	FALSE
+"CLSI 2014"	"DISK"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	29	28	FALSE
+"CLSI 2014"	"MIC"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
 "CLSI 2014"	"DISK"		"Acinetobacter"	"Piperacillin"	"Table 2B-2"	"100ug"	21	17	FALSE
 "CLSI 2014"	"MIC"		"Acinetobacter"	"Piperacillin"	"Table 2B-2"		16	128	FALSE
 "CLSI 2014"	"MIC"		"Anaerosalibacter"	"Piperacillin"	"Table 2J"		32	128	FALSE
@@ -14611,8 +14611,8 @@
 "CLSI 2014"	"MIC"		"(unknown name)"	"Polymyxin B"	"Generic CLSI rules"	"300units"	2	8	FALSE
 "CLSI 2014"	"DISK"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30ug"	18	14	FALSE
 "CLSI 2014"	"MIC"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30ug"	1	4	FALSE
-"CLSI 2014"	"DISK"		"Streptococcus pneumoniae"	"Penicillin V"	"Table 2G"	"10ug"			FALSE
-"CLSI 2014"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Penicillin V"	"Table 2G"		0.064	2	FALSE
+"CLSI 2014"	"DISK"		"Streptococcus pneumoniae"		"Table 2G"	"10ug"			FALSE
+"CLSI 2014"	"MIC"	"Oral"	"Streptococcus pneumoniae"		"Table 2G"		0.064	2	FALSE
 "CLSI 2014"	"DISK"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2ug"	13	12	FALSE
 "CLSI 2014"	"MIC"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2ug"	2	4	FALSE
 "CLSI 2014"	"DISK"		"Enterococcus"	"Quinupristin/dalfopristin"	"Table 2D"	"15ug"	19	15	FALSE
@@ -15848,42 +15848,42 @@
 "CLSI 2013"	"MIC"		"Staphylococcus lugdunensis"	"Oxacillin"	"Table 2C"		2	4	FALSE
 "CLSI 2013"	"DISK"		"Streptococcus pneumoniae"	"Oxacillin"	"Table 2G"	"1ug"	20		FALSE
 "CLSI 2013"	"MIC"		"(unknown name)"	"Oxacillin"	"Generic CLSI rules"	"1ug"	0.25	0.5	FALSE
-"CLSI 2013"	"MIC"		"Abiotrophia"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2013"	"MIC"		"Aggregatibacter"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2013"	"MIC"		"Anaerosalibacter"	"Penicillin G"	"Table 2J"		0.5	2	FALSE
-"CLSI 2013"	"MIC"		"Bacillus"	"Penicillin G"	"M45 Table 3"		0.125	0.25	FALSE
-"CLSI 2013"	"MIC"		"Bacillus anthracis"	"Penicillin G"	"M45 Table 16"		0.125	0.25	FALSE
-"CLSI 2013"	"MIC"		"Cardiobacterium"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2013"	"MIC"		"Eikenella"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2013"	"DISK"		"Enterococcus"	"Penicillin G"	"Table 2D"	"10units"	15	14	FALSE
-"CLSI 2013"	"MIC"		"Enterococcus"	"Penicillin G"	"Table 2D"		8	16	FALSE
-"CLSI 2013"	"MIC"		"Erysipelothrix rhusiopathiae"	"Penicillin G"	"M45 Table 6"		0.125		FALSE
-"CLSI 2013"	"MIC"		"Granulicatella"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2013"	"MIC"		"Kingella"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2013"	"MIC"		"Leuconostoc"	"Penicillin G"	"M45 Table 10"		8		FALSE
-"CLSI 2013"	"MIC"		"Lactobacillus"	"Penicillin G"	"M45 Table 9"		8		FALSE
-"CLSI 2013"	"DISK"		"Listeria monocytogenes"	"Penicillin G"	"M45 Table 11"	"10units"			FALSE
-"CLSI 2013"	"MIC"		"Listeria monocytogenes"	"Penicillin G"	"M45 Table 11"		2		FALSE
-"CLSI 2013"	"DISK"		"Neisseria gonorrhoeae"	"Penicillin G"	"Table 2F"	"10units"	47	26	FALSE
-"CLSI 2013"	"MIC"		"Neisseria gonorrhoeae"	"Penicillin G"	"Table 2F"		0.064	2	FALSE
-"CLSI 2013"	"DISK"		"Neisseria meningitidis"	"Penicillin G"	"Table 2I"	"10units"			FALSE
-"CLSI 2013"	"MIC"		"Neisseria meningitidis"	"Penicillin G"	"Table 2I"		0.064	0.5	FALSE
-"CLSI 2013"	"MIC"		"Pediococcus"	"Penicillin G"	"M45 Table 14"		8		FALSE
-"CLSI 2013"	"DISK"		"Pasteurella"	"Penicillin G"	"M45 Table 13"	"10 Units"	25		FALSE
-"CLSI 2013"	"MIC"		"Pasteurella"	"Penicillin G"	"M45 Table 13"		0.5		FALSE
-"CLSI 2013"	"DISK"		"Staphylococcus"	"Penicillin G"	"Table 2C"	"10ug"	29	28	FALSE
-"CLSI 2013"	"MIC"		"Staphylococcus"	"Penicillin G"	"Table 2C"		0.125	0.25	FALSE
-"CLSI 2013"	"DISK"		"Streptococcus"	"Penicillin G"	"Table 2H-1"	"10units"	24		FALSE
-"CLSI 2013"	"MIC"		"Streptococcus"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2013"	"MIC"		"Streptococcus"	"Penicillin G"	"Table 2H-1"		0.125		FALSE
-"CLSI 2013"	"DISK"		"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"	"10units"			FALSE
-"CLSI 2013"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		0.064	0.12	FALSE
-"CLSI 2013"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		2	8	FALSE
-"CLSI 2013"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		0.064	2	FALSE
-"CLSI 2013"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Table 2H-2"	"10units"			FALSE
-"CLSI 2013"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Table 2H-2"		0.125	4	FALSE
-"CLSI 2013"	"DISK"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	29	28	FALSE
-"CLSI 2013"	"MIC"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
+"CLSI 2013"	"MIC"		"Abiotrophia"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2013"	"MIC"		"Aggregatibacter"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2013"	"MIC"		"Anaerosalibacter"	"Benzylpenicillin"	"Table 2J"		0.5	2	FALSE
+"CLSI 2013"	"MIC"		"Bacillus"	"Benzylpenicillin"	"M45 Table 3"		0.125	0.25	FALSE
+"CLSI 2013"	"MIC"		"Bacillus anthracis"	"Benzylpenicillin"	"M45 Table 16"		0.125	0.25	FALSE
+"CLSI 2013"	"MIC"		"Cardiobacterium"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2013"	"MIC"		"Eikenella"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2013"	"DISK"		"Enterococcus"	"Benzylpenicillin"	"Table 2D"	"10units"	15	14	FALSE
+"CLSI 2013"	"MIC"		"Enterococcus"	"Benzylpenicillin"	"Table 2D"		8	16	FALSE
+"CLSI 2013"	"MIC"		"Erysipelothrix rhusiopathiae"	"Benzylpenicillin"	"M45 Table 6"		0.125		FALSE
+"CLSI 2013"	"MIC"		"Granulicatella"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2013"	"MIC"		"Kingella"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2013"	"MIC"		"Leuconostoc"	"Benzylpenicillin"	"M45 Table 10"		8		FALSE
+"CLSI 2013"	"MIC"		"Lactobacillus"	"Benzylpenicillin"	"M45 Table 9"		8		FALSE
+"CLSI 2013"	"DISK"		"Listeria monocytogenes"	"Benzylpenicillin"	"M45 Table 11"	"10units"			FALSE
+"CLSI 2013"	"MIC"		"Listeria monocytogenes"	"Benzylpenicillin"	"M45 Table 11"		2		FALSE
+"CLSI 2013"	"DISK"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"Table 2F"	"10units"	47	26	FALSE
+"CLSI 2013"	"MIC"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"Table 2F"		0.064	2	FALSE
+"CLSI 2013"	"DISK"		"Neisseria meningitidis"	"Benzylpenicillin"	"Table 2I"	"10units"			FALSE
+"CLSI 2013"	"MIC"		"Neisseria meningitidis"	"Benzylpenicillin"	"Table 2I"		0.064	0.5	FALSE
+"CLSI 2013"	"MIC"		"Pediococcus"	"Benzylpenicillin"	"M45 Table 14"		8		FALSE
+"CLSI 2013"	"DISK"		"Pasteurella"	"Benzylpenicillin"	"M45 Table 13"	"10 Units"	25		FALSE
+"CLSI 2013"	"MIC"		"Pasteurella"	"Benzylpenicillin"	"M45 Table 13"		0.5		FALSE
+"CLSI 2013"	"DISK"		"Staphylococcus"	"Benzylpenicillin"	"Table 2C"	"10ug"	29	28	FALSE
+"CLSI 2013"	"MIC"		"Staphylococcus"	"Benzylpenicillin"	"Table 2C"		0.125	0.25	FALSE
+"CLSI 2013"	"DISK"		"Streptococcus"	"Benzylpenicillin"	"Table 2H-1"	"10units"	24		FALSE
+"CLSI 2013"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2013"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"Table 2H-1"		0.125		FALSE
+"CLSI 2013"	"DISK"		"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"	"10units"			FALSE
+"CLSI 2013"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		0.064	0.12	FALSE
+"CLSI 2013"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		2	8	FALSE
+"CLSI 2013"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		0.064	2	FALSE
+"CLSI 2013"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Table 2H-2"	"10units"			FALSE
+"CLSI 2013"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Table 2H-2"		0.125	4	FALSE
+"CLSI 2013"	"DISK"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	29	28	FALSE
+"CLSI 2013"	"MIC"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
 "CLSI 2013"	"DISK"		"Acinetobacter"	"Piperacillin"	"Table 2B-2"	"100ug"	21	17	FALSE
 "CLSI 2013"	"MIC"		"Acinetobacter"	"Piperacillin"	"Table 2B-2"		16	128	FALSE
 "CLSI 2013"	"MIC"		"Anaerosalibacter"	"Piperacillin"	"Table 2J"		32	128	FALSE
@@ -15899,8 +15899,8 @@
 "CLSI 2013"	"MIC"		"(unknown name)"	"Polymyxin B"	"Generic CLSI rules"	"300units"	2	8	FALSE
 "CLSI 2013"	"DISK"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30ug"	18	14	FALSE
 "CLSI 2013"	"MIC"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30ug"	1	4	FALSE
-"CLSI 2013"	"DISK"		"Streptococcus pneumoniae"	"Penicillin V"	"Table 2G"	"10ug"			FALSE
-"CLSI 2013"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Penicillin V"	"Table 2G"		0.064	2	FALSE
+"CLSI 2013"	"DISK"		"Streptococcus pneumoniae"		"Table 2G"	"10ug"			FALSE
+"CLSI 2013"	"MIC"	"Oral"	"Streptococcus pneumoniae"		"Table 2G"		0.064	2	FALSE
 "CLSI 2013"	"DISK"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2ug"	13	12	FALSE
 "CLSI 2013"	"MIC"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2ug"	2	4	FALSE
 "CLSI 2013"	"DISK"		"Enterococcus"	"Quinupristin/dalfopristin"	"Table 2D"	"15ug"	19	15	FALSE
@@ -17116,42 +17116,42 @@
 "CLSI 2012"	"MIC"		"Staphylococcus lugdunensis"	"Oxacillin"	"Table 2C"		2	4	FALSE
 "CLSI 2012"	"DISK"		"Streptococcus pneumoniae"	"Oxacillin"	"Table 2G"	"1ug"	20		FALSE
 "CLSI 2012"	"MIC"		"(unknown name)"	"Oxacillin"	"Generic CLSI rules"	"1ug"	0.25	0.5	FALSE
-"CLSI 2012"	"MIC"		"Abiotrophia"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2012"	"MIC"		"Aggregatibacter"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2012"	"MIC"		"Anaerosalibacter"	"Penicillin G"	"Table 2J"		0.5	2	FALSE
-"CLSI 2012"	"MIC"		"Bacillus"	"Penicillin G"	"M45 Table 3"		0.125	0.25	FALSE
-"CLSI 2012"	"MIC"		"Bacillus anthracis"	"Penicillin G"	"M45 Table 16"		0.125	0.25	FALSE
-"CLSI 2012"	"MIC"		"Cardiobacterium"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2012"	"MIC"		"Eikenella"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2012"	"DISK"		"Enterococcus"	"Penicillin G"	"Table 2D"	"10units"	15	14	FALSE
-"CLSI 2012"	"MIC"		"Enterococcus"	"Penicillin G"	"Table 2D"		8	16	FALSE
-"CLSI 2012"	"MIC"		"Erysipelothrix rhusiopathiae"	"Penicillin G"	"M45 Table 6"		0.125		FALSE
-"CLSI 2012"	"MIC"		"Granulicatella"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2012"	"MIC"		"Kingella"	"Penicillin G"	"M45 Table 7"		1	4	FALSE
-"CLSI 2012"	"MIC"		"Leuconostoc"	"Penicillin G"	"M45 Table 10"		8		FALSE
-"CLSI 2012"	"MIC"		"Lactobacillus"	"Penicillin G"	"M45 Table 9"		8		FALSE
-"CLSI 2012"	"DISK"		"Listeria monocytogenes"	"Penicillin G"	"M45 Table 11"	"10units"			FALSE
-"CLSI 2012"	"MIC"		"Listeria monocytogenes"	"Penicillin G"	"M45 Table 11"		2		FALSE
-"CLSI 2012"	"DISK"		"Neisseria gonorrhoeae"	"Penicillin G"	"Table 2F"	"10units"	47	26	FALSE
-"CLSI 2012"	"MIC"		"Neisseria gonorrhoeae"	"Penicillin G"	"Table 2F"		0.064	2	FALSE
-"CLSI 2012"	"DISK"		"Neisseria meningitidis"	"Penicillin G"	"Table 2I"	"10units"			FALSE
-"CLSI 2012"	"MIC"		"Neisseria meningitidis"	"Penicillin G"	"Table 2I"		0.064	0.5	FALSE
-"CLSI 2012"	"MIC"		"Pediococcus"	"Penicillin G"	"M45 Table 14"		8		FALSE
-"CLSI 2012"	"DISK"		"Pasteurella"	"Penicillin G"	"M45 Table 13"	"10 Units"	25		FALSE
-"CLSI 2012"	"MIC"		"Pasteurella"	"Penicillin G"	"M45 Table 13"		0.5		FALSE
-"CLSI 2012"	"DISK"		"Staphylococcus"	"Penicillin G"	"Table 2C"	"10ug"	29	28	FALSE
-"CLSI 2012"	"MIC"		"Staphylococcus"	"Penicillin G"	"Table 2C"		0.125	0.25	FALSE
-"CLSI 2012"	"DISK"		"Streptococcus"	"Penicillin G"	"Table 2H-1"	"10units"	24		FALSE
-"CLSI 2012"	"MIC"		"Streptococcus"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2012"	"MIC"		"Streptococcus"	"Penicillin G"	"Table 2H-1"		0.125		FALSE
-"CLSI 2012"	"DISK"		"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"	"10units"			FALSE
-"CLSI 2012"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		0.064	0.12	FALSE
-"CLSI 2012"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		2	8	FALSE
-"CLSI 2012"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Penicillin G"	"Table 2G"		0.064	2	FALSE
-"CLSI 2012"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Table 2H-2"	"10units"			FALSE
-"CLSI 2012"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"	"Table 2H-2"		0.125	4	FALSE
-"CLSI 2012"	"DISK"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	29	28	FALSE
-"CLSI 2012"	"MIC"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
+"CLSI 2012"	"MIC"		"Abiotrophia"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2012"	"MIC"		"Aggregatibacter"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2012"	"MIC"		"Anaerosalibacter"	"Benzylpenicillin"	"Table 2J"		0.5	2	FALSE
+"CLSI 2012"	"MIC"		"Bacillus"	"Benzylpenicillin"	"M45 Table 3"		0.125	0.25	FALSE
+"CLSI 2012"	"MIC"		"Bacillus anthracis"	"Benzylpenicillin"	"M45 Table 16"		0.125	0.25	FALSE
+"CLSI 2012"	"MIC"		"Cardiobacterium"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2012"	"MIC"		"Eikenella"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2012"	"DISK"		"Enterococcus"	"Benzylpenicillin"	"Table 2D"	"10units"	15	14	FALSE
+"CLSI 2012"	"MIC"		"Enterococcus"	"Benzylpenicillin"	"Table 2D"		8	16	FALSE
+"CLSI 2012"	"MIC"		"Erysipelothrix rhusiopathiae"	"Benzylpenicillin"	"M45 Table 6"		0.125		FALSE
+"CLSI 2012"	"MIC"		"Granulicatella"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2012"	"MIC"		"Kingella"	"Benzylpenicillin"	"M45 Table 7"		1	4	FALSE
+"CLSI 2012"	"MIC"		"Leuconostoc"	"Benzylpenicillin"	"M45 Table 10"		8		FALSE
+"CLSI 2012"	"MIC"		"Lactobacillus"	"Benzylpenicillin"	"M45 Table 9"		8		FALSE
+"CLSI 2012"	"DISK"		"Listeria monocytogenes"	"Benzylpenicillin"	"M45 Table 11"	"10units"			FALSE
+"CLSI 2012"	"MIC"		"Listeria monocytogenes"	"Benzylpenicillin"	"M45 Table 11"		2		FALSE
+"CLSI 2012"	"DISK"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"Table 2F"	"10units"	47	26	FALSE
+"CLSI 2012"	"MIC"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"Table 2F"		0.064	2	FALSE
+"CLSI 2012"	"DISK"		"Neisseria meningitidis"	"Benzylpenicillin"	"Table 2I"	"10units"			FALSE
+"CLSI 2012"	"MIC"		"Neisseria meningitidis"	"Benzylpenicillin"	"Table 2I"		0.064	0.5	FALSE
+"CLSI 2012"	"MIC"		"Pediococcus"	"Benzylpenicillin"	"M45 Table 14"		8		FALSE
+"CLSI 2012"	"DISK"		"Pasteurella"	"Benzylpenicillin"	"M45 Table 13"	"10 Units"	25		FALSE
+"CLSI 2012"	"MIC"		"Pasteurella"	"Benzylpenicillin"	"M45 Table 13"		0.5		FALSE
+"CLSI 2012"	"DISK"		"Staphylococcus"	"Benzylpenicillin"	"Table 2C"	"10ug"	29	28	FALSE
+"CLSI 2012"	"MIC"		"Staphylococcus"	"Benzylpenicillin"	"Table 2C"		0.125	0.25	FALSE
+"CLSI 2012"	"DISK"		"Streptococcus"	"Benzylpenicillin"	"Table 2H-1"	"10units"	24		FALSE
+"CLSI 2012"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2012"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"Table 2H-1"		0.125		FALSE
+"CLSI 2012"	"DISK"		"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"	"10units"			FALSE
+"CLSI 2012"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		0.064	0.12	FALSE
+"CLSI 2012"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		2	8	FALSE
+"CLSI 2012"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		0.064	2	FALSE
+"CLSI 2012"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Table 2H-2"	"10units"			FALSE
+"CLSI 2012"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Table 2H-2"		0.125	4	FALSE
+"CLSI 2012"	"DISK"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	29	28	FALSE
+"CLSI 2012"	"MIC"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
 "CLSI 2012"	"DISK"		"Acinetobacter"	"Piperacillin"	"Table 2B-2"	"100ug"	21	17	FALSE
 "CLSI 2012"	"MIC"		"Acinetobacter"	"Piperacillin"	"Table 2B-2"		16	128	FALSE
 "CLSI 2012"	"MIC"		"Anaerosalibacter"	"Piperacillin"	"Table 2J"		32	128	FALSE
@@ -17167,8 +17167,8 @@
 "CLSI 2012"	"MIC"		"(unknown name)"	"Polymyxin B"	"Generic CLSI rules"	"300units"	2	8	FALSE
 "CLSI 2012"	"DISK"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30ug"	18	14	FALSE
 "CLSI 2012"	"MIC"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30ug"	1	4	FALSE
-"CLSI 2012"	"DISK"		"Streptococcus pneumoniae"	"Penicillin V"	"Table 2G"	"10ug"			FALSE
-"CLSI 2012"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Penicillin V"	"Table 2G"		0.064	2	FALSE
+"CLSI 2012"	"DISK"		"Streptococcus pneumoniae"		"Table 2G"	"10ug"			FALSE
+"CLSI 2012"	"MIC"	"Oral"	"Streptococcus pneumoniae"		"Table 2G"		0.064	2	FALSE
 "CLSI 2012"	"DISK"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2ug"	13	12	FALSE
 "CLSI 2012"	"MIC"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2ug"	2	4	FALSE
 "CLSI 2012"	"DISK"		"Enterococcus"	"Quinupristin/dalfopristin"	"Table 2D"	"15ug"	19	15	FALSE
@@ -18191,40 +18191,40 @@
 "CLSI 2011"	"MIC"		"Staphylococcus lugdunensis"	"Oxacillin"			2	4	FALSE
 "CLSI 2011"	"DISK"		"Streptococcus pneumoniae"	"Oxacillin"		"1ug"	20		FALSE
 "CLSI 2011"	"MIC"		"(unknown name)"	"Oxacillin"	"Generic CLSI rules"	"1ug"	0.25	0.5	FALSE
-"CLSI 2011"	"MIC"		"Abiotrophia"	"Penicillin G"	"M45 Table 1"		0.125	4	FALSE
-"CLSI 2011"	"MIC"		"Aggregatibacter"	"Penicillin G"			1	4	FALSE
-"CLSI 2011"	"MIC"		"Anaerosalibacter"	"Penicillin G"			0.5	2	FALSE
-"CLSI 2011"	"MIC"		"Bacillus"	"Penicillin G"			0.125	0.25	FALSE
-"CLSI 2011"	"MIC"		"Bacillus anthracis"	"Penicillin G"			0.125	0.25	FALSE
-"CLSI 2011"	"MIC"		"Cardiobacterium"	"Penicillin G"			1	4	FALSE
-"CLSI 2011"	"MIC"		"Eikenella"	"Penicillin G"			1	4	FALSE
-"CLSI 2011"	"DISK"		"Enterococcus"	"Penicillin G"		"10units"	15	14	FALSE
-"CLSI 2011"	"MIC"		"Enterococcus"	"Penicillin G"			8	16	FALSE
-"CLSI 2011"	"MIC"		"Erysipelothrix rhusiopathiae"	"Penicillin G"			0.125		FALSE
-"CLSI 2011"	"MIC"		"Granulicatella"	"Penicillin G"			0.125	4	FALSE
-"CLSI 2011"	"MIC"		"Kingella"	"Penicillin G"			1	4	FALSE
-"CLSI 2011"	"MIC"		"Leuconostoc"	"Penicillin G"			8		FALSE
-"CLSI 2011"	"MIC"		"Lactobacillus"	"Penicillin G"			8		FALSE
-"CLSI 2011"	"DISK"		"Listeria monocytogenes"	"Penicillin G"		"10units"			FALSE
-"CLSI 2011"	"MIC"		"Listeria monocytogenes"	"Penicillin G"			2		FALSE
-"CLSI 2011"	"DISK"		"Neisseria gonorrhoeae"	"Penicillin G"		"10units"	47	26	FALSE
-"CLSI 2011"	"MIC"		"Neisseria gonorrhoeae"	"Penicillin G"			0.064	2	FALSE
-"CLSI 2011"	"DISK"		"Neisseria meningitidis"	"Penicillin G"		"10units"			FALSE
-"CLSI 2011"	"MIC"		"Neisseria meningitidis"	"Penicillin G"			0.064	0.5	FALSE
-"CLSI 2011"	"MIC"		"Pediococcus"	"Penicillin G"			8		FALSE
-"CLSI 2011"	"DISK"		"Pasteurella"	"Penicillin G"		"10ug"	25		FALSE
-"CLSI 2011"	"MIC"		"Pasteurella"	"Penicillin G"			0.5		FALSE
-"CLSI 2011"	"DISK"		"Streptococcus"	"Penicillin G"		"10units"	24		FALSE
-"CLSI 2011"	"MIC"		"Streptococcus"	"Penicillin G"			0.125	4	FALSE
-"CLSI 2011"	"MIC"		"Streptococcus"	"Penicillin G"			0.125		FALSE
-"CLSI 2011"	"DISK"		"Streptococcus pneumoniae"	"Penicillin G"		"10units"			FALSE
-"CLSI 2011"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Penicillin G"			0.064	0.12	FALSE
-"CLSI 2011"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Penicillin G"			2	8	FALSE
-"CLSI 2011"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Penicillin G"			0.064	2	FALSE
-"CLSI 2011"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"		"10units"			FALSE
-"CLSI 2011"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Penicillin G"			0.125	4	FALSE
-"CLSI 2011"	"DISK"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	29	28	FALSE
-"CLSI 2011"	"MIC"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
+"CLSI 2011"	"MIC"		"Abiotrophia"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2011"	"MIC"		"Aggregatibacter"	"Benzylpenicillin"			1	4	FALSE
+"CLSI 2011"	"MIC"		"Anaerosalibacter"	"Benzylpenicillin"			0.5	2	FALSE
+"CLSI 2011"	"MIC"		"Bacillus"	"Benzylpenicillin"			0.125	0.25	FALSE
+"CLSI 2011"	"MIC"		"Bacillus anthracis"	"Benzylpenicillin"			0.125	0.25	FALSE
+"CLSI 2011"	"MIC"		"Cardiobacterium"	"Benzylpenicillin"			1	4	FALSE
+"CLSI 2011"	"MIC"		"Eikenella"	"Benzylpenicillin"			1	4	FALSE
+"CLSI 2011"	"DISK"		"Enterococcus"	"Benzylpenicillin"		"10units"	15	14	FALSE
+"CLSI 2011"	"MIC"		"Enterococcus"	"Benzylpenicillin"			8	16	FALSE
+"CLSI 2011"	"MIC"		"Erysipelothrix rhusiopathiae"	"Benzylpenicillin"			0.125		FALSE
+"CLSI 2011"	"MIC"		"Granulicatella"	"Benzylpenicillin"			0.125	4	FALSE
+"CLSI 2011"	"MIC"		"Kingella"	"Benzylpenicillin"			1	4	FALSE
+"CLSI 2011"	"MIC"		"Leuconostoc"	"Benzylpenicillin"			8		FALSE
+"CLSI 2011"	"MIC"		"Lactobacillus"	"Benzylpenicillin"			8		FALSE
+"CLSI 2011"	"DISK"		"Listeria monocytogenes"	"Benzylpenicillin"		"10units"			FALSE
+"CLSI 2011"	"MIC"		"Listeria monocytogenes"	"Benzylpenicillin"			2		FALSE
+"CLSI 2011"	"DISK"		"Neisseria gonorrhoeae"	"Benzylpenicillin"		"10units"	47	26	FALSE
+"CLSI 2011"	"MIC"		"Neisseria gonorrhoeae"	"Benzylpenicillin"			0.064	2	FALSE
+"CLSI 2011"	"DISK"		"Neisseria meningitidis"	"Benzylpenicillin"		"10units"			FALSE
+"CLSI 2011"	"MIC"		"Neisseria meningitidis"	"Benzylpenicillin"			0.064	0.5	FALSE
+"CLSI 2011"	"MIC"		"Pediococcus"	"Benzylpenicillin"			8		FALSE
+"CLSI 2011"	"DISK"		"Pasteurella"	"Benzylpenicillin"		"10ug"	25		FALSE
+"CLSI 2011"	"MIC"		"Pasteurella"	"Benzylpenicillin"			0.5		FALSE
+"CLSI 2011"	"DISK"		"Streptococcus"	"Benzylpenicillin"		"10units"	24		FALSE
+"CLSI 2011"	"MIC"		"Streptococcus"	"Benzylpenicillin"			0.125	4	FALSE
+"CLSI 2011"	"MIC"		"Streptococcus"	"Benzylpenicillin"			0.125		FALSE
+"CLSI 2011"	"DISK"		"Streptococcus pneumoniae"	"Benzylpenicillin"		"10units"			FALSE
+"CLSI 2011"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"			0.064	0.12	FALSE
+"CLSI 2011"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"			2	8	FALSE
+"CLSI 2011"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Benzylpenicillin"			0.064	2	FALSE
+"CLSI 2011"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"		"10units"			FALSE
+"CLSI 2011"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"			0.125	4	FALSE
+"CLSI 2011"	"DISK"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	29	28	FALSE
+"CLSI 2011"	"MIC"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
 "CLSI 2011"	"MIC"		"Anaerosalibacter"	"Piperacillin"			32	128	FALSE
 "CLSI 2011"	"DISK"		"Pseudomonas aeruginosa"	"Piperacillin"		"100ug"	18	17	FALSE
 "CLSI 2011"	"MIC"		"Pseudomonas aeruginosa"	"Piperacillin"			64	128	FALSE
@@ -18236,8 +18236,8 @@
 "CLSI 2011"	"MIC"		"(unknown name)"	"Polymyxin B"	"Generic CLSI rules"	"300units"	2	8	FALSE
 "CLSI 2011"	"DISK"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30ug"	18	14	FALSE
 "CLSI 2011"	"MIC"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30ug"	1	4	FALSE
-"CLSI 2011"	"DISK"		"Streptococcus pneumoniae"	"Penicillin V"		"10ug"			FALSE
-"CLSI 2011"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Penicillin V"			0.064	2	FALSE
+"CLSI 2011"	"DISK"		"Streptococcus pneumoniae"			"10ug"			FALSE
+"CLSI 2011"	"MIC"	"Oral"	"Streptococcus pneumoniae"				0.064	2	FALSE
 "CLSI 2011"	"DISK"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2ug"	13	12	FALSE
 "CLSI 2011"	"MIC"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2ug"	2	4	FALSE
 "CLSI 2011"	"DISK"		"Streptococcus"	"Quinupristin/dalfopristin"		"15ug"	19	15	FALSE
@@ -18595,8 +18595,8 @@
 "CLSI 2010"	"DISK"		"(unknown name)"	"Orbifloxacin"	"Generic CLSI rules"	"10ug"	23	17	FALSE
 "CLSI 2010"	"MIC"		"(unknown name)"	"Orbifloxacin"	"Generic CLSI rules"	"10ug"	1	8	FALSE
 "CLSI 2010"	"MIC"		"(unknown name)"	"Oxacillin"	"Generic CLSI rules"	"1ug"	0.25	0.5	FALSE
-"CLSI 2010"	"DISK"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	29	28	FALSE
-"CLSI 2010"	"MIC"		"(unknown name)"	"Penicillin G"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
+"CLSI 2010"	"DISK"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	29	28	FALSE
+"CLSI 2010"	"MIC"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
 "CLSI 2010"	"DISK"		"(unknown name)"	"Piperacillin"	"Generic CLSI rules"	"100ug"	21	17	FALSE
 "CLSI 2010"	"MIC"		"(unknown name)"	"Piperacillin"	"Generic CLSI rules"	"100ug"	16	128	FALSE
 "CLSI 2010"	"DISK"		"(unknown name)"	"Polymyxin B"	"Generic CLSI rules"	"300units"	12	11	FALSE

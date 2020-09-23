@@ -87,6 +87,8 @@ check_dataset_integrity <- function() {
   data_in_pkg <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item", drop = TRUE]
   data_in_globalenv <- ls(envir = globalenv())
   overwritten <- data_in_pkg[data_in_pkg %in% data_in_globalenv]
+  # exception for example_isolates
+  overwritten <- overwritten[overwritten != "example_isolates"]
   stop_if(length(overwritten) > 0,
           "the following data set is overwritten by your global environment and prevents the AMR package from working correctly:\n",
           paste0("'", overwritten, "'", collapse = ", "),
@@ -110,7 +112,7 @@ check_dataset_integrity <- function() {
   invisible(TRUE)
 }
 
-search_type_in_df <- function(x, type) {
+search_type_in_df <- function(x, type, info = TRUE) {
   # try to find columns based on type
   found <- NULL
   
@@ -187,7 +189,7 @@ search_type_in_df <- function(x, type) {
     }
   }
   
-  if (!is.null(found)) {
+  if (!is.null(found) & info == TRUE) {
     msg <- paste0("NOTE: Using column `", font_bold(found), "` as input for `col_", type, "`.")
     if (type %in% c("keyantibiotics", "specimen")) {
       msg <- paste(msg, "Use", font_bold(paste0("col_", type), "= FALSE"), "to prevent this.")
@@ -195,6 +197,11 @@ search_type_in_df <- function(x, type) {
     message(font_blue(msg))
   }
   found
+}
+
+is_possibly_regex <- function(x) {
+  sapply(strsplit(x, ""),
+         function(y) any(y %in% c("$", "(", ")", "*", "+", "-", ".", "?", "[", "]", "^", "{", "|", "}", "\\"), na.rm = TRUE))
 }
 
 stop_ifnot_installed <- function(package) {
@@ -259,7 +266,7 @@ stop_if <- function(expr, ..., call = TRUE) {
 }
 
 stop_ifnot <- function(expr, ..., call = TRUE) {
-  if (!isTRUE(expr)) {
+  if (isFALSE(expr)) {
     if (isTRUE(call)) {
       call <- -1
     }
@@ -315,6 +322,18 @@ dataset_UTF8_to_ASCII <- function(df) {
     }
   }
   df
+}
+
+create_ab_documentation <- function(ab) {
+  ab_names <- ab_name(ab, language = NULL, tolower = TRUE)
+  ab <- ab[order(ab_names)]
+  ab_names <- ab_names[order(ab_names)]
+  atcs <- ab_atc(ab)
+  atcs[!is.na(atcs)] <- paste0("[", atcs[!is.na(atcs)], "](", ab_url(ab[!is.na(atcs)]), ")")
+  atcs[is.na(atcs)] <- "no ATC code"
+  out <- paste0(ab_names, " (`", ab, "`, ", atcs, ")", collapse = ", ")
+  substr(out, 1, 1) <- toupper(substr(out, 1, 1))
+  out
 }
 
 has_colour <- function() {

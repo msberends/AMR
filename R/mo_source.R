@@ -35,7 +35,7 @@
 #' 
 #' The created compressed data file `"~/.mo_source.rds"` will be used at default for MO determination (function [as.mo()] and consequently all `mo_*` functions like [mo_genus()] and [mo_gramstain()]). The location of the original file will be saved as an R option with `options(mo_source = path)`. Its timestamp will be saved with `options(mo_source_datetime = ...)`. 
 #' 
-#' The function [get_mo_source()] will return the data set by reading `"~/.mo_source.rds"` with [readRDS()]. If the original file has changed (by checking the aforementioned options `mo_source` and `mo_source_datetime`), it will call [set_mo_source()] to update the data file automatically.
+#' The function [get_mo_source()] will return the data set by reading `"~/.mo_source.rds"` with [readRDS()]. If the original file has changed (by checking the aforementioned options `mo_source` and `mo_source_datetime`), it will call [set_mo_source()] to update the data file automatically if used in an interactive session.
 #'
 #' Reading an Excel file (`.xlsx`) with only one row has a size of 8-9 kB. The compressed file created with [set_mo_source()] will then have a size of 0.1 kB and can be read by [get_mo_source()] in only a couple of microseconds (millionths of a second).
 #' 
@@ -224,7 +224,7 @@ get_mo_source <- function() {
     set_mo_source("")
     return(NULL)
   }
-  if (new_time != old_time) {
+  if (interactive() && new_time != old_time) {
     # set updated source
     set_mo_source(getOption("mo_source"))
   }

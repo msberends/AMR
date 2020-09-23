@@ -110,8 +110,14 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
   
   note_if_more_than_one_found <- function(found, index, from_text) {
     if (initial_search == TRUE & isTRUE(length(from_text) > 1)) {
-      message(font_blue(paste0("NOTE: more than one result was found for item ", index, ": ",
-                               paste0(ab_name(from_text, tolower = TRUE, initial_search = FALSE), collapse = ", "))))
+      abnames <- ab_name(from_text, tolower = TRUE, initial_search = FALSE)
+      if (ab_name(found[1L], language = NULL) %like% "clavulanic acid") {
+        abnames <- abnames[!abnames == "clavulanic acid"]
+      }
+      if (length(abnames) > 1) {
+        message(font_blue(paste0("NOTE: more than one result was found for item ", index, ": ",
+                                 paste0(abnames, collapse = ", "))))
+      }
     }
     found[1L]
   }

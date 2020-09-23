@@ -187,7 +187,6 @@ is.rsi <- function(x) {
 #' @export
 is.rsi.eligible <- function(x, threshold = 0.05) {
   stop_if(NCOL(x) > 1, "`x` must be a one-dimensional vector.")
-  
   if (any(c("logical",
             "numeric",
             "integer",
@@ -226,15 +225,12 @@ as.rsi.default <- function(x, ...) {
               class =  c("rsi", "ordered", "factor"))
   } else {
     
-    ab <- deparse(substitute(x))
     if (!any(x %like% "(R|S|I)", na.rm = TRUE)) {
-      if (!is.na(suppressWarnings(as.ab(ab)))) {
-        # check if they are actually MICs or disks now that the antibiotic name is valid
-        if (all_valid_mics(x)) {
-          as.rsi(as.mic(x), ab = ab, ...)
-        } else if (all_valid_disks(x)) {
-          as.rsi(as.disk(x), ab = ab, ...)
-        }
+      # check if they are actually MICs or disks now that the antibiotic name is valid
+      if (all_valid_mics(x)) {
+        warning("The input seems to be MIC values. Transform them with as.mic() before running as.rsi() to interpret them.")
+      } else if (all_valid_disks(x)) {
+        warning("The input seems to be disk diffusion values. Transform them with as.disk() before running as.rsi() to interpret them.")
       }
     }
     

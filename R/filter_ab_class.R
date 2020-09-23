@@ -93,7 +93,7 @@ filter_ab_class <- function(x,
   stop_ifnot(all(scope %in% c("any", "all")), "`scope` must be one of: 'any', 'all'")
   
   # get all columns in data with names that resemble antibiotics
-  ab_in_data <- suppressMessages(get_column_abx(x))
+  ab_in_data <- get_column_abx(x, info = FALSE)
   if (length(ab_in_data) == 0) {
     message(font_blue("NOTE: no columns with class <rsi> found (see ?as.rsi), data left unchanged."))
     return(x.bak)

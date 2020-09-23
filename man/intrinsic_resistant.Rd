@@ -5,7 +5,7 @@
 \alias{intrinsic_resistant}
 \title{Data set with bacterial intrinsic resistance}
 \format{
-A \link{data.frame} with 49,462 observations and 2 variables:
+A \link{data.frame} with 93,892 observations and 2 variables:
 \itemize{
 \item \code{microorganism}\cr Name of the microorganism
 \item \code{antibiotic}\cr Name of the antibiotic drug
@@ -20,7 +20,7 @@ Data set containing defined intrinsic resistance by EUCAST of all bug-drug combi
 \details{
 The repository of this \code{AMR} package contains a file comprising this exact data set: \url{https://github.com/msberends/AMR/blob/master/data-raw/intrinsic_resistant.txt}. This file \strong{allows for machine reading EUCAST guidelines about intrinsic resistance}, which is almost impossible with the Excel and PDF files distributed by EUCAST. The file is updated automatically.
 
-This data set is based on 'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes', version 3.1, 2016.
+This data set is based on 'EUCAST Expert Rules / EUCAST Intrinsic Resistance and Unusual Phenotypes', v3.2 from 2020.
 }
 \section{Reference data publicly available}{
 
