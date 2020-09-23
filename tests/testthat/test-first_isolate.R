@@ -74,7 +74,7 @@ test_that("first isolates work", {
                       type = "points",
                       info = TRUE),
         na.rm = TRUE)),
-    1400)
+    1399)
 
   # first non-ICU isolates
   expect_equal(

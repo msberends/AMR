@@ -43,7 +43,7 @@ test_that("ab_property works", {
 
   expect_identical(ab_ddd("AMX", "oral"), 1.5)
   expect_identical(ab_ddd("AMX", "oral", units = TRUE), "g")
-  expect_identical(ab_ddd("AMX", "iv"), 1)
+  expect_identical(ab_ddd("AMX", "iv"), 3)
   expect_identical(ab_ddd("AMX", "iv", units = TRUE), "g")
 
   expect_identical(ab_name(x = c("AMC", "PLB"), language = NULL), c("Amoxicillin/clavulanic acid", "Polymyxin B"))

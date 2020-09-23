@@ -29,7 +29,7 @@ test_that("counts work", {
   expect_equal(count_all(example_isolates$AMX), n_rsi(example_isolates$AMX))
   
   # AMX resistance in `example_isolates`
-  expect_equal(count_R(example_isolates$AMX), 683)
+  expect_equal(count_R(example_isolates$AMX), 804)
   expect_equal(count_I(example_isolates$AMX), 3)
   expect_equal(suppressWarnings(count_S(example_isolates$AMX)), 543)
   expect_equal(count_R(example_isolates$AMX) + count_I(example_isolates$AMX),

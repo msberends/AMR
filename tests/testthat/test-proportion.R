@@ -29,8 +29,8 @@ test_that("proportions works", {
   expect_equal(proportion_SI(example_isolates$AMX), susceptibility(example_isolates$AMX))
   
   # AMX resistance in `example_isolates`
-  expect_equal(proportion_R(example_isolates$AMX), 0.5557364, tolerance = 0.0001)
-  expect_equal(proportion_I(example_isolates$AMX), 0.002441009, tolerance = 0.0001)
+  expect_equal(proportion_R(example_isolates$AMX), 0.5955556, tolerance = 0.0001)
+  expect_equal(proportion_I(example_isolates$AMX), 0.002222222, tolerance = 0.0001)
   expect_equal(1 - proportion_R(example_isolates$AMX) - proportion_I(example_isolates$AMX),
                proportion_S(example_isolates$AMX))
   expect_equal(proportion_R(example_isolates$AMX) + proportion_I(example_isolates$AMX),
