@@ -39,18 +39,18 @@ is.rsi.eligible(x, threshold = 0.05)
 
 \method{as.rsi}{data.frame}(
   x,
+  ...,
   col_mo = NULL,
   guideline = "EUCAST",
   uti = NULL,
   conserve_capped_values = FALSE,
-  add_intrinsic_resistance = FALSE,
-  ...
+  add_intrinsic_resistance = FALSE
 )
 }
 \arguments{
 \item{x}{vector of values (for class \code{\link{mic}}: an MIC value in mg/L, for class \code{\link{disk}}: a disk diffusion radius in millimetres)}
 
-\item{...}{parameters passed on to methods}
+\item{...}{for using on a \link{data.frame}: names of columns to apply \code{\link[=as.rsi]{as.rsi()}} on (supports tidy selection like \code{AMX:VAN}). Otherwise: parameters passed on to methods.}
 
 \item{threshold}{maximum fraction of invalid antimicrobial interpretations of \code{x}, please see \emph{Examples}}
 
@@ -70,7 +70,7 @@ list(version_txt = "v3.2", year = 2020, title = "EUCAST Expert Rules / EUCAST In
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 }
 \value{
-Ordered factor with new class \code{\link{rsi}}
+Ordered \link{factor} with new class \code{\link{rsi}}
 }
 \description{
 Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class \code{\link{rsi}}, which is an ordered factor with levels \verb{S < I < R}. Values that cannot be interpreted will be returned as \code{NA} with a warning.
@@ -211,7 +211,6 @@ as.rsi(x = as.disk(18),
 
 as.rsi(c("S", "I", "R", "A", "B", "C"))
 as.rsi("<= 0.002; S") # will return "S"
-
 rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370)))
 is.rsi(rsi_data)
 plot(rsi_data)    # for percentages
@@ -221,6 +220,9 @@ barplot(rsi_data) # for frequencies
 library(dplyr)
 example_isolates \%>\%
   mutate_at(vars(PEN:RIF), as.rsi)
+# same:   
+example_isolates \%>\%
+  as.rsi(PEN:RIF)
 
 # fastest way to transform all columns with already valid AMR results to class `rsi`:
 example_isolates \%>\%

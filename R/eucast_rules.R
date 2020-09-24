@@ -136,6 +136,11 @@ eucast_rules <- function(x,
                          version_expertrules = 3.2,
                          ...) {
   
+  x_deparsed <- deparse(substitute(x))
+  if (!x_deparsed %like% "[a-z]") {
+    x_deparsed <- "your_data"
+  }
+  
   check_dataset_integrity()
   
   version_breakpoints <- as.double(version_breakpoints)
@@ -152,12 +157,12 @@ eucast_rules <- function(x,
     rules <- getOption("AMR.eucast_rules")
   }
   
-  if (verbose == TRUE & info == TRUE) {
+  if (interactive() & verbose == TRUE & info == TRUE) {
     txt <- paste0("WARNING: In Verbose mode, the eucast_rules() function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way.",
                   "\n\nThis may overwrite your existing data if you use e.g.:",
                   "\ndata <- eucast_rules(data, verbose = TRUE)\n\nDo you want to continue?")
     showQuestion <- import_fn("showQuestion", "rstudioapi", error_on_fail = FALSE)
-    if (!is.null(showQuestion) & interactive()) {
+    if (!is.null(showQuestion)) {
       q_continue <- showQuestion("Using verbose = TRUE with eucast_rules()", txt)
     } else {
       q_continue <- utils::menu(choices = c("OK", "Cancel"), graphics = FALSE, title = txt)
@@ -504,6 +509,7 @@ eucast_rules <- function(x,
       paste(collapse = ", ")
     x <- gsub("_", " ", x, fixed = TRUE)
     x <- gsub("except CAZ", paste("except", ab_name("CAZ", language = NULL, tolower = TRUE)), x, fixed = TRUE)
+    x <- gsub("cephalosporins (1st|2nd|3rd|4th|5th)", "cephalosporins (\\1 gen.)", x)
     x
   }
   format_antibiotic_names <- function(ab_names, ab_results) {
@@ -881,9 +887,13 @@ eucast_rules <- function(x,
     rownames(verbose_info) <- NULL
     affected <- x.bak[which(x.bak$`.rowid` %in% x$`.rowid`), , drop = FALSE]
     rows_affected <- as.integer(rownames(affected))
-    verbose_info <- data.frame(row = rows_affected, rowid = affected[, ".rowid", drop = TRUE]) %pm>% 
-      pm_left_join(verbose_info, by = "rowid") %pm>% 
+    verbose_info <- verbose_info %pm>% 
+      pm_left_join(data.frame(row = rows_affected, 
+                              rowid = affected[, ".rowid", drop = TRUE],
+                              stringsAsFactors = FALSE),
+                   by = "rowid") %pm>% 
       pm_select(-rowid) %pm>% 
+      pm_select(row, pm_everything()) %pm>% 
       pm_filter(!is.na(new)) %pm>%
       pm_arrange(row, rule_group, rule_name, col)
     
@@ -919,7 +929,7 @@ eucast_rules <- function(x,
         pm_count(new, name = "n")
       cat(paste("   -", 
                 paste0(formatnr(added_summary$n), " test result", ifelse(added_summary$n > 1, "s", ""), 
-                       " added as ", added_summary$new), collapse = "\n"))
+                       " added as ", paste0('"', added_summary$new, '"')), collapse = "\n"))
     }
     
     # print changed values
@@ -942,7 +952,7 @@ eucast_rules <- function(x,
         pm_count(old, new, name = "n")
       cat(paste("   -", 
                 paste0(formatnr(changed_summary$n), " test result", ifelse(changed_summary$n > 1, "s", ""), " changed from ", 
-                       changed_summary$old, " to ", changed_summary$new), collapse = "\n"))
+                       paste0('"', changed_summary$old, '"'), " to ", paste0('"', changed_summary$new, '"')), collapse = "\n"))
       cat("\n")
     }
     
@@ -955,9 +965,12 @@ eucast_rules <- function(x,
     }
   }
   
+
   if (isTRUE(warn_lacking_rsi_class)) {
-    warning("Not all columns with antimicrobial results are of class <rsi>.\n",
-            "Transform eligible columns to class <rsi> on beforehand: your_data %pm>% mutate_if(is.rsi.eligible, as.rsi)",
+    unique_cols <- colnames(x.bak)[colnames(x.bak) %in% verbose_info$col]
+    warning("Not all columns with antimicrobial results are of class <rsi>. Transform them on beforehand, with e.g.:\n",
+            "  ", x_deparsed, " %>% mutate_if(is.rsi.eligible, as.rsi)\n",
+            "  ", x_deparsed, " %>% as.rsi(", unique_cols[1], ":", unique_cols[length(unique_cols)], ")",
             call. = FALSE)
   }
   
@@ -1010,7 +1023,7 @@ edit_rsi <- function(x,
   if (length(rows) > 0 & length(cols) > 0) {
     new_edits <- x
     if (any(!sapply(x[, cols, drop = FALSE], is.rsi), na.rm = TRUE)) {
-      track_changes$warn <- TRUE
+      track_changes$rsi_warn <- TRUE
     }
     tryCatch(
       # insert into original table
@@ -1044,7 +1057,7 @@ edit_rsi <- function(x,
     )
     
     track_changes$output <- new_edits
-    if (isTRUE(info) && isFALSE(all.equal(x, track_changes$output))) {
+    if (isTRUE(info) && !isTRUE(all.equal(x, track_changes$output))) {
       get_original_rows <- function(rowids) {
         as.integer(rownames(original_data[which(original_data$.rowid %in% rowids), , drop = FALSE]))
       }

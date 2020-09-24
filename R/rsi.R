@@ -33,7 +33,7 @@
 #' @param conserve_capped_values a logical to indicate that MIC values starting with `">"` (but not `">="`) must always return "R" , and that MIC values starting with `"<"` (but not `"<="`) must always return "S"
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a logical to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on 'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes', version `r EUCAST_VERSION_EXPERT_RULES`.
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, please see *Examples*
-#' @param ... parameters passed on to methods
+#' @param ... for using on a [data.frame]: names of columns to apply [as.rsi()] on (supports tidy selection like `AMX:VAN`). Otherwise: parameters passed on to methods.
 #' @details 
 #' ## How it works
 #' 
@@ -86,7 +86,7 @@
 #'   A microorganism is categorised as *Susceptible, Increased exposure* when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.
 #'
 #' This AMR package honours this new insight. Use [susceptibility()] (equal to [proportion_SI()]) to determine antimicrobial susceptibility and [count_susceptible()] (equal to [count_SI()]) to count susceptible isolates.
-#' @return Ordered factor with new class [`rsi`]
+#' @return Ordered [factor] with new class [`rsi`]
 #' @aliases rsi
 #' @export
 #' @seealso [as.mic()], [as.disk()], [as.mo()]
@@ -150,7 +150,7 @@
 #' 
 #' as.rsi(c("S", "I", "R", "A", "B", "C"))
 #' as.rsi("<= 0.002; S") # will return "S"
-#' 
+
 #' rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370)))
 #' is.rsi(rsi_data)
 #' plot(rsi_data)    # for percentages
@@ -160,6 +160,9 @@
 #' library(dplyr)
 #' example_isolates %>%
 #'   mutate_at(vars(PEN:RIF), as.rsi)
+#' # same:   
+#' example_isolates %>%
+#'   as.rsi(PEN:RIF)
 #'
 #' # fastest way to transform all columns with already valid AMR results to class `rsi`:
 #' example_isolates %>%
@@ -418,13 +421,14 @@ as.rsi.disk <- function(x,
 
 #' @rdname as.rsi
 #' @export
-as.rsi.data.frame <- function(x, 
+as.rsi.data.frame <- function(x,
+                              ..., 
                               col_mo = NULL, 
                               guideline = "EUCAST",
                               uti = NULL,
                               conserve_capped_values = FALSE,
-                              add_intrinsic_resistance = FALSE,
-                              ...) {
+                              add_intrinsic_resistance = FALSE) {
+  
   # try to find columns based on type
   # -- mo
   if (is.null(col_mo)) {
@@ -471,38 +475,46 @@ as.rsi.data.frame <- function(x,
   }
   
   i <- 0
+  sel <- colnames(pm_select(x, ...))
   ab_cols <- colnames(x)[sapply(x, function(y) {
     i <<- i + 1
     check <- is.mic(y) | is.disk(y)
     ab <- colnames(x)[i]
-    ab_coerced <- suppressWarnings(as.ab(ab))
-    if (is.na(ab_coerced)) {
-      # not even a valid AB code
-      return(FALSE)
-    } else if (!check & all_valid_mics(y)) {
-      message(font_blue(paste0("NOTE: Assuming column `", ab, "` (",
-                               ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
-                               ab_name(ab_coerced, tolower = TRUE), ") contains MIC values.")))
-      return(TRUE)
-    } else if (!check & all_valid_disks(y)) {
-      message(font_blue(paste0("NOTE: Assuming column `", ab, "` (",
-                               ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
-                               ab_name(ab_coerced, tolower = TRUE), ") contains disk zones.")))
-      return(TRUE)
+    if (length(sel) == 0 || (length(sel) > 0 && ab %in% sel)) {
+      ab_coerced <- suppressWarnings(as.ab(ab))
+      if (is.na(ab_coerced) | !ab %in% sel) {
+        # not even a valid AB code
+        return(FALSE)
+      } else {
+        if (!check & all_valid_mics(y)) {
+          message(font_blue(paste0("NOTE: Assuming column `", ab, "` (",
+                                   ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
+                                   ab_name(ab_coerced, tolower = TRUE), ") contains MIC values.")))
+        } else if (!check & all_valid_disks(y)) {
+          message(font_blue(paste0("NOTE: Assuming column `", ab, "` (",
+                                   ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
+                                   ab_name(ab_coerced, tolower = TRUE), ") contains disk zones.")))
+        } else if (!is.rsi(y)) {
+          message(font_blue(paste0("NOTE: Assuming column `", ab, "` (",
+                                   ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
+                                   ab_name(ab_coerced, tolower = TRUE), ") must be cleaned to valid R/SI values.")))
+        }
+        return(TRUE)
+      }
     } else {
-      return(check)
+      return(FALSE)
     }
   })]
   
   stop_if(length(ab_cols) == 0,
-          "no columns with MIC values or disk zones found in this data set. Use as.mic() or as.disk() to transform antimicrobial columns.")
-  
+          "no columns with MIC values, disk zones or antibiotic column names found in this data set. Use as.mic() or as.disk() to transform antimicrobial columns.")
   # set type per column
   types <- character(length(ab_cols))
   types[sapply(x[, ab_cols], is.mic)] <- "mic"
   types[types == "" & sapply(x[, ab_cols], all_valid_mics)] <- "mic"
   types[sapply(x[, ab_cols], is.disk)] <- "disk"
   types[types == "" & sapply(x[, ab_cols], all_valid_disks)] <- "disk"
+  types[types == "" & !sapply(x[, ab_cols], is.rsi)] <- "rsi"
   
   for (i in seq_len(length(ab_cols))) {
     if (types[i] == "mic") {
@@ -518,6 +530,8 @@ as.rsi.data.frame <- function(x,
                                      ab = ab_cols[i],
                                      guideline = guideline,
                                      uti = uti)
+    } else if (types[i] == "rsi") {
+      x[, ab_cols[i]] <- as.rsi.default(x = x %pm>% pm_pull(ab_cols[i]))
     }
   }
   

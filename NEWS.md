@@ -1,4 +1,4 @@
-# AMR 1.3.0.9027
+# AMR 1.3.0.9028
 ## <small>Last updated: 24 September 2020</small>
 
 Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscipt to. We are those reviewers very grateful for going through our code so thoroughly!
@@ -32,6 +32,7 @@ Note: some changes in this version were suggested by anonymous reviewers from th
     your_data %>% mutate(across(where(is.mic), as.rsi))
     your_data %>% mutate(across(where(is.disk), as.rsi))
     ```
+  * Cleaning columns in a data.frame now allows you to specify those columns with tidy selection, e.g. `as.rsi(df, col1:col9)`
   * Big speed improvement for interpreting MIC values and disk zone diameters. When interpreting 5,000 MIC values of two antibiotics (10,000 values in total), our benchmarks showed a total run time going from 80.7-85.1 seconds to 1.8-2.0 seconds.
   * Added parameter 'add_intrinsic_resistance' (defaults to `FALSE`), that considers intrinsic resistance according to EUCAST
   * Fixed a bug where in EUCAST rules the breakpoint for R would be interpreted as ">=" while this should have been "<"
