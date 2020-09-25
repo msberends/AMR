@@ -44,6 +44,8 @@ test_that("PCA works", {
   
   expect_s3_class(pca_model, "pca")
   
+  pdf(NULL) # prevent Rplots.pdf being created
+  
   ggplot_pca(pca_model, ellipse = TRUE)
   ggplot_pca(pca_model, arrows_textangled = FALSE)
 })

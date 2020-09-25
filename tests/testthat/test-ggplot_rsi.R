@@ -29,6 +29,8 @@ test_that("ggplot_rsi works", {
 
   library(dplyr)
   library(ggplot2)
+  
+  pdf(NULL) # prevent Rplots.pdf being created
 
   # data should be equal
   expect_equal(

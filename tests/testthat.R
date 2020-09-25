@@ -19,7 +19,7 @@
 # Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
-library(testthat)
+library(testthat, warn.conflicts = FALSE)
 library(AMR)
 
 test_check("AMR")

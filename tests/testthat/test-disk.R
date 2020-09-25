@@ -29,8 +29,11 @@ test_that("disk works", {
   expect_equal(suppressWarnings(as.logical(as.disk("INVALID VALUE"))), NA)
 
   # all levels should be valid disks
-  expect_silent(as.disk(levels(as.disk(15))))
-
+  x <- as.disk(c(20, 40))
+  expect_s3_class(x[1], "disk")
+  expect_s3_class(x[[1]], "disk")
+  expect_s3_class(c(x[1], x[9]), "disk")
+  expect_s3_class(unique(x[1], x[9]), "disk")
   expect_warning(as.disk("INVALID VALUE"))
   
   expect_output(print(as.disk(12)))

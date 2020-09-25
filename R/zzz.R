@@ -90,10 +90,10 @@ create_MO_lookup <- function() {
                                                    MO_lookup$subspecies)))
   ind <- MO_lookup$genus == "" | grepl("^[(]unknown ", MO_lookup$fullname)
   MO_lookup[ind, "fullname_lower"] <- tolower(MO_lookup[ind, "fullname"])
-  MO_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", MO_lookup$fullname_lower))
+  MO_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", MO_lookup$fullname_lower, perl = TRUE))
   
   # add a column with only "e coli" like combinations
-  MO_lookup$g_species <- gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO_lookup$fullname_lower)
+  MO_lookup$g_species <- gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO_lookup$fullname_lower, perl = TRUE)
   
   # so arrange data on prevalence first, then kingdom, then full name
   MO_lookup[order(MO_lookup$prevalence, MO_lookup$kingdom_index, MO_lookup$fullname_lower), ]

@@ -177,3 +177,12 @@ c.disk <- function(x, ...) {
   attributes(y) <- attributes(x)
   y
 }
+
+#' @method unique disk
+#' @export
+#' @noRd
+unique.disk <- function(x, incomparables = FALSE, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
+}

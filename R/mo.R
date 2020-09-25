@@ -204,11 +204,11 @@ as.mo <- function(x,
     return(to_class_mo(x))
   }
   
-  if (tryCatch(all(tolower(x) %in% MO_lookup$fullname_lower, na.rm = TRUE)
+  if (tryCatch(all(x == "" | gsub(".*(unknown ).*", "unknown name", tolower(x), perl = TRUE) %in% MO_lookup$fullname_lower, na.rm = TRUE)
                & isFALSE(Becker)
                & isFALSE(Lancefield), error = function(e) FALSE)) {
     # to improve speed, special case for taxonomically correct full names (case-insensitive)
-    return(MO_lookup[match(tolower(x), MO_lookup$fullname_lower), "mo", drop = TRUE])
+    return(MO_lookup[match(gsub(".*(unknown ).*", "unknown name", tolower(x), perl = TRUE), MO_lookup$fullname_lower), "mo", drop = TRUE])
   }
   
   # start off with replaced language-specific non-ASCII characters with ASCII characters
@@ -481,8 +481,8 @@ exec_as.mo <- function(x,
       # also, make sure the trailing and leading characters are a-z or 0-9
       # in case of non-regex
       if (dyslexia_mode == FALSE) {
-        trimmed <- gsub("^[^a-zA-Z0-9)(]+", "", trimmed)
-        trimmed <- gsub("[^a-zA-Z0-9)(]+$", "", trimmed)
+        trimmed <- gsub("^[^a-zA-Z0-9)(]+", "", trimmed, perl = TRUE)
+        trimmed <- gsub("[^a-zA-Z0-9)(]+$", "", trimmed, perl = TRUE)
       }
       trimmed
     }
@@ -497,49 +497,49 @@ exec_as.mo <- function(x,
     x_backup[grepl("^(fungus|fungi)$", x)] <- "F_FUNGUS" # will otherwise become the kingdom
     
     # remove spp and species
-    x <- gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x)
-    x <- gsub("(spp.?|subsp.?|subspecies|biovar|serovar|species)", "", x)
-    x <- gsub("^([a-z]{2,4})(spe.?)$", "\\1", x) # when ending in SPE instead of SPP and preceded by 2-4 characters
+    x <- gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x, perl = TRUE)
+    x <- gsub("(spp.?|subsp.?|subspecies|biovar|serovar|species)", "", x, perl = TRUE)
+    x <- gsub("^([a-z]{2,4})(spe.?)$", "\\1", x, perl = TRUE) # when ending in SPE instead of SPP and preceded by 2-4 characters
     x <- strip_whitespace(x, dyslexia_mode)
     
     x_backup_without_spp <- x
     x_species <- paste(x, "species")
     # translate to English for supported languages of mo_property
-    x <- gsub("(gruppe|groep|grupo|gruppo|groupe)", "group", x)
+    x <- gsub("(gruppe|groep|grupo|gruppo|groupe)", "group", x, perl = TRUE)
     # no groups and complexes as ending
-    x <- gsub("(complex|group)$", "", x)
-    x <- gsub("((an)?aero+b)[a-z]*", "", x)
-    x <- gsub("^atyp[a-z]*", "", x)
-    x <- gsub("(vergroen)[a-z]*", "viridans", x)
-    x <- gsub("[a-z]*diff?erent[a-z]*", "", x)
-    x <- gsub("(hefe|gist|gisten|levadura|lievito|fermento|levure)[a-z]*", "yeast", x)
-    x <- gsub("(schimmels?|mofo|molde|stampo|moisissure|fungi)[a-z]*", "fungus", x)
-    x <- gsub("fungus[ph|f]rya", "fungiphrya", x)
+    x <- gsub("(complex|group)$", "", x, perl = TRUE)
+    x <- gsub("((an)?aero+b)[a-z]*", "", x, perl = TRUE)
+    x <- gsub("^atyp[a-z]*", "", x, perl = TRUE)
+    x <- gsub("(vergroen)[a-z]*", "viridans", x, perl = TRUE)
+    x <- gsub("[a-z]*diff?erent[a-z]*", "", x, perl = TRUE)
+    x <- gsub("(hefe|gist|gisten|levadura|lievito|fermento|levure)[a-z]*", "yeast", x, perl = TRUE)
+    x <- gsub("(schimmels?|mofo|molde|stampo|moisissure|fungi)[a-z]*", "fungus", x, perl = TRUE)
+    x <- gsub("fungus[ph|f]rya", "fungiphrya", x, perl = TRUE)
     # no contamination
-    x <- gsub("(contamination|kontamination|mengflora|contaminaci.n|contamina..o)", "", x)
+    x <- gsub("(contamination|kontamination|mengflora|contaminaci.n|contamina..o)", "", x, perl = TRUE)
     # remove non-text in case of "E. coli" except dots and spaces
-    x <- trimws(gsub("[^.a-zA-Z0-9/ \\-]+", " ", x))
+    x <- trimws(gsub("[^.a-zA-Z0-9/ \\-]+", " ", x, perl = TRUE))
     # but make sure that dots are followed by a space
-    x <- gsub("[.] ?", ". ", x)
+    x <- gsub("[.] ?", ". ", x, perl = TRUE)
     # replace minus by a space
-    x <- gsub("-+", " ", x)
+    x <- gsub("-+", " ", x, perl = TRUE)
     # replace hemolytic by haemolytic
-    x <- gsub("ha?emoly", "haemoly", x)
+    x <- gsub("ha?emoly", "haemoly", x, perl = TRUE)
     # place minus back in streptococci
-    x <- gsub("(alpha|beta|gamma).?ha?emoly", "\\1-haemoly", x)
+    x <- gsub("(alpha|beta|gamma).?ha?emoly", "\\1-haemoly", x, perl = TRUE)
     # remove genus as first word
-    x <- gsub("^genus ", "", x)
+    x <- gsub("^genus ", "", x, perl = TRUE)
     # remove 'uncertain'-like texts
-    x <- trimws(gsub("(uncertain|susp[ie]c[a-z]+|verdacht)", "", x))
+    x <- trimws(gsub("(uncertain|susp[ie]c[a-z]+|verdacht)", "", x, perl = TRUE))
     # allow characters that resemble others = dyslexia_mode ----
     if (dyslexia_mode == TRUE) {
       x <- tolower(x)
-      x <- gsub("[iy]+", "[iy]+", x)
-      x <- gsub("(c|k|q|qu|s|z|x|ks)+", "(c|k|q|qu|s|z|x|ks)+", x)
-      x <- gsub("(ph|hp|f|v)+", "(ph|hp|f|v)+", x)
-      x <- gsub("(th|ht|t)+", "(th|ht|t)+", x)
-      x <- gsub("a+", "a+", x)
-      x <- gsub("u+", "u+", x)
+      x <- gsub("[iy]+", "[iy]+", x, perl = TRUE)
+      x <- gsub("(c|k|q|qu|s|z|x|ks)+", "(c|k|q|qu|s|z|x|ks)+", x, perl = TRUE)
+      x <- gsub("(ph|hp|f|v)+", "(ph|hp|f|v)+", x, perl = TRUE)
+      x <- gsub("(th|ht|t)+", "(th|ht|t)+", x, perl = TRUE)
+      x <- gsub("a+", "a+", x, perl = TRUE)
+      x <- gsub("u+", "u+", x, perl = TRUE)
       # allow any ending of -um, -us, -ium, -icum, -ius, -icus, -ica, -ia and -a (needs perl for the negative backward lookup):
       x <- gsub("(u\\+\\(c\\|k\\|q\\|qu\\+\\|s\\|z\\|x\\|ks\\)\\+)(?![a-z])",
                 "(u[s|m]|[iy][ck]?u[ms]|[iy]?[ck]?a)", x, perl = TRUE)
@@ -549,11 +549,11 @@ exec_as.mo <- function(x,
                 "(u[s|m]|[iy][ck]?u[ms]|[iy]?[ck]?a)", x, perl = TRUE)
       x <- gsub("(\\[iy\\]\\+a\\+)(?![a-z])",
                 "([iy]*a+|[iy]+a*)", x, perl = TRUE)
-      x <- gsub("e+", "e+", x)
-      x <- gsub("o+", "o+", x)
-      x <- gsub("(.)\\1+", "\\1+", x)
+      x <- gsub("e+", "e+", x, perl = TRUE)
+      x <- gsub("o+", "o+", x, perl = TRUE)
+      x <- gsub("(.)\\1+", "\\1+", x, perl = TRUE)
       # allow multiplication of all other consonants
-      x <- gsub("([bdgjlnrw]+)", "\\1+", x)
+      x <- gsub("([bdgjlnrw]+)", "\\1+", x, perl = TRUE)
       # allow ending in -en or -us
       x <- gsub("e\\+n(?![a-z[])", "(e+n|u+(c|k|q|qu|s|z|x|ks)+)", x, perl = TRUE)
       # if the input is longer than 10 characters, allow any forgotten consonant between all characters, as some might just have forgotten one...
@@ -571,12 +571,12 @@ exec_as.mo <- function(x,
     
     x_trimmed <- x
     x_trimmed_species <- paste(x_trimmed, "species")
-    x_trimmed_without_group <- gsub(" gro.u.p$", "", x_trimmed)
+    x_trimmed_without_group <- gsub(" gro.u.p$", "", x_trimmed, perl = TRUE)
     # remove last part from "-" or "/"
     x_trimmed_without_group <- gsub("(.*)[-/].*", "\\1", x_trimmed_without_group)
     # replace space and dot by regex sign
-    x_withspaces <- gsub("[ .]+", ".* ", x)
-    x <- gsub("[ .]+", ".*", x)
+    x_withspaces <- gsub("[ .]+", ".* ", x, perl = TRUE)
+    x <- gsub("[ .]+", ".*", x, perl = TRUE)
     # add start en stop regex
     x <- paste0("^", x, "$")
     
@@ -616,7 +616,7 @@ exec_as.mo <- function(x,
       }
       
       # valid fullname ----
-      found <- lookup(fullname_lower %in% gsub("[^a-zA-Z0-9_. -]", "", tolower(c(x_backup[i], x_backup_without_spp[i]))))
+      found <- lookup(fullname_lower %in% gsub("[^a-zA-Z0-9_. -]", "", tolower(c(x_backup[i], x_backup_without_spp[i])), perl = TRUE))
       # added the gsub() for "(unknown fungus)", since fullname_lower does not contain brackets
       if (!is.na(found)) {
         x[i] <- found[1L]
@@ -670,7 +670,7 @@ exec_as.mo <- function(x,
       
       # very probable: is G. species ----
       found <- lookup(g_species %in% gsub("[^a-z0-9/ \\-]+", "", 
-                                          tolower(c(x_backup[i], x_backup_without_spp[i]))))
+                                          tolower(c(x_backup[i], x_backup_without_spp[i])), perl = TRUE))
       if (!is.na(found)) {
         x[i] <- found[1L]
         next
@@ -1121,8 +1121,8 @@ exec_as.mo <- function(x,
             if (isTRUE(debug)) {
               cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (4) strip values between brackets\n"))
             }
-            a.x_backup_stripped <- gsub("( *[(].*[)] *)", " ", a.x_backup)
-            a.x_backup_stripped <- trimws(gsub(" +", " ", a.x_backup_stripped))
+            a.x_backup_stripped <- gsub("( *[(].*[)] *)", " ", a.x_backup, perl = TRUE)
+            a.x_backup_stripped <- trimws(gsub(" +", " ", a.x_backup_stripped, perl = TRUE))
             if (isTRUE(debug)) {
               message("Running '", a.x_backup_stripped, "'")
             }
@@ -1612,7 +1612,7 @@ format_uncertainty_as_df <- function(uncertainty_level,
 pillar_shaft.mo <- function(x, ...) {
   out <- format(x)
   # grey out the kingdom (part until first "_")
-  out[!is.na(x)] <- gsub("^([A-Z]+_)(.*)", paste0(font_subtle("\\1"), "\\2"), out[!is.na(x)])
+  out[!is.na(x)] <- gsub("^([A-Z]+_)(.*)", paste0(font_subtle("\\1"), "\\2"), out[!is.na(x)], perl = TRUE)
   # and grey out every _
   out[!is.na(x)] <- gsub("_", font_subtle("_"), out[!is.na(x)])
   
@@ -1745,6 +1745,15 @@ c.mo <- function(x, ...) {
   # must only contain valid MOs
   class_integrity_check(y, "microorganism code", c(as.character(microorganisms$mo), 
                                                    as.character(microorganisms.translation$mo_old)))
+}
+
+#' @method unique mo
+#' @export
+#' @noRd
+unique.mo <- function(x, incomparables = FALSE, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
 }
 
 #' @rdname as.mo

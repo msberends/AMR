@@ -28,6 +28,13 @@ test_that("rsi works", {
   expect_true(as.rsi("I") < as.rsi("R"))
   expect_true(is.rsi(as.rsi("S")))
   
+  
+  x <- example_isolates$AMX
+  expect_s3_class(x[1], "rsi")
+  expect_s3_class(x[[1]], "rsi")
+  expect_s3_class(c(x[1], x[9]), "rsi")
+  expect_s3_class(unique(x[1], x[9]), "rsi")
+  
   pdf(NULL) # prevent Rplots.pdf being created
   expect_silent(barplot(as.rsi(c("S", "I", "R"))))
   expect_silent(plot(as.rsi(c("S", "I", "R"))))

@@ -99,6 +99,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
   # remove diacritics
   x <- iconv(x, from = "UTF-8", to = "ASCII//TRANSLIT")
   x <- gsub('"', "", x, fixed = TRUE)
+  x <- gsub("(specimen|specimen date|specimen_date|spec_date)", "", x, ignore.case = TRUE, perl = TRUE)
   x_bak_clean <- x
   if (already_regex == FALSE) {
     x_bak_clean <- generalise_antibiotic_name(x_bak_clean)
@@ -212,26 +213,26 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
     }
     x_spelling <- x[i]
     if (already_regex == FALSE) {
-      x_spelling <- gsub("[IY]+", "[IY]+", x_spelling)
-      x_spelling <- gsub("(C|K|Q|QU|S|Z|X|KS)+", "(C|K|Q|QU|S|Z|X|KS)+", x_spelling)
-      x_spelling <- gsub("(PH|F|V)+", "(PH|F|V)+", x_spelling)
-      x_spelling <- gsub("(TH|T)+", "(TH|T)+", x_spelling)
-      x_spelling <- gsub("A+", "A+", x_spelling)
-      x_spelling <- gsub("E+", "E+", x_spelling)
-      x_spelling <- gsub("O+", "O+", x_spelling)
+      x_spelling <- gsub("[IY]+", "[IY]+", x_spelling, perl = TRUE)
+      x_spelling <- gsub("(C|K|Q|QU|S|Z|X|KS)+", "(C|K|Q|QU|S|Z|X|KS)+", x_spelling, perl = TRUE)
+      x_spelling <- gsub("(PH|F|V)+", "(PH|F|V)+", x_spelling, perl = TRUE)
+      x_spelling <- gsub("(TH|T)+", "(TH|T)+", x_spelling, perl = TRUE)
+      x_spelling <- gsub("A+", "A+", x_spelling, perl = TRUE)
+      x_spelling <- gsub("E+", "E+", x_spelling, perl = TRUE)
+      x_spelling <- gsub("O+", "O+", x_spelling, perl = TRUE)
       # allow any ending of -in/-ine and -im/-ime
-      x_spelling <- gsub("(\\[IY\\]\\+(N|M)|\\[IY\\]\\+(N|M)E\\+)$", "[IY]+(N|M)E*", x_spelling)
+      x_spelling <- gsub("(\\[IY\\]\\+(N|M)|\\[IY\\]\\+(N|M)E\\+)$", "[IY]+(N|M)E*", x_spelling, perl = TRUE)
       # allow any ending of -ol/-ole
-      x_spelling <- gsub("(O\\+L|O\\+LE\\+)$", "O+LE*", x_spelling)
+      x_spelling <- gsub("(O\\+L|O\\+LE\\+)$", "O+LE*", x_spelling, perl = TRUE)
       # allow any ending of -on/-one
-      x_spelling <- gsub("(O\\+N|O\\+NE\\+)$", "O+NE*", x_spelling)
+      x_spelling <- gsub("(O\\+N|O\\+NE\\+)$", "O+NE*", x_spelling, perl = TRUE)
       # replace multiple same characters to single one with '+', like "ll" -> "l+"
-      x_spelling <- gsub("(.)\\1+", "\\1+", x_spelling)
+      x_spelling <- gsub("(.)\\1+", "\\1+", x_spelling, perl = TRUE)
       # replace spaces and slashes with a possibility on both
-      x_spelling <- gsub("[ /]", "( .*|.*/)", x_spelling)
+      x_spelling <- gsub("[ /]", "( .*|.*/)", x_spelling, perl = TRUE)
       # correct for digital reading text (OCR)
-      x_spelling <- gsub("[NRD8B]", "[NRD8B]", x_spelling)
-      x_spelling <- gsub("(O|0)", "(O|0)+", x_spelling)
+      x_spelling <- gsub("[NRD8B]", "[NRD8B]", x_spelling, perl = TRUE)
+      x_spelling <- gsub("(O|0)", "(O|0)+", x_spelling, perl = TRUE)
       x_spelling <- gsub("++", "+", x_spelling, fixed = TRUE)
     }
     
@@ -264,7 +265,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
       
       # try by removing all spaces
       if (x[i] %like% " ") {
-        found <- suppressWarnings(as.ab(gsub(" +", "", x[i]), initial_search = FALSE))
+        found <- suppressWarnings(as.ab(gsub(" +", "", x[i], perl = TRUE), initial_search = FALSE))
         if (length(found) > 0 & !is.na(found)) {
           x_new[i] <- note_if_more_than_one_found(found, i, from_text)
           next
@@ -273,7 +274,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
       
       # try by removing all spaces and numbers
       if (x[i] %like% " " | x[i] %like% "[0-9]") {
-        found <- suppressWarnings(as.ab(gsub("[ 0-9]", "", x[i]), initial_search = FALSE))
+        found <- suppressWarnings(as.ab(gsub("[ 0-9]", "", x[i], perl = TRUE), initial_search = FALSE))
         if (length(found) > 0 & !is.na(found)) {
           x_new[i] <- note_if_more_than_one_found(found, i, from_text)
           next
@@ -318,7 +319,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
       
       # try by removing all trailing capitals
       if (x[i] %like_case% "[a-z]+[A-Z]+$") {
-        found <- suppressWarnings(as.ab(gsub("[A-Z]+$", "", x[i]), initial_search = FALSE))
+        found <- suppressWarnings(as.ab(gsub("[A-Z]+$", "", x[i], perl = TRUE), initial_search = FALSE))
         if (!is.na(found)) {
           x_new[i] <- note_if_more_than_one_found(found, i, from_text)
           next
@@ -326,7 +327,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
       }
       
       # keep only letters
-      found <- suppressWarnings(as.ab(gsub("[^A-Z]", "", x[i]), initial_search = FALSE))
+      found <- suppressWarnings(as.ab(gsub("[^A-Z]", "", x[i], perl = TRUE), initial_search = FALSE))
       if (!is.na(found)) {
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next
@@ -357,10 +358,10 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
       }
       
       # make all consonants facultative
-      search_str <- gsub("([BCDFGHJKLMNPQRSTVWXZ])", "\\1*", x[i])
+      search_str <- gsub("([BCDFGHJKLMNPQRSTVWXZ])", "\\1*", x[i], perl = TRUE)
       found <- suppressWarnings(as.ab(search_str, initial_search = FALSE, already_regex = TRUE))
       # keep at least 4 normal characters
-      if (nchar(gsub(".\\*", "", search_str)) < 4) {
+      if (nchar(gsub(".\\*", "", search_str, perl = TRUE)) < 4) {
         found <- NA
       }
       if (!is.na(found)) {
@@ -369,10 +370,10 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
       }
       
       # make all vowels facultative
-      search_str <- gsub("([AEIOUY])", "\\1*", x[i])
+      search_str <- gsub("([AEIOUY])", "\\1*", x[i], perl = TRUE)
       found <- suppressWarnings(as.ab(search_str, initial_search = FALSE, already_regex = TRUE))
       # keep at least 5 normal characters
-      if (nchar(gsub(".\\*", "", search_str)) < 5) {
+      if (nchar(gsub(".\\*", "", search_str, perl = TRUE)) < 5) {
         found <- NA
       }
       if (!is.na(found)) {
@@ -529,24 +530,33 @@ c.ab <- function(x, ...) {
   class_integrity_check(y, "antimicrobial code", antibiotics$ab)
 }
 
+#' @method unique ab
+#' @export
+#' @noRd
+unique.ab <- function(x, incomparables = FALSE, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
+}
+
 generalise_antibiotic_name <- function(x) {
   x <- toupper(x)
   # remove suffices
-  x <- gsub("_(MIC|RSI|DIS[CK])$", "", x)
+  x <- gsub("_(MIC|RSI|DIS[CK])$", "", x, perl = TRUE)
   # remove disk concentrations, like LVX_NM -> LVX
-  x <- gsub("_[A-Z]{2}[0-9_.]{0,3}$", "", x)
+  x <- gsub("_[A-Z]{2}[0-9_.]{0,3}$", "", x, perl = TRUE)
   # remove part between brackets if that's followed by another string
   x <- gsub("(.*)+ [(].*[)]", "\\1", x)
   # keep only max 1 space
-  x <- trimws2(gsub(" +", " ", x))
+  x <- trimws2(gsub(" +", " ", x, perl = TRUE))
   # non-character, space or number should be a slash
-  x <- gsub("[^A-Z0-9 -]", "/", x)
+  x <- gsub("[^A-Z0-9 -]", "/", x, perl = TRUE)
   # spaces around non-characters must be removed: amox + clav -> amox/clav
-  x <- gsub("(.*[A-Z0-9]) ([^A-Z0-9].*)", "\\1\\2", x)
-  x <- gsub("(.*[^A-Z0-9]) ([A-Z0-9].*)", "\\1\\2", x)
+  x <- gsub("(.*[A-Z0-9]) ([^A-Z0-9].*)", "\\1\\2", x, perl = TRUE)
+  x <- gsub("(.*[^A-Z0-9]) ([A-Z0-9].*)", "\\1\\2", x, perl = TRUE)
   # remove hyphen after a starting "co"
-  x <- gsub("^CO-", "CO", x)
+  x <- gsub("^CO-", "CO", x, perl = TRUE)
   # replace operators with a space
-  x <- gsub("(/| AND | WITH | W/|[+]|[-])+", " ", x)
+  x <- gsub("(/| AND | WITH | W/|[+]|[-])+", " ", x, perl = TRUE)
   x
 }

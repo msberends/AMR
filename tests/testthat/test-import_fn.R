@@ -19,6 +19,8 @@
 # Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
+context("import_fn.R")
+
 test_that("imports work", {
   skip_on_cran()
   

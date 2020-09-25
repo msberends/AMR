@@ -34,8 +34,11 @@ test_that("mic works", {
   expect_equal(suppressWarnings(as.logical(as.mic("INVALID VALUE"))), NA)
 
   # all levels should be valid MICs
-  expect_silent(as.mic(levels(as.mic(1))))
-
+  x <- as.mic(c(2, 4))
+  expect_s3_class(x[1], "mic")
+  expect_s3_class(x[[1]], "mic")
+  expect_s3_class(c(x[1], x[9]), "mic")
+  expect_s3_class(unique(x[1], x[9]), "mic")
   expect_warning(as.mic("INVALID VALUE"))
 
   pdf(NULL) # prevent Rplots.pdf being created

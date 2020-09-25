@@ -1,13 +1,13 @@
 # -------------------------------------------------------------------------------------------------------------------------------
 # For editing this EUCAST reference file, these values can all be used for targeting antibiotics:
-# 'all_betalactams', 'aminoglycosides', 'aminopenicillins', 'carbapenems', 'cephalosporins', 'cephalosporins_1st', 'cephalosporins_2nd', 'cephalosporins_except_CAZ', 
-# 'fluoroquinolones', 'glycopeptides', 'lincosamides', 'lipoglycopeptides', 'macrolides', 'oxazolidinones', 'polymyxins', 'streptogramins', 'tetracyclines', 'ureidopenicillins', 
+# 'all_betalactams', 'aminoglycosides', 'aminopenicillins', 'carbapenems', 'cephalosporins', 'cephalosporins_1st', 'cephalosporins_2nd', 'cephalosporins_except_CAZ',
+# 'fluoroquinolones', 'glycopeptides', 'lincosamides', 'lipoglycopeptides', 'macrolides', 'oxazolidinones', 'polymyxins', 'streptogramins', 'tetracyclines', 'ureidopenicillins',
 # and all separate EARS-Net letter codes like 'AMC'. They can be separated by comma: 'AMC, fluoroquinolones'.
 # The 'if_mo_property' column can be any column name from the AMR::microorganisms data set, or "genus_species" or "gramstain".
 # The like.is.one_of column must be 'like' or 'is' or 'one_of' ('like' will read the 'this_value' column as regular expression)
 # The EUCAST guideline contains references to the 'Burkholderia cepacia complex'. All species in this group are noted on the 'B.cepacia' sheet of the EUCAST Clinical Breakpoint v.10.0 Excel file of 2020 (v_10.0_Breakpoint_Tables.xlsx).
 # >>>>> IF YOU WANT TO IMPORT THIS FILE INTO YOUR OWN SOFTWARE, HAVE THE FIRST 10 LINES SKIPPED <<<<<
-# -------------------------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------------------------------------				
 if_mo_property	like.is.one_of	this_value	and_these_antibiotics	have_these_values	then_change_these_antibiotics	to_value	reference.rule	reference.rule_group	reference.version	note
 order	is	Enterobacterales	AMP	S	AMX	S	Enterobacterales (Order)	Breakpoints	10	
 order	is	Enterobacterales	AMP	I	AMX	I	Enterobacterales (Order)	Breakpoints	10	
@@ -216,20 +216,19 @@ genus_species	is	Aeromonas dhakensis			aminopenicillins, AMC, SAM, FOX	R	Table 1
 genus_species	is	Aeromonas caviae			aminopenicillins, AMC, SAM, FOX	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.2	
 genus_species	is	Aeromonas jandaei			aminopenicillins, AMC, SAM, TIC,  CZO, CEP, LEX, CFR, FOX	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.2	
 genus	one_of	Achromobacter, Acinetobacter, Alcaligenes, Bordetella, Burkholderia, Elizabethkingia, Flavobacterium, Ochrobactrum, Pseudomonas, Stenotrophomonas			PEN, cephalosporins_1st, cephalosporins_2nd, glycopeptides, lipoglycopeptides, FUS, macrolides, lincosamides, streptogramins, RIF, oxazolidinones	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.2	
-fullname	like	^Acinetobacter (baumannii|pittii|nosocomialis)			aminopenicillins, AMC, CRO, CTX, ATM, ETP, TMP, FOS, DOX, TCY	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.2	
-genus	is	Acinetobacter			DOX, TCY	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.2	
-genus_species	is	Achromobacter xylosoxidans 			aminopenicillins, CRO, CTX, ETP	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.2	
-fullname	like	^Burkholderia (ambifaria|anthina|arboris|cepacia|cenocepacia|contaminans|diffusa|dolosa|lata|latens|metallica|multivorans|paludis|pseudomultivorans|pyrrocinia|pseudomultivorans|seminalis|stabilis|stagnalis|territorii|ubonensis|vietnamiensis)			aminopenicillins, AMC, SAM, TIC, TCC, PIP, TZP, CRO, CTX, ATM, ETP, CIP, CHL, aminoglycosides, TMP, FOS, polymyxins	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.2	
-genus_species	is	Elizabethkingia meningoseptica			aminopenicillins, AMC, SAM, TIC, TCC, PIP, CZO, CTX, CRO, CAZ, FEP, ATM, ETP, IPM, MEM, polymyxins	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.2	
-genus_species	is	Ochrobactrum anthropi			aminopenicillins, AMC, SAM, TIC, TCC, PIP, TZP, CZO, CTX, CRO, CAZ, FEP, ATM, ETP	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.2	
-genus_species	is	Pseudomonas aeruginosa			aminopenicillins, AMC, SAM, CTX, CRO, ETP, CHL, TMP, tetracyclines, TGC	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.2	
-genus_species	is	Stenotrophomonas maltophilia			aminopenicillins, AMC, SAM, TIC, PIP, TZP, CRO, CTX, ATM, ETP, IPM, MEM, aminoglycosides, TMP, FOS, DOX, TCY, polymyxins	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.2	
-genus	one_of	Haemophilus, Moraxella, Neisseria, Campylobacter			glycopeptides, lipoglycopeptides, lincosamides, oxazolidinones	R	Table 3: Intrinsic resistance in other gram-negative bacteria	Expert Rules	3.2	
-genus_species	is	Haemophilus influenzae			FUS, streptogramins	R	Table 3: Intrinsic resistance in other gram-negative bacteria	Expert Rules	3.2	
-genus_species	is	Moraxella catarrhalis			TMP	R	Table 3: Intrinsic resistance in other gram-negative bacteria	Expert Rules	3.2	
-genus	is	Neisseria			TMP	R	Table 3: Intrinsic resistance in other gram-negative bacteria	Expert Rules	3.2	
-genus_species	is	Campylobacter fetus			FUS, streptogramins, TMP, NAL	R	Table 3: Intrinsic resistance in other gram-negative bacteria	Expert Rules	3.2	
-fullname	like	^Campylobacter (jejuni|coli)			FUS, streptogramins, TMP	R	Table 3: Intrinsic resistance in other gram-negative bacteria	Expert Rules	3.2	
+fullname	like	^Acinetobacter (baumannii|pittii|nosocomialis)			aminopenicillins, AMC, CRO, CTX, ATM, ETP, TMP, FOS, DOX, TCY	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.2	Additional rules from header added in separate rule (genus is one of…)
+genus	is	Acinetobacter			DOX, TCY	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.2	Additional rules from header added in separate rule (genus is one of…)
+genus_species	is	Achromobacter xylosoxidans 			aminopenicillins, CRO, CTX, ETP	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.2	Additional rules from header added in separate rule (genus is one of…)
+fullname	like	^Burkholderia (ambifaria|anthina|arboris|cepacia|cenocepacia|contaminans|diffusa|dolosa|lata|latens|metallica|multivorans|paludis|pseudomultivorans|pyrrocinia|pseudomultivorans|seminalis|stabilis|stagnalis|territorii|ubonensis|vietnamiensis)			aminopenicillins, AMC, SAM, TIC, TCC, PIP, TZP, CRO, CTX, ATM, ETP, CIP, CHL, aminoglycosides, TMP, FOS, polymyxins	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.2	Additional rules from header added in separate rule (genus is one of…)
+genus_species	is	Elizabethkingia meningoseptica			aminopenicillins, AMC, SAM, TIC, TCC, PIP, CZO, CTX, CRO, CAZ, FEP, ATM, ETP, IPM, MEM, polymyxins	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.2	Additional rules from header added in separate rule (genus is one of…)
+genus_species	is	Ochrobactrum anthropi			aminopenicillins, AMC, SAM, TIC, TCC, PIP, TZP, CZO, CTX, CRO, CAZ, FEP, ATM, ETP	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.2	Additional rules from header added in separate rule (genus is one of…)
+genus_species	is	Pseudomonas aeruginosa			aminopenicillins, AMC, SAM, CTX, CRO, ETP, CHL, KAN, NEO, TMP, tetracyclines, TGC	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.2	Additional rules from header added in separate rule (genus is one of…)
+genus_species	is	Stenotrophomonas maltophilia			aminopenicillins, AMC, SAM, TIC, PIP, TZP, CRO, CTX, ATM, ETP, IPM, MEM, aminoglycosides, TMP, FOS, TCY	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.2	Additional rules from header added in separate rule (genus is one of…)
+genus_species	is	Haemophilus influenzae			FUS, streptogramins, glycopeptides, lipoglycopeptides, lincosamides, oxazolidinones	R	Table 3: Intrinsic resistance in other gram-negative bacteria	Expert Rules	3.2	
+genus_species	is	Moraxella catarrhalis			TMP, glycopeptides, lipoglycopeptides, lincosamides, oxazolidinones	R	Table 3: Intrinsic resistance in other gram-negative bacteria	Expert Rules	3.2	
+genus	is	Neisseria			TMP, glycopeptides, lipoglycopeptides, lincosamides, oxazolidinones	R	Table 3: Intrinsic resistance in other gram-negative bacteria	Expert Rules	3.2	
+genus_species	is	Campylobacter fetus			FUS, streptogramins, TMP, NAL, glycopeptides, lipoglycopeptides, lincosamides, oxazolidinones	R	Table 3: Intrinsic resistance in other gram-negative bacteria	Expert Rules	3.2	
+fullname	like	^Campylobacter (jejuni|coli)			FUS, streptogramins, TMP, glycopeptides, lipoglycopeptides, lincosamides, oxazolidinones	R	Table 3: Intrinsic resistance in other gram-negative bacteria	Expert Rules	3.2	
 gramstain	is	Gram-positive			ATM, TEM, polymyxins, NAL	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.2	
 genus_species	is	Staphylococcus saprophyticus			FUS, CAZ, FOS, NOV	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.2	
 genus_species	is	Staphylococcus cohnii			CAZ, NOV	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.2	
@@ -263,6 +262,7 @@ genus	one_of	Arsenophonus, Biostraticola, Brenneria, Buchnera, Budvicia, Buttiau
 fullname	like	^(Serratia|Providencia|Morganella morganii)			TGC	R	Expert Rules on Enterobacterales	Expert Rules	3.2	
 genus	is	Salmonella			cephalosporins_2nd	R	Expert Rules on Salmonella	Expert Rules	3.2	
 genus	is	Salmonella			aminoglycosides	R	Expert Rules on Salmonella	Expert Rules	3.2	
+genus	is	Salmonella	PEF	R	CIP	R	Expert Rules on Salmonella	Expert Rules	3.2	
 genus_species	is	Staphylococcus aureus	FOX1	R	all_betalactams	R	Expert Rules on Staphylococcus	Expert Rules	3.2	
 genus_species	is	Staphylococcus aureus	FOX1	S	all_betalactams	S	Expert Rules on Staphylococcus	Expert Rules	3.2	
 genus_species	one_of	Staphylococcus aureus, Staphylococcus lugdunensis	PEN	R	AMP, AMX, AZL, BAM, CRB, CRN, EPC, HET, MEC, MEZ, MTM, PIP, PME, PVM, SBC, TAL, TEM, TIC	R	Expert Rules on Staphylococcus	Expert Rules	3.2	all penicillins without beta-lactamse inhibitor
@@ -278,6 +278,7 @@ fullname	like	^Enterococcus (faecalis|faecium)	AMP	R	ureidopenicillins, IPM	R	Ex
 fullname	like	^Enterococcus (faecalis|faecium)	AMX	R	ureidopenicillins, IPM	R	Expert Rules on Enterococcus	Expert Rules	3.2	
 genus	is	Enterococcus	NOR	S	CIP, LVX	S	Expert Rules on Enterococcus	Expert Rules	3.2	
 genus	is	Enterococcus	VAN	S	lipoglycopeptides	S	Expert Rules on Enterococcus	Expert Rules	3.2	
+genus_species	is	Enterococcus faecium			CLI	R	Expert Rules on Enterococcus	Expert Rules	3.2	
 genus_species	one_of	Streptococcus group A, Streptococcus group B, Streptococcus group C, Streptococcus group G	PEN	S	aminopenicillins, cephalosporins, carbapenems	S	Expert Rules on Streptococcus A, B, C and G	Expert Rules	3.2	
 genus_species	one_of	Streptococcus group A, Streptococcus group B, Streptococcus group C, Streptococcus group G	NOR	S	LVX, MFX	S	Expert Rules on Streptococcus A, B, C and G	Expert Rules	3.2	
 genus_species	one_of	Streptococcus group A, Streptococcus group B, Streptococcus group C, Streptococcus group G	NOR	R	LVX, MFX	R	Expert Rules on Streptococcus A, B, C and G	Expert Rules	3.2	

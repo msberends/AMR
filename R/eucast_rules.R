@@ -137,7 +137,7 @@ eucast_rules <- function(x,
                          ...) {
   
   x_deparsed <- deparse(substitute(x))
-  if (!x_deparsed %like% "[a-z]") {
+  if (length(x_deparsed) > 0 || !all(x_deparsed %like% "[a-z]")) {
     x_deparsed <- "your_data"
   }
   

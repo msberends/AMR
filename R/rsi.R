@@ -19,7 +19,7 @@
 # Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
-#' Interpret MIC and disk, or clean raw R/SI data
+#' Interpret MIC and disk values, or clean raw R/SI data
 #'
 #' Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class [`rsi`], which is an ordered factor with levels `S < I < R`. Values that cannot be interpreted will be returned as `NA` with a warning.
 #' @inheritSection lifecycle Stable lifecycle
@@ -339,6 +339,7 @@ as.rsi.mic <- function(x,
                            ab_name(ab_coerced, tolower = TRUE), ")", mo_var_found, 
                            " according to ", font_bold(guideline_coerced), " ... ")),
           appendLF = FALSE)
+  
   result <- exec_as.rsi(method = "mic",
                         x = x,
                         mo = mo_coerced,
@@ -482,7 +483,7 @@ as.rsi.data.frame <- function(x,
     ab <- colnames(x)[i]
     if (length(sel) == 0 || (length(sel) > 0 && ab %in% sel)) {
       ab_coerced <- suppressWarnings(as.ab(ab))
-      if (is.na(ab_coerced) | !ab %in% sel) {
+      if (is.na(ab_coerced) || (length(sel) > 0 & !ab %in% sel)) {
         # not even a valid AB code
         return(FALSE)
       } else {
@@ -494,7 +495,7 @@ as.rsi.data.frame <- function(x,
           message(font_blue(paste0("NOTE: Assuming column `", ab, "` (",
                                    ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
                                    ab_name(ab_coerced, tolower = TRUE), ") contains disk zones.")))
-        } else if (!is.rsi(y)) {
+        } else if (!check & !is.rsi(y)) {
           message(font_blue(paste0("NOTE: Assuming column `", ab, "` (",
                                    ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
                                    ab_name(ab_coerced, tolower = TRUE), ") must be cleaned to valid R/SI values.")))
@@ -581,11 +582,20 @@ exec_as.rsi <- function(method,
   warned <- FALSE
   method_param <- toupper(method)
   
-  mo_genus <- as.mo(mo_genus(mo))
+  genera <- mo_genus(mo)
+  mo_genus <- as.mo(genera)
   mo_family <- as.mo(mo_family(mo))
   mo_order <- as.mo(mo_order(mo))
-  mo_becker <- as.mo(mo, Becker = TRUE)
-  mo_lancefield <- as.mo(mo, Lancefield = TRUE)
+  if (any(genera == "Staphylococcus", na.rm = TRUE)) {
+    mo_becker <- as.mo(mo, Becker = TRUE)
+  } else {
+    mo_becker <- mo
+  }
+  if (any(genera == "Streptococcus", na.rm = TRUE)) {
+    mo_lancefield <- as.mo(mo, Lancefield = TRUE)
+  } else {
+    mo_lancefield <- mo
+  }
   mo_other <- as.mo(rep("UNKNOWN", length(mo)))
   
   guideline_coerced <- get_guideline(guideline)
@@ -781,7 +791,7 @@ summary.rsi <- function(object, ...) {
 
 #' @method plot rsi
 #' @export
-#' @importFrom graphics text axis
+#' @importFrom graphics plot text axis
 #' @rdname plot
 plot.rsi <- function(x,
                      lwd = 2,
@@ -810,12 +820,6 @@ plot.rsi <- function(x,
   
   ymax <- pm_if_else(max(data$s) > 95, 105, 100)
   
-  # get plot() generic; this was moved from the 'graphics' pkg to the 'base' pkg in R 4.0.0
-  if (as.integer(R.Version()$major) >= 4) {
-    plot <- import_fn("plot", "base")
-  } else {
-    plot <- import_fn("plot", "graphics")
-  }
   plot(x = data$x,
        y = data$s,
        lwd = lwd,
@@ -895,4 +899,13 @@ c.rsi <- function(x, ...) {
   y <- unlist(lapply(list(...), as.character))
   x <- as.character(x)
   as.rsi(c(x, y))
+}
+
+#' @method unique rsi
+#' @export
+#' @noRd
+unique.rsi <- function(x, incomparables = FALSE, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
 }

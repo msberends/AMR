@@ -287,3 +287,12 @@ c.mic <- function(x, ...) {
   x <- as.character(x)
   as.mic(c(x, y))
 }
+
+#' @method unique mic
+#' @export
+#' @noRd
+unique.mic <- function(x, incomparables = FALSE, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
+}

@@ -8,7 +8,7 @@
 \alias{as.rsi.mic}
 \alias{as.rsi.disk}
 \alias{as.rsi.data.frame}
-\title{Interpret MIC and disk, or clean raw R/SI data}
+\title{Interpret MIC and disk values, or clean raw R/SI data}
 \usage{
 as.rsi(x, ...)
 

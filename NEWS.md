@@ -1,5 +1,5 @@
-# AMR 1.3.0.9028
-## <small>Last updated: 24 September 2020</small>
+# AMR 1.3.0.9029
+## <small>Last updated: 25 September 2020</small>
 
 Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscipt to. We are those reviewers very grateful for going through our code so thoroughly!
 
@@ -63,6 +63,7 @@ Note: some changes in this version were suggested by anonymous reviewers from th
   * 'Penicillin G' (for intravenous use) is now named 'Benzylpenicillin' (code `PEN`)
   * 'Penicillin V' (for oral use, code `PNV`) was removed, since its actual entry 'Phenoxymethylpenicillin' (code `PHN`) already existed
   * The group name (`antibiotics$group`) of 'Linezolid' (`LNZ`), 'Cycloserine' (`CYC`), 'Tedizolid' (`TZD`) and 'Thiacetazone' (`THA`) is now "Oxazolidinones" instead of "Other antibacterials"
+* Added support for using `unique()` on classes `<rsi>`, `<mic>`, `<disk>`, `<ab>` and `<mo>`
 
 ### Other
 * Removed unnecessary references to the `base` package
