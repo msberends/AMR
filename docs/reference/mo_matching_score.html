@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9030</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9031</span>
       </span>
     </div>
 
@@ -255,27 +255,24 @@
       <th>n</th>
       <td><p>A full taxonomic name, that exists in <code><a href='microorganisms.html'>microorganisms$fullname</a></code></p></td>
     </tr>
-    <tr>
-      <th>uncertainty</th>
-      <td><p>The level of uncertainty set in <code><a href='as.mo.html'>as.mo()</a></code>, see <code>allow_uncertain</code> in that function (here, it defaults to 1, but is automatically determined in <code><a href='as.mo.html'>as.mo()</a></code> based on the number of transformations needed to get to a result)</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="matching-score-for-microorganisms"><a class="anchor" href="#matching-score-for-microorganisms"></a>Matching score for microorganisms</h2>
 
     
 
-<p>With ambiguous user input in <code><a href='as.mo.html'>as.mo()</a></code> and all the <code><a href='mo_property.html'>mo_*</a></code> functions, the returned results are chosen based on their matching score using <code>mo_matching_score()</code>. This matching score \(m\) is calculated as:</p>
-<p>$$m_{(x, n)} = \frac{l_{n} - 0.5 \times \min \begin{cases}l_{n} \\ \operatorname{lev}(x, n)\end{cases}}{l_{n} p k}$$</p>
+<p>With ambiguous user input in <code><a href='as.mo.html'>as.mo()</a></code> and all the <code><a href='mo_property.html'>mo_*</a></code> functions, the returned results are chosen based on their matching score using <code>mo_matching_score()</code>. This matching score \(m\), ranging from 0 to 100%, is calculated as:</p>
+<p>$$m_{(x, n)} = \frac{l_{n} - 0.5 \cdot \min \begin{cases}l_{n} \\ \operatorname{lev}(x, n)\end{cases}}{l_{n} \cdot p_{n} \cdot k_{n}}$$</p>
 <p>where:</p><ul>
 <li><p>\(x\) is the user input;</p></li>
-<li><p>\(n\) is a taxonomic name (genus, species and subspecies);</p></li>
-<li><p>\(l_{n}\) is the length of the taxonomic name;</p></li>
-<li><p>\(\operatorname{lev}\) is the <a href='https://en.wikipedia.org/wiki/Levenshtein_distance'>Levenshtein distance</a> function;</p></li>
-<li><p>\(p\) is the human pathogenic prevalence, categorised into group \(1\), \(2\) and \(3\) (see <em>Details</em> in <code><a href='as.mo.html'>?as.mo</a></code>), meaning that \(p = \{1, 2 , 3\}\);</p></li>
-<li><p>\(k\) is the kingdom index, set as follows: Bacteria = \(1\), Fungi = \(2\), Protozoa = \(3\), Archaea = \(4\), and all others = \(5\), meaning that \(k = \{1, 2 , 3, 4, 5\}\).</p></li>
+<li><p>\(n\) is a taxonomic name (genus, species and subspecies) as found in <code><a href='microorganisms.html'>microorganisms$fullname</a></code>;</p></li>
+<li><p>\(l_{n}\) is the length of \(n\);</p></li>
+<li><p>\(\operatorname{lev}\) is the <a href='https://en.wikipedia.org/wiki/Levenshtein_distance'>Levenshtein distance function</a>;</p></li>
+<li><p>\(p_{n}\) is the human pathogenic prevalence of \(n\), categorised into group \(1\), \(2\) and \(3\) (see <em>Details</em> in <code><a href='as.mo.html'>?as.mo</a></code>), meaning that \(p = \{1, 2 , 3\}\);</p></li>
+<li><p>\(k_{n}\) is the kingdom index of \(n\), set as follows: Bacteria = \(1\), Fungi = \(2\), Protozoa = \(3\), Archaea = \(4\), and all others = \(5\), meaning that \(k = \{1, 2 , 3, 4, 5\}\).</p></li>
 </ul>
 
+<p>This means that the user input <code>x = "E. coli"</code> gets for <em>Escherichia coli</em> a matching score of 68.8% and for <em>Entamoeba coli</em> a matching score of 7.9%.</p>
 <p>All matches are sorted descending on their matching score and for all user input values, the top match will be returned.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

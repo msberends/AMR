@@ -24,20 +24,21 @@
 #' This helper function is used by [as.mo()] to determine the most probable match of taxonomic records, based on user input. 
 #' @param x Any user input value(s)
 #' @param n A full taxonomic name, that exists in [`microorganisms$fullname`][microorganisms]
-#' @param uncertainty The level of uncertainty set in [as.mo()], see `allow_uncertain` in that function (here, it defaults to 1, but is automatically determined in [as.mo()] based on the number of transformations needed to get to a result)
 #' @section Matching score for microorganisms:
-#' With ambiguous user input in [as.mo()] and all the [`mo_*`][mo_property()] functions, the returned results are chosen based on their matching score using [mo_matching_score()]. This matching score \eqn{m} is calculated as:
+#' With ambiguous user input in [as.mo()] and all the [`mo_*`][mo_property()] functions, the returned results are chosen based on their matching score using [mo_matching_score()]. This matching score \eqn{m}, ranging from 0 to 100%, is calculated as:
 #' 
-#' \deqn{m_{(x, n)} = \frac{l_{n} - 0.5 \times \min \begin{cases}l_{n} \\ \operatorname{lev}(x, n)\end{cases}}{l_{n} p k}}{m(x, n) = ( l_n * min(l_n, lev(x, n) ) ) / ( l_n * p * k )}
+#' \deqn{m_{(x, n)} = \frac{l_{n} - 0.5 \cdot \min \begin{cases}l_{n} \\ \operatorname{lev}(x, n)\end{cases}}{l_{n} \cdot p_{n} \cdot k_{n}}}{m(x, n) = ( l_n * min(l_n, lev(x, n) ) ) / ( l_n * p_n * k_n )}
 #' 
 #' where:
 #' 
 #' * \eqn{x} is the user input;
-#' * \eqn{n} is a taxonomic name (genus, species and subspecies);
-#' * \eqn{l_{n}}{l_n} is the length of the taxonomic name;
-#' * \eqn{\operatorname{lev}}{lev} is the [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) function;
-#' * \eqn{p} is the human pathogenic prevalence, categorised into group \eqn{1}, \eqn{2} and \eqn{3} (see *Details* in `?as.mo`), meaning that \eqn{p = \{1, 2 , 3\}}{p = {1, 2, 3}};
-#' * \eqn{k} is the kingdom index, set as follows: Bacteria = \eqn{1}, Fungi = \eqn{2}, Protozoa = \eqn{3}, Archaea = \eqn{4}, and all others = \eqn{5}, meaning that \eqn{k = \{1, 2 , 3, 4, 5\}}{k = {1, 2, 3, 4, 5}}.
+#' * \eqn{n} is a taxonomic name (genus, species and subspecies) as found in [`microorganisms$fullname`][microorganisms];
+#' * \eqn{l_{n}}{l_n} is the length of \eqn{n};
+#' * \eqn{\operatorname{lev}}{lev} is the [Levenshtein distance function](https://en.wikipedia.org/wiki/Levenshtein_distance);
+#' * \eqn{p_{n}}{p_n} is the human pathogenic prevalence of \eqn{n}, categorised into group \eqn{1}, \eqn{2} and \eqn{3} (see *Details* in `?as.mo`), meaning that \eqn{p = \{1, 2 , 3\}}{p = {1, 2, 3}};
+#' * \eqn{k_{n}}{k_n} is the kingdom index of \eqn{n}, set as follows: Bacteria = \eqn{1}, Fungi = \eqn{2}, Protozoa = \eqn{3}, Archaea = \eqn{4}, and all others = \eqn{5}, meaning that \eqn{k = \{1, 2 , 3, 4, 5\}}{k = {1, 2, 3, 4, 5}}.
+#' 
+#' This means that the user input `x = "E. coli"` gets for *Escherichia coli* a matching score of `r percentage(mo_matching_score("E. coli", "Escherichia coli"), 1)` and for *Entamoeba coli* a matching score of `r percentage(mo_matching_score("E. coli", "Entamoeba coli"), 1)`.
 #' 
 #' All matches are sorted descending on their matching score and for all user input values, the top match will be returned.
 #' @export

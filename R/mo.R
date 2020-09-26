@@ -301,7 +301,7 @@ exec_as.mo <- function(x,
                      initial = initial_search,
                      uncertainty = actual_uncertainty,
                      input_actual = actual_input) {
-
+    
     if (!is.null(input_actual)) {
       input <- input_actual
     } else {
@@ -318,7 +318,7 @@ exec_as.mo <- function(x,
       if (NROW(res_df) > 1 & uncertainty != -1) {
         # sort the findings on matching score
         scores <- mo_matching_score(x = input, 
-                                    fullname = res_df[, "fullname", drop = TRUE])
+                                    n = res_df[, "fullname", drop = TRUE])
         res_df <- res_df[order(scores, decreasing = TRUE), , drop = FALSE]
       }
       res <- as.character(res_df[, column, drop = TRUE])
@@ -442,7 +442,7 @@ exec_as.mo <- function(x,
     # we need special treatment for very prevalent full names, they are likely!
     # e.g. as.mo("Staphylococcus aureus")
     x <- MO_lookup[match(tolower(x), MO_lookup$fullname_lower), property, drop = TRUE]
-
+    
   } else if (all(x %in% reference_data_to_use$fullname)) {
     # we need special treatment for very prevalent full names, they are likely!
     # e.g. as.mo("Staphylococcus aureus")
@@ -1544,7 +1544,7 @@ exec_as.mo <- function(x,
     # this will save the uncertain items as attribute, so they can be bound to `uncertainties` in the uncertain_fn() function
     x <- structure(x, uncertainties = uncertainties)
   }
-
+  
   
   if (old_mo_warning == TRUE & property != "mo") {
     warning("The input contained old microorganism IDs from previous versions of this package.\nPlease use `as.mo()` on these old IDs to transform them to the new format.\nSUPPORT FOR THIS WILL BE DROPPED IN A FUTURE VERSION.", call. = FALSE)
@@ -1639,7 +1639,7 @@ freq.mo <- function(x, ...) {
                                                            ")"),
                                   `No. of genera` = pm_n_distinct(mo_genus(x_noNA, language = NULL)),
                                   `No. of species` = pm_n_distinct(paste(mo_genus(x_noNA, language = NULL),
-                                                                      mo_species(x_noNA, language = NULL)))))
+                                                                         mo_species(x_noNA, language = NULL)))))
 }
 
 #' @method print mo
@@ -1773,7 +1773,7 @@ print.mo_uncertainties <- function(x, ...) {
     if (x[i, ]$candidates != "") {
       candidates <- unlist(strsplit(x[i, ]$candidates, ", ", fixed = TRUE))
       scores <- mo_matching_score(x = x[i, ]$input,
-                                  fullname = candidates)
+                                  n = candidates)
       # sort on descending scores
       candidates <- candidates[order(1 - scores)]
       n_candidates <- length(candidates)
@@ -1799,8 +1799,8 @@ print.mo_uncertainties <- function(x, ...) {
                                ifelse(!is.na(x[i, ]$renamed_to), paste(", renamed to", font_italic(x[i, ]$renamed_to)), ""),
                                " (", x[i, ]$mo,
                                ", matching score = ", trimws(percentage(mo_matching_score(x = x[i, ]$input,
-                                                                                fullname = x[i, ]$fullname),
-                                                              digits = 1)),
+                                                                                          n = x[i, ]$fullname),
+                                                                        digits = 1)),
                                ") "),
                         uncertainty_interpretation,
                         candidates),
