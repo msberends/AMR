@@ -54,7 +54,7 @@ test_that("rsi works", {
   expect_identical(as.logical(lapply(example_isolates, is.rsi.eligible)),
                    rep(FALSE, length(example_isolates)))
   
-  library(dplyr)
+  library(dplyr, warn.conflicts = FALSE)
   # 40 rsi columns
   expect_equal(example_isolates %>%
                  mutate_at(vars(PEN:RIF), as.character) %>%

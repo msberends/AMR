@@ -40,7 +40,7 @@ test_that("prediction of rsi works", {
   expect_silent(ggplot_rsi_predict(x))
   expect_error(ggplot_rsi_predict(example_isolates))
 
-  library(dplyr)
+  library(dplyr, warn.conflicts = FALSE)
 
   expect_output(rsi_predict(x = filter(example_isolates, mo == "B_ESCHR_COLI"),
                             model = "binomial",

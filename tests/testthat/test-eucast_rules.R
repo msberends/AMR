@@ -72,7 +72,7 @@ test_that("EUCAST rules work", {
   expect_equal(suppressWarnings(eucast_rules(a, "mo", info = FALSE)), b)
   
   # piperacillin must be R in Enterobacteriaceae when tica is R
-  library(dplyr)
+  library(dplyr, warn.conflicts = FALSE)
   expect_equal(suppressWarnings(
     example_isolates %>%
       mutate(TIC = as.rsi("R"),
@@ -85,7 +85,7 @@ test_that("EUCAST rules work", {
       as.character()),
     "R")
   
-  # Azithromicin and Clarythromycin must be equal to Erythromycin
+  # Azithromycin and Clarythromycin must be equal to Erythromycin
   a <- eucast_rules(data.frame(mo = example_isolates$mo,
                                ERY = example_isolates$ERY,
                                AZM = as.rsi("R"),

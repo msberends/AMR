@@ -4,33 +4,40 @@
 \alias{mo_matching_score}
 \title{Calculate the matching score for microorganisms}
 \usage{
-mo_matching_score(x, fullname, uncertainty = 1)
+mo_matching_score(x, n)
 }
 \arguments{
 \item{x}{Any user input value(s)}
 
-\item{fullname}{A full taxonomic name, that exists in \code{\link[=microorganisms]{microorganisms$fullname}}}
+\item{n}{A full taxonomic name, that exists in \code{\link[=microorganisms]{microorganisms$fullname}}}
 
 \item{uncertainty}{The level of uncertainty set in \code{\link[=as.mo]{as.mo()}}, see \code{allow_uncertain} in that function (here, it defaults to 1, but is automatically determined in \code{\link[=as.mo]{as.mo()}} based on the number of transformations needed to get to a result)}
 }
 \description{
 This helper function is used by \code{\link[=as.mo]{as.mo()}} to determine the most probable match of taxonomic records, based on user input.
 }
-\details{
-The matching score is based on four parameters:
-\enumerate{
-\item A human pathogenic prevalence \eqn{P}, that is categorised into group 1, 2 and 3 (see \code{\link[=as.mo]{as.mo()}});
-\item A kingdom index \eqn{K} is set as follows: Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, and all others = 5;
-\item The level of uncertainty \eqn{U} that is needed to get to a result (1 to 3, see \code{\link[=as.mo]{as.mo()}});
-\item The \href{https://en.wikipedia.org/wiki/Levenshtein_distance}{Levenshtein distance} \eqn{L} is the distance between the user input and all taxonomic full names, with the text length of the user input being the maximum distance. A modified version of the Levenshtein distance \eqn{L'} based on the text length of the full name \eqn{F} is calculated as:
+\section{Matching score for microorganisms}{
+
+With ambiguous user input in \code{\link[=as.mo]{as.mo()}} and all the \code{\link[=mo_property]{mo_*}} functions, the returned results are chosen based on their matching score using \code{\link[=mo_matching_score]{mo_matching_score()}}. This matching score \eqn{m} is calculated as:
+
+\deqn{m_{(x, n)} = \frac{l_{n} - 0.5 \times \min \begin{cases}l_{n} \\ \operatorname{lev}(x, n)\end{cases}}{l_{n} p k}}{m(x, n) = ( l_n * min(l_n, lev(x, n) ) ) / ( l_n * p * k )}
+
+where:
+\itemize{
+\item \eqn{x} is the user input;
+\item \eqn{n} is a taxonomic name (genus, species and subspecies);
+\item \eqn{l_{n}}{l_n} is the length of the taxonomic name;
+\item \eqn{\operatorname{lev}}{lev} is the \href{https://en.wikipedia.org/wiki/Levenshtein_distance}{Levenshtein distance} function;
+\item \eqn{p} is the human pathogenic prevalence, categorised into group \eqn{1}, \eqn{2} and \eqn{3} (see \emph{Details} in \code{?as.mo}), meaning that \eqn{p = \{1, 2 , 3\}}{p = {1, 2, 3}};
+\item \eqn{k} is the kingdom index, set as follows: Bacteria = \eqn{1}, Fungi = \eqn{2}, Protozoa = \eqn{3}, Archaea = \eqn{4}, and all others = \eqn{5}, meaning that \eqn{k = \{1, 2 , 3, 4, 5\}}{k = {1, 2, 3, 4, 5}}.
 }
 
-\deqn{L' = 1 - \frac{0.5L}{F}}{L' = 1 - ((0.5 * L) / F)}
-
-The final matching score \eqn{M} is calculated as:
-\deqn{M = L' \times \frac{1}{P K U} = \frac{F - 0.5L}{F P K U}}{M = L' * (1 / (P * K * U)) = (F - 0.5L) / (F * P * K * U)}
+All matches are sorted descending on their matching score and for all user input values, the top match will be returned.
 }
+
 \examples{
 as.mo("E. coli")
 mo_uncertainties()
+
+mo_matching_score("E. coli", "Escherichia coli")
 }

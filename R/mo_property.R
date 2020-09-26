@@ -42,6 +42,7 @@
 #' All output will be [translate]d where possible.
 #'
 #' The function [mo_url()] will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
+#' @inheritSection mo_matching_score Matching score for microorganisms
 #' @inheritSection catalogue_of_life Catalogue of Life
 #' @inheritSection as.mo Source
 #' @rdname mo_property

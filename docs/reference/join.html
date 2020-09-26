@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9026</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9029</span>
       </span>
     </div>
 
@@ -263,7 +263,7 @@
     </tr>
     <tr>
       <th>by</th>
-      <td><p>a variable to join by - if left empty will search for a column with class <code><a href='as.mo.html'>mo</a></code> (created with <code><a href='as.mo.html'>as.mo()</a></code>) or will be <code>"mo"</code> if that column name exists in <code>x</code>, could otherwise be a column name of <code>x</code> with values that exist in <code>microorganisms$mo</code> (like <code>by = "bacteria_id"</code>), or another column in <a href='microorganisms.html'>microorganisms</a> (but then it should be named, like <code>by = c("my_genus_species" = "fullname")</code>)</p></td>
+      <td><p>a variable to join by - if left empty will search for a column with class <code><a href='as.mo.html'>mo</a></code> (created with <code><a href='as.mo.html'>as.mo()</a></code>) or will be <code>"mo"</code> if that column name exists in <code>x</code>, could otherwise be a column name of <code>x</code> with values that exist in <code>microorganisms$mo</code> (like <code>by = "bacteria_id"</code>), or another column in <a href='microorganisms.html'>microorganisms</a> (but then it should be named, like <code>by = c("bacteria_id" = "fullname")</code>)</p></td>
     </tr>
     <tr>
       <th>suffix</th>
@@ -278,7 +278,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><strong>Note:</strong> As opposed to the <code>join()</code> functions of <code>dplyr</code>, <a href='https://rdrr.io/r/base/character.html'>character</a> vectors are supported and at default existing columns will get a suffix <code>"2"</code> and the newly joined columns will not get a suffix.</p>
-<p>These functions rely on <code><a href='https://rdrr.io/r/base/merge.html'>merge()</a></code>, a base R function to do joins.</p>
+<p>If the <code>dplyr</code> package is installed, their join functions will be used. Otherwise, the much slower <code><a href='https://rdrr.io/r/base/merge.html'>merge()</a></code> function from base R will be used.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
 
     

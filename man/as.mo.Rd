@@ -125,24 +125,6 @@ Group 2 consists of all microorganisms where the taxonomic phylum is Proteobacte
 
 Group 3 (least prevalent microorganisms) consists of all other microorganisms. This group contains microorganisms most probably not found in humans.
 }
-
-\subsection{Background on matching scores}{
-
-With ambiguous user input, the returned results are chosen based on their matching score using \code{\link[=mo_matching_score]{mo_matching_score()}}. This matching score is based on four parameters:
-\enumerate{
-\item The prevalence \eqn{P} is categorised into group 1, 2 and 3 as stated above;
-\item A kingdom index \eqn{K} is set as follows: Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, and all others = 5;
-\item The level of uncertainty \eqn{U} needed to get to the result, as stated above (1 to 3);
-\item The \href{https://en.wikipedia.org/wiki/Levenshtein_distance}{Levenshtein distance} \eqn{L} is the distance between the user input and all taxonomic full names, with the text length of the user input being the maximum distance. A modified version of the Levenshtein distance \eqn{L'} based on the text length of the full name \eqn{F} is calculated as:
-}
-
-\deqn{L' = 1 - \frac{0.5L}{F}}{L' = 1 - ((0.5 * L) / F)}
-
-The final matching score \eqn{M} is calculated as:
-\deqn{M = L' \times \frac{1}{P K U} = \frac{F - 0.5L}{F P K U}}{M = L' * (1 / (P * K * U)) = (F - 0.5L) / (F * P * K * U)}
-
-All matches are sorted descending on their matching score and for all user input values, the top match will be returned.
-}
 }
 \section{Source}{
 
@@ -160,6 +142,25 @@ All matches are sorted descending on their matching score and for all user input
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
 
 If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
+}
+
+\section{Matching score for microorganisms}{
+
+With ambiguous user input in \code{\link[=as.mo]{as.mo()}} and all the \code{\link[=mo_property]{mo_*}} functions, the returned results are chosen based on their matching score using \code{\link[=mo_matching_score]{mo_matching_score()}}. This matching score \eqn{m} is calculated as:
+
+\deqn{m_{(x, n)} = \frac{l_{n} - 0.5 \times \min \begin{cases}l_{n} \\ \operatorname{lev}(x, n)\end{cases}}{l_{n} p k}}{m(x, n) = ( l_n * min(l_n, lev(x, n) ) ) / ( l_n * p * k )}
+
+where:
+\itemize{
+\item \eqn{x} is the user input;
+\item \eqn{n} is a taxonomic name (genus, species and subspecies);
+\item \eqn{l_{n}}{l_n} is the length of the taxonomic name;
+\item \eqn{\operatorname{lev}}{lev} is the \href{https://en.wikipedia.org/wiki/Levenshtein_distance}{Levenshtein distance} function;
+\item \eqn{p} is the human pathogenic prevalence, categorised into group \eqn{1}, \eqn{2} and \eqn{3} (see \emph{Details} in \code{?as.mo}), meaning that \eqn{p = \{1, 2 , 3\}}{p = {1, 2, 3}};
+\item \eqn{k} is the kingdom index, set as follows: Bacteria = \eqn{1}, Fungi = \eqn{2}, Protozoa = \eqn{3}, Archaea = \eqn{4}, and all others = \eqn{5}, meaning that \eqn{k = \{1, 2 , 3, 4, 5\}}{k = {1, 2, 3, 4, 5}}.
+}
+
+All matches are sorted descending on their matching score and for all user input values, the top match will be returned.
 }
 
 \section{Catalogue of Life}{

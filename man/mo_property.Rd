@@ -124,6 +124,25 @@ The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stabl
 If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
+\section{Matching score for microorganisms}{
+
+With ambiguous user input in \code{\link[=as.mo]{as.mo()}} and all the \code{\link[=mo_property]{mo_*}} functions, the returned results are chosen based on their matching score using \code{\link[=mo_matching_score]{mo_matching_score()}}. This matching score \eqn{m} is calculated as:
+
+\deqn{m_{(x, n)} = \frac{l_{n} - 0.5 \times \min \begin{cases}l_{n} \\ \operatorname{lev}(x, n)\end{cases}}{l_{n} p k}}{m(x, n) = ( l_n * min(l_n, lev(x, n) ) ) / ( l_n * p * k )}
+
+where:
+\itemize{
+\item \eqn{x} is the user input;
+\item \eqn{n} is a taxonomic name (genus, species and subspecies);
+\item \eqn{l_{n}}{l_n} is the length of the taxonomic name;
+\item \eqn{\operatorname{lev}}{lev} is the \href{https://en.wikipedia.org/wiki/Levenshtein_distance}{Levenshtein distance} function;
+\item \eqn{p} is the human pathogenic prevalence, categorised into group \eqn{1}, \eqn{2} and \eqn{3} (see \emph{Details} in \code{?as.mo}), meaning that \eqn{p = \{1, 2 , 3\}}{p = {1, 2, 3}};
+\item \eqn{k} is the kingdom index, set as follows: Bacteria = \eqn{1}, Fungi = \eqn{2}, Protozoa = \eqn{3}, Archaea = \eqn{4}, and all others = \eqn{5}, meaning that \eqn{k = \{1, 2 , 3, 4, 5\}}{k = {1, 2, 3, 4, 5}}.
+}
+
+All matches are sorted descending on their matching score and for all user input values, the top match will be returned.
+}
+
 \section{Catalogue of Life}{
 
 \if{html}{\figure{logo_col.png}{options: height=40px style=margin-bottom:5px} \cr}

@@ -101,20 +101,7 @@
 #' 
 #' Group 3 (least prevalent microorganisms) consists of all other microorganisms. This group contains microorganisms most probably not found in humans.
 #' 
-#' ## Background on matching scores
-#' With ambiguous user input, the returned results are chosen based on their matching score using [mo_matching_score()]. This matching score is based on four parameters:
-#' 
-#' 1. The prevalence \eqn{P} is categorised into group 1, 2 and 3 as stated above;
-#' 2. A kingdom index \eqn{K} is set as follows: Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, and all others = 5;
-#' 3. The level of uncertainty \eqn{U} needed to get to the result, as stated above (1 to 3);
-#' 4. The [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) \eqn{L} is the distance between the user input and all taxonomic full names, with the text length of the user input being the maximum distance. A modified version of the Levenshtein distance \eqn{L'} based on the text length of the full name \eqn{F} is calculated as:
-#' 
-#' \deqn{L' = 1 - \frac{0.5L}{F}}{L' = 1 - ((0.5 * L) / F)}
-#'   
-#' The final matching score \eqn{M} is calculated as:
-#' \deqn{M = L' \times \frac{1}{P K U} = \frac{F - 0.5L}{F P K U}}{M = L' * (1 / (P * K * U)) = (F - 0.5L) / (F * P * K * U)}
-#' 
-#' All matches are sorted descending on their matching score and for all user input values, the top match will be returned.
+#' @inheritSection mo_matching_score Matching score for microorganisms
 #' @inheritSection catalogue_of_life Catalogue of Life
 #  (source as a section here, so it can be inherited by other man pages:)
 #' @section Source:
@@ -331,8 +318,7 @@ exec_as.mo <- function(x,
       if (NROW(res_df) > 1 & uncertainty != -1) {
         # sort the findings on matching score
         scores <- mo_matching_score(x = input, 
-                                    fullname = res_df[, "fullname", drop = TRUE],
-                                    uncertainty = uncertainty)
+                                    fullname = res_df[, "fullname", drop = TRUE])
         res_df <- res_df[order(scores, decreasing = TRUE), , drop = FALSE]
       }
       res <- as.character(res_df[, column, drop = TRUE])
@@ -1779,7 +1765,7 @@ print.mo_uncertainties <- function(x, ...) {
   if (NROW(x) == 0) {
     return(NULL)
   }
-  cat(font_blue(strwrap(c("Matching scores are based on human pathogenic prevalence and the resemblance between the input and the full taxonomic name. Furthermore, an indication is given about the probability of the match - the more transformations are needed for coercion, the more improbable the result.")), collapse = "\n"))
+  cat(font_blue(strwrap(c("Matching scores are based on human pathogenic prevalence and the resemblance between the input and the full taxonomic name. Furthermore, an indication is given about the certainty of the match - the more transformations are needed for coercion, the less certain the result.")), collapse = "\n"))
   cat("\n")
   
   msg <- ""
@@ -1787,8 +1773,7 @@ print.mo_uncertainties <- function(x, ...) {
     if (x[i, ]$candidates != "") {
       candidates <- unlist(strsplit(x[i, ]$candidates, ", ", fixed = TRUE))
       scores <- mo_matching_score(x = x[i, ]$input,
-                                  fullname = candidates,
-                                  uncertainty = x[i, ]$uncertainty)
+                                  fullname = candidates)
       # sort on descending scores
       candidates <- candidates[order(1 - scores)]
       n_candidates <- length(candidates)
@@ -1802,11 +1787,11 @@ print.mo_uncertainties <- function(x, ...) {
       candidates <- ""
     }
     if (x[i, ]$uncertainty == 1) {
-      uncertainty_interpretation <- font_green("* MOST PROBABLE *")
+      uncertainty_interpretation <- font_green("* very certain *")
     } else if (x[i, ]$uncertainty == 1) {
-      uncertainty_interpretation <- font_yellow("* PROBABLE *")
+      uncertainty_interpretation <- font_yellow("* certain *")
     } else {
-      uncertainty_interpretation <- font_red("* IMPROBABLE *")
+      uncertainty_interpretation <- font_red("* not certain *")
     }
     msg <- paste(msg,
                  paste0('"', x[i, ]$input, '" -> ',
@@ -1814,8 +1799,7 @@ print.mo_uncertainties <- function(x, ...) {
                                ifelse(!is.na(x[i, ]$renamed_to), paste(", renamed to", font_italic(x[i, ]$renamed_to)), ""),
                                " (", x[i, ]$mo,
                                ", matching score = ", trimws(percentage(mo_matching_score(x = x[i, ]$input,
-                                                                                fullname = x[i, ]$fullname,
-                                                                                uncertainty = x[i, ]$uncertainty),
+                                                                                fullname = x[i, ]$fullname),
                                                               digits = 1)),
                                ") "),
                         uncertainty_interpretation,

@@ -48,18 +48,6 @@ pm_left_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
   rownames(merged) <- NULL
   merged
 }
-# pm_filter_join_worker <- function(x, y, by = NULL, type = c("anti", "semi")) {
-#   type <- match.arg(type, choices = c("anti", "semi"), several.ok = FALSE)
-#   if (is.null(by)) {
-#     by <- intersect(names(x), names(y))
-#     join_message(by)
-#   }
-#   rows <- interaction(x[, by]) %in% interaction(y[, by])
-#   if (type == "anti") rows <- !rows
-#   res <- x[rows, , drop = FALSE]
-#   rownames(res) <- NULL
-#   res
-# }
 
 quick_case_when <- function(...) {
   vectors <- list(...)

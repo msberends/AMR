@@ -26,7 +26,7 @@ anti_join_microorganisms(x, by = NULL, ...)
 \arguments{
 \item{x}{existing table to join, or character vector}
 
-\item{by}{a variable to join by - if left empty will search for a column with class \code{\link{mo}} (created with \code{\link[=as.mo]{as.mo()}}) or will be \code{"mo"} if that column name exists in \code{x}, could otherwise be a column name of \code{x} with values that exist in \code{microorganisms$mo} (like \code{by = "bacteria_id"}), or another column in \link{microorganisms} (but then it should be named, like \code{by = c("my_genus_species" = "fullname")})}
+\item{by}{a variable to join by - if left empty will search for a column with class \code{\link{mo}} (created with \code{\link[=as.mo]{as.mo()}}) or will be \code{"mo"} if that column name exists in \code{x}, could otherwise be a column name of \code{x} with values that exist in \code{microorganisms$mo} (like \code{by = "bacteria_id"}), or another column in \link{microorganisms} (but then it should be named, like \code{by = c("bacteria_id" = "fullname")})}
 
 \item{suffix}{if there are non-joined duplicate variables in \code{x} and \code{y}, these suffixes will be added to the output to disambiguate them. Should be a character vector of length 2.}
 
@@ -38,7 +38,7 @@ Join the data set \link{microorganisms} easily to an existing table or character
 \details{
 \strong{Note:} As opposed to the \code{join()} functions of \code{dplyr}, \link{character} vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix.
 
-These functions rely on \code{\link[=merge]{merge()}}, a base R function to do joins.
+If the \code{dplyr} package is installed, their join functions will be used. Otherwise, the much slower \code{\link[=merge]{merge()}} function from base R will be used.
 }
 \section{Stable lifecycle}{
 

@@ -37,7 +37,7 @@ test_that("counts work", {
   expect_equal(suppressWarnings(count_S(example_isolates$AMX)) + count_I(example_isolates$AMX),
                count_SI(example_isolates$AMX))
   
-  library(dplyr)
+  library(dplyr, warn.conflicts = FALSE)
   expect_equal(example_isolates %>% count_susceptible(AMC), 1433)
   expect_equal(example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = TRUE), 1687)
   expect_equal(example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = FALSE), 1764)

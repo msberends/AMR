@@ -25,7 +25,7 @@ test_that("as.mo works", {
   
   skip_on_cran()
   
-  library(dplyr)
+  library(dplyr, warn.conflicts = FALSE)
  
   MOs <- microorganisms %>% filter(!is.na(mo), nchar(mo) > 3)
   expect_identical(as.character(MOs$mo), as.character(as.mo(MOs$mo)))
