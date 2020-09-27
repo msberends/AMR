@@ -151,9 +151,10 @@ rsi_calc <- function(...,
       data_vars <- paste(" for", data_vars)
     }
     warning("Introducing NA: only ", denominator, " results available", data_vars, " (`minimum` = ", minimum, ").", call. = FALSE)
-    fraction <- NA
+    fraction <- NA_real_
   } else {
     fraction <- numerator / denominator
+    fraction[is.nan(fraction)] <- NA_real_
   }
   
   if (as_percent == TRUE) {

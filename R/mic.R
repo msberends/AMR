@@ -296,3 +296,17 @@ unique.mic <- function(x, incomparables = FALSE, ...) {
   attributes(y) <- attributes(x)
   y
 }
+
+# will be exported using s3_register() in R/zzz.R
+get_skimmers.mic <- function(column) {
+  sfl <- import_fn("sfl", "skimr", error_on_fail = FALSE)
+  inline_hist <- import_fn("inline_hist", "skimr", error_on_fail = FALSE)
+  sfl(
+    skim_type = "mic",
+    min = ~as.character(sort(na.omit(.))[1]),
+    max = ~as.character(sort(stats::na.omit(.))[length(stats::na.omit(.))]),
+    median = ~as.character(stats::na.omit(.)[as.double(stats::na.omit(.)) == median(as.double(stats::na.omit(.)))])[1],
+    n_unique = n_unique,
+    hist_log2 = ~inline_hist(log2(as.double(stats::na.omit(.))))
+  )
+}

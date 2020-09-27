@@ -49,9 +49,14 @@
   s3_register("tibble::type_sum", "mic")
   s3_register("pillar::pillar_shaft", "disk")
   s3_register("tibble::type_sum", "disk")
-  # support for frequency tables
+  # support for frequency tables from the cleaner package
   s3_register("cleaner::freq", "mo")
   s3_register("cleaner::freq", "rsi")
+  # support from skim from the skimr package
+  s3_register("skimr::get_skimmers", "mo")
+  s3_register("skimr::get_skimmers", "rsi")
+  s3_register("skimr::get_skimmers", "mic")
+  s3_register("skimr::get_skimmers", "disk")
 }
 
 .onAttach <- function(...) {

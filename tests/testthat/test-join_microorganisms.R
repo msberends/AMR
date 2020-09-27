@@ -45,7 +45,6 @@ test_that("joins work", {
   expect_true(nrow(unjoined) < nrow(right))
   expect_true(nrow(unjoined) < nrow(full))
 
-
   expect_equal(nrow(inner_join_microorganisms("B_ESCHR_COLI")), 1)
   expect_equal(nrow(inner_join_microorganisms("B_ESCHR_COLI", by = c("mo" = "mo"))), 1)
 

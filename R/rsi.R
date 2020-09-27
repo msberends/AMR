@@ -743,6 +743,43 @@ freq.rsi <- function(x, ...) {
   }
 }
 
+
+# will be exported using s3_register() in R/zzz.R
+get_skimmers.rsi <- function(column) {
+  # a bit of a crazy hack to get the variable name
+  name_call <- function(.data, name = deparse(substitute(column))) {
+    vars <- tryCatch(eval(parse(text = ".data$skim_variable"), envir = sys.frame(2)), 
+                     error = function(e) NULL)
+    calls <- sys.calls()
+    i <- tryCatch(attributes(calls[[length(calls)]])$position, 
+                  error = function(e) NULL)
+    if (is.null(vars) | is.null(i)) {
+      NA_character_
+    } else{
+      lengths <- sapply(vars, length)
+      lengths <-  sum(lengths[!names(lengths) == "rsi"])
+      var <- vars$rsi[i - lengths]
+      if (var == "data") {
+        NA_character_
+      } else{
+        ab_name(var)
+      }
+    }
+  }
+  
+  sfl <- import_fn("sfl", "skimr", error_on_fail = FALSE)
+  sfl(
+    skim_type = "rsi",
+    name = name_call,
+    count_R = count_R,
+    count_S = count_susceptible,
+    count_I = count_I,
+    prop_R = ~proportion_R(., minimum = 0),
+    prop_S = ~susceptibility(., minimum = 0),
+    prop_I = ~proportion_I(., minimum = 0)
+  )
+}
+
 #' @method print rsi
 #' @export
 #' @noRd

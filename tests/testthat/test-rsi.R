@@ -28,7 +28,6 @@ test_that("rsi works", {
   expect_true(as.rsi("I") < as.rsi("R"))
   expect_true(is.rsi(as.rsi("S")))
   
-  
   x <- example_isolates$AMX
   expect_s3_class(x[1], "rsi")
   expect_s3_class(x[[1]], "rsi")
@@ -69,6 +68,14 @@ test_that("rsi works", {
   expect_error(as.rsi.disk(as.disk(16)))
   
   expect_error(get_guideline("this one does not exist"))
+  
+  expect_s3_class(example_isolates %>%
+                    mutate(m = as.mic(2),
+                           d = as.disk(20)) %>% 
+                    skimr::skim(),
+                  "data.frame")
+  expect_s3_class(skimr::skim(example_isolates),
+                  "data.frame")
 
 })
 

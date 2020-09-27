@@ -1637,9 +1637,22 @@ freq.mo <- function(x, ...) {
                                                                   decimal.mark = "."),
                                                            " (", percentage(sum(grams == "Gram-positive", na.rm = TRUE) / length(grams), digits = digits),
                                                            ")"),
-                                  `No. of genera` = pm_n_distinct(mo_genus(x_noNA, language = NULL)),
-                                  `No. of species` = pm_n_distinct(paste(mo_genus(x_noNA, language = NULL),
+                                  `Nr. of genera` = pm_n_distinct(mo_genus(x_noNA, language = NULL)),
+                                  `Nr. of species` = pm_n_distinct(paste(mo_genus(x_noNA, language = NULL),
                                                                          mo_species(x_noNA, language = NULL)))))
+}
+
+# will be exported using s3_register() in R/zzz.R
+get_skimmers.mo <- function(column) {
+  sfl <- import_fn("sfl", "skimr", error_on_fail = FALSE)
+  sfl(
+    skim_type = "mo",
+    unique_total = n_unique,
+    gram_negative = ~sum(mo_gramstain(stats::na.omit(.), language = NULL) == "Gram-negative", na.rm = TRUE),
+    gram_positive = ~sum(mo_gramstain(stats::na.omit(.), language = NULL) == "Gram-positive", na.rm = TRUE),
+    top_genus = ~names(sort(-table(mo_genus(stats::na.omit(.), language = NULL))))[1L],
+    top_species = ~names(sort(-table(mo_name(stats::na.omit(.), language = NULL))))[1L]
+  )
 }
 
 #' @method print mo

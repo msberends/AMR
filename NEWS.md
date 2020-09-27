@@ -1,5 +1,5 @@
-# AMR 1.3.0.9031
-## <small>Last updated: 26 September 2020</small>
+# AMR 1.3.0.9032
+## <small>Last updated: 28 September 2020</small>
 
 Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscipt to. We are those reviewers very grateful for going through our code so thoroughly!
 
@@ -18,6 +18,7 @@ Note: some changes in this version were suggested by anonymous reviewers from th
   #> [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"   
   ```
 * Support for veterinary ATC codes
+* Support for skimming classes `<rsi>`, `<mic>`, `<disk>` and `<mo>` with the `skimr` package 
 
 ### Changed
 * Although advertised that this package should work under R 3.0.0, we still had a dependency on R 3.6.0. This is fixed, meaning that our package should now work under R 3.0.0.

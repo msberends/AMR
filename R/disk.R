@@ -186,3 +186,17 @@ unique.disk <- function(x, incomparables = FALSE, ...) {
   attributes(y) <- attributes(x)
   y
 }
+
+# will be exported using s3_register() in R/zzz.R
+get_skimmers.disk <- function(column) {
+  sfl <- import_fn("sfl", "skimr", error_on_fail = FALSE)
+  inline_hist <- import_fn("inline_hist", "skimr", error_on_fail = FALSE)
+  sfl(
+    skim_type = "disk",
+    smallest = ~min(as.double(.), na.rm = TRUE),
+    largest = ~max(as.double(.), na.rm = TRUE),
+    median = ~stats::median(as.double(.), na.rm = TRUE),
+    n_unique = n_unique,
+    hist = ~inline_hist(stats::na.omit(as.double(.)))
+  )
+}
