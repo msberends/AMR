@@ -93,11 +93,11 @@ test_that("proportions works", {
 
   # check too low amount of isolates
   expect_identical(suppressWarnings(proportion_R(example_isolates$AMX, minimum = nrow(example_isolates) + 1)),
-                   NA)
+                   NA_real_)
   expect_identical(suppressWarnings(proportion_I(example_isolates$AMX, minimum = nrow(example_isolates) + 1)),
-                   NA)
+                   NA_real_)
   expect_identical(suppressWarnings(proportion_S(example_isolates$AMX, minimum = nrow(example_isolates) + 1)),
-                   NA)
+                   NA_real_)
 
   # warning for speed loss
   expect_warning(proportion_R(as.character(example_isolates$GEN)))

@@ -193,10 +193,10 @@ get_skimmers.disk <- function(column) {
   inline_hist <- import_fn("inline_hist", "skimr", error_on_fail = FALSE)
   sfl(
     skim_type = "disk",
-    smallest = ~min(as.double(.), na.rm = TRUE),
-    largest = ~max(as.double(.), na.rm = TRUE),
+    min = ~min(as.double(.), na.rm = TRUE),
+    max = ~max(as.double(.), na.rm = TRUE),
     median = ~stats::median(as.double(.), na.rm = TRUE),
-    n_unique = n_unique,
+    n_unique = ~pm_n_distinct(., na.rm = TRUE),
     hist = ~inline_hist(stats::na.omit(as.double(.)))
   )
 }

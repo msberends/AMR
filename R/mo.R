@@ -1647,7 +1647,7 @@ get_skimmers.mo <- function(column) {
   sfl <- import_fn("sfl", "skimr", error_on_fail = FALSE)
   sfl(
     skim_type = "mo",
-    unique_total = n_unique,
+    unique_total = ~pm_n_distinct(., na.rm = TRUE),
     gram_negative = ~sum(mo_gramstain(stats::na.omit(.), language = NULL) == "Gram-negative", na.rm = TRUE),
     gram_positive = ~sum(mo_gramstain(stats::na.omit(.), language = NULL) == "Gram-positive", na.rm = TRUE),
     top_genus = ~names(sort(-table(mo_genus(stats::na.omit(.), language = NULL))))[1L],
@@ -1778,20 +1778,20 @@ print.mo_uncertainties <- function(x, ...) {
   if (NROW(x) == 0) {
     return(NULL)
   }
-  cat(font_blue(strwrap(c("Matching scores are based on human pathogenic prevalence and the resemblance between the input and the full taxonomic name. Furthermore, an indication is given about the certainty of the match - the more transformations are needed for coercion, the less certain the result.")), collapse = "\n"))
+  cat(font_blue(strwrap(c("Matching scores are based on human pathogenic prevalence and the resemblance between the input and the full taxonomic name. Please see ?mo_matching_score.")), collapse = "\n"))
   cat("\n")
   
   msg <- ""
   for (i in seq_len(nrow(x))) {
     if (x[i, ]$candidates != "") {
       candidates <- unlist(strsplit(x[i, ]$candidates, ", ", fixed = TRUE))
-      scores <- mo_matching_score(x = x[i, ]$input,
-                                  n = candidates)
+      scores <- mo_matching_score(x = x[i, ]$input, n = candidates)
       # sort on descending scores
       candidates <- candidates[order(1 - scores)]
+      scores_formatted <- trimws(formatC(round(scores, 3), format = "f", digits = 3))
       n_candidates <- length(candidates)
       candidates <- paste0(font_italic(candidates, collapse = NULL), 
-                           " (", trimws(percentage(scores[order(1 - scores)], digits = 1)), ")")
+                           " (", scores_formatted[order(1 - scores)], ")")
       candidates <- paste(candidates, collapse = ", ")
       # align with input after arrow
       candidates <- paste0("\n", strrep(" ", nchar(x[i, ]$input) + 6), 
@@ -1799,23 +1799,17 @@ print.mo_uncertainties <- function(x, ...) {
     } else {
       candidates <- ""
     }
-    if (x[i, ]$uncertainty == 1) {
-      uncertainty_interpretation <- font_green("* very certain *")
-    } else if (x[i, ]$uncertainty == 1) {
-      uncertainty_interpretation <- font_yellow("* certain *")
-    } else {
-      uncertainty_interpretation <- font_red("* not certain *")
-    }
+    score <- trimws(formatC(round(mo_matching_score(x = x[i, ]$input,
+                                                    n = x[i, ]$fullname),
+                                  3),
+                            format = "f", digits = 3))
     msg <- paste(msg,
                  paste0('"', x[i, ]$input, '" -> ',
                         paste0(font_bold(font_italic(x[i, ]$fullname)),
                                ifelse(!is.na(x[i, ]$renamed_to), paste(", renamed to", font_italic(x[i, ]$renamed_to)), ""),
                                " (", x[i, ]$mo,
-                               ", matching score = ", trimws(percentage(mo_matching_score(x = x[i, ]$input,
-                                                                                          n = x[i, ]$fullname),
-                                                                        digits = 1)),
+                               ", matching score = ", score,
                                ") "),
-                        uncertainty_interpretation,
                         candidates),
                  sep = "\n")
   }

@@ -25,7 +25,7 @@
 #' @param x Any user input value(s)
 #' @param n A full taxonomic name, that exists in [`microorganisms$fullname`][microorganisms]
 #' @section Matching score for microorganisms:
-#' With ambiguous user input in [as.mo()] and all the [`mo_*`][mo_property()] functions, the returned results are chosen based on their matching score using [mo_matching_score()]. This matching score \eqn{m}, ranging from 0 to 100%, is calculated as:
+#' With ambiguous user input in [as.mo()] and all the [`mo_*`][mo_property()] functions, the returned results are chosen based on their matching score using [mo_matching_score()]. This matching score \eqn{m}, is calculated as:
 #' 
 #' \deqn{m_{(x, n)} = \frac{l_{n} - 0.5 \cdot \min \begin{cases}l_{n} \\ \operatorname{lev}(x, n)\end{cases}}{l_{n} \cdot p_{n} \cdot k_{n}}}{m(x, n) = ( l_n * min(l_n, lev(x, n) ) ) / ( l_n * p_n * k_n )}
 #' 
@@ -66,7 +66,7 @@ mo_matching_score <- function(x, n) {
   var_F <- nchar(n)
   # L = modified Levenshtein distance
   var_L <- levenshtein
-  # P = Prevalence (1 to 3)
+  # P = prevalence (1 to 3), see ?as.mo
   var_P <- MO_lookup[match(n, MO_lookup$fullname), "prevalence", drop = TRUE]
   # K = kingdom index (Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5)
   var_K <- MO_lookup[match(n, MO_lookup$fullname), "kingdom_index", drop = TRUE]

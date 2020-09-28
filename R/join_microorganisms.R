@@ -172,11 +172,11 @@ semi_join_microorganisms <- function(x, by = NULL, ...) {
   dplyr_semi <- import_fn("semi_join", "dplyr", error_on_fail = FALSE)
   if (!is.null(dplyr_semi)) {
     join <- suppressWarnings(
-      dplyr_semi(x = x, y = microorganisms, by = by,...)
+      dplyr_semi(x = x, y = microorganisms, by = by, ...)
     )
   } else {
     join <- suppressWarnings(
-      pm_semi_join(x = x, y = microorganisms, by = by,...)
+      pm_semi_join(x = x, y = microorganisms, by = by, ...)
     )
   }
   class(join) <- x_class
@@ -196,11 +196,11 @@ anti_join_microorganisms <- function(x, by = NULL, ...) {
   dplyr_anti <- import_fn("anti_join", "dplyr", error_on_fail = FALSE)
   if (!is.null(dplyr_anti)) {
     join <- suppressWarnings(
-      dplyr_anti(x = x, y = microorganisms, by = by,...)
+      dplyr_anti(x = x, y = microorganisms, by = by, ...)
     )
   } else {
     join <- suppressWarnings(
-      pm_anti_join(x = x, y = microorganisms, by = by,...)
+      pm_anti_join(x = x, y = microorganisms, by = by, ...)
     )
   }
   class(join) <- x_class

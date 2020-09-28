@@ -306,7 +306,7 @@ get_skimmers.mic <- function(column) {
     min = ~as.character(sort(na.omit(.))[1]),
     max = ~as.character(sort(stats::na.omit(.))[length(stats::na.omit(.))]),
     median = ~as.character(stats::na.omit(.)[as.double(stats::na.omit(.)) == median(as.double(stats::na.omit(.)))])[1],
-    n_unique = n_unique,
+    n_unique = ~pm_n_distinct(., na.rm = TRUE),
     hist_log2 = ~inline_hist(log2(as.double(stats::na.omit(.))))
   )
 }

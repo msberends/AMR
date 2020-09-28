@@ -42,8 +42,8 @@ EUCAST_VERSION_EXPERT_RULES <- list("3.1" = list(version_txt = "v3.1",
 #' @param info print progress
 #' @param rules a character vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expert"`, `"other"`, `"all"`, and defaults to `c("breakpoints", "expert")`. The default value can be set to another value, e.g. using `options(AMR_eucastrules = "all")`.
 #' @param verbose a [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.
-#' @param version_breakpoints the version number to use for the EUCAST Clinical Breakpoints guideline
-#' @param version_expertrules the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline
+#' @param version_breakpoints the version number to use for the EUCAST Clinical Breakpoints guideline. Currently supported: `r paste0(names(EUCAST_VERSION_BREAKPOINTS), collapse = ", ")`.
+#' @param version_expertrules the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Currently supported: `r paste0(names(EUCAST_VERSION_EXPERT_RULES), collapse = ", ")`.
 #' @param ... column name of an antibiotic, please see section *Antibiotics* below
 #' @inheritParams first_isolate
 #' @details
@@ -143,8 +143,8 @@ eucast_rules <- function(x,
   
   check_dataset_integrity()
   
-  version_breakpoints <- as.double(version_breakpoints)
-  version_expertrules <- as.double(version_expertrules)
+  version_breakpoints <- as.double(gsub("[^0-9.]+", "", version_breakpoints))
+  version_expertrules <- as.double(gsub("[^0-9.]+", "", version_expertrules))
   stop_ifnot(version_breakpoints %in% as.double(names(EUCAST_VERSION_BREAKPOINTS)),
              "EUCAST version ", version_breakpoints, " for clinical breakpoints not found")
   stop_ifnot(version_expertrules %in% as.double(names(EUCAST_VERSION_EXPERT_RULES)),

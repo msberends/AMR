@@ -42,9 +42,9 @@ eucast_rules(
 
 \item{verbose}{a \link{logical} to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.}
 
-\item{version_breakpoints}{the version number to use for the EUCAST Clinical Breakpoints guideline}
+\item{version_breakpoints}{the version number to use for the EUCAST Clinical Breakpoints guideline. Currently supported: 10.0.}
 
-\item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline}
+\item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Currently supported: 3.1, 3.2.}
 
 \item{...}{column name of an antibiotic, please see section \emph{Antibiotics} below}
 }

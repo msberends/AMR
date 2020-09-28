@@ -746,20 +746,27 @@ freq.rsi <- function(x, ...) {
 
 # will be exported using s3_register() in R/zzz.R
 get_skimmers.rsi <- function(column) {
-  # a bit of a crazy hack to get the variable name
-  name_call <- function(.data, name = deparse(substitute(column))) {
-    vars <- tryCatch(eval(parse(text = ".data$skim_variable"), envir = sys.frame(2)), 
-                     error = function(e) NULL)
+  # get the variable name 'skim_variable'
+  name_call <- function(.data) {
     calls <- sys.calls()
+    calls_txt <- vapply(calls, function(x) paste(deparse(x), collapse = ""), FUN.VALUE = character(1))
+    if (any(calls_txt %like% "skim_variable", na.rm = TRUE)) {
+      ind <- which(calls_txt %like% "skim_variable")[1L]
+      vars <- tryCatch(eval(parse(text = ".data$skim_variable"), envir = sys.frame(ind)), 
+                       error = function(e) NULL)
+    } else {
+      vars <- NULL
+    }
     i <- tryCatch(attributes(calls[[length(calls)]])$position, 
                   error = function(e) NULL)
     if (is.null(vars) | is.null(i)) {
       NA_character_
-    } else{
+    } else {
       lengths <- sapply(vars, length)
-      lengths <-  sum(lengths[!names(lengths) == "rsi"])
-      var <- vars$rsi[i - lengths]
-      if (var == "data") {
+      when_starts_rsi <- which(names(sapply(vars, length)) == "rsi")
+      offset <- sum(lengths[c(1:when_starts_rsi - 1)])
+      var <- vars$rsi[i - offset]
+      if (!isFALSE(var == "data")) {
         NA_character_
       } else{
         ab_name(var)
@@ -770,7 +777,7 @@ get_skimmers.rsi <- function(column) {
   sfl <- import_fn("sfl", "skimr", error_on_fail = FALSE)
   sfl(
     skim_type = "rsi",
-    name = name_call,
+    ab_name = name_call,
     count_R = count_R,
     count_S = count_susceptible,
     count_I = count_I,
