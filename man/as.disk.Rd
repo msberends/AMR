@@ -38,7 +38,7 @@ On our website \url{https://msberends.github.io/AMR} you can find \href{https://
 }
 
 \examples{
-\dontrun{
+\donttest{
 # transform existing disk zones to the `disk` class
 library(dplyr)
 df <- data.frame(microorganism = "E. coli",
@@ -46,8 +46,9 @@ df <- data.frame(microorganism = "E. coli",
                  CIP = 14,
                  GEN = 18,
                  TOB = 16)
-df <- df \%>\% mutate_at(vars(AMP:TOB), as.disk)
-df
+df[, 2:5] <- lapply(df[, 2:5], as.disk)
+# same with dplyr:
+# df \%>\% mutate(across(AMP:TOB, as.disk))
 
 # interpret disk values, see ?as.rsi
 as.rsi(x = as.disk(18),

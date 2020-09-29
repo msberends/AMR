@@ -57,8 +57,8 @@ nl	([([ ]*?)group	\\1groep	FALSE	FALSE
 nl	([([ ]*?)Group	\\1Groep	FALSE	FALSE
 nl	antibiotic	antibioticum	FALSE	FALSE
 nl	Antibiotic	Antibioticum	FALSE	FALSE
-nl	Drug Middel	FALSE	FALSE
-nl	drug middel	FALSE	FALSE
+nl	Drug	Middel	FALSE	FALSE
+nl	drug	middel	FALSE	FALSE
 nl	no .*growth	geen .*groei	FALSE	TRUE
 nl	no|not	geen|niet	FALSE	TRUE
 

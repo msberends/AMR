@@ -60,8 +60,7 @@
 #' # See ?example_isolates.
 #'
 #' # See ?pca for more info about Principal Component Analysis (PCA).
-#' \dontrun{
-#'   library(dplyr)
+#' if (require("dplyr")) {
 #'   pca_model <- example_isolates %>% 
 #'     filter(mo_genus(mo) == "Staphylococcus") %>% 
 #'     group_by(species = mo_shortname(mo)) %>%

@@ -63,5 +63,5 @@ jobs:
         shell: Rscript {0}
 
       - name: Test coverage
-        run: covr::codecov(line_exclusions = list("R/atc_online.R", "R/mo_source.R", "R/resistance_predict.R", "R/aa_helper_pm_functions.R", "R/zzz.R"), quiet = FALSE)
+        run: covr::codecov(line_exclusions = list("R/atc_online.R", "R/mo_source.R", "R/resistance_predict.R", "R/aa_helper_functions.R", "R/aa_helper_pm_functions.R", "R/zzz.R"), quiet = FALSE)
         shell: Rscript {0}

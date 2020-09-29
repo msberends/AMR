@@ -102,14 +102,14 @@
 #'   
 #' }
 #'   
-#' \dontrun{
+#' \donttest{
 #' 
 #' # resistance of ciprofloxacine per age group
 #' example_isolates %>%
 #'   mutate(first_isolate = first_isolate(.)) %>%
 #'   filter(first_isolate == TRUE,
 #'          mo == as.mo("E. coli")) %>%
-#'   # `age_group` is also a function of this package:
+#'   # `age_groups` is also a function of this AMR package:
 #'   group_by(age_group = age_groups(age)) %>%
 #'   select(age_group,
 #'          CIP) %>%
@@ -118,7 +118,8 @@
 #' # for colourblind mode, use divergent colours from the viridis package:
 #' example_isolates %>%
 #'   select(AMX, NIT, FOS, TMP, CIP) %>%
-#'   ggplot_rsi() + scale_fill_viridis_d()
+#'   ggplot_rsi() + 
+#'   scale_fill_viridis_d()
 #' # a shorter version which also adjusts data label colours:
 #' example_isolates %>%
 #'   select(AMX, NIT, FOS, TMP, CIP) %>%

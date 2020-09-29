@@ -45,7 +45,7 @@ bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname, ...)
 
 \item{add_ab_group}{logical to indicate where the group of the antimicrobials must be included as a first column}
 
-\item{remove_intrinsic_resistant}{logical to indicate that rows with 100\% resistance for all tested antimicrobials must be removed from the table}
+\item{remove_intrinsic_resistant}{logical to indicate that rows and columns with 100\% resistance for all tested antimicrobials must be removed from the table}
 
 \item{decimal.mark}{the character to be used to indicate the numeric
     decimal point.}
@@ -83,12 +83,12 @@ x
 format(x, translate_ab = "name (atc)")
 
 # Use FUN to change to transformation of microorganism codes
-x <- bug_drug_combinations(example_isolates, 
-                           FUN = mo_gramstain)
+bug_drug_combinations(example_isolates, 
+                      FUN = mo_gramstain)
                            
-x <- bug_drug_combinations(example_isolates,
-                           FUN = function(x) ifelse(x == as.mo("E. coli"),
-                                                    "E. coli",
-                                                    "Others"))
+bug_drug_combinations(example_isolates,
+                      FUN = function(x) ifelse(x == as.mo("E. coli"),
+                                               "E. coli",
+                                               "Others"))
 }
 }

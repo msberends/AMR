@@ -157,15 +157,6 @@
 #'     group_by(hospital_id) %>%
 #'     proportion_df(translate = FALSE)
 #' }
-#' 
-#' \dontrun{  
-#'   # calculate current empiric combination therapy of Helicobacter gastritis:
-#'   my_table %>%
-#'     filter(first_isolate == TRUE,
-#'            genus == "Helicobacter") %>%
-#'     summarise(p = susceptibility(AMX, MTR),  # amoxicillin with metronidazole
-#'               n = count_all(AMX, MTR))
-#' }
 resistance <- function(...,
                        minimum = 30,
                        as_percent = FALSE,

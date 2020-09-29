@@ -127,7 +127,7 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE) {
 #' # same:
 #' age_groups(ages, c(1, 2, 4, 6, 13, 17))
 #'
-#' \dontrun{
+#' \donttest{
 #' # resistance of ciprofloxacine per age group
 #' library(dplyr)
 #' example_isolates %>%

@@ -31,14 +31,16 @@ test_that("mdro works", {
   expect_error(mdro(example_isolates, col_mo = "invalid", info = TRUE))
 
   outcome <- suppressWarnings(mdro(example_isolates))
+  outcome <- mdro(example_isolates, "eucast3.1", info = TRUE)
   outcome <- eucast_exceptional_phenotypes(example_isolates, info = TRUE)
   # check class
-  expect_equal(outcome %>% class(), c("ordered", "factor"))
+  expect_equal(class(outcome), c("ordered", "factor"))
 
   outcome <- mdro(example_isolates, "nl", info = TRUE)
   # check class
-  expect_equal(outcome %>% class(), c("ordered", "factor"))
+  expect_equal(class(outcome), c("ordered", "factor"))
 
+  library(dplyr)
   # example_isolates should have these finding using Dutch guidelines
   expect_equal(outcome %>% cleaner::freq() %>% pull(count),
                c(1969, 25, 6)) # 1969 neg, 25 unconfirmed, 6 pos

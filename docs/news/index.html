@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9034</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9035</span>
       </span>
     </div>
 
@@ -236,20 +236,27 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1309034" class="section level1">
-<h1 class="page-header" data-toc-text="1.3.0.9034">
-<a href="#amr-1309034" class="anchor"></a>AMR 1.3.0.9034<small> Unreleased </small>
+    <div id="amr-1309035" class="section level1">
+<h1 class="page-header" data-toc-text="1.3.0.9035">
+<a href="#amr-1309035" class="anchor"></a>AMR 1.3.0.9035<small> Unreleased </small>
 </h1>
 <div id="last-updated-29-september-2020" class="section level2">
 <h2 class="hasAnchor">
 <a href="#last-updated-29-september-2020" class="anchor"></a><small>Last updated: 29 September 2020</small>
 </h2>
 <p>Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscipt to. We are those reviewers very grateful for going through our code so thoroughly!</p>
+<div id="breaking" class="section level3">
+<h3 class="hasAnchor">
+<a href="#breaking" class="anchor"></a>Breaking</h3>
+<ul>
+<li>Removed functions <code>portion_R()</code>, <code>portion_S()</code> and <code>portion_I()</code> that were deprecated since version 0.9.0 (November 2019) and were replaced with <code><a href="../reference/proportion.html">proportion_R()</a></code>, <code><a href="../reference/proportion.html">proportion_S()</a></code> and <code><a href="../reference/proportion.html">proportion_I()</a></code>.</li>
+</ul>
+</div>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h3>
 <ul>
-<li><p>Support for ‘EUCAST Expert Rules’ / ‘EUCAST Intrinsic Resistance and Unusual Phenotypes’ version 3.2 of May 2020. With this addition to the previously implemented version 3.1 of 2016, the <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function can now correct for more than 180 different antibiotics. All previously implemented versions of the EUCAST rules are now maintained and kept available in this package. The <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function consequently gained the parameters <code>version_breakpoints</code> (at the moment defaults to v10.0, 2020) and <code>version_expertrules</code> (at the moment defaults to v3.2, 2020). The <code>example_isolates</code> data set now also reflects the change from v3.1 to v3.2.</p></li>
+<li><p>Support for ‘EUCAST Expert Rules’ / ‘EUCAST Intrinsic Resistance and Unusual Phenotypes’ version 3.2 of May 2020. With this addition to the previously implemented version 3.1 of 2016, the <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function can now correct for more than 180 different antibiotics and the <code><a href="../reference/mdro.html">mdro()</a></code> function can determine multidrug resistance based on more than 150 different antibiotics. All previously implemented versions of the EUCAST rules are now maintained and kept available in this package. The <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function consequently gained the parameters <code>version_breakpoints</code> (at the moment defaults to v10.0, 2020) and <code>version_expertrules</code> (at the moment defaults to v3.2, 2020). The <code>example_isolates</code> data set now also reflects the change from v3.1 to v3.2. The <code><a href="../reference/mdro.html">mdro()</a></code> function now accepts <code>guideline == "EUCAST3.1"</code> and <code>guideline == "EUCAST3.2"</code>.</p></li>
 <li><p>A new vignette and website page with info about all our public and freely available data sets, that can be downloaded as flat files or in formats for use in R, SPSS, SAS, Stata and Excel: <a href="https://msberends.github.io/AMR/articles/datasets.html" class="uri">https://msberends.github.io/AMR/articles/datasets.html</a></p></li>
 <li>
 <p>Data set <code>intrinsic_resistant</code>. This data set contains all bug-drug combinations where the ‘bug’ is intrinsic resistant to the ‘drug’ according to the latest EUCAST insights. It contains just two columns: <code>microorganism</code> and <code>antibiotic</code>.</p>
@@ -430,9 +437,9 @@
 <h1 class="page-header" data-toc-text="1.2.0">
 <a href="#amr-120" class="anchor"></a>AMR 1.2.0<small> 2020-05-28 </small>
 </h1>
-<div id="breaking" class="section level3">
+<div id="breaking-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#breaking" class="anchor"></a>Breaking</h3>
+<a href="#breaking-1" class="anchor"></a>Breaking</h3>
 <ul>
 <li>
 <p>Removed code dependency on all other R packages, making this package fully independent of the development process of others. This is a major code change, but will probably not be noticeable by most users.</p>
@@ -640,9 +647,9 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <h1 class="page-header" data-toc-text="0.9.0">
 <a href="#amr-090" class="anchor"></a>AMR 0.9.0<small> 2019-11-29 </small>
 </h1>
-<div id="breaking-1" class="section level3">
+<div id="breaking-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#breaking-1" class="anchor"></a>Breaking</h3>
+<a href="#breaking-2" class="anchor"></a>Breaking</h3>
 <ul>
 <li>Adopted Adeolu <em>et al.</em> (2016), <a href="https://www.ncbi.nlm.nih.gov/pubmed/27620848">PMID 27620848</a> for the <code>microorganisms</code> data set, which means that the new order Enterobacterales now consists of a part of the existing family Enterobacteriaceae, but that this family has been split into other families as well (like <em>Morganellaceae</em> and <em>Yersiniaceae</em>). Although published in 2016, this information is not yet in the Catalogue of Life version of 2019. All MDRO determinations with <code><a href="../reference/mdro.html">mdro()</a></code> will now use the Enterobacterales order for all guidelines before 2016 that were dependent on the Enterobacteriaceae family.
 <ul>
@@ -748,9 +755,9 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <h1 class="page-header" data-toc-text="0.8.0">
 <a href="#amr-080" class="anchor"></a>AMR 0.8.0<small> 2019-10-15 </small>
 </h1>
-<div id="breaking-2" class="section level3">
+<div id="breaking-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#breaking-2" class="anchor"></a>Breaking</h3>
+<a href="#breaking-3" class="anchor"></a>Breaking</h3>
 <ul>
 <li>
 <p>Determination of first isolates now <strong>excludes</strong> all ‘unknown’ microorganisms at default, i.e. microbial code <code>"UNKNOWN"</code>. They can be included with the new parameter <code>include_unknown</code>:</p>
@@ -889,7 +896,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li>The <code>antibiotics</code> data set is now sorted by name and all cephalosporins now have their generation between brackets</li>
 <li>Speed improvement for <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code> which is now 30 times faster for antibiotic abbreviations</li>
 <li>Improved <code><a href="../reference/filter_ab_class.html">filter_ab_class()</a></code> to be more reliable and to support 5th generation cephalosporins</li>
-<li>Function <code><a href="../reference/availability.html">availability()</a></code> now uses <code><a href="../reference/AMR-deprecated.html">portion_R()</a></code> instead of <code><a href="../reference/AMR-deprecated.html">portion_IR()</a></code>, to comply with EUCAST insights</li>
+<li>Function <code><a href="../reference/availability.html">availability()</a></code> now uses <code>portion_R()</code> instead of <code>portion_IR()</code>, to comply with EUCAST insights</li>
 <li>Functions <code><a href="../reference/age.html">age()</a></code> and <code><a href="../reference/age_groups.html">age_groups()</a></code> now have a <code>na.rm</code> parameter to remove empty values</li>
 <li>Renamed function <code>p.symbol()</code> to <code><a href="../reference/p_symbol.html">p_symbol()</a></code> (the former is now deprecated and will be removed in a future version)</li>
 <li>Using negative values for <code>x</code> in <code><a href="../reference/age_groups.html">age_groups()</a></code> will now introduce <code>NA</code>s and not return an error anymore</li>
@@ -919,7 +926,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <a href="#new-6" class="anchor"></a>New</h4>
 <ul>
 <li>
-<p>Function <code><a href="../reference/proportion.html">rsi_df()</a></code> to transform a <code>data.frame</code> to a data set containing only the microbial interpretation (S, I, R), the antibiotic, the percentage of S/I/R and the number of available isolates. This is a convenient combination of the existing functions <code><a href="../reference/count.html">count_df()</a></code> and <code><a href="../reference/AMR-deprecated.html">portion_df()</a></code> to immediately show resistance percentages and number of available isolates:</p>
+<p>Function <code><a href="../reference/proportion.html">rsi_df()</a></code> to transform a <code>data.frame</code> to a data set containing only the microbial interpretation (S, I, R), the antibiotic, the percentage of S/I/R and the number of available isolates. This is a convenient combination of the existing functions <code><a href="../reference/count.html">count_df()</a></code> and <code>portion_df()</code> to immediately show resistance percentages and number of available isolates:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit">
 <span class="kw">septic_patients</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="kw">AMX</span>, <span class="kw">CIP</span>) <span class="op">%&gt;%</span>
@@ -964,7 +971,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <h4 class="hasAnchor">
 <a href="#changed-6" class="anchor"></a>Changed</h4>
 <ul>
-<li>Column names of output <code><a href="../reference/count.html">count_df()</a></code> and <code><a href="../reference/AMR-deprecated.html">portion_df()</a></code> are now lowercase</li>
+<li>Column names of output <code><a href="../reference/count.html">count_df()</a></code> and <code>portion_df()</code> are now lowercase</li>
 <li>Fixed bug in translation of microorganism names</li>
 <li>Fixed bug in determining taxonomic kingdoms</li>
 <li>Algorithm improvements for <code><a href="../reference/as.ab.html">as.ab()</a></code> and <code><a href="../reference/as.mo.html">as.mo()</a></code> to understand even more severely misspelled input</li>
@@ -1041,7 +1048,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li>Improved intelligence of looking up antibiotic columns in a data set using <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>
 </li>
 <li>Added ~5,000 more old taxonomic names to the <code>microorganisms.old</code> data set, which leads to better results finding when using the <code><a href="../reference/as.mo.html">as.mo()</a></code> function</li>
-<li>This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as ‘increased exposure’ and not ‘intermediate’ anymore. For functions like <code><a href="../reference/AMR-deprecated.html">portion_df()</a></code> and <code><a href="../reference/count.html">count_df()</a></code> this means that their new parameter <code>combine_SI</code> is TRUE at default. Our plotting function <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> also reflects this change since it uses <code><a href="../reference/count.html">count_df()</a></code> internally.</li>
+<li>This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as ‘increased exposure’ and not ‘intermediate’ anymore. For functions like <code>portion_df()</code> and <code><a href="../reference/count.html">count_df()</a></code> this means that their new parameter <code>combine_SI</code> is TRUE at default. Our plotting function <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> also reflects this change since it uses <code><a href="../reference/count.html">count_df()</a></code> internally.</li>
 <li>The <code><a href="../reference/age.html">age()</a></code> function gained a new parameter <code>exact</code> to determine ages with decimals</li>
 <li>Removed deprecated functions <code>guess_mo()</code>, <code>guess_atc()</code>, <code>EUCAST_rules()</code>, <code>interpretive_reading()</code>, <code><a href="../reference/as.rsi.html">rsi()</a></code>
 </li>
@@ -1595,9 +1602,9 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <span class="co"># which is the same as:</span>
 <span class="kw">septic_patients</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/count.html">count_IR</a></span>(<span class="kw">amox</span>, <span class="kw">cipr</span>)
 
-<span class="kw">septic_patients</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/AMR-deprecated.html">portion_S</a></span>(<span class="kw">amcl</span>)
-<span class="kw">septic_patients</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/AMR-deprecated.html">portion_S</a></span>(<span class="kw">amcl</span>, <span class="kw">gent</span>)
-<span class="kw">septic_patients</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/AMR-deprecated.html">portion_S</a></span>(<span class="kw">amcl</span>, <span class="kw">gent</span>, <span class="kw">pita</span>)
+<span class="kw">septic_patients</span> <span class="op">%&gt;%</span> <span class="fu">portion_S</span>(<span class="kw">amcl</span>)
+<span class="kw">septic_patients</span> <span class="op">%&gt;%</span> <span class="fu">portion_S</span>(<span class="kw">amcl</span>, <span class="kw">gent</span>)
+<span class="kw">septic_patients</span> <span class="op">%&gt;%</span> <span class="fu">portion_S</span>(<span class="kw">amcl</span>, <span class="kw">gent</span>, <span class="kw">pita</span>)
 </pre></div>
 </li>
 <li><p>Edited <code>ggplot_rsi</code> and <code>geom_rsi</code> so they can cope with <code>count_df</code>. The new <code>fun</code> parameter has value <code>portion_df</code> at default, but can be set to <code>count_df</code>.</p></li>

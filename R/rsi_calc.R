@@ -188,9 +188,9 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   translate_ab <- get_translate_ab(translate_ab)
   
   # select only groups and antibiotics
-  if (pm_has_groups(data)) {
+  if (inherits(data, "grouped_df")) {
     data_has_groups <- TRUE
-    groups <- setdiff(names(pm_get_group_details(data)), ".rows")
+    groups <- setdiff(names(attributes(data)$groups), ".rows")
     data <- data[, c(groups, colnames(data)[sapply(data, is.rsi)]), drop = FALSE]
   } else {
     data_has_groups <- FALSE

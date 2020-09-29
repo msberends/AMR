@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9028</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9035</span>
       </span>
     </div>
 
@@ -304,7 +304,7 @@
     </tr>
     <tr>
       <th>remove_intrinsic_resistant</th>
-      <td><p>logical to indicate that rows with 100% resistance for all tested antimicrobials must be removed from the table</p></td>
+      <td><p>logical to indicate that rows and columns with 100% resistance for all tested antimicrobials must be removed from the table</p></td>
     </tr>
     <tr>
       <th>decimal.mark</th>
@@ -348,13 +348,13 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>x</span>, translate_ab = <span class='st'>"name (atc)"</span>)
 
 <span class='co'># Use FUN to change to transformation of microorganism codes</span>
-<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'>bug_drug_combinations</span>(<span class='kw'>example_isolates</span>, 
-                           FUN = <span class='kw'>mo_gramstain</span>)
+<span class='fu'>bug_drug_combinations</span>(<span class='kw'>example_isolates</span>, 
+                      FUN = <span class='kw'>mo_gramstain</span>)
                            
-<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'>bug_drug_combinations</span>(<span class='kw'>example_isolates</span>,
-                           FUN = <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='kw'>x</span> <span class='op'>==</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"E. coli"</span>),
-                                                    <span class='st'>"E. coli"</span>,
-                                                    <span class='st'>"Others"</span>))
+<span class='fu'>bug_drug_combinations</span>(<span class='kw'>example_isolates</span>,
+                      FUN = <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='kw'>x</span> <span class='op'>==</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"E. coli"</span>),
+                                               <span class='st'>"E. coli"</span>,
+                                               <span class='st'>"Others"</span>))
 <span class='co'># }</span>
 </pre>
   </div>

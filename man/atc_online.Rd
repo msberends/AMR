@@ -80,16 +80,13 @@ On our website \url{https://msberends.github.io/AMR} you can find \href{https://
 }
 
 \examples{
-\dontrun{
+\donttest{
 # oral DDD (Defined Daily Dose) of amoxicillin
 atc_online_property("J01CA04", "DDD", "O")
+
 # parenteral DDD (Defined Daily Dose) of amoxicillin
 atc_online_property("J01CA04", "DDD", "P")
 
 atc_online_property("J01CA04", property = "groups") # search hierarchical groups of amoxicillin
-# [1] "ANTIINFECTIVES FOR SYSTEMIC USE"
-# [2] "ANTIBACTERIALS FOR SYSTEMIC USE"
-# [3] "BETA-LACTAM ANTIBACTERIALS, PENICILLINS"
-# [4] "Penicillins with extended spectrum"
 }
 }

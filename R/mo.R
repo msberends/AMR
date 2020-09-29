@@ -93,14 +93,7 @@
 #'
 #' ## Microbial prevalence of pathogens in humans
 #' 
-#' The intelligent rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the `prevalence` columns in the [microorganisms] and [microorganisms.old] data sets. The grouping into prevalence groups is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence.
-#' 
-#' Group 1 (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is  *Enterococcus*, *Staphylococcus* or *Streptococcus*. This group consequently contains all common Gram-negative bacteria, such as *Klebsiella*, *Pseudomonas* and *Legionella*.
-#' 
-#' Group 2 consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is *Aspergillus*, *Bacteroides*, *Candida*, *Capnocytophaga*, *Chryseobacterium*, *Cryptococcus*, *Elisabethkingia*, *Flavobacterium*, *Fusobacterium*, *Giardia*, *Leptotrichia*, *Mycoplasma*, *Prevotella*, *Rhodotorula*, *Treponema*, *Trichophyton* or *Ureaplasma*. This group consequently contains all less common and rare human pathogens.
-#' 
-#' Group 3 (least prevalent microorganisms) consists of all other microorganisms. This group contains microorganisms most probably not found in humans.
-#' 
+#' The intelligent rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the `prevalence` columns in the [microorganisms] and [microorganisms.old] data sets. The grouping into human pathogenic prevalence is explained in the section *Matching score for microorganisms* below.
 #' @inheritSection mo_matching_score Matching score for microorganisms
 #' @inheritSection catalogue_of_life Catalogue of Life
 #  (source as a section here, so it can be inherited by other man pages:)
@@ -152,25 +145,6 @@
 #' # All mo_* functions use as.mo() internally too (see ?mo_property):
 #' mo_genus("E. coli")           # returns "Escherichia"
 #' mo_gramstain("E. coli")       # returns "Gram negative"
-#' 
-#' }
-#' \dontrun{
-#' df$mo <- as.mo(df$microorganism_name)
-#'
-#' # the select function of the Tidyverse is also supported:
-#' library(dplyr)
-#' df$mo <- df %>%
-#'   select(microorganism_name) %>%
-#'   as.mo()
-#'
-#' # and can even contain 2 columns, which is convenient
-#' # for genus/species combinations:
-#' df$mo <- df %>%
-#'   select(genus, species) %>%
-#'   as.mo()
-#' # although this works easier and does the same:
-#' df <- df %>%
-#'   mutate(mo = as.mo(paste(genus, species)))
 #' }
 as.mo <- function(x, 
                   Becker = FALSE, 
@@ -1439,45 +1413,26 @@ exec_as.mo <- function(x,
   
   # Becker ----
   if (Becker == TRUE | Becker == "all") {
-    # See Source. It's this figure:
-    # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4187637/figure/F3/
-    MOs_staph <- MO_lookup[which(MO_lookup$genus == "Staphylococcus"), ]
-    CoNS <- MOs_staph[which(MOs_staph$species %in% c("arlettae", "auricularis", "capitis",
-                                                     "caprae", "carnosus", "chromogenes", "cohnii", "condimenti",
-                                                     "devriesei", "epidermidis", "equorum", "felis",
-                                                     "fleurettii", "gallinarum", "haemolyticus",
-                                                     "hominis", "jettensis", "kloosii", "lentus",
-                                                     "lugdunensis", "massiliensis", "microti",
-                                                     "muscae", "nepalensis", "pasteuri", "petrasii",
-                                                     "pettenkoferi", "piscifermentans", "rostri",
-                                                     "saccharolyticus", "saprophyticus", "sciuri",
-                                                     "stepanovicii", "simulans", "succinus",
-                                                     "vitulinus", "warneri", "xylosus")
-                            | (MOs_staph$species == "schleiferi" & MOs_staph$subspecies %in% c("schleiferi", ""))),
-                      property]
-    CoPS <- MOs_staph[which(MOs_staph$species %in% c("simiae", "agnetis",
-                                                     "delphini", "lutrae",
-                                                     "hyicus", "intermedius",
-                                                     "pseudintermedius", "pseudointermedius",
-                                                     "schweitzeri", "argenteus")
-                            | (MOs_staph$species == "schleiferi" & MOs_staph$subspecies == "coagulans")),
-                      property]
-    
     # warn when species found that are not in Becker (2014, PMID 25278577) and Becker (2019, PMID 30872103)
     post_Becker <- c("argensis", "caeli", "cornubiensis", "edaphicus")
-    if (any(x %in% MOs_staph[which(MOs_staph$species %in% post_Becker), property])) {
+    if (any(x %in% MO_lookup[which(MO_lookup$species %in% post_Becker), property])) {
       
       warning("Becker ", font_italic("et al."), " (2014, 2019) does not contain these species named after their publication: ",
               font_italic(paste("S.",
-                                sort(mo_species(unique(x[x %in% MOs_staph[which(MOs_staph$species %in% post_Becker), property]]))),
+                                sort(mo_species(unique(x[x %in% MO_lookup[which(MO_lookup$species %in% post_Becker), property]]))),
                                 collapse = ", ")),
               ".",
               call. = FALSE,
               immediate. = TRUE)
     }
     
+    # 'MO_CONS' and 'MO_COPS' are <mo> vectors created in R/zzz.R
+    CoNS <- MO_lookup[which(MO_lookup$mo %in% MO_CONS), property, drop = TRUE]
     x[x %in% CoNS] <- lookup(mo == "B_STPHY_CONS", uncertainty = -1)
+    
+    CoPS <- MO_lookup[which(MO_lookup$mo %in% MO_COPS), property, drop = TRUE]
     x[x %in% CoPS] <- lookup(mo == "B_STPHY_COPS", uncertainty = -1)
+    
     if (Becker == "all") {
       x[x %in% lookup(fullname %like_case% "^Staphylococcus aureus", n = Inf)] <- lookup(mo == "B_STPHY_COPS", uncertainty = -1)
     }

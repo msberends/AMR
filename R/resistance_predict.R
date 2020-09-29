@@ -84,10 +84,8 @@
 #' }
 #'
 #' # create nice plots with ggplot2 yourself
-#' \dontrun{
-#'   library(dplyr)
-#'   library(ggplot2)
-#'
+#' if (require("dplyr") & require("ggplot2")) {
+#' 
 #'   data <- example_isolates %>%
 #'     filter(mo == as.mo("E. coli")) %>%
 #'     resistance_predict(col_ab = "AMX",

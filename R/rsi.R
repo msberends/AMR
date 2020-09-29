@@ -106,34 +106,6 @@
 #'                  NIT = as.mic(32))
 #' as.rsi(df)
 #' 
-#' \dontrun{
-#' 
-#' # the dplyr way
-#' library(dplyr)
-#' df %>% mutate_if(is.mic, as.rsi)
-#' df %>% mutate_if(function(x) is.mic(x) | is.disk(x), as.rsi)
-#' df %>% mutate(across(where(is.mic), as.rsi))
-#' df %>% mutate_at(vars(AMP:TOB), as.rsi)
-#' df %>% mutate(across(AMP:TOB), as.rsi)
-#'
-#' df %>%
-#'   mutate_at(vars(AMP:TOB), as.rsi, mo = "E. coli")
-#'   
-#' # to include information about urinary tract infections (UTI)
-#' data.frame(mo = "E. coli",
-#'            NIT = c("<= 2", 32),
-#'            from_the_bladder = c(TRUE, FALSE)) %>%
-#'   as.rsi(uti = "from_the_bladder")
-#'   
-#' data.frame(mo = "E. coli",
-#'            NIT = c("<= 2", 32),
-#'            specimen = c("urine", "blood")) %>%
-#'   as.rsi() # automatically determines urine isolates
-#' 
-#' df %>%
-#'   mutate_at(vars(AMP:NIT), as.rsi, mo = "E. coli", uti = TRUE)  
-#' }
-#' 
 #' # for single values
 #' as.rsi(x = as.mic(2),
 #'        mo = as.mo("S. pneumoniae"),
@@ -145,6 +117,32 @@
 #'        ab = "ampicillin",  # and `ab` with as.ab()
 #'        guideline = "EUCAST")
 #'
+#' \donttest{
+#' # the dplyr way
+#' if (require("dplyr")) {
+#'   df %>% mutate_if(is.mic, as.rsi)
+#'   df %>% mutate_if(function(x) is.mic(x) | is.disk(x), as.rsi)
+#'   df %>% mutate(across(where(is.mic), as.rsi))
+#'   df %>% mutate_at(vars(AMP:TOB), as.rsi)
+#'   df %>% mutate(across(AMP:TOB), as.rsi)
+#'  
+#'   df %>%
+#'     mutate_at(vars(AMP:TOB), as.rsi, mo = "E. coli")
+#'     
+#'   # to include information about urinary tract infections (UTI)
+#'   data.frame(mo = "E. coli",
+#'              NIT = c("<= 2", 32),
+#'              from_the_bladder = c(TRUE, FALSE)) %>%
+#'     as.rsi(uti = "from_the_bladder")
+#'     
+#'   data.frame(mo = "E. coli",
+#'              NIT = c("<= 2", 32),
+#'              specimen = c("urine", "blood")) %>%
+#'     as.rsi() # automatically determines urine isolates
+#'   
+#'   df %>%
+#'     mutate_at(vars(AMP:NIT), as.rsi, mo = "E. coli", uti = TRUE)  
+#' }
 #'
 #' # For CLEANING existing R/SI values ------------------------------------
 #' 
@@ -156,25 +154,22 @@
 #' plot(rsi_data)    # for percentages
 #' barplot(rsi_data) # for frequencies
 #'
-#' \dontrun{
-#' library(dplyr)
-#' example_isolates %>%
-#'   mutate_at(vars(PEN:RIF), as.rsi)
-#' # same:   
-#' example_isolates %>%
-#'   as.rsi(PEN:RIF)
-#'
-#' # fastest way to transform all columns with already valid AMR results to class `rsi`:
-#' example_isolates %>%
-#'   mutate_if(is.rsi.eligible, as.rsi)
-#'   
-#' # note: from dplyr 1.0.0 on, this will be: 
-#' # example_isolates %>%
-#' #   mutate(across(is.rsi.eligible, as.rsi))
-#'
-#' # default threshold of `is.rsi.eligible` is 5%.
-#' is.rsi.eligible(WHONET$`First name`) # fails, >80% is invalid
-#' is.rsi.eligible(WHONET$`First name`, threshold = 0.99) # succeeds
+#' # the dplyr way
+#' if (require("dplyr")) {
+#'   example_isolates %>%
+#'     mutate_at(vars(PEN:RIF), as.rsi)
+#'   # same:   
+#'   example_isolates %>%
+#'     as.rsi(PEN:RIF)
+#'  
+#'   # fastest way to transform all columns with already valid AMR results to class `rsi`:
+#'   example_isolates %>%
+#'     mutate_if(is.rsi.eligible, as.rsi)
+#'     
+#'   # note: from dplyr 1.0.0 on, this will be: 
+#'   # example_isolates %>%
+#'   #   mutate(across(is.rsi.eligible, as.rsi))
+#' }
 #' }
 as.rsi <- function(x, ...) {
   UseMethod("as.rsi")
@@ -430,13 +425,6 @@ as.rsi.data.frame <- function(x,
                               conserve_capped_values = FALSE,
                               add_intrinsic_resistance = FALSE) {
   
-  # try to find columns based on type
-  # -- mo
-  if (is.null(col_mo)) {
-    col_mo <- search_type_in_df(x = x, type = "mo")
-    stop_if(is.null(col_mo), "`col_mo` must be set")
-  }
-  
   # -- UTIs
   col_uti <- uti
   if (is.null(col_uti)) {
@@ -516,6 +504,14 @@ as.rsi.data.frame <- function(x,
   types[sapply(x[, ab_cols], is.disk)] <- "disk"
   types[types == "" & sapply(x[, ab_cols], all_valid_disks)] <- "disk"
   types[types == "" & !sapply(x[, ab_cols], is.rsi)] <- "rsi"
+  
+  if (any(types %in% c("mic", "disk"), na.rm = TRUE)) {
+    # now we need an mo column - try to find columns based on type
+    if (is.null(col_mo)) {
+      col_mo <- search_type_in_df(x = x, type = "mo")
+      stop_if(is.null(col_mo), "`col_mo` must be set")
+    }
+  }
   
   for (i in seq_len(length(ab_cols))) {
     if (types[i] == "mic") {

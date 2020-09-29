@@ -26,7 +26,7 @@
 #' @inheritParams eucast_rules
 #' @param combine_IR logical to indicate whether values R and I should be summed
 #' @param add_ab_group logical to indicate where the group of the antimicrobials must be included as a first column
-#' @param remove_intrinsic_resistant logical to indicate that rows with 100% resistance for all tested antimicrobials must be removed from the table
+#' @param remove_intrinsic_resistant logical to indicate that rows and columns with 100% resistance for all tested antimicrobials must be removed from the table
 #' @param FUN the function to call on the `mo` column to transform the microorganism IDs, defaults to [mo_shortname()] 
 #' @param translate_ab a character of length 1 containing column names of the [antibiotics] data set
 #' @param ... arguments passed on to `FUN`
@@ -45,13 +45,13 @@
 #' format(x, translate_ab = "name (atc)")
 #' 
 #' # Use FUN to change to transformation of microorganism codes
-#' x <- bug_drug_combinations(example_isolates, 
-#'                            FUN = mo_gramstain)
+#' bug_drug_combinations(example_isolates, 
+#'                       FUN = mo_gramstain)
 #'                            
-#' x <- bug_drug_combinations(example_isolates,
-#'                            FUN = function(x) ifelse(x == as.mo("E. coli"),
-#'                                                     "E. coli",
-#'                                                     "Others"))
+#' bug_drug_combinations(example_isolates,
+#'                       FUN = function(x) ifelse(x == as.mo("E. coli"),
+#'                                                "E. coli",
+#'                                                "Others"))
 #' }
 bug_drug_combinations <- function(x, 
                                   col_mo = NULL, 
@@ -183,13 +183,12 @@ format.bug_drug_combinations <- function(x,
     y <- y %pm>% 
       pm_left_join(mo_group, by = "ab")
   }
-  y <<- y
   y <- y %pm>% 
     pm_distinct(ab, .keep_all = TRUE) %pm>% 
     pm_select(-mo, -txt) %pm>% 
     # replace tidyr::pivot_wider() until here
     remove_NAs()
-  
+
   select_ab_vars <- function(.data) {
     .data[, c("ab_group", "ab_txt", colnames(.data)[!colnames(.data) %in% c("ab_group", "ab_txt", "ab")])]
   }
@@ -205,12 +204,19 @@ format.bug_drug_combinations <- function(x,
     y <- y %pm>% 
       pm_select(-ab_group) %pm>%
       pm_rename("Drug" = ab_txt)
-    colnames(y)[1] <- translate_AMR(colnames(y)[1], language = get_locale(), only_unknown = FALSE)
+    colnames(y)[1] <- translate_AMR(colnames(y)[1], language, only_unknown = FALSE)
   } else {
     y <- y %pm>% 
       pm_rename("Group" = ab_group,
                 "Drug" = ab_txt)
-    colnames(y)[1:2] <- translate_AMR(colnames(y)[1:2], language = get_locale(), only_unknown = FALSE)
+  }
+  
+  if (!is.null(language)) {
+    colnames(y) <- translate_AMR(colnames(y), language, only_unknown = FALSE)
+  }
+  
+  if (remove_intrinsic_resistant == TRUE) {
+    y <- y[, !sapply(y, function(col) all(col %like% "100", na.rm = TRUE) & !any(is.na(col))), drop = FALSE]
   }
   
   rownames(y) <- NULL

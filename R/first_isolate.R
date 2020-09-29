@@ -46,18 +46,19 @@
 #'
 #' All isolates with a microbial ID of `NA` will be excluded as first isolate.
 #'
-#' The functions [filter_first_isolate()] and [filter_first_weighted_isolate()] are helper functions to quickly filter on first isolates. The function [filter_first_isolate()] is essentially equal to one of:
+#' The functions [filter_first_isolate()] and [filter_first_weighted_isolate()] are helper functions to quickly filter on first isolates. The function [filter_first_isolate()] is essentially equal to either:
 #' ```
-#'  x %>% filter(first_isolate(., ...))
+#'   x[first_isolate(x, ...), ]
+#'   x %>% filter(first_isolate(x, ...))
 #' ```
 #' The function [filter_first_weighted_isolate()] is essentially equal to:
 #' ```
-#'  x %>%
-#'    mutate(keyab = key_antibiotics(.)) %>%
-#'    mutate(only_weighted_firsts = first_isolate(x,
-#'                                                col_keyantibiotics = "keyab", ...)) %>%
-#'    filter(only_weighted_firsts == TRUE) %>%
-#'    select(-only_weighted_firsts, -keyab)
+#'   x %>%
+#'     mutate(keyab = key_antibiotics(.)) %>%
+#'     mutate(only_weighted_firsts = first_isolate(x,
+#'                                                 col_keyantibiotics = "keyab", ...)) %>%
+#'     filter(only_weighted_firsts == TRUE) %>%
+#'     select(-only_weighted_firsts, -keyab)
 #' ```
 #' @section Key antibiotics:
 #' There are two ways to determine whether isolates can be included as first *weighted* isolates which will give generally the same results:
@@ -80,50 +81,41 @@
 #' @examples
 #' # `example_isolates` is a dataset available in the AMR package.
 #' # See ?example_isolates.
-#'
-#' \dontrun{
-#' library(dplyr)
-#' # Filter on first isolates:
-#' example_isolates %>%
-#'   mutate(first_isolate = first_isolate(.)) %>%
-#'   filter(first_isolate == TRUE)
 #' 
-#' # Now let's see if first isolates matter:
-#' A <- example_isolates %>%
-#'   group_by(hospital_id) %>%
-#'   summarise(count = n_rsi(GEN),            # gentamicin availability
-#'             resistance = resistance(GEN))  # gentamicin resistance
-#'
-#' B <- example_isolates %>%
-#'   filter_first_weighted_isolate() %>%      # the 1st isolate filter
-#'   group_by(hospital_id) %>%
-#'   summarise(count = n_rsi(GEN),            # gentamicin availability
-#'             resistance = resistance(GEN))  # gentamicin resistance
-#'
-#' # Have a look at A and B.
-#' # B is more reliable because every isolate is counted only once.
-#' # Gentamicin resistance in hospital D appears to be 3.7% higher than
-#' # when you (erroneously) would have used all isolates for analysis.
-#'
-#'
-#' ## OTHER EXAMPLES:
+#' # basic filtering on first isolates
+#' example_isolates[first_isolate(example_isolates), ]
 #' 
-#' # Short-hand versions:
-#' example_isolates %>%
-#'   filter_first_isolate()
+#' \donttest{
+#' if (require("dplyr")) {
+#'   # Filter on first isolates:
+#'   example_isolates %>%
+#'     mutate(first_isolate = first_isolate(.)) %>%
+#'     filter(first_isolate == TRUE)
+#'  
+#'   # Short-hand versions:
+#'   example_isolates %>%
+#'     filter_first_isolate()
+#'     
+#'   example_isolates %>%
+#'     filter_first_weighted_isolate()
 #'   
-#' example_isolates %>%
-#'   filter_first_weighted_isolate()
-#'
-#'
-#' # set key antibiotics to a new variable
-#' x$keyab <- key_antibiotics(x)
-#'
-#' x$first_isolate <- first_isolate(x)
-#'
-#' x$first_isolate_weighed <- first_isolate(x, col_keyantibiotics = 'keyab')
-#'
-#' x$first_blood_isolate <- first_isolate(x, specimen_group = "Blood")
+#'   # Now let's see if first isolates matter:
+#'   A <- example_isolates %>%
+#'     group_by(hospital_id) %>%
+#'     summarise(count = n_rsi(GEN),            # gentamicin availability
+#'               resistance = resistance(GEN))  # gentamicin resistance
+#'  
+#'   B <- example_isolates %>%
+#'     filter_first_weighted_isolate() %>%      # the 1st isolate filter
+#'     group_by(hospital_id) %>%
+#'     summarise(count = n_rsi(GEN),            # gentamicin availability
+#'               resistance = resistance(GEN))  # gentamicin resistance
+#'  
+#'   # Have a look at A and B.
+#'   # B is more reliable because every isolate is counted only once.
+#'   # Gentamicin resistance in hospital D appears to be 3.7% higher than
+#'   # when you (erroneously) would have used all isolates for analysis.
+#' }
 #' }
 first_isolate <- function(x,
                           col_date = NULL,

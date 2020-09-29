@@ -69,21 +69,23 @@ The \link[=lifecycle]{lifecycle} of this function is \strong{maturing}. The unly
 # `example_isolates` is a dataset available in the AMR package.
 # See ?example_isolates.
 
-\dontrun{
-# calculate the resistance per group first
-library(dplyr)
-resistance_data <- example_isolates \%>\% 
-  group_by(order = mo_order(mo),       # group on anything, like order
-           genus = mo_genus(mo)) \%>\%   #  and genus as we do here
-  summarise_if(is.rsi, resistance)     # then get resistance of all drugs
-  
-# now conduct PCA for certain antimicrobial agents
-pca_result <- resistance_data \%>\%         
-  pca(AMC, CXM, CTX, CAZ, GEN, TOB, TMP, SXT) 
-  
-pca_result
-summary(pca_result)
-biplot(pca_result)
-ggplot_pca(pca_result) # a new and convenient plot function
+\donttest{
+
+if (require("dplyr")) {
+  # calculate the resistance per group first 
+  resistance_data <- example_isolates \%>\% 
+    group_by(order = mo_order(mo),       # group on anything, like order
+             genus = mo_genus(mo)) \%>\%   #  and genus as we do here
+    summarise_if(is.rsi, resistance)     # then get resistance of all drugs
+    
+  # now conduct PCA for certain antimicrobial agents
+  pca_result <- resistance_data \%>\%         
+    pca(AMC, CXM, CTX, CAZ, GEN, TOB, TMP, SXT) 
+    
+  pca_result
+  summary(pca_result)
+  biplot(pca_result)
+  ggplot_pca(pca_result) # a new and convenient plot function
+}
 }
 }

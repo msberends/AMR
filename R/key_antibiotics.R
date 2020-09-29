@@ -72,33 +72,35 @@
 #' @examples
 #' # `example_isolates` is a dataset available in the AMR package.
 #' # See ?example_isolates.
-#'
-#' \dontrun{
-#' library(dplyr)
-#' # set key antibiotics to a new variable
-#' my_patients <- example_isolates %>%
-#'   mutate(keyab = key_antibiotics(.)) %>%
-#'   mutate(
-#'     # now calculate first isolates
-#'     first_regular = first_isolate(., col_keyantibiotics = FALSE),
-#'     # and first WEIGHTED isolates
-#'     first_weighted = first_isolate(., col_keyantibiotics = "keyab")
-#'   )
-#'
-#' # Check the difference, in this data set it results in 7% more isolates:
-#' sum(my_patients$first_regular, na.rm = TRUE)
-#' sum(my_patients$first_weighted, na.rm = TRUE)
-#' }
-#'
+#' 
 #' # output of the `key_antibiotics` function could be like this:
 #' strainA <- "SSSRR.S.R..S"
 #' strainB <- "SSSIRSSSRSSS"
 #'
+#' # can those strings can be compared with:
 #' key_antibiotics_equal(strainA, strainB)
 #' # TRUE, because I is ignored (as well as missing values)
 #'
 #' key_antibiotics_equal(strainA, strainB, ignore_I = FALSE)
 #' # FALSE, because I is not ignored and so the 4th value differs
+#'
+#' \donttest{
+#' if (require("dplyr")) {
+#'   # set key antibiotics to a new variable
+#'   my_patients <- example_isolates %>%
+#'     mutate(keyab = key_antibiotics(.)) %>%
+#'     mutate(
+#'       # now calculate first isolates
+#'       first_regular = first_isolate(., col_keyantibiotics = FALSE),
+#'       # and first WEIGHTED isolates
+#'       first_weighted = first_isolate(., col_keyantibiotics = "keyab")
+#'     )
+#'  
+#'   # Check the difference, in this data set it results in 7% more isolates:
+#'   sum(my_patients$first_regular, na.rm = TRUE)
+#'   sum(my_patients$first_weighted, na.rm = TRUE)
+#' }
+#' }
 key_antibiotics <- function(x,
                             col_mo = NULL,
                             universal_1 = guess_ab_col(x, "amoxicillin"),

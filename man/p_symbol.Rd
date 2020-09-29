@@ -17,6 +17,9 @@ Text
 \description{
 Return the symbol related to the p-value: 0 '\verb{***}' 0.001 '\verb{**}' 0.01 '\code{*}' 0.05 '\code{.}' 0.1 ' ' 1. Values above \code{p = 1} will return \code{NA}.
 }
+\details{
+\strong{NOTE}: this function will be moved to the \code{cleaner} package when a new version is being published on CRAN.
+}
 \section{Questioning lifecycle}{
 
 \if{html}{\figure{lifecycle_questioning.svg}{options: style=margin-bottom:5px} \cr}

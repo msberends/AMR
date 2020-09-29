@@ -57,18 +57,21 @@ On our website \url{https://msberends.github.io/AMR} you can find \href{https://
 left_join_microorganisms(as.mo("K. pneumoniae"))
 left_join_microorganisms("B_KLBSL_PNE")
 
-\dontrun{
-library(dplyr)
-example_isolates \%>\% left_join_microorganisms()
-
-df <- data.frame(date = seq(from = as.Date("2018-01-01"),
-                            to = as.Date("2018-01-07"),
-                            by = 1),
-                 bacteria = as.mo(c("S. aureus", "MRSA", "MSSA", "STAAUR",
-                                    "E. coli", "E. coli", "E. coli")),
-                 stringsAsFactors = FALSE)
-colnames(df)
-df_joined <- left_join_microorganisms(df, "bacteria")
-colnames(df_joined)
+\donttest{
+if (require("dplyr")) {
+  example_isolates \%>\%
+    left_join_microorganisms() \%>\% 
+    colnames()
+ 
+  df <- data.frame(date = seq(from = as.Date("2018-01-01"),
+                              to = as.Date("2018-01-07"),
+                              by = 1),
+                   bacteria = as.mo(c("S. aureus", "MRSA", "MSSA", "STAAUR",
+                                      "E. coli", "E. coli", "E. coli")),
+                   stringsAsFactors = FALSE)
+  colnames(df)
+  df_joined <- left_join_microorganisms(df, "bacteria")
+  colnames(df_joined)
+}
 }
 }

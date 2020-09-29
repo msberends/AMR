@@ -32,21 +32,22 @@
 #' where:
 #' 
 #' * \eqn{x} is the user input;
-#' * \eqn{n} is a taxonomic name (genus, species and subspecies) as found in [`microorganisms$fullname`][microorganisms];
-#' * \eqn{l_{n}}{l_n} is the length of \eqn{n};
-#' * \eqn{\operatorname{lev}}{lev} is the [Levenshtein distance function](https://en.wikipedia.org/wiki/Levenshtein_distance);
-#' * \eqn{p_{n}}{p_n} is the human pathogenic prevalence of \eqn{n}, categorised into group \eqn{1}, \eqn{2} and \eqn{3} (see *Details* in `?as.mo`), meaning that \eqn{p = \{1, 2 , 3\}}{p = {1, 2, 3}};
-#' * \eqn{k_{n}}{k_n} is the kingdom index of \eqn{n}, set as follows: Bacteria = \eqn{1}, Fungi = \eqn{2}, Protozoa = \eqn{3}, Archaea = \eqn{4}, and all others = \eqn{5}, meaning that \eqn{k = \{1, 2 , 3, 4, 5\}}{k = {1, 2, 3, 4, 5}}.
+#' * \eqn{n} is a taxonomic name (genus, species, and subspecies);
+#' * \eqn{l_n}{l_n} is the length of \eqn{n};
+#' * lev is the [Levenshtein distance function](https://en.wikipedia.org/wiki/Levenshtein_distance), which counts any insertion, deletion and substitution as 1 that is needed to change \eqn{x} into \eqn{n};
+#' * \eqn{p_n}{p_n} is the human pathogenic prevalence group of \eqn{n}, as described below;
+#' * \eqn{k_n}{p_n} is the taxonomic kingdom of \eqn{n}, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.
 #' 
-#' This means that the user input `x = "E. coli"` gets for *Escherichia coli* a matching score of `r percentage(mo_matching_score("E. coli", "Escherichia coli"), 1)` and for *Entamoeba coli* a matching score of `r percentage(mo_matching_score("E. coli", "Entamoeba coli"), 1)`.
+#' The grouping into human pathogenic prevalence (\eqn{p}) is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence. **Group 1** (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is *Enterococcus*, *Staphylococcus* or *Streptococcus*. This group consequently contains all common Gram-negative bacteria, such as *Pseudomonas* and *Legionella* and all species within the order Enterobacterales. **Group 2** consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is *Absidia*, *Acremonium*, *Actinotignum*, *Alternaria*, *Anaerosalibacter*, *Apophysomyces*, *Arachnia*, *Aspergillus*, *Aureobacterium*, *Aureobasidium*, *Bacteroides*, *Basidiobolus*, *Beauveria*, *Blastocystis*, *Branhamella*, *Calymmatobacterium*, *Candida*, *Capnocytophaga*, *Catabacter*, *Chaetomium*, *Chryseobacterium*, *Chryseomonas*, *Chrysonilia*, *Cladophialophora*, *Cladosporium*, *Conidiobolus*, *Cryptococcus*, *Curvularia*, *Exophiala*, *Exserohilum*, *Flavobacterium*, *Fonsecaea*, *Fusarium*, *Fusobacterium*, *Hendersonula*, *Hypomyces*, *Koserella*, *Lelliottia*, *Leptosphaeria*, *Leptotrichia*, *Malassezia*, *Malbranchea*, *Mortierella*, *Mucor*, *Mycocentrospora*, *Mycoplasma*, *Nectria*, *Ochroconis*, *Oidiodendron*, *Phoma*, *Piedraia*, *Pithomyces*, *Pityrosporum*, *Prevotella*,\\*Pseudallescheria*, *Rhizomucor*, *Rhizopus*, *Rhodotorula*, *Scolecobasidium*, *Scopulariopsis*, *Scytalidium*,*Sporobolomyces*, *Stachybotrys*, *Stomatococcus*, *Treponema*, *Trichoderma*, *Trichophyton*, *Trichosporon*, *Tritirachium* or *Ureaplasma*. **Group 3** consists of all other microorganisms.
 #' 
-#' All matches are sorted descending on their matching score and for all user input values, the top match will be returned.
+#' All matches are sorted descending on their matching score and for all user input values, the top match will be returned. This will lead to the effect that e.g., `"E. coli"` will return the microbial ID of *Escherichia coli* (\eqn{m = `r round(mo_matching_score("E. coli", "Escherichia coli"), 3)`}, a highly prevalent microorganism found in humans) and not *Entamoeba coli* (\eqn{m = `r round(mo_matching_score("E. coli", "Entamoeba coli"), 3)`}, a less prevalent microorganism in humans), although the latter would alphabetically come first. 
 #' @export
 #' @examples 
 #' as.mo("E. coli")
 #' mo_uncertainties()
 #' 
-#' mo_matching_score("E. coli", "Escherichia coli")
+#' mo_matching_score(x = "E. coli",
+#'                   n = c("Escherichia coli", "Entamoeba coli"))
 mo_matching_score <- function(x, n) {
   # n is always a taxonomically valid full name
   levenshtein <- double(length = length(x))

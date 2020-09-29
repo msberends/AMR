@@ -167,34 +167,6 @@ df <- data.frame(microorganism = "E. coli",
                  NIT = as.mic(32))
 as.rsi(df)
 
-\dontrun{
-
-# the dplyr way
-library(dplyr)
-df \%>\% mutate_if(is.mic, as.rsi)
-df \%>\% mutate_if(function(x) is.mic(x) | is.disk(x), as.rsi)
-df \%>\% mutate(across(where(is.mic), as.rsi))
-df \%>\% mutate_at(vars(AMP:TOB), as.rsi)
-df \%>\% mutate(across(AMP:TOB), as.rsi)
-
-df \%>\%
-  mutate_at(vars(AMP:TOB), as.rsi, mo = "E. coli")
-  
-# to include information about urinary tract infections (UTI)
-data.frame(mo = "E. coli",
-           NIT = c("<= 2", 32),
-           from_the_bladder = c(TRUE, FALSE)) \%>\%
-  as.rsi(uti = "from_the_bladder")
-  
-data.frame(mo = "E. coli",
-           NIT = c("<= 2", 32),
-           specimen = c("urine", "blood")) \%>\%
-  as.rsi() # automatically determines urine isolates
-
-df \%>\%
-  mutate_at(vars(AMP:NIT), as.rsi, mo = "E. coli", uti = TRUE)  
-}
-
 # for single values
 as.rsi(x = as.mic(2),
        mo = as.mo("S. pneumoniae"),
@@ -206,6 +178,32 @@ as.rsi(x = as.disk(18),
        ab = "ampicillin",  # and `ab` with as.ab()
        guideline = "EUCAST")
 
+\donttest{
+# the dplyr way
+if (require("dplyr")) {
+  df \%>\% mutate_if(is.mic, as.rsi)
+  df \%>\% mutate_if(function(x) is.mic(x) | is.disk(x), as.rsi)
+  df \%>\% mutate(across(where(is.mic), as.rsi))
+  df \%>\% mutate_at(vars(AMP:TOB), as.rsi)
+  df \%>\% mutate(across(AMP:TOB), as.rsi)
+ 
+  df \%>\%
+    mutate_at(vars(AMP:TOB), as.rsi, mo = "E. coli")
+    
+  # to include information about urinary tract infections (UTI)
+  data.frame(mo = "E. coli",
+             NIT = c("<= 2", 32),
+             from_the_bladder = c(TRUE, FALSE)) \%>\%
+    as.rsi(uti = "from_the_bladder")
+    
+  data.frame(mo = "E. coli",
+             NIT = c("<= 2", 32),
+             specimen = c("urine", "blood")) \%>\%
+    as.rsi() # automatically determines urine isolates
+  
+  df \%>\%
+    mutate_at(vars(AMP:NIT), as.rsi, mo = "E. coli", uti = TRUE)  
+}
 
 # For CLEANING existing R/SI values ------------------------------------
 
@@ -216,25 +214,22 @@ is.rsi(rsi_data)
 plot(rsi_data)    # for percentages
 barplot(rsi_data) # for frequencies
 
-\dontrun{
-library(dplyr)
-example_isolates \%>\%
-  mutate_at(vars(PEN:RIF), as.rsi)
-# same:   
-example_isolates \%>\%
-  as.rsi(PEN:RIF)
-
-# fastest way to transform all columns with already valid AMR results to class `rsi`:
-example_isolates \%>\%
-  mutate_if(is.rsi.eligible, as.rsi)
-  
-# note: from dplyr 1.0.0 on, this will be: 
-# example_isolates \%>\%
-#   mutate(across(is.rsi.eligible, as.rsi))
-
-# default threshold of `is.rsi.eligible` is 5\%.
-is.rsi.eligible(WHONET$`First name`) # fails, >80\% is invalid
-is.rsi.eligible(WHONET$`First name`, threshold = 0.99) # succeeds
+# the dplyr way
+if (require("dplyr")) {
+  example_isolates \%>\%
+    mutate_at(vars(PEN:RIF), as.rsi)
+  # same:   
+  example_isolates \%>\%
+    as.rsi(PEN:RIF)
+ 
+  # fastest way to transform all columns with already valid AMR results to class `rsi`:
+  example_isolates \%>\%
+    mutate_if(is.rsi.eligible, as.rsi)
+    
+  # note: from dplyr 1.0.0 on, this will be: 
+  # example_isolates \%>\%
+  #   mutate(across(is.rsi.eligible, as.rsi))
+}
 }
 }
 \seealso{

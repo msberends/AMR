@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9026</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9035</span>
       </span>
     </div>
 
@@ -369,15 +369,16 @@
     <p><strong>WHY THIS IS SO IMPORTANT</strong> <br />
 To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode <a href='https://www.ncbi.nlm.nih.gov/pubmed/17304462'>(ref)</a>. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all <em>S. aureus</em> isolates would be overestimated, because you included this MRSA more than once. It would be <a href='https://en.wikipedia.org/wiki/Selection_bias'>selection bias</a>.</p>
 <p>All isolates with a microbial ID of <code>NA</code> will be excluded as first isolate.</p>
-<p>The functions <code>filter_first_isolate()</code> and <code>filter_first_weighted_isolate()</code> are helper functions to quickly filter on first isolates. The function <code>filter_first_isolate()</code> is essentially equal to one of:</p><pre> <span class='kw'>x</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'>first_isolate</span>(<span class='kw'>.</span>, <span class='kw'>...</span>))
+<p>The functions <code>filter_first_isolate()</code> and <code>filter_first_weighted_isolate()</code> are helper functions to quickly filter on first isolates. The function <code>filter_first_isolate()</code> is essentially equal to either:</p><pre>  <span class='kw'>x</span>[<span class='fu'>first_isolate</span>(<span class='kw'>x</span>, <span class='kw'>...</span>), ]
+  <span class='kw'>x</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'>first_isolate</span>(<span class='kw'>x</span>, <span class='kw'>...</span>))
 </pre>
 
-<p>The function <code>filter_first_weighted_isolate()</code> is essentially equal to:</p><pre> <span class='kw'>x</span> <span class='op'>%&gt;%</span>
-   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(keyab = <span class='fu'><a href='key_antibiotics.html'>key_antibiotics</a></span>(<span class='kw'>.</span>)) <span class='op'>%&gt;%</span>
-   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(only_weighted_firsts = <span class='fu'>first_isolate</span>(<span class='kw'>x</span>,
-                                               col_keyantibiotics = <span class='st'>"keyab"</span>, <span class='kw'>...</span>)) <span class='op'>%&gt;%</span>
-   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw'>only_weighted_firsts</span> <span class='op'>==</span> <span class='fl'>TRUE</span>) <span class='op'>%&gt;%</span>
-   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='op'>-</span><span class='kw'>only_weighted_firsts</span>, <span class='op'>-</span><span class='kw'>keyab</span>)
+<p>The function <code>filter_first_weighted_isolate()</code> is essentially equal to:</p><pre>  <span class='kw'>x</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(keyab = <span class='fu'><a href='key_antibiotics.html'>key_antibiotics</a></span>(<span class='kw'>.</span>)) <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(only_weighted_firsts = <span class='fu'>first_isolate</span>(<span class='kw'>x</span>,
+                                                col_keyantibiotics = <span class='st'>"keyab"</span>, <span class='kw'>...</span>)) <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw'>only_weighted_firsts</span> <span class='op'>==</span> <span class='fl'>TRUE</span>) <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='op'>-</span><span class='kw'>only_weighted_firsts</span>, <span class='op'>-</span><span class='kw'>keyab</span>)
 </pre>
 
     <h2 class="hasAnchor" id="key-antibiotics"><a class="anchor" href="#key-antibiotics"></a>Key antibiotics</h2>
@@ -411,50 +412,41 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
     <pre class="examples"><span class='co'># `example_isolates` is a dataset available in the AMR package.</span>
 <span class='co'># See ?example_isolates.</span>
 
-<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
-<span class='co'># Filter on first isolates:</span>
-<span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(first_isolate = <span class='fu'>first_isolate</span>(<span class='kw'>.</span>)) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw'>first_isolate</span> <span class='op'>==</span> <span class='fl'>TRUE</span>)
+<span class='co'># basic filtering on first isolates</span>
+<span class='kw'>example_isolates</span>[<span class='fu'>first_isolate</span>(<span class='kw'>example_isolates</span>), ]
 
-<span class='co'># Now let's see if first isolates matter:</span>
-<span class='kw'>A</span> <span class='op'>&lt;-</span> <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>hospital_id</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(count = <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='kw'>GEN</span>),            <span class='co'># gentamicin availability</span>
-            resistance = <span class='fu'><a href='proportion.html'>resistance</a></span>(<span class='kw'>GEN</span>))  <span class='co'># gentamicin resistance</span>
-
-<span class='kw'>B</span> <span class='op'>&lt;-</span> <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>filter_first_weighted_isolate</span>() <span class='op'>%&gt;%</span>      <span class='co'># the 1st isolate filter</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>hospital_id</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(count = <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='kw'>GEN</span>),            <span class='co'># gentamicin availability</span>
-            resistance = <span class='fu'><a href='proportion.html'>resistance</a></span>(<span class='kw'>GEN</span>))  <span class='co'># gentamicin resistance</span>
-
-<span class='co'># Have a look at A and B.</span>
-<span class='co'># B is more reliable because every isolate is counted only once.</span>
-<span class='co'># Gentamicin resistance in hospital D appears to be 3.7% higher than</span>
-<span class='co'># when you (erroneously) would have used all isolates for analysis.</span>
-
-
-<span class='co'>## OTHER EXAMPLES:</span>
-
-<span class='co'># Short-hand versions:</span>
-<span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>filter_first_isolate</span>()
+<span class='co'># \donttest{</span>
+<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span>)) {
+  <span class='co'># Filter on first isolates:</span>
+  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(first_isolate = <span class='fu'>first_isolate</span>(<span class='kw'>.</span>)) <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw'>first_isolate</span> <span class='op'>==</span> <span class='fl'>TRUE</span>)
+ 
+  <span class='co'># Short-hand versions:</span>
+  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>filter_first_isolate</span>()
+    
+  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>filter_first_weighted_isolate</span>()
   
-<span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>filter_first_weighted_isolate</span>()
-
-
-<span class='co'># set key antibiotics to a new variable</span>
-<span class='kw'>x</span><span class='op'>$</span><span class='kw'>keyab</span> <span class='op'>&lt;-</span> <span class='fu'><a href='key_antibiotics.html'>key_antibiotics</a></span>(<span class='kw'>x</span>)
-
-<span class='kw'>x</span><span class='op'>$</span><span class='kw'>first_isolate</span> <span class='op'>&lt;-</span> <span class='fu'>first_isolate</span>(<span class='kw'>x</span>)
-
-<span class='kw'>x</span><span class='op'>$</span><span class='kw'>first_isolate_weighed</span> <span class='op'>&lt;-</span> <span class='fu'>first_isolate</span>(<span class='kw'>x</span>, col_keyantibiotics = <span class='st'>'keyab'</span>)
-
-<span class='kw'>x</span><span class='op'>$</span><span class='kw'>first_blood_isolate</span> <span class='op'>&lt;-</span> <span class='fu'>first_isolate</span>(<span class='kw'>x</span>, specimen_group = <span class='st'>"Blood"</span>)
+  <span class='co'># Now let's see if first isolates matter:</span>
+  <span class='kw'>A</span> <span class='op'>&lt;-</span> <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>hospital_id</span>) <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(count = <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='kw'>GEN</span>),            <span class='co'># gentamicin availability</span>
+              resistance = <span class='fu'><a href='proportion.html'>resistance</a></span>(<span class='kw'>GEN</span>))  <span class='co'># gentamicin resistance</span>
+ 
+  <span class='kw'>B</span> <span class='op'>&lt;-</span> <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>filter_first_weighted_isolate</span>() <span class='op'>%&gt;%</span>      <span class='co'># the 1st isolate filter</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>hospital_id</span>) <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(count = <span class='fu'><a href='count.html'>n_rsi</a></span>(<span class='kw'>GEN</span>),            <span class='co'># gentamicin availability</span>
+              resistance = <span class='fu'><a href='proportion.html'>resistance</a></span>(<span class='kw'>GEN</span>))  <span class='co'># gentamicin resistance</span>
+ 
+  <span class='co'># Have a look at A and B.</span>
+  <span class='co'># B is more reliable because every isolate is counted only once.</span>
+  <span class='co'># Gentamicin resistance in hospital D appears to be 3.7% higher than</span>
+  <span class='co'># when you (erroneously) would have used all isolates for analysis.</span>
 }
+<span class='co'># }</span>
 </pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

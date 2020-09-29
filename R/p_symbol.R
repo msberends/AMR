@@ -25,6 +25,7 @@
 #' @inheritSection lifecycle Questioning lifecycle
 #' @param p p value
 #' @param emptychar text to show when `p > 0.1`
+#' @details **NOTE**: this function will be moved to the `cleaner` package when a new version is being published on CRAN.
 #' @return Text
 #' @inheritSection AMR Read more on our website!
 #' @export

@@ -35,9 +35,18 @@
   assign(x = "LANGUAGES_SUPPORTED",
          value = sort(c("en", unique(translations_file$lang))),
          envir = asNamespace("AMR"))
+  
+  assign(x = "MO_CONS",
+         value = create_species_cons_cops("CoNS"),
+         envir = asNamespace("AMR"))
+  
+  assign(x = "MO_COPS",
+         value = create_species_cons_cops("CoPS"),
+         envir = asNamespace("AMR"))
 
-  # support for tibble headers (type_sum) and tibble columns content (pillar_shaft) without the need to depend on other packages
-  # this was suggested by the developers of the vctrs package: 
+  # Support for tibble headers (type_sum) and tibble columns content (pillar_shaft)
+  # without the need to depend on other packages. This was suggested by the 
+  # developers of the vctrs package: 
   # https://github.com/r-lib/vctrs/blob/05968ce8e669f73213e3e894b5f4424af4f46316/R/register-s3.R
   s3_register("pillar::pillar_shaft", "ab")
   s3_register("tibble::type_sum", "ab")
@@ -49,10 +58,10 @@
   s3_register("tibble::type_sum", "mic")
   s3_register("pillar::pillar_shaft", "disk")
   s3_register("tibble::type_sum", "disk")
-  # support for frequency tables from the cleaner package
+  # Support for frequency tables from the cleaner package
   s3_register("cleaner::freq", "mo")
   s3_register("cleaner::freq", "rsi")
-  # support from skim from the skimr package
+  # Support from skim() from the skimr package
   s3_register("skimr::get_skimmers", "mo")
   s3_register("skimr::get_skimmers", "rsi")
   s3_register("skimr::get_skimmers", "mic")
@@ -60,6 +69,7 @@
 }
 
 .onAttach <- function(...) {
+  # show notice in 10% of cases in interactive session
   if (!interactive() || stats::runif(1) > 0.1 || isTRUE(as.logical(getOption("AMR_silentstart", FALSE)))) {
     return()
   }
@@ -67,6 +77,39 @@
                         "If you have a minute, please anonymously fill in this short questionnaire to improve the package and its functionalities:",
                         "\nhttps://msberends.github.io/AMR/survey.html",
                         "\n[ prevent his notice with suppressPackageStartupMessages(library(AMR)) or use options(AMR_silentstart = TRUE) ]")
+}
+
+create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
+  # Determination of which staphylococcal species are CoNS/CoPS according to Becker et al.:
+  # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4187637/figure/F3/
+  # returns class <mo>
+  MO_staph <- AMR::microorganisms
+  MO_staph <- MO_staph[which(MO_staph$genus == "Staphylococcus"), , drop = FALSE]
+  if (type == "CoNS") {
+    MO_staph[which(MO_staph$species %in% c("coagulase-negative",
+                                           "arlettae", "auricularis", "capitis",
+                                           "caprae", "carnosus", "chromogenes", "cohnii", "condimenti",
+                                           "devriesei", "epidermidis", "equorum", "felis",
+                                           "fleurettii", "gallinarum", "haemolyticus",
+                                           "hominis", "jettensis", "kloosii", "lentus",
+                                           "lugdunensis", "massiliensis", "microti",
+                                           "muscae", "nepalensis", "pasteuri", "petrasii",
+                                           "pettenkoferi", "piscifermentans", "rostri",
+                                           "saccharolyticus", "saprophyticus", "sciuri",
+                                           "stepanovicii", "simulans", "succinus",
+                                           "vitulinus", "warneri", "xylosus")
+                   | (MO_staph$species == "schleiferi" & MO_staph$subspecies %in% c("schleiferi", ""))),
+             "mo", drop = TRUE]
+  } else if (type == "CoPS") {
+    MO_staph[which(MO_staph$species %in% c("coagulase-positive",
+                                           "simiae", "agnetis",
+                                           "delphini", "lutrae",
+                                           "hyicus", "intermedius",
+                                           "pseudintermedius", "pseudointermedius",
+                                           "schweitzeri", "argenteus")
+                   | (MO_staph$species == "schleiferi" & MO_staph$subspecies == "coagulans")),
+             "mo", drop = TRUE]
+  }
 }
 
 create_AB_lookup <- function() {

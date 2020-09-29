@@ -33,8 +33,7 @@
 #' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
 #' @examples 
-#' \dontrun{
-#'   library(dplyr)
+#' if (require("dplyr")) {
 #' 
 #'   # this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
 #'   example_isolates %>% 
@@ -57,9 +56,9 @@
 #'     format()
 #'     
 #'     
-#'   data.frame(irrelevant = "value",
+#'   data.frame(some_column = "some_value",
 #'              J01CA01 = "S") %>%   # ATC code of ampicillin
-#'     select(penicillins())         # the 'J01CA01' column will be selected
+#'     select(penicillins())         # only the 'J01CA01' column will be selected
 #'
 #' }
 ab_class <- function(ab_class) {

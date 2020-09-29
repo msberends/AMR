@@ -60,17 +60,14 @@
 #' @inheritSection AMR Read more on our website!
 #' @source <https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/>
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # oral DDD (Defined Daily Dose) of amoxicillin
 #' atc_online_property("J01CA04", "DDD", "O")
+#' 
 #' # parenteral DDD (Defined Daily Dose) of amoxicillin
 #' atc_online_property("J01CA04", "DDD", "P")
 #'
 #' atc_online_property("J01CA04", property = "groups") # search hierarchical groups of amoxicillin
-#' # [1] "ANTIINFECTIVES FOR SYSTEMIC USE"
-#' # [2] "ANTIBACTERIALS FOR SYSTEMIC USE"
-#' # [3] "BETA-LACTAM ANTIBACTERIALS, PENICILLINS"
-#' # [4] "Penicillins with extended spectrum"
 #' }
 atc_online_property <- function(atc_code,
                                 property,

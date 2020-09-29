@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9034</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9035</span>
       </span>
     </div>
 
@@ -265,21 +265,22 @@
 <p>$$m_{(x, n)} = \frac{l_{n} - 0.5 \cdot \min \begin{cases}l_{n} \\ \operatorname{lev}(x, n)\end{cases}}{l_{n} \cdot p_{n} \cdot k_{n}}$$</p>
 <p>where:</p><ul>
 <li><p>\(x\) is the user input;</p></li>
-<li><p>\(n\) is a taxonomic name (genus, species and subspecies) as found in <code><a href='microorganisms.html'>microorganisms$fullname</a></code>;</p></li>
-<li><p>\(l_{n}\) is the length of \(n\);</p></li>
-<li><p>\(\operatorname{lev}\) is the <a href='https://en.wikipedia.org/wiki/Levenshtein_distance'>Levenshtein distance function</a>;</p></li>
-<li><p>\(p_{n}\) is the human pathogenic prevalence of \(n\), categorised into group \(1\), \(2\) and \(3\) (see <em>Details</em> in <code><a href='as.mo.html'>?as.mo</a></code>), meaning that \(p = \{1, 2 , 3\}\);</p></li>
-<li><p>\(k_{n}\) is the kingdom index of \(n\), set as follows: Bacteria = \(1\), Fungi = \(2\), Protozoa = \(3\), Archaea = \(4\), and all others = \(5\), meaning that \(k = \{1, 2 , 3, 4, 5\}\).</p></li>
+<li><p>\(n\) is a taxonomic name (genus, species, and subspecies);</p></li>
+<li><p>\(l_n\) is the length of \(n\);</p></li>
+<li><p>lev is the <a href='https://en.wikipedia.org/wiki/Levenshtein_distance'>Levenshtein distance function</a>, which counts any insertion, deletion and substitution as 1 that is needed to change \(x\) into \(n\);</p></li>
+<li><p>\(p_n\) is the human pathogenic prevalence group of \(n\), as described below;</p></li>
+<li><p>\(k_n\) is the taxonomic kingdom of \(n\), set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.</p></li>
 </ul>
 
-<p>This means that the user input <code>x = "E. coli"</code> gets for <em>Escherichia coli</em> a matching score of 68.8% and for <em>Entamoeba coli</em> a matching score of 7.9%.</p>
-<p>All matches are sorted descending on their matching score and for all user input values, the top match will be returned.</p>
+<p>The grouping into human pathogenic prevalence (\(p\)) is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence. <strong>Group 1</strong> (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is <em>Enterococcus</em>, <em>Staphylococcus</em> or <em>Streptococcus</em>. This group consequently contains all common Gram-negative bacteria, such as <em>Pseudomonas</em> and <em>Legionella</em> and all species within the order Enterobacterales. <strong>Group 2</strong> consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is <em>Absidia</em>, <em>Acremonium</em>, <em>Actinotignum</em>, <em>Alternaria</em>, <em>Anaerosalibacter</em>, <em>Apophysomyces</em>, <em>Arachnia</em>, <em>Aspergillus</em>, <em>Aureobacterium</em>, <em>Aureobasidium</em>, <em>Bacteroides</em>, <em>Basidiobolus</em>, <em>Beauveria</em>, <em>Blastocystis</em>, <em>Branhamella</em>, <em>Calymmatobacterium</em>, <em>Candida</em>, <em>Capnocytophaga</em>, <em>Catabacter</em>, <em>Chaetomium</em>, <em>Chryseobacterium</em>, <em>Chryseomonas</em>, <em>Chrysonilia</em>, <em>Cladophialophora</em>, <em>Cladosporium</em>, <em>Conidiobolus</em>, <em>Cryptococcus</em>, <em>Curvularia</em>, <em>Exophiala</em>, <em>Exserohilum</em>, <em>Flavobacterium</em>, <em>Fonsecaea</em>, <em>Fusarium</em>, <em>Fusobacterium</em>, <em>Hendersonula</em>, <em>Hypomyces</em>, <em>Koserella</em>, <em>Lelliottia</em>, <em>Leptosphaeria</em>, <em>Leptotrichia</em>, <em>Malassezia</em>, <em>Malbranchea</em>, <em>Mortierella</em>, <em>Mucor</em>, <em>Mycocentrospora</em>, <em>Mycoplasma</em>, <em>Nectria</em>, <em>Ochroconis</em>, <em>Oidiodendron</em>, <em>Phoma</em>, <em>Piedraia</em>, <em>Pithomyces</em>, <em>Pityrosporum</em>, <em>Prevotella</em>,\<em>Pseudallescheria</em>, <em>Rhizomucor</em>, <em>Rhizopus</em>, <em>Rhodotorula</em>, <em>Scolecobasidium</em>, <em>Scopulariopsis</em>, <em>Scytalidium</em>,<em>Sporobolomyces</em>, <em>Stachybotrys</em>, <em>Stomatococcus</em>, <em>Treponema</em>, <em>Trichoderma</em>, <em>Trichophyton</em>, <em>Trichosporon</em>, <em>Tritirachium</em> or <em>Ureaplasma</em>. <strong>Group 3</strong> consists of all other microorganisms.</p>
+<p>All matches are sorted descending on their matching score and for all user input values, the top match will be returned. This will lead to the effect that e.g., <code>"E. coli"</code> will return the microbial ID of <em>Escherichia coli</em> (\(m = 0.688\), a highly prevalent microorganism found in humans) and not <em>Entamoeba coli</em> (\(m = 0.079\), a less prevalent microorganism in humans), although the latter would alphabetically come first.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"E. coli"</span>)
 <span class='fu'><a href='as.mo.html'>mo_uncertainties</a></span>()
 
-<span class='fu'>mo_matching_score</span>(<span class='st'>"E. coli"</span>, <span class='st'>"Escherichia coli"</span>)
+<span class='fu'>mo_matching_score</span>(x = <span class='st'>"E. coli"</span>,
+                  n = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Escherichia coli"</span>, <span class='st'>"Entamoeba coli"</span>))
 </pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

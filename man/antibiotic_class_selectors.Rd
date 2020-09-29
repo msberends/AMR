@@ -68,8 +68,7 @@ On our website \url{https://msberends.github.io/AMR} you can find \href{https://
 }
 
 \examples{
-\dontrun{
-  library(dplyr)
+if (require("dplyr")) {
 
   # this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
   example_isolates \%>\% 
@@ -92,9 +91,9 @@ On our website \url{https://msberends.github.io/AMR} you can find \href{https://
     format()
     
     
-  data.frame(irrelevant = "value",
+  data.frame(some_column = "some_value",
              J01CA01 = "S") \%>\%   # ATC code of ampicillin
-    select(penicillins())         # the 'J01CA01' column will be selected
+    select(penicillins())         # only the 'J01CA01' column will be selected
 
 }
 }

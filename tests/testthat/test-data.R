@@ -66,6 +66,8 @@ test_that("creation of data sets is valid", {
   expect_true(all(c("fullname", "fullname_new", "ref", "prevalence",
                     "fullname_lower", "g_species") %in% colnames(olddf)))
   
+  expect_s3_class(create_species_cons_cops("CoNS"), "mo")
+  
 })
 
 test_that("CoL version info works", {

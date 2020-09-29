@@ -84,18 +84,20 @@ test_that("mic2rsi works", {
   
   skip_on_cran()
   
+  # S. pneumoniae/ampicillin in EUCAST 2020: 0.5-2 ug/ml (R is only > 2)
   expect_equal(as.character(
-    as.rsi(x = as.mic(0.125),
-                      mo = "B_STRPT_PNMN",
-                      ab = "AMX",
-                      guideline = "EUCAST")),
-    "S")
+    as.rsi(x = as.mic(c(0.125, 0.5, 1, 2, 4)),
+           mo = "B_STRPT_PNMN",
+           ab = "AMP",
+           guideline = "EUCAST 2020")),
+    c("S", "S", "I", "I", "R"))
+  # S. pneumoniae/amoxicillin in CLSI 2019: 2-8 ug/ml (R is 8 and > 8)
   expect_equal(as.character(
-    as.rsi(x = as.mic(4),
+    as.rsi(x = as.mic(c(1, 2, 4, 8, 16)),
            mo = "B_STRPT_PNMN",
            ab = "AMX",
-           guideline = "EUCAST")),
-    "I")
+           guideline = "CLSI 2019")),
+    c("S", "S", "I", "R", "R"))
 
   # cutoffs at MIC = 8
   expect_equal(as.rsi(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020"),

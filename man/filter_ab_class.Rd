@@ -71,40 +71,43 @@ If the unlying code needs breaking changes, they will occur gradually. For examp
 }
 
 \examples{
-\dontrun{
-library(dplyr)
+filter_aminoglycosides(example_isolates)
 
-# filter on isolates that have any result for any aminoglycoside
-example_isolates \%>\% filter_ab_class("aminoglycoside")
-example_isolates \%>\% filter_aminoglycosides()
+\donttest{
+if (require("dplyr")) {
 
-# this is essentially the same as (but without determination of column names):
-example_isolates \%>\%
-  filter_at(.vars = vars(c("GEN", "TOB", "AMK", "KAN")),
-            .vars_predicate = any_vars(. \%in\% c("S", "I", "R")))
+  # filter on isolates that have any result for any aminoglycoside
+  example_isolates \%>\% filter_aminoglycosides()
+  example_isolates \%>\% filter_ab_class("aminoglycoside")
+
+  # this is essentially the same as (but without determination of column names):
+  example_isolates \%>\%
+    filter_at(.vars = vars(c("GEN", "TOB", "AMK", "KAN")),
+              .vars_predicate = any_vars(. \%in\% c("S", "I", "R")))
 
 
-# filter on isolates that show resistance to ANY aminoglycoside
-example_isolates \%>\% filter_aminoglycosides("R", "any")
-
-# filter on isolates that show resistance to ALL aminoglycosides
-example_isolates \%>\% filter_aminoglycosides("R", "all")
-
-# filter on isolates that show resistance to
-# any aminoglycoside and any fluoroquinolone
-example_isolates \%>\%
-  filter_aminoglycosides("R") \%>\%
-  filter_fluoroquinolones("R")
-
-# filter on isolates that show resistance to
-# all aminoglycosides and all fluoroquinolones
-example_isolates \%>\%
-  filter_aminoglycosides("R", "all") \%>\%
-  filter_fluoroquinolones("R", "all")
-
-# with dplyr 1.0.0 and higher (that adds 'across()'), this is equal:
-example_isolates \%>\% filter_carbapenems("R", "all")
-example_isolates \%>\% filter(across(carbapenems(), ~. == "R"))
+  # filter on isolates that show resistance to ANY aminoglycoside
+  example_isolates \%>\% filter_aminoglycosides("R", "any")
+ 
+  # filter on isolates that show resistance to ALL aminoglycosides
+  example_isolates \%>\% filter_aminoglycosides("R", "all")
+ 
+  # filter on isolates that show resistance to
+  # any aminoglycoside and any fluoroquinolone
+  example_isolates \%>\%
+    filter_aminoglycosides("R") \%>\%
+    filter_fluoroquinolones("R")
+ 
+  # filter on isolates that show resistance to
+  # all aminoglycosides and all fluoroquinolones
+  example_isolates \%>\%
+    filter_aminoglycosides("R", "all") \%>\%
+    filter_fluoroquinolones("R", "all")
+  
+  # with dplyr 1.0.0 and higher (that adds 'across()'), this is equal:
+  example_isolates \%>\% filter_carbapenems("R", "all")
+  example_isolates \%>\% filter(across(carbapenems(), ~. == "R"))
+}
 }
 }
 \seealso{

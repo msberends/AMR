@@ -50,7 +50,7 @@
 
 <meta property="og:title" content="Filter isolates on result in antimicrobial class — filter_ab_class" />
 <meta property="og:description" content="Filter isolates on results in specific antimicrobial classes. This makes it easy to filter on isolates that were tested for e.g. any aminoglycoside, or to filter on carbapenem-resistant isolates without the need to specify the drugs." />
-<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9035</span>
       </span>
     </div>
 
@@ -310,41 +310,45 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
     <div class='dont-index'><p><code><a href='antibiotic_class_selectors.html'>antibiotic_class_selectors()</a></code> for the <code><a href='https://dplyr.tidyverse.org/reference/select.html'>select()</a></code> equivalent.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
+    <pre class="examples"><span class='fu'>filter_aminoglycosides</span>(<span class='kw'>example_isolates</span>)
 
-<span class='co'># filter on isolates that have any result for any aminoglycoside</span>
-<span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span> <span class='fu'>filter_ab_class</span>(<span class='st'>"aminoglycoside"</span>)
-<span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span> <span class='fu'>filter_aminoglycosides</span>()
+<span class='co'># \donttest{</span>
+<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span>)) {
 
-<span class='co'># this is essentially the same as (but without determination of column names):</span>
-<span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter_all.html'>filter_at</a></span>(.vars = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"GEN"</span>, <span class='st'>"TOB"</span>, <span class='st'>"AMK"</span>, <span class='st'>"KAN"</span>)),
-            .vars_predicate = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/all_vars.html'>any_vars</a></span>(<span class='kw'>.</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"S"</span>, <span class='st'>"I"</span>, <span class='st'>"R"</span>)))
+  <span class='co'># filter on isolates that have any result for any aminoglycoside</span>
+  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span> <span class='fu'>filter_aminoglycosides</span>()
+  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span> <span class='fu'>filter_ab_class</span>(<span class='st'>"aminoglycoside"</span>)
+
+  <span class='co'># this is essentially the same as (but without determination of column names):</span>
+  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter_all.html'>filter_at</a></span>(.vars = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"GEN"</span>, <span class='st'>"TOB"</span>, <span class='st'>"AMK"</span>, <span class='st'>"KAN"</span>)),
+              .vars_predicate = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/all_vars.html'>any_vars</a></span>(<span class='kw'>.</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"S"</span>, <span class='st'>"I"</span>, <span class='st'>"R"</span>)))
 
 
-<span class='co'># filter on isolates that show resistance to ANY aminoglycoside</span>
-<span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span> <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>, <span class='st'>"any"</span>)
-
-<span class='co'># filter on isolates that show resistance to ALL aminoglycosides</span>
-<span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span> <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>, <span class='st'>"all"</span>)
-
-<span class='co'># filter on isolates that show resistance to</span>
-<span class='co'># any aminoglycoside and any fluoroquinolone</span>
-<span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>filter_fluoroquinolones</span>(<span class='st'>"R"</span>)
-
-<span class='co'># filter on isolates that show resistance to</span>
-<span class='co'># all aminoglycosides and all fluoroquinolones</span>
-<span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>, <span class='st'>"all"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>filter_fluoroquinolones</span>(<span class='st'>"R"</span>, <span class='st'>"all"</span>)
-
-<span class='co'># with dplyr 1.0.0 and higher (that adds 'across()'), this is equal:</span>
-<span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span> <span class='fu'>filter_carbapenems</span>(<span class='st'>"R"</span>, <span class='st'>"all"</span>)
-<span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span>(<span class='fu'><a href='antibiotic_class_selectors.html'>carbapenems</a></span>(), <span class='op'>~</span><span class='kw'>.</span> <span class='op'>==</span> <span class='st'>"R"</span>))
-}</pre>
+  <span class='co'># filter on isolates that show resistance to ANY aminoglycoside</span>
+  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span> <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>, <span class='st'>"any"</span>)
+ 
+  <span class='co'># filter on isolates that show resistance to ALL aminoglycosides</span>
+  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span> <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>, <span class='st'>"all"</span>)
+ 
+  <span class='co'># filter on isolates that show resistance to</span>
+  <span class='co'># any aminoglycoside and any fluoroquinolone</span>
+  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>) <span class='op'>%&gt;%</span>
+    <span class='fu'>filter_fluoroquinolones</span>(<span class='st'>"R"</span>)
+ 
+  <span class='co'># filter on isolates that show resistance to</span>
+  <span class='co'># all aminoglycosides and all fluoroquinolones</span>
+  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>filter_aminoglycosides</span>(<span class='st'>"R"</span>, <span class='st'>"all"</span>) <span class='op'>%&gt;%</span>
+    <span class='fu'>filter_fluoroquinolones</span>(<span class='st'>"R"</span>, <span class='st'>"all"</span>)
+  
+  <span class='co'># with dplyr 1.0.0 and higher (that adds 'across()'), this is equal:</span>
+  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span> <span class='fu'>filter_carbapenems</span>(<span class='st'>"R"</span>, <span class='st'>"all"</span>)
+  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span>(<span class='fu'><a href='antibiotic_class_selectors.html'>carbapenems</a></span>(), <span class='op'>~</span><span class='kw'>.</span> <span class='op'>==</span> <span class='st'>"R"</span>))
+}
+<span class='co'># }</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

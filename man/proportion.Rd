@@ -218,15 +218,6 @@ if (require("dplyr")) {
     group_by(hospital_id) \%>\%
     proportion_df(translate = FALSE)
 }
-
-\dontrun{  
-  # calculate current empiric combination therapy of Helicobacter gastritis:
-  my_table \%>\%
-    filter(first_isolate == TRUE,
-           genus == "Helicobacter") \%>\%
-    summarise(p = susceptibility(AMX, MTR),  # amoxicillin with metronidazole
-              n = count_all(AMX, MTR))
-}
 }
 \seealso{
 \code{\link[=count]{count()}} to count resistant and susceptible isolates.
