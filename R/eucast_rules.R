@@ -475,7 +475,6 @@ eucast_rules <- function(x,
   all_betalactams <- c(aminopenicillins, cephalosporins, carbapenems, ureidopenicillins, AMC, OXA, FLC, PEN)
   # nolint end
   
-  
   # Some helper functions ---------------------------------------------------
   get_antibiotic_columns <- function(x, df) {
     x <- trimws(unlist(strsplit(x, ",", fixed = TRUE)))
@@ -546,6 +545,8 @@ eucast_rules <- function(x,
     }
     suppressWarnings(as.rsi(x))
   }
+  
+  # Preparing the data ------------------------------------------------------
   
   verbose_info <- data.frame(rowid = character(0),
                              col = character(0),
@@ -884,18 +885,16 @@ eucast_rules <- function(x,
   # Print overview ----------------------------------------------------------
   if (info == TRUE) {
     
-    rownames(verbose_info) <- NULL
-    affected <- x.bak[which(x.bak$`.rowid` %in% x$`.rowid`), , drop = FALSE]
-    rows_affected <- as.integer(rownames(affected))
-    verbose_info <- verbose_info %pm>% 
-      pm_left_join(data.frame(row = rows_affected, 
-                              rowid = affected[, ".rowid", drop = TRUE],
-                              stringsAsFactors = FALSE),
-                   by = "rowid") %pm>% 
-      pm_select(-rowid) %pm>% 
+    verbose_info <- x.bak %pm>%
+      pm_mutate(row = pm_row_number()) %pm>%
+      pm_select(`.rowid`, row) %pm>%
+      pm_right_join(verbose_info,
+                    by = c(".rowid" = "rowid")) %pm>% 
+      pm_select(-`.rowid`) %pm>% 
       pm_select(row, pm_everything()) %pm>% 
       pm_filter(!is.na(new)) %pm>%
       pm_arrange(row, rule_group, rule_name, col)
+    rownames(verbose_info) <- NULL
     
     if (verbose == TRUE) {
       wouldve <- "would have "
@@ -904,15 +903,17 @@ eucast_rules <- function(x,
     }
     
     cat(paste0("\n", font_grey(strrep("-", 0.95 * options()$width)), "\n"))
-    cat(font_bold(paste("The rules", paste0(wouldve, "affected"),
-                        formatnr(pm_n_distinct(verbose_info$row)),
+    cat(paste0("The rules ", paste0(wouldve, "affected "),
+              font_bold(formatnr(pm_n_distinct(verbose_info$row)),
                         "out of", formatnr(nrow(x.bak)),
-                        "rows, making a total of", formatnr(nrow(verbose_info)), "edits\n")))
-    
-    total_n_added <- verbose_info %pm>% pm_filter(is.na(old)) %pm>% nrow()
-    total_n_changed <- verbose_info %pm>% pm_filter(!is.na(old)) %pm>% nrow()
-    
-    # print added values
+                        "rows"), 
+              ", making a total of ",
+              font_bold(formatnr(nrow(verbose_info)), "edits\n")))
+
+total_n_added <- verbose_info %pm>% pm_filter(is.na(old)) %pm>% nrow()
+total_n_changed <- verbose_info %pm>% pm_filter(!is.na(old)) %pm>% nrow()
+
+# print added values
     if (total_n_added == 0) {
       colour <- cat # is function
     } else {

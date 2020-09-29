@@ -97,6 +97,12 @@ test_that("mic2rsi works", {
            guideline = "EUCAST")),
     "I")
 
+  # cutoffs at MIC = 8
+  expect_equal(as.rsi(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020"),
+               as.rsi("S"))
+  expect_equal(as.rsi(as.mic(32), "E. coli", "ampicillin", guideline = "EUCAST 2020"),
+               as.rsi("R"))
+
   expect_true(example_isolates %>%
                 mutate(amox_mic = as.mic(2)) %>%
                 select(mo, amox_mic) %>%

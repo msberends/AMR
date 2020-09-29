@@ -94,7 +94,7 @@ atc_online_property <- function(atc_code,
   }
   
   if (!has_internet()) {
-    message("There appears to be no internet connection.")
+    message("There appears to be no internet connection, returning NA.")
     return(rep(NA, length(atc_code)))
   }
   
