@@ -954,7 +954,7 @@ mdro <- function(x,
               "any")
     trans_tbl(3,
               which(x$mo %in% MO_CONS), # coagulase-negative Staphylococcus
-              c(  VAN, TLV, DAL, ORI, DAP, LNZ, TZD, QDA, TGC, ERV, OMC),
+              c(VAN, TLV, DAL, ORI, DAP, LNZ, TZD, QDA, TGC, ERV, OMC),
               "any")
     trans_tbl(3,
               which(x$genus == "Corynebacterium"),
