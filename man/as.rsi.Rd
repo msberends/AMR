@@ -156,6 +156,11 @@ On our website \url{https://msberends.github.io/AMR} you can find \href{https://
 \examples{
 summary(example_isolates) # see all R/SI results at a glance
 
+if (require("skimr")) {
+  # support for skim() too:
+  skim(example_isolates)
+}
+
 # For INTERPRETING disk diffusion and MIC values -----------------------
        
 # a whole data set, even with combined MIC values and disk zones
@@ -185,7 +190,7 @@ if (require("dplyr")) {
   df \%>\% mutate_if(function(x) is.mic(x) | is.disk(x), as.rsi)
   df \%>\% mutate(across(where(is.mic), as.rsi))
   df \%>\% mutate_at(vars(AMP:TOB), as.rsi)
-  df \%>\% mutate(across(AMP:TOB), as.rsi)
+  df \%>\% mutate(across(AMP:TOB, as.rsi))
  
   df \%>\%
     mutate_at(vars(AMP:TOB), as.rsi, mo = "E. coli")
@@ -228,7 +233,7 @@ if (require("dplyr")) {
     
   # note: from dplyr 1.0.0 on, this will be: 
   # example_isolates \%>\%
-  #   mutate(across(is.rsi.eligible, as.rsi))
+  #   mutate(across(where(is.rsi.eligible), as.rsi))
 }
 }
 }

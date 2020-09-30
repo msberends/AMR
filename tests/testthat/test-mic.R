@@ -40,6 +40,7 @@ test_that("mic works", {
   expect_s3_class(c(x[1], x[9]), "mic")
   expect_s3_class(unique(x[1], x[9]), "mic")
   expect_warning(as.mic("INVALID VALUE"))
+  
 
   pdf(NULL) # prevent Rplots.pdf being created
   expect_silent(barplot(as.mic(c(1, 2, 4, 8))))

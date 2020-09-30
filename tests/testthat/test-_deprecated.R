@@ -19,31 +19,9 @@
 # Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
-context("import_fn.R")
+context("deprecated.R")
 
-test_that("imports work", {
+test_that("deprecated functions work", {
   skip_on_cran()
-  
-  import_functions <- c(
-    cleaner = "freq.default",
-    curl = "has_internet",
-    dplyr = "cur_column",
-    dplyr = "peek_mask",
-    readxl = "read_excel",
-    rstudioapi = "showQuestion",
-    rvest = "html_attr",
-    rvest = "html_children",
-    rvest = "html_node",
-    rvest = "html_nodes",
-    rvest = "html_table",
-    rvest = "html_text",
-    tidyselect = "peek_vars",
-    xml2 = "read_html")
-  
-  for (i in seq_len(length(import_functions))) {
-    pkg <- names(import_functions)[i]
-    fn <- unname(import_functions[i])
-    expect(!is.null(import_fn(name = fn, pkg = pkg, error_on_fail = FALSE)),
-           failure_message = paste0("Function ", pkg, "::", fn, "() does not exist"))
-  }
+  # if some functions get deprecated, put the tests here
 })

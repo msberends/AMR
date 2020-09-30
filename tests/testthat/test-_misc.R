@@ -19,7 +19,7 @@
 # Visit our website for more info: https://msberends.github.io/AMR.    #
 # ==================================================================== #
 
-context("misc.R")
+context("aa_helper_functions.R")
 
 test_that("percentages works", {
   skip_on_cran()
@@ -49,4 +49,41 @@ test_that("looking up ab columns works", {
   expect_message(get_column_abx(example_isolates, soft_dependencies = "FUS"))
   expect_warning(get_column_abx(dplyr::rename(example_isolates, thisone = AMX), amox = "thisone", tmp = "thisone", verbose = TRUE))
   expect_warning(get_column_abx(dplyr::rename(example_isolates, thisone = AMX), amox = "thisone", tmp = "thisone", verbose = FALSE))
+})
+
+test_that("imports work", {
+  skip_on_cran()
+  
+  import_functions <- c(
+    "anti_join" = "dplyr",
+    "cur_column" = "dplyr",
+    "freq.default" = "cleaner",
+    "full_join" = "dplyr",
+    "has_internet" = "curl",
+    "html_attr" = "rvest",
+    "html_children" = "rvest",
+    "html_node" = "rvest",
+    "html_nodes" = "rvest",
+    "html_table" = "rvest",
+    "html_text" = "rvest",
+    "inline_hist" = "skimr",
+    "inner_join" = "dplyr",
+    "insertText" = "rstudioapi",
+    "left_join" = "dplyr",
+    "new_pillar_shaft_simple" = "pillar",
+    "peek_mask" = "dplyr",
+    "peek_vars" = "tidyselect",
+    "read_excel" = "readxl",
+    "read_html" = "xml2",
+    "right_join" = "dplyr",
+    "semi_join" = "dplyr",
+    "sfl" = "skimr",
+    "showQuestion" = "rstudioapi")
+  
+  for (i in seq_len(length(import_functions))) {
+    fn <- names(import_functions)[i]
+    pkg <- unname(import_functions[i])
+    expect(!is.null(import_fn(name = fn, pkg = pkg, error_on_fail = FALSE)),
+           failure_message = paste0("Function ", pkg, "::", fn, "() does not exist"))
+  }
 })
