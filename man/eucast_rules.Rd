@@ -31,7 +31,7 @@ eucast_rules(
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{info}{print progress}
+\item{info}{a logical to indicate whether progress should be printed to the console, defaults to only print while in interactive sessions}
 
 \item{rules}{a character vector that specifies which rules should be applied. Must be one or more of \code{"breakpoints"}, \code{"expert"}, \code{"other"}, \code{"all"}, and defaults to \code{c("breakpoints", "expert")}. The default value can be set to another value, e.g. using \code{options(AMR_eucastrules = "all")}.}
 

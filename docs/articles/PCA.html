@@ -20,7 +20,7 @@
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <script src="../extra.js"></script><meta property="og:title" content="How to conduct principal component analysis (PCA) for AMR">
 <meta property="og:description" content="AMR">
-<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg">
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0</span>
       </span>
     </div>
 
@@ -227,9 +227,9 @@
 <span class="co"># $ PEN             &lt;rsi&gt; R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R,…</span>
 <span class="co"># $ OXA             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
 <span class="co"># $ FLC             &lt;rsi&gt; NA, NA, R, R, R, R, S, S, R, S, S, S, NA, NA, NA, NA,…</span>
-<span class="co"># $ AMX             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ AMX             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, R, R, NA, NA, NA, NA, NA, NA,…</span>
 <span class="co"># $ AMC             &lt;rsi&gt; I, I, NA, NA, NA, NA, S, S, NA, NA, S, S, I, I, R, I,…</span>
-<span class="co"># $ AMP             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ AMP             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, R, R, NA, NA, NA, NA, NA, NA,…</span>
 <span class="co"># $ TZP             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
 <span class="co"># $ CZO             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
 <span class="co"># $ FEP             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
@@ -252,10 +252,10 @@
 <span class="co"># $ VAN             &lt;rsi&gt; R, R, S, S, S, S, S, S, S, S, NA, NA, R, R, R, R, R, …</span>
 <span class="co"># $ TEC             &lt;rsi&gt; R, R, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, R, R, R…</span>
 <span class="co"># $ TCY             &lt;rsi&gt; R, R, S, S, S, S, S, S, S, I, S, S, NA, NA, I, R, R, …</span>
-<span class="co"># $ TGC             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="co"># $ TGC             &lt;rsi&gt; NA, NA, S, S, S, S, S, S, S, NA, S, S, NA, NA, NA, R,…</span>
 <span class="co"># $ DOX             &lt;rsi&gt; NA, NA, S, S, S, S, S, S, S, NA, S, S, NA, NA, NA, R,…</span>
 <span class="co"># $ ERY             &lt;rsi&gt; R, R, R, R, R, R, S, S, R, S, S, S, R, R, R, R, R, R,…</span>
-<span class="co"># $ CLI             &lt;rsi&gt; NA, NA, NA, NA, NA, R, NA, NA, NA, NA, NA, NA, NA, NA…</span>
+<span class="co"># $ CLI             &lt;rsi&gt; R, R, NA, NA, NA, R, NA, NA, NA, NA, NA, NA, R, R, R,…</span>
 <span class="co"># $ AZM             &lt;rsi&gt; R, R, R, R, R, R, S, S, R, S, S, S, R, R, R, R, R, R,…</span>
 <span class="co"># $ IPM             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, S, S,…</span>
 <span class="co"># $ MEM             &lt;rsi&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
@@ -301,9 +301,9 @@
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">pca_result</span>)
 <span class="co"># Importance of components:</span>
 <span class="co">#                          PC1    PC2     PC3     PC4     PC5     PC6       PC7</span>
-<span class="co"># Standard deviation     2.154 1.6809 0.61305 0.33882 0.20755 0.03137 1.602e-16</span>
-<span class="co"># Proportion of Variance 0.580 0.3532 0.04698 0.01435 0.00538 0.00012 0.000e+00</span>
-<span class="co"># Cumulative Proportion  0.580 0.9332 0.98014 0.99449 0.99988 1.00000 1.000e+00</span>
+<span class="co"># Standard deviation     2.154 1.6807 0.61365 0.33902 0.20757 0.03136 1.733e-16</span>
+<span class="co"># Proportion of Variance 0.580 0.3531 0.04707 0.01437 0.00539 0.00012 0.000e+00</span>
+<span class="co"># Cumulative Proportion  0.580 0.9331 0.98012 0.99449 0.99988 1.00000 1.000e+00</span>
 </pre></div>
 <p>Good news. The first two components explain a total of 93.3% of the variance (see the PC1 and PC2 values of the <em>Proportion of Variance</em>. We can create a so-called biplot with the base R <code><a href="https://rdrr.io/r/stats/biplot.html">biplot()</a></code> function, to see which antimicrobial resistance per drug explain the difference per microorganism.</p>
 </div>

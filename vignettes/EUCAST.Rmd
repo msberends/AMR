@@ -28,7 +28,9 @@ What are EUCAST rules? The European Committee on Antimicrobial Susceptibility Te
 
 > *EUCAST expert rules are a tabulated collection of expert knowledge on intrinsic resistances, exceptional resistance phenotypes and interpretive rules that may be applied to antimicrobial susceptibility testing in order to reduce errors and make appropriate recommendations for reporting particular resistances.*
 
-In Europe, a lot of medical microbiological laboratories already apply these rules ([Brown *et al.*, 2015](https://www.eurosurveillance.org/content/10.2807/1560-7917.ES2015.20.2.21008)). Our package features their latest insights on intrinsic resistance and exceptional phenotypes (version `r AMR:::EUCAST_VERSION_BREAKPOINTS`). Moreover, the `eucast_rules()` function we use for this purpose can also apply additional rules, like forcing <help title="ATC: J01CA01">ampicillin</help> = R in isolates when <help title="ATC: J01CR02">amoxicillin/clavulanic acid</help> = R.
+In Europe, a lot of medical microbiological laboratories already apply these rules ([Brown *et al.*, 2015](https://www.eurosurveillance.org/content/10.2807/1560-7917.ES2015.20.2.21008)). Our package features their latest insights on intrinsic resistance and unusual phenotypes (`r AMR:::EUCAST_VERSION_EXPERT_RULES[[length(AMR:::EUCAST_VERSION_EXPERT_RULES)]]$version_txt`, `r AMR:::EUCAST_VERSION_EXPERT_RULES[[length(AMR:::EUCAST_VERSION_EXPERT_RULES)]]$year`).
+
+Moreover, the `eucast_rules()` function we use for this purpose can also apply additional rules, like forcing <help title="ATC: J01CA01">ampicillin</help> = R in isolates when <help title="ATC: J01CR02">amoxicillin/clavulanic acid</help> = R.
 
 ## Examples
 
@@ -58,7 +60,7 @@ data <- data.frame(mo = c("Staphylococcus aureus",
                    COL = "-",       # Colistin
                    CAZ = "-",       # Ceftazidime
                    CXM = "-",       # Cefuroxime
-                   PEN = "S",       # Penicillin G
+                   PEN = "S",       # Benzylenicillin
                    FOX = "S",       # Cefoxitin
                    stringsAsFactors = FALSE)
 ```
@@ -68,9 +70,9 @@ data
 ```{r, echo = FALSE}
 knitr::kable(data, align = "lccccccc")
 ```
-```{r, eval = FALSE}
+```{r, warning = FALSE, eval = FALSE}
 eucast_rules(data)
 ```
-```{r, echo = FALSE, message = FALSE}
+```{r, warning = FALSE, echo = FALSE, message = FALSE}
 knitr::kable(eucast_rules(data), align = "lccccccc")
 ```

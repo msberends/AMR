@@ -157,7 +157,7 @@ as.mo <- function(x,
   
   check_dataset_integrity()
   
-  if (tryCatch(all(x %in% MO_lookup$mo, na.rm = TRUE)
+  if (tryCatch(all(x[!is.na(x)] %in% MO_lookup$mo)
                & isFALSE(Becker)
                & isFALSE(Lancefield), error = function(e) FALSE)) {
     # don't look into valid MO codes, just return them
@@ -212,7 +212,7 @@ as.mo <- function(x,
         pm_pull("mo")
     )
     
-  } else if (all(x %in% MO_lookup$mo)
+  } else if (all(x[!is.na(x)] %in% MO_lookup$mo)
              & isFALSE(Becker)
              & isFALSE(Lancefield)) {
     y <- x
@@ -1733,7 +1733,9 @@ print.mo_uncertainties <- function(x, ...) {
   if (NROW(x) == 0) {
     return(NULL)
   }
-  cat(font_blue(strwrap(c("Matching scores are based on human pathogenic prevalence and the resemblance between the input and the full taxonomic name. Please see ?mo_matching_score.")), collapse = "\n"))
+  cat(font_blue(strwrap("Matching scores are based on human pathogenic prevalence and the resemblance between the input and the full taxonomic name. Please see ?mo_matching_score.", 
+                        width = 0.98 * getOption("width")), 
+                collapse = "\n"))
   cat("\n")
   
   msg <- ""
@@ -1745,12 +1747,22 @@ print.mo_uncertainties <- function(x, ...) {
       candidates <- candidates[order(1 - scores)]
       scores_formatted <- trimws(formatC(round(scores, 3), format = "f", digits = 3))
       n_candidates <- length(candidates)
-      candidates <- paste0(font_italic(candidates, collapse = NULL), 
-                           " (", scores_formatted[order(1 - scores)], ")")
-      candidates <- paste(candidates, collapse = ", ")
+      candidates <- paste0(candidates, " (", scores_formatted[order(1 - scores)], ")", collapse = ", ")
       # align with input after arrow
-      candidates <- paste0("\n", strrep(" ", nchar(x[i, ]$input) + 6), 
-                           "Also matched", ifelse(n_candidates == 25, " (max 25)", ""), ": ", candidates)
+      candidates <- paste0("\n", 
+                           strwrap(paste0("Also matched",
+                                          ifelse(n_candidates >= 25, " (max 25)", ""), ": ", 
+                                          candidates), # this is already max 25 due to format_uncertainty_as_df()
+                                   indent = nchar(x[i, ]$input) + 6,
+                                   exdent = nchar(x[i, ]$input) + 6, 
+                                   width = 0.98 * getOption("width")),
+                           collapse = "")
+      # after strwrap, make taxonomic names italic
+      candidates <- gsub("([A-Za-z]+)", font_italic("\\1"), candidates)
+      candidates <- gsub(paste(font_italic(c("Also", "matched"), collapse = NULL), collapse = " "), 
+                         "Also matched",
+                         candidates, fixed = TRUE)
+      candidates <- gsub(font_italic("max"), "max", candidates, fixed = TRUE)
     } else {
       candidates <- ""
     }
@@ -1759,14 +1771,20 @@ print.mo_uncertainties <- function(x, ...) {
                                   3),
                             format = "f", digits = 3))
     msg <- paste(msg,
-                 paste0('"', x[i, ]$input, '" -> ',
-                        paste0(font_bold(font_italic(x[i, ]$fullname)),
-                               ifelse(!is.na(x[i, ]$renamed_to), paste(", renamed to", font_italic(x[i, ]$renamed_to)), ""),
-                               " (", x[i, ]$mo,
-                               ", matching score = ", score,
-                               ") "),
-                        candidates),
+                 paste0(
+                   strwrap(
+                     paste0('"', x[i, ]$input, '" -> ',
+                            paste0(font_bold(font_italic(x[i, ]$fullname)),
+                                   ifelse(!is.na(x[i, ]$renamed_to), paste(", renamed to", font_italic(x[i, ]$renamed_to)), ""),
+                                   " (", x[i, ]$mo,
+                                   ", matching score = ", score,
+                                   ") ")),
+                     width = 0.98 * getOption("width"),
+                     exdent = nchar(x[i, ]$input) + 6), 
+                   collapse = "\n"),
+                 candidates,
                  sep = "\n")
+    msg <- paste0(gsub("\n\n", "\n", msg), "\n\n")
   }
   cat(msg)
 }

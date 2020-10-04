@@ -188,8 +188,9 @@ search_type_in_df <- function(x, type, info = TRUE) {
 }
 
 is_possibly_regex <- function(x) {
-  sapply(strsplit(x, ""),
-         function(y) any(y %in% c("$", "(", ")", "*", "+", "-", ".", "?", "[", "]", "^", "{", "|", "}", "\\"), na.rm = TRUE))
+  tryCatch(sapply(strsplit(x, ""),
+                  function(y) any(y %in% c("$", "(", ")", "*", "+", "-", ".", "?", "[", "]", "^", "{", "|", "}", "\\"), na.rm = TRUE)),
+           error = function(e) rep(TRUE, length(x)))
 }
 
 stop_ifnot_installed <- function(package) {

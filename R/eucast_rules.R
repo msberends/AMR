@@ -39,7 +39,7 @@ EUCAST_VERSION_EXPERT_RULES <- list("3.1" = list(version_txt = "v3.1",
 #' To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see Details.
 #' @inheritSection lifecycle Stable lifecycle
 #' @param x data with antibiotic columns, such as `amox`, `AMX` and `AMC`
-#' @param info print progress
+#' @param info a logical to indicate whether progress should be printed to the console, defaults to only print while in interactive sessions
 #' @param rules a character vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expert"`, `"other"`, `"all"`, and defaults to `c("breakpoints", "expert")`. The default value can be set to another value, e.g. using `options(AMR_eucastrules = "all")`.
 #' @param verbose a [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.
 #' @param version_breakpoints the version number to use for the EUCAST Clinical Breakpoints guideline. Currently supported: `r paste0(names(EUCAST_VERSION_BREAKPOINTS), collapse = ", ")`.
@@ -132,7 +132,7 @@ eucast_rules <- function(x,
                          ...) {
   
   x_deparsed <- deparse(substitute(x))
-  if (length(x_deparsed) > 0 || !all(x_deparsed %like% "[a-z]")) {
+  if (length(x_deparsed) > 1 || !all(x_deparsed %like% "[a-z]+")) {
     x_deparsed <- "your_data"
   }
   
@@ -188,7 +188,7 @@ eucast_rules <- function(x,
   }
   
   warned <- FALSE
-  warn_lacking_rsi_class <- FALSE
+  warn_lacking_rsi_class <- character(0)
   txt_ok <- function(n_added, n_changed, warned = FALSE) {
     if (warned == FALSE) {
       if (n_added + n_changed == 0) {
@@ -447,7 +447,7 @@ eucast_rules <- function(x,
   if (info == TRUE & NROW(x) > 10000) {
     message(font_blue("NOTE: Preparing data..."), appendLF = FALSE)
   }
-
+  
   # nolint start
   # antibiotic classes ----
   aminoglycosides <- c(AMK, DKB, GEN, ISE, KAN, NEO, NET, RST, SIS, STR, STR1, TOB)
@@ -612,9 +612,7 @@ eucast_rules <- function(x,
         # Set base to R where base + enzyme inhibitor is R
         rule_current <- paste0("Set ", ab_name_base, " (", cols_ab[ab_enzyme[i, ]$base_ab], ") = R where ",
                                ab_name_enzyme, " (", cols_ab[ab_enzyme[i, ]$ab], ") = R")
-        if (info == TRUE) {
-          cat(rule_current)
-        }
+        cat(rule_current)
         run_changes <- edit_rsi(x = x,
                                 col_mo = col_mo,
                                 to = "R",
@@ -629,7 +627,7 @@ eucast_rules <- function(x,
         n_changed <- n_changed + run_changes$changed
         verbose_info <- run_changes$verbose_info
         x <- run_changes$output
-        warn_lacking_rsi_class <- warn_lacking_rsi_class | run_changes$rsi_warn
+        warn_lacking_rsi_class <- c(warn_lacking_rsi_class, run_changes$rsi_warn)
         # Print number of new changes
         if (info == TRUE) {
           # print only on last one of rules in this group
@@ -659,7 +657,7 @@ eucast_rules <- function(x,
         n_changed <- n_changed + run_changes$changed
         verbose_info <- run_changes$verbose_info
         x <- run_changes$output
-        warn_lacking_rsi_class <- warn_lacking_rsi_class | run_changes$rsi_warn
+        warn_lacking_rsi_class <- c(warn_lacking_rsi_class, run_changes$rsi_warn)
         # Print number of new changes
         if (info == TRUE) {
           # print only on last one of rules in this group
@@ -691,7 +689,7 @@ eucast_rules <- function(x,
   if (any(c("all", "breakpoints") %in% rules)) {
     eucast_rules_df <- subset(eucast_rules_df,
                               !reference.rule_group %like% "breakpoint" |
-                              (reference.rule_group %like% "breakpoint" & reference.version == version_breakpoints))
+                                (reference.rule_group %like% "breakpoint" & reference.version == version_breakpoints))
   }
   if (any(c("all", "expert") %in% rules)) {
     eucast_rules_df <- subset(eucast_rules_df,
@@ -846,7 +844,7 @@ eucast_rules <- function(x,
     }
     
     cols <- get_antibiotic_columns(target_antibiotics, x)
-
+    
     # Apply rule on data ------------------------------------------------------
     # this will return the unique number of changes
     run_changes <- edit_rsi(x = x,
@@ -866,7 +864,7 @@ eucast_rules <- function(x,
     n_changed <- n_changed + run_changes$changed
     verbose_info <- run_changes$verbose_info
     x <- run_changes$output
-    warn_lacking_rsi_class <- warn_lacking_rsi_class | run_changes$rsi_warn
+    warn_lacking_rsi_class <- c(warn_lacking_rsi_class, run_changes$rsi_warn)
     # Print number of new changes ---------------------------------------------
     if (info == TRUE & rule_next != rule_current) {
       # print only on last one of rules in this group
@@ -878,8 +876,7 @@ eucast_rules <- function(x,
   }
   
   # Print overview ----------------------------------------------------------
-  if (info == TRUE) {
-    
+  if (info == TRUE | verbose == TRUE) {
     verbose_info <- x.bak %pm>%
       pm_mutate(row = pm_row_number()) %pm>%
       pm_select(`.rowid`, row) %pm>%
@@ -890,6 +887,9 @@ eucast_rules <- function(x,
       pm_filter(!is.na(new)) %pm>%
       pm_arrange(row, rule_group, rule_name, col)
     rownames(verbose_info) <- NULL
+  }
+  
+  if (info == TRUE) {
     
     if (verbose == TRUE) {
       wouldve <- "would have "
@@ -899,16 +899,16 @@ eucast_rules <- function(x,
     
     cat(paste0("\n", font_grey(strrep("-", 0.95 * options()$width)), "\n"))
     cat(paste0("The rules ", paste0(wouldve, "affected "),
-              font_bold(formatnr(pm_n_distinct(verbose_info$row)),
-                        "out of", formatnr(nrow(x.bak)),
-                        "rows"), 
-              ", making a total of ",
-              font_bold(formatnr(nrow(verbose_info)), "edits\n")))
-
-total_n_added <- verbose_info %pm>% pm_filter(is.na(old)) %pm>% nrow()
-total_n_changed <- verbose_info %pm>% pm_filter(!is.na(old)) %pm>% nrow()
-
-# print added values
+               font_bold(formatnr(pm_n_distinct(verbose_info$row)),
+                         "out of", formatnr(nrow(x.bak)),
+                         "rows"), 
+               ", making a total of ",
+               font_bold(formatnr(nrow(verbose_info)), "edits\n")))
+    
+    total_n_added <- verbose_info %pm>% pm_filter(is.na(old)) %pm>% nrow()
+    total_n_changed <- verbose_info %pm>% pm_filter(!is.na(old)) %pm>% nrow()
+    
+    # print added values
     if (total_n_added == 0) {
       colour <- cat # is function
     } else {
@@ -961,12 +961,14 @@ total_n_changed <- verbose_info %pm>% pm_filter(!is.na(old)) %pm>% nrow()
     }
   }
   
-
-  if (isTRUE(warn_lacking_rsi_class)) {
-    unique_cols <- colnames(x.bak)[colnames(x.bak) %in% verbose_info$col]
+  if (length(warn_lacking_rsi_class) > 0) {
+    warn_lacking_rsi_class <- unique(warn_lacking_rsi_class)
     warning("Not all columns with antimicrobial results are of class <rsi>. Transform them on beforehand, with e.g.:\n",
             "  ", x_deparsed, " %>% mutate_if(is.rsi.eligible, as.rsi)\n",
-            "  ", x_deparsed, " %>% as.rsi(", unique_cols[1], ":", unique_cols[length(unique_cols)], ")",
+            "  ", x_deparsed, " %>% as.rsi(", ifelse(length(warn_lacking_rsi_class) == 1, 
+                                                     warn_lacking_rsi_class,
+                                                     paste0(warn_lacking_rsi_class[1], ":", warn_lacking_rsi_class[length(warn_lacking_rsi_class)])), 
+            ")",
             call. = FALSE)
   }
   
@@ -1004,7 +1006,7 @@ edit_rsi <- function(x,
                         changed = 0,
                         output = x,
                         verbose_info = last_verbose_info,
-                        rsi_warn = FALSE)
+                        rsi_warn = character(0))
   
   txt_error <- function() {
     if (info == TRUE) cat("", font_red_bg(font_white(" ERROR ")), "\n\n") 
@@ -1019,7 +1021,7 @@ edit_rsi <- function(x,
   if (length(rows) > 0 & length(cols) > 0) {
     new_edits <- x
     if (any(!sapply(x[, cols, drop = FALSE], is.rsi), na.rm = TRUE)) {
-      track_changes$rsi_warn <- TRUE
+      track_changes$rsi_warn <- cols[!sapply(x[, cols, drop = FALSE], is.rsi)]
     }
     tryCatch(
       # insert into original table

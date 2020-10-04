@@ -415,7 +415,7 @@ mo_validate <- function(x, property, language, ...) {
   
   check_dataset_integrity()
   
-  if (tryCatch(all(x %in% MO_lookup$mo) & length(list(...)) == 0, error = function(e) FALSE)) {
+  if (tryCatch(all(x[!is.na(x)] %in% MO_lookup$mo) & length(list(...)) == 0, error = function(e) FALSE)) {
     # special case for mo_* functions where class is already <mo>
     return(MO_lookup[match(x, MO_lookup$mo), property, drop = TRUE])
   }

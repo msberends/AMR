@@ -50,7 +50,7 @@
 
 <meta property="og:title" content="G-test for Count Data — g.test" />
 <meta property="og:description" content="g.test() performs chi-squared contingency table tests and goodness-of-fit tests, just like chisq.test() but is more reliable (1). A G-test can be used to see whether the number of observations in each category fits a theoretical expectation (called a G-test of goodness-of-fit), or to see whether the proportions of one variable are different for different values of the other variable (called a G-test of independence)." />
-<meta property="og:image" content="https://msberends.github.io/AMR/logo.svg" />
+<meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.3.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0</span>
       </span>
     </div>
 
@@ -326,7 +326,8 @@
 <p>Unlike the exact test of goodness-of-fit (<code><a href='https://rdrr.io/r/stats/fisher.test.html'>fisher.test()</a></code>), the <em>G</em>-test does not directly calculate the probability of obtaining the observed results or something more extreme. Instead, like almost all statistical tests, the <em>G</em>-test has an intermediate step; it uses the data to calculate a test statistic that measures how far the observed data are from the null expectation. You then use a mathematical relationship, in this case the chi-square distribution, to estimate the probability of obtaining that value of the test statistic.</p>
 <p>The <em>G</em>-test uses the log of the ratio of two likelihoods as the test statistic, which is why it is also called a likelihood ratio test or log-likelihood ratio test. The formula to calculate a <em>G</em>-statistic is:</p>
 <p>\(G = 2 * sum(x * log(x / E))\)</p>
-<p>where <code>E</code> are the expected values. Since this is chi-square distributed, the p value can be calculated in <span style="R">R</span> with:</p><pre><span class='kw'>p</span> <span class='op'>&lt;-</span> <span class='kw'>stats</span>::<span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>pchisq</a></span>(<span class='kw'>G</span>, <span class='kw'>df</span>, lower.tail = <span class='fl'>FALSE</span>)</pre>
+<p>where <code>E</code> are the expected values. Since this is chi-square distributed, the p value can be calculated in <span style="R">R</span> with:</p><pre><span class='kw'>p</span> <span class='op'>&lt;-</span> <span class='kw'>stats</span>::<span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>pchisq</a></span>(<span class='kw'>G</span>, <span class='kw'>df</span>, lower.tail = <span class='fl'>FALSE</span>)
+</pre>
 
 <p>where <code>df</code> are the degrees of freedom.</p>
 <p>If there are more than two categories and you want to find out which ones are significantly different from their null expectation, you can use the same method of testing each category vs. the sum of all categories, with the Bonferroni correction. You use <em>G</em>-tests for each category, of course.</p>
@@ -385,6 +386,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>questioni
 
 <span class='co'># There is a significant difference from a 1:1 ratio.</span>
 <span class='co'># Meaning: there are significantly more left-billed birds.</span>
+
 </pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
