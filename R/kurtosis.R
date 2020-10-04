@@ -21,41 +21,43 @@
 
 #' Kurtosis of the sample
 #'
-#' @description Kurtosis is a measure of the "tailedness" of the probability distribution of a real-valued random variable.
-#' @inheritSection lifecycle Questioning lifecycle
+#' @description Kurtosis is a measure of the "tailedness" of the probability distribution of a real-valued random variable. A normal distribution has a kurtosis of 3 and a excess kurtosis of 0.
+#' @inheritSection lifecycle Stable lifecycle
 #' @param x a vector of values, a [`matrix`] or a [data.frame]
-#' @param na.rm a logical value indicating whether `NA` values should be stripped before the computation proceeds.
+#' @param na.rm a logical to indicate whether `NA` values should be stripped before the computation proceeds
+#' @param excess a logical to indicate whether the *excess kurtosis* should be returned, defined as the kurtosis minus 3.
 #' @seealso [skewness()]
 #' @rdname kurtosis
 #' @inheritSection AMR Read more on our website!
 #' @export
-kurtosis <- function(x, na.rm = FALSE) {
+kurtosis <- function(x, na.rm = FALSE, excess = FALSE) {
   UseMethod("kurtosis")
 }
 
 #' @method kurtosis default
 #' @rdname kurtosis
 #' @export
-kurtosis.default <- function(x, na.rm = FALSE) {
+kurtosis.default <- function(x, na.rm = FALSE, excess = FALSE) {
   x <- as.vector(x)
   if (na.rm == TRUE) {
     x <- x[!is.na(x)]
   }
   n <- length(x)
-  n * sum((x - mean(x, na.rm = na.rm))^4, na.rm = na.rm) /
+  k <- n * sum((x - mean(x, na.rm = na.rm))^4, na.rm = na.rm) /
     (sum((x - mean(x, na.rm = na.rm))^2, na.rm = na.rm)^2)
+  k - ifelse(excess, 3, 0)
 }
 
 #' @method kurtosis matrix
 #' @rdname kurtosis
 #' @export
-kurtosis.matrix <- function(x, na.rm = FALSE) {
-  apply(x, 2, kurtosis.default, na.rm = na.rm)
+kurtosis.matrix <- function(x, na.rm = FALSE, excess = FALSE) {
+  apply(x, 2, kurtosis.default, na.rm = na.rm, excess = excess)
 }
 
 #' @method kurtosis data.frame
 #' @rdname kurtosis
 #' @export
-kurtosis.data.frame <- function(x, na.rm = FALSE) {
-  sapply(x, kurtosis.default, na.rm = na.rm)
+kurtosis.data.frame <- function(x, na.rm = FALSE, excess = FALSE) {
+  sapply(x, kurtosis.default, na.rm = na.rm, excess = excess)
 }

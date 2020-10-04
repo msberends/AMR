@@ -22,7 +22,7 @@
 #' Guess antibiotic column
 #'
 #' This tries to find a column name in a data set based on information from the [antibiotics] data set. Also supports WHONET abbreviations.
-#' @inheritSection lifecycle Maturing lifecycle
+#' @inheritSection lifecycle Stable lifecycle
 #' @param x a [data.frame]
 #' @param search_string a text to search `x` for, will be checked with [as.ab()] if this value is not a column in `x`
 #' @param verbose a logical to indicate whether additional info should be printed

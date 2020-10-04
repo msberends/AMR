@@ -23,10 +23,10 @@
 #'
 #' @description Skewness is a measure of the asymmetry of the probability distribution of a real-valued random variable about its mean.
 #'
-#' When negative: the left tail is longer; the mass of the distribution is concentrated on the right of the figure. When positive: the right tail is longer; the mass of the distribution is concentrated on the left of the figure.
-#' @inheritSection lifecycle Questioning lifecycle
+#' When negative ('left-skewed'): the left tail is longer; the mass of the distribution is concentrated on the right of a histogram. When positive ('right-skewed'): the right tail is longer; the mass of the distribution is concentrated on the left of a histogram. A normal distribution has a skewness of 0.
+#' @inheritSection lifecycle Stable lifecycle
 #' @param x a vector of values, a [`matrix`] or a [data.frame]
-#' @param na.rm a logical value indicating whether `NA` values should be stripped before the computation proceeds.
+#' @param na.rm a logical value indicating whether `NA` values should be stripped before the computation proceeds
 #' @seealso [kurtosis()]
 #' @rdname skewness
 #' @inheritSection AMR Read more on our website!

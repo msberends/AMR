@@ -26,10 +26,18 @@ test_that("kurtosis works", {
   expect_equal(kurtosis(example_isolates$age),
                3.549319,
                tolerance = 0.00001)
+  
   expect_equal(unname(kurtosis(data.frame(example_isolates$age))),
                3.549319,
                tolerance = 0.00001)
+  expect_equal(unname(kurtosis(data.frame(example_isolates$age), excess = TRUE)),
+               0.549319,
+               tolerance = 0.00001)
+  
   expect_equal(kurtosis(matrix(example_isolates$age)),
                3.549319,
+               tolerance = 0.00001)
+  expect_equal(kurtosis(matrix(example_isolates$age), excess = TRUE),
+               0.549319,
                tolerance = 0.00001)
 })

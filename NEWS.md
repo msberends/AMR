@@ -1,5 +1,5 @@
-# AMR 1.3.0.9038
-## <small>Last updated: 4 October 2020</small>
+# AMR 1.3.0.9039
+## <small>Last updated:  4 October 2020</small>
 
 Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscipt about this package to. We are those reviewers very grateful for going through our code so thoroughly!
 
@@ -65,6 +65,7 @@ Note: some changes in this version were suggested by anonymous reviewers from th
   * 'Penicillin V' (for oral use, code `PNV`) was removed, since its actual entry 'Phenoxymethylpenicillin' (code `PHN`) already existed
   * The group name (`antibiotics$group`) of 'Linezolid' (`LNZ`), 'Cycloserine' (`CYC`), 'Tedizolid' (`TZD`) and 'Thiacetazone' (`THA`) is now "Oxazolidinones" instead of "Other antibacterials"
 * Added support for using `unique()` on classes `<rsi>`, `<mic>`, `<disk>`, `<ab>` and `<mo>`
+* Added parameter `excess` to the `kurtosis()` function (defaults to `FALSE`), to return the *excess kurtosis*, defined as the kurtosis minus three.
 
 ### Other
 * Removed functions `portion_R()`, `portion_S()` and `portion_I()` that were deprecated since version 0.9.0 (November 2019) and were replaced with `proportion_R()`, `proportion_S()` and `proportion_I()`

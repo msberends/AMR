@@ -18,17 +18,19 @@ skewness(x, na.rm = FALSE)
 \arguments{
 \item{x}{a vector of values, a \code{\link{matrix}} or a \link{data.frame}}
 
-\item{na.rm}{a logical value indicating whether \code{NA} values should be stripped before the computation proceeds.}
+\item{na.rm}{a logical value indicating whether \code{NA} values should be stripped before the computation proceeds}
 }
 \description{
 Skewness is a measure of the asymmetry of the probability distribution of a real-valued random variable about its mean.
 
-When negative: the left tail is longer; the mass of the distribution is concentrated on the right of the figure. When positive: the right tail is longer; the mass of the distribution is concentrated on the left of the figure.
+When negative ('left-skewed'): the left tail is longer; the mass of the distribution is concentrated on the right of a histogram. When positive ('right-skewed'): the right tail is longer; the mass of the distribution is concentrated on the left of a histogram. A normal distribution has a skewness of 0.
 }
-\section{Questioning lifecycle}{
+\section{Stable lifecycle}{
 
-\if{html}{\figure{lifecycle_questioning.svg}{options: style=margin-bottom:5px} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{questioning}. This function might be no longer be optimal approach, or is it questionable whether this function should be in this \code{AMR} package at all.
+\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
+The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
+
+If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
 \section{Read more on our website!}{

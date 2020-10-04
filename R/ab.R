@@ -22,7 +22,7 @@
 #' Transform input to an antibiotic ID
 #'
 #' Use this function to determine the antibiotic code of one or more antibiotics. The data set [antibiotics] will be searched for abbreviations, official names and synonyms (brand names).
-#' @inheritSection lifecycle Maturing lifecycle
+#' @inheritSection lifecycle Stable lifecycle
 #' @param x character vector to determine to antibiotic ID
 #' @param flag_multiple_results logical to indicate whether a note should be printed to the console that probably more than one antibiotic code or name can be retrieved from a single input value.
 #' @param info logical to indicate whether a progress bar should be printed
