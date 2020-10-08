@@ -1,22 +1,26 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis                              #
+# Antimicrobial Resistance (AMR) Analysis for R                        #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
 # (c) 2018-2020 Berends MS, Luz CF et al.                              #
+# Developed at the University of Groningen, the Netherlands, in        #
+# collaboration with non-profit organisations Certe Medical            #
+# Diagnostics & Advice, and University Medical Center Groningen.       # 
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
 # GNU General Public License version 2.0 (GNU GPL-2), as published by  #
 # the Free Software Foundation.                                        #
-#                                                                      #
 # We created this package for both routine data analysis and academic  #
 # research and it was publicly released in the hope that it will be    #
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
-# Visit our website for more info: https://msberends.github.io/AMR.    #
+#                                                                      #
+# Visit our website for the full manual and a complete tutorial about  #
+# how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
 #' The `AMR` Package
@@ -50,7 +54,7 @@
 #' @section Reference data publicly available:
 #' All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this `AMR` package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find [all download links on our website](https://msberends.github.io/AMR/articles/datasets.html), which is automatically updated with every code change.
 #' @section Read more on our website!:
-#' On our website <https://msberends.github.io/AMR> you can find [a comprehensive tutorial](https://msberends.github.io/AMR/articles/AMR.html) about how to conduct AMR analysis, the [complete documentation of all functions](https://msberends.github.io/AMR/reference) (which reads a lot easier than here in R) and [an example analysis using WHONET data](https://msberends.github.io/AMR/articles/WHONET.html). As we would like to better understand the backgrounds and needs of our users, please [participate in our survey](https://msberends.github.io/AMR/survey.html)!
+#' On our website <https://msberends.github.io/AMR/> you can find [a comprehensive tutorial](https://msberends.github.io/AMR/articles/AMR.html) about how to conduct AMR analysis, the [complete documentation of all functions](https://msberends.github.io/AMR/reference/) and [an example analysis using WHONET data](https://msberends.github.io/AMR/articles/WHONET.html). As we would like to better understand the backgrounds and needs of our users, please [participate in our survey](https://msberends.github.io/AMR/survey.html)!
 #' @section Contact Us:
 #' For suggestions, comments or questions, please contact us at:
 #'

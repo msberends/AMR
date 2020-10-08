@@ -45,7 +45,7 @@ structure_txt <- function(dataset) {
 download_txt <- function(filename) {
   msg <- paste0("It was last updated on ", 
                 trimws(format(file.mtime(paste0("../data/", filename, ".rda")), "%e %B %Y %H:%M:%S %Z")), 
-                ". Find more info about the structure of this data set [here](https://msberends.github.io/AMR/reference/", filename, ".html).\n")
+                ". Find more info about the structure of this data set [here](https://msberends.github.io/AMR/reference/", ifelse(filename == "antivirals", "antibiotics", filename), ".html).\n")
   github_base <- "https://github.com/msberends/AMR/raw/master/data-raw/"
   filename <- paste0("../data-raw/", filename)
   txt <- paste0(filename, ".txt")

@@ -1,22 +1,26 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis                              #
+# Antimicrobial Resistance (AMR) Analysis for R                        #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
 # (c) 2018-2020 Berends MS, Luz CF et al.                              #
+# Developed at the University of Groningen, the Netherlands, in        #
+# collaboration with non-profit organisations Certe Medical            #
+# Diagnostics & Advice, and University Medical Center Groningen.       # 
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
 # GNU General Public License version 2.0 (GNU GPL-2), as published by  #
 # the Free Software Foundation.                                        #
-#                                                                      #
 # We created this package for both routine data analysis and academic  #
 # research and it was publicly released in the hope that it will be    #
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
-# Visit our website for more info: https://msberends.github.io/AMR.    #
+#                                                                      #
+# Visit our website for the full manual and a complete tutorial about  #
+# how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
 #' Determine first (weighted) isolates
@@ -42,7 +46,7 @@
 #' @param include_unknown logical to determine whether 'unknown' microorganisms should be included too, i.e. microbial code `"UNKNOWN"`, which defaults to `FALSE`. For WHONET users, this means that all records with organism code `"con"` (*contamination*) will be excluded at default. Isolates with a microbial ID of `NA` will always be excluded as first isolate.
 #' @param ... parameters passed on to the [first_isolate()] function
 #' @details **WHY THIS IS SO IMPORTANT** \cr
-#' To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode [(ref)](https://www.ncbi.nlm.nih.gov/pubmed/17304462). If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all *S. aureus* isolates would be overestimated, because you included this MRSA more than once. It would be [selection bias](https://en.wikipedia.org/wiki/Selection_bias).
+#' To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode [(ref)](https:/pubmed.ncbi.nlm.nih.gov/17304462/). If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all *S. aureus* isolates would be overestimated, because you included this MRSA more than once. It would be [selection bias](https://en.wikipedia.org/wiki/Selection_bias).
 #'
 #' All isolates with a microbial ID of `NA` will be excluded as first isolate.
 #'

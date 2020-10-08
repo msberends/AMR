@@ -24,7 +24,7 @@ library(AMR)
 
 ## Introduction
 
-What are EUCAST rules? The European Committee on Antimicrobial Susceptibility Testing (EUCAST) states [on their website](http://www.eucast.org/expert_rules_and_intrinsic_resistance/):
+What are EUCAST rules? The European Committee on Antimicrobial Susceptibility Testing (EUCAST) states [on their website](https://www.eucast.org/expert_rules_and_intrinsic_resistance/):
 
 > *EUCAST expert rules are a tabulated collection of expert knowledge on intrinsic resistances, exceptional resistance phenotypes and interpretive rules that may be applied to antimicrobial susceptibility testing in order to reduce errors and make appropriate recommendations for reporting particular resistances.*
 

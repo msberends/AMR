@@ -1,5 +1,5 @@
-# AMR 1.3.0.9039
-## <small>Last updated:  4 October 2020</small>
+# AMR 1.4.0
+
 
 Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscipt about this package to. We are those reviewers very grateful for going through our code so thoroughly!
 
@@ -206,7 +206,7 @@ Note: some changes in this version were suggested by anonymous reviewers from th
 This software is now out of beta and considered stable. Nonetheless, this package will be developed continually.
 
 ### New
-* Support for the newest [EUCAST Clinical Breakpoint Tables v.10.0](http://www.eucast.org/clinical_breakpoints/), valid from 1 January 2020. This affects translation of MIC and disk zones using `as.rsi()` and inferred resistance and susceptibility using `eucast_rules()`.
+* Support for the newest [EUCAST Clinical Breakpoint Tables v.10.0](https://www.eucast.org/clinical_breakpoints/), valid from 1 January 2020. This affects translation of MIC and disk zones using `as.rsi()` and inferred resistance and susceptibility using `eucast_rules()`.
 * The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2020 to translate MIC and disk diffusion values to R/SI: <https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt>. This **allows for machine reading these guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file used to process the EUCAST Clinical Breakpoints Excel file [can be found here](https://github.com/msberends/AMR/blob/master/data-raw/read_EUCAST.R).
 * Support for LOINC and SNOMED codes
   * Support for LOINC codes in the `antibiotics` data set. Use `ab_loinc()` to retrieve LOINC codes, or use a LOINC code for input in any `ab_*` function:
@@ -252,7 +252,7 @@ This software is now out of beta and considered stable. Nonetheless, this packag
 # AMR 0.9.0
 
 ### Breaking
-* Adopted Adeolu *et al.* (2016), [PMID 27620848](https://www.ncbi.nlm.nih.gov/pubmed/27620848) for the `microorganisms` data set, which means that the new order Enterobacterales now consists of a part of the existing family Enterobacteriaceae, but that this family has been split into other families as well (like *Morganellaceae* and *Yersiniaceae*). Although published in 2016, this information is not yet in the Catalogue of Life version of 2019. All MDRO determinations with `mdro()` will now use the Enterobacterales order for all guidelines before 2016 that were dependent on the Enterobacteriaceae family.
+* Adopted Adeolu *et al.* (2016), [PMID 27620848](https:/pubmed.ncbi.nlm.nih.gov/27620848/) for the `microorganisms` data set, which means that the new order Enterobacterales now consists of a part of the existing family Enterobacteriaceae, but that this family has been split into other families as well (like *Morganellaceae* and *Yersiniaceae*). Although published in 2016, this information is not yet in the Catalogue of Life version of 2019. All MDRO determinations with `mdro()` will now use the Enterobacterales order for all guidelines before 2016 that were dependent on the Enterobacteriaceae family.
   * If you were dependent on the old Enterobacteriaceae family e.g. by using in your code:
     ```r
     if (mo_family(somebugs) == "Enterobacteriaceae") ...
@@ -591,7 +591,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
   * Due to this change, some `mo` codes changed (e.g. *Streptococcus* changed from `B_STRPTC` to `B_STRPT`). A translation table is  used internally to support older microorganism IDs, so users will not notice this difference.
   * New function `mo_rank()` for the taxonomic rank (genus, species, infraspecies, etc.)
   * New function `mo_url()` to get the direct URL of a species from the Catalogue of Life
-* Support for data from [WHONET](https://whonet.org/) and [EARS-Net](https://ecdc.europa.eu/en/about-us/partnerships-and-networks/disease-and-laboratory-networks/ears-net) (European Antimicrobial Resistance Surveillance Network):
+* Support for data from [WHONET](https://whonet.org/) and [EARS-Net](https://www.ecdc.europa.eu/en/about-us/partnerships-and-networks/disease-and-laboratory-networks/ears-net) (European Antimicrobial Resistance Surveillance Network):
   * Exported files from WHONET can be read and used in this package. For functions like `first_isolate()` and `eucast_rules()`, all parameters will be filled in automatically.
   * This package now knows all antibiotic abbrevations by EARS-Net (which are also being used by WHONET) - the `antibiotics` data set now contains a column `ears_net`.
   * The function `as.mo()` now knows all WHONET species abbreviations too, because almost 2,000 microbial abbreviations were added to the `microorganisms.codes` data set.
@@ -660,7 +660,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 
 #### Changed
 * Function `eucast_rules()`:
-  * Updated EUCAST Clinical breakpoints to [version 9.0 of 1 January 2019](http://www.eucast.org/clinical_breakpoints/), the data set `septic_patients` now reflects these changes
+  * Updated EUCAST Clinical breakpoints to [version 9.0 of 1 January 2019](https://www.eucast.org/clinical_breakpoints/), the data set `septic_patients` now reflects these changes
   * Fixed a critical bug where some rules that depend on previous applied rules would not be applied adequately
   * Emphasised in manual that penicillin is meant as benzylpenicillin (ATC [J01CE01](https://www.whocc.no/atc_ddd_index/?code=J01CE01))
   * New info is returned when running this function, stating exactly what has been changed or added. Use `eucast_rules(..., verbose = TRUE)` to get a data set with all changed per bug and drug combination.
@@ -776,7 +776,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 * Functions `MDRO`, `BRMO`, `MRGN` and `EUCAST_exceptional_phenotypes` were renamed to `mdro`, `brmo`, `mrgn` and `eucast_exceptional_phenotypes`
 * `EUCAST_rules` was renamed to `eucast_rules`, the old function still exists as a deprecated function
 * Big changes to the `eucast_rules` function:
-  * Now also applies rules from the EUCAST 'Breakpoint tables for bacteria', version 8.1, 2018, http://www.eucast.org/clinical_breakpoints/ (see Source of the function)
+  * Now also applies rules from the EUCAST 'Breakpoint tables for bacteria', version 8.1, 2018, https://www.eucast.org/clinical_breakpoints/ (see Source of the function)
   * New parameter `rules` to specify which rules should be applied (expert rules, breakpoints, others or all)
   * New parameter `verbose` which can be set to `TRUE` to get very specific messages about which columns and rows were affected
   * Better error handling when rules cannot be applied (i.e. new values could not be inserted)
@@ -1036,7 +1036,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 * Function `guess_atc` to **determine the ATC** of an antibiotic based on name, trade name, or known abbreviations
 * Function `freq` to create **frequency tables**, with additional info in a header
 * Function `MDRO` to **determine Multi Drug Resistant Organisms (MDRO)** with support for country-specific guidelines.
-  * [Exceptional resistances defined by EUCAST](http://www.eucast.org/expert_rules_and_intrinsic_resistance) are also supported instead of countries alone
+  * [Exceptional resistances defined by EUCAST](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) are also supported instead of countries alone
   * Functions `BRMO` and `MRGN` are wrappers for Dutch and German guidelines, respectively
 * New algorithm to determine weighted isolates, can now be `"points"` or `"keyantibiotics"`, see `?first_isolate`
 * New print format for `tibble`s and `data.table`s

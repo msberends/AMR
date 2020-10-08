@@ -185,7 +185,7 @@ data <- data %>%
   mutate_at(vars(AMX:GEN), as.rsi)
 ```
 
-Finally, we will apply [EUCAST rules](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) on our antimicrobial results. In Europe, most medical microbiological laboratories already apply these rules. Our package features their latest insights on intrinsic resistance and exceptional phenotypes. Moreover, the `eucast_rules()` function can also apply additional rules, like forcing <help title="ATC: J01CA01">ampicillin</help> = R when <help title="ATC: J01CR02">amoxicillin/clavulanic acid</help> = R.
+Finally, we will apply [EUCAST rules](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) on our antimicrobial results. In Europe, most medical microbiological laboratories already apply these rules. Our package features their latest insights on intrinsic resistance and exceptional phenotypes. Moreover, the `eucast_rules()` function can also apply additional rules, like forcing <help title="ATC: J01CA01">ampicillin</help> = R when <help title="ATC: J01CR02">amoxicillin/clavulanic acid</help> = R.
 
 Because the amoxicillin (column `AMX`) and amoxicillin/clavulanic acid (column `AMC`) in our data were generated randomly, some rows will undoubtedly contain AMX = S and AMC = R, which is technically impossible. The `eucast_rules()` fixes this:
 
@@ -206,7 +206,7 @@ data <- data %>%
 ## First isolates
 We also need to know which isolates we can *actually* use for analysis.
 
-To conduct an analysis of antimicrobial resistance, you must [only include the first isolate of every patient per episode](https://www.ncbi.nlm.nih.gov/pubmed/17304462) (Hindler *et al.*, Clin Infect Dis. 2007). If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following weeks (yes, some countries like the Netherlands have these blood drawing policies). The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would clearly be [selection bias](https://en.wikipedia.org/wiki/Selection_bias).
+To conduct an analysis of antimicrobial resistance, you must [only include the first isolate of every patient per episode](https:/pubmed.ncbi.nlm.nih.gov/17304462/) (Hindler *et al.*, Clin Infect Dis. 2007). If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following weeks (yes, some countries like the Netherlands have these blood drawing policies). The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would clearly be [selection bias](https://en.wikipedia.org/wiki/Selection_bias).
 
 The Clinical and Laboratory Standards Institute (CLSI) appoints this as follows:
 

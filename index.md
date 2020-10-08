@@ -19,8 +19,8 @@ This package is [fully independent of any other R package](https://en.wikipedia.
 <div class="main-content">
   <p>
     <a href="./countries_large.png" target="_blank"><img src="./countries.png" class="countries_map"></a>
-    <strong>Used in more than 100 countries</strong><br>
-    Since its first public release in early 2018, this package has been downloaded from more than 100 countries. Click the map to enlarge and to also see the names of the countries.</p><br><br>
+    <strong>Used in more than 120 countries</strong><br>
+    Since its first public release in early 2018, this package has been downloaded from more than 120 countries. Click the map to enlarge and to also see the names of the countries.</p><br><br>
 </div>
 
 <div class="home-buttons">
@@ -146,7 +146,7 @@ The `AMR` package basically does four important things:
    
 2. It **enhances existing data** and **adds new data** from data sets included in this package.
 
-   * Use `eucast_rules()` to apply [EUCAST expert rules to isolates](http://www.eucast.org/expert_rules_and_intrinsic_resistance/) (not the translation from MIC to R/SI values, use `as.rsi()` for that).
+   * Use `eucast_rules()` to apply [EUCAST expert rules to isolates](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) (not the translation from MIC to R/SI values, use `as.rsi()` for that).
    * Use `first_isolate()` to identify the first isolates of every patient [using guidelines from the CLSI](https://clsi.org/standards/products/microbiology/documents/m39/) (Clinical and Laboratory Standards Institute).
      * You can also identify first *weighted* isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them.
    * Use `mdro()` to determine which micro-organisms are multi-drug resistant organisms (MDRO). It supports a variety of international guidelines, such as the MDR-paper by Magiorakos *et al.* (2012, [PMID 21793988](https://www.ncbi.nlm.nih.gov/pubmed/?term=21793988)), the exceptional phenotype definitions of EUCAST and the WHO guideline on multi-drug resistant TB. It also supports the national guidelines of the Netherlands and Germany.

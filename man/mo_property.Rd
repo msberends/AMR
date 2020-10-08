@@ -128,7 +128,7 @@ If the unlying code needs breaking changes, they will occur gradually. For examp
 
 With ambiguous user input in \code{\link[=as.mo]{as.mo()}} and all the \code{\link[=mo_property]{mo_*}} functions, the returned results are chosen based on their matching score using \code{\link[=mo_matching_score]{mo_matching_score()}}. This matching score \eqn{m}, is calculated as:
 
-\deqn{m_{(x, n)} = \frac{l_{n} - 0.5 \cdot \min \begin{cases}l_{n} \\ \operatorname{lev}(x, n)\end{cases}}{l_{n} \cdot p_{n} \cdot k_{n}}}{m(x, n) = ( l_n * min(l_n, lev(x, n) ) ) / ( l_n * p_n * k_n )}
+\deqn{m_{(x, n)} = \frac{l_{n} - 0.5 \cdot \min \begin{cases}l_{n} \\ \textrm{lev}(x, n)\end{cases}}{l_{n} \cdot p_{n} \cdot k_{n}}}{m(x, n) = ( l_n * min(l_n, lev(x, n) ) ) / ( l_n * p_n * k_n )}
 
 where:
 \itemize{
@@ -170,7 +170,7 @@ All reference data sets (about microorganisms, antibiotics, R/SI interpretation,
 
 \section{Read more on our website!}{
 
-On our website \url{https://msberends.github.io/AMR} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
+On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }
 
 \examples{

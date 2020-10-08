@@ -1,22 +1,26 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis                              #
+# Antimicrobial Resistance (AMR) Analysis for R                        #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
 # (c) 2018-2020 Berends MS, Luz CF et al.                              #
+# Developed at the University of Groningen, the Netherlands, in        #
+# collaboration with non-profit organisations Certe Medical            #
+# Diagnostics & Advice, and University Medical Center Groningen.       # 
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
 # GNU General Public License version 2.0 (GNU GPL-2), as published by  #
 # the Free Software Foundation.                                        #
-#                                                                      #
 # We created this package for both routine data analysis and academic  #
 # research and it was publicly released in the hope that it will be    #
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
-# Visit our website for more info: https://msberends.github.io/AMR.    #
+#                                                                      #
+# Visit our website for the full manual and a complete tutorial about  #
+# how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
 #' Determine multidrug-resistant organisms (MDRO)
@@ -45,7 +49,7 @@
 #' - `guideline = "MRGN"`\cr
 #'   The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7. DOI: 10.1186/s13756-015-0047-6
 #' - `guideline = "BRMO"`\cr
-#'   The Dutch national guideline - Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) (ZKH)" ([link](https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH))
+#'   The Dutch national guideline - Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) (ZKH)" ([link](https://www.rivm.nl/wip-richtlijn-brmo-bijzonder-resistente-micro-organismen-zkh))
 #'
 #' Please suggest your own (country-specific) guidelines by letting us know: <https://github.com/msberends/AMR/issues/new>.
 #' 

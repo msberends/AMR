@@ -1,22 +1,26 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis                              #
+# Antimicrobial Resistance (AMR) Analysis for R                        #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
 # (c) 2018-2020 Berends MS, Luz CF et al.                              #
+# Developed at the University of Groningen, the Netherlands, in        #
+# collaboration with non-profit organisations Certe Medical            #
+# Diagnostics & Advice, and University Medical Center Groningen.       # 
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
 # GNU General Public License version 2.0 (GNU GPL-2), as published by  #
 # the Free Software Foundation.                                        #
-#                                                                      #
 # We created this package for both routine data analysis and academic  #
 # research and it was publicly released in the hope that it will be    #
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
-# Visit our website for more info: https://msberends.github.io/AMR.    #
+#                                                                      #
+# Visit our website for the full manual and a complete tutorial about  #
+# how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
 #' Data sets with `r format(nrow(antibiotics) + nrow(antivirals), big.mark = ",")` antimicrobials
@@ -111,7 +115,7 @@
 #' * <https://github.com/msberends/AMR/raw/master/data/microorganisms.rda>
 #' @section About the records from DSMZ (see source):
 #' Names of prokaryotes are defined as being validly published by the International Code of Nomenclature of Bacteria. Validly published are all names which are included in the Approved Lists of Bacterial Names and the names subsequently published in the International Journal of Systematic Bacteriology (IJSB) and, from January 2000, in the International Journal of Systematic and Evolutionary Microbiology (IJSEM) as original articles or in the validation lists.
-#' *(from <https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date/complete-list-readme>)*
+#' *(from <https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date>)*
 #' 
 #' In February 2020, the DSMZ records were merged with the List of Prokaryotic names with Standing in Nomenclature (LPSN).
 #' @source Catalogue of Life: Annual Checklist (public online taxonomic database), <http://www.catalogueoflife.org> (check included annual version with [catalogue_of_life_version()]).

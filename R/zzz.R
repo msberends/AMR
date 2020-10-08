@@ -1,22 +1,26 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis                              #
+# Antimicrobial Resistance (AMR) Analysis for R                        #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
 # (c) 2018-2020 Berends MS, Luz CF et al.                              #
+# Developed at the University of Groningen, the Netherlands, in        #
+# collaboration with non-profit organisations Certe Medical            #
+# Diagnostics & Advice, and University Medical Center Groningen.       # 
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
 # GNU General Public License version 2.0 (GNU GPL-2), as published by  #
 # the Free Software Foundation.                                        #
-#                                                                      #
 # We created this package for both routine data analysis and academic  #
 # research and it was publicly released in the hope that it will be    #
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
-# Visit our website for more info: https://msberends.github.io/AMR.    #
+#                                                                      #
+# Visit our website for the full manual and a complete tutorial about  #
+# how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
 .onLoad <- function(libname, pkgname) {
@@ -49,14 +53,14 @@
   # developers of the vctrs package: 
   # https://github.com/r-lib/vctrs/blob/05968ce8e669f73213e3e894b5f4424af4f46316/R/register-s3.R
   s3_register("pillar::pillar_shaft", "ab")
-  s3_register("tibble::type_sum", "ab")
   s3_register("pillar::pillar_shaft", "mo")
-  s3_register("tibble::type_sum", "mo")
   s3_register("pillar::pillar_shaft", "rsi")
-  s3_register("tibble::type_sum", "rsi")
   s3_register("pillar::pillar_shaft", "mic")
-  s3_register("tibble::type_sum", "mic")
   s3_register("pillar::pillar_shaft", "disk")
+  s3_register("tibble::type_sum", "ab")
+  s3_register("tibble::type_sum", "mo")
+  s3_register("tibble::type_sum", "rsi")
+  s3_register("tibble::type_sum", "mic")
   s3_register("tibble::type_sum", "disk")
   # Support for frequency tables from the cleaner package
   s3_register("cleaner::freq", "mo")
@@ -81,8 +85,8 @@
 
 create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
   # Determination of which staphylococcal species are CoNS/CoPS according to Becker et al.:
-  # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4187637/figure/F3/
-  # returns class <mo>
+  # https://cmr.asm.org/content/cmr/27/4/870/F6.large.jpg
+  # this function returns class <mo>
   MO_staph <- AMR::microorganisms
   MO_staph <- MO_staph[which(MO_staph$genus == "Staphylococcus"), , drop = FALSE]
   if (type == "CoNS") {

@@ -18,7 +18,7 @@ This helper function is used by \code{\link[=as.mo]{as.mo()}} to determine the m
 
 With ambiguous user input in \code{\link[=as.mo]{as.mo()}} and all the \code{\link[=mo_property]{mo_*}} functions, the returned results are chosen based on their matching score using \code{\link[=mo_matching_score]{mo_matching_score()}}. This matching score \eqn{m}, is calculated as:
 
-\deqn{m_{(x, n)} = \frac{l_{n} - 0.5 \cdot \min \begin{cases}l_{n} \\ \operatorname{lev}(x, n)\end{cases}}{l_{n} \cdot p_{n} \cdot k_{n}}}{m(x, n) = ( l_n * min(l_n, lev(x, n) ) ) / ( l_n * p_n * k_n )}
+\deqn{m_{(x, n)} = \frac{l_{n} - 0.5 \cdot \min \begin{cases}l_{n} \\ \textrm{lev}(x, n)\end{cases}}{l_{n} \cdot p_{n} \cdot k_{n}}}{m(x, n) = ( l_n * min(l_n, lev(x, n) ) ) / ( l_n * p_n * k_n )}
 
 where:
 \itemize{

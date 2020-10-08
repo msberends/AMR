@@ -1,22 +1,26 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis                              #
+# Antimicrobial Resistance (AMR) Analysis for R                        #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
 # (c) 2018-2020 Berends MS, Luz CF et al.                              #
+# Developed at the University of Groningen, the Netherlands, in        #
+# collaboration with non-profit organisations Certe Medical            #
+# Diagnostics & Advice, and University Medical Center Groningen.       # 
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
 # GNU General Public License version 2.0 (GNU GPL-2), as published by  #
 # the Free Software Foundation.                                        #
-#                                                                      #
 # We created this package for both routine data analysis and academic  #
 # research and it was publicly released in the hope that it will be    #
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
-# Visit our website for more info: https://msberends.github.io/AMR.    #
+#                                                                      #
+# Visit our website for the full manual and a complete tutorial about  #
+# how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
 #' Calculate the matching score for microorganisms
@@ -27,7 +31,7 @@
 #' @section Matching score for microorganisms:
 #' With ambiguous user input in [as.mo()] and all the [`mo_*`][mo_property()] functions, the returned results are chosen based on their matching score using [mo_matching_score()]. This matching score \eqn{m}, is calculated as:
 #' 
-#' \deqn{m_{(x, n)} = \frac{l_{n} - 0.5 \cdot \min \begin{cases}l_{n} \\ \operatorname{lev}(x, n)\end{cases}}{l_{n} \cdot p_{n} \cdot k_{n}}}{m(x, n) = ( l_n * min(l_n, lev(x, n) ) ) / ( l_n * p_n * k_n )}
+#' \deqn{m_{(x, n)} = \frac{l_{n} - 0.5 \cdot \min \begin{cases}l_{n} \\ \textrm{lev}(x, n)\end{cases}}{l_{n} \cdot p_{n} \cdot k_{n}}}{m(x, n) = ( l_n * min(l_n, lev(x, n) ) ) / ( l_n * p_n * k_n )}
 #' 
 #' where:
 #' 
@@ -49,29 +53,35 @@
 #' mo_matching_score(x = "E. coli",
 #'                   n = c("Escherichia coli", "Entamoeba coli"))
 mo_matching_score <- function(x, n) {
+  x <- parse_and_convert(x)
+  # no dots and other non-whitespace characters
+  x <- gsub("[^a-zA-Z0-9 \\(\\)]+", "", x)
+  # only keep one space
+  x <- gsub(" +", " ", x)
+
   # n is always a taxonomically valid full name
-  levenshtein <- double(length = length(x))
   if (length(n) == 1) {
     n <- rep(n, length(x))
   }
   if (length(x) == 1) {
     x <- rep(x, length(n))
   }
+  
+  # length of fullname
+  l_n <- nchar(n)
+  lev <- double(length = length(x))
+  l_n.lev <- double(length = length(x))
   for (i in seq_len(length(x))) {
     # determine Levenshtein distance, but maximise to nchar of n
-    levenshtein[i] <- min(as.double(utils::adist(x[i], n[i], ignore.case = FALSE)),
-                          nchar(n[i]))
+    lev[i] <- utils::adist(x[i], n[i], ignore.case = FALSE, fixed = TRUE)
+    # minimum of (l_n, Levenshtein distance)
+    l_n.lev[i] <- min(l_n[i], as.double(lev[i]))
   }
-  
-  # F = length of fullname
-  var_F <- nchar(n)
-  # L = modified Levenshtein distance
-  var_L <- levenshtein
-  # P = prevalence (1 to 3), see ?as.mo
-  var_P <- MO_lookup[match(n, MO_lookup$fullname), "prevalence", drop = TRUE]
-  # K = kingdom index (Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5)
-  var_K <- MO_lookup[match(n, MO_lookup$fullname), "kingdom_index", drop = TRUE]
+  # human pathogenic prevalence (1 to 3), see ?as.mo
+  p_n <- MO_lookup[match(n, MO_lookup$fullname), "prevalence", drop = TRUE]
+  # kingdom index (Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5)
+  k_n <- MO_lookup[match(n, MO_lookup$fullname), "kingdom_index", drop = TRUE]
   
   # matching score:
-  (var_F - 0.5 * var_L) / (var_F * var_P * var_K)
+  (l_n - 0.5 * l_n.lev) / (l_n * p_n * k_n)
 }

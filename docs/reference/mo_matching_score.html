@@ -262,7 +262,7 @@
     
 
 <p>With ambiguous user input in <code><a href='as.mo.html'>as.mo()</a></code> and all the <code><a href='mo_property.html'>mo_*</a></code> functions, the returned results are chosen based on their matching score using <code>mo_matching_score()</code>. This matching score \(m\), is calculated as:</p>
-<p>$$m_{(x, n)} = \frac{l_{n} - 0.5 \cdot \min \begin{cases}l_{n} \\ \operatorname{lev}(x, n)\end{cases}}{l_{n} \cdot p_{n} \cdot k_{n}}$$</p>
+<p>$$m_{(x, n)} = \frac{l_{n} - 0.5 \cdot \min \begin{cases}l_{n} \\ \textrm{lev}(x, n)\end{cases}}{l_{n} \cdot p_{n} \cdot k_{n}}$$</p>
 <p>where:</p><ul>
 <li><p>\(x\) is the user input;</p></li>
 <li><p>\(n\) is a taxonomic name (genus, species, and subspecies);</p></li>

@@ -87,7 +87,7 @@ The international guideline for multi-drug resistant tuberculosis - World Health
 \item \code{guideline = "MRGN"}\cr
 The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7. DOI: 10.1186/s13756-015-0047-6
 \item \code{guideline = "BRMO"}\cr
-The Dutch national guideline - Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) (ZKH)" (\href{https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH}{link})
+The Dutch national guideline - Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) (ZKH)" (\href{https://www.rivm.nl/wip-richtlijn-brmo-bijzonder-resistente-micro-organismen-zkh}{link})
 }
 
 Please suggest your own (country-specific) guidelines by letting us know: \url{https://github.com/msberends/AMR/issues/new}.
@@ -113,7 +113,7 @@ Amikacin (\code{AMK}, \href{https://www.whocc.no/atc_ddd_index/?code=J01GB06&sho
 
 \section{Interpretation of R and S/I}{
 
-In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories R and S/I as shown below (\url{http://www.eucast.org/newsiandr/}).
+In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories R and S/I as shown below (\url{https://www.eucast.org/newsiandr/}).
 \itemize{
 \item \strong{R = Resistant}\cr
 A microorganism is categorised as \emph{Resistant} when there is a high likelihood of therapeutic failure even when there is increased exposure. Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
@@ -128,7 +128,7 @@ This AMR package honours this new insight. Use \code{\link[=susceptibility]{susc
 
 \section{Read more on our website!}{
 
-On our website \url{https://msberends.github.io/AMR} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference}{complete documentation of all functions} (which reads a lot easier than here in R) and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
+On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }
 
 \examples{
