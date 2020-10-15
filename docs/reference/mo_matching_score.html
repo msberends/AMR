@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9000</span>
       </span>
     </div>
 
@@ -242,7 +242,7 @@
     <p>This helper function is used by <code><a href='as.mo.html'>as.mo()</a></code> to determine the most probable match of taxonomic records, based on user input.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mo_matching_score</span>(<span class='kw'>x</span>, <span class='kw'>n</span>)</pre>
+    <pre class="usage"><span class='fu'>mo_matching_score</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>n</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -276,11 +276,11 @@
 <p>All matches are sorted descending on their matching score and for all user input values, the top match will be returned. This will lead to the effect that e.g., <code>"E. coli"</code> will return the microbial ID of <em>Escherichia coli</em> (\(m = 0.688\), a highly prevalent microorganism found in humans) and not <em>Entamoeba coli</em> (\(m = 0.079\), a less prevalent microorganism in humans), although the latter would alphabetically come first.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"E. coli"</span>)
-<span class='fu'><a href='as.mo.html'>mo_uncertainties</a></span>()
+    <pre class="examples"><span class='fu'><a href='as.mo.html'>as.mo</a></span><span class='op'>(</span><span class='st'>"E. coli"</span><span class='op'>)</span>
+<span class='fu'><a href='as.mo.html'>mo_uncertainties</a></span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'>mo_matching_score</span>(x = <span class='st'>"E. coli"</span>,
-                  n = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Escherichia coli"</span>, <span class='st'>"Entamoeba coli"</span>))
+<span class='fu'>mo_matching_score</span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"E. coli"</span>,
+                  n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Escherichia coli"</span>, <span class='st'>"Entamoeba coli"</span><span class='op'>)</span><span class='op'>)</span>
 </pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -297,7 +297,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

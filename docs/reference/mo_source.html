@@ -83,7 +83,7 @@ This is the fastest way to have your organisation (or analysis) specific codes p
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9000</span>
       </span>
     </div>
 
@@ -244,9 +244,9 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 <p>This is <strong>the fastest way</strong> to have your organisation (or analysis) specific codes picked up and translated by this package.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>set_mo_source</span>(<span class='kw'>path</span>)
+    <pre class="usage"><span class='fu'>set_mo_source</span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span>
 
-<span class='fu'>get_mo_source</span>()</pre>
+<span class='fu'>get_mo_source</span><span class='op'>(</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -277,20 +277,20 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 4 |                    |              |
 </pre>
 
-<p>We save it as <code>"home/me/ourcodes.xlsx"</code>. Now we have to set it as a source:</p><pre><span class='fu'>set_mo_source</span>(<span class='st'>"home/me/ourcodes.xlsx"</span>)
+<p>We save it as <code>"home/me/ourcodes.xlsx"</code>. Now we have to set it as a source:</p><pre><span class='fu'>set_mo_source</span><span class='op'>(</span><span class='st'>"home/me/ourcodes.xlsx"</span><span class='op'>)</span>
 <span class='co'>#&gt; NOTE: Created mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'</span>
 <span class='co'>#&gt;       (columns "Organisation XYZ" and "mo")</span>
 </pre>
 
 <p>It has now created a file <code>"~/.mo_source.rds"</code> with the contents of our Excel file. Only the first column with foreign values and the 'mo' column will be kept when creating the RDS file.</p>
-<p>And now we can use it in our functions:</p><pre><span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"lab_mo_ecoli"</span>)
+<p>And now we can use it in our functions:</p><pre><span class='fu'><a href='as.mo.html'>as.mo</a></span><span class='op'>(</span><span class='st'>"lab_mo_ecoli"</span><span class='op'>)</span>
 <span class='co'>#&gt; [1] B_ESCHR_COLI</span>
 
-<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='st'>"lab_mo_kpneumoniae"</span>)
+<span class='fu'><a href='mo_property.html'>mo_genus</a></span><span class='op'>(</span><span class='st'>"lab_mo_kpneumoniae"</span><span class='op'>)</span>
 <span class='co'>#&gt; [1] "Klebsiella"</span>
 
 <span class='co'># other input values still work too</span>
-<span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Escherichia coli"</span>, <span class='st'>"E. coli"</span>, <span class='st'>"lab_mo_ecoli"</span>))
+<span class='fu'><a href='as.mo.html'>as.mo</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Escherichia coli"</span>, <span class='st'>"E. coli"</span>, <span class='st'>"lab_mo_ecoli"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'>#&gt; [1] B_ESCHR_COLI B_ESCHR_COLI B_ESCHR_COLI</span>
 </pre>
 
@@ -303,16 +303,16 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 5 |                    |              |
 </pre>
 
-<p>...any new usage of an MO function in this package will update your data file:</p><pre><span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"lab_mo_ecoli"</span>)
+<p>...any new usage of an MO function in this package will update your data file:</p><pre><span class='fu'><a href='as.mo.html'>as.mo</a></span><span class='op'>(</span><span class='st'>"lab_mo_ecoli"</span><span class='op'>)</span>
 <span class='co'>#&gt; NOTE: Updated mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'</span>
 <span class='co'>#&gt;       (columns "Organisation XYZ" and "mo")</span>
 <span class='co'>#&gt; [1] B_ESCHR_COLI</span>
 
-<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='st'>"lab_Staph_aureus"</span>)
+<span class='fu'><a href='mo_property.html'>mo_genus</a></span><span class='op'>(</span><span class='st'>"lab_Staph_aureus"</span><span class='op'>)</span>
 <span class='co'>#&gt; [1] "Staphylococcus"</span>
 </pre>
 
-<p>To delete the reference data file, just use <code>""</code>, <code>NULL</code> or <code>FALSE</code> as input for <code>set_mo_source()</code>:</p><pre><span class='fu'>set_mo_source</span>(<span class='kw'>NULL</span>)
+<p>To delete the reference data file, just use <code>""</code>, <code>NULL</code> or <code>FALSE</code> as input for <code>set_mo_source()</code>:</p><pre><span class='fu'>set_mo_source</span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span>
 <span class='co'># Removed mo_source file '~/.mo_source.rds'.</span>
 </pre>
 
@@ -345,7 +345,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

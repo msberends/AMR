@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9000</span>
       </span>
     </div>
 
@@ -242,7 +242,7 @@
     <p><code>g.test()</code> performs chi-squared contingency table tests and goodness-of-fit tests, just like <code><a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test()</a></code> but is more reliable (1). A <em>G</em>-test can be used to see whether the number of observations in each category fits a theoretical expectation (called a <strong><em>G</em>-test of goodness-of-fit</strong>), or to see whether the proportions of one variable are different for different values of the other variable (called a <strong><em>G</em>-test of independence</strong>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>g.test</span>(<span class='kw'>x</span>, y = <span class='kw'>NULL</span>, p = <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='kw'>x</span>), <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='kw'>x</span>)), rescale.p = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>g.test</span><span class='op'>(</span><span class='va'>x</span>, y <span class='op'>=</span> <span class='cn'>NULL</span>, p <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>, rescale.p <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -305,14 +305,14 @@
 <p>If <code>x</code> is a matrix with at least two rows and columns, it is taken as a two-dimensional contingency table: the entries of <code>x</code> must be non-negative integers.  Otherwise, <code>x</code> and <code>y</code> must be vectors or factors of the same length; cases with missing values are removed, the objects are coerced to factors, and the contingency table is computed from these.  Then Pearson's chi-squared test is performed of the null hypothesis that the joint distribution of the cell counts in a 2-dimensional contingency table is the product of the row and column marginals.</p>
 <p>The p-value is computed from the asymptotic chi-squared distribution of the test statistic.</p>
 <p>In the contingency table case simulation is done by random sampling from the set of all contingency tables with given marginals, and works only if the marginals are strictly positive. Note that this is not the usual sampling situation assumed for a chi-squared test (like the <em>G</em>-test) but rather that for Fisher's exact test.</p>
-<p>In the goodness-of-fit case simulation is done by random sampling from the discrete distribution specified by <code>p</code>, each sample being of size <code>n = sum(x)</code>. This simulation is done in <span style="R">R</span> and may be slow.</p><h3><em>G</em>-test of goodness-of-fit (likelihood ratio test)</h3>
+<p>In the goodness-of-fit case simulation is done by random sampling from the discrete distribution specified by <code>p</code>, each sample being of size <code>n = sum(x)</code>. This simulation is done in <span style="R">R</span> and may be slow.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><em>G</em>-test of goodness-of-fit (likelihood ratio test)</h3>
 
 
 <p>Use the <em>G</em>-test of goodness-of-fit when you have one nominal variable with two or more values (such as male and female, or red, pink and white flowers). You compare the observed counts of numbers of observations in each category with the expected counts, which you calculate using some kind of theoretical expectation (such as a 1:1 sex ratio or a 1:2:1 ratio in a genetic cross).</p>
 <p>If the expected number of observations in any category is too small, the <em>G</em>-test may give inaccurate results, and you should use an exact test instead (<code><a href='https://rdrr.io/r/stats/fisher.test.html'>fisher.test()</a></code>).</p>
 <p>The <em>G</em>-test of goodness-of-fit is an alternative to the chi-square test of goodness-of-fit (<code><a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test()</a></code>); each of these tests has some advantages and some disadvantages, and the results of the two tests are usually very similar.</p>
 
-<h3><em>G</em>-test of independence</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><em>G</em>-test of independence</h3>
 
 
 <p>Use the <em>G</em>-test of independence when you have two nominal variables, each with two or more possible values. You want to know whether the proportions for one variable are different among values of the other variable.</p>
@@ -320,13 +320,13 @@
 <p>Fisher's exact test (<code><a href='https://rdrr.io/r/stats/fisher.test.html'>fisher.test()</a></code>) is an <strong>exact</strong> test, where the <em>G</em>-test is still only an <strong>approximation</strong>. For any 2x2 table, Fisher's Exact test may be slower but will still run in seconds, even if the sum of your observations is multiple millions.</p>
 <p>The <em>G</em>-test of independence is an alternative to the chi-square test of independence (<code><a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test()</a></code>), and they will give approximately the same results.</p>
 
-<h3>How the test works</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>How the test works</h3>
 
 
 <p>Unlike the exact test of goodness-of-fit (<code><a href='https://rdrr.io/r/stats/fisher.test.html'>fisher.test()</a></code>), the <em>G</em>-test does not directly calculate the probability of obtaining the observed results or something more extreme. Instead, like almost all statistical tests, the <em>G</em>-test has an intermediate step; it uses the data to calculate a test statistic that measures how far the observed data are from the null expectation. You then use a mathematical relationship, in this case the chi-square distribution, to estimate the probability of obtaining that value of the test statistic.</p>
 <p>The <em>G</em>-test uses the log of the ratio of two likelihoods as the test statistic, which is why it is also called a likelihood ratio test or log-likelihood ratio test. The formula to calculate a <em>G</em>-statistic is:</p>
 <p>\(G = 2 * sum(x * log(x / E))\)</p>
-<p>where <code>E</code> are the expected values. Since this is chi-square distributed, the p value can be calculated in <span style="R">R</span> with:</p><pre><span class='kw'>p</span> <span class='op'>&lt;-</span> <span class='kw'>stats</span>::<span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>pchisq</a></span>(<span class='kw'>G</span>, <span class='kw'>df</span>, lower.tail = <span class='fl'>FALSE</span>)
+<p>where <code>E</code> are the expected values. Since this is chi-square distributed, the p value can be calculated in <span style="R">R</span> with:</p><pre><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>stats</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>pchisq</a></span><span class='op'>(</span><span class='va'>G</span>, <span class='va'>df</span>, lower.tail <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 </pre>
 
 <p>where <code>df</code> are the degrees of freedom.</p>
@@ -364,8 +364,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>questioni
 <span class='co'># by a single gene with two co-dominant alleles, you would expect a 1:2:1</span>
 <span class='co'># ratio.</span>
 
-<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>772</span>, <span class='fl'>1611</span>, <span class='fl'>737</span>)
-<span class='kw'>G</span> <span class='op'>&lt;-</span> <span class='fu'>g.test</span>(<span class='kw'>x</span>, p = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span>) <span class='op'>/</span> <span class='fl'>4</span>)
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>772</span>, <span class='fl'>1611</span>, <span class='fl'>737</span><span class='op'>)</span>
+<span class='va'>G</span> <span class='op'>&lt;-</span> <span class='fu'>g.test</span><span class='op'>(</span><span class='va'>x</span>, p <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span> <span class='op'>/</span> <span class='fl'>4</span><span class='op'>)</span>
 <span class='co'># G$p.value = 0.12574.</span>
 
 <span class='co'># There is no significant difference from a 1:2:1 ratio.</span>
@@ -380,8 +380,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>questioni
 <span class='co'># keep the number of right and left-billed birds at a 1:1 ratio. Groth (1992)</span>
 <span class='co'># observed 1752 right-billed and 1895 left-billed crossbills.</span>
 
-<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1752</span>, <span class='fl'>1895</span>)
-<span class='fu'>g.test</span>(<span class='kw'>x</span>)
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1752</span>, <span class='fl'>1895</span><span class='op'>)</span>
+<span class='fu'>g.test</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 <span class='co'># p = 0.01787343</span>
 
 <span class='co'># There is a significant difference from a 1:1 ratio.</span>
@@ -403,7 +403,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>questioni
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

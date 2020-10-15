@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9000</span>
       </span>
     </div>
 
@@ -242,14 +242,14 @@
     <p>Use this function on e.g. clinical texts from health care records. It returns a <a href='https://rdrr.io/r/base/list.html'>list</a> with all antimicrobial drugs, doses and forms of administration found in the texts.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ab_from_text</span>(
-  <span class='kw'>text</span>,
-  type = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"drug"</span>, <span class='st'>"dose"</span>, <span class='st'>"administration"</span>),
-  collapse = <span class='kw'>NULL</span>,
-  translate_ab = <span class='fl'>FALSE</span>,
-  thorough_search = <span class='kw'>NULL</span>,
-  <span class='kw'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>ab_from_text</span><span class='op'>(</span>
+  <span class='va'>text</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"drug"</span>, <span class='st'>"dose"</span>, <span class='st'>"administration"</span><span class='op'>)</span>,
+  collapse <span class='op'>=</span> <span class='cn'>NULL</span>,
+  translate_ab <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  thorough_search <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -285,14 +285,14 @@
     <p>A <a href='https://rdrr.io/r/base/list.html'>list</a>, or a  <a href='https://rdrr.io/r/base/character.html'>character</a> if <code>collapse</code> is not <code>NULL</code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is also internally used by <code><a href='as.ab.html'>as.ab()</a></code>, although it then only searches for the first drug name and will throw a note if more drug names could have been returned.</p><h3>Parameter <code>type</code></h3>
+    <p>This function is also internally used by <code><a href='as.ab.html'>as.ab()</a></code>, although it then only searches for the first drug name and will throw a note if more drug names could have been returned.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Parameter <code>type</code></h3>
 
 
 <p>At default, the function will search for antimicrobial drug names. All text elements will be searched for official names, ATC codes and brand names. As it uses <code><a href='as.ab.html'>as.ab()</a></code> internally, it will correct for misspelling.</p>
 <p>With <code>type = "dose"</code> (or similar, like "dosing", "doses"), all text elements will be searched for numeric values that are higher than 100 and do not resemble years. The output will be numeric. It supports any unit (g, mg, IE, etc.) and multiple values in one clinical text, see <em>Examples</em>.</p>
 <p>With <code>type = "administration"</code> (or abbreviations, like "admin", "adm"), all text elements will be searched for a form of drug administration. It supports the following forms (including common abbreviations): buccal, implant, inhalation, instillation, intravenous, nasal, oral, parenteral, rectal, sublingual, transdermal and vaginal. Abbreviations for oral (such as 'po', 'per os') will become "oral", all values for intravenous (such as 'iv', 'intraven') will become "iv". It supports multiple values in one clinical text, see <em>Examples</em>.</p>
 
-<h3>Parameter <code>collapse</code></h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Parameter <code>collapse</code></h3>
 
 
 <p>Without using <code>collapse</code>, this function will return a <a href='https://rdrr.io/r/base/list.html'>list</a>. This can be convenient to use e.g. inside a <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code>):<br />
@@ -316,36 +316,36 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># mind the bad spelling of amoxicillin in this line, </span>
 <span class='co'># straight from a true health care record:</span>
-<span class='fu'>ab_from_text</span>(<span class='st'>"28/03/2020 regular amoxicilliin 500mg po tds"</span>)
+<span class='fu'>ab_from_text</span><span class='op'>(</span><span class='st'>"28/03/2020 regular amoxicilliin 500mg po tds"</span><span class='op'>)</span>
 
-<span class='fu'>ab_from_text</span>(<span class='st'>"500 mg amoxi po and 400mg cipro iv"</span>)
-<span class='fu'>ab_from_text</span>(<span class='st'>"500 mg amoxi po and 400mg cipro iv"</span>, type = <span class='st'>"dose"</span>)
-<span class='fu'>ab_from_text</span>(<span class='st'>"500 mg amoxi po and 400mg cipro iv"</span>, type = <span class='st'>"admin"</span>)
+<span class='fu'>ab_from_text</span><span class='op'>(</span><span class='st'>"500 mg amoxi po and 400mg cipro iv"</span><span class='op'>)</span>
+<span class='fu'>ab_from_text</span><span class='op'>(</span><span class='st'>"500 mg amoxi po and 400mg cipro iv"</span>, type <span class='op'>=</span> <span class='st'>"dose"</span><span class='op'>)</span>
+<span class='fu'>ab_from_text</span><span class='op'>(</span><span class='st'>"500 mg amoxi po and 400mg cipro iv"</span>, type <span class='op'>=</span> <span class='st'>"admin"</span><span class='op'>)</span>
 
-<span class='fu'>ab_from_text</span>(<span class='st'>"500 mg amoxi po and 400mg cipro iv"</span>, collapse = <span class='st'>", "</span>)
+<span class='fu'>ab_from_text</span><span class='op'>(</span><span class='st'>"500 mg amoxi po and 400mg cipro iv"</span>, collapse <span class='op'>=</span> <span class='st'>", "</span><span class='op'>)</span>
 
 <span class='co'># if you want to know which antibiotic groups were administered, do e.g.:</span>
-<span class='kw'>abx</span> <span class='op'>&lt;-</span> <span class='fu'>ab_from_text</span>(<span class='st'>"500 mg amoxi po and 400mg cipro iv"</span>)
-<span class='fu'><a href='ab_property.html'>ab_group</a></span>(<span class='kw'>abx</span>[[<span class='fl'>1</span>]])
+<span class='va'>abx</span> <span class='op'>&lt;-</span> <span class='fu'>ab_from_text</span><span class='op'>(</span><span class='st'>"500 mg amoxi po and 400mg cipro iv"</span><span class='op'>)</span>
+<span class='fu'><a href='ab_property.html'>ab_group</a></span><span class='op'>(</span><span class='va'>abx</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
 
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span>)) {
-  <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(clinical_text = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"given 400mg cipro and 500 mg amox"</span>,
-                           <span class='st'>"started on doxy iv today"</span>)) <span class='op'>%&gt;%</span> 
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(abx_codes = <span class='fu'>ab_from_text</span>(<span class='kw'>clinical_text</span>),
-           abx_doses = <span class='fu'>ab_from_text</span>(<span class='kw'>clinical_text</span>, type = <span class='st'>"doses"</span>),
-           abx_admin = <span class='fu'>ab_from_text</span>(<span class='kw'>clinical_text</span>, type = <span class='st'>"admin"</span>),
-           abx_coll = <span class='fu'>ab_from_text</span>(<span class='kw'>clinical_text</span>, collapse = <span class='st'>"|"</span>),
-           abx_coll_names = <span class='fu'>ab_from_text</span>(<span class='kw'>clinical_text</span>,
-                                         collapse = <span class='st'>"|"</span>,
-                                         translate_ab = <span class='st'>"name"</span>),
-           abx_coll_doses = <span class='fu'>ab_from_text</span>(<span class='kw'>clinical_text</span>,
-                                         type = <span class='st'>"doses"</span>,
-                                         collapse = <span class='st'>"|"</span>),
-           abx_coll_admin = <span class='fu'>ab_from_text</span>(<span class='kw'>clinical_text</span>,
-                                         type = <span class='st'>"admin"</span>,
-                                         collapse = <span class='st'>"|"</span>))
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>clinical_text <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"given 400mg cipro and 500 mg amox"</span>,
+                           <span class='st'>"started on doxy iv today"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>abx_codes <span class='op'>=</span> <span class='fu'>ab_from_text</span><span class='op'>(</span><span class='va'>clinical_text</span><span class='op'>)</span>,
+           abx_doses <span class='op'>=</span> <span class='fu'>ab_from_text</span><span class='op'>(</span><span class='va'>clinical_text</span>, type <span class='op'>=</span> <span class='st'>"doses"</span><span class='op'>)</span>,
+           abx_admin <span class='op'>=</span> <span class='fu'>ab_from_text</span><span class='op'>(</span><span class='va'>clinical_text</span>, type <span class='op'>=</span> <span class='st'>"admin"</span><span class='op'>)</span>,
+           abx_coll <span class='op'>=</span> <span class='fu'>ab_from_text</span><span class='op'>(</span><span class='va'>clinical_text</span>, collapse <span class='op'>=</span> <span class='st'>"|"</span><span class='op'>)</span>,
+           abx_coll_names <span class='op'>=</span> <span class='fu'>ab_from_text</span><span class='op'>(</span><span class='va'>clinical_text</span>,
+                                         collapse <span class='op'>=</span> <span class='st'>"|"</span>,
+                                         translate_ab <span class='op'>=</span> <span class='st'>"name"</span><span class='op'>)</span>,
+           abx_coll_doses <span class='op'>=</span> <span class='fu'>ab_from_text</span><span class='op'>(</span><span class='va'>clinical_text</span>,
+                                         type <span class='op'>=</span> <span class='st'>"doses"</span>,
+                                         collapse <span class='op'>=</span> <span class='st'>"|"</span><span class='op'>)</span>,
+           abx_coll_admin <span class='op'>=</span> <span class='fu'>ab_from_text</span><span class='op'>(</span><span class='va'>clinical_text</span>,
+                                         type <span class='op'>=</span> <span class='st'>"admin"</span>,
+                                         collapse <span class='op'>=</span> <span class='st'>"|"</span><span class='op'>)</span><span class='op'>)</span>
 
-}
+<span class='op'>}</span>
 </pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -362,7 +362,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

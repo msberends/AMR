@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9000</span>
       </span>
     </div>
 
@@ -242,22 +242,22 @@
     <p>Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use <code><a href='https://rdrr.io/r/base/format.html'>format()</a></code> on the result to prettify it to a publicable/printable format, see Examples.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bug_drug_combinations</span>(<span class='kw'>x</span>, col_mo = <span class='kw'>NULL</span>, FUN = <span class='kw'>mo_shortname</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>bug_drug_combinations</span><span class='op'>(</span><span class='va'>x</span>, col_mo <span class='op'>=</span> <span class='cn'>NULL</span>, FUN <span class='op'>=</span> <span class='va'>mo_shortname</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for bug_drug_combinations</span>
-<span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(
-  <span class='kw'>x</span>,
-  translate_ab = <span class='st'>"name (ab, atc)"</span>,
-  language = <span class='fu'><a href='translate.html'>get_locale</a></span>(),
-  minimum = <span class='fl'>30</span>,
-  combine_SI = <span class='fl'>TRUE</span>,
-  combine_IR = <span class='fl'>FALSE</span>,
-  add_ab_group = <span class='fl'>TRUE</span>,
-  remove_intrinsic_resistant = <span class='fl'>FALSE</span>,
-  decimal.mark = <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"OutDec"</span>),
-  big.mark = <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='kw'>decimal.mark</span> <span class='op'>==</span> <span class='st'>","</span>, <span class='st'>"."</span>, <span class='st'>","</span>),
-  <span class='kw'>...</span>
-)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  translate_ab <span class='op'>=</span> <span class='st'>"name (ab, atc)"</span>,
+  language <span class='op'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span><span class='op'>(</span><span class='op'>)</span>,
+  minimum <span class='op'>=</span> <span class='fl'>30</span>,
+  combine_SI <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  combine_IR <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  add_ab_group <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  remove_intrinsic_resistant <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  decimal.mark <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"OutDec"</span><span class='op'>)</span>,
+  big.mark <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>decimal.mark</span> <span class='op'>==</span> <span class='st'>","</span>, <span class='st'>"."</span>, <span class='st'>","</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -343,18 +343,18 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># \donttest{</span>
-<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'>bug_drug_combinations</span>(<span class='kw'>example_isolates</span>)
-<span class='kw'>x</span>
-<span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='kw'>x</span>, translate_ab = <span class='st'>"name (atc)"</span>)
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>bug_drug_combinations</span><span class='op'>(</span><span class='va'>example_isolates</span><span class='op'>)</span>
+<span class='va'>x</span>
+<span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='va'>x</span>, translate_ab <span class='op'>=</span> <span class='st'>"name (atc)"</span><span class='op'>)</span>
 
 <span class='co'># Use FUN to change to transformation of microorganism codes</span>
-<span class='fu'>bug_drug_combinations</span>(<span class='kw'>example_isolates</span>, 
-                      FUN = <span class='kw'>mo_gramstain</span>)
+<span class='fu'>bug_drug_combinations</span><span class='op'>(</span><span class='va'>example_isolates</span>, 
+                      FUN <span class='op'>=</span> <span class='va'>mo_gramstain</span><span class='op'>)</span>
                            
-<span class='fu'>bug_drug_combinations</span>(<span class='kw'>example_isolates</span>,
-                      FUN = <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='kw'>x</span> <span class='op'>==</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span>(<span class='st'>"E. coli"</span>),
+<span class='fu'>bug_drug_combinations</span><span class='op'>(</span><span class='va'>example_isolates</span>,
+                      FUN <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>x</span> <span class='op'>==</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span><span class='op'>(</span><span class='st'>"E. coli"</span><span class='op'>)</span>,
                                                <span class='st'>"E. coli"</span>,
-                                               <span class='st'>"Others"</span>))
+                                               <span class='st'>"Others"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># }</span>
 </pre>
   </div>
@@ -372,7 +372,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

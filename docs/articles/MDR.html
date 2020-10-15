@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9000</span>
       </span>
     </div>
 
@@ -187,7 +187,7 @@
 
       
 
-      </header><script src="MDR_files/header-attrs-2.3/header-attrs.js"></script><script src="MDR_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="MDR_files/header-attrs-2.4/header-attrs.js"></script><script src="MDR_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>How to determine multi-drug resistance (MDR)</h1>
@@ -240,16 +240,14 @@
 <p>The <code><a href="../reference/mdro.html">mdro()</a></code> function always returns an ordered <code>factor</code>. For example, the output of the default guideline by Magiorakos <em>et al.</em> returns a <code>factor</code> with levels ‘Negative’, ‘MDR’, ‘XDR’ or ‘PDR’ in that order.</p>
 <p>The next example uses the <code>example_isolates</code> data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR analysis. If we test the MDR/XDR/PDR guideline on this data set, we get:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org">dplyr</a></span>)   <span class="co"># to support pipes: %&gt;%</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/msberends/cleaner">cleaner</a></span>) <span class="co"># to create frequency tables</span>
-</pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>   <span class="co"># to support pipes: %&gt;%</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/msberends/cleaner">cleaner</a></span><span class="op">)</span> <span class="co"># to create frequency tables</span></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">example_isolates</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/mdro.html">mdro</a></span>() <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>() <span class="co"># show frequency table of the result</span>
+<span class="va">example_isolates</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/mdro.html">mdro</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># show frequency table of the result</span>
 <span class="co"># Warning in mdro(.): NA introduced for isolates where the available percentage of</span>
-<span class="co"># antimicrobial classes was below 50% (set with `pct_required_classes`)</span>
-</pre></div>
+<span class="co"># antimicrobial classes was below 50% (set with `pct_required_classes`)</span></pre></div>
 <p><strong>Frequency table</strong></p>
 <p>Class: factor &gt; ordered (numeric)<br>
 Length: 2,000<br>
@@ -288,62 +286,56 @@ Unique: 2</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="co"># a helper function to get a random vector with values S, I and R</span>
 <span class="co"># with the probabilities 50% - 10% - 40%</span>
-<span class="kw">sample_rsi</span> <span class="op">&lt;-</span> <span class="fu">function</span>() {
-  <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"S"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>),
-         size = <span class="fl">5000</span>,
-         prob = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.4</span>),
-         replace = <span class="fl">TRUE</span>)
-}
+<span class="va">sample_rsi</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"S"</span>, <span class="st">"I"</span>, <span class="st">"R"</span><span class="op">)</span>,
+         size <span class="op">=</span> <span class="fl">5000</span>,
+         prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.4</span><span class="op">)</span>,
+         replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="op">}</span>
 
-<span class="kw">my_TB_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(rifampicin = <span class="fu">sample_rsi</span>(),
-                         isoniazid = <span class="fu">sample_rsi</span>(),
-                         gatifloxacin = <span class="fu">sample_rsi</span>(),
-                         ethambutol = <span class="fu">sample_rsi</span>(),
-                         pyrazinamide = <span class="fu">sample_rsi</span>(),
-                         moxifloxacin = <span class="fu">sample_rsi</span>(),
-                         kanamycin = <span class="fu">sample_rsi</span>())
-</pre></div>
+<span class="va">my_TB_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>rifampicin <span class="op">=</span> <span class="fu">sample_rsi</span><span class="op">(</span><span class="op">)</span>,
+                         isoniazid <span class="op">=</span> <span class="fu">sample_rsi</span><span class="op">(</span><span class="op">)</span>,
+                         gatifloxacin <span class="op">=</span> <span class="fu">sample_rsi</span><span class="op">(</span><span class="op">)</span>,
+                         ethambutol <span class="op">=</span> <span class="fu">sample_rsi</span><span class="op">(</span><span class="op">)</span>,
+                         pyrazinamide <span class="op">=</span> <span class="fu">sample_rsi</span><span class="op">(</span><span class="op">)</span>,
+                         moxifloxacin <span class="op">=</span> <span class="fu">sample_rsi</span><span class="op">(</span><span class="op">)</span>,
+                         kanamycin <span class="op">=</span> <span class="fu">sample_rsi</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p>Because all column names are automatically verified for valid drug names or codes, this would have worked exactly the same:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw">my_TB_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(RIF = <span class="fu">sample_rsi</span>(),
-                         INH = <span class="fu">sample_rsi</span>(),
-                         GAT = <span class="fu">sample_rsi</span>(),
-                         ETH = <span class="fu">sample_rsi</span>(),
-                         PZA = <span class="fu">sample_rsi</span>(),
-                         MFX = <span class="fu">sample_rsi</span>(),
-                         KAN = <span class="fu">sample_rsi</span>())
-</pre></div>
+<span class="va">my_TB_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>RIF <span class="op">=</span> <span class="fu">sample_rsi</span><span class="op">(</span><span class="op">)</span>,
+                         INH <span class="op">=</span> <span class="fu">sample_rsi</span><span class="op">(</span><span class="op">)</span>,
+                         GAT <span class="op">=</span> <span class="fu">sample_rsi</span><span class="op">(</span><span class="op">)</span>,
+                         ETH <span class="op">=</span> <span class="fu">sample_rsi</span><span class="op">(</span><span class="op">)</span>,
+                         PZA <span class="op">=</span> <span class="fu">sample_rsi</span><span class="op">(</span><span class="op">)</span>,
+                         MFX <span class="op">=</span> <span class="fu">sample_rsi</span><span class="op">(</span><span class="op">)</span>,
+                         KAN <span class="op">=</span> <span class="fu">sample_rsi</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p>The data set now looks like this:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">my_TB_data</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">my_TB_data</span><span class="op">)</span>
 <span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span>
-<span class="co"># 1          R         S            S          R            S            I</span>
-<span class="co"># 2          I         S            S          S            I            R</span>
-<span class="co"># 3          R         R            R          R            R            R</span>
-<span class="co"># 4          R         I            S          R            S            S</span>
-<span class="co"># 5          S         S            I          S            S            R</span>
+<span class="co"># 1          R         S            S          R            R            S</span>
+<span class="co"># 2          I         R            S          R            S            I</span>
+<span class="co"># 3          R         R            S          S            S            S</span>
+<span class="co"># 4          R         R            S          I            S            S</span>
+<span class="co"># 5          S         I            R          S            R            S</span>
 <span class="co"># 6          S         S            S          R            S            S</span>
 <span class="co">#   kanamycin</span>
-<span class="co"># 1         R</span>
+<span class="co"># 1         S</span>
 <span class="co"># 2         S</span>
-<span class="co"># 3         R</span>
-<span class="co"># 4         R</span>
+<span class="co"># 3         S</span>
+<span class="co"># 4         S</span>
 <span class="co"># 5         S</span>
-<span class="co"># 6         R</span>
-</pre></div>
+<span class="co"># 6         R</span></pre></div>
 <p>We can now add the interpretation of MDR-TB to our data set. You can use:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="../reference/mdro.html">mdro</a></span>(<span class="kw">my_TB_data</span>, guideline = <span class="st">"TB"</span>)
-</pre></div>
+<span class="fu"><a href="../reference/mdro.html">mdro</a></span><span class="op">(</span><span class="va">my_TB_data</span>, guideline <span class="op">=</span> <span class="st">"TB"</span><span class="op">)</span></pre></div>
 <p>or its shortcut <code><a href="../reference/mdro.html">mdr_tb()</a></code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="kw">my_TB_data</span><span class="op">$</span><span class="kw">mdr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mdro.html">mdr_tb</a></span>(<span class="kw">my_TB_data</span>)
-<span class="co"># NOTE: No column found as input for `col_mo`, assuming all records contain Mycobacterium tuberculosis.</span>
-</pre></div>
+<span class="va">my_TB_data</span><span class="op">$</span><span class="va">mdr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mdro.html">mdr_tb</a></span><span class="op">(</span><span class="va">my_TB_data</span><span class="op">)</span>
+<span class="co"># NOTE: No column found as input for `col_mo`, assuming all records contain Mycobacterium tuberculosis.</span></pre></div>
 <p>Create a frequency table of the results:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span>(<span class="kw">my_TB_data</span><span class="op">$</span><span class="kw">mdr</span>)
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span><span class="op">(</span><span class="va">my_TB_data</span><span class="op">$</span><span class="va">mdr</span><span class="op">)</span></pre></div>
 <p><strong>Frequency table</strong></p>
 <p>Class: factor &gt; ordered (numeric)<br>
 Length: 5,000<br>
@@ -363,40 +355,40 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistant</td>
-<td align="right">3225</td>
-<td align="right">64.50%</td>
-<td align="right">3225</td>
-<td align="right">64.50%</td>
+<td align="right">3262</td>
+<td align="right">65.24%</td>
+<td align="right">3262</td>
+<td align="right">65.24%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">698</td>
-<td align="right">13.96%</td>
-<td align="right">3923</td>
-<td align="right">78.46%</td>
+<td align="right">664</td>
+<td align="right">13.28%</td>
+<td align="right">3926</td>
+<td align="right">78.52%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multi-drug-resistant</td>
-<td align="right">581</td>
-<td align="right">11.62%</td>
-<td align="right">4504</td>
-<td align="right">90.08%</td>
+<td align="right">609</td>
+<td align="right">12.18%</td>
+<td align="right">4535</td>
+<td align="right">90.70%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistant</td>
-<td align="right">298</td>
-<td align="right">5.96%</td>
-<td align="right">4802</td>
-<td align="right">96.04%</td>
+<td align="right">283</td>
+<td align="right">5.66%</td>
+<td align="right">4818</td>
+<td align="right">96.36%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensively drug-resistant</td>
-<td align="right">198</td>
-<td align="right">3.96%</td>
+<td align="right">182</td>
+<td align="right">3.64%</td>
 <td align="right">5000</td>
 <td align="right">100.00%</td>
 </tr>
@@ -418,7 +410,7 @@ Unique: 5</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

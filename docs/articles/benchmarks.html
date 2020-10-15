@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9000</span>
       </span>
     </div>
 
@@ -187,7 +187,7 @@
 
       
 
-      </header><script src="benchmarks_files/header-attrs-2.3/header-attrs.js"></script><script src="benchmarks_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="benchmarks_files/header-attrs-2.4/header-attrs.js"></script><script src="benchmarks_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Benchmarks</h1>
@@ -203,106 +203,44 @@
 <p>One of the most important features of this package is the complete microbial taxonomic database, supplied by the <a href="http://catalogueoflife.org">Catalogue of Life</a>. We created a function <code><a href="../reference/as.mo.html">as.mo()</a></code> that transforms any user input value to a valid microbial ID by using intelligent rules combined with the taxonomic tree of Catalogue of Life.</p>
 <p>Using the <code>microbenchmark</code> package, we can review the calculation performance of this function. Its function <code>microbenchmark()</code> runs different input expressions independently of each other and measures their time-to-result.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw">microbenchmark</span> <span class="op">&lt;-</span> <span class="kw">microbenchmark</span>::<span class="kw"><a href="https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html">microbenchmark</a></span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://msberends.github.io/AMR">AMR</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org">dplyr</a></span>)
-</pre></div>
+<span class="va">microbenchmark</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html">microbenchmark</a></span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></pre></div>
 <p>In the next test, we try to ‘coerce’ different input values into the microbial code of <em>Staphylococcus aureus</em>. Coercion is a computational process of forcing output based on an input. For microorganism names, coercing user input to taxonomically valid microorganism names is crucial to ensure correct interpretation and to enable grouping based on taxonomic properties.</p>
 <p>The actual result is the same every time: it returns its microorganism code <code>B_STPHY_AURS</code> (<em>B</em> stands for <em>Bacteria</em>, the taxonomic kingdom).</p>
 <p>But the calculation time differs a lot:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">S.aureus</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span>(
-  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"sau"</span>), <span class="co"># WHONET code</span>
-  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"stau"</span>),
-  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"STAU"</span>),
-  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"staaur"</span>),
-  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"STAAUR"</span>),
-  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"S. aureus"</span>),
-  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"S aureus"</span>),
-  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"Staphylococcus aureus"</span>), <span class="co"># official taxonomic name</span>
-  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"Staphylococcus aureus (MRSA)"</span>), <span class="co"># additional text</span>
-  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"Sthafilokkockus aaureuz"</span>), <span class="co"># incorrect spelling</span>
-  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"MRSA"</span>), <span class="co"># Methicillin Resistant S. aureus</span>
-  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"VISA"</span>), <span class="co"># Vancomycin Intermediate S. aureus</span>
-  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span>(<span class="st">"VRSA"</span>), <span class="co"># Vancomycin Resistant S. aureus</span>
-  times = <span class="fl">10</span>)
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span>(<span class="kw">S.aureus</span>, unit = <span class="st">"ms"</span>, signif = <span class="fl">2</span>)
+<span class="va">S.aureus</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="op">(</span>
+  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"sau"</span><span class="op">)</span>, <span class="co"># WHONET code</span>
+  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"stau"</span><span class="op">)</span>,
+  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"STAU"</span><span class="op">)</span>,
+  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"staaur"</span><span class="op">)</span>,
+  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"STAAUR"</span><span class="op">)</span>,
+  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"S. aureus"</span><span class="op">)</span>,
+  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"S aureus"</span><span class="op">)</span>,
+  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"Staphylococcus aureus"</span><span class="op">)</span>, <span class="co"># official taxonomic name</span>
+  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"Staphylococcus aureus (MRSA)"</span><span class="op">)</span>, <span class="co"># additional text</span>
+  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"Sthafilokkockus aaureuz"</span><span class="op">)</span>, <span class="co"># incorrect spelling</span>
+  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"MRSA"</span><span class="op">)</span>, <span class="co"># Methicillin Resistant S. aureus</span>
+  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"VISA"</span><span class="op">)</span>, <span class="co"># Vancomycin Intermediate S. aureus</span>
+  <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"VRSA"</span><span class="op">)</span>, <span class="co"># Vancomycin Resistant S. aureus</span>
+  times <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
+<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="va">S.aureus</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
 <span class="co">#                                   expr   min    lq  mean median    uq max neval</span>
-<span class="co">#                           as.mo("sau")  11.0  12.0  25.0   13.0  14.0 130    10</span>
-<span class="co">#                          as.mo("stau") 210.0 230.0 240.0  250.0 250.0 260    10</span>
-<span class="co">#                          as.mo("STAU") 210.0 210.0 240.0  240.0 260.0 270    10</span>
-<span class="co">#                        as.mo("staaur")  12.0  14.0  22.0   14.0  41.0  43    10</span>
-<span class="co">#                        as.mo("STAAUR")  12.0  12.0  19.0   13.0  14.0  47    10</span>
-<span class="co">#                     as.mo("S. aureus")  26.0  28.0  38.0   30.0  58.0  62    10</span>
-<span class="co">#                      as.mo("S aureus")  28.0  29.0  45.0   52.0  56.0  60    10</span>
-<span class="co">#         as.mo("Staphylococcus aureus")   2.1   2.2   7.9    2.4   2.6  32    10</span>
-<span class="co">#  as.mo("Staphylococcus aureus (MRSA)") 840.0 880.0 890.0  890.0 890.0 930    10</span>
-<span class="co">#       as.mo("Sthafilokkockus aaureuz") 340.0 370.0 390.0  390.0 410.0 490    10</span>
-<span class="co">#                          as.mo("MRSA")  11.0  12.0  16.0   13.0  14.0  44    10</span>
-<span class="co">#                          as.mo("VISA")  19.0  20.0  32.0   22.0  50.0  51    10</span>
-<span class="co">#                          as.mo("VRSA")  18.0  22.0  24.0   22.0  23.0  46    10</span>
-</pre></div>
+<span class="co">#                           as.mo("sau")  12.0  13.0  25.0   15.0  40.0  43    10</span>
+<span class="co">#                          as.mo("stau") 210.0 220.0 230.0  230.0 250.0 260    10</span>
+<span class="co">#                          as.mo("STAU") 210.0 210.0 230.0  250.0 250.0 260    10</span>
+<span class="co">#                        as.mo("staaur")  12.0  13.0  24.0   14.0  41.0  42    10</span>
+<span class="co">#                        as.mo("STAAUR")  13.0  13.0  22.0   14.0  39.0  42    10</span>
+<span class="co">#                     as.mo("S. aureus")  27.0  30.0  42.0   41.0  54.0  61    10</span>
+<span class="co">#                      as.mo("S aureus")  24.0  29.0  45.0   43.0  60.0  66    10</span>
+<span class="co">#         as.mo("Staphylococcus aureus")   2.1   2.5   4.9    2.5   2.9  26    10</span>
+<span class="co">#  as.mo("Staphylococcus aureus (MRSA)") 820.0 860.0 880.0  880.0 900.0 970    10</span>
+<span class="co">#       as.mo("Sthafilokkockus aaureuz") 330.0 340.0 370.0  370.0 390.0 420    10</span>
+<span class="co">#                          as.mo("MRSA")  11.0  13.0  22.0   14.0  41.0  44    10</span>
+<span class="co">#                          as.mo("VISA")  21.0  22.0  48.0   47.0  51.0 140    10</span>
+<span class="co">#                          as.mo("VRSA")  19.0  20.0  23.0   21.0  22.0  47    10</span></pre></div>
 <p><img src="benchmarks_files/figure-html/unnamed-chunk-4-1.png" width="562.5"></p>
 <p>In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 5 milliseconds means it can determine 200 input values per second. It case of 100 milliseconds, this is only 10 input values per second. It is clear that accepted taxonomic names are extremely fast, but some variations can take up to 500-1000 times as much time.</p>
 <p>To improve performance, two important calculations take almost no time at all: <strong>repetitive results</strong> and <strong>already precalculated results</strong>.</p>
@@ -312,79 +250,66 @@
 <p>Repetitive results are unique values that are present more than once. Unique values will only be calculated once by <code><a href="../reference/as.mo.html">as.mo()</a></code>. We will use <code><a href="../reference/mo_property.html">mo_name()</a></code> for this test - a helper function that returns the full microbial name (genus, species and possibly subspecies) which uses <code><a href="../reference/as.mo.html">as.mo()</a></code> internally.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="co"># take all MO codes from the example_isolates data set</span>
-<span class="kw">x</span> <span class="op">&lt;-</span> <span class="kw">example_isolates</span><span class="op">$</span><span class="kw">mo</span> <span class="op">%&gt;%</span>
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span><span class="op">$</span><span class="va">mo</span> <span class="op">%&gt;%</span>
   <span class="co"># and copy them a thousand times</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fl">1000</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="co"># then scramble them</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>()
+  <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="op">)</span>
   
 <span class="co"># as the example_isolates has 2,000 rows, we should have 2 million items</span>
-<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="kw">x</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co"># [1] 2000000</span>
 
 <span class="co"># and how many unique values do we have?</span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html">n_distinct</a></span>(<span class="kw">x</span>)
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html">n_distinct</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co"># [1] 90</span>
 
 <span class="co"># now let's see:</span>
-<span class="kw">run_it</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span>(<span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="kw">x</span>),
-                         times = <span class="fl">10</span>)
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span>(<span class="kw">run_it</span>, unit = <span class="st">"ms"</span>, signif = <span class="fl">3</span>)
+<span class="va">run_it</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,
+                         times <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
+<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
 <span class="co">#        expr min  lq mean median  uq max neval</span>
-<span class="co">#  mo_name(x) 131 161  200    168 187 341    10</span>
-</pre></div>
-<p>So getting official taxonomic names of 2,000,000 (!!) items consisting of 90 unique values only takes 0.168 seconds. You only lose time on your unique input values.</p>
+<span class="co">#  mo_name(x) 150 154  195    179 197 301    10</span></pre></div>
+<p>So getting official taxonomic names of 2,000,000 (!!) items consisting of 90 unique values only takes 0.179 seconds. You only lose time on your unique input values.</p>
 </div>
 <div id="precalculated-results" class="section level3">
 <h3 class="hasAnchor">
 <a href="#precalculated-results" class="anchor"></a>Precalculated results</h3>
 <p>What about precalculated results? If the input is an already precalculated result of a helper function like <code><a href="../reference/mo_property.html">mo_name()</a></code>, it almost doesn’t take any time at all (see ‘C’ below):</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw">run_it</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span>(A = <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="st">"STAAUR"</span>),
-                         B = <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="st">"S. aureus"</span>),
-                         C = <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="st">"Staphylococcus aureus"</span>),
-                         times = <span class="fl">10</span>)
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="co"># Result of one value was guessed with uncertainty. Use mo_uncertainties() to review it.</span>
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span>(<span class="kw">run_it</span>, unit = <span class="st">"ms"</span>, signif = <span class="fl">3</span>)
+<span class="va">run_it</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="op">(</span>A <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"STAAUR"</span><span class="op">)</span>,
+                         B <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"S. aureus"</span><span class="op">)</span>,
+                         C <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"Staphylococcus aureus"</span><span class="op">)</span>,
+                         times <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
+<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
 <span class="co">#  expr   min    lq  mean median    uq   max neval</span>
-<span class="co">#     A  6.85  7.05  7.57   7.51  8.05  8.52    10</span>
-<span class="co">#     B 21.50 21.70 27.40  23.80 25.00 64.70    10</span>
-<span class="co">#     C  1.75  1.86  1.99   1.93  2.08  2.27    10</span>
-</pre></div>
-<p>So going from <code><a href="../reference/mo_property.html">mo_name("Staphylococcus aureus")</a></code> to <code>"Staphylococcus aureus"</code> takes 0.0019 seconds - it doesn’t even start calculating <em>if the result would be the same as the expected resulting value</em>. That goes for all helper functions:</p>
+<span class="co">#     A  7.11  7.23  7.79   7.74  8.46  8.54    10</span>
+<span class="co">#     B 21.40 21.90 30.40  24.00 25.50 60.00    10</span>
+<span class="co">#     C  1.97  1.98  2.12   2.05  2.34  2.43    10</span></pre></div>
+<p>So going from <code><a href="../reference/mo_property.html">mo_name("Staphylococcus aureus")</a></code> to <code>"Staphylococcus aureus"</code> takes 0.002 seconds - it doesn’t even start calculating <em>if the result would be the same as the expected resulting value</em>. That goes for all helper functions:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="kw">run_it</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span>(A = <span class="fu"><a href="../reference/mo_property.html">mo_species</a></span>(<span class="st">"aureus"</span>),
-                         B = <span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span>(<span class="st">"Staphylococcus"</span>),
-                         C = <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="st">"Staphylococcus aureus"</span>),
-                         D = <span class="fu"><a href="../reference/mo_property.html">mo_family</a></span>(<span class="st">"Staphylococcaceae"</span>),
-                         E = <span class="fu"><a href="../reference/mo_property.html">mo_order</a></span>(<span class="st">"Bacillales"</span>),
-                         F = <span class="fu"><a href="../reference/mo_property.html">mo_class</a></span>(<span class="st">"Bacilli"</span>),
-                         G = <span class="fu"><a href="../reference/mo_property.html">mo_phylum</a></span>(<span class="st">"Firmicutes"</span>),
-                         H = <span class="fu"><a href="../reference/mo_property.html">mo_kingdom</a></span>(<span class="st">"Bacteria"</span>),
-                         times = <span class="fl">10</span>)
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span>(<span class="kw">run_it</span>, unit = <span class="st">"ms"</span>, signif = <span class="fl">3</span>)
+<span class="va">run_it</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="op">(</span>A <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_species</a></span><span class="op">(</span><span class="st">"aureus"</span><span class="op">)</span>,
+                         B <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="st">"Staphylococcus"</span><span class="op">)</span>,
+                         C <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"Staphylococcus aureus"</span><span class="op">)</span>,
+                         D <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_family</a></span><span class="op">(</span><span class="st">"Staphylococcaceae"</span><span class="op">)</span>,
+                         E <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_order</a></span><span class="op">(</span><span class="st">"Bacillales"</span><span class="op">)</span>,
+                         F <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_class</a></span><span class="op">(</span><span class="st">"Bacilli"</span><span class="op">)</span>,
+                         G <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_phylum</a></span><span class="op">(</span><span class="st">"Firmicutes"</span><span class="op">)</span>,
+                         H <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_kingdom</a></span><span class="op">(</span><span class="st">"Bacteria"</span><span class="op">)</span>,
+                         times <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
+<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
-<span class="co">#  expr  min   lq mean median   uq  max neval</span>
-<span class="co">#     A 1.38 1.57 1.60   1.61 1.67 1.71    10</span>
-<span class="co">#     B 1.55 1.60 1.73   1.63 1.92 2.05    10</span>
-<span class="co">#     C 1.39 1.50 1.70   1.62 1.84 2.39    10</span>
-<span class="co">#     D 1.32 1.51 1.59   1.57 1.61 2.04    10</span>
-<span class="co">#     E 1.34 1.40 1.52   1.53 1.65 1.66    10</span>
-<span class="co">#     F 1.28 1.53 1.56   1.60 1.66 1.72    10</span>
-<span class="co">#     G 1.30 1.33 1.59   1.61 1.74 1.98    10</span>
-<span class="co">#     H 1.31 1.45 1.62   1.55 1.70 2.46    10</span>
-</pre></div>
+<span class="co">#  expr  min   lq mean median   uq   max neval</span>
+<span class="co">#     A 1.33 1.57 1.70   1.69 1.83  2.18    10</span>
+<span class="co">#     B 1.62 1.67 5.34   1.70 2.15 36.90    10</span>
+<span class="co">#     C 1.43 1.55 1.64   1.59 1.70  2.06    10</span>
+<span class="co">#     D 1.29 1.44 1.53   1.55 1.66  1.70    10</span>
+<span class="co">#     E 1.31 1.58 1.68   1.65 1.71  2.11    10</span>
+<span class="co">#     F 1.54 1.61 1.80   1.67 1.86  2.57    10</span>
+<span class="co">#     G 1.52 1.62 1.73   1.71 1.77  2.04    10</span>
+<span class="co">#     H 1.40 1.55 1.70   1.65 1.92  2.03    10</span></pre></div>
 <p>Of course, when running <code><a href="../reference/mo_property.html">mo_phylum("Firmicutes")</a></code> the function has zero knowledge about the actual microorganism, namely <em>S. aureus</em>. But since the result would be <code>"Firmicutes"</code> anyway, there is no point in calculating the result. And because this package ‘knows’ all phyla of all known bacteria (according to the Catalogue of Life), it can just return the initial value immediately.</p>
 </div>
 <div id="results-in-other-languages" class="section level3">
@@ -392,34 +317,33 @@
 <a href="#results-in-other-languages" class="anchor"></a>Results in other languages</h3>
 <p>When the system language is non-English and supported by this <code>AMR</code> package, some functions will have a translated result. This almost does’t take extra time:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="st">"CoNS"</span>, language = <span class="st">"en"</span>) <span class="co"># or just mo_name("CoNS") on an English system</span>
+<span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"CoNS"</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span> <span class="co"># or just mo_name("CoNS") on an English system</span>
 <span class="co"># [1] "Coagulase-negative Staphylococcus (CoNS)"</span>
 
-<span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="st">"CoNS"</span>, language = <span class="st">"es"</span>) <span class="co"># or just mo_name("CoNS") on a Spanish system</span>
+<span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"CoNS"</span>, language <span class="op">=</span> <span class="st">"es"</span><span class="op">)</span> <span class="co"># or just mo_name("CoNS") on a Spanish system</span>
 <span class="co"># [1] "Staphylococcus coagulasa negativo (SCN)"</span>
 
-<span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="st">"CoNS"</span>, language = <span class="st">"nl"</span>) <span class="co"># or just mo_name("CoNS") on a Dutch system</span>
+<span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"CoNS"</span>, language <span class="op">=</span> <span class="st">"nl"</span><span class="op">)</span> <span class="co"># or just mo_name("CoNS") on a Dutch system</span>
 <span class="co"># [1] "Coagulase-negatieve Staphylococcus (CNS)"</span>
 
-<span class="kw">run_it</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span>(en = <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="st">"CoNS"</span>, language = <span class="st">"en"</span>),
-                         de = <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="st">"CoNS"</span>, language = <span class="st">"de"</span>),
-                         nl = <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="st">"CoNS"</span>, language = <span class="st">"nl"</span>),
-                         es = <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="st">"CoNS"</span>, language = <span class="st">"es"</span>),
-                         it = <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="st">"CoNS"</span>, language = <span class="st">"it"</span>),
-                         fr = <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="st">"CoNS"</span>, language = <span class="st">"fr"</span>),
-                         pt = <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span>(<span class="st">"CoNS"</span>, language = <span class="st">"pt"</span>),
-                         times = <span class="fl">100</span>)
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span>(<span class="kw">run_it</span>, unit = <span class="st">"ms"</span>, signif = <span class="fl">4</span>)
+<span class="va">run_it</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="op">(</span>en <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"CoNS"</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>,
+                         de <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"CoNS"</span>, language <span class="op">=</span> <span class="st">"de"</span><span class="op">)</span>,
+                         nl <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"CoNS"</span>, language <span class="op">=</span> <span class="st">"nl"</span><span class="op">)</span>,
+                         es <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"CoNS"</span>, language <span class="op">=</span> <span class="st">"es"</span><span class="op">)</span>,
+                         it <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"CoNS"</span>, language <span class="op">=</span> <span class="st">"it"</span><span class="op">)</span>,
+                         fr <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"CoNS"</span>, language <span class="op">=</span> <span class="st">"fr"</span><span class="op">)</span>,
+                         pt <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"CoNS"</span>, language <span class="op">=</span> <span class="st">"pt"</span><span class="op">)</span>,
+                         times <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
+<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
-<span class="co">#  expr   min    lq  mean median    uq    max neval</span>
-<span class="co">#    en 14.00 14.36 18.52  14.64 15.18  57.58   100</span>
-<span class="co">#    de 17.04 17.33 20.94  17.63 18.49  56.23   100</span>
-<span class="co">#    nl 28.21 29.20 32.15  30.06 31.02  72.91   100</span>
-<span class="co">#    es 16.85 17.26 19.83  17.44 17.95 152.20   100</span>
-<span class="co">#    it 16.58 17.10 19.03  17.43 18.24  54.28   100</span>
-<span class="co">#    fr 16.71 17.20 21.24  17.52 19.02  63.25   100</span>
-<span class="co">#    pt 16.76 17.29 23.27  17.62 19.14  65.28   100</span>
-</pre></div>
+<span class="co">#  expr   min    lq  mean median    uq   max neval</span>
+<span class="co">#    en 14.20 14.66 20.04  15.14 16.90 58.67   100</span>
+<span class="co">#    de 17.15 17.85 24.30  18.27 20.00 59.17   100</span>
+<span class="co">#    nl 29.13 30.50 34.60  31.26 32.86 72.63   100</span>
+<span class="co">#    es 16.95 17.70 22.61  18.35 20.54 59.42   100</span>
+<span class="co">#    it 17.04 17.60 21.72  18.14 19.60 59.19   100</span>
+<span class="co">#    fr 16.82 17.52 21.71  18.05 19.63 61.06   100</span>
+<span class="co">#    pt 16.92 17.58 19.92  18.23 19.19 54.61   100</span></pre></div>
 <p>Currently supported are German, Dutch, Spanish, Italian, French and Portuguese.</p>
 </div>
   </div>
@@ -437,7 +361,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

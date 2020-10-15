@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9000</span>
       </span>
     </div>
 
@@ -242,26 +242,26 @@
     <p>Determine which isolates are multidrug-resistant organisms (MDRO) according to international and national guidelines.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mdro</span>(
-  <span class='kw'>x</span>,
-  guideline = <span class='st'>"CMI2012"</span>,
-  col_mo = <span class='kw'>NULL</span>,
-  info = <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>(),
-  pct_required_classes = <span class='fl'>0.5</span>,
-  combine_SI = <span class='fl'>TRUE</span>,
-  verbose = <span class='fl'>FALSE</span>,
-  <span class='kw'>...</span>
-)
+    <pre class="usage"><span class='fu'>mdro</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  guideline <span class='op'>=</span> <span class='st'>"CMI2012"</span>,
+  col_mo <span class='op'>=</span> <span class='cn'>NULL</span>,
+  info <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span>,
+  pct_required_classes <span class='op'>=</span> <span class='fl'>0.5</span>,
+  combine_SI <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
-<span class='fu'>brmo</span>(<span class='kw'>x</span>, guideline = <span class='st'>"BRMO"</span>, <span class='kw'>...</span>)
+<span class='fu'>brmo</span><span class='op'>(</span><span class='va'>x</span>, guideline <span class='op'>=</span> <span class='st'>"BRMO"</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>mrgn</span>(<span class='kw'>x</span>, guideline = <span class='st'>"MRGN"</span>, <span class='kw'>...</span>)
+<span class='fu'>mrgn</span><span class='op'>(</span><span class='va'>x</span>, guideline <span class='op'>=</span> <span class='st'>"MRGN"</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>mdr_tb</span>(<span class='kw'>x</span>, guideline = <span class='st'>"TB"</span>, <span class='kw'>...</span>)
+<span class='fu'>mdr_tb</span><span class='op'>(</span><span class='va'>x</span>, guideline <span class='op'>=</span> <span class='st'>"TB"</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>mdr_cmi2012</span>(<span class='kw'>x</span>, guideline = <span class='st'>"CMI2012"</span>, <span class='kw'>...</span>)
+<span class='fu'>mdr_cmi2012</span><span class='op'>(</span><span class='va'>x</span>, guideline <span class='op'>=</span> <span class='st'>"CMI2012"</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>eucast_exceptional_phenotypes</span>(<span class='kw'>x</span>, guideline = <span class='st'>"EUCAST"</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'>eucast_exceptional_phenotypes</span><span class='op'>(</span><span class='va'>x</span>, guideline <span class='op'>=</span> <span class='st'>"EUCAST"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -372,19 +372,19 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <p>On our website <a href='https://msberends.github.io/AMR/'>https://msberends.github.io/AMR/</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.github.io/AMR/reference/'>complete documentation of all functions</a> and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>. As we would like to better understand the backgrounds and needs of our users, please <a href='https://msberends.github.io/AMR/survey.html'>participate in our survey</a>!</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='fu'>mdro</span>(<span class='kw'>example_isolates</span>, guideline = <span class='st'>"EUCAST"</span>)
+    <pre class="examples"><span class='fu'>mdro</span><span class='op'>(</span><span class='va'>example_isolates</span>, guideline <span class='op'>=</span> <span class='st'>"EUCAST"</span><span class='op'>)</span>
 
 <span class='co'># \donttest{</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span>)) {
-  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
-    <span class='fu'>mdro</span>() <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>()
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>mdro</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='op'>)</span>
   
-  <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(EUCAST = <span class='fu'>eucast_exceptional_phenotypes</span>(<span class='kw'>.</span>),
-           BRMO = <span class='fu'>brmo</span>(<span class='kw'>.</span>),
-           MRGN = <span class='fu'>mrgn</span>(<span class='kw'>.</span>))
-}
+  <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>EUCAST <span class='op'>=</span> <span class='fu'>eucast_exceptional_phenotypes</span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span>,
+           BRMO <span class='op'>=</span> <span class='fu'>brmo</span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span>,
+           MRGN <span class='op'>=</span> <span class='fu'>mrgn</span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
 <span class='co'># }</span>
 </pre>
   </div>
@@ -402,7 +402,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

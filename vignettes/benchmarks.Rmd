@@ -61,7 +61,7 @@ The actual result is the same every time: it returns its microorganism code ``r 
 
 But the calculation time differs a lot:
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 S.aureus <- microbenchmark(
   as.mo("sau"), # WHONET code
   as.mo("stau"),
@@ -117,7 +117,7 @@ So getting official taxonomic names of `r format(length(x), big.mark = ",")` (!!
 
 What about precalculated results? If the input is an already precalculated result of a helper function like `mo_name()`, it almost doesn't take any time at all (see 'C' below):
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 run_it <- microbenchmark(A = mo_name("STAAUR"),
                          B = mo_name("S. aureus"),
                          C = mo_name("Staphylococcus aureus"),

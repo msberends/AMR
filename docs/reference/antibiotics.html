@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9000</span>
       </span>
     </div>
 
@@ -242,15 +242,15 @@
     <p>Two data sets containing all antibiotics/antimycotics and antivirals. Use <code><a href='as.ab.html'>as.ab()</a></code> or one of the <code><a href='ab_property.html'>ab_property()</a></code> functions to retrieve values from the antibiotics data set. Three identifiers are included in this data set: an antibiotic ID (<code>ab</code>, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (<code>atc</code>) as defined by the WHO, and a Compound ID (<code>cid</code>) as found in PubChem. Other properties in this data set are derived from one or more of these codes.</p>
     </div>
 
-    <pre class="usage"><span class='kw'>antibiotics</span>
+    <pre class="usage"><span class='va'>antibiotics</span>
 
-<span class='kw'>antivirals</span></pre>
+<span class='va'>antivirals</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     
-<h3>For the antibiotics data set: a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with 455 observations and 14 variables:</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>For the antibiotics data set: a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with 455 observations and 14 variables:</h3>
 
 <ul>
 <li><p><code>ab</code><br /> Antibiotic ID as used in this package (like <code>AMC</code>), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available</p></li>
@@ -270,7 +270,7 @@
 </ul>
 
 
-<h3>For the antivirals data set: a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with 102 observations and 9 variables:</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>For the antivirals data set: a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with 102 observations and 9 variables:</h3>
 
 <ul>
 <li><p><code>atc</code><br /> ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC</p></li>
@@ -294,7 +294,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Properties that are based on an ATC code are only available when an ATC is available. These properties are: <code>atc_group1</code>, <code>atc_group2</code>, <code>oral_ddd</code>, <code>oral_units</code>, <code>iv_ddd</code> and <code>iv_units</code>.</p>
-<p>Synonyms (i.e. trade names) are derived from the Compound ID (<code>cid</code>) and consequently only available where a CID is available.</p><h3>Direct download</h3>
+<p>Synonyms (i.e. trade names) are derived from the Compound ID (<code>cid</code>) and consequently only available where a CID is available.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Direct download</h3>
 
 
 <p>These data sets are available as 'flat files' for use even without R - you can find the files here:</p><ul>
@@ -346,7 +346,7 @@ This package contains <strong>all ~550 antibiotic, antimycotic and antiviral dru
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

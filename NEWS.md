@@ -1,5 +1,10 @@
-# AMR 1.4.0
+# AMR 1.4.0.9000
+## <small>Last updated: 15 October 2020</small>
 
+### Other
+* More extensive unit tests
+
+# AMR 1.4.0
 
 Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscipt about this package to. We are those reviewers very grateful for going through our code so thoroughly!
 
