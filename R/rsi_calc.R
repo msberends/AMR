@@ -36,10 +36,11 @@ rsi_calc <- function(...,
                      as_percent = FALSE,
                      only_all_tested = FALSE,
                      only_count = FALSE) {
-  
-  stop_ifnot(is.numeric(minimum), "`minimum` must be numeric", call = -2)
-  stop_ifnot(is.logical(as_percent), "`as_percent` must be logical", call = -2)
-  stop_ifnot(is.logical(only_all_tested), "`only_all_tested` must be logical", call = -2)
+  meet_criteria(ab_result, allow_class = c("character", "numeric", "integer"), has_length = c(1, 2, 3), .call_depth = 1)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, .call_depth = 1)
+  meet_criteria(as_percent, allow_class = "logical", has_length = 1, .call_depth = 1)
+  meet_criteria(only_all_tested, allow_class = "logical", has_length = 1, .call_depth = 1)
+  meet_criteria(only_count, allow_class = "logical", has_length = 1, .call_depth = 1)
   
   data_vars <- dots2vars(...)
   
@@ -177,17 +178,21 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
                         combine_SI = TRUE,
                         combine_IR = FALSE,
                         combine_SI_missing = FALSE) {
+  meet_criteria(type, is_in = c("proportion", "count", "both"), has_length = 1, .call_depth = 1)
+  meet_criteria(data, allow_class = "data.frame", contains_column_class = "rsi", .call_depth = 1)
+  meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE, .call_depth = 1)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE, .call_depth = 1)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, .call_depth = 1)
+  meet_criteria(as_percent, allow_class = "logical", has_length = 1, .call_depth = 1)
+  meet_criteria(combine_SI, allow_class = "logical", has_length = 1, .call_depth = 1)
+  meet_criteria(combine_SI_missing, allow_class = "logical", has_length = 1, .call_depth = 1)
   
   check_dataset_integrity()
-  stop_ifnot(is.data.frame(data), "`data` must be a data.frame", call = -2)
-  stop_if(any(dim(data) == 0), "`data` must contain rows and columns", call = -2)
-  stop_ifnot(any(sapply(data, is.rsi), na.rm = TRUE), "no columns with class <rsi> found. See ?as.rsi.", call = -2)
+  
   if (isTRUE(combine_IR) & isTRUE(combine_SI_missing)) {
     combine_SI <- FALSE
   }
   stop_if(isTRUE(combine_SI) & isTRUE(combine_IR), "either `combine_SI` or `combine_IR` can be TRUE, not both", call = -2)
-  stop_ifnot(is.numeric(minimum), "`minimum` must be numeric", call = -2)
-  stop_ifnot(is.logical(as_percent), "`as_percent` must be logical", call = -2)
   
   translate_ab <- get_translate_ab(translate_ab)
   

@@ -4,22 +4,27 @@
 \alias{age}
 \title{Age in years of individuals}
 \usage{
-age(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE)
+age(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...)
 }
 \arguments{
 \item{x}{date(s), will be coerced with \code{\link[=as.POSIXlt]{as.POSIXlt()}}}
 
-\item{reference}{reference date(s) (defaults to today), will be coerced with \code{\link[=as.POSIXlt]{as.POSIXlt()}} and cannot be lower than \code{x}}
+\item{reference}{reference date(s) (defaults to today), will be coerced with \code{\link[=as.POSIXlt]{as.POSIXlt()}}}
 
 \item{exact}{a logical to indicate whether age calculation should be exact, i.e. with decimals. It divides the number of days of \href{https://en.wikipedia.org/wiki/Year-to-date}{year-to-date} (YTD) of \code{x} by the number of days in the year of \code{reference} (either 365 or 366).}
 
 \item{na.rm}{a logical to indicate whether missing values should be removed}
+
+\item{...}{parameters passed on to \code{\link[=as.POSIXlt]{as.POSIXlt()}}, such as \code{origin}}
 }
 \value{
 An \link{integer} (no decimals) if \code{exact = FALSE}, a \link{double} (with decimals) otherwise
 }
 \description{
 Calculates age in years based on a reference date, which is the sytem date at default.
+}
+\details{
+Ages below 0 will be returned as \code{NA} with a warning. Ages above 120 will only give a warning.
 }
 \section{Stable lifecycle}{
 

@@ -92,12 +92,17 @@ ab_from_text <- function(text,
                          translate_ab = FALSE,
                          thorough_search = NULL,
                          ...) {
-  
   if (missing(type)) {
     type <- type[1L]
   }
+  
+  meet_criteria(text)
+  meet_criteria(type, allow_class = "character", has_length = 1)
+  meet_criteria(collapse, has_length = 1, allow_NULL = TRUE)
+  meet_criteria(translate_ab, allow_NULL = FALSE) # get_translate_ab() will be more informative about what's allowed
+  meet_criteria(thorough_search, allow_class = "logical", has_length = 1, allow_NULL = TRUE)
+
   type <- tolower(trimws(type))
-  stop_if(length(type) != 1, "`type` must be of length 1")
   
   text <- tolower(as.character(text))
   text_split_all <- strsplit(text, "[ ;.,:\\|]")

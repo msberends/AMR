@@ -61,8 +61,12 @@
 #' }
 #' }
 inner_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
+  meet_criteria(x, allow_class = c("data.frame", "character"))
+  meet_criteria(by, allow_class = "character", allow_NULL = TRUE)
+  meet_criteria(suffix, allow_class = "character", has_length = 2)
+  
   check_dataset_integrity()
-  check_groups_before_join(x, "inner_join_microorganisms")
+  x <- check_groups_before_join(x, "inner_join_microorganisms")
   checked <- joins_check_df(x, by)
   x_class <- get_prejoined_class(x)
   x <- checked$x
@@ -88,8 +92,12 @@ inner_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
 #' @rdname join
 #' @export
 left_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
+  meet_criteria(x, allow_class = c("data.frame", "character"))
+  meet_criteria(by, allow_class = "character", allow_NULL = TRUE)
+  meet_criteria(suffix, allow_class = "character", has_length = 2)
+  
   check_dataset_integrity()
-  check_groups_before_join(x, "left_join_microorganisms")
+  x <- check_groups_before_join(x, "left_join_microorganisms")
   checked <- joins_check_df(x, by)
   x_class <- get_prejoined_class(x)
   x <- checked$x
@@ -115,8 +123,12 @@ left_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
 #' @rdname join
 #' @export
 right_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
+  meet_criteria(x, allow_class = c("data.frame", "character"))
+  meet_criteria(by, allow_class = "character", allow_NULL = TRUE)
+  meet_criteria(suffix, allow_class = "character", has_length = 2)
+  
   check_dataset_integrity()
-  check_groups_before_join(x, "right_join_microorganisms")
+  x <- check_groups_before_join(x, "right_join_microorganisms")
   checked <- joins_check_df(x, by)
   x_class <- get_prejoined_class(x)
   x <- checked$x
@@ -142,8 +154,12 @@ right_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
 #' @rdname join
 #' @export
 full_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
+  meet_criteria(x, allow_class = c("data.frame", "character"))
+  meet_criteria(by, allow_class = "character", allow_NULL = TRUE)
+  meet_criteria(suffix, allow_class = "character", has_length = 2)
+  
   check_dataset_integrity()
-  check_groups_before_join(x, "full_join_microorganisms")
+  x <- check_groups_before_join(x, "full_join_microorganisms")
   checked <- joins_check_df(x, by)
   x_class <- get_prejoined_class(x)
   x <- checked$x
@@ -169,8 +185,11 @@ full_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
 #' @rdname join
 #' @export
 semi_join_microorganisms <- function(x, by = NULL, ...) {
+  meet_criteria(x, allow_class = c("data.frame", "character"))
+  meet_criteria(by, allow_class = "character", allow_NULL = TRUE)
+  
   check_dataset_integrity()
-  check_groups_before_join(x, "semi_join_microorganisms")
+  x <- check_groups_before_join(x, "semi_join_microorganisms")
   x_class <- get_prejoined_class(x)
   checked <- joins_check_df(x, by)
   x <- checked$x
@@ -193,8 +212,11 @@ semi_join_microorganisms <- function(x, by = NULL, ...) {
 #' @rdname join
 #' @export
 anti_join_microorganisms <- function(x, by = NULL, ...) {
+  meet_criteria(x, allow_class = c("data.frame", "character"))
+  meet_criteria(by, allow_class = "character", allow_NULL = TRUE)
+  
   check_dataset_integrity()
-  check_groups_before_join(x, "anti_join_microorganisms")
+  x <- check_groups_before_join(x, "anti_join_microorganisms")
   checked <- joins_check_df(x, by)
   x_class <- get_prejoined_class(x)
   x <- checked$x
@@ -255,6 +277,10 @@ get_prejoined_class <- function(x) {
 
 check_groups_before_join <- function(x, fn) {
   if (is.data.frame(x) && !is.null(attributes(x)$groups)) {
-    warning("Groups are dropped, since the ", fn, "() function relies on merge() from base R, not on join() from dplyr.", call. = FALSE)
+    x <- pm_ungroup(x)
+    attr(x, "groups") <- NULL
+    class(x) <- class(x)[!class(x) %like% "group"]
+    warning("Groups are dropped, since the ", fn, "() function relies on merge() from base R if dplyr is not installed.", call. = FALSE)
   }
+  x
 }

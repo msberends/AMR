@@ -80,16 +80,22 @@ filter_ab_class <- function(x,
                             result = NULL,
                             scope = "any",
                             ...) {
-  
+  .call_depth <- list(...)$`.call_depth`
+  if (is.null(.call_depth)) {
+    .call_depth <- 0
+  }
+  meet_criteria(x, allow_class = "data.frame", .call_depth = .call_depth)
+  meet_criteria(ab_class, allow_class = "character", has_length = 1, .call_depth = .call_depth)
+  meet_criteria(result, allow_class = "character", has_length = c(1, 2, 3), allow_NULL = TRUE, .call_depth = .call_depth)
+  meet_criteria(scope, allow_class = "character", has_length = 1, is_in = c("all", "any"), .call_depth = .call_depth)
+
   check_dataset_integrity()
-  stop_ifnot(is.data.frame(x), "`x` must be a data frame")
-  
+
   # save to return later
   x_class <- class(x)
   x.bak <- x
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   
-  scope <- scope[1L]
   if (is.null(result)) {
     result <- c("S", "I", "R")
   }
@@ -174,6 +180,7 @@ filter_aminoglycosides <- function(x,
                   ab_class = "aminoglycoside",
                   result = result,
                   scope = scope,
+                  .call_depth = 1,
                   ...)
 }
 
@@ -187,6 +194,7 @@ filter_carbapenems <- function(x,
                   ab_class = "carbapenem",
                   result = result,
                   scope = scope,
+                  .call_depth = 1,
                   ...)
 }
 
@@ -200,6 +208,7 @@ filter_cephalosporins <- function(x,
                   ab_class = "cephalosporin",
                   result = result,
                   scope = scope,
+                  .call_depth = 1,
                   ...)
 }
 
@@ -213,6 +222,7 @@ filter_1st_cephalosporins <- function(x,
                   ab_class = "cephalosporins (1st gen.)",
                   result = result,
                   scope = scope,
+                  .call_depth = 1,
                   ...)
 }
 
@@ -226,6 +236,7 @@ filter_2nd_cephalosporins <- function(x,
                   ab_class = "cephalosporins (2nd gen.)",
                   result = result,
                   scope = scope,
+                  .call_depth = 1,
                   ...)
 }
 
@@ -239,6 +250,7 @@ filter_3rd_cephalosporins <- function(x,
                   ab_class = "cephalosporins (3rd gen.)",
                   result = result,
                   scope = scope,
+                  .call_depth = 1,
                   ...)
 }
 
@@ -252,6 +264,7 @@ filter_4th_cephalosporins <- function(x,
                   ab_class = "cephalosporins (4th gen.)",
                   result = result,
                   scope = scope,
+                  .call_depth = 1,
                   ...)
 }
 
@@ -265,6 +278,7 @@ filter_5th_cephalosporins <- function(x,
                   ab_class = "cephalosporins (5th gen.)",
                   result = result,
                   scope = scope,
+                  .call_depth = 1,
                   ...)
 }
 
@@ -278,6 +292,7 @@ filter_fluoroquinolones <- function(x,
                   ab_class = "fluoroquinolone",
                   result = result,
                   scope = scope,
+                  .call_depth = 1,
                   ...)
 }
 
@@ -291,6 +306,7 @@ filter_glycopeptides <- function(x,
                   ab_class = "glycopeptide",
                   result = result,
                   scope = scope,
+                  .call_depth = 1,
                   ...)
 }
 
@@ -304,6 +320,7 @@ filter_macrolides <- function(x,
                   ab_class = "macrolide",
                   result = result,
                   scope = scope,
+                  .call_depth = 1,
                   ...)
 }
 
@@ -317,6 +334,7 @@ filter_penicillins <- function(x,
                   ab_class = "penicillin",
                   result = result,
                   scope = scope,
+                  .call_depth = 1,
                   ...)
 }
 
@@ -330,6 +348,7 @@ filter_tetracyclines <- function(x,
                   ab_class = "tetracycline",
                   result = result,
                   scope = scope,
+                  .call_depth = 1,
                   ...)
 }
 

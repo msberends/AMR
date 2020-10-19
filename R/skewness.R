@@ -36,6 +36,7 @@
 #' @inheritSection AMR Read more on our website!
 #' @export
 skewness <- function(x, na.rm = FALSE) {
+  meet_criteria(na.rm, allow_class = "logical", has_length = 1)
   UseMethod("skewness")
 }
 
@@ -43,6 +44,7 @@ skewness <- function(x, na.rm = FALSE) {
 #' @rdname skewness
 #' @export
 skewness.default <- function(x, na.rm = FALSE) {
+  meet_criteria(na.rm, allow_class = "logical", has_length = 1)
   x <- as.vector(x)
   if (na.rm == TRUE) {
     x <- x[!is.na(x)]
@@ -55,6 +57,7 @@ skewness.default <- function(x, na.rm = FALSE) {
 #' @rdname skewness
 #' @export
 skewness.matrix <- function(x, na.rm = FALSE) {
+  meet_criteria(na.rm, allow_class = "logical", has_length = 1)
   apply(x, 2, skewness.default, na.rm = na.rm)
 }
 
@@ -62,5 +65,6 @@ skewness.matrix <- function(x, na.rm = FALSE) {
 #' @rdname skewness
 #' @export
 skewness.data.frame <- function(x, na.rm = FALSE) {
+  meet_criteria(na.rm, allow_class = "logical", has_length = 1)
   sapply(x, skewness.default, na.rm = na.rm)
 }

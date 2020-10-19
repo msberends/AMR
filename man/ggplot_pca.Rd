@@ -10,8 +10,9 @@ As per their GPL-2 licence that demands documentation of code changes, the chang
 \enumerate{
 \item Rewritten code to remove the dependency on packages \code{plyr}, \code{scales} and \code{grid}
 \item Parametrised more options, like arrow and ellipse settings
+\item Hardened all input possibilities by defining the exact type of user input for every parameter
 \item Added total amount of explained variance as a caption in the plot
-\item Cleaned all syntax based on the \code{lintr} package and added integrity checks
+\item Cleaned all syntax based on the \code{lintr} package, fixed grammatical errors and added integrity checks
 \item Updated documentation
 }
 }
@@ -19,7 +20,7 @@ As per their GPL-2 licence that demands documentation of code changes, the chang
 ggplot_pca(
   x,
   choices = 1:2,
-  scale = TRUE,
+  scale = 1,
   pc.biplot = TRUE,
   labels = NULL,
   labels_textsize = 3,

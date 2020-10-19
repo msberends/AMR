@@ -329,6 +329,89 @@ create_ab_documentation <- function(ab) {
   out
 }
 
+# a check for every single argument in all functions
+meet_criteria <- function(object,
+                          allow_class = NULL,
+                          has_length = NULL,
+                          looks_like = NULL,
+                          is_in = NULL,
+                          contains_column_class = NULL,
+                          allow_NULL = FALSE,
+                          allow_NA = FALSE,
+                          ignore.case = FALSE,
+                          .call_depth = 0) { # depth in calling
+  
+  obj_name <- deparse(substitute(object))
+  call_depth <- -2 - abs(.call_depth)
+  
+  if (is.null(object)) {
+    stop_if(allow_NULL == FALSE, "argument `", obj_name, "` must not be NULL", call = call_depth)
+    return(invisible())
+  }
+  if (is.null(dim(object)) && length(object) == 1 && is.na(object)) {
+    stop_if(allow_NA == FALSE, "argument `", obj_name, "` must not be NA", call = call_depth)
+    return(invisible())
+  }
+  
+  vector_or <- function(v, quotes) {
+    if (length(v) == 1) {
+      return(paste0(ifelse(quotes, '"', ""), v, ifelse(quotes, '"', "")))
+    }
+    # all commas except for last item, so will become '"val1", "val2", "val3" or "val4"'
+    paste0(paste0(ifelse(quotes, '"', ""), v[seq_len(length(v) - 1)], ifelse(quotes, '"', ""), collapse = ", "),
+           " or ", paste0(ifelse(quotes, '"', ""), v[length(v)], ifelse(quotes, '"', "")))
+  }
+  
+  if (!is.null(allow_class)) {
+    stop_ifnot(inherits(object, allow_class), "argument `", obj_name, 
+               "` must ", # ifelse(allow_NULL, "be NULL or must ", ""), 
+               "be of class ", vector_or(allow_class, quotes = TRUE), 
+               ", not \"", paste(class(object), collapse = "/"), "\"",
+               call = call_depth)
+    # check data.frames for data
+    if (inherits(object, "data.frame")) {
+      stop_if(any(dim(object) == 0), 
+              "the data provided in argument `", obj_name,
+              "` must contain rows and columns (current dimensions: ", 
+              paste(dim(object), collapse = " x "), ")",
+              call = call_depth)
+    }
+  }
+  if (!is.null(has_length)) {
+    stop_ifnot(length(object) %in% has_length, "argument `", obj_name, 
+               "` must ", # ifelse(allow_NULL, "be NULL or must ", ""), 
+               "be of length ", vector_or(has_length, quotes = FALSE),
+               ", not ", length(object),
+               call = call_depth)
+  }
+  if (!is.null(looks_like)) {
+    stop_ifnot(object %like% looks_like, "argument `", obj_name, 
+               "` must ", # ifelse(allow_NULL, "be NULL or must ", ""), 
+               "resemble the regular expression \"", looks_like, "\"",
+               call = call_depth)
+  }
+  if (!is.null(is_in)) {
+    if (ignore.case == TRUE) {
+      object <- tolower(object)
+      is_in <- tolower(is_in)
+    }
+    stop_ifnot(all(object %in% is_in, na.rm = TRUE), "argument `", obj_name, 
+               "` must be ",
+               ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1, "one of: ", ""),
+               vector_or(is_in, quotes = TRUE), 
+               ", not ", paste0("\"", object, "\"", collapse = "/"), "",
+               call = call_depth)
+  }
+  if (!is.null(contains_column_class)) {
+    stop_ifnot(any(sapply(object, function(col, columns_class = contains_column_class) inherits(col, columns_class)), na.rm = TRUE),
+               "the data provided in argument `", obj_name, 
+               "` must contain at least one column of class <", contains_column_class, ">. ",
+               "See ?as.", contains_column_class, ".",
+               call = call_depth)
+  }
+  return(invisible())
+}
+
 has_colour <- function() {
   # this is a base R version of crayon::has_color
   enabled <- getOption("crayon.enabled")

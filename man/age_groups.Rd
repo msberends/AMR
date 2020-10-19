@@ -22,14 +22,14 @@ Split ages into age groups defined by the \code{split} parameter. This allows fo
 \details{
 To split ages, the input for the \code{split_at} parameter can be:
 \itemize{
-\item A numeric vector. A vector of e.g. \code{c(10, 20)} will split on 0-9, 10-19 and 20+. A value of only \code{50} will split on 0-49 and 50+.
+\item A numeric vector. A value of e.g. \code{c(10, 20)} will split \code{x} on 0-9, 10-19 and 20+. A value of only \code{50} will split \code{x} on 0-49 and 50+.
 The default is to split on young children (0-11), youth (12-24), young adults (25-54), middle-aged adults (55-74) and elderly (75+).
 \item A character:
 \itemize{
 \item \code{"children"} or \code{"kids"}, equivalent of: \code{c(0, 1, 2, 4, 6, 13, 18)}. This will split on 0, 1, 2-3, 4-5, 6-12, 13-17 and 18+.
 \item \code{"elderly"} or \code{"seniors"}, equivalent of: \code{c(65, 75, 85)}. This will split on 0-64, 65-74, 75-84, 85+.
-\item \code{"fives"}, equivalent of: \code{1:20 * 5}. This will split on 0-4, 5-9, 10-14, ..., 90-94, 95-99, 100+.
-\item \code{"tens"}, equivalent of: \code{1:10 * 10}. This will split on 0-9, 10-19, 20-29, ..., 80-89, 90-99, 100+.
+\item \code{"fives"}, equivalent of: \code{1:20 * 5}. This will split on 0-4, 5-9, ..., 95-99, 100+.
+\item \code{"tens"}, equivalent of: \code{1:10 * 10}. This will split on 0-9, 10-19, ..., 90-99, 100+.
 }
 }
 }
@@ -64,12 +64,11 @@ age_groups(ages, 1:20 * 5)
 age_groups(ages, split_at = "fives")
 
 # split specifically for children
-age_groups(ages, "children")
-# same:
 age_groups(ages, c(1, 2, 4, 6, 13, 17))
+age_groups(ages, "children")
 
 \donttest{
-# resistance of ciprofloxacine per age group
+# resistance of ciprofloxacin per age group
 library(dplyr)
 example_isolates \%>\%
   filter_first_isolate() \%>\%

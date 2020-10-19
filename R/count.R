@@ -189,7 +189,6 @@ count_df <- function(data,
                      language = get_locale(),
                      combine_SI = TRUE,
                      combine_IR = FALSE) {
-  
   rsi_calc_df(type = "count",
               data = data,
               translate_ab = translate_ab,

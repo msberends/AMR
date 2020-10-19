@@ -85,7 +85,7 @@ if (require("dplyr")) {
     
   # get bug/drug combinations for only macrolides in Gram-positives:
   example_isolates \%>\% 
-    filter(mo_gramstain(mo) \%like\% "pos") \%>\% 
+    filter(mo \%>\% is_gram_positive()) \%>\% 
     select(mo, macrolides()) \%>\% 
     bug_drug_combinations() \%>\%
     format()

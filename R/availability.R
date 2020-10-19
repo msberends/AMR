@@ -43,7 +43,9 @@
 #'     availability()
 #' }
 availability <- function(tbl, width = NULL) {
-  stop_ifnot(is.data.frame(tbl), "`tbl` must be a data.frame")
+  meet_criteria(tbl, allow_class = "data.frame")
+  meet_criteria(width, allow_class = "numeric", allow_NULL = TRUE)
+  
   x <- sapply(tbl, function(x) {
     1 - sum(is.na(x)) / length(x) 
   })

@@ -66,9 +66,12 @@ pca <- function(x,
                 scale. = TRUE,
                 tol = NULL,
                 rank. = NULL) {
-  
-  stop_ifnot(is.data.frame(x), "`x` must be a data.frame")
-  stop_if(any(dim(x) == 0), "`x` must contain rows and columns")
+  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(retx, allow_class = "logical", has_length = 1)
+  meet_criteria(center, allow_class = "logical", has_length = 1)
+  meet_criteria(scale., allow_class = "logical", has_length = 1)
+  meet_criteria(tol, allow_class = "numeric", has_length = 1, allow_NULL = TRUE)
+  meet_criteria(rank., allow_class = "numeric", has_length = 1, allow_NULL = TRUE)
   
   # unset data.table, tibble, etc.
   # also removes groups made by dplyr::group_by

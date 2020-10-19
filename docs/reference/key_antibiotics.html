@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9001</span>
       </span>
     </div>
 
@@ -281,7 +281,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>table with antibiotics coloms, like <code>AMX</code> or <code>amox</code></p></td>
+      <td><p>a data.frame with antibiotics columns, like <code>AMX</code> or <code>amox</code></p></td>
     </tr>
     <tr>
       <th>col_mo</th>
@@ -289,27 +289,27 @@
     </tr>
     <tr>
       <th>universal_1, universal_2, universal_3, universal_4, universal_5, universal_6</th>
-      <td><p>column names of <strong>broad-spectrum</strong> antibiotics, case-insensitive. At default, the columns containing these antibiotics will be guessed with <code><a href='guess_ab_col.html'>guess_ab_col()</a></code>.</p></td>
+      <td><p>column names of <strong>broad-spectrum</strong> antibiotics, case-insensitive. See details for which antibiotics will be used at default (which are guessed with <code><a href='guess_ab_col.html'>guess_ab_col()</a></code>).</p></td>
     </tr>
     <tr>
       <th>GramPos_1, GramPos_2, GramPos_3, GramPos_4, GramPos_5, GramPos_6</th>
-      <td><p>column names of antibiotics for <strong>Gram-positives</strong>, case-insensitive. At default, the columns containing these antibiotics will be guessed with <code><a href='guess_ab_col.html'>guess_ab_col()</a></code>.</p></td>
+      <td><p>column names of antibiotics for <strong>Gram-positives</strong>, case-insensitive. See details for which antibiotics will be used at default (which are guessed with <code><a href='guess_ab_col.html'>guess_ab_col()</a></code>).</p></td>
     </tr>
     <tr>
       <th>GramNeg_1, GramNeg_2, GramNeg_3, GramNeg_4, GramNeg_5, GramNeg_6</th>
-      <td><p>column names of antibiotics for <strong>Gram-negatives</strong>, case-insensitive. At default, the columns containing these antibiotics will be guessed with <code><a href='guess_ab_col.html'>guess_ab_col()</a></code>.</p></td>
+      <td><p>column names of antibiotics for <strong>Gram-negatives</strong>, case-insensitive. See details for which antibiotics will be used at default (which are guessed with <code><a href='guess_ab_col.html'>guess_ab_col()</a></code>).</p></td>
     </tr>
     <tr>
       <th>warnings</th>
-      <td><p>give warning about missing antibiotic columns, they will anyway be ignored</p></td>
+      <td><p>give a warning about missing antibiotic columns (they will be ignored)</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other parameters passed on to function</p></td>
+      <td><p>other parameters passed on to functions</p></td>
     </tr>
     <tr>
       <th>y, z</th>
-      <td><p>characters to compare</p></td>
+      <td><p>character vectors to compare</p></td>
     </tr>
     <tr>
       <th>type</th>

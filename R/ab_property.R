@@ -89,6 +89,10 @@
 #' ab_atc("cephthriaxone")
 #' ab_atc("seephthriaaksone")
 ab_name <- function(x, language = get_locale(), tolower = FALSE, ...) {
+  meet_criteria(x, allow_class = c("character", "numeric", "integer"))
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(tolower, allow_class = "logical", has_length = 1)
+  
   x <- translate_AMR(ab_validate(x = x, property = "name", ...), language = language)
   if (tolower == TRUE) {
     # use perl to only transform the first character
@@ -102,18 +106,21 @@ ab_name <- function(x, language = get_locale(), tolower = FALSE, ...) {
 #' @aliases ATC
 #' @export
 ab_atc <- function(x, ...) {
+  meet_criteria(x, allow_class = c("character", "numeric", "integer"))
   ab_validate(x = x, property = "atc", ...)
 }
 
 #' @rdname ab_property
 #' @export
 ab_cid <- function(x, ...) {
+  meet_criteria(x, allow_class = c("character", "numeric", "integer"))
   ab_validate(x = x, property = "cid", ...)
 }
 
 #' @rdname ab_property
 #' @export
 ab_synonyms <- function(x, ...) {
+  meet_criteria(x, allow_class = c("character", "numeric", "integer"))
   syns <- ab_validate(x = x, property = "synonyms", ...)
   names(syns) <- x
   if (length(syns) == 1) {
@@ -126,30 +133,38 @@ ab_synonyms <- function(x, ...) {
 #' @rdname ab_property
 #' @export
 ab_tradenames <- function(x, ...) {
+  meet_criteria(x, allow_class = c("character", "numeric", "integer"))
   ab_synonyms(x, ...)
 }
 
 #' @rdname ab_property
 #' @export
 ab_group <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "numeric", "integer"))
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   translate_AMR(ab_validate(x = x, property = "group", ...), language = language)
 }
 
 #' @rdname ab_property
 #' @export
 ab_atc_group1 <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "numeric", "integer"))
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   translate_AMR(ab_validate(x = x, property = "atc_group1", ...), language = language)
 }
 
 #' @rdname ab_property
 #' @export
 ab_atc_group2 <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "numeric", "integer"))
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   translate_AMR(ab_validate(x = x, property = "atc_group2", ...), language = language)
 }
 
 #' @rdname ab_property
 #' @export
 ab_loinc <- function(x, ...) {
+  meet_criteria(x, allow_class = c("character", "numeric", "integer"))
   loincs <- ab_validate(x = x, property = "loinc", ...)
   names(loincs) <- x
   if (length(loincs) == 1) {
@@ -162,7 +177,10 @@ ab_loinc <- function(x, ...) {
 #' @rdname ab_property
 #' @export
 ab_ddd <- function(x, administration = "oral", units = FALSE, ...) {
-  stop_ifnot(administration %in% c("oral", "iv"), "`administration` must be 'oral' or 'iv'")
+  meet_criteria(x, allow_class = c("character", "numeric", "integer"))
+  meet_criteria(administration, is_in = c("oral", "iv"), has_length = 1)
+  meet_criteria(units, allow_class = "logical", has_length = 1)
+
   ddd_prop <- administration
   if (units == TRUE) {
     ddd_prop <- paste0(ddd_prop, "_units")
@@ -175,6 +193,9 @@ ab_ddd <- function(x, administration = "oral", units = FALSE, ...) {
 #' @rdname ab_property
 #' @export
 ab_info <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "numeric", "integer"))
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   x <- as.ab(x, ...)
   list(ab = as.character(x),
              atc = ab_atc(x),
@@ -194,6 +215,9 @@ ab_info <- function(x, language = get_locale(), ...) {
 #' @rdname ab_property
 #' @export
 ab_url <- function(x, open = FALSE, ...) {
+  meet_criteria(x, allow_class = c("character", "numeric", "integer"))
+  meet_criteria(open, allow_class = "logical", has_length = 1)
+  
   ab <- as.ab(x = x, ... = ...)
   u <- paste0("https://www.whocc.no/atc_ddd_index/?code=", ab_atc(ab), "&showdescription=no")
   u[is.na(ab_atc(ab))] <- NA_character_
@@ -218,10 +242,9 @@ ab_url <- function(x, open = FALSE, ...) {
 #' @rdname ab_property
 #' @export
 ab_property <- function(x, property = "name", language = get_locale(), ...) {
-  stop_if(length(property) != 1L, "'property' must be of length 1.")
-  stop_ifnot(property %in% colnames(antibiotics),
-             "invalid property: '", property, "' - use a column name of the `antibiotics` data set")
-  
+  meet_criteria(x, allow_class = c("character", "numeric", "integer"))
+  meet_criteria(property, is_in = colnames(antibiotics), has_length = 1)
+  meet_criteria(language, is_in = c(LANGUAGES_SUPPORTED, ""), has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
   translate_AMR(ab_validate(x = x, property = property, ...), language = language)
 }
 

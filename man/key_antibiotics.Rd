@@ -40,21 +40,21 @@ key_antibiotics_equal(
 )
 }
 \arguments{
-\item{x}{table with antibiotics coloms, like \code{AMX} or \code{amox}}
+\item{x}{a data.frame with antibiotics columns, like \code{AMX} or \code{amox}}
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{universal_1, universal_2, universal_3, universal_4, universal_5, universal_6}{column names of \strong{broad-spectrum} antibiotics, case-insensitive. At default, the columns containing these antibiotics will be guessed with \code{\link[=guess_ab_col]{guess_ab_col()}}.}
+\item{universal_1, universal_2, universal_3, universal_4, universal_5, universal_6}{column names of \strong{broad-spectrum} antibiotics, case-insensitive. See details for which antibiotics will be used at default (which are guessed with \code{\link[=guess_ab_col]{guess_ab_col()}}).}
 
-\item{GramPos_1, GramPos_2, GramPos_3, GramPos_4, GramPos_5, GramPos_6}{column names of antibiotics for \strong{Gram-positives}, case-insensitive. At default, the columns containing these antibiotics will be guessed with \code{\link[=guess_ab_col]{guess_ab_col()}}.}
+\item{GramPos_1, GramPos_2, GramPos_3, GramPos_4, GramPos_5, GramPos_6}{column names of antibiotics for \strong{Gram-positives}, case-insensitive. See details for which antibiotics will be used at default (which are guessed with \code{\link[=guess_ab_col]{guess_ab_col()}}).}
 
-\item{GramNeg_1, GramNeg_2, GramNeg_3, GramNeg_4, GramNeg_5, GramNeg_6}{column names of antibiotics for \strong{Gram-negatives}, case-insensitive. At default, the columns containing these antibiotics will be guessed with \code{\link[=guess_ab_col]{guess_ab_col()}}.}
+\item{GramNeg_1, GramNeg_2, GramNeg_3, GramNeg_4, GramNeg_5, GramNeg_6}{column names of antibiotics for \strong{Gram-negatives}, case-insensitive. See details for which antibiotics will be used at default (which are guessed with \code{\link[=guess_ab_col]{guess_ab_col()}}).}
 
-\item{warnings}{give warning about missing antibiotic columns, they will anyway be ignored}
+\item{warnings}{give a warning about missing antibiotic columns (they will be ignored)}
 
-\item{...}{other parameters passed on to function}
+\item{...}{other parameters passed on to functions}
 
-\item{y, z}{characters to compare}
+\item{y, z}{character vectors to compare}
 
 \item{type}{type to determine weighed isolates; can be \code{"keyantibiotics"} or \code{"points"}, see Details}
 

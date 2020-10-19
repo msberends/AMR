@@ -16,6 +16,8 @@
 \alias{mo_domain}
 \alias{mo_type}
 \alias{mo_gramstain}
+\alias{is_gram_negative}
+\alias{is_gram_positive}
 \alias{mo_snomed}
 \alias{mo_ref}
 \alias{mo_authors}
@@ -55,6 +57,10 @@ mo_type(x, language = get_locale(), ...)
 
 mo_gramstain(x, language = get_locale(), ...)
 
+is_gram_negative(x, ...)
+
+is_gram_positive(x, ...)
+
 mo_snomed(x, language = get_locale(), ...)
 
 mo_ref(x, language = get_locale(), ...)
@@ -76,7 +82,7 @@ mo_url(x, open = FALSE, language = get_locale(), ...)
 mo_property(x, property = "fullname", language = get_locale(), ...)
 }
 \arguments{
-\item{x}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
+\item{x}{any character (vector) that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
 
 \item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can be overwritten by setting the option \code{AMR_locale}, e.g. \code{options(AMR_locale = "de")}, see \link{translate}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
@@ -110,7 +116,7 @@ The short name - \code{\link[=mo_shortname]{mo_shortname()}} - almost always ret
 
 Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions \code{\link[=mo_kingdom]{mo_kingdom()}} and \code{\link[=mo_domain]{mo_domain()}} return the exact same results.
 
-The Gram stain - \code{\link[=mo_gramstain]{mo_gramstain()}} - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, \href{https://pubmed.ncbi.nlm.nih.gov/11837318}{PMID 11837318}), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value \code{NA}.
+The Gram stain - \code{\link[=mo_gramstain]{mo_gramstain()}} - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, \href{https://pubmed.ncbi.nlm.nih.gov/11837318}{PMID 11837318}), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value \code{NA}. Functions \code{\link[=is_gram_negative]{is_gram_negative()}} and \code{\link[=is_gram_positive]{is_gram_positive()}} always return \code{TRUE} or \code{FALSE}, even for species outside the kingdom of Bacteria.
 
 All output will be \link{translate}d where possible.
 

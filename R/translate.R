@@ -73,7 +73,7 @@
 #' mo_name("CoNS", language = "pt")
 #' #> "Staphylococcus coagulase negativo (CoNS)"
 get_locale <- function() {
-  # AMR versions prior to 1.3.0 used the environmental variable:
+  # AMR versions 1.3.0 and prior used the environmental variable:
   if (!identical("", Sys.getenv("AMR_locale"))) {
     options(AMR_locale = Sys.getenv("AMR_locale"))
   }
@@ -101,20 +101,20 @@ get_locale <- function() {
 
 coerce_language_setting <- function(lang) {
   # grepl() with ignore.case = FALSE is faster than %like%
-  if (grepl("^(English|en_|EN_)", lang, ignore.case = FALSE)) {
+  if (grepl("^(English|en_|EN_)", lang, ignore.case = FALSE, perl = TRUE)) {
     # as first option to optimise speed
     "en"
-  } else if (grepl("^(German|Deutsch|de_|DE_)", lang, ignore.case = FALSE)) {
+  } else if (grepl("^(German|Deutsch|de_|DE_)", lang, ignore.case = FALSE, perl = TRUE)) {
     "de"
-  } else if (grepl("^(Dutch|Nederlands|nl_|NL_)", lang, ignore.case = FALSE)) {
+  } else if (grepl("^(Dutch|Nederlands|nl_|NL_)", lang, ignore.case = FALSE, perl = TRUE)) {
     "nl"
-  } else if (grepl("^(Spanish|Espa.+ol|es_|ES_)", lang, ignore.case = FALSE)) {
+  } else if (grepl("^(Spanish|Espa.+ol|es_|ES_)", lang, ignore.case = FALSE, perl = TRUE)) {
     "es"
-  } else if (grepl("^(Italian|Italiano|it_|IT_)", lang, ignore.case = FALSE)) {
+  } else if (grepl("^(Italian|Italiano|it_|IT_)", lang, ignore.case = FALSE, perl = TRUE)) {
     "it"
-  } else if (grepl("^(French|Fran.+ais|fr_|FR_)", lang, ignore.case = FALSE)) {
+  } else if (grepl("^(French|Fran.+ais|fr_|FR_)", lang, ignore.case = FALSE, perl = TRUE)) {
     "fr"
-  } else if (grepl("^(Portuguese|Portugu.+s|pt_|PT_)", lang, ignore.case = FALSE)) {
+  } else if (grepl("^(Portuguese|Portugu.+s|pt_|PT_)", lang, ignore.case = FALSE, perl = TRUE)) {
     "pt"
   } else {
     # other language -> set to English

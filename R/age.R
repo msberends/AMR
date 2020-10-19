@@ -28,9 +28,11 @@
 #' Calculates age in years based on a reference date, which is the sytem date at default.
 #' @inheritSection lifecycle Stable lifecycle
 #' @param x date(s), will be coerced with [as.POSIXlt()]
-#' @param reference reference date(s) (defaults to today), will be coerced with [as.POSIXlt()] and cannot be lower than `x`
+#' @param reference reference date(s) (defaults to today), will be coerced with [as.POSIXlt()]
 #' @param exact a logical to indicate whether age calculation should be exact, i.e. with decimals. It divides the number of days of [year-to-date](https://en.wikipedia.org/wiki/Year-to-date) (YTD) of `x` by the number of days in the year of `reference` (either 365 or 366).
 #' @param na.rm a logical to indicate whether missing values should be removed
+#' @param ... parameters passed on to [as.POSIXlt()], such as `origin`
+#' @details Ages below 0 will be returned as `NA` with a warning. Ages above 120 will only give a warning.
 #' @return An [integer] (no decimals) if `exact = FALSE`, a [double] (with decimals) otherwise
 #' @seealso To split ages into groups, use the [age_groups()] function.
 #' @inheritSection AMR Read more on our website!
@@ -44,13 +46,18 @@
 #' df$age_exact <- age(df$birth_date, exact = TRUE)
 #'
 #' df
-age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE) {
+age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
+  meet_criteria(x, allow_class = c("character", "Date", "POSIXt"))
+  meet_criteria(reference, allow_class = c("character", "Date", "POSIXt"))
+  meet_criteria(exact, allow_class = "logical", has_length = 1)
+  meet_criteria(na.rm, allow_class = "logical", has_length = 1)
+  
   if (length(x) != length(reference)) {
     stop_if(length(reference) != 1, "`x` and `reference` must be of same length, or `reference` must be of length 1.")
     reference <- rep(reference, length(x))
   }
-  x <- as.POSIXlt(x)
-  reference <- as.POSIXlt(reference)
+  x <- as.POSIXlt(x, ...)
+  reference <- as.POSIXlt(reference, ...)
   
   # from https://stackoverflow.com/a/25450756/4575331
   years_gap <- reference$year - x$year
@@ -98,13 +105,13 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE) {
 #' @param na.rm a [logical] to indicate whether missing values should be removed
 #' @details To split ages, the input for the `split_at` parameter can be:
 #' 
-#' * A numeric vector. A vector of e.g. `c(10, 20)` will split on 0-9, 10-19 and 20+. A value of only `50` will split on 0-49 and 50+.
+#' * A numeric vector. A value of e.g. `c(10, 20)` will split `x` on 0-9, 10-19 and 20+. A value of only `50` will split `x` on 0-49 and 50+.
 #'   The default is to split on young children (0-11), youth (12-24), young adults (25-54), middle-aged adults (55-74) and elderly (75+).
 #' * A character:
 #'   - `"children"` or `"kids"`, equivalent of: `c(0, 1, 2, 4, 6, 13, 18)`. This will split on 0, 1, 2-3, 4-5, 6-12, 13-17 and 18+.
 #'   - `"elderly"` or `"seniors"`, equivalent of: `c(65, 75, 85)`. This will split on 0-64, 65-74, 75-84, 85+.
-#'   - `"fives"`, equivalent of: `1:20 * 5`. This will split on 0-4, 5-9, 10-14, ..., 90-94, 95-99, 100+.
-#'   - `"tens"`, equivalent of: `1:10 * 10`. This will split on 0-9, 10-19, 20-29, ..., 80-89, 90-99, 100+.
+#'   - `"fives"`, equivalent of: `1:20 * 5`. This will split on 0-4, 5-9, ..., 95-99, 100+.
+#'   - `"tens"`, equivalent of: `1:10 * 10`. This will split on 0-9, 10-19, ..., 90-99, 100+.
 #' @return Ordered [factor]
 #' @seealso To determine ages, based on one or more reference dates, use the [age()] function.
 #' @export
@@ -127,12 +134,11 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE) {
 #' age_groups(ages, split_at = "fives")
 #'
 #' # split specifically for children
-#' age_groups(ages, "children")
-#' # same:
 #' age_groups(ages, c(1, 2, 4, 6, 13, 17))
+#' age_groups(ages, "children")
 #'
 #' \donttest{
-#' # resistance of ciprofloxacine per age group
+#' # resistance of ciprofloxacin per age group
 #' library(dplyr)
 #' example_isolates %>%
 #'   filter_first_isolate() %>%
@@ -142,7 +148,10 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE) {
 #'   ggplot_rsi(x = "age_group", minimum = 0)
 #' }
 age_groups <- function(x, split_at = c(12, 25, 55, 75), na.rm = FALSE) {
-  stop_ifnot(is.numeric(x), "`x` must be numeric, not ", paste0(class(x), collapse = "/"))
+  meet_criteria(x, allow_class = c("numeric", "integer"))
+  meet_criteria(split_at, allow_class = c("numeric", "integer", "character"))
+  meet_criteria(na.rm, allow_class = "logical", has_length = 1) 
+  
   if (any(x < 0, na.rm = TRUE)) {
     x[x < 0] <- NA
     warning("NAs introduced for ages below 0.")
@@ -169,17 +178,17 @@ age_groups <- function(x, split_at = c(12, 25, 55, 75), na.rm = FALSE) {
   
   # turn input values to 'split_at' indices
   y <- x
-  labs <- split_at
+  lbls <- split_at
   for (i in seq_len(length(split_at))) {
     y[x >= split_at[i]] <- i
     # create labels
-    labs[i - 1] <- paste0(unique(c(split_at[i - 1], split_at[i] - 1)), collapse = "-")
+    lbls[i - 1] <- paste0(unique(c(split_at[i - 1], split_at[i] - 1)), collapse = "-")
   }
   
   # last category
-  labs[length(labs)] <- paste0(split_at[length(split_at)], "+")
+  lbls[length(lbls)] <- paste0(split_at[length(split_at)], "+")
   
-  agegroups <- factor(labs[y], levels = labs, ordered = TRUE)
+  agegroups <- factor(lbls[y], levels = lbls, ordered = TRUE)
   
   if (isTRUE(na.rm)) {
     agegroups <- agegroups[!is.na(agegroups)]

@@ -31,8 +31,8 @@
 #' @param combine_IR logical to indicate whether values R and I should be summed
 #' @param add_ab_group logical to indicate where the group of the antimicrobials must be included as a first column
 #' @param remove_intrinsic_resistant logical to indicate that rows and columns with 100% resistance for all tested antimicrobials must be removed from the table
-#' @param FUN the function to call on the `mo` column to transform the microorganism IDs, defaults to [mo_shortname()] 
-#' @param translate_ab a character of length 1 containing column names of the [antibiotics] data set
+#' @param FUN function to call on the `mo` column to transform the microorganism IDs, defaults to [mo_shortname()] 
+#' @param translate_ab character of length 1 containing column names of the [antibiotics] data set
 #' @param ... arguments passed on to `FUN`
 #' @inheritParams rsi_df
 #' @inheritParams base::formatC
@@ -61,9 +61,10 @@ bug_drug_combinations <- function(x,
                                   col_mo = NULL, 
                                   FUN = mo_shortname,
                                   ...) {
-  stop_ifnot(is.data.frame(x), "`x` must be a data frame")
-  stop_ifnot(any(sapply(x, is.rsi), na.rm = TRUE), "No columns with class <rsi> found. See ?as.rsi.")
-  
+  meet_criteria(x, allow_class = "data.frame", contains_column_class = "rsi")
+  meet_criteria(col_mo, allow_class = "character", is_in = colnames(x), has_length = 1, allow_NULL = TRUE)
+  meet_criteria(FUN, allow_class = "function", has_length = 1)
+
   # try to find columns based on type
   # -- mo
   if (is.null(col_mo)) {
@@ -121,6 +122,17 @@ format.bug_drug_combinations <- function(x,
                                          decimal.mark = getOption("OutDec"),
                                          big.mark = ifelse(decimal.mark == ",", ".", ","),
                                          ...) {
+  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
+  meet_criteria(combine_IR, allow_class = "logical", has_length = 1)
+  meet_criteria(add_ab_group, allow_class = "logical", has_length = 1)
+  meet_criteria(remove_intrinsic_resistant, allow_class = "logical", has_length = 1)
+  meet_criteria(decimal.mark, allow_class = "character", has_length = 1)
+  meet_criteria(big.mark, allow_class = "character", has_length = 1)
+  
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   x <- subset(x, total >= minimum)
   

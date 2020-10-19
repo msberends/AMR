@@ -31,7 +31,7 @@
 #' @param x vector of values (for class [`mic`]: an MIC value in mg/L, for class [`disk`]: a disk diffusion radius in millimetres)
 #' @param mo any (vector of) text that can be coerced to a valid microorganism code with [as.mo()], will be determined automatically if the `dplyr` package is installed
 #' @param ab any (vector of) text that can be coerced to a valid antimicrobial code with [as.ab()]
-#' @param uti (Urinary Tract Infection) A vector with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.rsi()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be search for a 'specimen' and rows containing 'urin' in that column will be regarded isolates from a UTI. See *Examples*.
+#' @param uti (Urinary Tract Infection) A vector with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.rsi()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be searched for a 'specimen' and rows containing 'urin' (such as 'urine', 'urina') in that column will be regarded isolates from a UTI. See *Examples*.
 #' @inheritParams first_isolate
 #' @param guideline defaults to the latest included EUCAST guideline, see Details for all options
 #' @param conserve_capped_values a logical to indicate that MIC values starting with `">"` (but not `">="`) must always return "R" , and that MIC values starting with `"<"` (but not `"<="`) must always return "S"
@@ -193,6 +193,8 @@ is.rsi <- function(x) {
 #' @rdname as.rsi
 #' @export
 is.rsi.eligible <- function(x, threshold = 0.05) {
+  meet_criteria(threshold, allow_class = "numeric", has_length = 1)
+  
   stop_if(NCOL(x) > 1, "`x` must be a one-dimensional vector.")
   if (any(c("logical",
             "numeric",
@@ -293,6 +295,13 @@ as.rsi.mic <- function(x,
                        conserve_capped_values = FALSE,
                        add_intrinsic_resistance = FALSE,
                        ...) {
+  meet_criteria(x)
+  meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
+  meet_criteria(ab, allow_class = c("ab", "character"))
+  meet_criteria(guideline, allow_class = "character", has_length = 1)
+  meet_criteria(uti, allow_class = "logical", has_length = c(1, length(x)))
+  meet_criteria(conserve_capped_values, allow_class = "logical", has_length = 1)
+  meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
   
   # for dplyr's across()
   cur_column_dplyr <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
@@ -322,6 +331,9 @@ as.rsi.mic <- function(x,
           "To transform certain columns with e.g. mutate_at(), use\n",
           "`data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n\n",
           "To tranform all MIC values in a data set, use `data %>% as.rsi()` or data %>% mutate_if(is.mic, as.rsi).", call = FALSE)
+  }
+  if (length(ab) == 1 && ab %like% "as.mic") {
+    stop_('No unambiguous name was supplied about the antibiotic (parameter "ab"). See ?as.rsi.', call = FALSE)
   }
   
   ab_coerced <- suppressWarnings(as.ab(ab))
@@ -364,6 +376,12 @@ as.rsi.disk <- function(x,
                         uti = FALSE,
                         add_intrinsic_resistance = FALSE,
                         ...) {
+  meet_criteria(x)
+  meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
+  meet_criteria(ab, allow_class = c("ab", "character"))
+  meet_criteria(guideline, allow_class = "character", has_length = 1)
+  meet_criteria(uti, allow_class = "logical", has_length = c(1, length(x)))
+  meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
   
   # for dplyr's across()
   cur_column_dplyr <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
@@ -393,6 +411,9 @@ as.rsi.disk <- function(x,
           "To transform certain columns with e.g. mutate_at(), use\n",
           "`data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n\n",
           "To tranform all disk diffusion zones in a data set, use `data %>% as.rsi()` or data %>% mutate_if(is.disk, as.rsi).", call = FALSE)
+  }
+  if (length(ab) == 1 && ab %like% "as.disk") {
+    stop_('No unambiguous name was supplied about the antibiotic (parameter "ab"). See ?as.rsi.', call = FALSE)
   }
   
   ab_coerced <- suppressWarnings(as.ab(ab))
@@ -433,6 +454,12 @@ as.rsi.data.frame <- function(x,
                               uti = NULL,
                               conserve_capped_values = FALSE,
                               add_intrinsic_resistance = FALSE) {
+  meet_criteria(x, allow_class = "data.frame") # will also check for dimensions > 0
+  meet_criteria(col_mo, allow_class = "character", is_in = colnames(x), allow_NULL = TRUE)
+  meet_criteria(guideline, allow_class = "character", has_length = 1)
+  meet_criteria(uti, allow_class = "logical", has_length = c(1, nrow(x)), allow_NULL = TRUE)
+  meet_criteria(conserve_capped_values, allow_class = "logical", has_length = 1)
+  meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
   
   # -- UTIs
   col_uti <- uti
@@ -731,6 +758,14 @@ type_sum.rsi <- function(x, ...) {
 freq.rsi <- function(x, ...) {
   x_name <- deparse(substitute(x))
   x_name <- gsub(".*[$]", "", x_name)
+  if (x_name %in% c("x", ".")) {
+    # try again going through system calls
+    x_name <- na.omit(sapply(sys.calls(), 
+                             function(call) {
+                               call_txt <- as.character(call)
+                               ifelse(call_txt[1] %like% "freq$", call_txt[length(call_txt)], character(0))
+                             }))[1L]
+  }
   ab <- suppressMessages(suppressWarnings(as.ab(x_name)))
   freq.default <- import_fn("freq.default", "cleaner", error_on_fail = FALSE)
   digits <- list(...)$digits
@@ -850,6 +885,13 @@ plot.rsi <- function(x,
                      main = paste("Resistance Overview of", deparse(substitute(x))),
                      axes = FALSE,
                      ...) {
+  meet_criteria(lwd, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(ylim, allow_class = c("numeric", "integer"), allow_NULL = TRUE)
+  meet_criteria(ylab, allow_class = "character", has_length = 1)
+  meet_criteria(xlab, allow_class = "character", has_length = 1)
+  meet_criteria(main, allow_class = "character", has_length = 1)
+  meet_criteria(axes, allow_class = "logical", has_length = 1)
+  
   data <- as.data.frame(table(x), stringsAsFactors = FALSE)
   colnames(data) <- c("x", "n")
   data$s <- round((data$n / sum(data$n)) * 100, 1)
@@ -901,6 +943,12 @@ barplot.rsi <- function(height,
                         beside = TRUE,
                         axes = beside,
                         ...) {
+  meet_criteria(col, allow_class = "character", has_length = 3)
+  meet_criteria(xlab, allow_class = "character", has_length = 1)
+  meet_criteria(main, allow_class = "character", has_length = 1)
+  meet_criteria(ylab, allow_class = "character", has_length = 1)
+  meet_criteria(beside, allow_class = "logical", has_length = 1)
+  meet_criteria(axes, allow_class = "logical", has_length = 1)
   
   if (axes == TRUE) {
     par(mar =  c(5, 4, 4, 2) + 0.1)

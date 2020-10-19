@@ -139,6 +139,23 @@ first_isolate <- function(x,
                           info = interactive(),
                           include_unknown = FALSE,
                           ...) {
+  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(col_date, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  meet_criteria(col_patient_id, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  meet_criteria(col_testcode, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  meet_criteria(col_specimen, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  meet_criteria(col_icu, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  meet_criteria(col_keyantibiotics, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(testcodes_exclude, allow_class = "character", allow_NULL = TRUE)
+  meet_criteria(icu_exclude, allow_class = "logical", has_length = 1)
+  meet_criteria(specimen_group, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  meet_criteria(type, allow_class = "character", has_length = 1)
+  meet_criteria(ignore_I, allow_class = "logical", has_length = 1)
+  meet_criteria(points_threshold, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(info, allow_class = "logical", has_length = 1)
+  meet_criteria(include_unknown, allow_class = "logical", has_length = 1)
   
   dots <- unlist(list(...))
   if (length(dots) != 0) {
@@ -352,20 +369,20 @@ first_isolate <- function(x,
                                              info = info)
     # with key antibiotics
     x$newvar_first_isolate <- pm_if_else(x$newvar_row_index_sorted >= row.start &
-                                        x$newvar_row_index_sorted <= row.end &
-                                        x$newvar_genus_species != "" & 
-                                        (x$other_pat_or_mo | x$more_than_episode_ago | x$other_key_ab),
-                                      TRUE,
-                                      FALSE)
+                                           x$newvar_row_index_sorted <= row.end &
+                                           x$newvar_genus_species != "" & 
+                                           (x$other_pat_or_mo | x$more_than_episode_ago | x$other_key_ab),
+                                         TRUE,
+                                         FALSE)
     
   } else {
     # no key antibiotics
     x$newvar_first_isolate <- pm_if_else(x$newvar_row_index_sorted >= row.start &
-                                        x$newvar_row_index_sorted <= row.end &
-                                        x$newvar_genus_species != "" & 
-                                        (x$other_pat_or_mo | x$more_than_episode_ago),
-                                      TRUE,
-                                      FALSE)
+                                           x$newvar_row_index_sorted <= row.end &
+                                           x$newvar_genus_species != "" & 
+                                           (x$other_pat_or_mo | x$more_than_episode_ago),
+                                         TRUE,
+                                         FALSE)
   }
   
   # first one as TRUE
@@ -442,6 +459,10 @@ filter_first_isolate <- function(x,
                                  col_patient_id = NULL,
                                  col_mo = NULL,
                                  ...) {
+  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(col_date, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  meet_criteria(col_patient_id, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   subset(x, first_isolate(x = x,
                           col_date = col_date,
                           col_patient_id = col_patient_id,
@@ -457,6 +478,11 @@ filter_first_weighted_isolate <- function(x,
                                           col_mo = NULL,
                                           col_keyantibiotics = NULL,
                                           ...) {
+  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(col_date, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  meet_criteria(col_patient_id, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  meet_criteria(col_keyantibiotics, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   y <- x
   if (is.null(col_keyantibiotics)) {
     # first try to look for it

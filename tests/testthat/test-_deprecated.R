@@ -27,5 +27,6 @@ context("deprecated.R")
 
 test_that("deprecated functions work", {
   skip_on_cran()
-  # if some functions get deprecated, put the tests here
+  expect_identical(suppressWarnings(p_symbol(c(0.001, 0.01, 0.05, 0.1, 1, NA, 3))),
+                   c("***", "**", "*", ".", " ", NA, NA))
 })

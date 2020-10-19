@@ -54,7 +54,7 @@
 #'     
 #'   # get bug/drug combinations for only macrolides in Gram-positives:
 #'   example_isolates %>% 
-#'     filter(mo_gramstain(mo) %like% "pos") %>% 
+#'     filter(mo %>% is_gram_positive()) %>% 
 #'     select(mo, macrolides()) %>% 
 #'     bug_drug_combinations() %>%
 #'     format()
@@ -148,9 +148,12 @@ tetracyclines <- function() {
 }
 
 ab_selector <- function(ab_class, function_name) {
+  meet_criteria(ab_class, allow_class = "character", has_length = 1, .call_depth = 1)
+  meet_criteria(function_name, allow_class = "character", has_length = 1, .call_depth = 1)
+
   peek_vars_tidyselect <- import_fn("peek_vars", "tidyselect")
   vars_vct <- peek_vars_tidyselect(fn = function_name)
-  vars_df <- data.frame(as.list(vars_vct))[0, , drop = FALSE]
+  vars_df <- data.frame(as.list(vars_vct))[1, , drop = FALSE]
   colnames(vars_df) <- vars_vct
   ab_in_data <- get_column_abx(vars_df, info = FALSE)
   

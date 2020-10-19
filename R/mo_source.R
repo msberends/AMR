@@ -115,12 +115,12 @@
 #' @export
 #' @inheritSection AMR Read more on our website!
 set_mo_source <- function(path) {
+  meet_criteria(path, allow_class = "character", has_length = 1)
   
   file_location <- path.expand("~/mo_source.rds")
   
   stop_ifnot(interactive(), "This function can only be used in interactive mode, since it must ask for the user's permission to write a file to their home folder.")
-  stop_ifnot(length(path) == 1, "`path` must be of length 1")
-  
+
   if (is.null(path) || path %in% c(FALSE, "")) {
     options(mo_source = NULL)
     options(mo_source_timestamp = NULL)
@@ -131,8 +131,7 @@ set_mo_source <- function(path) {
     return(invisible())
   }
   
-  stop_ifnot(file.exists(path),
-             "file not found: ", path)
+  stop_ifnot(file.exists(path), "file not found: ", path)
   
   if (path %like% "[.]rds$") {
     df <- readRDS(path)
@@ -237,7 +236,6 @@ get_mo_source <- function() {
 }
 
 mo_source_isvalid <- function(x, refer_to_name = "`reference_df`", stop_on_error = TRUE) {
-  
   check_dataset_integrity()
   
   if (deparse(substitute(x)) == "get_mo_source()") {

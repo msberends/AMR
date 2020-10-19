@@ -126,13 +126,20 @@ resistance_predict <- function(x,
                                preserve_measurements = TRUE,
                                info = interactive(),
                                ...) {
+  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(col_ab, allow_class = "character", has_length = 1, is_in = colnames(x))
+  meet_criteria(col_date, allow_class = "character", has_length = 1, is_in = colnames(x), allow_NULL = TRUE)
+  meet_criteria(year_min, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE)
+  meet_criteria(year_max, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE)
+  meet_criteria(year_every, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(model, allow_class = c("character", "function"), has_length = 1, allow_NULL = TRUE)
+  meet_criteria(I_as_S, allow_class = "logical", has_length = 1)
+  meet_criteria(preserve_measurements, allow_class = "logical", has_length = 1)
+  meet_criteria(info, allow_class = "logical", has_length = 1)
   
-  stop_ifnot(is.data.frame(x), "`x` must be a data.frame")
-  stop_if(any(dim(x) == 0), "`x` must contain rows and columns")
   stop_if(is.null(model), 'choose a regression model with the `model` parameter, e.g. resistance_predict(..., model = "binomial")')
-  stop_ifnot(col_ab %in% colnames(x),
-             "column `", col_ab, "` not found")
-  
+
   dots <- unlist(list(...))
   if (length(dots) != 0) {
     # backwards compatibility with old parameters
@@ -300,6 +307,7 @@ rsi_predict <- resistance_predict
 #' @rdname resistance_predict
 plot.resistance_predict <- function(x, main = paste("Resistance Prediction of", x_name), ...) {
   x_name <- paste0(ab_name(attributes(x)$ab), " (", attributes(x)$ab, ")")
+  meet_criteria(main, allow_class = "character", has_length = 1)
   
   if (attributes(x)$I_as_S == TRUE) {
     ylab <- "%R"
@@ -342,11 +350,13 @@ ggplot_rsi_predict <- function(x,
                                main = paste("Resistance Prediction of", x_name),
                                ribbon = TRUE,
                                ...) {
+  x_name <- paste0(ab_name(attributes(x)$ab), " (", attributes(x)$ab, ")")
+  meet_criteria(main, allow_class = "character", has_length = 1)
+  meet_criteria(ribbon, allow_class = "logical", has_length = 1)
   
   stop_ifnot_installed("ggplot2")
   stop_ifnot(inherits(x, "resistance_predict"), "`x` must be a resistance prediction model created with resistance_predict()")
   
-  x_name <- paste0(ab_name(attributes(x)$ab), " (", attributes(x)$ab, ")")
   
   if (attributes(x)$I_as_S == TRUE) {
     ylab <- "%R"

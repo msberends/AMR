@@ -68,6 +68,10 @@
 #' }
 #' }
 like <- function(x, pattern, ignore.case = TRUE) {
+  meet_criteria(x, allow_NA = TRUE)
+  meet_criteria(pattern, allow_class = "character")
+  meet_criteria(ignore.case, allow_class = "logical", has_length = 1)
+
   # set to fixed if no regex found
   fixed <- !any(is_possibly_regex(pattern))
   if (ignore.case == TRUE) {
@@ -78,6 +82,10 @@ like <- function(x, pattern, ignore.case = TRUE) {
   
   if (length(pattern) > 1 & length(x) == 1) {
     x <- rep(x, length(pattern))
+  }
+  
+  if (all(is.na(x))) {
+    return(rep(FALSE, length(x)))
   }
     
   if (length(pattern) > 1) {
@@ -137,18 +145,24 @@ like <- function(x, pattern, ignore.case = TRUE) {
 #' @rdname like
 #' @export
 "%like%" <- function(x, pattern) {
+  meet_criteria(x, allow_NA = TRUE)
+  meet_criteria(pattern, allow_class = "character")
   like(x, pattern, ignore.case = TRUE)
 }
 
 #' @rdname like
 #' @export
 "%like_case%" <- function(x, pattern) {
+  meet_criteria(x, allow_NA = TRUE)
+  meet_criteria(pattern, allow_class = "character")
   like(x, pattern, ignore.case = FALSE)
 }
 
 # don't export his one, it's just for convenience in eucast_rules()
 # match all Klebsiella and Raoultella, but not K. aerogenes: fullname %like_perl% "^(Klebsiella(?! aerogenes)|Raoultella)"
 "%like_perl%" <- function(x, pattern) {
+  meet_criteria(x)
+  meet_criteria(pattern, allow_class = "character")
   grepl(x = tolower(x),
         pattern = tolower(pattern),
         perl = TRUE,

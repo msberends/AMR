@@ -158,6 +158,13 @@ as.mo <- function(x,
                   ignore_pattern = getOption("AMR_ignore_pattern"),
                   language = get_locale(),
                   ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(Becker, allow_class = c("logical", "character"), has_length = 1)
+  meet_criteria(Lancefield, allow_class = c("logical", "character"), has_length = 1)
+  meet_criteria(allow_uncertain, allow_class = c("logical", "numeric", "integer"), has_length = 1)
+  meet_criteria(reference_df, allow_class = "data.frame", allow_NULL = TRUE)
+  meet_criteria(ignore_pattern, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   
   check_dataset_integrity()
   
@@ -268,6 +275,20 @@ exec_as.mo <- function(x,
                        actual_uncertainty = 1,
                        actual_input = NULL,
                        language = get_locale()) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(Becker, allow_class = c("logical", "character"), has_length = 1)
+  meet_criteria(Lancefield, allow_class = c("logical", "character"), has_length = 1)
+  meet_criteria(allow_uncertain, allow_class = c("logical", "numeric", "integer"), has_length = 1)
+  meet_criteria(reference_df, allow_class = "data.frame", allow_NULL = TRUE)
+  meet_criteria(property, allow_class = "character", has_length = 1, is_in = colnames(microorganisms))
+  meet_criteria(initial_search, allow_class = "logical", has_length = 1)
+  meet_criteria(dyslexia_mode, allow_class = "logical", has_length = 1)
+  meet_criteria(debug, allow_class = "logical", has_length = 1)
+  meet_criteria(ignore_pattern, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  meet_criteria(reference_data_to_use, allow_class = "data.frame")
+  meet_criteria(actual_uncertainty, allow_class = "numeric", has_length = 1)
+  meet_criteria(actual_input, allow_class = "character", allow_NULL = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   
   check_dataset_integrity()
   
@@ -1607,8 +1628,8 @@ get_skimmers.mo <- function(column) {
   sfl(
     skim_type = "mo",
     unique_total = ~pm_n_distinct(., na.rm = TRUE),
-    gram_negative = ~sum(mo_gramstain(stats::na.omit(.), language = NULL) == "Gram-negative", na.rm = TRUE),
-    gram_positive = ~sum(mo_gramstain(stats::na.omit(.), language = NULL) == "Gram-positive", na.rm = TRUE),
+    gram_negative = ~sum(is_gram_negative(stats::na.omit(.))),
+    gram_positive = ~sum(is_gram_positive(stats::na.omit(.))),
     top_genus = ~names(sort(-table(mo_genus(stats::na.omit(.), language = NULL))))[1L],
     top_species = ~names(sort(-table(mo_name(stats::na.omit(.), language = NULL))))[1L]
   )

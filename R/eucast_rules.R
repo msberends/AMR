@@ -134,6 +134,13 @@ eucast_rules <- function(x,
                          version_breakpoints = 10.0,
                          version_expertrules = 3.2,
                          ...) {
+  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(col_mo, allow_class = "character", has_length = 1, is_in = colnames(x), allow_NULL = TRUE)
+  meet_criteria(info, allow_class = "logical", has_length = 1)
+  meet_criteria(rules, allow_class = "character", has_length = c(1, 2, 3, 4), is_in = c("breakpoints", "expert", "other", "all"))
+  meet_criteria(verbose, allow_class = "logical", has_length = 1)
+  meet_criteria(version_breakpoints, allow_class = "numeric", has_length = 1)
+  meet_criteria(version_expertrules, allow_class = "numeric", has_length = 1)
   
   x_deparsed <- deparse(substitute(x))
   if (length(x_deparsed) > 1 || !all(x_deparsed %like% "[a-z]+")) {
@@ -172,18 +179,12 @@ eucast_rules <- function(x,
     }
   }
   
-  stop_ifnot(is.data.frame(x), "`x` must be a data frame")
-  
   # try to find columns based on type
   # -- mo
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo", info = info)
   }
   stop_if(is.null(col_mo), "`col_mo` must be set")
-  stop_ifnot(col_mo %in% colnames(x), "column '", col_mo, "' (`col_mo`) not found")
-  
-  stop_ifnot(all(rules %in% c("breakpoints", "expert", "other", "all")),
-             '`rules` must be one or more of: "breakpoints", "expert", "other", "all".')
   
   decimal.mark <- getOption("OutDec")
   big.mark <- ifelse(decimal.mark != ",", ",", ".")
@@ -576,7 +577,7 @@ eucast_rules <- function(x,
     # big speed gain! only analyse unique rows:
     pm_distinct(`.rowid`, .keep_all = TRUE) %pm>% 
     as.data.frame(stringsAsFactors = FALSE)
-  x[, col_mo] <- as.mo(x[, col_mo, drop = TRUE])
+  x[, col_mo] <- as.mo(as.character(x[, col_mo, drop = TRUE]))
   x <- x %pm>%
     left_join_microorganisms(by = col_mo, suffix = c("_oldcols", ""))
   x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL)

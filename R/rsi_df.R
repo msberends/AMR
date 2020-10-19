@@ -32,7 +32,6 @@ rsi_df <- function(data,
                    as_percent = FALSE,
                    combine_SI = TRUE,
                    combine_IR = FALSE) {
-  
   rsi_calc_df(type = "both",
               data = data,
               translate_ab = translate_ab,

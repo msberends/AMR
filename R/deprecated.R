@@ -30,4 +30,18 @@
 #' @inheritSection AMR Read more on our website!
 #' @keywords internal
 #' @name AMR-deprecated
-# @export
+#' @export
+p_symbol <- function(p, emptychar = " ") {
+  .Deprecated(package = "AMR")
+  
+  p <- as.double(p)
+  s <- rep(NA_character_, length(p))
+  
+  s[p <= 1] <- emptychar
+  s[p <= 0.100] <- "."
+  s[p <= 0.050] <- "*"
+  s[p <= 0.010] <- "**"
+  s[p <= 0.001] <- "***"
+  
+  s
+}

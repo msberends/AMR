@@ -35,6 +35,8 @@
 #' @inheritSection AMR Read more on our website!
 #' @export
 kurtosis <- function(x, na.rm = FALSE, excess = FALSE) {
+  meet_criteria(na.rm, allow_class = "logical", has_length = 1)
+  meet_criteria(excess, allow_class = "logical", has_length = 1)
   UseMethod("kurtosis")
 }
 
@@ -42,6 +44,8 @@ kurtosis <- function(x, na.rm = FALSE, excess = FALSE) {
 #' @rdname kurtosis
 #' @export
 kurtosis.default <- function(x, na.rm = FALSE, excess = FALSE) {
+  meet_criteria(na.rm, allow_class = "logical", has_length = 1)
+  meet_criteria(excess, allow_class = "logical", has_length = 1)
   x <- as.vector(x)
   if (na.rm == TRUE) {
     x <- x[!is.na(x)]
@@ -56,6 +60,8 @@ kurtosis.default <- function(x, na.rm = FALSE, excess = FALSE) {
 #' @rdname kurtosis
 #' @export
 kurtosis.matrix <- function(x, na.rm = FALSE, excess = FALSE) {
+  meet_criteria(na.rm, allow_class = "logical", has_length = 1)
+  meet_criteria(excess, allow_class = "logical", has_length = 1)
   apply(x, 2, kurtosis.default, na.rm = na.rm, excess = excess)
 }
 
@@ -63,5 +69,7 @@ kurtosis.matrix <- function(x, na.rm = FALSE, excess = FALSE) {
 #' @rdname kurtosis
 #' @export
 kurtosis.data.frame <- function(x, na.rm = FALSE, excess = FALSE) {
+  meet_criteria(na.rm, allow_class = "logical", has_length = 1)
+  meet_criteria(excess, allow_class = "logical", has_length = 1)
   sapply(x, kurtosis.default, na.rm = na.rm, excess = excess)
 }

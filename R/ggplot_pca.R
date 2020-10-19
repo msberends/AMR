@@ -53,9 +53,10 @@
 #' As per their GPL-2 licence that demands documentation of code changes, the changes made based on the source code were: 
 #' 1. Rewritten code to remove the dependency on packages `plyr`, `scales` and `grid`
 #' 2. Parametrised more options, like arrow and ellipse settings
-#' 3. Added total amount of explained variance as a caption in the plot
-#' 4. Cleaned all syntax based on the `lintr` package and added integrity checks
-#' 5. Updated documentation
+#' 3. Hardened all input possibilities by defining the exact type of user input for every parameter
+#' 4. Added total amount of explained variance as a caption in the plot
+#' 5. Cleaned all syntax based on the `lintr` package, fixed grammatical errors and added integrity checks
+#' 6. Updated documentation
 #' @details The colours for labels and points can be changed by adding another scale layer for colour, like `scale_colour_viridis_d()` or `scale_colour_brewer()`.
 #' @rdname ggplot_pca
 #' @export
@@ -85,7 +86,7 @@
 #' }
 ggplot_pca <- function(x,
                        choices = 1:2,
-                       scale = TRUE,
+                       scale = 1,
                        pc.biplot = TRUE,
                        labels = NULL,
                        labels_textsize = 3,
@@ -107,22 +108,27 @@ ggplot_pca <- function(x,
                        ...) {
   
   stop_ifnot_installed("ggplot2")
-  stop_ifnot(length(choices) == 2, "`choices` must be of length 2")
-  stop_ifnot(is.logical(arrows), "`arrows` must be TRUE or FALSE")
-  stop_ifnot(is.logical(arrows_textangled), "`arrows_textangled` must be TRUE or FALSE")
-  stop_ifnot(is.logical(ellipse), "`ellipse` must be TRUE or FALSE")
-  stop_ifnot(is.logical(pc.biplot), "`pc.biplot` must be TRUE or FALSE")
-  stop_ifnot(is.logical(scale), "`scale` must be TRUE or FALSE")
-  stop_ifnot(is.numeric(arrows_alpha), "`arrows_alpha` must be numeric")
-  stop_ifnot(is.numeric(arrows_size), "`arrows_size` must be numeric")
-  stop_ifnot(is.numeric(arrows_textsize), "`arrows_textsize` must be numeric")
-  stop_ifnot(is.numeric(base_textsize), "`base_textsize` must be numeric")
-  stop_ifnot(is.numeric(choices), "`choices` must be numeric")
-  stop_ifnot(is.numeric(ellipse_alpha), "`ellipse_alpha` must be numeric")
-  stop_ifnot(is.numeric(ellipse_prob), "`ellipse_prob` must be numeric")
-  stop_ifnot(is.numeric(ellipse_size), "`ellipse_size` must be numeric")
-  stop_ifnot(is.numeric(labels_text_placement), "`labels_text_placement` must be numeric")
-  stop_ifnot(is.numeric(labels_textsize), "`labels_textsize` must be numeric")
+  meet_criteria(x, allow_class = c("prcomp", "princomp", "PCA", "lda"))
+  meet_criteria(choices, allow_class = c("numeric", "integer"), has_length = 2)
+  meet_criteria(scale, allow_class = c("numeric", "integer", "logical"), has_length = 1)
+  meet_criteria(pc.biplot, allow_class = "logical", has_length = 1)
+  meet_criteria(labels, allow_class = "character", allow_NULL = TRUE)
+  meet_criteria(labels_textsize, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(labels_text_placement, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(groups, allow_class = "character", allow_NULL = TRUE)
+  meet_criteria(ellipse, allow_class = "logical", has_length = 1)
+  meet_criteria(ellipse_prob, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(ellipse_size, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(ellipse_alpha, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(points_size, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(points_alpha, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(arrows, allow_class = "logical", has_length = 1)
+  meet_criteria(arrows_colour, allow_class = "character", has_length = 1)
+  meet_criteria(arrows_size, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(arrows_textsize, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(arrows_textangled, allow_class = "logical", has_length = 1)
+  meet_criteria(arrows_alpha, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(base_textsize, allow_class = c("numeric", "integer"), has_length = 1)
   
   calculations <- pca_calculations(pca_model = x,
                                    groups = groups, 
@@ -302,7 +308,7 @@ pca_calculations <- function(pca_model,
     v <- pca_model$scaling
     d.total <- sum(d ^ 2)
   } else {
-    stop("Expected a object of class prcomp, princomp, PCA, or lda")
+    stop("Expected an object of class prcomp, princomp, PCA, or lda")
   }
   
   # Scores

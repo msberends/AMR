@@ -171,10 +171,29 @@ ggplot_rsi <- function(data,
                        ...) {
   
   stop_ifnot_installed("ggplot2")
-  
-  x <- x[1]
-  facet <- facet[1]
-  
+  meet_criteria(data, allow_class = "data.frame", contains_column_class = "rsi")
+  meet_criteria(position, allow_class = "character", has_length = 1, is_in = c("fill", "stack", "dodge"), allow_NULL = TRUE)
+  meet_criteria(x, allow_class = "character", has_length = 1)
+  meet_criteria(fill, allow_class = "character", has_length = 1)
+  meet_criteria(facet, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  meet_criteria(breaks, allow_class = c("numeric", "integer"))
+  meet_criteria(limits, allow_class = c("numeric", "integer"), has_length = 2, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
+  meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
+  meet_criteria(combine_IR, allow_class = "logical", has_length = 1)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(nrow, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE)
+  meet_criteria(colours, allow_class = "character")
+  meet_criteria(datalabels, allow_class = "logical", has_length = 1)
+  meet_criteria(datalabels.size, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(datalabels.colour, allow_class = "character", has_length = 1)
+  meet_criteria(title, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  meet_criteria(subtitle, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  meet_criteria(caption, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  meet_criteria(x.title, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  meet_criteria(y.title, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+
   # we work with aes_string later on
   x_deparse <- deparse(substitute(x))
   if (x_deparse != "x") {
@@ -256,7 +275,15 @@ geom_rsi <- function(position = NULL,
                      ...)  {
   
   stop_ifnot_installed("ggplot2")
-  stop_if(is.data.frame(position), "`position` is invalid. Did you accidentally use '%pm>%' instead of '+'?")
+  stop_if(is.data.frame(position), "`position` is invalid. Did you accidentally use '%>%' instead of '+'?")
+  meet_criteria(position, allow_class = "character", has_length = 1, is_in = c("fill", "stack", "dodge"), allow_NULL = TRUE)
+  meet_criteria(x, allow_class = "character", has_length = 1)
+  meet_criteria(fill, allow_class = "character", has_length = 1)
+  meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
+  meet_criteria(combine_IR, allow_class = "logical", has_length = 1)
   
   y <- "value"
   if (missing(position) | is.null(position)) {
@@ -300,10 +327,10 @@ geom_rsi <- function(position = NULL,
 #' @rdname ggplot_rsi
 #' @export
 facet_rsi <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
-  
-  stop_ifnot_installed("ggplot2")
-  
   facet <- facet[1]
+  stop_ifnot_installed("ggplot2")
+  meet_criteria(facet, allow_class = "character", has_length = 1)
+  meet_criteria(nrow, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE)
   
   # we work with aes_string later on
   facet_deparse <- deparse(substitute(facet))
@@ -327,6 +354,8 @@ facet_rsi <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
 #' @export
 scale_y_percent <- function(breaks = seq(0, 1, 0.1), limits = NULL) {
   stop_ifnot_installed("ggplot2")
+  meet_criteria(breaks, allow_class = c("numeric", "integer"))
+  meet_criteria(limits, allow_class = c("numeric", "integer"), has_length = 2, allow_NULL = TRUE, allow_NA = TRUE)
   
   if (all(breaks[breaks != 0] > 1)) {
     breaks <- breaks / 100
@@ -344,6 +373,8 @@ scale_rsi_colours <- function(colours = c(S = "#61a8ff",
                                           IR = "#ff6961",
                                           R = "#ff6961")) {
   stop_ifnot_installed("ggplot2")
+  meet_criteria(colours, allow_class = "character")
+  
   # previous colour: palette = "RdYlGn"
   # previous colours: values = c("#b22222", "#ae9c20", "#7cfc00")
   
@@ -383,6 +414,16 @@ labels_rsi_count <- function(position = NULL,
                              datalabels.size = 3,
                              datalabels.colour = "gray15") {
   stop_ifnot_installed("ggplot2")
+  meet_criteria(position, allow_class = "character", has_length = 1, is_in = c("fill", "stack", "dodge"), allow_NULL = TRUE)
+  meet_criteria(x, allow_class = "character", has_length = 1)
+  meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
+  meet_criteria(combine_IR, allow_class = "logical", has_length = 1)
+  meet_criteria(datalabels.size, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(datalabels.colour, allow_class = "character", has_length = 1)
+  
   if (is.null(position)) {
     position <- "fill"
   }

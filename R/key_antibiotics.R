@@ -27,14 +27,14 @@
 #'
 #' These function can be used to determine first isolates (see [first_isolate()]). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates will then be called first *weighted* isolates.
 #' @inheritSection lifecycle Stable lifecycle
-#' @param x table with antibiotics coloms, like `AMX` or `amox`
-#' @param y,z characters to compare
+#' @param x a data.frame with antibiotics columns, like `AMX` or `amox`
+#' @param y,z character vectors to compare
 #' @inheritParams first_isolate
-#' @param universal_1,universal_2,universal_3,universal_4,universal_5,universal_6 column names of **broad-spectrum** antibiotics, case-insensitive. At default, the columns containing these antibiotics will be guessed with [guess_ab_col()].
-#' @param GramPos_1,GramPos_2,GramPos_3,GramPos_4,GramPos_5,GramPos_6 column names of antibiotics for **Gram-positives**, case-insensitive. At default, the columns containing these antibiotics will be guessed with [guess_ab_col()].
-#' @param GramNeg_1,GramNeg_2,GramNeg_3,GramNeg_4,GramNeg_5,GramNeg_6 column names of antibiotics for **Gram-negatives**, case-insensitive. At default, the columns containing these antibiotics will be guessed with [guess_ab_col()].
-#' @param warnings give warning about missing antibiotic columns, they will anyway be ignored
-#' @param ... other parameters passed on to function
+#' @param universal_1,universal_2,universal_3,universal_4,universal_5,universal_6 column names of **broad-spectrum** antibiotics, case-insensitive. See details for which antibiotics will be used at default (which are guessed with [guess_ab_col()]).
+#' @param GramPos_1,GramPos_2,GramPos_3,GramPos_4,GramPos_5,GramPos_6 column names of antibiotics for **Gram-positives**, case-insensitive. See details for which antibiotics will be used at default (which are guessed with [guess_ab_col()]).
+#' @param GramNeg_1,GramNeg_2,GramNeg_3,GramNeg_4,GramNeg_5,GramNeg_6 column names of antibiotics for **Gram-negatives**, case-insensitive. See details for which antibiotics will be used at default (which are guessed with [guess_ab_col()]).
+#' @param warnings give a warning about missing antibiotic columns (they will be ignored)
+#' @param ... other parameters passed on to functions
 #' @details The function [key_antibiotics()] returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using [key_antibiotics_equal()], to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (`"."`) by [key_antibiotics()] and ignored by [key_antibiotics_equal()].
 #' 
 #' The [first_isolate()] function only uses this function on the same microbial species from the same patient. Using this, e.g. an MRSA will be included after a susceptible *S. aureus* (MSSA) is found within the same patient episode. Without key antibiotic comparison it would not. See [first_isolate()] for more info.
@@ -127,6 +127,27 @@ key_antibiotics <- function(x,
                             GramNeg_6 = guess_ab_col(x, "meropenem"),
                             warnings = TRUE,
                             ...) {
+  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(universal_1, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(universal_2, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(universal_3, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(universal_4, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(universal_5, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(universal_6, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(GramPos_1, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(GramPos_2, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(GramPos_3, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(GramPos_4, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(GramPos_5, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(GramPos_6, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(GramNeg_1, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(GramNeg_2, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(GramNeg_3, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(GramNeg_4, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(GramNeg_5, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(GramNeg_6, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(warnings, allow_class = "logical", has_length = 1)
   
   dots <- unlist(list(...))
   if (length(dots) != 0) {
@@ -258,13 +279,19 @@ key_antibiotics_equal <- function(y,
                                   ignore_I = TRUE,
                                   points_threshold = 2,
                                   info = FALSE) {
+  meet_criteria(y, allow_class = "character")
+  meet_criteria(z, allow_class = "character")
+  meet_criteria(type, allow_class = "character", has_length = c(1, 2))
+  meet_criteria(ignore_I, allow_class = "logical", has_length = 1)
+  meet_criteria(points_threshold, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(info, allow_class = "logical", has_length = 1)
+  
+  stop_ifnot(length(y) == length(z), "length of `y` and `z` must be equal")
   # y is active row, z is lag
   x <- y
   y <- z
   
   type <- type[1]
-  
-  stop_ifnot(length(x) == length(y), "length of `x` and `y` must be equal")
   
   # only show progress bar on points or when at least 5000 isolates
   info_needed <- info == TRUE & (type == "points" | length(x) > 5000)

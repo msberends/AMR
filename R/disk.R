@@ -58,6 +58,9 @@
 #' as.rsi(df)
 #' }
 as.disk <- function(x, na.rm = FALSE) {
+  meet_criteria(x, allow_class = c("disk", "character", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(na.rm, allow_class = "logical", has_length = 1)
+  
   if (!is.disk(x)) {
     x <- x %pm>% unlist()
     if (na.rm == TRUE) {
@@ -109,6 +112,9 @@ as.disk <- function(x, na.rm = FALSE) {
 }
 
 all_valid_disks <- function(x) {
+  if (!inherits(x, c("disk", "character", "numeric", "integer"))) {
+    return(FALSE)
+  }
   x_disk <- suppressWarnings(as.disk(x[!is.na(x)]))
   !any(is.na(x_disk)) & !all(is.na(x))
 }

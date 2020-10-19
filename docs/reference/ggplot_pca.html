@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9001</span>
       </span>
     </div>
 
@@ -242,30 +242,30 @@
     <p>Produces a <code>ggplot2</code> variant of a so-called <a href='https://en.wikipedia.org/wiki/Biplot'>biplot</a> for PCA (principal component analysis), but is more flexible and more appealing than the base <span style="R">R</span> <code><a href='https://rdrr.io/r/stats/biplot.html'>biplot()</a></code> function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ggplot_pca</span>(
-  <span class='kw'>x</span>,
-  choices = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>,
-  scale = <span class='fl'>TRUE</span>,
-  pc.biplot = <span class='fl'>TRUE</span>,
-  labels = <span class='kw'>NULL</span>,
-  labels_textsize = <span class='fl'>3</span>,
-  labels_text_placement = <span class='fl'>1.5</span>,
-  groups = <span class='kw'>NULL</span>,
-  ellipse = <span class='fl'>TRUE</span>,
-  ellipse_prob = <span class='fl'>0.68</span>,
-  ellipse_size = <span class='fl'>0.5</span>,
-  ellipse_alpha = <span class='fl'>0.5</span>,
-  points_size = <span class='fl'>2</span>,
-  points_alpha = <span class='fl'>0.25</span>,
-  arrows = <span class='fl'>TRUE</span>,
-  arrows_colour = <span class='st'>"darkblue"</span>,
-  arrows_size = <span class='fl'>0.5</span>,
-  arrows_textsize = <span class='fl'>3</span>,
-  arrows_textangled = <span class='fl'>TRUE</span>,
-  arrows_alpha = <span class='fl'>0.75</span>,
-  base_textsize = <span class='fl'>10</span>,
-  <span class='kw'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>ggplot_pca</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  choices <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>,
+  scale <span class='op'>=</span> <span class='fl'>1</span>,
+  pc.biplot <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  labels <span class='op'>=</span> <span class='cn'>NULL</span>,
+  labels_textsize <span class='op'>=</span> <span class='fl'>3</span>,
+  labels_text_placement <span class='op'>=</span> <span class='fl'>1.5</span>,
+  groups <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ellipse <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  ellipse_prob <span class='op'>=</span> <span class='fl'>0.68</span>,
+  ellipse_size <span class='op'>=</span> <span class='fl'>0.5</span>,
+  ellipse_alpha <span class='op'>=</span> <span class='fl'>0.5</span>,
+  points_size <span class='op'>=</span> <span class='fl'>2</span>,
+  points_alpha <span class='op'>=</span> <span class='fl'>0.25</span>,
+  arrows <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  arrows_colour <span class='op'>=</span> <span class='st'>"darkblue"</span>,
+  arrows_size <span class='op'>=</span> <span class='fl'>0.5</span>,
+  arrows_textsize <span class='op'>=</span> <span class='fl'>3</span>,
+  arrows_textangled <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  arrows_alpha <span class='op'>=</span> <span class='fl'>0.75</span>,
+  base_textsize <span class='op'>=</span> <span class='fl'>10</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -375,8 +375,9 @@
 <p>As per their GPL-2 licence that demands documentation of code changes, the changes made based on the source code were:</p><ol>
 <li><p>Rewritten code to remove the dependency on packages <code>plyr</code>, <code>scales</code> and <code>grid</code></p></li>
 <li><p>Parametrised more options, like arrow and ellipse settings</p></li>
+<li><p>Hardened all input possibilities by defining the exact type of user input for every parameter</p></li>
 <li><p>Added total amount of explained variance as a caption in the plot</p></li>
-<li><p>Cleaned all syntax based on the <code>lintr</code> package and added integrity checks</p></li>
+<li><p>Cleaned all syntax based on the <code>lintr</code> package, fixed grammatical errors and added integrity checks</p></li>
 <li><p>Updated documentation</p></li>
 </ol>
 
@@ -395,25 +396,25 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 <span class='co'># See ?example_isolates.</span>
 
 <span class='co'># See ?pca for more info about Principal Component Analysis (PCA).</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span>)) {
-  <span class='kw'>pca_model</span> <span class='op'>&lt;-</span> <span class='kw'>example_isolates</span> <span class='op'>%&gt;%</span> 
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='mo_property.html'>mo_genus</a></span>(<span class='kw'>mo</span>) <span class='op'>==</span> <span class='st'>"Staphylococcus"</span>) <span class='op'>%&gt;%</span> 
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(species = <span class='fu'><a href='mo_property.html'>mo_shortname</a></span>(<span class='kw'>mo</span>)) <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise_all.html'>summarise_if</a></span> (<span class='kw'>is.rsi</span>, <span class='kw'>resistance</span>) <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='pca.html'>pca</a></span>(<span class='kw'>FLC</span>, <span class='kw'>AMC</span>, <span class='kw'>CXM</span>, <span class='kw'>GEN</span>, <span class='kw'>TOB</span>, <span class='kw'>TMP</span>, <span class='kw'>SXT</span>, <span class='kw'>CIP</span>, <span class='kw'>TEC</span>, <span class='kw'>TCY</span>, <span class='kw'>ERY</span>)
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>pca_model</span> <span class='op'>&lt;-</span> <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'><a href='mo_property.html'>mo_genus</a></span><span class='op'>(</span><span class='va'>mo</span><span class='op'>)</span> <span class='op'>==</span> <span class='st'>"Staphylococcus"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span>species <span class='op'>=</span> <span class='fu'><a href='mo_property.html'>mo_shortname</a></span><span class='op'>(</span><span class='va'>mo</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise_all.html'>summarise_if</a></span> <span class='op'>(</span><span class='va'>is.rsi</span>, <span class='va'>resistance</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='pca.html'>pca</a></span><span class='op'>(</span><span class='va'>FLC</span>, <span class='va'>AMC</span>, <span class='va'>CXM</span>, <span class='va'>GEN</span>, <span class='va'>TOB</span>, <span class='va'>TMP</span>, <span class='va'>SXT</span>, <span class='va'>CIP</span>, <span class='va'>TEC</span>, <span class='va'>TCY</span>, <span class='va'>ERY</span><span class='op'>)</span>
     
   <span class='co'># old (base R)</span>
-  <span class='fu'><a href='https://rdrr.io/r/stats/biplot.html'>biplot</a></span>(<span class='kw'>pca_model</span>)
+  <span class='fu'><a href='https://rdrr.io/r/stats/biplot.html'>biplot</a></span><span class='op'>(</span><span class='va'>pca_model</span><span class='op'>)</span>
   
   <span class='co'># new </span>
-  <span class='fu'>ggplot_pca</span>(<span class='kw'>pca_model</span>)
+  <span class='fu'>ggplot_pca</span><span class='op'>(</span><span class='va'>pca_model</span><span class='op'>)</span>
   
-  <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='http://ggplot2.tidyverse.org'>"ggplot2"</a></span>)) {
-    <span class='fu'>ggplot_pca</span>(<span class='kw'>pca_model</span>) <span class='op'>+</span>
-      <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_viridis.html'>scale_colour_viridis_d</a></span>() <span class='op'>+</span>
-      <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span>(title = <span class='st'>"Title here"</span>)
-  }
-}
+  <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='http://ggplot2.tidyverse.org'>"ggplot2"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+    <span class='fu'>ggplot_pca</span><span class='op'>(</span><span class='va'>pca_model</span><span class='op'>)</span> <span class='op'>+</span>
+      <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_viridis.html'>scale_colour_viridis_d</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+      <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Title here"</span><span class='op'>)</span>
+  <span class='op'>}</span>
+<span class='op'>}</span>
 </pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -430,7 +431,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

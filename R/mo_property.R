@@ -27,7 +27,7 @@
 #'
 #' Use these functions to return a specific property of a microorganism based on the latest accepted taxonomy. All input values will be evaluated internally with [as.mo()], which makes it possible to use microbial abbreviations, codes and names as input. Please see *Examples*.
 #' @inheritSection lifecycle Stable lifecycle
-#' @param x any (vector of) text that can be coerced to a valid microorganism code with [as.mo()]
+#' @param x any character (vector) that can be coerced to a valid microorganism code with [as.mo()]
 #' @param property one of the column names of the [microorganisms] data set or `"shortname"`
 #' @param language language of the returned text, defaults to system language (see [get_locale()]) and can be overwritten by setting the option `AMR_locale`, e.g. `options(AMR_locale = "de")`, see [translate]. Use `language = NULL` or `language = ""` to prevent translation.
 #' @param ... other parameters passed on to [as.mo()], such as 'allow_uncertain' and 'ignore_pattern'
@@ -41,7 +41,7 @@
 #' 
 #' Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions [mo_kingdom()] and [mo_domain()] return the exact same results.
 #'
-#' The Gram stain - [mo_gramstain()] - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318)), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`.
+#' The Gram stain - [mo_gramstain()] - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318)), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`. Functions [is_gram_negative()] and [is_gram_positive()] always return `TRUE` or `FALSE`, even for species outside the kingdom of Bacteria.
 #'
 #' All output will be [translate]d where possible.
 #'
@@ -146,6 +146,9 @@
 #' mo_info("E. coli")
 #' }
 mo_name <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   translate_AMR(mo_validate(x = x, property = "fullname", language = language, ...), language = language, only_unknown = FALSE)
 }
 
@@ -156,6 +159,9 @@ mo_fullname <- mo_name
 #' @rdname mo_property
 #' @export
 mo_shortname <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   x.mo <- as.mo(x, language = language, ...)
   
   metadata <- get_mo_failures_uncertainties_renamed()
@@ -186,48 +192,72 @@ mo_shortname <- function(x, language = get_locale(), ...) {
 #' @rdname mo_property
 #' @export
 mo_subspecies <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   translate_AMR(mo_validate(x = x, property = "subspecies", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_species <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   translate_AMR(mo_validate(x = x, property = "species", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_genus <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   translate_AMR(mo_validate(x = x, property = "genus", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_family <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   translate_AMR(mo_validate(x = x, property = "family", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_order <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   translate_AMR(mo_validate(x = x, property = "order", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_class <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   translate_AMR(mo_validate(x = x, property = "class", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_phylum <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   translate_AMR(mo_validate(x = x, property = "phylum", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_kingdom <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   translate_AMR(mo_validate(x = x, property = "kingdom", language = language, ...), language = language, only_unknown = TRUE)
 }
 
@@ -238,12 +268,18 @@ mo_domain <- mo_kingdom
 #' @rdname mo_property
 #' @export
 mo_type <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   translate_AMR(mo_validate(x = x, property = "kingdom", language = language, ...), language = language, only_unknown = FALSE)
 }
 
 #' @rdname mo_property
 #' @export
 mo_gramstain <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   x.mo <- as.mo(x, language = language, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
   
@@ -274,19 +310,44 @@ mo_gramstain <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
+is_gram_negative <- function(x, ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  grams <- mo_gramstain(x, language = NULL, ...)
+  "Gram-negative" == grams & !is.na(grams)
+}
+
+#' @rdname mo_property
+#' @export
+is_gram_positive <- function(x, ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  grams <- mo_gramstain(x, language = NULL, ...)
+  "Gram-positive" == grams & !is.na(grams)
+}
+
+#' @rdname mo_property
+#' @export
 mo_snomed <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   mo_validate(x = x, property = "snomed", language = language, ...)
 }
 
 #' @rdname mo_property
 #' @export
 mo_ref <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   mo_validate(x = x, property = "ref", language = language, ...)
 }
 
 #' @rdname mo_property
 #' @export
 mo_authors <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   x <- mo_validate(x = x, property = "ref", language = language, ...)
   # remove last 4 digits and presumably the comma and space that preceed them
   x[!is.na(x)] <- gsub(",? ?[0-9]{4}", "", x[!is.na(x)])
@@ -296,6 +357,9 @@ mo_authors <- function(x, language = get_locale(), ...) {
 #' @rdname mo_property
 #' @export
 mo_year <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   x <- mo_validate(x = x, property = "ref", language = language, ...)
   # get last 4 digits
   x[!is.na(x)] <- gsub(".*([0-9]{4})$", "\\1", x[!is.na(x)])
@@ -305,12 +369,18 @@ mo_year <- function(x, language = get_locale(), ...) {
 #' @rdname mo_property
 #' @export
 mo_rank <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   mo_validate(x = x, property = "rank", language = language, ...)
 }
 
 #' @rdname mo_property
 #' @export
 mo_taxonomy <- function(x, language = get_locale(),  ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   x <- as.mo(x, language = language, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
   
@@ -330,6 +400,9 @@ mo_taxonomy <- function(x, language = get_locale(),  ...) {
 #' @rdname mo_property
 #' @export
 mo_synonyms <- function(x, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   x <- as.mo(x, language = language, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
   
@@ -356,6 +429,9 @@ mo_synonyms <- function(x, language = get_locale(), ...) {
 #' @rdname mo_property
 #' @export
 mo_info <- function(x, language = get_locale(),  ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   x <- as.mo(x, language = language, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
   
@@ -379,6 +455,10 @@ mo_info <- function(x, language = get_locale(),  ...) {
 #' @rdname mo_property
 #' @export
 mo_url <- function(x, open = FALSE, language = get_locale(), ...) {
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(open, allow_class = "logical", has_length = 1)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
   mo <- as.mo(x = x, language = language, ... = ...)
   mo_names <- mo_name(mo)
   metadata <- get_mo_failures_uncertainties_renamed()
@@ -408,15 +488,14 @@ mo_url <- function(x, open = FALSE, language = get_locale(), ...) {
 #' @rdname mo_property
 #' @export
 mo_property <- function(x, property = "fullname", language = get_locale(), ...) {
-  stop_ifnot(length(property) == 1L, "'property' must be of length 1")
-  stop_ifnot(property %in% colnames(microorganisms),
-             "invalid property: '", property, "' - use a column name of the `microorganisms` data set")
-  
+  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(property, allow_class = "character", has_length = 1, is_in = colnames(microorganisms))
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+
   translate_AMR(mo_validate(x = x, property = property, language = language, ...), language = language, only_unknown = TRUE)
 }
 
 mo_validate <- function(x, property, language, ...) {
-  
   check_dataset_integrity()
   
   if (tryCatch(all(x[!is.na(x)] %in% MO_lookup$mo) & length(list(...)) == 0, error = function(e) FALSE)) {

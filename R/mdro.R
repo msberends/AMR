@@ -93,6 +93,13 @@ mdro <- function(x,
                  combine_SI = TRUE,
                  verbose = FALSE,
                  ...) {
+  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(guideline, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  meet_criteria(col_mo, allow_class = "character", has_length = 1, is_in = colnames(x), allow_NULL = TRUE)
+  meet_criteria(info, allow_class = "logical", has_length = 1)
+  meet_criteria(pct_required_classes, allow_class = "numeric", has_length = 1)
+  meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
+  meet_criteria(verbose, allow_class = "logical", has_length = 1)
   
   check_dataset_integrity()
   
@@ -128,9 +135,8 @@ mdro <- function(x,
     warning("Using `country` is deprecated, use `guideline` instead. Please see ?mdro.", call. = FALSE)
     guideline <- list(...)$country
   }
-  stop_ifnot(length(guideline) == 1, "`guideline` must be of length 1")
-  
-  guideline.bak <- guideline
+
+    guideline.bak <- guideline
   guideline <- tolower(gsub("[^a-zA-Z0-9.]+", "", guideline))
   if (is.null(guideline)) {
     # default to the paper by Magiorakos et al. (2012)
@@ -631,7 +637,7 @@ mdro <- function(x,
     }
   }
   
-  x[, col_mo] <- as.mo(x[, col_mo, drop = TRUE])
+  x[, col_mo] <- as.mo(as.character(x[, col_mo, drop = TRUE]))
   # join to microorganisms data set
   x <- left_join_microorganisms(x, by = col_mo)
   x$MDRO <- ifelse(!is.na(x$genus), 1, NA_integer_)
@@ -1243,29 +1249,39 @@ mdro <- function(x,
 #' @rdname mdro
 #' @export
 brmo <- function(x, guideline = "BRMO", ...) {
+  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(guideline, allow_class = "character", has_length = 1)
   mdro(x, guideline = "BRMO", ...)
 }
 
 #' @rdname mdro
 #' @export
 mrgn <- function(x, guideline = "MRGN", ...) {
+  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(guideline, allow_class = "character", has_length = 1)
   mdro(x = x, guideline = "MRGN", ...)
 }
 
 #' @rdname mdro
 #' @export
 mdr_tb <- function(x, guideline = "TB", ...) {
+  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(guideline, allow_class = "character", has_length = 1)
   mdro(x = x, guideline = "TB", ...)
 }
 
 #' @rdname mdro
 #' @export
 mdr_cmi2012 <- function(x, guideline = "CMI2012", ...) {
+  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(guideline, allow_class = "character", has_length = 1)
   mdro(x = x, guideline = "CMI2012", ...)
 }
 
 #' @rdname mdro
 #' @export
 eucast_exceptional_phenotypes <- function(x, guideline = "EUCAST", ...) {
+  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(guideline, allow_class = "character", has_length = 1)
   mdro(x = x, guideline = "EUCAST", ...)
 }

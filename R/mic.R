@@ -56,6 +56,9 @@
 #' plot(mic_data)
 #' barplot(mic_data)
 as.mic <- function(x, na.rm = FALSE) {
+  meet_criteria(x, allow_class = c("mic", "character", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(na.rm, allow_class = "logical", has_length = 1)
+  
   if (is.mic(x)) {
     x
   } else {
@@ -134,6 +137,9 @@ as.mic <- function(x, na.rm = FALSE) {
 }
 
 all_valid_mics <- function(x) {
+  if (!inherits(x, c("mic", "character", "factor", "numeric", "integer"))) {
+    return(FALSE)
+  }
   x_mic <- tryCatch(suppressWarnings(as.mic(x[!is.na(x)])),
                     error = function(e) NA)
   !any(is.na(x_mic)) & !all(is.na(x))
@@ -221,6 +227,11 @@ plot.mic <- function(x,
                      xlab = "MIC value",
                      axes = FALSE,
                      ...) {
+  meet_criteria(main, allow_class = "character", has_length = 1)
+  meet_criteria(ylab, allow_class = "character", has_length = 1)
+  meet_criteria(xlab, allow_class = "character", has_length = 1)
+  meet_criteria(axes, allow_class = "logical", has_length = 1)
+  
   barplot(table(droplevels.factor(x)),
           ylab = ylab,
           xlab = xlab,
@@ -240,6 +251,11 @@ barplot.mic <- function(height,
                         xlab = "MIC value",
                         axes = FALSE,
                         ...) {
+  meet_criteria(main, allow_class = "character", has_length = 1)
+  meet_criteria(ylab, allow_class = "character", has_length = 1)
+  meet_criteria(xlab, allow_class = "character", has_length = 1)
+  meet_criteria(axes, allow_class = "logical", has_length = 1)
+  
   barplot(table(droplevels.factor(height)),
           ylab = ylab,
           xlab = xlab,

@@ -29,11 +29,11 @@ bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname, ...)
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{FUN}{the function to call on the \code{mo} column to transform the microorganism IDs, defaults to \code{\link[=mo_shortname]{mo_shortname()}}}
+\item{FUN}{function to call on the \code{mo} column to transform the microorganism IDs, defaults to \code{\link[=mo_shortname]{mo_shortname()}}}
 
 \item{...}{arguments passed on to \code{FUN}}
 
-\item{translate_ab}{a character of length 1 containing column names of the \link{antibiotics} data set}
+\item{translate_ab}{character of length 1 containing column names of the \link{antibiotics} data set}
 
 \item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 

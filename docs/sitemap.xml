@@ -4,6 +4,9 @@
     <loc>https://msberends.github.io/AMR//index.html</loc>
   </url>
   <url>
+    <loc>https://msberends.github.io/AMR//reference/AMR-deprecated.html</loc>
+  </url>
+  <url>
     <loc>https://msberends.github.io/AMR//reference/AMR.html</loc>
   </url>
   <url>
@@ -128,9 +131,6 @@
   </url>
   <url>
     <loc>https://msberends.github.io/AMR//reference/mo_source.html</loc>
-  </url>
-  <url>
-    <loc>https://msberends.github.io/AMR//reference/p_symbol.html</loc>
   </url>
   <url>
     <loc>https://msberends.github.io/AMR//reference/pca.html</loc>

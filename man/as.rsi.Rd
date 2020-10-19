@@ -60,7 +60,7 @@ is.rsi.eligible(x, threshold = 0.05)
 
 \item{guideline}{defaults to the latest included EUCAST guideline, see Details for all options}
 
-\item{uti}{(Urinary Tract Infection) A vector with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.rsi]{as.rsi()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be search for a 'specimen' and rows containing 'urin' in that column will be regarded isolates from a UTI. See \emph{Examples}.}
+\item{uti}{(Urinary Tract Infection) A vector with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.rsi]{as.rsi()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be searched for a 'specimen' and rows containing 'urin' (such as 'urine', 'urina') in that column will be regarded isolates from a UTI. See \emph{Examples}.}
 
 \item{conserve_capped_values}{a logical to indicate that MIC values starting with \code{">"} (but not \code{">="}) must always return "R" , and that MIC values starting with \code{"<"} (but not \code{"<="}) must always return "S"}
 

@@ -82,6 +82,9 @@
 #' ab_name("J01FA01")    # "Erythromycin"
 #' ab_name("eryt")       # "Erythromycin"
 as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
+  meet_criteria(x, allow_class = c("character", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(flag_multiple_results, allow_class = "logical", has_length = 1)
+  meet_criteria(info, allow_class = "logical", has_length = 1)
   
   check_dataset_integrity()
   

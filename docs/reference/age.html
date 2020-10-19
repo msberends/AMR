@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9001</span>
       </span>
     </div>
 
@@ -242,7 +242,7 @@
     <p>Calculates age in years based on a reference date, which is the sytem date at default.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>age</span><span class='op'>(</span><span class='va'>x</span>, reference <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span>, exact <span class='op'>=</span> <span class='cn'>FALSE</span>, na.rm <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>age</span><span class='op'>(</span><span class='va'>x</span>, reference <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span><span class='op'>(</span><span class='op'>)</span>, exact <span class='op'>=</span> <span class='cn'>FALSE</span>, na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -253,7 +253,7 @@
     </tr>
     <tr>
       <th>reference</th>
-      <td><p>reference date(s) (defaults to today), will be coerced with <code><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXlt()</a></code> and cannot be lower than <code>x</code></p></td>
+      <td><p>reference date(s) (defaults to today), will be coerced with <code><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXlt()</a></code></p></td>
     </tr>
     <tr>
       <th>exact</th>
@@ -263,11 +263,18 @@
       <th>na.rm</th>
       <td><p>a logical to indicate whether missing values should be removed</p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p>parameters passed on to <code><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXlt()</a></code>, such as <code>origin</code></p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An <a href='https://rdrr.io/r/base/integer.html'>integer</a> (no decimals) if <code>exact = FALSE</code>, a <a href='https://rdrr.io/r/base/double.html'>double</a> (with decimals) otherwise</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Ages below 0 will be returned as <code>NA</code> with a warning. Ages above 120 will only give a warning.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
 
     

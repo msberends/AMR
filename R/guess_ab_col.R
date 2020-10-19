@@ -30,7 +30,7 @@
 #' @param x a [data.frame]
 #' @param search_string a text to search `x` for, will be checked with [as.ab()] if this value is not a column in `x`
 #' @param verbose a logical to indicate whether additional info should be printed
-#' @details You can look for an antibiotic (trade) name or abbreviation and it will search `x` and the [antibiotics] data set for any column containing a name or code of that antibiotic. **Longer columns names take precendence over shorter column names.**
+#' @details You can look for an antibiotic (trade) name or abbreviation and it will search `x` and the [antibiotics] data set for any column containing a name or code of that antibiotic. **Longer columns names take precedence over shorter column names.**
 #' @return A column name of `x`, or `NULL` when no result is found.
 #' @export
 #' @inheritSection AMR Read more on our website!
@@ -63,16 +63,13 @@
 #' guess_ab_col(df, "ampicillin")
 #' # [1] "AMP_ED20"
 guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE) {
+  meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
+  meet_criteria(search_string, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  meet_criteria(verbose, allow_class = "logical", has_length = 1)
+  
   if (is.null(x) & is.null(search_string)) {
     return(as.name("guess_ab_col"))
   }
-  stop_ifnot(is.data.frame(x), "`x` must be a data.frame")
-  
-  if (length(search_string) > 1) {
-    warning("argument 'search_string' has length > 1 and only the first element will be used")
-    search_string <- search_string[1]
-  }
-  search_string <- as.character(search_string)
   
   if (search_string %in% colnames(x)) {
     ab_result <- search_string
@@ -116,6 +113,11 @@ get_column_abx <- function(x,
                            verbose = FALSE,
                            info = TRUE,
                            ...) {
+  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(soft_dependencies, allow_class = "character", allow_NULL = TRUE)
+  meet_criteria(hard_dependencies, allow_class = "character", allow_NULL = TRUE)
+  meet_criteria(verbose, allow_class = "logical", has_length = 1)
+  meet_criteria(info, allow_class = "logical", has_length = 1)
   
   if (info == TRUE) {
     message(font_blue("NOTE: Auto-guessing columns suitable for analysis"), appendLF = FALSE)

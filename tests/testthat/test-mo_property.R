@@ -112,4 +112,9 @@ test_that("mo_property works", {
                   stringsAsFactors = FALSE)
   expect_equal(nrow(subset(x, f1 != f2)), 0)
   
+  # is gram pos/neg (also return FALSE for all non-bacteria)
+  expect_equal(is_gram_negative(c("Escherichia coli", "Staphylococcus aureus", "Candida albicans")),
+               c(TRUE, FALSE, FALSE))
+  expect_equal(is_gram_positive(c("Escherichia coli", "Staphylococcus aureus", "Candida albicans")),
+               c(FALSE, TRUE, FALSE))
 })
