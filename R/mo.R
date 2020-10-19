@@ -158,7 +158,7 @@ as.mo <- function(x,
                   ignore_pattern = getOption("AMR_ignore_pattern"),
                   language = get_locale(),
                   ...) {
-  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(x, allow_NA = TRUE)
   meet_criteria(Becker, allow_class = c("logical", "character"), has_length = 1)
   meet_criteria(Lancefield, allow_class = c("logical", "character"), has_length = 1)
   meet_criteria(allow_uncertain, allow_class = c("logical", "numeric", "integer"), has_length = 1)
@@ -275,7 +275,7 @@ exec_as.mo <- function(x,
                        actual_uncertainty = 1,
                        actual_input = NULL,
                        language = get_locale()) {
-  meet_criteria(x, allow_class = c("character", "data.frame", "list", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(x, allow_NA = TRUE)
   meet_criteria(Becker, allow_class = c("logical", "character"), has_length = 1)
   meet_criteria(Lancefield, allow_class = c("logical", "character"), has_length = 1)
   meet_criteria(allow_uncertain, allow_class = c("logical", "numeric", "integer"), has_length = 1)
