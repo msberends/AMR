@@ -28,10 +28,10 @@
 #' Use this function to determine a valid microorganism ID ([`mo`]). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like `"Staphylococcus aureus"`), an abbreviated name (like `"S. aureus"`), an abbreviation known in the field (like `"MRSA"`), or just a genus. Please see *Examples*.
 #' @inheritSection lifecycle Stable lifecycle
 #' @param x a character vector or a [data.frame] with one or two columns
-#' @param Becker a logical to indicate whether *Staphylococci* should be categorised into coagulase-negative *Staphylococci* ("CoNS") and coagulase-positive *Staphylococci* ("CoPS") instead of their own species, according to Karsten Becker *et al.* (1,2). Note that this does not include species that were newly named after these publications, like *S. caeli*.
+#' @param Becker a logical to indicate whether *Staphylococci* should be categorised into coagulase-negative *Staphylococci* ("CoNS") and coagulase-positive *Staphylococci* ("CoPS") instead of their own species, according to Karsten Becker *et al.* (1,2,3).
 #'
 #' This excludes *Staphylococcus aureus* at default, use `Becker = "all"` to also categorise *S. aureus* as "CoPS".
-#' @param Lancefield a logical to indicate whether beta-haemolytic *Streptococci* should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (3). These *Streptococci* will be categorised in their first group, e.g. *Streptococcus dysgalactiae* will be group C, although officially it was also categorised into groups G and L.
+#' @param Lancefield a logical to indicate whether beta-haemolytic *Streptococci* should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (4). These *Streptococci* will be categorised in their first group, e.g. *Streptococcus dysgalactiae* will be group C, although officially it was also categorised into groups G and L.
 #'
 #' This excludes *Enterococci* at default (who are in group D), use `Lancefield = "all"` to also categorise all *Enterococci* as group D.
 #' @param allow_uncertain a number between `0` (or `"none"`) and `3` (or `"all"`), or `TRUE` (= `2`) or `FALSE` (= `0`) to indicate whether the input should be checked for less probable results, please see *Details*
@@ -104,8 +104,9 @@
 #' @section Source:
 #' 1. Becker K *et al.* **Coagulase-Negative Staphylococci**. 2014. Clin Microbiol Rev. 27(4): 870–926. <https://dx.doi.org/10.1128/CMR.00109-13>
 #' 2. Becker K *et al.* **Implications of identifying the recently defined members of the *S. aureus* complex, *S. argenteus* and *S. schweitzeri*: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).** 2019. Clin Microbiol Infect. <https://doi.org/10.1016/j.cmi.2019.02.028>
-#' 3. Lancefield RC **A serological differentiation of human and other groups of hemolytic streptococci**. 1933. J Exp Med. 57(4): 571–95. <https://dx.doi.org/10.1084/jem.57.4.571>
-#' 4. Catalogue of Life: Annual Checklist (public online taxonomic database), <http://www.catalogueoflife.org> (check included annual version with [catalogue_of_life_version()]).
+#' 3. Becker K *et al.* **Emergence of coagulase-negative staphylococci** 2020. Expert Rev Anti Infect Ther. 18(4):349-366. <https://dx.doi.org/10.1080/14787210.2020.1730813>
+#' 4. Lancefield RC **A serological differentiation of human and other groups of hemolytic streptococci**. 1933. J Exp Med. 57(4): 571–95. <https://dx.doi.org/10.1084/jem.57.4.571>
+#' 5. Catalogue of Life: Annual Checklist (public online taxonomic database), <http://www.catalogueoflife.org> (check included annual version with [catalogue_of_life_version()]).
 #' @export
 #' @return A [character] [vector] with additional class [`mo`]
 #' @seealso [microorganisms] for the [data.frame] that is being used to determine ID's.
@@ -158,7 +159,7 @@ as.mo <- function(x,
                   ignore_pattern = getOption("AMR_ignore_pattern"),
                   language = get_locale(),
                   ...) {
-  meet_criteria(x, allow_NA = TRUE)
+  meet_criteria(x, allow_class = c("mo", "data.frame", "list", "character", "numeric", "integer", "factor"), allow_NA = TRUE)
   meet_criteria(Becker, allow_class = c("logical", "character"), has_length = 1)
   meet_criteria(Lancefield, allow_class = c("logical", "character"), has_length = 1)
   meet_criteria(allow_uncertain, allow_class = c("logical", "numeric", "integer"), has_length = 1)
@@ -275,7 +276,7 @@ exec_as.mo <- function(x,
                        actual_uncertainty = 1,
                        actual_input = NULL,
                        language = get_locale()) {
-  meet_criteria(x, allow_NA = TRUE)
+  meet_criteria(x, allow_class = c("mo", "data.frame", "list", "character", "numeric", "integer", "factor"), allow_NA = TRUE)
   meet_criteria(Becker, allow_class = c("logical", "character"), has_length = 1)
   meet_criteria(Lancefield, allow_class = c("logical", "character"), has_length = 1)
   meet_criteria(allow_uncertain, allow_class = c("logical", "numeric", "integer"), has_length = 1)
@@ -1431,15 +1432,18 @@ exec_as.mo <- function(x,
     if (length(uncertainties$input) > 1) {
       plural <- c("s", "them", "were")
     }
-    msg <- paste0("Result", plural[1], " of ", nr2char(length(uncertainties$input)), " value", plural[1],
+    msg <- paste0("Translation to ", nr2char(length(uncertainties$input)), " microorganism", plural[1],
                   " ", plural[3], " guessed with uncertainty. Use mo_uncertainties() to review ", plural[2], ".")
-    message(font_blue(msg))
+    message(font_red(msg))
   }
   
   # Becker ----
   if (Becker == TRUE | Becker == "all") {
-    # warn when species found that are not in Becker (2014, PMID 25278577) and Becker (2019, PMID 30872103)
-    post_Becker <- c("argensis", "caeli", "cornubiensis", "edaphicus")
+    # warn when species found that are not in:
+    # - Becker et al. 2014, PMID 25278577
+    # - Becker et al. 2019, PMID 30872103
+    # - Becker et al. 2020, PMID 32056452
+    post_Becker <- c("") # 2020-10-20 currently all are mentioned in above papers
     if (any(x %in% MO_lookup[which(MO_lookup$species %in% post_Becker), property])) {
       
       warning("Becker ", font_italic("et al."), " (2014, 2019) does not contain these species named after their publication: ",

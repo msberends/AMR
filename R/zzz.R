@@ -84,23 +84,25 @@
 }
 
 create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
-  # Determination of which staphylococcal species are CoNS/CoPS according to Becker et al.:
-  # https://cmr.asm.org/content/cmr/27/4/870/F6.large.jpg
+  # Determination of which staphylococcal species are CoNS/CoPS according to:
+  # - Becker et al. 2014, PMID 25278577
+  # - Becker et al. 2019, PMID 30872103
+  # - Becker et al. 2020, PMID 32056452
   # this function returns class <mo>
   MO_staph <- AMR::microorganisms
   MO_staph <- MO_staph[which(MO_staph$genus == "Staphylococcus"), , drop = FALSE]
   if (type == "CoNS") {
-    MO_staph[which(MO_staph$species %in% c("coagulase-negative",
-                                           "arlettae", "auricularis", "capitis",
-                                           "caprae", "carnosus", "chromogenes", "cohnii", "condimenti",
-                                           "devriesei", "epidermidis", "equorum", "felis",
-                                           "fleurettii", "gallinarum", "haemolyticus",
-                                           "hominis", "jettensis", "kloosii", "lentus",
-                                           "lugdunensis", "massiliensis", "microti",
+    MO_staph[which(MO_staph$species %in% c("coagulase-negative", "argensis", "arlettae",
+                                           "auricularis", "caeli", "capitis", "caprae", 
+                                           "carnosus", "chromogenes", "cohnii", "condimenti",
+                                           "debuckii", "devriesei", "edaphicus", "epidermidis",
+                                           "equorum", "felis", "fleurettii", "gallinarum",
+                                           "haemolyticus", "hominis", "jettensis", "kloosii",
+                                           "lentus", "lugdunensis", "massiliensis", "microti",
                                            "muscae", "nepalensis", "pasteuri", "petrasii",
-                                           "pettenkoferi", "piscifermentans", "rostri",
-                                           "saccharolyticus", "saprophyticus", "sciuri",
-                                           "stepanovicii", "simulans", "succinus",
+                                           "pettenkoferi", "piscifermentans", "pseudoxylosus",
+                                           "rostri", "saccharolyticus", "saprophyticus",
+                                           "sciuri", "simulans", "stepanovicii", "succinus",
                                            "vitulinus", "warneri", "xylosus")
                    | (MO_staph$species == "schleiferi" & MO_staph$subspecies %in% c("schleiferi", ""))),
              "mo", drop = TRUE]

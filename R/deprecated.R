@@ -32,7 +32,7 @@
 #' @name AMR-deprecated
 #' @export
 p_symbol <- function(p, emptychar = " ") {
-  .Deprecated(package = "AMR")
+  .Deprecated(package = "AMR", new = "cleaner::p_symbol")
   
   p <- as.double(p)
   s <- rep(NA_character_, length(p))

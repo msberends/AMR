@@ -323,7 +323,7 @@ get_skimmers.mic <- function(column) {
   inline_hist <- import_fn("inline_hist", "skimr", error_on_fail = FALSE)
   sfl(
     skim_type = "mic",
-    min = ~as.character(sort(na.omit(.))[1]),
+    min = ~as.character(sort(stats::na.omit(.))[1]),
     max = ~as.character(sort(stats::na.omit(.))[length(stats::na.omit(.))]),
     median = ~as.character(stats::na.omit(.)[as.double(stats::na.omit(.)) == median(as.double(stats::na.omit(.)))])[1],
     n_unique = ~pm_n_distinct(., na.rm = TRUE),

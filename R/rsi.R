@@ -461,6 +461,12 @@ as.rsi.data.frame <- function(x,
   meet_criteria(conserve_capped_values, allow_class = "logical", has_length = 1)
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
   
+  # -- MO
+  col_mo.bak <- col_mo
+  if (is.null(col_mo)) {
+    col_mo <- search_type_in_df(x = x, type = "mo", info = FALSE)
+  }
+  
   # -- UTIs
   col_uti <- uti
   if (is.null(col_uti)) {
@@ -501,29 +507,25 @@ as.rsi.data.frame <- function(x,
   
   i <- 0
   sel <- colnames(pm_select(x, ...))
+  if (!is.null(col_mo)) {
+    sel <- sel[sel != col_mo]
+  }
   ab_cols <- colnames(x)[sapply(x, function(y) {
     i <<- i + 1
     check <- is.mic(y) | is.disk(y)
     ab <- colnames(x)[i]
+    if (!is.null(col_mo) && ab == col_mo) {
+      return(FALSE)
+    }
+    if (!is.null(col_uti) && ab == col_uti) {
+      return(FALSE)
+    }
     if (length(sel) == 0 || (length(sel) > 0 && ab %in% sel)) {
       ab_coerced <- suppressWarnings(as.ab(ab))
       if (is.na(ab_coerced) || (length(sel) > 0 & !ab %in% sel)) {
         # not even a valid AB code
         return(FALSE)
       } else {
-        if (!check & all_valid_mics(y)) {
-          message(font_blue(paste0("NOTE: Assuming column `", ab, "` (",
-                                   ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
-                                   ab_name(ab_coerced, tolower = TRUE), ") contains MIC values.")))
-        } else if (!check & all_valid_disks(y)) {
-          message(font_blue(paste0("NOTE: Assuming column `", ab, "` (",
-                                   ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
-                                   ab_name(ab_coerced, tolower = TRUE), ") contains disk zones.")))
-        } else if (!check & !is.rsi(y)) {
-          message(font_blue(paste0("NOTE: Assuming column `", ab, "` (",
-                                   ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
-                                   ab_name(ab_coerced, tolower = TRUE), ") must be cleaned to valid R/SI values.")))
-        }
         return(TRUE)
       }
     } else {
@@ -535,36 +537,46 @@ as.rsi.data.frame <- function(x,
           "no columns with MIC values, disk zones or antibiotic column names found in this data set. Use as.mic() or as.disk() to transform antimicrobial columns.")
   # set type per column
   types <- character(length(ab_cols))
-  types[sapply(x[, ab_cols], is.mic)] <- "mic"
-  types[types == "" & sapply(x[, ab_cols], all_valid_mics)] <- "mic"
   types[sapply(x[, ab_cols], is.disk)] <- "disk"
   types[types == "" & sapply(x[, ab_cols], all_valid_disks)] <- "disk"
+  types[sapply(x[, ab_cols], is.mic)] <- "mic"
+  types[types == "" & sapply(x[, ab_cols], all_valid_mics)] <- "mic"
   types[types == "" & !sapply(x[, ab_cols], is.rsi)] <- "rsi"
   
   if (any(types %in% c("mic", "disk"), na.rm = TRUE)) {
-    # now we need an mo column - try to find columns based on type
-    if (is.null(col_mo)) {
+    # now we need an mo column
+    stop_if(is.null(col_mo), "`col_mo` must be set")
+    # if not null, we already found it, now find again so a message will show
+    if (is.null(col_mo.bak)) {
       col_mo <- search_type_in_df(x = x, type = "mo")
-      stop_if(is.null(col_mo), "`col_mo` must be set")
     }
   }
+  
+  x_mo <- as.mo(x %pm>% pm_pull(col_mo))
   
   for (i in seq_len(length(ab_cols))) {
     if (types[i] == "mic") {
       x[, ab_cols[i]] <- as.rsi.mic(x = x %pm>% pm_pull(ab_cols[i]),
-                                    mo = x %pm>% pm_pull(col_mo),
+                                    mo = x_mo,
                                     ab = ab_cols[i],
                                     guideline = guideline,
                                     uti = uti,
                                     conserve_capped_values = conserve_capped_values)
     } else if (types[i] == "disk") {
       x[, ab_cols[i]] <- as.rsi.disk(x = x %pm>% pm_pull(ab_cols[i]),
-                                     mo = x %pm>% pm_pull(col_mo),
+                                     mo = x_mo,
                                      ab = ab_cols[i],
                                      guideline = guideline,
                                      uti = uti)
     } else if (types[i] == "rsi") {
+      ab <- ab_cols[i]
+      ab_coerced <- suppressWarnings(as.ab(ab))
+      message(font_blue(paste0("=> Cleaning values in column `", font_bold(ab), "` (",
+                               ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
+                               ab_name(ab_coerced, tolower = TRUE), ")... ")),
+              appendLF = FALSE)
       x[, ab_cols[i]] <- as.rsi.default(x = x %pm>% pm_pull(ab_cols[i]))
+      message(font_green("OK."))
     }
   }
   
@@ -760,11 +772,11 @@ freq.rsi <- function(x, ...) {
   x_name <- gsub(".*[$]", "", x_name)
   if (x_name %in% c("x", ".")) {
     # try again going through system calls
-    x_name <- na.omit(sapply(sys.calls(), 
-                             function(call) {
-                               call_txt <- as.character(call)
-                               ifelse(call_txt[1] %like% "freq$", call_txt[length(call_txt)], character(0))
-                             }))[1L]
+    x_name <- stats::na.omit(sapply(sys.calls(), 
+                                    function(call) {
+                                      call_txt <- as.character(call)
+                                      ifelse(call_txt[1] %like% "freq$", call_txt[length(call_txt)], character(0))
+                                    }))[1L]
   }
   ab <- suppressMessages(suppressWarnings(as.ab(x_name)))
   freq.default <- import_fn("freq.default", "cleaner", error_on_fail = FALSE)

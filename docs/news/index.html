@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9003</span>
       </span>
     </div>
 
@@ -236,13 +236,13 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1409002" class="section level1">
-<h1 class="page-header" data-toc-text="1.4.0.9002">
-<a href="#amr-1409002" class="anchor"></a>AMR 1.4.0.9002<small> Unreleased </small>
+    <div id="amr-1409003" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.0.9003">
+<a href="#amr-1409003" class="anchor"></a>AMR 1.4.0.9003<small> Unreleased </small>
 </h1>
-<div id="last-updated-19-october-2020" class="section level2">
+<div id="last-updated-20-october-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-19-october-2020" class="anchor"></a><small>Last updated: 19 October 2020</small>
+<a href="#last-updated-20-october-2020" class="anchor"></a><small>Last updated: 20 October 2020</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
@@ -257,6 +257,8 @@
 <ul>
 <li>For all function parameters in the code, it is now defined what the exact type of user input should be (inspired by the <a href="https://github.com/moodymudskipper/typed"><code>typed</code></a> package). If the user input for a certain function does not meet the requirements for a specific parameter (such as the class or length), an informative error will be thrown. This makes the package more robust and the use of it more reproducible and reliable. In total, more than 400 arguments were defined.</li>
 <li>Deprecated function <code><a href="../reference/AMR-deprecated.html">p_symbol()</a></code> that not really fits the scope of this package. It will be removed in a future version. See <a href="https://github.com/msberends/AMR/blob/v1.4.0/R/p_symbol.R">here</a> for the source code to preserve it.</li>
+<li>Better determination of disk zones and MIC values when running <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on a data.frame</li>
+<li>Updated coagulase-negative staphylococci with Becker <em>et al.</em> 2020 (PMID 32056452), meaning that the species <em>S. argensis</em>, <em>S. caeli</em>, <em>S. debuckii</em>, <em>S. edaphicus</em> and <em>S. pseudoxylosus</em> are now all considered CoNS</li>
 </ul>
 </div>
 <div id="other" class="section level3">

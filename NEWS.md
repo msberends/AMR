@@ -1,5 +1,5 @@
-# AMR 1.4.0.9002
-## <small>Last updated: 19 October 2020</small>
+# AMR 1.4.0.9003
+## <small>Last updated: 20 October 2020</small>
 
 ### New
 * Functions `is_gram_negative()` and `is_gram_positive()` as wrappers around `mo_gramstain()`. They always return `TRUE` or `FALSE`, thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
@@ -7,6 +7,8 @@
 ### Changed
 * For all function parameters in the code, it is now defined what the exact type of user input should be (inspired by the [`typed`](https://github.com/moodymudskipper/typed) package). If the user input for a certain function does not meet the requirements for a specific parameter (such as the class or length), an informative error will be thrown. This makes the package more robust and the use of it more reproducible and reliable. In total, more than 400 arguments were defined.
 * Deprecated function `p_symbol()` that not really fits the scope of this package. It will be removed in a future version. See [here](https://github.com/msberends/AMR/blob/v1.4.0/R/p_symbol.R) for the source code to preserve it.
+* Better determination of disk zones and MIC values when running `as.rsi()` on a data.frame
+* Updated coagulase-negative staphylococci with Becker *et al.* 2020 (PMID 32056452), meaning that the species *S. argensis*, *S. caeli*, *S. debuckii*, *S. edaphicus* and *S. pseudoxylosus* are now all considered CoNS
 
 ### Other
 * More extensive unit tests
