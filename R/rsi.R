@@ -100,14 +100,14 @@
 #' summary(example_isolates) # see all R/SI results at a glance
 #' 
 #' if (require("skimr")) {
-#'   # support for skim() too:
+#'   # class <rsi> supported in skim() too:
 #'   skim(example_isolates)
 #' }
 #' 
 #' # For INTERPRETING disk diffusion and MIC values -----------------------
 #'        
 #' # a whole data set, even with combined MIC values and disk zones
-#' df <- data.frame(microorganism = "E. coli",
+#' df <- data.frame(microorganism = "Escherichia coli",
 #'                  AMP = as.mic(8),
 #'                  CIP = as.mic(0.256),
 #'                  GEN = as.disk(18),
@@ -136,7 +136,7 @@
 #'   df %>% mutate(across(AMP:TOB, as.rsi))
 #'  
 #'   df %>%
-#'     mutate_at(vars(AMP:TOB), as.rsi, mo = "E. coli")
+#'     mutate_at(vars(AMP:TOB), as.rsi, mo = .$microorganism)
 #'     
 #'   # to include information about urinary tract infections (UTI)
 #'   data.frame(mo = "E. coli",
@@ -457,7 +457,7 @@ as.rsi.data.frame <- function(x,
   meet_criteria(x, allow_class = "data.frame") # will also check for dimensions > 0
   meet_criteria(col_mo, allow_class = "character", is_in = colnames(x), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
-  meet_criteria(uti, allow_class = "logical", has_length = c(1, nrow(x)), allow_NULL = TRUE)
+  meet_criteria(uti, allow_class = c("logical", "character"), allow_NULL = TRUE)
   meet_criteria(conserve_capped_values, allow_class = "logical", has_length = 1)
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
   
@@ -482,6 +482,8 @@ as.rsi.data.frame <- function(x,
       }
     } else {
       # column found, transform to logical
+      stop_if(length(col_uti) != 1 | !col_uti %in% colnames(x),
+              "argument `uti` must be a logical vector, of must be a single column name of `x`")
       uti <- as.logical(x[, col_uti, drop = TRUE])
     }
   } else {

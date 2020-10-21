@@ -157,14 +157,14 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 summary(example_isolates) # see all R/SI results at a glance
 
 if (require("skimr")) {
-  # support for skim() too:
+  # class <rsi> supported in skim() too:
   skim(example_isolates)
 }
 
 # For INTERPRETING disk diffusion and MIC values -----------------------
        
 # a whole data set, even with combined MIC values and disk zones
-df <- data.frame(microorganism = "E. coli",
+df <- data.frame(microorganism = "Escherichia coli",
                  AMP = as.mic(8),
                  CIP = as.mic(0.256),
                  GEN = as.disk(18),
@@ -193,7 +193,7 @@ if (require("dplyr")) {
   df \%>\% mutate(across(AMP:TOB, as.rsi))
  
   df \%>\%
-    mutate_at(vars(AMP:TOB), as.rsi, mo = "E. coli")
+    mutate_at(vars(AMP:TOB), as.rsi, mo = .$microorganism)
     
   # to include information about urinary tract infections (UTI)
   data.frame(mo = "E. coli",

@@ -273,7 +273,7 @@ geom_rsi <- function(position = NULL,
                      combine_SI = TRUE,
                      combine_IR = FALSE,
                      ...)  {
-  
+  x <- x[1]
   stop_ifnot_installed("ggplot2")
   stop_if(is.data.frame(position), "`position` is invalid. Did you accidentally use '%>%' instead of '+'?")
   meet_criteria(position, allow_class = "character", has_length = 1, is_in = c("fill", "stack", "dodge"), allow_NULL = TRUE)
@@ -293,8 +293,6 @@ geom_rsi <- function(position = NULL,
   if (identical(position, "fill")) {
     position <- ggplot2::position_fill(vjust = 0.5, reverse = TRUE)
   }
-  
-  x <- x[1]
   
   # we work with aes_string later on
   x_deparse <- deparse(substitute(x))

@@ -1,5 +1,5 @@
-# AMR 1.4.0.9003
-## <small>Last updated: 20 October 2020</small>
+# AMR 1.4.0.9004
+## <small>Last updated: 21 October 2020</small>
 
 ### New
 * Functions `is_gram_negative()` and `is_gram_positive()` as wrappers around `mo_gramstain()`. They always return `TRUE` or `FALSE`, thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
