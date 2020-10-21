@@ -371,7 +371,7 @@ scale_rsi_colours <- function(colours = c(S = "#61a8ff",
                                           IR = "#ff6961",
                                           R = "#ff6961")) {
   stop_ifnot_installed("ggplot2")
-  meet_criteria(colours, allow_class = "character")
+  meet_criteria(colours, allow_class = c("character", "logical"))
   
   # previous colour: palette = "RdYlGn"
   # previous colours: values = c("#b22222", "#ae9c20", "#7cfc00")
