@@ -162,7 +162,7 @@ ggplot_rsi <- function(data,
                                    R = "#ff6961"),
                        datalabels = TRUE,
                        datalabels.size = 2.5,
-                       datalabels.colour = "gray15",
+                       datalabels.colour = "grey15",
                        title = NULL,
                        subtitle = NULL,
                        caption = NULL,
@@ -184,7 +184,7 @@ ggplot_rsi <- function(data,
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(nrow, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE)
-  meet_criteria(colours, allow_class = "character")
+  meet_criteria(colours, allow_class = c("character", "logical"))
   meet_criteria(datalabels, allow_class = "logical", has_length = 1)
   meet_criteria(datalabels.size, allow_class = c("numeric", "integer"), has_length = 1)
   meet_criteria(datalabels.colour, allow_class = "character", has_length = 1)
@@ -226,8 +226,8 @@ ggplot_rsi <- function(data,
   if (fill == "interpretation") {
     # set RSI colours
     if (isFALSE(colours) & missing(datalabels.colour)) {
-      # set datalabel colour to middle gray
-      datalabels.colour <- "gray50"
+      # set datalabel colour to middle grey
+      datalabels.colour <- "grey50"
     }
     p <- p + scale_rsi_colours(colours = colours)
   }
@@ -410,7 +410,7 @@ labels_rsi_count <- function(position = NULL,
                              combine_SI = TRUE,
                              combine_IR = FALSE,
                              datalabels.size = 3,
-                             datalabels.colour = "gray15") {
+                             datalabels.colour = "grey15") {
   stop_ifnot_installed("ggplot2")
   meet_criteria(position, allow_class = "character", has_length = 1, is_in = c("fill", "stack", "dodge"), allow_NULL = TRUE)
   meet_criteria(x, allow_class = "character", has_length = 1)

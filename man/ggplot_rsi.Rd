@@ -28,7 +28,7 @@ ggplot_rsi(
     "#ff6961"),
   datalabels = TRUE,
   datalabels.size = 2.5,
-  datalabels.colour = "gray15",
+  datalabels.colour = "grey15",
   title = NULL,
   subtitle = NULL,
   caption = NULL,
@@ -69,7 +69,7 @@ labels_rsi_count(
   combine_SI = TRUE,
   combine_IR = FALSE,
   datalabels.size = 3,
-  datalabels.colour = "gray15"
+  datalabels.colour = "grey15"
 )
 }
 \arguments{
