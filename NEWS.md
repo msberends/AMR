@@ -1,8 +1,9 @@
-# AMR 1.4.0.9006
+# AMR 1.4.0.9007
 ## <small>Last updated: 21 October 2020</small>
 
 ### New
 * Functions `is_gram_negative()` and `is_gram_positive()` as wrappers around `mo_gramstain()`. They always return `TRUE` or `FALSE`, thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
+* Functions `%not_like%` and `%like_perl%` as wrappers around `%like%`.
 
 ### Changed
 * For all function parameters in the code, it is now defined what the exact type of user input should be (inspired by the [`typed`](https://github.com/moodymudskipper/typed) package). If the user input for a certain function does not meet the requirements for a specific parameter (such as the class or length), an informative error will be thrown. This makes the package more robust and the use of it more reproducible and reliable. In total, more than 400 arguments were defined.

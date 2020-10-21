@@ -144,8 +144,14 @@ first_isolate <- function(x,
   meet_criteria(col_patient_id, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   meet_criteria(col_testcode, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  if (isFALSE(col_specimen)) {
+    col_specimen <- NULL
+  }
   meet_criteria(col_specimen, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   meet_criteria(col_icu, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  if (isFALSE(col_keyantibiotics)) {
+    col_keyantibiotics <- NULL
+  }
   meet_criteria(col_keyantibiotics, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1)
   meet_criteria(testcodes_exclude, allow_class = "character", allow_NULL = TRUE)
@@ -206,16 +212,10 @@ first_isolate <- function(x,
   if (is.null(col_keyantibiotics)) {
     col_keyantibiotics <- search_type_in_df(x = x, type = "keyantibiotics")
   }
-  if (isFALSE(col_keyantibiotics)) {
-    col_keyantibiotics <- NULL
-  }
-  
+
   # -- specimen
   if (is.null(col_specimen) & !is.null(specimen_group)) {
     col_specimen <- search_type_in_df(x = x, type = "specimen")
-  }
-  if (isFALSE(col_specimen)) {
-    col_specimen <- NULL
   }
   
   # check if columns exist

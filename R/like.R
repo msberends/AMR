@@ -42,6 +42,8 @@
 #' * Tries again with `perl = TRUE` if regex fails
 #' 
 #' Using RStudio? This function can also be inserted from the Addins menu and can have its own Keyboard Shortcut like `Ctrl+Shift+L` or `Cmd+Shift+L` (see `Tools` > `Modify Keyboard Shortcuts...`).
+#' 
+#' The `"%not_like%"` and `"%like_perl%"` functions are wrappers around `"%like%"`.
 #' @source Idea from the [`like` function from the `data.table` package](https://github.com/Rdatatable/data.table/blob/master/R/like.R)
 #' @seealso [grep()]
 #' @inheritSection AMR Read more on our website!
@@ -146,8 +148,16 @@ like <- function(x, pattern, ignore.case = TRUE) {
 #' @export
 "%like%" <- function(x, pattern) {
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(pattern, allow_class = "character")
+  meet_criteria(pattern, allow_NA = FALSE)
   like(x, pattern, ignore.case = TRUE)
+}
+
+#' @rdname like
+#' @export
+"%not_like%" <- function(x, pattern) {
+  meet_criteria(x, allow_NA = TRUE)
+  meet_criteria(pattern, allow_NA = FALSE)
+  !like(x, pattern, ignore.case = TRUE)
 }
 
 #' @rdname like
@@ -158,11 +168,13 @@ like <- function(x, pattern, ignore.case = TRUE) {
   like(x, pattern, ignore.case = FALSE)
 }
 
-# don't export his one, it's just for convenience in eucast_rules()
-# match all Klebsiella and Raoultella, but not K. aerogenes: fullname %like_perl% "^(Klebsiella(?! aerogenes)|Raoultella)"
+#' @rdname like
+#' @export
 "%like_perl%" <- function(x, pattern) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(pattern, allow_NA = FALSE)
+  # convenient for e.g. matching all Klebsiella and Raoultella, but not 
+  # K. aerogenes: fullname %like_perl% "^(Klebsiella(?! aerogenes)|Raoultella)"
   grepl(x = tolower(x),
         pattern = tolower(pattern),
         perl = TRUE,
