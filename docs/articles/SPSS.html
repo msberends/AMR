@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9008</span>
       </span>
     </div>
 
@@ -187,13 +187,14 @@
 
       
 
-      </header><script src="SPSS_files/header-attrs-2.3/header-attrs.js"></script><script src="SPSS_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="SPSS_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="SPSS_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="SPSS_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>How to import data from SPSS / SAS / Stata</h1>
                         <h4 class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">08 October 2020</h4>
+            <h4 class="date">26 October 2020</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/master/vignettes/SPSS.Rmd"><code>vignettes/SPSS.Rmd</code></a></small>
       <div class="hidden name"><code>SPSS.Rmd</code></div>
@@ -249,38 +250,37 @@
 <p>To demonstrate the first point:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="co"># not all values are valid MIC values:</span>
-<span class="fu"><a href="../reference/as.mic.html">as.mic</a></span>(<span class="fl">0.125</span>)
+<span class="fu"><a href="../reference/as.mic.html">as.mic</a></span><span class="op">(</span><span class="fl">0.125</span><span class="op">)</span>
 <span class="co"># Class &lt;mic&gt;</span>
 <span class="co"># [1] 0.125</span>
-<span class="fu"><a href="../reference/as.mic.html">as.mic</a></span>(<span class="st">"testvalue"</span>)
+<span class="fu"><a href="../reference/as.mic.html">as.mic</a></span><span class="op">(</span><span class="st">"testvalue"</span><span class="op">)</span>
 <span class="co"># Class &lt;mic&gt;</span>
 <span class="co"># [1] &lt;NA&gt;</span>
 
 <span class="co"># the Gram stain is avaiable for all bacteria:</span>
-<span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span>(<span class="st">"E. coli"</span>)
+<span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>
 <span class="co"># [1] "Gram-negative"</span>
 
 <span class="co"># Klebsiella is intrinsic resistant to amoxicllin, according to EUCAST:</span>
-<span class="kw">klebsiella_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(mo = <span class="st">"klebsiella"</span>, 
-                              amox = <span class="st">"S"</span>,
-                              stringsAsFactors = <span class="fl">FALSE</span>)
-<span class="kw">klebsiella_test</span> <span class="co"># (our original data)</span>
+<span class="va">klebsiella_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>mo <span class="op">=</span> <span class="st">"klebsiella"</span>, 
+                              amox <span class="op">=</span> <span class="st">"S"</span>,
+                              stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="va">klebsiella_test</span> <span class="co"># (our original data)</span>
 <span class="co">#           mo amox</span>
 <span class="co"># 1 klebsiella    S</span>
-<span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span>(<span class="kw">klebsiella_test</span>, info = <span class="fl">FALSE</span>) <span class="co"># (the edited data by EUCAST rules)</span>
+<span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span><span class="op">(</span><span class="va">klebsiella_test</span>, info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># (the edited data by EUCAST rules)</span>
 <span class="co">#           mo amox</span>
 <span class="co"># 1 klebsiella    R</span>
 
 <span class="co"># hundreds of trade names can be translated to a name, trade name or an ATC code:</span>
-<span class="fu"><a href="../reference/ab_property.html">ab_name</a></span>(<span class="st">"floxapen"</span>)
+<span class="fu"><a href="../reference/ab_property.html">ab_name</a></span><span class="op">(</span><span class="st">"floxapen"</span><span class="op">)</span>
 <span class="co"># [1] "Flucloxacillin"</span>
-<span class="fu"><a href="../reference/ab_property.html">ab_tradenames</a></span>(<span class="st">"floxapen"</span>)
+<span class="fu"><a href="../reference/ab_property.html">ab_tradenames</a></span><span class="op">(</span><span class="st">"floxapen"</span><span class="op">)</span>
 <span class="co"># [1] "floxacillin"          "floxapen"             "floxapen sodium salt"</span>
 <span class="co"># [4] "fluclox"              "flucloxacilina"       "flucloxacillin"      </span>
 <span class="co"># [7] "flucloxacilline"      "flucloxacillinum"     "fluorochloroxacillin"</span>
-<span class="fu"><a href="../reference/ab_property.html">ab_atc</a></span>(<span class="st">"floxapen"</span>)
-<span class="co"># [1] "J01CF05"</span>
-</pre></div>
+<span class="fu"><a href="../reference/ab_property.html">ab_atc</a></span><span class="op">(</span><span class="st">"floxapen"</span><span class="op">)</span>
+<span class="co"># [1] "J01CF05"</span></pre></div>
 </div>
 <div id="import-data-from-spsssasstata" class="section level2">
 <h2 class="hasAnchor">
@@ -294,10 +294,10 @@
 <p>If additional packages are needed, RStudio will ask you if they should be installed on beforehand.</p>
 <p>In the the window that opens, you can define all options (parameters) that should be used for import and you’re ready to go:</p>
 <p><img src="https://github.com/msberends/AMR/raw/master/docs/import2.png"></p>
-<p>If you want named variables to be imported as factors so it resembles SPSS more, use <code><a href="https://haven.tidyverse.org/reference/as_factor.html">as_factor()</a></code>.</p>
+<p>If you want named variables to be imported as factors so it resembles SPSS more, use <code>as_factor()</code>.</p>
 <p>The difference is this:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">SPSS_data</span>
+<span class="va">SPSS_data</span>
 <span class="co"># # A tibble: 4,203 x 4</span>
 <span class="co">#     v001 sex       status    statusage</span>
 <span class="co">#    &lt;dbl&gt; &lt;dbl+lbl&gt; &lt;dbl+lbl&gt;     &lt;dbl&gt;</span>
@@ -313,7 +313,7 @@
 <span class="co"># 10 10018 0         1              66.6</span>
 <span class="co"># # … with 4,193 more rows</span>
 
-<span class="fu">as_factor</span>(<span class="kw">SPSS_data</span>)
+<span class="fu">as_factor</span><span class="op">(</span><span class="va">SPSS_data</span><span class="op">)</span>
 <span class="co"># # A tibble: 4,203 x 4</span>
 <span class="co">#     v001 sex    status statusage</span>
 <span class="co">#    &lt;dbl&gt; &lt;fct&gt;  &lt;fct&gt;      &lt;dbl&gt;</span>
@@ -327,8 +327,7 @@
 <span class="co">#  8 10011 Male   alive       73.1</span>
 <span class="co">#  9 10017 Male   alive       56.7</span>
 <span class="co"># 10 10018 Female alive       66.6</span>
-<span class="co"># # … with 4,193 more rows</span>
-</pre></div>
+<span class="co"># # … with 4,193 more rows</span></pre></div>
 </div>
 <div id="base-r" class="section level3">
 <h3 class="hasAnchor">
@@ -336,10 +335,9 @@
 <p>To import data from SPSS, SAS or Stata, you can use the <a href="https://haven.tidyverse.org/">great <code>haven</code> package</a> yourself:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="co"># download and install the latest version:</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"haven"</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"haven"</span><span class="op">)</span>
 <span class="co"># load the package you just installed:</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://haven.tidyverse.org">haven</a></span>) 
-</pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">haven</span><span class="op">)</span> </pre></div>
 <p>You can now import files as follows:</p>
 <div id="spss" class="section level4">
 <h4 class="hasAnchor">
@@ -347,23 +345,21 @@
 <p>To read files from SPSS into R:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="co"># read any SPSS file based on file extension (best way):</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html">read_spss</a></span>(file = <span class="st">"path/to/file"</span>)
+<span class="fu">read_spss</span><span class="op">(</span>file <span class="op">=</span> <span class="st">"path/to/file"</span><span class="op">)</span>
 
 <span class="co"># read .sav or .zsav file:</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html">read_sav</a></span>(file = <span class="st">"path/to/file"</span>)
+<span class="fu">read_sav</span><span class="op">(</span>file <span class="op">=</span> <span class="st">"path/to/file"</span><span class="op">)</span>
 
 <span class="co"># read .por file:</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html">read_por</a></span>(file = <span class="st">"path/to/file"</span>)
-</pre></div>
-<p>Do not forget about <code><a href="https://haven.tidyverse.org/reference/as_factor.html">as_factor()</a></code>, as mentioned above.</p>
+<span class="fu">read_por</span><span class="op">(</span>file <span class="op">=</span> <span class="st">"path/to/file"</span><span class="op">)</span></pre></div>
+<p>Do not forget about <code>as_factor()</code>, as mentioned above.</p>
 <p>To export your R objects to the SPSS file format:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="co"># save as .sav file:</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html">write_sav</a></span>(data = <span class="kw">yourdata</span>, path = <span class="st">"path/to/file"</span>)
+<span class="fu">write_sav</span><span class="op">(</span>data <span class="op">=</span> <span class="va">yourdata</span>, path <span class="op">=</span> <span class="st">"path/to/file"</span><span class="op">)</span>
 
 <span class="co"># save as compressed .zsav file:</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html">write_sav</a></span>(data = <span class="kw">yourdata</span>, path = <span class="st">"path/to/file"</span>, compress = <span class="fl">TRUE</span>)
-</pre></div>
+<span class="fu">write_sav</span><span class="op">(</span>data <span class="op">=</span> <span class="va">yourdata</span>, path <span class="op">=</span> <span class="st">"path/to/file"</span>, compress <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
 </div>
 <div id="sas" class="section level4">
 <h4 class="hasAnchor">
@@ -371,20 +367,18 @@
 <p>To read files from SAS into R:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
 <span class="co"># read .sas7bdat + .sas7bcat files:</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_sas.html">read_sas</a></span>(data_file = <span class="st">"path/to/file"</span>, catalog_file = <span class="kw">NULL</span>)
+<span class="fu">read_sas</span><span class="op">(</span>data_file <span class="op">=</span> <span class="st">"path/to/file"</span>, catalog_file <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
 
 <span class="co"># read SAS transport files (version 5 and version 8):</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_xpt.html">read_xpt</a></span>(file = <span class="st">"path/to/file"</span>)
-</pre></div>
+<span class="fu">read_xpt</span><span class="op">(</span>file <span class="op">=</span> <span class="st">"path/to/file"</span><span class="op">)</span></pre></div>
 <p>To export your R objects to the SAS file format:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="co"># save as regular SAS file:</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_sas.html">write_sas</a></span>(data = <span class="kw">yourdata</span>, path = <span class="st">"path/to/file"</span>)
+<span class="fu">write_sas</span><span class="op">(</span>data <span class="op">=</span> <span class="va">yourdata</span>, path <span class="op">=</span> <span class="st">"path/to/file"</span><span class="op">)</span>
 
 <span class="co"># the SAS transport format is an open format </span>
 <span class="co"># (required for submission of the data to the FDA)</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_xpt.html">write_xpt</a></span>(data = <span class="kw">yourdata</span>, path = <span class="st">"path/to/file"</span>, version = <span class="fl">8</span>)
-</pre></div>
+<span class="fu">write_xpt</span><span class="op">(</span>data <span class="op">=</span> <span class="va">yourdata</span>, path <span class="op">=</span> <span class="st">"path/to/file"</span>, version <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></pre></div>
 </div>
 <div id="stata" class="section level4">
 <h4 class="hasAnchor">
@@ -392,17 +386,15 @@
 <p>To read files from Stata into R:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="co"># read .dta file:</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_stata</a></span>(file = <span class="st">"/path/to/file"</span>)
+<span class="fu">read_stata</span><span class="op">(</span>file <span class="op">=</span> <span class="st">"/path/to/file"</span><span class="op">)</span>
 
 <span class="co"># works exactly the same:</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span>(file = <span class="st">"/path/to/file"</span>)
-</pre></div>
+<span class="fu">read_dta</span><span class="op">(</span>file <span class="op">=</span> <span class="st">"/path/to/file"</span><span class="op">)</span></pre></div>
 <p>To export your R objects to the Stata file format:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="co"># save as .dta file, Stata version 14:</span>
 <span class="co"># (supports Stata v8 until v15 at the time of writing)</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">write_dta</a></span>(data = <span class="kw">yourdata</span>, path = <span class="st">"/path/to/file"</span>, version = <span class="fl">14</span>)
-</pre></div>
+<span class="fu">write_dta</span><span class="op">(</span>data <span class="op">=</span> <span class="va">yourdata</span>, path <span class="op">=</span> <span class="st">"/path/to/file"</span>, version <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></pre></div>
 </div>
 </div>
 </div>
@@ -423,7 +415,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -3,8 +3,10 @@
 \name{like}
 \alias{like}
 \alias{\%like\%}
+\alias{\%not_like\%}
 \alias{\%like_case\%}
-\title{Pattern Matching}
+\alias{\%not_like_case\%}
+\title{Pattern matching with keyboard shortcut}
 \source{
 Idea from the \href{https://github.com/Rdatatable/data.table/blob/master/R/like.R}{\code{like} function from the \code{data.table} package}
 }
@@ -13,7 +15,11 @@ like(x, pattern, ignore.case = TRUE)
 
 x \%like\% pattern
 
+x \%not_like\% pattern
+
 x \%like_case\% pattern
+
+x \%not_like_case\% pattern
 }
 \arguments{
 \item{x}{a character vector where matches are sought, or an object which can be coerced by \code{\link[=as.character]{as.character()}} to a character vector.}
@@ -37,7 +43,9 @@ The \verb{\%like\%} function:
 \item Tries again with \code{perl = TRUE} if regex fails
 }
 
-Using RStudio? This function can also be inserted from the Addins menu and can have its own Keyboard Shortcut like \code{Ctrl+Shift+L} or \code{Cmd+Shift+L} (see \code{Tools} > \verb{Modify Keyboard Shortcuts...}).
+Using RStudio? This function can also be inserted in your code from the Addins menu and can have its own Keyboard Shortcut like \code{Ctrl+Shift+L} or \code{Cmd+Shift+L} (see \code{Tools} > \verb{Modify Keyboard Shortcuts...}). This addin iterates over all 'like' variants. So if you have defined the keyboard shortcut Ctrl/Cmd + L to this addin, it will first insert \verb{\%like\%} and by pressing it again it will be replaced with \verb{\%not_like\%}, then \verb{\%like_case\%}, then \verb{\%not_like_case\%} and then back to \verb{\%like\%}.
+
+The \code{"\%not_like\%"} and \code{"\%not_like_case\%"} functions are wrappers around \code{"\%like\%"} and \code{"\%like_case\%"}.
 }
 \section{Stable lifecycle}{
 

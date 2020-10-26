@@ -9,7 +9,7 @@
 # (c) 2018-2020 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -37,18 +37,18 @@ pm_left_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
   if (length(by) == 1) {
     by <- rep(by, 2)
   }
-  
+
   int_x <- colnames(x) %in% colnames(y) & colnames(x) != by[1]
   int_y <- colnames(y) %in% colnames(x) & colnames(y) != by[2]
   colnames(x)[int_x] <- paste0(colnames(x)[int_x], suffix[1L])
   colnames(y)[int_y] <- paste0(colnames(y)[int_y], suffix[2L])
-  
+
   merged <- cbind(x,
                   y[match(x[, by[1], drop = TRUE],
                           y[, by[2], drop = TRUE]),
                     colnames(y)[!colnames(y) %in% colnames(x) & !colnames(y) == by[2]],
                     drop = FALSE])
-  
+
   rownames(merged) <- NULL
   merged
 }
@@ -71,7 +71,42 @@ addin_insert_in <- function() {
 
 # No export, no Rd
 addin_insert_like <- function() {
-  import_fn("insertText", "rstudioapi")(" %like% ")
+  stop_ifnot_installed("rstudioapi")
+  # we want Ctrl/Cmd + L to iterate over %like%, %not_like% and %like_case%, so determine context first
+  
+  getSourceEditorContext <- import_fn("getSourceEditorContext", "rstudioapi")
+  insertText <- import_fn("insertText", "rstudioapi")
+  modifyRange <- import_fn("insertText", "rstudioapi")
+  document_range <- import_fn("document_range", "rstudioapi")
+  document_position <- import_fn("document_position", "rstudioapi")
+  # setSelectionRanges <- import_fn("setSelectionRanges", "rstudioapi")
+  
+  context <- getSourceEditorContext()
+  current_row <- context$selection[[1]]$range$end[1]
+  current_col <- context$selection[[1]]$range$end[2]
+  current_row_txt <- context$contents[current_row]
+  
+  pos_preceded_by <- function(txt) {
+    substr(current_row_txt, current_col - nchar(txt), current_col) == txt
+  }
+  replace_pos <- function(old, with) {
+    modifyRange(document_range(document_position(current_row, current_col - nchar(old)),
+                               document_position(current_row, current_col)),
+                text = with,
+                id = context$id)
+  }
+  
+  if (pos_preceded_by(" %like% ")) {
+    replace_pos(" %like% ", with = " %not_like% ")
+  } else if (pos_preceded_by(" %not_like% ")) {
+    replace_pos(" %not_like% ", with = " %like_case% ")
+  } else if (pos_preceded_by(" %like_case% ")) {
+    replace_pos(" %like_case% ", with = " %not_like_case% ")
+  } else if (pos_preceded_by(" %not_like_case% ")) {
+    replace_pos(" %not_like_case% ", with = " %like% ")
+  } else {
+    insertText(" %like% ")
+  }
 }
 
 check_dataset_integrity <- function() {
@@ -88,13 +123,13 @@ check_dataset_integrity <- function() {
   # check if other packages did not overwrite our data sets
   tryCatch({
     check_microorganisms <- all(c("mo", "fullname", "kingdom", "phylum",
-                                  "class", "order", "family", "genus", 
+                                  "class", "order", "family", "genus",
                                   "species", "subspecies", "rank",
                                   "species_id", "source", "ref", "prevalence") %in% colnames(microorganisms),
                                 na.rm = TRUE)
-    check_antibiotics <- all(c("ab", "atc", "cid", "name", "group", 
+    check_antibiotics <- all(c("ab", "atc", "cid", "name", "group",
                                "atc_group1", "atc_group2", "abbreviations",
-                               "synonyms", "oral_ddd", "oral_units", 
+                               "synonyms", "oral_ddd", "oral_units",
                                "iv_ddd", "iv_units", "loinc") %in% colnames(antibiotics),
                              na.rm = TRUE)
   }, error = function(e) {
@@ -107,10 +142,10 @@ check_dataset_integrity <- function() {
 search_type_in_df <- function(x, type, info = TRUE) {
   # try to find columns based on type
   found <- NULL
-  
+
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   colnames(x) <- trimws(colnames(x))
-  
+
   # -- mo
   if (type == "mo") {
     if (any(sapply(x, is.mo))) {
@@ -128,7 +163,7 @@ search_type_in_df <- function(x, type, info = TRUE) {
     } else if (any(colnames(x) %like% "species")) {
       found <- sort(colnames(x)[colnames(x) %like% "species"])[1]
     }
-    
+
   }
   # -- key antibiotics
   if (type == "keyantibiotics") {
@@ -180,7 +215,7 @@ search_type_in_df <- function(x, type, info = TRUE) {
       }
     }
   }
-  
+
   if (!is.null(found) & info == TRUE) {
     msg <- paste0("NOTE: Using column `", font_bold(found), "` as input for `col_", type, "`.")
     if (type %in% c("keyantibiotics", "specimen")) {
@@ -222,8 +257,8 @@ import_fn <- function(name, pkg, error_on_fail = TRUE) {
     get(name, envir = asNamespace(pkg)),
     error = function(e) {
       if (isTRUE(error_on_fail)) {
-        stop_("function ", name, "() not found in package '", pkg, 
-              "'. Please create an issue at https://github.com/msberends/AMR/issues. Many thanks!", 
+        stop_("function ", name, "() not found in package '", pkg,
+              "'. Please create an issue at https://github.com/msberends/AMR/issues. Many thanks!",
               call = FALSE)
       } else {
         return(NULL)
@@ -231,6 +266,52 @@ import_fn <- function(name, pkg, error_on_fail = TRUE) {
     })
 }
 
+# this alternative to the message() function:
+# - wraps text to never break lines within words
+# - ignores formatted text while wrapping
+# - adds indentation dependent on the type of message (like NOTE)
+# - add additional formatting functions like blue or bold text
+message_ <- function(..., appendLF = TRUE, add_fn = list(font_blue)) {
+  msg <- paste0(c(...), collapse = "")
+
+  # we need to correct for already applied style, that adds text like "\033[31m\"
+  msg_stripped <- font_stripstyle(msg)
+  # where are the spaces now?
+  msg_stripped_wrapped <- paste0(strwrap(msg_stripped,
+                                         simplify = TRUE,
+                                         width = 0.95 * getOption("width")),
+                                 collapse = "\n")
+  msg_stripped_spaces <- which(unlist(strsplit(msg_stripped, "")) == " ")
+  msg_stripped_wrapped_spaces <- which(unlist(strsplit(msg_stripped_wrapped, "")) == " ")
+  # so these are the indices of spaces that need to be replaced
+  replace_spaces <- which(!msg_stripped_spaces %in% msg_stripped_wrapped_spaces)
+  # put it together
+  msg <- unlist(strsplit(msg, " "))
+  msg[replace_spaces] <- paste0(msg[replace_spaces], "\n")
+  msg <- paste0(msg, collapse = " ")
+  msg <- gsub("\n ", "\n", msg, fixed = TRUE)
+
+  if (msg_stripped %like% "^NOTE: ") {
+    indentation <- 6
+  } else {
+    indentation <- 0
+  }
+  msg <- gsub("\n", paste0("\n", strrep(" ", indentation)), msg, fixed = TRUE)
+
+  if (length(add_fn) > 0) {
+    if (!is.list(add_fn)) {
+      add_fn <- list(add_fn)
+    }
+    for (i in seq_len(length(add_fn))) {
+      msg <- add_fn[[i]](msg)
+    }
+  }
+  message(msg, appendLF = appendLF)
+}
+
+# this alternative to the stop() function:
+# - adds the function name where the error was thrown
+# - wraps text to never break lines within words
 stop_ <- function(..., call = TRUE) {
   msg <- paste0(c(...), collapse = "")
   if (!isFALSE(call)) {
@@ -340,10 +421,10 @@ meet_criteria <- function(object,
                           allow_NA = FALSE,
                           ignore.case = FALSE,
                           .call_depth = 0) { # depth in calling
-  
+
   obj_name <- deparse(substitute(object))
   call_depth <- -2 - abs(.call_depth)
-  
+
   if (is.null(object)) {
     stop_if(allow_NULL == FALSE, "argument `", obj_name, "` must not be NULL", call = call_depth)
     return(invisible())
@@ -352,7 +433,7 @@ meet_criteria <- function(object,
     stop_if(allow_NA == FALSE, "argument `", obj_name, "` must not be NA", call = call_depth)
     return(invisible())
   }
-  
+
   vector_or <- function(v, quotes) {
     if (length(v) == 1) {
       return(paste0(ifelse(quotes, '"', ""), v, ifelse(quotes, '"', "")))
@@ -361,32 +442,32 @@ meet_criteria <- function(object,
     paste0(paste0(ifelse(quotes, '"', ""), v[seq_len(length(v) - 1)], ifelse(quotes, '"', ""), collapse = ", "),
            " or ", paste0(ifelse(quotes, '"', ""), v[length(v)], ifelse(quotes, '"', "")))
   }
-  
+
   if (!is.null(allow_class)) {
-    stop_ifnot(inherits(object, allow_class), "argument `", obj_name, 
-               "` must ", # ifelse(allow_NULL, "be NULL or must ", ""), 
-               "be of class ", vector_or(allow_class, quotes = TRUE), 
+    stop_ifnot(inherits(object, allow_class), "argument `", obj_name,
+               "` must ", # ifelse(allow_NULL, "be NULL or must ", ""),
+               "be of class ", vector_or(allow_class, quotes = TRUE),
                ", not \"", paste(class(object), collapse = "/"), "\"",
                call = call_depth)
     # check data.frames for data
     if (inherits(object, "data.frame")) {
-      stop_if(any(dim(object) == 0), 
+      stop_if(any(dim(object) == 0),
               "the data provided in argument `", obj_name,
-              "` must contain rows and columns (current dimensions: ", 
+              "` must contain rows and columns (current dimensions: ",
               paste(dim(object), collapse = " x "), ")",
               call = call_depth)
     }
   }
   if (!is.null(has_length)) {
-    stop_ifnot(length(object) %in% has_length, "argument `", obj_name, 
-               "` must ", # ifelse(allow_NULL, "be NULL or must ", ""), 
+    stop_ifnot(length(object) %in% has_length, "argument `", obj_name,
+               "` must ", # ifelse(allow_NULL, "be NULL or must ", ""),
                "be of length ", vector_or(has_length, quotes = FALSE),
                ", not ", length(object),
                call = call_depth)
   }
   if (!is.null(looks_like)) {
-    stop_ifnot(object %like% looks_like, "argument `", obj_name, 
-               "` must ", # ifelse(allow_NULL, "be NULL or must ", ""), 
+    stop_ifnot(object %like% looks_like, "argument `", obj_name,
+               "` must ", # ifelse(allow_NULL, "be NULL or must ", ""),
                "resemble the regular expression \"", looks_like, "\"",
                call = call_depth)
   }
@@ -395,16 +476,16 @@ meet_criteria <- function(object,
       object <- tolower(object)
       is_in <- tolower(is_in)
     }
-    stop_ifnot(all(object %in% is_in, na.rm = TRUE), "argument `", obj_name, 
+    stop_ifnot(all(object %in% is_in, na.rm = TRUE), "argument `", obj_name,
                "` must be ",
                ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1, "one of: ", ""),
-               vector_or(is_in, quotes = TRUE), 
+               vector_or(is_in, quotes = TRUE),
                ", not ", paste0("\"", object, "\"", collapse = "/"), "",
                call = call_depth)
   }
   if (!is.null(contains_column_class)) {
     stop_ifnot(any(sapply(object, function(col, columns_class = contains_column_class) inherits(col, columns_class)), na.rm = TRUE),
-               "the data provided in argument `", obj_name, 
+               "the data provided in argument `", obj_name,
                "` must contain at least one column of class <", contains_column_class, ">. ",
                "See ?as.", contains_column_class, ".",
                call = call_depth)
@@ -463,7 +544,7 @@ has_colour <- function() {
   if (Sys.getenv("TERM") == "dumb") {
     return(FALSE)
   }
-  grepl(pattern = "^screen|^xterm|^vt100|color|ansi|cygwin|linux", 
+  grepl(pattern = "^screen|^xterm|^vt100|color|ansi|cygwin|linux",
         x = Sys.getenv("TERM"),
         ignore.case = TRUE,
         perl = TRUE)
@@ -560,7 +641,7 @@ progress_ticker <- function(n = 1, n_min = 0, ...) {
 create_pillar_column <- function(x, ...) {
   new_pillar_shaft_simple <- import_fn("new_pillar_shaft_simple", "pillar", error_on_fail = FALSE)
   if (!is.null(new_pillar_shaft_simple)) {
-    new_pillar_shaft_simple(x, ...)  
+    new_pillar_shaft_simple(x, ...)
   } else {
     # does not exist in package 'pillar' anymore
     structure(list(x),
@@ -622,12 +703,12 @@ round2 <- function(x, digits = 0, force_zero = TRUE) {
   if (digits > 0 & force_zero == TRUE) {
     values_trans <- val[val != as.integer(val) & !is.na(val)]
     val[val != as.integer(val) & !is.na(val)] <- paste0(values_trans,
-                                                        strrep("0", 
-                                                               max(0, 
+                                                        strrep("0",
+                                                               max(0,
                                                                    digits - nchar(
                                                                      format(
                                                                        as.double(
-                                                                         gsub(".*[.](.*)$", 
+                                                                         gsub(".*[.](.*)$",
                                                                               "\\1",
                                                                               values_trans)),
                                                                        scientific = FALSE)))))
@@ -638,7 +719,7 @@ round2 <- function(x, digits = 0, force_zero = TRUE) {
 
 # percentage from our other package: 'cleaner'
 percentage <- function(x, digits = NULL, ...) {
-  
+
   # getdecimalplaces() function
   getdecimalplaces <- function(x, minimum = 0, maximum = 3) {
     if (maximum < minimum) {
@@ -647,20 +728,20 @@ percentage <- function(x, digits = NULL, ...) {
     if (minimum > maximum) {
       minimum <- maximum
     }
-    max_places <- max(unlist(lapply(strsplit(sub("0+$", "", 
+    max_places <- max(unlist(lapply(strsplit(sub("0+$", "",
                                                  as.character(x * 100)), ".", fixed = TRUE),
                                     function(y) ifelse(length(y) == 2, nchar(y[2]), 0))), na.rm = TRUE)
     max(min(max_places,
             maximum, na.rm = TRUE),
         minimum, na.rm = TRUE)
   }
-  
+
   # format_percentage() function
   format_percentage <- function(x, digits = NULL, ...) {
     if (is.null(digits)) {
       digits <- getdecimalplaces(x)
     }
-    
+
     # round right: percentage(0.4455) and format(as.percentage(0.4455), 1) should return "44.6%", not "44.5%"
     x_formatted <- format(round2(as.double(x), digits = digits + 2) * 100,
                           scientific = FALSE,
@@ -671,7 +752,7 @@ percentage <- function(x, digits = NULL, ...) {
     x_formatted[!grepl(pattern = "^[0-9.,e-]+$", x = x)] <- NA_character_
     x_formatted
   }
-  
+
   # the actual working part
   x <- as.double(x)
   if (is.null(digits)) {
@@ -688,12 +769,12 @@ percentage <- function(x, digits = NULL, ...) {
 # see here for the full list: https://github.com/r-lib/backports
 strrep <- function(x, times) {
   x <- as.character(x)
-  if (length(x) == 0L) 
+  if (length(x) == 0L)
     return(x)
   unlist(.mapply(function(x, times) {
-    if (is.na(x) || is.na(times)) 
+    if (is.na(x) || is.na(times))
       return(NA_character_)
-    if (times <= 0L) 
+    if (times <= 0L)
       return("")
     paste0(replicate(times, x), collapse = "")
   }, list(x = x, times = times), MoreArgs = list()), use.names = FALSE)
@@ -701,9 +782,9 @@ strrep <- function(x, times) {
 trimws <- function(x, which = c("both", "left", "right")) {
   which <- match.arg(which)
   mysub <- function(re, x) sub(re, "", x, perl = TRUE)
-  if (which == "left") 
+  if (which == "left")
     return(mysub("^[ \t\r\n]+", x))
-  if (which == "right") 
+  if (which == "right")
     return(mysub("[ \t\r\n]+$", x))
   mysub("[ \t\r\n]+$", mysub("^[ \t\r\n]+", x))
 }

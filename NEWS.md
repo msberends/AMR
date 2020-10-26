@@ -1,17 +1,19 @@
-# AMR 1.4.0.9007
-## <small>Last updated: 21 October 2020</small>
+# AMR 1.4.0.9008
+## <small>Last updated: 26 October 2020</small>
 
 ### New
 * Functions `is_gram_negative()` and `is_gram_positive()` as wrappers around `mo_gramstain()`. They always return `TRUE` or `FALSE`, thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
-* Functions `%not_like%` and `%like_perl%` as wrappers around `%like%`.
+* Functions `%not_like%` and `%not_like_case%` as wrappers around `%like%` and `%like_case%`. The RStudio addin to insert the text " %like% " as provided in this package now iterates over all like variants. So if you have defined the keyboard shortcut Ctrl/Cmd + L to this addin, it will first insert ` %like% ` and by pressing it again it will be replaced with ` %not_like% `, etc.
 
 ### Changed
 * For all function parameters in the code, it is now defined what the exact type of user input should be (inspired by the [`typed`](https://github.com/moodymudskipper/typed) package). If the user input for a certain function does not meet the requirements for a specific parameter (such as the class or length), an informative error will be thrown. This makes the package more robust and the use of it more reproducible and reliable. In total, more than 400 arguments were defined.
 * Deprecated function `p_symbol()` that not really fits the scope of this package. It will be removed in a future version. See [here](https://github.com/msberends/AMR/blob/v1.4.0/R/p_symbol.R) for the source code to preserve it.
 * Better determination of disk zones and MIC values when running `as.rsi()` on a data.frame
 * Updated coagulase-negative staphylococci with Becker *et al.* 2020 (PMID 32056452), meaning that the species *S. argensis*, *S. caeli*, *S. debuckii*, *S. edaphicus* and *S. pseudoxylosus* are now all considered CoNS
+* Fix for using parameter `reference_df` in `as.mo()` and `mo_*()` functions that contain old microbial codes (from previous package versions)
 
 ### Other
+* All messages thrown by this package now have correct line breaks
 * More extensive unit tests
 
 # AMR 1.4.0

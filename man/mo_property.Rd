@@ -57,9 +57,9 @@ mo_type(x, language = get_locale(), ...)
 
 mo_gramstain(x, language = get_locale(), ...)
 
-is_gram_negative(x, ...)
+is_gram_negative(x, language = get_locale(), ...)
 
-is_gram_positive(x, ...)
+is_gram_positive(x, language = get_locale(), ...)
 
 mo_snomed(x, language = get_locale(), ...)
 
@@ -84,7 +84,7 @@ mo_property(x, property = "fullname", language = get_locale(), ...)
 \arguments{
 \item{x}{any character (vector) that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
 
-\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can be overwritten by setting the option \code{AMR_locale}, e.g. \code{options(AMR_locale = "de")}, see \link{translate}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
+\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can be overwritten by setting the option \code{AMR_locale}, e.g. \code{options(AMR_locale = "de")}, see \link{translate}. Also used to translate text like "no growth". Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
 \item{...}{other parameters passed on to \code{\link[=as.mo]{as.mo()}}, such as 'allow_uncertain' and 'ignore_pattern'}
 

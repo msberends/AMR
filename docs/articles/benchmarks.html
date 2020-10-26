@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9008</span>
       </span>
     </div>
 
@@ -187,7 +187,8 @@
 
       
 
-      </header><script src="benchmarks_files/header-attrs-2.4/header-attrs.js"></script><script src="benchmarks_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="benchmarks_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="benchmarks_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="benchmarks_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Benchmarks</h1>
@@ -227,20 +228,34 @@
   times <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
 <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="va">S.aureus</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
-<span class="co">#                                   expr   min    lq  mean median    uq max neval</span>
-<span class="co">#                           as.mo("sau")  12.0  13.0  25.0   15.0  40.0  43    10</span>
-<span class="co">#                          as.mo("stau") 210.0 220.0 230.0  230.0 250.0 260    10</span>
-<span class="co">#                          as.mo("STAU") 210.0 210.0 230.0  250.0 250.0 260    10</span>
-<span class="co">#                        as.mo("staaur")  12.0  13.0  24.0   14.0  41.0  42    10</span>
-<span class="co">#                        as.mo("STAAUR")  13.0  13.0  22.0   14.0  39.0  42    10</span>
-<span class="co">#                     as.mo("S. aureus")  27.0  30.0  42.0   41.0  54.0  61    10</span>
-<span class="co">#                      as.mo("S aureus")  24.0  29.0  45.0   43.0  60.0  66    10</span>
-<span class="co">#         as.mo("Staphylococcus aureus")   2.1   2.5   4.9    2.5   2.9  26    10</span>
-<span class="co">#  as.mo("Staphylococcus aureus (MRSA)") 820.0 860.0 880.0  880.0 900.0 970    10</span>
-<span class="co">#       as.mo("Sthafilokkockus aaureuz") 330.0 340.0 370.0  370.0 390.0 420    10</span>
-<span class="co">#                          as.mo("MRSA")  11.0  13.0  22.0   14.0  41.0  44    10</span>
-<span class="co">#                          as.mo("VISA")  21.0  22.0  48.0   47.0  51.0 140    10</span>
-<span class="co">#                          as.mo("VRSA")  19.0  20.0  23.0   21.0  22.0  47    10</span></pre></div>
+<span class="co">#                                   expr    min     lq   mean median     uq  max</span>
+<span class="co">#                           as.mo("sau")   26.0   26.0   50.0   26.0   26.0  180</span>
+<span class="co">#                          as.mo("stau")  430.0  430.0  470.0  440.0  490.0  630</span>
+<span class="co">#                          as.mo("STAU")  430.0  440.0  470.0  500.0  500.0  500</span>
+<span class="co">#                        as.mo("staaur")   26.0   26.0   32.0   26.0   26.0   76</span>
+<span class="co">#                        as.mo("STAAUR")   26.0   26.0   44.0   26.0   81.0   83</span>
+<span class="co">#                     as.mo("S. aureus")   60.0   60.0   77.0   61.0  110.0  120</span>
+<span class="co">#                      as.mo("S aureus")   60.0   61.0   94.0  110.0  120.0  120</span>
+<span class="co">#         as.mo("Staphylococcus aureus")    4.1    4.1    9.6    4.1    4.2   59</span>
+<span class="co">#  as.mo("Staphylococcus aureus (MRSA)") 2200.0 2200.0 2200.0 2200.0 2300.0 2300</span>
+<span class="co">#       as.mo("Sthafilokkockus aaureuz")  760.0  800.0  810.0  800.0  810.0  840</span>
+<span class="co">#                          as.mo("MRSA")   26.0   26.0   37.0   26.0   26.0   83</span>
+<span class="co">#                          as.mo("VISA")   42.0   42.0   59.0   42.0   92.0   97</span>
+<span class="co">#                          as.mo("VRSA")   42.0   42.0   68.0   67.0   92.0   97</span>
+<span class="co">#  neval</span>
+<span class="co">#     10</span>
+<span class="co">#     10</span>
+<span class="co">#     10</span>
+<span class="co">#     10</span>
+<span class="co">#     10</span>
+<span class="co">#     10</span>
+<span class="co">#     10</span>
+<span class="co">#     10</span>
+<span class="co">#     10</span>
+<span class="co">#     10</span>
+<span class="co">#     10</span>
+<span class="co">#     10</span>
+<span class="co">#     10</span></pre></div>
 <p><img src="benchmarks_files/figure-html/unnamed-chunk-4-1.png" width="562.5"></p>
 <p>In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 5 milliseconds means it can determine 200 input values per second. It case of 100 milliseconds, this is only 10 input values per second. It is clear that accepted taxonomic names are extremely fast, but some variations can take up to 500-1000 times as much time.</p>
 <p>To improve performance, two important calculations take almost no time at all: <strong>repetitive results</strong> and <strong>already precalculated results</strong>.</p>
@@ -270,8 +285,8 @@
 <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
 <span class="co">#        expr min  lq mean median  uq max neval</span>
-<span class="co">#  mo_name(x) 150 154  195    179 197 301    10</span></pre></div>
-<p>So getting official taxonomic names of 2,000,000 (!!) items consisting of 90 unique values only takes 0.179 seconds. You only lose time on your unique input values.</p>
+<span class="co">#  mo_name(x) 308 326  399    331 370 676    10</span></pre></div>
+<p>So getting official taxonomic names of 2,000,000 (!!) items consisting of 90 unique values only takes 0.331 seconds. You only lose time on your unique input values.</p>
 </div>
 <div id="precalculated-results" class="section level3">
 <h3 class="hasAnchor">
@@ -284,11 +299,11 @@
                          times <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
 <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
-<span class="co">#  expr   min    lq  mean median    uq   max neval</span>
-<span class="co">#     A  7.11  7.23  7.79   7.74  8.46  8.54    10</span>
-<span class="co">#     B 21.40 21.90 30.40  24.00 25.50 60.00    10</span>
-<span class="co">#     C  1.97  1.98  2.12   2.05  2.34  2.43    10</span></pre></div>
-<p>So going from <code><a href="../reference/mo_property.html">mo_name("Staphylococcus aureus")</a></code> to <code>"Staphylococcus aureus"</code> takes 0.002 seconds - it doesn’t even start calculating <em>if the result would be the same as the expected resulting value</em>. That goes for all helper functions:</p>
+<span class="co">#  expr   min    lq  mean median    uq    max neval</span>
+<span class="co">#     A 16.20 16.20 18.60  17.90 18.90  28.00    10</span>
+<span class="co">#     B 50.90 51.10 57.70  51.20 53.10 108.00    10</span>
+<span class="co">#     C  3.58  3.72  4.03   4.06  4.14   4.91    10</span></pre></div>
+<p>So going from <code><a href="../reference/mo_property.html">mo_name("Staphylococcus aureus")</a></code> to <code>"Staphylococcus aureus"</code> takes 0.0041 seconds - it doesn’t even start calculating <em>if the result would be the same as the expected resulting value</em>. That goes for all helper functions:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="va">run_it</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="op">(</span>A <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_species</a></span><span class="op">(</span><span class="st">"aureus"</span><span class="op">)</span>,
                          B <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="st">"Staphylococcus"</span><span class="op">)</span>,
@@ -301,15 +316,15 @@
                          times <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
 <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
-<span class="co">#  expr  min   lq mean median   uq   max neval</span>
-<span class="co">#     A 1.33 1.57 1.70   1.69 1.83  2.18    10</span>
-<span class="co">#     B 1.62 1.67 5.34   1.70 2.15 36.90    10</span>
-<span class="co">#     C 1.43 1.55 1.64   1.59 1.70  2.06    10</span>
-<span class="co">#     D 1.29 1.44 1.53   1.55 1.66  1.70    10</span>
-<span class="co">#     E 1.31 1.58 1.68   1.65 1.71  2.11    10</span>
-<span class="co">#     F 1.54 1.61 1.80   1.67 1.86  2.57    10</span>
-<span class="co">#     G 1.52 1.62 1.73   1.71 1.77  2.04    10</span>
-<span class="co">#     H 1.40 1.55 1.70   1.65 1.92  2.03    10</span></pre></div>
+<span class="co">#  expr  min   lq mean median   uq  max neval</span>
+<span class="co">#     A 3.62 3.62 3.66   3.64 3.67 3.80    10</span>
+<span class="co">#     B 3.57 3.59 3.68   3.64 3.72 4.01    10</span>
+<span class="co">#     C 3.63 3.64 3.65   3.64 3.67 3.71    10</span>
+<span class="co">#     D 3.57 3.58 3.62   3.61 3.67 3.69    10</span>
+<span class="co">#     E 3.56 3.57 3.60   3.59 3.60 3.68    10</span>
+<span class="co">#     F 3.55 3.58 3.73   3.65 3.85 4.01    10</span>
+<span class="co">#     G 3.54 3.56 3.62   3.58 3.61 3.93    10</span>
+<span class="co">#     H 3.53 3.57 3.59   3.58 3.63 3.66    10</span></pre></div>
 <p>Of course, when running <code><a href="../reference/mo_property.html">mo_phylum("Firmicutes")</a></code> the function has zero knowledge about the actual microorganism, namely <em>S. aureus</em>. But since the result would be <code>"Firmicutes"</code> anyway, there is no point in calculating the result. And because this package ‘knows’ all phyla of all known bacteria (according to the Catalogue of Life), it can just return the initial value immediately.</p>
 </div>
 <div id="results-in-other-languages" class="section level3">
@@ -336,14 +351,14 @@
                          times <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
 <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
-<span class="co">#  expr   min    lq  mean median    uq   max neval</span>
-<span class="co">#    en 14.20 14.66 20.04  15.14 16.90 58.67   100</span>
-<span class="co">#    de 17.15 17.85 24.30  18.27 20.00 59.17   100</span>
-<span class="co">#    nl 29.13 30.50 34.60  31.26 32.86 72.63   100</span>
-<span class="co">#    es 16.95 17.70 22.61  18.35 20.54 59.42   100</span>
-<span class="co">#    it 17.04 17.60 21.72  18.14 19.60 59.19   100</span>
-<span class="co">#    fr 16.82 17.52 21.71  18.05 19.63 61.06   100</span>
-<span class="co">#    pt 16.92 17.58 19.92  18.23 19.19 54.61   100</span></pre></div>
+<span class="co">#  expr   min    lq  mean median    uq    max neval</span>
+<span class="co">#    en 35.85 36.13 41.92  36.29 36.84 318.20   100</span>
+<span class="co">#    de 42.37 42.67 45.11  42.91 43.19  95.04   100</span>
+<span class="co">#    nl 70.13 70.65 75.92  70.95 71.50 140.20   100</span>
+<span class="co">#    es 42.16 42.46 46.88  42.64 43.20  95.37   100</span>
+<span class="co">#    it 41.85 42.24 46.84  42.40 42.84  95.92   100</span>
+<span class="co">#    fr 42.13 42.53 48.41  42.71 43.27  95.21   100</span>
+<span class="co">#    pt 42.25 42.47 48.56  42.71 43.12  96.60   100</span></pre></div>
 <p>Currently supported are German, Dutch, Spanish, Italian, French and Portuguese.</p>
 </div>
   </div>

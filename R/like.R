@@ -23,7 +23,7 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-#' Pattern Matching
+#' Pattern matching with keyboard shortcut
 #'
 #' Convenient wrapper around [grep()] to match a pattern: `x %like% pattern`. It always returns a [`logical`] vector and is always case-insensitive (use `x %like_case% pattern` for case-sensitive matching). Also, `pattern` can be as long as `x` to compare items of each index in both vectors, or they both can have the same length to iterate over all cases.
 #' @inheritSection lifecycle Stable lifecycle
@@ -41,9 +41,9 @@
 #' * Checks if `pattern` is a regular expression and sets `fixed = TRUE` if not, to greatly improve speed
 #' * Tries again with `perl = TRUE` if regex fails
 #' 
-#' Using RStudio? This function can also be inserted from the Addins menu and can have its own Keyboard Shortcut like `Ctrl+Shift+L` or `Cmd+Shift+L` (see `Tools` > `Modify Keyboard Shortcuts...`).
+#' Using RStudio? This function can also be inserted in your code from the Addins menu and can have its own Keyboard Shortcut like `Ctrl+Shift+L` or `Cmd+Shift+L` (see `Tools` > `Modify Keyboard Shortcuts...`). This addin iterates over all 'like' variants. So if you have defined the keyboard shortcut Ctrl/Cmd + L to this addin, it will first insert ` %like% ` and by pressing it again it will be replaced with ` %not_like% `, then ` %like_case% `, then ` %not_like_case% ` and then back to ` %like% `.
 #' 
-#' The `"%not_like%"` and `"%like_perl%"` functions are wrappers around `"%like%"`.
+#' The `"%not_like%"` and `"%not_like_case%"` functions are wrappers around `"%like%"` and `"%like_case%"`.
 #' @source Idea from the [`like` function from the `data.table` package](https://github.com/Rdatatable/data.table/blob/master/R/like.R)
 #' @seealso [grep()]
 #' @inheritSection AMR Read more on our website!
@@ -168,8 +168,15 @@ like <- function(x, pattern, ignore.case = TRUE) {
   like(x, pattern, ignore.case = FALSE)
 }
 
+
 #' @rdname like
 #' @export
+"%not_like_case%" <- function(x, pattern) {
+  meet_criteria(x, allow_NA = TRUE)
+  meet_criteria(pattern, allow_NA = FALSE)
+  !like(x, pattern, ignore.case = FALSE)
+}
+
 "%like_perl%" <- function(x, pattern) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(pattern, allow_NA = FALSE)
