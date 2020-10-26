@@ -271,8 +271,12 @@ import_fn <- function(name, pkg, error_on_fail = TRUE) {
 # - ignores formatted text while wrapping
 # - adds indentation dependent on the type of message (like NOTE)
 # - add additional formatting functions like blue or bold text
-message_ <- function(..., appendLF = TRUE, add_fn = list(font_blue)) {
+message_ <- function(..., appendLF = TRUE, add_fn = list(font_blue), as_note = TRUE) {
   msg <- paste0(c(...), collapse = "")
+  
+  if (isTRUE(as_note)) {
+    msg <- paste0("NOTE: ", gsub("note:? ?", "", msg, ignore.case = TRUE))
+  }
 
   # we need to correct for already applied style, that adds text like "\033[31m\"
   msg_stripped <- font_stripstyle(msg)

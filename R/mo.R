@@ -205,7 +205,6 @@ as.mo <- function(x,
       & all(x %in% reference_df[, 1][[1]])) {
 
     # has valid own reference_df
-    # (data.table not faster here)
     reference_df <- reference_df %pm>% pm_filter(!is.na(mo))
     # keep only first two columns, second must be mo
     if (colnames(reference_df)[1] == "mo") {
@@ -213,6 +212,9 @@ as.mo <- function(x,
     } else {
       reference_df <- reference_df[, c(1, 2)]
     }
+    # some microbial codes might be old
+    reference_df[, 1] <- as.mo(reference_df[, 1, drop = TRUE])
+    
     colnames(reference_df)[1] <- "x"
     # remove factors, just keep characters
     suppressWarnings(
@@ -221,9 +223,7 @@ as.mo <- function(x,
     suppressWarnings(
       y <- data.frame(x = x, stringsAsFactors = FALSE) %pm>%
         pm_left_join(reference_df, by = "x") %pm>%
-        pm_pull("mo") %pm>%
-        # run as.mo() for when using old microbial codes
-        as.mo()
+        pm_pull("mo")
     )
 
   } else if (all(x[!is.na(x)] %in% MO_lookup$mo)
@@ -415,7 +415,7 @@ exec_as.mo <- function(x,
       reference_df <- reference_df[, c(1, 2)]
     }
     # some microbial codes might be old
-    reference_df$mo <- as.mo(reference_df$mo)
+    reference_df[, 1] <- as.mo(reference_df[, 1, drop = TRUE])
     
     colnames(reference_df)[1] <- "x"
     # remove factors, just keep characters
@@ -1438,7 +1438,7 @@ exec_as.mo <- function(x,
     }
     msg <- paste0("Translation to ", nr2char(length(uncertainties$input)), " microorganism", plural[1],
                   " ", plural[3], " guessed with uncertainty. Use mo_uncertainties() to review ", plural[2], ".")
-    message(font_red(msg))
+    message_(msg)
   }
 
   # Becker ----
