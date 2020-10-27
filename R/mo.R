@@ -1761,9 +1761,7 @@ print.mo_uncertainties <- function(x, ...) {
   if (NROW(x) == 0) {
     return(NULL)
   }
-  cat(font_blue(strwrap("Matching scores are based on human pathogenic prevalence and the resemblance between the input and the full taxonomic name. Please see ?mo_matching_score.",
-                        width = 0.98 * getOption("width")),
-                collapse = "\n"))
+  message_("Matching scores are based on human pathogenic prevalence and the resemblance between the input and the full taxonomic name. Please see ?mo_matching_score.", as_note = FALSE)
   cat("\n")
 
   msg <- ""
@@ -1838,16 +1836,19 @@ print.mo_renamed <- function(x, ...) {
     return(invisible())
   }
   for (i in seq_len(nrow(x))) {
-    message(font_blue(paste0("NOTE: ",
-                             font_italic(x$old_name[i]), ifelse(x$old_ref[i] %in% c("", NA), "",
-                                                                paste0(" (",  gsub("et al.", font_italic("et al."), x$old_ref[i]), ")")),
-                             " was renamed ",
-                             ifelse(as.integer(gsub("[^0-9]", "", x$new_ref[i])) < as.integer(gsub("[^0-9]", "", x$old_ref[i])),
-                                    font_bold("back to "),
-                                    ""),
-                             font_italic(x$new_name[i]), ifelse(x$new_ref[i] %in% c("", NA), "",
-                                                                paste0(" (",  gsub("et al.", font_italic("et al."), x$new_ref[i]), ")")),
-                             " [", x$mo[i], "]")))
+    message_(font_italic(x$old_name[i]),
+             ifelse(x$old_ref[i] %in% c("", NA),
+                    "",
+                    paste0(" (",  gsub("et al.", font_italic("et al."), x$old_ref[i]), ")")),
+             " was renamed ",
+             ifelse(as.integer(gsub("[^0-9]", "", x$new_ref[i])) < as.integer(gsub("[^0-9]", "", x$old_ref[i])),
+                    font_bold("back to "),
+                    ""),
+             font_italic(x$new_name[i]),
+             ifelse(x$new_ref[i] %in% c("", NA), 
+                    "",
+                    paste0(" (",  gsub("et al.", font_italic("et al."), x$new_ref[i]), ")")),
+             " [", x$mo[i], "]")
   }
 }
 
@@ -1945,9 +1946,9 @@ replace_ignore_pattern <- function(x, ignore_pattern) {
   if (!is.null(ignore_pattern) && !identical(trimws2(ignore_pattern), "")) {
     ignore_cases <- x %like% ignore_pattern
     if (sum(ignore_cases) > 0) {
-      message(font_blue(paste0("NOTE: the following input was ignored by `ignore_pattern = \"", ignore_pattern, "\"`: ",
-                               paste0("'", sort(unique(x[x %like% ignore_pattern])), "'", collapse = ", "),
-                               collapse = ", ")))
+      message_("The following input was ignored by `ignore_pattern = \"", ignore_pattern, "\"`: ",
+               paste0("'", sort(unique(x[x %like% ignore_pattern])), "'", collapse = ", "),
+               collapse = ", ")
       x[x %like% ignore_pattern] <- NA_character_
     }
   }

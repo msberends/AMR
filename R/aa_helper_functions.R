@@ -209,19 +209,20 @@ search_type_in_df <- function(x, type, info = TRUE) {
     if (!is.null(found)) {
       # this column should contain logicals
       if (!is.logical(x[, found, drop = TRUE])) {
-        message(font_red(paste0("NOTE: Column `", font_bold(found), "` found as input for `col_", type,
-                                "`, but this column does not contain 'logical' values (TRUE/FALSE) and was ignored.")))
+        message_("Column `", font_bold(found), "` found as input for `col_", type,
+                 "`, but this column does not contain 'logical' values (TRUE/FALSE) and was ignored.",
+                 add_fn = font_red)
         found <- NULL
       }
     }
   }
 
   if (!is.null(found) & info == TRUE) {
-    msg <- paste0("NOTE: Using column `", font_bold(found), "` as input for `col_", type, "`.")
+    msg <- paste0("Using column `", font_bold(found), "` as input for `col_", type, "`.")
     if (type %in% c("keyantibiotics", "specimen")) {
       msg <- paste(msg, "Use", font_bold(paste0("col_", type), "= FALSE"), "to prevent this.")
     }
-    message(font_blue(msg))
+    message_(msg)
   }
   found
 }
@@ -297,6 +298,8 @@ message_ <- function(..., appendLF = TRUE, add_fn = list(font_blue), as_note = T
 
   if (msg_stripped %like% "^NOTE: ") {
     indentation <- 6
+  } else if (msg_stripped %like% "^=> ") {
+    indentation <- 3
   } else {
     indentation <- 0
   }

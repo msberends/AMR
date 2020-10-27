@@ -94,14 +94,16 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE) {
   
   if (length(ab_result) == 0) {
     if (verbose == TRUE) {
-      message(paste0("No column found as input for `", search_string,
-                     "` (", ab_name(search_string, language = NULL, tolower = TRUE), ")."))
+      message_("No column found as input for `", search_string,
+               "` (", ab_name(search_string, language = NULL, tolower = TRUE), ").",
+               add_fn = font_black,
+               as_note = FALSE)
     }
     return(NULL)
   } else {
     if (verbose == TRUE) {
-      message(font_blue(paste0("NOTE: Using column `", font_bold(ab_result), "` as input for `", search_string,
-                               "` (", ab_name(search_string, language = NULL, tolower = TRUE), ").")))
+      message_("Using column `", font_bold(ab_result), "` as input for `", search_string,
+               "` (", ab_name(search_string, language = NULL, tolower = TRUE), ").")
     }
     return(ab_result)
   }
@@ -120,18 +122,20 @@ get_column_abx <- function(x,
   meet_criteria(info, allow_class = "logical", has_length = 1)
   
   if (info == TRUE) {
-    message(font_blue("NOTE: Auto-guessing columns suitable for analysis"), appendLF = FALSE)
+    message_("Auto-guessing columns suitable for analysis", appendLF = FALSE)
   }
   
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   if (NROW(x) > 10000) {
     # only test maximum of 10,000 values per column
     if (info == TRUE) {
-      message(font_blue(paste0(" (using only ", font_bold("the first 10,000 rows"), ")...")), appendLF = FALSE)
+      message_(" (using only ", font_bold("the first 10,000 rows"), ")...",
+               appendLF = FALSE, 
+               as_note = FALSE)
     }
     x <- x[1:10000, , drop = FALSE]
   } else if (info == TRUE) {
-    message(font_blue("..."), appendLF = FALSE)
+    message_("...", appendLF = FALSE, as_note = FALSE)
   }
   x_bak <- x
   # only check columns that are a valid AB code, ATC code, name, abbreviation or synonym,
@@ -178,7 +182,7 @@ get_column_abx <- function(x,
   
   if (length(x) == 0) {
     if (info == TRUE) {
-      message(font_blue("No columns found."))
+      message_("No columns found.")
     }
     return(x)
   }
@@ -192,13 +196,13 @@ get_column_abx <- function(x,
   
   # succeeded with auto-guessing
   if (info == TRUE) {
-    message(font_blue("OK."))
+    message_("OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
   }
   
   for (i in seq_len(length(x))) {
     if (info == TRUE & verbose == TRUE & !names(x[i]) %in% names(duplicates)) {
-      message(font_blue(paste0("NOTE: Using column `", font_bold(x[i]), "` as input for `", names(x)[i],
-                               "` (", ab_name(names(x)[i], tolower = TRUE, language = NULL), ").")))
+      message_("Using column `", font_bold(x[i]), "` as input for `", names(x)[i],
+               "` (", ab_name(names(x)[i], tolower = TRUE, language = NULL), ").")
     }
     if (info == TRUE & names(x[i]) %in% names(duplicates)) {
       warning(font_red(paste0("Using column `", font_bold(x[i]), "` as input for `", names(x)[i],
@@ -225,15 +229,10 @@ get_column_abx <- function(x,
       # missing a soft dependency may lower the reliability
       missing <- soft_dependencies[!soft_dependencies %in% names(x)]
       missing_msg <- paste(paste0(ab_name(missing, tolower = TRUE, language = NULL), 
-                                  " (", missing, ")"), 
+                                  " (", font_bold(missing, collapse = NULL), ")"), 
                            collapse = ", ")
-      missing_msg <- paste("NOTE: Reliability would be improved if these antimicrobial results would be available too:",
-                           missing_msg)
-      wrapped <- strwrap(missing_msg,
-                         width = 0.95 * getOption("width"),
-                         exdent = 6)
-      wrapped <- gsub("\\((.*?)\\)", paste0("(", font_bold("\\1"), ")"), wrapped) # add bold abbreviations
-      message(font_blue(wrapped, collapse = "\n"))
+      message_("Reliability would be improved if these antimicrobial results would be available too: ",
+               missing_msg)
     }
   }
   x

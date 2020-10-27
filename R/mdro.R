@@ -114,7 +114,7 @@ mdro <- function(x,
       q_continue <- utils::menu(choices = c("OK", "Cancel"), graphics = FALSE, title = txt)
     }
     if (q_continue %in% c(FALSE, 2)) {
-      message("Cancelled, returning original data")
+      message_("Cancelled, returning original data", add_fn = font_red, as_note = FALSE)
       return(x)
     }
   }
@@ -162,10 +162,10 @@ mdro <- function(x,
     col_mo <- search_type_in_df(x = x, type = "mo", info = info)
   }
   if (is.null(col_mo) & guideline$code == "tb") {
-    message(font_blue("NOTE: No column found as input for `col_mo`,",
-                      font_bold("assuming all records contain", font_italic("Mycobacterium tuberculosis."))))
-    x$mo <- as.mo("Mycobacterium tuberculosis")
-    col_mo <- "mo"
+    message_("No column found as input for `col_mo`, ",
+             font_bold("assuming all records contain", font_italic("Mycobacterium tuberculosis.")))
+             x$mo <- as.mo("Mycobacterium tuberculosis")
+             col_mo <- "mo"
   }
   stop_if(is.null(col_mo), "`col_mo` must be set")
   stop_ifnot(col_mo %in% colnames(x), "column '", col_mo, "' (`col_mo`) not found")
@@ -599,7 +599,7 @@ mdro <- function(x,
   }
   trans_tbl2 <- function(txt, rows, lst) {
     if (info == TRUE) {
-      message(font_blue(txt, "..."), appendLF = FALSE)
+      message_(txt, "...", appendLF = FALSE, as_note = FALSE)
     }
     if (length(rows) > 0) {
       # function specific for the CMI paper of 2012 (Magiorakos et al.)
@@ -633,7 +633,7 @@ mdro <- function(x,
     }
     
     if (info == TRUE) {
-      message(font_blue(" OK"))
+      message_(" OK", as_note = FALSE)
     }
   }
   
@@ -653,20 +653,20 @@ mdro <- function(x,
     # take amoxicillin if ampicillin is unavailable
     if (is.na(AMP) & !is.na(AMX)) {
       if (verbose == TRUE) {
-        message(font_blue("NOTE: Filling ampicillin (AMP) results with amoxicillin (AMX) results"))
+        message_("Filling ampicillin (AMP) results with amoxicillin (AMX) results")
       }
       AMP <- AMX
     }
     # take ceftriaxone if cefotaxime is unavailable and vice versa
     if (is.na(CRO) & !is.na(CTX)) {
       if (verbose == TRUE) {
-        message(font_blue("NOTE: Filling ceftriaxone (CRO) results with cefotaxime (CTX) results"))
+        message_("Filling ceftriaxone (CRO) results with cefotaxime (CTX) results")
       }
       CRO <- CTX
     }
     if (is.na(CTX) & !is.na(CRO)) {
       if (verbose == TRUE) {
-        message(font_blue("NOTE: Filling cefotaxime (CTX) results with ceftriaxone (CRO) results"))
+        message_("Filling cefotaxime (CTX) results with ceftriaxone (CRO) results")
       }
       CTX <- CRO
     }

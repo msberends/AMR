@@ -116,8 +116,8 @@ pca <- function(x,
   
   pca_data <- x[, which(sapply(x, function(x) is.numeric(x)))]
   
-  message(font_blue(paste0("NOTE: Columns selected for PCA: ", paste0(font_bold(colnames(pca_data)), collapse = "/"),
-                           ".\n      Total observations available: ", nrow(pca_data), ".")))
+  message_("Columns selected for PCA: ", paste0(font_bold(colnames(pca_data)), collapse = "/"),
+           ". Total observations available: ", nrow(pca_data), ".")
   
   pca_model <- prcomp(pca_data, retx = retx, center = center, scale. = scale., tol = tol, rank. = rank.)
   attr(pca_model, "non_numeric_cols") <- x[, sapply(x, function(y) !is.numeric(y) & !all(is.na(y))), drop = FALSE]

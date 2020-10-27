@@ -340,7 +340,10 @@ as.rsi.mic <- function(x,
   mo_coerced <- suppressWarnings(as.mo(mo))
   guideline_coerced <- get_guideline(guideline)
   if (is.na(ab_coerced)) {
-    message(font_red(paste0("Returning NAs for unknown drug: `", font_bold(ab), "`. Rename this column to a drug name or code, and check the output with as.ab().")))
+    message_("Returning NAs for unknown drug: `", font_bold(ab),
+             "`. Rename this column to a drug name or code, and check the output with as.ab().", 
+             add_fn = font_red, 
+             as_note = FALSE)
     return(as.rsi(rep(NA, length(x))))
   }
   if (length(mo_coerced) == 1) {
@@ -350,11 +353,12 @@ as.rsi.mic <- function(x,
     uti <- rep(uti, length(x))
   }
   
-  message(font_blue(paste0("=> Interpreting MIC values of `", font_bold(ab), "` (",
-                           ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
-                           ab_name(ab_coerced, tolower = TRUE), ")", mo_var_found, 
-                           " according to ", font_bold(guideline_coerced), " ... ")),
-          appendLF = FALSE)
+  message_("=> Interpreting MIC values of `", font_bold(ab), "` (",
+           ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
+           ab_name(ab_coerced, tolower = TRUE), ")", mo_var_found, 
+           " according to ", font_bold(guideline_coerced), " ... ",
+           appendLF = FALSE,
+           as_note = FALSE)
   
   result <- exec_as.rsi(method = "mic",
                         x = x,
@@ -363,7 +367,7 @@ as.rsi.mic <- function(x,
                         guideline = guideline_coerced,
                         uti = uti,
                         conserve_capped_values = conserve_capped_values,
-                        add_intrinsic_resistance = add_intrinsic_resistance) # exec_as.rsi will return message(font_blue(" OK."))
+                        add_intrinsic_resistance = add_intrinsic_resistance) # exec_as.rsi will return message_(" OK.")
   result
 }
 
@@ -420,7 +424,10 @@ as.rsi.disk <- function(x,
   mo_coerced <- suppressWarnings(as.mo(mo))
   guideline_coerced <- get_guideline(guideline)
   if (is.na(ab_coerced)) {
-    message(font_red(paste0("Returning NAs for unknown drug: `", font_bold(ab), "`. Rename this column to a drug name or code, and check the output with as.ab().")))
+    message_("Returning NAs for unknown drug: `", font_bold(ab),
+             "`. Rename this column to a drug name or code, and check the output with as.ab().", 
+             add_fn = font_red, 
+             as_note = FALSE)
     return(as.rsi(rep(NA, length(x))))
   }
   if (length(mo_coerced) == 1) {
@@ -430,10 +437,11 @@ as.rsi.disk <- function(x,
     uti <- rep(uti, length(x))
   }
   
-  message(font_blue(paste0("=> Interpreting disk zones of `", font_bold(ab), "` (",
-                           ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
-                           ab_name(ab_coerced, tolower = TRUE), ") using guideline ", font_bold(guideline_coerced), " ... ")),
-          appendLF = FALSE)
+  message_("=> Interpreting disk zones of `", font_bold(ab), "` (",
+           ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
+           ab_name(ab_coerced, tolower = TRUE), ") using guideline ", font_bold(guideline_coerced), " ... ",
+           appendLF = FALSE, 
+           as_note = FALSE)
   result <- exec_as.rsi(method = "disk",
                         x = x,
                         mo = mo_coerced,
@@ -441,7 +449,7 @@ as.rsi.disk <- function(x,
                         guideline = guideline_coerced,
                         uti = uti,
                         conserve_capped_values = FALSE,
-                        add_intrinsic_resistance = add_intrinsic_resistance) # exec_as.rsi will return message(font_blue(" OK."))
+                        add_intrinsic_resistance = add_intrinsic_resistance) # exec_as.rsi will return message_(" OK.")
   result
 }
 
@@ -497,10 +505,11 @@ as.rsi.data.frame <- function(x,
       } else {
         plural <- c("", "s", "a ")
       }
-      message(font_blue(paste0("NOTE: Assuming value", plural[1], " ", 
-                               paste(paste0('"', values, '"'), collapse = ", "),
-                               " in column `", font_bold(col_specimen),
-                               "` reflect", plural[2], " ", plural[3], "urinary tract infection", plural[1], ".\n  Use `as.rsi(uti = FALSE)` to prevent this.")))
+      message_("Assuming value", plural[1], " ", 
+               paste(paste0('"', values, '"'), collapse = ", "),
+               " in column `", font_bold(col_specimen),
+               "` reflect", plural[2], " ", plural[3], "urinary tract infection", plural[1],
+               ".\n  Use `as.rsi(uti = FALSE)` to prevent this.")
     } else {
       # no data about UTI's found
       uti <- FALSE
@@ -573,12 +582,13 @@ as.rsi.data.frame <- function(x,
     } else if (types[i] == "rsi") {
       ab <- ab_cols[i]
       ab_coerced <- suppressWarnings(as.ab(ab))
-      message(font_blue(paste0("=> Cleaning values in column `", font_bold(ab), "` (",
-                               ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
-                               ab_name(ab_coerced, tolower = TRUE), ")... ")),
-              appendLF = FALSE)
+      message_("=> Cleaning values in column `", font_bold(ab), "` (",
+               ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
+               ab_name(ab_coerced, tolower = TRUE), ")... ",
+               appendLF = FALSE,
+               as_note = FALSE)
       x[, ab_cols[i]] <- as.rsi.default(x = x %pm>% pm_pull(ab_cols[i]))
-      message(font_green("OK."))
+      message_("OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
     }
   }
   
@@ -646,7 +656,7 @@ exec_as.rsi <- function(method,
   
   guideline_coerced <- get_guideline(guideline)
   if (guideline_coerced != guideline) {
-    message(font_blue(paste0("Note: Using guideline ", font_bold(guideline_coerced), " as input for `guideline`.")))
+    message_("Using guideline ", font_bold(guideline_coerced), " as input for `guideline`.")
   }
   
   new_rsi <- rep(NA_character_, length(x))
@@ -664,7 +674,7 @@ exec_as.rsi <- function(method,
   lookup_other <- paste(mo_other, ab)
   
   if (all(trans$uti == TRUE, na.rm = TRUE) & all(uti == FALSE)) {
-    message(font_red("WARNING."))
+    message_("WARNING.", add_fn = list(font_red, font_bold), as_note = FALSE)
     warning("Interpretation of ", font_bold(ab_name(ab, tolower = TRUE)), " for some microorganisms is only available for (uncomplicated) urinary tract infections (UTI).\n  Use parameter 'uti' to set which isolates are from urine. See ?as.rsi.", call. = FALSE)
     warned <- TRUE
   }
@@ -744,7 +754,7 @@ exec_as.rsi <- function(method,
     pm_pull(new_rsi)
   
   if (warned == FALSE) {
-    message(font_green("OK."))
+    message_("OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
   }
   
   load_mo_failures_uncertainties_renamed(metadata_mo)

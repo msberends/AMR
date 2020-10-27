@@ -255,7 +255,7 @@ joins_check_df <- function(x, by) {
         stop("Cannot join - no column found with name 'mo' or with class <mo>.", call. = FALSE)
       }
     }
-    message('Joining, by = "', by, '"') # message same as dplyr::join functions
+    message_('Joining, by = "', by, '"', add_fn = font_black, as_note = FALSE) # message same as dplyr::join functions
   }
   if (is.null(names(by))) {
     joinby <- colnames(microorganisms)[1]

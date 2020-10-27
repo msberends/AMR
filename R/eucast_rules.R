@@ -174,7 +174,7 @@ eucast_rules <- function(x,
       q_continue <- utils::menu(choices = c("OK", "Cancel"), graphics = FALSE, title = txt)
     }
     if (q_continue %in% c(FALSE, 2)) {
-      message("Cancelled, returning original data")
+      message_("Cancelled, returning original data", add_fn = font_red, as_note = FALSE)
       return(x)
     }
   }
@@ -443,14 +443,14 @@ eucast_rules <- function(x,
   if (ab_missing(AMP) & !ab_missing(AMX)) {
     # ampicillin column is missing, but amoxicillin is available
     if (info == TRUE) {
-      message(font_blue(paste0("NOTE: Using column `", font_bold(AMX), "` as input for ampicillin since many EUCAST rules depend on it.")))
+      message_("Using column `", font_bold(AMX), "` as input for ampicillin since many EUCAST rules depend on it.")
     }
     AMP <- AMX
   }
   
   # data preparation ----
   if (info == TRUE & NROW(x) > 10000) {
-    message(font_blue("NOTE: Preparing data..."), appendLF = FALSE)
+    message_("Preparing data...", appendLF = FALSE, as_note = FALSE)
   }
   
   # nolint start
@@ -583,7 +583,7 @@ eucast_rules <- function(x,
   x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL)
   x$genus_species <- paste(x$genus, x$species)
   if (info == TRUE & NROW(x) > 10000) {
-    message(font_blue("OK."))
+    message_("OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
   }
   
   if (any(x$genus == "Staphylococcus", na.rm = TRUE)) {

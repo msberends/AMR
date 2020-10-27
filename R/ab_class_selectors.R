@@ -158,7 +158,7 @@ ab_selector <- function(ab_class, function_name) {
   ab_in_data <- get_column_abx(vars_df, info = FALSE)
   
   if (length(ab_in_data) == 0) {
-    message(font_blue("NOTE: no antimicrobial agents found."))
+    message_("No antimicrobial agents found.")
     return(NULL)
   }
   
@@ -176,13 +176,13 @@ ab_selector <- function(ab_class, function_name) {
   # get the columns with a group names in the chosen ab class
   agents <- ab_in_data[names(ab_in_data) %in% ab_reference$ab]
   if (length(agents) == 0) {
-    message(font_blue(paste0("NOTE: No antimicrobial agents of class ", ab_group, 
-                             " found", examples, ".")))
+    message_("No antimicrobial agents of class ", ab_group, " found", examples, ".")
   } else {
-    message(font_blue(paste0("Selecting ", ab_group, ": ",
-                             paste(paste0("`", font_bold(agents, collapse = NULL),
-                                          "` (", ab_name(names(agents), tolower = TRUE, language = NULL), ")"),
-                                   collapse = ", "))))
+    message_("Selecting ", ab_group, ": ",
+             paste(paste0("`", font_bold(agents, collapse = NULL),
+                          "` (", ab_name(names(agents), tolower = TRUE, language = NULL), ")"),
+                   collapse = ", "),
+             as_note = FALSE)
   }
   unname(agents)
 }

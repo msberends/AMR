@@ -108,7 +108,7 @@ filter_ab_class <- function(x,
   # get all columns in data with names that resemble antibiotics
   ab_in_data <- get_column_abx(x, info = FALSE)
   if (length(ab_in_data) == 0) {
-    message(font_blue("NOTE: no columns with class <rsi> found (see ?as.rsi), data left unchanged."))
+    message_("No columns with class <rsi> found (see ?as.rsi), data left unchanged.")
     return(x.bak)
   }
   # get reference data
@@ -122,15 +122,15 @@ filter_ab_class <- function(x,
                            atc_group2 %like% ab_class)
   ab_group <- find_ab_group(ab_class)
   if (ab_group == "") {
-    message(font_blue(paste0("NOTE: unknown antimicrobial class '", ab_class.bak, "', data left unchanged.")))
+    message_("Unknown antimicrobial class '", ab_class.bak, "', data left unchanged.")
     return(x.bak)
   }
   # get the columns with a group names in the chosen ab class
   agents <- ab_in_data[names(ab_in_data) %in% ab_reference$ab]
   if (length(agents) == 0) {
-    message(font_blue(paste0("NOTE: no antimicrobial agents of class ", ab_group, 
-                             " found (such as ", find_ab_names(ab_class, 2), 
-                             "), data left unchanged.")))
+    message_("NOTE: no antimicrobial agents of class ", ab_group, 
+             " found (such as ", find_ab_names(ab_class, 2), 
+             "), data left unchanged.")
     return(x.bak)
   }
   
@@ -158,11 +158,11 @@ filter_ab_class <- function(x,
   # sort columns on official name
   agents <- agents[order(ab_name(names(agents), language = NULL))]
   
-  message(font_blue(paste0("Filtering on ", ab_group, ": ", scope,
-                           paste(paste0("`", font_bold(agents, collapse = NULL),
-                                        "` (", ab_name(names(agents), tolower = TRUE, language = NULL), ")"),
-                                 collapse = scope_txt),
-                           operator, toString(result))))
+  message_("Filtering on ", ab_group, ": ", scope,
+           paste(paste0("`", font_bold(agents, collapse = NULL),
+                        "` (", ab_name(names(agents), tolower = TRUE, language = NULL), ")"),
+                 collapse = scope_txt),
+           operator, toString(result), as_note = FALSE)
   x_transposed <- as.list(as.data.frame(t(x[, agents, drop = FALSE])))
   filtered <- sapply(x_transposed, function(y) scope_fn(y %in% result, na.rm = TRUE))
   x <- x[which(filtered), , drop = FALSE]

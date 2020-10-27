@@ -123,8 +123,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
         abnames <- abnames[!abnames == "clavulanic acid"]
       }
       if (length(abnames) > 1) {
-        message(font_blue(paste0("NOTE: more than one result was found for item ", index, ": ",
-                                 paste0(abnames, collapse = ", "))))
+        message_("More than one result was found for item ", index, ": ",
+                 paste0(abnames, collapse = ", "))
       }
     }
     found[1L]

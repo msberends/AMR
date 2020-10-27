@@ -126,7 +126,9 @@ set_mo_source <- function(path) {
     options(mo_source_timestamp = NULL)
     if (file.exists(file_location)) {
       unlink(file_location)
-      message(font_red(paste0("Removed mo_source file '", font_bold(file_location), "'")))
+      message_("Removed mo_source file '", font_bold(file_location), "'",
+               add_fn = font_red,
+               as_note = FALSE)
     }
     return(invisible())
   }
@@ -199,10 +201,9 @@ set_mo_source <- function(path) {
   saveRDS(df, file_location)
   options(mo_source = path)
   options(mo_source_timestamp = as.character(file.info(path)$mtime))
-  message(font_blue(paste0("NOTE: ",
-                           action, " mo_source file '", font_bold(file_location), "'",
-                           " from '", font_bold(path), "'",
-                           '\n      (columns "', colnames(df)[1], '" and "', colnames(df)[2], '")')))
+  message_(action, " mo_source file '", font_bold(file_location), "'",
+           " from '", font_bold(path), "'",
+           '(columns "', colnames(df)[1], '" and "', colnames(df)[2], '")')
 }
 
 #' @rdname mo_source
@@ -215,7 +216,7 @@ get_mo_source <- function() {
   if (!file.exists(path.expand("~/mo_source.rds"))) {
     options(mo_source = NULL)
     options(mo_source_timestamp = NULL)
-    message(font_blue("NOTE: Removed references to deleted mo_source file (see ?mo_source)"))
+    message_("Removed references to deleted mo_source file (see ?mo_source)")
     return(NULL)
   }
   

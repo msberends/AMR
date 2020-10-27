@@ -201,7 +201,7 @@ first_isolate <- function(x,
       # WHONET support
       x$patient_id <- paste(x$`First name`, x$`Last name`, x$Sex)
       col_patient_id <- "patient_id"
-      message(font_blue(paste0("NOTE: Using combined columns `", font_bold("First name"), "`, `", font_bold("Last name"), "` and `", font_bold("Sex"), "` as input for `col_patient_id`")))
+      message_("Using combined columns `", font_bold("First name"), "`, `", font_bold("Last name"), "` and `", font_bold("Sex"), "` as input for `col_patient_id`")
     } else {
       col_patient_id <- search_type_in_df(x = x, type = "patient_id")
     }
@@ -250,7 +250,9 @@ first_isolate <- function(x,
   }
   # remove testcodes
   if (!is.null(testcodes_exclude) & info == TRUE) {
-    message(font_black(paste0("[Criterion] Exclude test codes: ", toString(paste0("'", testcodes_exclude, "'")))))
+    message_("[Criterion] Exclude test codes: ", toString(paste0("'", testcodes_exclude, "'")),
+             add_fn = font_black,
+             as_note = FALSE)
   }
   
   if (is.null(col_specimen)) {
@@ -261,7 +263,9 @@ first_isolate <- function(x,
   if (!is.null(specimen_group)) {
     check_columns_existance(col_specimen, x)
     if (info == TRUE) {
-      message(font_black(paste0("[Criterion] Exclude other than specimen group '", specimen_group, "'")))
+      message_("[Criterion] Exclude other than specimen group '", specimen_group, "'",
+               add_fn = font_black,
+               as_note = FALSE)
     }
   }
   if (!is.null(col_keyantibiotics)) {
@@ -298,7 +302,7 @@ first_isolate <- function(x,
   # no isolates found
   if (abs(row.start) == Inf | abs(row.end) == Inf) {
     if (info == TRUE) {
-      message(paste("=> Found", font_bold("no isolates")))
+      message_("=> Found ", font_bold("no isolates"), as_note = FALSE)
     }
     return(rep(FALSE, nrow(x)))
   }
@@ -350,13 +354,17 @@ first_isolate <- function(x,
     weighted.notice <- "weighted "
     if (info == TRUE) {
       if (type == "keyantibiotics") {
-        message(font_black(paste0("[Criterion] Base inclusion on key antibiotics, ",
-                                  ifelse(ignore_I == FALSE, "not ", ""),
-                                  "ignoring I")))
+        message_("[Criterion] Base inclusion on key antibiotics, ",
+                 ifelse(ignore_I == FALSE, "not ", ""),
+                 "ignoring I",
+                 add_fn = font_black,
+                 as_note = FALSE)
       }
       if (type == "points") {
-        message(font_black(paste0("[Criterion] Base inclusion on key antibiotics, using points threshold of "
-                                  , points_threshold)))
+        message_("[Criterion] Base inclusion on key antibiotics, using points threshold of "
+                 , points_threshold,
+                 add_fn = font_black,
+                 as_note = FALSE)
       }
     }
     type_param <- type
@@ -393,10 +401,14 @@ first_isolate <- function(x,
   }
   if (!is.null(col_icu)) {
     if (icu_exclude == TRUE) {
-      message(font_black("[Criterion] Exclude isolates from ICU.\n"))
+      message_("[Criterion] Exclude isolates from ICU.",
+               add_fn = font_black,
+               as_note = FALSE)
       x[which(as.logical(x[, col_icu, drop = TRUE])), "newvar_first_isolate"] <- FALSE
     } else {
-      message(font_black("[Criterion] Include isolates from ICU.\n"))
+      message_("[Criterion] Include isolates from ICU.",
+               add_fn = font_black,
+               as_note = FALSE)
     }
   }
   
@@ -405,18 +417,18 @@ first_isolate <- function(x,
   
   # handle empty microorganisms
   if (any(x$newvar_mo == "UNKNOWN", na.rm = TRUE) & info == TRUE) {
-    message(font_blue(paste0("NOTE: ", ifelse(include_unknown == TRUE, "Included ", "Excluded "), 
-                             format(sum(x$newvar_mo == "UNKNOWN", na.rm = TRUE),
-                                    decimal.mark = decimal.mark, big.mark = big.mark), 
-                             " isolates with a microbial ID 'UNKNOWN' (column `", font_bold(col_mo), "`)")))
+    message_(ifelse(include_unknown == TRUE, "Included ", "Excluded "), 
+             format(sum(x$newvar_mo == "UNKNOWN", na.rm = TRUE),
+                    decimal.mark = decimal.mark, big.mark = big.mark), 
+             " isolates with a microbial ID 'UNKNOWN' (column `", font_bold(col_mo), "`)")
   }
   x[which(x$newvar_mo == "UNKNOWN"), "newvar_first_isolate"] <- include_unknown
   
   # exclude all NAs
   if (any(is.na(x$newvar_mo)) & info == TRUE) {
-    message(font_blue(paste0("NOTE: Excluded ", format(sum(is.na(x$newvar_mo), na.rm = TRUE),
-                                                       decimal.mark = decimal.mark, big.mark = big.mark), 
-                             " isolates with a microbial ID 'NA' (column `", font_bold(col_mo), "`)")))
+    message_("Excluded ", format(sum(is.na(x$newvar_mo), na.rm = TRUE),
+                                 decimal.mark = decimal.mark, big.mark = big.mark), 
+             " isolates with a microbial ID 'NA' (column `", font_bold(col_mo), "`)")
   }
   x[which(is.na(x$newvar_mo)), "newvar_first_isolate"] <- FALSE
   
@@ -445,7 +457,7 @@ first_isolate <- function(x,
                         font_bold(paste0(n_found, " first ", weighted.notice, "isolates")),
                         " (", p_found_total, " of total where a microbial ID was available)")
     }
-    message(font_black(msg_txt))
+    message_(msg_txt, add_fn = font_black, as_note = FALSE)
   }
   
   x$newvar_first_isolate

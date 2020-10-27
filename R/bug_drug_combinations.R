@@ -245,5 +245,5 @@ print.bug_drug_combinations <- function(x, ...) {
   x_class <- class(x)
   print(structure(x, class = x_class[x_class != "bug_drug_combinations"]),
         ...)
-  message(font_blue("NOTE: Use 'format()' on this result to get a publishable/printable format."))
+  message_("Use 'format()' on this result to get a publishable/printable format.", as_note = FALSE)
 }
