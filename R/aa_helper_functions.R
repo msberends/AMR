@@ -87,7 +87,7 @@ addin_insert_like <- function() {
   current_row_txt <- context$contents[current_row]
   
   pos_preceded_by <- function(txt) {
-    substr(current_row_txt, current_col - nchar(txt), current_col) == txt
+    substr(current_row_txt, current_col - nchar(txt), current_col) %like% paste0("^", txt)
   }
   replace_pos <- function(old, with) {
     modifyRange(document_range(document_position(current_row, current_col - nchar(old)),

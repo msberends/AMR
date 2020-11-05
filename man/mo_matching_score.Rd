@@ -12,7 +12,7 @@ mo_matching_score(x, n)
 \item{n}{A full taxonomic name, that exists in \code{\link[=microorganisms]{microorganisms$fullname}}}
 }
 \description{
-This helper function is used by \code{\link[=as.mo]{as.mo()}} to determine the most probable match of taxonomic records, based on user input.
+This algorithm is used by \code{\link[=as.mo]{as.mo()}} and all the \code{\link[=mo_property]{mo_*}} functions to determine the most probable match of taxonomic records based on user input.
 }
 \section{Matching score for microorganisms}{
 
@@ -35,10 +35,21 @@ The grouping into human pathogenic prevalence (\eqn{p}) is based on experience f
 All matches are sorted descending on their matching score and for all user input values, the top match will be returned. This will lead to the effect that e.g., \code{"E. coli"} will return the microbial ID of \emph{Escherichia coli} (\eqn{m = 0.688}, a highly prevalent microorganism found in humans) and not \emph{Entamoeba coli} (\eqn{m = 0.079}, a less prevalent microorganism in humans), although the latter would alphabetically come first.
 }
 
+\section{Stable lifecycle}{
+
+\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
+The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
+
+If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
+}
+
 \examples{
 as.mo("E. coli")
 mo_uncertainties()
 
 mo_matching_score(x = "E. coli",
                   n = c("Escherichia coli", "Entamoeba coli"))
+}
+\author{
+Matthijs S. Berends
 }

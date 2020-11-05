@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9012</span>
       </span>
     </div>
 
@@ -322,6 +322,11 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'><a href='mo_property.html'>mo_name</a></span><span class='op'>(</span><span class='va'>mo</span><span class='op'>)</span> <span class='op'>%like%</span> <span class='st'>"^ent"</span><span class='op'>)</span>
+ 
+  <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>group <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span><span class='va'>hospital_id</span> <span class='op'>%like%</span> <span class='st'>"A|D"</span>        <span class='op'>~</span> <span class='st'>"Group 1"</span>,
+                             <span class='fu'><a href='mo_property.html'>mo_name</a></span><span class='op'>(</span><span class='va'>mo</span><span class='op'>)</span> <span class='op'>%not_like%</span> <span class='st'>"^Staph"</span> <span class='op'>~</span> <span class='st'>"Group 2a"</span>,
+                             <span class='cn'>TRUE</span>                            <span class='op'>~</span> <span class='st'>"Group 2b"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
 <span class='co'># }</span>
 </pre>

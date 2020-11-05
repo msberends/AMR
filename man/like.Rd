@@ -80,6 +80,11 @@ a \%like\% b
 if (require("dplyr")) {
   example_isolates \%>\%
     filter(mo_name(mo) \%like\% "^ent")
+ 
+  example_isolates \%>\% 
+    mutate(group = case_when(hospital_id \%like\% "A|D"        ~ "Group 1",
+                             mo_name(mo) \%not_like\% "^Staph" ~ "Group 2a",
+                             TRUE                            ~ "Group 2b"))
 }
 }
 }

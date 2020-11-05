@@ -199,31 +199,16 @@ as.mo <- function(x,
   uncertainty_level <- translate_allow_uncertain(allow_uncertain)
 
   if (mo_source_isvalid(reference_df)
-      & isFALSE(Becker)
-      & isFALSE(Lancefield)
-      & !is.null(reference_df)
-      & all(x %in% reference_df[, 1][[1]])) {
+      && isFALSE(Becker)
+      && isFALSE(Lancefield)
+      && !is.null(reference_df)
+      && all(x %in% unlist(reference_df), na.rm = TRUE)) {
 
-    # has valid own reference_df
-    reference_df <- reference_df %pm>% pm_filter(!is.na(mo))
-    # keep only first two columns, second must be mo
-    if (colnames(reference_df)[1] == "mo") {
-      reference_df <- reference_df[, c(2, 1)]
-    } else {
-      reference_df <- reference_df[, c(1, 2)]
-    }
-    # some microbial codes might be old
-    reference_df[, 1] <- as.mo(reference_df[, 1, drop = TRUE])
-    
-    colnames(reference_df)[1] <- "x"
-    # remove factors, just keep characters
-    suppressWarnings(
-      reference_df[] <- lapply(reference_df, as.character)
-    )
+    reference_df <- repair_reference_df(reference_df)
     suppressWarnings(
       y <- data.frame(x = x, stringsAsFactors = FALSE) %pm>%
         pm_left_join(reference_df, by = "x") %pm>%
-        pm_pull("mo")
+        pm_pull(mo) 
     )
 
   } else if (all(x[!is.na(x)] %in% MO_lookup$mo)
@@ -406,22 +391,7 @@ exec_as.mo <- function(x,
   # defined df to check for
   if (!is.null(reference_df)) {
     mo_source_isvalid(reference_df)
-
-    reference_df <- reference_df %pm>% pm_filter(!is.na(mo))
-    # keep only first two columns, second must be named "mo"
-    if (colnames(reference_df)[1] == "mo") {
-      reference_df <- reference_df[, c(2, 1)]
-    } else {
-      reference_df <- reference_df[, c(1, 2)]
-    }
-    # some microbial codes might be old
-    reference_df[, 1] <- as.mo(reference_df[, 1, drop = TRUE])
-    
-    colnames(reference_df)[1] <- "x"
-    # remove factors, just keep characters
-    suppressWarnings(
-      reference_df[] <- lapply(reference_df, as.character)
-    )
+    reference_df <- repair_reference_df(reference_df)
   }
 
   # all empty
@@ -1936,7 +1906,11 @@ replace_old_mo_codes <- function(x, property) {
     if (property != "mo") {
       message_(font_blue("NOTE: The input contained old microbial codes (from previous package versions). Please update your MO codes with as.mo()."))
     } else {
-      message_(font_blue("NOTE:", length(matched), "old microbial codes (from previous package versions) were updated to current used codes."))
+      if (length(matched) == 1) {
+        message_(font_blue("NOTE: 1 old microbial code (from previous package versions) was updated to a current used code."))
+      } else {
+        message_(font_blue("NOTE:", length(matched), "old microbial codes (from previous package versions) were updated to current used codes.")) 
+      }
     }
   }
   x
@@ -1953,6 +1927,27 @@ replace_ignore_pattern <- function(x, ignore_pattern) {
     }
   }
   x
+}
+
+repair_reference_df <- function(reference_df) {
+  # has valid own reference_df
+  reference_df <- reference_df %pm>%
+    pm_filter(!is.na(mo))
+  
+  # keep only first two columns, second must be mo
+  if (colnames(reference_df)[1] == "mo") {
+    reference_df <- reference_df %pm>% pm_select(2, "mo")
+  } else {
+    reference_df <- reference_df %pm>% pm_select(1, "mo")
+  }
+  # some microbial codes might be old
+  reference_df[, 2] <- as.mo(reference_df[, 2, drop = TRUE])
+  # remove factors, just keep characters
+  suppressWarnings(
+    reference_df[] <- lapply(reference_df, as.character)
+  )
+  colnames(reference_df)[1] <- "x"
+  reference_df
 }
 
 left_join_MO_lookup <- function(x, ...) {

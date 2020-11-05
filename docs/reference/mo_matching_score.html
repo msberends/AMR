@@ -49,7 +49,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Calculate the matching score for microorganisms — mo_matching_score" />
-<meta property="og:description" content="This helper function is used by as.mo() to determine the most probable match of taxonomic records, based on user input." />
+<meta property="og:description" content="This algorithm is used by as.mo() and all the mo_* functions to determine the most probable match of taxonomic records based on user input." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9012</span>
       </span>
     </div>
 
@@ -239,7 +239,7 @@
     </div>
 
     <div class="ref-description">
-    <p>This helper function is used by <code><a href='as.mo.html'>as.mo()</a></code> to determine the most probable match of taxonomic records, based on user input.</p>
+    <p>This algorithm is used by <code><a href='as.mo.html'>as.mo()</a></code> and all the <code><a href='mo_property.html'>mo_*</a></code> functions to determine the most probable match of taxonomic records based on user input.</p>
     </div>
 
     <pre class="usage"><span class='fu'>mo_matching_score</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>n</span><span class='op'>)</span></pre>
@@ -274,6 +274,16 @@
 
 <p>The grouping into human pathogenic prevalence (\(p\)) is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence. <strong>Group 1</strong> (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is <em>Enterococcus</em>, <em>Staphylococcus</em> or <em>Streptococcus</em>. This group consequently contains all common Gram-negative bacteria, such as <em>Pseudomonas</em> and <em>Legionella</em> and all species within the order Enterobacterales. <strong>Group 2</strong> consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is <em>Absidia</em>, <em>Acremonium</em>, <em>Actinotignum</em>, <em>Alternaria</em>, <em>Anaerosalibacter</em>, <em>Apophysomyces</em>, <em>Arachnia</em>, <em>Aspergillus</em>, <em>Aureobacterium</em>, <em>Aureobasidium</em>, <em>Bacteroides</em>, <em>Basidiobolus</em>, <em>Beauveria</em>, <em>Blastocystis</em>, <em>Branhamella</em>, <em>Calymmatobacterium</em>, <em>Candida</em>, <em>Capnocytophaga</em>, <em>Catabacter</em>, <em>Chaetomium</em>, <em>Chryseobacterium</em>, <em>Chryseomonas</em>, <em>Chrysonilia</em>, <em>Cladophialophora</em>, <em>Cladosporium</em>, <em>Conidiobolus</em>, <em>Cryptococcus</em>, <em>Curvularia</em>, <em>Exophiala</em>, <em>Exserohilum</em>, <em>Flavobacterium</em>, <em>Fonsecaea</em>, <em>Fusarium</em>, <em>Fusobacterium</em>, <em>Hendersonula</em>, <em>Hypomyces</em>, <em>Koserella</em>, <em>Lelliottia</em>, <em>Leptosphaeria</em>, <em>Leptotrichia</em>, <em>Malassezia</em>, <em>Malbranchea</em>, <em>Mortierella</em>, <em>Mucor</em>, <em>Mycocentrospora</em>, <em>Mycoplasma</em>, <em>Nectria</em>, <em>Ochroconis</em>, <em>Oidiodendron</em>, <em>Phoma</em>, <em>Piedraia</em>, <em>Pithomyces</em>, <em>Pityrosporum</em>, <em>Prevotella</em>,\<em>Pseudallescheria</em>, <em>Rhizomucor</em>, <em>Rhizopus</em>, <em>Rhodotorula</em>, <em>Scolecobasidium</em>, <em>Scopulariopsis</em>, <em>Scytalidium</em>,<em>Sporobolomyces</em>, <em>Stachybotrys</em>, <em>Stomatococcus</em>, <em>Treponema</em>, <em>Trichoderma</em>, <em>Trichophyton</em>, <em>Trichosporon</em>, <em>Tritirachium</em> or <em>Ureaplasma</em>. <strong>Group 3</strong> consists of all other microorganisms.</p>
 <p>All matches are sorted descending on their matching score and for all user input values, the top match will be returned. This will lead to the effect that e.g., <code>"E. coli"</code> will return the microbial ID of <em>Escherichia coli</em> (\(m = 0.688\), a highly prevalent microorganism found in humans) and not <em>Entamoeba coli</em> (\(m = 0.079\), a less prevalent microorganism in humans), although the latter would alphabetically come first.</p>
+    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
+
+    
+
+<p><img src='figures/lifecycle_stable.svg' style=margin-bottom:5px /> <br />
+The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</strong>. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.</p>
+<p>If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Matthijs S. Berends</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='fu'><a href='as.mo.html'>as.mo</a></span><span class='op'>(</span><span class='st'>"E. coli"</span><span class='op'>)</span>

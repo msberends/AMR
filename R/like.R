@@ -67,6 +67,11 @@
 #' if (require("dplyr")) {
 #'   example_isolates %>%
 #'     filter(mo_name(mo) %like% "^ent")
+#'  
+#'   example_isolates %>% 
+#'     mutate(group = case_when(hospital_id %like% "A|D"        ~ "Group 1",
+#'                              mo_name(mo) %not_like% "^Staph" ~ "Group 2a",
+#'                              TRUE                            ~ "Group 2b"))
 #' }
 #' }
 like <- function(x, pattern, ignore.case = TRUE) {
@@ -167,7 +172,6 @@ like <- function(x, pattern, ignore.case = TRUE) {
   meet_criteria(pattern, allow_NA = FALSE)
   like(x, pattern, ignore.case = FALSE)
 }
-
 
 #' @rdname like
 #' @export

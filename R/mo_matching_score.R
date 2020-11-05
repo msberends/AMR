@@ -25,7 +25,9 @@
 
 #' Calculate the matching score for microorganisms
 #' 
-#' This helper function is used by [as.mo()] to determine the most probable match of taxonomic records, based on user input. 
+#' This algorithm is used by [as.mo()] and all the [`mo_*`][mo_property()] functions to determine the most probable match of taxonomic records based on user input. 
+#' @inheritSection lifecycle Stable lifecycle
+#' @author Matthijs S. Berends
 #' @param x Any user input value(s)
 #' @param n A full taxonomic name, that exists in [`microorganisms$fullname`][microorganisms]
 #' @section Matching score for microorganisms:
