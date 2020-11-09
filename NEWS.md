@@ -1,8 +1,13 @@
-# AMR 1.4.0.9012
-## <small>Last updated:  5 November 2020</small>
+# AMR 1.4.0.9013
+## <small>Last updated:  9 November 2020</small>
 
 ### New
-* Functions `is_gram_negative()` and `is_gram_positive()` as wrappers around `mo_gramstain()`. They always return `TRUE` or `FALSE`, thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
+* Functions `is_gram_negative()` and `is_gram_positive()` as wrappers around `mo_gramstain()`. They always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria. If you have the `dplyr` package installed, they can even determine the column with microorganisms themselves inside `dplyr` functions:
+  ```r
+  example_isolates %>%
+    filter(is_gram_positive())
+  #> NOTE: Using column `mo` as input for 'x'
+  ```
 * Functions `%not_like%` and `%not_like_case%` as wrappers around `%like%` and `%like_case%`. The RStudio addin to insert the text " %like% " as provided in this package now iterates over all like variants. So if you have defined the keyboard shortcut Ctrl/Cmd + L to this addin, it will first insert ` %like% ` and by pressing it again it will be replaced with ` %not_like% `, etc.
 
 ### Changed

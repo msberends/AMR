@@ -773,7 +773,7 @@ eucast_rules <- function(x,
     like_is_one_of <- trimws(eucast_rules_df[i, "like.is.one_of", drop = TRUE])
     mo_value <- trimws(eucast_rules_df[i, "this_value", drop = TRUE])
     
-    # be sure to comprise all coagulase-negative/-positive Staphylococci when they are mentioned
+    # be sure to comprise all coagulase-negative/-positive staphylococci when they are mentioned
     if (mo_value %like% "coagulase" && any(x$genus == "Staphylococcus", na.rm = TRUE)) {
       if (mo_value %like% "negative") {
         eucast_rules_df[i, "this_value"] <- paste0("^(", paste0(all_staph[which(all_staph$CNS_CPS %like% "negative"),

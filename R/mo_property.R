@@ -41,7 +41,7 @@
 #'
 #' Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions [mo_kingdom()] and [mo_domain()] return the exact same results.
 #'
-#' The Gram stain - [mo_gramstain()] - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318)), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`. Functions [is_gram_negative()] and [is_gram_positive()] always return `TRUE` or `FALSE`, even for species outside the kingdom of Bacteria.
+#' The Gram stain - [mo_gramstain()] - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318)), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`. Functions [is_gram_negative()] and [is_gram_positive()] always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
 #'
 #' All output will be [translate]d where possible.
 #'
@@ -122,7 +122,7 @@
 #' mo_shortname("S. pyo", Lancefield = TRUE) # "GAS" (='Group A Streptococci')
 #'
 #'
-#' # language support for German, Dutch, Spanish, Portuguese, Italian and French
+#' # language support  --------------------------------------------------------
 #' mo_gramstain("E. coli", language = "de")  # "Gramnegativ"
 #' mo_gramstain("E. coli", language = "nl")  # "Gram-negatief"
 #' mo_gramstain("E. coli", language = "es")  # "Gram negativo"
@@ -139,7 +139,11 @@
 #'             Lancefield = TRUE,
 #'             language = "nl")              # "Streptococcus groep A"
 #'
+#' # gram stains can be used as a filter
+#' example_isolates %>%
+#'   filter(is_gram_positive())
 #'
+#' # other --------------------------------------------------------------------
 #' # get a list with the complete taxonomy (from kingdom to subspecies)
 #' mo_taxonomy("E. coli")
 #' # get a list with the taxonomy, the authors, Gram-stain and URL to the online database
@@ -177,10 +181,10 @@ mo_shortname <- function(x, language = get_locale(), ...) {
 
   # exceptions for where no species is known
   shortnames[shortnames %like% ".[.] spp[.]"] <- genera[shortnames %like% ".[.] spp[.]"]
-  # exceptions for Staphylococci
+  # exceptions for staphylococci
   shortnames[shortnames == "S. coagulase-negative"] <- "CoNS"
   shortnames[shortnames == "S. coagulase-positive"] <- "CoPS"
-  # exceptions for Streptococci: Streptococcus Group A -> GAS
+  # exceptions for streptococci: Group A Streptococcus -> GAS
   shortnames[shortnames %like% "S. group [ABCDFGHK]"] <- paste0("G", gsub("S. group ([ABCDFGHK])", "\\1", shortnames[shortnames %like% "S. group [ABCDFGHK]"]), "S")
   # unknown species etc.
   shortnames[shortnames %like% "unknown"] <- paste0("(", trimws(gsub("[^a-zA-Z -]", "", shortnames[shortnames %like% "unknown"])), ")")
@@ -311,6 +315,23 @@ mo_gramstain <- function(x, language = get_locale(), ...) {
 #' @rdname mo_property
 #' @export
 is_gram_negative <- function(x, language = get_locale(), ...) {
+  if (missing(x)) {
+    peek_mask_dplyr <- import_fn("peek_mask", "dplyr", error_on_fail = FALSE)
+    if (!is.null(peek_mask_dplyr)) {
+      try({
+        df <- as.data.frame(peek_mask_dplyr()$across_cols(), stringsAsFactors = FALSE)
+        mo <- suppressMessages(search_type_in_df(df, "mo"))
+        if (!is.null(mo)) {
+          message_("Using column `", font_bold(mo), "` as input for 'x'")
+          x <- df[, mo, drop = TRUE]
+        } else {
+          stop_("Argument 'x' is missing")
+        }
+      }, silent = TRUE)
+    } else {
+      stop_("Argument 'x' is missing")
+    }
+  }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
 
@@ -318,12 +339,31 @@ is_gram_negative <- function(x, language = get_locale(), ...) {
   metadata <- get_mo_failures_uncertainties_renamed()
   grams <- mo_gramstain(x.mo, language = NULL)
   load_mo_failures_uncertainties_renamed(metadata)
-  grams == "Gram-negative" & !is.na(grams)
+  out <- grams == "Gram-negative" & !is.na(grams)
+  out[x.mo %in% c(NA, "UNKNOWN")] <- NA
+  out
 }
 
 #' @rdname mo_property
 #' @export
 is_gram_positive <- function(x, language = get_locale(), ...) {
+  if (missing(x)) {
+    peek_mask_dplyr <- import_fn("peek_mask", "dplyr", error_on_fail = FALSE)
+    if (!is.null(peek_mask_dplyr)) {
+      try({
+        df <- as.data.frame(peek_mask_dplyr()$across_cols(), stringsAsFactors = FALSE)
+        mo <- suppressMessages(search_type_in_df(df, "mo"))
+        if (!is.null(mo)) {
+          message_("Using column `", font_bold(mo), "` as input for 'x'")
+          x <- df[, mo, drop = TRUE]
+        } else {
+          stop_("Argument 'x' is missing")
+        }
+      }, silent = TRUE)
+    } else {
+      stop_("Argument 'x' is missing")
+    }
+  }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
 
@@ -331,7 +371,9 @@ is_gram_positive <- function(x, language = get_locale(), ...) {
   metadata <- get_mo_failures_uncertainties_renamed()
   grams <- mo_gramstain(x.mo, language = NULL)
   load_mo_failures_uncertainties_renamed(metadata)
-  grams == "Gram-positive" & !is.na(grams)
+  out <- grams == "Gram-positive" & !is.na(grams)
+  out[x.mo %in% c(NA, "UNKNOWN")] <- NA
+  out
 }
 
 #' @rdname mo_property

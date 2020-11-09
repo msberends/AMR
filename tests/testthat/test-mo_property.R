@@ -117,4 +117,10 @@ test_that("mo_property works", {
                c(TRUE, FALSE, FALSE))
   expect_equal(is_gram_positive(c("Escherichia coli", "Staphylococcus aureus", "Candida albicans")),
                c(FALSE, TRUE, FALSE))
+  
+  library(dplyr)
+  expect_equal(example_isolates %>% filter(is_gram_negative()) %>% nrow(),
+               730)
+  expect_equal(example_isolates %>% filter(is_gram_positive()) %>% nrow(),
+               1238)
 })

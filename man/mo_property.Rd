@@ -116,7 +116,7 @@ The short name - \code{\link[=mo_shortname]{mo_shortname()}} - almost always ret
 
 Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions \code{\link[=mo_kingdom]{mo_kingdom()}} and \code{\link[=mo_domain]{mo_domain()}} return the exact same results.
 
-The Gram stain - \code{\link[=mo_gramstain]{mo_gramstain()}} - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, \href{https://pubmed.ncbi.nlm.nih.gov/11837318}{PMID 11837318}), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value \code{NA}. Functions \code{\link[=is_gram_negative]{is_gram_negative()}} and \code{\link[=is_gram_positive]{is_gram_positive()}} always return \code{TRUE} or \code{FALSE}, even for species outside the kingdom of Bacteria.
+The Gram stain - \code{\link[=mo_gramstain]{mo_gramstain()}} - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, \href{https://pubmed.ncbi.nlm.nih.gov/11837318}{PMID 11837318}), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value \code{NA}. Functions \code{\link[=is_gram_negative]{is_gram_negative()}} and \code{\link[=is_gram_positive]{is_gram_positive()}} always return \code{TRUE} or \code{FALSE} (except when the input is \code{NA} or the MO code is \code{UNKNOWN}), thus always return \code{FALSE} for species outside the taxonomic kingdom of Bacteria.
 
 All output will be \link{translate}d where possible.
 
@@ -241,7 +241,7 @@ mo_shortname("S. pyo")                    # "S. pyogenes"
 mo_shortname("S. pyo", Lancefield = TRUE) # "GAS" (='Group A Streptococci')
 
 
-# language support for German, Dutch, Spanish, Portuguese, Italian and French
+# language support  --------------------------------------------------------
 mo_gramstain("E. coli", language = "de")  # "Gramnegativ"
 mo_gramstain("E. coli", language = "nl")  # "Gram-negatief"
 mo_gramstain("E. coli", language = "es")  # "Gram negativo"
@@ -258,7 +258,11 @@ mo_fullname("S. pyogenes",
             Lancefield = TRUE,
             language = "nl")              # "Streptococcus groep A"
 
+# gram stains can be used as a filter
+example_isolates \%>\%
+  filter(is_gram_positive())
 
+# other --------------------------------------------------------------------
 # get a list with the complete taxonomy (from kingdom to subspecies)
 mo_taxonomy("E. coli")
 # get a list with the taxonomy, the authors, Gram-stain and URL to the online database
