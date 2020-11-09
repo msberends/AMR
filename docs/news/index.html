@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9014</span>
       </span>
     </div>
 
@@ -236,9 +236,9 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1409013" class="section level1">
-<h1 class="page-header" data-toc-text="1.4.0.9013">
-<a href="#amr-1409013" class="anchor"></a>AMR 1.4.0.9013<small> Unreleased </small>
+    <div id="amr-1409014" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.0.9014">
+<a href="#amr-1409014" class="anchor"></a>AMR 1.4.0.9014<small> Unreleased </small>
 </h1>
 <div id="last-updated-9-november-2020" class="section level2">
 <h2 class="hasAnchor">
@@ -252,7 +252,7 @@
 <p>Functions <code><a href="../reference/mo_property.html">is_gram_negative()</a></code> and <code><a href="../reference/mo_property.html">is_gram_positive()</a></code> as wrappers around <code><a href="../reference/mo_property.html">mo_gramstain()</a></code>. They always return <code>TRUE</code> or <code>FALSE</code> (except when the input is <code>NA</code> or the MO code is <code>UNKNOWN</code>), thus always return <code>FALSE</code> for species outside the taxonomic kingdom of Bacteria. If you have the <code>dplyr</code> package installed, they can even determine the column with microorganisms themselves inside <code>dplyr</code> functions:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="va">example_isolates</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">is_gram_positive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">is_gram_positive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; NOTE: Using column `mo` as input for 'x'</span></pre></div>
 </li>
 <li><p>Functions <code><a href="../reference/like.html">%not_like%</a></code> and <code><a href="../reference/like.html">%not_like_case%</a></code> as wrappers around <code><a href="../reference/like.html">%like%</a></code> and <code><a href="../reference/like.html">%like_case%</a></code>. The RStudio addin to insert the text " %like% " as provided in this package now iterates over all like variants. So if you have defined the keyboard shortcut Ctrl/Cmd + L to this addin, it will first insert <code><a href="../reference/like.html">%like%</a></code> and by pressing it again it will be replaced with <code><a href="../reference/like.html">%not_like%</a></code>, etc.</p></li>

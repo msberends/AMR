@@ -140,9 +140,11 @@
 #'             language = "nl")              # "Streptococcus groep A"
 #'
 #' # gram stains can be used as a filter
-#' example_isolates %>%
-#'   filter(is_gram_positive())
-#'
+#' if (require("dplyr")) {
+#'   example_isolates %>%
+#'     filter(is_gram_positive())
+#' }
+#' 
 #' # other --------------------------------------------------------------------
 #' # get a list with the complete taxonomy (from kingdom to subspecies)
 #' mo_taxonomy("E. coli")

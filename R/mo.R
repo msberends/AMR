@@ -1417,7 +1417,7 @@ exec_as.mo <- function(x,
     # - Becker et al. 2014, PMID 25278577
     # - Becker et al. 2019, PMID 30872103
     # - Becker et al. 2020, PMID 32056452
-    post_Becker <- c("") # 2020-10-20 currently all are mentioned in above papers
+    post_Becker <- character(0) # 2020-10-20 currently all are mentioned in above papers
     if (any(x %in% MO_lookup[which(MO_lookup$species %in% post_Becker), property])) {
 
       warning("Becker ", font_italic("et al."), " (2014, 2019) does not contain these species named after their publication: ",
