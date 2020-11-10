@@ -313,7 +313,9 @@ word_wrap <- function(...,
   }
   msg <- gsub("\n", paste0("\n", strrep(" ", indentation)), msg, fixed = TRUE)
   msg <- gsub("*|*", paste0("*|*", strrep(" ", indentation)), msg, fixed = TRUE)
-
+  # remove trailing empty characters
+  msg <- gsub("(\n| )+$", "", msg)
+  
   if (length(add_fn) > 0) {
     if (!is.list(add_fn)) {
       add_fn <- list(add_fn)

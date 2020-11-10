@@ -1,4 +1,4 @@
-# AMR 1.4.0.9015
+# AMR 1.4.0.9016
 ## <small>Last updated: 10 November 2020</small>
 
 ### New
@@ -16,6 +16,7 @@
 * Better determination of disk zones and MIC values when running `as.rsi()` on a data.frame
 * Updated coagulase-negative staphylococci determination with Becker *et al.* 2020 (PMID 32056452), meaning that the species *S. argensis*, *S. caeli*, *S. debuckii*, *S. edaphicus* and *S. pseudoxylosus* are now all considered CoNS
 * Fix for using parameter `reference_df` in `as.mo()` and `mo_*()` functions that contain old microbial codes (from previous package versions)
+* Fix for using `as.rsi()` on a data.frame in older R versions
 
 ### Other
 * All messages and warnings thrown by this package now break sentences on whole words

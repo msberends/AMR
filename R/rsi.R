@@ -469,6 +469,13 @@ as.rsi.data.frame <- function(x,
   meet_criteria(conserve_capped_values, allow_class = "logical", has_length = 1)
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
   
+  for (i in seq_len(ncol(x))) {
+    # don't keep factors
+    if (is.factor(x[, i, drop = TRUE])) {
+      x[, i] <- as.character(x[, i, drop = TRUE])
+    }
+  }
+  
   # -- MO
   col_mo.bak <- col_mo
   if (is.null(col_mo)) {

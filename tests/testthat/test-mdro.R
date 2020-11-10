@@ -46,7 +46,7 @@ test_that("mdro works", {
 
   library(dplyr)
   # example_isolates should have these finding using Dutch guidelines
-  expect_equal(outcome %>% cleaner::freq() %>% pull(count),
+  expect_equal(as.double(table(outcome)),
                c(1969, 25, 6)) # 1969 neg, 25 unconfirmed, 6 pos
 
   expect_equal(brmo(example_isolates, info = FALSE),
@@ -104,7 +104,7 @@ test_that("mdro works", {
   expect_equal(
     # select only rifampicine, mo will be determined automatically (as M. tuberculosis),
     # number of mono-resistant strains should be equal to number of rifampicine-resistant strains
-    cleaner::freq(mdr_tb(example_isolates[, "RIF", drop = FALSE]))$count[2],
+    as.double(table(mdr_tb(example_isolates[, "RIF", drop = FALSE])))[2],
     count_R(example_isolates$RIF))
 
   sample_rsi <- function() {
