@@ -132,7 +132,7 @@ mdro <- function(x,
   }
   
   if (!is.null(list(...)$country)) {
-    warning("Using `country` is deprecated, use `guideline` instead. Please see ?mdro.", call. = FALSE)
+    warning_("Using `country` is deprecated, use `guideline` instead. Please see ?mdro.", call = FALSE)
     guideline <- list(...)$country
   }
 
@@ -1205,7 +1205,7 @@ mdro <- function(x,
   # Results ----
   if (guideline$code == "cmi2012") {
     if (any(x$MDRO == -1, na.rm = TRUE)) {
-      warning("NA introduced for isolates where the available percentage of antimicrobial classes was below ",
+      warning_("NA introduced for isolates where the available percentage of antimicrobial classes was below ",
               percentage(pct_required_classes), " (set with `pct_required_classes`)")
       # set these -1s to NA
       x[which(x$MDRO == -1), "MDRO"] <- NA_integer_

@@ -1,5 +1,5 @@
-# AMR 1.4.0.9014
-## <small>Last updated:  9 November 2020</small>
+# AMR 1.4.0.9015
+## <small>Last updated: 10 November 2020</small>
 
 ### New
 * Functions `is_gram_negative()` and `is_gram_positive()` as wrappers around `mo_gramstain()`. They always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria. If you have the `dplyr` package installed, they can even determine the column with microorganisms themselves inside `dplyr` functions:
@@ -18,7 +18,7 @@
 * Fix for using parameter `reference_df` in `as.mo()` and `mo_*()` functions that contain old microbial codes (from previous package versions)
 
 ### Other
-* All messages thrown by this package now have correct line breaks
+* All messages and warnings thrown by this package now break sentences on whole words
 * More extensive unit tests
 
 # AMR 1.4.0

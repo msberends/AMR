@@ -101,10 +101,10 @@ as.disk <- function(x, na.rm = FALSE) {
         unique() %pm>%
         sort()
       list_missing <- paste0('"', list_missing, '"', collapse = ", ")
-      warning(na_after - na_before, " results truncated (",
-              round(((na_after - na_before) / length(x)) * 100),
-              "%) that were invalid disk zones: ",
-              list_missing, call. = FALSE)
+      warning_(na_after - na_before, " results truncated (",
+               round(((na_after - na_before) / length(x)) * 100),
+               "%) that were invalid disk zones: ",
+               list_missing, call = FALSE)
     }
   }
   structure(as.integer(x),

@@ -155,7 +155,7 @@ translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE) {
   # check if text to look for is in one of the patterns
   any_form_in_patterns <- tryCatch(any(from_unique %like% paste0("(", paste(df_trans$pattern, collapse = "|"), ")")),
                                    error = function(e) {
-                                     warning("Translation not possible. Please open an issue on GitHub (https://github.com/msberends/AMR/issues).", call. = FALSE)
+                                     warning_("Translation not possible. Please open an issue on GitHub (https://github.com/msberends/AMR/issues).", call = FALSE)
                                      return(FALSE)
                                    })
   if (NROW(df_trans) == 0 | !any_form_in_patterns) {

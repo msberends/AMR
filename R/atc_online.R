@@ -161,7 +161,7 @@ atc_online_property <- function(atc_code,
       colnames(tbl) <- gsub("^atc.*", "atc", tolower(colnames(tbl)))
       
       if (length(tbl) == 0) {
-        warning("ATC not found: ", atc_code[i], ". Please check ", atc_url, ".", call. = FALSE)
+        warning_("ATC not found: ", atc_code[i], ". Please check ", atc_url, ".", call = FALSE)
         returnvalue[i] <- NA
         next
       }

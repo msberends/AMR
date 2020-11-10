@@ -77,10 +77,13 @@
   if (!interactive() || stats::runif(1) > 0.1 || isTRUE(as.logical(getOption("AMR_silentstart", FALSE)))) {
     return()
   }
-  packageStartupMessage("Thank you for using the AMR package! ",
-                        "If you have a minute, please anonymously fill in this short questionnaire to improve the package and its functionalities:",
-                        "\nhttps://msberends.github.io/AMR/survey.html",
-                        "\n[ prevent his notice with suppressPackageStartupMessages(library(AMR)) or use options(AMR_silentstart = TRUE) ]")
+  packageStartupMessage(word_wrap("Thank you for using the AMR package! ",
+                                  "If you have a minute, please anonymously fill in this short questionnaire to improve the package and its functionalities: ",
+                                  font_blue("https://msberends.github.io/AMR/survey.html\n"),
+                                  "[prevent his notice with ",
+                                  font_bold("suppressPackageStartupMessages(library(AMR))"),
+                                  " or use ",
+                                  font_bold("options(AMR_silentstart = TRUE)"), "]"))
 }
 
 create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {

@@ -95,7 +95,7 @@ rsi_calc <- function(...,
   }
   
   if (is.null(x)) {
-    warning("argument is NULL (check if columns exist): returning NA", call. = FALSE)
+    warning_("argument is NULL (check if columns exist): returning NA", call = FALSE)
     return(NA)
   }
   
@@ -143,8 +143,8 @@ rsi_calc <- function(...,
   }
   
   if (print_warning == TRUE) {
-    warning("Increase speed by transforming to class <rsi> on beforehand: your_data %pm>% mutate_if(is.rsi.eligible, as.rsi)",
-            call. = FALSE)
+    warning_("Increase speed by transforming to class <rsi> on beforehand: your_data %pm>% mutate_if(is.rsi.eligible, as.rsi)",
+             call = FALSE)
   }
   
   if (only_count == TRUE) {
@@ -155,7 +155,7 @@ rsi_calc <- function(...,
     if (data_vars != "") {
       data_vars <- paste(" for", data_vars)
     }
-    warning("Introducing NA: only ", denominator, " results available", data_vars, " (`minimum` = ", minimum, ").", call. = FALSE)
+    warning_("Introducing NA: only ", denominator, " results available", data_vars, " (`minimum` = ", minimum, ").", call = FALSE)
     fraction <- NA_real_
   } else {
     fraction <- numerator / denominator

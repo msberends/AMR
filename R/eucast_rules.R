@@ -564,10 +564,12 @@ eucast_rules <- function(x,
   x <- as.data.frame(x, stringsAsFactors = FALSE) # no tibbles, data.tables, etc.
   rownames(x) <- NULL # will later be restored with old_attributes
   # create unique row IDs - combination of the MO and all ABx columns (so they will only run once per unique combination)
-  x$`.rowid` <- sapply(as.list(as.data.frame(t(x[, c(col_mo, cols_ab), drop = FALSE]))), function(x) {
-    x[is.na(x)] <- "."
-    paste0(x, collapse = "")
-  })
+  x$`.rowid` <- sapply(as.list(as.data.frame(t(x[, c(col_mo, cols_ab), drop = FALSE]),
+                                             stringsAsFactors = FALSE)),
+                       function(x) {
+                         x[is.na(x)] <- "."
+                         paste0(x, collapse = "")
+                       })
 
   # save original table, with the new .rowid column
   x.bak <- x
@@ -676,7 +678,12 @@ eucast_rules <- function(x,
     
   } else {
     if (info == TRUE) {
-      cat(font_red("\nSkipping inheritance rules defined by this package, such as setting trimethoprim (TMP) = R where trimethoprim/sulfamethoxazole (SXT) = R.\nUse eucast_rules(..., rules = \"all\") to also apply those rules.\n"))
+      message_("\n\nSkipping inheritance rules defined by this package, such as setting trimethoprim (TMP) = R where trimethoprim/sulfamethoxazole (SXT) = R.",
+               as_note = FALSE,
+               add_fn = font_red)
+      message_("Use eucast_rules(..., rules = \"all\") to also apply those rules.",
+               as_note = FALSE,
+               add_fn = font_red)
     }
   }
   
@@ -763,7 +770,9 @@ eucast_rules <- function(x,
       # Print rule  -------------------------------------------------------------
       if (rule_current != rule_previous) {
         # is new rule within group, print its name
-        cat(markup_italics_where_needed(rule_current))
+        cat(markup_italics_where_needed(word_wrap(rule_current, 
+                                                  width = getOption("width") - 30,
+                                                  extra_indent = 4)))
         warned <- FALSE
       }
     }
@@ -903,12 +912,12 @@ eucast_rules <- function(x,
     }
     
     cat(paste0("\n", font_grey(strrep("-", 0.95 * options()$width)), "\n"))
-    cat(paste0("The rules ", paste0(wouldve, "affected "),
-               font_bold(formatnr(pm_n_distinct(verbose_info$row)),
-                         "out of", formatnr(nrow(x.bak)),
-                         "rows"), 
-               ", making a total of ",
-               font_bold(formatnr(nrow(verbose_info)), "edits\n")))
+    cat(word_wrap(paste0("The rules ", paste0(wouldve, "affected "),
+                         font_bold(formatnr(pm_n_distinct(verbose_info$row)),
+                                   "out of", formatnr(nrow(x.bak)),
+                                   "rows"), 
+                         ", making a total of ",
+                         font_bold(formatnr(nrow(verbose_info)), "edits\n"))))
     
     total_n_added <- verbose_info %pm>% pm_filter(is.na(old)) %pm>% nrow()
     total_n_changed <- verbose_info %pm>% pm_filter(!is.na(old)) %pm>% nrow()
@@ -960,21 +969,21 @@ eucast_rules <- function(x,
     cat(paste0(font_grey(strrep("-", 0.95 * options()$width)), "\n"))
     
     if (verbose == FALSE & total_n_added + total_n_changed > 0) {
-      cat(paste("\nUse", font_bold("eucast_rules(..., verbose = TRUE)"), "(on your original data) to get a data.frame with all specified edits instead.\n\n"))
+      cat("\n", word_wrap("Use ", font_bold("eucast_rules(..., verbose = TRUE)"), " (on your original data) to get a data.frame with all specified edits instead."), "\n\n", sep = "")
     } else if (verbose == TRUE) {
-      cat(paste0("\nUsed 'Verbose mode' (", font_bold("verbose = TRUE"), "), which returns a data.frame with all specified edits.\nUse ", font_bold("verbose = FALSE"), " to apply the rules on your data.\n\n"))
+      cat("\n", word_wrap("Used 'Verbose mode' (", font_bold("verbose = TRUE"), "), which returns a data.frame with all specified edits.\nUse ", font_bold("verbose = FALSE"), " to apply the rules on your data."), "\n\n", sep = "")
     }
   }
   
   if (length(warn_lacking_rsi_class) > 0) {
     warn_lacking_rsi_class <- unique(warn_lacking_rsi_class)
-    warning("Not all columns with antimicrobial results are of class <rsi>. Transform them on beforehand, with e.g.:\n",
-            "  ", x_deparsed, " %>% mutate_if(is.rsi.eligible, as.rsi)\n",
-            "  ", x_deparsed, " %>% as.rsi(", ifelse(length(warn_lacking_rsi_class) == 1, 
-                                                     warn_lacking_rsi_class,
-                                                     paste0(warn_lacking_rsi_class[1], ":", warn_lacking_rsi_class[length(warn_lacking_rsi_class)])), 
-            ")",
-            call. = FALSE)
+    warning_("Not all columns with antimicrobial results are of class <rsi>. Transform them on beforehand, with e.g.:\n",
+             "  ", x_deparsed, " %>% mutate_if(is.rsi.eligible, as.rsi)\n",
+             "  ", x_deparsed, " %>% as.rsi(", ifelse(length(warn_lacking_rsi_class) == 1, 
+                                                      warn_lacking_rsi_class,
+                                                      paste0(warn_lacking_rsi_class[1], ":", warn_lacking_rsi_class[length(warn_lacking_rsi_class)])), 
+             ")",
+             call = FALSE)
   }
   
   # Return data set ---------------------------------------------------------
@@ -1034,16 +1043,16 @@ edit_rsi <- function(x,
       warning = function(w) {
         if (w$message %like% "invalid factor level") {
           xyz <- sapply(cols, function(col) {
-            new_edits[, col] <- factor(x = as.character(pm_pull(new_edits, col)), levels = c(to, levels(pm_pull(new_edits, col))))
-            # x[, col] <<- factor(x = as.character(pm_pull(x, col)), levels = c(to, levels(pm_pull(x, col))))
+            new_edits[, col] <<- factor(x = as.character(pm_pull(new_edits, col)),
+                                       levels = unique(c(to, levels(pm_pull(new_edits, col)))))
             invisible()
           })
-          new_edits[rows, cols] <- to
-          warning('Value "', to, '" added to the factor levels of column(s) `', paste(cols, collapse = "`, `"), "` because this value was not an existing factor level.\nA better way is to use as.rsi() on beforehand on antimicrobial columns to guarantee the right structure.", call. = FALSE)
+          suppressWarnings(new_edits[rows, cols] <<- to)
+          warning_('Value "', to, '" added to the factor levels of column(s) `', paste(cols, collapse = "`, `"), "` because this value was not an existing factor level. A better way is to use as.rsi() on beforehand on antimicrobial columns to guarantee the right structure.", call = FALSE)
           txt_warning()
           warned <- FALSE
         } else {
-          warning(w$message, call. = FALSE)
+          warning_(w$message, call = FALSE)
           txt_warning()
           cat("\n") # txt_warning() does not append a "\n" on itself
         }

@@ -225,12 +225,12 @@ ab_url <- function(x, open = FALSE, ...) {
   
   NAs <- ab_name(ab, tolower = TRUE, language = NULL)[!is.na(ab) & is.na(ab_atc(ab))]
   if (length(NAs) > 0) {
-    warning("No ATC code available for ", paste0(NAs, collapse = ", "), ".")
+    warning_("No ATC code available for ", paste0(NAs, collapse = ", "), ".")
   }
   
   if (open == TRUE) {
     if (length(u) > 1 & !is.na(u[1L])) {
-      warning("only the first URL will be opened, as `browseURL()` only suports one string.")
+      warning_("Only the first URL will be opened, as `browseURL()` only suports one string.")
     }
     if (!is.na(u[1L])) {
       utils::browseURL(u[1L])

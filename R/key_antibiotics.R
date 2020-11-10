@@ -188,11 +188,11 @@ key_antibiotics <- function(x,
     }
     if (!all(col.list %in% colnames(x))) {
       if (warnings == TRUE) {
-        warning("Some columns do not exist and will be ignored: ",
-                col.list.bak[!(col.list %in% colnames(x))] %pm>% toString(),
-                ".\nTHIS MAY STRONGLY INFLUENCE THE OUTCOME.",
-                immediate. = TRUE,
-                call. = FALSE)
+        warning_("Some columns do not exist and will be ignored: ",
+                 col.list.bak[!(col.list %in% colnames(x))] %pm>% toString(),
+                 ".\nTHIS MAY STRONGLY INFLUENCE THE OUTCOME.",
+                 immediate = TRUE,
+                 call = FALSE)
       }
     }
     col.list
@@ -227,7 +227,7 @@ key_antibiotics <- function(x,
   gram_positive <- gram_positive[!is.null(gram_positive)]
   gram_positive <- gram_positive[!is.na(gram_positive)]
   if (length(gram_positive) < 12) {
-    warning("only using ", length(gram_positive), " different antibiotics as key antibiotics for Gram-positives. See ?key_antibiotics.", call. = FALSE)
+    warning_("Only using ", length(gram_positive), " different antibiotics as key antibiotics for Gram-positives. See ?key_antibiotics.", call = FALSE)
   }
   
   gram_negative <- c(universal,
@@ -236,7 +236,7 @@ key_antibiotics <- function(x,
   gram_negative <- gram_negative[!is.null(gram_negative)]
   gram_negative <- gram_negative[!is.na(gram_negative)]
   if (length(gram_negative) < 12) {
-    warning("only using ", length(gram_negative), " different antibiotics as key antibiotics for Gram-negatives. See ?key_antibiotics.", call. = FALSE)
+    warning_("Only using ", length(gram_negative), " different antibiotics as key antibiotics for Gram-negatives. See ?key_antibiotics.", call = FALSE)
   }
   
   x <- as.data.frame(x, stringsAsFactors = FALSE)
@@ -264,7 +264,7 @@ key_antibiotics <- function(x,
   key_abs <- toupper(gsub("[^SIR]", ".", gsub("(NA|NULL)", ".", x$key_ab)))
   
   if (pm_n_distinct(key_abs) == 1) {
-    warning("No distinct key antibiotics determined.", call. = FALSE)
+    warning_("No distinct key antibiotics determined.", call = FALSE)
   }
   
   key_abs

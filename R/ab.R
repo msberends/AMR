@@ -434,17 +434,17 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
   x_unknown_ATCs <- x_unknown[x_unknown %like% "[A-Z][0-9][0-9][A-Z][A-Z][0-9][0-9]"]
   x_unknown <- x_unknown[!x_unknown %in% x_unknown_ATCs]
   if (length(x_unknown_ATCs) > 0) {
-    warning("These ATC codes are not (yet) in the antibiotics data set: ",
-            paste('"', sort(unique(x_unknown_ATCs)), '"', sep = "", collapse = ", "),
-            ".",
-            call. = FALSE)
+    warning_("These ATC codes are not (yet) in the antibiotics data set: ",
+             paste('"', sort(unique(x_unknown_ATCs)), '"', sep = "", collapse = ", "),
+             ".",
+             call = FALSE)
   }
   
   if (length(x_unknown) > 0) {
-    warning("These values could not be coerced to a valid antimicrobial ID: ",
-            paste('"', sort(unique(x_unknown)), '"', sep = "", collapse = ", "),
-            ".",
-            call. = FALSE)
+    warning_("These values could not be coerced to a valid antimicrobial ID: ",
+             paste('"', sort(unique(x_unknown)), '"', sep = "", collapse = ", "),
+             ".",
+             call = FALSE)
   }
   
   x_result <- data.frame(x = x_bak_clean, stringsAsFactors = FALSE) %pm>%

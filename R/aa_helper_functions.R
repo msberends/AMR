@@ -267,27 +267,35 @@ import_fn <- function(name, pkg, error_on_fail = TRUE) {
     })
 }
 
-# this alternative to the message() function:
+# this alternative wrapper to the message(), warning() and stop() functions:
 # - wraps text to never break lines within words
 # - ignores formatted text while wrapping
 # - adds indentation dependent on the type of message (like NOTE)
-# - add additional formatting functions like blue or bold text
-message_ <- function(..., appendLF = TRUE, add_fn = list(font_blue), as_note = TRUE) {
+# - can add additional formatting functions like blue or bold text
+word_wrap <- function(...,
+                      add_fn = list(), 
+                      as_note = FALSE,
+                      width = 0.95 * getOption("width"),
+                      extra_indent = 0) {
   msg <- paste0(c(...), collapse = "")
+  # replace new lines to add them again later
+  msg <- gsub("\n", "*|*", msg, fixed = TRUE)
   
   if (isTRUE(as_note)) {
     msg <- paste0("NOTE: ", gsub("note:? ?", "", msg, ignore.case = TRUE))
   }
-
+  
   # we need to correct for already applied style, that adds text like "\033[31m\"
   msg_stripped <- font_stripstyle(msg)
   # where are the spaces now?
   msg_stripped_wrapped <- paste0(strwrap(msg_stripped,
                                          simplify = TRUE,
-                                         width = 0.95 * getOption("width")),
+                                         width = width),
+                                 collapse = "\n")
+  msg_stripped_wrapped <- paste0(unlist(strsplit(msg_stripped_wrapped, "(\n|\\*\\|\\*)")),
                                  collapse = "\n")
   msg_stripped_spaces <- which(unlist(strsplit(msg_stripped, "")) == " ")
-  msg_stripped_wrapped_spaces <- which(unlist(strsplit(msg_stripped_wrapped, "")) == " ")
+  msg_stripped_wrapped_spaces <- which(unlist(strsplit(msg_stripped_wrapped, "")) != "\n")
   # so these are the indices of spaces that need to be replaced
   replace_spaces <- which(!msg_stripped_spaces %in% msg_stripped_wrapped_spaces)
   # put it together
@@ -295,15 +303,16 @@ message_ <- function(..., appendLF = TRUE, add_fn = list(font_blue), as_note = T
   msg[replace_spaces] <- paste0(msg[replace_spaces], "\n")
   msg <- paste0(msg, collapse = " ")
   msg <- gsub("\n ", "\n", msg, fixed = TRUE)
-
+  
   if (msg_stripped %like% "^NOTE: ") {
-    indentation <- 6
+    indentation <- 6 + extra_indent
   } else if (msg_stripped %like% "^=> ") {
-    indentation <- 3
+    indentation <- 3 + extra_indent
   } else {
-    indentation <- 0
+    indentation <- 0 + extra_indent
   }
   msg <- gsub("\n", paste0("\n", strrep(" ", indentation)), msg, fixed = TRUE)
+  msg <- gsub("*|*", paste0("*|*", strrep(" ", indentation)), msg, fixed = TRUE)
 
   if (length(add_fn) > 0) {
     if (!is.list(add_fn)) {
@@ -313,14 +322,38 @@ message_ <- function(..., appendLF = TRUE, add_fn = list(font_blue), as_note = T
       msg <- add_fn[[i]](msg)
     }
   }
-  message(msg, appendLF = appendLF)
+  
+  # place back spaces
+  msg <- gsub("*|*", "\n", msg, fixed = TRUE)
+  msg
+}
+
+message_ <- function(...,
+                     appendLF = TRUE,
+                     add_fn = list(font_blue),
+                     as_note = TRUE) {
+  message(word_wrap(..., 
+                    add_fn = add_fn,
+                    as_note = as_note),
+          appendLF = appendLF)
+}
+
+warning_ <- function(...,
+                     add_fn = list(),
+                     immediate = FALSE,
+                     call = TRUE) {
+  warning(word_wrap(..., 
+                    add_fn = add_fn,
+                    as_note = FALSE),
+          immediate. = immediate,
+          call. = call)
 }
 
 # this alternative to the stop() function:
 # - adds the function name where the error was thrown
 # - wraps text to never break lines within words
 stop_ <- function(..., call = TRUE) {
-  msg <- paste0(c(...), collapse = "")
+  msg <- word_wrap(..., add_fn = list(), as_note = FALSE)
   if (!isFALSE(call)) {
     if (isTRUE(call)) {
       call <- as.character(sys.call(-1)[1])
@@ -374,7 +407,7 @@ stop_ifnot <- function(expr, ..., call = TRUE) {
 
 class_integrity_check <- function(value, type, check_vector) {
   if (!all(value[!is.na(value)] %in% check_vector)) {
-    warning(paste0("invalid ", type, ", NA generated"), call. = FALSE)
+    warning_(paste0("invalid ", type, ", NA generated"), call = FALSE)
     value[!value %in% check_vector] <- NA
   }
   value

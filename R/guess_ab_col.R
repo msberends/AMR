@@ -167,8 +167,9 @@ get_column_abx <- function(x,
   if (length(dots) > 0) {
     newnames <- suppressWarnings(as.ab(names(dots), info = FALSE))
     if (any(is.na(newnames))) {
-      warning("Invalid antibiotic reference(s): ", toString(names(dots)[is.na(newnames)]),
-              call. = FALSE, immediate. = TRUE)
+      warning_("Invalid antibiotic reference(s): ", toString(names(dots)[is.na(newnames)]),
+               call = FALSE,
+               immediate = TRUE)
     }
     # turn all NULLs to NAs
     dots <- unlist(lapply(dots, function(x) if (is.null(x)) NA else x))
@@ -205,11 +206,12 @@ get_column_abx <- function(x,
                "` (", ab_name(names(x)[i], tolower = TRUE, language = NULL), ").")
     }
     if (info == TRUE & names(x[i]) %in% names(duplicates)) {
-      warning(font_red(paste0("Using column `", font_bold(x[i]), "` as input for `", names(x)[i],
-                              "` (", ab_name(names(x)[i], tolower = TRUE, language = NULL),
-                              "), although it was matched for multiple antibiotics or columns.")), 
-              call. = FALSE, 
-              immediate. = verbose)
+      warning_(paste0("Using column `", font_bold(x[i]), "` as input for `", names(x)[i],
+                      "` (", ab_name(names(x)[i], tolower = TRUE, language = NULL),
+                      "), although it was matched for multiple antibiotics or columns."),
+               add_fn = font_red,
+               call = FALSE, 
+               immediate = verbose)
     }
   }
   
@@ -245,8 +247,8 @@ generate_warning_abs_missing <- function(missing, any = FALSE) {
   } else {
     any_txt <- c("", "are")
   }
-  warning(paste0("Introducing NAs since", any_txt[1], " these antimicrobials ", any_txt[2], " required: ",
-                 paste(missing, collapse = ", ")),
-          immediate. = TRUE,
-          call. = FALSE)
+  warning_(paste0("Introducing NAs since", any_txt[1], " these antimicrobials ", any_txt[2], " required: ",
+                  paste(missing, collapse = ", ")),
+           immediate = TRUE,
+           call = FALSE)
 }

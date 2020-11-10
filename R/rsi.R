@@ -237,9 +237,9 @@ as.rsi.default <- function(x, ...) {
     if (!any(x %like% "(R|S|I)", na.rm = TRUE)) {
       # check if they are actually MICs or disks now that the antibiotic name is valid
       if (all_valid_mics(x)) {
-        warning("The input seems to be MIC values. Transform them with as.mic() before running as.rsi() to interpret them.")
+        warning_("The input seems to be MIC values. Transform them with as.mic() before running as.rsi() to interpret them.")
       } else if (all_valid_disks(x)) {
-        warning("The input seems to be disk diffusion values. Transform them with as.disk() before running as.rsi() to interpret them.")
+        warning_("The input seems to be disk diffusion values. Transform them with as.disk() before running as.rsi() to interpret them.")
       }
     }
     
@@ -273,10 +273,10 @@ as.rsi.default <- function(x, ...) {
           unique() %pm>%
           sort()
         list_missing <- paste0('"', list_missing, '"', collapse = ", ")
-        warning(na_after - na_before, " results truncated (",
-                round(((na_after - na_before) / length(x)) * 100),
-                "%) that were invalid antimicrobial interpretations: ",
-                list_missing, call. = FALSE)
+        warning_(na_after - na_before, " results truncated (",
+                 round(((na_after - na_before) / length(x)) * 100),
+                 "%) that were invalid antimicrobial interpretations: ",
+                 list_missing, call = FALSE)
       }
     }
     
@@ -675,14 +675,14 @@ exec_as.rsi <- function(method,
   
   if (all(trans$uti == TRUE, na.rm = TRUE) & all(uti == FALSE)) {
     message_("WARNING.", add_fn = list(font_red, font_bold), as_note = FALSE)
-    warning("Interpretation of ", font_bold(ab_name(ab, tolower = TRUE)), " for some microorganisms is only available for (uncomplicated) urinary tract infections (UTI).\n  Use parameter 'uti' to set which isolates are from urine. See ?as.rsi.", call. = FALSE)
+    warning_("Interpretation of ", font_bold(ab_name(ab, tolower = TRUE)), " for some microorganisms is only available for (uncomplicated) urinary tract infections (UTI).\n  Use parameter 'uti' to set which isolates are from urine. See ?as.rsi.", call = FALSE)
     warned <- TRUE
   }
   
   for (i in seq_len(length(x))) {
     if (isTRUE(add_intrinsic_resistance)) {
       if (!guideline_coerced %like% "EUCAST") {
-        warning("Using 'add_intrinsic_resistance' is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.", call. = FALSE)
+        warning_("Using 'add_intrinsic_resistance' is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.", call = FALSE)
       } else {
         get_record <- subset(intrinsic_resistant, 
                              microorganism == mo_name(mo[i], language = NULL) & antibiotic == ab_name(ab, language = NULL))

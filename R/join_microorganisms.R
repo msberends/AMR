@@ -83,7 +83,7 @@ inner_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
     )
   }
   if (NROW(join) > NROW(x)) {
-    warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
+    warning_("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
   }
   class(join) <- x_class
   join
@@ -114,7 +114,7 @@ left_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
     )
   }
   if (NROW(join) > NROW(x)) {
-    warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
+    warning_("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
   }
   class(join) <- x_class
   join
@@ -145,7 +145,7 @@ right_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
     )
   }
   if (NROW(join) > NROW(x)) {
-    warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
+    warning_("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
   }
   class(join) <- x_class
   join
@@ -176,7 +176,7 @@ full_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
     )
   }
   if (NROW(join) > NROW(x)) {
-    warning("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
+    warning_("The newly joined tbl contains ", nrow(join) - nrow(x), " rows more that its original.")
   }
   class(join) <- x_class
   join
@@ -280,7 +280,7 @@ check_groups_before_join <- function(x, fn) {
     x <- pm_ungroup(x)
     attr(x, "groups") <- NULL
     class(x) <- class(x)[!class(x) %like% "group"]
-    warning("Groups are dropped, since the ", fn, "() function relies on merge() from base R if dplyr is not installed.", call. = FALSE)
+    warning_("Groups are dropped, since the ", fn, "() function relies on merge() from base R.", call = FALSE)
   }
   x
 }

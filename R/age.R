@@ -83,10 +83,10 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
   
   if (any(ages < 0, na.rm = TRUE)) {
     ages[ages < 0] <- NA
-    warning("NAs introduced for ages below 0.")
+    warning_("NAs introduced for ages below 0.", call = TRUE)
   }
   if (any(ages > 120, na.rm = TRUE)) {
-    warning("Some ages are above 120.")
+    warning_("Some ages are above 120.", call = TRUE)
   }
   
   if (isTRUE(na.rm)) {
@@ -154,7 +154,7 @@ age_groups <- function(x, split_at = c(12, 25, 55, 75), na.rm = FALSE) {
   
   if (any(x < 0, na.rm = TRUE)) {
     x[x < 0] <- NA
-    warning("NAs introduced for ages below 0.")
+    warning_("NAs introduced for ages below 0.", call = TRUE)
   }
   if (is.character(split_at)) {
     split_at <- split_at[1L]

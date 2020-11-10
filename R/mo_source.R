@@ -239,7 +239,7 @@ get_mo_source <- function() {
 mo_source_isvalid <- function(x, refer_to_name = "`reference_df`", stop_on_error = TRUE) {
   check_dataset_integrity()
   
-  if (deparse(substitute(x)) == "get_mo_source()") {
+  if (paste(deparse(substitute(x)), collapse = "") == "get_mo_source()") {
     return(TRUE)
   }
   if (identical(x, get_mo_source())) {
@@ -247,21 +247,21 @@ mo_source_isvalid <- function(x, refer_to_name = "`reference_df`", stop_on_error
   }
   if (is.null(x)) {
     if (stop_on_error == TRUE) {
-      stop(refer_to_name, " cannot be NULL", call. = FALSE)
+      stop_(refer_to_name, " cannot be NULL", call = FALSE)
     } else {
       return(FALSE)
     }
   }
   if (!is.data.frame(x)) {
     if (stop_on_error == TRUE) {
-      stop(refer_to_name, " must be a data.frame", call. = FALSE)
+      stop_(refer_to_name, " must be a data.frame", call = FALSE)
     } else {
       return(FALSE)
     }
   }
   if (!"mo" %in% colnames(x)) {
     if (stop_on_error == TRUE) {
-      stop(refer_to_name, " must contain a column 'mo'", call. = FALSE)
+      stop_(refer_to_name, " must contain a column 'mo'", call = FALSE)
     } else {
       return(FALSE)
     }
@@ -274,13 +274,27 @@ mo_source_isvalid <- function(x, refer_to_name = "`reference_df`", stop_on_error
       } else {
         plural <- ""
       }
-      stop("Value", plural, " ", paste0("'", invalid[, 1, drop = TRUE], "'", collapse = ", "), 
+      stop_("Value", plural, " ", paste0("'", invalid[, 1, drop = TRUE], "'", collapse = ", "), 
            " found in ", tolower(refer_to_name), 
            ", but with invalid microorganism code", plural, " ", paste0("'", invalid$mo, "'", collapse = ", "),
-           call. = FALSE)
+           call = FALSE)
     } else {
       return(FALSE)
     }
   }
-  TRUE
+  if (colnames(x)[1] != "mo" & nrow(x) > length(unique(x[, 1, drop = TRUE]))) {
+    if (stop_on_error == TRUE) {
+      stop_(refer_to_name, " contains duplicate values in column '", colnames(x)[1], "'", call = FALSE)
+    } else {
+      return(FALSE)
+    }
+  }
+  if (colnames(x)[2] != "mo" & nrow(x) > length(unique(x[, 2, drop = TRUE]))) {
+    if (stop_on_error == TRUE) {
+      stop_(refer_to_name, " contains duplicate values in column '", colnames(x)[2], "'", call = FALSE)
+    } else {
+      return(FALSE)
+    }
+  }
+  return(TRUE)
 }

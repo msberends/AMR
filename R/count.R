@@ -134,7 +134,7 @@ count_R <- function(..., only_all_tested = FALSE) {
 #' @rdname count
 #' @export
 count_IR <- function(..., only_all_tested = FALSE) {
-  warning("Using 'count_IR' is discouraged; use 'count_resistant()' instead to not consider \"I\" being resistant.", call. = FALSE)
+  warning_("Using 'count_IR' is discouraged; use 'count_resistant()' instead to not consider \"I\" being resistant.", call = FALSE)
   rsi_calc(...,
            ab_result = c("I", "R"),
            only_all_tested = only_all_tested,
@@ -162,7 +162,7 @@ count_SI <- function(..., only_all_tested = FALSE) {
 #' @rdname count
 #' @export
 count_S <- function(..., only_all_tested = FALSE) {
-  warning("Using 'count_S' is discouraged; use 'count_susceptible()' instead to also consider \"I\" being susceptible.", call. = FALSE)
+  warning_("Using 'count_S' is discouraged; use 'count_susceptible()' instead to also consider \"I\" being susceptible.", call = FALSE)
   rsi_calc(...,
            ab_result = "S",
            only_all_tested = only_all_tested,

@@ -173,7 +173,7 @@ as.mo <- function(x,
                & isFALSE(Becker)
                & isFALSE(Lancefield), error = function(e) FALSE)) {
     # don't look into valid MO codes, just return them
-    # is.mo() won't work - codes might change between package versions
+    # is.mo() won't work - MO codes might change between package versions
     return(to_class_mo(x))
   }
 
@@ -1393,9 +1393,10 @@ exec_as.mo <- function(x,
                   "You can also use your own reference data, e.g.:\n",
                   '  as.mo("mycode", reference_df = data.frame(own = "mycode", mo = "B_ESCHR_COLI"))\n',
                   '  mo_name("mycode", reference_df = data.frame(own = "mycode", mo = "B_ESCHR_COLI"))\n')
-    warning(font_red(paste0("\n", msg)),
-            call. = FALSE,
-            immediate. = TRUE) # thus will always be shown, even if >= warnings
+    warning_(paste0("\n", msg),
+             add_fn = font_red,
+             call = FALSE,
+             immediate = TRUE) # thus will always be shown, even if >= warnings
   }
   # handling uncertainties ----
   if (NROW(uncertainties) > 0 & initial_search == TRUE) {
@@ -1420,13 +1421,13 @@ exec_as.mo <- function(x,
     post_Becker <- character(0) # 2020-10-20 currently all are mentioned in above papers
     if (any(x %in% MO_lookup[which(MO_lookup$species %in% post_Becker), property])) {
 
-      warning("Becker ", font_italic("et al."), " (2014, 2019) does not contain these species named after their publication: ",
-              font_italic(paste("S.",
-                                sort(mo_species(unique(x[x %in% MO_lookup[which(MO_lookup$species %in% post_Becker), property]]))),
-                                collapse = ", ")),
-              ".",
-              call. = FALSE,
-              immediate. = TRUE)
+      warning_("Becker ", font_italic("et al."), " (2014, 2019) does not contain these species named after their publication: ",
+               font_italic(paste("S.",
+                                 sort(mo_species(unique(x[x %in% MO_lookup[which(MO_lookup$species %in% post_Becker), property]]))),
+                                 collapse = ", ")),
+               ".",
+               call = FALSE,
+               immediate = TRUE)
     }
 
     # 'MO_CONS' and 'MO_COPS' are <mo> vectors created in R/zzz.R
@@ -1903,13 +1904,14 @@ replace_old_mo_codes <- function(x, property) {
     mo_new <- microorganisms.translation$mo_new[matched]
     # assign on places where a match was found
     x[which(!is.na(matched))] <- mo_new[which(!is.na(matched))]
+    n_matched <- length(matched[!is.na(matched)])
     if (property != "mo") {
       message_(font_blue("NOTE: The input contained old microbial codes (from previous package versions). Please update your MO codes with as.mo()."))
     } else {
-      if (length(matched) == 1) {
-        message_(font_blue("NOTE: 1 old microbial code (from previous package versions) was updated to a current used code."))
+      if (n_matched == 1) {
+        message_(font_blue("NOTE: 1 old microbial code (from previous package versions) was updated to a current used MO code."))
       } else {
-        message_(font_blue("NOTE:", length(matched), "old microbial codes (from previous package versions) were updated to current used codes.")) 
+        message_(font_blue("NOTE:", n_matched, "old microbial codes (from previous package versions) were updated to current used MO codes.")) 
       }
     }
   }
@@ -1940,13 +1942,14 @@ repair_reference_df <- function(reference_df) {
   } else {
     reference_df <- reference_df %pm>% pm_select(1, "mo")
   }
-  # some microbial codes might be old
-  reference_df[, 2] <- as.mo(reference_df[, 2, drop = TRUE])
+  
   # remove factors, just keep characters
-  suppressWarnings(
-    reference_df[] <- lapply(reference_df, as.character)
-  )
   colnames(reference_df)[1] <- "x"
+  reference_df[, "x"] <- as.character(reference_df[, "x", drop = TRUE])
+  reference_df[, "mo"] <- as.character(reference_df[, "mo", drop = TRUE])
+  
+  # some microbial codes might be old
+  reference_df[, "mo"] <- as.mo(reference_df[, "mo", drop = TRUE])
   reference_df
 }
 
