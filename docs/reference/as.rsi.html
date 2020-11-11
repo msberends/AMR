@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9017</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9018</span>
       </span>
     </div>
 
@@ -327,7 +327,7 @@ list(version_txt = "v3.2", year = 2020, title = "EUCAST Expert Rules / EUCAST In
     </tr>
     <tr>
       <th>reference_data</th>
-      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> to be used for interpretation, which defaults to the <a href='rsi_translation.html'>rsi_translation</a> data set. Changing this parameter allows for using own interpretation guidelines. This parameter must contain a data set that is equal in structure to the <a href='rsi_translation.html'>rsi_translation</a> data set (same column names and column types). Please note that the 'guideline' column in this data set must contain values set in the 'guideline' parameter of <code>as.rsi()</code>.</p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> to be used for interpretation, which defaults to the <a href='rsi_translation.html'>rsi_translation</a> data set. Changing this parameter allows for using own interpretation guidelines. This parameter must contain a data set that is equal in structure to the <a href='rsi_translation.html'>rsi_translation</a> data set (same column names and column types). Please note that the <code>guideline</code> parameter will be ignored when <code>reference_data</code> is manually set.</p></td>
     </tr>
     <tr>
       <th>col_mo</th>
@@ -365,7 +365,7 @@ list(version_txt = "v3.2", year = 2020, title = "EUCAST Expert Rules / EUCAST In
 
 
 <p>For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the <code>guideline</code> parameter are: "CLSI 2010", "CLSI 2011", "CLSI 2012", "CLSI 2013", "CLSI 2014", "CLSI 2015", "CLSI 2016", "CLSI 2017", "CLSI 2018", "CLSI 2019", "EUCAST 2011", "EUCAST 2012", "EUCAST 2013", "EUCAST 2014", "EUCAST 2015", "EUCAST 2016", "EUCAST 2017", "EUCAST 2018", "EUCAST 2019", "EUCAST 2020".</p>
-<p>Simply using <code>"CLSI"</code> or <code>"EUCAST"</code> as input will automatically select the latest version of that guideline. You can set your own data set using the <code>reference_data</code> parameter.</p>
+<p>Simply using <code>"CLSI"</code> or <code>"EUCAST"</code> as input will automatically select the latest version of that guideline. You can set your own data set using the <code>reference_data</code> parameter. The <code>guideline</code> parameter will then be ignored.</p>
 
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>After interpretation</h3>
 

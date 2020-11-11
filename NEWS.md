@@ -1,4 +1,4 @@
-# AMR 1.4.0.9017
+# AMR 1.4.0.9018
 ## <small>Last updated: 11 November 2020</small>
 
 ### New
@@ -11,7 +11,7 @@
 * Functions `%not_like%` and `%not_like_case%` as wrappers around `%like%` and `%like_case%`. The RStudio addin to insert the text " %like% " as provided in this package now iterates over all like variants. So if you have defined the keyboard shortcut Ctrl/Cmd + L to this addin, it will first insert ` %like% ` and by pressing it again it will be replaced with ` %not_like% `, etc.
 
 ### Changed
-* Reference data used for `as.rsi()` can now be set by the user, using the `reference_data` parameter.
+* Reference data used for `as.rsi()` can now be set by the user, using the `reference_data` parameter. This allows for using own interpretation guidelines.
 * For all function parameters in the code, it is now defined what the exact type of user input should be (inspired by the [`typed`](https://github.com/moodymudskipper/typed) package). If the user input for a certain function does not meet the requirements for a specific parameter (such as the class or length), an informative error will be thrown. This makes the package more robust and the use of it more reproducible and reliable. In total, more than 400 arguments were defined.
 * Deprecated function `p_symbol()` that not really fits the scope of this package. It will be removed in a future version. See [here](https://github.com/msberends/AMR/blob/v1.4.0/R/p_symbol.R) for the source code to preserve it.
 * Better determination of disk zones and MIC values when running `as.rsi()` on a data.frame

@@ -70,7 +70,7 @@ is.rsi.eligible(x, threshold = 0.05)
 \item{add_intrinsic_resistance}{\emph{(only useful when using a EUCAST guideline)} a logical to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in \emph{Klebsiella} species. Determination is based on the \link{intrinsic_resistant} data set, that itself is based on 'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes', version list(version_txt = "v3.1", year = 2016, title = "EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes")
 list(version_txt = "v3.2", year = 2020, title = "EUCAST Expert Rules / EUCAST Intrinsic Resistance and Unusual Phenotypes").}
 
-\item{reference_data}{a \link{data.frame} to be used for interpretation, which defaults to the \link{rsi_translation} data set. Changing this parameter allows for using own interpretation guidelines. This parameter must contain a data set that is equal in structure to the \link{rsi_translation} data set (same column names and column types). Please note that the 'guideline' column in this data set must contain values set in the 'guideline' parameter of \code{\link[=as.rsi]{as.rsi()}}.}
+\item{reference_data}{a \link{data.frame} to be used for interpretation, which defaults to the \link{rsi_translation} data set. Changing this parameter allows for using own interpretation guidelines. This parameter must contain a data set that is equal in structure to the \link{rsi_translation} data set (same column names and column types). Please note that the \code{guideline} parameter will be ignored when \code{reference_data} is manually set.}
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 }
@@ -107,7 +107,7 @@ your_data \%>\% mutate(across(where(is.disk), as.rsi)) # since dplyr 1.0.0
 
 For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the \code{guideline} parameter are: "CLSI 2010", "CLSI 2011", "CLSI 2012", "CLSI 2013", "CLSI 2014", "CLSI 2015", "CLSI 2016", "CLSI 2017", "CLSI 2018", "CLSI 2019", "EUCAST 2011", "EUCAST 2012", "EUCAST 2013", "EUCAST 2014", "EUCAST 2015", "EUCAST 2016", "EUCAST 2017", "EUCAST 2018", "EUCAST 2019", "EUCAST 2020".
 
-Simply using \code{"CLSI"} or \code{"EUCAST"} as input will automatically select the latest version of that guideline. You can set your own data set using the \code{reference_data} parameter.
+Simply using \code{"CLSI"} or \code{"EUCAST"} as input will automatically select the latest version of that guideline. You can set your own data set using the \code{reference_data} parameter. The \code{guideline} parameter will then be ignored.
 }
 
 \subsection{After interpretation}{

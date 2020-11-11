@@ -36,7 +36,7 @@
 #' @param guideline defaults to the latest included EUCAST guideline, see Details for all options
 #' @param conserve_capped_values a logical to indicate that MIC values starting with `">"` (but not `">="`) must always return "R" , and that MIC values starting with `"<"` (but not `"<="`) must always return "S"
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a logical to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on 'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes', version `r EUCAST_VERSION_EXPERT_RULES`.
-#' @param reference_data a [data.frame] to be used for interpretation, which defaults to the [rsi_translation] data set. Changing this parameter allows for using own interpretation guidelines. This parameter must contain a data set that is equal in structure to the [rsi_translation] data set (same column names and column types). Please note that the 'guideline' column in this data set must contain values set in the 'guideline' parameter of [as.rsi()].
+#' @param reference_data a [data.frame] to be used for interpretation, which defaults to the [rsi_translation] data set. Changing this parameter allows for using own interpretation guidelines. This parameter must contain a data set that is equal in structure to the [rsi_translation] data set (same column names and column types). Please note that the `guideline` parameter will be ignored when `reference_data` is manually set.
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, please see *Examples*
 #' @param ... for using on a [data.frame]: names of columns to apply [as.rsi()] on (supports tidy selection like `AMX:VAN`). Otherwise: parameters passed on to methods.
 #' @details 
@@ -67,7 +67,7 @@
 #' 
 #' For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the `guideline` parameter are: `r paste0('"', sort(unique(AMR::rsi_translation$guideline)), '"', collapse = ", ")`.
 #' 
-#' Simply using `"CLSI"` or `"EUCAST"` as input will automatically select the latest version of that guideline. You can set your own data set using the `reference_data` parameter.
+#' Simply using `"CLSI"` or `"EUCAST"` as input will automatically select the latest version of that guideline. You can set your own data set using the `reference_data` parameter. The `guideline` parameter will then be ignored.
 #' 
 #' ## After interpretation
 #' 
@@ -359,7 +359,10 @@ as.rsi.mic <- function(x,
   message_("=> Interpreting MIC values of `", font_bold(ab), "` (",
            ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
            ab_name(ab_coerced, tolower = TRUE), ")", mo_var_found, 
-           " according to ", font_bold(guideline_coerced), " ... ",
+           " according to ", ifelse(identical(reference_data, AMR::rsi_translation),
+                                    font_bold(guideline_coerced),
+                                    "manually defined 'reference_data'"),
+           " ... ",
            appendLF = FALSE,
            as_note = FALSE)
   
@@ -445,9 +448,14 @@ as.rsi.disk <- function(x,
   
   message_("=> Interpreting disk zones of `", font_bold(ab), "` (",
            ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
-           ab_name(ab_coerced, tolower = TRUE), ") using guideline ", font_bold(guideline_coerced), " ... ",
-           appendLF = FALSE, 
+           ab_name(ab_coerced, tolower = TRUE), ")", mo_var_found, 
+           " according to ", ifelse(identical(reference_data, AMR::rsi_translation),
+                                    font_bold(guideline_coerced),
+                                    "manually defined 'reference_data'"),
+           " ... ",
+           appendLF = FALSE,
            as_note = FALSE)
+  
   result <- exec_as.rsi(method = "disk",
                         x = x,
                         mo = mo_coerced,
@@ -622,6 +630,9 @@ as.rsi.data.frame <- function(x,
 }
 
 get_guideline <- function(guideline, reference_data) {
+  if (!identical(reference_data, AMR::rsi_translation)) {
+    return(guideline)
+  }
   guideline_param <- toupper(guideline)
   if (guideline_param %in% c("CLSI", "EUCAST")) {
     guideline_param <- rev(sort(subset(reference_data, guideline %like% guideline_param)$guideline))[1L]
@@ -646,7 +657,8 @@ exec_as.rsi <- function(method,
                         guideline,
                         uti,
                         conserve_capped_values, 
-                        add_intrinsic_resistance) {
+                        add_intrinsic_resistance,
+                        reference_data) {
   
   metadata_mo <- get_mo_failures_uncertainties_renamed()
   
@@ -687,8 +699,13 @@ exec_as.rsi <- function(method,
   
   new_rsi <- rep(NA_character_, length(x))
   ab_param <- ab
-  trans <- reference_data %pm>%
-    subset(guideline == guideline_coerced & method == method_param & ab == ab_param)
+  if (identical(reference_data, AMR::rsi_translation)) {
+    trans <- reference_data %pm>%
+      subset(guideline == guideline_coerced & method == method_param & ab == ab_param)
+  } else {
+    trans <- reference_data %pm>%
+      subset(method == method_param & ab == ab_param)
+  }
   trans$lookup <- paste(trans$mo, trans$ab)
   
   lookup_mo <- paste(mo, ab)
