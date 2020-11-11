@@ -90,12 +90,12 @@ test_that("EUCAST rules work", {
     "R")
   
   # Azithromycin and Clarythromycin must be equal to Erythromycin
-  a <- as.rsi(eucast_rules(data.frame(mo = example_isolates$mo,
-                               ERY = example_isolates$ERY,
-                               AZM = as.rsi("R"),
-                               CLR = factor("R"),
-                               stringsAsFactors = FALSE),
-                    version_expertrules = 3.1)$CLR)
+  a <- suppressWarnings(as.rsi(eucast_rules(data.frame(mo = example_isolates$mo,
+                                                       ERY = example_isolates$ERY,
+                                                       AZM = as.rsi("R"),
+                                                       CLR = factor("R"),
+                                                       stringsAsFactors = FALSE),
+                                            version_expertrules = 3.1)$CLR))
   b <- example_isolates$ERY
   expect_identical(a[!is.na(b)],
                    b[!is.na(b)])

@@ -85,7 +85,8 @@ availability <- function(tbl, width = NULL) {
                    available = percentage(x),
                    visual_availabilty = paste0("|", x_chars, x_chars_empty, "|"),
                    resistant = R_print,
-                   visual_resistance = vis_resistance)
+                   visual_resistance = vis_resistance,
+                   stringsAsFactors = FALSE)
   if (length(R[is.na(R)]) == ncol(tbl)) {
     df[, 1:3]
   } else {

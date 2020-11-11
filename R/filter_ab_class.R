@@ -163,7 +163,7 @@ filter_ab_class <- function(x,
                         "` (", ab_name(names(agents), tolower = TRUE, language = NULL), ")"),
                  collapse = scope_txt),
            operator, toString(result), as_note = FALSE)
-  x_transposed <- as.list(as.data.frame(t(x[, agents, drop = FALSE])))
+  x_transposed <- as.list(as.data.frame(t(x[, agents, drop = FALSE]), stringsAsFactors = FALSE))
   filtered <- sapply(x_transposed, function(y) scope_fn(y %in% result, na.rm = TRUE))
   x <- x[which(filtered), , drop = FALSE]
   class(x) <- x_class

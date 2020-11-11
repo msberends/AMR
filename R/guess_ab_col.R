@@ -145,8 +145,9 @@ get_column_abx <- function(x,
   vectr_antibiotics <- vectr_antibiotics[!is.na(vectr_antibiotics) & nchar(vectr_antibiotics) >= 3]
   x_columns <- sapply(colnames(x), function(col, df = x_bak) {
     if (toupper(col) %in% vectr_antibiotics | 
-        is.rsi(as.data.frame(df)[, col, drop = TRUE]) |
-        is.rsi.eligible(as.data.frame(df)[, col, drop = TRUE], threshold = 0.5)) {
+        is.rsi(as.data.frame(df, stringsAsFactors = FALSE)[, col, drop = TRUE]) |
+        is.rsi.eligible(as.data.frame(df, stringsAsFactors = FALSE)[, col, drop = TRUE],
+                        threshold = 0.5)) {
       return(col)
     } else {
       return(NA_character_)
@@ -156,7 +157,8 @@ get_column_abx <- function(x,
   x <- x[, x_columns, drop = FALSE] # without drop = TRUE, x will become a vector when x_columns is length 1
   
   df_trans <- data.frame(colnames = colnames(x),
-                         abcode = suppressWarnings(as.ab(colnames(x), info = FALSE)))
+                         abcode = suppressWarnings(as.ab(colnames(x), info = FALSE)),
+                         stringsAsFactors = FALSE)
   df_trans <- df_trans[!is.na(df_trans$abcode), , drop = FALSE]
   x <- as.character(df_trans$colnames)
   names(x) <- df_trans$abcode
@@ -197,7 +199,7 @@ get_column_abx <- function(x,
   
   # succeeded with auto-guessing
   if (info == TRUE) {
-    message_("OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
+    message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
   }
   
   for (i in seq_len(length(x))) {

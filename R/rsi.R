@@ -36,6 +36,7 @@
 #' @param guideline defaults to the latest included EUCAST guideline, see Details for all options
 #' @param conserve_capped_values a logical to indicate that MIC values starting with `">"` (but not `">="`) must always return "R" , and that MIC values starting with `"<"` (but not `"<="`) must always return "S"
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a logical to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on 'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes', version `r EUCAST_VERSION_EXPERT_RULES`.
+#' @param reference_data a [data.frame] to be used for interpretation, which defaults to the [rsi_translation] data set. Changing this parameter allows for using own interpretation guidelines. This parameter must contain a data set that is equal in structure to the [rsi_translation] data set (same column names and column types). Please note that the 'guideline' column in this data set must contain values set in the 'guideline' parameter of [as.rsi()].
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, please see *Examples*
 #' @param ... for using on a [data.frame]: names of columns to apply [as.rsi()] on (supports tidy selection like `AMX:VAN`). Otherwise: parameters passed on to methods.
 #' @details 
@@ -66,7 +67,7 @@
 #' 
 #' For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the `guideline` parameter are: `r paste0('"', sort(unique(AMR::rsi_translation$guideline)), '"', collapse = ", ")`.
 #' 
-#' Simply using `"CLSI"` or `"EUCAST"` as input will automatically select the latest version of that guideline. 
+#' Simply using `"CLSI"` or `"EUCAST"` as input will automatically select the latest version of that guideline. You can set your own data set using the `reference_data` parameter.
 #' 
 #' ## After interpretation
 #' 
@@ -294,6 +295,7 @@ as.rsi.mic <- function(x,
                        uti = FALSE,
                        conserve_capped_values = FALSE,
                        add_intrinsic_resistance = FALSE,
+                       reference_data = AMR::rsi_translation,
                        ...) {
   meet_criteria(x)
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
@@ -302,6 +304,8 @@ as.rsi.mic <- function(x,
   meet_criteria(uti, allow_class = "logical", has_length = c(1, length(x)))
   meet_criteria(conserve_capped_values, allow_class = "logical", has_length = 1)
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
+  meet_criteria(reference_data, allow_class = "data.frame")
+  check_reference_data(reference_data)
   
   # for dplyr's across()
   cur_column_dplyr <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
@@ -328,8 +332,7 @@ as.rsi.mic <- function(x,
   }
   if (is.null(mo)) {
     stop_('No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
-          "To transform certain columns with e.g. mutate_at(), use\n",
-          "`data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n\n",
+          "To transform certain columns with e.g. mutate_at(), use `data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n",
           "To tranform all MIC values in a data set, use `data %>% as.rsi()` or data %>% mutate_if(is.mic, as.rsi).", call = FALSE)
   }
   if (length(ab) == 1 && ab %like% "as.mic") {
@@ -338,7 +341,7 @@ as.rsi.mic <- function(x,
   
   ab_coerced <- suppressWarnings(as.ab(ab))
   mo_coerced <- suppressWarnings(as.mo(mo))
-  guideline_coerced <- get_guideline(guideline)
+  guideline_coerced <- get_guideline(guideline, reference_data)
   if (is.na(ab_coerced)) {
     message_("Returning NAs for unknown drug: `", font_bold(ab),
              "`. Rename this column to a drug name or code, and check the output with as.ab().", 
@@ -367,7 +370,8 @@ as.rsi.mic <- function(x,
                         guideline = guideline_coerced,
                         uti = uti,
                         conserve_capped_values = conserve_capped_values,
-                        add_intrinsic_resistance = add_intrinsic_resistance) # exec_as.rsi will return message_(" OK.")
+                        add_intrinsic_resistance = add_intrinsic_resistance,
+                        reference_data = reference_data) # exec_as.rsi will return message 'OK'
   result
 }
 
@@ -379,6 +383,7 @@ as.rsi.disk <- function(x,
                         guideline = "EUCAST", 
                         uti = FALSE,
                         add_intrinsic_resistance = FALSE,
+                        reference_data = AMR::rsi_translation,
                         ...) {
   meet_criteria(x)
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
@@ -386,6 +391,8 @@ as.rsi.disk <- function(x,
   meet_criteria(guideline, allow_class = "character", has_length = 1)
   meet_criteria(uti, allow_class = "logical", has_length = c(1, length(x)))
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
+  meet_criteria(reference_data, allow_class = "data.frame")
+  check_reference_data(reference_data)
   
   # for dplyr's across()
   cur_column_dplyr <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
@@ -412,8 +419,7 @@ as.rsi.disk <- function(x,
   }
   if (is.null(mo)) {
     stop_('No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
-          "To transform certain columns with e.g. mutate_at(), use\n",
-          "`data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n\n",
+          "To transform certain columns with e.g. mutate_at(), use `data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n",
           "To tranform all disk diffusion zones in a data set, use `data %>% as.rsi()` or data %>% mutate_if(is.disk, as.rsi).", call = FALSE)
   }
   if (length(ab) == 1 && ab %like% "as.disk") {
@@ -422,7 +428,7 @@ as.rsi.disk <- function(x,
   
   ab_coerced <- suppressWarnings(as.ab(ab))
   mo_coerced <- suppressWarnings(as.mo(mo))
-  guideline_coerced <- get_guideline(guideline)
+  guideline_coerced <- get_guideline(guideline, reference_data)
   if (is.na(ab_coerced)) {
     message_("Returning NAs for unknown drug: `", font_bold(ab),
              "`. Rename this column to a drug name or code, and check the output with as.ab().", 
@@ -449,7 +455,8 @@ as.rsi.disk <- function(x,
                         guideline = guideline_coerced,
                         uti = uti,
                         conserve_capped_values = FALSE,
-                        add_intrinsic_resistance = add_intrinsic_resistance) # exec_as.rsi will return message_(" OK.")
+                        add_intrinsic_resistance = add_intrinsic_resistance,
+                        reference_data = reference_data) # exec_as.rsi will return message 'OK'
   result
 }
 
@@ -461,13 +468,15 @@ as.rsi.data.frame <- function(x,
                               guideline = "EUCAST",
                               uti = NULL,
                               conserve_capped_values = FALSE,
-                              add_intrinsic_resistance = FALSE) {
+                              add_intrinsic_resistance = FALSE,
+                              reference_data = rsi_translation) {
   meet_criteria(x, allow_class = "data.frame") # will also check for dimensions > 0
   meet_criteria(col_mo, allow_class = "character", is_in = colnames(x), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
   meet_criteria(uti, allow_class = c("logical", "character"), allow_NULL = TRUE)
   meet_criteria(conserve_capped_values, allow_class = "logical", has_length = 1)
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
+  meet_criteria(reference_data, allow_class = "data.frame")
   
   for (i in seq_len(ncol(x))) {
     # don't keep factors
@@ -574,18 +583,28 @@ as.rsi.data.frame <- function(x,
   
   for (i in seq_len(length(ab_cols))) {
     if (types[i] == "mic") {
-      x[, ab_cols[i]] <- as.rsi.mic(x = x %pm>% pm_pull(ab_cols[i]),
-                                    mo = x_mo,
-                                    ab = ab_cols[i],
-                                    guideline = guideline,
-                                    uti = uti,
-                                    conserve_capped_values = conserve_capped_values)
+      x[, ab_cols[i]] <- as.rsi(x = x %pm>% 
+                                  pm_pull(ab_cols[i]) %pm>% 
+                                  as.character() %pm>%
+                                  as.mic(),
+                                mo = x_mo,
+                                ab = ab_cols[i],
+                                guideline = guideline,
+                                uti = uti,
+                                conserve_capped_values = conserve_capped_values,
+                                add_intrinsic_resistance = add_intrinsic_resistance,
+                                reference_data = reference_data)
     } else if (types[i] == "disk") {
-      x[, ab_cols[i]] <- as.rsi.disk(x = x %pm>% pm_pull(ab_cols[i]),
-                                     mo = x_mo,
-                                     ab = ab_cols[i],
-                                     guideline = guideline,
-                                     uti = uti)
+      x[, ab_cols[i]] <- as.rsi(x = x %pm>% 
+                                  pm_pull(ab_cols[i]) %pm>% 
+                                  as.character() %pm>%
+                                  as.disk(),
+                                mo = x_mo,
+                                ab = ab_cols[i],
+                                guideline = guideline,
+                                uti = uti,
+                                add_intrinsic_resistance = add_intrinsic_resistance,
+                                reference_data = reference_data)
     } else if (types[i] == "rsi") {
       ab <- ab_cols[i]
       ab_coerced <- suppressWarnings(as.ab(ab))
@@ -595,26 +614,26 @@ as.rsi.data.frame <- function(x,
                appendLF = FALSE,
                as_note = FALSE)
       x[, ab_cols[i]] <- as.rsi.default(x = x %pm>% pm_pull(ab_cols[i]))
-      message_("OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
+      message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
     }
   }
   
   x
 }
 
-get_guideline <- function(guideline) {
+get_guideline <- function(guideline, reference_data) {
   guideline_param <- toupper(guideline)
   if (guideline_param %in% c("CLSI", "EUCAST")) {
-    guideline_param <- rev(sort(subset(rsi_translation, guideline %like% guideline_param)$guideline))[1L]
+    guideline_param <- rev(sort(subset(reference_data, guideline %like% guideline_param)$guideline))[1L]
   }
   if (!guideline_param %like% " ") {
     # like 'EUCAST2020', should be 'EUCAST 2020'
     guideline_param <- gsub("([a-z]+)([0-9]+)", "\\1 \\2", guideline_param, ignore.case = TRUE)
   }
   
-  stop_ifnot(guideline_param %in% rsi_translation$guideline,
+  stop_ifnot(guideline_param %in% reference_data$guideline,
              "invalid guideline: '", guideline,
-             "'.\nValid guidelines are: ", paste0("'", unique(rsi_translation$guideline), "'", collapse = ", "), call = FALSE)
+             "'.\nValid guidelines are: ", paste0("'", unique(reference_data$guideline), "'", collapse = ", "), call = FALSE)
   
   guideline_param
   
@@ -631,7 +650,7 @@ exec_as.rsi <- function(method,
   
   metadata_mo <- get_mo_failures_uncertainties_renamed()
   
-  x_bak <- data.frame(x_mo = paste0(x, mo))
+  x_bak <- data.frame(x_mo = paste0(x, mo), stringsAsFactors = FALSE)
   df <- unique(data.frame(x, mo), stringsAsFactors = FALSE)
   x <- df$x
   mo <- df$mo
@@ -661,14 +680,14 @@ exec_as.rsi <- function(method,
   }
   mo_other <- as.mo(rep("UNKNOWN", length(mo)))
   
-  guideline_coerced <- get_guideline(guideline)
+  guideline_coerced <- get_guideline(guideline, reference_data)
   if (guideline_coerced != guideline) {
     message_("Using guideline ", font_bold(guideline_coerced), " as input for `guideline`.")
   }
   
   new_rsi <- rep(NA_character_, length(x))
   ab_param <- ab
-  trans <- rsi_translation %pm>%
+  trans <- reference_data %pm>%
     subset(guideline == guideline_coerced & method == method_param & ab == ab_param)
   trans$lookup <- paste(trans$mo, trans$ab)
   
@@ -682,7 +701,7 @@ exec_as.rsi <- function(method,
   
   if (all(trans$uti == TRUE, na.rm = TRUE) & all(uti == FALSE)) {
     message_("WARNING.", add_fn = list(font_red, font_bold), as_note = FALSE)
-    warning_("Interpretation of ", font_bold(ab_name(ab, tolower = TRUE)), " for some microorganisms is only available for (uncomplicated) urinary tract infections (UTI).\n  Use parameter 'uti' to set which isolates are from urine. See ?as.rsi.", call = FALSE)
+    warning_("Interpretation of ", font_bold(ab_name(ab, tolower = TRUE)), " for some microorganisms is only available for (uncomplicated) urinary tract infections (UTI). Use parameter 'uti' to set which isolates are from urine. See ?as.rsi.", call = FALSE)
     warned <- TRUE
   }
   
@@ -757,11 +776,13 @@ exec_as.rsi <- function(method,
   }
   
   new_rsi <- x_bak %pm>%
-    pm_left_join(data.frame(x_mo = paste0(df$x, df$mo), new_rsi), by = "x_mo") %pm>%
+    pm_left_join(data.frame(x_mo = paste0(df$x, df$mo), new_rsi,
+                            stringsAsFactors = FALSE),
+                 by = "x_mo") %pm>%
     pm_pull(new_rsi)
   
   if (warned == FALSE) {
-    message_("OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
+    message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
   }
   
   load_mo_failures_uncertainties_renamed(metadata_mo)
@@ -928,13 +949,16 @@ plot.rsi <- function(x,
   data$s <- round((data$n / sum(data$n)) * 100, 1)
   
   if (!"S" %in% data$x) {
-    data <- rbind(data, data.frame(x = "S", n = 0, s = 0))
+    data <- rbind(data, data.frame(x = "S", n = 0, s = 0, stringsAsFactors = FALSE),
+                  stringsAsFactors = FALSE)
   }
   if (!"I" %in% data$x) {
-    data <- rbind(data, data.frame(x = "I", n = 0, s = 0))
+    data <- rbind(data, data.frame(x = "I", n = 0, s = 0, stringsAsFactors = FALSE),
+                  stringsAsFactors = FALSE)
   }
   if (!"R" %in% data$x) {
-    data <- rbind(data, data.frame(x = "R", n = 0, s = 0))
+    data <- rbind(data, data.frame(x = "R", n = 0, s = 0, stringsAsFactors = FALSE),
+                  stringsAsFactors = FALSE)
   }
   
   # don't use as.rsi() here, it will confuse plot()
@@ -1036,4 +1060,18 @@ unique.rsi <- function(x, incomparables = FALSE, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(x)
   y
+}
+
+check_reference_data <- function(reference_data) {
+  if (!identical(reference_data, AMR::rsi_translation)) {
+    class_rsi <- sapply(rsi_translation, function(x) paste0("<", class(x), ">", collapse = " and "))
+    class_ref <- sapply(reference_data, function(x) paste0("<", class(x), ">", collapse = " and "))
+    if (!all(names(class_rsi) == names(class_ref))) {
+      stop_("'reference_data' must have the same column names as the 'rsi_translation' data set.", call = -2)
+    }
+    if (!all(class_rsi == class_ref)) {
+      class_rsi[class_rsi != class_ref][1]
+      stop_("'reference_data' must be the same structure as the 'rsi_translation' data set. Column '", names(class_ref[class_rsi != class_ref][1]), "' is of class ", class_ref[class_rsi != class_ref][1], ", but should be of class ", class_rsi[class_rsi != class_ref][1], ".", call = -2)
+    }
+  }
 }

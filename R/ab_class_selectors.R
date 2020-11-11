@@ -153,7 +153,7 @@ ab_selector <- function(ab_class, function_name) {
 
   peek_vars_tidyselect <- import_fn("peek_vars", "tidyselect")
   vars_vct <- peek_vars_tidyselect(fn = function_name)
-  vars_df <- data.frame(as.list(vars_vct))[1, , drop = FALSE]
+  vars_df <- data.frame(as.list(vars_vct), stringsAsFactors = FALSE)[1, , drop = FALSE]
   colnames(vars_df) <- vars_vct
   ab_in_data <- get_column_abx(vars_df, info = FALSE)
   

@@ -324,7 +324,8 @@ exec_as.mo <- function(x,
                                   format_uncertainty_as_df(uncertainty_level = uncertainty,
                                                            input = input,
                                                            result_mo = res_df[1, "mo", drop = TRUE],
-                                                           candidates = as.character(res_df[, "fullname", drop = TRUE])))
+                                                           candidates = as.character(res_df[, "fullname", drop = TRUE])),
+                                  stringsAsFactors = FALSE)
         }
         res[seq_len(min(n, length(res)))]
       }
@@ -819,7 +820,8 @@ exec_as.mo <- function(x,
           uncertainties <- rbind(uncertainties,
                                  format_uncertainty_as_df(uncertainty_level = 1,
                                                           input = x_backup[i],
-                                                          result_mo = lookup(fullname == "Salmonella enterica", "mo", uncertainty = -1)))
+                                                          result_mo = lookup(fullname == "Salmonella enterica", "mo", uncertainty = -1)),
+                                 stringsAsFactors = FALSE)
           next
         }
       }
@@ -1022,7 +1024,8 @@ exec_as.mo <- function(x,
               uncertainties <<- rbind(uncertainties,
                                       format_uncertainty_as_df(uncertainty_level = now_checks_for_uncertainty_level,
                                                                input = a.x_backup,
-                                                               result_mo = lookup(fullname == found["fullname_new"], "mo", haystack = MO_lookup)))
+                                                               result_mo = lookup(fullname == found["fullname_new"], "mo", haystack = MO_lookup)),
+                                      stringsAsFactors = FALSE)
               return(x)
             }
 
@@ -1043,7 +1046,8 @@ exec_as.mo <- function(x,
             if (!empty_result(found)) {
               found_result <- found
               uncertainties <<- rbind(uncertainties,
-                                      attr(found, which = "uncertainties", exact = TRUE))
+                                      attr(found, which = "uncertainties", exact = TRUE),
+                                      stringsAsFactors = FALSE)
               found <- lookup(mo == found)
               return(found)
             }
@@ -1071,7 +1075,8 @@ exec_as.mo <- function(x,
                   uncertainties <<- rbind(uncertainties,
                                           format_uncertainty_as_df(uncertainty_level = now_checks_for_uncertainty_level,
                                                                    input = a.x_backup,
-                                                                   result_mo = found_result))
+                                                                   result_mo = found_result),
+                                          stringsAsFactors = FALSE)
                   return(found)
                 }
               }
@@ -1095,7 +1100,8 @@ exec_as.mo <- function(x,
             if (!empty_result(found) & nchar(g.x_backup_without_spp) >= 6) {
               found_result <- found
               uncertainties <<- rbind(uncertainties,
-                                      attr(found, which = "uncertainties", exact = TRUE))
+                                      attr(found, which = "uncertainties", exact = TRUE),
+                                      stringsAsFactors = FALSE)
               found <- lookup(mo == found)
               return(found)
             }
@@ -1118,7 +1124,8 @@ exec_as.mo <- function(x,
             if (!empty_result(found) & nchar(g.x_backup_without_spp) >= 6) {
               found_result <- found
               uncertainties <<- rbind(uncertainties,
-                                      attr(found, which = "uncertainties", exact = TRUE))
+                                      attr(found, which = "uncertainties", exact = TRUE),
+                                      stringsAsFactors = FALSE)
               found <- lookup(mo == found)
               return(found)
             }
@@ -1147,7 +1154,8 @@ exec_as.mo <- function(x,
                   if (!empty_result(found)) {
                     found_result <- found
                     uncertainties <<- rbind(uncertainties,
-                                            attr(found, which = "uncertainties", exact = TRUE))
+                                            attr(found, which = "uncertainties", exact = TRUE),
+                                            stringsAsFactors = FALSE)
                     found <- lookup(mo == found)
                     return(found)
                   }
@@ -1175,7 +1183,8 @@ exec_as.mo <- function(x,
                   if (!empty_result(found)) {
                     found_result <- found
                     uncertainties <<- rbind(uncertainties,
-                                            attr(found, which = "uncertainties", exact = TRUE))
+                                            attr(found, which = "uncertainties", exact = TRUE),
+                                            stringsAsFactors = FALSE)
                     found <- lookup(mo == found)
                     return(found)
                   }
@@ -1193,7 +1202,8 @@ exec_as.mo <- function(x,
               uncertainties <<- rbind(uncertainties,
                                       format_uncertainty_as_df(uncertainty_level = now_checks_for_uncertainty_level,
                                                                input = a.x_backup,
-                                                               result_mo = found_result))
+                                                               result_mo = found_result),
+                                      stringsAsFactors = FALSE)
               return(found)
             }
             if (b.x_trimmed %like_case% "(fungus|fungi)" & !b.x_trimmed %like_case% "fungiphrya") {
@@ -1203,7 +1213,8 @@ exec_as.mo <- function(x,
               uncertainties <<- rbind(uncertainties,
                                       format_uncertainty_as_df(uncertainty_level = now_checks_for_uncertainty_level,
                                                                input = a.x_backup,
-                                                               result_mo = found_result))
+                                                               result_mo = found_result),
+                                      stringsAsFactors = FALSE)
               return(found)
             }
             # (9) try to strip off one element from start and check the remains (only allow >= 2-part name outcome) ----
@@ -1228,7 +1239,8 @@ exec_as.mo <- function(x,
                   # uncertainty level 2 only if searched part contains a space (otherwise it will be found with lvl 3)
                   if (x_strip_collapsed %like_case% " ") {
                     uncertainties <<- rbind(uncertainties,
-                                            attr(found, which = "uncertainties", exact = TRUE))
+                                            attr(found, which = "uncertainties", exact = TRUE),
+                                            stringsAsFactors = FALSE)
                     found <- lookup(mo == found)
                     return(found)
                   }
@@ -1261,7 +1273,8 @@ exec_as.mo <- function(x,
                 if (!empty_result(found)) {
                   found_result <- found
                   uncertainties <<- rbind(uncertainties,
-                                          attr(found, which = "uncertainties", exact = TRUE))
+                                          attr(found, which = "uncertainties", exact = TRUE),
+                                          stringsAsFactors = FALSE)
                   found <- lookup(mo == found)
                   return(found)
                 }
@@ -1287,7 +1300,8 @@ exec_as.mo <- function(x,
                 if (!empty_result(found)) {
                   found_result <- found
                   uncertainties <<- rbind(uncertainties,
-                                          attr(found, which = "uncertainties", exact = TRUE))
+                                          attr(found, which = "uncertainties", exact = TRUE),
+                                          stringsAsFactors = FALSE)
                   found <- lookup(mo == found)
                   return(found)
                 }
@@ -1305,7 +1319,8 @@ exec_as.mo <- function(x,
             if (!is.na(found) & nchar(g.x_backup_without_spp) >= 6) {
               found_result <- lookup(mo == found)
               uncertainties <<- rbind(uncertainties,
-                                      attr(found, which = "uncertainties", exact = TRUE))
+                                      attr(found, which = "uncertainties", exact = TRUE),
+                                      stringsAsFactors = FALSE)
               found <- lookup(mo == found)
               return(found)
             }
@@ -1498,7 +1513,8 @@ exec_as.mo <- function(x,
                              format_uncertainty_as_df(uncertainty_level = actual_uncertainty,
                                                       input = actual_input,
                                                       result_mo = x,
-                                                      candidates = ""))
+                                                      candidates = ""),
+                             stringsAsFactors = FALSE)
     }
     # this will save the uncertain items as attribute, so they can be bound to `uncertainties` in the uncertain_fn() function
     x <- structure(x, uncertainties = uncertainties)
@@ -1520,7 +1536,9 @@ was_renamed <- function(name_old, name_new, ref_old = "", ref_new = "", mo = "")
                           stringsAsFactors = FALSE)
   already_set <- getOption("mo_renamed")
   if (!is.null(already_set)) {
-    options(mo_renamed = rbind(already_set, newly_set))
+    options(mo_renamed = rbind(already_set,
+                               newly_set,
+                               stringsAsFactors = FALSE))
   } else {
     options(mo_renamed = newly_set)
   }
@@ -1791,7 +1809,7 @@ print.mo_uncertainties <- function(x, ...) {
 mo_renamed <- function() {
   items <- getOption("mo_renamed", default = NULL)
   if (is.null(items)) {
-    items <- data.frame()
+    items <- data.frame(stringsAsFactors = FALSE)
   } else {
     items <- pm_distinct(items, old_name, .keep_all = TRUE)
   }

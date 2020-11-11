@@ -79,13 +79,13 @@ bug_drug_combinations <- function(x,
   
   unique_mo <- sort(unique(x[, col_mo, drop = TRUE]))
   
-  out <- data.frame(
-    mo = character(0),
-    ab = character(0),
-    S = integer(0),
-    I = integer(0),
-    R = integer(0),
-    total = integer(0))
+  out <- data.frame(mo = character(0),
+                    ab = character(0),
+                    S = integer(0),
+                    I = integer(0),
+                    R = integer(0),
+                    total = integer(0),
+                    stringsAsFactors = FALSE)
   
   for (i in seq_len(length(unique_mo))) {
     # filter on MO group and only select R/SI columns
@@ -101,8 +101,9 @@ bug_drug_combinations <- function(x,
                             S = merged$S,
                             I = merged$I,
                             R = merged$R,
-                            total = merged$S + merged$I + merged$R)
-    out <- rbind(out, out_group)
+                            total = merged$S + merged$I + merged$R,
+                            stringsAsFactors = FALSE)
+    out <- rbind(out, out_group, stringsAsFactors = FALSE)
   }
   
   structure(.Data = out, class = c("bug_drug_combinations", x_class))
@@ -163,7 +164,8 @@ format.bug_drug_combinations <- function(x,
   
   remove_NAs <- function(.data) {
     cols <- colnames(.data)
-    .data <- as.data.frame(sapply(.data, function(x) ifelse(is.na(x), "", x), simplify = FALSE))
+    .data <- as.data.frame(sapply(.data, function(x) ifelse(is.na(x), "", x), simplify = FALSE),
+                           stringsAsFactors = FALSE)
     colnames(.data) <- cols
     .data
   }

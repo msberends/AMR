@@ -118,7 +118,7 @@ rsi_calc <- function(...,
       rsi_integrity_check <- as.rsi(rsi_integrity_check)
     }
     
-    x_transposed <- as.list(as.data.frame(t(x)))
+    x_transposed <- as.list(as.data.frame(t(x), stringsAsFactors = FALSE))
     if (only_all_tested == TRUE) {
       # no NAs in any column
       y <- apply(X = as.data.frame(lapply(x, as.integer), stringsAsFactors = FALSE),
@@ -240,7 +240,7 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
       } else {
         values <- factor(values, levels = c("S", "I", "R"), ordered = TRUE)
       }
-      col_results <- as.data.frame(as.matrix(table(values)))
+      col_results <- as.data.frame(as.matrix(table(values)), stringsAsFactors = FALSE)
       col_results$interpretation <- rownames(col_results)
       col_results$isolates <- col_results[, 1, drop = TRUE]
       if (NROW(col_results) > 0 && sum(col_results$isolates, na.rm = TRUE) > 0) {
@@ -265,7 +265,7 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
           }
           out_new <- cbind(group_values, out_new)
         }
-        out <- rbind(out, out_new)
+        out <- rbind(out, out_new, stringsAsFactors = FALSE)
       }
     }
     out

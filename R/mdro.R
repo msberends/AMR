@@ -574,7 +574,9 @@ mdro <- function(x,
     cols <- cols[!ab_missing(cols)]
     cols <- cols[!is.na(cols)]
     if (length(rows) > 0 & length(cols) > 0) {
-      x[, cols] <- as.data.frame(lapply(x[, cols, drop = FALSE], function(col) as.rsi(col)))
+      x[, cols] <- as.data.frame(lapply(x[, cols, drop = FALSE],
+                                        function(col) as.rsi(col)), 
+                                 stringsAsFactors = FALSE)
       x[rows, "columns_nonsusceptible"] <<- sapply(rows, 
                                                    function(row, group_vct = cols) {
                                                      cols_nonsus <- sapply(x[row, group_vct, drop = FALSE], 
@@ -589,7 +591,8 @@ mdro <- function(x,
       } else if (any_all == "all") {
         search_function <- all
       }
-      x_transposed <- as.list(as.data.frame(t(x[, cols, drop = FALSE])))
+      x_transposed <- as.list(as.data.frame(t(x[, cols, drop = FALSE]),
+                                            stringsAsFactors = FALSE))
       row_filter <- sapply(x_transposed, function(y) search_function(y %in% search_result, na.rm = TRUE))
       row_filter <- x[which(row_filter), "row_number", drop = TRUE]
       rows <- rows[rows %in% row_filter]
@@ -604,7 +607,9 @@ mdro <- function(x,
     if (length(rows) > 0) {
       # function specific for the CMI paper of 2012 (Magiorakos et al.)
       lst_vector <- unlist(lst)[!is.na(unlist(lst))]
-      x[, lst_vector] <- as.data.frame(lapply(x[, lst_vector, drop = FALSE], function(col) as.rsi(col)))
+      x[, lst_vector] <- as.data.frame(lapply(x[, lst_vector, drop = FALSE],
+                                              function(col) as.rsi(col)),
+                                       stringsAsFactors = FALSE)
       x[rows, "classes_in_guideline"] <<- length(lst)
       x[rows, "classes_available"] <<- sapply(rows, 
                                               function(row, group_tbl = lst) {
@@ -627,13 +632,14 @@ mdro <- function(x,
                                                    na.rm = TRUE) 
                                              })
       # for PDR; all agents are R (or I if combine_SI = FALSE)
-      x_transposed <- as.list(as.data.frame(t(x[rows, lst_vector, drop = FALSE])))
+      x_transposed <- as.list(as.data.frame(t(x[rows, lst_vector, drop = FALSE]),
+                                            stringsAsFactors = FALSE))
       row_filter <- sapply(x_transposed, function(y) all(y %in% search_result, na.rm = TRUE))
       x[which(row_filter), "classes_affected"] <<- 999
     }
     
     if (info == TRUE) {
-      message_(" OK", as_note = FALSE)
+      message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
     }
   }
   

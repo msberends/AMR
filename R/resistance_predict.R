@@ -186,7 +186,8 @@ resistance_predict <- function(x,
   # remove rows with NAs
   df <- subset(df, !is.na(df[, col_ab, drop = TRUE]))
   df$year <- year(df[, col_date, drop = TRUE])
-  df <- as.data.frame(rbind(table(df[, c("year", col_ab)])), stringsAsFactors = FALSE)
+  df <- as.data.frame(rbind(table(df[, c("year", col_ab)])),
+                      stringsAsFactors = FALSE)
   df$year <- as.integer(rownames(df))
   rownames(df) <- NULL
   

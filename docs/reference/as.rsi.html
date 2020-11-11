@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9017</span>
       </span>
     </div>
 
@@ -257,6 +257,7 @@
   uti <span class='op'>=</span> <span class='cn'>FALSE</span>,
   conserve_capped_values <span class='op'>=</span> <span class='cn'>FALSE</span>,
   add_intrinsic_resistance <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  reference_data <span class='op'>=</span> <span class='fu'>AMR</span><span class='fu'>::</span><span class='va'><a href='rsi_translation.html'>rsi_translation</a></span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -268,6 +269,7 @@
   guideline <span class='op'>=</span> <span class='st'>"EUCAST"</span>,
   uti <span class='op'>=</span> <span class='cn'>FALSE</span>,
   add_intrinsic_resistance <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  reference_data <span class='op'>=</span> <span class='fu'>AMR</span><span class='fu'>::</span><span class='va'><a href='rsi_translation.html'>rsi_translation</a></span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -279,7 +281,8 @@
   guideline <span class='op'>=</span> <span class='st'>"EUCAST"</span>,
   uti <span class='op'>=</span> <span class='cn'>NULL</span>,
   conserve_capped_values <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  add_intrinsic_resistance <span class='op'>=</span> <span class='cn'>FALSE</span>
+  add_intrinsic_resistance <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  reference_data <span class='op'>=</span> <span class='va'>rsi_translation</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -323,6 +326,10 @@
 list(version_txt = "v3.2", year = 2020, title = "EUCAST Expert Rules / EUCAST Intrinsic Resistance and Unusual Phenotypes").</p></td>
     </tr>
     <tr>
+      <th>reference_data</th>
+      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> to be used for interpretation, which defaults to the <a href='rsi_translation.html'>rsi_translation</a> data set. Changing this parameter allows for using own interpretation guidelines. This parameter must contain a data set that is equal in structure to the <a href='rsi_translation.html'>rsi_translation</a> data set (same column names and column types). Please note that the 'guideline' column in this data set must contain values set in the 'guideline' parameter of <code>as.rsi()</code>.</p></td>
+    </tr>
+    <tr>
       <th>col_mo</th>
       <td><p>column name of the IDs of the microorganisms (see <code><a href='as.mo.html'>as.mo()</a></code>), defaults to the first column of class <code><a href='as.mo.html'>mo</a></code>. Values will be coerced using <code><a href='as.mo.html'>as.mo()</a></code>.</p></td>
     </tr>
@@ -358,7 +365,7 @@ list(version_txt = "v3.2", year = 2020, title = "EUCAST Expert Rules / EUCAST In
 
 
 <p>For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the <code>guideline</code> parameter are: "CLSI 2010", "CLSI 2011", "CLSI 2012", "CLSI 2013", "CLSI 2014", "CLSI 2015", "CLSI 2016", "CLSI 2017", "CLSI 2018", "CLSI 2019", "EUCAST 2011", "EUCAST 2012", "EUCAST 2013", "EUCAST 2014", "EUCAST 2015", "EUCAST 2016", "EUCAST 2017", "EUCAST 2018", "EUCAST 2019", "EUCAST 2020".</p>
-<p>Simply using <code>"CLSI"</code> or <code>"EUCAST"</code> as input will automatically select the latest version of that guideline.</p>
+<p>Simply using <code>"CLSI"</code> or <code>"EUCAST"</code> as input will automatically select the latest version of that guideline. You can set your own data set using the <code>reference_data</code> parameter.</p>
 
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>After interpretation</h3>
 

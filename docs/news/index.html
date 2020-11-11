@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9016</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9017</span>
       </span>
     </div>
 
@@ -236,13 +236,13 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1409016" class="section level1">
-<h1 class="page-header" data-toc-text="1.4.0.9016">
-<a href="#amr-1409016" class="anchor"></a>AMR 1.4.0.9016<small> Unreleased </small>
+    <div id="amr-1409017" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.0.9017">
+<a href="#amr-1409017" class="anchor"></a>AMR 1.4.0.9017<small> Unreleased </small>
 </h1>
-<div id="last-updated-10-november-2020" class="section level2">
+<div id="last-updated-11-november-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-10-november-2020" class="anchor"></a><small>Last updated: 10 November 2020</small>
+<a href="#last-updated-11-november-2020" class="anchor"></a><small>Last updated: 11 November 2020</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
@@ -252,7 +252,7 @@
 <p>Functions <code><a href="../reference/mo_property.html">is_gram_negative()</a></code> and <code><a href="../reference/mo_property.html">is_gram_positive()</a></code> as wrappers around <code><a href="../reference/mo_property.html">mo_gramstain()</a></code>. They always return <code>TRUE</code> or <code>FALSE</code> (except when the input is <code>NA</code> or the MO code is <code>UNKNOWN</code>), thus always return <code>FALSE</code> for species outside the taxonomic kingdom of Bacteria. If you have the <code>dplyr</code> package installed, they can even determine the column with microorganisms themselves inside <code>dplyr</code> functions:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="va">example_isolates</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">is_gram_positive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">is_gram_positive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; NOTE: Using column `mo` as input for 'x'</span></pre></div>
 </li>
 <li><p>Functions <code><a href="../reference/like.html">%not_like%</a></code> and <code><a href="../reference/like.html">%not_like_case%</a></code> as wrappers around <code><a href="../reference/like.html">%like%</a></code> and <code><a href="../reference/like.html">%like_case%</a></code>. The RStudio addin to insert the text " %like% " as provided in this package now iterates over all like variants. So if you have defined the keyboard shortcut Ctrl/Cmd + L to this addin, it will first insert <code><a href="../reference/like.html">%like%</a></code> and by pressing it again it will be replaced with <code><a href="../reference/like.html">%not_like%</a></code>, etc.</p></li>
@@ -262,6 +262,7 @@
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
+<li>Reference data used for <code><a href="../reference/as.rsi.html">as.rsi()</a></code> can now be set by the user, using the <code>reference_data</code> parameter.</li>
 <li>For all function parameters in the code, it is now defined what the exact type of user input should be (inspired by the <a href="https://github.com/moodymudskipper/typed"><code>typed</code></a> package). If the user input for a certain function does not meet the requirements for a specific parameter (such as the class or length), an informative error will be thrown. This makes the package more robust and the use of it more reproducible and reliable. In total, more than 400 arguments were defined.</li>
 <li>Deprecated function <code><a href="../reference/AMR-deprecated.html">p_symbol()</a></code> that not really fits the scope of this package. It will be removed in a future version. See <a href="https://github.com/msberends/AMR/blob/v1.4.0/R/p_symbol.R">here</a> for the source code to preserve it.</li>
 <li>Better determination of disk zones and MIC values when running <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on a data.frame</li>

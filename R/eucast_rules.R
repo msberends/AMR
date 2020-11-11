@@ -585,7 +585,7 @@ eucast_rules <- function(x,
   x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL)
   x$genus_species <- paste(x$genus, x$species)
   if (info == TRUE & NROW(x) > 10000) {
-    message_("OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
+    message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
   }
   
   if (any(x$genus == "Staphylococcus", na.rm = TRUE)) {
@@ -1088,7 +1088,9 @@ edit_rsi <- function(x,
                                    "rule", "rule_group", "rule_name", "rule_source")
         verbose_new <- verbose_new %pm>% pm_filter(old != new | is.na(old))
         # save changes to data set 'verbose_info'
-        track_changes$verbose_info <- rbind(track_changes$verbose_info, verbose_new)
+        track_changes$verbose_info <- rbind(track_changes$verbose_info,
+                                            verbose_new,
+                                            stringsAsFactors = FALSE)
         # count adds and changes
         track_changes$added <- track_changes$added + verbose_new %pm>%
           pm_filter(is.na(old)) %pm>%

@@ -314,11 +314,13 @@ pca_calculations <- function(pca_model,
   # Scores
   choices <- pmin(choices, ncol(u))
   obs.scale <- 1 - as.integer(scale)
-  df.u <- as.data.frame(sweep(u[, choices], 2, d[choices] ^ obs.scale, FUN = "*"))
+  df.u <- as.data.frame(sweep(u[, choices], 2, d[choices] ^ obs.scale, FUN = "*"),
+                        stringsAsFactors = FALSE)
   
   # Directions
   v <- sweep(v, 2, d ^ as.integer(scale), FUN = "*")
-  df.v <- as.data.frame(v[, choices])
+  df.v <- as.data.frame(v[, choices],
+                        stringsAsFactors = FALSE)
   
   names(df.u) <- c("xvar", "yvar")
   names(df.v) <- names(df.u)
@@ -356,7 +358,8 @@ pca_calculations <- function(pca_model,
       if (nrow(x) <= 2) {
         return(data.frame(X1 = numeric(0),
                           X2 = numeric(0),
-                          groups = character(0)))
+                          groups = character(0),
+                          stringsAsFactors = FALSE))
       }
       sigma <- var(cbind(x$xvar, x$yvar))
       mu <- c(mean(x$xvar), mean(x$yvar))
