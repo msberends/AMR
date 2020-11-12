@@ -1,5 +1,5 @@
-# AMR 1.4.0.9018
-## <small>Last updated: 11 November 2020</small>
+# AMR 1.4.0.9019
+## <small>Last updated: 12 November 2020</small>
 
 ### New
 * Functions `is_gram_negative()` and `is_gram_positive()` as wrappers around `mo_gramstain()`. They always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria. If you have the `dplyr` package installed, they can even determine the column with microorganisms themselves inside `dplyr` functions:

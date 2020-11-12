@@ -27,13 +27,24 @@
 # (running "data-raw/internals.R" will process that TSV file)
 EUCAST_VERSION_BREAKPOINTS <- list("10.0" = list(version_txt = "v10.0",
                                                  year = 2020, 
-                                                 title = "EUCAST Clinical Breakpoints"))
+                                                 title = "'EUCAST Clinical Breakpoints'",
+                                                 url = "https://www.eucast.org/clinical_breakpoints/"))
 EUCAST_VERSION_EXPERT_RULES <- list("3.1" = list(version_txt = "v3.1",
                                                  year = 2016, 
-                                                 title = "EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes"),
+                                                 title = "'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes'",
+                                                 url = "https://www.eucast.org/expert_rules_and_intrinsic_resistance/"),
                                     "3.2" = list(version_txt = "v3.2",
                                                  year = 2020, 
-                                                 title = "EUCAST Expert Rules / EUCAST Intrinsic Resistance and Unusual Phenotypes"))
+                                                 title = "'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes'",
+                                                 url = "https://www.eucast.org/expert_rules_and_intrinsic_resistance/"))
+
+format_eucast_version_nr <- function(version) {
+  # for documentation - adds title, version number, year and url in markdown language
+  lst <- c(EUCAST_VERSION_BREAKPOINTS, EUCAST_VERSION_EXPERT_RULES)
+  version <- format(version, nsmall = 1)
+  paste0("[", lst[[version]]$title, " ", lst[[version]]$version_txt, "](", lst[[version]]$url, ")",
+         " from ", lst[[version]]$year)
+}
 
 #' Apply EUCAST rules
 #' 

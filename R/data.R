@@ -258,7 +258,7 @@ catalogue_of_life <- list(
 #' - `antibiotic`\cr Name of the antibiotic drug
 #' @details The repository of this `AMR` package contains a file comprising this exact data set: <https://github.com/msberends/AMR/blob/master/data-raw/intrinsic_resistant.txt>. This file **allows for machine reading EUCAST guidelines about intrinsic resistance**, which is almost impossible with the Excel and PDF files distributed by EUCAST. The file is updated automatically.
 #' 
-#' This data set is based on '`r EUCAST_VERSION_EXPERT_RULES[["3.2"]]$title`', `r EUCAST_VERSION_EXPERT_RULES[["3.2"]]$version_txt` from `r EUCAST_VERSION_EXPERT_RULES[["3.2"]]$year`.
+#' This data set is based on `r format_eucast_version_nr(3.2)`.
 #' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
 #' @examples
