@@ -79,8 +79,7 @@ addin_insert_like <- function() {
   modifyRange <- import_fn("insertText", "rstudioapi")
   document_range <- import_fn("document_range", "rstudioapi")
   document_position <- import_fn("document_position", "rstudioapi")
-  # setSelectionRanges <- import_fn("setSelectionRanges", "rstudioapi")
-  
+
   context <- getSourceEditorContext()
   current_row <- context$selection[[1]]$range$end[1]
   current_col <- context$selection[[1]]$range$end[2]
@@ -688,7 +687,7 @@ set_clean_class <- function(x, new_class) {
     lvls <- levels(x)
     attributes(x) <- NULL
     levels(x) <- lvls
-  } else {
+  } else if (!is.list(x) && !is.function(x)) {
     attributes(x) <- NULL
   }
   class(x) <- new_class

@@ -598,7 +598,7 @@ mo_validate <- function(x, property, language, ...) {
   }
 
   if (property == "mo") {
-    return(to_class_mo(x))
+    return(set_clean_class(x, new_class = c("mo", "character")))
   } else if (property == "snomed") {
     return(as.double(eval(parse(text = x))))
   } else {
