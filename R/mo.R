@@ -148,8 +148,9 @@
 #' as.mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPT_GRPA
 #'
 #' # All mo_* functions use as.mo() internally too (see ?mo_property):
-#' mo_genus("E. coli")           # returns "Escherichia"
-#' mo_gramstain("E. coli")       # returns "Gram negative"
+#' mo_genus("E. coli")                           # returns "Escherichia"
+#' mo_gramstain("E. coli")                       # returns "Gram negative"
+#' mo_is_intrinsic_resistant("E. coli", "vanco") # returns TRUE
 #' }
 as.mo <- function(x,
                   Becker = FALSE,
@@ -1620,8 +1621,8 @@ get_skimmers.mo <- function(column) {
   sfl(
     skim_type = "mo",
     unique_total = ~pm_n_distinct(., na.rm = TRUE),
-    gram_negative = ~sum(is_gram_negative(stats::na.omit(.))),
-    gram_positive = ~sum(is_gram_positive(stats::na.omit(.))),
+    gram_negative = ~sum(mo_is_gram_negative(stats::na.omit(.))),
+    gram_positive = ~sum(mo_is_gram_positive(stats::na.omit(.))),
     top_genus = ~names(sort(-table(mo_genus(stats::na.omit(.), language = NULL))))[1L],
     top_species = ~names(sort(-table(mo_name(stats::na.omit(.), language = NULL))))[1L]
   )

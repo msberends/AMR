@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9019</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9020</span>
       </span>
     </div>
 
@@ -455,8 +455,9 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 <span class='fu'>as.mo</span><span class='op'>(</span><span class='st'>"S. pyogenes"</span>, Lancefield <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='co'># will not remain species: B_STRPT_GRPA</span>
 
 <span class='co'># All mo_* functions use as.mo() internally too (see ?mo_property):</span>
-<span class='fu'><a href='mo_property.html'>mo_genus</a></span><span class='op'>(</span><span class='st'>"E. coli"</span><span class='op'>)</span>           <span class='co'># returns "Escherichia"</span>
-<span class='fu'><a href='mo_property.html'>mo_gramstain</a></span><span class='op'>(</span><span class='st'>"E. coli"</span><span class='op'>)</span>       <span class='co'># returns "Gram negative"</span>
+<span class='fu'><a href='mo_property.html'>mo_genus</a></span><span class='op'>(</span><span class='st'>"E. coli"</span><span class='op'>)</span>                           <span class='co'># returns "Escherichia"</span>
+<span class='fu'><a href='mo_property.html'>mo_gramstain</a></span><span class='op'>(</span><span class='st'>"E. coli"</span><span class='op'>)</span>                       <span class='co'># returns "Gram negative"</span>
+<span class='fu'><a href='mo_property.html'>mo_is_intrinsic_resistant</a></span><span class='op'>(</span><span class='st'>"E. coli"</span>, <span class='st'>"vanco"</span><span class='op'>)</span> <span class='co'># returns TRUE</span>
 <span class='co'># }</span>
 </pre>
   </div>

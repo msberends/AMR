@@ -1,12 +1,18 @@
-# AMR 1.4.0.9019
-## <small>Last updated: 12 November 2020</small>
+# AMR 1.4.0.9020
+## <small>Last updated: 16 November 2020</small>
 
 ### New
-* Functions `is_gram_negative()` and `is_gram_positive()` as wrappers around `mo_gramstain()`. They always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria. If you have the `dplyr` package installed, they can even determine the column with microorganisms themselves inside `dplyr` functions:
+* Functions `mo_is_gram_negative()` and `mo_is_gram_positive()` as wrappers around `mo_gramstain()`. They always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria. If you have the `dplyr` package installed, they can even determine the column with microorganisms themselves when used inside `dplyr` verbs:
   ```r
   example_isolates %>%
-    filter(is_gram_positive())
-  #> NOTE: Using column `mo` as input for 'x'
+    filter(mo_is_gram_positive())
+  #> NOTE: Using column `mo` as input for mo_is_gram_positive()
+  ```
+* Function `mo_is_intrinsic_resistant()` to test for intrinsic resistance, based on [EUCAST Intrinsic Resistance and Unusual Phenotypes v3.2](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) from 2020. As with the new `mo_is_gram_*()` functions, if you have the `dplyr` package installed the column with microorganisms will be automatically determined when used inside `dplyr` verbs:
+  ```r
+  example_isolates %>%
+    filter(mo_is_intrinsic_resistant(ab = "Vancomycin"))
+  #> NOTE: Using column `mo` as input for mo_is_intrinsic_resistant()
   ```
 * Functions `%not_like%` and `%not_like_case%` as wrappers around `%like%` and `%like_case%`. The RStudio addin to insert the text " %like% " as provided in this package now iterates over all like variants. So if you have defined the keyboard shortcut Ctrl/Cmd + L to this addin, it will first insert ` %like% ` and by pressing it again it will be replaced with ` %not_like% `, etc.
 

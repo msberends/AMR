@@ -54,7 +54,7 @@
 #'     
 #'   # get bug/drug combinations for only macrolides in Gram-positives:
 #'   example_isolates %>% 
-#'     filter(is_gram_positive()) %>% 
+#'     filter(mo_is_gram_positive()) %>% 
 #'     select(mo, macrolides()) %>% 
 #'     bug_drug_combinations() %>%
 #'     format()

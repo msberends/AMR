@@ -212,8 +212,9 @@ as.mo("S. pyogenes")                    # will remain species: B_STRPT_PYGN
 as.mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPT_GRPA
 
 # All mo_* functions use as.mo() internally too (see ?mo_property):
-mo_genus("E. coli")           # returns "Escherichia"
-mo_gramstain("E. coli")       # returns "Gram negative"
+mo_genus("E. coli")                           # returns "Escherichia"
+mo_gramstain("E. coli")                       # returns "Gram negative"
+mo_is_intrinsic_resistant("E. coli", "vanco") # returns TRUE
 }
 }
 \seealso{

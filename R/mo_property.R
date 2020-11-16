@@ -31,6 +31,7 @@
 #' @param property one of the column names of the [microorganisms] data set or `"shortname"`
 #' @param language language of the returned text, defaults to system language (see [get_locale()]) and can be overwritten by setting the option `AMR_locale`, e.g. `options(AMR_locale = "de")`, see [translate]. Also used to translate text like "no growth". Use `language = NULL` or `language = ""` to prevent translation.
 #' @param ... other parameters passed on to [as.mo()], such as 'allow_uncertain' and 'ignore_pattern'
+#' @param ab any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
 #' @param open browse the URL using [utils::browseURL()]
 #' @details All functions will return the most recently known taxonomic property according to the Catalogue of Life, except for [mo_ref()], [mo_authors()] and [mo_year()]. Please refer to this example, knowing that *Escherichia blattae* was renamed to *Shimwellia blattae* in 2010:
 #' - `mo_name("Escherichia blattae")` will return `"Shimwellia blattae"` (with a message about the renaming)
@@ -41,7 +42,9 @@
 #'
 #' Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions [mo_kingdom()] and [mo_domain()] return the exact same results.
 #'
-#' The Gram stain - [mo_gramstain()] - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318)), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`. Functions [is_gram_negative()] and [is_gram_positive()] always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
+#' The Gram stain - [mo_gramstain()] - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318)), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`. Functions [mo_is_gram_negative()] and [mo_is_gram_positive()] always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
+#' 
+#' Intrinsic resistance - [mo_is_intrinsic_resistant()] - will be determined based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(3.2)`. The [mo_is_intrinsic_resistant()] can be vectorised over parameters `x` (input for microorganisms) and over `ab` (input for antibiotics).
 #'
 #' All output will be [translate]d where possible.
 #'
@@ -139,13 +142,19 @@
 #'             Lancefield = TRUE,
 #'             language = "nl")              # "Streptococcus groep A"
 #'
-#' # gram stains can be used as a filter
+#'
+#' # other --------------------------------------------------------------------
+#' 
+#' # gram stains and intrinsic resistance can also be used as a filter in dplyr verbs
 #' if (require("dplyr")) {
 #'   example_isolates %>%
-#'     filter(is_gram_positive())
+#'     filter(mo_is_gram_positive())
+#'     
+#'   example_isolates %>%
+#'     filter(mo_is_intrinsic_resistant(ab = "vanco"))
 #' }
 #' 
-#' # other --------------------------------------------------------------------
+#' 
 #' # get a list with the complete taxonomy (from kingdom to subspecies)
 #' mo_taxonomy("E. coli")
 #' # get a list with the taxonomy, the authors, Gram-stain and URL to the online database
@@ -316,23 +325,10 @@ mo_gramstain <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-is_gram_negative <- function(x, language = get_locale(), ...) {
+mo_is_gram_negative <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
-    peek_mask_dplyr <- import_fn("peek_mask", "dplyr", error_on_fail = FALSE)
-    if (!is.null(peek_mask_dplyr)) {
-      try({
-        df <- as.data.frame(peek_mask_dplyr()$across_cols(), stringsAsFactors = FALSE)
-        mo <- suppressMessages(search_type_in_df(df, "mo"))
-        if (!is.null(mo)) {
-          message_("Using column `", font_bold(mo), "` as input for 'x'")
-          x <- df[, mo, drop = TRUE]
-        } else {
-          stop_("Argument 'x' is missing")
-        }
-      }, silent = TRUE)
-    } else {
-      stop_("Argument 'x' is missing")
-    }
+    # this supports using in dplyr verbs: ... %>% filter(mo_is_gram_negative())
+    x <- find_mo_col("mo_is_gram_negative")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -342,29 +338,16 @@ is_gram_negative <- function(x, language = get_locale(), ...) {
   grams <- mo_gramstain(x.mo, language = NULL)
   load_mo_failures_uncertainties_renamed(metadata)
   out <- grams == "Gram-negative" & !is.na(grams)
-  out[x.mo %in% c(NA, "UNKNOWN")] <- NA
+  out[x.mo %in% c(NA_character_, "UNKNOWN")] <- NA
   out
 }
 
 #' @rdname mo_property
 #' @export
-is_gram_positive <- function(x, language = get_locale(), ...) {
+mo_is_gram_positive <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
-    peek_mask_dplyr <- import_fn("peek_mask", "dplyr", error_on_fail = FALSE)
-    if (!is.null(peek_mask_dplyr)) {
-      try({
-        df <- as.data.frame(peek_mask_dplyr()$across_cols(), stringsAsFactors = FALSE)
-        mo <- suppressMessages(search_type_in_df(df, "mo"))
-        if (!is.null(mo)) {
-          message_("Using column `", font_bold(mo), "` as input for 'x'")
-          x <- df[, mo, drop = TRUE]
-        } else {
-          stop_("Argument 'x' is missing")
-        }
-      }, silent = TRUE)
-    } else {
-      stop_("Argument 'x' is missing")
-    }
+    # this supports using in dplyr verbs: ... %>% filter(mo_is_gram_positive())
+    x <- find_mo_col("mo_is_gram_positive")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -374,8 +357,38 @@ is_gram_positive <- function(x, language = get_locale(), ...) {
   grams <- mo_gramstain(x.mo, language = NULL)
   load_mo_failures_uncertainties_renamed(metadata)
   out <- grams == "Gram-positive" & !is.na(grams)
-  out[x.mo %in% c(NA, "UNKNOWN")] <- NA
+  out[x.mo %in% c(NA_character_, "UNKNOWN")] <- NA
   out
+}
+
+#' @rdname mo_property
+#' @export
+mo_is_intrinsic_resistant <- function(x, ab, language = get_locale(), ...) {
+  if (missing(x)) {
+    # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
+    x <- find_mo_col("mo_is_intrinsic_resistant")
+  }
+  meet_criteria(x, allow_NA = TRUE)
+  meet_criteria(ab, allow_NA = FALSE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
+  x.mo <- as.mo(x, language = language, ...)
+  x <- mo_name(x.mo, language = NULL) # has to match intrinsic_resistant$microorganism
+  ab <- ab_name(ab, language = NULL, # has to match intrinsic_resistant$antibiotic
+                flag_multiple_results = FALSE,
+                info = FALSE)
+  if (length(x) == 1 & length(ab) > 1) {
+    x <- rep(x, length(ab))
+  } else if (length(ab) == 1 & length(x) > 1) {
+    ab <- rep(ab, length(x))
+  }
+  if (length(x) != length(ab)) {
+    stop_("length of 'x' and 'ab' must be equal, or one of them must be of length 1.")
+  }
+  
+  intrinsic_to_check <- intrinsic_resistant[which(intrinsic_resistant$microorganism %in% x | 
+                                                    intrinsic_resistant$antibiotic %in% ab), , drop = FALSE]
+  paste(x, ab) %in% paste(intrinsic_to_check$microorganism, intrinsic_to_check$antibiotic)
 }
 
 #' @rdname mo_property
@@ -590,5 +603,27 @@ mo_validate <- function(x, property, language, ...) {
     return(as.double(eval(parse(text = x))))
   } else {
     return(x)
+  }
+}
+
+find_mo_col <- function(fn) {
+  # this function tries to find an mo column using dplyr:::peek_mask() for mo_is_*() functions,
+  # which is useful when functions are used within dplyr verbs
+  peek_mask_dplyr <- import_fn("peek_mask", "dplyr", error_on_fail = FALSE)
+  if (!is.null(peek_mask_dplyr)) {
+    df <- NULL
+    mo <- NULL
+    try({
+      df <- as.data.frame(peek_mask_dplyr()$across_cols(), stringsAsFactors = FALSE)
+      mo <- suppressMessages(search_type_in_df(df, "mo"))
+    }, silent = TRUE)
+    if (!is.null(df) && !is.null(mo) && is.data.frame(df)) {
+      message_("Using column `", font_bold(mo), "` as input for ", fn, "()")
+      return(df[, mo, drop = TRUE])
+    } else {
+      stop_("Argument 'x' is missing and no column with info about microorganisms could be found.", call = -2)
+    }
+  } else {
+    stop_("Argument 'x' is missing.", call = -2)
   }
 }

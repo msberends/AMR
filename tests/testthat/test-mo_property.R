@@ -113,14 +113,20 @@ test_that("mo_property works", {
   expect_equal(nrow(subset(x, f1 != f2)), 0)
   
   # is gram pos/neg (also return FALSE for all non-bacteria)
-  expect_equal(is_gram_negative(c("Escherichia coli", "Staphylococcus aureus", "Candida albicans")),
+  expect_equal(mo_is_gram_negative(c("Escherichia coli", "Staphylococcus aureus", "Candida albicans")),
                c(TRUE, FALSE, FALSE))
-  expect_equal(is_gram_positive(c("Escherichia coli", "Staphylococcus aureus", "Candida albicans")),
+  expect_equal(mo_is_gram_positive(c("Escherichia coli", "Staphylococcus aureus", "Candida albicans")),
                c(FALSE, TRUE, FALSE))
+  # is intrinsic resistant
+  expect_equal(mo_is_intrinsic_resistant(c("Escherichia coli", "Staphylococcus aureus", "Candida albicans"),
+                                         "vanco"),
+               c(TRUE, FALSE, FALSE))
   
   library(dplyr)
-  expect_equal(example_isolates %>% filter(is_gram_negative()) %>% nrow(),
+  expect_equal(example_isolates %>% filter(mo_is_gram_negative()) %>% nrow(),
                730)
-  expect_equal(example_isolates %>% filter(is_gram_positive()) %>% nrow(),
+  expect_equal(example_isolates %>% filter(mo_is_gram_positive()) %>% nrow(),
                1238)
+  expect_equal(example_isolates %>% filter(mo_is_intrinsic_resistant(ab = "Vancomycin")) %>% nrow(),
+               710)
 })
