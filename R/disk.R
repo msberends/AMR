@@ -39,7 +39,6 @@
 #' @examples
 #' \donttest{
 #' # transform existing disk zones to the `disk` class
-#' library(dplyr)
 #' df <- data.frame(microorganism = "E. coli",
 #'                  AMP = 20,
 #'                  CIP = 14,
@@ -107,8 +106,8 @@ as.disk <- function(x, na.rm = FALSE) {
                list_missing, call = FALSE)
     }
   }
-  structure(as.integer(x),
-            class = c("disk", "integer"))
+  set_clean_class(as.integer(x),
+                  new_class = c("disk", "integer"))
 }
 
 all_valid_disks <- function(x) {

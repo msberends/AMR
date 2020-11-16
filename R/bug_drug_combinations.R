@@ -106,7 +106,8 @@ bug_drug_combinations <- function(x,
     out <- rbind(out, out_group, stringsAsFactors = FALSE)
   }
   
-  structure(.Data = out, class = c("bug_drug_combinations", x_class))
+  set_clean_class(out,
+                  new_class = c("bug_drug_combinations", x_class))
 }
 
 #' @method format bug_drug_combinations
@@ -245,7 +246,8 @@ format.bug_drug_combinations <- function(x,
 #' @export
 print.bug_drug_combinations <- function(x, ...) {
   x_class <- class(x)
-  print(structure(x, class = x_class[x_class != "bug_drug_combinations"]),
+  print(set_clean_class(x, 
+                        new_class = x_class[x_class != "bug_drug_combinations"]),
         ...)
   message_("Use 'format()' on this result to get a publishable/printable format.", as_note = FALSE)
 }

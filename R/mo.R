@@ -175,7 +175,7 @@ as.mo <- function(x,
                & isFALSE(Lancefield), error = function(e) FALSE)) {
     # don't look into valid MO codes, just return them
     # is.mo() won't work - MO codes might change between package versions
-    return(to_class_mo(x))
+    return(set_clean_class(x, new_class = c("mo", "character")))
   }
 
   if (tryCatch(all(x == "" | gsub(".*(unknown ).*", "unknown name", tolower(x), perl = TRUE) %in% MO_lookup$fullname_lower, na.rm = TRUE)
@@ -228,12 +228,8 @@ as.mo <- function(x,
                      ...)
   }
 
-  to_class_mo(y)
-}
-
-to_class_mo <- function(x) {
-  structure(.Data = x,
-            class = c("mo", "character"))
+  set_clean_class(y,
+                  new_class = c("mo", "character"))
 }
 
 #' @rdname as.mo
@@ -399,7 +395,8 @@ exec_as.mo <- function(x,
   # all empty
   if (all(identical(trimws(x_input), "") | is.na(x_input) | length(x) == 0)) {
     if (property == "mo") {
-      return(to_class_mo(rep(NA_character_, length(x_input))))
+      return(set_clean_class(rep(NA_character_, length(x_input)),
+                             new_class = c("mo", "character")))
     } else {
       return(rep(NA_character_, length(x_input)))
     }
@@ -1499,7 +1496,7 @@ exec_as.mo <- function(x,
   x <- df_found$found[match(df_input$input, df_found$input)]
 
   if (property == "mo") {
-    x <- to_class_mo(x)
+    x <- set_clean_class(x, new_class = c("mo", "character"))
   }
 
   if (length(mo_renamed()) > 0) {
@@ -1740,8 +1737,9 @@ mo_uncertainties <- function() {
   if (is.null(getOption("mo_uncertainties"))) {
     return(NULL)
   }
-  structure(.Data = as.data.frame(getOption("mo_uncertainties"), stringsAsFactors = FALSE),
-            class = c("mo_uncertainties", "data.frame"))
+  set_clean_class(as.data.frame(getOption("mo_uncertainties"), 
+                                stringsAsFactors = FALSE),
+                  new_class = c("mo_uncertainties", "data.frame"))
 }
 
 #' @method print mo_uncertainties
@@ -1814,8 +1812,9 @@ mo_renamed <- function() {
   } else {
     items <- pm_distinct(items, old_name, .keep_all = TRUE)
   }
-  structure(.Data = items,
-            class = c("mo_renamed", "data.frame"))
+  set_clean_class(as.data.frame(items,
+                                stringsAsFactors = FALSE),
+                  new_class = c("mo_renamed", "data.frame"))
 }
 
 #' @method print mo_renamed

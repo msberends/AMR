@@ -131,8 +131,8 @@ as.mic <- function(x, na.rm = FALSE) {
                list_missing, call = FALSE)
     }
     
-    structure(.Data = factor(x, levels = lvls, ordered = TRUE),
-              class =  c("mic", "ordered", "factor"))
+    set_clean_class(factor(x, levels = lvls, ordered = TRUE),
+                    new_class =  c("mic", "ordered", "factor"))
   }
 }
 

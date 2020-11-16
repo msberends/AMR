@@ -670,7 +670,7 @@ progress_ticker <- function(n = 1, n_min = 0, ...) {
     pb$kill <- function() {
       invisible()
     }
-    structure(pb, class = "txtProgressBar")
+    set_clean_class(pb, new_class = "txtProgressBar")
   } else if (n >= n_min) {
     pb <- utils::txtProgressBar(max = n, style = 3)
     pb$tick <- function() {
@@ -678,6 +678,21 @@ progress_ticker <- function(n = 1, n_min = 0, ...) {
     }
     pb
   }
+}
+
+set_clean_class <- function(x, new_class) {
+  if (is.null(x)) {
+    x <- NA_character_
+  }
+  if (is.factor(x)) {
+    lvls <- levels(x)
+    attributes(x) <- NULL
+    levels(x) <- lvls
+  } else {
+    attributes(x) <- NULL
+  }
+  class(x) <- new_class
+  x
 }
 
 create_pillar_column <- function(x, ...) {

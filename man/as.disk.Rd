@@ -40,7 +40,6 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 \examples{
 \donttest{
 # transform existing disk zones to the `disk` class
-library(dplyr)
 df <- data.frame(microorganism = "E. coli",
                  AMP = 20,
                  CIP = 14,

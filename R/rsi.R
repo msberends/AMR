@@ -223,17 +223,15 @@ is.rsi.eligible <- function(x, threshold = 0.05) {
 #' @export
 as.rsi.default <- function(x, ...) {
   if (is.rsi(x)) {
-    x
-  } else if (all(is.na(x)) || identical(levels(x), c("S", "I", "R"))) {
-    structure(.Data = factor(x, levels = c("S", "I", "R"), ordered = TRUE),
-              class =  c("rsi", "ordered", "factor"))
-  } else if (inherits(x, "integer") & all(x %in% c(1:3, NA))) {
+    return(x)
+  }
+  
+  if (inherits(x, "integer") & all(x %in% c(1:3, NA))) {
     x[x == 1] <- "S"
     x[x == 2] <- "I"
     x[x == 3] <- "R"
-    structure(.Data = factor(x, levels = c("S", "I", "R"), ordered = TRUE),
-              class =  c("rsi", "ordered", "factor"))
-  } else {
+    
+  } else if (!all(is.na(x)) && !identical(levels(x), c("S", "I", "R"))) {
     
     if (!any(x %like% "(R|S|I)", na.rm = TRUE)) {
       # check if they are actually MICs or disks now that the antibiotic name is valid
@@ -280,10 +278,10 @@ as.rsi.default <- function(x, ...) {
                  list_missing, call = FALSE)
       }
     }
-    
-    structure(.Data = factor(x, levels = c("S", "I", "R"), ordered = TRUE),
-              class =  c("rsi", "ordered", "factor"))
   }
+  
+  set_clean_class(factor(x, levels = c("S", "I", "R"), ordered = TRUE),
+                  new_class =  c("rsi", "ordered", "factor"))
 }
 
 #' @rdname as.rsi
@@ -804,8 +802,8 @@ exec_as.rsi <- function(method,
   
   load_mo_failures_uncertainties_renamed(metadata_mo)
   
-  structure(.Data = factor(new_rsi, levels = c("S", "I", "R"), ordered = TRUE),
-            class =  c("rsi", "ordered", "factor"))
+  set_clean_class(factor(new_rsi, levels = c("S", "I", "R"), ordered = TRUE),
+                  new_class =  c("rsi", "ordered", "factor"))
 }
 
 # will be exported using s3_register() in R/zzz.R

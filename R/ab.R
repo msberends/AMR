@@ -97,8 +97,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
   
   if (all(toupper(x) %in% antibiotics$ab)) {
     # valid AB code, but not yet right class
-    return(structure(.Data = toupper(x),
-                     class = c("ab", "character")))
+    return(set_clean_class(toupper(x),
+                           new_class = c("ab", "character")))
   }
   
   x_bak <- x
@@ -455,8 +455,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
     x_result <- NA_character_
   }
   
-  structure(.Data = x_result,
-            class = c("ab", "character"))
+  set_clean_class(x_result,
+                  new_class = c("ab", "character"))
 }
 
 #' @rdname as.ab

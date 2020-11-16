@@ -139,13 +139,14 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
 #'
 #' \donttest{
 #' # resistance of ciprofloxacin per age group
-#' library(dplyr)
-#' example_isolates %>%
-#'   filter_first_isolate() %>%
-#'   filter(mo == as.mo("E. coli")) %>%
-#'   group_by(age_group = age_groups(age)) %>%
-#'   select(age_group, CIP) %>%
-#'   ggplot_rsi(x = "age_group", minimum = 0)
+#' if (require("dplyr")) {
+#'   example_isolates %>%
+#'     filter_first_isolate() %>%
+#'     filter(mo == as.mo("E. coli")) %>%
+#'     group_by(age_group = age_groups(age)) %>%
+#'     select(age_group, CIP) %>%
+#'     ggplot_rsi(x = "age_group", minimum = 0)
+#' }
 #' }
 age_groups <- function(x, split_at = c(12, 25, 55, 75), na.rm = FALSE) {
   meet_criteria(x, allow_class = c("numeric", "integer"))

@@ -263,7 +263,7 @@ ab_validate <- function(x, property, ...) {
      pm_pull(property)
   }
   if (property == "ab") {
-    return(structure(x, class = property))
+    return(set_clean_class(x, new_class = c("ab", "character")))
   } else if (property == "cid") {
     return(as.integer(x))
   } else if (property %like% "ddd") {

@@ -107,8 +107,8 @@ catalogue_of_life_version <- function() {
                   n_total_species = nrow(microorganisms),
                   n_total_synonyms = nrow(microorganisms.old)))
   
-  structure(.Data = lst,
-            class = c("catalogue_of_life_version", "list"))
+  set_clean_class(lst,
+                  new_class = c("catalogue_of_life_version", "list"))
 }
 
 #' @method print catalogue_of_life_version
