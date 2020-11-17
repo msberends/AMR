@@ -4,6 +4,7 @@
 \alias{first_isolate}
 \alias{filter_first_isolate}
 \alias{filter_first_weighted_isolate}
+\alias{is_new_episode}
 \title{Determine first (weighted) isolates}
 \source{
 Methodology of this function is strictly based on:
@@ -48,11 +49,18 @@ filter_first_weighted_isolate(
   col_keyantibiotics = NULL,
   ...
 )
+
+is_new_episode(
+  .data,
+  episode_days = 365,
+  col_date = NULL,
+  col_patient_id = NULL
+)
 }
 \arguments{
-\item{x}{a \link{data.frame} containing isolates.}
+\item{x, .data}{a \link{data.frame} containing isolates.}
 
-\item{col_date}{column name of the result date (or date that is was received on the lab), defaults to the first column of with a date class}
+\item{col_date}{column name of the result date (or date that is was received on the lab), defaults to the first column with a date class}
 
 \item{col_patient_id}{column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' or 'patid' (case insensitive)}
 
@@ -90,15 +98,22 @@ filter_first_weighted_isolate(
 A \code{\link{logical}} vector
 }
 \description{
-Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type.
+Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use \code{\link[=is_new_episode]{is_new_episode()}} that also supports grouping with the \code{dplyr} package, see \emph{Examples}.
 }
 \details{
-\strong{WHY THIS IS SO IMPORTANT} \cr
-To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode \href{https:/pubmed.ncbi.nlm.nih.gov/17304462/}{(ref)}. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be \href{https://en.wikipedia.org/wiki/Selection_bias}{selection bias}.
+The \code{\link[=is_new_episode]{is_new_episode()}} function is a wrapper around the \code{\link[=first_isolate]{first_isolate()}} function and can be used for data sets without isolates to just determine patient episodes based on any combination of grouping variables (using \code{dplyr}), please see \emph{Examples}. Since it runs \code{\link[=first_isolate]{first_isolate()}} for every group, it is quite slow.
 
 All isolates with a microbial ID of \code{NA} will be excluded as first isolate.
+\subsection{Why this is so important}{
 
-The functions \code{\link[=filter_first_isolate]{filter_first_isolate()}} and \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_isolate()}} are helper functions to quickly filter on first isolates. The function \code{\link[=filter_first_isolate]{filter_first_isolate()}} is essentially equal to either:\preformatted{  x[first_isolate(x, ...), ]
+To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode \href{https:/pubmed.ncbi.nlm.nih.gov/17304462/}{(ref)}. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be \href{https://en.wikipedia.org/wiki/Selection_bias}{selection bias}.
+}
+
+\subsection{\verb{filter_*()} shortcuts}{
+
+The functions \code{\link[=filter_first_isolate]{filter_first_isolate()}} and \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_isolate()}} are helper functions to quickly filter on first isolates.
+
+The function \code{\link[=filter_first_isolate]{filter_first_isolate()}} is essentially equal to either:\preformatted{  x[first_isolate(x, ...), ]
   x \%>\% filter(first_isolate(x, ...))
 }
 
@@ -108,6 +123,7 @@ The function \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_i
                                                 col_keyantibiotics = "keyab", ...)) \%>\%
     filter(only_weighted_firsts == TRUE) \%>\%
     select(-only_weighted_firsts, -keyab)
+}
 }
 }
 \section{Key antibiotics}{
@@ -143,21 +159,22 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 # basic filtering on first isolates
 example_isolates[first_isolate(example_isolates), ]
 
+# filtering based on isolates ----------------------------------------------
 \donttest{
 if (require("dplyr")) {
-  # Filter on first isolates:
+  # filter on first isolates:
   example_isolates \%>\%
     mutate(first_isolate = first_isolate(.)) \%>\%
     filter(first_isolate == TRUE)
  
-  # Short-hand versions:
+  # short-hand versions:
   example_isolates \%>\%
     filter_first_isolate()
     
   example_isolates \%>\%
     filter_first_weighted_isolate()
   
-  # Now let's see if first isolates matter:
+  # now let's see if first isolates matter:
   A <- example_isolates \%>\%
     group_by(hospital_id) \%>\%
     summarise(count = n_rsi(GEN),            # gentamicin availability
@@ -173,6 +190,42 @@ if (require("dplyr")) {
   # B is more reliable because every isolate is counted only once.
   # Gentamicin resistance in hospital D appears to be 3.7\% higher than
   # when you (erroneously) would have used all isolates for analysis.
+}
+
+# filtering based on any other condition -----------------------------------
+
+if (require("dplyr")) {
+  # is_new_episode() can be used in dplyr verbs to determine patient
+  # episodes based on any (combination of) grouping variables:
+  example_isolates \%>\%
+    mutate(condition = sample(x = c("A", "B", "C"), 
+                              size = 2000,
+                              replace = TRUE)) \%>\% 
+    group_by(condition) \%>\%
+    mutate(new_episode = is_new_episode())
+  
+  example_isolates \%>\%
+    group_by(hospital_id) \%>\% 
+    summarise(patients = n_distinct(patient_id),
+              n_episodes_365 = sum(is_new_episode(episode_days = 365)),
+              n_episodes_60  = sum(is_new_episode(episode_days = 60)),
+              n_episodes_30  = sum(is_new_episode(episode_days = 30)))
+    
+    
+  # grouping on microorganisms leads to the same results as first_isolate():
+  x <- example_isolates \%>\%
+    filter_first_isolate(include_unknown = TRUE)
+    
+  y <- example_isolates \%>\%
+    group_by(mo) \%>\%
+    filter(is_new_episode())
+
+  identical(x$patient_id, y$patient_id)
+  
+  # but now you can group on isolates and many more:
+  example_isolates \%>\%
+    group_by(mo, hospital_id, ward_icu) \%>\%
+    mutate(flag_episode = is_new_episode())
 }
 }
 }

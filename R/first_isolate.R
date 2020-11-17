@@ -25,10 +25,10 @@
 
 #' Determine first (weighted) isolates
 #'
-#' Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type.
+#' Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use [is_new_episode()] that also supports grouping with the `dplyr` package, see *Examples*.
 #' @inheritSection lifecycle Stable lifecycle
-#' @param x a [data.frame] containing isolates.
-#' @param col_date column name of the result date (or date that is was received on the lab), defaults to the first column of with a date class
+#' @param x,.data a [data.frame] containing isolates.
+#' @param col_date column name of the result date (or date that is was received on the lab), defaults to the first column with a date class
 #' @param col_patient_id column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' or 'patid' (case insensitive)
 #' @param col_mo column name of the IDs of the microorganisms (see [as.mo()]), defaults to the first column of class [`mo`]. Values will be coerced using [as.mo()].
 #' @param col_testcode column name of the test codes. Use `col_testcode = NULL` to **not** exclude certain test codes (like test codes for screening). In that case `testcodes_exclude` will be ignored.
@@ -45,17 +45,26 @@
 #' @param info print progress
 #' @param include_unknown logical to determine whether 'unknown' microorganisms should be included too, i.e. microbial code `"UNKNOWN"`, which defaults to `FALSE`. For WHONET users, this means that all records with organism code `"con"` (*contamination*) will be excluded at default. Isolates with a microbial ID of `NA` will always be excluded as first isolate.
 #' @param ... parameters passed on to the [first_isolate()] function
-#' @details **WHY THIS IS SO IMPORTANT** \cr
+#' @details The [is_new_episode()] function is a wrapper around the [first_isolate()] function and can be used for data sets without isolates to just determine patient episodes based on any combination of grouping variables (using `dplyr`), please see *Examples*. Since it runs [first_isolate()] for every group, it is quite slow.
+#' 
+#' All isolates with a microbial ID of `NA` will be excluded as first isolate.
+#' 
+#' ### Why this is so important
 #' To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode [(ref)](https:/pubmed.ncbi.nlm.nih.gov/17304462/). If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all *S. aureus* isolates would be overestimated, because you included this MRSA more than once. It would be [selection bias](https://en.wikipedia.org/wiki/Selection_bias).
 #'
-#' All isolates with a microbial ID of `NA` will be excluded as first isolate.
+#' ### `filter_*()` shortcuts
 #'
-#' The functions [filter_first_isolate()] and [filter_first_weighted_isolate()] are helper functions to quickly filter on first isolates. The function [filter_first_isolate()] is essentially equal to either:
+#' The functions [filter_first_isolate()] and [filter_first_weighted_isolate()] are helper functions to quickly filter on first isolates.
+#' 
+#' The function [filter_first_isolate()] is essentially equal to either:
+#' 
 #' ```
 #'   x[first_isolate(x, ...), ]
 #'   x %>% filter(first_isolate(x, ...))
 #' ```
+#' 
 #' The function [filter_first_weighted_isolate()] is essentially equal to:
+#' 
 #' ```
 #'   x %>%
 #'     mutate(keyab = key_antibiotics(.)) %>%
@@ -89,21 +98,22 @@
 #' # basic filtering on first isolates
 #' example_isolates[first_isolate(example_isolates), ]
 #' 
+#' # filtering based on isolates ----------------------------------------------
 #' \donttest{
 #' if (require("dplyr")) {
-#'   # Filter on first isolates:
+#'   # filter on first isolates:
 #'   example_isolates %>%
 #'     mutate(first_isolate = first_isolate(.)) %>%
 #'     filter(first_isolate == TRUE)
 #'  
-#'   # Short-hand versions:
+#'   # short-hand versions:
 #'   example_isolates %>%
 #'     filter_first_isolate()
 #'     
 #'   example_isolates %>%
 #'     filter_first_weighted_isolate()
 #'   
-#'   # Now let's see if first isolates matter:
+#'   # now let's see if first isolates matter:
 #'   A <- example_isolates %>%
 #'     group_by(hospital_id) %>%
 #'     summarise(count = n_rsi(GEN),            # gentamicin availability
@@ -119,6 +129,42 @@
 #'   # B is more reliable because every isolate is counted only once.
 #'   # Gentamicin resistance in hospital D appears to be 3.7% higher than
 #'   # when you (erroneously) would have used all isolates for analysis.
+#' }
+#' 
+#' # filtering based on any other condition -----------------------------------
+#' 
+#' if (require("dplyr")) {
+#'   # is_new_episode() can be used in dplyr verbs to determine patient
+#'   # episodes based on any (combination of) grouping variables:
+#'   example_isolates %>%
+#'     mutate(condition = sample(x = c("A", "B", "C"), 
+#'                               size = 2000,
+#'                               replace = TRUE)) %>% 
+#'     group_by(condition) %>%
+#'     mutate(new_episode = is_new_episode())
+#'   
+#'   example_isolates %>%
+#'     group_by(hospital_id) %>% 
+#'     summarise(patients = n_distinct(patient_id),
+#'               n_episodes_365 = sum(is_new_episode(episode_days = 365)),
+#'               n_episodes_60  = sum(is_new_episode(episode_days = 60)),
+#'               n_episodes_30  = sum(is_new_episode(episode_days = 30)))
+#'     
+#'     
+#'   # grouping on microorganisms leads to the same results as first_isolate():
+#'   x <- example_isolates %>%
+#'     filter_first_isolate(include_unknown = TRUE)
+#'     
+#'   y <- example_isolates %>%
+#'     group_by(mo) %>%
+#'     filter(is_new_episode())
+#' 
+#'   identical(x$patient_id, y$patient_id)
+#'   
+#'   # but now you can group on isolates and many more:
+#'   example_isolates %>%
+#'     group_by(mo, hospital_id, ward_icu) %>%
+#'     mutate(flag_episode = is_new_episode())
 #' }
 #' }
 first_isolate <- function(x,
@@ -139,7 +185,7 @@ first_isolate <- function(x,
                           info = interactive(),
                           include_unknown = FALSE,
                           ...) {
-  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
   meet_criteria(col_date, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   meet_criteria(col_patient_id, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
@@ -175,13 +221,10 @@ first_isolate <- function(x,
     }
   }
   
-  stop_ifnot(is.data.frame(x), "`x` must be a data.frame")
-  stop_if(any(dim(x) == 0), "`x` must contain rows and columns")
-  
   # remove data.table, grouping from tibbles, etc.
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   
-  # try to find columns based on type
+ # try to find columns based on type
   # -- mo
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo")
@@ -299,12 +342,31 @@ first_isolate <- function(x,
     )
   }
   
-  # no isolates found
+  # speed up - return immediately if obvious
   if (abs(row.start) == Inf | abs(row.end) == Inf) {
     if (info == TRUE) {
-      message_("=> Found ", font_bold("no isolates"), as_note = FALSE)
+      message_("=> Found ", font_bold("no isolates"),
+               add_fn = font_black, 
+               as_note = FALSE)
     }
     return(rep(FALSE, nrow(x)))
+  }
+  if (row.start == row.end) {
+    if (info == TRUE) {
+      message_("=> Found ", font_bold("1 isolate"), ", as the data only contained 1 row", 
+               add_fn = font_black,
+               as_note = FALSE)
+    }
+    return(TRUE)
+  }
+  if (length(c(row.start:row.end)) == pm_n_distinct(x[c(row.start:row.end), col_mo, drop = TRUE])) {
+    if (info == TRUE) {
+      message_("=> Found ", font_bold(paste(length(c(row.start:row.end)), "isolates")),
+               ", as all isolates were different microorganisms",
+               add_fn = font_black,
+               as_note = FALSE)
+    }
+    return(rep(TRUE, length(c(row.start:row.end))))
   }
   
   # did find some isolates - add new index numbers of rows
@@ -511,7 +573,66 @@ filter_first_weighted_isolate <- function(x,
   subset(x, first_isolate(x = y,
                           col_date = col_date,
                           col_patient_id = col_patient_id,
-                          col_mo = col_mo,
-                          col_keyantibiotics = col_keyantibiotics,
                           ...))
+}
+
+#' @rdname first_isolate
+#' @export
+is_new_episode <- function(.data,
+                           episode_days = 365,
+                           col_date = NULL,
+                           col_patient_id = NULL) {
+  if (missing(.data)) {
+    # look it up - this also supports grouping variables
+    cur_data <- import_fn("cur_data", "dplyr", error_on_fail = FALSE)
+    if (is.null(cur_data)) {
+      stop_("parameter '.data' not set.")
+    }
+    .data <- cur_data()
+  }
+  meet_criteria(.data, allow_class = "data.frame") # also checks dimensions to be >0
+  meet_criteria(col_date, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  meet_criteria(col_patient_id, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1)
+  
+  # get i'th ID of group, so notices will only be thrown once
+  cur_group_id <- import_fn("cur_group_id", "dplyr", error_on_fail = FALSE)
+  first_group <- tryCatch(is.null(cur_group_id) || cur_group_id() == 1,
+                          error = function(e) TRUE)
+
+  # try to find columns based on type
+  # -- date
+  if (is.null(col_date)) {
+    col_date <- search_type_in_df(x = .data,
+                                  type = "date",
+                                  info = first_group)
+    stop_if(is.null(col_date), "`col_date` must be set")
+  }
+  
+  # -- patient id
+  if (is.null(col_patient_id)) {
+    if (all(c("First name", "Last name", "Sex") %in% colnames(.data))) {
+      # WHONET support
+      .data$patient_id <- paste(.data$`First name`, .data$`Last name`, .data$Sex)
+      col_patient_id <- "patient_id"
+      if (is.null(cur_group_id) || cur_group_id() == 1) {
+        message_("Using combined columns `", font_bold("First name"), "`, `", font_bold("Last name"), "` and `", font_bold("Sex"), "` as input for `col_patient_id`")
+      }
+    } else {
+      col_patient_id <- search_type_in_df(x = .data,
+                                          type = "patient_id",
+                                          info = first_group)
+    }
+    stop_if(is.null(col_patient_id), "`col_patient_id` must be set")
+  }
+  
+  # create any random mo, so first isolates can be calculated
+  .data$a94a8fe5 <- as.mo("Escherichia coli")
+  
+  first_isolate(.data,
+                col_date = col_date,
+                col_patient_id = col_patient_id,
+                episode_days = episode_days,
+                col_mo = "a94a8fe5",
+                info = FALSE)
 }

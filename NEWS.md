@@ -1,7 +1,15 @@
-# AMR 1.4.0.9023
+# AMR 1.4.0.9024
 ## <small>Last updated: 17 November 2020</small>
 
 ### New
+* Function `is_new_episode()` to determine patient episodes which are not necessarily based on microorganisms. It also supports grouped variables with e.g. `mutate()` and `summarise()` of the `dplyr` package:
+   ```r
+   example_isolates %>%
+     group_by(hospital_id) %>% 
+     summarise(patients = n_distinct(patient_id),
+               n_episodes_365 = sum(is_new_episode(episode_days = 365)),
+               n_episodes_60 = sum(is_new_episode(episode_days = 60)))
+  ```
 * Functions `mo_is_gram_negative()` and `mo_is_gram_positive()` as wrappers around `mo_gramstain()`. They always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria. If you have the `dplyr` package installed, they can even determine the column with microorganisms themselves when used inside `dplyr` verbs:
   ```r
   example_isolates %>%

@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9023</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9024</span>
       </span>
     </div>
 
@@ -236,9 +236,9 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1409023" class="section level1">
-<h1 class="page-header" data-toc-text="1.4.0.9023">
-<a href="#amr-1409023" class="anchor"></a>AMR 1.4.0.9023<small> Unreleased </small>
+    <div id="amr-1409024" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.0.9024">
+<a href="#amr-1409024" class="anchor"></a>AMR 1.4.0.9024<small> Unreleased </small>
 </h1>
 <div id="last-updated-17-november-2020" class="section level2">
 <h2 class="hasAnchor">
@@ -248,6 +248,7 @@
 <h3 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h3>
 <ul>
+<li><p>Function <code><a href="../reference/first_isolate.html">is_new_episode()</a></code> to determine patient episodes which are not necessarily based on microorganisms. It also supports grouped variables with e.g. <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> of the <code>dplyr</code> package: <code>r  example_isolates %&gt;%    group_by(hospital_id) %&gt;%     summarise(patients = n_distinct(patient_id),              n_episodes_365 = sum(is_new_episode(episode_days = 365)),              n_episodes_60 = sum(is_new_episode(episode_days = 60)))</code></p></li>
 <li>
 <p>Functions <code><a href="../reference/mo_property.html">mo_is_gram_negative()</a></code> and <code><a href="../reference/mo_property.html">mo_is_gram_positive()</a></code> as wrappers around <code><a href="../reference/mo_property.html">mo_gramstain()</a></code>. They always return <code>TRUE</code> or <code>FALSE</code> (except when the input is <code>NA</code> or the MO code is <code>UNKNOWN</code>), thus always return <code>FALSE</code> for species outside the taxonomic kingdom of Bacteria. If you have the <code>dplyr</code> package installed, they can even determine the column with microorganisms themselves when used inside <code>dplyr</code> verbs:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">

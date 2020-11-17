@@ -139,9 +139,13 @@ check_dataset_integrity <- function() {
 }
 
 search_type_in_df <- function(x, type, info = TRUE) {
+  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(type, allow_class = "character", has_length = 1)
+  
   # try to find columns based on type
   found <- NULL
 
+  # remove attributes from other packages
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   colnames(x) <- trimws(colnames(x))
 

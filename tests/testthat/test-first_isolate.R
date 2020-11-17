@@ -200,4 +200,15 @@ test_that("first isolates work", {
   expect_identical(filter_first_weighted_isolate(example_isolates),
                    subset(example_isolates, first_isolate(ex)))
   
+  # notice that all mo's are distinct, so all are TRUE
+  expect_true(all(example_isolates %pm>%
+                    pm_distinct(mo, .keep_all = TRUE) %pm>%
+                    first_isolate() == TRUE))
+  
+  library(dplyr)
+  # is_new_episode
+  old <- example_isolates %>% mutate(out = first_isolate(., include_unknown = TRUE))
+  new <- example_isolates %>% group_by(mo) %>% mutate(out = is_new_episode())
+  expect_identical(which(old$out), which(new$out))
+
 })
