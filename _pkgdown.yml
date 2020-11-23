@@ -147,11 +147,12 @@ reference:
   - title: "Analysing data: antimicrobial resistance"
     desc: >
       Use these function for the analysis part. You can use `susceptibility()` or `resistance()` on any antibiotic column.
-      Be sure to first select the isolates that are appropiate for analysis, by using `first_isolate()`.
+      Be sure to first select the isolates that are appropiate for analysis, by using `first_isolate()` or `is_new_episode()`.
       You can also filter your data on certain resistance in certain antibiotic classes (`filter_ab_class()`), or determine multi-drug resistant microorganisms (MDRO, `mdro()`).
     contents:
     - "`proportion`"
     - "`count`"
+    - "`is_new_episode`"
     - "`first_isolate`"
     - "`key_antibiotics`"
     - "`mdro`"
@@ -181,20 +182,19 @@ reference:
   
   - title: "Other: statistical tests"
     desc: >
-      Some statistical tests or methods are not part of base R and are added to this package for convenience.
+      Some statistical tests or methods are not part of base R and were added to this package for convenience.
     contents:
     - "`g.test`"
     - "`kurtosis`"
     - "`skewness`"
-    - "`p_symbol`"
 
-  # - title: "Other: deprecated functions"
-  #   desc: >
-  #     These functions are deprecated, meaning that they will still
-  #     work but show a warning with every use and will be removed
-  #     in a future version.
-  #   contents:
-  #   - "`AMR-deprecated`"
+  - title: "Other: deprecated functions"
+    desc: >
+      These functions are deprecated, meaning that they will still
+      work but show a warning with every use and will be removed
+      in a future version.
+    contents:
+    - "`AMR-deprecated`"
 
 authors:
   Matthijs S. Berends:

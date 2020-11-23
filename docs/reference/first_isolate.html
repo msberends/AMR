@@ -49,7 +49,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Determine first (weighted) isolates — first_isolate" />
-<meta property="og:description" content="Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use is_new_episode() that also supports grouping with the dplyr package, see Examples." />
+<meta property="og:description" content="Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use is_new_episode() that also supports grouping with the dplyr package." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9024</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9025</span>
       </span>
     </div>
 
@@ -239,7 +239,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use <code>is_new_episode()</code> that also supports grouping with the <code>dplyr</code> package, see <em>Examples</em>.</p>
+    <p>Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use <code><a href='is_new_episode.html'>is_new_episode()</a></code> that also supports grouping with the <code>dplyr</code> package.</p>
     </div>
 
     <pre class="usage"><span class='fu'>first_isolate</span><span class='op'>(</span>
@@ -278,13 +278,6 @@
   col_mo <span class='op'>=</span> <span class='cn'>NULL</span>,
   col_keyantibiotics <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>is_new_episode</span><span class='op'>(</span>
-  <span class='va'>.data</span>,
-  episode_days <span class='op'>=</span> <span class='fl'>365</span>,
-  col_date <span class='op'>=</span> <span class='cn'>NULL</span>,
-  col_patient_id <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -373,7 +366,7 @@
     <p>A <code><a href='https://rdrr.io/r/base/logical.html'>logical</a></code> vector</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>is_new_episode()</code> function is a wrapper around the <code>first_isolate()</code> function and can be used for data sets without isolates to just determine patient episodes based on any combination of grouping variables (using <code>dplyr</code>), please see <em>Examples</em>. Since it runs <code>first_isolate()</code> for every group, it is quite slow.</p>
+    <p>The <code>first_isolate()</code> function is a wrapper around the <code><a href='is_new_episode.html'>is_new_episode()</a></code> function, but more efficient for data sets containing microorganism codes or names.</p>
 <p>All isolates with a microbial ID of <code>NA</code> will be excluded as first isolate.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Why this is so important</h3>
 
 
@@ -461,42 +454,6 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
   <span class='co'># B is more reliable because every isolate is counted only once.</span>
   <span class='co'># Gentamicin resistance in hospital D appears to be 3.7% higher than</span>
   <span class='co'># when you (erroneously) would have used all isolates for analysis.</span>
-<span class='op'>}</span>
-
-<span class='co'># filtering based on any other condition -----------------------------------</span>
-
-<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='co'># is_new_episode() can be used in dplyr verbs to determine patient</span>
-  <span class='co'># episodes based on any (combination of) grouping variables:</span>
-  <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>condition <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span><span class='op'>)</span>, 
-                              size <span class='op'>=</span> <span class='fl'>2000</span>,
-                              replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>condition</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>new_episode <span class='op'>=</span> <span class='fu'>is_new_episode</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-  
-  <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>hospital_id</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>patients <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/n_distinct.html'>n_distinct</a></span><span class='op'>(</span><span class='va'>patient_id</span><span class='op'>)</span>,
-              n_episodes_365 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'>is_new_episode</span><span class='op'>(</span>episode_days <span class='op'>=</span> <span class='fl'>365</span><span class='op'>)</span><span class='op'>)</span>,
-              n_episodes_60  <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'>is_new_episode</span><span class='op'>(</span>episode_days <span class='op'>=</span> <span class='fl'>60</span><span class='op'>)</span><span class='op'>)</span>,
-              n_episodes_30  <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'>is_new_episode</span><span class='op'>(</span>episode_days <span class='op'>=</span> <span class='fl'>30</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-    
-    
-  <span class='co'># grouping on microorganisms leads to the same results as first_isolate():</span>
-  <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
-    <span class='fu'>filter_first_isolate</span><span class='op'>(</span>include_unknown <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-    
-  <span class='va'>y</span> <span class='op'>&lt;-</span> <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>mo</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>is_new_episode</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-
-  <span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>patient_id</span>, <span class='va'>y</span><span class='op'>$</span><span class='va'>patient_id</span><span class='op'>)</span>
-  
-  <span class='co'># but now you can group on isolates and many more:</span>
-  <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>mo</span>, <span class='va'>hospital_id</span>, <span class='va'>ward_icu</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>flag_episode <span class='op'>=</span> <span class='fu'>is_new_episode</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
 <span class='co'># }</span>
 </pre>

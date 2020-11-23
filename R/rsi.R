@@ -614,13 +614,18 @@ as.rsi.data.frame <- function(x,
     } else if (types[i] == "rsi") {
       ab <- ab_cols[i]
       ab_coerced <- suppressWarnings(as.ab(ab))
-      message_("=> Cleaning values in column `", font_bold(ab), "` (",
-               ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
-               ab_name(ab_coerced, tolower = TRUE), ")... ",
-               appendLF = FALSE,
-               as_note = FALSE)
-      x[, ab_cols[i]] <- as.rsi.default(x = x %pm>% pm_pull(ab_cols[i]))
-      message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
+      if (!all(x[, ab_cols[i], drop = TRUE] %in% c("R", "S", "I"), na.rm = TRUE)) {
+        # only print message if values are not already clean
+        message_("=> Cleaning values in column `", font_bold(ab), "` (",
+                 ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
+                 ab_name(ab_coerced, tolower = TRUE), ")... ",
+                 appendLF = FALSE,
+                 as_note = FALSE)
+      }
+      x[, ab_cols[i]] <- as.rsi.default(x = as.character(x[, ab_cols[i], drop = TRUE]))
+      if (!all(x[, ab_cols[i], drop = TRUE] %in% c("R", "S", "I"), na.rm = TRUE)) {
+        message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
+      }
     }
   }
   

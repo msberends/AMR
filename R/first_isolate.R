@@ -25,7 +25,7 @@
 
 #' Determine first (weighted) isolates
 #'
-#' Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use [is_new_episode()] that also supports grouping with the `dplyr` package, see *Examples*.
+#' Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use [is_new_episode()] that also supports grouping with the `dplyr` package.
 #' @inheritSection lifecycle Stable lifecycle
 #' @param x,.data a [data.frame] containing isolates.
 #' @param col_date column name of the result date (or date that is was received on the lab), defaults to the first column with a date class
@@ -45,7 +45,7 @@
 #' @param info print progress
 #' @param include_unknown logical to determine whether 'unknown' microorganisms should be included too, i.e. microbial code `"UNKNOWN"`, which defaults to `FALSE`. For WHONET users, this means that all records with organism code `"con"` (*contamination*) will be excluded at default. Isolates with a microbial ID of `NA` will always be excluded as first isolate.
 #' @param ... parameters passed on to the [first_isolate()] function
-#' @details The [is_new_episode()] function is a wrapper around the [first_isolate()] function and can be used for data sets without isolates to just determine patient episodes based on any combination of grouping variables (using `dplyr`), please see *Examples*. Since it runs [first_isolate()] for every group, it is quite slow.
+#' @details The [first_isolate()] function is a wrapper around the [is_new_episode()] function, but more efficient for data sets containing microorganism codes or names.
 #' 
 #' All isolates with a microbial ID of `NA` will be excluded as first isolate.
 #' 
@@ -129,42 +129,6 @@
 #'   # B is more reliable because every isolate is counted only once.
 #'   # Gentamicin resistance in hospital D appears to be 3.7% higher than
 #'   # when you (erroneously) would have used all isolates for analysis.
-#' }
-#' 
-#' # filtering based on any other condition -----------------------------------
-#' 
-#' if (require("dplyr")) {
-#'   # is_new_episode() can be used in dplyr verbs to determine patient
-#'   # episodes based on any (combination of) grouping variables:
-#'   example_isolates %>%
-#'     mutate(condition = sample(x = c("A", "B", "C"), 
-#'                               size = 2000,
-#'                               replace = TRUE)) %>% 
-#'     group_by(condition) %>%
-#'     mutate(new_episode = is_new_episode())
-#'   
-#'   example_isolates %>%
-#'     group_by(hospital_id) %>% 
-#'     summarise(patients = n_distinct(patient_id),
-#'               n_episodes_365 = sum(is_new_episode(episode_days = 365)),
-#'               n_episodes_60  = sum(is_new_episode(episode_days = 60)),
-#'               n_episodes_30  = sum(is_new_episode(episode_days = 30)))
-#'     
-#'     
-#'   # grouping on microorganisms leads to the same results as first_isolate():
-#'   x <- example_isolates %>%
-#'     filter_first_isolate(include_unknown = TRUE)
-#'     
-#'   y <- example_isolates %>%
-#'     group_by(mo) %>%
-#'     filter(is_new_episode())
-#' 
-#'   identical(x$patient_id, y$patient_id)
-#'   
-#'   # but now you can group on isolates and many more:
-#'   example_isolates %>%
-#'     group_by(mo, hospital_id, ward_icu) %>%
-#'     mutate(flag_episode = is_new_episode())
 #' }
 #' }
 first_isolate <- function(x,
@@ -375,28 +339,6 @@ first_isolate <- function(x,
   scope.size <- nrow(x[which(x$newvar_row_index_sorted %in% c(row.start + 1:row.end) &
                                !is.na(x$newvar_mo)), , drop = FALSE])
   
-  identify_new_year <- function(x, episode_days) {
-    # I asked on StackOverflow:
-    # https://stackoverflow.com/questions/42122245/filter-one-row-every-year
-    if (length(x) == 1) {
-      return(TRUE)
-    }
-    indices <- integer(0)
-    start <- x[1]
-    ind <- 1
-    indices[ind] <- ind
-    for (i in 2:length(x)) {
-      if (isTRUE(as.numeric(x[i] - start) >= episode_days)) {
-        ind <- ind + 1
-        indices[ind] <- i
-        start <- x[i]
-      }
-    }
-    result <- rep(FALSE, length(x))
-    result[indices] <- TRUE
-    return(result)
-  }
-  
   # Analysis of first isolate ----
   x$other_pat_or_mo <- ifelse(x$newvar_patient_id == pm_lag(x$newvar_patient_id) &
                                 x$newvar_genus_species == pm_lag(x$newvar_genus_species),
@@ -407,8 +349,8 @@ first_isolate <- function(x,
                                            function(g,
                                                     df = x,
                                                     days = episode_days) {
-                                             identify_new_year(x = df[which(df$episode_group == g), "newvar_date", drop = TRUE],
-                                                               episode_days = days)
+                                             is_new_episode(x = df[which(df$episode_group == g), ]$newvar_date,
+                                                            episode_days = days)
                                            }))
   
   weighted.notice <- ""
@@ -572,67 +514,5 @@ filter_first_weighted_isolate <- function(x,
   
   subset(x, first_isolate(x = y,
                           col_date = col_date,
-                          col_patient_id = col_patient_id,
-                          ...))
-}
-
-#' @rdname first_isolate
-#' @export
-is_new_episode <- function(.data,
-                           episode_days = 365,
-                           col_date = NULL,
-                           col_patient_id = NULL) {
-  if (missing(.data)) {
-    # look it up - this also supports grouping variables
-    cur_data <- import_fn("cur_data", "dplyr", error_on_fail = FALSE)
-    if (is.null(cur_data)) {
-      stop_("parameter '.data' not set.")
-    }
-    .data <- cur_data()
-  }
-  meet_criteria(.data, allow_class = "data.frame") # also checks dimensions to be >0
-  meet_criteria(col_date, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
-  meet_criteria(col_patient_id, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
-  meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1)
-  
-  # get i'th ID of group, so notices will only be thrown once
-  cur_group_id <- import_fn("cur_group_id", "dplyr", error_on_fail = FALSE)
-  first_group <- tryCatch(is.null(cur_group_id) || cur_group_id() == 1,
-                          error = function(e) TRUE)
-
-  # try to find columns based on type
-  # -- date
-  if (is.null(col_date)) {
-    col_date <- search_type_in_df(x = .data,
-                                  type = "date",
-                                  info = first_group)
-    stop_if(is.null(col_date), "`col_date` must be set")
-  }
-  
-  # -- patient id
-  if (is.null(col_patient_id)) {
-    if (all(c("First name", "Last name", "Sex") %in% colnames(.data))) {
-      # WHONET support
-      .data$patient_id <- paste(.data$`First name`, .data$`Last name`, .data$Sex)
-      col_patient_id <- "patient_id"
-      if (is.null(cur_group_id) || cur_group_id() == 1) {
-        message_("Using combined columns `", font_bold("First name"), "`, `", font_bold("Last name"), "` and `", font_bold("Sex"), "` as input for `col_patient_id`")
-      }
-    } else {
-      col_patient_id <- search_type_in_df(x = .data,
-                                          type = "patient_id",
-                                          info = first_group)
-    }
-    stop_if(is.null(col_patient_id), "`col_patient_id` must be set")
-  }
-  
-  # create any random mo, so first isolates can be calculated
-  .data$a94a8fe5 <- as.mo("Escherichia coli")
-  
-  first_isolate(.data,
-                col_date = col_date,
-                col_patient_id = col_patient_id,
-                episode_days = episode_days,
-                col_mo = "a94a8fe5",
-                info = FALSE)
+                          col_patient_id = col_patient_id))
 }

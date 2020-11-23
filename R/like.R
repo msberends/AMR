@@ -41,9 +41,7 @@
 #' * Checks if `pattern` is a regular expression and sets `fixed = TRUE` if not, to greatly improve speed
 #' * Tries again with `perl = TRUE` if regex fails
 #' 
-#' Using RStudio? This function can also be inserted in your code from the Addins menu and can have its own Keyboard Shortcut like `Ctrl+Shift+L` or `Cmd+Shift+L` (see `Tools` > `Modify Keyboard Shortcuts...`). This addin iterates over all 'like' variants. So if you have defined the keyboard shortcut Ctrl/Cmd + L to this addin, it will first insert ` %like% ` and by pressing it again it will be replaced with ` %not_like% `, then ` %like_case% `, then ` %not_like_case% ` and then back to ` %like% `.
-#' 
-#' The `"%not_like%"` and `"%not_like_case%"` functions are wrappers around `"%like%"` and `"%like_case%"`.
+#' Using RStudio? The text `%like%` can also be directly inserted in your code from the Addins menu and can have its own Keyboard Shortcut like `Ctrl+Shift+L` or `Cmd+Shift+L` (see `Tools` > `Modify Keyboard Shortcuts...`).
 #' @source Idea from the [`like` function from the `data.table` package](https://github.com/Rdatatable/data.table/blob/master/R/like.R)
 #' @seealso [grep()]
 #' @inheritSection AMR Read more on our website!
@@ -67,11 +65,6 @@
 #' if (require("dplyr")) {
 #'   example_isolates %>%
 #'     filter(mo_name(mo) %like% "^ent")
-#'  
-#'   example_isolates %>% 
-#'     mutate(group = case_when(hospital_id %like% "A|D"        ~ "Group 1",
-#'                              mo_name(mo) %not_like% "^Staph" ~ "Group 2a",
-#'                              TRUE                            ~ "Group 2b"))
 #' }
 #' }
 like <- function(x, pattern, ignore.case = TRUE) {
@@ -159,26 +152,10 @@ like <- function(x, pattern, ignore.case = TRUE) {
 
 #' @rdname like
 #' @export
-"%not_like%" <- function(x, pattern) {
-  meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(pattern, allow_NA = FALSE)
-  !like(x, pattern, ignore.case = TRUE)
-}
-
-#' @rdname like
-#' @export
 "%like_case%" <- function(x, pattern) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(pattern, allow_NA = FALSE)
   like(x, pattern, ignore.case = FALSE)
-}
-
-#' @rdname like
-#' @export
-"%not_like_case%" <- function(x, pattern) {
-  meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(pattern, allow_NA = FALSE)
-  !like(x, pattern, ignore.case = FALSE)
 }
 
 "%like_perl%" <- function(x, pattern) {

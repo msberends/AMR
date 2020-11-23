@@ -1,14 +1,12 @@
-# AMR 1.4.0.9024
-## <small>Last updated: 17 November 2020</small>
+# AMR 1.4.0.9025
+## <small>Last updated: 23 November 2020</small>
 
 ### New
-* Function `is_new_episode()` to determine patient episodes which are not necessarily based on microorganisms. It also supports grouped variables with e.g. `mutate()` and `summarise()` of the `dplyr` package:
+* Function `is_new_episode()` to determine patient episodes which are not necessarily based on microorganisms. It also supports grouped variables with e.g. `mutate()`, `filter()` and `summarise()` of the `dplyr` package:
    ```r
-   example_isolates %>%
-     group_by(hospital_id) %>% 
-     summarise(patients = n_distinct(patient_id),
-               n_episodes_365 = sum(is_new_episode(episode_days = 365)),
-               n_episodes_60 = sum(is_new_episode(episode_days = 60)))
+  example_isolates %>%
+    group_by(patient_id, hospital_id) %>%
+    filter(is_new_episode(date, episode_days = 60))
   ```
 * Functions `mo_is_gram_negative()` and `mo_is_gram_positive()` as wrappers around `mo_gramstain()`. They always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria. If you have the `dplyr` package installed, they can even determine the column with microorganisms themselves when used inside `dplyr` verbs:
   ```r
@@ -22,7 +20,6 @@
     filter(mo_is_intrinsic_resistant(ab = "Vancomycin"))
   #> NOTE: Using column `mo` as input for mo_is_intrinsic_resistant()
   ```
-* Functions `%not_like%` and `%not_like_case%` as wrappers around `%like%` and `%like_case%`. The RStudio addin to insert the text " %like% " as provided in this package now iterates over all like variants. So if you have defined the keyboard shortcut Ctrl/Cmd + L to this addin, it will first insert ` %like% ` and by pressing it again it will be replaced with ` %not_like% `, etc.
 
 ### Changed
 * Reference data used for `as.rsi()` can now be set by the user, using the `reference_data` parameter. This allows for using own interpretation guidelines.
@@ -32,6 +29,7 @@
 * Updated coagulase-negative staphylococci determination with Becker *et al.* 2020 (PMID 32056452), meaning that the species *S. argensis*, *S. caeli*, *S. debuckii*, *S. edaphicus* and *S. pseudoxylosus* are now all considered CoNS
 * Fix for using parameter `reference_df` in `as.mo()` and `mo_*()` functions that contain old microbial codes (from previous package versions)
 * Fix for using `as.rsi()` on a data.frame in older R versions
+* `as.rsi()` on a data.frame will not print a message anymore if the values are already clean R/SI values
 
 ### Other
 * All messages and warnings thrown by this package now break sentences on whole words

@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9024</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9025</span>
       </span>
     </div>
 
@@ -455,7 +455,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-analysing-data-antimicrobial-resistance" class="hasAnchor"><a href="#section-analysing-data-antimicrobial-resistance" class="anchor"></a>Analysing data: antimicrobial resistance</h2>
-          <p class="section-desc"><p>Use these function for the analysis part. You can use <code><a href="../reference/proportion.html">susceptibility()</a></code> or <code><a href="../reference/proportion.html">resistance()</a></code> on any antibiotic column. Be sure to first select the isolates that are appropiate for analysis, by using <code><a href="../reference/first_isolate.html">first_isolate()</a></code>. You can also filter your data on certain resistance in certain antibiotic classes (<code><a href="../reference/filter_ab_class.html">filter_ab_class()</a></code>), or determine multi-drug resistant microorganisms (MDRO, <code><a href="../reference/mdro.html">mdro()</a></code>).</p></p>
+          <p class="section-desc"><p>Use these function for the analysis part. You can use <code><a href="../reference/proportion.html">susceptibility()</a></code> or <code><a href="../reference/proportion.html">resistance()</a></code> on any antibiotic column. Be sure to first select the isolates that are appropiate for analysis, by using <code><a href="../reference/first_isolate.html">first_isolate()</a></code> or <code><a href="../reference/is_new_episode.html">is_new_episode()</a></code>. You can also filter your data on certain resistance in certain antibiotic classes (<code><a href="../reference/filter_ab_class.html">filter_ab_class()</a></code>), or determine multi-drug resistant microorganisms (MDRO, <code><a href="../reference/mdro.html">mdro()</a></code>).</p></p>
         </th>
       </tr>
       
@@ -478,7 +478,13 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="first_isolate.html">first_isolate()</a></code> <code><a href="first_isolate.html">filter_first_isolate()</a></code> <code><a href="first_isolate.html">filter_first_weighted_isolate()</a></code> <code><a href="first_isolate.html">is_new_episode()</a></code> </p>
+          <p><code><a href="is_new_episode.html">is_new_episode()</a></code> </p>
+        </td>
+        <td><p>Determine (new) episodes for patients</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="first_isolate.html">first_isolate()</a></code> <code><a href="first_isolate.html">filter_first_isolate()</a></code> <code><a href="first_isolate.html">filter_first_weighted_isolate()</a></code> </p>
         </td>
         <td><p>Determine first (weighted) isolates</p></td>
       </tr><tr>
@@ -581,7 +587,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="like.html">like()</a></code> <code><a href="like.html">`%like%`</a></code> <code><a href="like.html">`%not_like%`</a></code> <code><a href="like.html">`%like_case%`</a></code> <code><a href="like.html">`%not_like_case%`</a></code> </p>
+          <p><code><a href="like.html">like()</a></code> <code><a href="like.html">`%like%`</a></code> <code><a href="like.html">`%like_case%`</a></code> </p>
         </td>
         <td><p>Pattern matching with keyboard shortcut</p></td>
       </tr><tr>
@@ -601,7 +607,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-other-statistical-tests" class="hasAnchor"><a href="#section-other-statistical-tests" class="anchor"></a>Other: statistical tests</h2>
-          <p class="section-desc"><p>Some statistical tests or methods are not part of base R and are added to this package for convenience.</p></p>
+          <p class="section-desc"><p>Some statistical tests or methods are not part of base R and were added to this package for convenience.</p></p>
         </th>
       </tr>
       
@@ -627,7 +633,20 @@
           <p><code><a href="skewness.html">skewness()</a></code> </p>
         </td>
         <td><p>Skewness of the sample</p></td>
-      </tr><tr>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-other-deprecated-functions" class="hasAnchor"><a href="#section-other-deprecated-functions" class="anchor"></a>Other: deprecated functions</h2>
+          <p class="section-desc"><p>These functions are deprecated, meaning that they will still work but show a warning with every use and will be removed in a future version.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
         
         <td>
           <p><code><a href="AMR-deprecated.html">p_symbol()</a></code> </p>
