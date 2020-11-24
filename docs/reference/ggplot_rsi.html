@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9026</span>
       </span>
     </div>
 
@@ -361,7 +361,7 @@
     </tr>
     <tr>
       <th>colours</th>
-      <td><p>a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be <code>FALSE</code> to use default [ggplot2][<code><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot2::ggplot()</a></code> colours.</p></td>
+      <td><p>a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be <code>FALSE</code> to use default <a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot2</a> colours.</p></td>
     </tr>
     <tr>
       <th>datalabels</th>
@@ -468,13 +468,12 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 <span class='op'>}</span>
   
 <span class='co'># \donttest{</span>
-
 <span class='co'># resistance of ciprofloxacine per age group</span>
 <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>first_isolate <span class='op'>=</span> <span class='fu'><a href='first_isolate.html'>first_isolate</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>first_isolate</span> <span class='op'>==</span> <span class='cn'>TRUE</span>,
          <span class='va'>mo</span> <span class='op'>==</span> <span class='fu'><a href='as.mo.html'>as.mo</a></span><span class='op'>(</span><span class='st'>"E. coli"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='co'># `age_groups` is also a function of this AMR package:</span>
+  <span class='co'># age_groups() is also a function in this AMR package:</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span>age_group <span class='op'>=</span> <span class='fu'><a href='age_groups.html'>age_groups</a></span><span class='op'>(</span><span class='va'>age</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>age_group</span>,
          <span class='va'>CIP</span><span class='op'>)</span> <span class='op'>%&gt;%</span>

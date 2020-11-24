@@ -36,7 +36,7 @@
 #' @param facet variable to split plots by, either `"interpretation"` (default) or `"antibiotic"` or a grouping variable
 #' @inheritParams proportion
 #' @param nrow (when using `facet`) number of rows
-#' @param colours a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be `FALSE` to use default [ggplot2][[ggplot2::ggplot()] colours.
+#' @param colours a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be `FALSE` to use default [ggplot2][ggplot2::ggplot()] colours.
 #' @param datalabels show datalabels using [labels_rsi_count()]
 #' @param datalabels.size size of the datalabels
 #' @param datalabels.colour colour of the datalabels
@@ -107,13 +107,12 @@
 #' }
 #'   
 #' \donttest{
-#' 
 #' # resistance of ciprofloxacine per age group
 #' example_isolates %>%
 #'   mutate(first_isolate = first_isolate(.)) %>%
 #'   filter(first_isolate == TRUE,
 #'          mo == as.mo("E. coli")) %>%
-#'   # `age_groups` is also a function of this AMR package:
+#'   # age_groups() is also a function in this AMR package:
 #'   group_by(age_group = age_groups(age)) %>%
 #'   select(age_group,
 #'          CIP) %>%

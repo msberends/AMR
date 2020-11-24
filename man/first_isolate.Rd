@@ -50,7 +50,7 @@ filter_first_weighted_isolate(
 )
 }
 \arguments{
-\item{x, .data}{a \link{data.frame} containing isolates.}
+\item{x}{a \link{data.frame} containing isolates.}
 
 \item{col_date}{column name of the result date (or date that is was received on the lab), defaults to the first column with a date class}
 
@@ -84,7 +84,7 @@ filter_first_weighted_isolate(
 
 \item{include_unknown}{logical to determine whether 'unknown' microorganisms should be included too, i.e. microbial code \code{"UNKNOWN"}, which defaults to \code{FALSE}. For WHONET users, this means that all records with organism code \code{"con"} (\emph{contamination}) will be excluded at default. Isolates with a microbial ID of \code{NA} will always be excluded as first isolate.}
 
-\item{...}{parameters passed on to the \code{\link[=first_isolate]{first_isolate()}} function}
+\item{...}{parameters passed on to \code{\link[=first_isolate]{first_isolate()}} when using \code{\link[=filter_first_isolate]{filter_first_isolate()}}, or parameters passed on to \code{\link[=key_antibiotics]{key_antibiotics()}} when using \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_isolate()}}}
 }
 \value{
 A \code{\link{logical}} vector

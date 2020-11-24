@@ -73,5 +73,6 @@ globalVariables(c(".rowid",
                   "value",
                   "varname",
                   "xvar",
+                  "y",
                   "year",
                   "yvar"))

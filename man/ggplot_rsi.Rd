@@ -99,7 +99,7 @@ labels_rsi_count(
 
 \item{nrow}{(when using \code{facet}) number of rows}
 
-\item{colours}{a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be \code{FALSE} to use default [ggplot2][\code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} colours.}
+\item{colours}{a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be \code{FALSE} to use default \link[ggplot2:ggplot]{ggplot2} colours.}
 
 \item{datalabels}{show datalabels using \code{\link[=labels_rsi_count]{labels_rsi_count()}}}
 
@@ -194,13 +194,12 @@ if (require("ggplot2") & require("dplyr")) {
 }
   
 \donttest{
-
 # resistance of ciprofloxacine per age group
 example_isolates \%>\%
   mutate(first_isolate = first_isolate(.)) \%>\%
   filter(first_isolate == TRUE,
          mo == as.mo("E. coli")) \%>\%
-  # `age_groups` is also a function of this AMR package:
+  # age_groups() is also a function in this AMR package:
   group_by(age_group = age_groups(age)) \%>\%
   select(age_group,
          CIP) \%>\%

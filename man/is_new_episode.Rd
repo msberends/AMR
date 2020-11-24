@@ -22,7 +22,7 @@ This function determines which items in a vector can be considered (the start of
 \details{
 Dates are first sorted from old to new. The oldest date will mark the start of the first episode. After this date, the next date will be marked that is at least \code{episode_days} days later than the start of the first episode. From that second marked date on, the next date will be marked that is at least \code{episode_days} days later than the start of the second episode which will be the start of the third episode, and so on. Before the vector is being returned, the original order will be restored.
 
-The \code{dplyr} package is not required for this function to work, but this function works conveniently inside \code{dplyr} verbs such as \code{\link[=filter]{filter()}}, \code{\link[=mutate]{mutate()}} and \code{\link[=summarise]{summarise()}}.
+The \code{dplyr} package is not required for this function to work, but this function works conveniently inside \code{dplyr} verbs such as \code{\link[dplyr:filter]{filter()}}, \code{\link[dplyr:mutate]{mutate()}} and \code{\link[dplyr:summarise]{summarise()}}.
 }
 \section{Experimental lifecycle}{
 

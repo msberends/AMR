@@ -33,7 +33,7 @@
 #' @details 
 #' Dates are first sorted from old to new. The oldest date will mark the start of the first episode. After this date, the next date will be marked that is at least `episode_days` days later than the start of the first episode. From that second marked date on, the next date will be marked that is at least `episode_days` days later than the start of the second episode which will be the start of the third episode, and so on. Before the vector is being returned, the original order will be restored.
 #' 
-#' The `dplyr` package is not required for this function to work, but this function works conveniently inside `dplyr` verbs such as [filter()], [mutate()] and [summarise()].
+#' The `dplyr` package is not required for this function to work, but this function works conveniently inside `dplyr` verbs such as [`filter()`][dplyr::filter()], [`mutate()`][dplyr::mutate()] and [`summarise()`][dplyr::summarise()].
 #' @return a [logical] vector
 #' @export
 #' @inheritSection AMR Read more on our website!
@@ -86,23 +86,17 @@ is_new_episode <- function(x, episode_days = 365, ...) {
   x <- as.double(as.Date(x, ...)) # as.Date() for POSIX classes
   if (length(x) == 1) {
     return(TRUE)
-  }
-  if (length(x) == 2 && max(x) - min(x) >= episode_days) {
-    return(rep(TRUE, 2))
+  } else if (length(x) == 2) {
+    if (max(x) - min(x) >= episode_days) {
+      return(c(TRUE, TRUE))
+    } else {
+      return(c(TRUE, FALSE))
+    }
   }
   
   # I asked on StackOverflow:
   # https://stackoverflow.com/questions/42122245/filter-one-row-every-year
   exec <- function(x, episode_days) {
-    if (length(x) == 1) {
-      return(TRUE)
-    } else if (length(x) == 2) {
-      if (max(x) - min(x) >= episode_days) {
-        return(c(TRUE, TRUE))
-      } else {
-        return(c(TRUE, FALSE))
-      }
-    }
     indices <- integer()
     start <- x[1]
     ind <- 1
