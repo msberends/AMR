@@ -18,8 +18,8 @@ This package is [fully independent of any other R package](https://en.wikipedia.
 <div class="main-content">
   <p>
     <a href="./countries_large.png" target="_blank"><img src="./countries.png" class="countries_map"></a>
-    <strong>Used in more than 120 countries</strong><br>
-    Since its first public release in early 2018, this package has been downloaded from more than 120 countries. Click the map to enlarge and to also see the names of the countries.</p><br><br>
+    <strong>Used in 135 countries</strong><br>
+    Since its first public release in early 2018, this package has been downloaded from 135 countries. Click the map to enlarge and to also see the names of the countries.</p><br><br>
 </div>
 
 <div class="home-buttons">
