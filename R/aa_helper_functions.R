@@ -324,7 +324,7 @@ warning_ <- function(...,
 # - adds the function name where the error was thrown
 # - wraps text to never break lines within words
 stop_ <- function(..., call = TRUE) {
-  msg <- word_wrap(..., add_fn = list(), as_note = FALSE)
+  msg <- paste0(c(...), collapse = "")
   if (!isFALSE(call)) {
     if (isTRUE(call)) {
       call <- as.character(sys.call(-1)[1])
@@ -334,6 +334,7 @@ stop_ <- function(..., call = TRUE) {
     }
     msg <- paste0("in ", call, "(): ", msg)
   }
+  msg <- word_wrap(msg, add_fn = list(), as_note = FALSE)
   stop(msg, call. = FALSE)
 }
 
@@ -409,6 +410,7 @@ dataset_UTF8_to_ASCII <- function(df) {
   df
 }
 
+# for eucast_rules() and mdro(), creates markdown output with URLs and names
 create_ab_documentation <- function(ab) {
   ab_names <- ab_name(ab, language = NULL, tolower = TRUE)
   ab <- ab[order(ab_names)]
