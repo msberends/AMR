@@ -296,6 +296,10 @@ word_wrap <- function(...,
   
   # place back spaces
   msg <- gsub("*|*", "\n", msg, fixed = TRUE)
+  
+  # format backticks
+  msg <- gsub("(`.+?`)", font_grey_bg("\\1"), msg)
+  
   msg
 }
 
@@ -467,7 +471,7 @@ meet_criteria <- function(object,
       stop_if(any(dim(object) == 0),
               "the data provided in argument `", obj_name,
               "` must contain rows and columns (current dimensions: ",
-              paste(dim(object), collapse = " x "), ")",
+              paste(dim(object), collapse = "x"), ")",
               call = call_depth)
     }
   }
@@ -605,6 +609,9 @@ font_subtle <- function(..., collapse = " ") {
 }
 font_grey <- function(..., collapse = " ") {
   try_colour(..., before = "\033[38;5;249m", after = "\033[39m", collapse = collapse)
+}
+font_grey_bg <- function(..., collapse = " ") {
+  try_colour(..., before = "\033[48;5;253m", after = "\033[49m", collapse = collapse)
 }
 font_green_bg <- function(..., collapse = " ") {
   try_colour(..., before = "\033[42m", after = "\033[49m", collapse = collapse)

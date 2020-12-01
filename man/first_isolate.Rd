@@ -98,7 +98,7 @@ The \code{\link[=first_isolate]{first_isolate()}} function is a wrapper around t
 All isolates with a microbial ID of \code{NA} will be excluded as first isolate.
 \subsection{Why this is so important}{
 
-To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode \href{https:/pubmed.ncbi.nlm.nih.gov/17304462/}{(ref)}. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be \href{https://en.wikipedia.org/wiki/Selection_bias}{selection bias}.
+To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode \href{https://pubmed.ncbi.nlm.nih.gov/17304462/}{(Hindler \emph{et al.} 2007)}. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be \href{https://en.wikipedia.org/wiki/Selection_bias}{selection bias}.
 }
 
 \subsection{\verb{filter_*()} shortcuts}{
@@ -106,6 +106,7 @@ To conduct an analysis of antimicrobial resistance, you should only include the 
 The functions \code{\link[=filter_first_isolate]{filter_first_isolate()}} and \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_isolate()}} are helper functions to quickly filter on first isolates.
 
 The function \code{\link[=filter_first_isolate]{filter_first_isolate()}} is essentially equal to either:\preformatted{  x[first_isolate(x, ...), ]
+  
   x \%>\% filter(first_isolate(x, ...))
 }
 

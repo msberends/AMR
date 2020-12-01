@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9027</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9029</span>
       </span>
     </div>
 
@@ -236,13 +236,13 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1409027" class="section level1">
-<h1 class="page-header" data-toc-text="1.4.0.9027">
-<a href="#amr-1409027" class="anchor"></a>AMR 1.4.0.9027<small> Unreleased </small>
+    <div id="amr-1409029" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.0.9029">
+<a href="#amr-1409029" class="anchor"></a>AMR 1.4.0.9029<small> Unreleased </small>
 </h1>
-<div id="last-updated-25-november-2020" class="section level2">
+<div id="last-updated-1-december-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-25-november-2020" class="anchor"></a><small>Last updated: 25 November 2020</small>
+<a href="#last-updated-1-december-2020" class="anchor"></a><small>Last updated: 1 December 2020</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
@@ -252,21 +252,21 @@
 <p>Function <code><a href="../reference/is_new_episode.html">is_new_episode()</a></code> to determine patient episodes which are not necessarily based on microorganisms. It also supports grouped variables with e.g. <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> of the <code>dplyr</code> package:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="va">example_isolates</span> <span class="op">%&gt;%</span>
-  <span class="fu">group_by</span><span class="op">(</span><span class="va">patient_id</span>, <span class="va">hospital_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/is_new_episode.html">is_new_episode</a></span><span class="op">(</span><span class="va">date</span>, episode_days <span class="op">=</span> <span class="fl">60</span><span class="op">)</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">patient_id</span>, <span class="va">hospital_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/is_new_episode.html">is_new_episode</a></span><span class="op">(</span><span class="va">date</span>, episode_days <span class="op">=</span> <span class="fl">60</span><span class="op">)</span><span class="op">)</span></pre></div>
 </li>
 <li>
-<p>Functions <code><a href="../reference/mo_property.html">mo_is_gram_negative()</a></code> and <code><a href="../reference/mo_property.html">mo_is_gram_positive()</a></code> as wrappers around <code><a href="../reference/mo_property.html">mo_gramstain()</a></code>. They always return <code>TRUE</code> or <code>FALSE</code> (except when the input is <code>NA</code> or the MO code is <code>UNKNOWN</code>), thus always return <code>FALSE</code> for species outside the taxonomic kingdom of Bacteria. If you have the <code>dplyr</code> package installed, they can even determine the column with microorganisms themselves when used inside <code>dplyr</code> verbs:</p>
+<p>Functions <code><a href="../reference/mo_property.html">mo_is_gram_negative()</a></code> and <code><a href="../reference/mo_property.html">mo_is_gram_positive()</a></code> as wrappers around <code><a href="../reference/mo_property.html">mo_gramstain()</a></code>. They always return <code>TRUE</code> or <code>FALSE</code> (except when the input is <code>NA</code> or the MO code is <code>UNKNOWN</code>), thus always return <code>FALSE</code> for species outside the taxonomic kingdom of Bacteria. They can even determine the column with microorganisms themselves when used inside <code>dplyr</code> verbs:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="va">example_isolates</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_is_gram_positive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_is_gram_positive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; NOTE: Using column `mo` as input for mo_is_gram_positive()</span></pre></div>
 </li>
 <li>
 <p>Function <code><a href="../reference/mo_property.html">mo_is_intrinsic_resistant()</a></code> to test for intrinsic resistance, based on <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/">EUCAST Intrinsic Resistance and Unusual Phenotypes v3.2</a> from 2020. As with the new <code>mo_is_gram_*()</code> functions, if you have the <code>dplyr</code> package installed the column with microorganisms will be automatically determined when used inside <code>dplyr</code> verbs:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="va">example_isolates</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"Vancomycin"</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"Vancomycin"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; NOTE: Using column `mo` as input for mo_is_intrinsic_resistant()</span></pre></div>
 </li>
 </ul>
