@@ -40,6 +40,8 @@ test_that("data sets are valid", {
   expect_true(all(example_isolates$mo %in% microorganisms$mo))
   expect_true(all(microorganisms.translation$mo_new %in% microorganisms$mo))
   expect_true(all(rsi_translation$mo %in% microorganisms$mo))
+  expect_true(all(intrinsic_resistant$microorganism %in% microorganisms$fullname)) # also important for mo_is_intrinsic_resistant()
+  expect_true(all(intrinsic_resistant$antibiotic %in% antibiotics$name))
   expect_false(any(is.na(microorganisms.codes$code)))
   expect_false(any(is.na(microorganisms.codes$mo)))
   expect_false(any(microorganisms.translation$mo_old %in% microorganisms$mo))

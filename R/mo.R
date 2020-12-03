@@ -636,9 +636,7 @@ exec_as.mo <- function(x,
       }
 
       # WHONET and other common LIS codes ----
-      found <- lookup(code %in% toupper(c(x_backup_untouched[i], x_backup[i], x_backup_without_spp[i])),
-                      column = "mo",
-                      haystack = microorganisms.codes)
+      found <- microorganisms.codes[which(microorganisms.codes$code %in% toupper(c(x_backup_untouched[i], x_backup[i], x_backup_without_spp[i]))), "mo", drop = TRUE][1L]
       if (!is.na(found)) {
         x[i] <- lookup(mo == found)
         next
@@ -893,10 +891,12 @@ exec_as.mo <- function(x,
         }
 
         # try any match keeping spaces ----
-        found <- lookup(fullname_lower %like_case% d.x_withspaces_start_end,
-                        haystack = data_to_check)
-        if (!is.na(found) & nchar(g.x_backup_without_spp) >= 6) {
-          return(found[1L])
+        if (nchar(g.x_backup_without_spp) >= 6) {
+          found <- lookup(fullname_lower %like_case% d.x_withspaces_start_end,
+                          haystack = data_to_check)
+          if (!is.na(found)) {
+            return(found[1L])
+          }
         }
 
         # try any match keeping spaces, not ending with $ ----
@@ -905,10 +905,12 @@ exec_as.mo <- function(x,
         if (!is.na(found)) {
           return(found[1L])
         }
-        found <- lookup(fullname_lower %like_case% e.x_withspaces_start_only,
-                        haystack = data_to_check)
-        if (!is.na(found) & nchar(g.x_backup_without_spp) >= 6) {
-          return(found[1L])
+        if (nchar(g.x_backup_without_spp) >= 6) {
+          found <- lookup(fullname_lower %like_case% e.x_withspaces_start_only,
+                          haystack = data_to_check)
+          if (!is.na(found)) {
+            return(found[1L])
+          }
         }
 
         # try any match keeping spaces, not start with ^ ----
@@ -919,14 +921,16 @@ exec_as.mo <- function(x,
         }
 
         # try a trimmed version
-        found <- lookup(fullname_lower %like_case% b.x_trimmed |
-                          fullname_lower %like_case% c.x_trimmed_without_group,
-                        haystack = data_to_check)
-        if (!is.na(found) & nchar(g.x_backup_without_spp) >= 6) {
-          return(found[1L])
+        if (nchar(g.x_backup_without_spp) >= 6) {
+          found <- lookup(fullname_lower %like_case% b.x_trimmed |
+                            fullname_lower %like_case% c.x_trimmed_without_group,
+                          haystack = data_to_check)
+          if (!is.na(found)) {
+            return(found[1L])
+          }
         }
-
-
+        
+        
         # try splitting of characters in the middle and then find ID ----
         # only when text length is 6 or lower
         # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus, staaur = S. aureus
@@ -1313,14 +1317,16 @@ exec_as.mo <- function(x,
             if (isTRUE(debug)) {
               message("Running '", f.x_withspaces_end_only, "'")
             }
-            found <- lookup(fullname_lower %like_case% f.x_withspaces_end_only, column = "mo")
-            if (!is.na(found) & nchar(g.x_backup_without_spp) >= 6) {
-              found_result <- lookup(mo == found)
-              uncertainties <<- rbind(uncertainties,
-                                      attr(found, which = "uncertainties", exact = TRUE),
-                                      stringsAsFactors = FALSE)
-              found <- lookup(mo == found)
-              return(found)
+            if (nchar(g.x_backup_without_spp) >= 6) {
+              found <- lookup(fullname_lower %like_case% f.x_withspaces_end_only, column = "mo")
+              if (!is.na(found)) {
+                found_result <- lookup(mo == found)
+                uncertainties <<- rbind(uncertainties,
+                                        attr(found, which = "uncertainties", exact = TRUE),
+                                        stringsAsFactors = FALSE)
+                found <- lookup(mo == found)
+                return(found)
+              }
             }
           }
 

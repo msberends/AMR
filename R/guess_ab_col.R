@@ -44,7 +44,7 @@
 #' # [1] "tetr"
 #'
 #' guess_ab_col(df, "J01AA07", verbose = TRUE)
-#' # NOTE: Using column `tetr` as input for `J01AA07` (tetracycline).
+#' # NOTE: Using column 'tetr' as input for J01AA07 (tetracycline).
 #' # [1] "tetr"
 #'
 #' # WHONET codes
@@ -94,16 +94,16 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE) {
   
   if (length(ab_result) == 0) {
     if (verbose == TRUE) {
-      message_("No column found as input for `", search_string,
-               "` (", ab_name(search_string, language = NULL, tolower = TRUE), ").",
+      message_("No column found as input for ", search_string,
+               " (", ab_name(search_string, language = NULL, tolower = TRUE), ").",
                add_fn = font_black,
                as_note = FALSE)
     }
     return(NULL)
   } else {
     if (verbose == TRUE) {
-      message_("Using column `", font_bold(ab_result), "` as input for `", search_string,
-               "` (", ab_name(search_string, language = NULL, tolower = TRUE), ").")
+      message_("Using column '", font_bold(ab_result), "' as input for ", search_string,
+               " (", ab_name(search_string, language = NULL, tolower = TRUE), ").")
     }
     return(ab_result)
   }
@@ -204,12 +204,12 @@ get_column_abx <- function(x,
   
   for (i in seq_len(length(x))) {
     if (info == TRUE & verbose == TRUE & !names(x[i]) %in% names(duplicates)) {
-      message_("Using column `", font_bold(x[i]), "` as input for `", names(x)[i],
-               "` (", ab_name(names(x)[i], tolower = TRUE, language = NULL), ").")
+      message_("Using column '", font_bold(x[i]), "' as input for ", names(x)[i],
+               " (", ab_name(names(x)[i], tolower = TRUE, language = NULL), ").")
     }
     if (info == TRUE & names(x[i]) %in% names(duplicates)) {
-      warning_(paste0("Using column `", font_bold(x[i]), "` as input for `", names(x)[i],
-                      "` (", ab_name(names(x)[i], tolower = TRUE, language = NULL),
+      warning_(paste0("Using column '", font_bold(x[i]), "' as input for ", names(x)[i],
+                      " (", ab_name(names(x)[i], tolower = TRUE, language = NULL),
                       "), although it was matched for multiple antibiotics or columns."),
                add_fn = font_red,
                call = FALSE, 

@@ -1087,11 +1087,11 @@ check_reference_data <- function(reference_data) {
     class_rsi <- sapply(rsi_translation, function(x) paste0("<", class(x), ">", collapse = " and "))
     class_ref <- sapply(reference_data, function(x) paste0("<", class(x), ">", collapse = " and "))
     if (!all(names(class_rsi) == names(class_ref))) {
-      stop_("'reference_data' must have the same column names as the 'rsi_translation' data set.", call = -2)
+      stop_("`reference_data` must have the same column names as the 'rsi_translation' data set.", call = -2)
     }
     if (!all(class_rsi == class_ref)) {
       class_rsi[class_rsi != class_ref][1]
-      stop_("'reference_data' must be the same structure as the 'rsi_translation' data set. Column '", names(class_ref[class_rsi != class_ref][1]), "' is of class ", class_ref[class_rsi != class_ref][1], ", but should be of class ", class_rsi[class_rsi != class_ref][1], ".", call = -2)
+      stop_("`reference_data` must be the same structure as the 'rsi_translation' data set. Column '", names(class_ref[class_rsi != class_ref][1]), "' is of class ", class_ref[class_rsi != class_ref][1], ", but should be of class ", class_rsi[class_rsi != class_ref][1], ".", call = -2)
     }
   }
 }

@@ -209,7 +209,7 @@ first_isolate <- function(x,
       # WHONET support
       x$patient_id <- paste(x$`First name`, x$`Last name`, x$Sex)
       col_patient_id <- "patient_id"
-      message_("Using combined columns `", font_bold("First name"), "`, `", font_bold("Last name"), "` and `", font_bold("Sex"), "` as input for `col_patient_id`")
+      message_("Using combined columns '", font_bold("First name"), "', '", font_bold("Last name"), "' and '", font_bold("Sex"), "' as input for `col_patient_id`")
     } else {
       col_patient_id <- search_type_in_df(x = x, type = "patient_id")
     }

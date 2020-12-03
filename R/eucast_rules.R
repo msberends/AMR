@@ -454,7 +454,7 @@ eucast_rules <- function(x,
   if (ab_missing(AMP) & !ab_missing(AMX)) {
     # ampicillin column is missing, but amoxicillin is available
     if (info == TRUE) {
-      message_("Using column `", font_bold(AMX), "` as input for ampicillin since many EUCAST rules depend on it.")
+      message_("Using column '", font_bold(AMX), "' as input for ampicillin since many EUCAST rules depend on it.")
     }
     AMP <- AMX
   }

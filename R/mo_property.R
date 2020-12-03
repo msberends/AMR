@@ -383,9 +383,10 @@ mo_is_intrinsic_resistant <- function(x, ab, language = get_locale(), ...) {
     ab <- rep(ab, length(x))
   }
   if (length(x) != length(ab)) {
-    stop_("length of 'x' and 'ab' must be equal, or one of them must be of length 1.")
+    stop_("length of `x` and `ab` must be equal, or one of them must be of length 1.")
   }
   
+  # this saves about 50% in calculation time
   intrinsic_to_check <- intrinsic_resistant[which(intrinsic_resistant$microorganism %in% x | 
                                                     intrinsic_resistant$antibiotic %in% ab), , drop = FALSE]
   paste(x, ab) %in% paste(intrinsic_to_check$microorganism, intrinsic_to_check$antibiotic)
@@ -618,12 +619,12 @@ find_mo_col <- function(fn) {
       mo <- suppressMessages(search_type_in_df(df, "mo"))
     }, silent = TRUE)
     if (!is.null(df) && !is.null(mo) && is.data.frame(df)) {
-      message_("Using column `", font_bold(mo), "` as input for ", fn, "()")
+      message_("Using column '", font_bold(mo), "' as input for ", fn, "()")
       return(df[, mo, drop = TRUE])
     } else {
-      stop_("Argument 'x' is missing and no column with info about microorganisms could be found.", call = -2)
+      stop_("Argument `x` is missing and no column with info about microorganisms could be found.", call = -2)
     }
   } else {
-    stop_("Argument 'x' is missing.", call = -2)
+    stop_("Argument `x` is missing.", call = -2)
   }
 }

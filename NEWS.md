@@ -1,5 +1,5 @@
-# AMR 1.4.0.9029
-## <small>Last updated:  1 December 2020</small>
+# AMR 1.4.0.9030
+## <small>Last updated:  3 December 2020</small>
 
 ### New
 * Function `is_new_episode()` to determine patient episodes which are not necessarily based on microorganisms. It also supports grouped variables with e.g. `mutate()`, `filter()` and `summarise()` of the `dplyr` package:
@@ -30,6 +30,8 @@
 * Fix for using parameter `reference_df` in `as.mo()` and `mo_*()` functions that contain old microbial codes (from previous package versions)
 * Fix for using `as.rsi()` on a data.frame in older R versions
 * `as.rsi()` on a data.frame will not print a message anymore if the values are already clean R/SI values
+* Fixed a bug where `mo_uncertainties()` would not return the results based on the MO matching score
+* Fixed a bug where `as.mo()` would not return results for known laboratory codes for microorganisms
 
 ### Other
 * All messages and warnings thrown by this package now break sentences on whole words

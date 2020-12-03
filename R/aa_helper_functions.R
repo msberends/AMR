@@ -146,7 +146,7 @@ search_type_in_df <- function(x, type, info = TRUE) {
       # WHONET support
       found <- sort(colnames(x)[colnames(x) %like% "^(specimen date|specimen_date|spec_date)"])[1]
       if (!any(class(pm_pull(x, found)) %in% c("Date", "POSIXct"))) {
-        stop(font_red(paste0("ERROR: Found column `", font_bold(found), "` to be used as input for `col_", type,
+        stop(font_red(paste0("Found column '", font_bold(found), "' to be used as input for `col_", type,
                              "`, but this column contains no valid dates. Transform its values to valid dates first.")),
              call. = FALSE)
       }
@@ -178,7 +178,7 @@ search_type_in_df <- function(x, type, info = TRUE) {
     if (!is.null(found)) {
       # this column should contain logicals
       if (!is.logical(x[, found, drop = TRUE])) {
-        message_("Column `", font_bold(found), "` found as input for `col_", type,
+        message_("Column '", font_bold(found), "' found as input for `col_", type,
                  "`, but this column does not contain 'logical' values (TRUE/FALSE) and was ignored.",
                  add_fn = font_red)
         found <- NULL
@@ -187,7 +187,7 @@ search_type_in_df <- function(x, type, info = TRUE) {
   }
 
   if (!is.null(found) & info == TRUE) {
-    msg <- paste0("Using column `", font_bold(found), "` as input for `col_", type, "`.")
+    msg <- paste0("Using column '", found, "' as input for `col_", type, "`.")
     if (type %in% c("keyantibiotics", "specimen")) {
       msg <- paste(msg, "Use", font_bold(paste0("col_", type), "= FALSE"), "to prevent this.")
     }
