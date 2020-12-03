@@ -1,4 +1,4 @@
-# AMR 1.4.0.9030
+# AMR 1.4.0.9031
 ## <small>Last updated:  3 December 2020</small>
 
 ### New
@@ -32,6 +32,7 @@
 * `as.rsi()` on a data.frame will not print a message anymore if the values are already clean R/SI values
 * Fixed a bug where `mo_uncertainties()` would not return the results based on the MO matching score
 * Fixed a bug where `as.mo()` would not return results for known laboratory codes for microorganisms
+* Fixed a bug where `as.ab()` would sometimes fail
 
 ### Other
 * All messages and warnings thrown by this package now break sentences on whole words

@@ -386,6 +386,14 @@ mo_is_intrinsic_resistant <- function(x, ab, language = get_locale(), ...) {
     stop_("length of `x` and `ab` must be equal, or one of them must be of length 1.")
   }
   
+  # show used version number once per session
+  if (is.null(getOption("AMR_intrinsic_resistance_note", NULL))) {
+    message_("Determining intrinsic resistance based on ",
+             AMR:::format_eucast_version_nr(3.2, FALSE), ". ",
+             font_bold("This message is shown once per session."))
+    options(AMR_intrinsic_resistance_note = "shown")
+  }
+  
   # this saves about 50% in calculation time
   intrinsic_to_check <- intrinsic_resistant[which(intrinsic_resistant$microorganism %in% x | 
                                                     intrinsic_resistant$antibiotic %in% ab), , drop = FALSE]

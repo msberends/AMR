@@ -153,7 +153,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
     }
     
     if (isTRUE(flag_multiple_results) & x[i] %like% "[ ]") {
-      from_text <- suppressWarnings(ab_from_text(x[i], initial_search = FALSE, translate_ab = FALSE)[[1]])
+      from_text <- tryCatch(suppressWarnings(ab_from_text(x[i], initial_search = FALSE, translate_ab = FALSE)[[1]]),
+                            error = function(e) character(0))
     } else {
       from_text <- character(0)
     }
@@ -345,7 +346,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
       if (isTRUE(flag_multiple_results)) {
         found <- from_text[1L]
       } else {
-        found <- suppressWarnings(ab_from_text(x[i], initial_search = FALSE, translate_ab = FALSE)[[1]][1L])
+        found <- tryCatch(suppressWarnings(ab_from_text(x[i], initial_search = FALSE, translate_ab = FALSE)[[1]][1L]),
+                          error = function(e) NA_character_)
       }
       if (!is.na(found)) {
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)

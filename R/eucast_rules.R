@@ -38,12 +38,17 @@ EUCAST_VERSION_EXPERT_RULES <- list("3.1" = list(version_txt = "v3.1",
                                                  title = "'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes'",
                                                  url = "https://www.eucast.org/expert_rules_and_intrinsic_resistance/"))
 
-format_eucast_version_nr <- function(version) {
+format_eucast_version_nr <- function(version, markdown = TRUE) {
   # for documentation - adds title, version number, year and url in markdown language
   lst <- c(EUCAST_VERSION_BREAKPOINTS, EUCAST_VERSION_EXPERT_RULES)
   version <- format(version, nsmall = 1)
-  paste0("[", lst[[version]]$title, " ", lst[[version]]$version_txt, "](", lst[[version]]$url, ")",
-         " from ", lst[[version]]$year)
+  if (markdown == TRUE) {
+    paste0("[", lst[[version]]$title, " ", lst[[version]]$version_txt, "](", lst[[version]]$url, ")",
+           " from ", lst[[version]]$year)
+  } else {
+    paste0(lst[[version]]$title, " ", lst[[version]]$version_txt,
+           " from ", lst[[version]]$year)
+  }
 }
 
 #' Apply EUCAST rules
