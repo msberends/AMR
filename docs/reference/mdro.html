@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9032</span>
       </span>
     </div>
 
@@ -268,7 +268,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>data with antibiotic columns, such as <code>amox</code>, <code>AMX</code> and <code>AMC</code></p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with antibiotics columns, like <code>AMX</code> or <code>amox</code>. Can be omitted when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>.</p></td>
     </tr>
     <tr>
       <th>guideline</th>
@@ -319,20 +319,21 @@ Ordered <a href='https://rdrr.io/r/base/factor.html'>factor</a> with levels <cod
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For the <code>pct_required_classes</code> argument, values above 1 will be divided by 100. This is to support both fractions (<code>0.75</code> or <code>3/4</code>) and percentages (<code>75</code>).</p>
+    <p>These functions are context-aware when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>. This means that then the <code>x</code> parameter can be omitted, please see <em>Examples</em>.</p>
+<p>For the <code>pct_required_classes</code> argument, values above 1 will be divided by 100. This is to support both fractions (<code>0.75</code> or <code>3/4</code>) and percentages (<code>75</code>).</p>
 <p>Currently supported guidelines are (case-insensitive):</p><ul>
-<li><p><code>guideline = "CMI2012"</code><br />
-Magiorakos AP, Srinivasan A <em>et al.</em> "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) (<a href='https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext'>link</a>)</p></li>
-<li><p><code>guideline = "EUCAST3.2"</code> (or simply <code>guideline = "EUCAST"</code>)<br />
-The European international guideline - EUCAST Expert Rules Version 3.2 "Intrinsic Resistance and Unusual Phenotypes" (<a href='https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf'>link</a>)</p></li>
-<li><p><code>guideline = "EUCAST3.1"</code><br />
-The European international guideline - EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (<a href='https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf'>link</a>)</p></li>
-<li><p><code>guideline = "TB"</code><br />
-The international guideline for multi-drug resistant tuberculosis - World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" (<a href='https://www.who.int/tb/publications/pmdt_companionhandbook/en/'>link</a>)</p></li>
-<li><p><code>guideline = "MRGN"</code><br />
-The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7. DOI: 10.1186/s13756-015-0047-6</p></li>
-<li><p><code>guideline = "BRMO"</code><br />
-The Dutch national guideline - Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) (ZKH)" (<a href='https://www.rivm.nl/wip-richtlijn-brmo-bijzonder-resistente-micro-organismen-zkh'>link</a>)</p></li>
+<li><p><code>guideline = "CMI2012"</code> (default)</p>
+<p>Magiorakos AP, Srinivasan A <em>et al.</em> "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) (<a href='https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext'>link</a>)</p></li>
+<li><p><code>guideline = "EUCAST3.2"</code> (or simply <code>guideline = "EUCAST"</code>)</p>
+<p>The European international guideline - EUCAST Expert Rules Version 3.2 "Intrinsic Resistance and Unusual Phenotypes" (<a href='https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf'>link</a>)</p></li>
+<li><p><code>guideline = "EUCAST3.1"</code></p>
+<p>The European international guideline - EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (<a href='https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf'>link</a>)</p></li>
+<li><p><code>guideline = "TB"</code></p>
+<p>The international guideline for multi-drug resistant tuberculosis - World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" (<a href='https://www.who.int/tb/publications/pmdt_companionhandbook/en/'>link</a>)</p></li>
+<li><p><code>guideline = "MRGN"</code></p>
+<p>The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7. DOI: 10.1186/s13756-015-0047-6</p></li>
+<li><p><code>guideline = "BRMO"</code></p>
+<p>The Dutch national guideline - Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) (ZKH)" (<a href='https://www.rivm.nl/wip-richtlijn-brmo-bijzonder-resistente-micro-organismen-zkh'>link</a>)</p></li>
 </ul>
 
 <p>Please suggest your own (country-specific) guidelines by letting us know: <a href='https://github.com/msberends/AMR/issues/new'>https://github.com/msberends/AMR/issues/new</a>.</p>
@@ -380,10 +381,12 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
     <span class='fu'>mdro</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='op'>)</span>
   
+  <span class='co'># no need to define `x` when used inside dplyr verbs:</span>
   <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>EUCAST <span class='op'>=</span> <span class='fu'>eucast_exceptional_phenotypes</span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span>,
-           BRMO <span class='op'>=</span> <span class='fu'>brmo</span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span>,
-           MRGN <span class='op'>=</span> <span class='fu'>mrgn</span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>MDRO <span class='op'>=</span> <span class='fu'>mdro</span><span class='op'>(</span><span class='op'>)</span>,
+           EUCAST <span class='op'>=</span> <span class='fu'>eucast_exceptional_phenotypes</span><span class='op'>(</span><span class='op'>)</span>,
+           BRMO <span class='op'>=</span> <span class='fu'>brmo</span><span class='op'>(</span><span class='op'>)</span>,
+           MRGN <span class='op'>=</span> <span class='fu'>mrgn</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
 <span class='co'># }</span>
 </pre>

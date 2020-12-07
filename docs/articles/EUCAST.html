@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9032</span>
       </span>
     </div>
 
@@ -228,8 +228,17 @@
 <span class="co">#            mo ampicillin</span>
 <span class="co"># 1  Klebsiella          R</span>
 <span class="co"># 2 Escherichia          S</span></pre></div>
-<p>EUCAST rules can not only be used for correction, they can also be used for filling in known resistance and susceptibility based on results of other antimicrobials drugs. This process is called <em>interpretive reading</em> and is part of the <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function as well:</p>
+<p>A more convenient function is <code><a href="../reference/mo_property.html">mo_is_intrinsic_resistant()</a></code> that uses the same guideline, but allows to check for one or more specific microorganisms or antibiotics:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="../reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Klebsiella"</span>, <span class="st">"Escherichia"</span><span class="op">)</span>,
+                          <span class="st">"ampicillin"</span><span class="op">)</span>
+<span class="co"># [1]  TRUE FALSE</span>
+
+<span class="fu"><a href="../reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span><span class="st">"Klebsiella"</span>,
+                          <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ampicillin"</span>, <span class="st">"kanamycin"</span><span class="op">)</span><span class="op">)</span>
+<span class="co"># [1]  TRUE FALSE</span></pre></div>
+<p>EUCAST rules can not only be used for correction, they can also be used for filling in known resistance and susceptibility based on results of other antimicrobials drugs. This process is called <em>interpretive reading</em>, is basically a form of imputation, and is part of the <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function as well:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>mo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Staphylococcus aureus"</span>,
                           <span class="st">"Enterococcus faecalis"</span>,
                           <span class="st">"Escherichia coli"</span>,
@@ -243,7 +252,7 @@
                    PEN <span class="op">=</span> <span class="st">"S"</span>,       <span class="co"># Benzylenicillin</span>
                    FOX <span class="op">=</span> <span class="st">"S"</span>,       <span class="co"># Cefoxitin</span>
                    stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit">
+<div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="va">data</span></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -309,7 +318,7 @@
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb4"><pre class="downlit">
+<div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></pre></div>
 <table class="table">
 <thead><tr class="header">

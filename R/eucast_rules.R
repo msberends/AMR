@@ -620,8 +620,8 @@ eucast_rules <- function(x,
   if (any(c("all", "other") %in% rules)) {
     if (info == TRUE) {
       cat(font_bold(paste0("\nRules by this AMR package (",
-                           font_red(paste0("v", utils::packageVersion("AMR"), ", ", 
-                                           format(utils::packageDate("AMR"), "%Y"))), "), see ?eucast_rules\n")))
+                           font_red(paste0("v", utils::packageDescription("AMR")$Version, ", ", 
+                                           format(utils::packageDescription("AMR")$Date, "%Y"))), "), see ?eucast_rules\n")))
     }
     
     ab_enzyme <- subset(antibiotics, name %like% "/")[, c("ab", "name")]
@@ -639,7 +639,7 @@ eucast_rules <- function(x,
         run_changes <- edit_rsi(x = x,
                                 col_mo = col_mo,
                                 to = "R",
-                                rule = c(rule_current, "Other rules", "", paste0("Non-EUCAST: AMR package v", utils::packageVersion("AMR"))),
+                                rule = c(rule_current, "Other rules", "", paste0("Non-EUCAST: AMR package v", utils::packageDescription("AMR")$Version)),
                                 rows = which(as.rsi_no_warning(x[, cols_ab[ab_enzyme[i, ]$ab]]) == "R"),
                                 cols = cols_ab[ab_enzyme[i, ]$base_ab],
                                 last_verbose_info = verbose_info,
@@ -669,7 +669,7 @@ eucast_rules <- function(x,
         run_changes <- edit_rsi(x = x,
                                 col_mo = col_mo,
                                 to = "S",
-                                rule = c(rule_current, "Other rules", "", paste0("Non-EUCAST: AMR package v", utils::packageVersion("AMR"))),
+                                rule = c(rule_current, "Other rules", "", paste0("Non-EUCAST: AMR package v", utils::packageDescription("AMR")$Version)),
                                 rows = which(as.rsi_no_warning(x[, cols_ab[ab_enzyme[i, ]$base_ab]]) == "S"),
                                 cols = cols_ab[ab_enzyme[i, ]$ab],
                                 last_verbose_info = verbose_info,

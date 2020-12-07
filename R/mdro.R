@@ -27,6 +27,7 @@
 #'
 #' Determine which isolates are multidrug-resistant organisms (MDRO) according to international and national guidelines.
 #' @inheritSection lifecycle Stable lifecycle
+#' @param x a [data.frame] with antibiotics columns, like `AMX` or `amox`. Can be omitted when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`.
 #' @param guideline a specific guideline to follow. When left empty, the publication by Magiorakos *et al.* (2012, Clinical Microbiology and Infection) will be followed, please see *Details*.
 #' @inheritParams eucast_rules
 #' @param pct_required_classes minimal required percentage of antimicrobial classes that must be available per isolate, rounded down. For example, with the default guideline, 17 antimicrobial classes must be available for *S. aureus*. Setting this `pct_required_classes` argument to `0.5` (default) means that for every *S. aureus* isolate at least 8 different classes must be available. Any lower number of available classes will return `NA` for that isolate.
@@ -34,23 +35,36 @@
 #' @param verbose a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.
 #' @inheritSection eucast_rules Antibiotics
 #' @details 
+#' These functions are context-aware when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`. This means that then the `x` parameter can be omitted, please see *Examples*.
+#' 
 #' For the `pct_required_classes` argument, values above 1 will be divided by 100. This is to support both fractions (`0.75` or `3/4`) and percentages (`75`).
 #' 
 #' Currently supported guidelines are (case-insensitive):
 #' 
-#' - `guideline = "CMI2012"`\cr
-#'   Magiorakos AP, Srinivasan A *et al.* "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) ([link](https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext))
-#' - `guideline = "EUCAST3.2"` (or simply `guideline = "EUCAST"`)\cr
-#'   The European international guideline - EUCAST Expert Rules Version 3.2 "Intrinsic Resistance and Unusual Phenotypes" ([link](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf))
-#' - `guideline = "EUCAST3.1"`\cr
-#'   The European international guideline - EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" ([link](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf))
-#' - `guideline = "TB"`\cr
-#'   The international guideline for multi-drug resistant tuberculosis - World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" ([link](https://www.who.int/tb/publications/pmdt_companionhandbook/en/))
-#' - `guideline = "MRGN"`\cr
-#'   The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7. DOI: 10.1186/s13756-015-0047-6
-#' - `guideline = "BRMO"`\cr
-#'   The Dutch national guideline - Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) (ZKH)" ([link](https://www.rivm.nl/wip-richtlijn-brmo-bijzonder-resistente-micro-organismen-zkh))
+#' * `guideline = "CMI2012"` (default)
 #'
+#'   Magiorakos AP, Srinivasan A *et al.* "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) ([link](https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext))
+#' 
+#' * `guideline = "EUCAST3.2"` (or simply `guideline = "EUCAST"`)
+#'
+#'   The European international guideline - EUCAST Expert Rules Version 3.2 "Intrinsic Resistance and Unusual Phenotypes" ([link](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf))
+#' 
+#' * `guideline = "EUCAST3.1"`
+#'
+#'   The European international guideline - EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" ([link](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf))
+#' 
+#' * `guideline = "TB"`
+#'
+#'   The international guideline for multi-drug resistant tuberculosis - World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" ([link](https://www.who.int/tb/publications/pmdt_companionhandbook/en/))
+#' 
+#' * `guideline = "MRGN"`
+#'
+#'   The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7. DOI: 10.1186/s13756-015-0047-6
+#' 
+#' * `guideline = "BRMO"`
+#'
+#'   The Dutch national guideline - Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) (ZKH)" ([link](https://www.rivm.nl/wip-richtlijn-brmo-bijzonder-resistente-micro-organismen-zkh))
+#' 
 #' Please suggest your own (country-specific) guidelines by letting us know: <https://github.com/msberends/AMR/issues/new>.
 #' 
 #' **Note:** Every test that involves the Enterobacteriaceae family, will internally be performed using its newly named *order* Enterobacterales, since the Enterobacteriaceae family has been taxonomically reclassified by Adeolu *et al.* in 2016. Before that, Enterobacteriaceae was the only family under the Enterobacteriales (with an i) order. All species under the old Enterobacteriaceae family are still under the new Enterobacterales (without an i) order, but divided into multiple families. The way tests are performed now by this [mdro()] function makes sure that results from before 2016 and after 2016 are identical.
@@ -79,10 +93,12 @@
 #'     mdro() %>%
 #'     table()
 #'   
+#'   # no need to define `x` when used inside dplyr verbs:
 #'   example_isolates %>%
-#'     mutate(EUCAST = eucast_exceptional_phenotypes(.),
-#'            BRMO = brmo(.),
-#'            MRGN = mrgn(.))
+#'     mutate(MDRO = mdro(),
+#'            EUCAST = eucast_exceptional_phenotypes(),
+#'            BRMO = brmo(),
+#'            MRGN = mrgn())
 #' }
 #' }
 mdro <- function(x,
@@ -93,6 +109,9 @@ mdro <- function(x,
                  combine_SI = TRUE,
                  verbose = FALSE,
                  ...) {
+  if (missing(x)) {
+    x <- get_current_data(arg_name = "x", call = -2)
+  }
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(guideline, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(col_mo, allow_class = "character", has_length = 1, is_in = colnames(x), allow_NULL = TRUE)
@@ -175,24 +194,28 @@ mdro <- function(x,
     guideline$author <- "Magiorakos AP, Srinivasan A, Carey RB, ..., Vatopoulos A, Weber JT, Monnet DL"
     guideline$version <- "N/A"
     guideline$source <- "Clinical Microbiology and Infection 18:3, 2012. DOI: 10.1111/j.1469-0691.2011.03570.x"
-    
-  } else if (guideline$code == "eucast3.2") {
-    guideline$name <- "EUCAST Expert Rules, \"Intrinsic Resistance and Unusual Phenotypes\""
-    guideline$author <- "EUCAST (European Committee on Antimicrobial Susceptibility Testing)"
-    guideline$version <- "3.2, 2020"
-    guideline$source <- "https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf"
+    guideline$type <- "MDRs/XDRs/PDRs"
     
   } else if (guideline$code == "eucast3.1") {
     guideline$name <- "EUCAST Expert Rules, \"Intrinsic Resistance and Exceptional Phenotypes Tables\""
     guideline$author <- "EUCAST (European Committee on Antimicrobial Susceptibility Testing)"
     guideline$version <- "3.1, 2016"
     guideline$source <- "https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf"
+    guideline$type <- "EUCAST Exceptional Phenotypes"
+    
+  } else if (guideline$code == "eucast3.2") {
+    guideline$name <- "EUCAST Expert Rules, \"Intrinsic Resistance and Unusual Phenotypes\""
+    guideline$author <- "EUCAST (European Committee on Antimicrobial Susceptibility Testing)"
+    guideline$version <- "3.2, 2020"
+    guideline$source <- "https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf"
+    guideline$type <- "EUCAST Unusual Phenotypes"
     
   } else if (guideline$code == "tb") {
     guideline$name <- "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis"
     guideline$author <- "WHO (World Health Organization)"
     guideline$version <- "WHO/HTM/TB/2014.11, 2014"
     guideline$source <- "https://www.who.int/tb/publications/pmdt_companionhandbook/en/"
+    guideline$type <- "MDR-TB's"
     
     # support per country:
   } else if (guideline$code == "mrgn") {
@@ -200,12 +223,14 @@ mdro <- function(x,
     guideline$author <- "M\u00fcller J, Voss A, K\u00f6ck R, ..., Kern WV, Wendt C, Friedrich AW"
     guideline$version <- "N/A"
     guideline$source <- "Antimicrobial Resistance and Infection Control 4:7, 2015. DOI: 10.1186/s13756-015-0047-6"
+    guideline$type <- "MRGNs"
     
   } else if (guideline$code == "brmo") {
     guideline$name <- "WIP-Richtlijn Bijzonder Resistente Micro-organismen (BRMO)"
     guideline$author <- "RIVM (Rijksinstituut voor de Volksgezondheid)"
     guideline$version <- "Revision as of December 2017"
     guideline$source <- "https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH"
+    guideline$type <- "BRMOs"
   } else {
     stop("This guideline is currently unsupported: ", guideline$code, call. = FALSE)
   }
@@ -1194,7 +1219,7 @@ mdro <- function(x,
     if (sum(!is.na(x$MDRO) == 0)) {
       cat(font_bold(paste0("=> Found 0 MDROs since no isolates are covered by the guideline")))
     } else {
-      cat(font_bold(paste0("=> Found ", sum(x$MDRO %in% c(2:5), na.rm = TRUE), " MDROs out of ", sum(!is.na(x$MDRO)), 
+      cat(font_bold(paste0("=> Found ", sum(x$MDRO %in% c(2:5), na.rm = TRUE), " ", guideline$type, " out of ", sum(!is.na(x$MDRO)), 
                            " isolates (", trimws(percentage(sum(x$MDRO %in% c(2:5), na.rm = TRUE) / sum(!is.na(x$MDRO)))), ")\n")))
     }
   }
@@ -1255,6 +1280,9 @@ mdro <- function(x,
 #' @rdname mdro
 #' @export
 brmo <- function(x, guideline = "BRMO", ...) {
+  if (missing(x)) {
+    x <- get_current_data(arg_name = "x", call = -2)
+  }
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(guideline, allow_class = "character", has_length = 1)
   mdro(x, guideline = "BRMO", ...)
@@ -1263,6 +1291,9 @@ brmo <- function(x, guideline = "BRMO", ...) {
 #' @rdname mdro
 #' @export
 mrgn <- function(x, guideline = "MRGN", ...) {
+  if (missing(x)) {
+    x <- get_current_data(arg_name = "x", call = -2)
+  }
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(guideline, allow_class = "character", has_length = 1)
   mdro(x = x, guideline = "MRGN", ...)
@@ -1271,6 +1302,9 @@ mrgn <- function(x, guideline = "MRGN", ...) {
 #' @rdname mdro
 #' @export
 mdr_tb <- function(x, guideline = "TB", ...) {
+  if (missing(x)) {
+    x <- get_current_data(arg_name = "x", call = -2)
+  }
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(guideline, allow_class = "character", has_length = 1)
   mdro(x = x, guideline = "TB", ...)
@@ -1279,6 +1313,9 @@ mdr_tb <- function(x, guideline = "TB", ...) {
 #' @rdname mdro
 #' @export
 mdr_cmi2012 <- function(x, guideline = "CMI2012", ...) {
+  if (missing(x)) {
+    x <- get_current_data(arg_name = "x", call = -2)
+  }
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(guideline, allow_class = "character", has_length = 1)
   mdro(x = x, guideline = "CMI2012", ...)
@@ -1287,6 +1324,9 @@ mdr_cmi2012 <- function(x, guideline = "CMI2012", ...) {
 #' @rdname mdro
 #' @export
 eucast_exceptional_phenotypes <- function(x, guideline = "EUCAST", ...) {
+  if (missing(x)) {
+    x <- get_current_data(arg_name = "x", call = -2)
+  }
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(guideline, allow_class = "character", has_length = 1)
   mdro(x = x, guideline = "EUCAST", ...)

@@ -1,28 +1,29 @@
-# AMR 1.4.0.9031
-## <small>Last updated:  3 December 2020</small>
+# AMR 1.4.0.9032
+## <small>Last updated:  7 December 2020</small>
 
 ### New
 * Function `is_new_episode()` to determine patient episodes which are not necessarily based on microorganisms. It also supports grouped variables with e.g. `mutate()`, `filter()` and `summarise()` of the `dplyr` package:
   ```r
+  library(dplyr)
   example_isolates %>%
     group_by(patient_id, hospital_id) %>%
     filter(is_new_episode(date, episode_days = 60))
   ```
-* Functions `mo_is_gram_negative()` and `mo_is_gram_positive()` as wrappers around `mo_gramstain()`. They always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria. They can even determine the column with microorganisms themselves when used inside `dplyr` verbs:
-  ```r
-  example_isolates %>%
-    filter(mo_is_gram_positive())
-  #> NOTE: Using column `mo` as input for mo_is_gram_positive()
-  ```
-* Function `mo_is_intrinsic_resistant()` to test for intrinsic resistance, based on [EUCAST Intrinsic Resistance and Unusual Phenotypes v3.2](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) from 2020. As with the new `mo_is_gram_*()` functions, if you have the `dplyr` package installed the column with microorganisms will be automatically determined when used inside `dplyr` verbs:
-  ```r
-  example_isolates %>%
-    filter(mo_is_intrinsic_resistant(ab = "Vancomycin"))
-  #> NOTE: Using column `mo` as input for mo_is_intrinsic_resistant()
-  ```
+* Functions `mo_is_gram_negative()` and `mo_is_gram_positive()` as wrappers around `mo_gramstain()`. They always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
+* Function `mo_is_intrinsic_resistant()` to test for intrinsic resistance, based on [EUCAST Intrinsic Resistance and Unusual Phenotypes v3.2](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) from 2020.
 
 ### Changed
-* Reference data used for `as.rsi()` can now be set by the user, using the `reference_data` parameter. This allows for using own interpretation guidelines.
+* Reference data used for `as.rsi()` can now be set by the user, using the `reference_data` parameter. This allows for using own interpretation guidelines. The user-set data must have the same structure as `rsi_translation`.
+* Some functions are now context-aware when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`. This means that then the data parameter does not need to be set anymore. This is the case for the new functions `mo_is_gram_negative()`, `mo_is_gram_positive()`, `mo_is_intrinsic_resistant()` and for the existing functions `first_isolate()`, `key_antibiotics()`, `mdro()`, `brmo()`, `mrgn()`, `mdr_tb()`, `mdr_cmi2012()`, `eucast_exceptional_phenotypes()`. This was already the case for antibiotic selection functions (such as using `penicillins()` in `dplyr::select()`).
+  ```r
+  # to select first isolates that are Gram-negative 
+  # and view results of cephalosporins and aminoglycosides:
+  library(dplyr)
+  example_isolates %>%
+    filter(first_isolate(), mo_is_gram_negative()) %>% 
+    select(mo, cephalosporins(), aminoglycosides()) %>% 
+    as_tibble()
+```
 * For all function parameters in the code, it is now defined what the exact type of user input should be (inspired by the [`typed`](https://github.com/moodymudskipper/typed) package). If the user input for a certain function does not meet the requirements for a specific parameter (such as the class or length), an informative error will be thrown. This makes the package more robust and the use of it more reproducible and reliable. In total, more than 400 arguments were defined.
 * Deprecated function `p_symbol()` that not really fits the scope of this package. It will be removed in a future version. See [here](https://github.com/msberends/AMR/blob/v1.4.0/R/p_symbol.R) for the source code to preserve it.
 * Better determination of disk zones and MIC values when running `as.rsi()` on a data.frame
@@ -33,6 +34,7 @@
 * Fixed a bug where `mo_uncertainties()` would not return the results based on the MO matching score
 * Fixed a bug where `as.mo()` would not return results for known laboratory codes for microorganisms
 * Fixed a bug where `as.ab()` would sometimes fail
+* If using `as.rsi()` on MICs or disk diffusion while there is intrinsic antimicrobial resistance, a warning will be thrown to remind about this
 
 ### Other
 * All messages and warnings thrown by this package now break sentences on whole words

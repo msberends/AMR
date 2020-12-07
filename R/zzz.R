@@ -36,6 +36,10 @@
          value = create_MO.old_lookup(),
          envir = asNamespace("AMR"))
   
+  assign(x = "INTRINSIC_R",
+         value = create_intr_resistance(),
+         envir = asNamespace("AMR"))
+  
   assign(x = "LANGUAGES_SUPPORTED",
          value = sort(c("en", unique(translations_file$lang))),
          envir = asNamespace("AMR"))
@@ -84,6 +88,12 @@
                                   font_bold("suppressPackageStartupMessages(library(AMR))"),
                                   " or use ",
                                   font_bold("options(AMR_silentstart = TRUE)"), "]"))
+}
+
+create_intr_resistance <- function() {
+  # for mo_is_intrinsic_resistant() - saves a lot of time when executed on this vector
+  paste(AMR::microorganisms[match(AMR::intrinsic_resistant$microorganism, AMR::microorganisms$fullname), "mo", drop = TRUE],
+        AMR::antibiotics[match(AMR::intrinsic_resistant$antibiotic, AMR::antibiotics$name), "ab", drop = TRUE])
 }
 
 create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {

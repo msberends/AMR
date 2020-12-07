@@ -47,7 +47,7 @@ ggplot_rsi_predict(
 )
 }
 \arguments{
-\item{x}{a \link{data.frame} containing isolates.}
+\item{x}{a \link{data.frame} containing isolates. Can be omitted when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}.}
 
 \item{col_ab}{column name of \code{x} containing antimicrobial interpretations (\code{"R"}, \code{"I"} and \code{"S"})}
 

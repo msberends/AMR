@@ -50,7 +50,7 @@ filter_first_weighted_isolate(
 )
 }
 \arguments{
-\item{x}{a \link{data.frame} containing isolates.}
+\item{x}{a \link{data.frame} containing isolates. Can be omitted when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}.}
 
 \item{col_date}{column name of the result date (or date that is was received on the lab), defaults to the first column with a date class}
 
@@ -93,6 +93,8 @@ A \code{\link{logical}} vector
 Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use \code{\link[=is_new_episode]{is_new_episode()}} that also supports grouping with the \code{dplyr} package.
 }
 \details{
+These functions are context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} parameter can be omitted, please see \emph{Examples}.
+
 The \code{\link[=first_isolate]{first_isolate()}} function is a wrapper around the \code{\link[=is_new_episode]{is_new_episode()}} function, but more efficient for data sets containing microorganism codes or names.
 
 All isolates with a microbial ID of \code{NA} will be excluded as first isolate.
@@ -107,7 +109,7 @@ The functions \code{\link[=filter_first_isolate]{filter_first_isolate()}} and \c
 
 The function \code{\link[=filter_first_isolate]{filter_first_isolate()}} is essentially equal to either:\preformatted{  x[first_isolate(x, ...), ]
   
-  x \%>\% filter(first_isolate(x, ...))
+  x \%>\% filter(first_isolate(...))
 }
 
 The function \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_isolate()}} is essentially equal to:\preformatted{  x \%>\%
@@ -161,6 +163,8 @@ if (require("dplyr")) {
     filter(first_isolate == TRUE)
  
   # short-hand versions:
+  example_isolates \%>\%
+    filter(first_isolate())
   example_isolates \%>\%
     filter_first_isolate()
     

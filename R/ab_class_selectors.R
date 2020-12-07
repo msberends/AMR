@@ -179,10 +179,11 @@ ab_selector <- function(ab_class, function_name) {
     message_("No antimicrobial agents of class ", ab_group, " found", examples, ".")
   } else {
     message_("Selecting ", ab_group, ": ",
-             paste(paste0("`", font_bold(agents, collapse = NULL),
-                          "` (", ab_name(names(agents), tolower = TRUE, language = NULL), ")"),
+             paste(paste0("'", font_bold(agents, collapse = NULL),
+                          "' (", ab_name(names(agents), tolower = TRUE, language = NULL), ")"),
                    collapse = ", "),
-             as_note = FALSE)
+             as_note = FALSE,
+             extra_indent = nchar(paste0("Selecting ", ab_group, ": ")))
   }
   unname(agents)
 }

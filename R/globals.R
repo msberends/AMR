@@ -23,7 +23,8 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-globalVariables(c(".rowid",
+globalVariables(c("...length", # for pm_group_split() on R 3.3
+                  ".rowid",
                   "ab",
                   "ab_txt",
                   "angle",

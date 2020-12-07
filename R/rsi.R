@@ -354,7 +354,7 @@ as.rsi.mic <- function(x,
     uti <- rep(uti, length(x))
   }
   
-  message_("=> Interpreting MIC values of `", font_bold(ab), "` (",
+  message_("=> Interpreting MIC values of '", font_bold(ab), "' (",
            ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
            ab_name(ab_coerced, tolower = TRUE), ")", mo_var_found, 
            " according to ", ifelse(identical(reference_data, AMR::rsi_translation),
@@ -444,7 +444,7 @@ as.rsi.disk <- function(x,
     uti <- rep(uti, length(x))
   }
   
-  message_("=> Interpreting disk zones of `", font_bold(ab), "` (",
+  message_("=> Interpreting disk zones of '", font_bold(ab), "' (",
            ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
            ab_name(ab_coerced, tolower = TRUE), ")", mo_var_found, 
            " according to ", ifelse(identical(reference_data, AMR::rsi_translation),
@@ -720,22 +720,23 @@ exec_as.rsi <- function(method,
   lookup_other <- paste(mo_other, ab)
   
   if (all(trans$uti == TRUE, na.rm = TRUE) & all(uti == FALSE)) {
-    message_("WARNING.", add_fn = list(font_red, font_bold), as_note = FALSE)
+    message_("WARNING.", add_fn = list(font_yellow, font_bold), as_note = FALSE)
     warning_("Interpretation of ", font_bold(ab_name(ab, tolower = TRUE)), " for some microorganisms is only available for (uncomplicated) urinary tract infections (UTI). Use parameter 'uti' to set which isolates are from urine. See ?as.rsi.", call = FALSE)
     warned <- TRUE
   }
   
+  any_is_intrinsic_resistant <- FALSE
+  
   for (i in seq_len(length(x))) {
-    if (isTRUE(add_intrinsic_resistance)) {
+    is_intrinsic_r <- paste(mo[i], ab) %in% INTRINSIC_R
+    any_is_intrinsic_resistant <- any_is_intrinsic_resistant | is_intrinsic_r
+    
+    if (isTRUE(add_intrinsic_resistance) & is_intrinsic_r) {
       if (!guideline_coerced %like% "EUCAST") {
         warning_("Using 'add_intrinsic_resistance' is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.", call = FALSE)
       } else {
-        get_record <- subset(intrinsic_resistant, 
-                             microorganism == mo_name(mo[i], language = NULL) & antibiotic == ab_name(ab, language = NULL))
-        if (nrow(get_record) > 0) {
-          new_rsi[i] <- "R"
-          next
-        }
+        new_rsi[i] <- "R"
+        next
       }
     }
     
@@ -793,6 +794,13 @@ exec_as.rsi <- function(method,
                                       TRUE ~ NA_character_)
       }
     }
+  }
+  
+  if (any_is_intrinsic_resistant & guideline_coerced %like% "EUCAST" & !isTRUE(add_intrinsic_resistance)) {
+    # found some intrinsic resistance, but was not applied
+    message_("WARNING.", add_fn = list(font_yellow, font_bold), as_note = FALSE)
+    warning_("Found intrinsic resistance in some bug/drug combinations, although it was not applied.\nUse `as.rsi(..., add_intrinsic_resistance = TRUE)` to apply it.", call = FALSE)
+    warned <- TRUE
   }
   
   new_rsi <- x_bak %pm>%

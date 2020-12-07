@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9030</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9032</span>
       </span>
     </div>
 
@@ -285,7 +285,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> containing isolates.</p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> containing isolates. Can be omitted when used inside <code>dplyr</code> verbs, such as <code><a href='https://rdrr.io/r/stats/filter.html'>filter()</a></code>, <code>mutate()</code> and <code>summarise()</code>.</p></td>
     </tr>
     <tr>
       <th>col_date</th>
@@ -366,7 +366,8 @@
     <p>A <code><a href='https://rdrr.io/r/base/logical.html'>logical</a></code> vector</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>first_isolate()</code> function is a wrapper around the <code><a href='is_new_episode.html'>is_new_episode()</a></code> function, but more efficient for data sets containing microorganism codes or names.</p>
+    <p>These functions are context-aware when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>. This means that then the <code>x</code> parameter can be omitted, please see <em>Examples</em>.</p>
+<p>The <code>first_isolate()</code> function is a wrapper around the <code><a href='is_new_episode.html'>is_new_episode()</a></code> function, but more efficient for data sets containing microorganism codes or names.</p>
 <p>All isolates with a microbial ID of <code>NA</code> will be excluded as first isolate.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Why this is so important</h3>
 
 
@@ -378,7 +379,7 @@
 <p>The functions <code>filter_first_isolate()</code> and <code>filter_first_weighted_isolate()</code> are helper functions to quickly filter on first isolates.</p>
 <p>The function <code>filter_first_isolate()</code> is essentially equal to either:</p><pre>  <span class='va'>x</span><span class='op'>[</span><span class='fu'>first_isolate</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>, <span class='op'>]</span>
   
-  <span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>first_isolate</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>first_isolate</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span><span class='op'>)</span>
 </pre>
 
 <p>The function <code>filter_first_weighted_isolate()</code> is essentially equal to:</p><pre>  <span class='va'>x</span> <span class='op'>%&gt;%</span>
@@ -433,6 +434,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>first_isolate</span> <span class='op'>==</span> <span class='cn'>TRUE</span><span class='op'>)</span>
  
   <span class='co'># short-hand versions:</span>
+  <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>first_isolate</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
   <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
     <span class='fu'>filter_first_isolate</span><span class='op'>(</span><span class='op'>)</span>
     

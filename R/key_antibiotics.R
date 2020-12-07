@@ -25,9 +25,9 @@
 
 #' Key antibiotics for first *weighted* isolates
 #'
-#' These function can be used to determine first isolates (see [first_isolate()]). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates will then be called first *weighted* isolates.
+#' These function can be used to determine first isolates (see [first_isolate()]). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates can then be called first *weighted* isolates.
 #' @inheritSection lifecycle Stable lifecycle
-#' @param x a data.frame with antibiotics columns, like `AMX` or `amox`
+#' @param x a [data.frame] with antibiotics columns, like `AMX` or `amox`. Can be omitted when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`.
 #' @param y,z character vectors to compare
 #' @inheritParams first_isolate
 #' @param universal_1,universal_2,universal_3,universal_4,universal_5,universal_6 column names of **broad-spectrum** antibiotics, case-insensitive. See details for which antibiotics will be used at default (which are guessed with [guess_ab_col()]).
@@ -35,7 +35,10 @@
 #' @param GramNeg_1,GramNeg_2,GramNeg_3,GramNeg_4,GramNeg_5,GramNeg_6 column names of antibiotics for **Gram-negatives**, case-insensitive. See details for which antibiotics will be used at default (which are guessed with [guess_ab_col()]).
 #' @param warnings give a warning about missing antibiotic columns (they will be ignored)
 #' @param ... other parameters passed on to functions
-#' @details The function [key_antibiotics()] returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using [key_antibiotics_equal()], to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (`"."`) by [key_antibiotics()] and ignored by [key_antibiotics_equal()].
+#' @details 
+#' The [key_antibiotics()] function is context-aware when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`. This means that then the `x` parameter can be omitted, please see *Examples*.
+#' 
+#' The function [key_antibiotics()] returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using [key_antibiotics_equal()], to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (`"."`) by [key_antibiotics()] and ignored by [key_antibiotics_equal()].
 #' 
 #' The [first_isolate()] function only uses this function on the same microbial species from the same patient. Using this, e.g. an MRSA will be included after a susceptible *S. aureus* (MSSA) is found within the same patient episode. Without key antibiotic comparison it would not. See [first_isolate()] for more info.
 #'
@@ -77,30 +80,30 @@
 #' # `example_isolates` is a dataset available in the AMR package.
 #' # See ?example_isolates.
 #' 
-#' # output of the `key_antibiotics` function could be like this:
+#' # output of the `key_antibiotics()` function could be like this:
 #' strainA <- "SSSRR.S.R..S"
 #' strainB <- "SSSIRSSSRSSS"
 #'
-#' # can those strings can be compared with:
+#' # those strings can be compared with:
 #' key_antibiotics_equal(strainA, strainB)
 #' # TRUE, because I is ignored (as well as missing values)
 #'
 #' key_antibiotics_equal(strainA, strainB, ignore_I = FALSE)
-#' # FALSE, because I is not ignored and so the 4th value differs
+#' # FALSE, because I is not ignored and so the 4th character differs
 #'
 #' \donttest{
 #' if (require("dplyr")) {
 #'   # set key antibiotics to a new variable
 #'   my_patients <- example_isolates %>%
-#'     mutate(keyab = key_antibiotics(.)) %>%
+#'     mutate(keyab = key_antibiotics()) %>% # no need to define `x`
 #'     mutate(
 #'       # now calculate first isolates
-#'       first_regular = first_isolate(., col_keyantibiotics = FALSE),
+#'       first_regular = first_isolate(col_keyantibiotics = FALSE),
 #'       # and first WEIGHTED isolates
-#'       first_weighted = first_isolate(., col_keyantibiotics = "keyab")
+#'       first_weighted = first_isolate(col_keyantibiotics = "keyab")
 #'     )
 #'  
-#'   # Check the difference, in this data set it results in 7% more isolates:
+#'   # Check the difference, in this data set it results in a lot more isolates:
 #'   sum(my_patients$first_regular, na.rm = TRUE)
 #'   sum(my_patients$first_weighted, na.rm = TRUE)
 #' }
@@ -127,6 +130,9 @@ key_antibiotics <- function(x,
                             GramNeg_6 = guess_ab_col(x, "meropenem"),
                             warnings = TRUE,
                             ...) {
+  if (missing(x)) {
+    x <- get_current_data(arg_name = "x", call = -2)
+  }
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(universal_1, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)

@@ -372,11 +372,9 @@ mo_is_intrinsic_resistant <- function(x, ab, language = get_locale(), ...) {
   meet_criteria(ab, allow_NA = FALSE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   
-  x.mo <- as.mo(x, language = language, ...)
-  x <- mo_name(x.mo, language = NULL) # has to match intrinsic_resistant$microorganism
-  ab <- ab_name(ab, language = NULL, # has to match intrinsic_resistant$antibiotic
-                flag_multiple_results = FALSE,
-                info = FALSE)
+  x <- as.mo(x, language = language, ...)
+  ab <- as.ab(ab, language = NULL, flag_multiple_results = FALSE, info = FALSE)
+  
   if (length(x) == 1 & length(ab) > 1) {
     x <- rep(x, length(ab))
   } else if (length(ab) == 1 & length(x) > 1) {
@@ -389,15 +387,13 @@ mo_is_intrinsic_resistant <- function(x, ab, language = get_locale(), ...) {
   # show used version number once per session
   if (is.null(getOption("AMR_intrinsic_resistance_note", NULL))) {
     message_("Determining intrinsic resistance based on ",
-             AMR:::format_eucast_version_nr(3.2, FALSE), ". ",
-             font_bold("This message is shown once per session."))
+             format_eucast_version_nr(3.2, FALSE), ". ",
+             font_bold("This note is shown only once per session."))
     options(AMR_intrinsic_resistance_note = "shown")
   }
   
-  # this saves about 50% in calculation time
-  intrinsic_to_check <- intrinsic_resistant[which(intrinsic_resistant$microorganism %in% x | 
-                                                    intrinsic_resistant$antibiotic %in% ab), , drop = FALSE]
-  paste(x, ab) %in% paste(intrinsic_to_check$microorganism, intrinsic_to_check$antibiotic)
+  # runs against internal vector: INTRINSIC_R (see zzz.R)
+  paste(x, ab) %in% INTRINSIC_R
 }
 
 #' @rdname mo_property
@@ -616,23 +612,17 @@ mo_validate <- function(x, property, language, ...) {
 }
 
 find_mo_col <- function(fn) {
-  # this function tries to find an mo column using dplyr:::peek_mask() for mo_is_*() functions,
+  # this function tries to find an mo column using dplyr::cur_data_all() for mo_is_*() functions,
   # which is useful when functions are used within dplyr verbs
-  peek_mask_dplyr <- import_fn("peek_mask", "dplyr", error_on_fail = FALSE)
-  if (!is.null(peek_mask_dplyr)) {
-    df <- NULL
-    mo <- NULL
-    try({
-      df <- as.data.frame(peek_mask_dplyr()$across_cols(), stringsAsFactors = FALSE)
-      mo <- suppressMessages(search_type_in_df(df, "mo"))
-    }, silent = TRUE)
-    if (!is.null(df) && !is.null(mo) && is.data.frame(df)) {
-      message_("Using column '", font_bold(mo), "' as input for ", fn, "()")
-      return(df[, mo, drop = TRUE])
-    } else {
-      stop_("Argument `x` is missing and no column with info about microorganisms could be found.", call = -2)
-    }
+  df <- get_current_data("x", call = -3) # will return an error if not found
+  mo <- NULL
+  try({
+    mo <- suppressMessages(search_type_in_df(df, "mo"))
+  }, silent = TRUE)
+  if (!is.null(df) && !is.null(mo) && is.data.frame(df)) {
+    message_("Using column '", font_bold(mo), "' as input for ", fn, "()")
+    return(df[, mo, drop = TRUE])
   } else {
-    stop_("Argument `x` is missing.", call = -2)
+    stop_("argument `x` is missing and no column with info about microorganisms could be found.", call = -2)
   }
 }

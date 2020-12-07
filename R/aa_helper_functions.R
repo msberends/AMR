@@ -251,7 +251,7 @@ word_wrap <- function(...,
   msg <- gsub("\n", "*|*", msg, fixed = TRUE)
   
   if (isTRUE(as_note)) {
-    msg <- paste0("NOTE: ", gsub("note:? ?", "", msg, ignore.case = TRUE))
+    msg <- paste0("NOTE: ", gsub("^note:? ?", "", msg, ignore.case = TRUE))
   }
   
   # we need to correct for already applied style, that adds text like "\033[31m\"
@@ -510,6 +510,21 @@ meet_criteria <- function(object,
   return(invisible())
 }
 
+get_current_data <- function(arg_name, call) {
+  # this mimics dplyr::cur_data_all for users that use our content-aware functions in dplyr verbs
+  cur_data_all_dplyr <- import_fn("cur_data_all", "dplyr", error_on_fail = FALSE)
+  if (is.null(cur_data_all_dplyr)) {
+    # dplyr not installed
+    stop_("argument `", arg_name, "` is missing, with no default", call = call)
+  }
+  tryCatch(cur_data_all_dplyr(),
+           # dplyr installed, but not used inside dplyr verb
+           error = function(e) stop_("argument `", arg_name, "` is missing with no default ",
+                                     "or function not used inside a valid dplyr verb", 
+                                     # tryCatch adds 4 system calls, subtract them
+                                     call = call - 4))
+}
+
 has_colour <- function() {
   # this is a base R version of crayon::has_color
   enabled <- getOption("crayon.enabled")
@@ -567,7 +582,7 @@ has_colour <- function() {
         perl = TRUE)
 }
 
-# the crayon colours
+# set colours if console has_colour()
 try_colour <- function(..., before, after, collapse = " ") {
   txt <- paste0(unlist(list(...)), collapse = collapse)
   if (isTRUE(has_colour())) {
@@ -611,7 +626,7 @@ font_grey <- function(..., collapse = " ") {
   try_colour(..., before = "\033[38;5;249m", after = "\033[39m", collapse = collapse)
 }
 font_grey_bg <- function(..., collapse = " ") {
-  try_colour(..., before = "\033[48;5;253m", after = "\033[49m", collapse = collapse)
+  try_colour(..., before = "\033[48;5;255m", after = "\033[49m", collapse = collapse)
 }
 font_green_bg <- function(..., collapse = " ") {
   try_colour(..., before = "\033[42m", after = "\033[49m", collapse = collapse)
@@ -659,10 +674,12 @@ progress_ticker <- function(n = 1, n_min = 0, ...) {
 }
 
 set_clean_class <- function(x, new_class) {
+  # return the object with only the new class and no additional attributes where possible
   if (is.null(x)) {
     x <- NA_character_
   }
   if (is.factor(x)) {
+    # keep only levels and remove all other attributes
     lvls <- levels(x)
     attributes(x) <- NULL
     levels(x) <- lvls

@@ -40,7 +40,7 @@ key_antibiotics_equal(
 )
 }
 \arguments{
-\item{x}{a data.frame with antibiotics columns, like \code{AMX} or \code{amox}}
+\item{x}{a \link{data.frame} with antibiotics columns, like \code{AMX} or \code{amox}. Can be omitted when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}.}
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
@@ -65,9 +65,11 @@ key_antibiotics_equal(
 \item{info}{print progress}
 }
 \description{
-These function can be used to determine first isolates (see \code{\link[=first_isolate]{first_isolate()}}). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates will then be called first \emph{weighted} isolates.
+These function can be used to determine first isolates (see \code{\link[=first_isolate]{first_isolate()}}). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates can then be called first \emph{weighted} isolates.
 }
 \details{
+The \code{\link[=key_antibiotics]{key_antibiotics()}} function is context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} parameter can be omitted, please see \emph{Examples}.
+
 The function \code{\link[=key_antibiotics]{key_antibiotics()}} returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using \code{\link[=key_antibiotics_equal]{key_antibiotics_equal()}}, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (\code{"."}) by \code{\link[=key_antibiotics]{key_antibiotics()}} and ignored by \code{\link[=key_antibiotics_equal]{key_antibiotics_equal()}}.
 
 The \code{\link[=first_isolate]{first_isolate()}} function only uses this function on the same microbial species from the same patient. Using this, e.g. an MRSA will be included after a susceptible \emph{S. aureus} (MSSA) is found within the same patient episode. Without key antibiotic comparison it would not. See \code{\link[=first_isolate]{first_isolate()}} for more info.
@@ -136,30 +138,30 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 # `example_isolates` is a dataset available in the AMR package.
 # See ?example_isolates.
 
-# output of the `key_antibiotics` function could be like this:
+# output of the `key_antibiotics()` function could be like this:
 strainA <- "SSSRR.S.R..S"
 strainB <- "SSSIRSSSRSSS"
 
-# can those strings can be compared with:
+# those strings can be compared with:
 key_antibiotics_equal(strainA, strainB)
 # TRUE, because I is ignored (as well as missing values)
 
 key_antibiotics_equal(strainA, strainB, ignore_I = FALSE)
-# FALSE, because I is not ignored and so the 4th value differs
+# FALSE, because I is not ignored and so the 4th character differs
 
 \donttest{
 if (require("dplyr")) {
   # set key antibiotics to a new variable
   my_patients <- example_isolates \%>\%
-    mutate(keyab = key_antibiotics(.)) \%>\%
+    mutate(keyab = key_antibiotics()) \%>\% # no need to define `x`
     mutate(
       # now calculate first isolates
-      first_regular = first_isolate(., col_keyantibiotics = FALSE),
+      first_regular = first_isolate(col_keyantibiotics = FALSE),
       # and first WEIGHTED isolates
-      first_weighted = first_isolate(., col_keyantibiotics = "keyab")
+      first_weighted = first_isolate(col_keyantibiotics = "keyab")
     )
  
-  # Check the difference, in this data set it results in 7\% more isolates:
+  # Check the difference, in this data set it results in a lot more isolates:
   sum(my_patients$first_regular, na.rm = TRUE)
   sum(my_patients$first_weighted, na.rm = TRUE)
 }

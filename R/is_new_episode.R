@@ -43,7 +43,7 @@
 #' 
 #' is_new_episode(example_isolates$date)
 #' is_new_episode(example_isolates$date, episode_days = 60)
-#' 
+#' #' \donttest{
 #' if (require("dplyr")) {
 #'   # is_new_episode() can also be used in dplyr verbs to determine patient
 #'   # episodes based on any (combination of) grouping variables:
@@ -78,6 +78,7 @@
 #'   example_isolates %>%
 #'     group_by(patient_id, mo, hospital_id, ward_icu) %>%
 #'     mutate(flag_episode = is_new_episode(date))
+#' }
 #' }
 is_new_episode <- function(x, episode_days = 365, ...) {
   meet_criteria(x, allow_class = c("Date", "POSIXt"))

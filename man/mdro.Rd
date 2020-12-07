@@ -40,7 +40,7 @@ mdr_cmi2012(x, guideline = "CMI2012", ...)
 eucast_exceptional_phenotypes(x, guideline = "EUCAST", ...)
 }
 \arguments{
-\item{x}{data with antibiotic columns, such as \code{amox}, \code{AMX} and \code{AMC}}
+\item{x}{a \link{data.frame} with antibiotics columns, like \code{AMX} or \code{amox}. Can be omitted when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}.}
 
 \item{guideline}{a specific guideline to follow. When left empty, the publication by Magiorakos \emph{et al.} (2012, Clinical Microbiology and Infection) will be followed, please see \emph{Details}.}
 
@@ -72,21 +72,29 @@ Ordered \link{factor} with levels \code{Negative} < \verb{Positive, unconfirmed}
 Determine which isolates are multidrug-resistant organisms (MDRO) according to international and national guidelines.
 }
 \details{
+These functions are context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} parameter can be omitted, please see \emph{Examples}.
+
 For the \code{pct_required_classes} argument, values above 1 will be divided by 100. This is to support both fractions (\code{0.75} or \code{3/4}) and percentages (\code{75}).
 
 Currently supported guidelines are (case-insensitive):
 \itemize{
-\item \code{guideline = "CMI2012"}\cr
+\item \code{guideline = "CMI2012"} (default)
+
 Magiorakos AP, Srinivasan A \emph{et al.} "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) (\href{https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext}{link})
-\item \code{guideline = "EUCAST3.2"} (or simply \code{guideline = "EUCAST"})\cr
+\item \code{guideline = "EUCAST3.2"} (or simply \code{guideline = "EUCAST"})
+
 The European international guideline - EUCAST Expert Rules Version 3.2 "Intrinsic Resistance and Unusual Phenotypes" (\href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf}{link})
-\item \code{guideline = "EUCAST3.1"}\cr
+\item \code{guideline = "EUCAST3.1"}
+
 The European international guideline - EUCAST Expert Rules Version 3.1 "Intrinsic Resistance and Exceptional Phenotypes Tables" (\href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}{link})
-\item \code{guideline = "TB"}\cr
+\item \code{guideline = "TB"}
+
 The international guideline for multi-drug resistant tuberculosis - World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" (\href{https://www.who.int/tb/publications/pmdt_companionhandbook/en/}{link})
-\item \code{guideline = "MRGN"}\cr
+\item \code{guideline = "MRGN"}
+
 The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7. DOI: 10.1186/s13756-015-0047-6
-\item \code{guideline = "BRMO"}\cr
+\item \code{guideline = "BRMO"}
+
 The Dutch national guideline - Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) (ZKH)" (\href{https://www.rivm.nl/wip-richtlijn-brmo-bijzonder-resistente-micro-organismen-zkh}{link})
 }
 
@@ -140,10 +148,12 @@ if (require("dplyr")) {
     mdro() \%>\%
     table()
   
+  # no need to define `x` when used inside dplyr verbs:
   example_isolates \%>\%
-    mutate(EUCAST = eucast_exceptional_phenotypes(.),
-           BRMO = brmo(.),
-           MRGN = mrgn(.))
+    mutate(MDRO = mdro(),
+           EUCAST = eucast_exceptional_phenotypes(),
+           BRMO = brmo(),
+           MRGN = mrgn())
 }
 }
 }

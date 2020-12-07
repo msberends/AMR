@@ -27,7 +27,7 @@
 #'
 #' Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use [is_new_episode()] that also supports grouping with the `dplyr` package.
 #' @inheritSection lifecycle Stable lifecycle
-#' @param x a [data.frame] containing isolates.
+#' @param x a [data.frame] containing isolates. Can be omitted when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`.
 #' @param col_date column name of the result date (or date that is was received on the lab), defaults to the first column with a date class
 #' @param col_patient_id column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' or 'patid' (case insensitive)
 #' @param col_mo column name of the IDs of the microorganisms (see [as.mo()]), defaults to the first column of class [`mo`]. Values will be coerced using [as.mo()].
@@ -45,7 +45,10 @@
 #' @param info print progress
 #' @param include_unknown logical to determine whether 'unknown' microorganisms should be included too, i.e. microbial code `"UNKNOWN"`, which defaults to `FALSE`. For WHONET users, this means that all records with organism code `"con"` (*contamination*) will be excluded at default. Isolates with a microbial ID of `NA` will always be excluded as first isolate.
 #' @param ... parameters passed on to [first_isolate()] when using [filter_first_isolate()], or parameters passed on to [key_antibiotics()] when using [filter_first_weighted_isolate()]
-#' @details The [first_isolate()] function is a wrapper around the [is_new_episode()] function, but more efficient for data sets containing microorganism codes or names.
+#' @details 
+#' These functions are context-aware when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`. This means that then the `x` parameter can be omitted, please see *Examples*.
+#' 
+#' The [first_isolate()] function is a wrapper around the [is_new_episode()] function, but more efficient for data sets containing microorganism codes or names.
 #' 
 #' All isolates with a microbial ID of `NA` will be excluded as first isolate.
 #' 
@@ -61,7 +64,7 @@
 #' ```
 #'   x[first_isolate(x, ...), ]
 #'   
-#'   x %>% filter(first_isolate(x, ...))
+#'   x %>% filter(first_isolate(...))
 #' ```
 #' 
 #' The function [filter_first_weighted_isolate()] is essentially equal to:
@@ -109,6 +112,8 @@
 #'  
 #'   # short-hand versions:
 #'   example_isolates %>%
+#'     filter(first_isolate())
+#'   example_isolates %>%
 #'     filter_first_isolate()
 #'     
 #'   example_isolates %>%
@@ -150,6 +155,9 @@ first_isolate <- function(x,
                           info = interactive(),
                           include_unknown = FALSE,
                           ...) {
+  if (missing(x)) {
+    x <- get_current_data(arg_name = "x", call = -2)
+  }
   meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
   meet_criteria(col_date, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   meet_criteria(col_patient_id, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
@@ -425,7 +433,7 @@ first_isolate <- function(x,
     message_(ifelse(include_unknown == TRUE, "Included ", "Excluded "), 
              format(sum(x$newvar_mo == "UNKNOWN", na.rm = TRUE),
                     decimal.mark = decimal.mark, big.mark = big.mark), 
-             " isolates with a microbial ID 'UNKNOWN' (column `", font_bold(col_mo), "`)")
+             " isolates with a microbial ID 'UNKNOWN' (column '", font_bold(col_mo), "')")
   }
   x[which(x$newvar_mo == "UNKNOWN"), "newvar_first_isolate"] <- include_unknown
   
@@ -433,7 +441,7 @@ first_isolate <- function(x,
   if (any(is.na(x$newvar_mo)) & info == TRUE) {
     message_("Excluded ", format(sum(is.na(x$newvar_mo), na.rm = TRUE),
                                  decimal.mark = decimal.mark, big.mark = big.mark), 
-             " isolates with a microbial ID 'NA' (column `", font_bold(col_mo), "`)")
+             " isolates with a microbial ID 'NA' (column '", font_bold(col_mo), "')")
   }
   x[which(is.na(x$newvar_mo)), "newvar_first_isolate"] <- FALSE
   
