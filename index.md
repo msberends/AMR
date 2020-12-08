@@ -15,12 +15,42 @@ After installing this package, R knows [**~70,000 distinct microbial species**](
 
 This package is [fully independent of any other R package](https://en.wikipedia.org/wiki/Dependency_hell) and works on Windows, macOS and Linux with all versions of R since R-3.0.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl), in collaboration with non-profit organisations [Certe Medical Diagnostics and Advice](https://www.certe.nl) and [University Medical Center Groningen](https://www.umcg.nl). This R package is [actively maintained](./news) and is free software (see [Copyright](#copyright)).
 
-<div class="main-content">
+<div class="main-content" style="display: inline-block;">
   <p>
     <a href="./countries_large.png" target="_blank"><img src="./countries.png" class="countries_map"></a>
     <strong>Used in 135 countries</strong><br>
-    Since its first public release in early 2018, this package has been downloaded from 135 countries. Click the map to enlarge and to also see the names of the countries.</p><br><br>
+    Since its first public release in early 2018, this package has been downloaded from 135 countries. Click the map to enlarge.</p><br><br>
 </div>
+
+##### With `AMR` (for R), you'll always have a knowledgeable microbiologist at your side!
+
+```r
+# AMR works great with dplyr, but it's not required or neccesary
+library(AMR)
+library(dplyr)
+
+example_isolates %>%
+  mutate(mo = mo_fullname(mo)) %>%
+  filter(mo_is_gram_positive()) %>%
+  select(mo, carbapenems(), glycopeptides())
+#> NOTE: Using column 'mo' as input for mo_is_gram_positive()
+#> Selecting cephalosporins: 'CAZ' (ceftazidime), 'CRO' (ceftriaxone),
+#>                           'CTX' (cefotaxime), 'CXM' (cefuroxime), 
+#>                           'CZO' (cefazolin), 'FEP' (cefepime),
+#>                           'FOX' (cefoxitin)
+#> Selecting glycopeptides: 'TEC' (teicoplanin), 'VAN' (vancomycin)
+```
+
+With only having defined a filter on Gram-positive micro-organisms (`mo_is_gram_positive()`) and a selection of two antibiotic groups (`carbapenems()` and `glycopeptides()`), the reference data about [all bugs](./reference/microorganisms.html) and [drugs](./reference/antibiotics.html) in the `AMR` package make sure you get what you meant:
+
+| mo                           | CAZ | CRO | CTX | CXM | CZO | FEP | FOX | TEC | VAN | 
+|:-----------------------------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| *Enterococcus faecalis*      |  R  |  R  |  R  |  R  |  R  |  R  |  R  |     |  S  |
+| *Enterococcus faecalis*      |  R  |     |  R  |  R  |  R  |  R  |  R  |     |  S  |
+| *Enterococcus faecalis*      |  R  |  R  |  R  |  R  |  R  |  R  |  R  |     |  S  |
+| *Streptococcus* group B      |  R  |  S  |  S  |  S  |  S  |  S  |  S  |     |  S  |
+| *Staphylococcus epidermidis* |  R  |     |     |  S  |     |     |     |     |  S  |
+| *Enterococcus faecium*       |  R  |  R  |  R  |  R  |  R  |  R  |  R  |     |  S  |
 
 <div class="home-buttons">
 	<a href="articles/datasets.html">

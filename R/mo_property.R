@@ -27,8 +27,8 @@
 #'
 #' Use these functions to return a specific property of a microorganism based on the latest accepted taxonomy. All input values will be evaluated internally with [as.mo()], which makes it possible to use microbial abbreviations, codes and names as input. Please see *Examples*.
 #' @inheritSection lifecycle Stable lifecycle
-#' @param x any character (vector) that can be coerced to a valid microorganism code with [as.mo()]
-#' @param property one of the column names of the [microorganisms] data set or `"shortname"`
+#' @param x any character (vector) that can be coerced to a valid microorganism code with [as.mo()]. Can be omitted for auto-guessing in `mo_is_*()` functions when used inside `dplyr` verbs, such as [`filter()`][dplyr::filter()], [`mutate()`][dplyr::mutate()] and [`summarise()`][dplyr::summarise()], please see *Examples*.
+#' @param property one of the column names of the [microorganisms] data set: `r paste0('"``', colnames(microorganisms), '\``"', collapse = ", ")`, or must be `"shortname"`
 #' @param language language of the returned text, defaults to system language (see [get_locale()]) and can be overwritten by setting the option `AMR_locale`, e.g. `options(AMR_locale = "de")`, see [translate]. Also used to translate text like "no growth". Use `language = NULL` or `language = ""` to prevent translation.
 #' @param ... other parameters passed on to [as.mo()], such as 'allow_uncertain' and 'ignore_pattern'
 #' @param ab any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]

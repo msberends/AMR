@@ -50,7 +50,7 @@ filter_first_weighted_isolate(
 )
 }
 \arguments{
-\item{x}{a \link{data.frame} containing isolates. Can be omitted when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}.}
+\item{x}{a \link{data.frame} containing isolates. Can be omitted when used inside \code{dplyr} verbs, such as \code{\link[dplyr:filter]{filter()}}, \code{\link[dplyr:mutate]{mutate()}} and \code{\link[dplyr:summarise]{summarise()}}.}
 
 \item{col_date}{column name of the result date (or date that is was received on the lab), defaults to the first column with a date class}
 

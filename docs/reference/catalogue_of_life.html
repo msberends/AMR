@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9033</span>
       </span>
     </div>
 
@@ -249,17 +249,17 @@
     
 
 <p><img src='figures/logo_col.png' height=40px style=margin-bottom:5px /> <br />
-This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (<a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). The Catalogue of Life is the most comprehensive and authoritative global index of species currently available.</p>
-<p>Click here for more information about the included taxa. Check which version of the Catalogue of Life was included in this package with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version()</a></code>.</p>
+This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, <a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, <a href='https://lpsn.dsmz.de'>lpsn.dsmz.de</a>). This supplementation is needed until the <a href='https://github.com/Sp2000/colplus'>CoL+ project</a> is finished, which we await.</p>
+<p>Click here for more information about the included taxa. Check which versions of the CoL and LSPN were included in this package with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version()</a></code>.</p>
     <h2 class="hasAnchor" id="included-taxa"><a class="anchor" href="#included-taxa"></a>Included taxa</h2>
 
     
 
 <p>Included are:</p><ul>
-<li><p>All ~61,000 (sub)species from the kingdoms of Archaea, Bacteria, Chromista and Protozoa</p></li>
-<li><p>All ~8,500 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Microascales, Mucorales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant fungi are covered (like all species of <em>Aspergillus</em>, <em>Candida</em>, <em>Cryptococcus</em>, <em>Histplasma</em>, <em>Pneumocystis</em>, <em>Saccharomyces</em> and <em>Trichophyton</em>).</p></li>
-<li><p>All ~150 (sub)species from ~100 other relevant genera from the kingdom of Animalia (like <em>Strongyloides</em> and <em>Taenia</em>)</p></li>
-<li><p>All ~23,000 previously accepted names of all included (sub)species (these were taxonomically renamed)</p></li>
+<li><p>All ~55,000 (sub)species from the kingdoms of Archaea, Bacteria, Chromista and Protozoa</p></li>
+<li><p>All ~5,000 (sub)species from these orders of the kingdom of Fungi: Eurotiales, Microascales, Mucorales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales, as well as ~4,600 other fungal (sub)species. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant fungi are covered (like all species of <em>Aspergillus</em>, <em>Candida</em>, <em>Cryptococcus</em>, <em>Histplasma</em>, <em>Pneumocystis</em>, <em>Saccharomyces</em> and <em>Trichophyton</em>).</p></li>
+<li><p>All ~2,200 (sub)species from ~50 other relevant genera from the kingdom of Animalia (like <em>Strongyloides</em> and <em>Taenia</em>)</p></li>
+<li><p>All ~13,000 previously accepted names of all included (sub)species (these were taxonomically renamed)</p></li>
 <li><p>The complete taxonomic tree of all included (sub)species: from kingdom to subspecies</p></li>
 <li><p>The responsible author(s) and year of scientific publication</p></li>
 </ul>
@@ -285,26 +285,26 @@ Function <code><a href='as.mo.html'>as.mo()</a></code> to use the data for intel
 <span class='fu'><a href='mo_property.html'>mo_shortname</a></span><span class='op'>(</span><span class='st'>"Chlamydophila psittaci"</span><span class='op'>)</span>
 <span class='co'># Note: 'Chlamydophila psittaci' (Everett et al., 1999) was renamed back to</span>
 <span class='co'>#       'Chlamydia psittaci' (Page, 1968)</span>
-<span class='co'># [1] "C. psittaci"</span>
+<span class='co'>#&gt; [1] "C. psittaci"</span>
 
 <span class='co'># Get any property from the entire taxonomic tree for all included species</span>
 <span class='fu'><a href='mo_property.html'>mo_class</a></span><span class='op'>(</span><span class='st'>"E. coli"</span><span class='op'>)</span>
-<span class='co'># [1] "Gammaproteobacteria"</span>
+<span class='co'>#&gt; [1] "Gammaproteobacteria"</span>
 
 <span class='fu'><a href='mo_property.html'>mo_family</a></span><span class='op'>(</span><span class='st'>"E. coli"</span><span class='op'>)</span>
-<span class='co'># [1] "Enterobacteriaceae"</span>
+<span class='co'>#&gt; [1] "Enterobacteriaceae"</span>
 
 <span class='fu'><a href='mo_property.html'>mo_gramstain</a></span><span class='op'>(</span><span class='st'>"E. coli"</span><span class='op'>)</span> <span class='co'># based on kingdom and phylum, see ?mo_gramstain</span>
-<span class='co'># [1] "Gram negative"</span>
+<span class='co'>#&gt; [1] "Gram-negative"</span>
 
 <span class='fu'><a href='mo_property.html'>mo_ref</a></span><span class='op'>(</span><span class='st'>"E. coli"</span><span class='op'>)</span>
-<span class='co'># [1] "Castellani et al., 1919"</span>
+<span class='co'>#&gt; [1] "Castellani et al., 1919"</span>
 
 <span class='co'># Do not get mistaken - this package is about microorganisms</span>
 <span class='fu'><a href='mo_property.html'>mo_kingdom</a></span><span class='op'>(</span><span class='st'>"C. elegans"</span><span class='op'>)</span>
-<span class='co'># [1] "Fungi"                 # Fungi?!</span>
+<span class='co'>#&gt; [1] "Fungi"                 # Fungi?!</span>
 <span class='fu'><a href='mo_property.html'>mo_name</a></span><span class='op'>(</span><span class='st'>"C. elegans"</span><span class='op'>)</span>
-<span class='co'># [1] "Cladosporium elegans"  # Because a microorganism was found</span>
+<span class='co'>#&gt; [1] "Cladosporium elegans"  # Because a microorganism was found</span>
 </pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

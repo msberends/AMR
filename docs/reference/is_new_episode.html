@@ -281,7 +281,49 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>experimen
 <p>On our website <a href='https://msberends.github.io/AMR/'>https://msberends.github.io/AMR/</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.github.io/AMR/reference/'>complete documentation of all functions</a> and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>. As we would like to better understand the backgrounds and needs of our users, please <a href='https://msberends.github.io/AMR/survey.html'>participate in our survey</a>!</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"></pre>
+    <pre class="examples"><span class='co'># `example_isolates` is a dataset available in the AMR package.</span>
+<span class='co'># See ?example_isolates.</span>
+
+<span class='fu'>is_new_episode</span><span class='op'>(</span><span class='va'>example_isolates</span><span class='op'>$</span><span class='va'>date</span><span class='op'>)</span>
+<span class='fu'>is_new_episode</span><span class='op'>(</span><span class='va'>example_isolates</span><span class='op'>$</span><span class='va'>date</span>, episode_days <span class='op'>=</span> <span class='fl'>60</span><span class='op'>)</span>
+<span class='co'># \donttest{</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='co'># is_new_episode() can also be used in dplyr verbs to determine patient</span>
+  <span class='co'># episodes based on any (combination of) grouping variables:</span>
+  <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>condition <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span><span class='op'>)</span>, 
+                              size <span class='op'>=</span> <span class='fl'>2000</span>,
+                              replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>condition</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>new_episode <span class='op'>=</span> <span class='fu'>is_new_episode</span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>)</span>
+  
+  <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>hospital_id</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>patients <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/n_distinct.html'>n_distinct</a></span><span class='op'>(</span><span class='va'>patient_id</span><span class='op'>)</span>,
+              n_episodes_365 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'>is_new_episode</span><span class='op'>(</span><span class='va'>date</span>, episode_days <span class='op'>=</span> <span class='fl'>365</span><span class='op'>)</span><span class='op'>)</span>,
+              n_episodes_60  <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'>is_new_episode</span><span class='op'>(</span><span class='va'>date</span>, episode_days <span class='op'>=</span> <span class='fl'>60</span><span class='op'>)</span><span class='op'>)</span>,
+              n_episodes_30  <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'>is_new_episode</span><span class='op'>(</span><span class='va'>date</span>, episode_days <span class='op'>=</span> <span class='fl'>30</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+    
+    
+  <span class='co'># grouping on patients and microorganisms leads to the same results</span>
+  <span class='co'># as first_isolate():</span>
+  <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'><a href='first_isolate.html'>first_isolate</a></span><span class='op'>(</span><span class='va'>.</span>, include_unknown <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+    
+  <span class='va'>y</span> <span class='op'>&lt;-</span> <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>patient_id</span>, <span class='va'>mo</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>is_new_episode</span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>)</span>
+
+  <span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>patient_id</span>, <span class='va'>y</span><span class='op'>$</span><span class='va'>patient_id</span><span class='op'>)</span>
+  
+  <span class='co'># but is_new_episode() has a lot more flexibility than first_isolate(),</span>
+  <span class='co'># since you can now group on anything that seems relevant:</span>
+  <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>patient_id</span>, <span class='va'>mo</span>, <span class='va'>hospital_id</span>, <span class='va'>ward_icu</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>flag_episode <span class='op'>=</span> <span class='fu'>is_new_episode</span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='co'># }</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

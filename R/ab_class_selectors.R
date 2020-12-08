@@ -25,11 +25,11 @@
 
 #' Antibiotic class selectors
 #' 
-#' Use these selection helpers inside any function that allows [Tidyverse selection helpers](https://tidyselect.r-lib.org/reference/language.html), like `dplyr::select()` or `tidyr::pivot_longer()`. They help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.
+#' Use these selection helpers inside any function that allows [Tidyverse selection helpers](https://tidyselect.r-lib.org/reference/language.html), such as [`select()`][dplyr::select()] and [`pivot_longer()`][tidyr::pivot_longer()]. They help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.
 #' @inheritParams filter_ab_class 
 #' @details All columns will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.) in the [antibiotics] data set. This means that a selector like e.g. [aminoglycosides()] will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
 #' 
-#' **N.B. These functions only work if the `tidyselect` package is installed**, that comes with the `dplyr` package. An error will be thrown if the `tidyselect` package is not installed, or if the functions are used outside a function that allows Tidyverse selections like `select()` or `pivot_longer()`.
+#' **N.B. These functions require the `tidyselect` package to be installed**, that comes with the `dplyr` package. An error will be thrown if the `tidyselect` package is not installed, or if the functions are used outside a function that allows [Tidyverse selection helpers](https://tidyselect.r-lib.org/reference/language.html) such as [`select()`][dplyr::select()] and [`pivot_longer()`][tidyr::pivot_longer()]`.
 #' @rdname antibiotic_class_selectors
 #' @seealso [filter_ab_class()] for the `filter()` equivalent.
 #' @name antibiotic_class_selectors

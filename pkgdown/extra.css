@@ -229,6 +229,11 @@ table a:not(.btn):hover, .table a:not(.btn):hover {
   padding-top: 40px !important;
   font-weight: bold !important;
 }
+.template-home h5 {
+  font-weight: normal;
+  font-style: italic;
+  font-size: 16px;
+}
 
 /* logos on index page */
 .logo_img {

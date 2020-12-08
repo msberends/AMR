@@ -43,7 +43,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9033</span>
       </span>
     </div>
 
@@ -208,12 +208,120 @@ Since you are one of our users, we would like to know how you use the package an
 <p><code>AMR</code> is a free, open-source and independent <a href="https://www.r-project.org">R package</a> to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. <strong>Our aim is to provide a standard</strong> for clean and reproducible antimicrobial resistance data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.</p>
 <p>After installing this package, R knows <a href="./reference/microorganisms.html"><strong>~70,000 distinct microbial species</strong></a> and all <a href="./reference/antibiotics.html"><strong>~550 antibiotic, antimycotic and antiviral drugs</strong></a> by name and code (including ATC, EARS-NET, LOINC and SNOMED CT), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data.</p>
 <p>This package is <a href="https://en.wikipedia.org/wiki/Dependency_hell">fully independent of any other R package</a> and works on Windows, macOS and Linux with all versions of R since R-3.0.0 (April 2013). <strong>It was designed to work in any setting, including those with very limited resources</strong>. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the <a href="https://www.rug.nl">University of Groningen</a>, in collaboration with non-profit organisations <a href="https://www.certe.nl">Certe Medical Diagnostics and Advice</a> and <a href="https://www.umcg.nl">University Medical Center Groningen</a>. This R package is <a href="./news">actively maintained</a> and is free software (see <a href="#copyright">Copyright</a>).</p>
-<div class="main-content">
+<div class="main-content" style="display: inline-block;">
 <p>
-<a href="./countries_large.png" target="_blank"><img src="./countries.png" class="countries_map"></a> <strong>Used in 135 countries</strong><br> Since its first public release in early 2018, this package has been downloaded from 135 countries. Click the map to enlarge and to also see the names of the countries.
+<a href="./countries_large.png" target="_blank"><img src="./countries.png" class="countries_map"></a> <strong>Used in 135 countries</strong><br> Since its first public release in early 2018, this package has been downloaded from 135 countries. Click the map to enlarge.
 </p>
 <br><br>
 </div>
+<div id="with-amr-for-r-youll-always-have-a-knowledgeable-microbiologist-at-your-side" class="section level5">
+<h5 class="hasAnchor">
+<a href="#with-amr-for-r-youll-always-have-a-knowledgeable-microbiologist-at-your-side" class="anchor"></a>With <code>AMR</code> (for R), you’ll always have a knowledgeable microbiologist at your side!</h5>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="co"># AMR works great with dplyr, but it's not required or neccesary</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+
+<span class="va">example_isolates</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>mo <span class="op">=</span> <span class="fu"><a href="reference/mo_property.html">mo_fullname</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="reference/mo_property.html">mo_is_gram_positive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">mo</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">glycopeptides</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; NOTE: Using column 'mo' as input for mo_is_gram_positive()</span>
+<span class="co">#&gt; Selecting cephalosporins: 'CAZ' (ceftazidime), 'CRO' (ceftriaxone),</span>
+<span class="co">#&gt;                           'CTX' (cefotaxime), 'CXM' (cefuroxime), </span>
+<span class="co">#&gt;                           'CZO' (cefazolin), 'FEP' (cefepime),</span>
+<span class="co">#&gt;                           'FOX' (cefoxitin)</span>
+<span class="co">#&gt; Selecting glycopeptides: 'TEC' (teicoplanin), 'VAN' (vancomycin)</span></pre></div>
+<p>With only having defined a filter on Gram-positive micro-organisms (<code><a href="reference/mo_property.html">mo_is_gram_positive()</a></code>) and a selection of two antibiotic groups (<code><a href="reference/antibiotic_class_selectors.html">carbapenems()</a></code> and <code><a href="reference/antibiotic_class_selectors.html">glycopeptides()</a></code>), the reference data about <a href="./reference/microorganisms.html">all bugs</a> and <a href="./reference/antibiotics.html">drugs</a> in the <code>AMR</code> package make sure you get what you meant:</p>
+<table class="table">
+<thead><tr class="header">
+<th align="left">mo</th>
+<th align="center">CAZ</th>
+<th align="center">CRO</th>
+<th align="center">CTX</th>
+<th align="center">CXM</th>
+<th align="center">CZO</th>
+<th align="center">FEP</th>
+<th align="center">FOX</th>
+<th align="center">TEC</th>
+<th align="center">VAN</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left"><em>Enterococcus faecalis</em></td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center"></td>
+<td align="center">S</td>
+</tr>
+<tr class="even">
+<td align="left"><em>Enterococcus faecalis</em></td>
+<td align="center">R</td>
+<td align="center"></td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center"></td>
+<td align="center">S</td>
+</tr>
+<tr class="odd">
+<td align="left"><em>Enterococcus faecalis</em></td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center"></td>
+<td align="center">S</td>
+</tr>
+<tr class="even">
+<td align="left">
+<em>Streptococcus</em> group B</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center"></td>
+<td align="center">S</td>
+</tr>
+<tr class="odd">
+<td align="left"><em>Staphylococcus epidermidis</em></td>
+<td align="center">R</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">S</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">S</td>
+</tr>
+<tr class="even">
+<td align="left"><em>Enterococcus faecium</em></td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center"></td>
+<td align="center">S</td>
+</tr>
+</tbody>
+</table>
 <div class="home-buttons">
 <a href="articles/datasets.html">
 <div style="background-color: #128f7635;">
@@ -240,6 +348,7 @@ Since you are one of our users, we would like to know how you use the package an
 <span>Determine multi-drug resistance (MDR)</span>
 </div>
 </a>
+</div>
 </div>
 <div id="partners" class="section level4">
 <h4 class="hasAnchor">
@@ -281,7 +390,7 @@ Since you are one of our users, we would like to know how you use the package an
 <a href="#latest-released-version" class="anchor"></a>Latest released version</h4>
 <p><img src="https://www.r-pkg.org/badges/version-ago/AMR"><img src="https://cranlogs.r-pkg.org/badges/grand-total/AMR"></p>
 <p>This package is available <a href="https://cran.r-project.org/package=AMR">here on the official R network (CRAN)</a>, which has a peer-reviewed submission process. Install this package in R from CRAN by using the command:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
+<div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"AMR"</span><span class="op">)</span></pre></div>
 <p>It will be downloaded and installed automatically. For RStudio, click on the menu <em>Tools</em> &gt; <em>Install Packages…</em> and then type in “AMR” and press <kbd>Install</kbd>.</p>
 <p><strong>Note:</strong> Not all functions on this website may be available in this latest release. To use all functions and data sets mentioned on this website, install the latest development version.</p>
@@ -290,7 +399,7 @@ Since you are one of our users, we would like to know how you use the package an
 <h4 class="hasAnchor">
 <a href="#latest-development-version" class="anchor"></a>Latest development version</h4>
 <p>The latest and unpublished development version can be installed from GitHub using:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
+<div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span> 
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"msberends/AMR"</span><span class="op">)</span></pre></div>
 </div>
@@ -353,7 +462,7 @@ Since you are one of our users, we would like to know how you use the package an
 <li>
 <p>It <strong>analyses the data</strong> with convenient functions that use well-known methods.</p>
 <ul>
-<li>Calculate the microbial susceptibility or resistance (and even co-resistance) with the <code><a href="reference/proportion.html">susceptibility()</a></code> and <code><a href="reference/proportion.html">resistance()</a></code> functions, or be even more specific with the <code><a href="reference/proportion.html">proportion_R()</a></code>, <code><a href="reference/proportion.html">proportion_IR()</a></code>, <code><a href="reference/proportion.html">proportion_I()</a></code>, <code><a href="reference/proportion.html">proportion_SI()</a></code> and <code><a href="reference/proportion.html">proportion_S()</a></code> functions. Similarly, the <em>number</em> of isolates can be determined with the <code><a href="reference/count.html">count_resistant()</a></code>, <code><a href="reference/count.html">count_susceptible()</a></code> and <code><a href="reference/count.html">count_all()</a></code> functions. All these functions can be used with the <code>dplyr</code> package (e.g. in conjunction with <code>summarise()</code>)</li>
+<li>Calculate the microbial susceptibility or resistance (and even co-resistance) with the <code><a href="reference/proportion.html">susceptibility()</a></code> and <code><a href="reference/proportion.html">resistance()</a></code> functions, or be even more specific with the <code><a href="reference/proportion.html">proportion_R()</a></code>, <code><a href="reference/proportion.html">proportion_IR()</a></code>, <code><a href="reference/proportion.html">proportion_I()</a></code>, <code><a href="reference/proportion.html">proportion_SI()</a></code> and <code><a href="reference/proportion.html">proportion_S()</a></code> functions. Similarly, the <em>number</em> of isolates can be determined with the <code><a href="reference/count.html">count_resistant()</a></code>, <code><a href="reference/count.html">count_susceptible()</a></code> and <code><a href="reference/count.html">count_all()</a></code> functions. All these functions can be used with the <code>dplyr</code> package (e.g. in conjunction with <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>)</li>
 <li>Plot AMR results with <code><a href="reference/ggplot_rsi.html">geom_rsi()</a></code>, a function made for the <code>ggplot2</code> package</li>
 <li>Predict antimicrobial resistance for the nextcoming years using logistic regression models with the <code><a href="reference/resistance_predict.html">resistance_predict()</a></code> function</li>
 </ul>
