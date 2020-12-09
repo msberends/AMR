@@ -22,7 +22,7 @@ This package is [fully independent of any other R package](https://en.wikipedia.
     Since its first public release in early 2018, this package has been downloaded from 135 countries. Click the map to enlarge.</p><br><br>
 </div>
 
-##### With `AMR` (for R), you'll always have a knowledgeable microbiologist at your side!
+##### With `AMR` (for R), there's always a knowledgeable microbiologist by your side!
 
 ```r
 # AMR works great with dplyr, but it's not required or neccesary
@@ -31,26 +31,27 @@ library(dplyr)
 
 example_isolates %>%
   mutate(mo = mo_fullname(mo)) %>%
-  filter(mo_is_gram_positive()) %>%
-  select(mo, carbapenems(), glycopeptides())
-#> NOTE: Using column 'mo' as input for mo_is_gram_positive()
-#> Selecting cephalosporins: 'CAZ' (ceftazidime), 'CRO' (ceftriaxone),
-#>                           'CTX' (cefotaxime), 'CXM' (cefuroxime), 
-#>                           'CZO' (cefazolin), 'FEP' (cefepime),
-#>                           'FOX' (cefoxitin)
-#> Selecting glycopeptides: 'TEC' (teicoplanin), 'VAN' (vancomycin)
+  filter(mo_is_gram_negative(), mo_is_intrinsic_resistant(ab = "cefotax")) %>%
+  select(mo, aminoglycosides(), carbapenems())
+#> NOTE: Using column 'mo' as input for mo_is_gram_negative()
+#> NOTE: Using column 'mo' as input for mo_is_intrinsic_resistant()
+#> Selecting aminoglycosides: 'AMK' (amikacin), 'GEN' (gentamicin), 
+                              'KAN' (kanamycin), 'TOB' (tobramycin)
+#> Selecting carbapenems: 'IPM' (imipenem), 'MEM' (meropenem)
 ```
 
-With only having defined a filter on Gram-positive micro-organisms (`mo_is_gram_positive()`) and a selection of two antibiotic groups (`carbapenems()` and `glycopeptides()`), the reference data about [all bugs](./reference/microorganisms.html) and [drugs](./reference/antibiotics.html) in the `AMR` package make sure you get what you meant:
+With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (`mo_is_gram_positive()` and `mo_is_intrinsic_resistant()`) and a column selection on two antibiotic groups (`aminoglycosides()` and `carbapenems()`), the reference data about [all microorganisms](./reference/microorganisms.html) and [all antibiotics](./reference/antibiotics.html) in the `AMR` package make sure you get what you meant:
 
-| mo                           | CAZ | CRO | CTX | CXM | CZO | FEP | FOX | TEC | VAN | 
-|:-----------------------------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| *Enterococcus faecalis*      |  R  |  R  |  R  |  R  |  R  |  R  |  R  |     |  S  |
-| *Enterococcus faecalis*      |  R  |     |  R  |  R  |  R  |  R  |  R  |     |  S  |
-| *Enterococcus faecalis*      |  R  |  R  |  R  |  R  |  R  |  R  |  R  |     |  S  |
-| *Streptococcus* group B      |  R  |  S  |  S  |  S  |  S  |  S  |  S  |     |  S  |
-| *Staphylococcus epidermidis* |  R  |     |     |  S  |     |     |     |     |  S  |
-| *Enterococcus faecium*       |  R  |  R  |  R  |  R  |  R  |  R  |  R  |     |  S  |
+| mo                            |    AMK    |    GEN    |    KAN    |    TOB    |    IPM    |    MEM    |
+|:------------------------------|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
+|*Pseudomonas aeruginosa*       |           |     I     |     R     |     S     |     S     |           |
+|*Pseudomonas aeruginosa*       |           |     I     |     R     |     S     |     S     |           |
+|*Pseudomonas aeruginosa*       |           |     I     |     R     |     S     |     S     |           |
+|*Pseudomonas aeruginosa*       |     S     |     S     |     R     |     S     |           |     S     |
+|*Pseudomonas aeruginosa*       |     S     |     S     |     R     |     S     |     S     |     S     |
+|*Pseudomonas aeruginosa*       |     S     |     S     |     R     |     S     |     S     |     S     |
+|*Stenotrophomonas maltophilia* |     R     |     R     |     R     |     R     |     R     |     R     |
+|*Pseudomonas aeruginosa*       |     S     |     S     |     R     |     S     |           |     S     |
 
 <div class="home-buttons">
 	<a href="articles/datasets.html">

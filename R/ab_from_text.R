@@ -63,7 +63,7 @@
 #' ab_from_text("500 mg amoxi po and 400mg cipro iv", type = "admin")
 #' 
 #' ab_from_text("500 mg amoxi po and 400mg cipro iv", collapse = ", ")
-#' 
+#' \donttest{
 #' # if you want to know which antibiotic groups were administered, do e.g.:
 #' abx <- ab_from_text("500 mg amoxi po and 400mg cipro iv")
 #' ab_group(abx[[1]])
@@ -85,6 +85,7 @@
 #'                                          type = "admin",
 #'                                          collapse = "|"))
 #' 
+#' }
 #' }
 ab_from_text <- function(text,
                          type = c("drug", "dose", "administration"),

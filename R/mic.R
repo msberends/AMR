@@ -155,21 +155,21 @@ is.mic <- function(x) {
 #' @export
 #' @noRd
 as.double.mic <- function(x, ...) {
-  as.double(gsub("(<|=|>)+", "", as.character(x)))
+  as.double(gsub("[<=>]+", "", as.character(x)))
 }
 
 #' @method as.integer mic
 #' @export
 #' @noRd
 as.integer.mic <- function(x, ...) {
-  as.integer(gsub("(<|=|>)+", "", as.character(x)))
+  as.integer(gsub("[<=>]+", "", as.character(x)))
 }
 
 #' @method as.numeric mic
 #' @export
 #' @noRd
 as.numeric.mic <- function(x, ...) {
-  as.numeric(gsub("(<|=|>)+", "", as.character(x)))
+  as.numeric(gsub("[<=>]+", "", as.character(x)))
 }
 
 #' @method droplevels mic
@@ -183,9 +183,13 @@ droplevels.mic <- function(x, exclude = ifelse(anyNA(levels(x)), NULL, NA), ...)
 
 # will be exported using s3_register() in R/zzz.R
 pillar_shaft.mic <- function(x, ...) {
-  out <- trimws(format(x))
+  crude_numbers <- as.double(x)
+  operators <- gsub("[^<=>]+", "", as.character(x))
+  pasted <- trimws(paste0(operators, trimws(format(crude_numbers))))
+  out <- pasted
   out[is.na(x)] <- font_na(NA)
-  create_pillar_column(out, align = "right", min_width = 4)
+  out <- gsub("(<|=|>)", font_silver("\\1"), out)
+  create_pillar_column(out, align = "right", width = max(nchar(pasted)))
 }
 
 # will be exported using s3_register() in R/zzz.R
