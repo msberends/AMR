@@ -4,6 +4,7 @@
 
 <img src="https://www.r-pkg.org/badges/version-ago/AMR" />
 <img src="https://cranlogs.r-pkg.org/badges/grand-total/AMR" />
+<img src="https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg" />
 
 <img src="https://msberends.github.io/AMR/works_great_on.png" align="center" height="150px" />
 

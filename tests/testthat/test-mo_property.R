@@ -122,6 +122,10 @@ test_that("mo_property works", {
                                          "vanco"),
                c(TRUE, FALSE, FALSE))
   
+  # with reference data
+  expect_equal(mo_name("test", reference_df = data.frame(col1 = "test", mo = "B_ESCHR_COLI")), 
+               "Escherichia coli")
+  
   library(dplyr)
   expect_equal(example_isolates %>% filter(mo_is_gram_negative()) %>% nrow(),
                730)

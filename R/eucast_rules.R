@@ -619,9 +619,11 @@ eucast_rules <- function(x,
   # Other rules: enzyme inhibitors ------------------------------------------
   if (any(c("all", "other") %in% rules)) {
     if (info == TRUE) {
-      cat(font_bold(paste0("\nRules by this AMR package (",
-                           font_red(paste0("v", utils::packageDescription("AMR")$Version, ", ", 
-                                           format(as.Date(utils::packageDescription("AMR")$Date), format = "%Y"))), "), see ?eucast_rules\n")))
+      cat("\n")
+      cat(word_wrap(
+        font_bold(paste0("Rules by this AMR package (",
+                         font_red(paste0("v", utils::packageDescription("AMR")$Version, ", ", 
+                                         format(as.Date(utils::packageDescription("AMR")$Date), format = "%Y"))), "), see ?eucast_rules\n"))))
     }
     
     ab_enzyme <- subset(antibiotics, name %like% "/")[, c("ab", "name")]
@@ -635,7 +637,7 @@ eucast_rules <- function(x,
         # Set base to R where base + enzyme inhibitor is R
         rule_current <- paste0("Set ", ab_name_base, " (", cols_ab[ab_enzyme[i, ]$base_ab], ") = R where ",
                                ab_name_enzyme, " (", cols_ab[ab_enzyme[i, ]$ab], ") = R")
-        cat(rule_current)
+        cat(word_wrap(rule_current))
         run_changes <- edit_rsi(x = x,
                                 col_mo = col_mo,
                                 to = "R",
@@ -664,7 +666,7 @@ eucast_rules <- function(x,
         rule_current <- paste0("Set ", ab_name_enzyme, " (", cols_ab[ab_enzyme[i, ]$ab], ") = S where ",
                                ab_name_base, " (", cols_ab[ab_enzyme[i, ]$base_ab], ") = S")
         if (info == TRUE) {
-          cat(rule_current)
+          cat(word_wrap(rule_current))
         }
         run_changes <- edit_rsi(x = x,
                                 col_mo = col_mo,
@@ -763,9 +765,10 @@ eucast_rules <- function(x,
     if (info == TRUE) {
       # Print EUCAST intro ------------------------------------------------------
       if (!rule_group_current %like% "other" & eucast_notification_shown == FALSE) {
-        cat(paste0("\n", font_grey(strrep("-", 0.95 * options()$width)),
-                   "\nRules by the ", font_bold("European Committee on Antimicrobial Susceptibility Testing (EUCAST)"),
-                   "\n", font_blue("https://eucast.org/"), "\n"))
+        cat(
+          paste0("\n", font_grey(strrep("-", 0.95 * options()$width)), "\n",
+                 word_wrap("Rules by the ", font_bold("European Committee on Antimicrobial Susceptibility Testing (EUCAST)")), "\n", 
+                 font_blue("https://eucast.org/"), "\n"))
         eucast_notification_shown <- TRUE
       }
       
@@ -775,12 +778,16 @@ eucast_rules <- function(x,
         cat(font_bold(
           ifelse(
             rule_group_current %like% "breakpoint",
-            paste0("\n", breakpoints_info$title, " (",
-                   font_red(paste0(breakpoints_info$version_txt, ", ", breakpoints_info$year)), ")\n"),
+            paste0("\n", 
+                   word_wrap(
+                     breakpoints_info$title, " (",
+                     font_red(paste0(breakpoints_info$version_txt, ", ", breakpoints_info$year)), ")\n")),
             ifelse(
               rule_group_current %like% "expert",
-              paste0("\n", expertrules_info$title, " (",
-                     font_red(paste0(expertrules_info$version_txt, ", ", expertrules_info$year)), ")\n"),
+              paste0("\n", 
+                     word_wrap(
+                       expertrules_info$title, " (",
+                       font_red(paste0(expertrules_info$version_txt, ", ", expertrules_info$year)), ")\n")),
               ""))))
       }
       # Print rule  -------------------------------------------------------------

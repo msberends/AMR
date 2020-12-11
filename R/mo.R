@@ -748,7 +748,7 @@ exec_as.mo <- function(x,
                                           x_backup_without_spp[i])), uncertainty = -1)
         next
       }
-      if (x_backup_without_spp[i] %like_case% "haemoly.*strept") {
+      if (x_backup_without_spp[i] %like_case% "haemoly.*strep") {
         # Haemolytic streptococci in different languages
         x[i] <- lookup(mo == "B_STRPT_HAEM", uncertainty = -1)
         next
@@ -1011,8 +1011,8 @@ exec_as.mo <- function(x,
             if (!all(is.na(found)) & nchar(g.x_backup_without_spp) >= 6) {
               if (property == "ref") {
                 # when property is "ref" (which is the case in mo_ref, mo_authors and mo_year), return the old value, so:
-                # mo_ref("Chlamydia psittaci) = "Page, 1968" (with warning)
-                # mo_ref("Chlamydophila psittaci) = "Everett et al., 1999"
+                # mo_ref("Chlamydia psittaci") = "Page, 1968" (with warning)
+                # mo_ref("Chlamydophila psittaci") = "Everett et al., 1999"
                 x <- found["ref"]
               } else {
                 x <- lookup(fullname == found["fullname_new"], haystack = MO_lookup)
@@ -1437,17 +1437,19 @@ exec_as.mo <- function(x,
     # - Becker et al. 2014, PMID 25278577
     # - Becker et al. 2019, PMID 30872103
     # - Becker et al. 2020, PMID 32056452
-    post_Becker <- character(0) # 2020-10-20 currently all are mentioned in above papers
-    if (any(x %in% MO_lookup[which(MO_lookup$species %in% post_Becker), property])) {
-
-      warning_("Becker ", font_italic("et al."), " (2014, 2019) does not contain these species named after their publication: ",
-               font_italic(paste("S.",
-                                 sort(mo_species(unique(x[x %in% MO_lookup[which(MO_lookup$species %in% post_Becker), property]]))),
-                                 collapse = ", ")),
-               ".",
-               call = FALSE,
-               immediate = TRUE)
-    }
+    post_Becker <- character(0) # 2020-10-20 currently all are mentioned in above papers (otherwise uncomment below)
+    
+    # nolint start
+    # if (any(x %in% MO_lookup[which(MO_lookup$species %in% post_Becker), property])) {
+    #   warning_("Becker ", font_italic("et al."), " (2014, 2019) does not contain these species named after their publication: ",
+    #            font_italic(paste("S.",
+    #                              sort(mo_species(unique(x[x %in% MO_lookup[which(MO_lookup$species %in% post_Becker), property]]))),
+    #                              collapse = ", ")),
+    #            ".",
+    #            call = FALSE,
+    #            immediate = TRUE)
+    # }
+    # nolint end
 
     # 'MO_CONS' and 'MO_COPS' are <mo> vectors created in R/zzz.R
     CoNS <- MO_lookup[which(MO_lookup$mo %in% MO_CONS), property, drop = TRUE]
@@ -1975,11 +1977,4 @@ repair_reference_df <- function(reference_df) {
   # some microbial codes might be old
   reference_df[, "mo"] <- as.mo(reference_df[, "mo", drop = TRUE])
   reference_df
-}
-
-left_join_MO_lookup <- function(x, ...) {
-  pm_left_join(x = x, y = MO_lookup, ...)
-}
-left_join_MO.old_lookup <- function(x, ...) {
-  pm_left_join(x = x, y = MO.old_lookup, ...)
 }

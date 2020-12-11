@@ -116,6 +116,6 @@ test_that("EUCAST rules work", {
   expect_output(suppressWarnings(eucast_rules(example_isolates %>% mutate(NOR = "S", NAL = "S"), info = TRUE)))
   
   # check verbose output
-  expect_output(suppressWarnings(eucast_rules(example_isolates, verbose = TRUE, info = TRUE)))
+  expect_output(suppressWarnings(eucast_rules(example_isolates, verbose = TRUE, rules = "all", info = TRUE)))
   
 })
