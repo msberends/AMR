@@ -26,12 +26,14 @@
 #' Determine (new) episodes for patients
 #' 
 #' This function determines which items in a vector can be considered (the start of) a new episode, based on the parameter `episode_days`. This can be used to determine clinical episodes for any epidemiological analysis.
-#' @inheritSection lifecycle Experimental lifecycle
+#' @inheritSection lifecycle Stable lifecycle
 #' @param x vector of dates (class `Date` or `POSIXt`)
 #' @param episode_days length of the required episode in days, defaults to 365. Every element in the input will return `TRUE` after this number of days has passed since the last included date, independent of calendar years. Please see *Details*.
 #' @param ... arguments passed on to [as.Date()]
 #' @details 
 #' Dates are first sorted from old to new. The oldest date will mark the start of the first episode. After this date, the next date will be marked that is at least `episode_days` days later than the start of the first episode. From that second marked date on, the next date will be marked that is at least `episode_days` days later than the start of the second episode which will be the start of the third episode, and so on. Before the vector is being returned, the original order will be restored.
+#' 
+#' The [first_isolate()] function is a wrapper around the [is_new_episode()] function, but more efficient for data sets containing microorganism codes or names.
 #' 
 #' The `dplyr` package is not required for this function to work, but this function works conveniently inside `dplyr` verbs such as [`filter()`][dplyr::filter()], [`mutate()`][dplyr::mutate()] and [`summarise()`][dplyr::summarise()].
 #' @return a [logical] vector

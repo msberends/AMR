@@ -43,7 +43,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9036</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9037</span>
       </span>
     </div>
 
@@ -212,24 +212,24 @@ Since you are one of our users, we would like to know how you use the package an
 <p>
 <a href="./countries_large.png" target="_blank"><img src="./countries.png" class="countries_map"></a> <strong>Used in 135 countries</strong><br> Since its first public release in early 2018, this package has been downloaded from 135 countries. Click the map to enlarge.
 </p>
-<br><br>
+<p><br><br></p>
 </div>
 <div id="with-amr-for-r-theres-always-a-knowledgeable-microbiologist-by-your-side" class="section level5">
 <h5 class="hasAnchor">
 <a href="#with-amr-for-r-theres-always-a-knowledgeable-microbiologist-by-your-side" class="anchor"></a>With <code>AMR</code> (for R), there’s always a knowledgeable microbiologist by your side!</h5>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># AMR works great with dplyr, but it's not required or neccesary</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(AMR)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb1-4"><a href="#cb1-4"></a></span>
-<span id="cb1-5"><a href="#cb1-5"></a>example_isolates <span class="op">%&gt;%</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mo =</span> <span class="kw">mo_fullname</span>(mo)) <span class="op">%&gt;%</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">mo_is_gram_negative</span>(), <span class="kw">mo_is_intrinsic_resistant</span>(<span class="dt">ab =</span> <span class="st">"cefotax"</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="st">  </span><span class="kw">select</span>(mo, <span class="kw">aminoglycosides</span>(), <span class="kw">carbapenems</span>())</span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Using column 'mo' as input for mo_is_gram_negative()</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Using column 'mo' as input for mo_is_intrinsic_resistant()</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="co">#&gt; Selecting aminoglycosides: 'AMK' (amikacin), 'GEN' (gentamicin), </span></span>
-<span id="cb1-12"><a href="#cb1-12"></a>                              <span class="st">'KAN'</span> (kanamycin), <span class="st">'TOB'</span> (tobramycin)</span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="co">#&gt; Selecting carbapenems: 'IPM' (imipenem), 'MEM' (meropenem)</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># AMR works great with dplyr, but it's not required or neccesary</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(AMR)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>example_isolates <span class="sc">%&gt;%</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mo =</span> <span class="fu">mo_fullname</span>(mo)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">mo_is_gram_negative</span>(), <span class="fu">mo_is_intrinsic_resistant</span>(<span class="at">ab =</span> <span class="st">"cefotax"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(mo, <span class="fu">aminoglycosides</span>(), <span class="fu">carbapenems</span>())</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Using column 'mo' as input for mo_is_gram_negative()</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Using column 'mo' as input for mo_is_intrinsic_resistant()</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Selecting aminoglycosides: 'AMK' (amikacin), 'GEN' (gentamicin), </span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                              <span class="st">'KAN'</span> (kanamycin), <span class="st">'TOB'</span> (tobramycin)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Selecting carbapenems: 'IPM' (imipenem), 'MEM' (meropenem)</span></span></code></pre></div>
 <p>With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (<code><a href="reference/mo_property.html">mo_is_gram_positive()</a></code> and <code><a href="reference/mo_property.html">mo_is_intrinsic_resistant()</a></code>) and a column selection on two antibiotic groups (<code><a href="reference/antibiotic_class_selectors.html">aminoglycosides()</a></code> and <code><a href="reference/antibiotic_class_selectors.html">carbapenems()</a></code>), the reference data about <a href="./reference/microorganisms.html">all microorganisms</a> and <a href="./reference/antibiotics.html">all antibiotics</a> in the <code>AMR</code> package make sure you get what you meant:</p>
 <table class="table">
 <thead><tr class="header">
@@ -317,31 +317,30 @@ Since you are one of our users, we would like to know how you use the package an
 </tbody>
 </table>
 <div class="home-buttons">
-<a href="articles/datasets.html">
-<div style="background-color: #128f7635;">
-<div class="fa fa-database">
-</div>
-<span>Download our data sets</span>
-</div>
-</a> <a href="articles/AMR.html">
-<div style="background-color: #138F3865;">
-<div class="fa fa-chalkboard-teacher">
-</div>
-<span>Start learning AMR analysis</span>
-</div>
-</a> <a href="reference/as.rsi.html">
-<div style="background-color: #128f7650;">
-<div class="fa fa-language">
-</div>
-<span>Interpret MIC/disk values to R/SI</span>
-</div>
-</a> <a href="articles/MDR.html">
-<div style="background-color: #138F3835;">
-<div class="fa fa-skull-crossbones">
-</div>
-<span>Determine multi-drug resistance (MDR)</span>
-</div>
-</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>a href<span class="ot">=</span><span class="st">"articles/datasets.html"</span><span class="sc">&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="er">&lt;</span>div style<span class="ot">=</span><span class="st">"background-color: #128f7635;"</span><span class="sc">&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="er">&lt;</span>div class<span class="ot">=</span><span class="st">"fa fa-database"</span><span class="sc">&gt;</span><span class="er">&lt;/</span>div<span class="sc">&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="er">&lt;</span>span<span class="sc">&gt;</span>Download our data sets<span class="sc">&lt;</span><span class="er">/</span>span<span class="sc">&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="er">&lt;/</span>div<span class="sc">&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;/</span>a<span class="sc">&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;</span>a href<span class="ot">=</span><span class="st">"articles/AMR.html"</span><span class="sc">&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="er">&lt;</span>div style<span class="ot">=</span><span class="st">"background-color: #138F3865;"</span><span class="sc">&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="er">&lt;</span>div class<span class="ot">=</span><span class="st">"fa fa-chalkboard-teacher"</span><span class="sc">&gt;</span><span class="er">&lt;/</span>div<span class="sc">&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="er">&lt;</span>span<span class="sc">&gt;</span>Start learning AMR analysis<span class="sc">&lt;</span><span class="er">/</span>span<span class="sc">&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="er">&lt;/</span>div<span class="sc">&gt;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;/</span>a<span class="sc">&gt;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;</span>a href<span class="ot">=</span><span class="st">"reference/as.rsi.html"</span><span class="sc">&gt;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="er">&lt;</span>div style<span class="ot">=</span><span class="st">"background-color: #128f7650;"</span><span class="sc">&gt;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="er">&lt;</span>div class<span class="ot">=</span><span class="st">"fa fa-language"</span><span class="sc">&gt;</span><span class="er">&lt;/</span>div<span class="sc">&gt;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="er">&lt;</span>span<span class="sc">&gt;</span>Interpret MIC<span class="sc">/</span>disk values to R<span class="sc">/</span>SI<span class="sc">&lt;</span><span class="er">/</span>span<span class="sc">&gt;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="er">&lt;/</span>div<span class="sc">&gt;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;/</span>a<span class="sc">&gt;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;</span>a href<span class="ot">=</span><span class="st">"articles/MDR.html"</span><span class="sc">&gt;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="er">&lt;</span>div style<span class="ot">=</span><span class="st">"background-color: #138F3835;"</span><span class="sc">&gt;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        <span class="er">&lt;</span>div class<span class="ot">=</span><span class="st">"fa fa-skull-crossbones"</span><span class="sc">&gt;</span><span class="er">&lt;/</span>div<span class="sc">&gt;</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        <span class="er">&lt;</span>span<span class="sc">&gt;</span>Determine multi<span class="sc">-</span>drug <span class="fu">resistance</span> (MDR)<span class="sc">&lt;</span><span class="er">/</span>span<span class="sc">&gt;</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="er">&lt;/</span>div<span class="sc">&gt;</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;/</span>a<span class="sc">&gt;</span></span></code></pre></div>
 </div>
 </div>
 <div id="partners" class="section level4">
@@ -349,7 +348,7 @@ Since you are one of our users, we would like to know how you use the package an
 <a href="#partners" class="anchor"></a>Partners</h4>
 <p>The development of this package is part of, related to, or made possible by:</p>
 <div align="center">
-<a href="https://www.rug.nl" title="University of Groningen"><img src="./logo_rug.png" class="partner_logo"></a> <a href="https://www.umcg.nl" title="University Medical Center Groningen"><img src="./logo_umcg.png" class="partner_logo"></a> <a href="https://www.certe.nl" title="Certe Medical Diagnostics and Advice"><img src="./logo_certe.png" class="partner_logo"></a> <a href="http://www.eurhealth-1health.eu" title="EurHealth-1-Health"><img src="./logo_eh1h.png" class="partner_logo"></a> <a href="https://www.deutschland-nederland.eu" title="INTERREG"><img src="./logo_interreg.png" class="partner_logo"></a>
+<p><a href="https://www.rug.nl" title="University of Groningen"><img src="./logo_rug.png" class="partner_logo"></a> <a href="https://www.umcg.nl" title="University Medical Center Groningen"><img src="./logo_umcg.png" class="partner_logo"></a> <a href="https://www.certe.nl" title="Certe Medical Diagnostics and Advice"><img src="./logo_certe.png" class="partner_logo"></a> <a href="http://www.eurhealth-1health.eu" title="EurHealth-1-Health"><img src="./logo_eh1h.png" class="partner_logo"></a> <a href="https://www.deutschland-nederland.eu" title="INTERREG"><img src="./logo_interreg.png" class="partner_logo"></a></p>
 </div>
 </div>
 </div>
@@ -384,7 +383,7 @@ Since you are one of our users, we would like to know how you use the package an
 <a href="#latest-released-version" class="anchor"></a>Latest released version</h4>
 <p><img src="https://www.r-pkg.org/badges/version-ago/AMR"><img src="https://cranlogs.r-pkg.org/badges/grand-total/AMR"></p>
 <p>This package is available <a href="https://cran.r-project.org/package=AMR">here on the official R network (CRAN)</a>, which has a peer-reviewed submission process. Install this package in R from CRAN by using the command:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
+<div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"AMR"</span><span class="op">)</span></pre></div>
 <p>It will be downloaded and installed automatically. For RStudio, click on the menu <em>Tools</em> &gt; <em>Install Packages…</em> and then type in “AMR” and press <kbd>Install</kbd>.</p>
 <p><strong>Note:</strong> Not all functions on this website may be available in this latest release. To use all functions and data sets mentioned on this website, install the latest development version.</p>
@@ -393,7 +392,7 @@ Since you are one of our users, we would like to know how you use the package an
 <h4 class="hasAnchor">
 <a href="#latest-development-version" class="anchor"></a>Latest development version</h4>
 <p>The latest and unpublished development version can be installed from GitHub using:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
+<div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span> 
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"msberends/AMR"</span><span class="op">)</span></pre></div>
 </div>

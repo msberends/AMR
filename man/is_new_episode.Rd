@@ -22,12 +22,16 @@ This function determines which items in a vector can be considered (the start of
 \details{
 Dates are first sorted from old to new. The oldest date will mark the start of the first episode. After this date, the next date will be marked that is at least \code{episode_days} days later than the start of the first episode. From that second marked date on, the next date will be marked that is at least \code{episode_days} days later than the start of the second episode which will be the start of the third episode, and so on. Before the vector is being returned, the original order will be restored.
 
+The \code{\link[=first_isolate]{first_isolate()}} function is a wrapper around the \code{\link[=is_new_episode]{is_new_episode()}} function, but more efficient for data sets containing microorganism codes or names.
+
 The \code{dplyr} package is not required for this function to work, but this function works conveniently inside \code{dplyr} verbs such as \code{\link[dplyr:filter]{filter()}}, \code{\link[dplyr:mutate]{mutate()}} and \code{\link[dplyr:summarise]{summarise()}}.
 }
-\section{Experimental lifecycle}{
+\section{Stable lifecycle}{
 
-\if{html}{\figure{lifecycle_experimental.svg}{options: style=margin-bottom:5px} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{experimental}. An experimental function is in early stages of development. The unlying code might be changing frequently. Experimental functions might be removed without deprecation, so you are generally best off waiting until a function is more mature before you use it in production code. Experimental functions are only available in development versions of this \code{AMR} package and will thus not be included in releases that are submitted to CRAN, since such functions have not yet matured enough.
+\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
+The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
+
+If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
 \section{Read more on our website!}{

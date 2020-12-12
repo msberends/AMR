@@ -260,7 +260,7 @@ ab_validate <- function(x, property, ...) {
   if (!all(x %in% antibiotics[, property])) {
     x <- data.frame(ab = as.ab(x, ...), stringsAsFactors = FALSE) %pm>%
       pm_left_join(antibiotics, by = "ab") %pm>%
-     pm_pull(property)
+      pm_pull(property)
   }
   if (property == "ab") {
     return(set_clean_class(x, new_class = c("ab", "character")))

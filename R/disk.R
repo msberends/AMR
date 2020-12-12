@@ -144,6 +144,30 @@ print.disk <- function(x, ...) {
   print(as.integer(x), quote = FALSE)
 }
 
+#' @method plot disk
+#' @export
+#' @importFrom graphics barplot axis
+#' @rdname plot
+plot.disk <- function(x,
+                      main = paste("Disk zones values of", deparse(substitute(x))),
+                      ylab = "Frequency",
+                      xlab = "Disk diffusion (mm)",
+                      axes = FALSE,
+                      ...) {
+  meet_criteria(main, allow_class = "character", has_length = 1)
+  meet_criteria(ylab, allow_class = "character", has_length = 1)
+  meet_criteria(xlab, allow_class = "character", has_length = 1)
+  meet_criteria(axes, allow_class = "logical", has_length = 1)
+  
+  barplot(table(x),
+          ylab = ylab,
+          xlab = xlab,
+          axes = axes,
+          main = main,
+          ...)
+  axis(2, seq(0, max(table(x))))
+}
+
 #' @method [ disk
 #' @export
 #' @noRd

@@ -223,7 +223,7 @@ summary.mic <- function(object, ...) {
 
 #' @method plot mic
 #' @export
-#' @importFrom graphics barplot axis par
+#' @importFrom graphics barplot axis
 #' @rdname plot
 plot.mic <- function(x,
                      main = paste("MIC values of", deparse(substitute(x))),
@@ -236,13 +236,13 @@ plot.mic <- function(x,
   meet_criteria(xlab, allow_class = "character", has_length = 1)
   meet_criteria(axes, allow_class = "logical", has_length = 1)
   
-  barplot(table(droplevels.factor(x)),
+  barplot(table(as.double(x)),
           ylab = ylab,
           xlab = xlab,
           axes = axes,
           main = main,
           ...)
-  axis(2, seq(0, max(table(droplevels.factor(x)))))
+  axis(2, seq(0, max(table(as.double(x)))))
 }
 
 #' @method barplot mic
@@ -260,13 +260,13 @@ barplot.mic <- function(height,
   meet_criteria(xlab, allow_class = "character", has_length = 1)
   meet_criteria(axes, allow_class = "logical", has_length = 1)
   
-  barplot(table(droplevels.factor(height)),
+  barplot(table(as.double(height)),
           ylab = ylab,
           xlab = xlab,
           axes = axes,
           main = main,
           ...)
-  axis(2, seq(0, max(table(droplevels.factor(height)))))
+  axis(2, seq(0, max(table(as.double(height)))))
 }
 
 #' @method [ mic

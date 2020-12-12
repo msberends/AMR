@@ -179,6 +179,7 @@ reference:
     - "`like`"
     - "`mo_matching_score`"
     - "`pca`"
+    - "`random`"
   
   - title: "Other: statistical tests"
     desc: >

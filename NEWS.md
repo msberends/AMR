@@ -1,5 +1,5 @@
-# AMR 1.4.0.9036
-## <small>Last updated: 11 December 2020</small>
+# AMR 1.4.0.9037
+## <small>Last updated: 12 December 2020</small>
 
 ### New
 * Function `is_new_episode()` to determine patient episodes which are not necessarily based on microorganisms. It also supports grouped variables with e.g. `mutate()`, `filter()` and `summarise()` of the `dplyr` package:
@@ -11,6 +11,7 @@
   ```
 * Functions `mo_is_gram_negative()` and `mo_is_gram_positive()` as wrappers around `mo_gramstain()`. They always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
 * Function `mo_is_intrinsic_resistant()` to test for intrinsic resistance, based on [EUCAST Intrinsic Resistance and Unusual Phenotypes v3.2](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) from 2020.
+* Functions `random_mic()`, `random_disk()` and `random_rsi()` for random number generation. They take microorganism names and antibiotic names as input to make generation more realistic.
 
 ### Changed
 * Reference data used for `as.rsi()` can now be set by the user, using the `reference_data` parameter. This allows for using own interpretation guidelines. The user-set data must have the same structure as `rsi_translation`.
@@ -36,6 +37,8 @@
 * Fixed a bug where `as.ab()` would sometimes fail
 * If using `as.rsi()` on MICs or disk diffusion while there is intrinsic antimicrobial resistance, a warning will be thrown to remind about this
 * Better tibble printing for MIC values
+* Fix for plotting MIC values with `plot()`
+* Added `plot()` generic to class `<disk>`
 
 ### Other
 * All messages and warnings thrown by this package now break sentences on whole words

@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9036</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9037</span>
       </span>
     </div>
 
@@ -236,13 +236,13 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1409036" class="section level1">
-<h1 class="page-header" data-toc-text="1.4.0.9036">
-<a href="#amr-1409036" class="anchor"></a>AMR 1.4.0.9036<small> Unreleased </small>
+    <div id="amr-1409037" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.0.9037">
+<a href="#amr-1409037" class="anchor"></a>AMR 1.4.0.9037<small> Unreleased </small>
 </h1>
-<div id="last-updated-11-december-2020" class="section level2">
+<div id="last-updated-12-december-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-11-december-2020" class="anchor"></a><small>Last updated: 11 December 2020</small>
+<a href="#last-updated-12-december-2020" class="anchor"></a><small>Last updated: 12 December 2020</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
@@ -258,6 +258,7 @@
 </li>
 <li><p>Functions <code><a href="../reference/mo_property.html">mo_is_gram_negative()</a></code> and <code><a href="../reference/mo_property.html">mo_is_gram_positive()</a></code> as wrappers around <code><a href="../reference/mo_property.html">mo_gramstain()</a></code>. They always return <code>TRUE</code> or <code>FALSE</code> (except when the input is <code>NA</code> or the MO code is <code>UNKNOWN</code>), thus always return <code>FALSE</code> for species outside the taxonomic kingdom of Bacteria.</p></li>
 <li><p>Function <code><a href="../reference/mo_property.html">mo_is_intrinsic_resistant()</a></code> to test for intrinsic resistance, based on <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/">EUCAST Intrinsic Resistance and Unusual Phenotypes v3.2</a> from 2020.</p></li>
+<li><p>Functions <code><a href="../reference/random.html">random_mic()</a></code>, <code><a href="../reference/random.html">random_disk()</a></code> and <code><a href="../reference/random.html">random_rsi()</a></code> for random number generation. They take microorganism names and antibiotic names as input to make generation more realistic.</p></li>
 </ul>
 </div>
 <div id="changed" class="section level3">
@@ -288,6 +289,8 @@
 <li><p>Fixed a bug where <code><a href="../reference/as.ab.html">as.ab()</a></code> would sometimes fail</p></li>
 <li><p>If using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on MICs or disk diffusion while there is intrinsic antimicrobial resistance, a warning will be thrown to remind about this</p></li>
 <li><p>Better tibble printing for MIC values</p></li>
+<li><p>Fix for plotting MIC values with <code><a href="../reference/plot.html">plot()</a></code></p></li>
+<li><p>Added <code><a href="../reference/plot.html">plot()</a></code> generic to class <code>&lt;disk&gt;</code></p></li>
 </ul>
 </div>
 <div id="other" class="section level3">

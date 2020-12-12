@@ -21,6 +21,7 @@
 ^public$
 ^data-raw$
 ^\.lintr$
+^tests/testthat/_snaps$
 ^vignettes/AMR.Rmd$
 ^vignettes/benchmarks.Rmd$
 ^vignettes/EUCAST.Rmd$
