@@ -316,22 +316,21 @@ as.rsi.mic <- function(x,
   # for auto-determining mo
   mo_var_found <- ""
   if (is.null(mo)) {
-    peek_mask_dplyr <- import_fn("peek_mask", "dplyr", error_on_fail = FALSE)
-    if (!is.null(peek_mask_dplyr)) {
+    tryCatch({
+      df <- get_current_data(arg_name = "mo", call = -3) # will return an error if not found
+      mo <- NULL
       try({
-        df <- as.data.frame(peek_mask_dplyr()$across_cols(), stringsAsFactors = FALSE)
         mo <- suppressMessages(search_type_in_df(df, "mo"))
-        if (!is.null(mo)) {
-          mo_var_found <- paste0(" based on column `", font_bold(mo), "`")
-          mo <- df[, mo, drop = TRUE]
-        }
       }, silent = TRUE)
-    }
-  }
-  if (is.null(mo)) {
-    stop_('No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
-          "To transform certain columns with e.g. mutate_at(), use `data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n",
-          "To tranform all MIC values in a data set, use `data %>% as.rsi()` or data %>% mutate_if(is.mic, as.rsi).", call = FALSE)
+      if (!is.null(df) && !is.null(mo) && is.data.frame(df)) {
+        mo_var_found <- paste0(" based on column `", font_bold(mo), "`")
+        mo <- df[, mo, drop = TRUE]
+      }
+    }, error = function(e) 
+      stop_('No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
+            "To transform certain columns with e.g. mutate_at(), use `data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n",
+            "To tranform all disk diffusion zones in a data set, use `data %>% as.rsi()` or data %>% mutate_if(is.disk, as.rsi).", call = FALSE)
+    )
   }
   if (length(ab) == 1 && ab %like% "as.mic") {
     stop_('No unambiguous name was supplied about the antibiotic (parameter "ab"). See ?as.rsi.', call = FALSE)
@@ -406,22 +405,21 @@ as.rsi.disk <- function(x,
   # for auto-determining mo
   mo_var_found <- ""
   if (is.null(mo)) {
-    peek_mask_dplyr <- import_fn("peek_mask", "dplyr", error_on_fail = FALSE)
-    if (!is.null(peek_mask_dplyr)) {
+    tryCatch({
+      df <- get_current_data(arg_name = "mo", call = -3) # will return an error if not found
+      mo <- NULL
       try({
-        df <- as.data.frame(peek_mask_dplyr()$across_cols(), stringsAsFactors = FALSE)
         mo <- suppressMessages(search_type_in_df(df, "mo"))
-        if (!is.null(mo)) {
-          mo_var_found <- paste0(" based on column `", font_bold(mo), "`")
-          mo <- df[, mo, drop = TRUE]
-        }
       }, silent = TRUE)
-    }
-  }
-  if (is.null(mo)) {
-    stop_('No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
-          "To transform certain columns with e.g. mutate_at(), use `data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n",
-          "To tranform all disk diffusion zones in a data set, use `data %>% as.rsi()` or data %>% mutate_if(is.disk, as.rsi).", call = FALSE)
+      if (!is.null(df) && !is.null(mo) && is.data.frame(df)) {
+        mo_var_found <- paste0(" based on column `", font_bold(mo), "`")
+        mo <- df[, mo, drop = TRUE]
+      }
+    }, error = function(e) 
+      stop_('No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
+            "To transform certain columns with e.g. mutate_at(), use `data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n",
+            "To tranform all disk diffusion zones in a data set, use `data %>% as.rsi()` or data %>% mutate_if(is.disk, as.rsi).", call = FALSE)
+    )
   }
   if (length(ab) == 1 && ab %like% "as.disk") {
     stop_('No unambiguous name was supplied about the antibiotic (parameter "ab"). See ?as.rsi.', call = FALSE)

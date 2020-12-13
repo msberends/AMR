@@ -43,9 +43,11 @@ test_that("mic works", {
   expect_s3_class(x[[1]], "mic")
   expect_s3_class(c(x[1], x[9]), "mic")
   expect_s3_class(unique(x[1], x[9]), "mic")
+  expect_s3_class(droplevels(c(x[1], x[9])), "mic")
+  x[2] <- 32
+  expect_s3_class(x, "mic")
   expect_warning(as.mic("INVALID VALUE"))
   
-
   pdf(NULL) # prevent Rplots.pdf being created
   expect_silent(barplot(as.mic(c(1, 2, 4, 8))))
   expect_silent(plot(as.mic(c(1, 2, 4, 8))))
@@ -56,4 +58,7 @@ test_that("mic works", {
                            "<NA>" = "0",
                            "Min." = "2",
                            "Max." = "8"), class = c("summaryDefault", "table")))
+  
+  library(dplyr, warn.conflicts = FALSE)
+  expect_output(print(tibble(m = as.mic(2:4))))
 })

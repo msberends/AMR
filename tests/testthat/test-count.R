@@ -92,4 +92,11 @@ test_that("counts work", {
   expect_error(count_df(c("A", "B", "C")))
   expect_error(count_df(example_isolates[, "date"]))
   
+  # grouping in rsi_calc_df() (= backbone of rsi_df())
+  expect_true("hospital_id" %in% (example_isolates %>% 
+                group_by(hospital_id) %>% 
+                select(hospital_id, AMX, CIP, gender) %>%
+                rsi_df() %>% 
+                colnames()))
+  
 })

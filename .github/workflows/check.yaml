@@ -120,16 +120,7 @@ jobs:
           sessioninfo::session_info(pkgs, include_base = TRUE)
         shell: Rscript {0}
 
-      - name: Check on older R versions
-        # no vignettes here, since they rely on R 3.3 and higher
-        if: matrix.config.r == '3.2'
-        env:
-          _R_CHECK_CRAN_INCOMING_: false
-        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", "--ignore-vignettes"), build_args = "--no-build-vignettes" , error_on = "warning", check_dir = "check")
-        shell: Rscript {0}
-        
-      - name: Check on newer R versions
-        if: matrix.config.r != '3.2'
+      - name: Run Check
         env:
           _R_CHECK_CRAN_INCOMING_: false
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
