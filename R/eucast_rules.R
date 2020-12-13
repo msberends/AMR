@@ -539,7 +539,9 @@ eucast_rules <- function(x,
         x <- paste(paste0(ab_names, collapse = " and "), "are both")
       } else {
         # like PEN,FOX,GEN S (although dependency on > 2 ABx does not exist at the moment)
-        x <- paste(paste0(ab_names, collapse = " and "), "are all")
+        # nolint start
+        # x <- paste(paste0(ab_names, collapse = " and "), "are all")
+        # nolint end
       }
       return(paste0(x, " '", ab_results, "'"))
     } else {
@@ -869,14 +871,16 @@ eucast_rules <- function(x,
                                 & as.rsi_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]
                                 & as.rsi_no_warning(x[, source_antibiotics[2L]]) == source_value[2L]),
                           error = function(e) integer(0))
-      } else if (length(source_antibiotics) == 3) {
-        rows <-  tryCatch(which(x[, if_mo_property, drop = TRUE] %like_perl% mo_value
-                                & as.rsi_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]
-                                & as.rsi_no_warning(x[, source_antibiotics[2L]]) == source_value[2L]
-                                & as.rsi_no_warning(x[, source_antibiotics[3L]]) == source_value[3L]),
-                          error = function(e) integer(0))
+        # nolint start
+      # } else if (length(source_antibiotics) == 3) {
+      #   rows <-  tryCatch(which(x[, if_mo_property, drop = TRUE] %like_perl% mo_value
+      #                           & as.rsi_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]
+      #                           & as.rsi_no_warning(x[, source_antibiotics[2L]]) == source_value[2L]
+      #                           & as.rsi_no_warning(x[, source_antibiotics[3L]]) == source_value[3L]),
+      #                     error = function(e) integer(0))
+        # nolint end
       } else {
-        stop_("only 3 antibiotics supported for source_antibiotics")
+        stop_("only 2 antibiotics supported for source_antibiotics")
       }
     }
     

@@ -19,7 +19,7 @@ This package is [fully independent of any other R package](https://en.wikipedia.
   <p>
     <a href="./countries_large.png" target="_blank"><img src="./countries.png" class="countries_map"></a>
     <strong>Used in 135 countries</strong><br>
-    Since its first public release in early 2018, this package has been downloaded from 135 countries. Click the map to enlarge.</p><br><br>
+    Since its first public release in early 2018, this package has been downloaded from 135 countries. Click the map to enlarge and to see the country names.</p>
 </div>
 
 ##### With `AMR` (for R), there's always a knowledgeable microbiologist by your side!
@@ -36,16 +36,14 @@ example_isolates %>%
 #> NOTE: Using column 'mo' as input for mo_is_gram_negative()
 #> NOTE: Using column 'mo' as input for mo_is_intrinsic_resistant()
 #> Selecting aminoglycosides: 'AMK' (amikacin), 'GEN' (gentamicin), 
-                              'KAN' (kanamycin), 'TOB' (tobramycin)
+#>                            'KAN' (kanamycin), 'TOB' (tobramycin)
 #> Selecting carbapenems: 'IPM' (imipenem), 'MEM' (meropenem)
 ```
 
-With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (`mo_is_gram_positive()` and `mo_is_intrinsic_resistant()`) and a column selection on two antibiotic groups (`aminoglycosides()` and `carbapenems()`), the reference data about [all microorganisms](./reference/microorganisms.html) and [all antibiotics](./reference/antibiotics.html) in the `AMR` package make sure you get what you meant:
+With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (`mo_is_gram_negative()` and `mo_is_intrinsic_resistant()`) and a column selection on two antibiotic groups (`aminoglycosides()` and `carbapenems()`), the reference data about [all microorganisms](./reference/microorganisms.html) and [all antibiotics](./reference/antibiotics.html) in the `AMR` package make sure you get what you meant:
 
 | mo                            |    AMK    |    GEN    |    KAN    |    TOB    |    IPM    |    MEM    |
 |:------------------------------|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
-|*Pseudomonas aeruginosa*       |           |     I     |     R     |     S     |     S     |           |
-|*Pseudomonas aeruginosa*       |           |     I     |     R     |     S     |     S     |           |
 |*Pseudomonas aeruginosa*       |           |     I     |     R     |     S     |     S     |           |
 |*Pseudomonas aeruginosa*       |     S     |     S     |     R     |     S     |           |     S     |
 |*Pseudomonas aeruginosa*       |     S     |     S     |     R     |     S     |     S     |     S     |

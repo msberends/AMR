@@ -159,4 +159,12 @@ test_that("disk2rsi works", {
                 as.rsi(guideline = "CLSI") %>%
                 pull(amox_disk) %>%
                 is.rsi())
+  
+  expect_s3_class(suppressWarnings(as.rsi(data.frame(mo = "Escherichia coli",
+                                                     amoxi = c("R", "S", "I", "invalid")))$amoxi), "rsi")
+  
+  # frequency tables
+  if (require("cleaner")) {
+    expect_s3_class(cleaner::freq(example_isolates$AMX), "freq")
+  }
 })

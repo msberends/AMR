@@ -293,6 +293,8 @@ test_that("as.mo works", {
   expect_warning(c(x[1], "test"))
   
   # ignoring patterns
+  expect_equal(as.character(as.mo(c("E. coli", "E. coli ignorethis"), ignore_pattern = "this")),
+               c("B_ESCHR_COLI", NA))
   
   # frequency tables
   if (require("cleaner")) {
