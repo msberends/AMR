@@ -1,5 +1,5 @@
-# AMR 1.4.0.9039
-## <small>Last updated: 13 December 2020</small>
+# AMR 1.4.0.9040
+## <small>Last updated: 16 December 2020</small>
 
 ### New
 * Function `is_new_episode()` to determine patient episodes which are not necessarily based on microorganisms. It also supports grouped variables with e.g. `mutate()`, `filter()` and `summarise()` of the `dplyr` package:
@@ -39,6 +39,7 @@
 * Better tibble printing for MIC values
 * Fix for plotting MIC values with `plot()`
 * Added `plot()` generic to class `<disk>`
+* LA-MRSA and CA-MRSA are now recognised as an abbreviation for *Staphylococcus aureus*, meaning that e.g. `mo_genus("LA-MRSA")` will return `"Staphylococcus"` and `mo_is_gram_positive("LA-MRSA")` will return `TRUE`.
 
 ### Other
 * All messages and warnings thrown by this package now break sentences on whole words

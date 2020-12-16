@@ -42,6 +42,7 @@ example_isolates %>%
 
 With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (`mo_is_gram_negative()` and `mo_is_intrinsic_resistant()`) and a column selection on two antibiotic groups (`aminoglycosides()` and `carbapenems()`), the reference data about [all microorganisms](./reference/microorganisms.html) and [all antibiotics](./reference/antibiotics.html) in the `AMR` package make sure you get what you meant:
 
+
 | mo                            |    AMK    |    GEN    |    KAN    |    TOB    |    IPM    |    MEM    |
 |:------------------------------|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
 |*Pseudomonas aeruginosa*       |           |     I     |     R     |     S     |     S     |           |
@@ -50,33 +51,6 @@ With only having defined a row filter on Gram-negative bacteria with intrinsic r
 |*Pseudomonas aeruginosa*       |     S     |     S     |     R     |     S     |     S     |     S     |
 |*Stenotrophomonas maltophilia* |     R     |     R     |     R     |     R     |     R     |     R     |
 |*Pseudomonas aeruginosa*       |     S     |     S     |     R     |     S     |           |     S     |
-
-<div class="home-buttons">
-	<a href="articles/datasets.html">
-		<div style="background-color: #128f7635;">
-			<div class="fa fa-database"></div>
-			<span>Download our data sets</span>
-		</div>
-	</a>
-	<a href="articles/AMR.html">
-		<div style="background-color: #138F3865;">
-			<div class="fa fa-chalkboard-teacher"></div>
-			<span>Start learning AMR analysis</span>
-		</div>
-	</a>
-	<a href="reference/as.rsi.html">
-		<div style="background-color: #128f7650;">
-			<div class="fa fa-language"></div>
-			<span>Interpret MIC/disk values to R/SI</span>
-		</div>
-	</a>
-	<a href="articles/MDR.html">
-		<div style="background-color: #138F3835;">
-			<div class="fa fa-skull-crossbones"></div>
-			<span>Determine multi-drug resistance (MDR)</span>
-		</div>
-	</a>
-</div>
 
 #### Partners
 

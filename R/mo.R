@@ -677,17 +677,17 @@ exec_as.mo <- function(x,
 
       # translate known trivial abbreviations to genus + species ----
       if (toupper(x_backup_without_spp[i]) %in% c("MRSA", "MSSA", "VISA", "VRSA", "BORSA")
-          | x_backup_without_spp[i] %like_case% " (mrsa|mssa|visa|vrsa) ") {
+          | x_backup_without_spp[i] %like_case% "(^| )(mrsa|mssa|visa|vrsa|borsa|la-?mrsa|ca-?mrsa)( |$)") {
         x[i] <- lookup(fullname == "Staphylococcus aureus", uncertainty = -1)
         next
       }
       if (toupper(x_backup_without_spp[i]) %in% c("MRSE", "MSSE")
-          | x_backup_without_spp[i] %like_case% " (mrse|msse) ") {
+          | x_backup_without_spp[i] %like_case% "(^| )(mrse|msse)( |$)") {
         x[i] <- lookup(fullname == "Staphylococcus epidermidis", uncertainty = -1)
         next
       }
       if (toupper(x_backup_without_spp[i]) == "VRE"
-          | x_backup_without_spp[i] %like_case% " vre "
+          | x_backup_without_spp[i] %like_case% "(^| )vre "
           | x_backup_without_spp[i] %like_case% "(enterococci|enterokok|enterococo)[a-z]*?$")  {
         x[i] <- lookup(genus == "Enterococcus", uncertainty = -1)
         next
@@ -711,7 +711,7 @@ exec_as.mo <- function(x,
         next
       }
       if (toupper(x_backup_without_spp[i]) == "MRPA"
-          | x_backup_without_spp[i] %like_case% " mrpa ") {
+          | x_backup_without_spp[i] %like_case% "(^| )mrpa( |$)") {
         # multi resistant P. aeruginosa
         x[i] <- lookup(fullname == "Pseudomonas aeruginosa", uncertainty = -1)
         next
@@ -722,7 +722,7 @@ exec_as.mo <- function(x,
         next
       }
       if (toupper(x_backup_without_spp[i]) %in% c("PISP", "PRSP", "VISP", "VRSP")
-          | x_backup_without_spp[i] %like_case% " (pisp|prsp|visp|vrsp) ") {
+          | x_backup_without_spp[i] %like_case% "(^| )(pisp|prsp|visp|vrsp)( |$)") {
         # peni I, peni R, vanco I, vanco R: S. pneumoniae
         x[i] <- lookup(fullname == "Streptococcus pneumoniae", uncertainty = -1)
         next

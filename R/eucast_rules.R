@@ -636,14 +636,18 @@ eucast_rules <- function(x,
         ab_name_base <- ab_name(cols_ab[ab_enzyme[i, ]$base_ab], language = NULL, tolower = TRUE)
         ab_name_enzyme <- ab_name(cols_ab[ab_enzyme[i, ]$ab], language = NULL, tolower = TRUE)
         
-        # Set base to R where base + enzyme inhibitor is R
+        # Set base to R where base + enzyme inhibitor is R ----
         rule_current <- paste0("Set ", ab_name_base, " (", cols_ab[ab_enzyme[i, ]$base_ab], ") = R where ",
                                ab_name_enzyme, " (", cols_ab[ab_enzyme[i, ]$ab], ") = R")
-        cat(word_wrap(rule_current))
+        if (info == TRUE) {
+          cat(word_wrap(rule_current))
+          cat("\n")
+        }
         run_changes <- edit_rsi(x = x,
                                 col_mo = col_mo,
                                 to = "R",
-                                rule = c(rule_current, "Other rules", "", paste0("Non-EUCAST: AMR package v", utils::packageDescription("AMR")$Version)),
+                                rule = c(rule_current, "Other rules", "",
+                                         paste0("Non-EUCAST: AMR package v", utils::packageDescription("AMR")$Version)),
                                 rows = which(as.rsi_no_warning(x[, cols_ab[ab_enzyme[i, ]$ab]]) == "R"),
                                 cols = cols_ab[ab_enzyme[i, ]$base_ab],
                                 last_verbose_info = verbose_info,
@@ -664,16 +668,18 @@ eucast_rules <- function(x,
           n_changed <- 0
         }
         
-        # Set base + enzyme inhibitor to S where base is S
+        # Set base + enzyme inhibitor to S where base is S ----
         rule_current <- paste0("Set ", ab_name_enzyme, " (", cols_ab[ab_enzyme[i, ]$ab], ") = S where ",
                                ab_name_base, " (", cols_ab[ab_enzyme[i, ]$base_ab], ") = S")
         if (info == TRUE) {
           cat(word_wrap(rule_current))
+          cat("\n")
         }
         run_changes <- edit_rsi(x = x,
                                 col_mo = col_mo,
                                 to = "S",
-                                rule = c(rule_current, "Other rules", "", paste0("Non-EUCAST: AMR package v", utils::packageDescription("AMR")$Version)),
+                                rule = c(rule_current, "Other rules", "", 
+                                         paste0("Non-EUCAST: AMR package v", utils::packageDescription("AMR")$Version)),
                                 rows = which(as.rsi_no_warning(x[, cols_ab[ab_enzyme[i, ]$base_ab]]) == "S"),
                                 cols = cols_ab[ab_enzyme[i, ]$ab],
                                 last_verbose_info = verbose_info,

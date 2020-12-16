@@ -7,7 +7,7 @@
 \alias{barplot.mic}
 \alias{plot.rsi}
 \alias{barplot.rsi}
-\title{Plotting for classes \code{rsi} and \code{disk}}
+\title{Plotting for classes \code{rsi}, \code{mic} and \code{disk}}
 \usage{
 \method{plot}{disk}(
   x,

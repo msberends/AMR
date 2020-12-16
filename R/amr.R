@@ -66,6 +66,7 @@
 #' Post Office Box 30001 \cr
 #' 9700 RB Groningen \cr
 #' The Netherlands
+#' <https://msberends.github.io/AMR/>
 #'
 #' If you have found a bug, please file a new issue at: \cr
 #' <https://github.com/msberends/AMR/issues>
@@ -73,7 +74,7 @@
 #' @rdname AMR
 NULL
 
-#' Plotting for classes `rsi` and `disk`
+#' Plotting for classes `rsi`, `mic` and `disk`
 #' 
 #' Functions to print classes of the `AMR` package.
 #' @inheritSection lifecycle Stable lifecycle
