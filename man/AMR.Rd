@@ -23,8 +23,8 @@ This package can be used for:
 \item Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO)
 \item Calculating (empirical) susceptibility of both mono therapy and combination therapies
 \item Predicting future antimicrobial resistance using regression models
-\item Getting properties for any microorganism (like Gram stain, species, genus or family)
-\item Getting properties for any antibiotic (like name, code of EARS-Net/ATC/LOINC/PubChem, defined daily dose or trade name)
+\item Getting properties for any microorganism (such as Gram stain, species, genus or family)
+\item Getting properties for any antibiotic (such as name, code of EARS-Net/ATC/LOINC/PubChem, defined daily dose or trade name)
 \item Plotting antimicrobial resistance
 \item Applying EUCAST expert rules
 \item Getting SNOMED codes of a microorganism, or getting properties of a microorganism based on a SNOMED code

@@ -24,6 +24,7 @@
 # ==================================================================== #
 
 .onLoad <- function(libname, pkgname) {
+  
   assign(x = "AB_lookup",
          value = create_AB_lookup(),
          envir = asNamespace("AMR"))

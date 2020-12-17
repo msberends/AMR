@@ -28,6 +28,8 @@ context("zzz.R")
 test_that("imports work", {
   skip_on_cran()
   
+  # Check if these function still exist in the package (all are in Suggests field)
+  # Since GitHub Action runs every night, we will be emailed when a dependency fails based on this unit test
   import_functions <- c(
     "anti_join" = "dplyr",
     "cur_column" = "dplyr",
@@ -47,11 +49,8 @@ test_that("imports work", {
     "inline_hist" = "skimr",
     "inner_join" = "dplyr",
     "insertText" = "rstudioapi",
-    "insertText" = "rstudioapi",
-    "insertText" = "rstudioapi",
     "left_join" = "dplyr",
     "new_pillar_shaft_simple" = "pillar",
-    "peek_mask" = "dplyr",
     "peek_vars" = "tidyselect",
     "read_excel" = "readxl",
     "read_html" = "xml2",

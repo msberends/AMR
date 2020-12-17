@@ -83,7 +83,7 @@ This is the fastest way to have your organisation (or analysis) specific codes p
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9041</span>
       </span>
     </div>
 
@@ -91,14 +91,14 @@ This is the fastest way to have your organisation (or analysis) specific codes p
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
     Home
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     How to
      
@@ -107,77 +107,77 @@ This is the fastest way to have your organisation (or analysis) specific codes p
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/AMR.html">
-        <span class="fa fa-directions"></span>
+        <span class="fas fa-directions"></span>
          
         Conduct AMR analysis
       </a>
     </li>
     <li>
       <a href="../articles/resistance_predict.html">
-        <span class="fa fa-dice"></span>
+        <span class="fas fa-dice"></span>
          
         Predict antimicrobial resistance
       </a>
     </li>
     <li>
       <a href="../articles/datasets.html">
-        <span class="fa fa-database"></span>
+        <span class="fas fa-database"></span>
          
         Data sets for download / own use
       </a>
     </li>
     <li>
       <a href="../articles/PCA.html">
-        <span class="fa fa-compress"></span>
+        <span class="fas fa-compress"></span>
          
         Conduct principal component analysis for AMR
       </a>
     </li>
     <li>
       <a href="../articles/MDR.html">
-        <span class="fa fa-skull-crossbones"></span>
+        <span class="fas fa-skull-crossbones"></span>
          
         Determine multi-drug resistance (MDR)
       </a>
     </li>
     <li>
       <a href="../articles/WHONET.html">
-        <span class="fa fa-globe-americas"></span>
+        <span class="fas fa-globe-americas"></span>
          
         Work with WHONET data
       </a>
     </li>
     <li>
       <a href="../articles/SPSS.html">
-        <span class="fa fa-file-upload"></span>
+        <span class="fas fa-file-upload"></span>
          
         Import data from SPSS/SAS/Stata
       </a>
     </li>
     <li>
       <a href="../articles/EUCAST.html">
-        <span class="fa fa-exchange-alt"></span>
+        <span class="fas fa-exchange-alt"></span>
          
         Apply EUCAST rules
       </a>
     </li>
     <li>
       <a href="../reference/mo_property.html">
-        <span class="fa fa-bug"></span>
+        <span class="fas fa-bug"></span>
          
         Get properties of a microorganism
       </a>
     </li>
     <li>
       <a href="../reference/ab_property.html">
-        <span class="fa fa-capsules"></span>
+        <span class="fas fa-capsules"></span>
          
         Get properties of an antibiotic
       </a>
     </li>
     <li>
       <a href="../articles/benchmarks.html">
-        <span class="fa fa-shipping-fast"></span>
+        <span class="fas fa-shipping-fast"></span>
          
         Other: benchmarks
       </a>
@@ -186,21 +186,21 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-book-open"></span>
+    <span class="fas fa-book-open"></span>
      
     Manual
   </a>
 </li>
 <li>
   <a href="../authors.html">
-    <span class="fa fa-users"></span>
+    <span class="fas fa-users"></span>
      
     Authors
   </a>
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="far fa far fa-newspaper"></span>
+    <span class="far fa-newspaper"></span>
      
     Changelog
   </a>
@@ -209,14 +209,14 @@ This is the fastest way to have your organisation (or analysis) specific codes p
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/msberends/AMR">
-    <span class="fab fa fab fa-github"></span>
+    <span class="fab fa-github"></span>
      
     Source Code
   </a>
 </li>
 <li>
   <a href="../survey.html">
-    <span class="fa fa-clipboard-list"></span>
+    <span class="fas fa-clipboard-list"></span>
      
     Survey
   </a>
@@ -244,9 +244,12 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 <p>This is <strong>the fastest way</strong> to have your organisation (or analysis) specific codes picked up and translated by this package.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>set_mo_source</span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>set_mo_source</span><span class='op'>(</span>
+  <span class='va'>path</span>,
+  destination <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"AMR_mo_source"</span>, <span class='st'>"~/mo_source.rds"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>get_mo_source</span><span class='op'>(</span><span class='op'>)</span></pre>
+<span class='fu'>get_mo_source</span><span class='op'>(</span>destination <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"AMR_mo_source"</span>, <span class='st'>"~/mo_source.rds"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -255,14 +258,18 @@ This is the fastest way to have your organisation (or analysis) specific codes p
       <th>path</th>
       <td><p>location of your reference file, see Details. Can be <code>""</code>, <code>NULL</code> or <code>FALSE</code> to delete the reference file.</p></td>
     </tr>
+    <tr>
+      <th>destination</th>
+      <td><p>destination of the compressed data file, default to the user's home directory.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The reference file can be a text file separated with commas (CSV) or tabs or pipes, an Excel file (either 'xls' or 'xlsx' format) or an R object file (extension '.rds'). To use an Excel file, you will need to have the <code>readxl</code> package installed.</p>
-<p><code>set_mo_source()</code> will check the file for validity: it must be a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>, must have a column named <code>"mo"</code> which contains values from <code><a href='microorganisms.html'>microorganisms$mo</a></code> and must have a reference column with your own defined values. If all tests pass, <code>set_mo_source()</code> will read the file into R and will ask to export it to <code>"~/.mo_source.rds"</code>. The CRAN policy disallows packages to write to the file system, although '<em>exceptions may be allowed in interactive sessions if the package obtains confirmation from the user</em>'. For this reason, this function only works in interactive sessions so that the user can <strong>specifically confirm and allow</strong> that this file will be created.</p>
-<p>The created compressed data file <code>"~/.mo_source.rds"</code> will be used at default for MO determination (function <code><a href='as.mo.html'>as.mo()</a></code> and consequently all <code>mo_*</code> functions like <code><a href='mo_property.html'>mo_genus()</a></code> and <code><a href='mo_property.html'>mo_gramstain()</a></code>). The location of the original file will be saved as an R option with <code><a href='https://rdrr.io/r/base/options.html'>options(mo_source = path)</a></code>. Its timestamp will be saved with <code><a href='https://rdrr.io/r/base/options.html'>options(mo_source_datetime = ...)</a></code>.</p>
-<p>The function <code>get_mo_source()</code> will return the data set by reading <code>"~/.mo_source.rds"</code> with <code><a href='https://rdrr.io/r/base/readRDS.html'>readRDS()</a></code>. If the original file has changed (by checking the aforementioned options <code>mo_source</code> and <code>mo_source_datetime</code>), it will call <code>set_mo_source()</code> to update the data file automatically if used in an interactive session.</p>
+<p><code>set_mo_source()</code> will check the file for validity: it must be a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>, must have a column named <code>"mo"</code> which contains values from <code><a href='microorganisms.html'>microorganisms$mo</a></code> and must have a reference column with your own defined values. If all tests pass, <code>set_mo_source()</code> will read the file into R and will ask to export it to <code>"~/mo_source.rds"</code>. The CRAN policy disallows packages to write to the file system, although '<em>exceptions may be allowed in interactive sessions if the package obtains confirmation from the user</em>'. For this reason, this function only works in interactive sessions so that the user can <strong>specifically confirm and allow</strong> that this file will be created. The destination of this file can be set with the <code>destination</code> parameter and defaults to the user's home directory. It can also be set as an <span style="R">R</span> option, using <code>options(AMR_mo_source = "my/location/file.rds)</code>.</p>
+<p>The created compressed data file <code>"mo_source.rds"</code> will be used at default for MO determination (function <code><a href='as.mo.html'>as.mo()</a></code> and consequently all <code>mo_*</code> functions like <code><a href='mo_property.html'>mo_genus()</a></code> and <code><a href='mo_property.html'>mo_gramstain()</a></code>). The location and timestamp of the original file will be saved as an attribute to the compressed data file.</p>
+<p>The function <code>get_mo_source()</code> will return the data set by reading <code>"mo_source.rds"</code> with <code><a href='https://rdrr.io/r/base/readRDS.html'>readRDS()</a></code>. If the original file has changed (by checking the location and timestamp of the original file), it will call <code>set_mo_source()</code> to update the data file automatically if used in an interactive session.</p>
 <p>Reading an Excel file (<code>.xlsx</code>) with only one row has a size of 8-9 kB. The compressed file created with <code>set_mo_source()</code> will then have a size of 0.1 kB and can be read by <code>get_mo_source()</code> in only a couple of microseconds (millionths of a second).</p>
     <h2 class="hasAnchor" id="how-to-setup"><a class="anchor" href="#how-to-setup"></a>How to setup</h2>
 
@@ -278,12 +285,14 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 </pre>
 
 <p>We save it as <code>"home/me/ourcodes.xlsx"</code>. Now we have to set it as a source:</p><pre><span class='fu'>set_mo_source</span><span class='op'>(</span><span class='st'>"home/me/ourcodes.xlsx"</span><span class='op'>)</span>
-<span class='co'>#&gt; NOTE: Created mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'</span>
-<span class='co'>#&gt;       (columns "Organisation XYZ" and "mo")</span>
+<span class='co'>#&gt; NOTE: Created mo_source file '/Users/me/mo_source.rds' (0.3 kB) from</span>
+<span class='co'>#&gt;       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns </span>
+<span class='co'>#&gt;       "Organisation XYZ" and "mo"</span>
 </pre>
 
-<p>It has now created a file <code>"~/.mo_source.rds"</code> with the contents of our Excel file. Only the first column with foreign values and the 'mo' column will be kept when creating the RDS file.</p>
+<p>It has now created a file <code>"~/mo_source.rds"</code> with the contents of our Excel file. Only the first column with foreign values and the 'mo' column will be kept when creating the RDS file.</p>
 <p>And now we can use it in our functions:</p><pre><span class='fu'><a href='as.mo.html'>as.mo</a></span><span class='op'>(</span><span class='st'>"lab_mo_ecoli"</span><span class='op'>)</span>
+<span class='co'>#&gt; Class &lt;mo&gt;</span>
 <span class='co'>#&gt; [1] B_ESCHR_COLI</span>
 
 <span class='fu'><a href='mo_property.html'>mo_genus</a></span><span class='op'>(</span><span class='st'>"lab_mo_kpneumoniae"</span><span class='op'>)</span>
@@ -291,6 +300,9 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 
 <span class='co'># other input values still work too</span>
 <span class='fu'><a href='as.mo.html'>as.mo</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Escherichia coli"</span>, <span class='st'>"E. coli"</span>, <span class='st'>"lab_mo_ecoli"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='co'>#&gt; NOTE: Translation to one microorganism was guessed with uncertainty.</span>
+<span class='co'>#&gt;       Use mo_uncertainties() to review it.</span>
+<span class='co'>#&gt; Class &lt;mo&gt;</span>
 <span class='co'>#&gt; [1] B_ESCHR_COLI B_ESCHR_COLI B_ESCHR_COLI</span>
 </pre>
 
@@ -304,8 +316,10 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 </pre>
 
 <p>...any new usage of an MO function in this package will update your data file:</p><pre><span class='fu'><a href='as.mo.html'>as.mo</a></span><span class='op'>(</span><span class='st'>"lab_mo_ecoli"</span><span class='op'>)</span>
-<span class='co'>#&gt; NOTE: Updated mo_source file '~/.mo_source.rds' from 'home/me/ourcodes.xlsx'</span>
-<span class='co'>#&gt;       (columns "Organisation XYZ" and "mo")</span>
+<span class='co'>#&gt; NOTE: Updated mo_source file '/Users/me/mo_source.rds' (0.3 kB) from </span>
+<span class='co'>#&gt;       '/Users/me/Documents/ourcodes.xlsx' (9  kB), columns</span>
+<span class='co'>#&gt;        "Organisation XYZ" and "mo"</span>
+<span class='co'>#&gt; Class &lt;mo&gt;</span>
 <span class='co'>#&gt; [1] B_ESCHR_COLI</span>
 
 <span class='fu'><a href='mo_property.html'>mo_genus</a></span><span class='op'>(</span><span class='st'>"lab_Staph_aureus"</span><span class='op'>)</span>
@@ -313,10 +327,10 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 </pre>
 
 <p>To delete the reference data file, just use <code>""</code>, <code>NULL</code> or <code>FALSE</code> as input for <code>set_mo_source()</code>:</p><pre><span class='fu'>set_mo_source</span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span>
-<span class='co'># Removed mo_source file '~/.mo_source.rds'.</span>
+<span class='co'>#&gt; Removed mo_source file '/Users/me/mo_source.rds'</span>
 </pre>
 
-<p>If the original Excel file is moved or deleted, the mo_source file will be removed upon the next use of <code><a href='as.mo.html'>as.mo()</a></code>. If the mo_source file is manually deleted (i.e. without using <code>set_mo_source()</code>), the references to the mo_source file will be removed upon the next use of <code><a href='as.mo.html'>as.mo()</a></code>.</p>
+<p>If the original Excel file is moved or deleted, the mo_source file will be removed upon the next use of <code><a href='as.mo.html'>as.mo()</a></code>.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
 
     

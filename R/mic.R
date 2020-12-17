@@ -142,7 +142,7 @@ all_valid_mics <- function(x) {
   }
   x_mic <- tryCatch(suppressWarnings(as.mic(x[!is.na(x)])),
                     error = function(e) NA)
-  !any(is.na(x_mic)) & !all(is.na(x))
+  !any(is.na(x_mic)) && !all(is.na(x))
 }
 
 #' @rdname as.mic
@@ -175,7 +175,7 @@ as.numeric.mic <- function(x, ...) {
 #' @method droplevels mic
 #' @export
 #' @noRd
-droplevels.mic <- function(x, exclude = ifelse(anyNA(levels(x)), NULL, NA), ...) {
+droplevels.mic <- function(x, exclude = if (any(is.na(levels(x)))) NULL else NA, ...) {
   x <- droplevels.factor(x, exclude = exclude, ...)
   class(x) <- c("mic", "ordered", "factor")
   x
@@ -323,14 +323,12 @@ unique.mic <- function(x, incomparables = FALSE, ...) {
 
 # will be exported using s3_register() in R/zzz.R
 get_skimmers.mic <- function(column) {
-  sfl <- import_fn("sfl", "skimr", error_on_fail = FALSE)
-  inline_hist <- import_fn("inline_hist", "skimr", error_on_fail = FALSE)
-  sfl(
+  skimr::sfl(
     skim_type = "mic",
     min = ~as.character(sort(stats::na.omit(.))[1]),
     max = ~as.character(sort(stats::na.omit(.))[length(stats::na.omit(.))]),
     median = ~as.character(stats::na.omit(.)[as.double(stats::na.omit(.)) == median(as.double(stats::na.omit(.)))])[1],
     n_unique = ~pm_n_distinct(., na.rm = TRUE),
-    hist_log2 = ~inline_hist(log2(as.double(stats::na.omit(.))))
+    hist_log2 = ~skimr::inline_hist(log2(as.double(stats::na.omit(.))))
   )
 }

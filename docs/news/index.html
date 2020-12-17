@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9040</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9041</span>
       </span>
     </div>
 
@@ -236,14 +236,15 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1409040" class="section level1">
-<h1 class="page-header" data-toc-text="1.4.0.9040">
-<a href="#amr-1409040" class="anchor"></a>AMR 1.4.0.9040<small> Unreleased </small>
+    <div id="amr-1409041" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.0.9041">
+<a href="#amr-1409041" class="anchor"></a>AMR 1.4.0.9041<small> Unreleased </small>
 </h1>
-<div id="last-updated-16-december-2020" class="section level2">
+<div id="last-updated-17-december-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-16-december-2020" class="anchor"></a><small>Last updated: 16 December 2020</small>
+<a href="#last-updated-17-december-2020" class="anchor"></a><small>Last updated: 17 December 2020</small>
 </h2>
+<p>Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscript about this package to. We are those reviewers very grateful for going through our code so thoroughly!</p>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h3>
@@ -280,6 +281,7 @@
   <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </li>
 <li><p>For all function parameters in the code, it is now defined what the exact type of user input should be (inspired by the <a href="https://github.com/moodymudskipper/typed"><code>typed</code></a> package). If the user input for a certain function does not meet the requirements for a specific parameter (such as the class or length), an informative error will be thrown. This makes the package more robust and the use of it more reproducible and reliable. In total, more than 400 arguments were defined.</p></li>
+<li><p>Fix for <code><a href="../reference/mo_source.html">set_mo_source()</a></code>, that previously would not remember the file location of the original file</p></li>
 <li><p>Deprecated function <code><a href="../reference/AMR-deprecated.html">p_symbol()</a></code> that not really fits the scope of this package. It will be removed in a future version. See <a href="https://github.com/msberends/AMR/blob/v1.4.0/R/p_symbol.R">here</a> for the source code to preserve it.</p></li>
 <li><p>Better determination of disk zones and MIC values when running <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on a data.frame</p></li>
 <li><p>Updated coagulase-negative staphylococci determination with Becker <em>et al.</em> 2020 (PMID 32056452), meaning that the species <em>S. argensis</em>, <em>S. caeli</em>, <em>S. debuckii</em>, <em>S. edaphicus</em> and <em>S. pseudoxylosus</em> are now all considered CoNS</p></li>
@@ -294,6 +296,7 @@
 <li><p>Fix for plotting MIC values with <code><a href="../reference/plot.html">plot()</a></code></p></li>
 <li><p>Added <code><a href="../reference/plot.html">plot()</a></code> generic to class <code>&lt;disk&gt;</code></p></li>
 <li><p>LA-MRSA and CA-MRSA are now recognised as an abbreviation for <em>Staphylococcus aureus</em>, meaning that e.g. <code><a href="../reference/mo_property.html">mo_genus("LA-MRSA")</a></code> will return <code>"Staphylococcus"</code> and <code><a href="../reference/mo_property.html">mo_is_gram_positive("LA-MRSA")</a></code> will return <code>TRUE</code>.</p></li>
+<li><p>Fix for using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on a <code>data.frame</code> that only contains one column for antibiotic interpretations</p></li>
 </ul>
 </div>
 <div id="other" class="section level3">
@@ -302,6 +305,8 @@
 <ul>
 <li>All messages and warnings thrown by this package now break sentences on whole words</li>
 <li>More extensive unit tests</li>
+<li>Internal calls to <code><a href="https://rdrr.io/r/base/options.html">options()</a></code> were all removed in favour of a new internal environment <code>mo_env</code>
+</li>
 </ul>
 </div>
 </div>
@@ -310,7 +315,7 @@
 <h1 class="page-header" data-toc-text="1.4.0">
 <a href="#amr-140" class="anchor"></a>AMR 1.4.0<small> 2020-10-08 </small>
 </h1>
-<p>Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscipt about this package to. We are those reviewers very grateful for going through our code so thoroughly!</p>
+<p>Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscript about this package to. We are those reviewers very grateful for going through our code so thoroughly!</p>
 <div id="new-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new-1" class="anchor"></a>New</h3>

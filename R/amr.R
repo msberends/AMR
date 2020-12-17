@@ -42,8 +42,8 @@
 #' - Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO)
 #' - Calculating (empirical) susceptibility of both mono therapy and combination therapies
 #' - Predicting future antimicrobial resistance using regression models
-#' - Getting properties for any microorganism (like Gram stain, species, genus or family)
-#' - Getting properties for any antibiotic (like name, code of EARS-Net/ATC/LOINC/PubChem, defined daily dose or trade name)
+#' - Getting properties for any microorganism (such as Gram stain, species, genus or family)
+#' - Getting properties for any antibiotic (such as name, code of EARS-Net/ATC/LOINC/PubChem, defined daily dose or trade name)
 #' - Plotting antimicrobial resistance
 #' - Applying EUCAST expert rules
 #' - Getting SNOMED codes of a microorganism, or getting properties of a microorganism based on a SNOMED code

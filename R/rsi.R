@@ -481,7 +481,7 @@ as.rsi.data.frame <- function(x,
   meet_criteria(conserve_capped_values, allow_class = "logical", has_length = 1)
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
   meet_criteria(reference_data, allow_class = "data.frame")
-  
+
   for (i in seq_len(ncol(x))) {
     # don't keep factors
     if (is.factor(x[, i, drop = TRUE])) {
@@ -494,7 +494,7 @@ as.rsi.data.frame <- function(x,
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo", info = FALSE)
   }
-  
+
   # -- UTIs
   col_uti <- uti
   if (is.null(col_uti)) {
@@ -535,12 +535,13 @@ as.rsi.data.frame <- function(x,
       uti <- FALSE
     }
   }
-  
+
   i <- 0
   sel <- colnames(pm_select(x, ...))
   if (!is.null(col_mo)) {
     sel <- sel[sel != col_mo]
   }
+
   ab_cols <- colnames(x)[sapply(x, function(y) {
     i <<- i + 1
     check <- is.mic(y) | is.disk(y)
@@ -563,17 +564,16 @@ as.rsi.data.frame <- function(x,
       return(FALSE)
     }
   })]
-  
+
   stop_if(length(ab_cols) == 0,
           "no columns with MIC values, disk zones or antibiotic column names found in this data set. Use as.mic() or as.disk() to transform antimicrobial columns.")
   # set type per column
   types <- character(length(ab_cols))
-  types[sapply(x[, ab_cols], is.disk)] <- "disk"
-  types[types == "" & sapply(x[, ab_cols], all_valid_disks)] <- "disk"
-  types[sapply(x[, ab_cols], is.mic)] <- "mic"
-  types[types == "" & sapply(x[, ab_cols], all_valid_mics)] <- "mic"
-  types[types == "" & !sapply(x[, ab_cols], is.rsi)] <- "rsi"
-  
+  types[sapply(x[, ab_cols, drop = FALSE], is.disk)] <- "disk"
+  types[types == "" & sapply(x[, ab_cols, drop = FALSE], all_valid_disks)] <- "disk"
+  types[sapply(x[, ab_cols, drop = FALSE], is.mic)] <- "mic"
+  types[types == "" & sapply(x[, ab_cols, drop = FALSE], all_valid_mics)] <- "mic"
+  types[types == "" & !sapply(x[, ab_cols, drop = FALSE], is.rsi)] <- "rsi"
   if (any(types %in% c("mic", "disk"), na.rm = TRUE)) {
     # now we need an mo column
     stop_if(is.null(col_mo), "`col_mo` must be set")
@@ -582,9 +582,9 @@ as.rsi.data.frame <- function(x,
       col_mo <- search_type_in_df(x = x, type = "mo")
     }
   }
-  
+
   x_mo <- as.mo(x %pm>% pm_pull(col_mo))
-  
+
   for (i in seq_len(length(ab_cols))) {
     if (types[i] == "mic") {
       x[, ab_cols[i]] <- as.rsi(x = x %pm>% 
@@ -845,19 +845,22 @@ freq.rsi <- function(x, ...) {
                                     }))[1L]
   }
   ab <- suppressMessages(suppressWarnings(as.ab(x_name)))
-  freq.default <- import_fn("freq.default", "cleaner", error_on_fail = FALSE)
   digits <- list(...)$digits
   if (is.null(digits)) {
     digits <- 2
   }
   if (!is.na(ab)) {
-    freq.default(x = x, ...,
-                 .add_header = list(Drug = paste0(ab_name(ab, language = NULL), " (", ab, ", ", ab_atc(ab), ")"),
-                                    `Drug group` = ab_group(ab, language = NULL),
-                                    `%SI` = percentage(susceptibility(x, minimum = 0, as_percent = FALSE), digits = digits)))
+    cleaner::freq.default(x = x, ...,
+                          .add_header = list(
+                            Drug = paste0(ab_name(ab, language = NULL), " (", ab, ", ", ab_atc(ab), ")"),
+                            `Drug group` = ab_group(ab, language = NULL),
+                            `%SI` = percentage(susceptibility(x, minimum = 0, as_percent = FALSE),
+                                               digits = digits)))
   } else {
-    freq.default(x = x, ...,
-                 .add_header = list(`%SI` = percentage(susceptibility(x, minimum = 0, as_percent = FALSE), digits = digits)))
+    cleaner::freq.default(x = x, ...,
+                          .add_header = list(
+                            `%SI` = percentage(susceptibility(x, minimum = 0, as_percent = FALSE),
+                                               digits = digits)))
   }
 }
 
@@ -892,8 +895,7 @@ get_skimmers.rsi <- function(column) {
     }
   }
   
-  sfl <- import_fn("sfl", "skimr", error_on_fail = FALSE)
-  sfl(
+  skimr::sfl(
     skim_type = "rsi",
     ab_name = name_call,
     count_R = count_R,
@@ -916,7 +918,7 @@ print.rsi <- function(x, ...) {
 #' @method droplevels rsi
 #' @export
 #' @noRd
-droplevels.rsi <- function(x, exclude = if (anyNA(levels(x))) NULL else NA, ...) {
+droplevels.rsi <- function(x, exclude = if (any(is.na(levels(x)))) NULL else NA, ...) {
   x <- droplevels.factor(x, exclude = exclude, ...)
   class(x) <- c("rsi", "ordered", "factor")
   x

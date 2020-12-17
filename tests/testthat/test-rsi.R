@@ -108,13 +108,13 @@ test_that("mic2rsi works", {
                as.rsi("S"))
   expect_equal(as.rsi(as.mic(32), "E. coli", "ampicillin", guideline = "EUCAST 2020"),
                as.rsi("R"))
-
-  expect_true(example_isolates %>%
-                mutate(amox_mic = as.mic(2)) %>%
-                select(mo, amox_mic) %>%
-                as.rsi() %>%
-                pull(amox_mic) %>%
-                is.rsi())
+  
+  expect_true(suppressWarnings(example_isolates %>%
+                                 mutate(amox_mic = as.mic(2)) %>%
+                                 select(mo, amox_mic) %>%
+                                 as.rsi() %>%
+                                 pull(amox_mic) %>%
+                                 is.rsi()))
   
   expect_warning(data.frame(mo = "E. coli",
                             NIT = c("<= 2", 32)) %>%

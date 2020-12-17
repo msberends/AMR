@@ -114,8 +114,9 @@ all_valid_disks <- function(x) {
   if (!inherits(x, c("disk", "character", "numeric", "integer"))) {
     return(FALSE)
   }
-  x_disk <- suppressWarnings(as.disk(x[!is.na(x)]))
-  !any(is.na(x_disk)) & !all(is.na(x))
+  x_disk <- tryCatch(suppressWarnings(as.disk(x[!is.na(x)])),
+                     error = function(e) NA)
+  !any(is.na(x_disk)) && !all(is.na(x))
 }
 
 #' @rdname as.disk
@@ -223,14 +224,12 @@ unique.disk <- function(x, incomparables = FALSE, ...) {
 
 # will be exported using s3_register() in R/zzz.R
 get_skimmers.disk <- function(column) {
-  sfl <- import_fn("sfl", "skimr", error_on_fail = FALSE)
-  inline_hist <- import_fn("inline_hist", "skimr", error_on_fail = FALSE)
-  sfl(
+  skimr::sfl(
     skim_type = "disk",
     min = ~min(as.double(.), na.rm = TRUE),
     max = ~max(as.double(.), na.rm = TRUE),
     median = ~stats::median(as.double(.), na.rm = TRUE),
     n_unique = ~pm_n_distinct(., na.rm = TRUE),
-    hist = ~inline_hist(stats::na.omit(as.double(.)))
+    hist = ~skimr::inline_hist(stats::na.omit(as.double(.)))
   )
 }

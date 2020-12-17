@@ -96,7 +96,11 @@ rsi_calc <- function(...,
   
   if (is.null(x)) {
     warning_("argument is NULL (check if columns exist): returning NA", call = FALSE)
-    return(NA)
+    if (as_percent == TRUE) {
+      return(NA_character_)
+    } else {
+      return(NA_real_)
+    }
   }
   
   print_warning <- FALSE

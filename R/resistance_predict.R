@@ -34,7 +34,7 @@
 #' @param year_every unit of sequence between lowest year found in the data and `year_max`
 #' @param minimum minimal amount of available isolates per year to include. Years containing less observations will be estimated by the model.
 #' @param model the statistical model of choice. This could be a generalised linear regression model with binomial distribution (i.e. using `glm(..., family = binomial)``, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for all valid options.
-#' @param I_as_S a logical to indicate whether values `I` should be treated as `S` (will otherwise be treated as `R`). The default, `TRUE`, follows the redefinition by EUCAST about the interpretion of I (increased exposure) in 2019, see section *Interpretation of S, I and R* below. 
+#' @param I_as_S a logical to indicate whether values `"I"` should be treated as `"S"` (will otherwise be treated as `"R"`). The default, `TRUE`, follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section *Interpretation of S, I and R* below. 
 #' @param preserve_measurements a logical to indicate whether predictions of years that are actually available in the data should be overwritten by the original data. The standard errors of those years will be `NA`.
 #' @param info a logical to indicate whether textual analysis should be printed with the name and [summary()] of the statistical model.
 #' @param main title of the plot

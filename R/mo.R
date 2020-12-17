@@ -25,7 +25,7 @@
 
 #' Transform input to a microorganism ID
 #'
-#' Use this function to determine a valid microorganism ID ([`mo`]). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like `"Staphylococcus aureus"`), an abbreviated name (like `"S. aureus"`), an abbreviation known in the field (like `"MRSA"`), or just a genus. Please see *Examples*.
+#' Use this function to determine a valid microorganism ID ([`mo`]). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like `"Staphylococcus aureus"`), an abbreviated name (such as `"S. aureus"`), an abbreviation known in the field (such as `"MRSA"`), or just a genus. Please see *Examples*.
 #' @inheritSection lifecycle Stable lifecycle
 #' @param x a character vector or a [data.frame] with one or two columns
 #' @param Becker a logical to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker *et al.* (1,2,3).
@@ -111,7 +111,7 @@
 #' @return A [character] [vector] with additional class [`mo`]
 #' @seealso [microorganisms] for the [data.frame] that is being used to determine ID's.
 #'
-#' The [mo_property()] functions (like [mo_genus()], [mo_gramstain()]) to get properties based on the returned code.
+#' The [`mo_*`][mo_property()] functions (such as [mo_genus()], [mo_gramstain()]) to get properties based on the returned code.
 #' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
 #' @examples
@@ -199,10 +199,10 @@ as.mo <- function(x,
   x[trimws2(x) %like% paste0("^(", translate_AMR("no|not", language = language), ") [a-z]+")] <- "UNKNOWN"
   uncertainty_level <- translate_allow_uncertain(allow_uncertain)
 
-  if (mo_source_isvalid(reference_df)
+  if (!is.null(reference_df)
+      && mo_source_isvalid(reference_df)
       && isFALSE(Becker)
       && isFALSE(Lancefield)
-      && !is.null(reference_df)
       && all(x %in% unlist(reference_df), na.rm = TRUE)) {
 
     reference_df <- repair_reference_df(reference_df)
@@ -358,11 +358,11 @@ exec_as.mo <- function(x,
   x[trimws2(x) %like% paste0("^(", translate_AMR("no|not", language = language), ") [a-z]+")] <- "UNKNOWN"
 
   if (initial_search == TRUE) {
-    options(mo_failures = NULL)
-    options(mo_uncertainties = NULL)
-    options(mo_renamed = NULL)
+    mo_env$mo_failures <- NULL
+    mo_env$mo_uncertainties <- NULL
+    mo_env$mo_renamed <- NULL
   }
-  options(mo_renamed_last_run = NULL)
+  mo_env$mo_renamed_last_run <- NULL
 
   failures <- character(0)
   uncertainty_level <- translate_allow_uncertain(allow_uncertain)
@@ -595,7 +595,7 @@ exec_as.mo <- function(x,
         } else {
           x[i] <- lookup(fullname == found["fullname_new"], haystack = MO_lookup)
         }
-        options(mo_renamed_last_run = found["fullname"])
+        mo_env$mo_renamed_last_run <- found["fullname"]
         was_renamed(name_old = found["fullname"],
                     name_new = lookup(fullname == found["fullname_new"], "fullname", haystack = MO_lookup),
                     ref_old = found["ref"],
@@ -970,7 +970,7 @@ exec_as.mo <- function(x,
           } else {
             x[i] <- lookup(fullname == found["fullname_new"], haystack = MO_lookup)
           }
-          options(mo_renamed_last_run = found["fullname"])
+          mo_env$mo_renamed_last_run <- found["fullname"]
           was_renamed(name_old = found["fullname"],
                       name_new = lookup(fullname == found["fullname_new"], "fullname", haystack = MO_lookup),
                       ref_old = found["ref"],
@@ -1022,7 +1022,7 @@ exec_as.mo <- function(x,
                           ref_old = found["ref"],
                           ref_new = lookup(fullname == found["fullname_new"], "ref", haystack = MO_lookup),
                           mo = lookup(fullname == found["fullname_new"], "mo", haystack = MO_lookup))
-              options(mo_renamed_last_run = found["fullname"])
+              mo_env$mo_renamed_last_run <- found["fullname"]
               uncertainties <<- rbind(uncertainties,
                                       format_uncertainty_as_df(uncertainty_level = now_checks_for_uncertainty_level,
                                                                input = a.x_backup,
@@ -1393,7 +1393,7 @@ exec_as.mo <- function(x,
   # handling failures ----
   failures <- failures[!failures %in% c(NA, NULL, NaN)]
   if (length(failures) > 0 & initial_search == TRUE) {
-    options(mo_failures = sort(unique(failures)))
+    mo_env$mo_failures <- sort(unique(failures))
     plural <- c("value", "it", "was")
     if (pm_n_distinct(failures) > 1) {
       plural <- c("values", "them", "were")
@@ -1420,7 +1420,7 @@ exec_as.mo <- function(x,
   # handling uncertainties ----
   if (NROW(uncertainties) > 0 & initial_search == TRUE) {
     uncertainties <- as.list(pm_distinct(uncertainties, input, .keep_all = TRUE))
-    options(mo_uncertainties = uncertainties)
+    mo_env$mo_uncertainties <- uncertainties
 
     plural <- c("", "it", "was")
     if (length(uncertainties$input) > 1) {
@@ -1540,13 +1540,13 @@ was_renamed <- function(name_old, name_new, ref_old = "", ref_new = "", mo = "")
                           new_ref = ref_new,
                           mo = mo,
                           stringsAsFactors = FALSE)
-  already_set <- getOption("mo_renamed")
+  already_set <- mo_env$mo_renamed
   if (!is.null(already_set)) {
-    options(mo_renamed = rbind(already_set,
+    mo_env$mo_renamed = rbind(already_set,
                                newly_set,
-                               stringsAsFactors = FALSE))
+                               stringsAsFactors = FALSE)
   } else {
-    options(mo_renamed = newly_set)
+    mo_env$mo_renamed <- newly_set
   }
 }
 
@@ -1554,9 +1554,9 @@ format_uncertainty_as_df <- function(uncertainty_level,
                                      input,
                                      result_mo,
                                      candidates = NULL) {
-  if (!is.null(getOption("mo_renamed_last_run", default = NULL))) {
-    fullname <- getOption("mo_renamed_last_run")
-    options(mo_renamed_last_run = NULL)
+  if (!is.null(mo_env$mo_renamed_last_run)) {
+    fullname <- mo_env$mo_renamed_last_run
+    mo_env$mo_renamed_last_run <- NULL
     renamed_to <- MO_lookup[match(result_mo, MO_lookup$mo), "fullname", drop = TRUE][1]
   } else {
     fullname <- MO_lookup[match(result_mo, MO_lookup$mo), "fullname", drop = TRUE][1]
@@ -1603,27 +1603,32 @@ freq.mo <- function(x, ...) {
   if (is.null(digits)) {
     digits <- 2
   }
-  freq.default <- import_fn("freq.default", "cleaner", error_on_fail = FALSE)
-  freq.default(x = x, ...,
-               .add_header = list(`Gram-negative` = paste0(format(sum(grams == "Gram-negative", na.rm = TRUE),
-                                                                  big.mark = ",",
-                                                                  decimal.mark = "."),
-                                                           " (", percentage(sum(grams == "Gram-negative", na.rm = TRUE) / length(grams), digits = digits),
-                                                           ")"),
-                                  `Gram-positive` = paste0(format(sum(grams == "Gram-positive", na.rm = TRUE),
-                                                                  big.mark = ",",
-                                                                  decimal.mark = "."),
-                                                           " (", percentage(sum(grams == "Gram-positive", na.rm = TRUE) / length(grams), digits = digits),
-                                                           ")"),
-                                  `Nr. of genera` = pm_n_distinct(mo_genus(x_noNA, language = NULL)),
-                                  `Nr. of species` = pm_n_distinct(paste(mo_genus(x_noNA, language = NULL),
-                                                                         mo_species(x_noNA, language = NULL)))))
+  cleaner::freq.default(
+    x = x,
+    ...,
+    .add_header = list(
+      `Gram-negative` = paste0(
+        format(sum(grams == "Gram-negative", na.rm = TRUE),
+               big.mark = ",",
+               decimal.mark = "."),
+        " (", percentage(sum(grams == "Gram-negative", na.rm = TRUE) / length(grams),
+                         digits = digits),
+        ")"),
+      `Gram-positive` = paste0(
+        format(sum(grams == "Gram-positive", na.rm = TRUE),
+               big.mark = ",",
+               decimal.mark = "."),
+        " (", percentage(sum(grams == "Gram-positive", na.rm = TRUE) / length(grams),
+                         digits = digits),
+        ")"),
+      `Nr. of genera` = pm_n_distinct(mo_genus(x_noNA, language = NULL)),
+      `Nr. of species` = pm_n_distinct(paste(mo_genus(x_noNA, language = NULL),
+                                             mo_species(x_noNA, language = NULL)))))
 }
 
 # will be exported using s3_register() in R/zzz.R
 get_skimmers.mo <- function(column) {
-  sfl <- import_fn("sfl", "skimr", error_on_fail = FALSE)
-  sfl(
+  skimr::sfl(
     skim_type = "mo",
     unique_total = ~pm_n_distinct(., na.rm = TRUE),
     gram_negative = ~sum(mo_is_gram_negative(stats::na.omit(.))),
@@ -1736,16 +1741,16 @@ unique.mo <- function(x, incomparables = FALSE, ...) {
 #' @rdname as.mo
 #' @export
 mo_failures <- function() {
-  getOption("mo_failures")
+  mo_env$mo_failures
 }
 
 #' @rdname as.mo
 #' @export
 mo_uncertainties <- function() {
-  if (is.null(getOption("mo_uncertainties"))) {
+  if (is.null(mo_env$mo_uncertainties)) {
     return(NULL)
   }
-  set_clean_class(as.data.frame(getOption("mo_uncertainties"), 
+  set_clean_class(as.data.frame(mo_env$mo_uncertainties, 
                                 stringsAsFactors = FALSE),
                   new_class = c("mo_uncertainties", "data.frame"))
 }
@@ -1814,7 +1819,7 @@ print.mo_uncertainties <- function(x, ...) {
 #' @rdname as.mo
 #' @export
 mo_renamed <- function() {
-  items <- getOption("mo_renamed", default = NULL)
+  items <- mo_env$mo_renamed
   if (is.null(items)) {
     items <- data.frame(stringsAsFactors = FALSE)
   } else {
@@ -1878,20 +1883,20 @@ translate_allow_uncertain <- function(allow_uncertain) {
 }
 
 get_mo_failures_uncertainties_renamed <- function() {
-  remember <- list(failures = getOption("mo_failures"),
-                   uncertainties = getOption("mo_uncertainties"),
-                   renamed = getOption("mo_renamed"))
+  remember <- list(failures = mo_env$mo_failures,
+                   uncertainties = mo_env$mo_uncertainties,
+                   renamed = mo_env$mo_renamed)
   # empty them, otherwise mo_shortname("Chlamydophila psittaci") will give 3 notes
-  options("mo_failures" = NULL)
-  options("mo_uncertainties" = NULL)
-  options("mo_renamed" = NULL)
+  mo_env$mo_failures <- NULL
+  mo_env$mo_uncertainties <- NULL
+  mo_env$mo_renamed <- NULL
   remember
 }
 
 load_mo_failures_uncertainties_renamed <- function(metadata) {
-  options("mo_failures" = metadata$failures)
-  options("mo_uncertainties" = metadata$uncertainties)
-  options("mo_renamed" = metadata$renamed)
+  mo_env$mo_failures <- metadata$failures
+  mo_env$mo_uncertainties <- metadata$uncertainties
+  mo_env$mo_renamed <- metadata$renamed
 }
 
 trimws2 <- function(x) {
@@ -1978,3 +1983,5 @@ repair_reference_df <- function(reference_df) {
   reference_df[, "mo"] <- as.mo(reference_df[, "mo", drop = TRUE])
   reference_df
 }
+
+mo_env <- new.env(hash = FALSE)

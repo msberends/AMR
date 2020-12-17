@@ -75,3 +75,7 @@ contents <- gsub("pm_distinct <- function(.data, ..., .keep_all = FALSE)", "pm_d
 contents <- contents[!grepl("summarize", contents)]
 
 writeLines(contents, "R/aa_helper_pm_functions.R")
+
+# after this, comment out:
+# pm_left_join() since we use a faster version
+# pm_group_split() since we don't use it and it relies on R 3.5.0 for the use of ...length(), which is hard to support with C++ code

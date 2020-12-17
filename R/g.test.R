@@ -34,7 +34,7 @@
 #'
 #' The p-value is computed from the asymptotic chi-squared distribution of the test statistic.
 #'
-#' In the contingency table case simulation is done by random sampling from the set of all contingency tables with given marginals, and works only if the marginals are strictly positive. Note that this is not the usual sampling situation assumed for a chi-squared test (like the *G*-test) but rather that for Fisher's exact test.
+#' In the contingency table case simulation is done by random sampling from the set of all contingency tables with given marginals, and works only if the marginals are strictly positive. Note that this is not the usual sampling situation assumed for a chi-squared test (such as the *G*-test) but rather that for Fisher's exact test.
 #'
 #' In the goodness-of-fit case simulation is done by random sampling from the discrete distribution specified by `p`, each sample being of size `n = sum(x)`. This simulation is done in \R and may be slow.
 #'   
@@ -144,7 +144,7 @@ g.test <- function(x,
     DNAME <- paste(paste(DNAME, collapse = "\n"), "and",
                    paste(DNAME2, collapse = "\n"))
   }
-  if (any(x < 0) || anyNA(x))
+  if (any(x < 0) || any(is.na((x)))) # this last one was anyNA, but only introduced in R 3.1.0
     stop("all entries of 'x' must be nonnegative and finite")
   if ((n <- sum(x)) == 0)
     stop("at least one entry of 'x' must be positive")

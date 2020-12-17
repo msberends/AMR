@@ -46,7 +46,7 @@
 #' Without using `collapse`, this function will return a [list]. This can be convenient to use e.g. inside a `mutate()`):\cr
 #' `df %>% mutate(abx = ab_from_text(clinical_text))` 
 #' 
-#' The returned AB codes can be transformed to official names, groups, etc. with all [ab_property()] functions like [ab_name()] and [ab_group()], or by using the `translate_ab` parameter.
+#' The returned AB codes can be transformed to official names, groups, etc. with all [`ab_*`][ab_property()] functions such as [ab_name()] and [ab_group()], or by using the `translate_ab` parameter.
 #' 
 #' With using `collapse`, this function will return a [character]:\cr
 #' `df %>% mutate(abx = ab_from_text(clinical_text, collapse = "|"))` 

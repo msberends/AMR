@@ -58,7 +58,7 @@ If \code{x} is a matrix with at least two rows and columns, it is taken as a two
 
 The p-value is computed from the asymptotic chi-squared distribution of the test statistic.
 
-In the contingency table case simulation is done by random sampling from the set of all contingency tables with given marginals, and works only if the marginals are strictly positive. Note that this is not the usual sampling situation assumed for a chi-squared test (like the \emph{G}-test) but rather that for Fisher's exact test.
+In the contingency table case simulation is done by random sampling from the set of all contingency tables with given marginals, and works only if the marginals are strictly positive. Note that this is not the usual sampling situation assumed for a chi-squared test (such as the \emph{G}-test) but rather that for Fisher's exact test.
 
 In the goodness-of-fit case simulation is done by random sampling from the discrete distribution specified by \code{p}, each sample being of size \code{n = sum(x)}. This simulation is done in \R and may be slow.
 \subsection{\emph{G}-test of goodness-of-fit (likelihood ratio test)}{

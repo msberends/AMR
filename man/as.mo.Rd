@@ -53,7 +53,7 @@ This excludes \emph{Enterococci} at default (who are in group D), use \code{Lanc
 A \link{character} \link{vector} with additional class \code{\link{mo}}
 }
 \description{
-Use this function to determine a valid microorganism ID (\code{\link{mo}}). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (like \code{"S. aureus"}), an abbreviation known in the field (like \code{"MRSA"}), or just a genus. Please see \emph{Examples}.
+Use this function to determine a valid microorganism ID (\code{\link{mo}}). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (such as \code{"S. aureus"}), an abbreviation known in the field (such as \code{"MRSA"}), or just a genus. Please see \emph{Examples}.
 }
 \details{
 \subsection{General info}{
@@ -220,7 +220,7 @@ mo_is_intrinsic_resistant("E. coli", "vanco") # returns TRUE
 \seealso{
 \link{microorganisms} for the \link{data.frame} that is being used to determine ID's.
 
-The \code{\link[=mo_property]{mo_property()}} functions (like \code{\link[=mo_genus]{mo_genus()}}, \code{\link[=mo_gramstain]{mo_gramstain()}}) to get properties based on the returned code.
+The \code{\link[=mo_property]{mo_*}} functions (such as \code{\link[=mo_genus]{mo_genus()}}, \code{\link[=mo_gramstain]{mo_gramstain()}}) to get properties based on the returned code.
 }
 \keyword{Becker}
 \keyword{Lancefield}

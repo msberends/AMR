@@ -1,5 +1,7 @@
-# AMR 1.4.0.9040
-## <small>Last updated: 16 December 2020</small>
+# AMR 1.4.0.9041
+## <small>Last updated: 17 December 2020</small>
+
+Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscript about this package to. We are those reviewers very grateful for going through our code so thoroughly!
 
 ### New
 * Function `is_new_episode()` to determine patient episodes which are not necessarily based on microorganisms. It also supports grouped variables with e.g. `mutate()`, `filter()` and `summarise()` of the `dplyr` package:
@@ -26,6 +28,7 @@
     as_tibble()
 ```
 * For all function parameters in the code, it is now defined what the exact type of user input should be (inspired by the [`typed`](https://github.com/moodymudskipper/typed) package). If the user input for a certain function does not meet the requirements for a specific parameter (such as the class or length), an informative error will be thrown. This makes the package more robust and the use of it more reproducible and reliable. In total, more than 400 arguments were defined.
+* Fix for `set_mo_source()`, that previously would not remember the file location of the original file
 * Deprecated function `p_symbol()` that not really fits the scope of this package. It will be removed in a future version. See [here](https://github.com/msberends/AMR/blob/v1.4.0/R/p_symbol.R) for the source code to preserve it.
 * Better determination of disk zones and MIC values when running `as.rsi()` on a data.frame
 * Updated coagulase-negative staphylococci determination with Becker *et al.* 2020 (PMID 32056452), meaning that the species *S. argensis*, *S. caeli*, *S. debuckii*, *S. edaphicus* and *S. pseudoxylosus* are now all considered CoNS
@@ -40,14 +43,16 @@
 * Fix for plotting MIC values with `plot()`
 * Added `plot()` generic to class `<disk>`
 * LA-MRSA and CA-MRSA are now recognised as an abbreviation for *Staphylococcus aureus*, meaning that e.g. `mo_genus("LA-MRSA")` will return `"Staphylococcus"` and `mo_is_gram_positive("LA-MRSA")` will return `TRUE`.
+* Fix for using `as.rsi()` on a `data.frame` that only contains one column for antibiotic interpretations
 
 ### Other
 * All messages and warnings thrown by this package now break sentences on whole words
 * More extensive unit tests
+* Internal calls to `options()` were all removed in favour of a new internal environment `mo_env`
 
 # AMR 1.4.0
 
-Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscipt about this package to. We are those reviewers very grateful for going through our code so thoroughly!
+Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscript about this package to. We are those reviewers very grateful for going through our code so thoroughly!
 
 ### New
 * Support for 'EUCAST Expert Rules' / 'EUCAST Intrinsic Resistance and Unusual Phenotypes' version 3.2 of May 2020. With this addition to the previously implemented version 3.1 of 2016, the `eucast_rules()` function can now correct for more than 180 different antibiotics and the `mdro()` function can determine multidrug resistance based on more than 150 different antibiotics. All previously implemented versions of the EUCAST rules are now maintained and kept available in this package. The `eucast_rules()` function consequently gained the parameters `version_breakpoints` (at the moment defaults to v10.0, 2020) and `version_expertrules` (at the moment defaults to v3.2, 2020). The `example_isolates` data set now also reflects the change from v3.1 to v3.2. The `mdro()` function now accepts `guideline == "EUCAST3.1"` and `guideline == "EUCAST3.2"`.

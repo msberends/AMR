@@ -48,7 +48,7 @@ With \code{type = "administration"} (or abbreviations, like "admin", "adm"), all
 Without using \code{collapse}, this function will return a \link{list}. This can be convenient to use e.g. inside a \code{mutate()}):\cr
 \code{df \%>\% mutate(abx = ab_from_text(clinical_text))}
 
-The returned AB codes can be transformed to official names, groups, etc. with all \code{\link[=ab_property]{ab_property()}} functions like \code{\link[=ab_name]{ab_name()}} and \code{\link[=ab_group]{ab_group()}}, or by using the \code{translate_ab} parameter.
+The returned AB codes can be transformed to official names, groups, etc. with all \code{\link[=ab_property]{ab_*}} functions such as \code{\link[=ab_name]{ab_name()}} and \code{\link[=ab_group]{ab_group()}}, or by using the \code{translate_ab} parameter.
 
 With using \code{collapse}, this function will return a \link{character}:\cr
 \code{df \%>\% mutate(abx = ab_from_text(clinical_text, collapse = "|"))}

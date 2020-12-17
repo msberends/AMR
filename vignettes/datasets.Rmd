@@ -26,15 +26,6 @@ library(dplyr)
 
 options(knitr.kable.NA = '')
 
-file_size <- function(...) {
-  size_kb <- file.size(...) / 1024
-  if (size_kb < 100) {
-    paste(round(size_kb, 0), "kB")
-  } else {
-    paste(round(size_kb / 1024, 1), "MB")
-  }
-}
-
 structure_txt <- function(dataset) {
   paste0("A data set with ",
          format(nrow(dataset), big.mark = ","), " rows and ", 
@@ -55,7 +46,7 @@ download_txt <- function(filename) {
   sas <- paste0(filename, ".sas")
   excel <- paste0(filename, ".xlsx")
   create_txt <- function(filename, type, software) {
-    paste0("* Download as [", software, " file](", github_base, filename, ") (", file_size(filename), ")  \n")
+    paste0("* Download as [", software, " file](", github_base, filename, ") (", AMR:::formatted_filesize(filename), ")  \n")
   }
 
   if (any(file.exists(rds),
@@ -83,7 +74,7 @@ print_df <- function(x, rows = 6) {
         sapply(x, function(y) {
           if (length(y) > 3) {
             paste0(paste(y[1:3], collapse = ", "), ", ...")
-          } else if (length(y) == 0 || is.na(y)) {
+          } else if (length(y) == 0 || all(is.na(y))) {
             ""
           } else {
             paste(y, collapse = ", ")

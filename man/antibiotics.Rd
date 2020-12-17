@@ -8,7 +8,7 @@
 \format{
 \subsection{For the \link{antibiotics} data set: a \link{data.frame} with 455 observations and 14 variables:}{
 \itemize{
-\item \code{ab}\cr Antibiotic ID as used in this package (like \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
+\item \code{ab}\cr Antibiotic ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
 \item \code{atc}\cr ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC, like \code{J01CR02}
 \item \code{cid}\cr Compound ID as found in PubChem
 \item \code{name}\cr Official name as used by WHONET/EARS-Net or the WHO
@@ -54,7 +54,7 @@ antibiotics
 antivirals
 }
 \description{
-Two data sets containing all antibiotics/antimycotics and antivirals. Use \code{\link[=as.ab]{as.ab()}} or one of the \code{\link[=ab_property]{ab_property()}} functions to retrieve values from the \link{antibiotics} data set. Three identifiers are included in this data set: an antibiotic ID (\code{ab}, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (\code{atc}) as defined by the WHO, and a Compound ID (\code{cid}) as found in PubChem. Other properties in this data set are derived from one or more of these codes.
+Two data sets containing all antibiotics/antimycotics and antivirals. Use \code{\link[=as.ab]{as.ab()}} or one of the \code{\link[=ab_property]{ab_*}} functions to retrieve values from the \link{antibiotics} data set. Three identifiers are included in this data set: an antibiotic ID (\code{ab}, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (\code{atc}) as defined by the WHO, and a Compound ID (\code{cid}) as found in PubChem. Other properties in this data set are derived from one or more of these codes.
 }
 \details{
 Properties that are based on an ATC code are only available when an ATC is available. These properties are: \code{atc_group1}, \code{atc_group2}, \code{oral_ddd}, \code{oral_units}, \code{iv_ddd} and \code{iv_units}.

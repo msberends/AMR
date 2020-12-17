@@ -30,13 +30,15 @@ All entries in the \link{antibiotics} data set have three different identifiers:
 
 All these properties will be searched for the user input. The \code{\link[=as.ab]{as.ab()}} can correct for different forms of misspelling:
 \itemize{
-\item Wrong spelling of drug names (like "tobramicin" or "gentamycin"), which corrects for most audible similarities such as f/ph, x/ks, c/z/s, t/th, etc.
+\item Wrong spelling of drug names (such as "tobramicin" or "gentamycin"), which corrects for most audible similarities such as f/ph, x/ks, c/z/s, t/th, etc.
 \item Too few or too many vowels or consonants
-\item Switching two characters (like "mreopenem", often the case in clinical data, when doctors typed too fast)
+\item Switching two characters (such as "mreopenem", often the case in clinical data, when doctors typed too fast)
 \item Digitalised paper records, leaving artefacts like 0/o/O (zero and O's), B/8, n/r, etc.
 }
 
-Use the \code{\link[=ab_property]{ab_property()}} functions to get properties based on the returned antibiotic ID, see Examples.
+Use the \code{\link[=ab_property]{ab_*}} functions to get properties based on the returned antibiotic ID, see Examples.
+
+Note: the \code{\link[=as.ab]{as.ab()}} and \code{\link[=ab_property]{ab_*}} functions may use very long regular expression to match brand names of antimicrobial agents. This may fail on some systems.
 }
 \section{Source}{
 

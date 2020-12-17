@@ -101,6 +101,8 @@ check_dataset_integrity <- function() {
     # package not yet loaded
     require("AMR")
   })
+  stop_if(!check_microorganisms | !check_antibiotics,
+          "the data set `microorganisms` or `antibiotics` was overwritten in your environment because another package with the same object names was loaded _after_ the AMR package, preventing the AMR package from working correctly. Please load the AMR package last.")
   invisible(TRUE)
 }
 
@@ -224,10 +226,11 @@ import_fn <- function(name, pkg, error_on_fail = TRUE) {
     stop_ifnot_installed(pkg)
   }
   tryCatch(
-    get(name, envir = asNamespace(pkg)),
+    # don't use get() to avoid fetching non-API functions 
+    getExportedValue(name = name, ns = asNamespace(pkg)),
     error = function(e) {
       if (isTRUE(error_on_fail)) {
-        stop_("function ", name, "() not found in package '", pkg,
+        stop_("function ", name, "() is not an exported object from package '", pkg,
               "'. Please create an issue at https://github.com/msberends/AMR/issues. Many thanks!",
               call = FALSE)
       } else {
@@ -239,7 +242,7 @@ import_fn <- function(name, pkg, error_on_fail = TRUE) {
 # this alternative wrapper to the message(), warning() and stop() functions:
 # - wraps text to never break lines within words
 # - ignores formatted text while wrapping
-# - adds indentation dependent on the type of message (like NOTE)
+# - adds indentation dependent on the type of message (such as NOTE)
 # - can add additional formatting functions like blue or bold text
 word_wrap <- function(...,
                       add_fn = list(), 
@@ -690,6 +693,17 @@ set_clean_class <- function(x, new_class) {
   x
 }
 
+formatted_filesize <- function(...) {
+  size_kb <- file.size(...) / 1024
+  if (size_kb < 1) {
+    paste(round(size_kb, 1), "kB")
+  } else if (size_kb < 100) {
+    paste(round(size_kb, 0), "kB")
+  } else {
+    paste(round(size_kb / 1024, 1), "MB")
+  }
+}
+
 create_pillar_column <- function(x, ...) {
   new_pillar_shaft_simple <- import_fn("new_pillar_shaft_simple", "pillar", error_on_fail = FALSE)
   if (!is.null(new_pillar_shaft_simple)) {
@@ -817,7 +831,7 @@ percentage <- function(x, digits = NULL, ...) {
 }
 
 # prevent dependency on package 'backports'
-# these functions were not available in previous versions of R (last checked: R 4.0.2)
+# these functions were not available in previous versions of R (last checked: R 4.0.3)
 # see here for the full list: https://github.com/r-lib/backports
 strrep <- function(x, times) {
   x <- as.character(x)
@@ -860,4 +874,7 @@ str2lang <- function(s) {
 }
 isNamespaceLoaded <- function(pkg) {
   pkg %in% loadedNamespaces()
+}
+lengths = function(x, use.names = TRUE) {
+  vapply(x, length, FUN.VALUE = NA_integer_, USE.NAMES = use.names)
 }
