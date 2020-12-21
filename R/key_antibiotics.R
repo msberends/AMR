@@ -34,9 +34,9 @@
 #' @param GramPos_1,GramPos_2,GramPos_3,GramPos_4,GramPos_5,GramPos_6 column names of antibiotics for **Gram-positives**, case-insensitive. See details for which antibiotics will be used at default (which are guessed with [guess_ab_col()]).
 #' @param GramNeg_1,GramNeg_2,GramNeg_3,GramNeg_4,GramNeg_5,GramNeg_6 column names of antibiotics for **Gram-negatives**, case-insensitive. See details for which antibiotics will be used at default (which are guessed with [guess_ab_col()]).
 #' @param warnings give a warning about missing antibiotic columns (they will be ignored)
-#' @param ... other parameters passed on to functions
+#' @param ... other arguments passed on to functions
 #' @details 
-#' The [key_antibiotics()] function is context-aware when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`. This means that then the `x` parameter can be omitted, please see *Examples*.
+#' The [key_antibiotics()] function is context-aware when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`. This means that then the `x` argument can be omitted, please see *Examples*.
 #' 
 #' The function [key_antibiotics()] returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using [key_antibiotics_equal()], to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (`"."`) by [key_antibiotics()] and ignored by [key_antibiotics_equal()].
 #' 
@@ -157,7 +157,7 @@ key_antibiotics <- function(x,
   
   dots <- unlist(list(...))
   if (length(dots) != 0) {
-    # backwards compatibility with old parameters
+    # backwards compatibility with old arguments
     dots.names <- dots %pm>% names()
     if ("info" %in% dots.names) {
       warnings <- dots[which(dots.names == "info")]

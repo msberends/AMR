@@ -17,7 +17,7 @@ is_new_episode(x, episode_days = 365, ...)
 a \link{logical} vector
 }
 \description{
-This function determines which items in a vector can be considered (the start of) a new episode, based on the parameter \code{episode_days}. This can be used to determine clinical episodes for any epidemiological analysis.
+This function determines which items in a vector can be considered (the start of) a new episode, based on the argument \code{episode_days}. This can be used to determine clinical episodes for any epidemiological analysis.
 }
 \details{
 Dates are first sorted from old to new. The oldest date will mark the start of the first episode. After this date, the next date will be marked that is at least \code{episode_days} days later than the start of the first episode. From that second marked date on, the next date will be marked that is at least \code{episode_days} days later than the start of the second episode which will be the start of the third episode, and so on. Before the vector is being returned, the original order will be restored.
@@ -31,7 +31,7 @@ The \code{dplyr} package is not required for this function to work, but this fun
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
 
-If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
+If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
 \section{Read more on our website!}{

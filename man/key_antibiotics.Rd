@@ -52,7 +52,7 @@ key_antibiotics_equal(
 
 \item{warnings}{give a warning about missing antibiotic columns (they will be ignored)}
 
-\item{...}{other parameters passed on to functions}
+\item{...}{other arguments passed on to functions}
 
 \item{y, z}{character vectors to compare}
 
@@ -68,7 +68,7 @@ key_antibiotics_equal(
 These function can be used to determine first isolates (see \code{\link[=first_isolate]{first_isolate()}}). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates can then be called first \emph{weighted} isolates.
 }
 \details{
-The \code{\link[=key_antibiotics]{key_antibiotics()}} function is context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} parameter can be omitted, please see \emph{Examples}.
+The \code{\link[=key_antibiotics]{key_antibiotics()}} function is context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} argument can be omitted, please see \emph{Examples}.
 
 The function \code{\link[=key_antibiotics]{key_antibiotics()}} returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using \code{\link[=key_antibiotics_equal]{key_antibiotics_equal()}}, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (\code{"."}) by \code{\link[=key_antibiotics]{key_antibiotics()}} and ignored by \code{\link[=key_antibiotics_equal]{key_antibiotics_equal()}}.
 
@@ -113,17 +113,17 @@ The function \code{\link[=key_antibiotics_equal]{key_antibiotics_equal()}} check
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
 
-If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
+If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
 \section{Key antibiotics}{
 
 There are two ways to determine whether isolates can be included as first \emph{weighted} isolates which will give generally the same results:
 \enumerate{
-\item Using \code{type = "keyantibiotics"} and parameter \code{ignore_I}
+\item Using \code{type = "keyantibiotics"} and argument \code{ignore_I}
 
 Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With \code{ignore_I = FALSE}, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. Read more about this in the \code{\link[=key_antibiotics]{key_antibiotics()}} function.
-\item Using \code{type = "points"} and parameter \code{points_threshold}
+\item Using \code{type = "points"} and argument \code{points_threshold}
 
 A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds \code{points_threshold}, which default to \code{2}, an isolate will be (re)selected as a first weighted isolate.
 }

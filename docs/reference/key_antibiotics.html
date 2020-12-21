@@ -112,7 +112,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9042</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9043</span>
       </span>
     </div>
 
@@ -336,7 +336,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other parameters passed on to functions</p></td>
+      <td><p>other arguments passed on to functions</p></td>
     </tr>
     <tr>
       <th>y, z</th>
@@ -362,7 +362,7 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>key_antibiotics()</code> function is context-aware when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>. This means that then the <code>x</code> parameter can be omitted, please see <em>Examples</em>.</p>
+    <p>The <code>key_antibiotics()</code> function is context-aware when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>. This means that then the <code>x</code> argument can be omitted, please see <em>Examples</em>.</p>
 <p>The function <code>key_antibiotics()</code> returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using <code>key_antibiotics_equal()</code>, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (<code>"."</code>) by <code>key_antibiotics()</code> and ignored by <code>key_antibiotics_equal()</code>.</p>
 <p>The <code><a href='first_isolate.html'>first_isolate()</a></code> function only uses this function on the same microbial species from the same patient. Using this, e.g. an MRSA will be included after a susceptible <em>S. aureus</em> (MSSA) is found within the same patient episode. Without key antibiotic comparison it would not. See <code><a href='first_isolate.html'>first_isolate()</a></code> for more info.</p>
 <p>At default, the antibiotics that are used for <strong>Gram-positive bacteria</strong> are:</p><ul>
@@ -402,15 +402,15 @@
 
 <p><img src='figures/lifecycle_stable.svg' style=margin-bottom:5px /> <br />
 The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</strong>. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.</p>
-<p>If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
+<p>If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
     <h2 class="hasAnchor" id="key-antibiotics"><a class="anchor" href="#key-antibiotics"></a>Key antibiotics</h2>
 
     
 
 <p>There are two ways to determine whether isolates can be included as first <em>weighted</em> isolates which will give generally the same results:</p><ol>
-<li><p>Using <code>type = "keyantibiotics"</code> and parameter <code>ignore_I</code></p>
+<li><p>Using <code>type = "keyantibiotics"</code> and argument <code>ignore_I</code></p>
 <p>Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With <code>ignore_I = FALSE</code>, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. Read more about this in the <code>key_antibiotics()</code> function.</p></li>
-<li><p>Using <code>type = "points"</code> and parameter <code>points_threshold</code></p>
+<li><p>Using <code>type = "points"</code> and argument <code>points_threshold</code></p>
 <p>A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds <code>points_threshold</code>, which default to <code>2</code>, an isolate will be (re)selected as a first weighted isolate.</p></li>
 </ol>
 

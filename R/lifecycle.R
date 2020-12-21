@@ -44,7 +44,7 @@
 #' \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 #' The [lifecycle][AMR::lifecycle] of this function is **stable**. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
 #' 
-#' If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
+#' If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 #' @section Retired lifecycle:
 #' \if{html}{\figure{lifecycle_retired.svg}{options: style=margin-bottom:5px} \cr}
 #' The [lifecycle][AMR::lifecycle] of this function is **retired**. A retired function is no longer under active development, and (if appropiate) a better alternative is available. No new arguments will be added, and only the most critical bugs will be fixed. In a future version, this function will be removed.

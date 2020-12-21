@@ -50,7 +50,7 @@ ab_property(x, property = "name", language = get_locale(), ...)
 
 \item{tolower}{logical to indicate whether the first character of every output should be transformed to a lower case character. This will lead to e.g. "polymyxin B" and not "polymyxin b".}
 
-\item{...}{other parameters passed on to \code{\link[=as.ab]{as.ab()}}}
+\item{...}{other arguments passed on to \code{\link[=as.ab]{as.ab()}}}
 
 \item{administration}{way of administration, either \code{"oral"} or \code{"iv"}}
 
@@ -81,7 +81,7 @@ The function \code{\link[=ab_url]{ab_url()}} will return the direct URL to the o
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
 
-If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
+If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
 \section{Source}{

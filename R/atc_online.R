@@ -32,9 +32,9 @@
 #' @param administration type of administration when using `property = "Adm.R"`, see Details
 #' @param url url of website of the WHOCC. The sign `%s` can be used as a placeholder for ATC codes.
 #' @param url_vet url of website of the WHOCC for veterinary medicine. The sign `%s` can be used as a placeholder for ATC_vet codes (that all start with "Q").
-#' @param ... parameters to pass on to `atc_property`
+#' @param ... arguments to pass on to `atc_property`
 #' @details
-#' Options for parameter `administration`:
+#' Options for argument `administration`:
 #' 
 #' - `"Implant"` = Implant
 #' - `"Inhal"` = Inhalation

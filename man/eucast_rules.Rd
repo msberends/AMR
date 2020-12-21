@@ -66,7 +66,7 @@ Before further processing, two non-EUCAST rules about drug combinations can be a
 
 Important examples include amoxicillin and amoxicillin/clavulanic acid, and trimethoprim and trimethoprim/sulfamethoxazole. Needless to say, for these rules to work, both drugs must be available in the data set.
 
-Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include \code{"other"} to the \code{rules} parameter, or use \code{eucast_rules(..., rules = "all")}.
+Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include \code{"other"} to the \code{rules} argument, or use \code{eucast_rules(..., rules = "all")}.
 }
 }
 \section{Antibiotics}{
@@ -83,7 +83,7 @@ Amikacin (\code{AMK}, \href{https://www.whocc.no/atc_ddd_index/?code=J01GB06&sho
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
 
-If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
+If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
 \section{Reference data publicly available}{

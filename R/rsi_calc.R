@@ -70,7 +70,7 @@ rsi_calc <- function(...,
     }
     if (length(dots) == 0 | all(dots == "df")) {
      # for complete data.frames, like example_isolates %pm>% select(AMC, GEN) %pm>% proportion_S()
-      # and the old rsi function, which has "df" as name of the first parameter
+      # and the old rsi function, which has "df" as name of the first argument
       x <- dots_df
     } else {
       # get dots that are in column names already, and the ones that will be once evaluated using dots_df or global env

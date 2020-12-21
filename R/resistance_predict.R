@@ -39,11 +39,11 @@
 #' @param info a logical to indicate whether textual analysis should be printed with the name and [summary()] of the statistical model.
 #' @param main title of the plot
 #' @param ribbon a logical to indicate whether a ribbon should be shown (default) or error bars
-#' @param ... parameters passed on to functions
+#' @param ... arguments passed on to functions
 #' @inheritSection as.rsi Interpretation of R and S/I
 #' @inheritParams first_isolate
 #' @inheritParams graphics::plot
-#' @details Valid options for the statistical model (parameter `model`) are:
+#' @details Valid options for the statistical model (argument `model`) are:
 #' - `"binomial"` or `"binom"` or `"logit"`: a generalised linear regression model with binomial distribution
 #' - `"loglin"` or `"poisson"`: a generalised log-linear regression model with poisson distribution
 #' - `"lin"` or `"linear"`: a linear regression model
@@ -138,11 +138,11 @@ resistance_predict <- function(x,
   meet_criteria(preserve_measurements, allow_class = "logical", has_length = 1)
   meet_criteria(info, allow_class = "logical", has_length = 1)
   
-  stop_if(is.null(model), 'choose a regression model with the `model` parameter, e.g. resistance_predict(..., model = "binomial")')
+  stop_if(is.null(model), 'choose a regression model with the `model` argument, e.g. resistance_predict(..., model = "binomial")')
 
   dots <- unlist(list(...))
   if (length(dots) != 0) {
-    # backwards compatibility with old parameters
+    # backwards compatibility with old arguments
     dots.names <- dots %pm>% names()
     if ("tbl" %in% dots.names) {
       x <- dots[which(dots.names == "tbl")]
@@ -158,7 +158,7 @@ resistance_predict <- function(x,
     stop_if(is.null(col_date), "`col_date` must be set")
   }
   stop_ifnot(col_date %in% colnames(x),
-             "column `", col_date, "` not found")
+             "column '", col_date, "' not found")
   
   # no grouped tibbles
   x <- as.data.frame(x, stringsAsFactors = FALSE)

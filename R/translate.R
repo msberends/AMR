@@ -45,7 +45,7 @@
 #' @name translate
 #' @export
 #' @examples
-#' # The 'language' parameter of below functions
+#' # The 'language' argument of below functions
 #' # will be set automatically to your system language
 #' # with get_locale()
 #'

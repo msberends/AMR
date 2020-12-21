@@ -72,7 +72,7 @@
 \item{axes}{logical.  If \code{TRUE}, a vertical (or horizontal, if
     \code{horiz} is true) axis is drawn.}
 
-\item{...}{Parameters passed on to functions}
+\item{...}{Arguments passed on to functions}
 
 \item{height}{either a vector or matrix of values describing the
     bars which make up the plot.  If \code{height} is a vector, the
@@ -103,7 +103,7 @@ Functions to print classes of the \code{AMR} package.
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
 
-If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
+If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
 \section{Read more on our website!}{

@@ -47,13 +47,13 @@
 #' @param arrows_textangled a logical whether the text at the end of the arrows should be angled
 #' @param arrows_alpha the alpha (transparency) of the arrows and their text
 #' @param base_textsize the text size for all plot elements except the labels and arrows
-#' @param ... Parameters passed on to functions
+#' @param ... Arguments passed on to functions
 #' @source The [ggplot_pca()] function is based on the `ggbiplot()` function from the `ggbiplot` package by Vince Vu, as found on GitHub: <https://github.com/vqv/ggbiplot> (retrieved: 2 March 2020, their latest commit: [`7325e88`](https://github.com/vqv/ggbiplot/commit/7325e880485bea4c07465a0304c470608fffb5d9); 12 February 2015).
 #' 
 #' As per their GPL-2 licence that demands documentation of code changes, the changes made based on the source code were: 
 #' 1. Rewritten code to remove the dependency on packages `plyr`, `scales` and `grid`
 #' 2. Parametrised more options, like arrow and ellipse settings
-#' 3. Hardened all input possibilities by defining the exact type of user input for every parameter
+#' 3. Hardened all input possibilities by defining the exact type of user input for every argument
 #' 4. Added total amount of explained variance as a caption in the plot
 #' 5. Cleaned all syntax based on the `lintr` package, fixed grammatical errors and added integrity checks
 #' 6. Updated documentation

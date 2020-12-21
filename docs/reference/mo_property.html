@@ -112,7 +112,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9042</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9043</span>
       </span>
     </div>
 
@@ -340,7 +340,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other parameters passed on to <code><a href='as.mo.html'>as.mo()</a></code>, such as 'allow_uncertain' and 'ignore_pattern'</p></td>
+      <td><p>other arguments passed on to <code><a href='as.mo.html'>as.mo()</a></code>, such as 'allow_uncertain' and 'ignore_pattern'</p></td>
     </tr>
     <tr>
       <th>ab</th>
@@ -378,7 +378,7 @@
 <p>The short name - <code>mo_shortname()</code> - almost always returns the first character of the genus and the full species, like <code>"E. coli"</code>. Exceptions are abbreviations of staphylococci (such as <em>"CoNS"</em>, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as <em>"GBS"</em>, Group B Streptococci). Please bear in mind that e.g. <em>E. coli</em> could mean <em>Escherichia coli</em> (kingdom of Bacteria) as well as <em>Entamoeba coli</em> (kingdom of Protozoa). Returning to the full name will be done using <code><a href='as.mo.html'>as.mo()</a></code> internally, giving priority to bacteria and human pathogens, i.e. <code>"E. coli"</code> will be considered <em>Escherichia coli</em>. In other words, <code>mo_fullname(mo_shortname("Entamoeba coli"))</code> returns <code>"Escherichia coli"</code>.</p>
 <p>Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions <code>mo_kingdom()</code> and <code>mo_domain()</code> return the exact same results.</p>
 <p>The Gram stain - <code>mo_gramstain()</code> - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, <a href='https://pubmed.ncbi.nlm.nih.gov/11837318'>PMID 11837318</a>), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value <code>NA</code>. Functions <code>mo_is_gram_negative()</code> and <code>mo_is_gram_positive()</code> always return <code>TRUE</code> or <code>FALSE</code> (except when the input is <code>NA</code> or the MO code is <code>UNKNOWN</code>), thus always return <code>FALSE</code> for species outside the taxonomic kingdom of Bacteria.</p>
-<p>Intrinsic resistance - <code>mo_is_intrinsic_resistant()</code> - will be determined based on the <a href='intrinsic_resistant.html'>intrinsic_resistant</a> data set, which is based on <a href='https://www.eucast.org/expert_rules_and_intrinsic_resistance/'>'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2</a> from 2020. The <code>mo_is_intrinsic_resistant()</code> can be vectorised over parameters <code>x</code> (input for microorganisms) and over <code>ab</code> (input for antibiotics).</p>
+<p>Intrinsic resistance - <code>mo_is_intrinsic_resistant()</code> - will be determined based on the <a href='intrinsic_resistant.html'>intrinsic_resistant</a> data set, which is based on <a href='https://www.eucast.org/expert_rules_and_intrinsic_resistance/'>'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2</a> from 2020. The <code>mo_is_intrinsic_resistant()</code> can be vectorised over arguments <code>x</code> (input for microorganisms) and over <code>ab</code> (input for antibiotics).</p>
 <p>All output will be <a href='translate.html'>translate</a>d where possible.</p>
 <p>The function <code>mo_url()</code> will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
@@ -387,7 +387,7 @@
 
 <p><img src='figures/lifecycle_stable.svg' style=margin-bottom:5px /> <br />
 The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</strong>. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.</p>
-<p>If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
+<p>If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
     <h2 class="hasAnchor" id="matching-score-for-microorganisms"><a class="anchor" href="#matching-score-for-microorganisms"></a>Matching score for microorganisms</h2>
 
     

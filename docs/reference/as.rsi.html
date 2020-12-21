@@ -112,7 +112,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9042</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9043</span>
       </span>
     </div>
 
@@ -325,7 +325,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>for using on a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>: names of columns to apply <code>as.rsi()</code> on (supports tidy selection like <code>AMX:VAN</code>). Otherwise: parameters passed on to methods.</p></td>
+      <td><p>for using on a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>: names of columns to apply <code>as.rsi()</code> on (supports tidy selection like <code>AMX:VAN</code>). Otherwise: arguments passed on to methods.</p></td>
     </tr>
     <tr>
       <th>threshold</th>
@@ -357,7 +357,7 @@
     </tr>
     <tr>
       <th>reference_data</th>
-      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> to be used for interpretation, which defaults to the <a href='rsi_translation.html'>rsi_translation</a> data set. Changing this parameter allows for using own interpretation guidelines. This parameter must contain a data set that is equal in structure to the <a href='rsi_translation.html'>rsi_translation</a> data set (same column names and column types). Please note that the <code>guideline</code> parameter will be ignored when <code>reference_data</code> is manually set.</p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> to be used for interpretation, which defaults to the <a href='rsi_translation.html'>rsi_translation</a> data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the <a href='rsi_translation.html'>rsi_translation</a> data set (same column names and column types). Please note that the <code>guideline</code> argument will be ignored when <code>reference_data</code> is manually set.</p></td>
     </tr>
     <tr>
       <th>col_mo</th>
@@ -376,13 +376,13 @@
 
 <p>The <code>as.rsi()</code> function works in four ways:</p><ol>
 <li><p>For <strong>cleaning raw / untransformed data</strong>. The data will be cleaned to only contain values S, I and R and will try its best to determine this with some intelligence. For example, mixed values with R/SI interpretations and MIC values such as <code>"&lt;0.25; S"</code> will be coerced to <code>"S"</code>. Combined interpretations for multiple test methods (as seen in laboratory records) such as <code>"S; S"</code> will be coerced to <code>"S"</code>, but a value like <code>"S; I"</code> will return <code>NA</code> with a warning that the input is unclear.</p></li>
-<li><p>For <strong>interpreting minimum inhibitory concentration (MIC) values</strong> according to EUCAST or CLSI. You must clean your MIC values first using <code><a href='as.mic.html'>as.mic()</a></code>, that also gives your columns the new data class <code><a href='as.mic.html'>mic</a></code>. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the <code>mo</code> parameter.</p><ul>
+<li><p>For <strong>interpreting minimum inhibitory concentration (MIC) values</strong> according to EUCAST or CLSI. You must clean your MIC values first using <code><a href='as.mic.html'>as.mic()</a></code>, that also gives your columns the new data class <code><a href='as.mic.html'>mic</a></code>. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the <code>mo</code> argument.</p><ul>
 <li><p>Using <code>dplyr</code>, R/SI interpretation can be done very easily with either:</p><pre><span class='va'>your_data</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_if</a></span><span class='op'>(</span><span class='va'>is.mic</span>, <span class='va'>as.rsi</span><span class='op'>)</span>             <span class='co'># until dplyr 1.0.0</span>
 <span class='va'>your_data</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span><span class='op'>(</span><span class='fu'>where</span><span class='op'>(</span><span class='va'>is.mic</span><span class='op'>)</span>, <span class='va'>as.rsi</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># since dplyr 1.0.0</span>
 </pre></li>
 <li><p>Operators like "&lt;=" will be stripped before interpretation. When using <code>conserve_capped_values = TRUE</code>, an MIC value of e.g. "&gt;2" will always return "R", even if the breakpoint according to the chosen guideline is "&gt;=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (<code>conserve_capped_values = FALSE</code>) considers "&gt;2" to be lower than "&gt;=4" and might in this case return "S" or "I".</p></li>
 </ul></li>
-<li><p>For <strong>interpreting disk diffusion diameters</strong> according to EUCAST or CLSI. You must clean your disk zones first using <code><a href='as.disk.html'>as.disk()</a></code>, that also gives your columns the new data class <code><a href='as.disk.html'>disk</a></code>. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the <code>mo</code> parameter.</p><ul>
+<li><p>For <strong>interpreting disk diffusion diameters</strong> according to EUCAST or CLSI. You must clean your disk zones first using <code><a href='as.disk.html'>as.disk()</a></code>, that also gives your columns the new data class <code><a href='as.disk.html'>disk</a></code>. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the <code>mo</code> argument.</p><ul>
 <li><p>Using <code>dplyr</code>, R/SI interpretation can be done very easily with either:</p><pre><span class='va'>your_data</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate_all.html'>mutate_if</a></span><span class='op'>(</span><span class='va'>is.disk</span>, <span class='va'>as.rsi</span><span class='op'>)</span>             <span class='co'># until dplyr 1.0.0</span>
 <span class='va'>your_data</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span><span class='op'>(</span><span class='fu'>where</span><span class='op'>(</span><span class='va'>is.disk</span><span class='op'>)</span>, <span class='va'>as.rsi</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># since dplyr 1.0.0</span>
 </pre></li>
@@ -394,8 +394,8 @@
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Supported guidelines</h3>
 
 
-<p>For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the <code>guideline</code> parameter are: "CLSI 2010", "CLSI 2011", "CLSI 2012", "CLSI 2013", "CLSI 2014", "CLSI 2015", "CLSI 2016", "CLSI 2017", "CLSI 2018", "CLSI 2019", "EUCAST 2011", "EUCAST 2012", "EUCAST 2013", "EUCAST 2014", "EUCAST 2015", "EUCAST 2016", "EUCAST 2017", "EUCAST 2018", "EUCAST 2019", "EUCAST 2020".</p>
-<p>Simply using <code>"CLSI"</code> or <code>"EUCAST"</code> as input will automatically select the latest version of that guideline. You can set your own data set using the <code>reference_data</code> parameter. The <code>guideline</code> parameter will then be ignored.</p>
+<p>For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the <code>guideline</code> argument are: "CLSI 2010", "CLSI 2011", "CLSI 2012", "CLSI 2013", "CLSI 2014", "CLSI 2015", "CLSI 2016", "CLSI 2017", "CLSI 2018", "CLSI 2019", "EUCAST 2011", "EUCAST 2012", "EUCAST 2013", "EUCAST 2014", "EUCAST 2015", "EUCAST 2016", "EUCAST 2017", "EUCAST 2018", "EUCAST 2019", "EUCAST 2020".</p>
+<p>Simply using <code>"CLSI"</code> or <code>"EUCAST"</code> as input will automatically select the latest version of that guideline. You can set your own data set using the <code>reference_data</code> argument. The <code>guideline</code> argument will then be ignored.</p>
 
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>After interpretation</h3>
 
@@ -410,7 +410,7 @@
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Other</h3>
 
 
-<p>The function <code>is.rsi.eligible()</code> returns <code>TRUE</code> when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and <code>FALSE</code> otherwise. The threshold of 5% can be set with the <code>threshold</code> parameter.</p>
+<p>The function <code>is.rsi.eligible()</code> returns <code>TRUE</code> when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and <code>FALSE</code> otherwise. The threshold of 5% can be set with the <code>threshold</code> argument.</p>
 
     <h2 class="hasAnchor" id="interpretation-of-r-and-s-i"><a class="anchor" href="#interpretation-of-r-and-s-i"></a>Interpretation of R and S/I</h2>
 
@@ -432,7 +432,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 
 <p><img src='figures/lifecycle_stable.svg' style=margin-bottom:5px /> <br />
 The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</strong>. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.</p>
-<p>If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
+<p>If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
     <h2 class="hasAnchor" id="reference-data-publicly-available"><a class="anchor" href="#reference-data-publicly-available"></a>Reference data publicly available</h2>
 
     
@@ -463,7 +463,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
                  CIP <span class='op'>=</span> <span class='fu'><a href='as.mic.html'>as.mic</a></span><span class='op'>(</span><span class='fl'>0.256</span><span class='op'>)</span>,
                  GEN <span class='op'>=</span> <span class='fu'><a href='as.disk.html'>as.disk</a></span><span class='op'>(</span><span class='fl'>18</span><span class='op'>)</span>,
                  TOB <span class='op'>=</span> <span class='fu'><a href='as.disk.html'>as.disk</a></span><span class='op'>(</span><span class='fl'>16</span><span class='op'>)</span>,
-                 NIT <span class='op'>=</span> <span class='fu'><a href='as.mic.html'>as.mic</a></span><span class='op'>(</span><span class='fl'>32</span><span class='op'>)</span><span class='op'>)</span>
+                 NIT <span class='op'>=</span> <span class='fu'><a href='as.mic.html'>as.mic</a></span><span class='op'>(</span><span class='fl'>32</span><span class='op'>)</span>,
+                 ERY <span class='op'>=</span> <span class='st'>"R"</span><span class='op'>)</span>
 <span class='fu'>as.rsi</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
 
 <span class='co'># for single values</span>

@@ -200,7 +200,7 @@ g.test <- function(x,
   if (any(E < 5) && is.finite(PARAMETER))
     warning("G-statistic approximation may be incorrect due to E < 5")
   
-  structure(list(statistic = STATISTIC, parameter = PARAMETER,
+  structure(list(statistic = STATISTIC, argument = PARAMETER,
                  p.value = PVAL, method = METHOD, data.name = DNAME,
                  observed = x, expected = E, residuals = (x - E) / sqrt(E),
                  stdres = (x - E) / sqrt(V)), class = "htest")

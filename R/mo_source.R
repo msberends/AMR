@@ -36,7 +36,7 @@
 #' @aliases set_mo_source get_mo_source
 #' @details The reference file can be a text file separated with commas (CSV) or tabs or pipes, an Excel file (either 'xls' or 'xlsx' format) or an \R object file (extension '.rds'). To use an Excel file, you will need to have the `readxl` package installed.
 #'
-#' [set_mo_source()] will check the file for validity: it must be a [data.frame], must have a column named `"mo"` which contains values from [`microorganisms$mo`][microorganisms] and must have a reference column with your own defined values. If all tests pass, [set_mo_source()] will read the file into \R and will ask to export it to `"~/mo_source.rds"`. The CRAN policy disallows packages to write to the file system, although '*exceptions may be allowed in interactive sessions if the package obtains confirmation from the user*'. For this reason, this function only works in interactive sessions so that the user can **specifically confirm and allow** that this file will be created. The destination of this file can be set with the `destination` parameter and defaults to the user's home directory. It can also be set as an \R option, using `options(AMR_mo_source = "my/location/file.rds")`.
+#' [set_mo_source()] will check the file for validity: it must be a [data.frame], must have a column named `"mo"` which contains values from [`microorganisms$mo`][microorganisms] and must have a reference column with your own defined values. If all tests pass, [set_mo_source()] will read the file into \R and will ask to export it to `"~/mo_source.rds"`. The CRAN policy disallows packages to write to the file system, although '*exceptions may be allowed in interactive sessions if the package obtains confirmation from the user*'. For this reason, this function only works in interactive sessions so that the user can **specifically confirm and allow** that this file will be created. The destination of this file can be set with the `destination` argument and defaults to the user's home directory. It can also be set as an \R option, using `options(AMR_mo_source = "my/location/file.rds")`.
 #' 
 #' The created compressed data file `"mo_source.rds"` will be used at default for MO determination (function [as.mo()] and consequently all `mo_*` functions like [mo_genus()] and [mo_gramstain()]). The location and timestamp of the original file will be saved as an attribute to the compressed data file. 
 #' 
@@ -125,11 +125,11 @@
 set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_source.rds")) {
   meet_criteria(path, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(destination, allow_class = "character", has_length = 1)
-  stop_ifnot(destination %like% "[.]rds$", "the `destination` must be a file location with file extension .rds")
+  stop_ifnot(destination %like% "[.]rds$", "the `destination` must be a file location with file extension .rds.")
   
   mo_source_destination <- path.expand(destination)
   
-  stop_ifnot(interactive(), "This function can only be used in interactive mode, since it must ask for the user's permission to write a file to their home folder.")
+  stop_ifnot(interactive(), "this function can only be used in interactive mode, since it must ask for the user's permission to write a file to their home folder.")
 
   if (is.null(path) || path %in% c(FALSE, "")) {
     mo_env$mo_source <- NULL
@@ -160,13 +160,13 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
     try(
       df <- utils::read.table(header = TRUE, sep = ",", stringsAsFactors = FALSE),
       silent = TRUE)
-    if (!mo_source_isvalid(df, stop_on_error = FALSE)) {
+    if (!check_validity_mo_source(df, stop_on_error = FALSE)) {
       # try tab
       try(
         df <- utils::read.table(header = TRUE, sep = "\t", stringsAsFactors = FALSE),
         silent = TRUE)
     }
-    if (!mo_source_isvalid(df, stop_on_error = FALSE)) {
+    if (!check_validity_mo_source(df, stop_on_error = FALSE)) {
       # try pipe
       try(
         df <- utils::read.table(header = TRUE, sep = "|", stringsAsFactors = FALSE),
@@ -175,7 +175,7 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
   }
   
   # check integrity
-  mo_source_isvalid(df)
+  check_validity_mo_source(df)
   
   df <- subset(df, !is.na(mo))
   
@@ -211,6 +211,7 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
     }
   }
   attr(df, "mo_source_location") <- path
+  attr(df, "mo_source_destination") <- mo_source_destination
   attr(df, "mo_source_timestamp") <- file.mtime(path)
   saveRDS(df, mo_source_destination)
   mo_env$mo_source <- df
@@ -226,7 +227,7 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
 get_mo_source <- function(destination = getOption("AMR_mo_source", "~/mo_source.rds")) {
   if (!file.exists(path.expand(destination))) {
     if (interactive()) {
-      # source file might have been deleted, update reference
+      # source file might have been deleted, so update reference
       set_mo_source("")
     }
     return(NULL)
@@ -244,7 +245,7 @@ get_mo_source <- function(destination = getOption("AMR_mo_source", "~/mo_source.
   mo_env$mo_source
 }
 
-mo_source_isvalid <- function(x, refer_to_name = "`reference_df`", stop_on_error = TRUE) {
+check_validity_mo_source <- function(x, refer_to_name = "`reference_df`", stop_on_error = TRUE) {
   check_dataset_integrity()
   
   if (paste(deparse(substitute(x)), collapse = "") == "get_mo_source()") {

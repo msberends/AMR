@@ -15,7 +15,7 @@ age(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...)
 
 \item{na.rm}{a logical to indicate whether missing values should be removed}
 
-\item{...}{parameters passed on to \code{\link[=as.POSIXlt]{as.POSIXlt()}}, such as \code{origin}}
+\item{...}{arguments passed on to \code{\link[=as.POSIXlt]{as.POSIXlt()}}, such as \code{origin}}
 }
 \value{
 An \link{integer} (no decimals) if \code{exact = FALSE}, a \link{double} (with decimals) otherwise
@@ -31,7 +31,7 @@ Ages below 0 will be returned as \code{NA} with a warning. Ages above 120 will o
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
 
-If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
+If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
 \section{Read more on our website!}{

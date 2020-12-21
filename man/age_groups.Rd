@@ -17,10 +17,10 @@ age_groups(x, split_at = c(12, 25, 55, 75), na.rm = FALSE)
 Ordered \link{factor}
 }
 \description{
-Split ages into age groups defined by the \code{split} parameter. This allows for easier demographic (antimicrobial resistance) analysis.
+Split ages into age groups defined by the \code{split} argument. This allows for easier demographic (antimicrobial resistance) analysis.
 }
 \details{
-To split ages, the input for the \code{split_at} parameter can be:
+To split ages, the input for the \code{split_at} argument can be:
 \itemize{
 \item A numeric vector. A value of e.g. \code{c(10, 20)} will split \code{x} on 0-9, 10-19 and 20+. A value of only \code{50} will split \code{x} on 0-49 and 50+.
 The default is to split on young children (0-11), youth (12-24), young adults (25-54), middle-aged adults (55-74) and elderly (75+).
@@ -38,7 +38,7 @@ The default is to split on young children (0-11), youth (12-24), young adults (2
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
 
-If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
+If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
 \section{Read more on our website!}{

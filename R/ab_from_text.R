@@ -32,21 +32,21 @@
 #' @param collapse character to pass on to `paste(..., collapse = ...)` to only return one character per element of `text`, see *Examples*
 #' @param translate_ab if `type = "drug"`: a column name of the [antibiotics] data set to translate the antibiotic abbreviations to, using [ab_property()]. Defaults to `FALSE`. Using `TRUE` is equal to using "name".
 #' @param thorough_search logical to indicate whether the input must be extensively searched for misspelling and other faulty input values. Setting this to `TRUE` will take considerably more time than when using `FALSE`. At default, it will turn `TRUE` when all input elements contain a maximum of three words.
-#' @param ... parameters passed on to [as.ab()]
+#' @param ... arguments passed on to [as.ab()]
 #' @details This function is also internally used by [as.ab()], although it then only searches for the first drug name and will throw a note if more drug names could have been returned.
 #' 
-#' ## Parameter `type`
+#' ## Argument `type`
 #' At default, the function will search for antimicrobial drug names. All text elements will be searched for official names, ATC codes and brand names. As it uses [as.ab()] internally, it will correct for misspelling.
 #' 
 #' With `type = "dose"` (or similar, like "dosing", "doses"), all text elements will be searched for numeric values that are higher than 100 and do not resemble years. The output will be numeric. It supports any unit (g, mg, IE, etc.) and multiple values in one clinical text, see *Examples*.
 #' 
 #' With `type = "administration"` (or abbreviations, like "admin", "adm"), all text elements will be searched for a form of drug administration. It supports the following forms (including common abbreviations): buccal, implant, inhalation, instillation, intravenous, nasal, oral, parenteral, rectal, sublingual, transdermal and vaginal. Abbreviations for oral (such as 'po', 'per os') will become "oral", all values for intravenous (such as 'iv', 'intraven') will become "iv". It supports multiple values in one clinical text, see *Examples*.
 #' 
-#' ## Parameter `collapse`
+#' ## Argument `collapse`
 #' Without using `collapse`, this function will return a [list]. This can be convenient to use e.g. inside a `mutate()`):\cr
 #' `df %>% mutate(abx = ab_from_text(clinical_text))` 
 #' 
-#' The returned AB codes can be transformed to official names, groups, etc. with all [`ab_*`][ab_property()] functions such as [ab_name()] and [ab_group()], or by using the `translate_ab` parameter.
+#' The returned AB codes can be transformed to official names, groups, etc. with all [`ab_*`][ab_property()] functions such as [ab_name()] and [ab_group()], or by using the `translate_ab` argument.
 #' 
 #' With using `collapse`, this function will return a [character]:\cr
 #' `df %>% mutate(abx = ab_from_text(clinical_text, collapse = "|"))` 

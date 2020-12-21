@@ -30,7 +30,7 @@
 #' @param x any character (vector) that can be coerced to a valid microorganism code with [as.mo()]. Can be omitted for auto-guessing in `mo_is_*()` functions when used inside `dplyr` verbs, such as [`filter()`][dplyr::filter()], [`mutate()`][dplyr::mutate()] and [`summarise()`][dplyr::summarise()], please see *Examples*.
 #' @param property one of the column names of the [microorganisms] data set: `r paste0('"``', colnames(microorganisms), '\``"', collapse = ", ")`, or must be `"shortname"`
 #' @param language language of the returned text, defaults to system language (see [get_locale()]) and can be overwritten by setting the option `AMR_locale`, e.g. `options(AMR_locale = "de")`, see [translate]. Also used to translate text like "no growth". Use `language = NULL` or `language = ""` to prevent translation.
-#' @param ... other parameters passed on to [as.mo()], such as 'allow_uncertain' and 'ignore_pattern'
+#' @param ... other arguments passed on to [as.mo()], such as 'allow_uncertain' and 'ignore_pattern'
 #' @param ab any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
 #' @param open browse the URL using [utils::browseURL()]
 #' @details All functions will return the most recently known taxonomic property according to the Catalogue of Life, except for [mo_ref()], [mo_authors()] and [mo_year()]. Please refer to this example, knowing that *Escherichia blattae* was renamed to *Shimwellia blattae* in 2010:
@@ -44,7 +44,7 @@
 #'
 #' The Gram stain - [mo_gramstain()] - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318)), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`. Functions [mo_is_gram_negative()] and [mo_is_gram_positive()] always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
 #' 
-#' Intrinsic resistance - [mo_is_intrinsic_resistant()] - will be determined based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(3.2)`. The [mo_is_intrinsic_resistant()] can be vectorised over parameters `x` (input for microorganisms) and over `ab` (input for antibiotics).
+#' Intrinsic resistance - [mo_is_intrinsic_resistant()] - will be determined based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(3.2)`. The [mo_is_intrinsic_resistant()] can be vectorised over arguments `x` (input for microorganisms) and over `ab` (input for antibiotics).
 #'
 #' All output will be [translate]d where possible.
 #'
@@ -585,7 +585,7 @@ mo_validate <- function(x, property, language, ...) {
     Lancefield <- FALSE
   }
 
-  # try to catch an error when inputting an invalid parameter
+  # try to catch an error when inputting an invalid argument
   # so the 'call.' can be set to FALSE
   tryCatch(x[1L] %in% MO_lookup[1, property, drop = TRUE],
            error = function(e) stop(e$message, call. = FALSE))

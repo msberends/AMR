@@ -10,7 +10,7 @@ As per their GPL-2 licence that demands documentation of code changes, the chang
 \enumerate{
 \item Rewritten code to remove the dependency on packages \code{plyr}, \code{scales} and \code{grid}
 \item Parametrised more options, like arrow and ellipse settings
-\item Hardened all input possibilities by defining the exact type of user input for every parameter
+\item Hardened all input possibilities by defining the exact type of user input for every argument
 \item Added total amount of explained variance as a caption in the plot
 \item Cleaned all syntax based on the \code{lintr} package, fixed grammatical errors and added integrity checks
 \item Updated documentation
@@ -100,7 +100,7 @@ ggplot_pca(
 
 \item{base_textsize}{the text size for all plot elements except the labels and arrows}
 
-\item{...}{Parameters passed on to functions}
+\item{...}{Arguments passed on to functions}
 }
 \description{
 Produces a \code{ggplot2} variant of a so-called \href{https://en.wikipedia.org/wiki/Biplot}{biplot} for PCA (principal component analysis), but is more flexible and more appealing than the base \R \code{\link[=biplot]{biplot()}} function.

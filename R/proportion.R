@@ -36,15 +36,15 @@
 #' @param data a [data.frame] containing columns with class [`rsi`] (see [as.rsi()])
 #' @param translate_ab a column name of the [antibiotics] data set to translate the antibiotic abbreviations to, using [ab_property()]
 #' @inheritParams ab_property
-#' @param combine_SI a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter `combine_IR`, but this now follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is `TRUE`.
-#' @param combine_IR a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see parameter `combine_SI`.
+#' @param combine_SI a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the argument `combine_IR`, but this now follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is `TRUE`.
+#' @param combine_IR a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see argument `combine_SI`.
 #' @inheritSection as.rsi Interpretation of R and S/I
 #' @details
 #' The function [resistance()] is equal to the function [proportion_R()]. The function [susceptibility()] is equal to the function [proportion_SI()].
 #'  
 #' **Remember that you should filter your table to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set.
 #'
-#' These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the [`count()`][AMR::count()] functions to count isolates. The function [susceptibility()] is essentially equal to `count_susceptible() / count_all()`. *Low counts can influence the outcome - the `proportion` functions may camouflage this, since they only return the proportion (albeit being dependent on the `minimum` parameter).*
+#' These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the [`count()`][AMR::count()] functions to count isolates. The function [susceptibility()] is essentially equal to `count_susceptible() / count_all()`. *Low counts can influence the outcome - the `proportion` functions may camouflage this, since they only return the proportion (albeit being dependent on the `minimum` argument).*
 #'
 #' The function [proportion_df()] takes any variable from `data` that has an [`rsi`] class (created with [as.rsi()]) and calculates the proportions R, I and S. It also supports grouped variables. The function [rsi_df()] works exactly like [proportion_df()], but adds the number of isolates.
 #' @section Combination therapy:

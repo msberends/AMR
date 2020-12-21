@@ -26,6 +26,7 @@
 context("rsi.R")
 
 test_that("rsi works", {
+  
   skip_on_cran()
   
   expect_true(as.rsi("S") < as.rsi("I"))
@@ -83,7 +84,6 @@ test_that("rsi works", {
 
 })
 
-
 test_that("mic2rsi works", {
   
   skip_on_cran()
@@ -115,19 +115,6 @@ test_that("mic2rsi works", {
                                  as.rsi() %>%
                                  pull(amox_mic) %>%
                                  is.rsi()))
-  
-  expect_warning(data.frame(mo = "E. coli",
-                            NIT = c("<= 2", 32)) %>%
-                   as.rsi())
-  expect_message(data.frame(mo = "E. coli",
-                            NIT = c("<= 2", 32),
-                            uti = TRUE) %>%
-                   as.rsi())
-  expect_message(
-    data.frame(mo = "E. coli",
-               NIT = c("<= 2", 32),
-               specimen = c("urine", "blood")) %>%
-      as.rsi())
 })
 
 test_that("disk2rsi works", {
@@ -160,11 +147,37 @@ test_that("disk2rsi works", {
                 pull(amox_disk) %>%
                 is.rsi())
   
-  expect_s3_class(suppressWarnings(as.rsi(data.frame(mo = "Escherichia coli",
-                                                     amoxi = c("R", "S", "I", "invalid")))$amoxi), "rsi")
-  
   # frequency tables
   if (require("cleaner")) {
     expect_s3_class(cleaner::freq(example_isolates$AMX), "freq")
   }
+})
+
+test_that("data.frame2rsi works", {
+  
+  skip_on_cran()
+  
+  df <- data.frame(microorganism = "Escherichia coli",
+                   AMP = as.mic(8),
+                   CIP = as.mic(0.256),
+                   GEN = as.disk(18),
+                   TOB = as.disk(16),
+                   ERY = "R", # note about assigning <rsi> class
+                   CLR = "V") # note about cleaning
+  expect_s3_class(as.rsi(df), "data.frame")
+  
+  expect_s3_class(suppressWarnings(as.rsi(data.frame(mo = "Escherichia coli",
+                                                     amoxi = c("R", "S", "I", "invalid")))$amoxi), "rsi")
+  expect_warning(data.frame(mo = "E. coli",
+                            NIT = c("<= 2", 32)) %>%
+                   as.rsi())
+  expect_message(data.frame(mo = "E. coli",
+                            NIT = c("<= 2", 32),
+                            uti = TRUE) %>%
+                   as.rsi())
+  expect_message(
+    data.frame(mo = "E. coli",
+               NIT = c("<= 2", 32),
+               specimen = c("urine", "blood")) %>%
+      as.rsi())
 })

@@ -72,7 +72,7 @@ Ordered \link{factor} with levels \code{Negative} < \verb{Positive, unconfirmed}
 Determine which isolates are multidrug-resistant organisms (MDRO) according to international and national guidelines.
 }
 \details{
-These functions are context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} parameter can be omitted, please see \emph{Examples}.
+These functions are context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} argument can be omitted, please see \emph{Examples}.
 
 For the \code{pct_required_classes} argument, values above 1 will be divided by 100. This is to support both fractions (\code{0.75} or \code{3/4}) and percentages (\code{75}).
 
@@ -107,7 +107,7 @@ Please suggest your own (country-specific) guidelines by letting us know: \url{h
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
 
-If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
+If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
 \section{Antibiotics}{

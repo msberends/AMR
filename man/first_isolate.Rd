@@ -70,9 +70,9 @@ filter_first_weighted_isolate(
 
 \item{testcodes_exclude}{character vector with test codes that should be excluded (case-insensitive)}
 
-\item{icu_exclude}{logical whether ICU isolates should be excluded (rows with value \code{TRUE} in column \code{col_icu})}
+\item{icu_exclude}{logical whether ICU isolates should be excluded (rows with value \code{TRUE} in the column set with \code{col_icu})}
 
-\item{specimen_group}{value in column \code{col_specimen} to filter on}
+\item{specimen_group}{value in the column set with \code{col_specimen} to filter on}
 
 \item{type}{type to determine weighed isolates; can be \code{"keyantibiotics"} or \code{"points"}, see Details}
 
@@ -84,7 +84,7 @@ filter_first_weighted_isolate(
 
 \item{include_unknown}{logical to determine whether 'unknown' microorganisms should be included too, i.e. microbial code \code{"UNKNOWN"}, which defaults to \code{FALSE}. For WHONET users, this means that all records with organism code \code{"con"} (\emph{contamination}) will be excluded at default. Isolates with a microbial ID of \code{NA} will always be excluded as first isolate.}
 
-\item{...}{parameters passed on to \code{\link[=first_isolate]{first_isolate()}} when using \code{\link[=filter_first_isolate]{filter_first_isolate()}}, or parameters passed on to \code{\link[=key_antibiotics]{key_antibiotics()}} when using \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_isolate()}}}
+\item{...}{arguments passed on to \code{\link[=first_isolate]{first_isolate()}} when using \code{\link[=filter_first_isolate]{filter_first_isolate()}}, or arguments passed on to \code{\link[=key_antibiotics]{key_antibiotics()}} when using \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_isolate()}}}
 }
 \value{
 A \code{\link{logical}} vector
@@ -93,7 +93,7 @@ A \code{\link{logical}} vector
 Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use \code{\link[=is_new_episode]{is_new_episode()}} that also supports grouping with the \code{dplyr} package.
 }
 \details{
-These functions are context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} parameter can be omitted, please see \emph{Examples}.
+These functions are context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} argument can be omitted, please see \emph{Examples}.
 
 The \code{\link[=first_isolate]{first_isolate()}} function is a wrapper around the \code{\link[=is_new_episode]{is_new_episode()}} function, but more efficient for data sets containing microorganism codes or names.
 
@@ -125,10 +125,10 @@ The function \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_i
 
 There are two ways to determine whether isolates can be included as first \emph{weighted} isolates which will give generally the same results:
 \enumerate{
-\item Using \code{type = "keyantibiotics"} and parameter \code{ignore_I}
+\item Using \code{type = "keyantibiotics"} and argument \code{ignore_I}
 
 Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With \code{ignore_I = FALSE}, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. Read more about this in the \code{\link[=key_antibiotics]{key_antibiotics()}} function.
-\item Using \code{type = "points"} and parameter \code{points_threshold}
+\item Using \code{type = "points"} and argument \code{points_threshold}
 
 A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds \code{points_threshold}, which default to \code{2}, an isolate will be (re)selected as a first weighted isolate.
 }
@@ -139,7 +139,7 @@ A difference from I to S|R (or vice versa) means 0.5 points, a difference from S
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
 
-If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
+If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
 \section{Read more on our website!}{

@@ -36,9 +36,9 @@
 #' @param guideline defaults to the latest included EUCAST guideline, see Details for all options
 #' @param conserve_capped_values a logical to indicate that MIC values starting with `">"` (but not `">="`) must always return "R" , and that MIC values starting with `"<"` (but not `"<="`) must always return "S"
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a logical to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.2)`.
-#' @param reference_data a [data.frame] to be used for interpretation, which defaults to the [rsi_translation] data set. Changing this parameter allows for using own interpretation guidelines. This parameter must contain a data set that is equal in structure to the [rsi_translation] data set (same column names and column types). Please note that the `guideline` parameter will be ignored when `reference_data` is manually set.
+#' @param reference_data a [data.frame] to be used for interpretation, which defaults to the [rsi_translation] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [rsi_translation] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, please see *Examples*
-#' @param ... for using on a [data.frame]: names of columns to apply [as.rsi()] on (supports tidy selection like `AMX:VAN`). Otherwise: parameters passed on to methods.
+#' @param ... for using on a [data.frame]: names of columns to apply [as.rsi()] on (supports tidy selection like `AMX:VAN`). Otherwise: arguments passed on to methods.
 #' @details 
 #' ## How it works
 #' 
@@ -46,7 +46,7 @@
 #' 
 #' 1. For **cleaning raw / untransformed data**. The data will be cleaned to only contain values S, I and R and will try its best to determine this with some intelligence. For example, mixed values with R/SI interpretations and MIC values such as `"<0.25; S"` will be coerced to `"S"`. Combined interpretations for multiple test methods (as seen in laboratory records) such as `"S; S"` will be coerced to `"S"`, but a value like `"S; I"` will return `NA` with a warning that the input is unclear.
 #' 
-#' 2. For **interpreting minimum inhibitory concentration (MIC) values** according to EUCAST or CLSI. You must clean your MIC values first using [as.mic()], that also gives your columns the new data class [`mic`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` parameter.
+#' 2. For **interpreting minimum inhibitory concentration (MIC) values** according to EUCAST or CLSI. You must clean your MIC values first using [as.mic()], that also gives your columns the new data class [`mic`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` argument.
 #'    * Using `dplyr`, R/SI interpretation can be done very easily with either: 
 #'      ```
 #'      your_data %>% mutate_if(is.mic, as.rsi)             # until dplyr 1.0.0
@@ -54,7 +54,7 @@
 #'      ```
 #'    * Operators like "<=" will be stripped before interpretation. When using `conserve_capped_values = TRUE`, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (`conserve_capped_values = FALSE`) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
 #'      
-#' 3. For **interpreting disk diffusion diameters** according to EUCAST or CLSI. You must clean your disk zones first using [as.disk()], that also gives your columns the new data class [`disk`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` parameter.
+#' 3. For **interpreting disk diffusion diameters** according to EUCAST or CLSI. You must clean your disk zones first using [as.disk()], that also gives your columns the new data class [`disk`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` argument.
 #'    * Using `dplyr`, R/SI interpretation can be done very easily with either: 
 #'      ```
 #'      your_data %>% mutate_if(is.disk, as.rsi)             # until dplyr 1.0.0
@@ -65,9 +65,9 @@
 #' 
 #' ## Supported guidelines
 #' 
-#' For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the `guideline` parameter are: `r paste0('"', sort(unique(AMR::rsi_translation$guideline)), '"', collapse = ", ")`.
+#' For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the `guideline` argument are: `r paste0('"', sort(unique(AMR::rsi_translation$guideline)), '"', collapse = ", ")`.
 #' 
-#' Simply using `"CLSI"` or `"EUCAST"` as input will automatically select the latest version of that guideline. You can set your own data set using the `reference_data` parameter. The `guideline` parameter will then be ignored.
+#' Simply using `"CLSI"` or `"EUCAST"` as input will automatically select the latest version of that guideline. You can set your own data set using the `reference_data` argument. The `guideline` argument will then be ignored.
 #' 
 #' ## After interpretation
 #' 
@@ -79,7 +79,7 @@
 #'
 #' ## Other
 #'
-#' The function [is.rsi.eligible()] returns `TRUE` when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` parameter.
+#' The function [is.rsi.eligible()] returns `TRUE` when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` argument.
 #' @section Interpretation of R and S/I:
 #' In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories R and S/I as shown below (<https://www.eucast.org/newsiandr/>).
 #'
@@ -113,7 +113,8 @@
 #'                  CIP = as.mic(0.256),
 #'                  GEN = as.disk(18),
 #'                  TOB = as.disk(16),
-#'                  NIT = as.mic(32))
+#'                  NIT = as.mic(32),
+#'                  ERY = "R")
 #' as.rsi(df)
 #' 
 #' # for single values
@@ -323,25 +324,25 @@ as.rsi.mic <- function(x,
         mo <- suppressMessages(search_type_in_df(df, "mo"))
       }, silent = TRUE)
       if (!is.null(df) && !is.null(mo) && is.data.frame(df)) {
-        mo_var_found <- paste0(" based on column `", font_bold(mo), "`")
+        mo_var_found <- paste0(" based on column '", font_bold(mo), "'")
         mo <- df[, mo, drop = TRUE]
       }
     }, error = function(e) 
-      stop_('No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
+      stop_('No information was supplied about the microorganisms (missing argument `mo`). See ?as.rsi.\n\n',
             "To transform certain columns with e.g. mutate_at(), use `data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n",
             "To tranform all disk diffusion zones in a data set, use `data %>% as.rsi()` or data %>% mutate_if(is.disk, as.rsi).", call = FALSE)
     )
   }
   if (length(ab) == 1 && ab %like% "as.mic") {
-    stop_('No unambiguous name was supplied about the antibiotic (parameter "ab"). See ?as.rsi.', call = FALSE)
+    stop_('No unambiguous name was supplied about the antibiotic (argument `ab`). See ?as.rsi.', call = FALSE)
   }
   
   ab_coerced <- suppressWarnings(as.ab(ab))
   mo_coerced <- suppressWarnings(as.mo(mo))
   guideline_coerced <- get_guideline(guideline, reference_data)
   if (is.na(ab_coerced)) {
-    message_("Returning NAs for unknown drug: `", font_bold(ab),
-             "`. Rename this column to a drug name or code, and check the output with as.ab().", 
+    message_("Returning NAs for unknown drug: '", font_bold(ab),
+             "'. Rename this column to a drug name or code, and check the output with `as.ab()`.", 
              add_fn = font_red, 
              as_note = FALSE)
     return(as.rsi(rep(NA, length(x))))
@@ -353,7 +354,7 @@ as.rsi.mic <- function(x,
     uti <- rep(uti, length(x))
   }
   
-  message_("=> Interpreting MIC values of '", font_bold(ab), "' (",
+  message_("=> Interpreting MIC values of ", ifelse(isTRUE(list(...)$is_data.frame), "column ", ""), "'", font_bold(ab), "' (",
            ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
            ab_name(ab_coerced, tolower = TRUE), ")", mo_var_found, 
            " according to ", ifelse(identical(reference_data, AMR::rsi_translation),
@@ -412,25 +413,25 @@ as.rsi.disk <- function(x,
         mo <- suppressMessages(search_type_in_df(df, "mo"))
       }, silent = TRUE)
       if (!is.null(df) && !is.null(mo) && is.data.frame(df)) {
-        mo_var_found <- paste0(" based on column `", font_bold(mo), "`")
+        mo_var_found <- paste0(" based on column '", font_bold(mo), "'")
         mo <- df[, mo, drop = TRUE]
       }
     }, error = function(e) 
-      stop_('No information was supplied about the microorganisms (missing parameter "mo"). See ?as.rsi.\n\n',
+      stop_('No information was supplied about the microorganisms (missing argument `mo`). See ?as.rsi.\n\n',
             "To transform certain columns with e.g. mutate_at(), use `data %>% mutate_at(vars(...), as.rsi, mo = .$x)`, where x is your column with microorganisms.\n",
             "To tranform all disk diffusion zones in a data set, use `data %>% as.rsi()` or data %>% mutate_if(is.disk, as.rsi).", call = FALSE)
     )
   }
   if (length(ab) == 1 && ab %like% "as.disk") {
-    stop_('No unambiguous name was supplied about the antibiotic (parameter "ab"). See ?as.rsi.', call = FALSE)
+    stop_('No unambiguous name was supplied about the antibiotic (argument `ab`). See ?as.rsi.', call = FALSE)
   }
   
   ab_coerced <- suppressWarnings(as.ab(ab))
   mo_coerced <- suppressWarnings(as.mo(mo))
   guideline_coerced <- get_guideline(guideline, reference_data)
   if (is.na(ab_coerced)) {
-    message_("Returning NAs for unknown drug: `", font_bold(ab),
-             "`. Rename this column to a drug name or code, and check the output with as.ab().", 
+    message_("Returning NAs for unknown drug: '", font_bold(ab),
+             "'. Rename this column to a drug name or code, and check the output with `as.ab()`.", 
              add_fn = font_red, 
              as_note = FALSE)
     return(as.rsi(rep(NA, length(x))))
@@ -442,7 +443,7 @@ as.rsi.disk <- function(x,
     uti <- rep(uti, length(x))
   }
   
-  message_("=> Interpreting disk zones of '", font_bold(ab), "' (",
+  message_("=> Interpreting disk zones of ", ifelse(isTRUE(list(...)$is_data.frame), "column ", ""), "'", font_bold(ab), "' (",
            ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
            ab_name(ab_coerced, tolower = TRUE), ")", mo_var_found, 
            " according to ", ifelse(identical(reference_data, AMR::rsi_translation),
@@ -482,6 +483,7 @@ as.rsi.data.frame <- function(x,
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
   meet_criteria(reference_data, allow_class = "data.frame")
 
+  x.bak <- x
   for (i in seq_len(ncol(x))) {
     # don't keep factors
     if (is.factor(x[, i, drop = TRUE])) {
@@ -527,8 +529,8 @@ as.rsi.data.frame <- function(x,
       }
       message_("Assuming value", plural[1], " ", 
                paste(paste0('"', values, '"'), collapse = ", "),
-               " in column `", font_bold(col_specimen),
-               "` reflect", plural[2], " ", plural[3], "urinary tract infection", plural[1],
+               " in column '", font_bold(col_specimen),
+               "' reflect", plural[2], " ", plural[3], "urinary tract infection", plural[1],
                ".\n  Use `as.rsi(uti = FALSE)` to prevent this.")
     } else {
       # no data about UTI's found
@@ -569,11 +571,11 @@ as.rsi.data.frame <- function(x,
           "no columns with MIC values, disk zones or antibiotic column names found in this data set. Use as.mic() or as.disk() to transform antimicrobial columns.")
   # set type per column
   types <- character(length(ab_cols))
-  types[sapply(x[, ab_cols, drop = FALSE], is.disk)] <- "disk"
+  types[sapply(x.bak[, ab_cols, drop = FALSE], is.disk)] <- "disk"
+  types[sapply(x.bak[, ab_cols, drop = FALSE], is.mic)] <- "mic"
   types[types == "" & sapply(x[, ab_cols, drop = FALSE], all_valid_disks)] <- "disk"
-  types[sapply(x[, ab_cols, drop = FALSE], is.mic)] <- "mic"
   types[types == "" & sapply(x[, ab_cols, drop = FALSE], all_valid_mics)] <- "mic"
-  types[types == "" & !sapply(x[, ab_cols, drop = FALSE], is.rsi)] <- "rsi"
+  types[types == "" & !sapply(x.bak[, ab_cols, drop = FALSE], is.rsi)] <- "rsi"
   if (any(types %in% c("mic", "disk"), na.rm = TRUE)) {
     # now we need an mo column
     stop_if(is.null(col_mo), "`col_mo` must be set")
@@ -597,7 +599,8 @@ as.rsi.data.frame <- function(x,
                                 uti = uti,
                                 conserve_capped_values = conserve_capped_values,
                                 add_intrinsic_resistance = add_intrinsic_resistance,
-                                reference_data = reference_data)
+                                reference_data = reference_data,
+                                is_data.frame = TRUE)
     } else if (types[i] == "disk") {
       x[, ab_cols[i]] <- as.rsi(x = x %pm>% 
                                   pm_pull(ab_cols[i]) %pm>% 
@@ -608,20 +611,31 @@ as.rsi.data.frame <- function(x,
                                 guideline = guideline,
                                 uti = uti,
                                 add_intrinsic_resistance = add_intrinsic_resistance,
-                                reference_data = reference_data)
+                                reference_data = reference_data,
+                                is_data.frame = TRUE)
     } else if (types[i] == "rsi") {
+      show_message <- FALSE
       ab <- ab_cols[i]
       ab_coerced <- suppressWarnings(as.ab(ab))
       if (!all(x[, ab_cols[i], drop = TRUE] %in% c("R", "S", "I"), na.rm = TRUE)) {
+        show_message <- TRUE
         # only print message if values are not already clean
-        message_("=> Cleaning values in column `", font_bold(ab), "` (",
+        message_("=> Cleaning values in column '", font_bold(ab), "' (",
+                 ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
+                 ab_name(ab_coerced, tolower = TRUE), ")... ",
+                 appendLF = FALSE,
+                 as_note = FALSE)
+      } else if (!is.rsi(x.bak[, ab_cols[i], drop = TRUE])) {
+        show_message <- TRUE
+        # only print message if class not already set
+        message_("=> Assigning class <rsi> to already clean column '", font_bold(ab), "' (",
                  ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
                  ab_name(ab_coerced, tolower = TRUE), ")... ",
                  appendLF = FALSE,
                  as_note = FALSE)
       }
       x[, ab_cols[i]] <- as.rsi.default(x = as.character(x[, ab_cols[i], drop = TRUE]))
-      if (!all(x[, ab_cols[i], drop = TRUE] %in% c("R", "S", "I"), na.rm = TRUE)) {
+      if (show_message == TRUE) {
         message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
       }
     }
@@ -719,7 +733,7 @@ exec_as.rsi <- function(method,
   
   if (all(trans$uti == TRUE, na.rm = TRUE) & all(uti == FALSE)) {
     message_("WARNING.", add_fn = list(font_yellow, font_bold), as_note = FALSE)
-    warning_("Interpretation of ", font_bold(ab_name(ab, tolower = TRUE)), " for some microorganisms is only available for (uncomplicated) urinary tract infections (UTI). Use parameter 'uti' to set which isolates are from urine. See ?as.rsi.", call = FALSE)
+    warning_("Introducing NA: interpretation of ", font_bold(ab_name(ab, tolower = TRUE)), " for some microorganisms is only available for (uncomplicated) urinary tract infections (UTI). Use argument `uti` to set which isolates are from urine. See ?as.rsi.", call = FALSE)
     warned <- TRUE
   }
   

@@ -34,7 +34,7 @@
 #' @param administration way of administration, either `"oral"` or `"iv"`
 #' @param units a logical to indicate whether the units instead of the DDDs itself must be returned, see Examples
 #' @param open browse the URL using [utils::browseURL()]
-#' @param ... other parameters passed on to [as.ab()]
+#' @param ... other arguments passed on to [as.ab()]
 #' @details All output will be [translate]d where possible.
 #' 
 #' The function [ab_url()] will return the direct URL to the official WHO website. A warning will be returned if the required ATC code is not available.
@@ -252,7 +252,7 @@ ab_validate <- function(x, property, ...) {
   
   check_dataset_integrity()
   
-  # try to catch an error when inputting an invalid parameter
+  # try to catch an error when inputting an invalid argument
   # so the 'call.' can be set to FALSE
   tryCatch(x[1L] %in% antibiotics[1, property],
            error = function(e) stop(e$message, call. = FALSE))

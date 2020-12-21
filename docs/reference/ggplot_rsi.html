@@ -112,7 +112,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9042</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9043</span>
       </span>
     </div>
 
@@ -372,11 +372,11 @@
     </tr>
     <tr>
       <th>combine_SI</th>
-      <td><p>a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter <code>combine_IR</code>, but this now follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is <code>TRUE</code>.</p></td>
+      <td><p>a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the argument <code>combine_IR</code>, but this now follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>combine_IR</th>
-      <td><p>a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see parameter <code>combine_SI</code>.</p></td>
+      <td><p>a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see argument <code>combine_SI</code>.</p></td>
     </tr>
     <tr>
       <th>minimum</th>
@@ -428,13 +428,13 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other parameters passed on to <code>geom_rsi()</code></p></td>
+      <td><p>other arguments passed on to <code>geom_rsi()</code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>At default, the names of antibiotics will be shown on the plots using <code><a href='ab_property.html'>ab_name()</a></code>. This can be set with the <code>translate_ab</code> parameter. See <code><a href='count.html'>count_df()</a></code>.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>The functions</h3>
+    <p>At default, the names of antibiotics will be shown on the plots using <code><a href='ab_property.html'>ab_name()</a></code>. This can be set with the <code>translate_ab</code> argument. See <code><a href='count.html'>count_df()</a></code>.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>The functions</h3>
 
 
 <p><code>geom_rsi()</code> will take any variable from the data that has an <code><a href='as.rsi.html'>rsi</a></code> class (created with <code><a href='as.rsi.html'>as.rsi()</a></code>) using <code><a href='proportion.html'>rsi_df()</a></code> and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.</p>
@@ -483,7 +483,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>AMX</span>, <span class='va'>NIT</span>, <span class='va'>FOS</span>, <span class='va'>TMP</span>, <span class='va'>CIP</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
     <span class='fu'>ggplot_rsi</span><span class='op'>(</span>datalabels <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
  
-  <span class='co'># add other ggplot2 parameters as you like:</span>
+  <span class='co'># add other ggplot2 arguments as you like:</span>
   <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>AMX</span>, <span class='va'>NIT</span>, <span class='va'>FOS</span>, <span class='va'>TMP</span>, <span class='va'>CIP</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
     <span class='fu'>ggplot_rsi</span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>0.5</span>,

@@ -45,8 +45,8 @@
 #' @param caption text to show as caption of the plot
 #' @param x.title text to show as x axis description
 #' @param y.title text to show as y axis description
-#' @param ... other parameters passed on to [geom_rsi()]
-#' @details At default, the names of antibiotics will be shown on the plots using [ab_name()]. This can be set with the `translate_ab` parameter. See [count_df()].
+#' @param ... other arguments passed on to [geom_rsi()]
+#' @details At default, the names of antibiotics will be shown on the plots using [ab_name()]. This can be set with the `translate_ab` argument. See [count_df()].
 #'
 #' ## The functions
 #' [geom_rsi()] will take any variable from the data that has an [`rsi`] class (created with [as.rsi()]) using [rsi_df()] and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
@@ -91,7 +91,7 @@
 #'     select(AMX, NIT, FOS, TMP, CIP) %>%
 #'     ggplot_rsi(datalabels = FALSE)
 #'  
-#'   # add other ggplot2 parameters as you like:
+#'   # add other ggplot2 arguments as you like:
 #'   example_isolates %>%
 #'     select(AMX, NIT, FOS, TMP, CIP) %>%
 #'     ggplot_rsi(width = 0.5,

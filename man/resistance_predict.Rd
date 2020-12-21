@@ -69,7 +69,7 @@ ggplot_rsi_predict(
 
 \item{info}{a logical to indicate whether textual analysis should be printed with the name and \code{\link[=summary]{summary()}} of the statistical model.}
 
-\item{...}{parameters passed on to functions}
+\item{...}{arguments passed on to functions}
 
 \item{main}{title of the plot}
 
@@ -93,7 +93,7 @@ Furthermore, the model itself is available as an attribute: \code{attributes(x)$
 Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns \code{se_min} and \code{se_max}. See \emph{Examples} for a real live example.
 }
 \details{
-Valid options for the statistical model (parameter \code{model}) are:
+Valid options for the statistical model (argument \code{model}) are:
 \itemize{
 \item \code{"binomial"} or \code{"binom"} or \code{"logit"}: a generalised linear regression model with binomial distribution
 \item \code{"loglin"} or \code{"poisson"}: a generalised log-linear regression model with poisson distribution

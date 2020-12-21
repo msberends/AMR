@@ -113,7 +113,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9042</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9043</span>
       </span>
     </div>
 
@@ -342,11 +342,11 @@ resistance() should be used to calculate resistance, susceptibility() should be 
     </tr>
     <tr>
       <th>combine_SI</th>
-      <td><p>a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter <code>combine_IR</code>, but this now follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is <code>TRUE</code>.</p></td>
+      <td><p>a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the argument <code>combine_IR</code>, but this now follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>combine_IR</th>
-      <td><p>a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see parameter <code>combine_SI</code>.</p></td>
+      <td><p>a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see argument <code>combine_SI</code>.</p></td>
     </tr>
     </table>
 
@@ -360,7 +360,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 
     <p>The function <code>resistance()</code> is equal to the function <code>proportion_R()</code>. The function <code>susceptibility()</code> is equal to the function <code>proportion_SI()</code>.</p>
 <p><strong>Remember that you should filter your table to let it contain only first isolates!</strong> This is needed to exclude duplicates and to reduce selection bias. Use <code><a href='first_isolate.html'>first_isolate()</a></code> to determine them in your data set.</p>
-<p>These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the <code><a href='count.html'>count()</a></code> functions to count isolates. The function <code>susceptibility()</code> is essentially equal to <code>count_susceptible() / count_all()</code>. <em>Low counts can influence the outcome - the <code>proportion</code> functions may camouflage this, since they only return the proportion (albeit being dependent on the <code>minimum</code> parameter).</em></p>
+<p>These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the <code><a href='count.html'>count()</a></code> functions to count isolates. The function <code>susceptibility()</code> is essentially equal to <code>count_susceptible() / count_all()</code>. <em>Low counts can influence the outcome - the <code>proportion</code> functions may camouflage this, since they only return the proportion (albeit being dependent on the <code>minimum</code> argument).</em></p>
 <p>The function <code>proportion_df()</code> takes any variable from <code>data</code> that has an <code><a href='as.rsi.html'>rsi</a></code> class (created with <code><a href='as.rsi.html'>as.rsi()</a></code>) and calculates the proportions R, I and S. It also supports grouped variables. The function <code>rsi_df()</code> works exactly like <code>proportion_df()</code>, but adds the number of isolates.</p>
     <h2 class="hasAnchor" id="combination-therapy"><a class="anchor" href="#combination-therapy"></a>Combination therapy</h2>
 
@@ -399,7 +399,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 
 <p><img src='figures/lifecycle_stable.svg' style=margin-bottom:5px /> <br />
 The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</strong>. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.</p>
-<p>If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
+<p>If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
     <h2 class="hasAnchor" id="interpretation-of-r-and-s-i"><a class="anchor" href="#interpretation-of-r-and-s-i"></a>Interpretation of R and S/I</h2>
 
     

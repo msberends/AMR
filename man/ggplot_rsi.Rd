@@ -89,9 +89,9 @@ labels_rsi_count(
 
 \item{translate_ab}{a column name of the \link{antibiotics} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
 
-\item{combine_SI}{a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the parameter \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is \code{TRUE}.}
+\item{combine_SI}{a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the argument \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is \code{TRUE}.}
 
-\item{combine_IR}{a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see parameter \code{combine_SI}.}
+\item{combine_IR}{a logical to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see argument \code{combine_SI}.}
 
 \item{minimum}{the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.}
 
@@ -117,13 +117,13 @@ labels_rsi_count(
 
 \item{y.title}{text to show as y axis description}
 
-\item{...}{other parameters passed on to \code{\link[=geom_rsi]{geom_rsi()}}}
+\item{...}{other arguments passed on to \code{\link[=geom_rsi]{geom_rsi()}}}
 }
 \description{
 Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on \link[ggplot2:ggplot]{ggplot2} functions.
 }
 \details{
-At default, the names of antibiotics will be shown on the plots using \code{\link[=ab_name]{ab_name()}}. This can be set with the \code{translate_ab} parameter. See \code{\link[=count_df]{count_df()}}.
+At default, the names of antibiotics will be shown on the plots using \code{\link[=ab_name]{ab_name()}}. This can be set with the \code{translate_ab} argument. See \code{\link[=count_df]{count_df()}}.
 \subsection{The functions}{
 
 \code{\link[=geom_rsi]{geom_rsi()}} will take any variable from the data that has an \code{\link{rsi}} class (created with \code{\link[=as.rsi]{as.rsi()}}) using \code{\link[=rsi_df]{rsi_df()}} and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
@@ -178,7 +178,7 @@ if (require("ggplot2") & require("dplyr")) {
     select(AMX, NIT, FOS, TMP, CIP) \%>\%
     ggplot_rsi(datalabels = FALSE)
  
-  # add other ggplot2 parameters as you like:
+  # add other ggplot2 arguments as you like:
   example_isolates \%>\%
     select(AMX, NIT, FOS, TMP, CIP) \%>\%
     ggplot_rsi(width = 0.5,

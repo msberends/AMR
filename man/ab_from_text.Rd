@@ -24,7 +24,7 @@ ab_from_text(
 
 \item{thorough_search}{logical to indicate whether the input must be extensively searched for misspelling and other faulty input values. Setting this to \code{TRUE} will take considerably more time than when using \code{FALSE}. At default, it will turn \code{TRUE} when all input elements contain a maximum of three words.}
 
-\item{...}{parameters passed on to \code{\link[=as.ab]{as.ab()}}}
+\item{...}{arguments passed on to \code{\link[=as.ab]{as.ab()}}}
 }
 \value{
 A \link{list}, or a  \link{character} if \code{collapse} is not \code{NULL}
@@ -34,7 +34,7 @@ Use this function on e.g. clinical texts from health care records. It returns a 
 }
 \details{
 This function is also internally used by \code{\link[=as.ab]{as.ab()}}, although it then only searches for the first drug name and will throw a note if more drug names could have been returned.
-\subsection{Parameter \code{type}}{
+\subsection{Argument \code{type}}{
 
 At default, the function will search for antimicrobial drug names. All text elements will be searched for official names, ATC codes and brand names. As it uses \code{\link[=as.ab]{as.ab()}} internally, it will correct for misspelling.
 
@@ -43,12 +43,12 @@ With \code{type = "dose"} (or similar, like "dosing", "doses"), all text element
 With \code{type = "administration"} (or abbreviations, like "admin", "adm"), all text elements will be searched for a form of drug administration. It supports the following forms (including common abbreviations): buccal, implant, inhalation, instillation, intravenous, nasal, oral, parenteral, rectal, sublingual, transdermal and vaginal. Abbreviations for oral (such as 'po', 'per os') will become "oral", all values for intravenous (such as 'iv', 'intraven') will become "iv". It supports multiple values in one clinical text, see \emph{Examples}.
 }
 
-\subsection{Parameter \code{collapse}}{
+\subsection{Argument \code{collapse}}{
 
 Without using \code{collapse}, this function will return a \link{list}. This can be convenient to use e.g. inside a \code{mutate()}):\cr
 \code{df \%>\% mutate(abx = ab_from_text(clinical_text))}
 
-The returned AB codes can be transformed to official names, groups, etc. with all \code{\link[=ab_property]{ab_*}} functions such as \code{\link[=ab_name]{ab_name()}} and \code{\link[=ab_group]{ab_group()}}, or by using the \code{translate_ab} parameter.
+The returned AB codes can be transformed to official names, groups, etc. with all \code{\link[=ab_property]{ab_*}} functions such as \code{\link[=ab_name]{ab_name()}} and \code{\link[=ab_group]{ab_group()}}, or by using the \code{translate_ab} argument.
 
 With using \code{collapse}, this function will return a \link{character}:\cr
 \code{df \%>\% mutate(abx = ab_from_text(clinical_text, collapse = "|"))}

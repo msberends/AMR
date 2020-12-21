@@ -34,7 +34,7 @@
 #' @param ... extension for future versions, not used at the moment
 #' @details The base R function [sample()] is used for generating values.
 #' 
-#' Generated values are based on the latest EUCAST guideline implemented in the [rsi_translation] data set. To create specific generated values per bug or drug, set the `mo` and/or `ab` parameter.
+#' Generated values are based on the latest EUCAST guideline implemented in the [rsi_translation] data set. To create specific generated values per bug or drug, set the `mo` and/or `ab` argument.
 #' @return class `<mic>` for [random_mic()] (see [as.mic()]) and class `<disk>` for [random_disk()] (see [as.disk()])
 #' @name random
 #' @rdname random
@@ -89,7 +89,7 @@ random_exec <- function(type, size, mo = NULL, ab = NULL) {
     if (nrow(df_new) > 0) {
       df <- df_new
     } else {
-      warning_("No rows found that match mo '", mo, "', ignoring parameter `mo`", call = FALSE)
+      warning_("No rows found that match mo '", mo, "', ignoring argument `mo`", call = FALSE)
     }
   }
   
@@ -100,7 +100,7 @@ random_exec <- function(type, size, mo = NULL, ab = NULL) {
     if (nrow(df_new) > 0) {
       df <- df_new
     } else {
-      warning_("No rows found that match ab '", ab, "', ignoring parameter `ab`", call = FALSE)
+      warning_("No rows found that match ab '", ab, "', ignoring argument `ab`", call = FALSE)
     }
   }
   

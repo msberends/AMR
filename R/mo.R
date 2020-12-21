@@ -38,7 +38,7 @@
 #' @param reference_df a [data.frame] to be used for extra reference when translating `x` to a valid [`mo`]. See [set_mo_source()] and [get_mo_source()] to automate the usage of your own codes (e.g. used in your analysis or organisation).
 #' @param ignore_pattern a regular expression (case-insensitive) of which all matches in `x` must return `NA`. This can be convenient to exclude known non-relevant input and can also be set with the option `AMR_ignore_pattern`, e.g. `options(AMR_ignore_pattern = "(not reported|contaminated flora)")`.
 #' @param language language to translate text like "no growth", which defaults to the system language (see [get_locale()])
-#' @param ... other parameters passed on to functions
+#' @param ... other arguments passed on to functions
 #' @rdname as.mo
 #' @aliases mo
 #' @keywords mo Becker becker Lancefield lancefield guess
@@ -200,7 +200,7 @@ as.mo <- function(x,
   uncertainty_level <- translate_allow_uncertain(allow_uncertain)
 
   if (!is.null(reference_df)
-      && mo_source_isvalid(reference_df)
+      && check_validity_mo_source(reference_df)
       && isFALSE(Becker)
       && isFALSE(Lancefield)
       && all(x %in% unlist(reference_df), na.rm = TRUE)) {
@@ -388,7 +388,7 @@ exec_as.mo <- function(x,
 
   # defined df to check for
   if (!is.null(reference_df)) {
-    mo_source_isvalid(reference_df)
+    check_validity_mo_source(reference_df)
     reference_df <- repair_reference_df(reference_df)
   }
 
@@ -1408,10 +1408,10 @@ exec_as.mo <- function(x,
       msg <- paste0(msg, ": ", paste('"', unique(failures), '"', sep = "", collapse = ", "))
     }
     msg <- paste0(msg,
-                  ".\nUse mo_failures() to review ", plural[2], ". Edit the `allow_uncertain` parameter if needed (see ?as.mo).\n",
+                  ".\nUse mo_failures() to review ", plural[2], ". Edit the `allow_uncertain` argument if needed (see ?as.mo).\n",
                   "You can also use your own reference data, e.g.:\n",
-                  '  as.mo("mycode", reference_df = data.frame(own = "mycode", mo = "B_ESCHR_COLI"))\n',
-                  '  mo_name("mycode", reference_df = data.frame(own = "mycode", mo = "B_ESCHR_COLI"))\n')
+                  '  as.mo("mycode", reference_df = data.frame(own = "mycode", mo = "', MO_lookup$mo[match("Escherichia coli", MO_lookup$fullname)], '"))\n',
+                  '  mo_name("mycode", reference_df = data.frame(own = "mycode", mo = "', MO_lookup$mo[match("Escherichia coli", MO_lookup$fullname)], '"))\n')
     warning_(paste0("\n", msg),
              add_fn = font_red,
              call = FALSE,

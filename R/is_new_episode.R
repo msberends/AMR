@@ -25,7 +25,7 @@
 
 #' Determine (new) episodes for patients
 #' 
-#' This function determines which items in a vector can be considered (the start of) a new episode, based on the parameter `episode_days`. This can be used to determine clinical episodes for any epidemiological analysis.
+#' This function determines which items in a vector can be considered (the start of) a new episode, based on the argument `episode_days`. This can be used to determine clinical episodes for any epidemiological analysis.
 #' @inheritSection lifecycle Stable lifecycle
 #' @param x vector of dates (class `Date` or `POSIXt`)
 #' @param episode_days length of the required episode in days, defaults to 365. Every element in the input will return `TRUE` after this number of days has passed since the last included date, independent of calendar years. Please see *Details*.

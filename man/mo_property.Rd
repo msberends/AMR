@@ -89,7 +89,7 @@ mo_property(x, property = "fullname", language = get_locale(), ...)
 
 \item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can be overwritten by setting the option \code{AMR_locale}, e.g. \code{options(AMR_locale = "de")}, see \link{translate}. Also used to translate text like "no growth". Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
-\item{...}{other parameters passed on to \code{\link[=as.mo]{as.mo()}}, such as 'allow_uncertain' and 'ignore_pattern'}
+\item{...}{other arguments passed on to \code{\link[=as.mo]{as.mo()}}, such as 'allow_uncertain' and 'ignore_pattern'}
 
 \item{ab}{any (vector of) text that can be coerced to a valid antibiotic code with \code{\link[=as.ab]{as.ab()}}}
 
@@ -123,7 +123,7 @@ Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and so
 
 The Gram stain - \code{\link[=mo_gramstain]{mo_gramstain()}} - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, \href{https://pubmed.ncbi.nlm.nih.gov/11837318}{PMID 11837318}), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value \code{NA}. Functions \code{\link[=mo_is_gram_negative]{mo_is_gram_negative()}} and \code{\link[=mo_is_gram_positive]{mo_is_gram_positive()}} always return \code{TRUE} or \code{FALSE} (except when the input is \code{NA} or the MO code is \code{UNKNOWN}), thus always return \code{FALSE} for species outside the taxonomic kingdom of Bacteria.
 
-Intrinsic resistance - \code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}} - will be determined based on the \link{intrinsic_resistant} data set, which is based on \href{https://www.eucast.org/expert_rules_and_intrinsic_resistance/}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2} from 2020. The \code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}} can be vectorised over parameters \code{x} (input for microorganisms) and over \code{ab} (input for antibiotics).
+Intrinsic resistance - \code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}} - will be determined based on the \link{intrinsic_resistant} data set, which is based on \href{https://www.eucast.org/expert_rules_and_intrinsic_resistance/}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2} from 2020. The \code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}} can be vectorised over arguments \code{x} (input for microorganisms) and over \code{ab} (input for antibiotics).
 
 All output will be \link{translate}d where possible.
 
@@ -134,7 +134,7 @@ The function \code{\link[=mo_url]{mo_url()}} will return the direct URL to the o
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
 
-If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
+If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
 \section{Matching score for microorganisms}{

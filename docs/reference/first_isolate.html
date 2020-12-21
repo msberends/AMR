@@ -112,7 +112,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9042</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9043</span>
       </span>
     </div>
 
@@ -356,11 +356,11 @@
     </tr>
     <tr>
       <th>icu_exclude</th>
-      <td><p>logical whether ICU isolates should be excluded (rows with value <code>TRUE</code> in column <code>col_icu</code>)</p></td>
+      <td><p>logical whether ICU isolates should be excluded (rows with value <code>TRUE</code> in the column set with <code>col_icu</code>)</p></td>
     </tr>
     <tr>
       <th>specimen_group</th>
-      <td><p>value in column <code>col_specimen</code> to filter on</p></td>
+      <td><p>value in the column set with <code>col_specimen</code> to filter on</p></td>
     </tr>
     <tr>
       <th>type</th>
@@ -384,7 +384,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>parameters passed on to <code>first_isolate()</code> when using <code>filter_first_isolate()</code>, or parameters passed on to <code><a href='key_antibiotics.html'>key_antibiotics()</a></code> when using <code>filter_first_weighted_isolate()</code></p></td>
+      <td><p>arguments passed on to <code>first_isolate()</code> when using <code>filter_first_isolate()</code>, or arguments passed on to <code><a href='key_antibiotics.html'>key_antibiotics()</a></code> when using <code>filter_first_weighted_isolate()</code></p></td>
     </tr>
     </table>
 
@@ -397,7 +397,7 @@
     <p>A <code><a href='https://rdrr.io/r/base/logical.html'>logical</a></code> vector</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>These functions are context-aware when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>. This means that then the <code>x</code> parameter can be omitted, please see <em>Examples</em>.</p>
+    <p>These functions are context-aware when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>. This means that then the <code>x</code> argument can be omitted, please see <em>Examples</em>.</p>
 <p>The <code>first_isolate()</code> function is a wrapper around the <code><a href='is_new_episode.html'>is_new_episode()</a></code> function, but more efficient for data sets containing microorganism codes or names.</p>
 <p>All isolates with a microbial ID of <code>NA</code> will be excluded as first isolate.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Why this is so important</h3>
 
@@ -427,9 +427,9 @@
     
 
 <p>There are two ways to determine whether isolates can be included as first <em>weighted</em> isolates which will give generally the same results:</p><ol>
-<li><p>Using <code>type = "keyantibiotics"</code> and parameter <code>ignore_I</code></p>
+<li><p>Using <code>type = "keyantibiotics"</code> and argument <code>ignore_I</code></p>
 <p>Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With <code>ignore_I = FALSE</code>, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. Read more about this in the <code><a href='key_antibiotics.html'>key_antibiotics()</a></code> function.</p></li>
-<li><p>Using <code>type = "points"</code> and parameter <code>points_threshold</code></p>
+<li><p>Using <code>type = "points"</code> and argument <code>points_threshold</code></p>
 <p>A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds <code>points_threshold</code>, which default to <code>2</code>, an isolate will be (re)selected as a first weighted isolate.</p></li>
 </ol>
 
@@ -439,7 +439,7 @@
 
 <p><img src='figures/lifecycle_stable.svg' style=margin-bottom:5px /> <br />
 The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</strong>. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.</p>
-<p>If the unlying code needs breaking changes, they will occur gradually. For example, a parameter will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
+<p>If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
 
     

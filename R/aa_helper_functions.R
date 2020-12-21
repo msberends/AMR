@@ -250,11 +250,20 @@ word_wrap <- function(...,
                       width = 0.95 * getOption("width"),
                       extra_indent = 0) {
   msg <- paste0(c(...), collapse = "")
-  # replace new lines to add them again later
-  msg <- gsub("\n", "*|*", msg, fixed = TRUE)
   
   if (isTRUE(as_note)) {
     msg <- paste0("NOTE: ", gsub("^note:? ?", "", msg, ignore.case = TRUE))
+  }
+  
+  if (msg %like% "\n") {
+    # run word_wraps() over every line here, bind them and return again
+    return(paste0(sapply(trimws(unlist(strsplit(msg, "\n")), which = "right"),
+                         word_wrap, 
+                         add_fn = add_fn,
+                         as_note = FALSE,
+                         width = width, 
+                         extra_indent = extra_indent),
+                  collapse = "\n"))
   }
   
   # we need to correct for already applied style, that adds text like "\033[31m\"
@@ -284,7 +293,7 @@ word_wrap <- function(...,
     indentation <- 0 + extra_indent
   }
   msg <- gsub("\n", paste0("\n", strrep(" ", indentation)), msg, fixed = TRUE)
-  msg <- gsub("*|*", paste0("*|*", strrep(" ", indentation)), msg, fixed = TRUE)
+  # msg <- gsub("*|*", paste0("*|*", strrep(" ", indentation)), msg, fixed = TRUE)
   # remove trailing empty characters
   msg <- gsub("(\n| )+$", "", msg)
   
@@ -296,9 +305,6 @@ word_wrap <- function(...,
       msg <- add_fn[[i]](msg)
     }
   }
-  
-  # place back spaces
-  msg <- gsub("*|*", "\n", msg, fixed = TRUE)
   
   # format backticks
   msg <- gsub("(`.+?`)", font_grey_bg("\\1"), msg)
@@ -629,7 +635,7 @@ font_grey <- function(..., collapse = " ") {
   try_colour(..., before = "\033[38;5;249m", after = "\033[39m", collapse = collapse)
 }
 font_grey_bg <- function(..., collapse = " ") {
-  try_colour(..., before = "\033[48;5;255m", after = "\033[49m", collapse = collapse)
+  try_colour(..., before = "\033[48;5;254m", after = "\033[49m", collapse = collapse)
 }
 font_green_bg <- function(..., collapse = " ") {
   try_colour(..., before = "\033[42m", after = "\033[49m", collapse = collapse)
@@ -875,6 +881,6 @@ str2lang <- function(s) {
 isNamespaceLoaded <- function(pkg) {
   pkg %in% loadedNamespaces()
 }
-lengths = function(x, use.names = TRUE) {
+lengths <- function(x, use.names = TRUE) {
   vapply(x, length, FUN.VALUE = NA_integer_, USE.NAMES = use.names)
 }
