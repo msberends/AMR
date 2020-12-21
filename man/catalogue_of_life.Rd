@@ -28,7 +28,7 @@ Included are:
 
 The Catalogue of Life (\url{http://www.catalogueoflife.org}) is the most comprehensive and authoritative global index of species currently available. It holds essential information on the names, relationships and distributions of over 1.9 million species. The Catalogue of Life is used to support the major biodiversity and conservation information services such as the Global Biodiversity Information Facility (GBIF), Encyclopedia of Life (EoL) and the International Union for Conservation of Nature Red List. It is recognised by the Convention on Biological Diversity as a significant component of the Global Taxonomy Initiative and a contribution to Target 1 of the Global Strategy for Plant Conservation.
 
-The syntax used to transform the original data to a cleansed R format, can be found here: \url{https://github.com/msberends/AMR/blob/master/data-raw/reproduction_of_microorganisms.R}.
+The syntax used to transform the original data to a cleansed \R format, can be found here: \url{https://github.com/msberends/AMR/blob/master/data-raw/reproduction_of_microorganisms.R}.
 }
 
 \section{Read more on our website!}{

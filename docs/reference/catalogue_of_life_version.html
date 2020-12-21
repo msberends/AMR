@@ -6,6 +6,22 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Inform modern browsers that this page supports both dark and light color schemes,
+  and the page author prefers light. -->
+<meta name="color-scheme" content="dark light">
+<script>
+  // If `prefers-color-scheme` is not supported, fall back to light mode.
+  // i.e. In this case, inject the `light` CSS before the others, with
+  // no media filter so that it will be downloaded with highest priority.
+  if (window.matchMedia("(prefers-color-scheme: dark)").media === "not all") {
+    document.documentElement.style.display = "none";
+    document.head.insertAdjacentHTML(
+      "beforeend",
+      "<link id=\"css\" rel=\"stylesheet\" href=\"bootstrap.css\" onload=\"document.documentElement.style.display = ''\">"
+    );
+  }
+</script>
+
 <title>Version info of included Catalogue of Life — catalogue_of_life_version • AMR (for R)</title>
 
 <!-- favicons -->
@@ -19,10 +35,21 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- Flatly Theme - Light  -->
+<link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
+
+<!-- Darkly Theme - Dark -->
+<link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)">
+
+<!-- preferably CSS -->
+<link rel="stylesheet" href="../preferably.css">
+<link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
+<link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)">
+
+
 
 <!-- bootstrap-toc -->
 <link rel="stylesheet" href="../bootstrap-toc.css">
@@ -59,6 +86,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
 
+
+
+
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -82,7 +112,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9034</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9042</span>
       </span>
     </div>
 
@@ -90,14 +120,14 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
     Home
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     How to
      
@@ -106,77 +136,77 @@
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/AMR.html">
-        <span class="fa fa-directions"></span>
+        <span class="fas fa-directions"></span>
          
         Conduct AMR analysis
       </a>
     </li>
     <li>
       <a href="../articles/resistance_predict.html">
-        <span class="fa fa-dice"></span>
+        <span class="fas fa-dice"></span>
          
         Predict antimicrobial resistance
       </a>
     </li>
     <li>
       <a href="../articles/datasets.html">
-        <span class="fa fa-database"></span>
+        <span class="fas fa-database"></span>
          
         Data sets for download / own use
       </a>
     </li>
     <li>
       <a href="../articles/PCA.html">
-        <span class="fa fa-compress"></span>
+        <span class="fas fa-compress"></span>
          
         Conduct principal component analysis for AMR
       </a>
     </li>
     <li>
       <a href="../articles/MDR.html">
-        <span class="fa fa-skull-crossbones"></span>
+        <span class="fas fa-skull-crossbones"></span>
          
         Determine multi-drug resistance (MDR)
       </a>
     </li>
     <li>
       <a href="../articles/WHONET.html">
-        <span class="fa fa-globe-americas"></span>
+        <span class="fas fa-globe-americas"></span>
          
         Work with WHONET data
       </a>
     </li>
     <li>
       <a href="../articles/SPSS.html">
-        <span class="fa fa-file-upload"></span>
+        <span class="fas fa-file-upload"></span>
          
         Import data from SPSS/SAS/Stata
       </a>
     </li>
     <li>
       <a href="../articles/EUCAST.html">
-        <span class="fa fa-exchange-alt"></span>
+        <span class="fas fa-exchange-alt"></span>
          
         Apply EUCAST rules
       </a>
     </li>
     <li>
       <a href="../reference/mo_property.html">
-        <span class="fa fa-bug"></span>
+        <span class="fas fa-bug"></span>
          
         Get properties of a microorganism
       </a>
     </li>
     <li>
       <a href="../reference/ab_property.html">
-        <span class="fa fa-capsules"></span>
+        <span class="fas fa-capsules"></span>
          
         Get properties of an antibiotic
       </a>
     </li>
     <li>
       <a href="../articles/benchmarks.html">
-        <span class="fa fa-shipping-fast"></span>
+        <span class="fas fa-shipping-fast"></span>
          
         Other: benchmarks
       </a>
@@ -185,37 +215,38 @@
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-book-open"></span>
+    <span class="fas fa-book-open"></span>
      
     Manual
   </a>
 </li>
 <li>
   <a href="../authors.html">
-    <span class="fa fa-users"></span>
+    <span class="fas fa-users"></span>
      
     Authors
   </a>
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="far fa far fa-newspaper"></span>
+    <span class="far fa-newspaper"></span>
      
     Changelog
   </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        
         <li>
   <a href="https://github.com/msberends/AMR">
-    <span class="fab fa fab fa-github"></span>
+    <span class="fab fa-github"></span>
      
     Source Code
   </a>
 </li>
 <li>
   <a href="../survey.html">
-    <span class="fa fa-clipboard-list"></span>
+    <span class="fas fa-clipboard-list"></span>
      
     Survey
   </a>
@@ -282,7 +313,7 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>

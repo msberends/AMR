@@ -1,10 +1,9 @@
-# AMR 1.4.0.9041
-## <small>Last updated: 17 December 2020</small>
-
-Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscript about this package to. We are those reviewers very grateful for going through our code so thoroughly!
+# AMR 1.4.0.9042
+## <small>Last updated: 21 December 2020</small>
 
 ### New
 * Function `is_new_episode()` to determine patient episodes which are not necessarily based on microorganisms. It also supports grouped variables with e.g. `mutate()`, `filter()` and `summarise()` of the `dplyr` package:
+  
   ```r
   library(dplyr)
   example_isolates %>%
@@ -18,6 +17,7 @@ Note: some changes in this version were suggested by anonymous reviewers from th
 ### Changed
 * Reference data used for `as.rsi()` can now be set by the user, using the `reference_data` parameter. This allows for using own interpretation guidelines. The user-set data must have the same structure as `rsi_translation`.
 * Some functions are now context-aware when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`. This means that then the data parameter does not need to be set anymore. This is the case for the new functions `mo_is_gram_negative()`, `mo_is_gram_positive()`, `mo_is_intrinsic_resistant()` and for the existing functions `first_isolate()`, `key_antibiotics()`, `mdro()`, `brmo()`, `mrgn()`, `mdr_tb()`, `mdr_cmi2012()`, `eucast_exceptional_phenotypes()`. This was already the case for antibiotic selection functions (such as using `penicillins()` in `dplyr::select()`).
+  
   ```r
   # to select first isolates that are Gram-negative 
   # and view results of cephalosporins and aminoglycosides:
@@ -26,7 +26,7 @@ Note: some changes in this version were suggested by anonymous reviewers from th
     filter(first_isolate(), mo_is_gram_negative()) %>% 
     select(mo, cephalosporins(), aminoglycosides()) %>% 
     as_tibble()
-```
+  ```
 * For all function parameters in the code, it is now defined what the exact type of user input should be (inspired by the [`typed`](https://github.com/moodymudskipper/typed) package). If the user input for a certain function does not meet the requirements for a specific parameter (such as the class or length), an informative error will be thrown. This makes the package more robust and the use of it more reproducible and reliable. In total, more than 400 arguments were defined.
 * Fix for `set_mo_source()`, that previously would not remember the file location of the original file
 * Deprecated function `p_symbol()` that not really fits the scope of this package. It will be removed in a future version. See [here](https://github.com/msberends/AMR/blob/v1.4.0/R/p_symbol.R) for the source code to preserve it.
@@ -49,10 +49,9 @@ Note: some changes in this version were suggested by anonymous reviewers from th
 * All messages and warnings thrown by this package now break sentences on whole words
 * More extensive unit tests
 * Internal calls to `options()` were all removed in favour of a new internal environment `mo_env`
+* Our website now also has a dark theme, that switches on automatically based on system settings (such as Night Mode in macOS)
 
 # AMR 1.4.0
-
-Note: some changes in this version were suggested by anonymous reviewers from the journal we submitted our manuscript about this package to. We are those reviewers very grateful for going through our code so thoroughly!
 
 ### New
 * Support for 'EUCAST Expert Rules' / 'EUCAST Intrinsic Resistance and Unusual Phenotypes' version 3.2 of May 2020. With this addition to the previously implemented version 3.1 of 2016, the `eucast_rules()` function can now correct for more than 180 different antibiotics and the `mdro()` function can determine multidrug resistance based on more than 150 different antibiotics. All previously implemented versions of the EUCAST rules are now maintained and kept available in this package. The `eucast_rules()` function consequently gained the parameters `version_breakpoints` (at the moment defaults to v10.0, 2020) and `version_expertrules` (at the moment defaults to v3.2, 2020). The `example_isolates` data set now also reflects the change from v3.1 to v3.2. The `mdro()` function now accepts `guideline == "EUCAST3.1"` and `guideline == "EUCAST3.2"`.
@@ -60,6 +59,7 @@ Note: some changes in this version were suggested by anonymous reviewers from th
 * Data set `intrinsic_resistant`. This data set contains all bug-drug combinations where the 'bug' is intrinsic resistant to the 'drug' according to the latest EUCAST insights. It contains just two columns: `microorganism` and `antibiotic`.
 
   Curious about which enterococci are actually intrinsic resistant to vancomycin?
+  
   ```r
   library(AMR)
   library(dplyr)

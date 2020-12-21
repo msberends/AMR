@@ -514,7 +514,7 @@ meet_criteria <- function(object,
 }
 
 get_current_data <- function(arg_name, call) {
-  # this mimics dplyr::cur_data_all for users that use our content-aware functions in dplyr verbs
+  # this mimics dplyr::cur_data_all for users that use our context-aware functions in dplyr verbs
   cur_data_all_dplyr <- import_fn("cur_data_all", "dplyr", error_on_fail = FALSE)
   if (is.null(cur_data_all_dplyr)) {
     # dplyr not installed

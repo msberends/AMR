@@ -45,12 +45,12 @@ Manually added were:
 }
 \subsection{Direct download}{
 
-This data set is available as 'flat file' for use even without R - you can find the file here:
+This data set is available as 'flat file' for use even without \R - you can find the file here:
 \itemize{
 \item \url{https://github.com/msberends/AMR/raw/master/data-raw/microorganisms.txt}
 }
 
-The file in R format (with preserved data structure) can be found here:
+The file in \R format (with preserved data structure) can be found here:
 \itemize{
 \item \url{https://github.com/msberends/AMR/raw/master/data/microorganisms.rda}
 }

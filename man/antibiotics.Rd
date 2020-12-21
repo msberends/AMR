@@ -62,13 +62,13 @@ Properties that are based on an ATC code are only available when an ATC is avail
 Synonyms (i.e. trade names) are derived from the Compound ID (\code{cid}) and consequently only available where a CID is available.
 \subsection{Direct download}{
 
-These data sets are available as 'flat files' for use even without R - you can find the files here:
+These data sets are available as 'flat files' for use even without \R - you can find the files here:
 \itemize{
 \item \url{https://github.com/msberends/AMR/raw/master/data-raw/antibiotics.txt}
 \item \url{https://github.com/msberends/AMR/raw/master/data-raw/antivirals.txt}
 }
 
-Files in R format (with preserved data structure) can be found here:
+Files in \R format (with preserved data structure) can be found here:
 \itemize{
 \item \url{https://github.com/msberends/AMR/raw/master/data/antibiotics.rda}
 \item \url{https://github.com/msberends/AMR/raw/master/data/antivirals.rda}

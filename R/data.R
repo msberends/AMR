@@ -58,12 +58,12 @@
 #' Synonyms (i.e. trade names) are derived from the Compound ID (`cid`) and consequently only available where a CID is available.
 #' 
 #' ### Direct download
-#' These data sets are available as 'flat files' for use even without R - you can find the files here:
+#' These data sets are available as 'flat files' for use even without \R - you can find the files here:
 #' 
 #' * <https://github.com/msberends/AMR/raw/master/data-raw/antibiotics.txt>
 #' * <https://github.com/msberends/AMR/raw/master/data-raw/antivirals.txt>
 #' 
-#' Files in R format (with preserved data structure) can be found here:
+#' Files in \R format (with preserved data structure) can be found here:
 #' 
 #' * <https://github.com/msberends/AMR/raw/master/data/antibiotics.rda>
 #' * <https://github.com/msberends/AMR/raw/master/data/antivirals.rda>
@@ -106,11 +106,11 @@
 #' - `r format(nrow(subset(microorganisms, source == "DSMZ")), big.mark = ",")` species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) since the DSMZ contain the latest taxonomic information based on recent publications
 #' 
 #' ### Direct download
-#' This data set is available as 'flat file' for use even without R - you can find the file here:
+#' This data set is available as 'flat file' for use even without \R - you can find the file here:
 #' 
 #' * <https://github.com/msberends/AMR/raw/master/data-raw/microorganisms.txt>
 #' 
-#' The file in R format (with preserved data structure) can be found here:
+#' The file in \R format (with preserved data structure) can be found here:
 #' 
 #' * <https://github.com/msberends/AMR/raw/master/data/microorganisms.rda>
 #' @section About the records from DSMZ (see source):

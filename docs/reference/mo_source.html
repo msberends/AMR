@@ -6,6 +6,22 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Inform modern browsers that this page supports both dark and light color schemes,
+  and the page author prefers light. -->
+<meta name="color-scheme" content="dark light">
+<script>
+  // If `prefers-color-scheme` is not supported, fall back to light mode.
+  // i.e. In this case, inject the `light` CSS before the others, with
+  // no media filter so that it will be downloaded with highest priority.
+  if (window.matchMedia("(prefers-color-scheme: dark)").media === "not all") {
+    document.documentElement.style.display = "none";
+    document.head.insertAdjacentHTML(
+      "beforeend",
+      "<link id=\"css\" rel=\"stylesheet\" href=\"bootstrap.css\" onload=\"document.documentElement.style.display = ''\">"
+    );
+  }
+</script>
+
 <title>User-defined reference data set for microorganisms — mo_source • AMR (for R)</title>
 
 <!-- favicons -->
@@ -19,10 +35,21 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- Flatly Theme - Light  -->
+<link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
+
+<!-- Darkly Theme - Dark -->
+<link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)">
+
+<!-- preferably CSS -->
+<link rel="stylesheet" href="../preferably.css">
+<link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
+<link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)">
+
+
 
 <!-- bootstrap-toc -->
 <link rel="stylesheet" href="../bootstrap-toc.css">
@@ -60,6 +87,9 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
 
+
+
+
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -83,7 +113,7 @@ This is the fastest way to have your organisation (or analysis) specific codes p
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9041</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9042</span>
       </span>
     </div>
 
@@ -207,6 +237,7 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        
         <li>
   <a href="https://github.com/msberends/AMR">
     <span class="fab fa-github"></span>
@@ -266,8 +297,8 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The reference file can be a text file separated with commas (CSV) or tabs or pipes, an Excel file (either 'xls' or 'xlsx' format) or an R object file (extension '.rds'). To use an Excel file, you will need to have the <code>readxl</code> package installed.</p>
-<p><code>set_mo_source()</code> will check the file for validity: it must be a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>, must have a column named <code>"mo"</code> which contains values from <code><a href='microorganisms.html'>microorganisms$mo</a></code> and must have a reference column with your own defined values. If all tests pass, <code>set_mo_source()</code> will read the file into R and will ask to export it to <code>"~/mo_source.rds"</code>. The CRAN policy disallows packages to write to the file system, although '<em>exceptions may be allowed in interactive sessions if the package obtains confirmation from the user</em>'. For this reason, this function only works in interactive sessions so that the user can <strong>specifically confirm and allow</strong> that this file will be created. The destination of this file can be set with the <code>destination</code> parameter and defaults to the user's home directory. It can also be set as an <span style="R">R</span> option, using <code>options(AMR_mo_source = "my/location/file.rds)</code>.</p>
+    <p>The reference file can be a text file separated with commas (CSV) or tabs or pipes, an Excel file (either 'xls' or 'xlsx' format) or an <span style="R">R</span> object file (extension '.rds'). To use an Excel file, you will need to have the <code>readxl</code> package installed.</p>
+<p><code>set_mo_source()</code> will check the file for validity: it must be a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>, must have a column named <code>"mo"</code> which contains values from <code><a href='microorganisms.html'>microorganisms$mo</a></code> and must have a reference column with your own defined values. If all tests pass, <code>set_mo_source()</code> will read the file into <span style="R">R</span> and will ask to export it to <code>"~/mo_source.rds"</code>. The CRAN policy disallows packages to write to the file system, although '<em>exceptions may be allowed in interactive sessions if the package obtains confirmation from the user</em>'. For this reason, this function only works in interactive sessions so that the user can <strong>specifically confirm and allow</strong> that this file will be created. The destination of this file can be set with the <code>destination</code> parameter and defaults to the user's home directory. It can also be set as an <span style="R">R</span> option, using <code><a href='https://rdrr.io/r/base/options.html'>options(AMR_mo_source = "my/location/file.rds")</a></code>.</p>
 <p>The created compressed data file <code>"mo_source.rds"</code> will be used at default for MO determination (function <code><a href='as.mo.html'>as.mo()</a></code> and consequently all <code>mo_*</code> functions like <code><a href='mo_property.html'>mo_genus()</a></code> and <code><a href='mo_property.html'>mo_gramstain()</a></code>). The location and timestamp of the original file will be saved as an attribute to the compressed data file.</p>
 <p>The function <code>get_mo_source()</code> will return the data set by reading <code>"mo_source.rds"</code> with <code><a href='https://rdrr.io/r/base/readRDS.html'>readRDS()</a></code>. If the original file has changed (by checking the location and timestamp of the original file), it will call <code>set_mo_source()</code> to update the data file automatically if used in an interactive session.</p>
 <p>Reading an Excel file (<code>.xlsx</code>) with only one row has a size of 8-9 kB. The compressed file created with <code>set_mo_source()</code> will then have a size of 0.1 kB and can be read by <code>get_mo_source()</code> in only a couple of microseconds (millionths of a second).</p>
@@ -359,7 +390,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
 </div>
 
       </footer>
