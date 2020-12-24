@@ -213,7 +213,8 @@ authors:
 
 template:
   # this requires the 'preferably' package, https://github.com/amirmasoudabdol/preferably/
-  package: preferably
+  # package: preferably
   assets: "pkgdown/logos" # use logos in this folder
   params:
     noindex: false
+    template: "flatly"

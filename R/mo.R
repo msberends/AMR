@@ -276,7 +276,7 @@ exec_as.mo <- function(x,
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
 
   check_dataset_integrity()
-
+  
   lookup <- function(needle,
                      column = property,
                      haystack = reference_data_to_use,
@@ -358,6 +358,9 @@ exec_as.mo <- function(x,
   x[trimws2(x) %like% paste0("^(", translate_AMR("no|not", language = language), ") [a-z]+")] <- "UNKNOWN"
 
   if (initial_search == TRUE) {
+    # keep track of time - give some hints to improve speed if it takes a long time
+    start_time <- Sys.time()
+    
     mo_env$mo_failures <- NULL
     mo_env$mo_uncertainties <- NULL
     mo_env$mo_renamed <- NULL
@@ -1524,8 +1527,24 @@ exec_as.mo <- function(x,
     }
     # this will save the uncertain items as attribute, so they can be bound to `uncertainties` in the uncertain_fn() function
     x <- structure(x, uncertainties = uncertainties)
+  } else {
+    # keep track of time - give some hints to improve speed if it takes a long time
+    end_time <- Sys.time()
+    delta_time <- difftime(end_time, start_time, units = "secs")
+    if (delta_time >= 30) {
+      message_("Using `as.mo()` took ", delta_time, " seconds, which is a long time. Some suggestions to improve speed include:")
+      message_(word_wrap("- Try to use as many valid taxonomic names as possible for your input.",
+                         extra_indent = 2),
+               as_note = FALSE)
+      message_(word_wrap("- Save the output and use it as input for future calculations, e.g. create a new variable to your data using `as.mo()`. All functions in this package that rely on microorganism codes will automatically use that new column where possible. All `mo_*()` functions also do not require you to set their `x` argument as long as you have the dplyr package installed and you have a column of class <mo>.",
+                         extra_indent = 2),
+               as_note = FALSE)
+      message_(word_wrap("- Use `set_mo_source()` to continually transform your organisation codes to microorganisms codes used by this package, please see `?mo_source`.",
+                         extra_indent = 2),
+               as_note = FALSE)
+    }
   }
-
+  
   x
 }
 
@@ -1585,9 +1604,13 @@ pillar_shaft.mo <- function(x, ...) {
   out[x == "UNKNOWN"] <- font_na("  UNKNOWN")
 
   # make it always fit exactly
+  max_char <- max(nchar(x))
+  if (is.na(max_char)) {
+    max_char <- 7
+  }
   create_pillar_column(out,
                        align = "left",
-                       width = max(nchar(x)) + ifelse(any(x %in% c(NA, "UNKNOWN")), 2, 0))
+                       width = max_char + ifelse(any(x %in% c(NA, "UNKNOWN")), 2, 0))
 }
 
 # will be exported using s3_register() in R/zzz.R

@@ -1,5 +1,5 @@
-# AMR 1.4.0.9043
-## <small>Last updated: 22 December 2020</small>
+# AMR 1.4.0.9044
+## <small>Last updated: 24 December 2020</small>
 
 ### New
 * Function `is_new_episode()` to determine patient episodes which are not necessarily based on microorganisms. It also supports grouped variables with e.g. `mutate()`, `filter()` and `summarise()` of the `dplyr` package:
@@ -45,12 +45,14 @@
 * Fix for plotting MIC values with `plot()`
 * Added `plot()` generic to class `<disk>`
 * LA-MRSA and CA-MRSA are now recognised as an abbreviation for *Staphylococcus aureus*, meaning that e.g. `mo_genus("LA-MRSA")` will return `"Staphylococcus"` and `mo_is_gram_positive("LA-MRSA")` will return `TRUE`.
+* Fix for printing class <mo> in tibbles when all values are `NA`
+* Fix for `mo_shortname()` when the input contains `NA`
+* If `as.mo()` takes more than 30 seconds, some suggestions will be done to improve speed
 
 ### Other
 * All messages and warnings thrown by this package now break sentences on whole words
 * More extensive unit tests
 * Internal calls to `options()` were all removed in favour of a new internal environment `mo_env`
-* Our website now also has a dark theme, that switches on automatically based on system settings (such as Night Mode in macOS)
 
 # AMR 1.4.0
 

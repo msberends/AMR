@@ -75,6 +75,13 @@
   s3_register("skimr::get_skimmers", "rsi")
   s3_register("skimr::get_skimmers", "mic")
   s3_register("skimr::get_skimmers", "disk")
+  
+  # if mo source exists, fire it up (see mo_source())
+  try({
+    if (file.exists(getOption("AMR_mo_source", "~/mo_source.rds"))) {
+      invisible(get_mo_source())
+    }
+  }, silent = TRUE)
 }
 
 .onAttach <- function(...) {

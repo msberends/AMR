@@ -1,6 +1,6 @@
 # -------------------------------------------------------------------------------------------------------------------------------
 # For editing this EUCAST reference file, these values can all be used for targeting antibiotics:
-# 'all_betalactams', 'aminoglycosides', 'aminopenicillins', 'carbapenems', 'cephalosporins', 'cephalosporins_1st', 'cephalosporins_2nd', 'cephalosporins_except_CAZ',
+# 'all_betalactams', 'aminoglycosides', 'aminopenicillins', 'carbapenems', 'cephalosporins', 'cephalosporins_1st', 'cephalosporins_2nd', 'cephalosporins_3rd', 'cephalosporins_except_CAZ',
 # 'fluoroquinolones', 'glycopeptides', 'lincosamides', 'lipoglycopeptides', 'macrolides', 'oxazolidinones', 'polymyxins', 'streptogramins', 'tetracyclines', 'ureidopenicillins',
 # and all separate EARS-Net letter codes like 'AMC'. They can be separated by comma: 'AMC, fluoroquinolones'.
 # The 'if_mo_property' column can be any column name from the AMR::microorganisms data set, or "genus_species" or "gramstain".

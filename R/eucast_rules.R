@@ -87,7 +87,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #'
 #' The following antibiotics are used for the functions [eucast_rules()] and [mdro()]. These are shown below in the format 'name (`antimicrobial ID`, [ATC code](https://www.whocc.no/atc/structure_and_principles/))', sorted alphabetically:
 #'
-#' `r create_ab_documentation(c("AMC", "AMK", "AMP", "AMX", "ATM", "AVO", "AZL", "AZM", "BAM", "BPR", "CAC", "CAP", "CAT", "CAZ", "CCV", "CDR", "CDZ", "CEC", "CED", "CEI", "CEP", "CFM", "CFM1", "CFP", "CFR", "CFS", "CHL", "CID", "CIP", "CLI", "CLR", "CMX", "CMZ", "CND", "COL", "CPD", "CPM", "CPO", "CPR", "CPT", "CRB", "CRD", "CRN", "CRO", "CSL", "CTB", "CTF", "CTL", "CTT", "CTX", "CTZ", "CXM", "CYC", "CZD", "CZO", "CZX", "DAL", "DAP", "DIR", "DIT", "DIZ", "DKB", "DOR", "DOX", "ENX", "EPC", "ERV", "ERY", "ETH", "ETP", "FDX", "FEP", "FLC", "FLE", "FLR1", "FOS", "FOX", "FOX1", "FUS", "GAT", "GEH", "GEM", "GEN", "GRX", "HAP", "HET", "INH", "IPM", "ISE", "JOS", "KAN", "LEX", "LIN", "LNZ", "LOM", "LOR", "LTM", "LVX", "MAN", "MCM", "MEC", "MEM", "MEV", "MEZ", "MFX", "MID", "MNO", "MTM", "MTR", "NAL", "NEO", "NET", "NIT", "NOR", "NOV", "NVA", "OFX", "OLE", "OMC", "ORI", "OXA", "PAZ", "PEF", "PEN", "PHN", "PIP", "PLB", "PME", "PRI", "PRL", "PRU", "PVM", "PZA", "QDA", "RAM", "RFL", "RFP", "RIB", "RID", "RIF", "ROK", "RST", "RXT", "SAM", "SBC", "SDI", "SDM", "SIS", "SLF", "SLF1", "SLF10", "SLF11", "SLF12", "SLF13", "SLF2", "SLF3", "SLF4", "SLF5", "SLF6", "SLF7", "SLF8", "SLF9", "SLT1", "SLT2", "SLT3", "SLT4", "SLT5", "SMX", "SPI", "SPT", "SPX", "STH", "STR", "STR1", "SUD", "SUT", "SXT", "SZO", "TAL", "TCC", "TCM", "TCY", "TEC", "TEM", "TGC", "THA", "TIC", "TLT", "TLV", "TMP", "TMX", "TOB", "TRL", "TVA", "TZD", "TZP", "VAN"))`
+#' `r create_ab_documentation(c("AMC", "AMK", "AMP", "AMX", "ATM", "AVO", "AZL", "AZM", "BAM", "BPR", "CAC", "CAT", "CAZ", "CCP", "CCV", "CCX", "CDC", "CDR", "CDZ", "CEC", "CED", "CEI", "CEM", "CEP", "CFM", "CFM1", "CFP", "CFR", "CFS", "CFZ", "CHE", "CHL", "CID", "CIP", "CLI", "CLR", "CMX", "CMZ", "CND", "COL", "CPD", "CPI", "CPL", "CPM", "CPO", "CPR", "CPT", "CPX", "CRB", "CRD", "CRN", "CRO", "CSL", "CTB", "CTC", "CTF", "CTL", "CTS", "CTT", "CTX", "CTZ", "CXM", "CYC", "CZA", "CZD", "CZO", "CZP", "CZX", "DAL", "DAP", "DIR", "DIT", "DIX", "DIZ", "DKB", "DOR", "DOX", "ENX", "EPC", "ERY", "ETP", "FEP", "FLC", "FLE", "FLR1", "FOS", "FOV", "FOX", "FOX1", "FUS", "GAT", "GEM", "GEN", "GRX", "HAP", "HET", "IPM", "ISE", "JOS", "KAN", "LEX", "LIN", "LNZ", "LOM", "LOR", "LTM", "LVX", "MAN", "MCM", "MEC", "MEM", "MEV", "MEZ", "MFX", "MID", "MNO", "MTM", "NAL", "NEO", "NET", "NIT", "NOR", "NOV", "NVA", "OFX", "OLE", "ORI", "OXA", "PAZ", "PEF", "PEN", "PHN", "PIP", "PLB", "PME", "PRI", "PRL", "PRU", "PVM", "QDA", "RAM", "RFL", "RID", "RIF", "ROK", "RST", "RXT", "SAM", "SBC", "SDI", "SDM", "SIS", "SLF", "SLF1", "SLF10", "SLF11", "SLF12", "SLF13", "SLF2", "SLF3", "SLF4", "SLF5", "SLF6", "SLF7", "SLF8", "SLF9", "SLT1", "SLT2", "SLT3", "SLT4", "SLT5", "SMX", "SPI", "SPX", "STR", "STR1", "SUD", "SUT", "SXT", "SZO", "TAL", "TCC", "TCM", "TCY", "TEC", "TEM", "TGC", "THA", "TIC", "TIO", "TLT", "TLV", "TMP", "TMX", "TOB", "TRL", "TVA", "TZD", "TZP", "VAN"))`
 #' @aliases EUCAST
 #' @rdname eucast_rules
 #' @export
@@ -278,22 +278,27 @@ eucast_rules <- function(x,
   CAC <- cols_ab["CAC"]
   CAT <- cols_ab["CAT"]
   CAZ <- cols_ab["CAZ"]
+  CCP <- cols_ab["CCP"]
   CCV <- cols_ab["CCV"]
+  CCX <- cols_ab["CCX"]
+  CDC <- cols_ab["CDC"]
   CDR <- cols_ab["CDR"]
   CDZ <- cols_ab["CDZ"]
   CEC <- cols_ab["CEC"]
   CED <- cols_ab["CED"]
   CEI <- cols_ab["CEI"]
+  CEM <- cols_ab["CEM"]
   CEP <- cols_ab["CEP"]
   CFM <- cols_ab["CFM"]
   CFM1 <- cols_ab["CFM1"]
   CFP <- cols_ab["CFP"]
   CFR <- cols_ab["CFR"]
   CFS <- cols_ab["CFS"]
+  CFZ <- cols_ab["CFZ"]
+  CHE <- cols_ab["CHE"]
   CHL <- cols_ab["CHL"]
   CID <- cols_ab["CID"]
   CIP <- cols_ab["CIP"]
-  CLI <- cols_ab["CLI"]
   CLI <- cols_ab["CLI"]
   CLR <- cols_ab["CLR"]
   CMX <- cols_ab["CMX"]
@@ -301,30 +306,38 @@ eucast_rules <- function(x,
   CND <- cols_ab["CND"]
   COL <- cols_ab["COL"]
   CPD <- cols_ab["CPD"]
+  CPI <- cols_ab["CPI"]
+  CPL <- cols_ab["CPL"]
   CPM <- cols_ab["CPM"]
   CPO <- cols_ab["CPO"]
   CPR <- cols_ab["CPR"]
   CPT <- cols_ab["CPT"]
+  CPX <- cols_ab["CPX"]
   CRB <- cols_ab["CRB"]
   CRD <- cols_ab["CRD"]
   CRN <- cols_ab["CRN"]
   CRO <- cols_ab["CRO"]
   CSL <- cols_ab["CSL"]
   CTB <- cols_ab["CTB"]
+  CTC <- cols_ab["CTC"]
   CTF <- cols_ab["CTF"]
   CTL <- cols_ab["CTL"]
+  CTS <- cols_ab["CTS"]
   CTT <- cols_ab["CTT"]
   CTX <- cols_ab["CTX"]
   CTZ <- cols_ab["CTZ"]
   CXM <- cols_ab["CXM"]
   CYC <- cols_ab["CYC"]
+  CZA <- cols_ab["CZA"]
   CZD <- cols_ab["CZD"]
   CZO <- cols_ab["CZO"]
+  CZP <- cols_ab["CZP"]
   CZX <- cols_ab["CZX"]
   DAL <- cols_ab["DAL"]
   DAP <- cols_ab["DAP"]
   DIR <- cols_ab["DIR"]
   DIT <- cols_ab["DIT"]
+  DIX <- cols_ab["DIX"]
   DIZ <- cols_ab["DIZ"]
   DKB <- cols_ab["DKB"]
   DOR <- cols_ab["DOR"]
@@ -338,6 +351,7 @@ eucast_rules <- function(x,
   FLE <- cols_ab["FLE"]
   FLR1 <- cols_ab["FLR1"]
   FOS <- cols_ab["FOS"]
+  FOV <- cols_ab["FOV"]
   FOX <- cols_ab["FOX"]
   FOX1 <- cols_ab["FOX1"]
   FUS <- cols_ab["FUS"]
@@ -391,7 +405,6 @@ eucast_rules <- function(x,
   PRU <- cols_ab["PRU"]
   PVM <- cols_ab["PVM"]
   QDA <- cols_ab["QDA"]
-  QDA <- cols_ab["QDA"]
   RAM <- cols_ab["RAM"]
   RFL <- cols_ab["RFL"]
   RID <- cols_ab["RID"]
@@ -441,6 +454,7 @@ eucast_rules <- function(x,
   TGC <- cols_ab["TGC"]
   THA <- cols_ab["THA"]
   TIC <- cols_ab["TIC"]
+  TIO <- cols_ab["TIO"]
   TLT <- cols_ab["TLT"]
   TLV <- cols_ab["TLV"]
   TMP <- cols_ab["TMP"]
@@ -474,9 +488,10 @@ eucast_rules <- function(x,
   aminoglycosides <- c(AMK, DKB, GEN, ISE, KAN, NEO, NET, RST, SIS, STR, STR1, TOB)
   aminopenicillins <- c(AMP, AMX)
   carbapenems <- c(DOR, ETP, IPM, MEM, MEV)
-  cephalosporins <- c(CDZ, CAC, CEC, CFR, RID, MAN, CTZ, CZD, CZO, CDR, DIT, FEP, CAT, CFM, CMX, CMZ, DIZ, CID, CFP, CSL, CND, CTX, CTT, CTF, FOX, CPM, CPO, CPD, CPR, CRD, CFS, CPT, CAZ, CCV, CTL, CTB, CZX, BPR, CFM1, CEI, CRO, CXM, LEX, CEP, HAP, CED, LTM, LOR)
+  cephalosporins <- c(CDZ, CCP, CAC, CEC, CFR, RID, MAN, CTZ, CZD, CZO, CDR, DIT, FEP, CAT, CFM, CMX, CMZ, DIZ, CID, CFP, CSL, CND, CTX, CTT, CTF, FOX, CPM, CPO, CPD, CPR, CRD, CFS, CPT, CAZ, CCV, CTL, CTB, CZX, BPR, CFM1, CEI, CRO, CXM, LEX, CEP, HAP, CED, LTM, LOR)
   cephalosporins_1st <- c(CAC, CFR, RID, CTZ, CZD, CZO, CRD, CTL, LEX, CEP, HAP, CED)
   cephalosporins_2nd <- c(CEC, MAN, CMZ, CID, CND, CTT, CTF, FOX, CPR, CXM, LOR)
+  cephalosporins_3rd <- c(CDZ, CCP, CCX, CDR, DIT, DIX, CAT, CPI, CFM, CMX, DIZ, CFP, CSL, CTX, CTC, CTS, CHE, FOV, CFZ, CPM, CPD, CPX, CDC, CFS, CAZ, CZA, CCV, CEM, CPL, CTB, TIO, CZX, CZP, CRO, LTM)
   cephalosporins_except_CAZ <- cephalosporins[cephalosporins != ifelse(is.null(CAZ), "", CAZ)]
   fluoroquinolones <- c(CIP, ENX, FLE, GAT, GEM, GRX, LVX, LOM, MFX, NOR, OFX, PAZ, PEF, PRU, RFL, SPX, TMX, TVA)
   glycopeptides <- c(AVO, NVA, RAM, TEC, TCM, VAN) # dalba/orita/tela are in lipoglycopeptides
@@ -796,7 +811,7 @@ eucast_rules <- function(x,
                      word_wrap(
                        expertrules_info$title, " (",
                        font_red(paste0(expertrules_info$version_txt, ", ", expertrules_info$year)), ")\n")),
-              ""))))
+              ""))), "\n")
       }
       # Print rule  -------------------------------------------------------------
       if (rule_current != rule_previous) {

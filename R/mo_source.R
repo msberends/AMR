@@ -25,9 +25,9 @@
 
 #' User-defined reference data set for microorganisms
 #'
-#' @description These functions can be used to predefine your own reference to be used in [as.mo()] and consequently all `mo_*` functions like [mo_genus()] and [mo_gramstain()].
+#' @description These functions can be used to predefine your own reference to be used in [as.mo()] and consequently all [`mo_*`][mo_property()] functions (such as [mo_genus()] and [mo_gramstain()]).
 #'
-#' This is **the fastest way** to have your organisation (or analysis) specific codes picked up and translated by this package.
+#' This is **the fastest way** to have your organisation (or analysis) specific codes picked up and translated by this package, since you don't have to bother about it again after setting it up once.
 #' @inheritSection lifecycle Stable lifecycle
 #' @param path location of your reference file, see Details. Can be `""`, `NULL` or `FALSE` to delete the reference file.
 #' @param destination destination of the compressed data file, default to the user's home directory.
@@ -103,7 +103,7 @@
 #' ```
 #' as.mo("lab_mo_ecoli")
 #' #> NOTE: Updated mo_source file '/Users/me/mo_source.rds' (0.3 kB) from 
-#' #>       '/Users/me/Documents/ourcodes.xlsx' (9  kB), columns
+#' #>       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns
 #' #>        "Organisation XYZ" and "mo"
 #' #> Class <mo>
 #' #> [1] B_ESCHR_COLI
@@ -119,7 +119,7 @@
 #' #> Removed mo_source file '/Users/me/mo_source.rds'
 #' ```
 #' 
-#' If the original Excel file is moved or deleted, the mo_source file will be removed upon the next use of [as.mo()].
+#' If the original file (in the previous case an Excel file) is moved or deleted, the `mo_source.rds` file will be removed upon the next use of [as.mo()] or any [`mo_*`][mo_property()] function.
 #' @export
 #' @inheritSection AMR Read more on our website!
 set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_source.rds")) {

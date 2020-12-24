@@ -147,8 +147,11 @@ rsi_calc <- function(...,
   }
   
   if (print_warning == TRUE) {
-    warning_("Increase speed by transforming to class <rsi> on beforehand: your_data %pm>% mutate_if(is.rsi.eligible, as.rsi)",
-             call = FALSE)
+    if (message_not_thrown_before("rsi_calc")) {
+      warning_("Increase speed by transforming to class <rsi> on beforehand: your_data %pm>% mutate_if(is.rsi.eligible, as.rsi)",
+               call = FALSE)
+      remember_thrown_message("rsi_calc")
+    }
   }
   
   if (only_count == TRUE) {

@@ -19,9 +19,9 @@ get_mo_source(destination = getOption("AMR_mo_source", "~/mo_source.rds"))
 \item{destination}{destination of the compressed data file, default to the user's home directory.}
 }
 \description{
-These functions can be used to predefine your own reference to be used in \code{\link[=as.mo]{as.mo()}} and consequently all \verb{mo_*} functions like \code{\link[=mo_genus]{mo_genus()}} and \code{\link[=mo_gramstain]{mo_gramstain()}}.
+These functions can be used to predefine your own reference to be used in \code{\link[=as.mo]{as.mo()}} and consequently all \code{\link[=mo_property]{mo_*}} functions (such as \code{\link[=mo_genus]{mo_genus()}} and \code{\link[=mo_gramstain]{mo_gramstain()}}).
 
-This is \strong{the fastest way} to have your organisation (or analysis) specific codes picked up and translated by this package.
+This is \strong{the fastest way} to have your organisation (or analysis) specific codes picked up and translated by this package, since you don't have to bother about it again after setting it up once.
 }
 \details{
 The reference file can be a text file separated with commas (CSV) or tabs or pipes, an Excel file (either 'xls' or 'xlsx' format) or an \R object file (extension '.rds'). To use an Excel file, you will need to have the \code{readxl} package installed.
@@ -79,7 +79,7 @@ If we edit the Excel file by, let's say, adding row 4 like this:\preformatted{  
 
 ...any new usage of an MO function in this package will update your data file:\preformatted{as.mo("lab_mo_ecoli")
 #> NOTE: Updated mo_source file '/Users/me/mo_source.rds' (0.3 kB) from 
-#>       '/Users/me/Documents/ourcodes.xlsx' (9  kB), columns
+#>       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns
 #>        "Organisation XYZ" and "mo"
 #> Class <mo>
 #> [1] B_ESCHR_COLI
@@ -92,7 +92,7 @@ To delete the reference data file, just use \code{""}, \code{NULL} or \code{FALS
 #> Removed mo_source file '/Users/me/mo_source.rds'
 }
 
-If the original Excel file is moved or deleted, the mo_source file will be removed upon the next use of \code{\link[=as.mo]{as.mo()}}.
+If the original file (in the previous case an Excel file) is moved or deleted, the \code{mo_source.rds} file will be removed upon the next use of \code{\link[=as.mo]{as.mo()}} or any \code{\link[=mo_property]{mo_*}} function.
 }
 
 \section{Stable lifecycle}{

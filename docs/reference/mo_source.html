@@ -6,22 +6,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Inform modern browsers that this page supports both dark and light color schemes,
-  and the page author prefers light. -->
-<meta name="color-scheme" content="dark light">
-<script>
-  // If `prefers-color-scheme` is not supported, fall back to light mode.
-  // i.e. In this case, inject the `light` CSS before the others, with
-  // no media filter so that it will be downloaded with highest priority.
-  if (window.matchMedia("(prefers-color-scheme: dark)").media === "not all") {
-    document.documentElement.style.display = "none";
-    document.head.insertAdjacentHTML(
-      "beforeend",
-      "<link id=\"css\" rel=\"stylesheet\" href=\"bootstrap.css\" onload=\"document.documentElement.style.display = ''\">"
-    );
-  }
-</script>
-
 <title>User-defined reference data set for microorganisms — mo_source • AMR (for R)</title>
 
 <!-- favicons -->
@@ -36,20 +20,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
-
-<!-- Flatly Theme - Light  -->
-<link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
-
-<!-- Darkly Theme - Dark -->
-<link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)">
-
-<!-- preferably CSS -->
-<link rel="stylesheet" href="../preferably.css">
-<link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
-<link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)">
-
-
 
 <!-- bootstrap-toc -->
 <link rel="stylesheet" href="../bootstrap-toc.css">
@@ -76,8 +49,8 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="User-defined reference data set for microorganisms — mo_source" />
-<meta property="og:description" content="These functions can be used to predefine your own reference to be used in as.mo() and consequently all mo_* functions like mo_genus() and mo_gramstain().
-This is the fastest way to have your organisation (or analysis) specific codes picked up and translated by this package." />
+<meta property="og:description" content="These functions can be used to predefine your own reference to be used in as.mo() and consequently all mo_* functions (such as mo_genus() and mo_gramstain()).
+This is the fastest way to have your organisation (or analysis) specific codes picked up and translated by this package, since you don't have to bother about it again after setting it up once." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
@@ -86,9 +59,6 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
-
-
-
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -113,7 +83,7 @@ This is the fastest way to have your organisation (or analysis) specific codes p
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9043</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9044</span>
       </span>
     </div>
 
@@ -237,7 +207,6 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
         <li>
   <a href="https://github.com/msberends/AMR">
     <span class="fab fa-github"></span>
@@ -271,8 +240,8 @@ This is the fastest way to have your organisation (or analysis) specific codes p
     </div>
 
     <div class="ref-description">
-    <p>These functions can be used to predefine your own reference to be used in <code><a href='as.mo.html'>as.mo()</a></code> and consequently all <code>mo_*</code> functions like <code><a href='mo_property.html'>mo_genus()</a></code> and <code><a href='mo_property.html'>mo_gramstain()</a></code>.</p>
-<p>This is <strong>the fastest way</strong> to have your organisation (or analysis) specific codes picked up and translated by this package.</p>
+    <p>These functions can be used to predefine your own reference to be used in <code><a href='as.mo.html'>as.mo()</a></code> and consequently all <code><a href='mo_property.html'>mo_*</a></code> functions (such as <code><a href='mo_property.html'>mo_genus()</a></code> and <code><a href='mo_property.html'>mo_gramstain()</a></code>).</p>
+<p>This is <strong>the fastest way</strong> to have your organisation (or analysis) specific codes picked up and translated by this package, since you don't have to bother about it again after setting it up once.</p>
     </div>
 
     <pre class="usage"><span class='fu'>set_mo_source</span><span class='op'>(</span>
@@ -348,7 +317,7 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 
 <p>...any new usage of an MO function in this package will update your data file:</p><pre><span class='fu'><a href='as.mo.html'>as.mo</a></span><span class='op'>(</span><span class='st'>"lab_mo_ecoli"</span><span class='op'>)</span>
 <span class='co'>#&gt; NOTE: Updated mo_source file '/Users/me/mo_source.rds' (0.3 kB) from </span>
-<span class='co'>#&gt;       '/Users/me/Documents/ourcodes.xlsx' (9  kB), columns</span>
+<span class='co'>#&gt;       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns</span>
 <span class='co'>#&gt;        "Organisation XYZ" and "mo"</span>
 <span class='co'>#&gt; Class &lt;mo&gt;</span>
 <span class='co'>#&gt; [1] B_ESCHR_COLI</span>
@@ -361,7 +330,7 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 <span class='co'>#&gt; Removed mo_source file '/Users/me/mo_source.rds'</span>
 </pre>
 
-<p>If the original Excel file is moved or deleted, the mo_source file will be removed upon the next use of <code><a href='as.mo.html'>as.mo()</a></code>.</p>
+<p>If the original file (in the previous case an Excel file) is moved or deleted, the <code>mo_source.rds</code> file will be removed upon the next use of <code><a href='as.mo.html'>as.mo()</a></code> or any <code><a href='mo_property.html'>mo_*</a></code> function.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
 
     
@@ -390,7 +359,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

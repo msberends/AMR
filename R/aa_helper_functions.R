@@ -187,13 +187,16 @@ search_type_in_df <- function(x, type, info = TRUE) {
       }
     }
   }
-
+  
   if (!is.null(found) & info == TRUE) {
-    msg <- paste0("Using column '", font_bold(found), "' as input for `col_", type, "`.")
-    if (type %in% c("keyantibiotics", "specimen")) {
-      msg <- paste(msg, "Use", font_bold(paste0("col_", type), "= FALSE"), "to prevent this.")
+    if (message_not_thrown_before(fn = paste0("search_", type))) {
+      msg <- paste0("Using column '", font_bold(found), "' as input for `col_", type, "`.")
+      if (type %in% c("keyantibiotics", "specimen")) {
+        msg <- paste(msg, "Use", font_bold(paste0("col_", type), "= FALSE"), "to prevent this.")
+      }
+      message_(msg)
+      remember_thrown_message(fn = paste0("search_", type))
     }
-    message_(msg)
   }
   found
 }
@@ -532,6 +535,20 @@ get_current_data <- function(arg_name, call) {
                                      "or function not used inside a valid dplyr verb", 
                                      # tryCatch adds 4 system calls, subtract them
                                      call = call - 4))
+}
+
+get_root_env_address <- function() {
+  sub('<environment: (.*)>', '\\1', utils::capture.output(sys.frames()[[1]]))
+}
+
+remember_thrown_message <- function(fn) {
+  assign(x = paste0("address_", fn),
+         value = get_root_env_address(),
+         envir = mo_env)
+}
+
+message_not_thrown_before <- function(fn) {
+  is.null(mo_env[[paste0("address_", fn)]]) || !identical(mo_env[[paste0("address_", fn)]], get_root_env_address())
 }
 
 has_colour <- function() {

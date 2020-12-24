@@ -85,7 +85,7 @@ mo_url(x, open = FALSE, language = get_locale(), ...)
 mo_property(x, property = "fullname", language = get_locale(), ...)
 }
 \arguments{
-\item{x}{any character (vector) that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}. Can be omitted for auto-guessing in \verb{mo_is_*()} functions when used inside \code{dplyr} verbs, such as \code{\link[dplyr:filter]{filter()}}, \code{\link[dplyr:mutate]{mutate()}} and \code{\link[dplyr:summarise]{summarise()}}, please see \emph{Examples}.}
+\item{x}{any character (vector) that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}. Can be omitted for auto-guessing the column containing microorganism codes when used inside \code{dplyr} verbs, such as \code{\link[dplyr:filter]{filter()}}, \code{\link[dplyr:mutate]{mutate()}} and \code{\link[dplyr:summarise]{summarise()}}, please see \emph{Examples}.}
 
 \item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can be overwritten by setting the option \code{AMR_locale}, e.g. \code{options(AMR_locale = "de")}, see \link{translate}. Also used to translate text like "no growth". Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
@@ -93,7 +93,7 @@ mo_property(x, property = "fullname", language = get_locale(), ...)
 
 \item{ab}{any (vector of) text that can be coerced to a valid antibiotic code with \code{\link[=as.ab]{as.ab()}}}
 
-\item{open}{browse the URL using \code{\link[utils:browseURL]{utils::browseURL()}}}
+\item{open}{browse the URL using \code{\link[utils:browseURL]{browseURL()}}}
 
 \item{property}{one of the column names of the \link{microorganisms} data set: "\code{mo}", "\code{fullname}", "\code{kingdom}", "\code{phylum}", "\code{class}", "\code{order}", "\code{family}", "\code{genus}", "\code{species}", "\code{subspecies}", "\code{rank}", "\code{ref}", "\code{species_id}", "\code{source}", "\code{prevalence}", "\code{snomed}", or must be \code{"shortname"}}
 }

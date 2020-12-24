@@ -5,32 +5,15 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Inform modern browsers that this page supports both dark and light color schemes,
-  and the page author prefers light. --><meta name="color-scheme" content="dark light">
-<script>
-  // If `prefers-color-scheme` is not supported, fall back to light mode.
-  // i.e. In this case, inject the `light` CSS before the others, with
-  // no media filter so that it will be downloaded with highest priority.
-  if (window.matchMedia("(prefers-color-scheme: dark)").media === "not all") {
-    document.documentElement.style.display = "none";
-    document.head.insertAdjacentHTML(
-      "beforeend",
-      "<link id=\"css\" rel=\"stylesheet\" href=\"bootstrap.css\" onload=\"document.documentElement.style.display = ''\">"
-    );
-  }
-</script><title>Benchmarks • AMR (for R)</title>
+<title>Benchmarks • AMR (for R)</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
-<!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)">
-<!-- preferably CSS --><link rel="stylesheet" href="../preferably.css">
-<link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
-<link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)">
-<!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -56,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9042</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9044</span>
       </span>
     </div>
 
@@ -244,20 +227,20 @@
   times <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
 <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="va">S.aureus</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
-<span class="co">#                                   expr   min    lq  mean median    uq   max</span>
-<span class="co">#                           as.mo("sau")  10.0  11.0  20.0   13.0  38.0  41.0</span>
-<span class="co">#                          as.mo("stau") 100.0 110.0 120.0  110.0 140.0 140.0</span>
-<span class="co">#                          as.mo("STAU") 100.0 110.0 130.0  140.0 140.0 160.0</span>
-<span class="co">#                        as.mo("staaur")  10.0  12.0  23.0   14.0  38.0  58.0</span>
-<span class="co">#                        as.mo("STAAUR")  10.0  11.0  18.0   13.0  14.0  42.0</span>
-<span class="co">#                     as.mo("S. aureus")  26.0  30.0  46.0   44.0  58.0  78.0</span>
-<span class="co">#                      as.mo("S aureus")  26.0  27.0  32.0   31.0  31.0  56.0</span>
-<span class="co">#         as.mo("Staphylococcus aureus")   2.0   2.4   2.6    2.7   2.8   3.1</span>
-<span class="co">#  as.mo("Staphylococcus aureus (MRSA)") 890.0 910.0 920.0  920.0 930.0 960.0</span>
-<span class="co">#       as.mo("Sthafilokkockus aaureuz") 380.0 390.0 400.0  390.0 400.0 430.0</span>
-<span class="co">#                          as.mo("MRSA")   9.9  11.0  16.0   14.0  14.0  41.0</span>
-<span class="co">#                          as.mo("VISA")  17.0  19.0  28.0   21.0  45.0  52.0</span>
-<span class="co">#                          as.mo("VRSA")  17.0  19.0  26.0   21.0  22.0  53.0</span>
+<span class="co">#                                   expr   min    lq   mean median     uq    max</span>
+<span class="co">#                           as.mo("sau")   9.9  12.0   15.0   13.0   13.0   42.0</span>
+<span class="co">#                          as.mo("stau") 100.0 100.0  130.0  120.0  140.0  190.0</span>
+<span class="co">#                          as.mo("STAU") 110.0 110.0  130.0  130.0  140.0  150.0</span>
+<span class="co">#                        as.mo("staaur")   9.8  12.0   26.0   13.0   41.0   60.0</span>
+<span class="co">#                        as.mo("STAAUR")  11.0  11.0   15.0   13.0   13.0   41.0</span>
+<span class="co">#                     as.mo("S. aureus")  26.0  28.0   50.0   58.0   63.0   75.0</span>
+<span class="co">#                      as.mo("S aureus")  26.0  27.0   46.0   51.0   60.0   67.0</span>
+<span class="co">#         as.mo("Staphylococcus aureus")   1.9   2.2    2.5    2.5    2.8    3.1</span>
+<span class="co">#  as.mo("Staphylococcus aureus (MRSA)") 870.0 880.0 1100.0  910.0 1000.0 2400.0</span>
+<span class="co">#       as.mo("Sthafilokkockus aaureuz") 360.0 370.0  400.0  380.0  420.0  540.0</span>
+<span class="co">#                          as.mo("MRSA")   9.7  11.0   17.0   12.0   13.0   66.0</span>
+<span class="co">#                          as.mo("VISA")  19.0  19.0   36.0   35.0   53.0   56.0</span>
+<span class="co">#                          as.mo("VRSA")  17.0  20.0   20.0   21.0   21.0   23.0</span>
 <span class="co">#  neval</span>
 <span class="co">#     10</span>
 <span class="co">#     10</span>
@@ -301,8 +284,8 @@
 <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
 <span class="co">#        expr min  lq mean median  uq max neval</span>
-<span class="co">#  mo_name(x) 128 167  205    195 232 298    10</span></code></pre></div>
-<p>So getting official taxonomic names of 2,000,000 (!!) items consisting of 90 unique values only takes 0.195 seconds. You only lose time on your unique input values.</p>
+<span class="co">#  mo_name(x) 134 167  201    179 207 310    10</span></code></pre></div>
+<p>So getting official taxonomic names of 2,000,000 (!!) items consisting of 90 unique values only takes 0.179 seconds. You only lose time on your unique input values.</p>
 </div>
 <div id="precalculated-results" class="section level3">
 <h3 class="hasAnchor">
@@ -316,10 +299,10 @@
 <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
 <span class="co">#  expr   min    lq  mean median    uq   max neval</span>
-<span class="co">#     A  7.35  7.70  8.15   8.11  8.68  8.96    10</span>
-<span class="co">#     B 22.50 22.80 28.10  24.30 25.70 62.60    10</span>
-<span class="co">#     C  1.84  1.98  2.13   2.13  2.17  2.43    10</span></code></pre></div>
-<p>So going from <code><a href="../reference/mo_property.html">mo_name("Staphylococcus aureus")</a></code> to <code>"Staphylococcus aureus"</code> takes 0.0021 seconds - it doesn’t even start calculating <em>if the result would be the same as the expected resulting value</em>. That goes for all helper functions:</p>
+<span class="co">#     A  7.59  7.93  8.24   8.09  8.66  9.06    10</span>
+<span class="co">#     B 23.60 23.70 29.20  24.30 27.10 66.10    10</span>
+<span class="co">#     C  1.84  2.13  2.22   2.19  2.35  2.62    10</span></code></pre></div>
+<p>So going from <code><a href="../reference/mo_property.html">mo_name("Staphylococcus aureus")</a></code> to <code>"Staphylococcus aureus"</code> takes 0.0022 seconds - it doesn’t even start calculating <em>if the result would be the same as the expected resulting value</em>. That goes for all helper functions:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">run_it</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="op">(</span>A <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_species</a></span><span class="op">(</span><span class="st">"aureus"</span><span class="op">)</span>,
                          B <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="st">"Staphylococcus"</span><span class="op">)</span>,
@@ -333,14 +316,14 @@
 <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
 <span class="co">#  expr  min   lq mean median   uq  max neval</span>
-<span class="co">#     A 1.60 1.63 1.74   1.70 1.83 2.02    10</span>
-<span class="co">#     B 1.37 1.40 1.62   1.54 1.74 2.07    10</span>
-<span class="co">#     C 1.39 1.45 1.63   1.65 1.77 1.86    10</span>
-<span class="co">#     D 1.37 1.40 1.58   1.51 1.62 2.27    10</span>
-<span class="co">#     E 1.44 1.64 1.70   1.66 1.81 2.13    10</span>
-<span class="co">#     F 1.38 1.42 1.57   1.58 1.67 1.81    10</span>
-<span class="co">#     G 1.38 1.62 1.64   1.63 1.70 1.82    10</span>
-<span class="co">#     H 1.44 1.65 1.84   1.82 1.99 2.60    10</span></code></pre></div>
+<span class="co">#     A 1.69 1.77 1.82   1.83 1.86 1.92    10</span>
+<span class="co">#     B 1.78 1.79 1.89   1.91 1.95 2.06    10</span>
+<span class="co">#     C 1.74 1.79 1.88   1.87 1.94 2.06    10</span>
+<span class="co">#     D 1.75 1.77 1.94   1.95 1.99 2.41    10</span>
+<span class="co">#     E 1.70 1.75 1.84   1.81 1.87 2.08    10</span>
+<span class="co">#     F 1.66 1.70 1.76   1.74 1.80 1.89    10</span>
+<span class="co">#     G 1.68 1.70 1.82   1.75 1.93 2.09    10</span>
+<span class="co">#     H 1.66 1.69 1.75   1.74 1.80 1.92    10</span></code></pre></div>
 <p>Of course, when running <code><a href="../reference/mo_property.html">mo_phylum("Firmicutes")</a></code> the function has zero knowledge about the actual microorganism, namely <em>S. aureus</em>. But since the result would be <code>"Firmicutes"</code> anyway, there is no point in calculating the result. And because this package ‘knows’ all phyla of all known bacteria (according to the Catalogue of Life), it can just return the initial value immediately.</p>
 </div>
 <div id="results-in-other-languages" class="section level3">
@@ -367,14 +350,14 @@
                          times <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
 <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
-<span class="co">#  expr   min    lq  mean median    uq   max neval</span>
-<span class="co">#    en 15.77 16.36 18.40  16.85 17.50 53.58   100</span>
-<span class="co">#    de 19.03 19.70 24.60  20.14 21.06 59.83   100</span>
-<span class="co">#    nl 30.93 32.03 36.58  32.80 33.78 85.59   100</span>
-<span class="co">#    es 18.78 19.62 24.49  19.98 20.60 58.73   100</span>
-<span class="co">#    it 18.80 19.50 22.68  19.92 20.89 63.99   100</span>
-<span class="co">#    fr 18.78 19.59 21.99  19.90 20.75 58.87   100</span>
-<span class="co">#    pt 18.79 19.65 23.04  20.08 20.82 59.30   100</span></code></pre></div>
+<span class="co">#  expr   min    lq  mean median    uq    max neval</span>
+<span class="co">#    en 15.91 16.98 21.87  17.54 18.34 168.50   100</span>
+<span class="co">#    de 18.98 20.14 26.30  20.74 22.64  66.68   100</span>
+<span class="co">#    nl 31.02 32.71 37.56  33.84 35.81  82.77   100</span>
+<span class="co">#    es 19.13 20.06 22.96  20.54 21.42  65.26   100</span>
+<span class="co">#    it 18.90 19.84 24.26  20.59 22.80  60.30   100</span>
+<span class="co">#    fr 18.89 19.92 23.46  20.49 21.72  62.85   100</span>
+<span class="co">#    pt 18.90 19.99 23.80  20.70 22.17  61.42   100</span></code></pre></div>
 <p>Currently supported are German, Dutch, Spanish, Italian, French and Portuguese.</p>
 </div>
   </div>
@@ -392,7 +375,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Made with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1, using <a href="https://preferably.amirmasoudabdol.name/?source=footer">preferably</a> template.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

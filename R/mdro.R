@@ -192,7 +192,7 @@ mdro <- function(x,
   if (guideline$code == "cmi2012") {
     guideline$name <- "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance."
     guideline$author <- "Magiorakos AP, Srinivasan A, Carey RB, ..., Vatopoulos A, Weber JT, Monnet DL"
-    guideline$version <- "N/A"
+    guideline$version <- NA
     guideline$source <- "Clinical Microbiology and Infection 18:3, 2012. DOI: 10.1111/j.1469-0691.2011.03570.x"
     guideline$type <- "MDRs/XDRs/PDRs"
     
@@ -221,7 +221,7 @@ mdro <- function(x,
   } else if (guideline$code == "mrgn") {
     guideline$name <- "Cross-border comparison of the Dutch and German guidelines on multidrug-resistant Gram-negative microorganisms"
     guideline$author <- "M\u00fcller J, Voss A, K\u00f6ck R, ..., Kern WV, Wendt C, Friedrich AW"
-    guideline$version <- "N/A"
+    guideline$version <- NA
     guideline$source <- "Antimicrobial Resistance and Infection Control 4:7, 2015. DOI: 10.1186/s13756-015-0047-6"
     guideline$type <- "MRGNs"
     
@@ -568,11 +568,13 @@ mdro <- function(x,
     } else {
       cat(font_red("\nResults with 'R' or 'I' are considered as resistance. Use `combine_SI = TRUE` to only consider 'R' as resistance.\n"))
     }
-    cat("\nDetermining multidrug-resistant organisms (MDRO), according to:\n",
-        font_bold("Guideline: "), font_italic(guideline$name), "\n",
-        font_bold("Version:   "), guideline$version, "\n",
-        font_bold("Author:    "),    guideline$author, "\n",
-        font_bold("Source:    "), guideline$source, "\n",
+    cat("\n", word_wrap("Determining multidrug-resistant organisms (MDRO), according to:"), "\n",
+        word_wrap(paste0(font_bold("Guideline: "), font_italic(guideline$name)), extra_indent = 11, as_note = FALSE), "\n",
+        word_wrap(paste0(font_bold("Author(s): "), guideline$author), extra_indent = 11, as_note = FALSE), "\n",
+        ifelse(!is.na(guideline$version),
+               paste0(word_wrap(paste0(font_bold("Version:   "), guideline$version), extra_indent = 11, as_note = FALSE), "\n"),
+               ""),
+        word_wrap(paste0(font_bold("Source:    "), guideline$source), extra_indent = 11, as_note = FALSE), "\n",
         "\n", sep = "")
   }
   
@@ -1237,7 +1239,7 @@ mdro <- function(x,
   if (guideline$code == "cmi2012") {
     if (any(x$MDRO == -1, na.rm = TRUE)) {
       warning_("NA introduced for isolates where the available percentage of antimicrobial classes was below ",
-              percentage(pct_required_classes), " (set with `pct_required_classes`)")
+              percentage(pct_required_classes), " (set with `pct_required_classes`)", call = FALSE)
       # set these -1s to NA
       x[which(x$MDRO == -1), "MDRO"] <- NA_integer_
     }

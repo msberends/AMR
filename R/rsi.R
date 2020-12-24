@@ -709,7 +709,10 @@ exec_as.rsi <- function(method,
   
   guideline_coerced <- get_guideline(guideline, reference_data)
   if (guideline_coerced != guideline) {
-    message_("Using guideline ", font_bold(guideline_coerced), " as input for `guideline`.")
+    if (message_not_thrown_before("as.rsi")) {
+      message_("Using guideline ", font_bold(guideline_coerced), " as input for `guideline`.")
+      remember_thrown_message("as.rsi")
+    }
   }
   
   new_rsi <- rep(NA_character_, length(x))
@@ -745,7 +748,10 @@ exec_as.rsi <- function(method,
     
     if (isTRUE(add_intrinsic_resistance) & is_intrinsic_r) {
       if (!guideline_coerced %like% "EUCAST") {
-        warning_("Using 'add_intrinsic_resistance' is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.", call = FALSE)
+        if (message_not_thrown_before("as.rsi2")) {
+          warning_("Using 'add_intrinsic_resistance' is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.", call = FALSE)
+          remember_thrown_message("as.rsi2")
+        }
       } else {
         new_rsi[i] <- "R"
         next
@@ -811,7 +817,10 @@ exec_as.rsi <- function(method,
   if (any_is_intrinsic_resistant & guideline_coerced %like% "EUCAST" & !isTRUE(add_intrinsic_resistance)) {
     # found some intrinsic resistance, but was not applied
     message_("WARNING.", add_fn = list(font_yellow, font_bold), as_note = FALSE)
-    warning_("Found intrinsic resistance in some bug/drug combinations, although it was not applied.\nUse `as.rsi(..., add_intrinsic_resistance = TRUE)` to apply it.", call = FALSE)
+    if (message_not_thrown_before("as.rsi3")) {
+      warning_("Found intrinsic resistance in some bug/drug combinations, although it was not applied.\nUse `as.rsi(..., add_intrinsic_resistance = TRUE)` to apply it.", call = FALSE)
+      remember_thrown_message("as.rsi3")
+    }
     warned <- TRUE
   }
   

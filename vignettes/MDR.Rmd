@@ -81,34 +81,27 @@ example_isolates %>%
 For another example, I will create a data set to determine multi-drug resistant TB:
 
 ```{r}
-# a helper function to get a random vector with values S, I and R
-# with the probabilities 50% - 10% - 40%
-sample_rsi <- function() {
-  sample(c("S", "I", "R"),
-         size = 5000,
-         prob = c(0.5, 0.1, 0.4),
-         replace = TRUE)
-}
-
-my_TB_data <- data.frame(rifampicin = sample_rsi(),
-                         isoniazid = sample_rsi(),
-                         gatifloxacin = sample_rsi(),
-                         ethambutol = sample_rsi(),
-                         pyrazinamide = sample_rsi(),
-                         moxifloxacin = sample_rsi(),
-                         kanamycin = sample_rsi())
+# random_rsi() is a helper function to generate
+# a random vector with values S, I and R
+my_TB_data <- data.frame(rifampicin = random_rsi(5000),
+                         isoniazid = random_rsi(5000),
+                         gatifloxacin = random_rsi(5000),
+                         ethambutol = random_rsi(5000),
+                         pyrazinamide = random_rsi(5000),
+                         moxifloxacin = random_rsi(5000),
+                         kanamycin = random_rsi(5000))
 ```
 
 Because all column names are automatically verified for valid drug names or codes, this would have worked exactly the same:
 
 ```{r, eval = FALSE}
-my_TB_data <- data.frame(RIF = sample_rsi(),
-                         INH = sample_rsi(),
-                         GAT = sample_rsi(),
-                         ETH = sample_rsi(),
-                         PZA = sample_rsi(),
-                         MFX = sample_rsi(),
-                         KAN = sample_rsi())
+my_TB_data <- data.frame(RIF = random_rsi(5000),
+                         INH = random_rsi(5000),
+                         GAT = random_rsi(5000),
+                         ETH = random_rsi(5000),
+                         PZA = random_rsi(5000),
+                         MFX = random_rsi(5000),
+                         KAN = random_rsi(5000))
 ```
 
 The data set now looks like this:
