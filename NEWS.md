@@ -1,5 +1,5 @@
-# AMR 1.4.0.9044
-## <small>Last updated: 24 December 2020</small>
+# AMR 1.4.0.9045
+## <small>Last updated: 25 December 2020</small>
 
 ### New
 * Function `is_new_episode()` to determine patient episodes which are not necessarily based on microorganisms. It also supports grouped variables with e.g. `mutate()`, `filter()` and `summarise()` of the `dplyr` package:

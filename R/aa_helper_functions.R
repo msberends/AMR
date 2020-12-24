@@ -296,7 +296,6 @@ word_wrap <- function(...,
     indentation <- 0 + extra_indent
   }
   msg <- gsub("\n", paste0("\n", strrep(" ", indentation)), msg, fixed = TRUE)
-  # msg <- gsub("*|*", paste0("*|*", strrep(" ", indentation)), msg, fixed = TRUE)
   # remove trailing empty characters
   msg <- gsub("(\n| )+$", "", msg)
   
@@ -538,7 +537,7 @@ get_current_data <- function(arg_name, call) {
 }
 
 get_root_env_address <- function() {
-  sub('<environment: (.*)>', '\\1', utils::capture.output(sys.frames()[[1]]))
+  sub("<environment: (.*)>", "\\1", utils::capture.output(sys.frames()[[1]]))
 }
 
 remember_thrown_message <- function(fn) {

@@ -52,6 +52,7 @@ test_that("proportions works", {
                0.9382647,
                tolerance = 0.0001)
 
+  library(dplyr)
   # percentages
   expect_equal(example_isolates %>%
                  group_by(hospital_id) %>%
@@ -79,7 +80,7 @@ test_that("proportions works", {
   expect_warning(proportion_R(as.character(example_isolates$AMC)))
   expect_warning(proportion_S(as.character(example_isolates$AMC)))
   expect_warning(proportion_S(as.character(example_isolates$AMC,
-                                        example_isolates$GEN)))
+                                           example_isolates$GEN)))
   expect_warning(n_rsi(as.character(example_isolates$AMC,
                                     example_isolates$GEN)))
   expect_equal(suppressWarnings(n_rsi(as.character(example_isolates$AMC,

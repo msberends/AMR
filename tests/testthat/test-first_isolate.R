@@ -152,12 +152,6 @@ test_that("first isolates work", {
 
   require("dplyr")
   
-  # look for columns itself
-  expect_message(first_isolate(example_isolates))
-  expect_message(first_isolate(example_isolates %>%
-                               mutate(mo = as.character(mo)) %>%
-                               left_join_microorganisms()))
-
   # if mo is not an mo class, result should be the same
   expect_identical(example_isolates %>%
                      mutate(mo = as.character(mo)) %>%
