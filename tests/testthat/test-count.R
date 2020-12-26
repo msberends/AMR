@@ -79,7 +79,9 @@ test_that("counts work", {
   )
   
   # warning for speed loss
+  reset_all_thrown_messages()
   expect_warning(count_resistant(as.character(example_isolates$AMC)))
+  reset_all_thrown_messages()
   expect_warning(count_resistant(example_isolates$AMC,
                                  as.character(example_isolates$GEN)))
   

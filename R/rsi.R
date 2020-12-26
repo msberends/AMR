@@ -844,9 +844,9 @@ exec_as.rsi <- function(method,
 pillar_shaft.rsi <- function(x, ...) {
   out <- trimws(format(x))
   out[is.na(x)] <- font_grey(" NA")
-  out[x == "S"] <- font_green_bg(font_white("  S  "))
-  out[x == "I"] <- font_yellow_bg(font_black("  I  "))
-  out[x == "R"] <- font_red_bg(font_white("  R  "))
+  out[x == "R"] <- font_rsi_R_bg(font_black("  R  "))
+  out[x == "S"] <- font_rsi_S_bg(font_black("  S  "))
+  out[x == "I"] <- font_rsi_I_bg(font_black("  I  "))
   create_pillar_column(out, align = "left", width = 5)
 }
 

@@ -25,26 +25,34 @@
 
 #' Determine (new) episodes for patients
 #' 
-#' This function determines which items in a vector can be considered (the start of) a new episode, based on the argument `episode_days`. This can be used to determine clinical episodes for any epidemiological analysis.
+#' These functions determine which items in a vector can be considered (the start of) a new episode, based on the argument `episode_days`. This can be used to determine clinical episodes for any epidemiological analysis. The [get_episode()] function returns the index number of the episode per group, while the [is_new_episode()] function returns values `TRUE`/`FALSE` to indicate whether an item in a vector is the start of a new episode.
 #' @inheritSection lifecycle Stable lifecycle
 #' @param x vector of dates (class `Date` or `POSIXt`)
-#' @param episode_days length of the required episode in days, defaults to 365. Every element in the input will return `TRUE` after this number of days has passed since the last included date, independent of calendar years. Please see *Details*.
+#' @param episode_days length of the required episode in days, please see *Details*
 #' @param ... arguments passed on to [as.Date()]
 #' @details 
 #' Dates are first sorted from old to new. The oldest date will mark the start of the first episode. After this date, the next date will be marked that is at least `episode_days` days later than the start of the first episode. From that second marked date on, the next date will be marked that is at least `episode_days` days later than the start of the second episode which will be the start of the third episode, and so on. Before the vector is being returned, the original order will be restored.
 #' 
-#' The [first_isolate()] function is a wrapper around the [is_new_episode()] function, but more efficient for data sets containing microorganism codes or names.
+#' The [first_isolate()] function is a wrapper around the [is_new_episode()] function, but is more efficient for data sets containing microorganism codes or names.
 #' 
-#' The `dplyr` package is not required for this function to work, but this function works conveniently inside `dplyr` verbs such as [`filter()`][dplyr::filter()], [`mutate()`][dplyr::mutate()] and [`summarise()`][dplyr::summarise()].
-#' @return a [logical] vector
+#' The `dplyr` package is not required for these functions to work, but these functions support [variable grouping][dplyr::group_by()] and work conveniently inside `dplyr` verbs such as [`filter()`][dplyr::filter()], [`mutate()`][dplyr::mutate()] and [`summarise()`][dplyr::summarise()].
+#' @return 
+#' * [get_episode()]: a [double] vector
+#' * [is_new_episode()]: a [logical] vector
+#' @seealso [first_isolate()]
+#' @rdname get_episode
 #' @export
 #' @inheritSection AMR Read more on our website!
 #' @examples
 #' # `example_isolates` is a dataset available in the AMR package.
 #' # See ?example_isolates.
 #' 
-#' is_new_episode(example_isolates$date)
+#' get_episode(example_isolates$date, episode_days = 60)
 #' is_new_episode(example_isolates$date, episode_days = 60)
+#' 
+#' # filter on results from the third 60-day episode using base R
+#' example_isolates[which(get_episode(example_isolates$date, 60) == 3), ]
+#' 
 #' \donttest{
 #' if (require("dplyr")) {
 #'   # is_new_episode() can also be used in dplyr verbs to determine patient
@@ -54,7 +62,15 @@
 #'                               size = 2000,
 #'                               replace = TRUE)) %>% 
 #'     group_by(condition) %>%
-#'     mutate(new_episode = is_new_episode(date))
+#'     mutate(new_episode = is_new_episode(date, 365))
+#'     
+#'   example_isolates %>%
+#'     group_by(hospital_id, patient_id) %>%
+#'     transmute(date, 
+#'               patient_id,
+#'               new_index = get_episode(date, 60),
+#'               new_logical = is_new_episode(date, 60))
+#'   
 #'   
 #'   example_isolates %>%
 #'     group_by(hospital_id) %>% 
@@ -71,7 +87,7 @@
 #'     
 #'   y <- example_isolates %>%
 #'     group_by(patient_id, mo) %>%
-#'     filter(is_new_episode(date))
+#'     filter(is_new_episode(date, 365))
 #'
 #'   identical(x$patient_id, y$patient_id)
 #'   
@@ -79,21 +95,52 @@
 #'   # since you can now group on anything that seems relevant:
 #'   example_isolates %>%
 #'     group_by(patient_id, mo, hospital_id, ward_icu) %>%
-#'     mutate(flag_episode = is_new_episode(date))
+#'     mutate(flag_episode = is_new_episode(date, 365))
 #' }
 #' }
-is_new_episode <- function(x, episode_days = 365, ...) {
+get_episode <- function(x, episode_days, ...) {
   meet_criteria(x, allow_class = c("Date", "POSIXt"))
   meet_criteria(episode_days, allow_class = c("numeric", "double", "integer"), has_length = 1)
   
+  exec_episode(type = "sequential",
+               x = x, 
+               episode_days = episode_days,
+               ... = ...)
+}
+
+#' @rdname get_episode
+#' @export
+is_new_episode <- function(x, episode_days, ...) {
+  meet_criteria(x, allow_class = c("Date", "POSIXt"))
+  meet_criteria(episode_days, allow_class = c("numeric", "double", "integer"), has_length = 1)
+  
+  exec_episode(type = "logical",
+               x = x, 
+               episode_days = episode_days,
+               ... = ...)
+}
+
+exec_episode <- function(type, x, episode_days, ...) {
   x <- as.double(as.Date(x, ...)) # as.Date() for POSIX classes
   if (length(x) == 1) {
-    return(TRUE)
+    if (type == "logical") {
+      return(TRUE)
+    } else if (type == "sequential") {
+      return(1)
+    }
   } else if (length(x) == 2) {
     if (max(x) - min(x) >= episode_days) {
-      return(c(TRUE, TRUE))
+      if (type == "logical") {
+        return(c(TRUE, TRUE))
+      } else if (type == "sequential") {
+        return(c(1, 2))
+      }
     } else {
-      return(c(TRUE, FALSE))
+      if (type == "logical") {
+        return(c(TRUE, FALSE))
+      } else if (type == "sequential") {
+        return(c(1, 1))
+      }
     }
   }
   
@@ -107,13 +154,22 @@ is_new_episode <- function(x, episode_days = 365, ...) {
     for (i in 2:length(x)) {
       if (isTRUE((x[i] - start) >= episode_days)) {
         ind <- ind + 1
-        indices[ind] <- i
+        if (type == "logical") {
+          indices[ind] <- i
+        }
         start <- x[i]
       }
+      if (type == "sequential") {
+        indices[i] <- ind
+      }
     }
-    result <- rep(FALSE, length(x))
-    result[indices] <- TRUE
-    result
+    if (type == "logical") {
+      result <- rep(FALSE, length(x))
+      result[indices] <- TRUE
+      result
+    } else if (type == "sequential") {
+      indices
+    }
   }
   
   df <- data.frame(x = x,

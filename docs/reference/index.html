@@ -19,8 +19,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9045</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9046</span>
       </span>
     </div>
 
@@ -455,7 +455,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-analysing-data-antimicrobial-resistance" class="hasAnchor"><a href="#section-analysing-data-antimicrobial-resistance" class="anchor"></a>Analysing data: antimicrobial resistance</h2>
-          <p class="section-desc"><p>Use these function for the analysis part. You can use <code><a href="../reference/proportion.html">susceptibility()</a></code> or <code><a href="../reference/proportion.html">resistance()</a></code> on any antibiotic column. Be sure to first select the isolates that are appropiate for analysis, by using <code><a href="../reference/first_isolate.html">first_isolate()</a></code> or <code><a href="../reference/is_new_episode.html">is_new_episode()</a></code>. You can also filter your data on certain resistance in certain antibiotic classes (<code><a href="../reference/filter_ab_class.html">filter_ab_class()</a></code>), or determine multi-drug resistant microorganisms (MDRO, <code><a href="../reference/mdro.html">mdro()</a></code>).</p></p>
+          <p class="section-desc"><p>Use these function for the analysis part. You can use <code><a href="../reference/proportion.html">susceptibility()</a></code> or <code><a href="../reference/proportion.html">resistance()</a></code> on any antibiotic column. Be sure to first select the isolates that are appropiate for analysis, by using <code><a href="../reference/first_isolate.html">first_isolate()</a></code> or <code><a href="../reference/get_episode.html">is_new_episode()</a></code>. You can also filter your data on certain resistance in certain antibiotic classes (<code><a href="../reference/filter_ab_class.html">filter_ab_class()</a></code>), or determine multi-drug resistant microorganisms (MDRO, <code><a href="../reference/mdro.html">mdro()</a></code>).</p></p>
         </th>
       </tr>
       
@@ -478,7 +478,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="is_new_episode.html">is_new_episode()</a></code> </p>
+          <p><code><a href="get_episode.html">get_episode()</a></code> <code><a href="get_episode.html">is_new_episode()</a></code> </p>
         </td>
         <td><p>Determine (new) episodes for patients</p></td>
       </tr><tr>

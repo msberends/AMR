@@ -536,22 +536,39 @@ get_current_data <- function(arg_name, call) {
                                      call = call - 4))
 }
 
-get_root_env_address <- function() {
-  sub("<environment: (.*)>", "\\1", utils::capture.output(sys.frames()[[1]]))
+unique_call_id <- function() {
+  # combination of environment ID (like "0x7fed4ee8c848")
+  # and highest system call
+  c(envir = gsub("<environment: (.*)>", "\\1", utils::capture.output(sys.frames()[[1]])),
+    call = paste0(deparse(sys.calls()[[1]]), collapse = ""))
 }
 
 remember_thrown_message <- function(fn) {
-  assign(x = paste0("address_", fn),
-         value = get_root_env_address(),
-         envir = mo_env)
+  # this is to prevent that messages/notes will be printed for every dplyr group
+  # e.g. this would show a msg 4 times: example_isolates %>% group_by(hospital_id) %>% filter(mo_is_gram_negative())
+  assign(x = paste0("uniquecall_", fn),
+         value = unique_call_id(),
+         envir = pkg_env)
 }
 
 message_not_thrown_before <- function(fn) {
-  is.null(mo_env[[paste0("address_", fn)]]) || !identical(mo_env[[paste0("address_", fn)]], get_root_env_address())
+  is.null(pkg_env[[paste0("uniquecall_", fn)]]) || !identical(pkg_env[[paste0("uniquecall_", fn)]], unique_call_id())
+}
+
+reset_all_thrown_messages <- function() {
+  # for unit tests, where the environment and highest system call do not change
+  pkg_env_contents <- ls(envir = pkg_env)
+  rm(list = pkg_env_contents[pkg_env_contents %like% "^uniquecall_"],
+     envir = pkg_env)
 }
 
 has_colour <- function() {
-  # this is a base R version of crayon::has_color
+  # this is a base R version of crayon::has_color, but disables colours on emacs
+  
+  if (Sys.getenv("EMACS") != "" || Sys.getenv("INSIDE_EMACS") != "") {
+    # disable on emacs, only supports 8 colours
+    return(FALSE)
+  }
   enabled <- getOption("crayon.enabled")
   if (!is.null(enabled)) {
     return(isTRUE(enabled))
@@ -580,20 +597,6 @@ has_colour <- function() {
       return(TRUE)
     }
     return(FALSE)
-  }
-  emacs_version <- function() {
-    ver <- Sys.getenv("INSIDE_EMACS")
-    if (ver == "") {
-      return(NA_integer_)
-    }
-    ver <- gsub("'", "", ver)
-    ver <- strsplit(ver, ",", fixed = TRUE)[[1]]
-    ver <- strsplit(ver, ".", fixed = TRUE)[[1]]
-    as.numeric(ver)
-  }
-  if ((Sys.getenv("EMACS") != "" || Sys.getenv("INSIDE_EMACS") != "") &&
-      !is.na(emacs_version()[1]) && emacs_version()[1] >= 23) {
-    return(TRUE)
   }
   if ("COLORTERM" %in% names(Sys.getenv())) {
     return(TRUE)
@@ -655,6 +658,15 @@ font_grey_bg <- function(..., collapse = " ") {
 }
 font_green_bg <- function(..., collapse = " ") {
   try_colour(..., before = "\033[42m", after = "\033[49m", collapse = collapse)
+}
+font_rsi_R_bg <- function(..., collapse = " ") {
+  try_colour(..., before = "\033[48;5;202m", after = "\033[49m", collapse = collapse)
+}
+font_rsi_S_bg <- function(..., collapse = " ") {
+  try_colour(..., before = "\033[48;5;76m", after = "\033[49m", collapse = collapse)
+}
+font_rsi_I_bg <- function(..., collapse = " ") {
+  try_colour(..., before = "\033[48;5;148m", after = "\033[49m", collapse = collapse)
 }
 font_red_bg <- function(..., collapse = " ") {
   try_colour(..., before = "\033[41m", after = "\033[49m", collapse = collapse)

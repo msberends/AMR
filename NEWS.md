@@ -1,9 +1,8 @@
-# AMR 1.4.0.9045
-## <small>Last updated: 25 December 2020</small>
+# AMR 1.4.0.9046
+## <small>Last updated: 27 December 2020</small>
 
 ### New
-* Function `is_new_episode()` to determine patient episodes which are not necessarily based on microorganisms. It also supports grouped variables with e.g. `mutate()`, `filter()` and `summarise()` of the `dplyr` package:
-  
+* Functions `get_episode()` and `is_new_episode()` to determine (patient) episodes which are not necessarily based on microorganisms. The `get_episode()` function returns the index number of the episode per group, while the `is_new_episode()` function returns values `TRUE`/`FALSE` to indicate whether an item in a vector is the start of a new episode. They also support `dplyr`s grouping (i.e. using `group_by()`):
   ```r
   library(dplyr)
   example_isolates %>%
@@ -23,7 +22,6 @@
   * If using `as.rsi()` on MICs or disk diffusion while there is intrinsic antimicrobial resistance, a warning will be thrown to remind about this
   * Fix for using `as.rsi()` on a `data.frame` that only contains one column for antibiotic interpretations
 * Some functions are now context-aware when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`. This means that then the data argument does not need to be set anymore. This is the case for the new functions `mo_is_gram_negative()`, `mo_is_gram_positive()`, `mo_is_intrinsic_resistant()` and for the existing functions `first_isolate()`, `key_antibiotics()`, `mdro()`, `brmo()`, `mrgn()`, `mdr_tb()`, `mdr_cmi2012()`, `eucast_exceptional_phenotypes()`. This was already the case for antibiotic selection functions (such as using `penicillins()` in `dplyr::select()`).
-  
   ```r
   # to select first isolates that are Gram-negative 
   # and view results of cephalosporins and aminoglycosides:

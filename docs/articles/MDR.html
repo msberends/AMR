@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9044</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9046</span>
       </span>
     </div>
 
@@ -311,17 +311,17 @@ Unique: 2</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">my_TB_data</span><span class="op">)</span>
 <span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span>
-<span class="co"># 1          S         S            R          I            R            S</span>
-<span class="co"># 2          I         S            R          I            I            R</span>
-<span class="co"># 3          R         R            R          S            I            R</span>
-<span class="co"># 4          I         I            R          R            S            S</span>
-<span class="co"># 5          I         R            I          S            S            R</span>
-<span class="co"># 6          I         R            I          I            S            I</span>
+<span class="co"># 1          R         I            R          S            I            S</span>
+<span class="co"># 2          I         S            I          S            S            R</span>
+<span class="co"># 3          I         I            I          R            I            R</span>
+<span class="co"># 4          S         S            I          S            R            I</span>
+<span class="co"># 5          I         R            S          R            S            R</span>
+<span class="co"># 6          I         I            I          R            S            I</span>
 <span class="co">#   kanamycin</span>
-<span class="co"># 1         R</span>
-<span class="co"># 2         S</span>
+<span class="co"># 1         S</span>
+<span class="co"># 2         I</span>
 <span class="co"># 3         I</span>
-<span class="co"># 4         I</span>
+<span class="co"># 4         S</span>
 <span class="co"># 5         I</span>
 <span class="co"># 6         R</span></code></pre></div>
 <p>We can now add the interpretation of MDR-TB to our data set. You can use:</p>
@@ -354,40 +354,40 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistant</td>
-<td align="right">3214</td>
-<td align="right">64.28%</td>
-<td align="right">3214</td>
-<td align="right">64.28%</td>
+<td align="right">3219</td>
+<td align="right">64.38%</td>
+<td align="right">3219</td>
+<td align="right">64.38%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">997</td>
-<td align="right">19.94%</td>
-<td align="right">4211</td>
-<td align="right">84.22%</td>
+<td align="right">982</td>
+<td align="right">19.64%</td>
+<td align="right">4201</td>
+<td align="right">84.02%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multi-drug-resistant</td>
-<td align="right">442</td>
-<td align="right">8.84%</td>
-<td align="right">4653</td>
-<td align="right">93.06%</td>
+<td align="right">434</td>
+<td align="right">8.68%</td>
+<td align="right">4635</td>
+<td align="right">92.70%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistant</td>
-<td align="right">239</td>
-<td align="right">4.78%</td>
-<td align="right">4892</td>
-<td align="right">97.84%</td>
+<td align="right">251</td>
+<td align="right">5.02%</td>
+<td align="right">4886</td>
+<td align="right">97.72%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensively drug-resistant</td>
-<td align="right">108</td>
-<td align="right">2.16%</td>
+<td align="right">114</td>
+<td align="right">2.28%</td>
 <td align="right">5000</td>
 <td align="right">100.00%</td>
 </tr>

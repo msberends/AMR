@@ -23,7 +23,7 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-context("is_new_episode.R")
+context("episode.R")
 
 test_that("new episodes work", {
   skip_on_cran()

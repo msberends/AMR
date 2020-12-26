@@ -19,8 +19,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9045</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9046</span>
       </span>
     </div>
 
@@ -236,26 +236,26 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1409045" class="section level1">
-<h1 class="page-header" data-toc-text="1.4.0.9045">
-<a href="#amr-1409045" class="anchor"></a>AMR 1.4.0.9045<small> Unreleased </small>
+    <div id="amr-1409046" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.0.9046">
+<a href="#amr-1409046" class="anchor"></a>AMR 1.4.0.9046<small> Unreleased </small>
 </h1>
-<div id="last-updated-25-december-2020" class="section level2">
+<div id="last-updated-27-december-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-25-december-2020" class="anchor"></a><small>Last updated: 25 December 2020</small>
+<a href="#last-updated-27-december-2020" class="anchor"></a><small>Last updated: 27 December 2020</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h3>
 <ul>
 <li>
-<p>Function <code><a href="../reference/is_new_episode.html">is_new_episode()</a></code> to determine patient episodes which are not necessarily based on microorganisms. It also supports grouped variables with e.g. <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> of the <code>dplyr</code> package:</p>
+<p>Functions <code><a href="../reference/get_episode.html">get_episode()</a></code> and <code><a href="../reference/get_episode.html">is_new_episode()</a></code> to determine (patient) episodes which are not necessarily based on microorganisms. The <code><a href="../reference/get_episode.html">get_episode()</a></code> function returns the index number of the episode per group, while the <code><a href="../reference/get_episode.html">is_new_episode()</a></code> function returns values <code>TRUE</code>/<code>FALSE</code> to indicate whether an item in a vector is the start of a new episode. They also support <code>dplyr</code>s grouping (i.e. using <code><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by()</a></code>):</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="va">example_isolates</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">patient_id</span>, <span class="va">hospital_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/is_new_episode.html">is_new_episode</a></span><span class="op">(</span><span class="va">date</span>, episode_days <span class="op">=</span> <span class="fl">60</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span><span class="op">(</span><span class="va">patient_id</span>, <span class="va">hospital_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_episode.html">is_new_episode</a></span><span class="op">(</span><span class="va">date</span>, episode_days <span class="op">=</span> <span class="fl">60</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </li>
 <li><p>Functions <code><a href="../reference/mo_property.html">mo_is_gram_negative()</a></code> and <code><a href="../reference/mo_property.html">mo_is_gram_positive()</a></code> as wrappers around <code><a href="../reference/mo_property.html">mo_gramstain()</a></code>. They always return <code>TRUE</code> or <code>FALSE</code> (except when the input is <code>NA</code> or the MO code is <code>UNKNOWN</code>), thus always return <code>FALSE</code> for species outside the taxonomic kingdom of Bacteria.</p></li>
 <li><p>Function <code><a href="../reference/mo_property.html">mo_is_intrinsic_resistant()</a></code> to test for intrinsic resistance, based on <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/">EUCAST Intrinsic Resistance and Unusual Phenotypes v3.2</a> from 2020.</p></li>
@@ -279,15 +279,15 @@
 </ul>
 </li>
 <li>
-<p>Some functions are now context-aware when used inside <code>dplyr</code> verbs, such as <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>. This means that then the data argument does not need to be set anymore. This is the case for the new functions <code><a href="../reference/mo_property.html">mo_is_gram_negative()</a></code>, <code><a href="../reference/mo_property.html">mo_is_gram_positive()</a></code>, <code><a href="../reference/mo_property.html">mo_is_intrinsic_resistant()</a></code> and for the existing functions <code><a href="../reference/first_isolate.html">first_isolate()</a></code>, <code><a href="../reference/key_antibiotics.html">key_antibiotics()</a></code>, <code><a href="../reference/mdro.html">mdro()</a></code>, <code><a href="../reference/mdro.html">brmo()</a></code>, <code><a href="../reference/mdro.html">mrgn()</a></code>, <code><a href="../reference/mdro.html">mdr_tb()</a></code>, <code><a href="../reference/mdro.html">mdr_cmi2012()</a></code>, <code><a href="../reference/mdro.html">eucast_exceptional_phenotypes()</a></code>. This was already the case for antibiotic selection functions (such as using <code><a href="../reference/antibiotic_class_selectors.html">penicillins()</a></code> in <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code>).</p>
+<p>Some functions are now context-aware when used inside <code>dplyr</code> verbs, such as <code><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter()</a></code>, <code><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate()</a></code> and <code><a href="https://rdrr.io/pkg/dplyr/man/summarise.html">summarise()</a></code>. This means that then the data argument does not need to be set anymore. This is the case for the new functions <code><a href="../reference/mo_property.html">mo_is_gram_negative()</a></code>, <code><a href="../reference/mo_property.html">mo_is_gram_positive()</a></code>, <code><a href="../reference/mo_property.html">mo_is_intrinsic_resistant()</a></code> and for the existing functions <code><a href="../reference/first_isolate.html">first_isolate()</a></code>, <code><a href="../reference/key_antibiotics.html">key_antibiotics()</a></code>, <code><a href="../reference/mdro.html">mdro()</a></code>, <code><a href="../reference/mdro.html">brmo()</a></code>, <code><a href="../reference/mdro.html">mrgn()</a></code>, <code><a href="../reference/mdro.html">mdr_tb()</a></code>, <code><a href="../reference/mdro.html">mdr_cmi2012()</a></code>, <code><a href="../reference/mdro.html">eucast_exceptional_phenotypes()</a></code>. This was already the case for antibiotic selection functions (such as using <code><a href="../reference/antibiotic_class_selectors.html">penicillins()</a></code> in <code><a href="https://rdrr.io/pkg/dplyr/man/select.html">dplyr::select()</a></code>).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="co"># to select first isolates that are Gram-negative </span>
 <span class="co"># and view results of cephalosporins and aminoglycosides:</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="va">example_isolates</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/first_isolate.html">first_isolate</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/mo_property.html">mo_is_gram_negative</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">mo</span>, <span class="fu"><a href="../reference/antibiotic_class_selectors.html">cephalosporins</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/first_isolate.html">first_isolate</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/mo_property.html">mo_is_gram_negative</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/select.html">select</a></span><span class="op">(</span><span class="va">mo</span>, <span class="fu"><a href="../reference/antibiotic_class_selectors.html">cephalosporins</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </li>
 <li><p>For all function arguments in the code, it is now defined what the exact type of user input should be (inspired by the <a href="https://github.com/moodymudskipper/typed"><code>typed</code></a> package). If the user input for a certain function does not meet the requirements for a specific argument (such as the class or length), an informative error will be thrown. This makes the package more robust and the use of it more reproducible and reliable. In total, more than 420 arguments were defined.</p></li>
@@ -337,8 +337,8 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="va">intrinsic_resistant</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">antibiotic</span> <span class="op">==</span> <span class="st">"Vancomycin"</span>, <span class="va">microorganism</span> <span class="op">%like%</span> <span class="st">"Enterococcus"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">microorganism</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span><span class="op">(</span><span class="va">antibiotic</span> <span class="op">==</span> <span class="st">"Vancomycin"</span>, <span class="va">microorganism</span> <span class="op">%like%</span> <span class="st">"Enterococcus"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/pull.html">pull</a></span><span class="op">(</span><span class="va">microorganism</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"   </span></code></pre></div>
 </li>
 <li><p>Support for veterinary ATC codes</p></li>
@@ -354,16 +354,16 @@
 <p>Improvements for <code><a href="../reference/as.rsi.html">as.rsi()</a></code>:</p>
 <ul>
 <li>
-<p>Support for using <code>dplyr</code>’s <code><a href="https://dplyr.tidyverse.org/reference/across.html">across()</a></code> to interpret MIC values or disk zone diameters, which also automatically determines the column with microorganism names or codes.</p>
+<p>Support for using <code>dplyr</code>’s <code><a href="https://rdrr.io/pkg/dplyr/man/across.html">across()</a></code> to interpret MIC values or disk zone diameters, which also automatically determines the column with microorganism names or codes.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="co"># until dplyr 1.0.0</span>
-<span class="va">your_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.mic</span>, <span class="va">as.rsi</span><span class="op">)</span>
-<span class="va">your_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.disk</span>, <span class="va">as.rsi</span><span class="op">)</span>
+<span class="va">your_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.mic</span>, <span class="va">as.rsi</span><span class="op">)</span>
+<span class="va">your_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.disk</span>, <span class="va">as.rsi</span><span class="op">)</span>
 
 <span class="co"># since dplyr 1.0.0</span>
-<span class="va">your_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.mic</span><span class="op">)</span>, <span class="va">as.rsi</span><span class="op">)</span><span class="op">)</span>
-<span class="va">your_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.disk</span><span class="op">)</span>, <span class="va">as.rsi</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="va">your_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/across.html">across</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.mic</span><span class="op">)</span>, <span class="va">as.rsi</span><span class="op">)</span><span class="op">)</span>
+<span class="va">your_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/across.html">across</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.disk</span><span class="op">)</span>, <span class="va">as.rsi</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </li>
 <li><p>Cleaning columns in a data.frame now allows you to specify those columns with tidy selection, e.g. <code><a href="../reference/as.rsi.html">as.rsi(df, col1:col9)</a></code></p></li>
 <li><p>Big speed improvement for interpreting MIC values and disk zone diameters. When interpreting 5,000 MIC values of two antibiotics (10,000 values in total), our benchmarks showed a total run time going from 80.7-85.1 seconds to 1.8-2.0 seconds.</p></li>
@@ -433,14 +433,14 @@
 <ul>
 <li><p>Function <code><a href="../reference/ab_from_text.html">ab_from_text()</a></code> to retrieve antimicrobial drug names, doses and forms of administration from clinical texts in e.g. health care records, which also corrects for misspelling since it uses <code><a href="../reference/as.ab.html">as.ab()</a></code> internally</p></li>
 <li>
-<p><a href="https://tidyselect.r-lib.org/reference/language.html">Tidyverse selection helpers</a> for antibiotic classes, that help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. They can be used in any function that allows selection helpers, like <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code> and <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">tidyr::pivot_longer()</a></code>:</p>
+<p><a href="https://tidyselect.r-lib.org/reference/language.html">Tidyverse selection helpers</a> for antibiotic classes, that help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. They can be used in any function that allows selection helpers, like <code><a href="https://rdrr.io/pkg/dplyr/man/select.html">dplyr::select()</a></code> and <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">tidyr::pivot_longer()</a></code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 
 <span class="co"># Columns 'IPM' and 'MEM' are in the example_isolates data set</span>
 <span class="va">example_isolates</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="../reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="../reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Selecting carbapenems: `IPM` (imipenem), `MEM` (meropenem)</span></code></pre></div>
 </li>
 <li><p>Added <code><a href="../reference/mo_property.html">mo_domain()</a></code> as an alias to <code><a href="../reference/mo_property.html">mo_kingdom()</a></code></p></li>
@@ -622,14 +622,14 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <ul>
 <li><p>Fixed important floating point error for some MIC comparisons in EUCAST 2020 guideline</p></li>
 <li>
-<p>Interpretation from MIC values (and disk zones) to R/SI can now be used with <code><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at()</a></code> of the <code>dplyr</code> package:</p>
+<p>Interpretation from MIC values (and disk zones) to R/SI can now be used with <code><a href="https://rdrr.io/pkg/dplyr/man/mutate_all.html">mutate_at()</a></code> of the <code>dplyr</code> package:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">yourdata</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">antibiotic1</span><span class="op">:</span><span class="va">antibiotic25</span><span class="op">)</span>, <span class="va">as.rsi</span>, mo <span class="op">=</span> <span class="st">"E. coli"</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate_all.html">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/vars.html">vars</a></span><span class="op">(</span><span class="va">antibiotic1</span><span class="op">:</span><span class="va">antibiotic25</span><span class="op">)</span>, <span class="va">as.rsi</span>, mo <span class="op">=</span> <span class="st">"E. coli"</span><span class="op">)</span>
 
 <span class="va">yourdata</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">antibiotic1</span><span class="op">:</span><span class="va">antibiotic25</span><span class="op">)</span>, <span class="va">as.rsi</span>, mo <span class="op">=</span> <span class="va">.</span><span class="op">$</span><span class="va">mybacteria</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate_all.html">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/vars.html">vars</a></span><span class="op">(</span><span class="va">antibiotic1</span><span class="op">:</span><span class="va">antibiotic25</span><span class="op">)</span>, <span class="va">as.rsi</span>, mo <span class="op">=</span> <span class="va">.</span><span class="op">$</span><span class="va">mybacteria</span><span class="op">)</span></code></pre></div>
 </li>
 <li><p>Added antibiotic abbreviations for a laboratory manufacturer (GLIMS) for cefuroxime, cefotaxime, ceftazidime, cefepime, cefoxitin and trimethoprim/sulfamethoxazole</p></li>
 <li><p>Added <code>uti</code> (as abbreviation of urinary tract infections) as argument to <code><a href="../reference/as.rsi.html">as.rsi()</a></code>, so interpretation of MIC values and disk zones can be made dependent on isolates specifically from UTIs</p></li>
@@ -750,10 +750,10 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <code class="sourceCode R">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="va">example_isolates</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span>bug <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>amoxicillin <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">resistance</a></span><span class="op">(</span><span class="va">AMX</span><span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span><span class="op">(</span>bug <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/summarise.html">summarise</a></span><span class="op">(</span>amoxicillin <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">resistance</a></span><span class="op">(</span><span class="va">AMX</span><span class="op">)</span>,
             amox_clav   <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">resistance</a></span><span class="op">(</span><span class="va">AMC</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">amoxicillin</span><span class="op">)</span> <span class="op">|</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">amox_clav</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">amoxicillin</span><span class="op">)</span> <span class="op">|</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">amox_clav</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </li>
 <li>
 <p>Support for a new MDRO guideline: Magiorakos AP, Srinivasan A <em>et al.</em> “Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance.” Clinical Microbiology and Infection (2012).</p>
@@ -922,7 +922,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <span class="co"># (run this on your own console, as this page does not support colour printing)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="va">example_isolates</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">mo</span><span class="op">:</span><span class="va">AMC</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/select.html">select</a></span><span class="op">(</span><span class="va">mo</span><span class="op">:</span><span class="va">AMC</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </li>
 </ul>
@@ -1003,7 +1003,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">septic_patients</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">AMX</span>, <span class="va">CIP</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/select.html">select</a></span><span class="op">(</span><span class="va">AMX</span>, <span class="va">CIP</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/proportion.html">rsi_df</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#      antibiotic  interpretation      value  isolates</span>
 <span class="co"># 1   Amoxicillin              SI  0.4442636       546</span>
@@ -1139,7 +1139,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
   <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co"># grouped boxplots:</span>
 <span class="va">septic_patients</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">freq</span><span class="op">(</span><span class="va">age</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </li>
@@ -1288,9 +1288,9 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">septic_patients</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>only_firsts <span class="op">=</span> <span class="fu"><a href="../reference/first_isolate.html">first_isolate</a></span><span class="op">(</span><span class="va">septic_patients</span>, <span class="va">...</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">only_firsts</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">only_firsts</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span><span class="op">(</span>only_firsts <span class="op">=</span> <span class="fu"><a href="../reference/first_isolate.html">first_isolate</a></span><span class="op">(</span><span class="va">septic_patients</span>, <span class="va">...</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span><span class="op">(</span><span class="va">only_firsts</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">only_firsts</span><span class="op">)</span></code></pre></div>
 </li>
 <li><p>New function <code><a href="../reference/availability.html">availability()</a></code> to check the number of available (non-empty) results in a <code>data.frame</code></p></li>
 <li><p>New vignettes about how to conduct AMR analysis, predict antimicrobial resistance, use the <em>G</em>-test and more. These are also available (and even easier readable) on our website: <a href="https://msberends.gitlab.io/AMR" class="uri">https://msberends.gitlab.io/AMR</a>.</p></li>
@@ -1400,7 +1400,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <span class="co"># Determine genus of microorganisms (mo) in `septic_patients` data set:</span>
 <span class="co"># OLD WAY</span>
 <span class="va">septic_patients</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>genus <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span><span class="op">(</span>genus <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">freq</span><span class="op">(</span><span class="va">genus</span><span class="op">)</span>
 <span class="co"># NEW WAY</span>
 <span class="va">septic_patients</span> <span class="op">%&gt;%</span> 
@@ -1408,7 +1408,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 
 <span class="co"># Even supports grouping variables:</span>
 <span class="va">septic_patients</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">freq</span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </li>
 <li><p>Header info is now available as a list, with the <code>header</code> function</p></li>
@@ -1419,7 +1419,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li><p>Fix for header text where all observations are <code>NA</code></p></li>
 <li><p>New argument <code>droplevels</code> to exclude empty factor levels when input is a factor</p></li>
 <li><p>Factor levels will be in header when present in input data (maximum of 5)</p></li>
-<li><p>Fix for using <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> on frequency tables</p></li>
+<li><p>Fix for using <code><a href="https://rdrr.io/pkg/dplyr/man/select.html">select()</a></code> on frequency tables</p></li>
 </ul>
 </li>
 <li>Function <code><a href="../reference/ggplot_rsi.html">scale_y_percent()</a></code> now contains the <code>limits</code> argument</li>
@@ -1499,7 +1499,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">septic_patients</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">freq</span><span class="op">(</span><span class="va">gender</span><span class="op">)</span></code></pre></div>
 </li>
 <li>
@@ -1508,7 +1508,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <code class="sourceCode R">
 <span class="va">septic_patients</span> <span class="op">%&gt;%</span> 
   <span class="fu">freq</span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">count</span>, <span class="op">-</span><span class="va">cum_count</span><span class="op">)</span> <span class="co"># only get item, percent, cum_percent</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">count</span>, <span class="op">-</span><span class="va">cum_count</span><span class="op">)</span> <span class="co"># only get item, percent, cum_percent</span></code></pre></div>
 </li>
 <li><p>Check for <code><a href="https://hms.tidyverse.org/reference/Deprecated.html">hms::is.hms</a></code></p></li>
 <li><p>Now prints in markdown at default in non-interactive sessions</p></li>
@@ -1672,7 +1672,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <p>Support for quasiquotation in the functions series <code>count_*</code> and <code>portions_*</code>, and <code>n_rsi</code>. This allows to check for more than 2 vectors or columns.</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="va">septic_patients</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">amox</span>, <span class="va">cipr</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/count.html">count_IR</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">septic_patients</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/select.html">select</a></span><span class="op">(</span><span class="va">amox</span>, <span class="va">cipr</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/count.html">count_IR</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co"># which is the same as:</span>
 <span class="va">septic_patients</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/count.html">count_IR</a></span><span class="op">(</span><span class="va">amox</span>, <span class="va">cipr</span><span class="op">)</span>
 
@@ -1858,7 +1858,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <ul>
 <li>Full support for Windows, Linux and macOS</li>
 <li>Full support for old R versions, only R-3.0.0 (April 2013) or later is needed (needed packages may have other dependencies)</li>
-<li>Function <code>n_rsi</code> to count cases where antibiotic test results were available, to be used in conjunction with <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">dplyr::summarise</a></code>, see ?rsi</li>
+<li>Function <code>n_rsi</code> to count cases where antibiotic test results were available, to be used in conjunction with <code><a href="https://rdrr.io/pkg/dplyr/man/summarise.html">dplyr::summarise</a></code>, see ?rsi</li>
 <li>Function <code>guess_bactid</code> to <strong>determine the ID</strong> of a microorganism based on genus/species or known abbreviations like MRSA</li>
 <li>Function <code>guess_atc</code> to <strong>determine the ATC</strong> of an antibiotic based on name, trade name, or known abbreviations</li>
 <li>Function <code>freq</code> to create <strong>frequency tables</strong>, with additional info in a header</li>

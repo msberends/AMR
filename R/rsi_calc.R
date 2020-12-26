@@ -147,12 +147,10 @@ rsi_calc <- function(...,
   }
   
   if (print_warning == TRUE) {
-    # since rsi_calc() is always called from a count() or proportion() function, we use -1:
-    cll <- gsub("[^a-zA-Z0-9_]+", "_", paste(deparse(sys.calls()[[length(sys.calls()) - 1]]), collapse = ""))
-    if (message_not_thrown_before(cll)) {
+    if (message_not_thrown_before("rsi_calc")) {
       warning_("Increase speed by transforming to class <rsi> on beforehand: your_data %>% mutate_if(is.rsi.eligible, as.rsi)",
                call = FALSE)
-      remember_thrown_message(cll)
+      remember_thrown_message("rsi_calc")
     }
   }
   

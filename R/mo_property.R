@@ -163,7 +163,7 @@
 mo_name <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_name")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -180,7 +180,7 @@ mo_fullname <- mo_name
 mo_shortname <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_shortname")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -218,7 +218,7 @@ mo_shortname <- function(x, language = get_locale(), ...) {
 mo_subspecies <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_subspecies")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -231,7 +231,7 @@ mo_subspecies <- function(x, language = get_locale(), ...) {
 mo_species <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_species")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -244,7 +244,7 @@ mo_species <- function(x, language = get_locale(), ...) {
 mo_genus <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_genus")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -257,7 +257,7 @@ mo_genus <- function(x, language = get_locale(), ...) {
 mo_family <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_family")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -270,7 +270,7 @@ mo_family <- function(x, language = get_locale(), ...) {
 mo_order <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_order")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -283,7 +283,7 @@ mo_order <- function(x, language = get_locale(), ...) {
 mo_class <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_class")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -296,7 +296,7 @@ mo_class <- function(x, language = get_locale(), ...) {
 mo_phylum <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_phylum")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -309,7 +309,7 @@ mo_phylum <- function(x, language = get_locale(), ...) {
 mo_kingdom <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_kingdom")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -326,7 +326,7 @@ mo_domain <- mo_kingdom
 mo_type <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_type")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -339,7 +339,7 @@ mo_type <- function(x, language = get_locale(), ...) {
 mo_gramstain <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_gramstain")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -377,7 +377,7 @@ mo_gramstain <- function(x, language = get_locale(), ...) {
 mo_is_gram_negative <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_is_gram_negative")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -396,7 +396,7 @@ mo_is_gram_negative <- function(x, language = get_locale(), ...) {
 mo_is_gram_positive <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_is_gram_positive")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -450,7 +450,7 @@ mo_is_intrinsic_resistant <- function(x, ab, language = get_locale(), ...) {
 mo_snomed <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_snomed")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -463,7 +463,7 @@ mo_snomed <- function(x, language = get_locale(), ...) {
 mo_ref <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_ref")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -476,7 +476,7 @@ mo_ref <- function(x, language = get_locale(), ...) {
 mo_authors <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_authors")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -492,7 +492,7 @@ mo_authors <- function(x, language = get_locale(), ...) {
 mo_year <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_year")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -508,7 +508,7 @@ mo_year <- function(x, language = get_locale(), ...) {
 mo_rank <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_rank")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -521,7 +521,7 @@ mo_rank <- function(x, language = get_locale(), ...) {
 mo_taxonomy <- function(x, language = get_locale(),  ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_taxonomy")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -547,7 +547,7 @@ mo_taxonomy <- function(x, language = get_locale(),  ...) {
 mo_synonyms <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_synonyms")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -580,7 +580,7 @@ mo_synonyms <- function(x, language = get_locale(), ...) {
 mo_info <- function(x, language = get_locale(),  ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_info")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -610,7 +610,7 @@ mo_info <- function(x, language = get_locale(),  ...) {
 mo_url <- function(x, open = FALSE, language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_url")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(open, allow_class = "logical", has_length = 1)
@@ -647,7 +647,7 @@ mo_url <- function(x, open = FALSE, language = get_locale(), ...) {
 mo_property <- function(x, property = "fullname", language = get_locale(), ...) {
   if (missing(x)) {
     # this supports using in dplyr verbs: ... %>% filter(mo_is_intrinsic_resistant(ab = "amox"))
-    x <- find_mo_col("mo_is_intrinsic_resistant")
+    x <- find_mo_col("mo_property")
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(property, allow_class = "character", has_length = 1, is_in = colnames(microorganisms))

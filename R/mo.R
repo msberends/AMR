@@ -361,11 +361,11 @@ exec_as.mo <- function(x,
     # keep track of time - give some hints to improve speed if it takes a long time
     start_time <- Sys.time()
     
-    mo_env$mo_failures <- NULL
-    mo_env$mo_uncertainties <- NULL
-    mo_env$mo_renamed <- NULL
+    pkg_env$mo_failures <- NULL
+    pkg_env$mo_uncertainties <- NULL
+    pkg_env$mo_renamed <- NULL
   }
-  mo_env$mo_renamed_last_run <- NULL
+  pkg_env$mo_renamed_last_run <- NULL
 
   failures <- character(0)
   uncertainty_level <- translate_allow_uncertain(allow_uncertain)
@@ -598,7 +598,7 @@ exec_as.mo <- function(x,
         } else {
           x[i] <- lookup(fullname == found["fullname_new"], haystack = MO_lookup)
         }
-        mo_env$mo_renamed_last_run <- found["fullname"]
+        pkg_env$mo_renamed_last_run <- found["fullname"]
         was_renamed(name_old = found["fullname"],
                     name_new = lookup(fullname == found["fullname_new"], "fullname", haystack = MO_lookup),
                     ref_old = found["ref"],
@@ -973,7 +973,7 @@ exec_as.mo <- function(x,
           } else {
             x[i] <- lookup(fullname == found["fullname_new"], haystack = MO_lookup)
           }
-          mo_env$mo_renamed_last_run <- found["fullname"]
+          pkg_env$mo_renamed_last_run <- found["fullname"]
           was_renamed(name_old = found["fullname"],
                       name_new = lookup(fullname == found["fullname_new"], "fullname", haystack = MO_lookup),
                       ref_old = found["ref"],
@@ -1025,7 +1025,7 @@ exec_as.mo <- function(x,
                           ref_old = found["ref"],
                           ref_new = lookup(fullname == found["fullname_new"], "ref", haystack = MO_lookup),
                           mo = lookup(fullname == found["fullname_new"], "mo", haystack = MO_lookup))
-              mo_env$mo_renamed_last_run <- found["fullname"]
+              pkg_env$mo_renamed_last_run <- found["fullname"]
               uncertainties <<- rbind(uncertainties,
                                       format_uncertainty_as_df(uncertainty_level = now_checks_for_uncertainty_level,
                                                                input = a.x_backup,
@@ -1396,7 +1396,7 @@ exec_as.mo <- function(x,
   # handling failures ----
   failures <- failures[!failures %in% c(NA, NULL, NaN)]
   if (length(failures) > 0 & initial_search == TRUE) {
-    mo_env$mo_failures <- sort(unique(failures))
+    pkg_env$mo_failures <- sort(unique(failures))
     plural <- c("value", "it", "was")
     if (pm_n_distinct(failures) > 1) {
       plural <- c("values", "them", "were")
@@ -1423,7 +1423,7 @@ exec_as.mo <- function(x,
   # handling uncertainties ----
   if (NROW(uncertainties) > 0 & initial_search == TRUE) {
     uncertainties <- as.list(pm_distinct(uncertainties, input, .keep_all = TRUE))
-    mo_env$mo_uncertainties <- uncertainties
+    pkg_env$mo_uncertainties <- uncertainties
 
     plural <- c("", "it", "was")
     if (length(uncertainties$input) > 1) {
@@ -1559,13 +1559,13 @@ was_renamed <- function(name_old, name_new, ref_old = "", ref_new = "", mo = "")
                           new_ref = ref_new,
                           mo = mo,
                           stringsAsFactors = FALSE)
-  already_set <- mo_env$mo_renamed
+  already_set <- pkg_env$mo_renamed
   if (!is.null(already_set)) {
-    mo_env$mo_renamed = rbind(already_set,
+    pkg_env$mo_renamed = rbind(already_set,
                                newly_set,
                                stringsAsFactors = FALSE)
   } else {
-    mo_env$mo_renamed <- newly_set
+    pkg_env$mo_renamed <- newly_set
   }
 }
 
@@ -1573,9 +1573,9 @@ format_uncertainty_as_df <- function(uncertainty_level,
                                      input,
                                      result_mo,
                                      candidates = NULL) {
-  if (!is.null(mo_env$mo_renamed_last_run)) {
-    fullname <- mo_env$mo_renamed_last_run
-    mo_env$mo_renamed_last_run <- NULL
+  if (!is.null(pkg_env$mo_renamed_last_run)) {
+    fullname <- pkg_env$mo_renamed_last_run
+    pkg_env$mo_renamed_last_run <- NULL
     renamed_to <- MO_lookup[match(result_mo, MO_lookup$mo), "fullname", drop = TRUE][1]
   } else {
     fullname <- MO_lookup[match(result_mo, MO_lookup$mo), "fullname", drop = TRUE][1]
@@ -1764,16 +1764,16 @@ unique.mo <- function(x, incomparables = FALSE, ...) {
 #' @rdname as.mo
 #' @export
 mo_failures <- function() {
-  mo_env$mo_failures
+  pkg_env$mo_failures
 }
 
 #' @rdname as.mo
 #' @export
 mo_uncertainties <- function() {
-  if (is.null(mo_env$mo_uncertainties)) {
+  if (is.null(pkg_env$mo_uncertainties)) {
     return(NULL)
   }
-  set_clean_class(as.data.frame(mo_env$mo_uncertainties, 
+  set_clean_class(as.data.frame(pkg_env$mo_uncertainties, 
                                 stringsAsFactors = FALSE),
                   new_class = c("mo_uncertainties", "data.frame"))
 }
@@ -1842,7 +1842,7 @@ print.mo_uncertainties <- function(x, ...) {
 #' @rdname as.mo
 #' @export
 mo_renamed <- function() {
-  items <- mo_env$mo_renamed
+  items <- pkg_env$mo_renamed
   if (is.null(items)) {
     items <- data.frame(stringsAsFactors = FALSE)
   } else {
@@ -1906,20 +1906,20 @@ translate_allow_uncertain <- function(allow_uncertain) {
 }
 
 get_mo_failures_uncertainties_renamed <- function() {
-  remember <- list(failures = mo_env$mo_failures,
-                   uncertainties = mo_env$mo_uncertainties,
-                   renamed = mo_env$mo_renamed)
+  remember <- list(failures = pkg_env$mo_failures,
+                   uncertainties = pkg_env$mo_uncertainties,
+                   renamed = pkg_env$mo_renamed)
   # empty them, otherwise mo_shortname("Chlamydophila psittaci") will give 3 notes
-  mo_env$mo_failures <- NULL
-  mo_env$mo_uncertainties <- NULL
-  mo_env$mo_renamed <- NULL
+  pkg_env$mo_failures <- NULL
+  pkg_env$mo_uncertainties <- NULL
+  pkg_env$mo_renamed <- NULL
   remember
 }
 
 load_mo_failures_uncertainties_renamed <- function(metadata) {
-  mo_env$mo_failures <- metadata$failures
-  mo_env$mo_uncertainties <- metadata$uncertainties
-  mo_env$mo_renamed <- metadata$renamed
+  pkg_env$mo_failures <- metadata$failures
+  pkg_env$mo_uncertainties <- metadata$uncertainties
+  pkg_env$mo_renamed <- metadata$renamed
 }
 
 trimws2 <- function(x) {
@@ -2007,4 +2007,4 @@ repair_reference_df <- function(reference_df) {
   reference_df
 }
 
-mo_env <- new.env(hash = FALSE)
+pkg_env <- new.env(hash = FALSE)

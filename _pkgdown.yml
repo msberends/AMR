@@ -217,4 +217,4 @@ template:
   assets: "pkgdown/logos" # use logos in this folder
   params:
     noindex: false
-    template: "flatly"
+    bootswatch: "flatly"
