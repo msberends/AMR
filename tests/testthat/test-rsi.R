@@ -6,7 +6,7 @@
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
-# (c) 2018-2020 Berends MS, Luz CF et al.                              #
+# (c) 2018-2021 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       # 
@@ -164,7 +164,7 @@ test_that("data.frame2rsi works", {
                    TOB = as.disk(16),
                    ERY = "R", # note about assigning <rsi> class
                    CLR = "V") # note about cleaning
-  expect_s3_class(as.rsi(df), "data.frame")
+  expect_s3_class(suppressWarnings(as.rsi(df)), "data.frame")
   
   expect_s3_class(suppressWarnings(as.rsi(data.frame(mo = "Escherichia coli",
                                                      amoxi = c("R", "S", "I", "invalid")))$amoxi), "rsi")

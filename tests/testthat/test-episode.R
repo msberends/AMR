@@ -6,7 +6,7 @@
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
 # LICENCE                                                              #
-# (c) 2018-2020 Berends MS, Luz CF et al.                              #
+# (c) 2018-2021 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       # 
@@ -25,7 +25,7 @@
 
 context("episode.R")
 
-test_that("new episodes work", {
+test_that("episodes work", {
   skip_on_cran()
   
   test_df <- rbind(
@@ -38,8 +38,11 @@ test_that("new episodes work", {
       patient_id = "B"
     ))
   
+  expect_equal(get_episode(test_df$date, 365),
+               c(1, 1, 2, 2, 2, 3, 3, 4, 1, 2, 2, 2, 3))
+  
   library(dplyr)
-  expect_identical(test_df %>% group_by(patient_id) %>% mutate(f = is_new_episode(date)) %>% pull(f),
+  expect_identical(test_df %>% group_by(patient_id) %>% mutate(f = is_new_episode(date, 365)) %>% pull(f),
                    c(TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, TRUE))
   
   suppressMessages(
@@ -49,7 +52,7 @@ test_that("new episodes work", {
   
   y <- example_isolates %>%
     group_by(patient_id, mo) %>%
-    mutate(out = is_new_episode(date))
+    mutate(out = is_new_episode(date, 365))
   
   expect_identical(which(x$out), which(y$out))
 })
