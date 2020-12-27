@@ -122,19 +122,19 @@ test_that("EUCAST rules work", {
   expect_identical(
     eucast_rules(data.frame(mo = c("Escherichia coli", "Enterobacter cloacae"),
                             cefotax = as.rsi(c("S", "S"))),
-                 ampc_derepressed_cephalosporins = "R",
+                 ampc_cephalosporin_resistance = "R",
                  info = FALSE)$cefotax,
     as.rsi(c("S", "R")))
   expect_identical(
     eucast_rules(data.frame(mo = c("Escherichia coli", "Enterobacter cloacae"),
                             cefotax = as.rsi(c("S", "S"))),
-                 ampc_derepressed_cephalosporins = NA,
+                 ampc_cephalosporin_resistance = NA,
                  info = FALSE)$cefotax,
     as.rsi(c("S", NA)))
   expect_identical(
     eucast_rules(data.frame(mo = c("Escherichia coli", "Enterobacter cloacae"),
                             cefotax = as.rsi(c("S", "S"))),
-                 ampc_derepressed_cephalosporins = NULL,
+                 ampc_cephalosporin_resistance = NULL,
                  info = FALSE)$cefotax,
     as.rsi(c("S", "S")))
   
