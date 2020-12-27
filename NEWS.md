@@ -1,4 +1,4 @@
-# AMR 1.4.0.9047
+# AMR 1.4.0.9048
 ## <small>Last updated: 27 December 2020</small>
 
 ### New
@@ -14,6 +14,7 @@
 * Functions `random_mic()`, `random_disk()` and `random_rsi()` for random number generation. They take microorganism names and antibiotic names as input to make generation more realistic.
 
 ### Changed
+* New argument `ampc_cephalosporin_resistance` in `eucast_rules()` to correct for AmpC de-repressed cephalosporin-resistant mutants
 * Interpretation of antimicrobial resistance - `as.rsi()`:
   * Reference data used for `as.rsi()` can now be set by the user, using the `reference_data` argument. This allows for using own interpretation guidelines. The user-set data must have the same structure as `rsi_translation`.
   * Better determination of disk zones and MIC values when running `as.rsi()` on a data.frame
@@ -50,7 +51,8 @@
 ### Other
 * All messages and warnings thrown by this package now break sentences on whole words
 * More extensive unit tests
-* Internal calls to `options()` were all removed in favour of a new internal environment `mo_env`
+* Internal calls to `options()` were all removed in favour of a new internal environment `pkg_env`
+* Added Dr. Rogier Schade as contributor
 
 # AMR 1.4.0
 

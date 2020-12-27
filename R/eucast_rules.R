@@ -64,6 +64,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param verbose a [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.
 #' @param version_breakpoints the version number to use for the EUCAST Clinical Breakpoints guideline. Currently supported: `r paste0(names(EUCAST_VERSION_BREAKPOINTS), collapse = ", ")`.
 #' @param version_expertrules the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Currently supported: `r paste0(names(EUCAST_VERSION_EXPERT_RULES), collapse = ", ")`.
+#' @param ampc_cephalosporin_resistance a character value that should be applied for AmpC de-repressed cephalosporin-resistant mutants, defaults to `NA`. Currently only works when `version_expertrules` is `3.2`; '*EUCAST Expert Rules v3.2 on Enterobacterales*' states that susceptible (S) results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these agents. A value of `NA` for this argument will remove results for these agents, while e.g. a value of `"R"` will make the results for these agents resistant. Use `NULL` to not alter the results for AmpC de-repressed cephalosporin-resistant mutants. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: *`r gsub("|", "*, *", gsub("[)(^)]", "", eucast_rules_file[which(eucast_rules_file$reference.version == 3.2 & eucast_rules_file$reference.rule %like% "ampc"), "this_value"][1]), fixed = TRUE)`*.
 #' @param ... column name of an antibiotic, please see section *Antibiotics* below
 #' @inheritParams first_isolate
 #' @details
@@ -149,6 +150,7 @@ eucast_rules <- function(x,
                          verbose = FALSE,
                          version_breakpoints = 10.0,
                          version_expertrules = 3.2,
+                         ampc_cephalosporin_resistance = NA,
                          ...) {
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(col_mo, allow_class = "character", has_length = 1, is_in = colnames(x), allow_NULL = TRUE)
@@ -157,6 +159,7 @@ eucast_rules <- function(x,
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
   meet_criteria(version_breakpoints, allow_class = "numeric", has_length = 1)
   meet_criteria(version_expertrules, allow_class = "numeric", has_length = 1)
+  meet_criteria(ampc_cephalosporin_resistance, allow_class = c("rsi", "character"), has_length = 1, allow_NA = TRUE, allow_NULL = TRUE, is_in = c("R", "S", "I"))
   
   x_deparsed <- deparse(substitute(x))
   if (length(x_deparsed) > 1 || !all(x_deparsed %like% "[a-z]+")) {
@@ -731,7 +734,7 @@ eucast_rules <- function(x,
   # Official EUCAST rules ---------------------------------------------------
   eucast_notification_shown <- FALSE
   if (!is.null(list(...)$eucast_rules_df)) {
-    # this allows: eucast_rules(x, eucast_rules_df = AMR:::eucast_rules_file %pm>% filter(is.na(have_these_values)))
+    # this allows: eucast_rules(x, eucast_rules_df = AMR:::eucast_rules_file %>% filter(is.na(have_these_values)))
     eucast_rules_df <- list(...)$eucast_rules_df
   } else {
     # otherwise internal data file, created in data-raw/internals.R
@@ -748,6 +751,13 @@ eucast_rules <- function(x,
     eucast_rules_df <- subset(eucast_rules_df,
                               !reference.rule_group %like% "expert" |
                                 (reference.rule_group %like% "expert" & reference.version == version_expertrules))
+  }
+  # filter out AmpC de-repressed cephalosporin-resistant mutants ----
+  if (is.null(ampc_cephalosporin_resistance)) {
+    eucast_rules_df <- subset(eucast_rules_df,
+                              !reference.rule %like% "ampc")
+  } else {
+    eucast_rules_df[which(eucast_rules_df$reference.rule %like% "ampc"), "to_value"] <- as.character(ampc_cephalosporin_resistance)
   }
   
   for (i in seq_len(nrow(eucast_rules_df))) {
@@ -946,7 +956,7 @@ eucast_rules <- function(x,
                     by = c(".rowid" = "rowid")) %pm>% 
       pm_select(-`.rowid`) %pm>% 
       pm_select(row, pm_everything()) %pm>% 
-      pm_filter(!is.na(new)) %pm>%
+      pm_filter(!is.na(new) | is.na(new) & !is.na(old)) %pm>%
       pm_arrange(row, rule_group, rule_name, col)
     rownames(verbose_info) <- NULL
   }
@@ -1007,6 +1017,7 @@ eucast_rules <- function(x,
     if (total_n_changed > 0) {
       changed_summary <- verbose_info %pm>%
         pm_filter(!is.na(old)) %pm>%
+        pm_mutate(new = ifelse(is.na(new), "NA", new)) %pm>%
         pm_count(old, new, name = "n")
       cat(paste("   -", 
                 paste0(formatnr(changed_summary$n), " test result", ifelse(changed_summary$n > 1, "s", ""), " changed from ", 
@@ -1092,7 +1103,7 @@ edit_rsi <- function(x,
         if (w$message %like% "invalid factor level") {
           xyz <- sapply(cols, function(col) {
             new_edits[, col] <<- factor(x = as.character(pm_pull(new_edits, col)),
-                                       levels = unique(c(to, levels(pm_pull(new_edits, col)))))
+                                        levels = unique(c(to, levels(pm_pull(new_edits, col)))))
             invisible()
           })
           suppressWarnings(new_edits[rows, cols] <<- to)
@@ -1134,7 +1145,7 @@ edit_rsi <- function(x,
                                   stringsAsFactors = FALSE)
         colnames(verbose_new) <- c("rowid", "col", "mo_fullname", "old", "new",
                                    "rule", "rule_group", "rule_name", "rule_source")
-        verbose_new <- verbose_new %pm>% pm_filter(old != new | is.na(old))
+        verbose_new <- verbose_new %pm>% pm_filter(old != new | is.na(old) | is.na(new) & !is.na(old))
         # save changes to data set 'verbose_info'
         track_changes$verbose_info <- rbind(track_changes$verbose_info,
                                             verbose_new,

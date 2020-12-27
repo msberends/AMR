@@ -23,6 +23,7 @@ eucast_rules(
   verbose = FALSE,
   version_breakpoints = 10,
   version_expertrules = 3.2,
+  ampc_cephalosporin_resistance = NA,
   ...
 )
 }
@@ -40,6 +41,8 @@ eucast_rules(
 \item{version_breakpoints}{the version number to use for the EUCAST Clinical Breakpoints guideline. Currently supported: 10.0.}
 
 \item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Currently supported: 3.1, 3.2.}
+
+\item{ampc_cephalosporin_resistance}{a character value that should be applied for AmpC de-repressed cephalosporin-resistant mutants, defaults to \code{NA}. Currently only works when \code{version_expertrules} is \code{3.2}; '\emph{EUCAST Expert Rules v3.2 on Enterobacterales}' states that susceptible (S) results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these agents. A value of \code{NA} for this argument will remove results for these agents, while e.g. a value of \code{"R"} will make the results for these agents resistant. Use \code{NULL} to not alter the results for AmpC de-repressed cephalosporin-resistant mutants. \cr For \emph{EUCAST Expert Rules} v3.2, this rule applies to: \emph{Enterobacter}, \emph{Klebsiella aerogenes}, \emph{Citrobacter freundii}, \emph{Hafnia alvei}, \emph{Serratia}, \emph{Morganella morganii}, \emph{Providencia}.}
 
 \item{...}{column name of an antibiotic, please see section \emph{Antibiotics} below}
 }

@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9047</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9048</span>
       </span>
     </div>
 
@@ -236,9 +236,9 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1409047" class="section level1">
-<h1 class="page-header" data-toc-text="1.4.0.9047">
-<a href="#amr-1409047" class="anchor"></a>AMR 1.4.0.9047<small> Unreleased </small>
+    <div id="amr-1409048" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.0.9048">
+<a href="#amr-1409048" class="anchor"></a>AMR 1.4.0.9048<small> Unreleased </small>
 </h1>
 <div id="last-updated-27-december-2020" class="section level2">
 <h2 class="hasAnchor">
@@ -266,6 +266,7 @@
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
+<li><p>New argument <code>ampc_cephalosporin_resistance</code> in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> to correct for AmpC de-repressed cephalosporin-resistant mutants</p></li>
 <li>
 <p>Interpretation of antimicrobial resistance - <code><a href="../reference/as.rsi.html">as.rsi()</a></code>:</p>
 <ul>
@@ -313,8 +314,9 @@
 <ul>
 <li>All messages and warnings thrown by this package now break sentences on whole words</li>
 <li>More extensive unit tests</li>
-<li>Internal calls to <code><a href="https://rdrr.io/r/base/options.html">options()</a></code> were all removed in favour of a new internal environment <code>mo_env</code>
+<li>Internal calls to <code><a href="https://rdrr.io/r/base/options.html">options()</a></code> were all removed in favour of a new internal environment <code>pkg_env</code>
 </li>
+<li>Added Dr. Rogier Schade as contributor</li>
 </ul>
 </div>
 </div>

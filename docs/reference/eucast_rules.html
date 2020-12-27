@@ -83,7 +83,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9046</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9048</span>
       </span>
     </div>
 
@@ -252,6 +252,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
   verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
   version_breakpoints <span class='op'>=</span> <span class='fl'>10</span>,
   version_expertrules <span class='op'>=</span> <span class='fl'>3.2</span>,
+  ampc_cephalosporin_resistance <span class='op'>=</span> <span class='cn'>NA</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -285,6 +286,10 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     <tr>
       <th>version_expertrules</th>
       <td><p>the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Currently supported: 3.1, 3.2.</p></td>
+    </tr>
+    <tr>
+      <th>ampc_cephalosporin_resistance</th>
+      <td><p>a character value that should be applied for AmpC de-repressed cephalosporin-resistant mutants, defaults to <code>NA</code>. Currently only works when <code>version_expertrules</code> is <code>3.2</code>; '<em>EUCAST Expert Rules v3.2 on Enterobacterales</em>' states that susceptible (S) results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these agents. A value of <code>NA</code> for this argument will remove results for these agents, while e.g. a value of <code>"R"</code> will make the results for these agents resistant. Use <code>NULL</code> to not alter the results for AmpC de-repressed cephalosporin-resistant mutants. <br /> For <em>EUCAST Expert Rules</em> v3.2, this rule applies to: <em>Enterobacter</em>, <em>Klebsiella aerogenes</em>, <em>Citrobacter freundii</em>, <em>Hafnia alvei</em>, <em>Serratia</em>, <em>Morganella morganii</em>, <em>Providencia</em>.</p></td>
     </tr>
     <tr>
       <th>...</th>

@@ -50,7 +50,7 @@
 #' get_episode(example_isolates$date, episode_days = 60)
 #' is_new_episode(example_isolates$date, episode_days = 60)
 #' 
-#' # filter on results from the third 60-day episode using base R
+#' # filter on results from the third 60-day episode only, using base R
 #' example_isolates[which(get_episode(example_isolates$date, 60) == 3), ]
 #' 
 #' \donttest{

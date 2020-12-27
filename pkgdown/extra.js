@@ -90,6 +90,7 @@ $(document).ready(function() {
       x = x.replace("Judith", "Dr. Judith");
       x = x.replace("Gwen", "Dr. Gwen");
       x = x.replace("Anthony", "Dr. Anthony");
+      x = x.replace("Rogier", "Dr. Rogier");
     }
     return(x);
   }

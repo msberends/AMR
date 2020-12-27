@@ -118,4 +118,24 @@ test_that("EUCAST rules work", {
   # check verbose output
   expect_output(suppressWarnings(eucast_rules(example_isolates, verbose = TRUE, rules = "all", info = TRUE)))
   
+  # AmpC de-repressed cephalo mutants
+  expect_identical(
+    eucast_rules(data.frame(mo = c("Escherichia coli", "Enterobacter cloacae"),
+                            cefotax = as.rsi(c("S", "S"))),
+                 ampc_derepressed_cephalosporins = "R",
+                 info = FALSE)$cefotax,
+    as.rsi(c("S", "R")))
+  expect_identical(
+    eucast_rules(data.frame(mo = c("Escherichia coli", "Enterobacter cloacae"),
+                            cefotax = as.rsi(c("S", "S"))),
+                 ampc_derepressed_cephalosporins = NA,
+                 info = FALSE)$cefotax,
+    as.rsi(c("S", NA)))
+  expect_identical(
+    eucast_rules(data.frame(mo = c("Escherichia coli", "Enterobacter cloacae"),
+                            cefotax = as.rsi(c("S", "S"))),
+                 ampc_derepressed_cephalosporins = NULL,
+                 info = FALSE)$cefotax,
+    as.rsi(c("S", "S")))
+  
 })
