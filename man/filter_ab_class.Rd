@@ -105,6 +105,7 @@ if (require("dplyr")) {
     filter_fluoroquinolones("R", "all")
   
   # with dplyr 1.0.0 and higher (that adds 'across()'), this is equal:
+  # (though the row names on the first are more correct)
   example_isolates \%>\% filter_carbapenems("R", "all")
   example_isolates \%>\% filter(across(carbapenems(), ~. == "R"))
 }

@@ -69,7 +69,12 @@
 #'   data.frame(some_column = "some_value",
 #'              J01CA01 = "S") %>%   # ATC code of ampicillin
 #'     select(penicillins())         # only the 'J01CA01' column will be selected
-#'
+#'     
+#'     
+#'   # with dplyr 1.0.0 and higher (that adds 'across()'), this is equal:
+#'   # (though the row names on the first are more correct)
+#'   example_isolates %>% filter_carbapenems("R", "all")
+#'   example_isolates %>% filter(across(carbapenems(), ~. == "R"))
 #' }
 ab_class <- function(ab_class) {
   ab_selector(ab_class, function_name = "ab_class")
@@ -156,14 +161,19 @@ tetracyclines <- function() {
 ab_selector <- function(ab_class, function_name) {
   meet_criteria(ab_class, allow_class = "character", has_length = 1, .call_depth = 1)
   meet_criteria(function_name, allow_class = "character", has_length = 1, .call_depth = 1)
-
+  
   for (i in seq_len(length(sys.frames()))) {
-    vars_df <- sys.frames()[[i]]$x
+    vars_df <- tryCatch(sys.frames()[[i]]$x, error = function(e) NULL)
     if (!is.null(vars_df) && is.data.frame(vars_df)) {
+      # when using e.g. example_isolates[, carbapenems()] or example_isolates %>% select(carbapenems())
+      break
+    } else if (!is.null(vars_df) && is.list(vars_df)) {
+      # when using e.g. example_isolates %>% filter(across(carbapenems(), ~. == "R"))
+      vars_df <- as.data.frame(vars_df, stringsAsFactors = FALSE)
       break
     }
   }
-  stop_ifnot(is.data.frame(vars_df), "the ", function_name, "() function must be used inside dplyr verbs or a data.frame call.")
+  stop_ifnot(is.data.frame(vars_df), "this function must be used inside dplyr selection verbs or within a data.frame call.", call = -2)
   ab_in_data <- get_column_abx(vars_df, info = FALSE)
   
   if (length(ab_in_data) == 0) {
@@ -184,15 +194,18 @@ ab_selector <- function(ab_class, function_name) {
   }
   # get the columns with a group names in the chosen ab class
   agents <- ab_in_data[names(ab_in_data) %in% ab_reference$ab]
-  if (length(agents) == 0) {
-    message_("No antimicrobial agents of class ", ab_group, " found", examples, ".")
-  } else {
-    message_("Selecting ", ab_group, ": ",
-             paste(paste0("'", font_bold(agents, collapse = NULL),
-                          "' (", ab_name(names(agents), tolower = TRUE, language = NULL), ")"),
-                   collapse = ", "),
-             as_note = FALSE,
-             extra_indent = nchar(paste0("Selecting ", ab_group, ": ")))
-  }
+  if (message_not_thrown_before(function_name)) {
+    if (length(agents) == 0) {
+      message_("No antimicrobial agents of class ", ab_group, " found", examples, ".")
+    } else {
+      message_("Selecting ", ab_group, ": ",
+               paste(paste0("'", font_bold(agents, collapse = NULL),
+                            "' (", ab_name(names(agents), tolower = TRUE, language = NULL), ")"),
+                     collapse = ", "),
+               as_note = FALSE,
+               extra_indent = nchar(paste0("Selecting ", ab_group, ": ")))
+    }
+   remember_thrown_message(function_name)
+ }
   unname(agents)
 }

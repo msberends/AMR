@@ -100,7 +100,12 @@ if (require("dplyr")) {
   data.frame(some_column = "some_value",
              J01CA01 = "S") \%>\%   # ATC code of ampicillin
     select(penicillins())         # only the 'J01CA01' column will be selected
-
+    
+    
+  # with dplyr 1.0.0 and higher (that adds 'across()'), this is equal:
+  # (though the row names on the first are more correct)
+  example_isolates \%>\% filter_carbapenems("R", "all")
+  example_isolates \%>\% filter(across(carbapenems(), ~. == "R"))
 }
 }
 \seealso{
