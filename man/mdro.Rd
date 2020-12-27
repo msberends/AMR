@@ -40,7 +40,7 @@ mdr_cmi2012(x, guideline = "CMI2012", ...)
 eucast_exceptional_phenotypes(x, guideline = "EUCAST", ...)
 }
 \arguments{
-\item{x}{a \link{data.frame} with antibiotics columns, like \code{AMX} or \code{amox}. Can be omitted when used inside \code{dplyr} verbs, such as \code{\link[dplyr:filter]{filter()}}, \code{\link[dplyr:mutate]{mutate()}} and \code{\link[dplyr:summarise]{summarise()}}.}
+\item{x}{a \link{data.frame} with antibiotics columns, like \code{AMX} or \code{amox}. Can be left blank when used inside \code{dplyr} verbs, such as \code{\link[dplyr:filter]{filter()}}, \code{\link[dplyr:mutate]{mutate()}} and \code{\link[dplyr:summarise]{summarise()}}.}
 
 \item{guideline}{a specific guideline to follow. When left empty, the publication by Magiorakos \emph{et al.} (2012, Clinical Microbiology and Infection) will be followed, please see \emph{Details}.}
 
@@ -72,7 +72,7 @@ Ordered \link{factor} with levels \code{Negative} < \verb{Positive, unconfirmed}
 Determine which isolates are multidrug-resistant organisms (MDRO) according to international and national guidelines.
 }
 \details{
-These functions are context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} argument can be omitted, please see \emph{Examples}.
+These functions are context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} argument can be left blank, please see \emph{Examples}.
 
 For the \code{pct_required_classes} argument, values above 1 will be divided by 100. This is to support both fractions (\code{0.75} or \code{3/4}) and percentages (\code{75}).
 

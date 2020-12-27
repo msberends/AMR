@@ -49,7 +49,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Antibiotic class selectors — antibiotic_class_selectors" />
-<meta property="og:description" content="Use these selection helpers inside any function that allows Tidyverse selection helpers, such as select() and pivot_longer(). They help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations." />
+<meta property="og:description" content="These functions help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9046</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9050</span>
       </span>
     </div>
 
@@ -239,7 +239,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Use these selection helpers inside any function that allows <a href='https://tidyselect.r-lib.org/reference/language.html'>Tidyverse selection helpers</a>, such as <code><a href='https://dplyr.tidyverse.org/reference/select.html'>select()</a></code> and <code><a href='https://tidyr.tidyverse.org/reference/pivot_longer.html'>pivot_longer()</a></code>. They help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.</p>
+    <p>These functions help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.</p>
     </div>
 
     <pre class="usage"><span class='fu'>ab_class</span><span class='op'>(</span><span class='va'>ab_class</span><span class='op'>)</span>
@@ -282,7 +282,6 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>All columns will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.) in the <a href='antibiotics.html'>antibiotics</a> data set. This means that a selector like e.g. <code>aminoglycosides()</code> will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.</p>
-<p><strong>N.B. These functions require the <code>tidyselect</code> package to be installed</strong>, that comes with the <code>dplyr</code> package. An error will be thrown if the <code>tidyselect</code> package is not installed, or if the functions are used outside a function that allows <a href='https://tidyselect.r-lib.org/reference/language.html'>Tidyverse selection helpers</a> such as <code><a href='https://dplyr.tidyverse.org/reference/select.html'>select()</a></code> and <code><a href='https://tidyr.tidyverse.org/reference/pivot_longer.html'>pivot_longer()</a></code>`.</p>
     <h2 class="hasAnchor" id="reference-data-publicly-available"><a class="anchor" href="#reference-data-publicly-available"></a>Reference data publicly available</h2>
 
     
@@ -298,7 +297,15 @@
     <div class='dont-index'><p><code><a href='filter_ab_class.html'>filter_ab_class()</a></code> for the <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code> equivalent.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+    <pre class="examples"><span class='co'># `example_isolates` is a dataset available in the AMR package.</span>
+<span class='co'># See ?example_isolates.</span>
+
+<span class='co'># this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):</span>
+<span class='va'>example_isolates</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'>carbapenems</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>]</span>
+<span class='co'># this will select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB':</span>
+<span class='va'>example_isolates</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mo"</span>, <span class='fu'>aminoglycosides</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>]</span>
+
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
 
   <span class='co'># this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):</span>
   <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span> 

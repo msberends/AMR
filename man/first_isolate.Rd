@@ -50,7 +50,7 @@ filter_first_weighted_isolate(
 )
 }
 \arguments{
-\item{x}{a \link{data.frame} containing isolates. Can be omitted when used inside \code{dplyr} verbs, such as \code{\link[dplyr:filter]{filter()}}, \code{\link[dplyr:mutate]{mutate()}} and \code{\link[dplyr:summarise]{summarise()}}.}
+\item{x}{a \link{data.frame} containing isolates. Can be left blank when used inside \code{dplyr} verbs, such as \code{\link[dplyr:filter]{filter()}}, \code{\link[dplyr:mutate]{mutate()}} and \code{\link[dplyr:summarise]{summarise()}}.}
 
 \item{col_date}{column name of the result date (or date that is was received on the lab), defaults to the first column with a date class}
 
@@ -93,7 +93,7 @@ A \code{\link{logical}} vector
 Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use \code{\link[=is_new_episode]{is_new_episode()}} that also supports grouping with the \code{dplyr} package.
 }
 \details{
-These functions are context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} argument can be omitted, please see \emph{Examples}.
+These functions are context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} argument can be left blank, please see \emph{Examples}.
 
 The \code{\link[=first_isolate]{first_isolate()}} function is a wrapper around the \code{\link[=is_new_episode]{is_new_episode()}} function, but more efficient for data sets containing microorganism codes or names.
 

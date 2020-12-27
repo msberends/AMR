@@ -51,7 +51,6 @@ test_that("imports work", {
     "insertText" = "rstudioapi",
     "left_join" = "dplyr",
     "new_pillar_shaft_simple" = "pillar",
-    "peek_vars" = "tidyselect",
     "read_excel" = "readxl",
     "read_html" = "xml2",
     "right_join" = "dplyr",

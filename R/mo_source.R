@@ -149,8 +149,8 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
     
   } else if (path %like% "[.]xlsx?$") {
     # is Excel file (old or new)
-    read_excel <- import_fn("read_excel", "readxl")
-    df <- read_excel(path)
+    stop_ifnot_installed("readxl")
+    df <- readxl::read_excel(path)
     
   } else if (path %like% "[.]tsv$") {
     df <- utils::read.table(header = TRUE, sep = "\t", stringsAsFactors = FALSE)

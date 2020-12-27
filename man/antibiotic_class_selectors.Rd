@@ -50,12 +50,10 @@ tetracyclines()
 \item{ab_class}{an antimicrobial class, like \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched (case-insensitive) for this value.}
 }
 \description{
-Use these selection helpers inside any function that allows \href{https://tidyselect.r-lib.org/reference/language.html}{Tidyverse selection helpers}, such as \code{\link[dplyr:select]{select()}} and \code{\link[tidyr:pivot_longer]{pivot_longer()}}. They help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.
+These functions help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.
 }
 \details{
 All columns will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.) in the \link{antibiotics} data set. This means that a selector like e.g. \code{\link[=aminoglycosides]{aminoglycosides()}} will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
-
-\strong{N.B. These functions require the \code{tidyselect} package to be installed}, that comes with the \code{dplyr} package. An error will be thrown if the \code{tidyselect} package is not installed, or if the functions are used outside a function that allows \href{https://tidyselect.r-lib.org/reference/language.html}{Tidyverse selection helpers} such as \code{\link[dplyr:select]{select()}} and \code{\link[tidyr:pivot_longer]{pivot_longer()}}`.
 }
 \section{Reference data publicly available}{
 
@@ -68,6 +66,14 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 }
 
 \examples{
+# `example_isolates` is a dataset available in the AMR package.
+# See ?example_isolates.
+
+# this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
+example_isolates[, c(carbapenems())]
+# this will select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB':
+example_isolates[, c("mo", aminoglycosides())]
+
 if (require("dplyr")) {
 
   # this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):

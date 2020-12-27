@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9046</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9050</span>
       </span>
     </div>
 
@@ -239,7 +239,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use <code><a href='is_new_episode.html'>is_new_episode()</a></code> that also supports grouping with the <code>dplyr</code> package.</p>
+    <p>Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use <code><a href='get_episode.html'>is_new_episode()</a></code> that also supports grouping with the <code>dplyr</code> package.</p>
     </div>
 
     <pre class="usage"><span class='fu'>first_isolate</span><span class='op'>(</span>
@@ -285,7 +285,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> containing isolates. Can be omitted when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>.</p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> containing isolates. Can be left blank when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>.</p></td>
     </tr>
     <tr>
       <th>col_date</th>
@@ -366,8 +366,8 @@
     <p>A <code><a href='https://rdrr.io/r/base/logical.html'>logical</a></code> vector</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>These functions are context-aware when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>. This means that then the <code>x</code> argument can be omitted, please see <em>Examples</em>.</p>
-<p>The <code>first_isolate()</code> function is a wrapper around the <code><a href='is_new_episode.html'>is_new_episode()</a></code> function, but more efficient for data sets containing microorganism codes or names.</p>
+    <p>These functions are context-aware when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>. This means that then the <code>x</code> argument can be left blank, please see <em>Examples</em>.</p>
+<p>The <code>first_isolate()</code> function is a wrapper around the <code><a href='get_episode.html'>is_new_episode()</a></code> function, but more efficient for data sets containing microorganism codes or names.</p>
 <p>All isolates with a microbial ID of <code>NA</code> will be excluded as first isolate.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Why this is so important</h3>
 
 

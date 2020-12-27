@@ -27,7 +27,7 @@
 #'
 #' These function can be used to determine first isolates (see [first_isolate()]). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates can then be called first *weighted* isolates.
 #' @inheritSection lifecycle Stable lifecycle
-#' @param x a [data.frame] with antibiotics columns, like `AMX` or `amox`. Can be omitted when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`.
+#' @param x a [data.frame] with antibiotics columns, like `AMX` or `amox`. Can be left blank when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`.
 #' @param y,z character vectors to compare
 #' @inheritParams first_isolate
 #' @param universal_1,universal_2,universal_3,universal_4,universal_5,universal_6 column names of **broad-spectrum** antibiotics, case-insensitive. See details for which antibiotics will be used at default (which are guessed with [guess_ab_col()]).
@@ -36,7 +36,7 @@
 #' @param warnings give a warning about missing antibiotic columns (they will be ignored)
 #' @param ... other arguments passed on to functions
 #' @details 
-#' The [key_antibiotics()] function is context-aware when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`. This means that then the `x` argument can be omitted, please see *Examples*.
+#' The [key_antibiotics()] function is context-aware when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`. This means that then the `x` argument can be left blank, please see *Examples*.
 #' 
 #' The function [key_antibiotics()] returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using [key_antibiotics_equal()], to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (`"."`) by [key_antibiotics()] and ignored by [key_antibiotics_equal()].
 #' 

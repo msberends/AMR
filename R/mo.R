@@ -438,7 +438,7 @@ exec_as.mo <- function(x,
 
     strip_whitespace <- function(x, dyslexia_mode) {
       # all whitespaces (tab, new lines, etc.) should be one space
-      # and spaces before and after should be omitted
+      # and spaces before and after should be left blank
       trimmed <- trimws2(x)
       # also, make sure the trailing and leading characters are a-z or 0-9
       # in case of non-regex

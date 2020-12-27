@@ -40,7 +40,7 @@ key_antibiotics_equal(
 )
 }
 \arguments{
-\item{x}{a \link{data.frame} with antibiotics columns, like \code{AMX} or \code{amox}. Can be omitted when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}.}
+\item{x}{a \link{data.frame} with antibiotics columns, like \code{AMX} or \code{amox}. Can be left blank when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}.}
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
@@ -68,7 +68,7 @@ key_antibiotics_equal(
 These function can be used to determine first isolates (see \code{\link[=first_isolate]{first_isolate()}}). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates can then be called first \emph{weighted} isolates.
 }
 \details{
-The \code{\link[=key_antibiotics]{key_antibiotics()}} function is context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} argument can be omitted, please see \emph{Examples}.
+The \code{\link[=key_antibiotics]{key_antibiotics()}} function is context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} argument can be left blank, please see \emph{Examples}.
 
 The function \code{\link[=key_antibiotics]{key_antibiotics()}} returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using \code{\link[=key_antibiotics_equal]{key_antibiotics_equal()}}, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (\code{"."}) by \code{\link[=key_antibiotics]{key_antibiotics()}} and ignored by \code{\link[=key_antibiotics_equal]{key_antibiotics_equal()}}.
 

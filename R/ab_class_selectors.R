@@ -25,11 +25,9 @@
 
 #' Antibiotic class selectors
 #' 
-#' Use these selection helpers inside any function that allows [Tidyverse selection helpers](https://tidyselect.r-lib.org/reference/language.html), such as [`select()`][dplyr::select()] and [`pivot_longer()`][tidyr::pivot_longer()]. They help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.
+#' These functions help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.
 #' @inheritParams filter_ab_class 
 #' @details All columns will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.) in the [antibiotics] data set. This means that a selector like e.g. [aminoglycosides()] will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
-#' 
-#' **N.B. These functions require the `tidyselect` package to be installed**, that comes with the `dplyr` package. An error will be thrown if the `tidyselect` package is not installed, or if the functions are used outside a function that allows [Tidyverse selection helpers](https://tidyselect.r-lib.org/reference/language.html) such as [`select()`][dplyr::select()] and [`pivot_longer()`][tidyr::pivot_longer()]`.
 #' @rdname antibiotic_class_selectors
 #' @seealso [filter_ab_class()] for the `filter()` equivalent.
 #' @name antibiotic_class_selectors
@@ -37,6 +35,14 @@
 #' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
 #' @examples 
+#' # `example_isolates` is a dataset available in the AMR package.
+#' # See ?example_isolates.
+#' 
+#' # this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
+#' example_isolates[, c(carbapenems())]
+#' # this will select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB':
+#' example_isolates[, c("mo", aminoglycosides())]
+#' 
 #' if (require("dplyr")) {
 #' 
 #'   # this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
@@ -151,10 +157,13 @@ ab_selector <- function(ab_class, function_name) {
   meet_criteria(ab_class, allow_class = "character", has_length = 1, .call_depth = 1)
   meet_criteria(function_name, allow_class = "character", has_length = 1, .call_depth = 1)
 
-  peek_vars_tidyselect <- import_fn("peek_vars", "tidyselect")
-  vars_vct <- peek_vars_tidyselect(fn = function_name)
-  vars_df <- data.frame(as.list(vars_vct), stringsAsFactors = FALSE)[1, , drop = FALSE]
-  colnames(vars_df) <- vars_vct
+  for (i in seq_len(length(sys.frames()))) {
+    vars_df <- sys.frames()[[i]]$x
+    if (!is.null(vars_df) && is.data.frame(vars_df)) {
+      break
+    }
+  }
+  stop_ifnot(is.data.frame(vars_df), "the ", function_name, "() function must be used inside dplyr verbs or a data.frame call.")
   ab_in_data <- get_column_abx(vars_df, info = FALSE)
   
   if (length(ab_in_data) == 0) {

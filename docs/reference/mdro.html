@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9046</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9050</span>
       </span>
     </div>
 
@@ -268,7 +268,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with antibiotics columns, like <code>AMX</code> or <code>amox</code>. Can be omitted when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>.</p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with antibiotics columns, like <code>AMX</code> or <code>amox</code>. Can be left blank when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>.</p></td>
     </tr>
     <tr>
       <th>guideline</th>
@@ -319,7 +319,7 @@ Ordered <a href='https://rdrr.io/r/base/factor.html'>factor</a> with levels <cod
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>These functions are context-aware when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>. This means that then the <code>x</code> argument can be omitted, please see <em>Examples</em>.</p>
+    <p>These functions are context-aware when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>. This means that then the <code>x</code> argument can be left blank, please see <em>Examples</em>.</p>
 <p>For the <code>pct_required_classes</code> argument, values above 1 will be divided by 100. This is to support both fractions (<code>0.75</code> or <code>3/4</code>) and percentages (<code>75</code>).</p>
 <p>Currently supported guidelines are (case-insensitive):</p><ul>
 <li><p><code>guideline = "CMI2012"</code> (default)</p>

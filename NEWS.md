@@ -1,4 +1,4 @@
-# AMR 1.4.0.9049
+# AMR 1.4.0.9050
 ## <small>Last updated: 27 December 2020</small>
 
 ### New
@@ -47,6 +47,7 @@
 * Fix for printing class <mo> in tibbles when all values are `NA`
 * Fix for `mo_shortname()` when the input contains `NA`
 * If `as.mo()` takes more than 30 seconds, some suggestions will be done to improve speed
+* Lost dependency on the `tidyselect` package for using antibiotic selectors such as `carbapenems()` and `aminoglycosides()`
 
 ### Other
 * All messages and warnings thrown by this package now break sentences on whole words
