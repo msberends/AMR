@@ -1,5 +1,5 @@
-# AMR 1.4.0.9051
-## <small>Last updated: 27 December 2020</small>
+# AMR 1.4.0.9052
+## <small>Last updated: 28 December 2020</small>
 
 ### New
 * Functions `get_episode()` and `is_new_episode()` to determine (patient) episodes which are not necessarily based on microorganisms. The `get_episode()` function returns the index number of the episode per group, while the `is_new_episode()` function returns values `TRUE`/`FALSE` to indicate whether an item in a vector is the start of a new episode. They also support `dplyr`s grouping (i.e. using `group_by()`):
@@ -53,6 +53,8 @@
 * All messages and warnings thrown by this package now break sentences on whole words
 * More extensive unit tests
 * Internal calls to `options()` were all removed in favour of a new internal environment `pkg_env`
+* Improved internal type setting (among other things: replaced all `sapply()` calls with `vapply()`)
+* Added CodeFactor as a continuous code review to this package: <https://www.codefactor.io/repository/github/msberends/amr/>
 * Added Dr. Rogier Schade as contributor
 
 # AMR 1.4.0

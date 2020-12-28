@@ -66,5 +66,5 @@ skewness.matrix <- function(x, na.rm = FALSE) {
 #' @export
 skewness.data.frame <- function(x, na.rm = FALSE) {
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)
-  sapply(x, skewness.default, na.rm = na.rm)
+  vapply(FUN.VALUE = double(1), x, skewness.default, na.rm = na.rm)
 }

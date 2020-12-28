@@ -69,13 +69,13 @@ as.disk <- function(x, na.rm = FALSE) {
     
     na_before <- length(x[is.na(x)])
     
-    # heavily based on the function from our cleaner package:
+    # heavily based on cleaner::clean_double():
     clean_double2 <- function(x, remove = "[^0-9.,-]", fixed = FALSE) {
       x <- gsub(",", ".", x)
       # remove ending dot/comma
       x <- gsub("[,.]$", "", x)
       # only keep last dot/comma
-      reverse <- function(x) sapply(lapply(strsplit(x, NULL), rev), paste, collapse = "")
+      reverse <- function(x) vapply(FUN.VALUE = character(1), lapply(strsplit(x, NULL), rev), paste, collapse = "")
       x <- sub("{{dot}}", ".", 
                gsub(".", "",
                     reverse(sub(".", "}}tod{{",

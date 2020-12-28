@@ -97,7 +97,7 @@ pca <- function(x,
     }
     
     x <- as.data.frame(new_list, stringsAsFactors = FALSE)
-    if (any(sapply(x, function(y) !is.numeric(y)))) {
+    if (any(vapply(FUN.VALUE = logical(1), x, function(y) !is.numeric(y)))) {
       warning_("Be sure to first calculate the resistance (or susceptibility) of variables with antimicrobial test results, since PCA works with numeric variables only. Please see Examples in ?pca.")
     }
     
@@ -106,21 +106,21 @@ pca <- function(x,
              error = function(e) warning("column names could not be set"))
     
     # keep only numeric columns
-    x <- x[, sapply(x, function(y) is.numeric(y))]
+    x <- x[, vapply(FUN.VALUE = logical(1), x, function(y) is.numeric(y))]
     # bind the data set with the non-numeric columns
-    x <- cbind(x.bak[, sapply(x.bak, function(y) !is.numeric(y) & !all(is.na(y))), drop = FALSE], x)
+    x <- cbind(x.bak[, vapply(FUN.VALUE = logical(1), x.bak, function(y) !is.numeric(y) & !all(is.na(y))), drop = FALSE], x)
   }
   
   x <- pm_ungroup(x)  # would otherwise select the grouping vars
   x <- x[rowSums(is.na(x)) == 0, ] # remove columns containing NAs
   
-  pca_data <- x[, which(sapply(x, function(x) is.numeric(x)))]
+  pca_data <- x[, which(vapply(FUN.VALUE = logical(1), x, function(x) is.numeric(x)))]
   
   message_("Columns selected for PCA: ", paste0(font_bold(colnames(pca_data)), collapse = "/"),
            ". Total observations available: ", nrow(pca_data), ".")
   
   pca_model <- prcomp(pca_data, retx = retx, center = center, scale. = scale., tol = tol, rank. = rank.)
-  attr(pca_model, "non_numeric_cols") <- x[, sapply(x, function(y) !is.numeric(y) & !all(is.na(y))), drop = FALSE]
+  attr(pca_model, "non_numeric_cols") <- x[, vapply(FUN.VALUE = logical(1), x, function(y) !is.numeric(y) & !all(is.na(y))), drop = FALSE]
   class(pca_model) <- c("pca", class(pca_model))
   pca_model
 }

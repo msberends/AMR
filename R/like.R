@@ -102,7 +102,7 @@ like <- function(x, pattern, ignore.case = TRUE) {
           res[i] <- grepl(pattern[i], x[i], ignore.case = FALSE, fixed = fixed)
         }
       }
-      res <- sapply(pattern, function(pttrn) grepl(pttrn, x, ignore.case = FALSE, fixed = fixed))
+      res <- vapply(FUN.VALUE = logical(1), pattern, function(pttrn) grepl(pttrn, x, ignore.case = FALSE, fixed = fixed))
       res2 <- as.logical(rowSums(res))
       # get only first item of every hit in pattern
       res2[duplicated(res)] <- FALSE

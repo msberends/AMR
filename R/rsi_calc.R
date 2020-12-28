@@ -129,12 +129,12 @@ rsi_calc <- function(...,
                  MARGIN = 1,
                  FUN = min)
       numerator <- sum(as.integer(y) %in% as.integer(ab_result), na.rm = TRUE)
-      denominator <- sum(sapply(x_transposed, function(y) !(any(is.na(y)))))
+      denominator <- sum(vapply(FUN.VALUE = logical(1), x_transposed, function(y) !(any(is.na(y)))))
     } else {
       # may contain NAs in any column
       other_values <- setdiff(c(NA, levels(ab_result)), ab_result)
-      numerator <- sum(sapply(x_transposed, function(y) any(y %in% ab_result, na.rm = TRUE)))
-      denominator <- sum(sapply(x_transposed, function(y) !(all(y %in% other_values) & any(is.na(y)))))
+      numerator <- sum(vapply(FUN.VALUE = logical(1), x_transposed, function(y) any(y %in% ab_result, na.rm = TRUE)))
+      denominator <- sum(vapply(FUN.VALUE = logical(1), x_transposed, function(y) !(all(y %in% other_values) & any(is.na(y)))))
     }
   } else {
     # x is not a data.frame
@@ -207,10 +207,10 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   if (inherits(data, "grouped_df")) {
     data_has_groups <- TRUE
     groups <- setdiff(names(attributes(data)$groups), ".rows")
-    data <- data[, c(groups, colnames(data)[sapply(data, is.rsi)]), drop = FALSE]
+    data <- data[, c(groups, colnames(data)[vapply(FUN.VALUE = logical(1), data, is.rsi)]), drop = FALSE]
   } else {
     data_has_groups <- FALSE
-    data <- data[, colnames(data)[sapply(data, is.rsi)], drop = FALSE]
+    data <- data[, colnames(data)[vapply(FUN.VALUE = logical(1), data, is.rsi)], drop = FALSE]
   }
   
   data <- as.data.frame(data, stringsAsFactors = FALSE)

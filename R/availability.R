@@ -46,11 +46,11 @@ availability <- function(tbl, width = NULL) {
   meet_criteria(tbl, allow_class = "data.frame")
   meet_criteria(width, allow_class = "numeric", allow_NULL = TRUE)
   
-  x <- sapply(tbl, function(x) {
+  x <- vapply(FUN.VALUE = double(1), tbl, function(x) {
     1 - sum(is.na(x)) / length(x) 
   })
-  n <- sapply(tbl, function(x) length(x[!is.na(x)]))
-  R <- sapply(tbl, function(x) ifelse(is.rsi(x), resistance(x, minimum = 0), NA))
+  n <- vapply(FUN.VALUE = double(1), tbl, function(x) length(x[!is.na(x)]))
+  R <- vapply(FUN.VALUE = double(1), tbl, function(x) ifelse(is.rsi(x), resistance(x, minimum = 0), NA_real_))
   R_print <- character(length(R))
   R_print[!is.na(R)] <- percentage(R[!is.na(R)])
   R_print[is.na(R)] <- ""

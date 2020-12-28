@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9051</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9052</span>
       </span>
     </div>
 
@@ -236,13 +236,13 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1409051" class="section level1">
-<h1 class="page-header" data-toc-text="1.4.0.9051">
-<a href="#amr-1409051" class="anchor"></a>AMR 1.4.0.9051<small> Unreleased </small>
+    <div id="amr-1409052" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.0.9052">
+<a href="#amr-1409052" class="anchor"></a>AMR 1.4.0.9052<small> Unreleased </small>
 </h1>
-<div id="last-updated-27-december-2020" class="section level2">
+<div id="last-updated-28-december-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-27-december-2020" class="anchor"></a><small>Last updated: 27 December 2020</small>
+<a href="#last-updated-28-december-2020" class="anchor"></a><small>Last updated: 28 December 2020</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
@@ -316,6 +316,9 @@
 <li>All messages and warnings thrown by this package now break sentences on whole words</li>
 <li>More extensive unit tests</li>
 <li>Internal calls to <code><a href="https://rdrr.io/r/base/options.html">options()</a></code> were all removed in favour of a new internal environment <code>pkg_env</code>
+</li>
+<li>Improved internal type setting (among other things: replaced all <code><a href="https://rdrr.io/r/base/lapply.html">sapply()</a></code> calls with <code><a href="https://rdrr.io/r/base/lapply.html">vapply()</a></code>)</li>
+<li>Added CodeFactor as a continuous code review to this package: <a href="https://www.codefactor.io/repository/github/msberends/amr/" class="uri">https://www.codefactor.io/repository/github/msberends/amr/</a>
 </li>
 <li>Added Dr. Rogier Schade as contributor</li>
 </ul>

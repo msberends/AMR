@@ -193,28 +193,28 @@ mdro <- function(x,
     guideline$name <- "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance."
     guideline$author <- "Magiorakos AP, Srinivasan A, Carey RB, ..., Vatopoulos A, Weber JT, Monnet DL"
     guideline$version <- NA
-    guideline$source <- "Clinical Microbiology and Infection 18:3, 2012. DOI: 10.1111/j.1469-0691.2011.03570.x"
+    guideline$source_url <- "Clinical Microbiology and Infection 18:3, 2012. DOI: 10.1111/j.1469-0691.2011.03570.x"
     guideline$type <- "MDRs/XDRs/PDRs"
     
   } else if (guideline$code == "eucast3.1") {
     guideline$name <- "EUCAST Expert Rules, \"Intrinsic Resistance and Exceptional Phenotypes Tables\""
     guideline$author <- "EUCAST (European Committee on Antimicrobial Susceptibility Testing)"
     guideline$version <- "3.1, 2016"
-    guideline$source <- "https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf"
+    guideline$source_url <- "https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf"
     guideline$type <- "EUCAST Exceptional Phenotypes"
     
   } else if (guideline$code == "eucast3.2") {
     guideline$name <- "EUCAST Expert Rules, \"Intrinsic Resistance and Unusual Phenotypes\""
     guideline$author <- "EUCAST (European Committee on Antimicrobial Susceptibility Testing)"
     guideline$version <- "3.2, 2020"
-    guideline$source <- "https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf"
+    guideline$source_url <- "https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf"
     guideline$type <- "EUCAST Unusual Phenotypes"
     
   } else if (guideline$code == "tb") {
     guideline$name <- "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis"
     guideline$author <- "WHO (World Health Organization)"
     guideline$version <- "WHO/HTM/TB/2014.11, 2014"
-    guideline$source <- "https://www.who.int/tb/publications/pmdt_companionhandbook/en/"
+    guideline$source_url <- "https://www.who.int/tb/publications/pmdt_companionhandbook/en/"
     guideline$type <- "MDR-TB's"
     
     # support per country:
@@ -222,14 +222,14 @@ mdro <- function(x,
     guideline$name <- "Cross-border comparison of the Dutch and German guidelines on multidrug-resistant Gram-negative microorganisms"
     guideline$author <- "M\u00fcller J, Voss A, K\u00f6ck R, ..., Kern WV, Wendt C, Friedrich AW"
     guideline$version <- NA
-    guideline$source <- "Antimicrobial Resistance and Infection Control 4:7, 2015. DOI: 10.1186/s13756-015-0047-6"
+    guideline$source_url <- "Antimicrobial Resistance and Infection Control 4:7, 2015. DOI: 10.1186/s13756-015-0047-6"
     guideline$type <- "MRGNs"
     
   } else if (guideline$code == "brmo") {
     guideline$name <- "WIP-Richtlijn Bijzonder Resistente Micro-organismen (BRMO)"
     guideline$author <- "RIVM (Rijksinstituut voor de Volksgezondheid)"
     guideline$version <- "Revision as of December 2017"
-    guideline$source <- "https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH"
+    guideline$source_url <- "https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH"
     guideline$type <- "BRMOs"
   } else {
     stop("This guideline is currently unsupported: ", guideline$code, call. = FALSE)
@@ -413,6 +413,7 @@ mdro <- function(x,
                               ...)
   }
   
+  # nolint start
   AMC <- cols_ab["AMC"]
   AMK <- cols_ab["AMK"]
   AMP <- cols_ab["AMP"]
@@ -555,6 +556,7 @@ mdro <- function(x,
   abx_tb <- c(CAP, ETH, GAT, INH, PZA, RIF, RIB, RFP)
   abx_tb <- abx_tb[!is.na(abx_tb)]
   stop_if(guideline$code == "tb" & length(abx_tb) == 0, "no antimycobacterials found in data set")
+  # nolint end
   
   if (combine_SI == TRUE) {
     search_result <- "R"
@@ -574,8 +576,8 @@ mdro <- function(x,
         ifelse(!is.na(guideline$version),
                paste0(word_wrap(paste0(font_bold("Version:   "), guideline$version), extra_indent = 11, as_note = FALSE), "\n"),
                ""),
-        word_wrap(paste0(font_bold("Source:    "), guideline$source), extra_indent = 11, as_note = FALSE), "\n",
-        "\n", sep = "")
+        paste0(font_bold("Source:    "), guideline$source_url),
+        "\n\n", sep = "")
   }
   
   ab_missing <- function(ab) {
@@ -585,9 +587,8 @@ mdro <- function(x,
     x[!is.na(x)]
   }
   
-  verbose_df <- NULL
-  
   # antibiotic classes
+  # nolint start
   aminoglycosides <- c(TOB, GEN)
   cephalosporins <- c(CDZ, CAC, CEC, CFR, RID, MAN, CTZ, CZD, CZO, CDR, DIT, FEP, CAT, CFM, CMX, CMZ, DIZ, CID, CFP, CSL, CND, CTX, CTT, CTF, FOX, CPM, CPO, CPD, CPR, CRD, CFS, CPT, CAZ, CCV, CTL, CTB, CZX, BPR, CFM1, CEI, CRO, CXM, LEX, CEP, HAP, CED, LTM, LOR)
   cephalosporins_1st <- c(CAC, CFR, RID, CTZ, CZD, CZO, CRD, CTL, LEX, CEP, HAP, CED)
@@ -595,6 +596,7 @@ mdro <- function(x,
   cephalosporins_3rd <- c(CDZ, CDR, DIT, CAT, CFM, CMX, DIZ, CFP, CSL, CTX, CPM, CPD, CFS, CAZ, CCV, CTB, CZX, CRO, LTM)
   carbapenems <- c(DOR, ETP, IPM, MEM, MEV)
   fluoroquinolones <- c(CIP, ENX, FLE, GAT, GEM, GRX, LVX, LOM, MFX, NOR, OFX, PAZ, PEF, PRU, RFL, SPX, TMX, TVA)
+  # nolint end
   
   # helper function for editing the table
   trans_tbl <- function(to, rows, cols, any_all) {
@@ -604,9 +606,10 @@ mdro <- function(x,
       x[, cols] <- as.data.frame(lapply(x[, cols, drop = FALSE],
                                         function(col) as.rsi(col)), 
                                  stringsAsFactors = FALSE)
-      x[rows, "columns_nonsusceptible"] <<- sapply(rows, 
+      x[rows, "columns_nonsusceptible"] <<- vapply(FUN.VALUE = character(1),
+                                                   rows, 
                                                    function(row, group_vct = cols) {
-                                                     cols_nonsus <- sapply(x[row, group_vct, drop = FALSE], 
+                                                     cols_nonsus <- vapply(FUN.VALUE = logical(1), x[row, group_vct, drop = FALSE], 
                                                                            function(y) y %in% search_result)
                                                      paste(sort(c(unlist(strsplit(x[row, "columns_nonsusceptible", drop = TRUE], ", ")),
                                                                   names(cols_nonsus)[cols_nonsus])), 
@@ -620,7 +623,7 @@ mdro <- function(x,
       }
       x_transposed <- as.list(as.data.frame(t(x[, cols, drop = FALSE]),
                                             stringsAsFactors = FALSE))
-      row_filter <- sapply(x_transposed, function(y) search_function(y %in% search_result, na.rm = TRUE))
+      row_filter <- vapply(FUN.VALUE = logical(1), x_transposed, function(y) search_function(y %in% search_result, na.rm = TRUE))
       row_filter <- x[which(row_filter), "row_number", drop = TRUE]
       rows <- rows[rows %in% row_filter]
       x[rows, "MDRO"] <<- to
@@ -638,21 +641,27 @@ mdro <- function(x,
                                               function(col) as.rsi(col)),
                                        stringsAsFactors = FALSE)
       x[rows, "classes_in_guideline"] <<- length(lst)
-      x[rows, "classes_available"] <<- sapply(rows, 
+      x[rows, "classes_available"] <<- vapply(FUN.VALUE = double(1),
+                                              rows, 
                                               function(row, group_tbl = lst) {
-                                                sum(sapply(group_tbl, function(group) any(unlist(x[row, group[!is.na(group)], drop = TRUE]) %in% c("S", "I", "R"))))
+                                                sum(vapply(FUN.VALUE = logical(1),
+                                                           group_tbl, 
+                                                           function(group) any(unlist(x[row, group[!is.na(group)], drop = TRUE]) %in% c("S", "I", "R"))))
                                               })
       
       if (verbose == TRUE) {
-        x[rows, "columns_nonsusceptible"] <<- sapply(rows, 
+        x[rows, "columns_nonsusceptible"] <<- vapply(FUN.VALUE = character(1),
+                                                     rows, 
                                                      function(row, group_vct = lst_vector) {
-                                                       cols_nonsus <- sapply(x[row, group_vct, drop = FALSE], function(y) y %in% search_result)
+                                                       cols_nonsus <- vapply(FUN.VALUE = logical(1), x[row, group_vct, drop = FALSE], function(y) y %in% search_result)
                                                        paste(sort(names(cols_nonsus)[cols_nonsus]), collapse = ", ")
                                                      })
       }
-      x[rows, "classes_affected"] <<- sapply(rows, 
+      x[rows, "classes_affected"] <<- vapply(FUN.VALUE = double(1),
+                                             rows, 
                                              function(row, group_tbl = lst) {
-                                               sum(sapply(group_tbl, 
+                                               sum(vapply(FUN.VALUE = logical(1),
+                                                          group_tbl, 
                                                           function(group) {
                                                             any(unlist(x[row, group[!is.na(group)], drop = TRUE]) %in% search_result, na.rm = TRUE)
                                                           }),
@@ -661,7 +670,7 @@ mdro <- function(x,
       # for PDR; all agents are R (or I if combine_SI = FALSE)
       x_transposed <- as.list(as.data.frame(t(x[rows, lst_vector, drop = FALSE]),
                                             stringsAsFactors = FALSE))
-      row_filter <- sapply(x_transposed, function(y) all(y %in% search_result, na.rm = TRUE))
+      row_filter <- vapply(FUN.VALUE = logical(1), x_transposed, function(y) all(y %in% search_result, na.rm = TRUE))
       x[which(row_filter), "classes_affected"] <<- 999
     }
     

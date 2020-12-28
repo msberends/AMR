@@ -75,7 +75,7 @@ bug_drug_combinations <- function(x,
   x_class <- class(x)
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   x[, col_mo] <- FUN(x[, col_mo, drop = TRUE], ...)
-  x <- x[, c(col_mo, names(which(sapply(x, is.rsi)))), drop = FALSE]
+  x <- x[, c(col_mo, names(which(vapply(FUN.VALUE = logical(1), x, is.rsi)))), drop = FALSE]
   
   unique_mo <- sort(unique(x[, col_mo, drop = TRUE]))
   
@@ -89,7 +89,7 @@ bug_drug_combinations <- function(x,
   
   for (i in seq_len(length(unique_mo))) {
     # filter on MO group and only select R/SI columns
-    x_mo_filter <- x[which(x[, col_mo, drop = TRUE] == unique_mo[i]), names(which(sapply(x, is.rsi))), drop = FALSE]
+    x_mo_filter <- x[which(x[, col_mo, drop = TRUE] == unique_mo[i]), names(which(vapply(FUN.VALUE = logical(1), x, is.rsi))), drop = FALSE]
     # turn and merge everything
     pivot <- lapply(x_mo_filter, function(x) {
       m <- as.matrix(table(x))
@@ -165,7 +165,7 @@ format.bug_drug_combinations <- function(x,
   
   remove_NAs <- function(.data) {
     cols <- colnames(.data)
-    .data <- as.data.frame(sapply(.data, function(x) ifelse(is.na(x), "", x), simplify = FALSE),
+    .data <- as.data.frame(lapply(.data, function(x) ifelse(is.na(x), "", x)),
                            stringsAsFactors = FALSE)
     colnames(.data) <- cols
     .data
@@ -235,7 +235,7 @@ format.bug_drug_combinations <- function(x,
   }
   
   if (remove_intrinsic_resistant == TRUE) {
-    y <- y[, !sapply(y, function(col) all(col %like% "100", na.rm = TRUE) & !any(is.na(col))), drop = FALSE]
+    y <- y[, !vapply(FUN.VALUE = logical(1), y, function(col) all(col %like% "100", na.rm = TRUE) & !any(is.na(col))), drop = FALSE]
   }
   
   rownames(y) <- NULL

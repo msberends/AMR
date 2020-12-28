@@ -119,8 +119,8 @@ search_type_in_df <- function(x, type, info = TRUE) {
 
   # -- mo
   if (type == "mo") {
-    if (any(sapply(x, is.mo))) {
-      found <- sort(colnames(x)[sapply(x, is.mo)])[1]
+    if (any(vapply(FUN.VALUE = logical(1), x, is.mo))) {
+      found <- sort(colnames(x)[vapply(FUN.VALUE = logical(1), x, is.mo)])[1]
     } else if ("mo" %in% colnames(x) &
                suppressWarnings(
                  all(x$mo %in% c(NA,
@@ -152,8 +152,8 @@ search_type_in_df <- function(x, type, info = TRUE) {
                              "`, but this column contains no valid dates. Transform its values to valid dates first.")),
              call. = FALSE)
       }
-    } else if (any(sapply(x, function(x) inherits(x, c("Date", "POSIXct"))))) {
-      found <- sort(colnames(x)[sapply(x, function(x) inherits(x, c("Date", "POSIXct")))])[1]
+    } else if (any(vapply(FUN.VALUE = logical(1), x, function(x) inherits(x, c("Date", "POSIXct"))))) {
+      found <- sort(colnames(x)[vapply(FUN.VALUE = logical(1), x, function(x) inherits(x, c("Date", "POSIXct")))])[1]
     }
   }
   # -- patient id
@@ -202,7 +202,7 @@ search_type_in_df <- function(x, type, info = TRUE) {
 }
 
 is_possibly_regex <- function(x) {
-  tryCatch(sapply(strsplit(x, ""),
+  tryCatch(vapply(FUN.VALUE = character(1), strsplit(x, ""),
                   function(y) any(y %in% c("$", "(", ")", "*", "+", "-", ".", "?", "[", "]", "^", "{", "|", "}", "\\"), na.rm = TRUE)),
            error = function(e) rep(TRUE, length(x)))
 }
@@ -210,7 +210,7 @@ is_possibly_regex <- function(x) {
 stop_ifnot_installed <- function(package) {
   # no "utils::installed.packages()" since it requires non-staged install since R 3.6.0
   # https://developer.r-project.org/Blog/public/2019/02/14/staged-install/index.html
-  sapply(package, function(pkg)
+  vapply(FUN.VALUE = character(1), package, function(pkg)
     tryCatch(get(".packageName", envir = asNamespace(pkg)),
              error = function(e) {
                if (package == "rstudioapi") {
@@ -260,7 +260,8 @@ word_wrap <- function(...,
   
   if (msg %like% "\n") {
     # run word_wraps() over every line here, bind them and return again
-    return(paste0(sapply(trimws(unlist(strsplit(msg, "\n")), which = "right"),
+    return(paste0(vapply(FUN.VALUE = character(1),
+                         trimws(unlist(strsplit(msg, "\n")), which = "right"),
                          word_wrap, 
                          add_fn = add_fn,
                          as_note = FALSE,
@@ -512,7 +513,11 @@ meet_criteria <- function(object,
                call = call_depth)
   }
   if (!is.null(contains_column_class)) {
-    stop_ifnot(any(sapply(object, function(col, columns_class = contains_column_class) inherits(col, columns_class)), na.rm = TRUE),
+    stop_ifnot(any(vapply(FUN.VALUE = logical(1), 
+                          object,
+                          function(col, columns_class = contains_column_class) {
+                            inherits(col, columns_class)
+                          }), na.rm = TRUE),
                "the data provided in argument `", obj_name,
                "` must contain at least one column of class <", contains_column_class, ">. ",
                "See ?as.", contains_column_class, ".",

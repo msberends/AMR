@@ -139,13 +139,13 @@ get_column_abx <- function(x,
   }
   x_bak <- x
   # only check columns that are a valid AB code, ATC code, name, abbreviation or synonym,
-  # or already have the rsi class (as.rsi) 
-  # and that have no more than 50% invalid values
+  # or already have the <rsi> class (as.rsi) 
+  # and that they have no more than 50% invalid values
   vectr_antibiotics <- unique(toupper(unlist(antibiotics[, c("ab", "atc", "name", "abbreviations", "synonyms")])))
   vectr_antibiotics <- vectr_antibiotics[!is.na(vectr_antibiotics) & nchar(vectr_antibiotics) >= 3]
-  x_columns <- sapply(colnames(x), function(col, df = x_bak) {
-    if (toupper(col) %in% vectr_antibiotics | 
-        is.rsi(as.data.frame(df, stringsAsFactors = FALSE)[, col, drop = TRUE]) |
+  x_columns <- vapply(FUN.VALUE = character(1), colnames(x), function(col, df = x_bak) {
+    if (toupper(col) %in% vectr_antibiotics || 
+        is.rsi(as.data.frame(df, stringsAsFactors = FALSE)[, col, drop = TRUE]) ||
         is.rsi.eligible(as.data.frame(df, stringsAsFactors = FALSE)[, col, drop = TRUE],
                         threshold = 0.5)) {
       return(col)

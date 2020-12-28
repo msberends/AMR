@@ -115,7 +115,7 @@ ab_from_text <- function(text,
     translate_ab <- get_translate_ab(translate_ab)
     
     if (isTRUE(thorough_search) | 
-        (isTRUE(is.null(thorough_search)) & max(sapply(text_split_all, length), na.rm = TRUE) <= 3)) {
+        (isTRUE(is.null(thorough_search)) & max(vapply(FUN.VALUE = double(1), text_split_all, length), na.rm = TRUE) <= 3)) {
       text_split_all <- text_split_all[nchar(text_split_all) >= 4 & grepl("[a-z]+", text_split_all)]
       result <- lapply(text_split_all, function(text_split) {
         progress$tick()
@@ -203,7 +203,7 @@ ab_from_text <- function(text,
   
   # collapse text if needed
   if (!is.null(collapse)) {
-    result <- sapply(result, function(x) {
+    result <- vapply(FUN.VALUE = character(1), result, function(x) {
       if (length(x) == 1 & all(is.na(x))) {
         NA_character_
       } else {

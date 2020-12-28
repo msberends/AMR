@@ -163,14 +163,24 @@ ab_selector <- function(ab_class, function_name) {
   meet_criteria(function_name, allow_class = "character", has_length = 1, .call_depth = 1)
   
   for (i in seq_len(length(sys.frames()))) {
+    # dplyr?
+    if (".data" %in% names(sys.frames()[[i]])) {
+      vars_df <- sys.frames()[[i]]$`.data`
+      if (is.data.frame(vars_df)) {
+        break
+      }
+    }
+    # then try base R - an element `x` will be in the system call stack
     vars_df <- tryCatch(sys.frames()[[i]]$x, error = function(e) NULL)
     if (!is.null(vars_df) && is.data.frame(vars_df)) {
       # when using e.g. example_isolates[, carbapenems()] or example_isolates %>% select(carbapenems())
       break
     } else if (!is.null(vars_df) && is.list(vars_df)) {
       # when using e.g. example_isolates %>% filter(across(carbapenems(), ~. == "R"))
-      vars_df <- as.data.frame(vars_df, stringsAsFactors = FALSE)
-      break
+      vars_df <- tryCatch(as.data.frame(vars_df, stringsAsFactors = FALSE), error = function(e) NULL)
+      if (!is.null(vars_df)) {
+        break
+      }
     }
   }
   stop_ifnot(is.data.frame(vars_df), "this function must be used inside dplyr selection verbs or within a data.frame call.", call = -2)
@@ -199,7 +209,7 @@ ab_selector <- function(ab_class, function_name) {
       message_("No antimicrobial agents of class ", ab_group, " found", examples, ".")
     } else {
       message_("Selecting ", ab_group, ": ",
-               paste(paste0("'", font_bold(agents, collapse = NULL),
+               paste(paste0("column '", font_bold(agents, collapse = NULL),
                             "' (", ab_name(names(agents), tolower = TRUE, language = NULL), ")"),
                      collapse = ", "),
                as_note = FALSE,

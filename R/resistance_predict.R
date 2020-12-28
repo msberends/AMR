@@ -192,7 +192,9 @@ resistance_predict <- function(x,
   rownames(df) <- NULL
   
   df <- subset(df, sum(df$R + df$S, na.rm = TRUE) >= minimum)
+  # nolint start
   df_matrix <- as.matrix(df[, c("R", "S"), drop = FALSE])
+  # nolint end
   
   stop_if(NROW(df) == 0, "there are no observations")
   

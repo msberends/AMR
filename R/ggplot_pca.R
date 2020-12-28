@@ -306,7 +306,6 @@ pca_calculations <- function(pca_model,
     d <- pca_model$svd
     u <- predict(pca_model)$x / nobs.factor
     v <- pca_model$scaling
-    d.total <- sum(d ^ 2)
   } else {
     stop("Expected an object of class prcomp, princomp, PCA, or lda")
   }

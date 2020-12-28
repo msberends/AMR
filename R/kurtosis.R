@@ -71,5 +71,5 @@ kurtosis.matrix <- function(x, na.rm = FALSE, excess = FALSE) {
 kurtosis.data.frame <- function(x, na.rm = FALSE, excess = FALSE) {
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)
   meet_criteria(excess, allow_class = "logical", has_length = 1)
-  sapply(x, kurtosis.default, na.rm = na.rm, excess = excess)
+  vapply(FUN.VALUE = double(1), x, kurtosis.default, na.rm = na.rm, excess = excess)
 }

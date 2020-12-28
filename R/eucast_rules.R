@@ -64,7 +64,8 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param verbose a [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.
 #' @param version_breakpoints the version number to use for the EUCAST Clinical Breakpoints guideline. Currently supported: `r paste0(names(EUCAST_VERSION_BREAKPOINTS), collapse = ", ")`.
 #' @param version_expertrules the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Currently supported: `r paste0(names(EUCAST_VERSION_EXPERT_RULES), collapse = ", ")`.
-#' @param ampc_cephalosporin_resistance a character value that should be applied for AmpC de-repressed cephalosporin-resistant mutants, defaults to `NA`. Currently only works when `version_expertrules` is `3.2`; '*EUCAST Expert Rules v3.2 on Enterobacterales*' states that susceptible (S) results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these agents. A value of `NA` for this argument will remove results for these agents, while e.g. a value of `"R"` will make the results for these agents resistant. Use `NULL` to not alter the results for AmpC de-repressed cephalosporin-resistant mutants. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: *`r gsub("|", "*, *", gsub("[)(^)]", "", eucast_rules_file[which(eucast_rules_file$reference.version == 3.2 & eucast_rules_file$reference.rule %like% "ampc"), "this_value"][1]), fixed = TRUE)`*.
+#' @param ampc_cephalosporin_resistance a character value that should be applied for AmpC de-repressed cephalosporin-resistant mutants, defaults to `NA`. Currently only works when `version_expertrules` is `3.2`; '*EUCAST Expert Rules v3.2 on Enterobacterales*' states that susceptible (S) results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these agents. A value of `NA` for this argument will remove results for these agents, while e.g. a value of `"R"` will make the results for these agents resistant. Use `NULL` to not alter the results for AmpC de-repressed cephalosporin-resistant mutants. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: *`r gsub("[)(^]", "", gsub("|", ", ", eucast_rules_file[which(eucast_rules_file$reference.version == 3.2 & eucast_rules_file$reference.rule %like% "ampc"), "this_value"][1], fixed = TRUE))`*.
+#' 
 #' @param ... column name of an antibiotic, please see section *Antibiotics* below
 #' @inheritParams first_isolate
 #' @details
@@ -537,7 +538,7 @@ eucast_rules <- function(x,
       strsplit(",") %pm>%
       unlist() %pm>%
       trimws() %pm>%
-      sapply(function(x) if (x %in% antibiotics$ab) ab_name(x, language = NULL, tolower = TRUE) else x) %pm>%
+      vapply(FUN.VALUE = character(1), function(x) if (x %in% antibiotics$ab) ab_name(x, language = NULL, tolower = TRUE) else x) %pm>%
       sort() %pm>%
       paste(collapse = ", ")
     x <- gsub("_", " ", x, fixed = TRUE)
@@ -600,13 +601,14 @@ eucast_rules <- function(x,
   x <- as.data.frame(x, stringsAsFactors = FALSE) # no tibbles, data.tables, etc.
   rownames(x) <- NULL # will later be restored with old_attributes
   # create unique row IDs - combination of the MO and all ABx columns (so they will only run once per unique combination)
-  x$`.rowid` <- sapply(as.list(as.data.frame(t(x[, c(col_mo, cols_ab), drop = FALSE]),
+  x$`.rowid` <- vapply(FUN.VALUE = character(1),
+                       as.list(as.data.frame(t(x[, c(col_mo, cols_ab), drop = FALSE]),
                                              stringsAsFactors = FALSE)),
                        function(x) {
                          x[is.na(x)] <- "."
                          paste0(x, collapse = "")
                        })
-
+  
   # save original table, with the new .rowid column
   x.bak <- x
   # keep only unique rows for MO and ABx
@@ -1093,18 +1095,18 @@ edit_rsi <- function(x,
   
   if (length(rows) > 0 & length(cols) > 0) {
     new_edits <- x
-    if (any(!sapply(x[, cols, drop = FALSE], is.rsi), na.rm = TRUE)) {
-      track_changes$rsi_warn <- cols[!sapply(x[, cols, drop = FALSE], is.rsi)]
+    if (any(!vapply(FUN.VALUE = logical(1), x[, cols, drop = FALSE], is.rsi), na.rm = TRUE)) {
+      track_changes$rsi_warn <- cols[!vapply(FUN.VALUE = logical(1), x[, cols, drop = FALSE], is.rsi)]
     }
     tryCatch(
       # insert into original table
       new_edits[rows, cols] <- to,
       warning = function(w) {
         if (w$message %like% "invalid factor level") {
-          xyz <- sapply(cols, function(col) {
+          xyz <- vapply(FUN.VALUE = logical(1), cols, function(col) {
             new_edits[, col] <<- factor(x = as.character(pm_pull(new_edits, col)),
                                         levels = unique(c(to, levels(pm_pull(new_edits, col)))))
-            invisible()
+            TRUE
           })
           suppressWarnings(new_edits[rows, cols] <<- to)
           warning_('Value "', to, '" added to the factor levels of column(s) `', paste(cols, collapse = "`, `"), "` because this value was not an existing factor level. A better way is to use as.rsi() on beforehand on antimicrobial columns to guarantee the right structure.", call = FALSE)

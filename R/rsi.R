@@ -544,7 +544,7 @@ as.rsi.data.frame <- function(x,
     sel <- sel[sel != col_mo]
   }
 
-  ab_cols <- colnames(x)[sapply(x, function(y) {
+  ab_cols <- colnames(x)[vapply(FUN.VALUE = logical(1), x, function(y) {
     i <<- i + 1
     check <- is.mic(y) | is.disk(y)
     ab <- colnames(x)[i]
@@ -571,11 +571,11 @@ as.rsi.data.frame <- function(x,
           "no columns with MIC values, disk zones or antibiotic column names found in this data set. Use as.mic() or as.disk() to transform antimicrobial columns.")
   # set type per column
   types <- character(length(ab_cols))
-  types[sapply(x.bak[, ab_cols, drop = FALSE], is.disk)] <- "disk"
-  types[sapply(x.bak[, ab_cols, drop = FALSE], is.mic)] <- "mic"
-  types[types == "" & sapply(x[, ab_cols, drop = FALSE], all_valid_disks)] <- "disk"
-  types[types == "" & sapply(x[, ab_cols, drop = FALSE], all_valid_mics)] <- "mic"
-  types[types == "" & !sapply(x.bak[, ab_cols, drop = FALSE], is.rsi)] <- "rsi"
+  types[vapply(FUN.VALUE = logical(1), x.bak[, ab_cols, drop = FALSE], is.disk)] <- "disk"
+  types[vapply(FUN.VALUE = logical(1), x.bak[, ab_cols, drop = FALSE], is.mic)] <- "mic"
+  types[types == "" & vapply(FUN.VALUE = logical(1), x[, ab_cols, drop = FALSE], all_valid_disks)] <- "disk"
+  types[types == "" & vapply(FUN.VALUE = logical(1), x[, ab_cols, drop = FALSE], all_valid_mics)] <- "mic"
+  types[types == "" & !vapply(FUN.VALUE = logical(1), x.bak[, ab_cols, drop = FALSE], is.rsi)] <- "rsi"
   if (any(types %in% c("mic", "disk"), na.rm = TRUE)) {
     # now we need an mo column
     stop_if(is.null(col_mo), "`col_mo` must be set")
@@ -861,7 +861,8 @@ freq.rsi <- function(x, ...) {
   x_name <- gsub(".*[$]", "", x_name)
   if (x_name %in% c("x", ".")) {
     # try again going through system calls
-    x_name <- stats::na.omit(sapply(sys.calls(), 
+    x_name <- stats::na.omit(vapply(FUN.VALUE = character(1),
+                                    sys.calls(), 
                                     function(call) {
                                       call_txt <- as.character(call)
                                       ifelse(call_txt[1] %like% "freq$", call_txt[length(call_txt)], character(0))
@@ -906,8 +907,8 @@ get_skimmers.rsi <- function(column) {
     if (is.null(vars) | is.null(i)) {
       NA_character_
     } else {
-      lengths <- sapply(vars, length)
-      when_starts_rsi <- which(names(sapply(vars, length)) == "rsi")
+      lengths <- vapply(FUN.VALUE = double(1), vars, length)
+      when_starts_rsi <- which(names(vapply(FUN.VALUE = double(1), vars, length)) == "rsi")
       offset <- sum(lengths[c(1:when_starts_rsi - 1)])
       var <- vars$rsi[i - offset]
       if (!isFALSE(var == "data")) {
@@ -1115,8 +1116,8 @@ unique.rsi <- function(x, incomparables = FALSE, ...) {
 
 check_reference_data <- function(reference_data) {
   if (!identical(reference_data, AMR::rsi_translation)) {
-    class_rsi <- sapply(rsi_translation, function(x) paste0("<", class(x), ">", collapse = " and "))
-    class_ref <- sapply(reference_data, function(x) paste0("<", class(x), ">", collapse = " and "))
+    class_rsi <- vapply(FUN.VALUE = character(1), rsi_translation, function(x) paste0("<", class(x), ">", collapse = " and "))
+    class_ref <- vapply(FUN.VALUE = character(1), reference_data, function(x) paste0("<", class(x), ">", collapse = " and "))
     if (!all(names(class_rsi) == names(class_ref))) {
       stop_("`reference_data` must have the same column names as the 'rsi_translation' data set.", call = -2)
     }

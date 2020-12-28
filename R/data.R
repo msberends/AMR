@@ -178,7 +178,7 @@ catalogue_of_life <- list(
 #' - `gender`\cr gender of the patient
 #' - `patient_id`\cr ID of the patient
 #' - `mo`\cr ID of microorganism created with [as.mo()], see also [microorganisms]
-#' - `PEN:RIF`\cr `r sum(sapply(example_isolates, is.rsi))` different antibiotics with class [`rsi`] (see [as.rsi()]); these column names occur in the [antibiotics] data set and can be translated with [ab_name()]
+#' - `PEN:RIF`\cr `r sum(vapply(FUN.VALUE = logical(1), example_isolates, is.rsi))` different antibiotics with class [`rsi`] (see [as.rsi()]); these column names occur in the [antibiotics] data set and can be translated with [ab_name()]
 #' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
 "example_isolates"
@@ -225,7 +225,7 @@ catalogue_of_life <- list(
 #' - `Inducible clindamycin resistance`\cr Clindamycin can be induced?
 #' - `Comment`\cr Other comments
 #' - `Date of data entry`\cr Date this data was entered in WHONET
-#' - `AMP_ND10:CIP_EE`\cr `r sum(sapply(WHONET, is.rsi))` different antibiotics. You can lookup the abbreviations in the [antibiotics] data set, or use e.g. [`ab_name("AMP")`][ab_name()] to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using [as.rsi()].
+#' - `AMP_ND10:CIP_EE`\cr `r sum(vapply(FUN.VALUE = logical(1), WHONET, is.rsi))` different antibiotics. You can lookup the abbreviations in the [antibiotics] data set, or use e.g. [`ab_name("AMP")`][ab_name()] to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using [as.rsi()].
 #' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
 "WHONET"

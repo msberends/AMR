@@ -107,14 +107,14 @@ as.mic <- function(x, na.rm = FALSE) {
     
     # these are allowed MIC values and will become factor levels
     ops <- c("<", "<=", "", ">=", ">")
-    lvls <- c(c(t(sapply(ops, function(x) paste0(x, "0.00", 1:9)))),
-              unique(c(t(sapply(ops, function(x) paste0(x, sort(as.double(paste0("0.0", 
+    lvls <- c(c(t(vapply(FUN.VALUE = character(9), ops, function(x) paste0(x, "0.00", 1:9)))),
+              unique(c(t(vapply(FUN.VALUE = character(104), ops, function(x) paste0(x, sort(as.double(paste0("0.0", 
                                                                                  sort(c(1:99, 125, 128, 256, 512, 625)))))))))),
-              unique(c(t(sapply(ops, function(x) paste0(x, sort(as.double(paste0("0.", 
+              unique(c(t(vapply(FUN.VALUE = character(103), ops, function(x) paste0(x, sort(as.double(paste0("0.", 
                                                                                  c(1:99, 125, 128, 256, 512))))))))),
-              c(t(sapply(ops, function(x) paste0(x, sort(c(1:9, 1.5)))))),
-              c(t(sapply(ops, function(x) paste0(x, c(10:98)[9:98 %% 2 == TRUE])))),
-              c(t(sapply(ops, function(x) paste0(x, sort(c(2 ^ c(7:10), 80 * c(2:12))))))))
+              c(t(vapply(FUN.VALUE = character(10), ops, function(x) paste0(x, sort(c(1:9, 1.5)))))),
+              c(t(vapply(FUN.VALUE = character(45), ops, function(x) paste0(x, c(10:98)[9:98 %% 2 == TRUE])))),
+              c(t(vapply(FUN.VALUE = character(15), ops, function(x) paste0(x, sort(c(2 ^ c(7:10), 80 * c(2:12))))))))
     
     na_before <- x[is.na(x) | x == ""] %pm>% length()
     x[!x %in% lvls] <- NA
