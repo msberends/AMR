@@ -1,5 +1,5 @@
 Package: AMR
-Version: 1.4.0.9053
+Version: 1.4.0.9054
 Date: 2020-12-29
 Title: Antimicrobial Resistance Analysis
 Authors@R: c(
@@ -57,7 +57,6 @@ Suggests:
     skimr,
     testthat,
     tidyr,
-    tidyselect,
     xml2
 VignetteBuilder: knitr,rmarkdown
 URL: https://msberends.github.io/AMR/, https://github.com/msberends/AMR

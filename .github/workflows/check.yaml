@@ -137,8 +137,7 @@ jobs:
           _R_CHECK_CRAN_INCOMING_: false
           _R_CHECK_FORCE_SUGGESTS_: false
         run: |
-          ls -lh
-          R CMD check data-raw/AMR_*.tar.gz
+          R CMD check data-raw/AMR_*.tar.gz --no-manual --no-build-vignettes --no-vignettes
 
       - name: Show testthat output
         if: always()
