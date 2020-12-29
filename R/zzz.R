@@ -23,6 +23,9 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
+# set up package environment, used by numerous AMR functions
+pkg_env <- new.env(hash = FALSE)
+
 .onLoad <- function(libname, pkgname) {
   
   assign(x = "AB_lookup",

@@ -2006,5 +2006,3 @@ repair_reference_df <- function(reference_df) {
   reference_df[, "mo"] <- as.mo(reference_df[, "mo", drop = TRUE])
   reference_df
 }
-
-pkg_env <- new.env(hash = FALSE)

@@ -56,16 +56,18 @@ jobs:
           - {os: windows-latest, r: 'devel',   allowfail: false}
           - {os: windows-latest, r: 'release', allowfail: false}
           - {os: windows-latest, r: 'oldrel',  allowfail: false}
-          - {os: ubuntu-16.04,   r: 'devel',   allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          - {os: ubuntu-16.04,   r: 'devel',   allowfail: false,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: 'release', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-          - {os: ubuntu-16.04,   r: 'oldrel',  allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          - {os: ubuntu-16.04,   r: 'oldrel',  allowfail: false,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: '4.0',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: '3.6',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: '3.5',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-          - {os: ubuntu-16.04,   r: '3.4',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-          - {os: ubuntu-16.04,   r: '3.3',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-          # - {os: ubuntu-16.04,   r: '3.2',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-          # older R versions cannot be tested, since tidyverse only supports last 4 R x.x versions
+          - {os: ubuntu-16.04,   r: '3.4',     allowfail: false,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          - {os: ubuntu-16.04,   r: '3.3',     allowfail: false,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          - {os: ubuntu-16.04,   r: '3.2',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          - {os: ubuntu-16.04,   r: '3.1',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          - {os: ubuntu-16.04,   r: '3.0',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       RSPM: ${{ matrix.config.rspm }}
@@ -80,13 +82,14 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@master
 
       - name: Query dependencies
+        if: matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2'
         run: |
           install.packages('remotes')
           saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
         shell: Rscript {0}
 
       - name: Cache R packages
-        if: runner.os != 'Windows'
+        if: runner.os != 'Windows' && matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2'
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
@@ -94,7 +97,7 @@ jobs:
           restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-3-
 
       - name: Install Linux dependencies
-        if: runner.os == 'Linux'
+        if: runner.os == 'Linux' && matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2'
         env:
           RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
         run: |
@@ -108,6 +111,7 @@ jobs:
           brew install mariadb-connector-c
 
       - name: Install dependencies
+        if: matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2'
         run: |
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
@@ -116,15 +120,25 @@ jobs:
       - name: Session info
         run: |
           options(width = 100)
-          pkgs <- installed.packages()[, "Package"]
-          sessioninfo::session_info(pkgs, include_base = TRUE)
+          utils::sessionInfo()
+          as.data.frame(utils::installed.packages())[, "Version", drop = FALSE]
         shell: Rscript {0}
 
       - name: Run R CMD check
+        if: matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2'
         env:
           _R_CHECK_CRAN_INCOMING_: false
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
+        
+      - name: Run R CMD check on older R versions
+        if: matrix.config.r == '3.0' || matrix.config.r == '3.1' || matrix.config.r == '3.2'
+        env:
+          _R_CHECK_CRAN_INCOMING_: false
+          _R_CHECK_FORCE_SUGGESTS_: false
+        run: |
+          ls -lh
+          R CMD check data-raw/AMR_*.tar.gz
 
       - name: Show testthat output
         if: always()

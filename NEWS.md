@@ -1,5 +1,5 @@
-# AMR 1.4.0.9052
-## <small>Last updated: 28 December 2020</small>
+# AMR 1.4.0.9053
+## <small>Last updated: 29 December 2020</small>
 
 ### New
 * Functions `get_episode()` and `is_new_episode()` to determine (patient) episodes which are not necessarily based on microorganisms. The `get_episode()` function returns the index number of the episode per group, while the `is_new_episode()` function returns values `TRUE`/`FALSE` to indicate whether an item in a vector is the start of a new episode. They also support `dplyr`s grouping (i.e. using `group_by()`):

@@ -33,7 +33,7 @@
 #' @param translate_ab if `type = "drug"`: a column name of the [antibiotics] data set to translate the antibiotic abbreviations to, using [ab_property()]. Defaults to `FALSE`. Using `TRUE` is equal to using "name".
 #' @param thorough_search logical to indicate whether the input must be extensively searched for misspelling and other faulty input values. Setting this to `TRUE` will take considerably more time than when using `FALSE`. At default, it will turn `TRUE` when all input elements contain a maximum of three words.
 #' @param ... arguments passed on to [as.ab()]
-#' @details This function is also internally used by [as.ab()], although it then only searches for the first drug name and will throw a note if more drug names could have been returned.
+#' @details This function is also internally used by [as.ab()], although it then only searches for the first drug name and will throw a note if more drug names could have been returned. Note: the [as.ab()] function may use very long regular expression to match brand names of antimicrobial agents. This may fail on some systems.
 #' 
 #' ## Argument `type`
 #' At default, the function will search for antimicrobial drug names. All text elements will be searched for official names, ATC codes and brand names. As it uses [as.ab()] internally, it will correct for misspelling.

@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9046</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.4.0.9053</span>
       </span>
     </div>
 
@@ -285,7 +285,7 @@
     <p>A <a href='https://rdrr.io/r/base/list.html'>list</a>, or a  <a href='https://rdrr.io/r/base/character.html'>character</a> if <code>collapse</code> is not <code>NULL</code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is also internally used by <code><a href='as.ab.html'>as.ab()</a></code>, although it then only searches for the first drug name and will throw a note if more drug names could have been returned.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Argument <code>type</code></h3>
+    <p>This function is also internally used by <code><a href='as.ab.html'>as.ab()</a></code>, although it then only searches for the first drug name and will throw a note if more drug names could have been returned. Note: the <code><a href='as.ab.html'>as.ab()</a></code> function may use very long regular expression to match brand names of antimicrobial agents. This may fail on some systems.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Argument <code>type</code></h3>
 
 
 <p>At default, the function will search for antimicrobial drug names. All text elements will be searched for official names, ATC codes and brand names. As it uses <code><a href='as.ab.html'>as.ab()</a></code> internally, it will correct for misspelling.</p>

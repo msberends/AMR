@@ -120,13 +120,21 @@ echo "• Updating internal data •"
 echo "••••••••••••••••••••••••••"
 Rscript -e "source('data-raw/internals.R')"
 echo
+echo "••••••••••••••••••••"
+echo "• Building package •"
+echo "••••••••••••••••••••"
+echo "• Removing old build..."
+rm data-raw/AMR_*.tar.gz
+echo "• Building to 'data-raw'..."
+Rscript -e "x <- devtools::build(path = 'data-raw', vignettes = FALSE, manual = FALSE, binary = FALSE, quiet = TRUE)"
+echo "• Installing..."
+Rscript -e "devtools::install(quiet = TRUE, dependencies = FALSE)"
+echo
 echo "•••••••••••••••••"
 echo "• Building site •"
 echo "•••••••••••••••••"
-echo "• Installing..."
-Rscript -e "devtools::install(quiet = TRUE, dependencies = FALSE)"
 Rscript -e "suppressMessages(pkgdown::build_site(lazy = $lazy, examples = FALSE))"
-# add the survey
+# add the survey page
 Rscript -e "source('data-raw/create_survey_page.R')"
 echo
 echo "•••••••••••••••••••••••••"
@@ -148,7 +156,7 @@ echo "••••••••••••••••••••••••�
 # save latest changes as well
 git add .
 # and commit
-git commit -a -m "(v$new_version) $1" --quiet
+git commit -a -m "(v${new_version}) $1" --quiet
 git push --quiet
 echo "Comparison:"
 echo "https://github.com/msberends/AMR/compare/master...premaster?view=inline"
