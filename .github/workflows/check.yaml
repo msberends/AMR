@@ -59,6 +59,9 @@ jobs:
           - {os: ubuntu-16.04,   r: 'devel',   allowfail: false,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: 'release', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: 'oldrel',  allowfail: false,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          - {os: ubuntu-20.04,   r: 'devel',   allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: ubuntu-20.04,   r: 'release', allowfail: true, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: ubuntu-20.04,   r: 'oldrel',  allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-16.04,   r: '4.0',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: '3.6',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: '3.5',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
@@ -66,8 +69,8 @@ jobs:
           - {os: ubuntu-16.04,   r: '3.3',     allowfail: false,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: '3.2',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: '3.1',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-          - {os: ubuntu-16.04,   r: '3.0',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-
+          - {os: ubuntu-16.04,   r: '3.0',     allowfail: false,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          - {os: ubuntu-20.04,   r: '3.0',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       RSPM: ${{ matrix.config.rspm }}
@@ -136,8 +139,10 @@ jobs:
         env:
           _R_CHECK_CRAN_INCOMING_: false
           _R_CHECK_FORCE_SUGGESTS_: false
+          _R_CHECK_LENGTH_1_CONDITION_: verbose
+          _R_CHECK_LENGTH_1_LOGIC2_: verbose
         run: |
-          R CMD check data-raw/AMR_*.tar.gz --no-manual --no-build-vignettes --no-vignettes
+          R CMD check data-raw/AMR_*.tar.gz --no-manual
 
       - name: Show testthat output
         if: always()
