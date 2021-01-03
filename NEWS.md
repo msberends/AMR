@@ -1,6 +1,5 @@
-# AMR 1.4.0.9055
-## <small>Last updated: 31 December 2020</small>
-
+# AMR 1.4.0.9056
+## <small>Last updated:  3 January 2021</small>
 ### New
 * Functions `get_episode()` and `is_new_episode()` to determine (patient) episodes which are not necessarily based on microorganisms. The `get_episode()` function returns the index number of the episode per group, while the `is_new_episode()` function returns values `TRUE`/`FALSE` to indicate whether an item in a vector is the start of a new episode. They also support `dplyr`s grouping (i.e. using `group_by()`):
   ```r
@@ -11,7 +10,7 @@
   ```
 * Functions `mo_is_gram_negative()` and `mo_is_gram_positive()` as wrappers around `mo_gramstain()`. They always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
 * Function `mo_is_intrinsic_resistant()` to test for intrinsic resistance, based on [EUCAST Intrinsic Resistance and Unusual Phenotypes v3.2](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) from 2020.
-* Functions `random_mic()`, `random_disk()` and `random_rsi()` for random number generation. They take microorganism names and antibiotic names as input to make generation more realistic.
+* Functions `random_mic()`, `random_disk()` and `random_rsi()` for random value generation. The functions `random_mic()` and `random_disk()` take microorganism names and antibiotic names as input to make generation more realistic.
 
 ### Changed
 * New argument `ampc_cephalosporin_resistance` in `eucast_rules()` to correct for AmpC de-repressed cephalosporin-resistant mutants
@@ -22,7 +21,21 @@
   * `as.rsi()` on a data.frame will not print a message anymore if the values are already clean R/SI values
   * If using `as.rsi()` on MICs or disk diffusion while there is intrinsic antimicrobial resistance, a warning will be thrown to remind about this
   * Fix for using `as.rsi()` on a `data.frame` that only contains one column for antibiotic interpretations
-* Some functions are now context-aware when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`. This means that then the data argument does not need to be set anymore. This is the case for the new functions `mo_is_gram_negative()`, `mo_is_gram_positive()`, `mo_is_intrinsic_resistant()` and for the existing functions `first_isolate()`, `key_antibiotics()`, `mdro()`, `brmo()`, `mrgn()`, `mdr_tb()`, `mdr_cmi2012()`, `eucast_exceptional_phenotypes()`. This was already the case for antibiotic selection functions (such as using `penicillins()` in `dplyr::select()`).
+* Some functions are now context-aware when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`. This means that then the data argument does not need to be set anymore. This is the case for the new functions:
+  * `mo_is_gram_negative()`
+  * `mo_is_gram_positive()`
+  * `mo_is_intrinsic_resistant()`
+  
+  ... and for the existing functions:
+  * `first_isolate()`,
+  * `key_antibiotics()`,
+  * `mdro()`,
+  * `brmo()`,
+  * `mrgn()`,
+  * `mdr_tb()`,
+  * `mdr_cmi2012()`,
+  * `eucast_exceptional_phenotypes()`
+  
   ```r
   # to select first isolates that are Gram-negative 
   # and view results of cephalosporins and aminoglycosides:
@@ -31,6 +44,12 @@
     filter(first_isolate(), mo_is_gram_negative()) %>% 
     select(mo, cephalosporins(), aminoglycosides()) %>% 
     as_tibble()
+  ```
+* For antibiotic selection functions (such as `cephalosporins()`, `aminoglycosides()`) to select columns based on a certain antibiotic group, the dependency on the `tidyselect` package was removed, meaning that they can now also be used without the need to have this package installed and now also work in base R function calls:
+  ```r
+  # above example in base R:
+  example_isolates[which(first_isolate() & mo_is_gram_negative()),
+                   c("mo", cephalosporins(), aminoglycosides())]
   ```
 * For all function arguments in the code, it is now defined what the exact type of user input should be (inspired by the [`typed`](https://github.com/moodymudskipper/typed) package). If the user input for a certain function does not meet the requirements for a specific argument (such as the class or length), an informative error will be thrown. This makes the package more robust and the use of it more reproducible and reliable. In total, more than 420 arguments were defined.
 * Fix for `set_mo_source()`, that previously would not remember the file location of the original file
@@ -47,7 +66,6 @@
 * Fix for printing class <mo> in tibbles when all values are `NA`
 * Fix for `mo_shortname()` when the input contains `NA`
 * If `as.mo()` takes more than 30 seconds, some suggestions will be done to improve speed
-* Lost dependency on the `tidyselect` package for using antibiotic selectors such as `carbapenems()` and `aminoglycosides()`
 
 ### Other
 * All messages and warnings thrown by this package now break sentences on whole words

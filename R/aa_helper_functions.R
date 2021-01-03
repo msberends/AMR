@@ -527,43 +527,74 @@ meet_criteria <- function(object,
 }
 
 get_current_data <- function(arg_name, call) {
-  # this mimics dplyr::cur_data_all for users that use our context-aware functions in dplyr verbs
-  cur_data_all_dplyr <- import_fn("cur_data_all", "dplyr", error_on_fail = FALSE)
-  if (is.null(cur_data_all_dplyr)) {
-    # dplyr not installed
-    stop_("argument `", arg_name, "` is missing, with no default", call = call)
+  # try a (base R) method, by going over the complete system call stack with sys.frames()
+  not_set <- TRUE
+  frms <- lapply(sys.frames(), function(el) {
+    if (tryCatch(not_set == TRUE && ".data" %in% names(el) && is.data.frame(el$`.data`), error = function(e) FALSE)) {
+      # dplyr? - an element `.data` will be in the system call stack
+      not_set <<- FALSE
+      el$`.data`
+    } else if (tryCatch(not_set == TRUE && any(c("x", "xx") %in% names(el)), error = function(e) FALSE)) {
+      # otherwise try base R:
+      # an element `x` will be in this environment for only cols, e.g. `example_isolates[, carbapenems()]`
+      # an element `xx` will be in this environment for rows + cols, e.g. `example_isolates[c(1:3), carbapenems()]`
+      if (is.data.frame(el$xx)) {
+        not_set <<- FALSE
+        el$xx
+      } else if (is.data.frame(el$x)) {
+        not_set <<- FALSE
+        el$x
+      } else {
+        NULL
+      }
+    } else {
+      NULL
+    }
+  })
+  vars_df <- tryCatch(frms[[which(!vapply(FUN.VALUE = logical(1), frms, is.null))]], error = function(e) NULL)
+  if (is.data.frame(vars_df)) {
+    return(vars_df)
   }
-  tryCatch(cur_data_all_dplyr(),
-           # dplyr installed, but not used inside dplyr verb
-           error = function(e) stop_("argument `", arg_name, "` is missing with no default ",
-                                     "or function not used inside a valid dplyr verb", 
-                                     # tryCatch adds 4 system calls, subtract them
-                                     call = call - 4))
+  
+  # nothing worked, so:
+  if (is.na(arg_name)) {
+    stop_("this function must be used inside valid dplyr selection verbs or inside a data.frame call", 
+          call = call)
+  } else {
+    stop_("argument `", arg_name, "` is missing with no default ",
+          "or function not used inside a valid dplyr verb", 
+          call = call)
+  }
 }
 
-unique_call_id <- function() {
-  # combination of environment ID (like "0x7fed4ee8c848")
-  # and highest system call
-  c(envir = gsub("<environment: (.*)>", "\\1", utils::capture.output(sys.frames()[[1]])),
-    call = paste0(deparse(sys.calls()[[1]]), collapse = ""))
+unique_call_id <- function(entire_session = FALSE) {
+  if (entire_session == TRUE) {
+    c(envir = "session",
+      call = "session")
+  } else {
+    # combination of environment ID (like "0x7fed4ee8c848")
+    # and highest system call
+    c(envir = gsub("<environment: (.*)>", "\\1", utils::capture.output(sys.frames()[[1]])),
+      call = paste0(deparse(sys.calls()[[1]]), collapse = ""))
+  }
 }
 
-remember_thrown_message <- function(fn) {
+remember_thrown_message <- function(fn, entire_session = FALSE) {
   # this is to prevent that messages/notes will be printed for every dplyr group
   # e.g. this would show a msg 4 times: example_isolates %>% group_by(hospital_id) %>% filter(mo_is_gram_negative())
-  assign(x = paste0("uniquecall_", fn),
-         value = unique_call_id(),
+  assign(x = paste0("thrown_msg_", fn),
+         value = unique_call_id(entire_session = entire_session),
          envir = pkg_env)
 }
 
-message_not_thrown_before <- function(fn) {
-  is.null(pkg_env[[paste0("uniquecall_", fn)]]) || !identical(pkg_env[[paste0("uniquecall_", fn)]], unique_call_id())
+message_not_thrown_before <- function(fn, entire_session = FALSE) {
+  is.null(pkg_env[[paste0("thrown_msg_", fn)]]) || !identical(pkg_env[[paste0("thrown_msg_", fn)]], unique_call_id(entire_session))
 }
 
 reset_all_thrown_messages <- function() {
   # for unit tests, where the environment and highest system call do not change
   pkg_env_contents <- ls(envir = pkg_env)
-  rm(list = pkg_env_contents[pkg_env_contents %like% "^uniquecall_"],
+  rm(list = pkg_env_contents[pkg_env_contents %like% "^thrown_msg_"],
      envir = pkg_env)
 }
 
@@ -571,7 +602,7 @@ has_colour <- function() {
   # this is a base R version of crayon::has_color, but disables colours on emacs
   
   if (Sys.getenv("EMACS") != "" || Sys.getenv("INSIDE_EMACS") != "") {
-    # disable on emacs, only supports 8 colours
+    # disable on emacs, which only supports 8 colours
     return(FALSE)
   }
   enabled <- getOption("crayon.enabled")

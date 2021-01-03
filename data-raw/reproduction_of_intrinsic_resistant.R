@@ -24,6 +24,7 @@
 # ==================================================================== #
 
 library(AMR)
+library(dplyr)
 int_resis <- data.frame(microorganism = microorganisms$mo, stringsAsFactors = FALSE)
 for (i in seq_len(nrow(antibiotics))) {
   int_resis$new <- as.rsi("S")
@@ -45,3 +46,6 @@ int_resis2$microorganism <- mo_name(int_resis2$microorganism, language = NULL)
 intrinsic_resistant <- as.data.frame(int_resis2, stringsAsFactors = FALSE)
 usethis::use_data(intrinsic_resistant, internal = FALSE, overwrite = TRUE, version = 2, compress = "xz")
 rm(intrinsic_resistant)
+
+# AFTER THIS:
+# DO NOT FORGET TO UPDATE THE VERSION NUMBER IN mo_is_intrinsic_resistant()

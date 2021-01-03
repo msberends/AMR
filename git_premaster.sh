@@ -123,9 +123,9 @@ echo
 echo "••••••••••••••••••••"
 echo "• Building package •"
 echo "••••••••••••••••••••"
-echo "• Removing old build..."
+echo "• Removing old build from 'data-raw/'..."
 rm data-raw/AMR_*.tar.gz
-echo "• Building to 'data-raw'..."
+echo "• Building 'data-raw/AMR_${new_version}.tar.gz'..."
 Rscript -e "x <- devtools::build(path = 'data-raw', vignettes = FALSE, manual = FALSE, binary = FALSE, quiet = TRUE)"
 echo "• Installing..."
 Rscript -e "devtools::install(quiet = TRUE, dependencies = FALSE)"

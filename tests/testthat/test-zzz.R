@@ -29,16 +29,13 @@ test_that("imports work", {
   skip_on_cran()
   
   # Check if these function still exist in the package (all are in Suggests field)
-  # Since GitHub Action runs every night, we will be emailed when a dependency fails based on this unit test
+  # Since GitHub Action runs every night, we will get emailed when a dependency fails based on this unit test
+  
+  # functions used by import_fn()
   import_functions <- c(
     "anti_join" = "dplyr",
     "cur_column" = "dplyr",
-    "cur_data" = "dplyr",
-    "document_position" = "rstudioapi",
-    "document_range" = "rstudioapi",
-    "freq.default" = "cleaner",
     "full_join" = "dplyr",
-    "getSourceEditorContext" = "rstudioapi",
     "has_internet" = "curl",
     "html_attr" = "rvest",
     "html_children" = "rvest",
@@ -46,22 +43,75 @@ test_that("imports work", {
     "html_nodes" = "rvest",
     "html_table" = "rvest",
     "html_text" = "rvest",
-    "inline_hist" = "skimr",
     "inner_join" = "dplyr",
     "insertText" = "rstudioapi",
     "left_join" = "dplyr",
     "new_pillar_shaft_simple" = "pillar",
-    "read_excel" = "readxl",
     "read_html" = "xml2",
     "right_join" = "dplyr",
     "semi_join" = "dplyr",
-    "sfl" = "skimr",
     "showQuestion" = "rstudioapi")
+  
+  # functions that are called directly
+  call_functions <- c(
+    # cleaner
+    "freq.default" = "cleaner",
+    # skmir
+    "inline_hist" = "skimr",
+    "sfl" = "skimr",
+    # set_mo_source
+    "read_excel" = "readxl",
+    # ggplot_rsi
+    "aes_string" = "ggplot2",
+    "element_blank" = "ggplot2",
+    "element_line" = "ggplot2",
+    "element_text" = "ggplot2",
+    "facet_wrap" = "ggplot2",
+    "geom_text" = "ggplot2",
+    "ggplot" = "ggplot2",
+    "labs" = "ggplot2",
+    "layer" = "ggplot2",
+    "position_fill" = "ggplot2",
+    "scale_fill_manual" = "ggplot2",
+    "scale_y_continuous" = "ggplot2",
+    "theme" = "ggplot2",
+    "theme_minimal" = "ggplot2",
+    # ggplot_pca
+    "aes" = "ggplot2",
+    "arrow" = "ggplot2",
+    "element_blank" = "ggplot2",
+    "element_line" = "ggplot2",
+    "element_text" = "ggplot2",
+    "expand_limits" = "ggplot2",
+    "geom_path" = "ggplot2",
+    "geom_point" = "ggplot2",
+    "geom_segment" = "ggplot2",
+    "geom_text" = "ggplot2",
+    "ggplot" = "ggplot2",
+    "labs" = "ggplot2",
+    "theme" = "ggplot2",
+    "theme_minimal" = "ggplot2",
+    "unit" = "ggplot2",
+    "xlab" = "ggplot2",
+    "ylab" = "ggplot2",
+    # resistance_predict
+    "aes" = "ggplot2",
+    "geom_errorbar" = "ggplot2",
+    "geom_point" = "ggplot2",
+    "geom_ribbon" = "ggplot2",
+    "ggplot" = "ggplot2",
+    "labs" = "ggplot2"
+  )
+  
+  import_functions <- c(import_functions, call_functions)
+  
+  # check if all are in Suggests  field
+  expect_true(all(unique(import_functions) %in% strsplit(packageDescription("AMR")$Suggests, ",\n")[[1]]))
   
   for (i in seq_len(length(import_functions))) {
     fn <- names(import_functions)[i]
     pkg <- unname(import_functions[i])
     expect(!is.null(import_fn(name = fn, pkg = pkg, error_on_fail = FALSE)),
-           failure_message = paste0("Function ", pkg, "::", fn, "() does not exist"))
+           failure_message = paste0("Function ", pkg, "::", fn, "() does not exist anymore"))
   }
 })

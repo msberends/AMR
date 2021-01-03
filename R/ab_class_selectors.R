@@ -161,29 +161,8 @@ tetracyclines <- function() {
 ab_selector <- function(ab_class, function_name) {
   meet_criteria(ab_class, allow_class = "character", has_length = 1, .call_depth = 1)
   meet_criteria(function_name, allow_class = "character", has_length = 1, .call_depth = 1)
-  
-  for (i in seq_len(length(sys.frames()))) {
-    # dplyr?
-    if (".data" %in% names(sys.frames()[[i]])) {
-      vars_df <- sys.frames()[[i]]$`.data`
-      if (is.data.frame(vars_df)) {
-        break
-      }
-    }
-    # then try base R - an element `x` will be in the system call stack
-    vars_df <- tryCatch(sys.frames()[[i]]$x, error = function(e) NULL)
-    if (!is.null(vars_df) && is.data.frame(vars_df)) {
-      # when using e.g. example_isolates[, carbapenems()] or example_isolates %>% select(carbapenems())
-      break
-    } else if (!is.null(vars_df) && is.list(vars_df)) {
-      # when using e.g. example_isolates %>% filter(across(carbapenems(), ~. == "R"))
-      vars_df <- tryCatch(as.data.frame(vars_df, stringsAsFactors = FALSE), error = function(e) NULL)
-      if (!is.null(vars_df)) {
-        break
-      }
-    }
-  }
-  stop_ifnot(is.data.frame(vars_df), "this function must be used inside dplyr selection verbs or within a data.frame call.", call = -2)
+
+  vars_df <- get_current_data(arg_name = NA, call = -3)
   ab_in_data <- get_column_abx(vars_df, info = FALSE)
   
   if (length(ab_in_data) == 0) {

@@ -35,6 +35,8 @@ example_isolates %>%
   select(mo, aminoglycosides(), carbapenems())
 #> NOTE: Using column 'mo' as input for mo_is_gram_negative()
 #> NOTE: Using column 'mo' as input for mo_is_intrinsic_resistant()
+#> NOTE: Determining intrinsic resistance based on 'EUCAST Expert Rules' and
+#>       'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2 from 2020.
 #> Selecting aminoglycosides: 'AMK' (amikacin), 'GEN' (gentamicin), 
 #>                            'KAN' (kanamycin), 'TOB' (tobramycin)
 #> Selecting carbapenems: 'IPM' (imipenem), 'MEM' (meropenem)
@@ -51,6 +53,15 @@ With only having defined a row filter on Gram-negative bacteria with intrinsic r
 |*Pseudomonas aeruginosa*       |     S     |     S     |     R     |     S     |     S     |     S     |
 |*Stenotrophomonas maltophilia* |     R     |     R     |     R     |     R     |     R     |     R     |
 |*Pseudomonas aeruginosa*       |     S     |     S     |     R     |     S     |           |     S     |
+
+A base R equivalent would be:
+
+```r
+example_isolates$mo <- mo_fullname(example_isolates$mo)
+example_isolates[which(mo_is_gram_negative() &
+                         mo_is_intrinsic_resistant(ab = "cefotax")),
+                 c("mo", aminoglycosides(), carbapenems())]
+```
 
 #### Partners
 
