@@ -56,6 +56,10 @@ jobs:
           - {os: windows-latest, r: 'devel',   allowfail: false}
           - {os: windows-latest, r: 'release', allowfail: false}
           - {os: windows-latest, r: 'oldrel',  allowfail: false}
+          - {os: ubuntu-20.04,   r: 'devel',   allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: ubuntu-20.04,   r: 'release', allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: ubuntu-20.04,   r: 'oldrel',  allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: ubuntu-20.04,   r: '3.0',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-16.04,   r: 'devel',   allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: 'release', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: 'oldrel',  allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
@@ -67,12 +71,6 @@ jobs:
           - {os: ubuntu-16.04,   r: '3.2',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: '3.1',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: '3.0',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-          - {os: ubuntu-20.04,   r: 'devel',   allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
-          - {os: ubuntu-20.04,   r: 'release', allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
-          - {os: ubuntu-20.04,   r: 'oldrel',  allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
-          - {os: ubuntu-20.04,   r: '3.2',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
-          - {os: ubuntu-20.04,   r: '3.1',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
-          - {os: ubuntu-20.04,   r: '3.0',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -95,7 +93,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Cache R packages
-        if: runner.os != 'Windows'
+        if: runner.os != 'Windows' && matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2'
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
@@ -103,7 +101,16 @@ jobs:
           restore-keys: ${{ matrix.config.os }}-r-${{ matrix.config.r }}-3-
 
       - name: Install Linux dependencies
-        if: runner.os == 'Linux'
+        if: runner.os == 'Linux' && matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2'
+        env:
+          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
+        run: |
+          Rscript -e "remotes::install_github('r-hub/sysreqs')"
+          sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
+          sudo -s eval "$sysreqs"
+          
+      - name: Install Linux dependencies on old R versions
+        if: matrix.config.r == '3.0' || matrix.config.r == '3.1' || matrix.config.r == '3.2'
         env:
           RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
         # update the below with sysreqs::sysreqs("DESCRIPTION") and check the "DEB" entries (for Ubuntu).
@@ -117,8 +124,10 @@ jobs:
           brew install mariadb-connector-c
 
       - name: Install dependencies
+        if: matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2'
         run: |
-          utils::update.packages(ask = FALSE)
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 
       - name: Session info
@@ -128,32 +137,27 @@ jobs:
           as.data.frame(utils::installed.packages())[, "Version", drop = FALSE]
         shell: Rscript {0}
 
-      - name: Run R CMD check
-        if: matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2'
-        env:
-          _R_CHECK_CRAN_INCOMING_: false
-        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
-        shell: Rscript {0}
+      # - name: Run R CMD check
+      #   if: matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2'
+      #   env:
+      #     _R_CHECK_CRAN_INCOMING_: false
+      #   run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
+      #   shell: Rscript {0}
         
       - name: Run R CMD check on older R versions
-        if: matrix.config.r == '3.0' || matrix.config.r == '3.1' || matrix.config.r == '3.2'
+        # if: matrix.config.r == '3.0' || matrix.config.r == '3.1' || matrix.config.r == '3.2'
         env:
           _R_CHECK_CRAN_INCOMING_: false
           _R_CHECK_FORCE_SUGGESTS_: false
-          # these are set already in --as-cran:
           _R_CHECK_LENGTH_1_CONDITION_: verbose
           _R_CHECK_LENGTH_1_LOGIC2_: verbose
         run: |
-          R CMD check data-raw/AMR_*.tar.gz --no-manual
+          R CMD check data-raw/AMR_*.tar.gz --no-manual --as-cran
 
       - name: Show testthat output
         if: always()
         run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
         shell: bash
-        
-      - name: Install packages to check for new deps
-        run: |
-          R CMD INSTALL data-raw/AMR_*.tar.gz
 
       - name: Upload check results
         if: failure()
