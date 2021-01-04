@@ -458,7 +458,7 @@ meet_criteria <- function(object,
     stop_if(allow_NULL == FALSE, "argument `", obj_name, "` must not be NULL", call = call_depth)
     return(invisible())
   }
-  if (is.null(dim(object)) && length(object) == 1 && is.na(object)) {
+  if (is.null(dim(object)) && length(object) == 1 && suppressWarnings(is.na(object))) { # suppressWarnings for functions
     stop_if(allow_NA == FALSE, "argument `", obj_name, "` must not be NA", call = call_depth)
     return(invisible())
   }
@@ -527,23 +527,36 @@ meet_criteria <- function(object,
 }
 
 get_current_data <- function(arg_name, call) {
+  if (as.double(R.Version()$major) + (as.double(R.Version()$minor) / 100) < 3.2) {
+    if (is.na(arg_name)) {
+      warning_("this function can only be used in R >= 3.2", call = call)
+      return(data.frame())
+    } else {
+      stop_("argument `", arg_name, "` is missing with no default", call = call)
+    }
+  }
+  
   # try a (base R) method, by going over the complete system call stack with sys.frames()
   not_set <- TRUE
   frms <- lapply(sys.frames(), function(el) {
-    if (tryCatch(not_set == TRUE && ".data" %in% names(el) && is.data.frame(el$`.data`), error = function(e) FALSE)) {
-      # dplyr? - an element `.data` will be in the system call stack
-      not_set <<- FALSE
-      el$`.data`
-    } else if (tryCatch(not_set == TRUE && any(c("x", "xx") %in% names(el)), error = function(e) FALSE)) {
-      # otherwise try base R:
-      # an element `x` will be in this environment for only cols, e.g. `example_isolates[, carbapenems()]`
-      # an element `xx` will be in this environment for rows + cols, e.g. `example_isolates[c(1:3), carbapenems()]`
-      if (is.data.frame(el$xx)) {
+    if (".Generic" %in% names(el)) {
+      if (tryCatch(not_set == TRUE && ".data" %in% names(el) && is.data.frame(el$`.data`), error = function(e) FALSE)) {
+        # dplyr? - an element `.data` will be in the system call stack
         not_set <<- FALSE
-        el$xx
-      } else if (is.data.frame(el$x)) {
-        not_set <<- FALSE
-        el$x
+        el$`.data`
+      } else if (tryCatch(not_set == TRUE && any(c("x", "xx") %in% names(el)), error = function(e) FALSE)) {
+        # otherwise try base R:
+        # an element `x` will be in this environment for only cols, e.g. `example_isolates[, carbapenems()]`
+        # an element `xx` will be in this environment for rows + cols, e.g. `example_isolates[c(1:3), carbapenems()]`
+        if (tryCatch(is.data.frame(el$xx), error = function(e) FALSE)) {
+          not_set <<- FALSE
+          el$xx
+        } else if (tryCatch(is.data.frame(el$x))) {
+          not_set <<- FALSE
+          el$x
+        } else {
+          NULL
+        }
       } else {
         NULL
       }

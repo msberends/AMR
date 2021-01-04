@@ -27,7 +27,9 @@
 #' 
 #' These functions help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.
 #' @inheritParams filter_ab_class 
-#' @details All columns will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.) in the [antibiotics] data set. This means that a selector like e.g. [aminoglycosides()] will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
+#' @details These functions only work in R 3.2 (2015) and later.
+#' 
+#' All columns will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.) in the [antibiotics] data set. This means that a selector like e.g. [aminoglycosides()] will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
 #' @rdname antibiotic_class_selectors
 #' @seealso [filter_ab_class()] for the `filter()` equivalent.
 #' @name antibiotic_class_selectors
@@ -161,7 +163,12 @@ tetracyclines <- function() {
 ab_selector <- function(ab_class, function_name) {
   meet_criteria(ab_class, allow_class = "character", has_length = 1, .call_depth = 1)
   meet_criteria(function_name, allow_class = "character", has_length = 1, .call_depth = 1)
-
+  
+  if (as.double(R.Version()$major) + (as.double(R.Version()$minor) / 100) < 3.2) {
+    warning_(function_name, "() can only be used in R >= 3.2", call = FALSE)
+    return(NULL)
+  }
+  
   vars_df <- get_current_data(arg_name = NA, call = -3)
   ab_in_data <- get_column_abx(vars_df, info = FALSE)
   

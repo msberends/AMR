@@ -123,7 +123,7 @@ jobs:
         run: |
           brew install mariadb-connector-c
 
-      - name: Install dependencies
+      - name: Install package dependencies
         if: matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2'
         run: |
           remotes::install_deps(dependencies = TRUE)
@@ -137,22 +137,22 @@ jobs:
           as.data.frame(utils::installed.packages())[, "Version", drop = FALSE]
         shell: Rscript {0}
 
-      # - name: Run R CMD check
-      #   if: matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2'
-      #   env:
-      #     _R_CHECK_CRAN_INCOMING_: false
-      #   run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
-      #   shell: Rscript {0}
+      - name: Run R CMD check
+        if: matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2'
+        env:
+          _R_CHECK_CRAN_INCOMING_: false
+        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
+        shell: Rscript {0}
         
       - name: Run R CMD check on older R versions
-        # if: matrix.config.r == '3.0' || matrix.config.r == '3.1' || matrix.config.r == '3.2'
+        if: matrix.config.r == '3.0' || matrix.config.r == '3.1' || matrix.config.r == '3.2'
         env:
           _R_CHECK_CRAN_INCOMING_: false
           _R_CHECK_FORCE_SUGGESTS_: false
           _R_CHECK_LENGTH_1_CONDITION_: verbose
           _R_CHECK_LENGTH_1_LOGIC2_: verbose
         run: |
-          R CMD check data-raw/AMR_*.tar.gz --no-manual --as-cran
+          R CMD check data-raw/AMR_*.tar.gz --no-manual --no-build-vignettes
 
       - name: Show testthat output
         if: always()
