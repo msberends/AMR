@@ -164,7 +164,7 @@ ab_selector <- function(ab_class, function_name) {
   meet_criteria(ab_class, allow_class = "character", has_length = 1, .call_depth = 1)
   meet_criteria(function_name, allow_class = "character", has_length = 1, .call_depth = 1)
   
-  if (as.double(R.Version()$major) + (as.double(R.Version()$minor) / 100) < 3.2) {
+  if (as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2) {
     warning_(function_name, "() can only be used in R >= 3.2", call = FALSE)
     return(NULL)
   }

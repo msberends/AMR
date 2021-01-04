@@ -105,12 +105,13 @@ test_that("imports work", {
   
   import_functions <- c(import_functions, call_functions)
   
-  # check if all are in Suggests  field
-  expect_true(all(unique(import_functions) %in% strsplit(packageDescription("AMR")$Suggests, ",\n")[[1]]))
-  
   for (i in seq_len(length(import_functions))) {
     fn <- names(import_functions)[i]
     pkg <- unname(import_functions[i])
+    # package should be in Suggests field of DESCRIPTION
+    expect(pkg %in% strsplit(packageDescription("AMR")$Suggests, ",\n")[[1]],
+           failure_message = paste0("Package ", pkg, " is not in Suggests field"))
+    # function should exist in foreign pkg namespace
     expect(!is.null(import_fn(name = fn, pkg = pkg, error_on_fail = FALSE)),
            failure_message = paste0("Function ", pkg, "::", fn, "() does not exist anymore"))
   }

@@ -527,7 +527,7 @@ meet_criteria <- function(object,
 }
 
 get_current_data <- function(arg_name, call) {
-  if (as.double(R.Version()$major) + (as.double(R.Version()$minor) / 100) < 3.2) {
+  if (as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2) {
     if (is.na(arg_name)) {
       warning_("this function can only be used in R >= 3.2", call = call)
       return(data.frame())
