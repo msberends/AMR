@@ -117,9 +117,8 @@ jobs:
           brew install mariadb-connector-c
 
       - name: Install dependencies
-        if: always()
         run: |
-          utils::install.packages(strsplit(utils::packageDescription("AMR")$Suggests, ",\n")[[1]])
+          utils::update.packages(ask = FALSE)
         shell: Rscript {0}
 
       - name: Session info
@@ -151,10 +150,14 @@ jobs:
         if: always()
         run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
         shell: bash
+        
+      - name: Install packages to check for new deps
+        run: |
+          R CMD INSTALL data-raw/AMR_*.tar.gz
 
       - name: Upload check results
         if: failure()
         uses: actions/upload-artifact@master
         with:
-          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
+          name: ${{ matrix.config.os }}-r${{ matrix.config.r }}-results
           path: check
