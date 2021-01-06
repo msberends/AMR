@@ -27,7 +27,7 @@
 #' 
 #' These functions help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.
 #' @inheritParams filter_ab_class 
-#' @details These functions only work in R 3.2 (2015) and later.
+#' @details \strong{\Sexpr{ifelse(as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2, paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
 #' 
 #' All columns will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.) in the [antibiotics] data set. This means that a selector like e.g. [aminoglycosides()] will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
 #' @rdname antibiotic_class_selectors
@@ -165,7 +165,9 @@ ab_selector <- function(ab_class, function_name) {
   meet_criteria(function_name, allow_class = "character", has_length = 1, .call_depth = 1)
   
   if (as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2) {
-    warning_(function_name, "() can only be used in R >= 3.2", call = FALSE)
+    warning_("antibiotic class selectors such as ", function_name, 
+             "() require R version 3.2 or later - you have ", R.version.string,
+             call = FALSE)
     return(NULL)
   }
   
@@ -194,10 +196,11 @@ ab_selector <- function(ab_class, function_name) {
     if (length(agents) == 0) {
       message_("No antimicrobial agents of class ", ab_group, " found", examples, ".")
     } else {
-      message_("Selecting ", ab_group, ": ",
-               paste(paste0("column '", font_bold(agents, collapse = NULL),
-                            "' (", ab_name(names(agents), tolower = TRUE, language = NULL), ")"),
-                     collapse = ", "),
+      agents_formatted <- paste0("column '", font_bold(agents, collapse = NULL), "'")
+      agents_names <- ab_name(names(agents), tolower = TRUE, language = NULL)
+      agents_formatted[agents != agents_names] <- paste0(agents_formatted[agents != agents_names],
+                                                         " (", agents_names[agents != agents_names], ")")
+      message_("Selecting ", ab_group, ": ", paste(agents_formatted, collapse = ", "),
                as_note = FALSE,
                extra_indent = nchar(paste0("Selecting ", ab_group, ": ")))
     }

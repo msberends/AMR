@@ -1,5 +1,7 @@
 # `AMR` (for R) <img src="./logo.png" align="right" height="120px" />
 
+*Note: the rules of 'EUCAST Clinical Breakpoints v11.0 (2021)' will be added in the next release, to be expected in February/March 2021.*
+
 > <span class="fa fa-clipboard-list" style="color: #128f76; font-size: 20pt; margin-right: 5px;"></span> **PLEASE TAKE PART IN OUR SURVEY!**  
 > Since you are one of our users, we would like to know how you use the package and what it brought you or your organisation. **If you have a minute, please [anonymously fill in this short questionnaire](./survey.html)**. Your valuable input will help to improve the package and its functionalities. You can answer the open questions in either English, Spanish, French, Dutch, or German. Thank you very much in advance!
 > <br>

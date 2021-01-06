@@ -7,7 +7,7 @@
 \source{
 \itemize{
 \item EUCAST Expert Rules. Version 2.0, 2012.\cr
-Leclercq et al. \strong{EUCAST expert rules in antimicrobial susceptibility testing.} \emph{Clin Microbiol Infect.} 2013;19(2):141-60.  \href{https://doi.org/10.1111/j.1469-0691.2011.03703.x}{(link)}
+Leclercq et al. \strong{EUCAST expert rules in antimicrobial susceptibility testing.} \emph{Clin Microbiol Infect.} 2013;19(2):141-60; \doi{https://doi.org/10.1111/j.1469-0691.2011.03703.x}
 \item EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes Tables. Version 3.1, 2016. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}{(link)}
 \item EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.2, 2020. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf}{(link)}
 \item EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 9.0, 2019. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx}{(link)}
@@ -69,7 +69,7 @@ Before further processing, two non-EUCAST rules about drug combinations can be a
 
 Important examples include amoxicillin and amoxicillin/clavulanic acid, and trimethoprim and trimethoprim/sulfamethoxazole. Needless to say, for these rules to work, both drugs must be available in the data set.
 
-Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include \code{"other"} to the \code{rules} argument, or use \code{eucast_rules(..., rules = "all")}.
+Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include \code{"other"} to the \code{rules} argument, or use \code{eucast_rules(..., rules = "all")}. You can also set the option \code{AMR_eucastrules}, i.e. run \code{options(AMR_eucastrules = "all")}.
 }
 }
 \section{Antibiotics}{

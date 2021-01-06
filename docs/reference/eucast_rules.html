@@ -302,7 +302,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     
 <ul>
 <li><p>EUCAST Expert Rules. Version 2.0, 2012.<br />
-Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility testing.</strong> <em>Clin Microbiol Infect.</em> 2013;19(2):141-60.  <a href='https://doi.org/10.1111/j.1469-0691.2011.03703.x'>(link)</a></p></li>
+Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility testing.</strong> <em>Clin Microbiol Infect.</em> 2013;19(2):141-60; doi: <a href='https://doi.org/10.1111/j.1469-0691.2011.03703.x'>10.1111/j.1469-0691.2011.03703.x</a></p></li>
 <li><p>EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes Tables. Version 3.1, 2016. <a href='https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf'>(link)</a></p></li>
 <li><p>EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.2, 2020. <a href='https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf'>(link)</a></p></li>
 <li><p>EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 9.0, 2019. <a href='https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx'>(link)</a></p></li>
@@ -325,7 +325,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 </ol>
 
 <p>Important examples include amoxicillin and amoxicillin/clavulanic acid, and trimethoprim and trimethoprim/sulfamethoxazole. Needless to say, for these rules to work, both drugs must be available in the data set.</p>
-<p>Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include <code>"other"</code> to the <code>rules</code> argument, or use <code>eucast_rules(..., rules = "all")</code>.</p>
+<p>Since these rules are not officially approved by EUCAST, they are not applied at default. To use these rules, include <code>"other"</code> to the <code>rules</code> argument, or use <code>eucast_rules(..., rules = "all")</code>. You can also set the option <code>AMR_eucastrules</code>, i.e. run <code><a href='https://rdrr.io/r/base/options.html'>options(AMR_eucastrules = "all")</a></code>.</p>
 
     <h2 class="hasAnchor" id="antibiotics"><a class="anchor" href="#antibiotics"></a>Antibiotics</h2>
 

@@ -1,5 +1,7 @@
-# AMR 1.4.0.9062
-## <small>Last updated:  4 January 2021</small>
+# AMR 1.5.0
+
+*Note: the rules of 'EUCAST Clinical Breakpoints v11.0 (2021)' will be added in the next release, to be expected in February/March 2021.*
+
 ### New
 * Functions `get_episode()` and `is_new_episode()` to determine (patient) episodes which are not necessarily based on microorganisms. The `get_episode()` function returns the index number of the episode per group, while the `is_new_episode()` function returns values `TRUE`/`FALSE` to indicate whether an item in a vector is the start of a new episode. They also support `dplyr`s grouping (i.e. using `group_by()`):
   ```r
@@ -45,7 +47,7 @@
     select(mo, cephalosporins(), aminoglycosides()) %>% 
     as_tibble()
   ```
-* For antibiotic selection functions (such as `cephalosporins()`, `aminoglycosides()`) to select columns based on a certain antibiotic group, the dependency on the `tidyselect` package was removed, meaning that they can now also be used without the need to have this package installed and now also work in base R function calls:
+* For antibiotic selection functions (such as `cephalosporins()`, `aminoglycosides()`) to select columns based on a certain antibiotic group, the dependency on the `tidyselect` package was removed, meaning that they can now also be used without the need to have this package installed and now also work in base R function calls (they rely on R 3.2 or later):
   ```r
   # above example in base R:
   example_isolates[which(first_isolate() & mo_is_gram_negative()),

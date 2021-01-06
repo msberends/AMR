@@ -59,7 +59,7 @@
 #' 
 #' * `guideline = "MRGN"`
 #'
-#'   The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7. DOI: 10.1186/s13756-015-0047-6
+#'   The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7; \doi{10.1186/s13756-015-0047-6}
 #' 
 #' * `guideline = "BRMO"`
 #'
@@ -193,7 +193,7 @@ mdro <- function(x,
     guideline$name <- "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance."
     guideline$author <- "Magiorakos AP, Srinivasan A, Carey RB, ..., Vatopoulos A, Weber JT, Monnet DL"
     guideline$version <- NA
-    guideline$source_url <- "Clinical Microbiology and Infection 18:3, 2012. DOI: 10.1111/j.1469-0691.2011.03570.x"
+    guideline$source_url <- "Clinical Microbiology and Infection 18:3, 2012; doi: 10.1111/j.1469-0691.2011.03570.x"
     guideline$type <- "MDRs/XDRs/PDRs"
     
   } else if (guideline$code == "eucast3.1") {
@@ -222,7 +222,7 @@ mdro <- function(x,
     guideline$name <- "Cross-border comparison of the Dutch and German guidelines on multidrug-resistant Gram-negative microorganisms"
     guideline$author <- "M\u00fcller J, Voss A, K\u00f6ck R, ..., Kern WV, Wendt C, Friedrich AW"
     guideline$version <- NA
-    guideline$source_url <- "Antimicrobial Resistance and Infection Control 4:7, 2015. DOI: 10.1186/s13756-015-0047-6"
+    guideline$source_url <- "Antimicrobial Resistance and Infection Control 4:7, 2015; doi: 10.1186/s13756-015-0047-6"
     guideline$type <- "MRGNs"
     
   } else if (guideline$code == "brmo") {

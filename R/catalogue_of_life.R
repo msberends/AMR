@@ -44,7 +44,7 @@ format_included_data_number <- function(data) {
 #' This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life.
 #' @section Catalogue of Life:
 #' \if{html}{\figure{logo_col.png}{options: height=40px style=margin-bottom:5px} \cr}
-#' This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, <http://www.catalogueoflife.org>). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, [lpsn.dsmz.de](https://lpsn.dsmz.de)). This supplementation is needed until the [CoL+ project](https://github.com/Sp2000/colplus) is finished, which we await.
+#' This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, <http://www.catalogueoflife.org>). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, [lpsn.dsmz.de](https://lpsn.dsmz.de)). This supplementation is needed until the [CoL+ project](https://github.com/CatalogueOfLife/general) is finished, which we await.
 #'
 #' [Click here][catalogue_of_life] for more information about the included taxa. Check which versions of the CoL and LSPN were included in this package with [catalogue_of_life_version()].
 #' @section Included taxa:
