@@ -23,10 +23,10 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
+# the testthat package is in Suggests, but very old R versions will not be
+# able to install it. Yet, we want checks in those R versions as well, so
+# only run unit tests in later R versions:
 if (require("testthat")) {
-  # the testthat package is in Suggests, but very old R versions will not be
-  # able to install it. Yet, we want checks in those R versions as well, so
-  # only run unit tests in later R versions:
   library(testthat, warn.conflicts = FALSE)
   library(AMR)
   test_check("AMR")

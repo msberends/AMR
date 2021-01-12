@@ -81,10 +81,13 @@ check_dataset_integrity <- function() {
   overwritten <- data_in_pkg[data_in_pkg %in% data_in_globalenv]
   # exception for example_isolates
   overwritten <- overwritten[overwritten != "example_isolates"]
-  stop_if(length(overwritten) > 0,
-          "the following data set is overwritten by your global environment and prevents the AMR package from working correctly:\n",
-          paste0("'", overwritten, "'", collapse = ", "),
-          ".\nPlease rename your object before using this function.", call = FALSE)
+  if (length(overwritten) > 0) {
+    warning_(ifelse(length(overwritten) == 1,
+                    "The following data set is overwritten by your global environment and prevents the AMR package from working correctly: ",
+                    "The following data sets are overwritten by your global environment and prevent the AMR package from working correctly: "),
+             paste0("'", overwritten, "'", collapse = ", "),
+             ".\nPlease rename your object(s).", call = FALSE)
+  }
   # check if other packages did not overwrite our data sets
   tryCatch({
     check_microorganisms <- all(c("mo", "fullname", "kingdom", "phylum",
@@ -439,6 +442,20 @@ create_ab_documentation <- function(ab) {
   out
 }
 
+vector_or <- function(v, quotes = TRUE, reverse = FALSE) {
+  # makes unique and sorts, and this also removed NAs
+  v <- sort(unique(v))
+   if (length(v) == 1) {
+    return(paste0(ifelse(quotes, '"', ""), v, ifelse(quotes, '"', "")))
+  }
+  if (reverse == TRUE) {
+    v <- rev(v)
+  }
+  # all commas except for last item, so will become '"val1", "val2", "val3" or "val4"'
+  paste0(paste0(ifelse(quotes, '"', ""), v[seq_len(length(v) - 1)], ifelse(quotes, '"', ""), collapse = ", "),
+         " or ", paste0(ifelse(quotes, '"', ""), v[length(v)], ifelse(quotes, '"', "")))
+}
+
 # a check for every single argument in all functions
 meet_criteria <- function(object,
                           allow_class = NULL,
@@ -461,15 +478,6 @@ meet_criteria <- function(object,
   if (is.null(dim(object)) && length(object) == 1 && suppressWarnings(is.na(object))) { # suppressWarnings for functions
     stop_if(allow_NA == FALSE, "argument `", obj_name, "` must not be NA", call = call_depth)
     return(invisible())
-  }
-
-  vector_or <- function(v, quotes) {
-    if (length(v) == 1) {
-      return(paste0(ifelse(quotes, '"', ""), v, ifelse(quotes, '"', "")))
-    }
-    # all commas except for last item, so will become '"val1", "val2", "val3" or "val4"'
-    paste0(paste0(ifelse(quotes, '"', ""), v[seq_len(length(v) - 1)], ifelse(quotes, '"', ""), collapse = ", "),
-           " or ", paste0(ifelse(quotes, '"', ""), v[length(v)], ifelse(quotes, '"', "")))
   }
 
   if (!is.null(allow_class)) {
@@ -527,24 +535,38 @@ meet_criteria <- function(object,
 }
 
 get_current_data <- function(arg_name, call) {
+  # try dplyr::cur_data_all() first to support dplyr groups
+  # only useful for e.g. dplyr::filter(), dplyr::mutate() and dplyr::summarise()
+  # not useful (throws error) with e.g. dplyr::select() - but that will be caught later in this function
+  cur_data_all <- import_fn("cur_data_all", "dplyr", error_on_fail = FALSE)
+  if (!is.null(cur_data_all)) {
+    out <- tryCatch(cur_data_all(), error = function(e) NULL)
+    if (is.data.frame(out)) {
+      return(out)
+    }
+  }
+  
   if (as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2) {
+    # R-3.0 and R-3.1 do not have an `x` element in the call stack, rendering this function useless
     if (is.na(arg_name)) {
+      # like in carbapenems() etc.
       warning_("this function can only be used in R >= 3.2", call = call)
       return(data.frame())
     } else {
       stop_("argument `", arg_name, "` is missing with no default", call = call)
     }
   }
-  
+
   # try a (base R) method, by going over the complete system call stack with sys.frames()
   not_set <- TRUE
   frms <- lapply(sys.frames(), function(el) {
-    if (".Generic" %in% names(el)) {
-      if (tryCatch(not_set == TRUE && ".data" %in% names(el) && is.data.frame(el$`.data`), error = function(e) FALSE)) {
+    if (not_set == TRUE && ".Generic" %in% names(el)) {
+      if (tryCatch(".data" %in% names(el) && is.data.frame(el$`.data`), error = function(e) FALSE)) {
         # dplyr? - an element `.data` will be in the system call stack
+        # will be used in dplyr::select() (but not in dplyr::filter(), dplyr::mutate() or dplyr::summarise())
         not_set <<- FALSE
         el$`.data`
-      } else if (tryCatch(not_set == TRUE && any(c("x", "xx") %in% names(el)), error = function(e) FALSE)) {
+      } else if (tryCatch(any(c("x", "xx") %in% names(el)), error = function(e) FALSE)) {
         # otherwise try base R:
         # an element `x` will be in this environment for only cols, e.g. `example_isolates[, carbapenems()]`
         # an element `xx` will be in this environment for rows + cols, e.g. `example_isolates[c(1:3), carbapenems()]`
@@ -574,9 +596,7 @@ get_current_data <- function(arg_name, call) {
     stop_("this function must be used inside valid dplyr selection verbs or inside a data.frame call", 
           call = call)
   } else {
-    stop_("argument `", arg_name, "` is missing with no default ",
-          "or function not used inside a valid dplyr verb", 
-          call = call)
+    stop_("argument `", arg_name, "` is missing with no default", call = call)
   }
 }
 
@@ -595,19 +615,19 @@ unique_call_id <- function(entire_session = FALSE) {
 remember_thrown_message <- function(fn, entire_session = FALSE) {
   # this is to prevent that messages/notes will be printed for every dplyr group
   # e.g. this would show a msg 4 times: example_isolates %>% group_by(hospital_id) %>% filter(mo_is_gram_negative())
-  assign(x = paste0("thrown_msg_", fn),
+  assign(x = paste0("thrown_msg.", fn),
          value = unique_call_id(entire_session = entire_session),
          envir = pkg_env)
 }
 
 message_not_thrown_before <- function(fn, entire_session = FALSE) {
-  is.null(pkg_env[[paste0("thrown_msg_", fn)]]) || !identical(pkg_env[[paste0("thrown_msg_", fn)]], unique_call_id(entire_session))
+  is.null(pkg_env[[paste0("thrown_msg.", fn)]]) || !identical(pkg_env[[paste0("thrown_msg.", fn)]], unique_call_id(entire_session))
 }
 
 reset_all_thrown_messages <- function() {
   # for unit tests, where the environment and highest system call do not change
   pkg_env_contents <- ls(envir = pkg_env)
-  rm(list = pkg_env_contents[pkg_env_contents %like% "^thrown_msg_"],
+  rm(list = pkg_env_contents[pkg_env_contents %like% "^thrown_msg."],
      envir = pkg_env)
 }
 

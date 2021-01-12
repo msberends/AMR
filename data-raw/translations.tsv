@@ -19,7 +19,8 @@ de	CoPS	KPS	TRUE	FALSE
 de	Gram-negative	Gramnegativ	FALSE	FALSE
 de	Gram-positive	Grampositiv	FALSE	FALSE
 de	Bacteria	Bakterien	FALSE	FALSE
-de	Fungi	Hefen/Pilze	FALSE	FALSE
+de	Fungi	Pilze	FALSE	FALSE
+de	Yeasts	Hefen	FALSE	FALSE
 de	Protozoa	Protozoen	FALSE	FALSE
 de	biogroup	Biogruppe	FALSE	FALSE
 de	biotype	Biotyp	FALSE	FALSE
@@ -49,8 +50,9 @@ nl	CoPS	CPS	TRUE	FALSE
 nl	Gram-negative	Gram-negatief	FALSE	FALSE
 nl	Gram-positive	Gram-positief	FALSE	FALSE
 nl	Bacteria	Bacteriën	FALSE	FALSE
-nl	Fungi	Schimmels/gisten	FALSE	FALSE
-nl	Protozoa	protozoën	FALSE	FALSE
+nl	Fungi	Schimmels	FALSE	FALSE
+nl	Yeasts	Gisten	FALSE	FALSE
+nl	Protozoa	Protozoën	FALSE	FALSE
 nl	biogroup	biogroep	FALSE	FALSE
 nl	vegetative	vegetatief	FALSE	FALSE
 nl	([([ ]*?)group	\\1groep	FALSE	FALSE
@@ -83,6 +85,7 @@ es	Gram-negative	Gram negativo	FALSE	FALSE
 es	Gram-positive	Gram positivo	FALSE	FALSE
 es	Bacteria	Bacterias	FALSE	FALSE
 es	Fungi	Hongos	FALSE	FALSE
+es	Yeasts	Levaduras	FALSE	FALSE
 es	Protozoa	Protozoarios	FALSE	FALSE
 es	biogroup	biogrupo	FALSE	FALSE
 es	biotype	biotipo	FALSE	FALSE
@@ -110,7 +113,8 @@ it	unknown rank	grado sconosciuto	FALSE	FALSE
 it	Gram-negative	Gram negativo	FALSE	FALSE
 it	Gram-positive	Gram positivo	FALSE	FALSE
 it	Bacteria	Batteri	FALSE	FALSE
-it	Fungi	Fungo	FALSE	FALSE
+it	Fungi	Funghi	FALSE	FALSE
+it	Yeasts	Lieviti	FALSE	FALSE
 it	Protozoa	Protozoi	FALSE	FALSE
 it	biogroup	biogruppo	FALSE	FALSE
 it	biotype	biotipo	FALSE	FALSE
@@ -139,6 +143,7 @@ fr	Gram-negative	Gram négatif	FALSE	FALSE
 fr	Gram-positive	Gram positif	FALSE	FALSE
 fr	Bacteria	Bactéries	FALSE	FALSE
 fr	Fungi	Champignons	FALSE	FALSE
+fr	Yeasts	Levures	FALSE	FALSE
 fr	Protozoa	Protozoaires	FALSE	FALSE
 fr	biogroup	biogroupe	FALSE	FALSE
 fr	vegetative	végétatif	FALSE	FALSE
@@ -166,6 +171,7 @@ pt	Gram-negative	Gram negativo	FALSE	FALSE
 pt	Gram-positive	Gram positivo	FALSE	FALSE
 pt	Bacteria	Bactérias	FALSE	FALSE
 pt	Fungi	Fungos	FALSE	FALSE
+pt	Yeasts	Leveduras	FALSE	FALSE
 pt	Protozoa	Protozoários	FALSE	FALSE
 pt	biogroup	biogrupo	FALSE	FALSE
 pt	biotype	biótipo	FALSE	FALSE

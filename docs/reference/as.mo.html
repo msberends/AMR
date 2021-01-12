@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9000</span>
       </span>
     </div>
 
@@ -387,14 +387,14 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
     
 
 <p>With ambiguous user input in <code>as.mo()</code> and all the <code><a href='mo_property.html'>mo_*</a></code> functions, the returned results are chosen based on their matching score using <code><a href='mo_matching_score.html'>mo_matching_score()</a></code>. This matching score \(m\), is calculated as:</p>
-<p>$$m_{(x, n)} = \frac{l_{n} - 0.5 \cdot \min \begin{cases}l_{n} \\ \textrm{lev}(x, n)\end{cases}}{l_{n} \cdot p_{n} \cdot k_{n}}$$</p>
+<p><img src='figures/mo_matching_score.png' width="300px" alt="mo matching score" /></p>
 <p>where:</p><ul>
-<li><p>\(x\) is the user input;</p></li>
-<li><p>\(n\) is a taxonomic name (genus, species, and subspecies);</p></li>
-<li><p>\(l_n\) is the length of \(n\);</p></li>
-<li><p>lev is the <a href='https://en.wikipedia.org/wiki/Levenshtein_distance'>Levenshtein distance function</a>, which counts any insertion, deletion and substitution as 1 that is needed to change \(x\) into \(n\);</p></li>
-<li><p>\(p_n\) is the human pathogenic prevalence group of \(n\), as described below;</p></li>
-<li><p>\(k_n\) is the taxonomic kingdom of \(n\), set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.</p></li>
+<li><p><i>x</i> is the user input;</p></li>
+<li><p><i>n</i> is a taxonomic name (genus, species, and subspecies);</p></li>
+<li><p><i>l<sub>n</sub></i> is the length of <i>n</i>;</p></li>
+<li><p><i>lev</i> is the <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein distance function</a>, which counts any insertion, deletion and substitution as 1 that is needed to change <i>x</i> into <i>n</i>;</p></li>
+<li><p><i>p<sub>n</sub></i> is the human pathogenic prevalence group of <i>n</i>, as described below;</p></li>
+<li><p><i>k<sub>n</sub></i> is the taxonomic kingdom of <i>n</i>, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.</p></li>
 </ul>
 
 <p>The grouping into human pathogenic prevalence (\(p\)) is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence. <strong>Group 1</strong> (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is <em>Enterococcus</em>, <em>Staphylococcus</em> or <em>Streptococcus</em>. This group consequently contains all common Gram-negative bacteria, such as <em>Pseudomonas</em> and <em>Legionella</em> and all species within the order Enterobacterales. <strong>Group 2</strong> consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is <em>Absidia</em>, <em>Acremonium</em>, <em>Actinotignum</em>, <em>Alternaria</em>, <em>Anaerosalibacter</em>, <em>Apophysomyces</em>, <em>Arachnia</em>, <em>Aspergillus</em>, <em>Aureobacterium</em>, <em>Aureobasidium</em>, <em>Bacteroides</em>, <em>Basidiobolus</em>, <em>Beauveria</em>, <em>Blastocystis</em>, <em>Branhamella</em>, <em>Calymmatobacterium</em>, <em>Candida</em>, <em>Capnocytophaga</em>, <em>Catabacter</em>, <em>Chaetomium</em>, <em>Chryseobacterium</em>, <em>Chryseomonas</em>, <em>Chrysonilia</em>, <em>Cladophialophora</em>, <em>Cladosporium</em>, <em>Conidiobolus</em>, <em>Cryptococcus</em>, <em>Curvularia</em>, <em>Exophiala</em>, <em>Exserohilum</em>, <em>Flavobacterium</em>, <em>Fonsecaea</em>, <em>Fusarium</em>, <em>Fusobacterium</em>, <em>Hendersonula</em>, <em>Hypomyces</em>, <em>Koserella</em>, <em>Lelliottia</em>, <em>Leptosphaeria</em>, <em>Leptotrichia</em>, <em>Malassezia</em>, <em>Malbranchea</em>, <em>Mortierella</em>, <em>Mucor</em>, <em>Mycocentrospora</em>, <em>Mycoplasma</em>, <em>Nectria</em>, <em>Ochroconis</em>, <em>Oidiodendron</em>, <em>Phoma</em>, <em>Piedraia</em>, <em>Pithomyces</em>, <em>Pityrosporum</em>, <em>Prevotella</em>,\<em>Pseudallescheria</em>, <em>Rhizomucor</em>, <em>Rhizopus</em>, <em>Rhodotorula</em>, <em>Scolecobasidium</em>, <em>Scopulariopsis</em>, <em>Scytalidium</em>,<em>Sporobolomyces</em>, <em>Stachybotrys</em>, <em>Stomatococcus</em>, <em>Treponema</em>, <em>Trichoderma</em>, <em>Trichophyton</em>, <em>Trichosporon</em>, <em>Tritirachium</em> or <em>Ureaplasma</em>. <strong>Group 3</strong> consists of all other microorganisms.</p>

@@ -25,6 +25,7 @@
 
 # set up package environment, used by numerous AMR functions
 pkg_env <- new.env(hash = FALSE)
+pkg_env$mo_failed <- character(0)
 
 .onLoad <- function(libname, pkgname) {
   

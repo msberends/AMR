@@ -70,10 +70,11 @@
 #'     filter_aminoglycosides("R", "all") %>%
 #'     filter_fluoroquinolones("R", "all")
 #'   
-#'   # with dplyr 1.0.0 and higher (that adds 'across()'), this is equal:
+#'   # with dplyr 1.0.0 and higher (that adds 'across()'), this is all equal:
 #'   # (though the row names on the first are more correct)
 #'   example_isolates %>% filter_carbapenems("R", "all")
 #'   example_isolates %>% filter(across(carbapenems(), ~. == "R"))
+#'   example_isolates %>% filter(across(carbapenems(), function(x) x == "R"))
 #' }
 #' }
 filter_ab_class <- function(x,
@@ -129,7 +130,7 @@ filter_ab_class <- function(x,
   # get the columns with a group names in the chosen ab class
   agents <- ab_in_data[names(ab_in_data) %in% ab_reference$ab]
   if (length(agents) == 0) {
-    message_("NOTE: no antimicrobial agents of class ", ab_group, 
+    message_("no antimicrobial agents of class ", ab_group, 
              " found (such as ", find_ab_names(ab_class, 2), 
              "), data left unchanged.")
     return(x.bak)

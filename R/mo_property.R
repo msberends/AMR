@@ -27,7 +27,7 @@
 #'
 #' Use these functions to return a specific property of a microorganism based on the latest accepted taxonomy. All input values will be evaluated internally with [as.mo()], which makes it possible to use microbial abbreviations, codes and names as input. Please see *Examples*.
 #' @inheritSection lifecycle Stable lifecycle
-#' @param x any character (vector) that can be coerced to a valid microorganism code with [as.mo()]. Can be left blank for auto-guessing the column containing microorganism codes when used inside `dplyr` verbs, such as [`filter()`][dplyr::filter()], [`mutate()`][dplyr::mutate()] and [`summarise()`][dplyr::summarise()], please see *Examples*.
+#' @param x any character (vector) that can be coerced to a valid microorganism code with [as.mo()]. Can be left blank for auto-guessing the column containing microorganism codes if used in a data set, please see *Examples*.
 #' @param property one of the column names of the [microorganisms] data set: `r paste0('"``', colnames(microorganisms), '\``"', collapse = ", ")`, or must be `"shortname"`
 #' @param language language of the returned text, defaults to system language (see [get_locale()]) and can be overwritten by setting the option `AMR_locale`, e.g. `options(AMR_locale = "de")`, see [translate]. Also used to translate text like "no growth". Use `language = NULL` or `language = ""` to prevent translation.
 #' @param ... other arguments passed on to [as.mo()], such as 'allow_uncertain' and 'ignore_pattern'
@@ -43,6 +43,8 @@
 #' Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions [mo_kingdom()] and [mo_domain()] return the exact same results.
 #'
 #' The Gram stain - [mo_gramstain()] - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318)), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`. Functions [mo_is_gram_negative()] and [mo_is_gram_positive()] always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
+#' 
+#' Determination of yeasts - [mo_is_yeast()] - will be based on the taxonomic phylum, class and order. Budding yeasts are true fungi of the phylum Ascomycetes, class Saccharomycetes (also called Hemiascomycetes). The true yeasts are separated into one main order Saccharomycetales. For all microorganisms that are in one of those two groups, the function will return `TRUE`. It returns `FALSE` for all other taxonomic entries.
 #' 
 #' Intrinsic resistance - [mo_is_intrinsic_resistant()] - will be determined based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(3.2)`. The [mo_is_intrinsic_resistant()] can be vectorised over arguments `x` (input for microorganisms) and over `ab` (input for antibiotics).
 #'
@@ -144,6 +146,8 @@
 #'
 #'
 #' # other --------------------------------------------------------------------
+#' 
+#' mo_is_yeast(c("Candida", "E. coli"))      # TRUE, FALSE
 #' 
 #' # gram stains and intrinsic resistance can also be used as a filter in dplyr verbs
 #' if (require("dplyr")) {
@@ -331,7 +335,10 @@ mo_type <- function(x, language = get_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   
-  translate_AMR(mo_validate(x = x, property = "kingdom", language = language, ...), language = language, only_unknown = FALSE)
+  x.mo <- as.mo(x, language = language, ...)
+  out <- mo_kingdom(x.mo, language = NULL)
+  out[which(mo_is_yeast(x.mo))] <- "Yeasts"
+  translate_AMR(out, language = language, only_unknown = FALSE)
 }
 
 #' @rdname mo_property
@@ -406,6 +413,33 @@ mo_is_gram_positive <- function(x, language = get_locale(), ...) {
   grams <- mo_gramstain(x.mo, language = NULL)
   load_mo_failures_uncertainties_renamed(metadata)
   out <- grams == "Gram-positive" & !is.na(grams)
+  out[x.mo %in% c(NA_character_, "UNKNOWN")] <- NA
+  out
+}
+
+#' @rdname mo_property
+#' @export
+mo_is_yeast <- function(x, language = get_locale(), ...) {
+  if (missing(x)) {
+    # this tries to find the data and an <mo> column
+    x <- find_mo_col(fn = "mo_is_yeast")
+  }
+  meet_criteria(x, allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
+  x.mo <- as.mo(x, language = language, ...)
+  metadata <- get_mo_failures_uncertainties_renamed()
+  
+  x.kingdom <- mo_kingdom(x.mo, language = NULL)
+  x.phylum <- mo_phylum(x.mo, language = NULL)
+  x.class <- mo_class(x.mo, language = NULL)
+  x.order <- mo_order(x.mo, language = NULL)
+  
+  load_mo_failures_uncertainties_renamed(metadata)
+  
+  out <- rep(FALSE, length(x))
+  out[x.kingdom == "Fungi" &
+        ((x.phylum == "Ascomycetes" & x.class == "Saccharomycetes") | x.order == "Saccharomycetales")] <- TRUE
   out[x.mo %in% c(NA_character_, "UNKNOWN")] <- NA
   out
 }

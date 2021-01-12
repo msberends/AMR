@@ -95,7 +95,14 @@
 #' - `source`\cr Either "CoL", "DSMZ" (see Source) or "manually added"
 #' - `prevalence`\cr Prevalence of the microorganism, see [as.mo()]
 #' - `snomed`\cr SNOMED code of the microorganism. Use [mo_snomed()] to retrieve it quickly, see [mo_property()].
-#' @details Manually added were:
+#' @details 
+#' Please note that entries are only based on the Catalogue of Life and the LPSN (see below). Since these sources incorporate entries based on (recent) publications in the International Journal of Systematic and Evolutionary Microbiology (IJSEM), it can happen that the year of publication is sometimes later than one might expect.
+#' 
+#' For example, *Staphylococcus pettenkoferi* was newly named in Diagnostic Microbiology and Infectious Disease in 2002 (PMID 12106949), but it was not before 2007 that a publication in IJSEM followed (PMID 17625191). Consequently, the AMR package returns 2007 for `mo_year("S. pettenkoferi")`.
+#' 
+#' ### Manually additions
+#' For convenience, some entries were added manually:
+#' 
 #' - 11 entries of *Streptococcus* (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)
 #' - 2 entries of *Staphylococcus* (coagulase-negative (CoNS) and coagulase-positive (CoPS))
 #' - 3 entries of *Trichomonas* (*Trichomonas vaginalis*, and its family and genus)
@@ -269,3 +276,21 @@ catalogue_of_life <- list(
 #'   # [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"
 #' }
 "intrinsic_resistant"
+
+#' Data set with treatment dosages as defined by EUCAST
+#'
+#' EUCAST breakpoints used in this package are based on the dosages in this data set. They can be retrieved with [eucast_dosage()].
+#' @format A [data.frame] with `r format(nrow(dosage), big.mark = ",")` observations and `r ncol(dosage)` variables:
+#' - `ab`\cr Antibiotic ID as used in this package (such as `AMC`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
+#' - `name`\cr Official name of the antimicrobial agent as used by WHONET/EARS-Net or the WHO
+#' - `type`\cr Type of the dosage, either `r vector_or(dosage$type)`
+#' - `dose`\cr Dose, such as "2 g" or "25 mg/kg"
+#' - `dose_times`\cr Dose, such as "2 g" or "25 mg/kg"
+#' - `administration`\cr Route of administration, either `r vector_or(dosage$administration)`
+#' - `notes`\cr Additional dosage notes
+#' - `original_txt`\cr Original text in the PDF file of EUCAST
+#' - `eucast_version`\cr Version number of the EUCAST Clinical Breakpoints guideline to which these dosages apply
+#' @details `r format_eucast_version_nr(11.0)` are based on the dosages in this data set.
+#' @inheritSection AMR Reference data publicly available
+#' @inheritSection AMR Read more on our website!
+"dosage"

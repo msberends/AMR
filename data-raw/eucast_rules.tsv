@@ -115,6 +115,115 @@ genus_species	is	Kingella kingae	TCY	R	DOX	R	Kingella kingae	Breakpoints	10
 genus_species	is	Burkholderia pseudomallei	TCY	S	DOX	S	Burkholderia pseudomallei	Breakpoints	10	
 genus_species	is	Burkholderia pseudomallei	TCY	I	DOX	I	Burkholderia pseudomallei	Breakpoints	10	
 genus_species	is	Burkholderia pseudomallei	TCY	R	DOX	R	Burkholderia pseudomallei	Breakpoints	10	
+order	is	Enterobacterales	AMP	S	AMX	S	Enterobacterales (Order)	Breakpoints	11	
+order	is	Enterobacterales	AMP	I	AMX	I	Enterobacterales (Order)	Breakpoints	11	
+order	is	Enterobacterales	AMP	R	AMX	R	Enterobacterales (Order)	Breakpoints	11	
+genus	is	Staphylococcus	PEN, FOX	S	AMP, AMX, PIP, TIC	S	Staphylococcus	Breakpoints	11	
+genus	is	Staphylococcus	PEN, FOX	R, S	OXA, FLC	S	Staphylococcus	Breakpoints	11	
+genus	is	Staphylococcus	FOX	R	all_betalactams	R	Staphylococcus	Breakpoints	11	
+genus_species	is	Staphylococcus saprophyticus	AMP	S	AMX, AMC, PIP, TZP	S	Staphylococcus	Breakpoints	11	
+genus	is	Staphylococcus	FOX	S	carbapenems, cephalosporins_except_CAZ	S	Staphylococcus	Breakpoints	11	
+genus	is	Staphylococcus	FOX	I	carbapenems, cephalosporins_except_CAZ	I	Staphylococcus	Breakpoints	11	
+genus	is	Staphylococcus	FOX	R	carbapenems, cephalosporins_except_CAZ	R	Staphylococcus	Breakpoints	11	
+genus	is	Staphylococcus	NOR	S	CIP, LVX, MFX, OFX	S	Staphylococcus	Breakpoints	11	
+genus	is	Staphylococcus	ERY	S	AZM, CLR, RXT	S	Staphylococcus	Breakpoints	11	
+genus	is	Staphylococcus	ERY	I	AZM, CLR, RXT	I	Staphylococcus	Breakpoints	11	
+genus	is	Staphylococcus	ERY	R	AZM, CLR, RXT	R	Staphylococcus	Breakpoints	11	
+genus	is	Staphylococcus	TCY	S	DOX, MNO	S	Staphylococcus	Breakpoints	11	
+genus	is	Enterococcus	AMP	S	AMX, AMC, PIP, TZP	S	Enterococcus	Breakpoints	11	
+genus	is	Enterococcus	AMP	I	AMX, AMC, PIP, TZP	I	Enterococcus	Breakpoints	11	
+genus	is	Enterococcus	AMP	R	AMX, AMC, PIP, TZP	R	Enterococcus	Breakpoints	11	
+genus	is	Enterococcus	NOR	S	CIP, LVX	S	Enterococcus	Breakpoints	11	
+genus	is	Enterococcus	NOR	I	CIP, LVX	I	Enterococcus	Breakpoints	11	
+genus	is	Enterococcus	NOR	R	CIP, LVX	R	Enterococcus	Breakpoints	11	
+genus_species	one_of	Streptococcus group A, Streptococcus group B, Streptococcus group C, Streptococcus group G	PEN	S	aminopenicillins, ureidopenicillins, cephalosporins_except_CAZ, carbapenems, FLC, AMC	S	Streptococcus groups A, B, C, G	Breakpoints	11	
+genus_species	like	Streptococcus group A, Streptococcus group B, Streptococcus group C, Streptococcus group G	PEN	I	aminopenicillins, ureidopenicillins, cephalosporins_except_CAZ, carbapenems, FLC, AMC	I	Streptococcus groups A, B, C, G	Breakpoints	11	
+genus_species	like	Streptococcus group A, Streptococcus group B, Streptococcus group C, Streptococcus group G	PEN	R	aminopenicillins, ureidopenicillins, cephalosporins_except_CAZ, carbapenems, FLC, AMC	R	Streptococcus groups A, B, C, G	Breakpoints	11	
+genus_species	like	Streptococcus group A, Streptococcus group B, Streptococcus group C, Streptococcus group G	NOR	S	MFX	S	Streptococcus groups A, B, C, G	Breakpoints	11	
+genus_species	like	Streptococcus group A, Streptococcus group B, Streptococcus group C, Streptococcus group G	NOR	S	LVX	I	Streptococcus groups A, B, C, G	Breakpoints	11	
+genus_species	like	Streptococcus group A, Streptococcus group B, Streptococcus group C, Streptococcus group G	ERY	S	AZM, CLR, RXT	S	Streptococcus groups A, B, C, G	Breakpoints	11	
+genus_species	like	Streptococcus group A, Streptococcus group B, Streptococcus group C, Streptococcus group G	ERY	I	AZM, CLR, RXT	I	Streptococcus groups A, B, C, G	Breakpoints	11	
+genus_species	like	Streptococcus group A, Streptococcus group B, Streptococcus group C, Streptococcus group G	ERY	R	AZM, CLR, RXT	R	Streptococcus groups A, B, C, G	Breakpoints	11	
+genus_species	like	Streptococcus group A, Streptococcus group B, Streptococcus group C, Streptococcus group G	TCY	S	DOX, MNO	S	Streptococcus groups A, B, C, G	Breakpoints	11	
+genus_species	is	Streptococcus pneumoniae	PEN	S	AMP, AMX, AMC, PIP, TZP	S	Streptococcus pneumoniae	Breakpoints	11	
+genus_species	is	Streptococcus pneumoniae	AMP	S	AMX, AMC, PIP, TZP	S	Streptococcus pneumoniae	Breakpoints	11	
+genus_species	is	Streptococcus pneumoniae	AMP	I	AMX, AMC, PIP, TZP	I	Streptococcus pneumoniae	Breakpoints	11	
+genus_species	is	Streptococcus pneumoniae	AMP	R	AMX, AMC, PIP, TZP	R	Streptococcus pneumoniae	Breakpoints	11	
+genus_species	is	Streptococcus pneumoniae	NOR	S	MFX	S	Streptococcus pneumoniae	Breakpoints	11	
+genus_species	is	Streptococcus pneumoniae	NOR	S	LVX	I	Streptococcus pneumoniae	Breakpoints	11	
+genus_species	is	Streptococcus pneumoniae	ERY	S	AZM, CLR, RXT	S	Streptococcus pneumoniae	Breakpoints	11	
+genus_species	is	Streptococcus pneumoniae	ERY	I	AZM, CLR, RXT	I	Streptococcus pneumoniae	Breakpoints	11	
+genus_species	is	Streptococcus pneumoniae	ERY	R	AZM, CLR, RXT	R	Streptococcus pneumoniae	Breakpoints	11	
+genus_species	is	Streptococcus pneumoniae	TCY	S	DOX, MNO	S	Streptococcus pneumoniae	Breakpoints	11	
+genus_species	like	^Streptococcus (anginosus|australis|bovis|constellatus|cristatus|equinus|gallolyticus|gordonii|infantarius|infantis|intermedius|mitis|mutans|oligofermentans|oralis|parasanguinis|peroris|pseudopneumoniae|salivarius|sanguinis|sinensis|sobrinus|thermophilus|vestibularis|viridans)$	PEN	S	AMP, AMX, AMC, PIP, TZP	S	Viridans group streptococci	Breakpoints	11	
+genus_species	like	^Streptococcus (anginosus|australis|bovis|constellatus|cristatus|equinus|gallolyticus|gordonii|infantarius|infantis|intermedius|mitis|mutans|oligofermentans|oralis|parasanguinis|peroris|pseudopneumoniae|salivarius|sanguinis|sinensis|sobrinus|thermophilus|vestibularis|viridans)$	AMP	S	AMX, AMC, PIP, TZP	S	Viridans group streptococci	Breakpoints	11	
+genus_species	like	^Streptococcus (anginosus|australis|bovis|constellatus|cristatus|equinus|gallolyticus|gordonii|infantarius|infantis|intermedius|mitis|mutans|oligofermentans|oralis|parasanguinis|peroris|pseudopneumoniae|salivarius|sanguinis|sinensis|sobrinus|thermophilus|vestibularis|viridans)$	AMP	I	AMX, AMC, PIP, TZP	I	Viridans group streptococci	Breakpoints	11	
+genus_species	like	^Streptococcus (anginosus|australis|bovis|constellatus|cristatus|equinus|gallolyticus|gordonii|infantarius|infantis|intermedius|mitis|mutans|oligofermentans|oralis|parasanguinis|peroris|pseudopneumoniae|salivarius|sanguinis|sinensis|sobrinus|thermophilus|vestibularis|viridans)$	AMP	R	AMX, AMC, PIP, TZP	R	Viridans group streptococci	Breakpoints	11	
+genus_species	is	Haemophilus influenzae	AMP	S	AMX, PIP	S	Haemophilus influenzae	Breakpoints	11	
+genus_species	is	Haemophilus influenzae	AMP	I	AMX, PIP	I	Haemophilus influenzae	Breakpoints	11	
+genus_species	is	Haemophilus influenzae	AMP	R	AMX, PIP	R	Haemophilus influenzae	Breakpoints	11	
+genus_species	is	Haemophilus influenzae	PEN	S	AMP, AMX, AMC, PIP, TZP	S	Haemophilus influenzae	Breakpoints	11	
+genus_species	is	Haemophilus influenzae	AMC	S	TZP	S	Haemophilus influenzae	Breakpoints	11	
+genus_species	is	Haemophilus influenzae	AMC	I	TZP	I	Haemophilus influenzae	Breakpoints	11	
+genus_species	is	Haemophilus influenzae	AMC	R	TZP	R	Haemophilus influenzae	Breakpoints	11	
+genus_species	is	Haemophilus influenzae	NAL	S	CIP, LVX, MFX, OFX	S	Haemophilus influenzae	Breakpoints	11	
+genus_species	is	Haemophilus influenzae	TCY	S	DOX, MNO	S	Haemophilus influenzae	Breakpoints	11	
+genus_species	is	Moraxella catarrhalis	AMC	S	TZP	S	Moraxella catarrhalis	Breakpoints	11	
+genus_species	is	Moraxella catarrhalis	AMC	I	TZP	I	Moraxella catarrhalis	Breakpoints	11	
+genus_species	is	Moraxella catarrhalis	AMC	R	TZP	R	Moraxella catarrhalis	Breakpoints	11	
+genus_species	is	Moraxella catarrhalis	NAL	S	CIP, LVX, MFX, OFX	S	Moraxella catarrhalis	Breakpoints	11	
+genus_species	is	Moraxella catarrhalis	ERY	S	AZM, CLR, RXT	S	Moraxella catarrhalis	Breakpoints	11	
+genus_species	is	Moraxella catarrhalis	ERY	I	AZM, CLR, RXT	I	Moraxella catarrhalis	Breakpoints	11	
+genus_species	is	Moraxella catarrhalis	ERY	R	AZM, CLR, RXT	R	Moraxella catarrhalis	Breakpoints	11	
+genus_species	is	Moraxella catarrhalis	TCY	S	DOX, MNO	S	Moraxella catarrhalis	Breakpoints	11	
+genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	S	AMP, AMX, PIP, TZP, TIC	S	Anaerobic Gram-positives	Breakpoints	11	
+genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	I	AMP, AMX, PIP, TZP, TIC	I	Anaerobic Gram-positives	Breakpoints	11	
+genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	R	AMP, AMX, PIP, TZP, TIC	R	Anaerobic Gram-positives	Breakpoints	11	
+genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	S	AMP, AMX, PIP, TZP, TIC	S	Anaerobic Gram-negatives	Breakpoints	11	
+genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	I	AMP, AMX, PIP, TZP, TIC	I	Anaerobic Gram-negatives	Breakpoints	11	
+genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	R	AMP, AMX, PIP, TZP, TIC	R	Anaerobic Gram-negatives	Breakpoints	11	
+genus_species	is	Pasteurella multocida	PEN	S	AMP, AMX	S	Pasteurella multocida	Breakpoints	11	
+genus_species	is	Pasteurella multocida	PEN	I	AMP, AMX	I	Pasteurella multocida	Breakpoints	11	
+genus_species	is	Pasteurella multocida	PEN	R	AMP, AMX	R	Pasteurella multocida	Breakpoints	11	
+genus_species	is	Campylobacter coli	ERY	S	AZM, CLR	S	Campylobacter coli	Breakpoints	11	
+genus_species	is	Campylobacter coli	ERY	I	AZM, CLR	I	Campylobacter coli	Breakpoints	11	
+genus_species	is	Campylobacter coli	ERY	R	AZM, CLR	R	Campylobacter coli	Breakpoints	11	
+genus_species	is	Campylobacter coli	TCY	S	DOX	S	Campylobacter coli	Breakpoints	11	
+genus_species	is	Campylobacter coli	TCY	I	DOX	I	Campylobacter coli	Breakpoints	11	
+genus_species	is	Campylobacter coli	TCY	R	DOX	R	Campylobacter coli	Breakpoints	11	
+genus_species	is	Campylobacter jejuni	ERY	S	AZM, CLR	S	Campylobacter jejuni	Breakpoints	11	
+genus_species	is	Campylobacter jejuni	ERY	I	AZM, CLR	I	Campylobacter jejuni	Breakpoints	11	
+genus_species	is	Campylobacter jejuni	ERY	R	AZM, CLR	R	Campylobacter jejuni	Breakpoints	11	
+genus_species	is	Campylobacter jejuni	TCY	S	DOX	S	Campylobacter jejuni	Breakpoints	11	
+genus_species	is	Campylobacter jejuni	TCY	I	DOX	I	Campylobacter jejuni	Breakpoints	11	
+genus_species	is	Campylobacter jejuni	TCY	R	DOX	R	Campylobacter jejuni	Breakpoints	11	
+genus_species	is	Aerococcus sanguinicola	NOR	S	fluoroquinolones	S	Aerococcus sanguinicola	Breakpoints	11	
+genus_species	is	Aerococcus sanguinicola	NOR	I	fluoroquinolones	I	Aerococcus sanguinicola	Breakpoints	11	
+genus_species	is	Aerococcus sanguinicola	NOR	R	fluoroquinolones	R	Aerococcus sanguinicola	Breakpoints	11	
+genus_species	is	Aerococcus sanguinicola	CIP	S	LVX	S	Aerococcus sanguinicola	Breakpoints	11	
+genus_species	is	Aerococcus sanguinicola	CIP	I	LVX	I	Aerococcus sanguinicola	Breakpoints	11	
+genus_species	is	Aerococcus sanguinicola	CIP	R	LVX	R	Aerococcus urinae	Breakpoints	11	
+genus_species	is	Aerococcus urinae	NOR	S	fluoroquinolones	S	Aerococcus urinae	Breakpoints	11	
+genus_species	is	Aerococcus urinae	NOR	I	fluoroquinolones	I	Aerococcus urinae	Breakpoints	11	
+genus_species	is	Aerococcus urinae	NOR	R	fluoroquinolones	R	Aerococcus urinae	Breakpoints	11	
+genus_species	is	Aerococcus urinae	CIP	S	LVX	S	Aerococcus urinae	Breakpoints	11	
+genus_species	is	Aerococcus urinae	CIP	I	LVX	I	Aerococcus urinae	Breakpoints	11	
+genus_species	is	Aerococcus urinae	CIP	R	LVX	R	Aerococcus urinae	Breakpoints	11	
+genus_species	is	Kingella kingae	PEN	S	AMP, AMX	S	Kingella kingae	Breakpoints	11	
+genus_species	is	Kingella kingae	PEN	I	AMP, AMX	I	Kingella kingae	Breakpoints	11	
+genus_species	is	Kingella kingae	PEN	R	AMP, AMX	R	Kingella kingae	Breakpoints	11	
+genus_species	is	Kingella kingae	ERY	S	AZM, CLR	S	Kingella kingae	Breakpoints	11	
+genus_species	is	Kingella kingae	ERY	I	AZM, CLR	I	Kingella kingae	Breakpoints	11	
+genus_species	is	Kingella kingae	ERY	R	AZM, CLR	R	Kingella kingae	Breakpoints	11	
+genus_species	is	Kingella kingae	TCY	S	DOX	S	Kingella kingae	Breakpoints	11	
+genus_species	is	Kingella kingae	TCY	I	DOX	I	Kingella kingae	Breakpoints	11	
+genus_species	is	Kingella kingae	TCY	R	DOX	R	Kingella kingae	Breakpoints	11	
+genus_species	is	Burkholderia pseudomallei	TCY	S	DOX	S	Burkholderia pseudomallei	Breakpoints	11	
+genus_species	is	Burkholderia pseudomallei	TCY	I	DOX	I	Burkholderia pseudomallei	Breakpoints	11	
+genus_species	is	Burkholderia pseudomallei	TCY	R	DOX	R	Burkholderia pseudomallei	Breakpoints	11	
+genus	is	Bacillus	NOR	S	fluoroquinolones	S	Bacillus	Breakpoints	11	added in 11
+genus	is	Bacillus	NOR	I	fluoroquinolones	I	Bacillus	Breakpoints	11	added in 11
+genus	is	Bacillus	NOR	R	fluoroquinolones	R	Bacillus	Breakpoints	11	added in 11
 order	is	Enterobacterales			PEN, glycopeptides, FUS, macrolides, LIN, streptogramins, RIF, DAP, LNZ	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules	3.1	
 fullname	like	^Citrobacter (koseri|amalonaticus|sedlakii|farmeri|rodentium)			aminopenicillins, TIC	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules	3.1	
 fullname	like	^Citrobacter (freundii|braakii|murliniae|werkmanii|youngae)			aminopenicillins, AMC, CZO, FOX	R	Table 01: Intrinsic resistance in Enterobacterales (at the time: Enterobacteriaceae)	Expert Rules	3.1	

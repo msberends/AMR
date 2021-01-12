@@ -99,18 +99,19 @@ reference:
       for more information about how to work with functions in this package.
     contents:
     - "`AMR`"
+    - "`example_isolates`"
+    - "`microorganisms`"
+    - "`microorganisms.codes`"
+    - "`microorganisms.old`"
+    - "`antibiotics`"
+    - "`intrinsic_resistant`"
+    - "`dosage`"
     - "`catalogue_of_life`"
     - "`catalogue_of_life_version`"
     - "`WHOCC`"
     - "`lifecycle`"
-    - "`microorganisms`"
-    - "`antibiotics`"
-    - "`intrinsic_resistant`"
-    - "`example_isolates`"
     - "`example_isolates_unclean`"
     - "`rsi_translation`"
-    - "`microorganisms.codes`"
-    - "`microorganisms.old`"
     - "`WHONET`"
     
   - title: "Preparing data: microorganisms"
@@ -143,6 +144,7 @@ reference:
     - "`as.disk`"
     - "`eucast_rules`"
     - "`plot`"
+    - "`isolate_identifier`"
     
   - title: "Analysing data: antimicrobial resistance"
     desc: >

@@ -160,6 +160,12 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
       from_text <- character(0)
     }
     
+    # old code for phenoxymethylpenicillin (Peni V)
+    if (x[i] == "PNV") {
+      x_new[i] <- "PHN"
+      next
+    }
+    
     # exact name
     found <- antibiotics[which(AB_lookup$generalised_name == x[i]), ]$ab
     if (length(found) > 0) {

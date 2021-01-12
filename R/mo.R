@@ -756,7 +756,7 @@ exec_as.mo <- function(x,
         x[i] <- lookup(mo == "B_STRPT_HAEM", uncertainty = -1)
         next
       }
-      # CoNS/CoPS in different languages (support for German, Dutch, Spanish, Portuguese) ----
+      # CoNS/CoPS in different languages (support for German, Dutch, Spanish, Portuguese)
       if (x_backup_without_spp[i] %like_case% "[ck]oagulas[ea] negatie?[vf]"
           | x_trimmed[i] %like_case% "[ck]oagulas[ea] negatie?[vf]"
           | x_backup_without_spp[i] %like_case% "[ck]o?ns[^a-z]?$") {
@@ -841,8 +841,17 @@ exec_as.mo <- function(x,
         x[i] <- lookup(fullname == "Streptococcus pneumoniae", uncertainty = -1)
         next
       }
-      # }
-
+      
+      if (x_backup[i] %in% pkg_env$mo_failed) {
+        # previously failed already in this session ----
+        # (at this point the latest reference_df has also be checked)
+        x[i] <- lookup(mo == "UNKNOWN")
+        if (initial_search == TRUE) {
+          failures <- c(failures, x_backup[i])
+        }
+        next
+      }
+      
       # NOW RUN THROUGH DIFFERENT PREVALENCE LEVELS
       check_per_prevalence <- function(data_to_check,
                                        data.old_to_check,
@@ -1397,6 +1406,7 @@ exec_as.mo <- function(x,
   failures <- failures[!failures %in% c(NA, NULL, NaN)]
   if (length(failures) > 0 & initial_search == TRUE) {
     pkg_env$mo_failures <- sort(unique(failures))
+    pkg_env$mo_failed <- c(pkg_env$mo_failed, pkg_env$mo_failures)
     plural <- c("value", "it", "was")
     if (pm_n_distinct(failures) > 1) {
       plural <- c("values", "them", "were")
@@ -1412,7 +1422,7 @@ exec_as.mo <- function(x,
     }
     msg <- paste0(msg,
                   ".\nUse mo_failures() to review ", plural[2], ". Edit the `allow_uncertain` argument if needed (see ?as.mo).\n",
-                  "You can also use your own reference data, e.g.:\n",
+                  "You can also use your own reference data with set_mo_source() or directly, e.g.:\n",
                   '  as.mo("mycode", reference_df = data.frame(own = "mycode", mo = "', MO_lookup$mo[match("Escherichia coli", MO_lookup$fullname)], '"))\n',
                   '  mo_name("mycode", reference_df = data.frame(own = "mycode", mo = "', MO_lookup$mo[match("Escherichia coli", MO_lookup$fullname)], '"))\n')
     warning_(paste0("\n", msg),
@@ -1430,7 +1440,7 @@ exec_as.mo <- function(x,
       plural <- c("s", "them", "were")
     }
     msg <- paste0("Translation to ", nr2char(length(uncertainties$input)), " microorganism", plural[1],
-                  " ", plural[3], " guessed with uncertainty. Use mo_uncertainties() to review ", plural[2], ".")
+                  " was guessed with uncertainty. Use mo_uncertainties() to review ", plural[2], ".")
     message_(msg)
   }
 
@@ -1960,12 +1970,12 @@ replace_old_mo_codes <- function(x, property) {
     x[which(!is.na(matched))] <- mo_new[which(!is.na(matched))]
     n_matched <- length(matched[!is.na(matched)])
     if (property != "mo") {
-      message_(font_blue("NOTE: The input contained old microbial codes (from previous package versions). Please update your MO codes with as.mo()."))
+      message_(font_blue("The input contained old microbial codes (from previous package versions). Please update your MO codes with as.mo()."))
     } else {
       if (n_matched == 1) {
-        message_(font_blue("NOTE: 1 old microbial code (from previous package versions) was updated to a current used MO code."))
+        message_(font_blue("1 old microbial code (from previous package versions) was updated to a current used MO code."))
       } else {
-        message_(font_blue("NOTE:", n_matched, "old microbial codes (from previous package versions) were updated to current used MO codes.")) 
+        message_(font_blue(n_matched, "old microbial codes (from previous package versions) were updated to current used MO codes.")) 
       }
     }
   }

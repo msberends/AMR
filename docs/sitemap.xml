@@ -67,6 +67,9 @@
     <loc>https://msberends.github.io/AMR//reference/count.html</loc>
   </url>
   <url>
+    <loc>https://msberends.github.io/AMR//reference/dosage.html</loc>
+  </url>
+  <url>
     <loc>https://msberends.github.io/AMR//reference/eucast_rules.html</loc>
   </url>
   <url>
@@ -98,6 +101,9 @@
   </url>
   <url>
     <loc>https://msberends.github.io/AMR//reference/intrinsic_resistant.html</loc>
+  </url>
+  <url>
+    <loc>https://msberends.github.io/AMR//reference/isolate_identifier.html</loc>
   </url>
   <url>
     <loc>https://msberends.github.io/AMR//reference/join.html</loc>

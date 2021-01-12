@@ -77,10 +77,22 @@ clsi_general <- read_tsv("data-raw/DRGLST.txt") %>%
 
 # add new EUCAST with read_EUCAST.R
 # 2020-04-14 did that now for 2019 and 2020
+
 rsi_trans <- rsi_trans %>%
   filter(guideline != "EUCAST 2019") %>% 
   bind_rows(new_EUCAST) %>% 
   bind_rows(clsi_general) %>% 
+  mutate(uti = site %like% "(UTI|urinary)") %>% 
+  as.data.frame(stringsAsFactors = FALSE) %>%
+  # force classes again
+  mutate(mo = as.mo(mo),
+         ab = as.ab(ab)) %>% 
+  arrange(desc(guideline), ab, mo, method)
+
+# 2021-01-12 did that now for 2021
+rsi_trans <- rsi_trans %>%
+  mutate(mo = as.character(mo)) %>% 
+  bind_rows(new_EUCAST) %>% 
   mutate(uti = site %like% "(UTI|urinary)") %>% 
   as.data.frame(stringsAsFactors = FALSE) %>%
   # force classes again

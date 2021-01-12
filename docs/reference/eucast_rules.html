@@ -49,7 +49,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Apply EUCAST rules — eucast_rules" />
-<meta property="og:description" content="Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, https://eucast.org), see Source.
+<meta property="og:description" content="Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, https://eucast.org), see Source. Use eucast_dosage() to get advised dosages of a certain bug-drug combination, which is based on the dosage data set.
 To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see Details." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
@@ -240,7 +240,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     </div>
 
     <div class="ref-description">
-    <p>Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <a href='https://eucast.org'>https://eucast.org</a>), see <em>Source</em>.</p>
+    <p>Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <a href='https://eucast.org'>https://eucast.org</a>), see <em>Source</em>. Use <code>eucast_dosage()</code> to get advised dosages of a certain bug-drug combination, which is based on the <a href='dosage.html'>dosage</a> data set.</p>
 <p>To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see Details.</p>
     </div>
 
@@ -254,7 +254,9 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
   version_expertrules <span class='op'>=</span> <span class='fl'>3.2</span>,
   ampc_cephalosporin_resistance <span class='op'>=</span> <span class='cn'>NA</span>,
   <span class='va'>...</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span>
+
+<span class='fu'>eucast_dosage</span><span class='op'>(</span><span class='va'>ab</span>, administration <span class='op'>=</span> <span class='st'>"iv"</span>, version_breakpoints <span class='op'>=</span> <span class='fl'>11</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -281,7 +283,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     </tr>
     <tr>
       <th>version_breakpoints</th>
-      <td><p>the version number to use for the EUCAST Clinical Breakpoints guideline. Currently supported: 10.0.</p></td>
+      <td><p>the version number to use for the EUCAST Clinical Breakpoints guideline. Currently supported: 11.0, 10.0.</p></td>
     </tr>
     <tr>
       <th>version_expertrules</th>
@@ -295,6 +297,14 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
       <th>...</th>
       <td><p>column name of an antibiotic, please see section <em>Antibiotics</em> below</p></td>
     </tr>
+    <tr>
+      <th>ab</th>
+      <td><p>any (vector of) text that can be coerced to a valid antibiotic code with <code><a href='as.ab.html'>as.ab()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>administration</th>
+      <td><p>route of administration, either "im", "iv" or "oral"</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
@@ -307,6 +317,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <li><p>EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.2, 2020. <a href='https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf'>(link)</a></p></li>
 <li><p>EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 9.0, 2019. <a href='https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx'>(link)</a></p></li>
 <li><p>EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 10.0, 2020. <a href='https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_10.0_Breakpoint_Tables.xlsx'>(link)</a></p></li>
+<li><p>EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 11.0, 2021. <a href='https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_11.0_Breakpoint_Tables.xlsx'>(link)</a></p></li>
 </ul>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -393,6 +404,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <span class='co'># containing all details about the transformations:</span>
 <span class='va'>c</span> <span class='op'>&lt;-</span> <span class='fu'>eucast_rules</span><span class='op'>(</span><span class='va'>a</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='co'># }</span>
+
+<span class='fu'>eucast_dosage</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"tobra"</span>, <span class='st'>"genta"</span>, <span class='st'>"cipro"</span><span class='op'>)</span>, <span class='st'>"iv"</span><span class='op'>)</span>
 </pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms.codes}
 \alias{microorganisms.codes}
-\title{Data set with 5,583 common microorganism codes}
+\title{Data set with 5,580 common microorganism codes}
 \format{
-A \link{data.frame} with 5,583 observations and 2 variables:
+A \link{data.frame} with 5,580 observations and 2 variables:
 \itemize{
 \item \code{code}\cr Commonly used code of a microorganism
 \item \code{mo}\cr ID of the microorganism in the \link{microorganisms} data set

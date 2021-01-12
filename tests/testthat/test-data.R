@@ -40,14 +40,17 @@ test_that("data sets are valid", {
   expect_true(all(example_isolates$mo %in% microorganisms$mo))
   expect_true(all(microorganisms.translation$mo_new %in% microorganisms$mo))
   expect_true(all(rsi_translation$mo %in% microorganisms$mo))
+  expect_true(all(rsi_translation$ab %in% antibiotics$ab))
   expect_true(all(intrinsic_resistant$microorganism %in% microorganisms$fullname)) # also important for mo_is_intrinsic_resistant()
   expect_true(all(intrinsic_resistant$antibiotic %in% antibiotics$name))
   expect_false(any(is.na(microorganisms.codes$code)))
   expect_false(any(is.na(microorganisms.codes$mo)))
   expect_false(any(microorganisms.translation$mo_old %in% microorganisms$mo))
+  expect_true(all(dosage$ab %in% antibiotics$ab))
+  expect_true(all(dosage$name %in% antibiotics$name))
   
   # antibiotic names must always be coercible to their original AB code
-  expect_identical(antibiotics$ab, as.ab(antibiotics$name))
+  expect_identical(as.ab(antibiotics$name), antibiotics$ab)
   
   # there should be no diacritics (i.e. non ASCII) characters in the datasets (CRAN policy)
   datasets <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item"]

@@ -1,6 +1,39 @@
-# AMR 1.5.0
+# AMR 1.5.0.9000
+## <small>Last updated: 12 January 2021</small>
+*Note: the rules of 'EUCAST Clinical Breakpoints v11.0 (2021)' will also be added in this next release, to be expected in February/March 2021.*
 
-*Note: the rules of 'EUCAST Clinical Breakpoints v11.0 (2021)' will be added in the next release, to be expected in February/March 2021.*
+### New
+* Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the `eucast_rules()` function and in `as.rsi()` to interpret MIC and disk diffusion values. This is now the default guideline in this package.
+* Function `eucast_dosage()` to to get advised dosages of a certain bug-drug combination based on EUCAST dosage data
+* Data set `dosage` to fuel the new `eucast_dosage()` function and to make this data available in a structured way 
+* Function `isolate_identifier()`, which will paste a microorganism code with all antimicrobial results of a data set into one string for each row. This is useful to compare isolates, e.g. between institutions or regions, when there is no genotyping available.
+* Function `mo_is_yeast()`, which determines whether a microorganism is a member of the taxonomic class Saccharomycetes or the taxonomic order Saccharomycetales:
+  ```r
+  mo_kingdom(c("Aspergillus", "Candida"))
+  #> [1] "Fungi" "Fungi"
+  
+  mo_is_yeast(c("Aspergillus", "Candida"))
+  #> [1] FALSE  TRUE
+  
+  # usage for filtering data:
+  example_isolates[which(mo_is_yeast()), ]   # base R
+  example_isolates %>% filter(mo_is_yeast()) # dplyr
+  ```
+  The `mo_type()` function has also been updated to reflect this change:
+  ```r
+  mo_type(c("Aspergillus", "Candida"))
+  # [1] "Fungi"  "Yeasts"
+  mo_type(c("Aspergillus", "Candida"), language = "es") # also supported: de, nl, fr, it, pt
+  #> [1] "Hongos"    "Levaduras"
+  ```
+
+### Changed
+* Using functions without setting a data set (e.g., `mo_is_gram_negative()`, `mo_is_gram_positive()`, `mo_is_intrinsic_resistant()`, `first_isolate()`, `mdro()`) now work with `dplyr`s `group_by()` again
+* Updated the data set `microorganisms.codes` (which contains popular LIS and WHONET codes for microorganisms) for some species of *Mycobacterium* that previously incorrectly returned *M. africanum*
+* Added Pretomanid (PMD, J04AK08) to the `antibiotics` data set
+
+
+# AMR 1.5.0
 
 ### New
 * Functions `get_episode()` and `is_new_episode()` to determine (patient) episodes which are not necessarily based on microorganisms. The `get_episode()` function returns the index number of the episode per group, while the `is_new_episode()` function returns values `TRUE`/`FALSE` to indicate whether an item in a vector is the start of a new episode. They also support `dplyr`s grouping (i.e. using `group_by()`):

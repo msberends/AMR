@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9000</span>
       </span>
     </div>
 
@@ -274,6 +274,8 @@
 
 <span class='fu'>mo_is_gram_positive</span><span class='op'>(</span><span class='va'>x</span>, language <span class='op'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
+<span class='fu'>mo_is_yeast</span><span class='op'>(</span><span class='va'>x</span>, language <span class='op'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+
 <span class='fu'>mo_is_intrinsic_resistant</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>ab</span>, language <span class='op'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>mo_snomed</span><span class='op'>(</span><span class='va'>x</span>, language <span class='op'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -301,7 +303,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>any character (vector) that can be coerced to a valid microorganism code with <code><a href='as.mo.html'>as.mo()</a></code>. Can be left blank for auto-guessing the column containing microorganism codes when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>, please see <em>Examples</em>.</p></td>
+      <td><p>any character (vector) that can be coerced to a valid microorganism code with <code><a href='as.mo.html'>as.mo()</a></code>. Can be left blank for auto-guessing the column containing microorganism codes if used in a data set, please see <em>Examples</em>.</p></td>
     </tr>
     <tr>
       <th>language</th>
@@ -347,7 +349,8 @@
 <p>The short name - <code>mo_shortname()</code> - almost always returns the first character of the genus and the full species, like <code>"E. coli"</code>. Exceptions are abbreviations of staphylococci (such as <em>"CoNS"</em>, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as <em>"GBS"</em>, Group B Streptococci). Please bear in mind that e.g. <em>E. coli</em> could mean <em>Escherichia coli</em> (kingdom of Bacteria) as well as <em>Entamoeba coli</em> (kingdom of Protozoa). Returning to the full name will be done using <code><a href='as.mo.html'>as.mo()</a></code> internally, giving priority to bacteria and human pathogens, i.e. <code>"E. coli"</code> will be considered <em>Escherichia coli</em>. In other words, <code>mo_fullname(mo_shortname("Entamoeba coli"))</code> returns <code>"Escherichia coli"</code>.</p>
 <p>Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions <code>mo_kingdom()</code> and <code>mo_domain()</code> return the exact same results.</p>
 <p>The Gram stain - <code>mo_gramstain()</code> - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, <a href='https://pubmed.ncbi.nlm.nih.gov/11837318'>PMID 11837318</a>), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value <code>NA</code>. Functions <code>mo_is_gram_negative()</code> and <code>mo_is_gram_positive()</code> always return <code>TRUE</code> or <code>FALSE</code> (except when the input is <code>NA</code> or the MO code is <code>UNKNOWN</code>), thus always return <code>FALSE</code> for species outside the taxonomic kingdom of Bacteria.</p>
-<p>Intrinsic resistance - <code>mo_is_intrinsic_resistant()</code> - will be determined based on the <a href='intrinsic_resistant.html'>intrinsic_resistant</a> data set, which is based on <a href='https://www.eucast.org/expert_rules_and_intrinsic_resistance/'>'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2</a> from 2020. The <code>mo_is_intrinsic_resistant()</code> can be vectorised over arguments <code>x</code> (input for microorganisms) and over <code>ab</code> (input for antibiotics).</p>
+<p>Determination of yeasts - <code>mo_is_yeast()</code> - will be based on the taxonomic phylum, class and order. Budding yeasts are true fungi of the phylum Ascomycetes, class Saccharomycetes (also called Hemiascomycetes). The true yeasts are separated into one main order Saccharomycetales. For all microorganisms that are in one of those two groups, the function will return <code>TRUE</code>. It returns <code>FALSE</code> for all other taxonomic entries.</p>
+<p>Intrinsic resistance - <code>mo_is_intrinsic_resistant()</code> - will be determined based on the <a href='intrinsic_resistant.html'>intrinsic_resistant</a> data set, which is based on <a href='https://www.eucast.org/expert_rules_and_intrinsic_resistance/'>'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2</a> (2020). The <code>mo_is_intrinsic_resistant()</code> can be vectorised over arguments <code>x</code> (input for microorganisms) and over <code>ab</code> (input for antibiotics).</p>
 <p>All output will be <a href='translate.html'>translate</a>d where possible.</p>
 <p>The function <code>mo_url()</code> will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
@@ -362,14 +365,14 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
     
 
 <p>With ambiguous user input in <code><a href='as.mo.html'>as.mo()</a></code> and all the <code>mo_*</code> functions, the returned results are chosen based on their matching score using <code><a href='mo_matching_score.html'>mo_matching_score()</a></code>. This matching score \(m\), is calculated as:</p>
-<p>$$m_{(x, n)} = \frac{l_{n} - 0.5 \cdot \min \begin{cases}l_{n} \\ \textrm{lev}(x, n)\end{cases}}{l_{n} \cdot p_{n} \cdot k_{n}}$$</p>
+<p><img src='figures/mo_matching_score.png' width="300px" alt="mo matching score" /></p>
 <p>where:</p><ul>
-<li><p>\(x\) is the user input;</p></li>
-<li><p>\(n\) is a taxonomic name (genus, species, and subspecies);</p></li>
-<li><p>\(l_n\) is the length of \(n\);</p></li>
-<li><p>lev is the <a href='https://en.wikipedia.org/wiki/Levenshtein_distance'>Levenshtein distance function</a>, which counts any insertion, deletion and substitution as 1 that is needed to change \(x\) into \(n\);</p></li>
-<li><p>\(p_n\) is the human pathogenic prevalence group of \(n\), as described below;</p></li>
-<li><p>\(k_n\) is the taxonomic kingdom of \(n\), set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.</p></li>
+<li><p><i>x</i> is the user input;</p></li>
+<li><p><i>n</i> is a taxonomic name (genus, species, and subspecies);</p></li>
+<li><p><i>l<sub>n</sub></i> is the length of <i>n</i>;</p></li>
+<li><p><i>lev</i> is the <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein distance function</a>, which counts any insertion, deletion and substitution as 1 that is needed to change <i>x</i> into <i>n</i>;</p></li>
+<li><p><i>p<sub>n</sub></i> is the human pathogenic prevalence group of <i>n</i>, as described below;</p></li>
+<li><p><i>k<sub>n</sub></i> is the taxonomic kingdom of <i>n</i>, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.</p></li>
 </ul>
 
 <p>The grouping into human pathogenic prevalence (\(p\)) is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence. <strong>Group 1</strong> (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is <em>Enterococcus</em>, <em>Staphylococcus</em> or <em>Streptococcus</em>. This group consequently contains all common Gram-negative bacteria, such as <em>Pseudomonas</em> and <em>Legionella</em> and all species within the order Enterobacterales. <strong>Group 2</strong> consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is <em>Absidia</em>, <em>Acremonium</em>, <em>Actinotignum</em>, <em>Alternaria</em>, <em>Anaerosalibacter</em>, <em>Apophysomyces</em>, <em>Arachnia</em>, <em>Aspergillus</em>, <em>Aureobacterium</em>, <em>Aureobasidium</em>, <em>Bacteroides</em>, <em>Basidiobolus</em>, <em>Beauveria</em>, <em>Blastocystis</em>, <em>Branhamella</em>, <em>Calymmatobacterium</em>, <em>Candida</em>, <em>Capnocytophaga</em>, <em>Catabacter</em>, <em>Chaetomium</em>, <em>Chryseobacterium</em>, <em>Chryseomonas</em>, <em>Chrysonilia</em>, <em>Cladophialophora</em>, <em>Cladosporium</em>, <em>Conidiobolus</em>, <em>Cryptococcus</em>, <em>Curvularia</em>, <em>Exophiala</em>, <em>Exserohilum</em>, <em>Flavobacterium</em>, <em>Fonsecaea</em>, <em>Fusarium</em>, <em>Fusobacterium</em>, <em>Hendersonula</em>, <em>Hypomyces</em>, <em>Koserella</em>, <em>Lelliottia</em>, <em>Leptosphaeria</em>, <em>Leptotrichia</em>, <em>Malassezia</em>, <em>Malbranchea</em>, <em>Mortierella</em>, <em>Mucor</em>, <em>Mycocentrospora</em>, <em>Mycoplasma</em>, <em>Nectria</em>, <em>Ochroconis</em>, <em>Oidiodendron</em>, <em>Phoma</em>, <em>Piedraia</em>, <em>Pithomyces</em>, <em>Pityrosporum</em>, <em>Prevotella</em>,\<em>Pseudallescheria</em>, <em>Rhizomucor</em>, <em>Rhizopus</em>, <em>Rhodotorula</em>, <em>Scolecobasidium</em>, <em>Scopulariopsis</em>, <em>Scytalidium</em>,<em>Sporobolomyces</em>, <em>Stachybotrys</em>, <em>Stomatococcus</em>, <em>Treponema</em>, <em>Trichoderma</em>, <em>Trichophyton</em>, <em>Trichosporon</em>, <em>Tritirachium</em> or <em>Ureaplasma</em>. <strong>Group 3</strong> consists of all other microorganisms.</p>
@@ -487,6 +490,8 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 
 
 <span class='co'># other --------------------------------------------------------------------</span>
+
+<span class='fu'>mo_is_yeast</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Candida"</span>, <span class='st'>"E. coli"</span><span class='op'>)</span><span class='op'>)</span>      <span class='co'># TRUE, FALSE</span>
 
 <span class='co'># gram stains and intrinsic resistance can also be used as a filter in dplyr verbs</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>

@@ -32,7 +32,12 @@ microorganisms
 A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using \code{\link[=as.mo]{as.mo()}}.
 }
 \details{
-Manually added were:
+Please note that entries are only based on the Catalogue of Life and the LPSN (see below). Since these sources incorporate entries based on (recent) publications in the International Journal of Systematic and Evolutionary Microbiology (IJSEM), it can happen that the year of publication is sometimes later than one might expect.
+
+For example, \emph{Staphylococcus pettenkoferi} was newly named in Diagnostic Microbiology and Infectious Disease in 2002 (PMID 12106949), but it was not before 2007 that a publication in IJSEM followed (PMID 17625191). Consequently, the AMR package returns 2007 for \code{mo_year("S. pettenkoferi")}.
+\subsection{Manually additions}{
+
+For convenience, some entries were added manually:
 \itemize{
 \item 11 entries of \emph{Streptococcus} (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)
 \item 2 entries of \emph{Staphylococcus} (coagulase-negative (CoNS) and coagulase-positive (CoPS))
@@ -43,6 +48,8 @@ Manually added were:
 \item 6 families under the Enterobacterales order, according to Adeolu \emph{et al.} (2016, PMID 27620848), that are not (yet) in the Catalogue of Life
 \item 7,411 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) since the DSMZ contain the latest taxonomic information based on recent publications
 }
+}
+
 \subsection{Direct download}{
 
 This data set is available as 'flat file' for use even without \R - you can find the file here:

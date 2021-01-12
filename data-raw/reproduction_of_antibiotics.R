@@ -606,6 +606,20 @@ antibiotics <- antibiotics %>%
     TRUE ~ group))
 antibiotics[which(antibiotics$ab %in% c("CYC", "LNZ", "THA", "TZD")), "group"] <- "Oxazolidinones"
 
+# add pretomanid
+antibiotics <- antibiotics %>%
+  mutate(ab = as.character(ab)) %>% 
+  bind_rows(antibiotics %>%
+              mutate(ab = as.character(ab)) %>% 
+              filter(ab == "SMF") %>%
+              mutate(ab = "PMD",
+                     atc = "J04AK08",
+                     cid = 456199, 
+                     name = "Pretomanid", 
+                     abbreviations = list(""),
+                     oral_ddd = NA_real_))
+
+
 # update DDDs from WHOCC website
 ddd_oral <- double(length = nrow(antibiotics))
 ddd_iv <- double(length = nrow(antibiotics))

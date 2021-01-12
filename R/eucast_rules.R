@@ -23,12 +23,16 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-# add new version numbers here, and add the rules themselves to "data-raw/eucast_rules.tsv"
-# (running "data-raw/internals.R" will process that TSV file)
-EUCAST_VERSION_BREAKPOINTS <- list("10.0" = list(version_txt = "v10.0",
+# add new version numbers here, and add the rules themselves to "data-raw/eucast_rules.tsv" and rsi_translation
+# (running "data-raw/internals.R" will process the TSV file)
+EUCAST_VERSION_BREAKPOINTS <- list("11.0" = list(version_txt = "v11.0",
+                                                 year = 2021, 
+                                                 title = "'EUCAST Clinical Breakpoint Tables'",
+                                                 url = "https://www.eucast.org/clinical_breakpoints/"),
+                                   "10.0" = list(version_txt = "v10.0",
                                                  year = 2020, 
-                                                 title = "'EUCAST Clinical Breakpoints'",
-                                                 url = "https://www.eucast.org/clinical_breakpoints/"))
+                                                 title = "'EUCAST Clinical Breakpoint Tables'",
+                                                 url = "https://www.eucast.org/ast_of_bacteria/previous_versions_of_documents/"))
 EUCAST_VERSION_EXPERT_RULES <- list("3.1" = list(version_txt = "v3.1",
                                                  year = 2016, 
                                                  title = "'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes'",
@@ -44,17 +48,17 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
   version <- format(version, nsmall = 1)
   if (markdown == TRUE) {
     paste0("[", lst[[version]]$title, " ", lst[[version]]$version_txt, "](", lst[[version]]$url, ")",
-           " from ", lst[[version]]$year)
+           " (", lst[[version]]$year, ")")
   } else {
     paste0(lst[[version]]$title, " ", lst[[version]]$version_txt,
-           " from ", lst[[version]]$year)
+           " (", lst[[version]]$year, ")")
   }
 }
 
 #' Apply EUCAST rules
 #' 
 #' @description
-#' Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <https://eucast.org>), see *Source*.
+#' Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <https://eucast.org>), see *Source*. Use [eucast_dosage()] to get advised dosages of a certain bug-drug combination, which is based on the [dosage] data set.
 #' 
 #' To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see Details.
 #' @inheritSection lifecycle Stable lifecycle
@@ -62,11 +66,12 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param info a logical to indicate whether progress should be printed to the console, defaults to only print while in interactive sessions
 #' @param rules a character vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expert"`, `"other"`, `"all"`, and defaults to `c("breakpoints", "expert")`. The default value can be set to another value, e.g. using `options(AMR_eucastrules = "all")`.
 #' @param verbose a [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.
-#' @param version_breakpoints the version number to use for the EUCAST Clinical Breakpoints guideline. Currently supported: `r paste0(names(EUCAST_VERSION_BREAKPOINTS), collapse = ", ")`.
-#' @param version_expertrules the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Currently supported: `r paste0(names(EUCAST_VERSION_EXPERT_RULES), collapse = ", ")`.
+#' @param version_breakpoints the version number to use for the EUCAST Clinical Breakpoints guideline. Can be either `r vector_or(names(EUCAST_VERSION_BREAKPOINTS), reverse = TRUE)`.
+#' @param version_expertrules the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either `r vector_or(names(EUCAST_VERSION_EXPERT_RULES), reverse = TRUE)`.
 #' @param ampc_cephalosporin_resistance a character value that should be applied for AmpC de-repressed cephalosporin-resistant mutants, defaults to `NA`. Currently only works when `version_expertrules` is `3.2`; '*EUCAST Expert Rules v3.2 on Enterobacterales*' states that susceptible (S) results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these agents. A value of `NA` for this argument will remove results for these agents, while e.g. a value of `"R"` will make the results for these agents resistant. Use `NULL` to not alter the results for AmpC de-repressed cephalosporin-resistant mutants. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: *`r gsub("[)(^]", "", gsub("|", ", ", eucast_rules_file[which(eucast_rules_file$reference.version == 3.2 & eucast_rules_file$reference.rule %like% "ampc"), "this_value"][1], fixed = TRUE))`*.
-#' 
 #' @param ... column name of an antibiotic, please see section *Antibiotics* below
+#' @param ab any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
+#' @param administration route of administration, either `r vector_or(dosage$administration)`
 #' @inheritParams first_isolate
 #' @details
 #' **Note:** This function does not translate MIC values to RSI values. Use [as.rsi()] for that. \cr
@@ -101,6 +106,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' - EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.2, 2020. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf)
 #' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 9.0, 2019. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx)
 #' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 10.0, 2020. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_10.0_Breakpoint_Tables.xlsx)
+#' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 11.0, 2021. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_11.0_Breakpoint_Tables.xlsx)
 #' @inheritSection AMR Reference data publicly available
 #' @inheritSection AMR Read more on our website!
 #' @examples
@@ -144,12 +150,14 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' # containing all details about the transformations:
 #' c <- eucast_rules(a, verbose = TRUE)
 #' }
+#' 
+#' eucast_dosage(c("tobra", "genta", "cipro"), "iv")
 eucast_rules <- function(x,
                          col_mo = NULL,
                          info = interactive(),
                          rules = getOption("AMR_eucastrules", default = c("breakpoints", "expert")),
                          verbose = FALSE,
-                         version_breakpoints = 10.0,
+                         version_breakpoints = 11.0,
                          version_expertrules = 3.2,
                          ampc_cephalosporin_resistance = NA,
                          ...) {
@@ -1167,4 +1175,27 @@ edit_rsi <- function(x,
     }
   }
   return(track_changes)
+}
+
+#' @rdname eucast_rules
+#' @export
+eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 11.0) {
+  # show used version_breakpoints number once per session (pkg_env will reload every session)
+  if (message_not_thrown_before(paste0("eucast_dosage_v", gsub("[^0-9]", "", version_breakpoints)), entire_session = TRUE)) {
+    message_("Dosages for antimicrobial drugs, as meant for ",
+             format_eucast_version_nr(version_breakpoints, markdown = FALSE), ". ",
+             font_red("This note will be shown once per session."))
+    remember_thrown_message(paste0("eucast_dosage_v", gsub("[^0-9]", "", version_breakpoints)), entire_session = TRUE)
+  }
+  ab <- as.ab(ab)
+  out <- character(length(ab))
+  for (i in seq_len(length(ab))) {
+    df <- data.frame(ab = ab[i], stringsAsFactors = FALSE, administration = administration) %pm>%
+      pm_inner_join(AMR::dosage, by = c("ab", "administration")) %pm>%
+      pm_mutate(txt = paste0(gsub("_", " ", type), ": ", dose_times, "x ", dose, " ", administration), perl = TRUE)
+    out[i] <- paste(df$txt, collapse = ", ")
+  }
+  names(out) <- ab_name(ab, language = NULL)
+  out[out == ""] <- NA_character_
+  out
 }

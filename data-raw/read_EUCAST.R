@@ -25,6 +25,7 @@
 
 library(openxlsx)
 library(dplyr)
+library(tidyr)
 library(cleaner)
 library(AMR)
 
@@ -32,8 +33,17 @@ library(AMR)
 
 read_EUCAST <- function(sheet, file, guideline_name) { 
   
-  message("Getting sheet ", sheet)
+  message("\nGetting sheet: ", sheet)
   sheet.bak <- sheet
+  
+  uncertainties <- NULL
+  add_uncertainties <- function(old, new) {
+    if (is.null(old)) {
+      new
+    } else {
+      bind_rows(old, new)
+    }
+  }
   
   raw_data <- read.xlsx(xlsxFile = file,
                         sheet = sheet,
@@ -42,6 +52,12 @@ read_EUCAST <- function(sheet, file, guideline_name) {
                         skipEmptyCols = FALSE, 
                         fillMergedCells = TRUE,
                         na.strings = c("", "-", "NA", "IE", "IP"))
+  probable_rows <- suppressWarnings(raw_data %>% mutate_all(as.double) %>% summarise_all(~sum(!is.na(.))) %>% unlist() %>% max())
+  if (probable_rows == 0) {
+    message("NO ROWS FOUND")
+    message("------------------------")
+    return(NULL)
+  }
   
   # in the info header in the Excel file, EUCAST mentions which genera are targeted
   if (sheet %like% "anaerob.*Gram.*posi") {
@@ -69,7 +85,8 @@ read_EUCAST <- function(sheet, file, guideline_name) {
   } else if (sheet %like% "PK.*PD") {
     sheet <- "UNKNOWN"
   }
-  mo_sheet <- paste0(as.mo(unlist(strsplit(sheet, "_"))), collapse = "|")
+  mo_sheet <- paste0(suppressMessages(as.mo(unlist(strsplit(sheet, "_")))), collapse = "|")
+  if (!is.null(mo_uncertainties())) uncertainties <- add_uncertainties(uncertainties, mo_uncertainties())
   
   set_columns_names <- function(x, cols) {
     colnames(x) <- cols[1:length(colnames(x))]
@@ -80,7 +97,8 @@ read_EUCAST <- function(sheet, file, guideline_name) {
     for (i in seq_len(length(x))) {
       y <- trimws(unlist(strsplit(x[i], "(,|and)")))
       y <- trimws(gsub("[(].*[)]", "", y))
-      y <- suppressWarnings(as.mo(y, allow_uncertain = FALSE))
+      y <- suppressWarnings(suppressMessages(as.mo(y, allow_uncertain = FALSE)))
+      if (!is.null(mo_uncertainties())) uncertainties <<- add_uncertainties(uncertainties, mo_uncertainties())
       y <- y[!is.na(y) & y != "UNKNOWN"]
       x[i] <- paste(y, collapse = "|")
     }
@@ -153,7 +171,8 @@ read_EUCAST <- function(sheet, file, guideline_name) {
     mutate(drug = gsub(" ?[(, ].*$", "", drug),
            drug = gsub("[1-9]+$", "", drug),
            ab = as.ab(drug)) %>% 
-    select(ab, mo, everything(), -drug)
+    select(ab, mo, everything(), -drug) %>% 
+    as.data.frame(stringsAsFactors = FALSE)
   
   # new row for every different MO mentioned
   for (i in 1:nrow(cleaned)) {
@@ -162,7 +181,7 @@ read_EUCAST <- function(sheet, file, guideline_name) {
       mo_vect <- unlist(strsplit(mo, "|", fixed = TRUE))
       cleaned[i, "mo"] <- mo_vect[1]
       for (j in seq_len(length(mo_vect))) {
-        cleaned <- bind_rows(cleaned, cleaned[i ,])
+        cleaned <- bind_rows(cleaned, cleaned[i , , drop = FALSE])
         cleaned[nrow(cleaned), "mo"] <- mo_vect[j]
       }
     }
@@ -190,41 +209,26 @@ read_EUCAST <- function(sheet, file, guideline_name) {
               ref_tbl = sheet.bak, 
               disk_dose = ifelse(!is.na(disk_dose), paste0(disk_dose, "ug"), NA_character_),
               breakpoint_S, 
-              breakpoint_R)
+              breakpoint_R) %>% 
+    as.data.frame(stringsAsFactors = FALSE)
   
+  if (!is.null(uncertainties)) {
+    print(uncertainties %>% distinct(input, mo, .keep_all = TRUE))
+  }
+
+  message("Estimated: ", probable_rows, ", gained: ", cleaned %>% count(ab) %>% nrow())
+  message("------------------------")
   cleaned
 }
 
-sheets_to_analyse <- c("Enterobacterales",
-                       "Pseudomonas",
-                       "S.maltophilia",
-                       "Acinetobacter",
-                       "Staphylococcus",
-                       "Enterococcus",
-                       "Streptococcus A,B,C,G",
-                       "S.pneumoniae",
-                       "Viridans group streptococci",
-                       "H.influenzae",
-                       "M.catarrhalis",
-                       "N.gonorrhoeae",
-                       "N.meningitidis",
-                       "Anaerobes, Grampositive",
-                       "C.difficile",
-                       "Anaerobes, Gramnegative",
-                       "H.pylori",
-                       "L.monocytogenes",
-                       "P.multocida",
-                       "C.jejuni_C.coli",
-                       "Corynebacterium",
-                       "A.sanguinicola_A.urinae",
-                       "K.kingae",
-                       "Aeromonas",
-                       "B.pseudomallei",
-                       "M.tuberculosis",
-                       "PK PD breakpoints")
 
-file <- "data-raw/v_10.0_Breakpoint_Tables.xlsx"
-guideline_name <- "EUCAST 2020"
+# Actual import -----------------------------------------------------------
+
+file <- "data-raw/v_11.0_Breakpoint_Tables.xlsx"
+sheets <- readxl::excel_sheets(file)
+guideline_name <- "EUCAST 2021"
+
+sheets_to_analyse <- sheets[!sheets %in% c("Content", "Changes", "Notes", "Guidance", "Dosages", "Technical uncertainty", "Topical agents")]
 
 # takes the longest time:
 new_EUCAST <- read_EUCAST(sheet = sheets_to_analyse[1],
