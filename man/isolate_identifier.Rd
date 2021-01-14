@@ -11,7 +11,7 @@ isolate_identifier(x, col_mo = NULL, cols_ab = NULL)
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{cols_ab}{a character vector of column names of \code{x}, or (a combination with) an \href{[ab_class()]}{antibiotic selector function}, such as \code{\link[=carbapenems]{carbapenems()}} and \code{\link[=aminoglysides]{aminoglysides()}}}
+\item{cols_ab}{a character vector of column names of \code{x}, or (a combination with) an \href{[ab_class()]}{antibiotic selector function}, such as \code{\link[=carbapenems]{carbapenems()}} and \code{\link[=aminoglycosides]{aminoglycosides()}}}
 }
 \description{
 This function will paste the microorganism code with all antimicrobial results into one string for each row in a data set. This is useful to compare isolates, e.g. between institutions or regions, when there is no genotyping available.
