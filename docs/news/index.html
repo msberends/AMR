@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9001</span>
       </span>
     </div>
 
@@ -236,22 +236,21 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1509000" class="section level1">
-<h1 class="page-header" data-toc-text="1.5.0.9000">
-<a href="#amr-1509000" class="anchor"></a>AMR 1.5.0.9000<small> Unreleased </small>
+    <div id="amr-1509001" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.0.9001">
+<a href="#amr-1509001" class="anchor"></a>AMR 1.5.0.9001<small> Unreleased </small>
 </h1>
-<div id="last-updated-12-january-2021" class="section level2">
+<div id="last-updated-14-january-2021" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-12-january-2021" class="anchor"></a><small>Last updated: 12 January 2021</small>
+<a href="#last-updated-14-january-2021" class="anchor"></a><small>Last updated: 14 January 2021</small>
 </h2>
-<p><em>Note: the rules of ‘EUCAST Clinical Breakpoints v11.0 (2021)’ will also be added in this next release, to be expected in February/March 2021.</em></p>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h3>
 <ul>
 <li><p>Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function and in <code><a href="../reference/as.rsi.html">as.rsi()</a></code> to interpret MIC and disk diffusion values. This is now the default guideline in this package.</p></li>
-<li><p>Function <code><a href="../reference/eucast_rules.html">eucast_dosage()</a></code> to to get advised dosages of a certain bug-drug combination based on EUCAST dosage data</p></li>
 <li><p>Data set <code>dosage</code> to fuel the new <code><a href="../reference/eucast_rules.html">eucast_dosage()</a></code> function and to make this data available in a structured way</p></li>
+<li><p>Function <code><a href="../reference/eucast_rules.html">eucast_dosage()</a></code> to get a <code>data.frame</code> with advised dosages of a certain bug-drug combination, which is based on the new <code>dosage</code> data set</p></li>
 <li><p>Function <code><a href="../reference/isolate_identifier.html">isolate_identifier()</a></code>, which will paste a microorganism code with all antimicrobial results of a data set into one string for each row. This is useful to compare isolates, e.g. between institutions or regions, when there is no genotyping available.</p></li>
 <li>
 <p>Function <code><a href="../reference/mo_property.html">mo_is_yeast()</a></code>, which determines whether a microorganism is a member of the taxonomic class Saccharomycetes or the taxonomic order Saccharomycetales:</p>
@@ -284,6 +283,7 @@
 <li>Updated the data set <code>microorganisms.codes</code> (which contains popular LIS and WHONET codes for microorganisms) for some species of <em>Mycobacterium</em> that previously incorrectly returned <em>M. africanum</em>
 </li>
 <li>Added Pretomanid (PMD, J04AK08) to the <code>antibiotics</code> data set</li>
+<li>WHONET code <code>"PNV"</code> will now correctly be interpreted as <code>PHN</code>, the antibiotic code for phenoxymethylpenicillin (‘peni V’)</li>
 </ul>
 </div>
 </div>

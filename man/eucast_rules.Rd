@@ -23,7 +23,7 @@ eucast_rules(
   info = interactive(),
   rules = getOption("AMR_eucastrules", default = c("breakpoints", "expert")),
   verbose = FALSE,
-  version_breakpoints = 10,
+  version_breakpoints = 11,
   version_expertrules = 3.2,
   ampc_cephalosporin_resistance = NA,
   ...
@@ -42,9 +42,9 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 11)
 
 \item{verbose}{a \link{logical} to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.}
 
-\item{version_breakpoints}{the version number to use for the EUCAST Clinical Breakpoints guideline. Currently supported: 11.0, 10.0.}
+\item{version_breakpoints}{the version number to use for the EUCAST Clinical Breakpoints guideline. Can be either "11.0" or "10.0".}
 
-\item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Currently supported: 3.1, 3.2.}
+\item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either "3.2" or "3.1".}
 
 \item{ampc_cephalosporin_resistance}{a character value that should be applied for AmpC de-repressed cephalosporin-resistant mutants, defaults to \code{NA}. Currently only works when \code{version_expertrules} is \code{3.2}; '\emph{EUCAST Expert Rules v3.2 on Enterobacterales}' states that susceptible (S) results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these agents. A value of \code{NA} for this argument will remove results for these agents, while e.g. a value of \code{"R"} will make the results for these agents resistant. Use \code{NULL} to not alter the results for AmpC de-repressed cephalosporin-resistant mutants. \cr For \emph{EUCAST Expert Rules} v3.2, this rule applies to: \emph{Enterobacter, Klebsiella aerogenes, Citrobacter braakii, freundii, gillenii, murliniae, rodenticum, sedlakii, werkmanii, youngae, Hafnia alvei, Serratia, Morganella morganii, Providencia}.}
 
@@ -58,7 +58,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 11)
 The input of \code{x}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \link{data.frame} with all original and new values of the affected bug-drug combinations.
 }
 \description{
-Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{https://eucast.org}), see \emph{Source}. Use \code{\link[=eucast_dosage]{eucast_dosage()}} to get advised dosages of a certain bug-drug combination, which is based on the \link{dosage} data set.
+Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{https://eucast.org}), see \emph{Source}. Use \code{\link[=eucast_dosage]{eucast_dosage()}} to get a \link{data.frame} with advised dosages of a certain bug-drug combination, which is based on the \link{dosage} data set.
 
 To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see Details.
 }

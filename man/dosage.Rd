@@ -11,7 +11,7 @@ A \link{data.frame} with 135 observations and 9 variables:
 \item \code{name}\cr Official name of the antimicrobial agent as used by WHONET/EARS-Net or the WHO
 \item \code{type}\cr Type of the dosage, either "high_dosage", "standard_dosage" or "uncomplicated_uti"
 \item \code{dose}\cr Dose, such as "2 g" or "25 mg/kg"
-\item \code{dose_times}\cr Dose, such as "2 g" or "25 mg/kg"
+\item \code{dose_times}\cr Number of times a dose must be administered
 \item \code{administration}\cr Route of administration, either "im", "iv" or "oral"
 \item \code{notes}\cr Additional dosage notes
 \item \code{original_txt}\cr Original text in the PDF file of EUCAST

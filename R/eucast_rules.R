@@ -58,7 +58,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' Apply EUCAST rules
 #' 
 #' @description
-#' Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <https://eucast.org>), see *Source*. Use [eucast_dosage()] to get advised dosages of a certain bug-drug combination, which is based on the [dosage] data set.
+#' Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <https://eucast.org>), see *Source*. Use [eucast_dosage()] to get a [data.frame] with advised dosages of a certain bug-drug combination, which is based on the [dosage] data set.
 #' 
 #' To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see Details.
 #' @inheritSection lifecycle Stable lifecycle
@@ -166,8 +166,8 @@ eucast_rules <- function(x,
   meet_criteria(info, allow_class = "logical", has_length = 1)
   meet_criteria(rules, allow_class = "character", has_length = c(1, 2, 3, 4), is_in = c("breakpoints", "expert", "other", "all"))
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
-  meet_criteria(version_breakpoints, allow_class = "numeric", has_length = 1)
-  meet_criteria(version_expertrules, allow_class = "numeric", has_length = 1)
+  meet_criteria(version_breakpoints, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_BREAKPOINTS)))
+  meet_criteria(version_expertrules, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_EXPERT_RULES)))
   meet_criteria(ampc_cephalosporin_resistance, allow_class = c("rsi", "character"), has_length = 1, allow_NA = TRUE, allow_NULL = TRUE, is_in = c("R", "S", "I"))
   
   x_deparsed <- deparse(substitute(x))
@@ -177,12 +177,6 @@ eucast_rules <- function(x,
   
   check_dataset_integrity()
   
-  version_breakpoints <- as.double(gsub("[^0-9.]+", "", version_breakpoints))
-  version_expertrules <- as.double(gsub("[^0-9.]+", "", version_expertrules))
-  stop_ifnot(version_breakpoints %in% as.double(names(EUCAST_VERSION_BREAKPOINTS)),
-             "EUCAST version ", version_breakpoints, " for clinical breakpoints not found")
-  stop_ifnot(version_expertrules %in% as.double(names(EUCAST_VERSION_EXPERT_RULES)),
-             "EUCAST version ", version_expertrules, " for expert rules/intrinsic resistance not found")
   breakpoints_info <- EUCAST_VERSION_BREAKPOINTS[[which(as.double(names(EUCAST_VERSION_BREAKPOINTS)) == version_breakpoints)]]
   expertrules_info <- EUCAST_VERSION_EXPERT_RULES[[which(as.double(names(EUCAST_VERSION_EXPERT_RULES)) == version_expertrules)]]
   
@@ -1180,6 +1174,10 @@ edit_rsi <- function(x,
 #' @rdname eucast_rules
 #' @export
 eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 11.0) {
+  meet_criteria(ab, allow_class = c("character", "numeric", "integer", "factor"))
+  meet_criteria(administration, allow_class = "character", is_in = dosage$administration[!is.na(dosage$administration)])
+  meet_criteria(version_breakpoints, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_BREAKPOINTS)))
+  
   # show used version_breakpoints number once per session (pkg_env will reload every session)
   if (message_not_thrown_before(paste0("eucast_dosage_v", gsub("[^0-9]", "", version_breakpoints)), entire_session = TRUE)) {
     message_("Dosages for antimicrobial drugs, as meant for ",
@@ -1187,15 +1185,11 @@ eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 11.0)
              font_red("This note will be shown once per session."))
     remember_thrown_message(paste0("eucast_dosage_v", gsub("[^0-9]", "", version_breakpoints)), entire_session = TRUE)
   }
+  
   ab <- as.ab(ab)
-  out <- character(length(ab))
-  for (i in seq_len(length(ab))) {
-    df <- data.frame(ab = ab[i], stringsAsFactors = FALSE, administration = administration) %pm>%
-      pm_inner_join(AMR::dosage, by = c("ab", "administration")) %pm>%
-      pm_mutate(txt = paste0(gsub("_", " ", type), ": ", dose_times, "x ", dose, " ", administration), perl = TRUE)
-    out[i] <- paste(df$txt, collapse = ", ")
-  }
-  names(out) <- ab_name(ab, language = NULL)
-  out[out == ""] <- NA_character_
-  out
+  df <- AMR::dosage[which(AMR::dosage$ab %in% ab & AMR::dosage$administration %in% administration), , drop = FALSE]
+  df <- df[match(ab, df$ab), colnames(df)[colnames(df) != "administration"], drop = FALSE]
+  rownames(df) <- NULL
+  df$ab <- ab
+  df
 }

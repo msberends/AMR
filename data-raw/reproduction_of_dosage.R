@@ -123,7 +123,8 @@ dosage <- bind_rows(
     original_txt = sapply(uti, function(x) x$original_txt),
     stringsAsFactors = FALSE
   )) %>% 
-  mutate(eucast_version = breakpoints_version) %>% 
+  mutate(eucast_version = breakpoints_version,
+         dose_times = as.integer(dose_times)) %>% 
   arrange(name, administration, type) %>% 
   filter(!is.na(dose), dose != ".")
 

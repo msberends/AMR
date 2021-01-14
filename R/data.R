@@ -285,7 +285,7 @@ catalogue_of_life <- list(
 #' - `name`\cr Official name of the antimicrobial agent as used by WHONET/EARS-Net or the WHO
 #' - `type`\cr Type of the dosage, either `r vector_or(dosage$type)`
 #' - `dose`\cr Dose, such as "2 g" or "25 mg/kg"
-#' - `dose_times`\cr Dose, such as "2 g" or "25 mg/kg"
+#' - `dose_times`\cr Number of times a dose must be administered
 #' - `administration`\cr Route of administration, either `r vector_or(dosage$administration)`
 #' - `notes`\cr Additional dosage notes
 #' - `original_txt`\cr Original text in the PDF file of EUCAST

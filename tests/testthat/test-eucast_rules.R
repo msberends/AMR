@@ -138,4 +138,8 @@ test_that("EUCAST rules work", {
                  info = FALSE)$cefotax,
     as.rsi(c("S", "S")))
   
+  # EUCAST dosage -----------------------------------------------------------
+  expect_equal(nrow(eucast_dosage(c("tobra", "genta", "cipro"))), 3)
+  expect_s3_class(eucast_dosage(c("tobra", "genta", "cipro")), "data.frame")
+  
 })

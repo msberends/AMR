@@ -479,12 +479,39 @@ meet_criteria <- function(object,
     stop_if(allow_NA == FALSE, "argument `", obj_name, "` must not be NA", call = call_depth)
     return(invisible())
   }
+  
+  translate_class <- function(allow_class, plural = isTRUE(has_length > 1)) {
+    allow_class.bak <- allow_class
+    allow_class[allow_class %in% c("numeric", "double")] <- "number"
+    allow_class[allow_class == "integer"] <- "whole number"
+    if (any(c("numeric", "double") %in% allow_class.bak, na.rm = TRUE) & "integer" %in% allow_class.bak) {
+      allow_class[allow_class %in% c("number", "whole number")] <- "(whole) number"
+    }
+    allow_class[allow_class == "character"] <- "text string"
+    allow_class[allow_class %in% c("Date", "POSIXt")] <- "date"
+    allow_class[allow_class != allow_class.bak] <- paste0(ifelse(plural, "", "a "),
+                                                          allow_class[allow_class != allow_class.bak],
+                                                          ifelse(plural, "s", ""))
+    # exceptions
+    allow_class[allow_class == "logical"] <- ifelse(plural, "a vector of `TRUE`/`FALSE`", "`TRUE` or `FALSE`")
+    if ("data.frame" %in% allow_class) {
+      allow_class <- "a data set"
+    }
+    if ("list" %in% allow_class) {
+      allow_class <- "a list"
+    }
+    if ("matrix" %in% allow_class) {
+      allow_class <- "a matrix"
+    }
+    allow_class[allow_class == allow_class.bak] <- paste0("a class <", allow_class[allow_class == allow_class.bak], ">")
+    # output
+    vector_or(allow_class, quotes = FALSE)
+  }
 
   if (!is.null(allow_class)) {
     stop_ifnot(inherits(object, allow_class), "argument `", obj_name,
-               "` must ", # ifelse(allow_NULL, "be NULL or must ", ""),
-               "be of class ", vector_or(allow_class, quotes = TRUE),
-               ", not \"", paste(class(object), collapse = "/"), "\"",
+               "` must be ", translate_class(allow_class),
+               ", not ", translate_class(class(object)),
                call = call_depth)
     # check data.frames for data
     if (inherits(object, "data.frame")) {
@@ -515,9 +542,8 @@ meet_criteria <- function(object,
     }
     stop_ifnot(all(object %in% is_in, na.rm = TRUE), "argument `", obj_name,
                "` must be ",
-               ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1, "one of: ", ""),
-               vector_or(is_in, quotes = TRUE),
-               ", not ", paste0("\"", object, "\"", collapse = "/"), "",
+               ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1, "either ", ""),
+               vector_or(is_in, quotes = !isTRUE(any(c("double", "numeric", "integer") %in% allow_class))),
                call = call_depth)
   }
   if (!is.null(contains_column_class)) {

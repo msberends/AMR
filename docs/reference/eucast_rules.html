@@ -49,7 +49,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Apply EUCAST rules — eucast_rules" />
-<meta property="og:description" content="Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, https://eucast.org), see Source. Use eucast_dosage() to get advised dosages of a certain bug-drug combination, which is based on the dosage data set.
+<meta property="og:description" content="Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, https://eucast.org), see Source. Use eucast_dosage() to get a data.frame with advised dosages of a certain bug-drug combination, which is based on the dosage data set.
 To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see Details." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
@@ -83,7 +83,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9001</span>
       </span>
     </div>
 
@@ -240,7 +240,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     </div>
 
     <div class="ref-description">
-    <p>Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <a href='https://eucast.org'>https://eucast.org</a>), see <em>Source</em>. Use <code>eucast_dosage()</code> to get advised dosages of a certain bug-drug combination, which is based on the <a href='dosage.html'>dosage</a> data set.</p>
+    <p>Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <a href='https://eucast.org'>https://eucast.org</a>), see <em>Source</em>. Use <code>eucast_dosage()</code> to get a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with advised dosages of a certain bug-drug combination, which is based on the <a href='dosage.html'>dosage</a> data set.</p>
 <p>To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see Details.</p>
     </div>
 
@@ -250,7 +250,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
   info <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span>,
   rules <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"AMR_eucastrules"</span>, default <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"breakpoints"</span>, <span class='st'>"expert"</span><span class='op'>)</span><span class='op'>)</span>,
   verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  version_breakpoints <span class='op'>=</span> <span class='fl'>10</span>,
+  version_breakpoints <span class='op'>=</span> <span class='fl'>11</span>,
   version_expertrules <span class='op'>=</span> <span class='fl'>3.2</span>,
   ampc_cephalosporin_resistance <span class='op'>=</span> <span class='cn'>NA</span>,
   <span class='va'>...</span>
@@ -283,11 +283,11 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     </tr>
     <tr>
       <th>version_breakpoints</th>
-      <td><p>the version number to use for the EUCAST Clinical Breakpoints guideline. Currently supported: 11.0, 10.0.</p></td>
+      <td><p>the version number to use for the EUCAST Clinical Breakpoints guideline. Can be either "11.0" or "10.0".</p></td>
     </tr>
     <tr>
       <th>version_expertrules</th>
-      <td><p>the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Currently supported: 3.1, 3.2.</p></td>
+      <td><p>the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either "3.2" or "3.1".</p></td>
     </tr>
     <tr>
       <th>ampc_cephalosporin_resistance</th>
