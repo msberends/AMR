@@ -138,9 +138,6 @@ mdro <- function(x,
     }
   }
   
-  stop_ifnot(is.data.frame(x), "`x` must be a data.frame")
-  stop_if(any(dim(x) == 0), "`x` must contain rows and columns")
-  
   # force regular data.frame, not a tibble or data.table
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   
@@ -154,8 +151,8 @@ mdro <- function(x,
     warning_("Using `country` is deprecated, use `guideline` instead. Please see ?mdro.", call = FALSE)
     guideline <- list(...)$country
   }
-
-    guideline.bak <- guideline
+  
+  guideline.bak <- guideline
   guideline <- tolower(gsub("[^a-zA-Z0-9.]+", "", guideline))
   if (is.null(guideline)) {
     # default to the paper by Magiorakos et al. (2012)
@@ -182,9 +179,9 @@ mdro <- function(x,
   }
   if (is.null(col_mo) & guideline$code == "tb") {
     message_("No column found as input for `col_mo`, ",
-             font_bold("assuming all records contain", font_italic("Mycobacterium tuberculosis.")))
-             x$mo <- as.mo("Mycobacterium tuberculosis")
-             col_mo <- "mo"
+             font_bold(paste0("assuming all records contain", font_italic("Mycobacterium tuberculosis"), ".")))
+    x$mo <- as.mo("Mycobacterium tuberculosis") # consider overkill at all times: MO_lookup[which(MO_lookup$fullname == "Mycobacterium tuberculosis"), "mo", drop = TRUE]
+    col_mo <- "mo"
   }
   stop_if(is.null(col_mo), "`col_mo` must be set")
   stop_ifnot(col_mo %in% colnames(x), "column '", col_mo, "' (`col_mo`) not found")
@@ -873,7 +870,9 @@ mdro <- function(x,
     # MDR (=2): >=3 classes affected
     x[which(x$classes_affected >= 3), "MDRO"] <- 2
     if (verbose == TRUE) {
-      x[which(x$classes_affected >= 3), "reason"] <- paste0("at least 3 classes contain R or I: ", x$classes_affected[which(x$classes_affected >= 3)],
+      x[which(x$classes_affected >= 3), "reason"] <- paste0("at least 3 classes contain R",
+                                                            ifelse(!isTRUE(combine_SI), " or I", ""), ": ",
+                                                            x$classes_affected[which(x$classes_affected >= 3)],
                                                             " out of ", x$classes_available[which(x$classes_affected >= 3)], " available classes")
     }
     
@@ -1044,49 +1043,55 @@ mdro <- function(x,
     # Germany -----------------------------------------------------------------
     CTX_or_CAZ <- CTX %or% CAZ
     IPM_or_MEM <- IPM %or% MEM
-    x$missing <- NA_character_
-    if (is.na(PIP)) PIP <- "missing"
-    if (is.na(CTX_or_CAZ)) CTX_or_CAZ <- "missing"
-    if (is.na(IPM_or_MEM)) IPM_or_MEM <- "missing"
-    if (is.na(IPM)) IPM <- "missing"
-    if (is.na(MEM)) MEM <- "missing"
-    if (is.na(CIP)) CIP <- "missing"
     
     # Table 1
-    x[which((x$order == "Enterobacterales" |  # following in fact the old Enterobacteriaceae classification
-               (x$genus == "Acinetobacter" & x$species ==  "baumannii")) &
-              x[, PIP] == "R" &
-              x[, CTX_or_CAZ] == "R" &
-              x[, IPM_or_MEM] == "S" &
-              x[, CIP] == "R"),
-      "MDRO"] <- 2 # 2 = 3MRGN
+    trans_tbl(2, # 3MRGN
+              which((x$order == "Enterobacterales" |  # following in fact the old Enterobacteriaceae classification
+                       (x$genus == "Acinetobacter" & x$species ==  "baumannii")) &
+                      x[, PIP, drop = TRUE] == "R" &
+                      x[, CTX_or_CAZ, drop = TRUE] == "R" &
+                      x[, IPM_or_MEM, drop = TRUE] == "S" &
+                      x[, CIP, drop = TRUE] == "R"),
+              c(PIP, CTX, CAZ, IPM, MEM, CIP),
+              "any")
     
-    x[which((x$order == "Enterobacterales" |  # following in fact the old Enterobacteriaceae classification
-               (x$genus == "Acinetobacter" & x$species ==  "baumannii")) &
-              x[, PIP] == "R" &
-              x[, CTX_or_CAZ] == "R" &
-              x[, IPM_or_MEM] == "R" &
-              x[, CIP] == "R"),
-      "MDRO"] <- 3 # 3 = 4MRGN, overwrites 3MRGN if applicable
+    trans_tbl(3, # 4MRGN, overwrites 3MRGN if applicable
+              which((x$order == "Enterobacterales" |  # following in fact the old Enterobacteriaceae classification
+                       (x$genus == "Acinetobacter" & x$species ==  "baumannii")) &
+                      x[, PIP, drop = TRUE] == "R" &
+                      x[, CTX_or_CAZ, drop = TRUE] == "R" &
+                      x[, IPM_or_MEM, drop = TRUE] == "R" &
+                      x[, CIP, drop = TRUE] == "R"),
+              c(PIP, CTX, CAZ, IPM, MEM, CIP),
+              "any")
     
-    x[which((x$order == "Enterobacterales" |  # following in fact the old Enterobacteriaceae classification
-               (x$genus == "Acinetobacter" & x$species ==  "baumannii")) &
-              x[, IPM] == "R" | x[, MEM] == "R"),
-      "MDRO"] <- 3 # 3 = 4MRGN, always when imipenem or meropenem is R
+    trans_tbl(3, # 4MRGN, overwrites 3MRGN if applicable
+              which((x$order == "Enterobacterales" |  # following in fact the old Enterobacteriaceae classification
+                       (x$genus == "Acinetobacter" & x$species ==  "baumannii")) &
+                      (x[, IPM, drop = TRUE] == "R" | x[, MEM, drop = TRUE] == "R")),
+              c(IPM, MEM),
+              "any")
     
-    x[which(x$genus == "Pseudomonas" & x$species == "aeruginosa" &
-              (x[, PIP] == "S") +
-              (x[, CTX_or_CAZ] == "S") +
-              (x[, IPM_or_MEM] == "S") +
-              (x[, CIP] == "S") == 1),
-      "MDRO"] <- 2 # 2 = 3MRGN, if only 1 group is S
+    trans_tbl(2, # 3MRGN, if only 1 group is S
+              which(x$genus == "Pseudomonas" & x$species == "aeruginosa" &
+                      (x[, PIP, drop = TRUE] == "S") +
+                      (x[, CTX_or_CAZ, drop = TRUE] == "S") +
+                      (x[, IPM_or_MEM, drop = TRUE] == "S") +
+                      (x[, CIP, drop = TRUE] == "S") == 1),
+              c(PIP, CTX, CAZ, IPM, MEM, CIP),
+              "any")
     
-    x[which((x$genus == "Pseudomonas" & x$species == "aeruginosa") &
-              x[, PIP] == "R" &
-              x[, CTX_or_CAZ] == "R" &
-              x[, IPM_or_MEM] == "R" &
-              x[, CIP] == "R"),
-      "MDRO"] <- 3 # 3 = 4MRGN
+    trans_tbl(3, # 4MRGN otherwise
+              which((x$genus == "Pseudomonas" & x$species == "aeruginosa") &
+                      (x[, PIP, drop = TRUE] == "R" | x[, TZP, drop = TRUE] == "R") &
+                      x[, CTX_or_CAZ, drop = TRUE] == "R" &
+                      x[, IPM_or_MEM, drop = TRUE] == "R" &
+                      x[, CIP, drop = TRUE] == "R"),
+              c(PIP, CTX, CAZ, IPM, MEM, CIP),
+              "any")
+    
+    x[which(x$MDRO == 2), "reason"] <- "3MRGN"
+    x[which(x$MDRO == 3), "reason"] <- "4MRGN"
   }
   
   if (guideline$code == "brmo") {
@@ -1139,17 +1144,21 @@ mdro <- function(x,
         & !ab_missing(CAZ)
         & !ab_missing(TZP)) {
       x$psae <- 0
-      x[which(x[, MEM] == "R" | x[, IPM] == "R"), "psae"] <- 1 + x[which(x[, MEM] == "R" | x[, IPM] == "R"), "psae"]
-      x[which(x[, GEN] == "R" & x[, TOB] == "R"), "psae"] <- 1 + x[which(x[, GEN] == "R" & x[, TOB] == "R"), "psae"]
-      x[which(x[, CIP] == "R"), "psae"] <- 1 + x[which(x[, CIP] == "R"), "psae"]
-      x[which(x[, CAZ] == "R"), "psae"] <- 1 + x[which(x[, CAZ] == "R"), "psae"]
-      x[which(x[, TZP] == "R"), "psae"] <- 1 + x[which(x[, TZP] == "R"), "psae"]
+      x[which(x[, MEM, drop = TRUE] == "R" | x[, IPM, drop = TRUE] == "R"), "psae"] <- 1 + x[which(x[, MEM, drop = TRUE] == "R" | x[, IPM, drop = TRUE] == "R"), "psae"]
+      x[which(x[, GEN, drop = TRUE] == "R" & x[, TOB, drop = TRUE] == "R"), "psae"] <- 1 + x[which(x[, GEN, drop = TRUE] == "R" & x[, TOB, drop = TRUE] == "R"), "psae"]
+      x[which(x[, CIP, drop = TRUE] == "R"), "psae"] <- 1 + x[which(x[, CIP, drop = TRUE] == "R"), "psae"]
+      x[which(x[, CAZ, drop = TRUE] == "R"), "psae"] <- 1 + x[which(x[, CAZ, drop = TRUE] == "R"), "psae"]
+      x[which(x[, TZP, drop = TRUE] == "R"), "psae"] <- 1 + x[which(x[, TZP, drop = TRUE] == "R"), "psae"]
     } else {
       x$psae <- 0
     }
+    trans_tbl(3,
+              which(x$genus == "Pseudomonas" & x$species == "aeruginosa" & x$psae >= 3),
+              c(CAZ, CIP, GEN, IPM, MEM, TOB, TZP),
+              "any")
     x[which(
       x$genus == "Pseudomonas" & x$species == "aeruginosa"
-      & x$psae >= 3), "MDRO"] <- 3
+      & x$psae >= 3), "reason"] <- paste0("at least 3 classes contain R", ifelse(!isTRUE(combine_SI), " or I", ""))
     
     # Table 3
     trans_tbl(3,
@@ -1224,6 +1233,7 @@ mdro <- function(x,
                                           1))))
     # keep all real TB, make other species NA
     x$MDRO <- ifelse(x$fullname == "Mycobacterium tuberculosis", x$MDRO, NA_real_)
+    x$reason <- "PDR/MDR/XDR criteria were met"
   }
   
   if (info == TRUE) {
@@ -1248,7 +1258,7 @@ mdro <- function(x,
   if (guideline$code == "cmi2012") {
     if (any(x$MDRO == -1, na.rm = TRUE)) {
       warning_("NA introduced for isolates where the available percentage of antimicrobial classes was below ",
-              percentage(pct_required_classes), " (set with `pct_required_classes`)", call = FALSE)
+               percentage(pct_required_classes), " (set with `pct_required_classes`)", call = FALSE)
       # set these -1s to NA
       x[which(x$MDRO == -1), "MDRO"] <- NA_integer_
     }
@@ -1280,8 +1290,8 @@ mdro <- function(x,
           col_mo,
           "MDRO",
           "reason",
-          "columns_nonsusceptible")]
-    #x
+          "columns_nonsusceptible"), 
+      drop = FALSE]
   } else {
     x$MDRO
   }

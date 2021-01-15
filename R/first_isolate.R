@@ -202,7 +202,6 @@ first_isolate <- function(x,
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo")
     stop_if(is.null(col_mo), "`col_mo` must be set")
-    stop_ifnot(col_mo %in% colnames(x), "column '", col_mo, "' (`col_mo`) not found")
   }
   
   # -- date

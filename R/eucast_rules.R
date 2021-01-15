@@ -205,8 +205,10 @@ eucast_rules <- function(x,
   # -- mo
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo", info = info)
+    stop_if(is.null(col_mo), "`col_mo` must be set")
+  } else {
+    stop_ifnot(col_mo %in% colnames(x), "column '", col_mo, "' (`col_mo`) not found")
   }
-  stop_if(is.null(col_mo), "`col_mo` must be set")
   
   decimal.mark <- getOption("OutDec")
   big.mark <- ifelse(decimal.mark != ",", ",", ".")

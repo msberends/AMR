@@ -122,7 +122,7 @@ get_column_abx <- function(x,
   meet_criteria(info, allow_class = "logical", has_length = 1)
   
   if (info == TRUE) {
-    message_("Auto-guessing columns suitable for analysis", appendLF = FALSE)
+    message_("Auto-guessing columns suitable for analysis", appendLF = FALSE, as_note = FALSE)
   }
   
   x <- as.data.frame(x, stringsAsFactors = FALSE)
