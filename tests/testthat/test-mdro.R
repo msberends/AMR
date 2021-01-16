@@ -223,4 +223,15 @@ test_that("mdro works", {
   expect_equal(as.integer(mdro(acin)), c(1:4))
   expect_s3_class(mdro(acin, verbose = TRUE), "data.frame")
   
+  # custom rules
+  custom <- custom_mdro_guideline("CIP == 'R' & age > 60" ~ "Elderly Type A",
+                                  "ERY == 'R' & age > 60" ~ "Elderly Type B")
+  expect_output(print(custom))
+  x <- mdro(example_isolates, guideline = custom, info = TRUE)
+  expect_equal(as.double(table(x)), c(43, 891, 1066))
+  expect_error(custom_mdro_guideline())
+  expect_error(custom_mdro_guideline("test"))
+  expect_error(custom_mdro_guideline("test" ~ c(1:3)))
+  expect_error(custom_mdro_guideline("test" ~ A))
+  
 })

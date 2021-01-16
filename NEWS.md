@@ -1,10 +1,11 @@
-# AMR 1.5.0.9003
-## <small>Last updated: 15 January 2021</small>
+# AMR 1.5.0.9004
+## <small>Last updated: 17 January 2021</small>
 
 ### New
 * Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the `eucast_rules()` function and in `as.rsi()` to interpret MIC and disk diffusion values. This is now the default guideline in this package.
 * Data set `dosage` to fuel the new `eucast_dosage()` function and to make this data available in a structured way 
 * Function `eucast_dosage()` to get a `data.frame` with advised dosages of a certain bug-drug combination, which is based on the new `dosage` data set
+* Support for custom MDRO guidelines, using the new `custom_mdro_guideline()` function, please see `mdro()` for additional info
 * Function `isolate_identifier()`, which will paste a microorganism code with all antimicrobial results of a data set into one string for each row. This is useful to compare isolates, e.g. between institutions or regions, when there is no genotyping available.
 * Function `mo_is_yeast()`, which determines whether a microorganism is a member of the taxonomic class Saccharomycetes or the taxonomic order Saccharomycetales:
   ```r

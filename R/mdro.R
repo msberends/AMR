@@ -25,10 +25,10 @@
 
 #' Determine multidrug-resistant organisms (MDRO)
 #'
-#' Determine which isolates are multidrug-resistant organisms (MDRO) according to international and national guidelines.
+#' Determine which isolates are multidrug-resistant organisms (MDRO) according to international, national and custom guidelines.
 #' @inheritSection lifecycle Stable lifecycle
 #' @param x a [data.frame] with antibiotics columns, like `AMX` or `amox`. Can be left blank for automatic determination.
-#' @param guideline a specific guideline to follow. When left empty, the publication by Magiorakos *et al.* (2012, Clinical Microbiology and Infection) will be followed, please see *Details*.
+#' @param guideline a specific guideline to follow. Can also have [custom_mdro_guideline()] as input. When left empty, the publication by Magiorakos *et al.* (2012, Clinical Microbiology and Infection) will be followed, please see *Details*.
 #' @inheritParams eucast_rules
 #' @param pct_required_classes minimal required percentage of antimicrobial classes that must be available per isolate, rounded down. For example, with the default guideline, 17 antimicrobial classes must be available for *S. aureus*. Setting this `pct_required_classes` argument to `0.5` (default) means that for every *S. aureus* isolate at least 8 different classes must be available. Any lower number of available classes will return `NA` for that isolate.
 #' @param combine_SI a [logical] to indicate whether all values of S and I must be merged into one, so resistance is only considered when isolates are R, not I. As this is the default behaviour of the [mdro()] function, it follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. When using `combine_SI = FALSE`, resistance is considered when isolates are R or I.
@@ -38,6 +38,10 @@
 #' These functions are context-aware when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`. This means that then the `x` argument can be left blank, please see *Examples*.
 #' 
 #' For the `pct_required_classes` argument, values above 1 will be divided by 100. This is to support both fractions (`0.75` or `3/4`) and percentages (`75`).
+#' 
+#' **Note:** Every test that involves the Enterobacteriaceae family, will internally be performed using its newly named *order* Enterobacterales, since the Enterobacteriaceae family has been taxonomically reclassified by Adeolu *et al.* in 2016. Before that, Enterobacteriaceae was the only family under the Enterobacteriales (with an i) order. All species under the old Enterobacteriaceae family are still under the new Enterobacterales (without an i) order, but divided into multiple families. The way tests are performed now by this [mdro()] function makes sure that results from before 2016 and after 2016 are identical.
+#' 
+#' ### International / National guidelines
 #' 
 #' Currently supported guidelines are (case-insensitive):
 #' 
@@ -67,7 +71,40 @@
 #' 
 #' Please suggest your own (country-specific) guidelines by letting us know: <https://github.com/msberends/AMR/issues/new>.
 #' 
-#' **Note:** Every test that involves the Enterobacteriaceae family, will internally be performed using its newly named *order* Enterobacterales, since the Enterobacteriaceae family has been taxonomically reclassified by Adeolu *et al.* in 2016. Before that, Enterobacteriaceae was the only family under the Enterobacteriales (with an i) order. All species under the old Enterobacteriaceae family are still under the new Enterobacterales (without an i) order, but divided into multiple families. The way tests are performed now by this [mdro()] function makes sure that results from before 2016 and after 2016 are identical.
+#' 
+#' ### Custom guidelines
+#' 
+#' Custom guidelines can be set with the [custom_mdro_guideline()] function. This is of great importance if you have custom rules to determine MDROs in your hospital, e.g., rules that are dependent on ward, state of contact isolation or other variables in your data.
+#' 
+#' If you are familiar with `case_when()` of the `dplyr` package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation':
+#' 
+#' ```
+#' custom <- custom_mdro_guideline("CIP == 'R' & age > 60" ~ "Elderly Type A",
+#'                                 "ERY == 'R' & age > 60" ~ "Elderly Type B")
+#' ```
+#' 
+#' If a row/an isolate matches the first rule, the value after the first `~` (in this case *'Elderly Type A'*) will be set as MDRO value. Otherwise, the second rule will be tried and so on. The number of rules is unlimited. 
+#' 
+#' You can print the rules set in the console for an overview. Colours will help reading it if your console supports colours.
+#' 
+#' ```
+#' custom
+#' #> A set of custom MDRO rules:
+#' #>   1. CIP == "R" & age > 60 -> "Elderly Type A"
+#' #>   2. ERY == "R" & age > 60 -> "Elderly Type B"
+#' #>   3. Otherwise -> "Negative"
+#' #> 
+#' #> Unmatched rows will return NA.
+#' ```
+#' 
+#' The outcome of the function can be used for the `guideline` argument in the [mdro()] function:
+#' 
+#' ```
+#' x <- mdro(example_isolates, guideline = custom)
+#' table(x)
+#' ```
+#' 
+#' The rules set (the `custom` object in this case) could be exported to a shared file location using [saveRDS()] if you collaborate with multiple users. The custom rules set could then be imported using [readRDS()],
 #' @inheritSection as.rsi Interpretation of R and S/I
 #' @return
 #' - CMI 2012 paper - function [mdr_cmi2012()] or [mdro()]:\cr
@@ -76,7 +113,7 @@
 #'   Ordered [factor] with levels `Negative` < `Mono-resistant` < `Poly-resistant` < `Multi-drug-resistant` < `Extensively drug-resistant`
 #' - German guideline - function [mrgn()] or [`mdro(..., guideline = "MRGN")`][mdro()]:\cr
 #'   Ordered [factor] with levels `Negative` < `3MRGN` < `4MRGN`
-#' - Everything else:\cr
+#' - Everything else, except for custom guidelines:\cr
 #'   Ordered [factor] with levels `Negative` < `Positive, unconfirmed` < `Positive`. The value `"Positive, unconfirmed"` means that, according to the guideline, it is not entirely sure if the isolate is multi-drug resistant and this should be confirmed with additional (e.g. molecular) tests
 #' @rdname mdro
 #' @aliases MDR XDR PDR BRMO 3MRGN 4MRGN
@@ -86,6 +123,10 @@
 #' Please see *Details* for the list of publications used for this function.
 #' @examples
 #' mdro(example_isolates, guideline = "EUCAST")
+#' 
+#' mdro(example_isolates,
+#'      guideline = custom_mdro_guideline("AMX == 'R'" ~ "Custom MDRO 1",
+#'                                        "VAN == 'R'" ~ "Custom MDRO 2"))
 #' 
 #' \donttest{
 #' if (require("dplyr")) {
@@ -113,7 +154,7 @@ mdro <- function(x,
     x <- get_current_data(arg_name = "x", call = -2)
   }
   meet_criteria(x, allow_class = "data.frame")
-  meet_criteria(guideline, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  meet_criteria(guideline, allow_class = c("list", "character"), allow_NULL = TRUE)
   meet_criteria(col_mo, allow_class = "character", has_length = 1, is_in = colnames(x), allow_NULL = TRUE)
   meet_criteria(info, allow_class = "logical", has_length = 1)
   meet_criteria(pct_required_classes, allow_class = "numeric", has_length = 1)
@@ -153,6 +194,30 @@ mdro <- function(x,
   }
   
   guideline.bak <- guideline
+  if (is.list(guideline)) {
+    # Custom MDRO guideline ---------------------------------------------------
+    stop_ifnot(inherits(guideline, "custom_mdro_guideline"), "use `custom_mdro_guideline()` to create custom guidelines")
+    if (info == TRUE) {
+      cat("Determining MDROs based on custom rules.\n")
+    }
+    x <- run_custom_mdro_guideline(x, guideline)
+    if (info == TRUE) {
+      if (sum(!is.na(x$MDRO)) == 0) {
+        cat(font_bold(paste0("=> Found 0 MDROs since no isolates are covered by the custom guideline")))
+      } else {
+        cat(font_bold(paste0("=> Found ", sum(x$MDRO != "Negative", na.rm = TRUE), " custom defined MDROs out of ", sum(!is.na(x$MDRO)), 
+                             " isolates (", trimws(percentage(sum(x$MDRO != "Negative", na.rm = TRUE) / sum(!is.na(x$MDRO)))), ")\n")))
+      }
+    }
+    if (verbose == TRUE) {
+      return(x[, c("row_number",
+                   "MDRO",
+                   "reason",
+                   "columns_nonsusceptible")])
+    } else {
+      return(x$MDRO)
+    }
+  }
   guideline <- tolower(gsub("[^a-zA-Z0-9.]+", "", guideline))
   if (is.null(guideline)) {
     # default to the paper by Magiorakos et al. (2012)
@@ -582,6 +647,11 @@ mdro <- function(x,
   }
   ab_NA <- function(x) {
     x[!is.na(x)]
+  }
+  try_ab <- function(expr) {
+    out <- tryCatch(expr, error = function(e) FALSE)
+    out[is.na(out)] <- FALSE
+    out
   }
   
   # antibiotic classes
@@ -1041,52 +1111,52 @@ mdro <- function(x,
   
   if (guideline$code == "mrgn") {
     # Germany -----------------------------------------------------------------
-    CTX_or_CAZ <- CTX %or% CAZ
-    IPM_or_MEM <- IPM %or% MEM
     
     # Table 1
     trans_tbl(2, # 3MRGN
               which((x$order == "Enterobacterales" |  # following in fact the old Enterobacteriaceae classification
                        (x$genus == "Acinetobacter" & x$species ==  "baumannii")) &
-                      x[, PIP, drop = TRUE] == "R" &
-                      x[, CTX_or_CAZ, drop = TRUE] == "R" &
-                      x[, IPM_or_MEM, drop = TRUE] == "S" &
-                      x[, CIP, drop = TRUE] == "R"),
+                      try_ab(x[, PIP, drop = TRUE] == "R") &
+                      (try_ab(x[, CTX, drop = TRUE] == "R") | try_ab(x[, CAZ, drop = TRUE] == "R")) &
+                      (try_ab(x[, IPM, drop = TRUE] != "R") | try_ab(x[, MEM, drop = TRUE] != "R")) &
+                      try_ab(x[, CIP, drop = TRUE] == "R")),
               c(PIP, CTX, CAZ, IPM, MEM, CIP),
               "any")
     
     trans_tbl(3, # 4MRGN, overwrites 3MRGN if applicable
               which((x$order == "Enterobacterales" |  # following in fact the old Enterobacteriaceae classification
                        (x$genus == "Acinetobacter" & x$species ==  "baumannii")) &
-                      x[, PIP, drop = TRUE] == "R" &
-                      x[, CTX_or_CAZ, drop = TRUE] == "R" &
-                      x[, IPM_or_MEM, drop = TRUE] == "R" &
-                      x[, CIP, drop = TRUE] == "R"),
+                      try_ab(x[, PIP, drop = TRUE] == "R") &
+                      (try_ab(x[, CTX, drop = TRUE] == "R") | try_ab(x[, CAZ, drop = TRUE] == "R")) &
+                      (try_ab(x[, IPM, drop = TRUE] == "R") | try_ab(x[, MEM, drop = TRUE] == "R")) &
+                      try_ab(x[, CIP, drop = TRUE] == "R")),
               c(PIP, CTX, CAZ, IPM, MEM, CIP),
               "any")
     
     trans_tbl(3, # 4MRGN, overwrites 3MRGN if applicable
               which((x$order == "Enterobacterales" |  # following in fact the old Enterobacteriaceae classification
                        (x$genus == "Acinetobacter" & x$species ==  "baumannii")) &
-                      (x[, IPM, drop = TRUE] == "R" | x[, MEM, drop = TRUE] == "R")),
+                      (try_ab(x[, IPM, drop = TRUE] == "R") | try_ab(x[, MEM, drop = TRUE] == "R"))),
               c(IPM, MEM),
               "any")
     
     trans_tbl(2, # 3MRGN, if only 1 group is S
               which(x$genus == "Pseudomonas" & x$species == "aeruginosa" &
-                      (x[, PIP, drop = TRUE] == "S") +
-                      (x[, CTX_or_CAZ, drop = TRUE] == "S") +
-                      (x[, IPM_or_MEM, drop = TRUE] == "S") +
-                      (x[, CIP, drop = TRUE] == "S") == 1),
+                      try_ab(x[, PIP, drop = TRUE] == "S") +
+                      try_ab(x[, CTX, drop = TRUE] == "S") +
+                      try_ab(x[, CAZ, drop = TRUE] == "S") +
+                      try_ab(x[, IPM, drop = TRUE] == "S") +
+                      try_ab(x[, MEM, drop = TRUE] == "S") +
+                      try_ab(x[, CIP, drop = TRUE] == "S") == 1),
               c(PIP, CTX, CAZ, IPM, MEM, CIP),
               "any")
     
     trans_tbl(3, # 4MRGN otherwise
               which((x$genus == "Pseudomonas" & x$species == "aeruginosa") &
-                      (x[, PIP, drop = TRUE] == "R" | x[, TZP, drop = TRUE] == "R") &
-                      x[, CTX_or_CAZ, drop = TRUE] == "R" &
-                      x[, IPM_or_MEM, drop = TRUE] == "R" &
-                      x[, CIP, drop = TRUE] == "R"),
+                      try_ab(x[, PIP, drop = TRUE] == "R") &
+                      (try_ab(x[, CTX, drop = TRUE] == "R") | try_ab(x[, CAZ, drop = TRUE] == "R")) &
+                      (try_ab(x[, IPM, drop = TRUE] == "R") | try_ab(x[, MEM, drop = TRUE] == "R")) &
+                      try_ab(x[, CIP, drop = TRUE] == "R")),
               c(PIP, CTX, CAZ, IPM, MEM, CIP),
               "any")
     
@@ -1237,7 +1307,7 @@ mdro <- function(x,
   }
   
   if (info == TRUE) {
-    if (sum(!is.na(x$MDRO) == 0)) {
+    if (sum(!is.na(x$MDRO)) == 0) {
       cat(font_bold(paste0("=> Found 0 MDROs since no isolates are covered by the guideline")))
     } else {
       cat(font_bold(paste0("=> Found ", sum(x$MDRO %in% c(2:5), na.rm = TRUE), " ", guideline$type, " out of ", sum(!is.na(x$MDRO)), 
@@ -1296,6 +1366,71 @@ mdro <- function(x,
     x$MDRO
   }
   
+}
+
+#' @rdname mdro
+#' @export
+custom_mdro_guideline <- function(...) {
+  dots <- list(...)
+  n_dots <- length(dots)
+  stop_if(n_dots == 0, "no custom rules were set. Please read the documentation using `?mdro`.")
+  out <- vector("list", n_dots)
+  for (i in seq_len(n_dots)) {
+    stop_ifnot(inherits(dots[[i]], "formula"), 
+               "element ", i, " must be a valid formula input (e.g., using '~'), please see `?mdro`")
+    qry <- as.character(dots[[i]][[2]])
+    val <- tryCatch(eval(dots[[i]][[3]]), error = function(e) NULL)
+    stop_if(is.null(val), "element ", i, " must return a valid value, it now returns an error: ", tryCatch(eval(dots[[i]][[3]]), error = function(e) e$message))
+    stop_if(length(val) > 1, "element ", i, " must return a value of length 1, not ", length(val))
+    stop_if(qry %like% "(&&|\\|\\|)",
+            "element ", i, " contains `&&` or `||` which will return `TRUE`/`FALSE` with length 1 (i.e., unvectorised)")
+    out[[i]]$query <- parse(text = qry)
+    out[[i]]$value <- as.character(val)
+  }
+  names(out) <- paste0("rule", seq_len(n_dots))
+  set_clean_class(out, new_class = c("custom_mdro_guideline", "list"))
+}
+
+#' @method print custom_mdro_guideline
+#' @export
+#' @noRd
+print.custom_mdro_guideline <- function(x, ...) {
+  cat("A set of custom MDRO rules:\n")
+  for (i in seq_len(length(x))) {
+    rule <- x[[i]]
+    cat("  ", i, ". ", font_blue(as.character(rule$query)), " -> ", font_red(paste0('"', rule$value, '"')), "\n", sep = "")
+  }
+  cat("  ", i + 1, ". Otherwise -> ", font_red(paste0('"Negative"')), "\n", sep = "")
+  cat("\nUnmatched rows will return ", font_red("NA"), ".\n", sep = "")
+}
+
+run_custom_mdro_guideline <- function(df, guideline) {
+  n_dots <- length(guideline)
+  stop_if(n_dots == 0, "no custom guidelines set", call = -2)
+  out <- character(length = NROW(df))
+  reasons <- character(length = NROW(df))
+  for (i in seq_len(n_dots)) {
+    qry <- eval(guideline[[i]]$query, envir = df, enclos = parent.frame())
+    stop_ifnot(is.logical(qry), "`", guideline[[i]]$query, "` must return `TRUE` or `FALSE`", call = -2)
+    val <- guideline[[i]]$value
+    out[which(qry)] <- val
+    reasons[which(qry)] <- paste0("matched ", names(guideline)[i], ": ", as.character(guideline[[i]]$query))
+  }
+  out[out == ""] <- "Negative"
+  reasons[out == "Negative"] <- "no rules matched"
+  
+  rsi_cols <- vapply(FUN.VALUE = logical(1), df, function(x) is.rsi(x))
+  columns_nonsusceptible <- as.data.frame(t(df[, rsi_cols] == "R"))
+  columns_nonsusceptible <- vapply(FUN.VALUE = character(1), 
+                                   columns_nonsusceptible, 
+                                   function(x) paste0(rownames(columns_nonsusceptible)[which(x)], collapse = " "))
+  columns_nonsusceptible[is.na(out)] <- NA_character_
+  
+  data.frame(row_number = seq_len(NROW(df)),
+             MDRO = out,
+             reason = reasons,
+             columns_nonsusceptible = columns_nonsusceptible,
+             stringsAsFactors = FALSE)
 }
 
 #' @rdname mdro

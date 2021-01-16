@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9004</span>
       </span>
     </div>
 
@@ -236,13 +236,13 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1509003" class="section level1">
-<h1 class="page-header" data-toc-text="1.5.0.9003">
-<a href="#amr-1509003" class="anchor"></a>AMR 1.5.0.9003<small> Unreleased </small>
+    <div id="amr-1509004" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.0.9004">
+<a href="#amr-1509004" class="anchor"></a>AMR 1.5.0.9004<small> Unreleased </small>
 </h1>
-<div id="last-updated-15-january-2021" class="section level2">
+<div id="last-updated-17-january-2021" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-15-january-2021" class="anchor"></a><small>Last updated: 15 January 2021</small>
+<a href="#last-updated-17-january-2021" class="anchor"></a><small>Last updated: 17 January 2021</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
@@ -251,6 +251,7 @@
 <li><p>Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function and in <code><a href="../reference/as.rsi.html">as.rsi()</a></code> to interpret MIC and disk diffusion values. This is now the default guideline in this package.</p></li>
 <li><p>Data set <code>dosage</code> to fuel the new <code><a href="../reference/eucast_rules.html">eucast_dosage()</a></code> function and to make this data available in a structured way</p></li>
 <li><p>Function <code><a href="../reference/eucast_rules.html">eucast_dosage()</a></code> to get a <code>data.frame</code> with advised dosages of a certain bug-drug combination, which is based on the new <code>dosage</code> data set</p></li>
+<li><p>Support for custom MDRO guidelines, using the new <code><a href="../reference/mdro.html">custom_mdro_guideline()</a></code> function, please see <code><a href="../reference/mdro.html">mdro()</a></code> for additional info</p></li>
 <li><p>Function <code><a href="../reference/isolate_identifier.html">isolate_identifier()</a></code>, which will paste a microorganism code with all antimicrobial results of a data set into one string for each row. This is useful to compare isolates, e.g. between institutions or regions, when there is no genotyping available.</p></li>
 <li>
 <p>Function <code><a href="../reference/mo_property.html">mo_is_yeast()</a></code>, which determines whether a microorganism is a member of the taxonomic class Saccharomycetes or the taxonomic order Saccharomycetales:</p>
