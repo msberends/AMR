@@ -155,6 +155,9 @@ mdro <- function(x,
   }
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(guideline, allow_class = c("list", "character"), allow_NULL = TRUE)
+  if (!is.list(guideline)) {
+    meet_criteria(guideline, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  }
   meet_criteria(col_mo, allow_class = "character", has_length = 1, is_in = colnames(x), allow_NULL = TRUE)
   meet_criteria(info, allow_class = "logical", has_length = 1)
   meet_criteria(pct_required_classes, allow_class = "numeric", has_length = 1)
