@@ -805,6 +805,7 @@ mdro <- function(x,
     x[which(x$genus == "Escherichia" & x$species == "hermannii"), ab_NA(c(TCC, TZP))] <- NA
     x[which((x$genus == "Citrobacter" & x$species == "freundii")
             | (x$genus == "Enterobacter" & x$species == "aerogenes")
+            | (x$genus == "Klebsiella" & x$species == "aerogenes") # new name (2017)
             | (x$genus == "Enterobacter" & x$species == "cloacae")
             | (x$genus == "Hafnia" & x$species == "alvei")
             | (x$genus == "Morganella" & x$species == "morganii")
@@ -824,6 +825,7 @@ mdro <- function(x,
     x[which((x$genus == "Citrobacter" & x$species == "koseri")
             | (x$genus == "Citrobacter" & x$species == "freundii")
             | (x$genus == "Enterobacter" & x$species == "aerogenes")
+            | (x$genus == "Klebsiella" & x$species == "aerogenes") # new name (2017)
             | (x$genus == "Enterobacter" & x$species == "cloacae")
             | (x$genus == "Escherichia" & x$species == "hermannii")
             | (x$genus == "Hafnia" & x$species == "alvei")
@@ -836,6 +838,7 @@ mdro <- function(x,
             | (x$genus == "Serratia" & x$species == "marcescens")), ab_NA(AMP)] <- NA
     x[which((x$genus == "Citrobacter" & x$species == "freundii")
             | (x$genus == "Enterobacter" & x$species == "aerogenes")
+            | (x$genus == "Klebsiella" & x$species == "aerogenes") # new name (2017)
             | (x$genus == "Enterobacter" & x$species == "cloacae")
             | (x$genus == "Hafnia" & x$species == "alvei")
             | (x$genus == "Morganella" & x$species == "morganii")
@@ -845,6 +848,7 @@ mdro <- function(x,
     x[which((x$genus == "Citrobacter" & x$species == "freundii")
             | (x$genus == "Citrobacter" & x$species == "koseri")
             | (x$genus == "Enterobacter" & x$species == "aerogenes")
+            | (x$genus == "Klebsiella" & x$species == "aerogenes") # new name (2017)
             | (x$genus == "Enterobacter" & x$species == "cloacae")
             | (x$genus == "Hafnia" & x$species == "alvei")
             | (x$genus == "Providencia" & x$species == "rettgeri")

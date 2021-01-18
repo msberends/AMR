@@ -27,24 +27,24 @@ context("resistance_predict.R")
 
 test_that("prediction of rsi works", {
   skip_on_cran()
-  AMX_R <- example_isolates %>%
-    filter(mo == "B_ESCHR_COLI") %>%
-    rsi_predict(col_ab = "AMX",
-                col_date = "date",
-                model = "binomial",
-                minimum = 10,
-                info = TRUE) %>%
-    pull("value")
+  
+  library(dplyr)
+  expect_output(AMX_R <- example_isolates %>%
+                  filter(mo == "B_ESCHR_COLI") %>%
+                  rsi_predict(col_ab = "AMX",
+                              col_date = "date",
+                              model = "binomial",
+                              minimum = 10,
+                              info = TRUE) %>%
+                  pull("value"))
   # AMX resistance will increase according to data set `example_isolates`
   expect_true(AMX_R[3] < AMX_R[20])
-
-  x <- resistance_predict(example_isolates, col_ab = "AMX", year_min = 2010, model = "binomial")
+  
+  expect_output(x <- suppressMessages(resistance_predict(example_isolates, col_ab = "AMX", year_min = 2010, model = "binomial", info = TRUE)))
   pdf(NULL) # prevent Rplots.pdf being created
   expect_silent(plot(x))
   expect_silent(ggplot_rsi_predict(x))
   expect_error(ggplot_rsi_predict(example_isolates))
-
-  library(dplyr, warn.conflicts = FALSE)
 
   expect_output(rsi_predict(x = filter(example_isolates, mo == "B_ESCHR_COLI"),
                             model = "binomial",

@@ -50,20 +50,21 @@ test_that("EUCAST rules work", {
   expect_warning(eucast_rules(data.frame(mo = "Escherichia coli", vancomycin = "S", stringsAsFactors = TRUE)))
   
   expect_identical(colnames(example_isolates),
-                   colnames(suppressWarnings(eucast_rules(example_isolates))))
+                   colnames(suppressWarnings(eucast_rules(example_isolates, info = FALSE))))
+  expect_output(suppressMessages(eucast_rules(example_isolates, info = TRUE)))
   
   a <- data.frame(mo = c("Klebsiella pneumoniae",
                          "Pseudomonas aeruginosa",
-                         "Enterobacter aerogenes"),
+                         "Enterobacter cloacae"),
                   amox = "-",           # Amoxicillin
                   stringsAsFactors = FALSE)
   b <- data.frame(mo = c("Klebsiella pneumoniae",
                          "Pseudomonas aeruginosa",
-                         "Enterobacter aerogenes"),
+                         "Enterobacter cloacae"),
                   amox = "R",       # Amoxicillin
                   stringsAsFactors = FALSE)
   expect_identical(suppressWarnings(eucast_rules(a, "mo", info = FALSE)), b)
-  expect_identical(suppressWarnings(eucast_rules(a, "mo", info = TRUE)), b)
+  expect_output(suppressMessages(suppressWarnings(eucast_rules(a, "mo", info = TRUE))))
   
   a <- data.frame(mo = c("Staphylococcus aureus",
                          "Streptococcus group A"),
@@ -81,8 +82,8 @@ test_that("EUCAST rules work", {
     example_isolates %>%
       mutate(TIC = as.rsi("R"),
              PIP = as.rsi("S")) %>%
-      eucast_rules(col_mo = "mo", version_expertrules = 3.1) %>%
-      left_join_microorganisms() %>%
+      eucast_rules(col_mo = "mo", version_expertrules = 3.1, info = FALSE) %>%
+      left_join_microorganisms(by = "mo") %>%
       filter(family == "Enterobacteriaceae") %>%
       pull(PIP) %>%
       unique() %>%

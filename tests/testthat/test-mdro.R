@@ -34,13 +34,13 @@ test_that("mdro works", {
   expect_error(mdro(example_isolates, guideline = c("BRMO", "MRGN"), info = TRUE))
   expect_error(mdro(example_isolates, col_mo = "invalid", info = TRUE))
 
-  outcome <- suppressWarnings(mdro(example_isolates))
-  outcome <- mdro(example_isolates, "eucast3.1", info = TRUE)
-  outcome <- eucast_exceptional_phenotypes(example_isolates, info = TRUE)
+  expect_output(suppressMessages(suppressWarnings(mdro(example_isolates, info = TRUE))))
+  expect_output(suppressMessages(suppressWarnings(mdro(example_isolates, "eucast3.1", info = TRUE))))
+  expect_output(outcome <- suppressMessages(suppressWarnings(eucast_exceptional_phenotypes(example_isolates, info = TRUE))))
   # check class
   expect_equal(class(outcome), c("ordered", "factor"))
 
-  outcome <- mdro(example_isolates, "nl", info = TRUE)
+  expect_output(outcome <- mdro(example_isolates, "nl", info = TRUE))
   # check class
   expect_equal(class(outcome), c("ordered", "factor"))
 
@@ -228,15 +228,14 @@ test_that("mdro works", {
                                   "ERY == 'R' & age > 60" ~ "Elderly Type B",
                                   as_factor = TRUE)
   expect_output(print(custom))
-  x <- mdro(example_isolates, guideline = custom, info = TRUE)
-  expect_equal(as.double(table(x)), c(43, 891, 1066))
+  expect_output(x <- mdro(example_isolates, guideline = custom, info = TRUE))
+  expect_equal(as.double(table(x)), c(1066, 43, 891))
   
   expect_output(print(custom_mdro_guideline(AMX == "R" ~ "test", as_factor = FALSE)))
   expect_error(custom_mdro_guideline())
   expect_error(custom_mdro_guideline("test"))
   expect_error(custom_mdro_guideline("test" ~ c(1:3)))
   expect_error(custom_mdro_guideline("test" ~ A))
-  expect_error(custom_mdro_guideline(test ~ "A"))
   expect_warning(mdro(example_isolates,
                       # since `test` gives an error, it will be ignored with a warning
                       guideline = custom_mdro_guideline(test ~ "A"), 
