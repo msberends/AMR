@@ -26,7 +26,7 @@
 #' Principal Component Analysis (for AMR)
 #' 
 #' Performs a principal component analysis (PCA) based on a data set with automatic determination for afterwards plotting the groups and labels, and automatic filtering on only suitable (i.e. non-empty and numeric) variables.
-#' @inheritSection lifecycle Maturing lifecycle
+#' @inheritSection lifecycle Maturing Lifecycle
 #' @param x a [data.frame] containing numeric columns
 #' @param ... columns of `x` to be selected for PCA, can be unquoted since it supports quasiquotation.
 #' @inheritParams stats::prcomp
@@ -36,6 +36,7 @@
 #' @return An object of classes [pca] and [prcomp]
 #' @importFrom stats prcomp
 #' @export
+#' @inheritSection AMR Read more on Our Website!
 #' @examples 
 #' # `example_isolates` is a dataset available in the AMR package.
 #' # See ?example_isolates.
@@ -98,7 +99,7 @@ pca <- function(x,
     
     x <- as.data.frame(new_list, stringsAsFactors = FALSE)
     if (any(vapply(FUN.VALUE = logical(1), x, function(y) !is.numeric(y)))) {
-      warning_("Be sure to first calculate the resistance (or susceptibility) of variables with antimicrobial test results, since PCA works with numeric variables only. Please see Examples in ?pca.")
+      warning_("Be sure to first calculate the resistance (or susceptibility) of variables with antimicrobial test results, since PCA works with numeric variables only. See Examples in ?pca.")
     }
     
     # set column names

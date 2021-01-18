@@ -23,10 +23,10 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-#' Transform input to a microorganism ID
+#' Transform Input to a Microorganism ID
 #'
-#' Use this function to determine a valid microorganism ID ([`mo`]). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like `"Staphylococcus aureus"`), an abbreviated name (such as `"S. aureus"`), an abbreviation known in the field (such as `"MRSA"`), or just a genus. Please see *Examples*.
-#' @inheritSection lifecycle Stable lifecycle
+#' Use this function to determine a valid microorganism ID ([`mo`]). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see *Source*). The input can be almost anything: a full name (like `"Staphylococcus aureus"`), an abbreviated name (such as `"S. aureus"`), an abbreviation known in the field (such as `"MRSA"`), or just a genus. See *Examples*.
+#' @inheritSection lifecycle Stable Lifecycle
 #' @param x a character vector or a [data.frame] with one or two columns
 #' @param Becker a logical to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker *et al.* (1,2,3).
 #'
@@ -34,7 +34,7 @@
 #' @param Lancefield a logical to indicate whether beta-haemolytic *Streptococci* should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (4). These *Streptococci* will be categorised in their first group, e.g. *Streptococcus dysgalactiae* will be group C, although officially it was also categorised into groups G and L.
 #'
 #' This excludes *Enterococci* at default (who are in group D), use `Lancefield = "all"` to also categorise all *Enterococci* as group D.
-#' @param allow_uncertain a number between `0` (or `"none"`) and `3` (or `"all"`), or `TRUE` (= `2`) or `FALSE` (= `0`) to indicate whether the input should be checked for less probable results, please see *Details*
+#' @param allow_uncertain a number between `0` (or `"none"`) and `3` (or `"all"`), or `TRUE` (= `2`) or `FALSE` (= `0`) to indicate whether the input should be checked for less probable results, see *Details*
 #' @param reference_df a [data.frame] to be used for extra reference when translating `x` to a valid [`mo`]. See [set_mo_source()] and [get_mo_source()] to automate the usage of your own codes (e.g. used in your analysis or organisation).
 #' @param ignore_pattern a regular expression (case-insensitive) of which all matches in `x` must return `NA`. This can be convenient to exclude known non-relevant input and can also be set with the option `AMR_ignore_pattern`, e.g. `options(AMR_ignore_pattern = "(not reported|contaminated flora)")`.
 #' @param language language to translate text like "no growth", which defaults to the system language (see [get_locale()])
@@ -43,7 +43,7 @@
 #' @aliases mo
 #' @keywords mo Becker becker Lancefield lancefield guess
 #' @details
-#' ## General info
+#' ## General Info
 #'
 #' A microorganism ID from this package (class: [`mo`]) is human readable and typically looks like these examples:
 #' ```
@@ -63,7 +63,7 @@
 #'
 #' Values that cannot be coerced will be considered 'unknown' and will get the MO code `UNKNOWN`.
 #'
-#' Use the [`mo_*`][mo_property()] functions to get properties based on the returned code, see Examples.
+#' Use the [`mo_*`][mo_property()] functions to get properties based on the returned code, see *Examples*.
 #'
 #' The algorithm uses data from the Catalogue of Life (see below) and from one other source (see [microorganisms]).
 #'
@@ -75,7 +75,7 @@
 #'
 #' This will lead to the effect that e.g. `"E. coli"` (a microorganism highly prevalent in humans) will return the microbial ID of *Escherichia coli* and not *Entamoeba coli* (a microorganism less prevalent in humans), although the latter would alphabetically come first.
 #'
-#' ## Coping with uncertain results
+#' ## Coping with Uncertain Results
 #'
 #' In addition, the [as.mo()] function can differentiate four levels of uncertainty to guess valid results:
 #' - Uncertainty level 0: no additional rules are applied;
@@ -91,14 +91,14 @@
 #' - `"Fluoroquinolone-resistant Neisseria gonorrhoeae"`. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result *Neisseria gonorrhoeae* (``r as.mo("Neisseria gonorrhoeae")``) needs review.
 #'
 #' There are three helper functions that can be run after using the [as.mo()] function:
-#' - Use [mo_uncertainties()] to get a [data.frame] that prints in a pretty format with all taxonomic names that were guessed. The output contains the matching score for all matches (see *Background on matching score*).
+#' - Use [mo_uncertainties()] to get a [data.frame] that prints in a pretty format with all taxonomic names that were guessed. The output contains the matching score for all matches (see *Matching Score for Microorganisms* below).
 #' - Use [mo_failures()] to get a [character] [vector] with all values that could not be coerced to a valid value.
 #' - Use [mo_renamed()] to get a [data.frame] with all values that could be coerced based on old, previously accepted taxonomic names.
 #'
-#' ## Microbial prevalence of pathogens in humans
+#' ## Microbial Prevalence of Pathogens in Humans
 #'
-#' The intelligent rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the `prevalence` columns in the [microorganisms] and [microorganisms.old] data sets. The grouping into human pathogenic prevalence is explained in the section *Matching score for microorganisms* below.
-#' @inheritSection mo_matching_score Matching score for microorganisms
+#' The intelligent rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the `prevalence` columns in the [microorganisms] and [microorganisms.old] data sets. The grouping into human pathogenic prevalence is explained in the section *Matching Score for Microorganisms* below.
+#' @inheritSection mo_matching_score Matching Score for Microorganisms
 #' @inheritSection catalogue_of_life Catalogue of Life
 #  (source as a section here, so it can be inherited by other man pages:)
 #' @section Source:
@@ -112,8 +112,8 @@
 #' @seealso [microorganisms] for the [data.frame] that is being used to determine ID's.
 #'
 #' The [`mo_*`][mo_property()] functions (such as [mo_genus()], [mo_gramstain()]) to get properties based on the returned code.
-#' @inheritSection AMR Reference data publicly available
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Reference Data Publicly Available
+#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' \donttest{
 #' # These examples all return "B_STPHY_AURS", the ID of S. aureus:
@@ -1549,7 +1549,7 @@ exec_as.mo <- function(x,
       message_(word_wrap("- Save the output and use it as input for future calculations, e.g. create a new variable to your data using `as.mo()`. All functions in this package that rely on microorganism codes will automatically use that new column where possible. All `mo_*()` functions also do not require you to set their `x` argument as long as you have the dplyr package installed and you have a column of class <mo>.",
                          extra_indent = 2),
                as_note = FALSE)
-      message_(word_wrap("- Use `set_mo_source()` to continually transform your organisation codes to microorganisms codes used by this package, please see `?mo_source`.",
+      message_(word_wrap("- Use `set_mo_source()` to continually transform your organisation codes to microorganisms codes used by this package, see `?mo_source`.",
                          extra_indent = 2),
                as_note = FALSE)
     }
@@ -1795,7 +1795,7 @@ print.mo_uncertainties <- function(x, ...) {
   if (NROW(x) == 0) {
     return(NULL)
   }
-  message_("Matching scores are based on human pathogenic prevalence and the resemblance between the input and the full taxonomic name. Please see ?mo_matching_score.", as_note = FALSE)
+  message_("Matching scores are based on human pathogenic prevalence and the resemblance between the input and the full taxonomic name. See ?mo_matching_score.", as_note = FALSE)
   cat("\n")
 
   msg <- ""

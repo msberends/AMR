@@ -51,9 +51,9 @@
 #' - Machine reading the EUCAST and CLSI guidelines from 2011-2020 to translate MIC values and disk diffusion diameters to R/SI
 #' - Principal component analysis for AMR
 #' 
-#' @section Reference data publicly available:
+#' @section Reference Data Publicly Available:
 #' All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this `AMR` package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find [all download links on our website](https://msberends.github.io/AMR/articles/datasets.html), which is automatically updated with every code change.
-#' @section Read more on our website!:
+#' @section Read more on Our Website!:
 #' On our website <https://msberends.github.io/AMR/> you can find [a comprehensive tutorial](https://msberends.github.io/AMR/articles/AMR.html) about how to conduct AMR analysis, the [complete documentation of all functions](https://msberends.github.io/AMR/reference/) and [an example analysis using WHONET data](https://msberends.github.io/AMR/articles/WHONET.html). As we would like to better understand the backgrounds and needs of our users, please [participate in our survey](https://msberends.github.io/AMR/survey.html)!
 #' @section Contact Us:
 #' For suggestions, comments or questions, please contact us at:
@@ -74,11 +74,11 @@
 #' @rdname AMR
 NULL
 
-#' Plotting for classes `rsi`, `mic` and `disk`
+#' Plotting for Classes `rsi`, `mic` and `disk`
 #' 
 #' Functions to print classes of the `AMR` package.
-#' @inheritSection lifecycle Stable lifecycle
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection lifecycle Stable Lifecycle
+#' @inheritSection AMR Read more on Our Website!
 #' @param ... Arguments passed on to functions
 #' @inheritParams base::plot
 #' @inheritParams graphics::barplot

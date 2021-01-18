@@ -15,7 +15,7 @@
 \alias{ab_ddd}
 \alias{ab_info}
 \alias{ab_url}
-\title{Get properties of an antibiotic}
+\title{Get Properties of an Antibiotic}
 \usage{
 ab_name(x, language = get_locale(), tolower = FALSE, ...)
 
@@ -54,7 +54,7 @@ ab_property(x, property = "name", language = get_locale(), ...)
 
 \item{administration}{way of administration, either \code{"oral"} or \code{"iv"}}
 
-\item{units}{a logical to indicate whether the units instead of the DDDs itself must be returned, see Examples}
+\item{units}{a logical to indicate whether the units instead of the DDDs itself must be returned, see \emph{Examples}}
 
 \item{open}{browse the URL using \code{\link[utils:browseURL]{utils::browseURL()}}}
 
@@ -76,7 +76,7 @@ All output will be \link{translate}d where possible.
 
 The function \code{\link[=ab_url]{ab_url()}} will return the direct URL to the official WHO website. A warning will be returned if the required ATC code is not available.
 }
-\section{Stable lifecycle}{
+\section{Stable Lifecycle}{
 
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
@@ -93,12 +93,12 @@ WHONET 2019 software: \url{http://www.whonet.org/software.html}
 European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{http://ec.europa.eu/health/documents/community-register/html/atc.htm}
 }
 
-\section{Reference data publicly available}{
+\section{Reference Data Publicly Available}{
 
 All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
 }
 
-\section{Read more on our website!}{
+\section{Read more on Our Website!}{
 
 On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }

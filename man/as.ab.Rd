@@ -4,7 +4,7 @@
 \alias{as.ab}
 \alias{ab}
 \alias{is.ab}
-\title{Transform input to an antibiotic ID}
+\title{Transform Input to an Antibiotic ID}
 \usage{
 as.ab(x, flag_multiple_results = TRUE, info = TRUE, ...)
 
@@ -36,7 +36,7 @@ All these properties will be searched for the user input. The \code{\link[=as.ab
 \item Digitalised paper records, leaving artefacts like 0/o/O (zero and O's), B/8, n/r, etc.
 }
 
-Use the \code{\link[=ab_property]{ab_*}} functions to get properties based on the returned antibiotic ID, see Examples.
+Use the \code{\link[=ab_property]{ab_*}} functions to get properties based on the returned antibiotic ID, see \emph{Examples}.
 
 Note: the \code{\link[=as.ab]{as.ab()}} and \code{\link[=ab_property]{ab_*}} functions may use very long regular expression to match brand names of antimicrobial agents. This may fail on some systems.
 }
@@ -49,7 +49,7 @@ WHONET 2019 software: \url{http://www.whonet.org/software.html}
 European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{http://ec.europa.eu/health/documents/community-register/html/atc.htm}
 }
 
-\section{Stable lifecycle}{
+\section{Stable Lifecycle}{
 
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
@@ -69,12 +69,12 @@ The WHOCC is located in Oslo at the Norwegian Institute of Public Health and fun
 \strong{NOTE: The WHOCC copyright does not allow use for commercial purposes, unlike any other info from this package.} See \url{https://www.whocc.no/copyright_disclaimer/.}
 }
 
-\section{Reference data publicly available}{
+\section{Reference Data Publicly Available}{
 
 All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
 }
 
-\section{Read more on our website!}{
+\section{Read more on Our Website!}{
 
 On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }

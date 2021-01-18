@@ -12,7 +12,7 @@
 \alias{count_all}
 \alias{n_rsi}
 \alias{count_df}
-\title{Count available isolates}
+\title{Count Available Isolates}
 \usage{
 count_resistant(..., only_all_tested = FALSE)
 
@@ -43,7 +43,7 @@ count_df(
 \arguments{
 \item{...}{one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link[=as.rsi]{as.rsi()}} if needed.}
 
-\item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}): a logical to indicate that isolates must be tested for all antibiotics, see section \emph{Combination therapy} below}
+\item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}): a logical to indicate that isolates must be tested for all antibiotics, see section \emph{Combination Therapy} below}
 
 \item{data}{a \link{data.frame} containing columns with class \code{\link{rsi}} (see \code{\link[=as.rsi]{as.rsi()}})}
 
@@ -59,7 +59,7 @@ count_df(
 An \link{integer}
 }
 \description{
-These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in \code{summarise()} from the \code{dplyr} package and also support grouped variables, please see \emph{Examples}.
+These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in \code{summarise()} from the \code{dplyr} package and also support grouped variables, see \emph{Examples}.
 
 \code{\link[=count_resistant]{count_resistant()}} should be used to count resistant isolates, \code{\link[=count_susceptible]{count_susceptible()}} should be used to count susceptible isolates.
 }
@@ -72,7 +72,7 @@ The function \code{\link[=n_rsi]{n_rsi()}} is an alias of \code{\link[=count_all
 
 The function \code{\link[=count_df]{count_df()}} takes any variable from \code{data} that has an \code{\link{rsi}} class (created with \code{\link[=as.rsi]{as.rsi()}}) and counts the number of S's, I's and R's. It also supports grouped variables. The function \code{\link[=rsi_df]{rsi_df()}} works exactly like \code{\link[=count_df]{count_df()}}, but adds the percentage of S, I and R.
 }
-\section{Stable lifecycle}{
+\section{Stable Lifecycle}{
 
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
@@ -95,7 +95,7 @@ A microorganism is categorised as \emph{Susceptible, Increased exposure} when th
 This AMR package honours this new insight. Use \code{\link[=susceptibility]{susceptibility()}} (equal to \code{\link[=proportion_SI]{proportion_SI()}}) to determine antimicrobial susceptibility and \code{\link[=count_susceptible]{count_susceptible()}} (equal to \code{\link[=count_SI]{count_SI()}}) to count susceptible isolates.
 }
 
-\section{Combination therapy}{
+\section{Combination Therapy}{
 
 When using more than one variable for \code{...} (= combination therapy), use \code{only_all_tested} to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Drug A and Drug B, about how \code{\link[=susceptibility]{susceptibility()}} works to calculate the \%SI:\preformatted{--------------------------------------------------------------------
                     only_all_tested = FALSE  only_all_tested = TRUE
@@ -126,7 +126,7 @@ and that, in combination therapies, for \code{only_all_tested = FALSE} applies t
 Using \code{only_all_tested} has no impact when only using one antibiotic as input.
 }
 
-\section{Read more on our website!}{
+\section{Read more on Our Website!}{
 
 On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }

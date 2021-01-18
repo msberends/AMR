@@ -23,10 +23,10 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-#' Transform input to disk diffusion diameters
+#' Transform Input to Disk Diffusion Diameters
 #'
 #' This transforms a vector to a new class [`disk`], which is a disk diffusion growth zone size (around an antibiotic disk) in millimetres between 6 and 50.
-#' @inheritSection lifecycle Stable lifecycle
+#' @inheritSection lifecycle Stable Lifecycle
 #' @rdname as.disk
 #' @param x vector
 #' @param na.rm a logical indicating whether missing values should be removed
@@ -35,7 +35,7 @@
 #' @aliases disk
 #' @export
 #' @seealso [as.rsi()]
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' \donttest{
 #' # transform existing disk zones to the `disk` class

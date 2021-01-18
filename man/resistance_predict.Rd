@@ -61,7 +61,7 @@ ggplot_rsi_predict(
 
 \item{minimum}{minimal amount of available isolates per year to include. Years containing less observations will be estimated by the model.}
 
-\item{model}{the statistical model of choice. This could be a generalised linear regression model with binomial distribution (i.e. using `glm(..., family = binomial)``, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for all valid options.}
+\item{model}{the statistical model of choice. This could be a generalised linear regression model with binomial distribution (i.e. using `glm(..., family = binomial)``, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See \emph{Details} for all valid options.}
 
 \item{I_as_S}{a logical to indicate whether values \code{"I"} should be treated as \code{"S"} (will otherwise be treated as \code{"R"}). The default, \code{TRUE}, follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section \emph{Interpretation of S, I and R} below.}
 
@@ -87,7 +87,7 @@ A \link{data.frame} with extra class \code{\link{resistance_predict}} with colum
 \item \code{estimated}, the estimated resistant percentages, calculated by the model
 }
 
-Furthermore, the model itself is available as an attribute: \code{attributes(x)$model}, please see \emph{Examples}.
+Furthermore, the model itself is available as an attribute: \code{attributes(x)$model}, see \emph{Examples}.
 }
 \description{
 Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns \code{se_min} and \code{se_max}. See \emph{Examples} for a real live example.
@@ -100,7 +100,7 @@ Valid options for the statistical model (argument \code{model}) are:
 \item \code{"lin"} or \code{"linear"}: a linear regression model
 }
 }
-\section{Maturing lifecycle}{
+\section{Maturing Lifecycle}{
 
 \if{html}{\figure{lifecycle_maturing.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{maturing}. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome \href{https://github.com/msberends/AMR/issues}{to suggest changes at our repository} or \link[=AMR]{write us an email (see section 'Contact Us')}.
@@ -121,7 +121,7 @@ A microorganism is categorised as \emph{Susceptible, Increased exposure} when th
 This AMR package honours this new insight. Use \code{\link[=susceptibility]{susceptibility()}} (equal to \code{\link[=proportion_SI]{proportion_SI()}}) to determine antimicrobial susceptibility and \code{\link[=count_susceptible]{count_susceptible()}} (equal to \code{\link[=count_SI]{count_SI()}}) to count susceptible isolates.
 }
 
-\section{Read more on our website!}{
+\section{Read more on Our Website!}{
 
 On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }

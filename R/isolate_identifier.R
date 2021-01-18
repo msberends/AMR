@@ -23,14 +23,14 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-#' Create identifier of an isolate
+#' Create Identifier of an Isolate
 #' 
 #' This function will paste the microorganism code with all antimicrobial results into one string for each row in a data set. This is useful to compare isolates, e.g. between institutions or regions, when there is no genotyping available.
-#' @inheritSection lifecycle Maturing lifecycle
+#' @inheritSection lifecycle Maturing Lifecycle
 #' @inheritParams eucast_rules
 #' @param cols_ab a character vector of column names of `x`, or (a combination with) an [antibiotic selector function]([ab_class()]), such as [carbapenems()] and [aminoglycosides()]
 #' @export
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Read more on Our Website!
 #' @examples 
 #' # automatic selection of microorganism and antibiotics (i.e., all <rsi> columns, see ?as.rsi)
 #' x <- isolate_identifier(example_isolates)

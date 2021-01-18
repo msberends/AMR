@@ -1,5 +1,5 @@
-# AMR 1.5.0.9005
-## <small>Last updated: 17 January 2021</small>
+# AMR 1.5.0.9006
+## <small>Last updated: 18 January 2021</small>
 
 ### New
 * Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the `eucast_rules()` function and in `as.rsi()` to interpret MIC and disk diffusion values. This is now the default guideline in this package.
@@ -33,6 +33,9 @@
 * Added Pretomanid (PMD, J04AK08) to the `antibiotics` data set
 * WHONET code `"PNV"` will now correctly be interpreted as `PHN`, the antibiotic code for phenoxymethylpenicillin ('peni V')
 * Fix for verbose output of `mdro(..., verbose = TRUE)` for German guideline (3MGRN and 4MGRN) and *P. aeruginosa* in Dutch guideline (BRMO)
+
+### Other
+* Big documentation updates
 
 
 # AMR 1.5.0

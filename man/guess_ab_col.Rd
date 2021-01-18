@@ -2,7 +2,7 @@
 % Please edit documentation in R/guess_ab_col.R
 \name{guess_ab_col}
 \alias{guess_ab_col}
-\title{Guess antibiotic column}
+\title{Guess Antibiotic Column}
 \usage{
 guess_ab_col(x = NULL, search_string = NULL, verbose = FALSE)
 }
@@ -22,7 +22,7 @@ This tries to find a column name in a data set based on information from the \li
 \details{
 You can look for an antibiotic (trade) name or abbreviation and it will search \code{x} and the \link{antibiotics} data set for any column containing a name or code of that antibiotic. \strong{Longer columns names take precedence over shorter column names.}
 }
-\section{Stable lifecycle}{
+\section{Stable Lifecycle}{
 
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
@@ -30,7 +30,7 @@ The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stabl
 If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
-\section{Read more on our website!}{
+\section{Read more on Our Website!}{
 
 On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }

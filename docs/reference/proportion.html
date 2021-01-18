@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate microbial resistance — proportion • AMR (for R)</title>
+<title>Calculate Microbial Resistance — proportion • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Calculate microbial resistance — proportion" />
-<meta property="og:description" content="These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in summarise() from the dplyr package and also support grouped variables, please see Examples.
+<meta property="og:title" content="Calculate Microbial Resistance — proportion" />
+<meta property="og:description" content="These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in summarise() from the dplyr package and also support grouped variables, see Examples.
 resistance() should be used to calculate resistance, susceptibility() should be used to calculate susceptibility." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
@@ -83,7 +83,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9006</span>
       </span>
     </div>
 
@@ -234,13 +234,13 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate microbial resistance</h1>
+    <h1>Calculate Microbial Resistance</h1>
     <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/proportion.R'><code>R/proportion.R</code></a>, <a href='https://github.com/msberends/AMR/blob/master/R/rsi_df.R'><code>R/rsi_df.R</code></a></small>
     <div class="hidden name"><code>proportion.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code> from the <code>dplyr</code> package and also support grouped variables, please see <em>Examples</em>.</p>
+    <p>These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code> from the <code>dplyr</code> package and also support grouped variables, see <em>Examples</em>.</p>
 <p><code>resistance()</code> should be used to calculate resistance, <code>susceptibility()</code> should be used to calculate susceptibility.<br /></p>
     </div>
 
@@ -283,11 +283,11 @@ resistance() should be used to calculate resistance, susceptibility() should be 
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>...</th>
-      <td><p>one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with <code><a href='as.rsi.html'>as.rsi()</a></code> if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See Examples.</p></td>
+      <td><p>one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with <code><a href='as.rsi.html'>as.rsi()</a></code> if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See <em>Examples</em>.</p></td>
     </tr>
     <tr>
       <th>minimum</th>
-      <td><p>the minimum allowed number of available (tested) isolates. Any isolate count lower than <code>minimum</code> will return <code>NA</code> with a warning. The default number of <code>30</code> isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.</p></td>
+      <td><p>the minimum allowed number of available (tested) isolates. Any isolate count lower than <code>minimum</code> will return <code>NA</code> with a warning. The default number of <code>30</code> isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see <em>Source</em>.</p></td>
     </tr>
     <tr>
       <th>as_percent</th>
@@ -295,7 +295,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
     </tr>
     <tr>
       <th>only_all_tested</th>
-      <td><p>(for combination therapies, i.e. using more than one variable for <code>...</code>): a logical to indicate that isolates must be tested for all antibiotics, see section <em>Combination therapy</em> below</p></td>
+      <td><p>(for combination therapies, i.e. using more than one variable for <code>...</code>): a logical to indicate that isolates must be tested for all antibiotics, see section <em>Combination Therapy</em> below</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -331,7 +331,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 <p><strong>Remember that you should filter your table to let it contain only first isolates!</strong> This is needed to exclude duplicates and to reduce selection bias. Use <code><a href='first_isolate.html'>first_isolate()</a></code> to determine them in your data set.</p>
 <p>These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the <code><a href='count.html'>count()</a></code> functions to count isolates. The function <code>susceptibility()</code> is essentially equal to <code>count_susceptible() / count_all()</code>. <em>Low counts can influence the outcome - the <code>proportion</code> functions may camouflage this, since they only return the proportion (albeit being dependent on the <code>minimum</code> argument).</em></p>
 <p>The function <code>proportion_df()</code> takes any variable from <code>data</code> that has an <code><a href='as.rsi.html'>rsi</a></code> class (created with <code><a href='as.rsi.html'>as.rsi()</a></code>) and calculates the proportions R, I and S. It also supports grouped variables. The function <code>rsi_df()</code> works exactly like <code>proportion_df()</code>, but adds the number of isolates.</p>
-    <h2 class="hasAnchor" id="combination-therapy"><a class="anchor" href="#combination-therapy"></a>Combination therapy</h2>
+    <h2 class="hasAnchor" id="combination-therapy"><a class="anchor" href="#combination-therapy"></a>Combination Therapy</h2>
 
     
 
@@ -362,7 +362,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 </pre>
 
 <p>Using <code>only_all_tested</code> has no impact when only using one antibiotic as input.</p>
-    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
+    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable Lifecycle</h2>
 
     
 
@@ -383,7 +383,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 </ul>
 
 <p>This AMR package honours this new insight. Use <code>susceptibility()</code> (equal to <code>proportion_SI()</code>) to determine antimicrobial susceptibility and <code><a href='count.html'>count_susceptible()</a></code> (equal to <code><a href='count.html'>count_SI()</a></code>) to count susceptible isolates.</p>
-    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on Our Website!</h2>
 
     
 

@@ -59,10 +59,15 @@ The \code{\link[=pca]{pca()}} function takes a \link{data.frame} as input and pe
 
 The result of the \code{\link[=pca]{pca()}} function is a \link{prcomp} object, with an additional attribute \code{non_numeric_cols} which is a vector with the column names of all columns that do not contain numeric values. These are probably the groups and labels, and will be used by \code{\link[=ggplot_pca]{ggplot_pca()}}.
 }
-\section{Maturing lifecycle}{
+\section{Maturing Lifecycle}{
 
 \if{html}{\figure{lifecycle_maturing.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{maturing}. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome \href{https://github.com/msberends/AMR/issues}{to suggest changes at our repository} or \link[=AMR]{write us an email (see section 'Contact Us')}.
+}
+
+\section{Read more on Our Website!}{
+
+On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }
 
 \examples{

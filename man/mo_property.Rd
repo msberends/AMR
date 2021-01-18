@@ -29,7 +29,7 @@
 \alias{mo_synonyms}
 \alias{mo_info}
 \alias{mo_url}
-\title{Get properties of a microorganism}
+\title{Get Properties of a Microorganism}
 \usage{
 mo_name(x, language = get_locale(), ...)
 
@@ -88,7 +88,7 @@ mo_url(x, open = FALSE, language = get_locale(), ...)
 mo_property(x, property = "fullname", language = get_locale(), ...)
 }
 \arguments{
-\item{x}{any character (vector) that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}. Can be left blank for auto-guessing the column containing microorganism codes if used in a data set, please see \emph{Examples}.}
+\item{x}{any character (vector) that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}. Can be left blank for auto-guessing the column containing microorganism codes if used in a data set, see \emph{Examples}.}
 
 \item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can be overwritten by setting the option \code{AMR_locale}, e.g. \code{options(AMR_locale = "de")}, see \link{translate}. Also used to translate text like "no growth". Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
@@ -110,7 +110,7 @@ mo_property(x, property = "fullname", language = get_locale(), ...)
 }
 }
 \description{
-Use these functions to return a specific property of a microorganism based on the latest accepted taxonomy. All input values will be evaluated internally with \code{\link[=as.mo]{as.mo()}}, which makes it possible to use microbial abbreviations, codes and names as input. Please see \emph{Examples}.
+Use these functions to return a specific property of a microorganism based on the latest accepted taxonomy. All input values will be evaluated internally with \code{\link[=as.mo]{as.mo()}}, which makes it possible to use microbial abbreviations, codes and names as input. See \emph{Examples}.
 }
 \details{
 All functions will return the most recently known taxonomic property according to the Catalogue of Life, except for \code{\link[=mo_ref]{mo_ref()}}, \code{\link[=mo_authors]{mo_authors()}} and \code{\link[=mo_year]{mo_year()}}. Please refer to this example, knowing that \emph{Escherichia blattae} was renamed to \emph{Shimwellia blattae} in 2010:
@@ -134,7 +134,7 @@ All output will be \link{translate}d where possible.
 
 The function \code{\link[=mo_url]{mo_url()}} will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
 }
-\section{Stable lifecycle}{
+\section{Stable Lifecycle}{
 
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
@@ -142,7 +142,7 @@ The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stabl
 If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
-\section{Matching score for microorganisms}{
+\section{Matching Score for Microorganisms}{
 
 With ambiguous user input in \code{\link[=as.mo]{as.mo()}} and all the \code{\link[=mo_property]{mo_*}} functions, the returned results are chosen based on their matching score using \code{\link[=mo_matching_score]{mo_matching_score()}}. This matching score \eqn{m}, is calculated as:
 
@@ -182,12 +182,12 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 }
 }
 
-\section{Reference data publicly available}{
+\section{Reference Data Publicly Available}{
 
 All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
 }
 
-\section{Read more on our website!}{
+\section{Read more on Our Website!}{
 
 On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }

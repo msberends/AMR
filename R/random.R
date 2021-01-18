@@ -23,10 +23,10 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-#' Random MIC values/disk zones/RSI generation
+#' Random MIC Values/Disk Zones/RSI Generation
 #'
 #' These functions can be used for generating random MIC values and disk diffusion diameters, for AMR analysis practice.
-#' @inheritSection lifecycle Maturing lifecycle 
+#' @inheritSection lifecycle Maturing Lifecycle 
 #' @param size desired size of the returned vector
 #' @param mo any character that can be coerced to a valid microorganism code with [as.mo()]
 #' @param ab any character that can be coerced to a valid antimicrobial agent code with [as.ab()]
@@ -39,7 +39,7 @@
 #' @name random
 #' @rdname random
 #' @export
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' random_mic(100)
 #' random_disk(100)

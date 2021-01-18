@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9006</span>
       </span>
     </div>
 
@@ -492,12 +492,12 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <div id="antibiotic-agents" class="section level2">
 <h2 class="hasAnchor">
 <a href="#antibiotic-agents" class="anchor"></a>Antibiotic agents</h2>
-<p>A data set with 455 rows and 14 columns, containing the following column names:<br><em>‘ab’, ‘atc’, ‘cid’, ‘name’, ‘group’, ‘atc_group1’, ‘atc_group2’, ‘abbreviations’, ‘synonyms’, ‘oral_ddd’, ‘oral_units’, ‘iv_ddd’, ‘iv_units’, ‘loinc’</em>.</p>
+<p>A data set with 456 rows and 14 columns, containing the following column names:<br><em>‘ab’, ‘atc’, ‘cid’, ‘name’, ‘group’, ‘atc_group1’, ‘atc_group2’, ‘abbreviations’, ‘synonyms’, ‘oral_ddd’, ‘oral_units’, ‘iv_ddd’, ‘iv_units’, ‘loinc’</em>.</p>
 <p>This data set is in R available as <code>antibiotics</code>, after you load the <code>AMR</code> package.</p>
-<p>It was last updated on 24 September 2020 00:50:35 CEST. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/antibiotics.html">here</a>.</p>
+<p>It was last updated on 14 January 2021 16:04:41 CET. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/antibiotics.html">here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/antibiotics.rds">R file</a> (31 kB)<br>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/antibiotics.rds">R file</a> (32 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/antibiotics.xlsx">Excel file</a> (65 kB)<br>
 </li>
@@ -528,17 +528,17 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <col width="1%">
 <col width="2%">
 <col width="3%">
-<col width="9%">
 <col width="8%">
-<col width="14%">
-<col width="19%">
+<col width="7%">
+<col width="13%">
+<col width="18%">
 <col width="6%">
-<col width="11%">
+<col width="14%">
 <col width="3%">
 <col width="3%">
 <col width="2%">
 <col width="3%">
-<col width="10%">
+<col width="9%">
 </colgroup>
 <thead><tr class="header">
 <th align="center">ab</th>
@@ -638,20 +638,20 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <td align="center">16420-2, 25233-8</td>
 </tr>
 <tr class="even">
-<td align="center">CZO</td>
-<td align="center">J01DB04</td>
-<td align="center">33255</td>
-<td align="center">Cefazolin</td>
-<td align="center">Cephalosporins (1st gen.)</td>
-<td align="center">Other beta-lactam antibacterials</td>
-<td align="center">First-generation cephalosporins</td>
-<td align="center">cfz, cfzl, cz, …</td>
-<td align="center">atirin, cefamezin, cefamezine, …</td>
+<td align="center">PEN</td>
+<td align="center">J01CE01</td>
+<td align="center">5904</td>
+<td align="center">Benzylpenicillin</td>
+<td align="center">Beta-lactams/penicillins</td>
+<td align="center">Combinations of antibacterials</td>
+<td align="center">Combinations of antibacterials</td>
+<td align="center">bepe, pen, peni, …</td>
+<td align="center">abbocillin, ayercillin, bencilpenicilina, …</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="center">3.0</td>
+<td align="center">3.6</td>
 <td align="center">g</td>
-<td align="center">16566-2, 25235-3, 3442-1, …</td>
+<td align="center">3913-1</td>
 </tr>
 </tbody>
 </table>
@@ -1002,27 +1002,27 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <div id="interpretation-from-mic-values-disk-diameters-to-rsi" class="section level2">
 <h2 class="hasAnchor">
 <a href="#interpretation-from-mic-values-disk-diameters-to-rsi" class="anchor"></a>Interpretation from MIC values / disk diameters to R/SI</h2>
-<p>A data set with 18,650 rows and 10 columns, containing the following column names:<br><em>‘guideline’, ‘method’, ‘site’, ‘mo’, ‘ab’, ‘ref_tbl’, ‘disk_dose’, ‘breakpoint_S’, ‘breakpoint_R’, ‘uti’</em>.</p>
+<p>A data set with 20,486 rows and 10 columns, containing the following column names:<br><em>‘guideline’, ‘method’, ‘site’, ‘mo’, ‘ab’, ‘ref_tbl’, ‘disk_dose’, ‘breakpoint_S’, ‘breakpoint_R’, ‘uti’</em>.</p>
 <p>This data set is in R available as <code>rsi_translation</code>, after you load the <code>AMR</code> package.</p>
-<p>It was last updated on 29 July 2020 13:12:34 CEST. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/rsi_translation.html">here</a>.</p>
+<p>It was last updated on 14 January 2021 16:04:41 CET. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/rsi_translation.html">here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/rsi_translation.rds">R file</a> (32 kB)<br>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/rsi_translation.rds">R file</a> (34 kB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/rsi_translation.xlsx">Excel file</a> (0.6 MB)<br>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/rsi_translation.xlsx">Excel file</a> (0.7 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/rsi_translation.txt">plain text file</a> (1.5 MB)<br>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/rsi_translation.txt">plain text file</a> (1.7 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/rsi_translation.sas">SAS file</a> (3.2 MB)<br>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/rsi_translation.sas">SAS file</a> (3.5 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/rsi_translation.sav">SPSS file</a> (3.4 MB)<br>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/rsi_translation.sav">SPSS file</a> (3.8 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/rsi_translation.dta">Stata file</a> (3 MB)</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/rsi_translation.dta">Stata file</a> (3.3 MB)</li>
 </ul>
 <div id="source-5" class="section level3">
 <h3 class="hasAnchor">
 <a href="#source-5" class="anchor"></a>Source</h3>
-<p>This data set contains interpretation rules for MIC values and disk diffusion diameters. Included guidelines are CLSI (2010-2019) and EUCAST (2011-2020).</p>
+<p>This data set contains interpretation rules for MIC values and disk diffusion diameters. Included guidelines are CLSI (2010-2019) and EUCAST (2011-2021).</p>
 </div>
 <div id="example-content-5" class="section level3">
 <h3 class="hasAnchor">
@@ -1054,7 +1054,7 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">EUCAST 2020</td>
+<td align="center">EUCAST 2021</td>
 <td align="center">DISK</td>
 <td align="center"></td>
 <td align="center">Enterobacterales</td>
@@ -1066,7 +1066,7 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <td align="center">FALSE</td>
 </tr>
 <tr class="even">
-<td align="center">EUCAST 2020</td>
+<td align="center">EUCAST 2021</td>
 <td align="center">DISK</td>
 <td align="center">UTI</td>
 <td align="center">Enterobacterales</td>
@@ -1078,7 +1078,7 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <td align="center">TRUE</td>
 </tr>
 <tr class="odd">
-<td align="center">EUCAST 2020</td>
+<td align="center">EUCAST 2021</td>
 <td align="center">MIC</td>
 <td align="center"></td>
 <td align="center">Enterobacterales</td>
@@ -1090,7 +1090,7 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <td align="center">FALSE</td>
 </tr>
 <tr class="even">
-<td align="center">EUCAST 2020</td>
+<td align="center">EUCAST 2021</td>
 <td align="center">MIC</td>
 <td align="center">UTI</td>
 <td align="center">Enterobacterales</td>
@@ -1102,7 +1102,7 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <td align="center">TRUE</td>
 </tr>
 <tr class="odd">
-<td align="center">EUCAST 2020</td>
+<td align="center">EUCAST 2021</td>
 <td align="center">MIC</td>
 <td align="center"></td>
 <td align="center">Actinomyces</td>
@@ -1114,7 +1114,7 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <td align="center">FALSE</td>
 </tr>
 <tr class="even">
-<td align="center">EUCAST 2020</td>
+<td align="center">EUCAST 2021</td>
 <td align="center">MIC</td>
 <td align="center"></td>
 <td align="center">Bacteroides</td>
@@ -1124,6 +1124,118 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <td align="center">4</td>
 <td align="center">8</td>
 <td align="center">FALSE</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="dosage-guidelines-from-eucast" class="section level2">
+<h2 class="hasAnchor">
+<a href="#dosage-guidelines-from-eucast" class="anchor"></a>Dosage guidelines from EUCAST</h2>
+<p>A data set with 135 rows and 9 columns, containing the following column names:<br><em>‘ab’, ‘name’, ‘type’, ‘dose’, ‘dose_times’, ‘administration’, ‘notes’, ‘original_txt’, ‘eucast_version’</em>.</p>
+<p>This data set is in R available as <code>dosage</code>, after you load the <code>AMR</code> package.</p>
+<p>It was last updated on 14 January 2021 16:04:41 CET. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/dosage.html">here</a>.</p>
+<p><strong>Direct download links:</strong></p>
+<ul>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/dosage.rds">R file</a> (3 kB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/dosage.xlsx">Excel file</a> (13 kB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/dosage.txt">plain text file</a> (13 kB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/dosage.sas">SAS file</a> (48 kB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/dosage.sav">SPSS file</a> (37 kB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/dosage.dta">Stata file</a> (38 kB)</li>
+</ul>
+<div id="source-6" class="section level3">
+<h3 class="hasAnchor">
+<a href="#source-6" class="anchor"></a>Source</h3>
+<p>EUCAST breakpoints used in this package are based on the dosages in this data set.</p>
+<p>Currently included dosages in the data set are meant for: <a href="https://www.eucast.org/clinical_breakpoints/">‘EUCAST Clinical Breakpoint Tables’ v11.0</a> (2021).</p>
+</div>
+<div id="example-content-6" class="section level3">
+<h3 class="hasAnchor">
+<a href="#example-content-6" class="anchor"></a>Example content</h3>
+<table class="table">
+<thead><tr class="header">
+<th align="center">ab</th>
+<th align="center">name</th>
+<th align="center">type</th>
+<th align="center">dose</th>
+<th align="center">dose_times</th>
+<th align="center">administration</th>
+<th align="center">notes</th>
+<th align="center">original_txt</th>
+<th align="center">eucast_version</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="center">AMK</td>
+<td align="center">Amikacin</td>
+<td align="center">standard_dosage</td>
+<td align="center">25-30 mg/kg</td>
+<td align="center">1</td>
+<td align="center">iv</td>
+<td align="center"></td>
+<td align="center">25-30 mg/kg x 1 iv</td>
+<td align="center">11</td>
+</tr>
+<tr class="even">
+<td align="center">AMX</td>
+<td align="center">Amoxicillin</td>
+<td align="center">high_dosage</td>
+<td align="center">2 g</td>
+<td align="center">6</td>
+<td align="center">iv</td>
+<td align="center"></td>
+<td align="center">2 g x 6 iv</td>
+<td align="center">11</td>
+</tr>
+<tr class="odd">
+<td align="center">AMX</td>
+<td align="center">Amoxicillin</td>
+<td align="center">standard_dosage</td>
+<td align="center">1 g</td>
+<td align="center">3</td>
+<td align="center">iv</td>
+<td align="center"></td>
+<td align="center">1 g x 3-4 iv</td>
+<td align="center">11</td>
+</tr>
+<tr class="even">
+<td align="center">AMX</td>
+<td align="center">Amoxicillin</td>
+<td align="center">high_dosage</td>
+<td align="center">0.75-1 g</td>
+<td align="center">3</td>
+<td align="center">oral</td>
+<td align="center"></td>
+<td align="center">0.75-1 g x 3 oral</td>
+<td align="center">11</td>
+</tr>
+<tr class="odd">
+<td align="center">AMX</td>
+<td align="center">Amoxicillin</td>
+<td align="center">standard_dosage</td>
+<td align="center">0.5 g</td>
+<td align="center">3</td>
+<td align="center">oral</td>
+<td align="center"></td>
+<td align="center">0.5 g x 3 oral</td>
+<td align="center">11</td>
+</tr>
+<tr class="even">
+<td align="center">AMX</td>
+<td align="center">Amoxicillin</td>
+<td align="center">uncomplicated_uti</td>
+<td align="center">0.5 g</td>
+<td align="center">3</td>
+<td align="center">oral</td>
+<td align="center"></td>
+<td align="center">0.5 g x 3 oral</td>
+<td align="center">11</td>
 </tr>
 </tbody>
 </table>

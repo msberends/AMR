@@ -159,5 +159,15 @@ if (changed_md5(intrinsic_resistant)) {
   try(openxlsx::write.xlsx(intrinsic_resistant, "data-raw/intrinsic_resistant.xlsx"), silent = TRUE)
 }
 
+if (changed_md5(dosage)) {
+  write_md5(dosage)
+  try(saveRDS(dosage, "data-raw/dosage.rds", version = 2, compress = "xz"), silent = TRUE)
+  try(write.table(dosage, "data-raw/dosage.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
+  try(haven::write_sas(dosage, "data-raw/dosage.sas"), silent = TRUE)
+  try(haven::write_sav(dosage, "data-raw/dosage.sav"), silent = TRUE)
+  try(haven::write_dta(dosage, "data-raw/dosage.dta"), silent = TRUE)
+  try(openxlsx::write.xlsx(dosage, "data-raw/dosage.xlsx"), silent = TRUE)
+}
+
 rm(write_md5)
 rm(changed_md5)

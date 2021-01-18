@@ -2,14 +2,14 @@
 % Please edit documentation in R/age.R
 \name{age_groups}
 \alias{age_groups}
-\title{Split ages into age groups}
+\title{Split Ages into Age Groups}
 \usage{
 age_groups(x, split_at = c(12, 25, 55, 75), na.rm = FALSE)
 }
 \arguments{
 \item{x}{age, e.g. calculated with \code{\link[=age]{age()}}}
 
-\item{split_at}{values to split \code{x} at, defaults to age groups 0-11, 12-24, 25-54, 55-74 and 75+. See Details.}
+\item{split_at}{values to split \code{x} at, defaults to age groups 0-11, 12-24, 25-54, 55-74 and 75+. See \emph{Details}.}
 
 \item{na.rm}{a \link{logical} to indicate whether missing values should be removed}
 }
@@ -33,7 +33,7 @@ The default is to split on young children (0-11), youth (12-24), young adults (2
 }
 }
 }
-\section{Stable lifecycle}{
+\section{Stable Lifecycle}{
 
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
@@ -41,7 +41,7 @@ The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stabl
 If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
-\section{Read more on our website!}{
+\section{Read more on Our Website!}{
 
 On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }

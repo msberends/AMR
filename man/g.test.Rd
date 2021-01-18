@@ -61,7 +61,7 @@ The p-value is computed from the asymptotic chi-squared distribution of the test
 In the contingency table case simulation is done by random sampling from the set of all contingency tables with given marginals, and works only if the marginals are strictly positive. Note that this is not the usual sampling situation assumed for a chi-squared test (such as the \emph{G}-test) but rather that for Fisher's exact test.
 
 In the goodness-of-fit case simulation is done by random sampling from the discrete distribution specified by \code{p}, each sample being of size \code{n = sum(x)}. This simulation is done in \R and may be slow.
-\subsection{\emph{G}-test of goodness-of-fit (likelihood ratio test)}{
+\subsection{\emph{G}-test Of Goodness-of-Fit (Likelihood Ratio Test)}{
 
 Use the \emph{G}-test of goodness-of-fit when you have one nominal variable with two or more values (such as male and female, or red, pink and white flowers). You compare the observed counts of numbers of observations in each category with the expected counts, which you calculate using some kind of theoretical expectation (such as a 1:1 sex ratio or a 1:2:1 ratio in a genetic cross).
 
@@ -70,7 +70,7 @@ If the expected number of observations in any category is too small, the \emph{G
 The \emph{G}-test of goodness-of-fit is an alternative to the chi-square test of goodness-of-fit (\code{\link[=chisq.test]{chisq.test()}}); each of these tests has some advantages and some disadvantages, and the results of the two tests are usually very similar.
 }
 
-\subsection{\emph{G}-test of independence}{
+\subsection{\emph{G}-test of Independence}{
 
 Use the \emph{G}-test of independence when you have two nominal variables, each with two or more possible values. You want to know whether the proportions for one variable are different among values of the other variable.
 
@@ -81,7 +81,7 @@ Fisher's exact test (\code{\link[=fisher.test]{fisher.test()}}) is an \strong{ex
 The \emph{G}-test of independence is an alternative to the chi-square test of independence (\code{\link[=chisq.test]{chisq.test()}}), and they will give approximately the same results.
 }
 
-\subsection{How the test works}{
+\subsection{How the Test Works}{
 
 Unlike the exact test of goodness-of-fit (\code{\link[=fisher.test]{fisher.test()}}), the \emph{G}-test does not directly calculate the probability of obtaining the observed results or something more extreme. Instead, like almost all statistical tests, the \emph{G}-test has an intermediate step; it uses the data to calculate a test statistic that measures how far the observed data are from the null expectation. You then use a mathematical relationship, in this case the chi-square distribution, to estimate the probability of obtaining that value of the test statistic.
 
@@ -97,13 +97,13 @@ where \code{df} are the degrees of freedom.
 If there are more than two categories and you want to find out which ones are significantly different from their null expectation, you can use the same method of testing each category vs. the sum of all categories, with the Bonferroni correction. You use \emph{G}-tests for each category, of course.
 }
 }
-\section{Questioning lifecycle}{
+\section{Questioning Lifecycle}{
 
 \if{html}{\figure{lifecycle_questioning.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{questioning}. This function might be no longer be optimal approach, or is it questionable whether this function should be in this \code{AMR} package at all.
 }
 
-\section{Read more on our website!}{
+\section{Read more on Our Website!}{
 
 On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }

@@ -23,10 +23,10 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-#' Determine bug-drug combinations
+#' Determine Bug-Drug Combinations
 #' 
-#' Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use [format()] on the result to prettify it to a publicable/printable format, see Examples.
-#' @inheritSection lifecycle Stable lifecycle
+#' Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use [format()] on the result to prettify it to a publicable/printable format, see *Examples*.
+#' @inheritSection lifecycle Stable Lifecycle
 #' @inheritParams eucast_rules
 #' @param combine_IR logical to indicate whether values R and I should be summed
 #' @param add_ab_group logical to indicate where the group of the antimicrobials must be included as a first column
@@ -41,7 +41,7 @@
 #' @rdname bug_drug_combinations
 #' @return The function [bug_drug_combinations()] returns a [data.frame] with columns "mo", "ab", "S", "I", "R" and "total".
 #' @source \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Read more on Our Website!
 #' @examples 
 #' \donttest{
 #' x <- bug_drug_combinations(example_isolates)

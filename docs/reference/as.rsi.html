@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Interpret MIC and disk values, or clean raw R/SI data — as.rsi • AMR (for R)</title>
+<title>Interpret MIC and Disk Values, or Clean Raw R/SI Data — as.rsi • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,7 +48,7 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Interpret MIC and disk values, or clean raw R/SI data — as.rsi" />
+<meta property="og:title" content="Interpret MIC and Disk Values, or Clean Raw R/SI Data — as.rsi" />
 <meta property="og:description" content="Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class rsi, which is an ordered factor with levels S &amp;lt; I &amp;lt; R. Values that cannot be interpreted will be returned as NA with a warning." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9006</span>
       </span>
     </div>
 
@@ -233,7 +233,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Interpret MIC and disk values, or clean raw R/SI data</h1>
+    <h1>Interpret MIC and Disk Values, or Clean Raw R/SI Data</h1>
     <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/rsi.R'><code>R/rsi.R</code></a></small>
     <div class="hidden name"><code>as.rsi.Rd</code></div>
     </div>
@@ -298,7 +298,7 @@
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>maximum fraction of invalid antimicrobial interpretations of <code>x</code>, please see <em>Examples</em></p></td>
+      <td><p>maximum fraction of invalid antimicrobial interpretations of <code>x</code>, see <em>Examples</em></p></td>
     </tr>
     <tr>
       <th>mo</th>
@@ -310,7 +310,7 @@
     </tr>
     <tr>
       <th>guideline</th>
-      <td><p>defaults to the latest included EUCAST guideline, see Details for all options</p></td>
+      <td><p>defaults to the latest included EUCAST guideline, see <em>Details</em> for all options</p></td>
     </tr>
     <tr>
       <th>uti</th>
@@ -340,7 +340,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>How it works</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>How it Works</h3>
 
 
 <p>The <code>as.rsi()</code> function works in four ways:</p><ol>
@@ -360,21 +360,21 @@
 </ol>
 
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Supported guidelines</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Supported Guidelines</h3>
 
 
 <p>For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the <code>guideline</code> argument are: "CLSI 2010", "CLSI 2011", "CLSI 2012", "CLSI 2013", "CLSI 2014", "CLSI 2015", "CLSI 2016", "CLSI 2017", "CLSI 2018", "CLSI 2019", "EUCAST 2011", "EUCAST 2012", "EUCAST 2013", "EUCAST 2014", "EUCAST 2015", "EUCAST 2016", "EUCAST 2017", "EUCAST 2018", "EUCAST 2019", "EUCAST 2020", "EUCAST 2021".</p>
 <p>Simply using <code>"CLSI"</code> or <code>"EUCAST"</code> as input will automatically select the latest version of that guideline. You can set your own data set using the <code>reference_data</code> argument. The <code>guideline</code> argument will then be ignored.</p>
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>After interpretation</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>After Interpretation</h3>
 
 
 <p>After using <code>as.rsi()</code>, you can use the <code><a href='eucast_rules.html'>eucast_rules()</a></code> defined by EUCAST to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.</p>
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Machine readable interpretation guidelines</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Machine-Readable Interpretation Guidelines</h3>
 
 
-<p>The repository of this package <a href='https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt'>contains a machine readable version</a> of all guidelines. This is a CSV file consisting of 20,486 rows and 10 columns. This file is machine readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. <strong>This allows for easy implementation of these rules in laboratory information systems (LIS)</strong>. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.</p>
+<p>The repository of this package <a href='https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt'>contains a machine-readable version</a> of all guidelines. This is a CSV file consisting of 20,486 rows and 10 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. <strong>This allows for easy implementation of these rules in laboratory information systems (LIS)</strong>. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.</p>
 
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Other</h3>
 
@@ -395,19 +395,19 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 </ul>
 
 <p>This AMR package honours this new insight. Use <code><a href='proportion.html'>susceptibility()</a></code> (equal to <code><a href='proportion.html'>proportion_SI()</a></code>) to determine antimicrobial susceptibility and <code><a href='count.html'>count_susceptible()</a></code> (equal to <code><a href='count.html'>count_SI()</a></code>) to count susceptible isolates.</p>
-    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
+    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable Lifecycle</h2>
 
     
 
 <p><img src='figures/lifecycle_stable.svg' style=margin-bottom:5px /> <br />
 The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</strong>. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.</p>
 <p>If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
-    <h2 class="hasAnchor" id="reference-data-publicly-available"><a class="anchor" href="#reference-data-publicly-available"></a>Reference data publicly available</h2>
+    <h2 class="hasAnchor" id="reference-data-publicly-available"><a class="anchor" href="#reference-data-publicly-available"></a>Reference Data Publicly Available</h2>
 
     
 
 <p>All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this <code>AMR</code> package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find <a href='https://msberends.github.io/AMR/articles/datasets.html'>all download links on our website</a>, which is automatically updated with every code change.</p>
-    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on Our Website!</h2>
 
     
 

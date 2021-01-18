@@ -23,10 +23,10 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-#' PCA biplot with `ggplot2`
+#' PCA Biplot with `ggplot2`
 #'
 #' Produces a `ggplot2` variant of a so-called [biplot](https://en.wikipedia.org/wiki/Biplot) for PCA (principal component analysis), but is more flexible and more appealing than the base \R [biplot()] function.
-#' @inheritSection lifecycle Maturing lifecycle
+#' @inheritSection lifecycle Maturing Lifecycle
 #' @param x an object returned by [pca()], [prcomp()] or [princomp()]
 #' @inheritParams stats::biplot.prcomp
 #' @param labels an optional vector of labels for the observations. If set, the labels will be placed below their respective points. When using the [pca()] function as input for `x`, this will be determined automatically based on the attribute `non_numeric_cols`, see [pca()].

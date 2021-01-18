@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Determine multidrug-resistant organisms (MDRO) — mdro • AMR (for R)</title>
+<title>Determine Multidrug-Resistant Organisms (MDRO) — mdro • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,7 +48,7 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Determine multidrug-resistant organisms (MDRO) — mdro" />
+<meta property="og:title" content="Determine Multidrug-Resistant Organisms (MDRO) — mdro" />
 <meta property="og:description" content="Determine which isolates are multidrug-resistant organisms (MDRO) according to international, national and custom guidelines." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9006</span>
       </span>
     </div>
 
@@ -233,7 +233,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Determine multidrug-resistant organisms (MDRO)</h1>
+    <h1>Determine Multidrug-Resistant Organisms (MDRO)</h1>
     <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/mdro.R'><code>R/mdro.R</code></a></small>
     <div class="hidden name"><code>mdro.Rd</code></div>
     </div>
@@ -253,7 +253,7 @@
   <span class='va'>...</span>
 <span class='op'>)</span>
 
-<span class='fu'>custom_mdro_guideline</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>custom_mdro_guideline</span><span class='op'>(</span><span class='va'>...</span>, as_factor <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='fu'>brmo</span><span class='op'>(</span><span class='va'>x</span>, guideline <span class='op'>=</span> <span class='st'>"BRMO"</span>, <span class='va'>...</span><span class='op'>)</span>
 
@@ -274,7 +274,7 @@
     </tr>
     <tr>
       <th>guideline</th>
-      <td><p>a specific guideline to follow. Can also have <code>custom_mdro_guideline()</code> as input. When left empty, the publication by Magiorakos <em>et al.</em> (2012, Clinical Microbiology and Infection) will be followed, please see <em>Details</em>.</p></td>
+      <td><p>a specific guideline to follow, see sections <em>Supported international / national guidelines</em> and <em>Using Custom Guidelines</em> below. When left empty, the publication by Magiorakos <em>et al.</em> (see below) will be followed.</p></td>
     </tr>
     <tr>
       <th>col_mo</th>
@@ -298,13 +298,17 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>column name of an antibiotic, please see section <em>Antibiotics</em> below</p></td>
+      <td><p>in case of <code>custom_mdro_guideline()</code>: a set of rules, see section <em>Using Custom Guidelines</em> below. Otherwise: column name of an antibiotic, see section <em>Antibiotics</em> below.</p></td>
+    </tr>
+    <tr>
+      <th>as_factor</th>
+      <td><p>a <a href='https://rdrr.io/r/base/logical.html'>logical</a> to indicate whether the returned value should be an ordered <a href='https://rdrr.io/r/base/factor.html'>factor</a> (<code>TRUE</code>, default), or otherwise a <a href='https://rdrr.io/r/base/character.html'>character</a> vector</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Please see <em>Details</em> for the list of publications used for this function.</p>
+    <p>See the supported guidelines above for the list of publications used for this function.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     
@@ -321,9 +325,12 @@ Ordered <a href='https://rdrr.io/r/base/factor.html'>factor</a> with levels <cod
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>These functions are context-aware when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>. This means that then the <code>x</code> argument can be left blank, please see <em>Examples</em>.</p>
+    <p>These functions are context-aware when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>. This means that then the <code>x</code> argument can be left blank, see <em>Examples</em>.</p>
 <p>For the <code>pct_required_classes</code> argument, values above 1 will be divided by 100. This is to support both fractions (<code>0.75</code> or <code>3/4</code>) and percentages (<code>75</code>).</p>
-<p><strong>Note:</strong> Every test that involves the Enterobacteriaceae family, will internally be performed using its newly named <em>order</em> Enterobacterales, since the Enterobacteriaceae family has been taxonomically reclassified by Adeolu <em>et al.</em> in 2016. Before that, Enterobacteriaceae was the only family under the Enterobacteriales (with an i) order. All species under the old Enterobacteriaceae family are still under the new Enterobacterales (without an i) order, but divided into multiple families. The way tests are performed now by this <code>mdro()</code> function makes sure that results from before 2016 and after 2016 are identical.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>International / National guidelines</h3>
+<p><strong>Note:</strong> Every test that involves the Enterobacteriaceae family, will internally be performed using its newly named <em>order</em> Enterobacterales, since the Enterobacteriaceae family has been taxonomically reclassified by Adeolu <em>et al.</em> in 2016. Before that, Enterobacteriaceae was the only family under the Enterobacteriales (with an i) order. All species under the old Enterobacteriaceae family are still under the new Enterobacterales (without an i) order, but divided into multiple families. The way tests are performed now by this <code>mdro()</code> function makes sure that results from before 2016 and after 2016 are identical.</p>
+    <h2 class="hasAnchor" id="supported-international-national-guidelines"><a class="anchor" href="#supported-international-national-guidelines"></a>Supported International / National Guidelines</h2>
+
+    
 
 
 <p>Currently supported guidelines are (case-insensitive):</p><ul>
@@ -342,32 +349,34 @@ Ordered <a href='https://rdrr.io/r/base/factor.html'>factor</a> with levels <cod
 </ul>
 
 <p>Please suggest your own (country-specific) guidelines by letting us know: <a href='https://github.com/msberends/AMR/issues/new'>https://github.com/msberends/AMR/issues/new</a>.</p>
+    <h2 class="hasAnchor" id="using-custom-guidelines"><a class="anchor" href="#using-custom-guidelines"></a>Using Custom Guidelines</h2>
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Custom guidelines</h3>
+    
 
 
 <p>Custom guidelines can be set with the <code>custom_mdro_guideline()</code> function. This is of great importance if you have custom rules to determine MDROs in your hospital, e.g., rules that are dependent on ward, state of contact isolation or other variables in your data.</p>
-<p>If you are familiar with <code><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when()</a></code> of the <code>dplyr</code> package, you will recognise the input method to set your own rules. Rules must be set using what <span style="R">R</span> considers to be the 'formula notation':</p><pre><span class='va'>custom</span> <span class='op'>&lt;-</span> <span class='fu'>custom_mdro_guideline</span><span class='op'>(</span><span class='st'>"CIP == 'R' &amp; age &gt; 60"</span> <span class='op'>~</span> <span class='st'>"Elderly Type A"</span>,
-                                <span class='st'>"ERY == 'R' &amp; age &gt; 60"</span> <span class='op'>~</span> <span class='st'>"Elderly Type B"</span><span class='op'>)</span>
+<p>If you are familiar with <code><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when()</a></code> of the <code>dplyr</code> package, you will recognise the input method to set your own rules. Rules must be set using what <span style="R">R</span> considers to be the 'formula notation':</p><pre><span class='va'>custom</span> <span class='op'>&lt;-</span> <span class='fu'>custom_mdro_guideline</span><span class='op'>(</span><span class='va'>CIP</span> <span class='op'>==</span> <span class='st'>"R"</span> <span class='op'>&amp;</span> <span class='va'>age</span> <span class='op'>&gt;</span> <span class='fl'>60</span> <span class='op'>~</span> <span class='st'>"Elderly Type A"</span>,
+                                <span class='va'>ERY</span> <span class='op'>==</span> <span class='st'>"R"</span> <span class='op'>&amp;</span> <span class='va'>age</span> <span class='op'>&gt;</span> <span class='fl'>60</span> <span class='op'>~</span> <span class='st'>"Elderly Type B"</span><span class='op'>)</span>
 </pre>
 
 <p>If a row/an isolate matches the first rule, the value after the first <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> (in this case <em>'Elderly Type A'</em>) will be set as MDRO value. Otherwise, the second rule will be tried and so on. The number of rules is unlimited.</p>
 <p>You can print the rules set in the console for an overview. Colours will help reading it if your console supports colours.</p><pre><span class='va'>custom</span>
 <span class='co'>#&gt; A set of custom MDRO rules:</span>
-<span class='co'>#&gt;   1. CIP == "R" &amp; age &gt; 60 -&gt; "Elderly Type A"</span>
-<span class='co'>#&gt;   2. ERY == "R" &amp; age &gt; 60 -&gt; "Elderly Type B"</span>
-<span class='co'>#&gt;   3. Otherwise -&gt; "Negative"</span>
+<span class='co'>#&gt;   1. CIP is "R" and age is higher than 60 -&gt; Elderly Type A</span>
+<span class='co'>#&gt;   2. ERY is "R" and age is higher than 60 -&gt; Elderly Type B</span>
+<span class='co'>#&gt;   3. Otherwise -&gt; Negative</span>
 <span class='co'>#&gt; </span>
 <span class='co'>#&gt; Unmatched rows will return NA.</span>
 </pre>
 
 <p>The outcome of the function can be used for the <code>guideline</code> argument in the <code>mdro()</code> function:</p><pre><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>mdro</span><span class='op'>(</span><span class='va'>example_isolates</span>, guideline <span class='op'>=</span> <span class='va'>custom</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='co'>#&gt; Elderly Type A Elderly Type B       Negative </span>
+<span class='co'>#&gt;             43            891           1066 </span>
 </pre>
 
 <p>The rules set (the <code>custom</code> object in this case) could be exported to a shared file location using <code><a href='https://rdrr.io/r/base/readRDS.html'>saveRDS()</a></code> if you collaborate with multiple users. The custom rules set could then be imported using <code><a href='https://rdrr.io/r/base/readRDS.html'>readRDS()</a></code>,</p>
-
-    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
+    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable Lifecycle</h2>
 
     
 
@@ -395,7 +404,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 </ul>
 
 <p>This AMR package honours this new insight. Use <code><a href='proportion.html'>susceptibility()</a></code> (equal to <code><a href='proportion.html'>proportion_SI()</a></code>) to determine antimicrobial susceptibility and <code><a href='count.html'>count_susceptible()</a></code> (equal to <code><a href='count.html'>count_SI()</a></code>) to count susceptible isolates.</p>
-    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on Our Website!</h2>
 
     
 
@@ -405,8 +414,8 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
     <pre class="examples"><span class='fu'>mdro</span><span class='op'>(</span><span class='va'>example_isolates</span>, guideline <span class='op'>=</span> <span class='st'>"EUCAST"</span><span class='op'>)</span>
 
 <span class='fu'>mdro</span><span class='op'>(</span><span class='va'>example_isolates</span>,
-     guideline <span class='op'>=</span> <span class='fu'>custom_mdro_guideline</span><span class='op'>(</span><span class='st'>"AMX == 'R'"</span> <span class='op'>~</span> <span class='st'>"Custom MDRO 1"</span>,
-                                       <span class='st'>"VAN == 'R'"</span> <span class='op'>~</span> <span class='st'>"Custom MDRO 2"</span><span class='op'>)</span><span class='op'>)</span>
+     guideline <span class='op'>=</span> <span class='fu'>custom_mdro_guideline</span><span class='op'>(</span><span class='va'>AMX</span> <span class='op'>==</span> <span class='st'>"R"</span> <span class='op'>~</span> <span class='st'>"Custom MDRO 1"</span>,
+                                       <span class='va'>VAN</span> <span class='op'>==</span> <span class='st'>"R"</span> <span class='op'>~</span> <span class='st'>"Custom MDRO 2"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># \donttest{</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>

@@ -23,10 +23,10 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-#' Key antibiotics for first *weighted* isolates
+#' Key Antibiotics for First (Weighted) Isolates
 #'
-#' These function can be used to determine first isolates (see [first_isolate()]). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates can then be called first *weighted* isolates.
-#' @inheritSection lifecycle Stable lifecycle
+#' These function can be used to determine first isolates (see [first_isolate()]). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates can then be called first 'weighted' isolates.
+#' @inheritSection lifecycle Stable Lifecycle
 #' @param x a [data.frame] with antibiotics columns, like `AMX` or `amox`. Can be left blank when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`.
 #' @param y,z character vectors to compare
 #' @inheritParams first_isolate
@@ -36,7 +36,7 @@
 #' @param warnings give a warning about missing antibiotic columns (they will be ignored)
 #' @param ... other arguments passed on to functions
 #' @details 
-#' The [key_antibiotics()] function is context-aware when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`. This means that then the `x` argument can be left blank, please see *Examples*.
+#' The [key_antibiotics()] function is context-aware when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`. This means that then the `x` argument can be left blank, see *Examples*.
 #' 
 #' The function [key_antibiotics()] returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using [key_antibiotics_equal()], to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (`"."`) by [key_antibiotics()] and ignored by [key_antibiotics_equal()].
 #' 
@@ -71,11 +71,11 @@
 #' - Meropenem
 #' 
 #' The function [key_antibiotics_equal()] checks the characters returned by [key_antibiotics()] for equality, and returns a [`logical`] vector.
-#' @inheritSection first_isolate Key antibiotics
+#' @inheritSection first_isolate Key Antibiotics
 #' @rdname key_antibiotics
 #' @export
 #' @seealso [first_isolate()]
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' # `example_isolates` is a dataset available in the AMR package.
 #' # See ?example_isolates.

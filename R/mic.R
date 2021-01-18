@@ -23,10 +23,10 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-#' Transform input to minimum inhibitory concentrations (MIC)
+#' Transform Input to Minimum Inhibitory Concentrations (MIC)
 #'
 #' This transforms a vector to a new class [`mic`], which is an ordered [factor] with valid minimum inhibitory concentrations (MIC) as levels. Invalid MIC values will be translated as `NA` with a warning.
-#' @inheritSection lifecycle Stable lifecycle
+#' @inheritSection lifecycle Stable Lifecycle
 #' @rdname as.mic
 #' @param x vector
 #' @param na.rm a logical indicating whether missing values should be removed
@@ -35,7 +35,7 @@
 #' @aliases mic
 #' @export
 #' @seealso [as.rsi()]
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' mic_data <- as.mic(c(">=32", "1.0", "1", "1.00", 8, "<=0.128", "8", "16", "16"))
 #' is.mic(mic_data)

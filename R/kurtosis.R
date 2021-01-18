@@ -23,16 +23,16 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-#' Kurtosis of the sample
+#' Kurtosis of the Sample
 #'
 #' @description Kurtosis is a measure of the "tailedness" of the probability distribution of a real-valued random variable. A normal distribution has a kurtosis of 3 and a excess kurtosis of 0.
-#' @inheritSection lifecycle Stable lifecycle
+#' @inheritSection lifecycle Stable Lifecycle
 #' @param x a vector of values, a [matrix] or a [data.frame]
 #' @param na.rm a logical to indicate whether `NA` values should be stripped before the computation proceeds
 #' @param excess a logical to indicate whether the *excess kurtosis* should be returned, defined as the kurtosis minus 3.
 #' @seealso [skewness()]
 #' @rdname kurtosis
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Read more on Our Website!
 #' @export
 kurtosis <- function(x, na.rm = FALSE, excess = FALSE) {
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)

@@ -3,7 +3,7 @@
 \name{get_episode}
 \alias{get_episode}
 \alias{is_new_episode}
-\title{Determine (new) episodes for patients}
+\title{Determine (New) Episodes for Patients}
 \usage{
 get_episode(x, episode_days, ...)
 
@@ -12,7 +12,7 @@ is_new_episode(x, episode_days, ...)
 \arguments{
 \item{x}{vector of dates (class \code{Date} or \code{POSIXt})}
 
-\item{episode_days}{length of the required episode in days, please see \emph{Details}}
+\item{episode_days}{length of the required episode in days, see \emph{Details}}
 
 \item{...}{arguments passed on to \code{\link[=as.Date]{as.Date()}}}
 }
@@ -32,7 +32,7 @@ The \code{\link[=first_isolate]{first_isolate()}} function is a wrapper around t
 
 The \code{dplyr} package is not required for these functions to work, but these functions support \link[dplyr:group_by]{variable grouping} and work conveniently inside \code{dplyr} verbs such as \code{\link[dplyr:filter]{filter()}}, \code{\link[dplyr:mutate]{mutate()}} and \code{\link[dplyr:summarise]{summarise()}}.
 }
-\section{Stable lifecycle}{
+\section{Stable Lifecycle}{
 
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
@@ -40,7 +40,7 @@ The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stabl
 If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
-\section{Read more on our website!}{
+\section{Read more on Our Website!}{
 
 On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }

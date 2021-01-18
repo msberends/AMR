@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Translate strings from AMR package — translate • AMR (for R)</title>
+<title>Translate Strings from AMR Package — translate • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,7 +48,7 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Translate strings from AMR package — translate" />
+<meta property="og:title" content="Translate Strings from AMR Package — translate" />
 <meta property="og:description" content="For language-dependent output of AMR functions, like mo_name(), mo_gramstain(), mo_type() and ab_name()." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9006</span>
       </span>
     </div>
 
@@ -233,7 +233,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Translate strings from AMR package</h1>
+    <h1>Translate Strings from AMR Package</h1>
     <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/translate.R'><code>R/translate.R</code></a></small>
     <div class="hidden name"><code>translate.Rd</code></div>
     </div>
@@ -249,7 +249,7 @@
 
     <p>Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: <a href='https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv'>https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv</a>. This file will be read by all functions where a translated output can be desired, like all <code><a href='mo_property.html'>mo_*</a></code> functions (such as <code><a href='mo_property.html'>mo_name()</a></code>, <code><a href='mo_property.html'>mo_gramstain()</a></code>, <code><a href='mo_property.html'>mo_type()</a></code>, etc.) and <code><a href='ab_property.html'>ab_*</a></code> functions (such as <code><a href='ab_property.html'>ab_name()</a></code>, <code><a href='ab_property.html'>ab_group()</a></code>, etc.).</p>
 <p>Currently supported languages are: Dutch, English, French, German, Italian, Portuguese, Spanish. Please note that currently not all these languages have translations available for all antimicrobial agents and colloquial microorganism names.</p>
-<p>Please suggest your own translations <a href='https://github.com/msberends/AMR/issues/new?title=Translations'>by creating a new issue on our repository</a>.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Changing the default language</h3>
+<p>Please suggest your own translations <a href='https://github.com/msberends/AMR/issues/new?title=Translations'>by creating a new issue on our repository</a>.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Changing the Default Language</h3>
 
 
 <p>The system language will be used at default (as returned by <code><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv("LANG")</a></code> or, if <code>LANG</code> is not set, <code><a href='https://rdrr.io/r/base/locales.html'>Sys.getlocale()</a></code>), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:</p><ol>
@@ -259,14 +259,14 @@
 
 <p>So if the R option <code>AMR_locale</code> is set, the system variables <code>LANGUAGE</code> and <code>LANG</code> will be ignored.</p>
 
-    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
+    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable Lifecycle</h2>
 
     
 
 <p><img src='figures/lifecycle_stable.svg' style=margin-bottom:5px /> <br />
 The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</strong>. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.</p>
 <p>If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
-    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on Our Website!</h2>
 
     
 

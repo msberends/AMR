@@ -23,12 +23,12 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-#' Determine (new) episodes for patients
+#' Determine (New) Episodes for Patients
 #' 
 #' These functions determine which items in a vector can be considered (the start of) a new episode, based on the argument `episode_days`. This can be used to determine clinical episodes for any epidemiological analysis. The [get_episode()] function returns the index number of the episode per group, while the [is_new_episode()] function returns values `TRUE`/`FALSE` to indicate whether an item in a vector is the start of a new episode.
-#' @inheritSection lifecycle Stable lifecycle
+#' @inheritSection lifecycle Stable Lifecycle
 #' @param x vector of dates (class `Date` or `POSIXt`)
-#' @param episode_days length of the required episode in days, please see *Details*
+#' @param episode_days length of the required episode in days, see *Details*
 #' @param ... arguments passed on to [as.Date()]
 #' @details 
 #' Dates are first sorted from old to new. The oldest date will mark the start of the first episode. After this date, the next date will be marked that is at least `episode_days` days later than the start of the first episode. From that second marked date on, the next date will be marked that is at least `episode_days` days later than the start of the second episode which will be the start of the third episode, and so on. Before the vector is being returned, the original order will be restored.
@@ -42,7 +42,7 @@
 #' @seealso [first_isolate()]
 #' @rdname get_episode
 #' @export
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' # `example_isolates` is a dataset available in the AMR package.
 #' # See ?example_isolates.

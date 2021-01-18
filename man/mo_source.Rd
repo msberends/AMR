@@ -4,7 +4,7 @@
 \alias{mo_source}
 \alias{set_mo_source}
 \alias{get_mo_source}
-\title{User-defined reference data set for microorganisms}
+\title{User-Defined Reference Data Set for Microorganisms}
 \usage{
 set_mo_source(
   path,
@@ -14,7 +14,7 @@ set_mo_source(
 get_mo_source(destination = getOption("AMR_mo_source", "~/mo_source.rds"))
 }
 \arguments{
-\item{path}{location of your reference file, see Details. Can be \code{""}, \code{NULL} or \code{FALSE} to delete the reference file.}
+\item{path}{location of your reference file, see \emph{Details}. Can be \code{""}, \code{NULL} or \code{FALSE} to delete the reference file.}
 
 \item{destination}{destination of the compressed data file, default to the user's home directory.}
 }
@@ -34,7 +34,7 @@ The function \code{\link[=get_mo_source]{get_mo_source()}} will return the data 
 
 Reading an Excel file (\code{.xlsx}) with only one row has a size of 8-9 kB. The compressed file created with \code{\link[=set_mo_source]{set_mo_source()}} will then have a size of 0.1 kB and can be read by \code{\link[=get_mo_source]{get_mo_source()}} in only a couple of microseconds (millionths of a second).
 }
-\section{How to setup}{
+\section{How to Setup}{
 
 
 Imagine this data on a sheet of an Excel file (mo codes were looked up in the \link{microorganisms} data set). The first column contains the organisation specific codes, the second column contains an MO code from this package:\preformatted{  |         A          |       B      |
@@ -95,7 +95,7 @@ To delete the reference data file, just use \code{""}, \code{NULL} or \code{FALS
 If the original file (in the previous case an Excel file) is moved or deleted, the \code{mo_source.rds} file will be removed upon the next use of \code{\link[=as.mo]{as.mo()}} or any \code{\link[=mo_property]{mo_*}} function.
 }
 
-\section{Stable lifecycle}{
+\section{Stable Lifecycle}{
 
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
@@ -103,7 +103,7 @@ The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stabl
 If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
-\section{Read more on our website!}{
+\section{Read more on Our Website!}{
 
 On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }

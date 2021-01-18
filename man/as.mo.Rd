@@ -7,7 +7,7 @@
 \alias{mo_failures}
 \alias{mo_uncertainties}
 \alias{mo_renamed}
-\title{Transform input to a microorganism ID}
+\title{Transform Input to a Microorganism ID}
 \usage{
 as.mo(
   x,
@@ -39,7 +39,7 @@ This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"}
 
 This excludes \emph{Enterococci} at default (who are in group D), use \code{Lancefield = "all"} to also categorise all \emph{Enterococci} as group D.}
 
-\item{allow_uncertain}{a number between \code{0} (or \code{"none"}) and \code{3} (or \code{"all"}), or \code{TRUE} (= \code{2}) or \code{FALSE} (= \code{0}) to indicate whether the input should be checked for less probable results, please see \emph{Details}}
+\item{allow_uncertain}{a number between \code{0} (or \code{"none"}) and \code{3} (or \code{"all"}), or \code{TRUE} (= \code{2}) or \code{FALSE} (= \code{0}) to indicate whether the input should be checked for less probable results, see \emph{Details}}
 
 \item{reference_df}{a \link{data.frame} to be used for extra reference when translating \code{x} to a valid \code{\link{mo}}. See \code{\link[=set_mo_source]{set_mo_source()}} and \code{\link[=get_mo_source]{get_mo_source()}} to automate the usage of your own codes (e.g. used in your analysis or organisation).}
 
@@ -53,10 +53,10 @@ This excludes \emph{Enterococci} at default (who are in group D), use \code{Lanc
 A \link{character} \link{vector} with additional class \code{\link{mo}}
 }
 \description{
-Use this function to determine a valid microorganism ID (\code{\link{mo}}). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (such as \code{"S. aureus"}), an abbreviation known in the field (such as \code{"MRSA"}), or just a genus. Please see \emph{Examples}.
+Use this function to determine a valid microorganism ID (\code{\link{mo}}). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see \emph{Source}). The input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (such as \code{"S. aureus"}), an abbreviation known in the field (such as \code{"MRSA"}), or just a genus. See \emph{Examples}.
 }
 \details{
-\subsection{General info}{
+\subsection{General Info}{
 
 A microorganism ID from this package (class: \code{\link{mo}}) is human readable and typically looks like these examples:\preformatted{  Code               Full name
   ---------------    --------------------------------------
@@ -74,7 +74,7 @@ A microorganism ID from this package (class: \code{\link{mo}}) is human readable
 
 Values that cannot be coerced will be considered 'unknown' and will get the MO code \code{UNKNOWN}.
 
-Use the \code{\link[=mo_property]{mo_*}} functions to get properties based on the returned code, see Examples.
+Use the \code{\link[=mo_property]{mo_*}} functions to get properties based on the returned code, see \emph{Examples}.
 
 The algorithm uses data from the Catalogue of Life (see below) and from one other source (see \link{microorganisms}).
 
@@ -88,7 +88,7 @@ The \code{\link[=as.mo]{as.mo()}} function uses several coercion rules for fast 
 This will lead to the effect that e.g. \code{"E. coli"} (a microorganism highly prevalent in humans) will return the microbial ID of \emph{Escherichia coli} and not \emph{Entamoeba coli} (a microorganism less prevalent in humans), although the latter would alphabetically come first.
 }
 
-\subsection{Coping with uncertain results}{
+\subsection{Coping with Uncertain Results}{
 
 In addition, the \code{\link[=as.mo]{as.mo()}} function can differentiate four levels of uncertainty to guess valid results:
 \itemize{
@@ -109,15 +109,15 @@ With the default setting (\code{allow_uncertain = TRUE}, level 2), below example
 
 There are three helper functions that can be run after using the \code{\link[=as.mo]{as.mo()}} function:
 \itemize{
-\item Use \code{\link[=mo_uncertainties]{mo_uncertainties()}} to get a \link{data.frame} that prints in a pretty format with all taxonomic names that were guessed. The output contains the matching score for all matches (see \emph{Background on matching score}).
+\item Use \code{\link[=mo_uncertainties]{mo_uncertainties()}} to get a \link{data.frame} that prints in a pretty format with all taxonomic names that were guessed. The output contains the matching score for all matches (see \emph{Matching Score for Microorganisms} below).
 \item Use \code{\link[=mo_failures]{mo_failures()}} to get a \link{character} \link{vector} with all values that could not be coerced to a valid value.
 \item Use \code{\link[=mo_renamed]{mo_renamed()}} to get a \link{data.frame} with all values that could be coerced based on old, previously accepted taxonomic names.
 }
 }
 
-\subsection{Microbial prevalence of pathogens in humans}{
+\subsection{Microbial Prevalence of Pathogens in Humans}{
 
-The intelligent rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the \code{prevalence} columns in the \link{microorganisms} and \link{microorganisms.old} data sets. The grouping into human pathogenic prevalence is explained in the section \emph{Matching score for microorganisms} below.
+The intelligent rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the \code{prevalence} columns in the \link{microorganisms} and \link{microorganisms.old} data sets. The grouping into human pathogenic prevalence is explained in the section \emph{Matching Score for Microorganisms} below.
 }
 }
 \section{Source}{
@@ -131,7 +131,7 @@ The intelligent rules consider the prevalence of microorganisms in humans groupe
 }
 }
 
-\section{Stable lifecycle}{
+\section{Stable Lifecycle}{
 
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
@@ -139,7 +139,7 @@ The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stabl
 If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
-\section{Matching score for microorganisms}{
+\section{Matching Score for Microorganisms}{
 
 With ambiguous user input in \code{\link[=as.mo]{as.mo()}} and all the \code{\link[=mo_property]{mo_*}} functions, the returned results are chosen based on their matching score using \code{\link[=mo_matching_score]{mo_matching_score()}}. This matching score \eqn{m}, is calculated as:
 
@@ -168,12 +168,12 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 \link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which versions of the CoL and LSPN were included in this package with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}.
 }
 
-\section{Reference data publicly available}{
+\section{Reference Data Publicly Available}{
 
 All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
 }
 
-\section{Read more on our website!}{
+\section{Read more on Our Website!}{
 
 On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }

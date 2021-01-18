@@ -225,13 +225,21 @@ test_that("mdro works", {
   
   # custom rules
   custom <- custom_mdro_guideline("CIP == 'R' & age > 60" ~ "Elderly Type A",
-                                  "ERY == 'R' & age > 60" ~ "Elderly Type B")
+                                  "ERY == 'R' & age > 60" ~ "Elderly Type B",
+                                  as_factor = TRUE)
   expect_output(print(custom))
   x <- mdro(example_isolates, guideline = custom, info = TRUE)
   expect_equal(as.double(table(x)), c(43, 891, 1066))
+  
+  expect_output(print(custom_mdro_guideline(AMX == "R" ~ "test", as_factor = FALSE)))
   expect_error(custom_mdro_guideline())
   expect_error(custom_mdro_guideline("test"))
   expect_error(custom_mdro_guideline("test" ~ c(1:3)))
   expect_error(custom_mdro_guideline("test" ~ A))
+  expect_error(custom_mdro_guideline(test ~ "A"))
+  expect_warning(mdro(example_isolates,
+                      # since `test` gives an error, it will be ignored with a warning
+                      guideline = custom_mdro_guideline(test ~ "A"), 
+                      info = FALSE))
   
 })

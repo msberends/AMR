@@ -45,23 +45,28 @@ EUCAST_VERSION_EXPERT_RULES <- list("3.1" = list(version_txt = "v3.1",
 format_eucast_version_nr <- function(version, markdown = TRUE) {
   # for documentation - adds title, version number, year and url in markdown language
   lst <- c(EUCAST_VERSION_BREAKPOINTS, EUCAST_VERSION_EXPERT_RULES)
-  version <- format(version, nsmall = 1)
-  if (markdown == TRUE) {
-    paste0("[", lst[[version]]$title, " ", lst[[version]]$version_txt, "](", lst[[version]]$url, ")",
-           " (", lst[[version]]$year, ")")
-  } else {
-    paste0(lst[[version]]$title, " ", lst[[version]]$version_txt,
-           " (", lst[[version]]$year, ")")
+  version <- format(unique(version), nsmall = 1)
+  txt <- character(0)
+  for (i in seq_len(length(version))) {
+    v <- version[i]
+    if (markdown == TRUE) {
+      txt <- c(txt, paste0("[", lst[[v]]$title, " ", lst[[v]]$version_txt, "](", lst[[v]]$url, ")",
+             " (", lst[[v]]$year, ")"))
+    } else {
+      txt <- c(txt, paste0(lst[[version]]$title, " ", lst[[v]]$version_txt,
+             " (", lst[[v]]$year, ")"))
+    }
   }
+  paste0(txt, collapse = ", ")
 }
 
-#' Apply EUCAST rules
+#' Apply EUCAST Rules
 #' 
 #' @description
 #' Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <https://eucast.org>), see *Source*. Use [eucast_dosage()] to get a [data.frame] with advised dosages of a certain bug-drug combination, which is based on the [dosage] data set.
 #' 
-#' To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see Details.
-#' @inheritSection lifecycle Stable lifecycle
+#' To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see *Details*.
+#' @inheritSection lifecycle Stable Lifecycle
 #' @param x data with antibiotic columns, such as `amox`, `AMX` and `AMC`
 #' @param info a logical to indicate whether progress should be printed to the console, defaults to only print while in interactive sessions
 #' @param rules a character vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expert"`, `"other"`, `"all"`, and defaults to `c("breakpoints", "expert")`. The default value can be set to another value, e.g. using `options(AMR_eucastrules = "all")`.
@@ -69,7 +74,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param version_breakpoints the version number to use for the EUCAST Clinical Breakpoints guideline. Can be either `r vector_or(names(EUCAST_VERSION_BREAKPOINTS), reverse = TRUE)`.
 #' @param version_expertrules the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either `r vector_or(names(EUCAST_VERSION_EXPERT_RULES), reverse = TRUE)`.
 #' @param ampc_cephalosporin_resistance a character value that should be applied for AmpC de-repressed cephalosporin-resistant mutants, defaults to `NA`. Currently only works when `version_expertrules` is `3.2`; '*EUCAST Expert Rules v3.2 on Enterobacterales*' states that susceptible (S) results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these agents. A value of `NA` for this argument will remove results for these agents, while e.g. a value of `"R"` will make the results for these agents resistant. Use `NULL` to not alter the results for AmpC de-repressed cephalosporin-resistant mutants. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: *`r gsub("[)(^]", "", gsub("|", ", ", eucast_rules_file[which(eucast_rules_file$reference.version == 3.2 & eucast_rules_file$reference.rule %like% "ampc"), "this_value"][1], fixed = TRUE))`*.
-#' @param ... column name of an antibiotic, please see section *Antibiotics* below
+#' @param ... column name of an antibiotic, see section *Antibiotics* below
 #' @param ab any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
 #' @param administration route of administration, either `r vector_or(dosage$administration)`
 #' @inheritParams first_isolate
@@ -79,7 +84,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #'
 #' The file containing all EUCAST rules is located here: <https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv>.
 #' 
-#' ## 'Other' rules
+#' ## 'Other' Rules
 #' 
 #' Before further processing, two non-EUCAST rules about drug combinations can be applied to improve the efficacy of the EUCAST rules, and the reliability of your data (analysis). These rules are:
 #' 
@@ -107,8 +112,8 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 9.0, 2019. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx)
 #' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 10.0, 2020. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_10.0_Breakpoint_Tables.xlsx)
 #' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 11.0, 2021. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_11.0_Breakpoint_Tables.xlsx)
-#' @inheritSection AMR Reference data publicly available
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Reference Data Publicly Available
+#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' \donttest{
 #' a <- data.frame(mo = c("Staphylococcus aureus",

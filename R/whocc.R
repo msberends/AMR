@@ -35,7 +35,7 @@
 #' The WHOCC is located in Oslo at the Norwegian Institute of Public Health and funded by the Norwegian government. The European Commission is the executive of the European Union and promotes its general interest.
 #' 
 #' **NOTE: The WHOCC copyright does not allow use for commercial purposes, unlike any other info from this package.** See <https://www.whocc.no/copyright_disclaimer/.>
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Read more on Our Website!
 #' @name WHOCC
 #' @rdname WHOCC
 #' @examples

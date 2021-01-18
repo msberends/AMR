@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AMR plots with ggplot2 — ggplot_rsi • AMR (for R)</title>
+<title>AMR Plots with ggplot2 — ggplot_rsi • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,7 +48,7 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="AMR plots with ggplot2 — ggplot_rsi" />
+<meta property="og:title" content="AMR Plots with ggplot2 — ggplot_rsi" />
 <meta property="og:description" content="Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on ggplot2 functions." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9006</span>
       </span>
     </div>
 
@@ -233,7 +233,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>AMR plots with <code>ggplot2</code></h1>
+    <h1>AMR Plots with <code>ggplot2</code></h1>
     <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/ggplot_rsi.R'><code>R/ggplot_rsi.R</code></a></small>
     <div class="hidden name"><code>ggplot_rsi.Rd</code></div>
     </div>
@@ -349,7 +349,7 @@
     </tr>
     <tr>
       <th>minimum</th>
-      <td><p>the minimum allowed number of available (tested) isolates. Any isolate count lower than <code>minimum</code> will return <code>NA</code> with a warning. The default number of <code>30</code> isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see Source.</p></td>
+      <td><p>the minimum allowed number of available (tested) isolates. Any isolate count lower than <code>minimum</code> will return <code>NA</code> with a warning. The default number of <code>30</code> isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see <em>Source</em>.</p></td>
     </tr>
     <tr>
       <th>language</th>
@@ -403,7 +403,7 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>At default, the names of antibiotics will be shown on the plots using <code><a href='ab_property.html'>ab_name()</a></code>. This can be set with the <code>translate_ab</code> argument. See <code><a href='count.html'>count_df()</a></code>.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>The functions</h3>
+    <p>At default, the names of antibiotics will be shown on the plots using <code><a href='ab_property.html'>ab_name()</a></code>. This can be set with the <code>translate_ab</code> argument. See <code><a href='count.html'>count_df()</a></code>.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>The Functions</h3>
 
 
 <p><code>geom_rsi()</code> will take any variable from the data that has an <code><a href='as.rsi.html'>rsi</a></code> class (created with <code><a href='as.rsi.html'>as.rsi()</a></code>) using <code><a href='proportion.html'>rsi_df()</a></code> and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.</p>
@@ -412,15 +412,15 @@
 <p><code>scale_rsi_colours()</code> sets colours to the bars: pastel blue for S, pastel turquoise for I and pastel red for R, using <code><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>ggplot2::scale_fill_manual()</a></code>.</p>
 <p><code>theme_rsi()</code> is a [ggplot2 theme][<code><a href='https://ggplot2.tidyverse.org/reference/theme.html'>ggplot2::theme()</a></code> with minimal distraction.</p>
 <p><code>labels_rsi_count()</code> print datalabels on the bars with percentage and amount of isolates using <code><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>ggplot2::geom_text()</a></code>.</p>
-<p><code>ggplot_rsi()</code> is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (<code>%&gt;%</code>). See Examples.</p>
+<p><code>ggplot_rsi()</code> is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (<code>%&gt;%</code>). See <em>Examples</em>.</p>
 
-    <h2 class="hasAnchor" id="maturing-lifecycle"><a class="anchor" href="#maturing-lifecycle"></a>Maturing lifecycle</h2>
+    <h2 class="hasAnchor" id="maturing-lifecycle"><a class="anchor" href="#maturing-lifecycle"></a>Maturing Lifecycle</h2>
 
     
 
 <p><img src='figures/lifecycle_maturing.svg' style=margin-bottom:5px /> <br />
 The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing</strong>. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome <a href='https://github.com/msberends/AMR/issues'>to suggest changes at our repository</a> or <a href='AMR.html'>write us an email (see section 'Contact Us')</a>.</p>
-    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on Our Website!</h2>
 
     
 

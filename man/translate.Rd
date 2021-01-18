@@ -3,7 +3,7 @@
 \name{translate}
 \alias{translate}
 \alias{get_locale}
-\title{Translate strings from AMR package}
+\title{Translate Strings from AMR Package}
 \usage{
 get_locale()
 }
@@ -16,7 +16,7 @@ Strings will be translated to foreign languages if they are defined in a local t
 Currently supported languages are: Dutch, English, French, German, Italian, Portuguese, Spanish. Please note that currently not all these languages have translations available for all antimicrobial agents and colloquial microorganism names.
 
 Please suggest your own translations \href{https://github.com/msberends/AMR/issues/new?title=Translations}{by creating a new issue on our repository}.
-\subsection{Changing the default language}{
+\subsection{Changing the Default Language}{
 
 The system language will be used at default (as returned by \code{Sys.getenv("LANG")} or, if \code{LANG} is not set, \code{\link[=Sys.getlocale]{Sys.getlocale()}}), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:
 \enumerate{
@@ -27,7 +27,7 @@ The system language will be used at default (as returned by \code{Sys.getenv("LA
 So if the R option \code{AMR_locale} is set, the system variables \code{LANGUAGE} and \code{LANG} will be ignored.
 }
 }
-\section{Stable lifecycle}{
+\section{Stable Lifecycle}{
 
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
@@ -35,7 +35,7 @@ The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stabl
 If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
-\section{Read more on our website!}{
+\section{Read more on Our Website!}{
 
 On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }

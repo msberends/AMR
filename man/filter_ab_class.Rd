@@ -15,7 +15,7 @@
 \alias{filter_macrolides}
 \alias{filter_penicillins}
 \alias{filter_tetracyclines}
-\title{Filter isolates on result in antimicrobial class}
+\title{Filter Isolates on Result in Antimicrobial Class}
 \usage{
 filter_ab_class(x, ab_class, result = NULL, scope = "any", ...)
 
@@ -62,7 +62,7 @@ Filter isolates on results in specific antimicrobial classes. This makes it easy
 \details{
 All columns of \code{x} will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.). This means that a filter function like e.g. \code{\link[=filter_aminoglycosides]{filter_aminoglycosides()}} will include column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
 }
-\section{Stable lifecycle}{
+\section{Stable Lifecycle}{
 
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.

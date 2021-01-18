@@ -23,10 +23,10 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-#' AMR plots with `ggplot2`
+#' AMR Plots with `ggplot2`
 #'
 #' Use these functions to create bar plots for antimicrobial resistance analysis. All functions rely on [ggplot2][ggplot2::ggplot()] functions.
-#' @inheritSection lifecycle Maturing lifecycle
+#' @inheritSection lifecycle Maturing Lifecycle
 #' @param data a [data.frame] with column(s) of class [`rsi`] (see [as.rsi()])
 #' @param position position adjustment of bars, either `"fill"`, `"stack"` or `"dodge"`
 #' @param x variable to show on x axis, either `"antibiotic"` (default) or `"interpretation"` or a grouping variable
@@ -48,7 +48,7 @@
 #' @param ... other arguments passed on to [geom_rsi()]
 #' @details At default, the names of antibiotics will be shown on the plots using [ab_name()]. This can be set with the `translate_ab` argument. See [count_df()].
 #'
-#' ## The functions
+#' ## The Functions
 #' [geom_rsi()] will take any variable from the data that has an [`rsi`] class (created with [as.rsi()]) using [rsi_df()] and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.
 #'
 #' [facet_rsi()] creates 2d plots (at default based on S/I/R) using [ggplot2::facet_wrap()].
@@ -61,10 +61,10 @@
 #'
 #' [labels_rsi_count()] print datalabels on the bars with percentage and amount of isolates using [ggplot2::geom_text()].
 #'
-#' [ggplot_rsi()] is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (`%>%`). See Examples.
+#' [ggplot_rsi()] is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (`%>%`). See *Examples*.
 #' @rdname ggplot_rsi
 #' @export
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' if (require("ggplot2") & require("dplyr")) {
 #'  

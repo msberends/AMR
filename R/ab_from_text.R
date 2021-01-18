@@ -23,10 +23,10 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-#' Retrieve antimicrobial drug names and doses from clinical text
+#' Retrieve Antimicrobial Drug Names and Doses from Clinical Text
 #' 
 #' Use this function on e.g. clinical texts from health care records. It returns a [list] with all antimicrobial drugs, doses and forms of administration found in the texts.
-#' @inheritSection lifecycle Maturing lifecycle
+#' @inheritSection lifecycle Maturing Lifecycle
 #' @param text text to analyse
 #' @param type type of property to search for, either `"drug"`, `"dose"` or `"administration"`, see *Examples*
 #' @param collapse character to pass on to `paste(..., collapse = ...)` to only return one character per element of `text`, see *Examples*
@@ -52,7 +52,7 @@
 #' `df %>% mutate(abx = ab_from_text(clinical_text, collapse = "|"))` 
 #' @export
 #' @return A [list], or a  [character] if `collapse` is not `NULL`
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Read more on Our Website!
 #' @examples 
 #' # mind the bad spelling of amoxicillin in this line, 
 #' # straight from a true health care record:

@@ -4,7 +4,7 @@
 \alias{first_isolate}
 \alias{filter_first_isolate}
 \alias{filter_first_weighted_isolate}
-\title{Determine first (weighted) isolates}
+\title{Determine First (Weighted) Isolates}
 \source{
 Methodology of this function is strictly based on:
 
@@ -64,9 +64,9 @@ filter_first_weighted_isolate(
 
 \item{col_icu}{column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU)}
 
-\item{col_keyantibiotics}{column name of the key antibiotics to determine first \emph{weighted} isolates, see \code{\link[=key_antibiotics]{key_antibiotics()}}. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use \code{col_keyantibiotics = FALSE} to prevent this.}
+\item{col_keyantibiotics}{column name of the key antibiotics to determine first (weighted) isolates, see \code{\link[=key_antibiotics]{key_antibiotics()}}. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use \code{col_keyantibiotics = FALSE} to prevent this.}
 
-\item{episode_days}{episode in days after which a genus/species combination will be determined as 'first isolate' again. The default of 365 days is based on the guideline by CLSI, see Source.}
+\item{episode_days}{episode in days after which a genus/species combination will be determined as 'first isolate' again. The default of 365 days is based on the guideline by CLSI, see \emph{Source}.}
 
 \item{testcodes_exclude}{character vector with test codes that should be excluded (case-insensitive)}
 
@@ -74,11 +74,11 @@ filter_first_weighted_isolate(
 
 \item{specimen_group}{value in the column set with \code{col_specimen} to filter on}
 
-\item{type}{type to determine weighed isolates; can be \code{"keyantibiotics"} or \code{"points"}, see Details}
+\item{type}{type to determine weighed isolates; can be \code{"keyantibiotics"} or \code{"points"}, see \emph{Details}}
 
-\item{ignore_I}{logical to determine whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantibiotics"}, see Details}
+\item{ignore_I}{logical to determine whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantibiotics"}, see \emph{Details}}
 
-\item{points_threshold}{points until the comparison of key antibiotics will lead to inclusion of an isolate when \code{type = "points"}, see Details}
+\item{points_threshold}{points until the comparison of key antibiotics will lead to inclusion of an isolate when \code{type = "points"}, see \emph{Details}}
 
 \item{info}{print progress}
 
@@ -93,17 +93,17 @@ A \code{\link{logical}} vector
 Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use \code{\link[=is_new_episode]{is_new_episode()}} that also supports grouping with the \code{dplyr} package.
 }
 \details{
-These functions are context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} argument can be left blank, please see \emph{Examples}.
+These functions are context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} argument can be left blank, see \emph{Examples}.
 
 The \code{\link[=first_isolate]{first_isolate()}} function is a wrapper around the \code{\link[=is_new_episode]{is_new_episode()}} function, but more efficient for data sets containing microorganism codes or names.
 
 All isolates with a microbial ID of \code{NA} will be excluded as first isolate.
-\subsection{Why this is so important}{
+\subsection{Why this is so Important}{
 
 To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode \href{https://pubmed.ncbi.nlm.nih.gov/17304462/}{(Hindler \emph{et al.} 2007)}. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be \href{https://en.wikipedia.org/wiki/Selection_bias}{selection bias}.
 }
 
-\subsection{\verb{filter_*()} shortcuts}{
+\subsection{\verb{filter_*()} Shortcuts}{
 
 The functions \code{\link[=filter_first_isolate]{filter_first_isolate()}} and \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_isolate()}} are helper functions to quickly filter on first isolates.
 
@@ -121,9 +121,9 @@ The function \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_i
 }
 }
 }
-\section{Key antibiotics}{
+\section{Key Antibiotics}{
 
-There are two ways to determine whether isolates can be included as first \emph{weighted} isolates which will give generally the same results:
+There are two ways to determine whether isolates can be included as first weighted isolates which will give generally the same results:
 \enumerate{
 \item Using \code{type = "keyantibiotics"} and argument \code{ignore_I}
 
@@ -134,7 +134,7 @@ A difference from I to S|R (or vice versa) means 0.5 points, a difference from S
 }
 }
 
-\section{Stable lifecycle}{
+\section{Stable Lifecycle}{
 
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
@@ -142,7 +142,7 @@ The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stabl
 If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
-\section{Read more on our website!}{
+\section{Read more on Our Website!}{
 
 On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }

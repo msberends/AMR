@@ -23,13 +23,13 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-#' User-defined reference data set for microorganisms
+#' User-Defined Reference Data Set for Microorganisms
 #'
 #' @description These functions can be used to predefine your own reference to be used in [as.mo()] and consequently all [`mo_*`][mo_property()] functions (such as [mo_genus()] and [mo_gramstain()]).
 #'
 #' This is **the fastest way** to have your organisation (or analysis) specific codes picked up and translated by this package, since you don't have to bother about it again after setting it up once.
-#' @inheritSection lifecycle Stable lifecycle
-#' @param path location of your reference file, see Details. Can be `""`, `NULL` or `FALSE` to delete the reference file.
+#' @inheritSection lifecycle Stable Lifecycle
+#' @param path location of your reference file, see *Details*. Can be `""`, `NULL` or `FALSE` to delete the reference file.
 #' @param destination destination of the compressed data file, default to the user's home directory.
 #' @rdname mo_source
 #' @name mo_source
@@ -44,7 +44,7 @@
 #'
 #' Reading an Excel file (`.xlsx`) with only one row has a size of 8-9 kB. The compressed file created with [set_mo_source()] will then have a size of 0.1 kB and can be read by [get_mo_source()] in only a couple of microseconds (millionths of a second).
 #' 
-#' @section How to setup:
+#' @section How to Setup:
 #' 
 #' Imagine this data on a sheet of an Excel file (mo codes were looked up in the [microorganisms] data set). The first column contains the organisation specific codes, the second column contains an MO code from this package:
 #' 
@@ -121,7 +121,7 @@
 #' 
 #' If the original file (in the previous case an Excel file) is moved or deleted, the `mo_source.rds` file will be removed upon the next use of [as.mo()] or any [`mo_*`][mo_property()] function.
 #' @export
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Read more on Our Website!
 set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_source.rds")) {
   meet_criteria(path, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(destination, allow_class = "character", has_length = 1)

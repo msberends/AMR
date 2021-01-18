@@ -23,13 +23,13 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-#' Get ATC properties from WHOCC website
+#' Get ATC Properties from WHOCC Website
 #'
 #' Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic), such as the name, defined daily dose (DDD) or standard unit.
-#' @inheritSection lifecycle Stable lifecycle
+#' @inheritSection lifecycle Stable Lifecycle
 #' @param atc_code a character or character vector with ATC code(s) of antibiotic(s)
-#' @param property property of an ATC code. Valid values are `"ATC"`, `"Name"`, `"DDD"`, `"U"` (`"unit"`), `"Adm.R"`, `"Note"` and `groups`. For this last option, all hierarchical groups of an ATC code will be returned, see Examples.
-#' @param administration type of administration when using `property = "Adm.R"`, see Details
+#' @param property property of an ATC code. Valid values are `"ATC"`, `"Name"`, `"DDD"`, `"U"` (`"unit"`), `"Adm.R"`, `"Note"` and `groups`. For this last option, all hierarchical groups of an ATC code will be returned, see *Examples*.
+#' @param administration type of administration when using `property = "Adm.R"`, see *Details*
 #' @param url url of website of the WHOCC. The sign `%s` can be used as a placeholder for ATC codes.
 #' @param url_vet url of website of the WHOCC for veterinary medicine. The sign `%s` can be used as a placeholder for ATC_vet codes (that all start with "Q").
 #' @param ... arguments to pass on to `atc_property`
@@ -61,7 +61,7 @@
 #' **N.B. This function requires an internet connection and only works if the following packages are installed: `curl`, `rvest`, `xml2`.**
 #' @export
 #' @rdname atc_online
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Read more on Our Website!
 #' @source <https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/>
 #' @examples
 #' \donttest{

@@ -23,10 +23,10 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-#' Transform input to an antibiotic ID
+#' Transform Input to an Antibiotic ID
 #'
 #' Use this function to determine the antibiotic code of one or more antibiotics. The data set [antibiotics] will be searched for abbreviations, official names and synonyms (brand names).
-#' @inheritSection lifecycle Stable lifecycle
+#' @inheritSection lifecycle Stable Lifecycle
 #' @param x character vector to determine to antibiotic ID
 #' @param flag_multiple_results logical to indicate whether a note should be printed to the console that probably more than one antibiotic code or name can be retrieved from a single input value.
 #' @param info logical to indicate whether a progress bar should be printed
@@ -42,7 +42,7 @@
 #'  * Switching two characters (such as "mreopenem", often the case in clinical data, when doctors typed too fast)
 #'  * Digitalised paper records, leaving artefacts like 0/o/O (zero and O's), B/8, n/r, etc.
 #'
-#' Use the [`ab_*`][ab_property()] functions to get properties based on the returned antibiotic ID, see Examples.
+#' Use the [`ab_*`][ab_property()] functions to get properties based on the returned antibiotic ID, see *Examples*.
 #' 
 #' Note: the [as.ab()] and [`ab_*`][ab_property()] functions may use very long regular expression to match brand names of antimicrobial agents. This may fail on some systems.
 #' @section Source:
@@ -56,8 +56,8 @@
 #' @seealso 
 #' * [antibiotics] for the [data.frame] that is being used to determine ATCs
 #' * [ab_from_text()] for a function to retrieve antimicrobial drugs from clinical text (from health care records)
-#' @inheritSection AMR Reference data publicly available
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Reference Data Publicly Available
+#' @inheritSection AMR Read more on Our Website!
 #' @export
 #' @examples
 #' # these examples all return "ERY", the ID of erythromycin:

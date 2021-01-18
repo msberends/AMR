@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Count available isolates — count • AMR (for R)</title>
+<title>Count Available Isolates — count • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Count available isolates — count" />
-<meta property="og:description" content="These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in summarise() from the dplyr package and also support grouped variables, please see Examples.
+<meta property="og:title" content="Count Available Isolates — count" />
+<meta property="og:description" content="These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in summarise() from the dplyr package and also support grouped variables, see Examples.
 count_resistant() should be used to count resistant isolates, count_susceptible() should be used to count susceptible isolates." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
@@ -83,7 +83,7 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9006</span>
       </span>
     </div>
 
@@ -234,13 +234,13 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Count available isolates</h1>
+    <h1>Count Available Isolates</h1>
     <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/count.R'><code>R/count.R</code></a></small>
     <div class="hidden name"><code>count.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code> from the <code>dplyr</code> package and also support grouped variables, please see <em>Examples</em>.</p>
+    <p>These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code> from the <code>dplyr</code> package and also support grouped variables, see <em>Examples</em>.</p>
 <p><code>count_resistant()</code> should be used to count resistant isolates, <code>count_susceptible()</code> should be used to count susceptible isolates.</p>
     </div>
 
@@ -279,7 +279,7 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
     </tr>
     <tr>
       <th>only_all_tested</th>
-      <td><p>(for combination therapies, i.e. using more than one variable for <code>...</code>): a logical to indicate that isolates must be tested for all antibiotics, see section <em>Combination therapy</em> below</p></td>
+      <td><p>(for combination therapies, i.e. using more than one variable for <code>...</code>): a logical to indicate that isolates must be tested for all antibiotics, see section <em>Combination Therapy</em> below</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -312,7 +312,7 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
 <p>The function <code>count_resistant()</code> is equal to the function <code>count_R()</code>. The function <code>count_susceptible()</code> is equal to the function <code>count_SI()</code>.</p>
 <p>The function <code>n_rsi()</code> is an alias of <code>count_all()</code>. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to <code><a href='https://dplyr.tidyverse.org/reference/n_distinct.html'>n_distinct()</a></code>. Their function is equal to <code>count_susceptible(...) + count_resistant(...)</code>.</p>
 <p>The function <code>count_df()</code> takes any variable from <code>data</code> that has an <code><a href='as.rsi.html'>rsi</a></code> class (created with <code><a href='as.rsi.html'>as.rsi()</a></code>) and counts the number of S's, I's and R's. It also supports grouped variables. The function <code><a href='proportion.html'>rsi_df()</a></code> works exactly like <code>count_df()</code>, but adds the percentage of S, I and R.</p>
-    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
+    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable Lifecycle</h2>
 
     
 
@@ -333,7 +333,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 </ul>
 
 <p>This AMR package honours this new insight. Use <code><a href='proportion.html'>susceptibility()</a></code> (equal to <code><a href='proportion.html'>proportion_SI()</a></code>) to determine antimicrobial susceptibility and <code>count_susceptible()</code> (equal to <code>count_SI()</code>) to count susceptible isolates.</p>
-    <h2 class="hasAnchor" id="combination-therapy"><a class="anchor" href="#combination-therapy"></a>Combination therapy</h2>
+    <h2 class="hasAnchor" id="combination-therapy"><a class="anchor" href="#combination-therapy"></a>Combination Therapy</h2>
 
     
 
@@ -364,7 +364,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 </pre>
 
 <p>Using <code>only_all_tested</code> has no impact when only using one antibiotic as input.</p>
-    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on Our Website!</h2>
 
     
 

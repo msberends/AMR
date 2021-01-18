@@ -1,0 +1,136 @@
+"ab"	"name"	"type"	"dose"	"dose_times"	"administration"	"notes"	"original_txt"	"eucast_version"
+"AMK"	"Amikacin"	"standard_dosage"	"25-30 mg/kg"	1	"iv"	""	"25-30 mg/kg x 1 iv"	11
+"AMX"	"Amoxicillin"	"high_dosage"	"2 g"	6	"iv"	""	"2 g x 6 iv"	11
+"AMX"	"Amoxicillin"	"standard_dosage"	"1 g"	3	"iv"	""	"1 g x 3-4 iv"	11
+"AMX"	"Amoxicillin"	"high_dosage"	"0.75-1 g"	3	"oral"	""	"0.75-1 g x 3 oral"	11
+"AMX"	"Amoxicillin"	"standard_dosage"	"0.5 g"	3	"oral"	""	"0.5 g x 3 oral"	11
+"AMX"	"Amoxicillin"	"uncomplicated_uti"	"0.5 g"	3	"oral"	""	"0.5 g x 3 oral"	11
+"AMC"	"Amoxicillin/clavulanic acid"	"high_dosage"	"2 g + 0.2 g"	3	"iv"	""	"(2 g amoxicillin + 0.2 g clavulanic acid) x 3 iv"	11
+"AMC"	"Amoxicillin/clavulanic acid"	"standard_dosage"	"1 g + 0.2 g"	3	"iv"	""	"(1 g amoxicillin + 0.2 g clavulanic acid) x 3-4 iv"	11
+"AMC"	"Amoxicillin/clavulanic acid"	"high_dosage"	"0.875 g + 0.125 g"	3	"oral"	""	"(0.875 g amoxicillin + 0.125 g clavulanic acid) x 3 oral"	11
+"AMC"	"Amoxicillin/clavulanic acid"	"standard_dosage"	"0.5 g + 0.125 g"	3	"oral"	""	"(0.5 g amoxicillin + 0.125 g clavulanic acid) x 3 oral"	11
+"AMC"	"Amoxicillin/clavulanic acid"	"uncomplicated_uti"	"0.5 g + 0.125 g"	3	"oral"	""	"(0.5 g amoxicillin + 0.125 g clavulanic acid) x 3 oral"	11
+"AMP"	"Ampicillin"	"high_dosage"	"2 g"	4	"iv"	""	"2 g x 4 iv"	11
+"AMP"	"Ampicillin"	"standard_dosage"	"2 g"	3	"iv"	""	"2 g x 3 iv"	11
+"SAM"	"Ampicillin/sulbactam"	"high_dosage"	"2 g + 1 g"	4	"iv"	""	"(2 g ampicillin + 1 g sulbactam) x 4 iv"	11
+"SAM"	"Ampicillin/sulbactam"	"standard_dosage"	"2 g + 1 g"	3	"iv"	""	"(2 g ampicillin + 1 g sulbactam) x 3 iv"	11
+"AZM"	"Azithromycin"	"standard_dosage"	"0.5 g"	1	"oral"	"or 0.5 g x 1 iv"	"0.5 g x 1 oral or 0.5 g x 1 iv"	11
+"ATM"	"Aztreonam"	"high_dosage"	"2 g"	4	"iv"	""	"2 g x 4 iv"	11
+"ATM"	"Aztreonam"	"standard_dosage"	"1 g"	3	"iv"	""	"1 g x 3 iv"	11
+"PEN"	"Benzylpenicillin"	"high_dosage"	"1.2 g"	4	"iv"	""	"1.2 g (2 MU) x 4-6 iv"	11
+"PEN"	"Benzylpenicillin"	"standard_dosage"	"0.6 g"	4	"iv"	""	"0.6 g (1 MU) x 4 iv"	11
+"CEC"	"Cefaclor"	"high_dosage"	"1 g"	3	"oral"	""	"1 g x 3 oral"	11
+"CEC"	"Cefaclor"	"standard_dosage"	"0.25-0.5 g"	3	"oral"	"depending on species and/or infection type"	"0.25-0.5 g x 3 oral depending on species and/or infection type"	11
+"CFR"	"Cefadroxil"	"standard_dosage"	"0.5-1 g"	2	"oral"	""	"0.5-1 g x 2 oral"	11
+"CFR"	"Cefadroxil"	"uncomplicated_uti"	"0.5-1 g"	2	"oral"	""	"0.5-1 g x 2 oral"	11
+"CZO"	"Cefazolin"	"high_dosage"	"2 g"	3	"iv"	""	"2 g x 3 iv"	11
+"CZO"	"Cefazolin"	"standard_dosage"	"1 g"	3	"iv"	""	"1 g x 3 iv"	11
+"FEP"	"Cefepime"	"high_dosage"	"2 g"	3	"iv"	""	"2 g x 3 iv"	11
+"FEP"	"Cefepime"	"standard_dosage"	"1 g"	3	"iv"	"or 2 g x 2 iv"	"1 g x 3 iv or 2 g x 2 iv"	11
+"FDC"	"Cefiderocol"	"standard_dosage"	"2 g"	3	"iv"	"over 3 hours"	"2 g x 3 iv over 3 hours"	11
+"CFM"	"Cefixime"	"standard_dosage"	"0.2-0.4 g"	2	"oral"	""	"0.2-0.4 g x 2 oral"	11
+"CFM"	"Cefixime"	"uncomplicated_uti"	"0.2-0.4 g"	2	"oral"	""	"0.2-0.4 g x 2 oral"	11
+"CTX"	"Cefotaxime"	"high_dosage"	"2 g"	3	"iv"	""	"2 g x 3 iv"	11
+"CTX"	"Cefotaxime"	"standard_dosage"	"1 g"	3	"iv"	""	"1 g x 3 iv"	11
+"CPD"	"Cefpodoxime"	"standard_dosage"	"0.1-0.2 g"	2	"oral"	""	"0.1-0.2 g x 2 oral"	11
+"CPD"	"Cefpodoxime"	"uncomplicated_uti"	"0.1-0.2 g"	2	"oral"	""	"0.1-0.2 g x 2 oral"	11
+"CPT"	"Ceftaroline"	"high_dosage"	"0.6 g"	3	"iv"	"over 2 hours"	"0.6 g x 3 iv over 2 hours"	11
+"CPT"	"Ceftaroline"	"standard_dosage"	"0.6 g"	2	"iv"	"over 1 hour"	"0.6 g x 2 iv over 1 hour"	11
+"CAZ"	"Ceftazidime"	"high_dosage"	"2 g"	3	"iv"	"or 1 g x 6 iv"	"2 g x 3 iv or 1 g x 6 iv"	11
+"CAZ"	"Ceftazidime"	"standard_dosage"	"1 g"	3	"iv"	""	"1 g x 3 iv"	11
+"CZA"	"Ceftazidime/avibactam"	"standard_dosage"	"2 g + 0.5 g"	3	"iv"	"over 2 hours"	"(2 g ceftazidime + 0.5 g avibactam) x 3 iv over 2 hours"	11
+"CTB"	"Ceftibuten"	"standard_dosage"	"0.4 g"	1	"oral"	""	"0.4 g x 1 oral"	11
+"BPR"	"Ceftobiprole"	"standard_dosage"	"0.5 g"	3	"iv"	"over 2 hours"	"0.5 g x 3 iv over 2 hours"	11
+"CZT"	"Ceftolozane/tazobactam"	"standard_dosage"	"1 g + 0.5 g"	3	"iv"	"over 1 hour"	"(1 g ceftolozane + 0.5 g tazobactam) x 3 iv over 1 hour"	11
+"CZT"	"Ceftolozane/tazobactam"	"standard_dosage"	"2 g + 1 g"	3	"iv"	"over 1 hour"	"(2 g ceftolozane + 1 g tazobactam) x 3 iv over 1 hour"	11
+"CRO"	"Ceftriaxone"	"high_dosage"	"2 g"	2	"iv"	"or 4 g x 1 iv"	"2 g x 2 iv or 4 g x 1 iv"	11
+"CRO"	"Ceftriaxone"	"standard_dosage"	"2 g"	1	"iv"	""	"2 g x 1 iv"	11
+"CXM"	"Cefuroxime"	"high_dosage"	"1.5 g"	3	"iv"	""	"1.5 g x 3 iv"	11
+"CXM"	"Cefuroxime"	"standard_dosage"	"0.75 g"	3	"iv"	""	"0.75 g x 3 iv"	11
+"CXM"	"Cefuroxime"	"high_dosage"	"0.5 g"	2	"oral"	""	"0.5 g x 2 oral"	11
+"CXM"	"Cefuroxime"	"standard_dosage"	"0.25 g"	2	"oral"	""	"0.25 g x 2 oral"	11
+"CXM"	"Cefuroxime"	"uncomplicated_uti"	"0.25 g"	2	"oral"	""	"0.25 g x 2 oral"	11
+"LEX"	"Cephalexin"	"standard_dosage"	"0.25-1 g"	2	"oral"	""	"0.25-1 g x 2-3 oral"	11
+"LEX"	"Cephalexin"	"uncomplicated_uti"	"0.25-1 g"	2	"oral"	""	"0.25-1 g x 2-3 oral"	11
+"CHL"	"Chloramphenicol"	"high_dosage"	"2 g"	4	"oral"	"or 2 g x 4 iv"	"2 g x 4 oral or 2 g x 4 iv"	11
+"CHL"	"Chloramphenicol"	"standard_dosage"	"1 g"	4	"oral"	"or 1 g x 4 iv"	"1 g x 4 oral or 1 g x 4 iv"	11
+"CIP"	"Ciprofloxacin"	"high_dosage"	"0.75 g"	2	"oral"	"or 0.4 g x 3 iv"	"0.75 g x 2 oral or 0.4 g x 3 iv"	11
+"CIP"	"Ciprofloxacin"	"standard_dosage"	"0.5 g"	2	"oral"	"or 0.4 g x 2 iv"	"0.5 g x 2 oral or 0.4 g x 2 iv"	11
+"CLR"	"Clarithromycin"	"high_dosage"	"0.5 g"	2	"oral"	""	"0.5 g x 2 oral"	11
+"CLR"	"Clarithromycin"	"standard_dosage"	"0.25 g"	2	"oral"	""	"0.25 g x 2 oral"	11
+"CLI"	"Clindamycin"	"high_dosage"	"0.3 g"	4	"oral"	"or 0.9 g x 3 iv"	"0.3 g x 4 oral or 0.9 g x 3 iv"	11
+"CLI"	"Clindamycin"	"standard_dosage"	"0.3 g"	2	"oral"	"or 0.6 g x 3 iv"	"0.3 g x 2 oral or 0.6 g x 3 iv"	11
+"CLO"	"Cloxacillin"	"high_dosage"	"1 g"	4	"oral"	"or 2 g x 6 iv"	"1 g x 4 oral or 2 g x 6 iv"	11
+"CLO"	"Cloxacillin"	"standard_dosage"	"0.5 g"	4	"oral"	"or 1 g x 4 iv"	"0.5 g x 4 oral or 1 g x 4 iv"	11
+"COL"	"Colistin"	"standard_dosage"	"4.5 MU"	2	"iv"	"loading dose of 9 MU"	"4.5 MU x 2 iv with a loading dose of 9 MU"	11
+"DAL"	"Dalbavancin"	"standard_dosage"	"1 g"	1	"iv"	"over 30 minutes on day 8"	"1 g x 1 iv over 30 minutes on day 1  If needed, 0.5 g x 1 iv over 30 minutes on day 8"	11
+"DAP"	"Daptomycin"	"standard_dosage"	"4 mg/kg"	1	"iv"	""	"4 mg/kg x 1 iv"	11
+"DAP"	"Daptomycin"	"standard_dosage"	"6 mg/kg"	1	"iv"	""	"6 mg/kg x 1 iv"	11
+"DFX"	"Delafloxacin"	"standard_dosage"	"0.45 g"	2	"oral"	"or 0.3 g x 2 iv"	"0.45 g x 2 oral or 0.3 g x 2 iv"	11
+"DIC"	"Dicloxacillin"	"high_dosage"	"2 g"	4	"oral"	"or 2 g x 6 iv"	"2 g x 4 oral or 2 g x 6 iv"	11
+"DIC"	"Dicloxacillin"	"standard_dosage"	"0.5-1 g"	4	"oral"	"or 1 g x 4 iv"	"0.5-1 g x 4 oral or 1 g x 4 iv"	11
+"DOR"	"Doripenem"	"high_dosage"	"1 g"	3	"iv"	"over 1 hour"	"1 g x 3 iv over 1 hour"	11
+"DOR"	"Doripenem"	"standard_dosage"	"0.5 g"	3	"iv"	"over 1 hour"	"0.5 g x 3 iv over 1 hour"	11
+"DOX"	"Doxycycline"	"high_dosage"	"0.2 g"	1	"oral"	""	"0.2 g x 1 oral"	11
+"DOX"	"Doxycycline"	"standard_dosage"	"0.1 g"	1	"oral"	""	"0.1 g x 1 oral"	11
+"ERV"	"Eravacycline"	"standard_dosage"	"1 mg/kg"	2	"iv"	""	"1 mg/kg x 2 iv"	11
+"ETP"	"Ertapenem"	"standard_dosage"	"1 g"	1	"iv"	"over 30 minutes"	"1 g x 1 iv over 30 minutes"	11
+"ERY"	"Erythromycin"	"high_dosage"	"1 g"	4	"oral"	"or 1 g x 4 iv"	"1 g x 4 oral or 1 g x 4 iv"	11
+"ERY"	"Erythromycin"	"standard_dosage"	"0.5 g"	2	"oral"	"or 0.5 g x 2-4 iv"	"0.5 g x 2-4 oral or 0.5 g x 2-4 iv"	11
+"FDX"	"Fidaxomicin"	"standard_dosage"	"0.2 g"	2	"oral"	""	"0.2 g x 2 oral"	11
+"FLC"	"Flucloxacillin"	"high_dosage"	"1 g"	4	"oral"	"or 2 g x 6 iv"	"1 g x 4 oral or 2 g x 6 iv"	11
+"FLC"	"Flucloxacillin"	"standard_dosage"	"1 g"	3	"oral"	"or 2 g x 4 iv (or 1 g x 6 iv)"	"1 g x 3 oral or 2 g x 4 iv (or 1 g x 6 iv)"	11
+"FOS"	"Fosfomycin"	"high_dosage"	"8 g"	3	"iv"	""	"8 g x 3 iv"	11
+"FOS"	"Fosfomycin"	"standard_dosage"	"4 g"	3	"iv"	""	"4 g x 3 iv"	11
+"FUS"	"Fusidic acid"	"high_dosage"	"0.5 g"	3	"oral"	"or 0.5 g x 3 iv"	"0.5 g x 3 oral or 0.5 g x 3 iv"	11
+"FUS"	"Fusidic acid"	"standard_dosage"	"0.5 g"	2	"oral"	"or 0.5 g x 2 iv"	"0.5 g x 2 oral or 0.5 g x 2 iv"	11
+"GEN"	"Gentamicin"	"standard_dosage"	"6-7 mg/kg"	1	"iv"	""	"6-7 mg/kg x 1 iv"	11
+"IPM"	"Imipenem"	"high_dosage"	"1 g"	4	"iv"	"over 30 minutes"	"1 g x 4 iv over 30 minutes"	11
+"IPM"	"Imipenem"	"standard_dosage"	"0.5 g"	4	"iv"	"over 30 minutes"	"0.5 g x 4 iv over 30 minutes"	11
+"IMR"	"Imipenem/relebactam"	"standard_dosage"	"0.5 g + 0.25 g"	4	"iv"	"over 30 minutes"	"(0.5 g imipenem + 0.25 g relebactam) x 4 iv over 30 minutes"	11
+"LMU"	"Lefamulin"	"standard_dosage"	"0.15 g"	2	"iv"	"or 0.6 g x 2 oral"	"0.15 g x 2 iv or 0.6 g x 2 oral"	11
+"LVX"	"Levofloxacin"	"high_dosage"	"0.5 g"	2	"oral"	"or 0.5 g x 2 iv"	"0.5 g x 2 oral or 0.5 g x 2 iv"	11
+"LVX"	"Levofloxacin"	"standard_dosage"	"0.5 g"	1	"oral"	"or 0.5 g x 1 iv"	"0.5 g x 1 oral or 0.5 g x 1 iv"	11
+"LNZ"	"Linezolid"	"standard_dosage"	"0.6 g"	2	"oral"	"or 0.6 g x 2 iv"	"0.6 g x 2 oral or 0.6 g x 2 iv"	11
+"MEM"	"Meropenem"	"high_dosage"	"2 g"	3	"iv"	"over 3 hours"	"2 g x 3 iv over 3 hours"	11
+"MEM"	"Meropenem"	"standard_dosage"	"1 g"	3	"iv"	"over 30 minutes"	"1 g x 3 iv over 30 minutes"	11
+"MEV"	"Meropenem/vaborbactam"	"standard_dosage"	"2 g + 2 g"	3	"iv"	"over 3 hours"	"(2 g meropenem + 2 g vaborbactam) x 3 iv over 3 hours"	11
+"MTR"	"Metronidazole"	"high_dosage"	"0.5 g"	3	"oral"	"or 0.5 g x 3 iv"	"0.5 g x 3 oral or 0.5 g x 3 iv"	11
+"MTR"	"Metronidazole"	"standard_dosage"	"0.4 g"	3	"oral"	"or 0.4 g x 3 iv"	"0.4 g x 3 oral or 0.4 g x 3 iv"	11
+"MNO"	"Minocycline"	"standard_dosage"	"0.1 g"	2	"oral"	""	"0.1 g x 2 oral"	11
+"MFX"	"Moxifloxacin"	"standard_dosage"	"0.4 g"	1	"oral"	"or 0.4 g x 1 iv"	"0.4 g x 1 oral or 0.4 g x 1 iv"	11
+"OFX"	"Ofloxacin"	"high_dosage"	"0.4 g"	2	"oral"	"or 0.4 g x 2 iv"	"0.4 g x 2 oral or 0.4 g x 2 iv"	11
+"OFX"	"Ofloxacin"	"standard_dosage"	"0.2 g"	2	"oral"	"or 0.2 g x 2 iv"	"0.2 g x 2 oral or 0.2 g x 2 iv"	11
+"ORI"	"Oritavancin"	"standard_dosage"	"1.2 g"	1	"iv"	""	"1.2 g x 1 (single dose) iv over 3 hours"	11
+"OXA"	"Oxacillin"	"high_dosage"	"1 g"	6	"iv"	""	"1 g x 6 iv"	11
+"OXA"	"Oxacillin"	"standard_dosage"	"1 g"	4	"iv"	""	"1 g x 4 iv"	11
+"PHN"	"Phenoxymethylpenicillin"	"standard_dosage"	"0.5-2 g"	3	"oral"	"depending on species and/or infection type"	"0.5-2 g x 3-4 oral depending on species and/or infection type"	11
+"PIP"	"Piperacillin"	"high_dosage"	"4 g"	4	"iv"	""	"4 g x 4 iv by extended 3-hour infusion"	11
+"PIP"	"Piperacillin"	"standard_dosage"	"4 g"	4	"iv"	""	"4 g x 4 iv"	11
+"TZP"	"Piperacillin/tazobactam"	"high_dosage"	"4 g + 0.5 g"	4	"iv"	""	"(4 g piperacillin + 0.5 g tazobactam) x 4 iv by extended 3-hour infusion"	11
+"TZP"	"Piperacillin/tazobactam"	"standard_dosage"	"4 g + 0.5 g"	4	"iv"	""	"(4 g piperacillin + 0.5 g tazobactam) x 4 iv or x 3 by extended 4-hour infusion"	11
+"QDA"	"Quinupristin/dalfopristin"	"high_dosage"	"7.5 mg/kg"	3	"iv"	""	"7.5 mg/kg x 3 iv"	11
+"QDA"	"Quinupristin/dalfopristin"	"standard_dosage"	"7.5 mg/kg"	2	"iv"	""	"7.5 mg/kg x 2 iv"	11
+"RIF"	"Rifampicin"	"high_dosage"	"0.6 g"	2	"oral"	"or 0.6 g x 2 iv"	"0.6 g x 2 oral or 0.6 g x 2 iv"	11
+"RIF"	"Rifampicin"	"standard_dosage"	"0.6 g"	1	"oral"	"or 0.6 g x 1 iv"	"0.6 g x 1 oral or 0.6 g x 1 iv"	11
+"RXT"	"Roxithromycin"	"standard_dosage"	"0.15 g"	2	"oral"	""	"0.15 g x 2 oral"	11
+"SPT"	"Spectinomycin"	"standard_dosage"	"2 g"	1	"im"	""	"2 g x 1 im"	11
+"TZD"	"Tedizolid"	"standard_dosage"	"0.2 g"	1	"oral"	"or 0.2 g x 1 iv"	"0.2 g x 1 oral or 0.2 g x 1 iv"	11
+"TEC"	"Teicoplanin"	"high_dosage"	"0.8 g"	1	"iv"	""	"0.8 g x 1 iv"	11
+"TEC"	"Teicoplanin"	"standard_dosage"	"0.4 g"	1	"iv"	""	"0.4 g x 1 iv"	11
+"TLV"	"Telavancin"	"standard_dosage"	"10 mg/kg"	1	"iv"	"over 1 hour"	"10 mg/kg x 1 iv over 1 hour"	11
+"TLT"	"Telithromycin"	"standard_dosage"	"0.8 g"	1	"oral"	""	"0.8 g x 1 oral"	11
+"TEM"	"Temocillin"	"high_dosage"	"2 g"	3	"iv"	""	"2 g x 3 iv"	11
+"TEM"	"Temocillin"	"standard_dosage"	"2 g"	2	"iv"	""	"2 g x 2 iv"	11
+"TCY"	"Tetracycline"	"high_dosage"	"0.5 g"	4	"oral"	""	"0.5 g x 4 oral"	11
+"TCY"	"Tetracycline"	"standard_dosage"	"0.25 g"	4	"oral"	""	"0.25 g x 4 oral"	11
+"TIC"	"Ticarcillin"	"high_dosage"	"3 g"	6	"iv"	""	"3 g x 6 iv"	11
+"TIC"	"Ticarcillin"	"standard_dosage"	"3 g"	4	"iv"	""	"3 g x 4 iv"	11
+"TCC"	"Ticarcillin/clavulanic acid"	"high_dosage"	"3 g + 0.1 g"	6	"iv"	""	"(3 g ticarcillin + 0.1 g clavulanic acid) x 6 iv"	11
+"TCC"	"Ticarcillin/clavulanic acid"	"standard_dosage"	"3 g + 0.1-0.2 g"	4	"iv"	""	"(3 g ticarcillin + 0.1-0.2 g clavulanic acid) x 4 iv"	11
+"TGC"	"Tigecycline"	"standard_dosage"	"0.1 g"			"loading dose followed by 50 mg x 2 iv"	"0.1 g loading dose followed by 50 mg x 2 iv"	11
+"TOB"	"Tobramycin"	"standard_dosage"	"6-7 mg/kg"	1	"iv"	""	"6-7 mg/kg x 1 iv"	11
+"SXT"	"Trimethoprim/sulfamethoxazole"	"high_dosage"	"0.24 g + 1.2 g"	2	"oral"	""	"(0.24 g trimethoprim + 1.2 g sulfamethoxazole) x 2 oral or (0.24 g trimethoprim + 1.2 g sulfamethoxazole) x 2 iv"	11
+"SXT"	"Trimethoprim/sulfamethoxazole"	"standard_dosage"	"0.16 g + 0.8 g"	2	"oral"	""	"(0.16 g trimethoprim + 0.8 g sulfamethoxazole) x 2 oral or (0.16 g trimethoprim + 0.8 g sulfamethoxazole) x 2 iv"	11
+"SXT"	"Trimethoprim/sulfamethoxazole"	"uncomplicated_uti"	"0.16 g + 0.8 g"	2	"oral"	""	"(0.16 g trimethoprim + 0.8 g sulfamethoxazole) x 2 oral"	11
+"VAN"	"Vancomycin"	"standard_dosage"	"0.5 g"	4	"iv"	"or 1 g x 2 iv or 2 g x 1 by continuous infusion"	"0.5 g x 4 iv or 1 g x 2 iv or 2 g x 1 by continuous infusion"	11

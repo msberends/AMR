@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Determine (new) episodes for patients — get_episode • AMR (for R)</title>
+<title>Determine (New) Episodes for Patients — get_episode • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,7 +48,7 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Determine (new) episodes for patients — get_episode" />
+<meta property="og:title" content="Determine (New) Episodes for Patients — get_episode" />
 <meta property="og:description" content="These functions determine which items in a vector can be considered (the start of) a new episode, based on the argument episode_days. This can be used to determine clinical episodes for any epidemiological analysis. The get_episode() function returns the index number of the episode per group, while the is_new_episode() function returns values TRUE/FALSE to indicate whether an item in a vector is the start of a new episode." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9006</span>
       </span>
     </div>
 
@@ -233,7 +233,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Determine (new) episodes for patients</h1>
+    <h1>Determine (New) Episodes for Patients</h1>
     <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/episode.R'><code>R/episode.R</code></a></small>
     <div class="hidden name"><code>get_episode.Rd</code></div>
     </div>
@@ -255,7 +255,7 @@
     </tr>
     <tr>
       <th>episode_days</th>
-      <td><p>length of the required episode in days, please see <em>Details</em></p></td>
+      <td><p>length of the required episode in days, see <em>Details</em></p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -276,14 +276,14 @@
     <p>Dates are first sorted from old to new. The oldest date will mark the start of the first episode. After this date, the next date will be marked that is at least <code>episode_days</code> days later than the start of the first episode. From that second marked date on, the next date will be marked that is at least <code>episode_days</code> days later than the start of the second episode which will be the start of the third episode, and so on. Before the vector is being returned, the original order will be restored.</p>
 <p>The <code><a href='first_isolate.html'>first_isolate()</a></code> function is a wrapper around the <code>is_new_episode()</code> function, but is more efficient for data sets containing microorganism codes or names.</p>
 <p>The <code>dplyr</code> package is not required for these functions to work, but these functions support <a href='https://dplyr.tidyverse.org/reference/group_by.html'>variable grouping</a> and work conveniently inside <code>dplyr</code> verbs such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>.</p>
-    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
+    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable Lifecycle</h2>
 
     
 
 <p><img src='figures/lifecycle_stable.svg' style=margin-bottom:5px /> <br />
 The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</strong>. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.</p>
 <p>If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
-    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on Our Website!</h2>
 
     
 

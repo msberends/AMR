@@ -14,7 +14,7 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 \link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which versions of the CoL and LSPN were included in this package with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}.
 }
 
-\section{Included taxa}{
+\section{Included Taxa}{
 
 Included are:
 \itemize{
@@ -31,7 +31,7 @@ The Catalogue of Life (\url{http://www.catalogueoflife.org}) is the most compreh
 The syntax used to transform the original data to a cleansed \R format, can be found here: \url{https://github.com/msberends/AMR/blob/master/data-raw/reproduction_of_microorganisms.R}.
 }
 
-\section{Read more on our website!}{
+\section{Read more on Our Website!}{
 
 On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }

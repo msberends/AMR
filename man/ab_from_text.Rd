@@ -2,7 +2,7 @@
 % Please edit documentation in R/ab_from_text.R
 \name{ab_from_text}
 \alias{ab_from_text}
-\title{Retrieve antimicrobial drug names and doses from clinical text}
+\title{Retrieve Antimicrobial Drug Names and Doses from Clinical Text}
 \usage{
 ab_from_text(
   text,
@@ -54,13 +54,13 @@ With using \code{collapse}, this function will return a \link{character}:\cr
 \code{df \%>\% mutate(abx = ab_from_text(clinical_text, collapse = "|"))}
 }
 }
-\section{Maturing lifecycle}{
+\section{Maturing Lifecycle}{
 
 \if{html}{\figure{lifecycle_maturing.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{maturing}. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome \href{https://github.com/msberends/AMR/issues}{to suggest changes at our repository} or \link[=AMR]{write us an email (see section 'Contact Us')}.
 }
 
-\section{Read more on our website!}{
+\section{Read more on Our Website!}{
 
 On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }

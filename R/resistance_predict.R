@@ -26,14 +26,14 @@
 #' Predict antimicrobial resistance
 #'
 #' Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns `se_min` and `se_max`. See *Examples* for a real live example.
-#' @inheritSection lifecycle Maturing lifecycle
+#' @inheritSection lifecycle Maturing Lifecycle
 #' @param col_ab column name of `x` containing antimicrobial interpretations (`"R"`, `"I"` and `"S"`)
 #' @param col_date column name of the date, will be used to calculate years if this column doesn't consist of years already, defaults to the first column of with a date class
 #' @param year_min lowest year to use in the prediction model, dafaults to the lowest year in `col_date`
 #' @param year_max highest year to use in the prediction model, defaults to 10 years after today
 #' @param year_every unit of sequence between lowest year found in the data and `year_max`
 #' @param minimum minimal amount of available isolates per year to include. Years containing less observations will be estimated by the model.
-#' @param model the statistical model of choice. This could be a generalised linear regression model with binomial distribution (i.e. using `glm(..., family = binomial)``, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See Details for all valid options.
+#' @param model the statistical model of choice. This could be a generalised linear regression model with binomial distribution (i.e. using `glm(..., family = binomial)``, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See *Details* for all valid options.
 #' @param I_as_S a logical to indicate whether values `"I"` should be treated as `"S"` (will otherwise be treated as `"R"`). The default, `TRUE`, follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section *Interpretation of S, I and R* below. 
 #' @param preserve_measurements a logical to indicate whether predictions of years that are actually available in the data should be overwritten by the original data. The standard errors of those years will be `NA`.
 #' @param info a logical to indicate whether textual analysis should be printed with the name and [summary()] of the statistical model.
@@ -56,14 +56,14 @@
 #' - `observed`, the original observed resistant percentages
 #' - `estimated`, the estimated resistant percentages, calculated by the model
 #'   
-#' Furthermore, the model itself is available as an attribute: `attributes(x)$model`, please see *Examples*.
+#' Furthermore, the model itself is available as an attribute: `attributes(x)$model`, see *Examples*.
 #' @seealso The [proportion()] functions to calculate resistance
 #' 
 #' Models: [lm()] [glm()]
 #' @rdname resistance_predict
 #' @export
 #' @importFrom stats predict glm lm
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' x <- resistance_predict(example_isolates, 
 #'                         col_ab = "AMX",

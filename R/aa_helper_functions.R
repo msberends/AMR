@@ -456,6 +456,37 @@ vector_or <- function(v, quotes = TRUE, reverse = FALSE) {
          " or ", paste0(ifelse(quotes, '"', ""), v[length(v)], ifelse(quotes, '"', "")))
 }
 
+format_class <- function(class, plural) {
+  class.bak <- class
+  class[class %in% c("numeric", "double")] <- "number"
+  class[class == "integer"] <- "whole number"
+  if (any(c("numeric", "double") %in% class.bak, na.rm = TRUE) & "integer" %in% class.bak) {
+    class[class %in% c("number", "whole number")] <- "(whole) number"
+  }
+  class[class == "character"] <- "text string"
+  class[class %in% c("Date", "POSIXt")] <- "date"
+  class[class != class.bak] <- paste0(ifelse(plural, "", "a "),
+                                                        class[class != class.bak],
+                                                        ifelse(plural, "s", ""))
+  # exceptions
+  class[class == "logical"] <- ifelse(plural, "a vector of `TRUE`/`FALSE`", "`TRUE` or `FALSE`")
+  if ("data.frame" %in% class) {
+    class <- "a data set"
+  }
+  if ("list" %in% class) {
+    class <- "a list"
+  }
+  if ("matrix" %in% class) {
+    class <- "a matrix"
+  }
+  if (any(c("mo", "ab", "rsi", "disk", "mic") %in% class)) {
+    class <- paste0("a class <", class[1L], ">")
+  }
+  class[class == class.bak] <- paste0("a class <", class[class == class.bak], ">")
+  # output
+  vector_or(class, quotes = FALSE)
+}
+
 # a check for every single argument in all functions
 meet_criteria <- function(object,
                           allow_class = NULL,
@@ -479,39 +510,11 @@ meet_criteria <- function(object,
     stop_if(allow_NA == FALSE, "argument `", obj_name, "` must not be NA", call = call_depth)
     return(invisible())
   }
-  
-  translate_class <- function(allow_class, plural = isTRUE(has_length > 1)) {
-    allow_class.bak <- allow_class
-    allow_class[allow_class %in% c("numeric", "double")] <- "number"
-    allow_class[allow_class == "integer"] <- "whole number"
-    if (any(c("numeric", "double") %in% allow_class.bak, na.rm = TRUE) & "integer" %in% allow_class.bak) {
-      allow_class[allow_class %in% c("number", "whole number")] <- "(whole) number"
-    }
-    allow_class[allow_class == "character"] <- "text string"
-    allow_class[allow_class %in% c("Date", "POSIXt")] <- "date"
-    allow_class[allow_class != allow_class.bak] <- paste0(ifelse(plural, "", "a "),
-                                                          allow_class[allow_class != allow_class.bak],
-                                                          ifelse(plural, "s", ""))
-    # exceptions
-    allow_class[allow_class == "logical"] <- ifelse(plural, "a vector of `TRUE`/`FALSE`", "`TRUE` or `FALSE`")
-    if ("data.frame" %in% allow_class) {
-      allow_class <- "a data set"
-    }
-    if ("list" %in% allow_class) {
-      allow_class <- "a list"
-    }
-    if ("matrix" %in% allow_class) {
-      allow_class <- "a matrix"
-    }
-    allow_class[allow_class == allow_class.bak] <- paste0("a class <", allow_class[allow_class == allow_class.bak], ">")
-    # output
-    vector_or(allow_class, quotes = FALSE)
-  }
 
   if (!is.null(allow_class)) {
     stop_ifnot(inherits(object, allow_class), "argument `", obj_name,
-               "` must be ", translate_class(allow_class),
-               ", not ", translate_class(class(object)),
+               "` must be ", format_class(allow_class, plural = isTRUE(has_length > 1)),
+               ", not ", format_class(class(object), plural = isTRUE(has_length > 1)),
                call = call_depth)
     # check data.frames for data
     if (inherits(object, "data.frame")) {

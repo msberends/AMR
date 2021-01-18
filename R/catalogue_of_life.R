@@ -47,7 +47,7 @@ format_included_data_number <- function(data) {
 #' This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, <http://www.catalogueoflife.org>). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, [lpsn.dsmz.de](https://lpsn.dsmz.de)). This supplementation is needed until the [CoL+ project](https://github.com/CatalogueOfLife/general) is finished, which we await.
 #'
 #' [Click here][catalogue_of_life] for more information about the included taxa. Check which versions of the CoL and LSPN were included in this package with [catalogue_of_life_version()].
-#' @section Included taxa:
+#' @section Included Taxa:
 #' Included are:
 #' - All `r format_included_data_number(microorganisms[which(microorganisms$kingdom %in% c("Archeae", "Bacteria", "Chromista", "Protozoa")), ])` (sub)species from the kingdoms of Archaea, Bacteria, Chromista and Protozoa
 #' - All `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Fungi" & microorganisms$order %in% c("Eurotiales", "Microascales", "Mucorales", "Onygenales", "Pneumocystales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales")), ])` (sub)species from these orders of the kingdom of Fungi: Eurotiales, Microascales, Mucorales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales, as well as `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Fungi" & !microorganisms$order %in% c("Eurotiales", "Microascales", "Mucorales", "Onygenales", "Pneumocystales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales")), ])` other fungal (sub)species. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant fungi are covered (such as all species of *Aspergillus*, *Candida*, *Cryptococcus*, *Histplasma*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*).
@@ -59,7 +59,7 @@ format_included_data_number <- function(data) {
 #' The Catalogue of Life (<http://www.catalogueoflife.org>) is the most comprehensive and authoritative global index of species currently available. It holds essential information on the names, relationships and distributions of over 1.9 million species. The Catalogue of Life is used to support the major biodiversity and conservation information services such as the Global Biodiversity Information Facility (GBIF), Encyclopedia of Life (EoL) and the International Union for Conservation of Nature Red List. It is recognised by the Convention on Biological Diversity as a significant component of the Global Taxonomy Initiative and a contribution to Target 1 of the Global Strategy for Plant Conservation.
 #'
 #' The syntax used to transform the original data to a cleansed \R format, can be found here: <https://github.com/msberends/AMR/blob/master/data-raw/reproduction_of_microorganisms.R>.
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Read more on Our Website!
 #' @name catalogue_of_life
 #' @rdname catalogue_of_life
 #' @seealso Data set [microorganisms] for the actual data. \cr
@@ -102,7 +102,7 @@ NULL
 #' @details For DSMZ, see [microorganisms].
 #' @return a [list], which prints in pretty format
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Read more on Our Website!
 #' @export
 catalogue_of_life_version <- function() {
   

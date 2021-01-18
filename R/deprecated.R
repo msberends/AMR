@@ -23,11 +23,11 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-#' Deprecated functions
+#' Deprecated Functions
 #'
 #' These functions are so-called '[Deprecated]'. They will be removed in a future release. Using the functions will give a warning with the name of the function it has been replaced by (if there is one).
-#' @inheritSection lifecycle Retired lifecycle
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection lifecycle Retired Lifecycle
+#' @inheritSection AMR Read more on Our Website!
 #' @keywords internal
 #' @name AMR-deprecated
 #' @export

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get ATC properties from WHOCC website — atc_online_property • AMR (for R)</title>
+<title>Get ATC Properties from WHOCC Website — atc_online_property • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,7 +48,7 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Get ATC properties from WHOCC website — atc_online_property" />
+<meta property="og:title" content="Get ATC Properties from WHOCC Website — atc_online_property" />
 <meta property="og:description" content="Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic), such as the name, defined daily dose (DDD) or standard unit." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9006</span>
       </span>
     </div>
 
@@ -233,7 +233,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get ATC properties from WHOCC website</h1>
+    <h1>Get ATC Properties from WHOCC Website</h1>
     <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/atc_online.R'><code>R/atc_online.R</code></a></small>
     <div class="hidden name"><code>atc_online.Rd</code></div>
     </div>
@@ -263,11 +263,11 @@
     </tr>
     <tr>
       <th>property</th>
-      <td><p>property of an ATC code. Valid values are <code>"ATC"</code>, <code>"Name"</code>, <code>"DDD"</code>, <code>"U"</code> (<code>"unit"</code>), <code>"Adm.R"</code>, <code>"Note"</code> and <code>groups</code>. For this last option, all hierarchical groups of an ATC code will be returned, see Examples.</p></td>
+      <td><p>property of an ATC code. Valid values are <code>"ATC"</code>, <code>"Name"</code>, <code>"DDD"</code>, <code>"U"</code> (<code>"unit"</code>), <code>"Adm.R"</code>, <code>"Note"</code> and <code>groups</code>. For this last option, all hierarchical groups of an ATC code will be returned, see <em>Examples</em>.</p></td>
     </tr>
     <tr>
       <th>administration</th>
-      <td><p>type of administration when using <code>property = "Adm.R"</code>, see Details</p></td>
+      <td><p>type of administration when using <code>property = "Adm.R"</code>, see <em>Details</em></p></td>
     </tr>
     <tr>
       <th>url</th>
@@ -313,14 +313,14 @@
 </ul>
 
 <p><strong>N.B. This function requires an internet connection and only works if the following packages are installed: <code>curl</code>, <code>rvest</code>, <code>xml2</code>.</strong></p>
-    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
+    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable Lifecycle</h2>
 
     
 
 <p><img src='figures/lifecycle_stable.svg' style=margin-bottom:5px /> <br />
 The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</strong>. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.</p>
 <p>If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
-    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on Our Website!</h2>
 
     
 

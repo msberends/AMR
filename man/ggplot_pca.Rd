@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggplot_pca.R
 \name{ggplot_pca}
 \alias{ggplot_pca}
-\title{PCA biplot with \code{ggplot2}}
+\title{PCA Biplot with \code{ggplot2}}
 \source{
 The \code{\link[=ggplot_pca]{ggplot_pca()}} function is based on the \code{ggbiplot()} function from the \code{ggbiplot} package by Vince Vu, as found on GitHub: \url{https://github.com/vqv/ggbiplot} (retrieved: 2 March 2020, their latest commit: \href{https://github.com/vqv/ggbiplot/commit/7325e880485bea4c07465a0304c470608fffb5d9}{\code{7325e88}}; 12 February 2015).
 
@@ -108,7 +108,7 @@ Produces a \code{ggplot2} variant of a so-called \href{https://en.wikipedia.org/
 \details{
 The colours for labels and points can be changed by adding another scale layer for colour, like \code{scale_colour_viridis_d()} or \code{scale_colour_brewer()}.
 }
-\section{Maturing lifecycle}{
+\section{Maturing Lifecycle}{
 
 \if{html}{\figure{lifecycle_maturing.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{maturing}. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome \href{https://github.com/msberends/AMR/issues}{to suggest changes at our repository} or \link[=AMR]{write us an email (see section 'Contact Us')}.

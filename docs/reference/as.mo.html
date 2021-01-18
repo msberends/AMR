@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Transform input to a microorganism ID — as.mo • AMR (for R)</title>
+<title>Transform Input to a Microorganism ID — as.mo • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Transform input to a microorganism ID — as.mo" />
-<meta property="og:description" content="Use this function to determine a valid microorganism ID (mo). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like &quot;Staphylococcus aureus&quot;), an abbreviated name (such as &quot;S. aureus&quot;), an abbreviation known in the field (such as &quot;MRSA&quot;), or just a genus. Please see Examples." />
+<meta property="og:title" content="Transform Input to a Microorganism ID — as.mo" />
+<meta property="og:description" content="Use this function to determine a valid microorganism ID (mo). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like &quot;Staphylococcus aureus&quot;), an abbreviated name (such as &quot;S. aureus&quot;), an abbreviation known in the field (such as &quot;MRSA&quot;), or just a genus. See Examples." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9006</span>
       </span>
     </div>
 
@@ -233,13 +233,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Transform input to a microorganism ID</h1>
+    <h1>Transform Input to a Microorganism ID</h1>
     <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/mo.R'><code>R/mo.R</code></a></small>
     <div class="hidden name"><code>as.mo.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Use this function to determine a valid microorganism ID (<code>mo</code>). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see Source). The input can be almost anything: a full name (like <code>"Staphylococcus aureus"</code>), an abbreviated name (such as <code>"S. aureus"</code>), an abbreviation known in the field (such as <code>"MRSA"</code>), or just a genus. Please see <em>Examples</em>.</p>
+    <p>Use this function to determine a valid microorganism ID (<code>mo</code>). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see <em>Source</em>). The input can be almost anything: a full name (like <code>"Staphylococcus aureus"</code>), an abbreviated name (such as <code>"S. aureus"</code>), an abbreviation known in the field (such as <code>"MRSA"</code>), or just a genus. See <em>Examples</em>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>as.mo</span><span class='op'>(</span>
@@ -280,7 +280,7 @@
     </tr>
     <tr>
       <th>allow_uncertain</th>
-      <td><p>a number between <code>0</code> (or <code>"none"</code>) and <code>3</code> (or <code>"all"</code>), or <code>TRUE</code> (= <code>2</code>) or <code>FALSE</code> (= <code>0</code>) to indicate whether the input should be checked for less probable results, please see <em>Details</em></p></td>
+      <td><p>a number between <code>0</code> (or <code>"none"</code>) and <code>3</code> (or <code>"all"</code>), or <code>TRUE</code> (= <code>2</code>) or <code>FALSE</code> (= <code>0</code>) to indicate whether the input should be checked for less probable results, see <em>Details</em></p></td>
     </tr>
     <tr>
       <th>reference_df</th>
@@ -306,7 +306,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>General info</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>General Info</h3>
 
 
 <p>A microorganism ID from this package (class: <code>mo</code>) is human readable and typically looks like these examples:</p><pre>  Code               Full name
@@ -324,7 +324,7 @@
 </pre>
 
 <p>Values that cannot be coerced will be considered 'unknown' and will get the MO code <code>UNKNOWN</code>.</p>
-<p>Use the <code><a href='mo_property.html'>mo_*</a></code> functions to get properties based on the returned code, see Examples.</p>
+<p>Use the <code><a href='mo_property.html'>mo_*</a></code> functions to get properties based on the returned code, see <em>Examples</em>.</p>
 <p>The algorithm uses data from the Catalogue of Life (see below) and from one other source (see <a href='microorganisms.html'>microorganisms</a>).</p>
 <p>The <code>as.mo()</code> function uses several coercion rules for fast and logical results. It assesses the input matching criteria in the following order:</p><ol>
 <li><p>Human pathogenic prevalence: the function  starts with more prevalent microorganisms, followed by less prevalent ones;</p></li>
@@ -334,7 +334,7 @@
 
 <p>This will lead to the effect that e.g. <code>"E. coli"</code> (a microorganism highly prevalent in humans) will return the microbial ID of <em>Escherichia coli</em> and not <em>Entamoeba coli</em> (a microorganism less prevalent in humans), although the latter would alphabetically come first.</p>
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Coping with uncertain results</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Coping with Uncertain Results</h3>
 
 
 <p>In addition, the <code>as.mo()</code> function can differentiate four levels of uncertainty to guess valid results:</p><ul>
@@ -352,16 +352,16 @@
 </ul>
 
 <p>There are three helper functions that can be run after using the <code>as.mo()</code> function:</p><ul>
-<li><p>Use <code>mo_uncertainties()</code> to get a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> that prints in a pretty format with all taxonomic names that were guessed. The output contains the matching score for all matches (see <em>Background on matching score</em>).</p></li>
+<li><p>Use <code>mo_uncertainties()</code> to get a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> that prints in a pretty format with all taxonomic names that were guessed. The output contains the matching score for all matches (see <em>Matching Score for Microorganisms</em> below).</p></li>
 <li><p>Use <code>mo_failures()</code> to get a <a href='https://rdrr.io/r/base/character.html'>character</a> <a href='https://rdrr.io/r/base/vector.html'>vector</a> with all values that could not be coerced to a valid value.</p></li>
 <li><p>Use <code>mo_renamed()</code> to get a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with all values that could be coerced based on old, previously accepted taxonomic names.</p></li>
 </ul>
 
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Microbial prevalence of pathogens in humans</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Microbial Prevalence of Pathogens in Humans</h3>
 
 
-<p>The intelligent rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the <code>prevalence</code> columns in the <a href='microorganisms.html'>microorganisms</a> and <a href='microorganisms.old.html'>microorganisms.old</a> data sets. The grouping into human pathogenic prevalence is explained in the section <em>Matching score for microorganisms</em> below.</p>
+<p>The intelligent rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the <code>prevalence</code> columns in the <a href='microorganisms.html'>microorganisms</a> and <a href='microorganisms.old.html'>microorganisms.old</a> data sets. The grouping into human pathogenic prevalence is explained in the section <em>Matching Score for Microorganisms</em> below.</p>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
@@ -375,14 +375,14 @@
 <li><p>Catalogue of Life: Annual Checklist (public online taxonomic database), <a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a> (check included annual version with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version()</a></code>).</p></li>
 </ol>
 
-    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable lifecycle</h2>
+    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable Lifecycle</h2>
 
     
 
 <p><img src='figures/lifecycle_stable.svg' style=margin-bottom:5px /> <br />
 The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</strong>. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.</p>
 <p>If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
-    <h2 class="hasAnchor" id="matching-score-for-microorganisms"><a class="anchor" href="#matching-score-for-microorganisms"></a>Matching score for microorganisms</h2>
+    <h2 class="hasAnchor" id="matching-score-for-microorganisms"><a class="anchor" href="#matching-score-for-microorganisms"></a>Matching Score for Microorganisms</h2>
 
     
 
@@ -406,12 +406,12 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <p><img src='figures/logo_col.png' height=40px style=margin-bottom:5px /> <br />
 This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, <a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, <a href='https://lpsn.dsmz.de'>lpsn.dsmz.de</a>). This supplementation is needed until the <a href='https://github.com/CatalogueOfLife/general'>CoL+ project</a> is finished, which we await.</p>
 <p><a href='catalogue_of_life.html'>Click here</a> for more information about the included taxa. Check which versions of the CoL and LSPN were included in this package with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version()</a></code>.</p>
-    <h2 class="hasAnchor" id="reference-data-publicly-available"><a class="anchor" href="#reference-data-publicly-available"></a>Reference data publicly available</h2>
+    <h2 class="hasAnchor" id="reference-data-publicly-available"><a class="anchor" href="#reference-data-publicly-available"></a>Reference Data Publicly Available</h2>
 
     
 
 <p>All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this <code>AMR</code> package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find <a href='https://msberends.github.io/AMR/articles/datasets.html'>all download links on our website</a>, which is automatically updated with every code change.</p>
-    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on Our Website!</h2>
 
     
 

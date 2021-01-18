@@ -3,7 +3,7 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data set with 67,151 microorganisms}
+\title{Data Set with 67,151 Microorganisms}
 \format{
 A \link{data.frame} with 67,151 observations and 16 variables:
 \itemize{
@@ -13,7 +13,7 @@ A \link{data.frame} with 67,151 observations and 16 variables:
 \item \code{rank}\cr Text of the taxonomic rank of the microorganism, like \code{"species"} or \code{"genus"}
 \item \code{ref}\cr Author(s) and year of concerning scientific publication
 \item \code{species_id}\cr ID of the species as used by the Catalogue of Life
-\item \code{source}\cr Either "CoL", "DSMZ" (see Source) or "manually added"
+\item \code{source}\cr Either "CoL", "DSMZ" (see \emph{Source}) or "manually added"
 \item \code{prevalence}\cr Prevalence of the microorganism, see \code{\link[=as.mo]{as.mo()}}
 \item \code{snomed}\cr SNOMED code of the microorganism. Use \code{\link[=mo_snomed]{mo_snomed()}} to retrieve it quickly, see \code{\link[=mo_property]{mo_property()}}.
 }
@@ -63,7 +63,7 @@ The file in \R format (with preserved data structure) can be found here:
 }
 }
 }
-\section{About the records from DSMZ (see source)}{
+\section{About the Records from DSMZ (see \emph{Source})}{
 
 Names of prokaryotes are defined as being validly published by the International Code of Nomenclature of Bacteria. Validly published are all names which are included in the Approved Lists of Bacterial Names and the names subsequently published in the International Journal of Systematic Bacteriology (IJSB) and, from January 2000, in the International Journal of Systematic and Evolutionary Microbiology (IJSEM) as original articles or in the validation lists.
 \emph{(from \url{https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date})}
@@ -79,12 +79,12 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 \link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which versions of the CoL and LSPN were included in this package with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}.
 }
 
-\section{Reference data publicly available}{
+\section{Reference Data Publicly Available}{
 
 All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
 }
 
-\section{Read more on our website!}{
+\section{Read more on Our Website!}{
 
 On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }

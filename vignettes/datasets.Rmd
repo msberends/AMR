@@ -250,3 +250,25 @@ rsi_translation %>%
   mutate(ab = ab_name(ab), mo = mo_name(mo)) %>% 
   print_df()
 ```
+
+
+## Dosage guidelines from EUCAST
+
+`r structure_txt(dosage)`
+
+This data set is in R available as `dosage`, after you load the `AMR` package.
+
+`r download_txt("dosage")`
+
+### Source
+
+EUCAST breakpoints used in this package are based on the dosages in this data set.
+
+Currently included dosages in the data set are meant for: `r AMR:::format_eucast_version_nr(unique(dosage$eucast_version))`.
+
+### Example content
+
+```{r, echo = FALSE}
+dosage %>% 
+  print_df()
+```

@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9006</span>
       </span>
     </div>
 
@@ -305,14 +305,14 @@
 <p>If <code>x</code> is a matrix with at least two rows and columns, it is taken as a two-dimensional contingency table: the entries of <code>x</code> must be non-negative integers.  Otherwise, <code>x</code> and <code>y</code> must be vectors or factors of the same length; cases with missing values are removed, the objects are coerced to factors, and the contingency table is computed from these.  Then Pearson's chi-squared test is performed of the null hypothesis that the joint distribution of the cell counts in a 2-dimensional contingency table is the product of the row and column marginals.</p>
 <p>The p-value is computed from the asymptotic chi-squared distribution of the test statistic.</p>
 <p>In the contingency table case simulation is done by random sampling from the set of all contingency tables with given marginals, and works only if the marginals are strictly positive. Note that this is not the usual sampling situation assumed for a chi-squared test (such as the <em>G</em>-test) but rather that for Fisher's exact test.</p>
-<p>In the goodness-of-fit case simulation is done by random sampling from the discrete distribution specified by <code>p</code>, each sample being of size <code>n = sum(x)</code>. This simulation is done in <span style="R">R</span> and may be slow.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><em>G</em>-test of goodness-of-fit (likelihood ratio test)</h3>
+<p>In the goodness-of-fit case simulation is done by random sampling from the discrete distribution specified by <code>p</code>, each sample being of size <code>n = sum(x)</code>. This simulation is done in <span style="R">R</span> and may be slow.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><em>G</em>-test Of Goodness-of-Fit (Likelihood Ratio Test)</h3>
 
 
 <p>Use the <em>G</em>-test of goodness-of-fit when you have one nominal variable with two or more values (such as male and female, or red, pink and white flowers). You compare the observed counts of numbers of observations in each category with the expected counts, which you calculate using some kind of theoretical expectation (such as a 1:1 sex ratio or a 1:2:1 ratio in a genetic cross).</p>
 <p>If the expected number of observations in any category is too small, the <em>G</em>-test may give inaccurate results, and you should use an exact test instead (<code><a href='https://rdrr.io/r/stats/fisher.test.html'>fisher.test()</a></code>).</p>
 <p>The <em>G</em>-test of goodness-of-fit is an alternative to the chi-square test of goodness-of-fit (<code><a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test()</a></code>); each of these tests has some advantages and some disadvantages, and the results of the two tests are usually very similar.</p>
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><em>G</em>-test of independence</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><em>G</em>-test of Independence</h3>
 
 
 <p>Use the <em>G</em>-test of independence when you have two nominal variables, each with two or more possible values. You want to know whether the proportions for one variable are different among values of the other variable.</p>
@@ -320,7 +320,7 @@
 <p>Fisher's exact test (<code><a href='https://rdrr.io/r/stats/fisher.test.html'>fisher.test()</a></code>) is an <strong>exact</strong> test, where the <em>G</em>-test is still only an <strong>approximation</strong>. For any 2x2 table, Fisher's Exact test may be slower but will still run in seconds, even if the sum of your observations is multiple millions.</p>
 <p>The <em>G</em>-test of independence is an alternative to the chi-square test of independence (<code><a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test()</a></code>), and they will give approximately the same results.</p>
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>How the test works</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>How the Test Works</h3>
 
 
 <p>Unlike the exact test of goodness-of-fit (<code><a href='https://rdrr.io/r/stats/fisher.test.html'>fisher.test()</a></code>), the <em>G</em>-test does not directly calculate the probability of obtaining the observed results or something more extreme. Instead, like almost all statistical tests, the <em>G</em>-test has an intermediate step; it uses the data to calculate a test statistic that measures how far the observed data are from the null expectation. You then use a mathematical relationship, in this case the chi-square distribution, to estimate the probability of obtaining that value of the test statistic.</p>
@@ -332,13 +332,13 @@
 <p>where <code>df</code> are the degrees of freedom.</p>
 <p>If there are more than two categories and you want to find out which ones are significantly different from their null expectation, you can use the same method of testing each category vs. the sum of all categories, with the Bonferroni correction. You use <em>G</em>-tests for each category, of course.</p>
 
-    <h2 class="hasAnchor" id="questioning-lifecycle"><a class="anchor" href="#questioning-lifecycle"></a>Questioning lifecycle</h2>
+    <h2 class="hasAnchor" id="questioning-lifecycle"><a class="anchor" href="#questioning-lifecycle"></a>Questioning Lifecycle</h2>
 
     
 
 <p><img src='figures/lifecycle_questioning.svg' style=margin-bottom:5px /> <br />
 The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>questioning</strong>. This function might be no longer be optimal approach, or is it questionable whether this function should be in this <code>AMR</code> package at all.</p>
-    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on our website!</h2>
+    <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on Our Website!</h2>
 
     
 

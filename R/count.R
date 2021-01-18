@@ -23,12 +23,12 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-#' Count available isolates
+#' Count Available Isolates
 #'
-#' @description These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in `summarise()` from the `dplyr` package and also support grouped variables, please see *Examples*.
+#' @description These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in `summarise()` from the `dplyr` package and also support grouped variables, see *Examples*.
 #'
 #' [count_resistant()] should be used to count resistant isolates, [count_susceptible()] should be used to count susceptible isolates.
-#' @inheritSection lifecycle Stable lifecycle
+#' @inheritSection lifecycle Stable Lifecycle
 #' @param ... one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with [as.rsi()] if needed.
 #' @inheritParams proportion
 #' @inheritSection as.rsi Interpretation of R and S/I
@@ -39,13 +39,13 @@
 #' The function [n_rsi()] is an alias of [count_all()]. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to `n_distinct()`. Their function is equal to `count_susceptible(...) + count_resistant(...)`.
 #'
 #' The function [count_df()] takes any variable from `data` that has an [`rsi`] class (created with [as.rsi()]) and counts the number of S's, I's and R's. It also supports grouped variables. The function [rsi_df()] works exactly like [count_df()], but adds the percentage of S, I and R.
-#' @inheritSection proportion Combination therapy
+#' @inheritSection proportion Combination Therapy
 #' @seealso [`proportion_*`][proportion] to calculate microbial resistance and susceptibility.
 #' @return An [integer]
 #' @rdname count
 #' @name count
 #' @export
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' # example_isolates is a data set available in the AMR package.
 #' ?example_isolates

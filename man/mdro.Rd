@@ -14,9 +14,9 @@
 \alias{mdr_tb}
 \alias{mdr_cmi2012}
 \alias{eucast_exceptional_phenotypes}
-\title{Determine multidrug-resistant organisms (MDRO)}
+\title{Determine Multidrug-Resistant Organisms (MDRO)}
 \source{
-Please see \emph{Details} for the list of publications used for this function.
+See the supported guidelines above for the list of publications used for this function.
 }
 \usage{
 mdro(
@@ -30,7 +30,7 @@ mdro(
   ...
 )
 
-custom_mdro_guideline(...)
+custom_mdro_guideline(..., as_factor = TRUE)
 
 brmo(x, guideline = "BRMO", ...)
 
@@ -45,7 +45,7 @@ eucast_exceptional_phenotypes(x, guideline = "EUCAST", ...)
 \arguments{
 \item{x}{a \link{data.frame} with antibiotics columns, like \code{AMX} or \code{amox}. Can be left blank for automatic determination.}
 
-\item{guideline}{a specific guideline to follow. Can also have \code{\link[=custom_mdro_guideline]{custom_mdro_guideline()}} as input. When left empty, the publication by Magiorakos \emph{et al.} (2012, Clinical Microbiology and Infection) will be followed, please see \emph{Details}.}
+\item{guideline}{a specific guideline to follow, see sections \emph{Supported international / national guidelines} and \emph{Using Custom Guidelines} below. When left empty, the publication by Magiorakos \emph{et al.} (see below) will be followed.}
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
@@ -57,7 +57,9 @@ eucast_exceptional_phenotypes(x, guideline = "EUCAST", ...)
 
 \item{verbose}{a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.}
 
-\item{...}{column name of an antibiotic, please see section \emph{Antibiotics} below}
+\item{...}{in case of \code{\link[=custom_mdro_guideline]{custom_mdro_guideline()}}: a set of rules, see section \emph{Using Custom Guidelines} below. Otherwise: column name of an antibiotic, see section \emph{Antibiotics} below.}
+
+\item{as_factor}{a \link{logical} to indicate whether the returned value should be an ordered \link{factor} (\code{TRUE}, default), or otherwise a \link{character} vector}
 }
 \value{
 \itemize{
@@ -75,12 +77,14 @@ Ordered \link{factor} with levels \code{Negative} < \verb{Positive, unconfirmed}
 Determine which isolates are multidrug-resistant organisms (MDRO) according to international, national and custom guidelines.
 }
 \details{
-These functions are context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} argument can be left blank, please see \emph{Examples}.
+These functions are context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} argument can be left blank, see \emph{Examples}.
 
 For the \code{pct_required_classes} argument, values above 1 will be divided by 100. This is to support both fractions (\code{0.75} or \code{3/4}) and percentages (\code{75}).
 
 \strong{Note:} Every test that involves the Enterobacteriaceae family, will internally be performed using its newly named \emph{order} Enterobacterales, since the Enterobacteriaceae family has been taxonomically reclassified by Adeolu \emph{et al.} in 2016. Before that, Enterobacteriaceae was the only family under the Enterobacteriales (with an i) order. All species under the old Enterobacteriaceae family are still under the new Enterobacterales (without an i) order, but divided into multiple families. The way tests are performed now by this \code{\link[=mdro]{mdro()}} function makes sure that results from before 2016 and after 2016 are identical.
-\subsection{International / National guidelines}{
+}
+\section{Supported International / National Guidelines}{
+
 
 Currently supported guidelines are (case-insensitive):
 \itemize{
@@ -107,33 +111,36 @@ The Dutch national guideline - Rijksinstituut voor Volksgezondheid en Milieu "WI
 Please suggest your own (country-specific) guidelines by letting us know: \url{https://github.com/msberends/AMR/issues/new}.
 }
 
-\subsection{Custom guidelines}{
+\section{Using Custom Guidelines}{
+
 
 Custom guidelines can be set with the \code{\link[=custom_mdro_guideline]{custom_mdro_guideline()}} function. This is of great importance if you have custom rules to determine MDROs in your hospital, e.g., rules that are dependent on ward, state of contact isolation or other variables in your data.
 
-If you are familiar with \code{case_when()} of the \code{dplyr} package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation':\preformatted{custom <- custom_mdro_guideline("CIP == 'R' & age > 60" ~ "Elderly Type A",
-                                "ERY == 'R' & age > 60" ~ "Elderly Type B")
+If you are familiar with \code{case_when()} of the \code{dplyr} package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation':\preformatted{custom <- custom_mdro_guideline(CIP == "R" & age > 60 ~ "Elderly Type A",
+                                ERY == "R" & age > 60 ~ "Elderly Type B")
 }
 
 If a row/an isolate matches the first rule, the value after the first \code{~} (in this case \emph{'Elderly Type A'}) will be set as MDRO value. Otherwise, the second rule will be tried and so on. The number of rules is unlimited.
 
 You can print the rules set in the console for an overview. Colours will help reading it if your console supports colours.\preformatted{custom
 #> A set of custom MDRO rules:
-#>   1. CIP == "R" & age > 60 -> "Elderly Type A"
-#>   2. ERY == "R" & age > 60 -> "Elderly Type B"
-#>   3. Otherwise -> "Negative"
+#>   1. CIP is "R" and age is higher than 60 -> Elderly Type A
+#>   2. ERY is "R" and age is higher than 60 -> Elderly Type B
+#>   3. Otherwise -> Negative
 #> 
 #> Unmatched rows will return NA.
 }
 
 The outcome of the function can be used for the \code{guideline} argument in the \code{\link[=mdro]{mdro()}} function:\preformatted{x <- mdro(example_isolates, guideline = custom)
 table(x)
+#> Elderly Type A Elderly Type B       Negative 
+#>             43            891           1066 
 }
 
 The rules set (the \code{custom} object in this case) could be exported to a shared file location using \code{\link[=saveRDS]{saveRDS()}} if you collaborate with multiple users. The custom rules set could then be imported using \code{\link[=readRDS]{readRDS()}},
 }
-}
-\section{Stable lifecycle}{
+
+\section{Stable Lifecycle}{
 
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
@@ -165,7 +172,7 @@ A microorganism is categorised as \emph{Susceptible, Increased exposure} when th
 This AMR package honours this new insight. Use \code{\link[=susceptibility]{susceptibility()}} (equal to \code{\link[=proportion_SI]{proportion_SI()}}) to determine antimicrobial susceptibility and \code{\link[=count_susceptible]{count_susceptible()}} (equal to \code{\link[=count_SI]{count_SI()}}) to count susceptible isolates.
 }
 
-\section{Read more on our website!}{
+\section{Read more on Our Website!}{
 
 On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }
@@ -174,8 +181,8 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 mdro(example_isolates, guideline = "EUCAST")
 
 mdro(example_isolates,
-     guideline = custom_mdro_guideline("AMX == 'R'" ~ "Custom MDRO 1",
-                                       "VAN == 'R'" ~ "Custom MDRO 2"))
+     guideline = custom_mdro_guideline(AMX == "R" ~ "Custom MDRO 1",
+                                       VAN == "R" ~ "Custom MDRO 2"))
 
 \donttest{
 if (require("dplyr")) {

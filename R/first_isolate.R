@@ -23,10 +23,10 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-#' Determine first (weighted) isolates
+#' Determine First (Weighted) Isolates
 #'
 #' Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use [is_new_episode()] that also supports grouping with the `dplyr` package.
-#' @inheritSection lifecycle Stable lifecycle
+#' @inheritSection lifecycle Stable Lifecycle
 #' @param x a [data.frame] containing isolates. Can be left blank for automatic determination.
 #' @param col_date column name of the result date (or date that is was received on the lab), defaults to the first column with a date class
 #' @param col_patient_id column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' or 'patid' (case insensitive)
@@ -34,28 +34,28 @@
 #' @param col_testcode column name of the test codes. Use `col_testcode = NULL` to **not** exclude certain test codes (such as test codes for screening). In that case `testcodes_exclude` will be ignored.
 #' @param col_specimen column name of the specimen type or group
 #' @param col_icu column name of the logicals (`TRUE`/`FALSE`) whether a ward or department is an Intensive Care Unit (ICU)
-#' @param col_keyantibiotics column name of the key antibiotics to determine first *weighted* isolates, see [key_antibiotics()]. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use `col_keyantibiotics = FALSE` to prevent this.
-#' @param episode_days episode in days after which a genus/species combination will be determined as 'first isolate' again. The default of 365 days is based on the guideline by CLSI, see Source. 
+#' @param col_keyantibiotics column name of the key antibiotics to determine first (weighted) isolates, see [key_antibiotics()]. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use `col_keyantibiotics = FALSE` to prevent this.
+#' @param episode_days episode in days after which a genus/species combination will be determined as 'first isolate' again. The default of 365 days is based on the guideline by CLSI, see *Source*. 
 #' @param testcodes_exclude character vector with test codes that should be excluded (case-insensitive)
 #' @param icu_exclude logical whether ICU isolates should be excluded (rows with value `TRUE` in the column set with `col_icu`)
 #' @param specimen_group value in the column set with `col_specimen` to filter on
-#' @param type type to determine weighed isolates; can be `"keyantibiotics"` or `"points"`, see Details
-#' @param ignore_I logical to determine whether antibiotic interpretations with `"I"` will be ignored when `type = "keyantibiotics"`, see Details
-#' @param points_threshold points until the comparison of key antibiotics will lead to inclusion of an isolate when `type = "points"`, see Details
+#' @param type type to determine weighed isolates; can be `"keyantibiotics"` or `"points"`, see *Details*
+#' @param ignore_I logical to determine whether antibiotic interpretations with `"I"` will be ignored when `type = "keyantibiotics"`, see *Details*
+#' @param points_threshold points until the comparison of key antibiotics will lead to inclusion of an isolate when `type = "points"`, see *Details*
 #' @param info print progress
 #' @param include_unknown logical to determine whether 'unknown' microorganisms should be included too, i.e. microbial code `"UNKNOWN"`, which defaults to `FALSE`. For WHONET users, this means that all records with organism code `"con"` (*contamination*) will be excluded at default. Isolates with a microbial ID of `NA` will always be excluded as first isolate.
 #' @param ... arguments passed on to [first_isolate()] when using [filter_first_isolate()], or arguments passed on to [key_antibiotics()] when using [filter_first_weighted_isolate()]
 #' @details 
-#' These functions are context-aware when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`. This means that then the `x` argument can be left blank, please see *Examples*.
+#' These functions are context-aware when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`. This means that then the `x` argument can be left blank, see *Examples*.
 #' 
 #' The [first_isolate()] function is a wrapper around the [is_new_episode()] function, but more efficient for data sets containing microorganism codes or names.
 #' 
 #' All isolates with a microbial ID of `NA` will be excluded as first isolate.
 #' 
-#' ### Why this is so important
+#' ## Why this is so Important
 #' To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode [(Hindler *et al.* 2007)](https://pubmed.ncbi.nlm.nih.gov/17304462/). If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all *S. aureus* isolates would be overestimated, because you included this MRSA more than once. It would be [selection bias](https://en.wikipedia.org/wiki/Selection_bias).
 #'
-#' ### `filter_*()` shortcuts
+#' ## `filter_*()` Shortcuts
 #'
 #' The functions [filter_first_isolate()] and [filter_first_weighted_isolate()] are helper functions to quickly filter on first isolates.
 #' 
@@ -77,8 +77,8 @@
 #'     filter(only_weighted_firsts == TRUE) %>%
 #'     select(-only_weighted_firsts, -keyab)
 #' ```
-#' @section Key antibiotics:
-#' There are two ways to determine whether isolates can be included as first *weighted* isolates which will give generally the same results:
+#' @section Key Antibiotics:
+#' There are two ways to determine whether isolates can be included as first weighted isolates which will give generally the same results:
 #'
 #' 1. Using `type = "keyantibiotics"` and argument `ignore_I`
 #' 
@@ -94,7 +94,7 @@
 #' @source Methodology of this function is strictly based on:
 #' 
 #' **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition**, 2014, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
-#' @inheritSection AMR Read more on our website!
+#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' # `example_isolates` is a dataset available in the AMR package.
 #' # See ?example_isolates.
