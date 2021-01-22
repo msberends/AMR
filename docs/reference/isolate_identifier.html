@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9009</span>
       </span>
     </div>
 
@@ -261,6 +261,18 @@
     <tr>
       <th>cols_ab</th>
       <td><p>a character vector of column names of <code>x</code>, or (a combination with) an <a href='[ab_class()]'>antibiotic selector function</a>, such as <code><a href='antibiotic_class_selectors.html'>carbapenems()</a></code> and <code><a href='antibiotic_class_selectors.html'>aminoglycosides()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>target</th>
+      <td><p><span style="R">R</span> object.</p></td>
+    </tr>
+    <tr>
+      <th>current</th>
+      <td><p>other <span style="R">R</span> object, to be compared with <code>target</code>.</p></td>
+    </tr>
+    <tr>
+      <th>ignore_empty_results</th>
+      <td><p>a logical to indicate whether empty results must be ignored, so that only values R, S and I will be compared</p></td>
     </tr>
     <tr>
       <th>...</th>

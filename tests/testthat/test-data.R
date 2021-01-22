@@ -63,7 +63,7 @@ test_that("data sets are valid", {
 test_that("creation of data sets is valid", {
   skip_on_cran()
   
-  df <- create_MO_lookup()
+  df <- AMR:::MO_lookup
   expect_lt(nrow(df[which(df$prevalence == 1), ]), nrow(df[which(df$prevalence == 2), ]))
   expect_lt(nrow(df[which(df$prevalence == 2), ]), nrow(df[which(df$prevalence == 3), ]))
   expect_true(all(c("mo", "fullname",
@@ -71,11 +71,10 @@ test_that("creation of data sets is valid", {
                     "rank", "ref", "species_id", "source", "prevalence", "snomed",
                     "kingdom_index", "fullname_lower", "g_species") %in% colnames(df)))
   
-  olddf <- create_MO.old_lookup()
   expect_true(all(c("fullname", "fullname_new", "ref", "prevalence",
-                    "fullname_lower", "g_species") %in% colnames(olddf)))
+                    "fullname_lower", "g_species") %in% colnames(AMR:::MO.old_lookup)))
   
-  expect_s3_class(create_species_cons_cops("CoNS"), "mo")
+  expect_s3_class(AMR:::MO_CONS, "mo")
   
 })
 

@@ -16,6 +16,12 @@ isolate_identifier(x, col_mo = NULL, cols_ab = NULL)
 
 \item{cols_ab}{a character vector of column names of \code{x}, or (a combination with) an \href{[ab_class()]}{antibiotic selector function}, such as \code{\link[=carbapenems]{carbapenems()}} and \code{\link[=aminoglycosides]{aminoglycosides()}}}
 
+\item{target}{\R object.}
+
+\item{current}{other \R object, to be compared with \code{target}.}
+
+\item{ignore_empty_results}{a logical to indicate whether empty results must be ignored, so that only values R, S and I will be compared}
+
 \item{...}{column name of an antibiotic, see section \emph{Antibiotics} below}
 }
 \description{

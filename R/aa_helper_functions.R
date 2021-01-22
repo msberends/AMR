@@ -479,10 +479,13 @@ format_class <- function(class, plural) {
   if ("matrix" %in% class) {
     class <- "a matrix"
   }
-  if (any(c("mo", "ab", "rsi", "disk", "mic") %in% class)) {
-    class <- paste0("a class <", class[1L], ">")
+  if ("isolate_identifier" %in% class) {
+    class <- "created with isolate_identifier()"
   }
-  class[class == class.bak] <- paste0("a class <", class[class == class.bak], ">")
+  if (any(c("mo", "ab", "rsi", "disk", "mic") %in% class)) {
+    class <- paste0("of class <", class[1L], ">")
+  }
+  class[class == class.bak] <- paste0("of class <", class[class == class.bak], ">")
   # output
   vector_or(class, quotes = FALSE)
 }
@@ -514,7 +517,7 @@ meet_criteria <- function(object,
   if (!is.null(allow_class)) {
     stop_ifnot(inherits(object, allow_class), "argument `", obj_name,
                "` must be ", format_class(allow_class, plural = isTRUE(has_length > 1)),
-               ", not ", format_class(class(object), plural = isTRUE(has_length > 1)),
+               ", i.e. not be ", format_class(class(object), plural = isTRUE(has_length > 1)),
                call = call_depth)
     # check data.frames for data
     if (inherits(object, "data.frame")) {

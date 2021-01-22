@@ -49,7 +49,7 @@ As said, SPSS is easier to learn than R. But SPSS, SAS and Stata come with major
   
 * **R has a huge community.**
 
-  Many R users just ask questions on websites like [StackOverflow.com](https://stackoverflow.com), the largest online community for programmers. At the time of writing, [`r format(suppressWarnings(readr::read_csv("https://data.stackexchange.com/stackoverflow/csv/1674647", col_types = "d")[[1]]), big.mark = ",")` R-related questions](https://stackoverflow.com/questions/tagged/r?sort=votes) have already been asked on this platform (that covers questions and answers for any programming language). In my own experience, most questions are answered within a couple of minutes.
+  Many R users just ask questions on websites like [StackOverflow.com](https://stackoverflow.com), the largest online community for programmers. At the time of writing, [`r format(suppressWarnings(read.csv("https://data.stackexchange.com/stackoverflow/csv/1674647", quote = '"'))[[1]], big.mark = ",")` R-related questions](https://stackoverflow.com/questions/tagged/r?sort=votes) have already been asked on this platform (that covers questions and answers for any programming language). In my own experience, most questions are answered within a couple of minutes.
   
 * **R understands any data type, including SPSS/SAS/Stata.**
 

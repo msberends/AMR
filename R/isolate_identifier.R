@@ -83,9 +83,15 @@ isolate_identifier <- function(x, col_mo = NULL, cols_ab = NULL) {
 }
 
 #' @method all.equal isolate_identifier
+#' @inheritParams base::all.equal
+#' @param ignore_empty_results a logical to indicate whether empty results must be ignored, so that only values R, S and I will be compared
 #' @rdname isolate_identifier
 #' @export
 all.equal.isolate_identifier <- function(target, current, ignore_empty_results = TRUE, ...) {
+  meet_criteria(target, allow_class = "isolate_identifier")
+  meet_criteria(current, allow_class = "isolate_identifier")
+  meet_criteria(ignore_empty_results, allow_class = "logical", has_length = 1)
+  
   if (isTRUE(all.equal.character(target, current))) {
     return(TRUE)
   }
