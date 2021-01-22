@@ -1049,6 +1049,7 @@ eucast_rules <- function(x,
     warn_lacking_rsi_class <- unique(warn_lacking_rsi_class)
     warning_("Not all columns with antimicrobial results are of class <rsi>. Transform them on beforehand, with e.g.:\n",
              "  ", x_deparsed, " %>% mutate_if(is.rsi.eligible, as.rsi)\n",
+             "  ", x_deparsed, " %>% mutate(across((is.rsi.eligible), as.rsi))\n",
              "  ", x_deparsed, " %>% as.rsi(", ifelse(length(warn_lacking_rsi_class) == 1, 
                                                       warn_lacking_rsi_class,
                                                       paste0(warn_lacking_rsi_class[1], ":", warn_lacking_rsi_class[length(warn_lacking_rsi_class)])), 

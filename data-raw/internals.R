@@ -23,12 +23,108 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 
-# Run this file to update the package using: -------------------------------
+# Run this file to update the package using:
 # source("data-raw/internals.R")
-# --------------------------------------------------------------------------
+
+library(dplyr, warn.conflicts = FALSE)
+devtools::load_all(quiet = TRUE)
+
+old_globalenv <- ls(envir = globalenv())
+
+# Helper functions --------------------------------------------------------
+
+create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
+  # Determination of which staphylococcal species are CoNS/CoPS according to:
+  # - Becker et al. 2014, PMID 25278577
+  # - Becker et al. 2019, PMID 30872103
+  # - Becker et al. 2020, PMID 32056452
+  # this function returns class <mo>
+  MO_staph <- AMR::microorganisms
+  MO_staph <- MO_staph[which(MO_staph$genus == "Staphylococcus"), , drop = FALSE]
+  if (type == "CoNS") {
+    MO_staph[which(MO_staph$species %in% c("coagulase-negative", "argensis", "arlettae",
+                                           "auricularis", "caeli", "capitis", "caprae", 
+                                           "carnosus", "chromogenes", "cohnii", "condimenti",
+                                           "debuckii", "devriesei", "edaphicus", "epidermidis",
+                                           "equorum", "felis", "fleurettii", "gallinarum",
+                                           "haemolyticus", "hominis", "jettensis", "kloosii",
+                                           "lentus", "lugdunensis", "massiliensis", "microti",
+                                           "muscae", "nepalensis", "pasteuri", "petrasii",
+                                           "pettenkoferi", "piscifermentans", "pseudoxylosus",
+                                           "rostri", "saccharolyticus", "saprophyticus",
+                                           "sciuri", "simulans", "stepanovicii", "succinus",
+                                           "vitulinus", "warneri", "xylosus")
+                   | (MO_staph$species == "schleiferi" & MO_staph$subspecies %in% c("schleiferi", ""))),
+             "mo", drop = TRUE]
+  } else if (type == "CoPS") {
+    MO_staph[which(MO_staph$species %in% c("coagulase-positive",
+                                           "simiae", "agnetis",
+                                           "delphini", "lutrae",
+                                           "hyicus", "intermedius",
+                                           "pseudintermedius", "pseudointermedius",
+                                           "schweitzeri", "argenteus")
+                   | (MO_staph$species == "schleiferi" & MO_staph$subspecies == "coagulans")),
+             "mo", drop = TRUE]
+  }
+}
+
+create_AB_lookup <- function() {
+  AB_lookup <- AMR::antibiotics
+  AB_lookup$generalised_name <- generalise_antibiotic_name(AB_lookup$name)
+  AB_lookup$generalised_synonyms <- lapply(AB_lookup$synonyms, generalise_antibiotic_name)
+  AB_lookup$generalised_abbreviations <- lapply(AB_lookup$abbreviations, generalise_antibiotic_name)
+  AB_lookup$generalised_loinc <- lapply(AB_lookup$loinc, generalise_antibiotic_name)
+  AB_lookup
+}
+
+create_MO_lookup <- function() {
+  MO_lookup <- AMR::microorganisms
+  
+  MO_lookup$kingdom_index <- NA_real_
+  MO_lookup[which(MO_lookup$kingdom == "Bacteria" | MO_lookup$mo == "UNKNOWN"), "kingdom_index"] <- 1
+  MO_lookup[which(MO_lookup$kingdom == "Fungi"), "kingdom_index"] <- 2
+  MO_lookup[which(MO_lookup$kingdom == "Protozoa"), "kingdom_index"] <- 3
+  MO_lookup[which(MO_lookup$kingdom == "Archaea"), "kingdom_index"] <- 4
+  # all the rest
+  MO_lookup[which(is.na(MO_lookup$kingdom_index)), "kingdom_index"] <- 5
+  
+  # use this paste instead of `fullname` to work with Viridans Group Streptococci, etc.
+  MO_lookup$fullname_lower <- tolower(trimws(paste(MO_lookup$genus, 
+                                                   MO_lookup$species,
+                                                   MO_lookup$subspecies)))
+  ind <- MO_lookup$genus == "" | grepl("^[(]unknown ", MO_lookup$fullname)
+  MO_lookup[ind, "fullname_lower"] <- tolower(MO_lookup[ind, "fullname"])
+  MO_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", MO_lookup$fullname_lower, perl = TRUE))
+  
+  # add a column with only "e coli" like combinations
+  MO_lookup$g_species <- gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO_lookup$fullname_lower, perl = TRUE)
+  
+  # so arrange data on prevalence first, then kingdom, then full name
+  MO_lookup[order(MO_lookup$prevalence, MO_lookup$kingdom_index, MO_lookup$fullname_lower), ]
+}
+
+create_MO.old_lookup <- function() {
+  MO.old_lookup <- AMR::microorganisms.old
+  MO.old_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", tolower(trimws(MO.old_lookup$fullname))))
+  
+  # add a column with only "e coli"-like combinations
+  MO.old_lookup$g_species <- trimws(gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO.old_lookup$fullname_lower))
+  
+  # so arrange data on prevalence first, then full name
+  MO.old_lookup[order(MO.old_lookup$prevalence, MO.old_lookup$fullname_lower), ]
+}
+
+create_intr_resistance <- function() {
+  # for mo_is_intrinsic_resistant() - saves a lot of time when executed on this vector
+  paste(AMR::microorganisms[match(AMR::intrinsic_resistant$microorganism, AMR::microorganisms$fullname), "mo", drop = TRUE],
+        AMR::antibiotics[match(AMR::intrinsic_resistant$antibiotic, AMR::antibiotics$name), "ab", drop = TRUE])
+}
+
+
+
+# Save internal data sets to R/sysdata.rda --------------------------------
 
 # See 'data-raw/eucast_rules.tsv' for the EUCAST reference file
-library(dplyr, warn.conflicts = FALSE)
 eucast_rules_file <- utils::read.delim(file = "data-raw/eucast_rules.tsv",
                                        skip = 10,
                                        sep = "\t",
@@ -48,7 +144,7 @@ eucast_rules_file <- utils::read.delim(file = "data-raw/eucast_rules.tsv",
   mutate(reference.rule_group = as.character(reference.rule_group)) %>% 
   select(-sorting_rule)
 
-# Translations ----
+# Translations
 translations_file <- utils::read.delim(file = "data-raw/translations.tsv",
                                        sep = "\t",
                                        stringsAsFactors = FALSE,
@@ -62,23 +158,42 @@ translations_file <- utils::read.delim(file = "data-raw/translations.tsv",
                                        allowEscapes = TRUE, # else "\\1" will be imported as "\\\\1"
                                        quote = "")
 
-# Old microorganism codes -------------------------------------------------
-
+# Old microorganism codes
 microorganisms.translation <- readRDS("data-raw/microorganisms.translation.rds")
 
+# for mo_is_intrinsic_resistant() - saves a lot of time when executed on this vector
+INTRINSIC_R <- create_intr_resistance()
+
+# for checking input in `language` argument in e.g. mo_*() and ab_*() functions
+LANGUAGES_SUPPORTED <- sort(c("en", unique(translations_file$lang)))
+
+# vectors of CoNS and CoPS, improves speed in as.mo()
+MO_CONS <- create_species_cons_cops("CoNS")
+MO_COPS <- create_species_cons_cops("CoPS")
+
+# reference data - they have additional columns compared to `antibiotics` and `microorganisms` to improve speed
+AB_lookup <- create_AB_lookup()
+MO_lookup <- create_MO_lookup()
+MO.old_lookup <- create_MO.old_lookup()
+
 # Export to package as internal data ----
-usethis::use_data(eucast_rules_file, translations_file, microorganisms.translation,
+usethis::use_data(eucast_rules_file, 
+                  translations_file,
+                  microorganisms.translation,
+                  INTRINSIC_R,
+                  LANGUAGES_SUPPORTED,
+                  MO_CONS,
+                  MO_COPS,
+                  AB_lookup,
+                  MO_lookup,
+                  MO.old_lookup,
                   internal = TRUE,
                   overwrite = TRUE,
                   version = 2,
                   compress = "xz")
 
-# Remove from global environment ----
-rm(eucast_rules_file)
-rm(translations_file)
-rm(microorganisms.translation)
+# Export data sets to the repository in different formats -----------------
 
-# Save to raw data to repository ----
 write_md5 <- function(object) {
   conn <- file(paste0("data-raw/", deparse(substitute(object)), ".md5"))
   writeLines(digest::digest(object, "md5"), conn)
@@ -93,7 +208,7 @@ changed_md5 <- function(object) {
   }, error = function(e) TRUE)
 }
 usethis::ui_done(paste0("Saving raw data to {usethis::ui_value('/data-raw/')}"))
-devtools::load_all(quiet = TRUE)
+
 # give official names to ABs and MOs
 rsi <- dplyr::mutate(rsi_translation, ab = ab_name(ab), mo = mo_name(mo))
 if (changed_md5(rsi)) {
@@ -169,5 +284,7 @@ if (changed_md5(dosage)) {
   try(openxlsx::write.xlsx(dosage, "data-raw/dosage.xlsx"), silent = TRUE)
 }
 
-rm(write_md5)
-rm(changed_md5)
+# remove leftovers from global env
+current_globalenv <- ls(envir = globalenv())
+rm(list = current_globalenv[!current_globalenv %in% old_globalenv])
+rm(current_globalenv)

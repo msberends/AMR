@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9008</span>
       </span>
     </div>
 
@@ -236,13 +236,13 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1509007" class="section level1">
-<h1 class="page-header" data-toc-text="1.5.0.9007">
-<a href="#amr-1509007" class="anchor"></a>AMR 1.5.0.9007<small> Unreleased </small>
+    <div id="amr-1509008" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.0.9008">
+<a href="#amr-1509008" class="anchor"></a>AMR 1.5.0.9008<small> Unreleased </small>
 </h1>
-<div id="last-updated-18-january-2021" class="section level2">
+<div id="last-updated-22-january-2021" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-18-january-2021" class="anchor"></a><small>Last updated: 18 January 2021</small>
+<a href="#last-updated-22-january-2021" class="anchor"></a><small>Last updated: 22 January 2021</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
@@ -285,7 +285,9 @@
 </li>
 <li>Added Pretomanid (PMD, J04AK08) to the <code>antibiotics</code> data set</li>
 <li>WHONET code <code>"PNV"</code> will now correctly be interpreted as <code>PHN</code>, the antibiotic code for phenoxymethylpenicillin (‘peni V’)</li>
-<li>Fix for verbose output of <code><a href="../reference/mdro.html">mdro(..., verbose = TRUE)</a></code> for German guideline (3MGRN and 4MGRN) and <em>P. aeruginosa</em> in Dutch guideline (BRMO)</li>
+<li>Fix for verbose output of <code><a href="../reference/mdro.html">mdro(..., verbose = TRUE)</a></code> for German guideline (3MGRN and 4MGRN) and Dutch guideline (BRMO, only <em>P. aeruginosa</em>)</li>
+<li>
+<code><a href="../reference/as.rsi.html">is.rsi.eligible()</a></code> now returns <code>FALSE</code> immediately if the input does not contain any of the values “R”, “S” or “I”. This drastically improves speed, also for a lot of other functions that rely on automatic determination of antibiotic columns.</li>
 </ul>
 </div>
 <div id="other" class="section level3">
@@ -293,6 +295,7 @@
 <a href="#other" class="anchor"></a>Other</h3>
 <ul>
 <li>Big documentation updates</li>
+<li>Loading the package (i.e., <code><a href="https://msberends.github.io/AMR/">library(AMR)</a></code>) now is ~50 times faster than before</li>
 </ul>
 </div>
 </div>

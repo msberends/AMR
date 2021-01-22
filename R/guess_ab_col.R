@@ -137,25 +137,25 @@ get_column_abx <- function(x,
   } else if (info == TRUE) {
     message_("...", appendLF = FALSE, as_note = FALSE)
   }
-  x_bak <- x
+
   # only check columns that are a valid AB code, ATC code, name, abbreviation or synonym,
   # or already have the <rsi> class (as.rsi) 
   # and that they have no more than 50% invalid values
   vectr_antibiotics <- unique(toupper(unlist(antibiotics[, c("ab", "atc", "name", "abbreviations", "synonyms")])))
   vectr_antibiotics <- vectr_antibiotics[!is.na(vectr_antibiotics) & nchar(vectr_antibiotics) >= 3]
-  x_columns <- vapply(FUN.VALUE = character(1), colnames(x), function(col, df = x_bak) {
+  x_columns <- vapply(FUN.VALUE = character(1), colnames(x), function(col, df = x) {
     if (toupper(col) %in% vectr_antibiotics || 
-        is.rsi(as.data.frame(df, stringsAsFactors = FALSE)[, col, drop = TRUE]) ||
-        is.rsi.eligible(as.data.frame(df, stringsAsFactors = FALSE)[, col, drop = TRUE],
-                        threshold = 0.5)) {
+        is.rsi(x[, col, drop = TRUE]) ||
+        is.rsi.eligible(x[, col, drop = TRUE], threshold = 0.5)
+        ) {
       return(col)
     } else {
       return(NA_character_)
     }
   })
+  
   x_columns <- x_columns[!is.na(x_columns)]
   x <- x[, x_columns, drop = FALSE] # without drop = TRUE, x will become a vector when x_columns is length 1
-  
   df_trans <- data.frame(colnames = colnames(x),
                          abcode = suppressWarnings(as.ab(colnames(x), info = FALSE)),
                          stringsAsFactors = FALSE)
@@ -216,7 +216,6 @@ get_column_abx <- function(x,
                immediate = verbose)
     }
   }
-  
   
   if (!is.null(hard_dependencies)) {
     hard_dependencies <- unique(hard_dependencies)

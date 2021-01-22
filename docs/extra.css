@@ -24,14 +24,6 @@
 # how to conduct AMR analysis: https://msberends.github.io/AMR/        #
 # ==================================================================== #
 */
-@media (prefers-color-scheme: dark) {
-  .navbar-default {
-    background-color: #213730; 
-  }
-  .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-    background-color: #355951; 
-  }
-}
 
 /* R for Data Science (r4ds) */
 #r4ds a {
@@ -208,16 +200,6 @@ thead {
 thead ~ tbody {
   /* only when it has a header */
   border-bottom: 2px solid black;
-}
-@media (prefers-color-scheme: dark) {
-  thead {
-    border-top: 2px solid white;
-    border-bottom: 2px solid white;
-  }
-  thead ~ tbody {
-    /* only when it has a header */
-    border-bottom: 2px solid white;
-  }
 }
 thead th {
   text-align: inherit; 

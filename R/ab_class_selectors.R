@@ -173,7 +173,15 @@ ab_selector <- function(ab_class, function_name) {
   }
   
   vars_df <- get_current_data(arg_name = NA, call = -3)
-  ab_in_data <- get_column_abx(vars_df, info = FALSE)
+  
+  # improve speed here so it will only run once when e.g. in one select call
+  if (!identical(pkg_env$ab_selector, unique_call_id())) {
+    ab_in_data <- get_column_abx(vars_df, info = FALSE)
+    pkg_env$ab_selector <- unique_call_id()
+    pkg_env$ab_selector_cols <- ab_in_data
+  } else {
+    ab_in_data <- pkg_env$ab_selector_cols
+  }
   
   if (length(ab_in_data) == 0) {
     message_("No antimicrobial agents found.")
@@ -199,13 +207,14 @@ ab_selector <- function(ab_class, function_name) {
     } else {
       agents_formatted <- paste0("column '", font_bold(agents, collapse = NULL), "'")
       agents_names <- ab_name(names(agents), tolower = TRUE, language = NULL)
-      agents_formatted[agents != agents_names] <- paste0(agents_formatted[agents != agents_names],
-                                                         " (", agents_names[agents != agents_names], ")")
+      need_name <- tolower(agents) != tolower(agents_names)
+      agents_formatted[need_name] <- paste0(agents_formatted[need_name],
+                                            " (", agents_names[need_name], ")")
       message_("Selecting ", ab_group, ": ", paste(agents_formatted, collapse = ", "),
                as_note = FALSE,
                extra_indent = nchar(paste0("Selecting ", ab_group, ": ")))
     }
-   remember_thrown_message(function_name)
- }
+    remember_thrown_message(function_name)
+  }
   unname(agents)
 }

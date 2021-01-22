@@ -49,16 +49,16 @@
 #' 2. For **interpreting minimum inhibitory concentration (MIC) values** according to EUCAST or CLSI. You must clean your MIC values first using [as.mic()], that also gives your columns the new data class [`mic`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` argument.
 #'    * Using `dplyr`, R/SI interpretation can be done very easily with either: 
 #'      ```
-#'      your_data %>% mutate_if(is.mic, as.rsi)             # until dplyr 1.0.0
-#'      your_data %>% mutate(across(where(is.mic), as.rsi)) # since dplyr 1.0.0
+#'      your_data %>% mutate_if(is.mic, as.rsi)         # until dplyr 1.0.0
+#'      your_data %>% mutate(across((is.mic), as.rsi))  # since dplyr 1.0.0
 #'      ```
 #'    * Operators like "<=" will be stripped before interpretation. When using `conserve_capped_values = TRUE`, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (`conserve_capped_values = FALSE`) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
 #'      
 #' 3. For **interpreting disk diffusion diameters** according to EUCAST or CLSI. You must clean your disk zones first using [as.disk()], that also gives your columns the new data class [`disk`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` argument.
 #'    * Using `dplyr`, R/SI interpretation can be done very easily with either: 
 #'      ```
-#'      your_data %>% mutate_if(is.disk, as.rsi)             # until dplyr 1.0.0
-#'      your_data %>% mutate(across(where(is.disk), as.rsi)) # since dplyr 1.0.0
+#'      your_data %>% mutate_if(is.disk, as.rsi)         # until dplyr 1.0.0
+#'      your_data %>% mutate(across((is.disk), as.rsi))  # since dplyr 1.0.0
 #'      ```
 #' 
 #' 4. For **interpreting a complete data set**, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running `as.rsi(data)`.
@@ -133,7 +133,7 @@
 #' if (require("dplyr")) {
 #'   df %>% mutate_if(is.mic, as.rsi)
 #'   df %>% mutate_if(function(x) is.mic(x) | is.disk(x), as.rsi)
-#'   df %>% mutate(across(where(is.mic), as.rsi))
+#'   df %>% mutate(across((is.mic), as.rsi))
 #'   df %>% mutate_at(vars(AMP:TOB), as.rsi)
 #'   df %>% mutate(across(AMP:TOB, as.rsi))
 #'  
@@ -179,7 +179,7 @@
 #'     
 #'   # note: from dplyr 1.0.0 on, this will be: 
 #'   # example_isolates %>%
-#'   #   mutate(across(where(is.rsi.eligible), as.rsi))
+#'   #   mutate(across((is.rsi.eligible), as.rsi))
 #' }
 #' }
 as.rsi <- function(x, ...) {
@@ -202,14 +202,19 @@ is.rsi.eligible <- function(x, threshold = 0.05) {
             "numeric",
             "integer",
             "mo",
+            "ab",
             "Date",
-            "POSIXct",
+            "POSIXt",
             "rsi",
             "raw",
-            "hms")
+            "hms",
+            "mic",
+            "disk")
           %in% class(x))) {
     # no transformation needed
-    FALSE
+    return(FALSE)
+  } else if (!any(c("R", "S", "I") %in% x, na.rm = TRUE)) {
+    return(FALSE)
   } else {
     x <- x[!is.na(x) & !is.null(x) & !identical(x, "")]
     if (length(x) == 0) {

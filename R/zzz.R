@@ -28,35 +28,6 @@ pkg_env <- new.env(hash = FALSE)
 pkg_env$mo_failed <- character(0)
 
 .onLoad <- function(libname, pkgname) {
-  
-  assign(x = "AB_lookup",
-         value = create_AB_lookup(),
-         envir = asNamespace("AMR"))
-  
-  assign(x = "MO_lookup",
-         value = create_MO_lookup(),
-         envir = asNamespace("AMR"))
-  
-  assign(x = "MO.old_lookup",
-         value = create_MO.old_lookup(),
-         envir = asNamespace("AMR"))
-  
-  assign(x = "INTRINSIC_R",
-         value = create_intr_resistance(),
-         envir = asNamespace("AMR"))
-  
-  assign(x = "LANGUAGES_SUPPORTED",
-         value = sort(c("en", unique(translations_file$lang))),
-         envir = asNamespace("AMR"))
-  
-  assign(x = "MO_CONS",
-         value = create_species_cons_cops("CoNS"),
-         envir = asNamespace("AMR"))
-  
-  assign(x = "MO_COPS",
-         value = create_species_cons_cops("CoPS"),
-         envir = asNamespace("AMR"))
-
   # Support for tibble headers (type_sum) and tibble columns content (pillar_shaft)
   # without the need to depend on other packages. This was suggested by the 
   # developers of the vctrs package: 
@@ -102,89 +73,5 @@ pkg_env$mo_failed <- character(0)
                                   font_bold("options(AMR_silentstart = TRUE)"), "]"))
 }
 
-create_intr_resistance <- function() {
-  # for mo_is_intrinsic_resistant() - saves a lot of time when executed on this vector
-  paste(AMR::microorganisms[match(AMR::intrinsic_resistant$microorganism, AMR::microorganisms$fullname), "mo", drop = TRUE],
-        AMR::antibiotics[match(AMR::intrinsic_resistant$antibiotic, AMR::antibiotics$name), "ab", drop = TRUE])
-}
 
-create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
-  # Determination of which staphylococcal species are CoNS/CoPS according to:
-  # - Becker et al. 2014, PMID 25278577
-  # - Becker et al. 2019, PMID 30872103
-  # - Becker et al. 2020, PMID 32056452
-  # this function returns class <mo>
-  MO_staph <- AMR::microorganisms
-  MO_staph <- MO_staph[which(MO_staph$genus == "Staphylococcus"), , drop = FALSE]
-  if (type == "CoNS") {
-    MO_staph[which(MO_staph$species %in% c("coagulase-negative", "argensis", "arlettae",
-                                           "auricularis", "caeli", "capitis", "caprae", 
-                                           "carnosus", "chromogenes", "cohnii", "condimenti",
-                                           "debuckii", "devriesei", "edaphicus", "epidermidis",
-                                           "equorum", "felis", "fleurettii", "gallinarum",
-                                           "haemolyticus", "hominis", "jettensis", "kloosii",
-                                           "lentus", "lugdunensis", "massiliensis", "microti",
-                                           "muscae", "nepalensis", "pasteuri", "petrasii",
-                                           "pettenkoferi", "piscifermentans", "pseudoxylosus",
-                                           "rostri", "saccharolyticus", "saprophyticus",
-                                           "sciuri", "simulans", "stepanovicii", "succinus",
-                                           "vitulinus", "warneri", "xylosus")
-                   | (MO_staph$species == "schleiferi" & MO_staph$subspecies %in% c("schleiferi", ""))),
-             "mo", drop = TRUE]
-  } else if (type == "CoPS") {
-    MO_staph[which(MO_staph$species %in% c("coagulase-positive",
-                                           "simiae", "agnetis",
-                                           "delphini", "lutrae",
-                                           "hyicus", "intermedius",
-                                           "pseudintermedius", "pseudointermedius",
-                                           "schweitzeri", "argenteus")
-                   | (MO_staph$species == "schleiferi" & MO_staph$subspecies == "coagulans")),
-             "mo", drop = TRUE]
-  }
-}
 
-create_AB_lookup <- function() {
-  AB_lookup <- AMR::antibiotics
-  AB_lookup$generalised_name <- generalise_antibiotic_name(AB_lookup$name)
-  AB_lookup$generalised_synonyms <- lapply(AB_lookup$synonyms, generalise_antibiotic_name)
-  AB_lookup$generalised_abbreviations <- lapply(AB_lookup$abbreviations, generalise_antibiotic_name)
-  AB_lookup$generalised_loinc <- lapply(AB_lookup$loinc, generalise_antibiotic_name)
-  AB_lookup
-}
-
-create_MO_lookup <- function() {
-  MO_lookup <- AMR::microorganisms
-  
-  MO_lookup$kingdom_index <- NA_real_
-  MO_lookup[which(MO_lookup$kingdom == "Bacteria" | MO_lookup$mo == "UNKNOWN"), "kingdom_index"] <- 1
-  MO_lookup[which(MO_lookup$kingdom == "Fungi"), "kingdom_index"] <- 2
-  MO_lookup[which(MO_lookup$kingdom == "Protozoa"), "kingdom_index"] <- 3
-  MO_lookup[which(MO_lookup$kingdom == "Archaea"), "kingdom_index"] <- 4
-  # all the rest
-  MO_lookup[which(is.na(MO_lookup$kingdom_index)), "kingdom_index"] <- 5
-  
-  # use this paste instead of `fullname` to work with Viridans Group Streptococci, etc.
-  MO_lookup$fullname_lower <- tolower(trimws(paste(MO_lookup$genus, 
-                                                   MO_lookup$species,
-                                                   MO_lookup$subspecies)))
-  ind <- MO_lookup$genus == "" | grepl("^[(]unknown ", MO_lookup$fullname)
-  MO_lookup[ind, "fullname_lower"] <- tolower(MO_lookup[ind, "fullname"])
-  MO_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", MO_lookup$fullname_lower, perl = TRUE))
-  
-  # add a column with only "e coli" like combinations
-  MO_lookup$g_species <- gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO_lookup$fullname_lower, perl = TRUE)
-  
-  # so arrange data on prevalence first, then kingdom, then full name
-  MO_lookup[order(MO_lookup$prevalence, MO_lookup$kingdom_index, MO_lookup$fullname_lower), ]
-}
-
-create_MO.old_lookup <- function() {
-  MO.old_lookup <- AMR::microorganisms.old
-  MO.old_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", tolower(trimws(MO.old_lookup$fullname))))
-  
-  # add a column with only "e coli"-like combinations
-  MO.old_lookup$g_species <- trimws(gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO.old_lookup$fullname_lower))
-  
-  # so arrange data on prevalence first, then full name
-  MO.old_lookup[order(MO.old_lookup$prevalence, MO.old_lookup$fullname_lower), ]
-}

@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9006</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9008</span>
       </span>
     </div>
 
@@ -242,7 +242,10 @@
     <p>This function will paste the microorganism code with all antimicrobial results into one string for each row in a data set. This is useful to compare isolates, e.g. between institutions or regions, when there is no genotyping available.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>isolate_identifier</span><span class='op'>(</span><span class='va'>x</span>, col_mo <span class='op'>=</span> <span class='cn'>NULL</span>, cols_ab <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>isolate_identifier</span><span class='op'>(</span><span class='va'>x</span>, col_mo <span class='op'>=</span> <span class='cn'>NULL</span>, cols_ab <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+
+<span class='co'># S3 method for isolate_identifier</span>
+<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>target</span>, <span class='va'>current</span>, ignore_empty_results <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -259,14 +262,18 @@
       <th>cols_ab</th>
       <td><p>a character vector of column names of <code>x</code>, or (a combination with) an <a href='[ab_class()]'>antibiotic selector function</a>, such as <code><a href='antibiotic_class_selectors.html'>carbapenems()</a></code> and <code><a href='antibiotic_class_selectors.html'>aminoglycosides()</a></code></p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p>column name of an antibiotic, see section <em>Antibiotics</em> below</p></td>
+    </tr>
     </table>
 
-    <h2 class="hasAnchor" id="maturing-lifecycle"><a class="anchor" href="#maturing-lifecycle"></a>Maturing Lifecycle</h2>
+    <h2 class="hasAnchor" id="experimental-lifecycle"><a class="anchor" href="#experimental-lifecycle"></a>Experimental Lifecycle</h2>
 
     
 
-<p><img src='figures/lifecycle_maturing.svg' style=margin-bottom:5px /> <br />
-The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing</strong>. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome <a href='https://github.com/msberends/AMR/issues'>to suggest changes at our repository</a> or <a href='AMR.html'>write us an email (see section 'Contact Us')</a>.</p>
+<p><img src='figures/lifecycle_experimental.svg' style=margin-bottom:5px /> <br />
+The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>experimental</strong>. An experimental function is in early stages of development. The unlying code might be changing frequently. Experimental functions might be removed without deprecation, so you are generally best off waiting until a function is more mature before you use it in production code. Experimental functions are only available in development versions of this <code>AMR</code> package and will thus not be included in releases that are submitted to CRAN, since such functions have not yet matured enough.</p>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on Our Website!</h2>
 
     

@@ -26,9 +26,10 @@
 #' Create Identifier of an Isolate
 #' 
 #' This function will paste the microorganism code with all antimicrobial results into one string for each row in a data set. This is useful to compare isolates, e.g. between institutions or regions, when there is no genotyping available.
-#' @inheritSection lifecycle Maturing Lifecycle
+#' @inheritSection lifecycle Experimental Lifecycle
 #' @inheritParams eucast_rules
 #' @param cols_ab a character vector of column names of `x`, or (a combination with) an [antibiotic selector function]([ab_class()]), such as [carbapenems()] and [aminoglycosides()]
+#' @rdname isolate_identifier
 #' @export
 #' @inheritSection AMR Read more on Our Website!
 #' @examples 
@@ -43,7 +44,12 @@
 isolate_identifier <- function(x, col_mo = NULL, cols_ab = NULL) {
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x, "mo")
+    if (is.null(col_mo)) {
+      # no column found, then ignore the argument
+      col_mo <- FALSE
+    }
   }
+  
   if (isFALSE(col_mo)) {
     # is FALSE then ignore mo column
     x$col_mo <- ""
@@ -60,14 +66,77 @@ isolate_identifier <- function(x, col_mo = NULL, cols_ab = NULL) {
                         # tryCatch adds 4 calls, so total is -5
                         error = function(e) stop_(e$message, call = -5))
   }
-  if (length(cols_ab) == 0) {
-    warning_("no columns with antimicrobial agents found", call = TRUE)
+  
+  # cope with empty values
+  if (length(cols_ab) == 0 && all(x[, col_mo, drop = TRUE] == "", na.rm = TRUE)) {
+    warning_("in isolate_identifier(): no column with microorganisms and no columns with antimicrobial agents found", call = FALSE)
+  } else if (length(cols_ab) == 0) {
+    warning_("in isolate_identifier(): no columns with antimicrobial agents found", call = FALSE)
   }
   
   out <- x[, c(col_mo, cols_ab), drop = FALSE]
   out <- do.call(paste, c(out, sep = ""))
   out <- gsub("NA", ".", out, fixed = TRUE)
-  set_clean_class(out, new_class = c("isolate_identifier", "character"))
+  out <- set_clean_class(out, new_class = c("isolate_identifier", "character"))
+  attr(out, "ab") <- cols_ab
+  out
+}
+
+#' @method all.equal isolate_identifier
+#' @rdname isolate_identifier
+#' @export
+all.equal.isolate_identifier <- function(target, current, ignore_empty_results = TRUE, ...) {
+  if (isTRUE(all.equal.character(target, current))) {
+    return(TRUE)
+  }
+  # vectorise over both target and current
+  if (length(target) > 1 && length(current) == 1) {
+    current <- rep(current, length(target))
+  } else if (length(current) > 1 && length(target) == 1) {
+    target <- rep(target, length(current))
+  }
+  stop_if(length(target) != length(current),
+          "length of `target` and `current` must be the same, or one must be 1")
+  
+  get_vector <- function(x) {
+    if (grepl("|", x, fixed = TRUE)) {
+      mo <- gsub("(.*)\\|.*", "\\1", x)
+    } else {
+      mo <- NULL
+    }
+    if (grepl("|", x, fixed = TRUE)) {
+      ab <- gsub(".*\\|(.*)", "\\1", x)
+    } else {
+      ab <- x
+    }
+    ab <- strsplit(ab, "")[[1L]]
+    if (is.null(mo)) {
+      out <- as.character(ab)
+      names(out) <- attributes(x)$ab
+    } else {
+      out <- as.character(c(mo, ab))
+      names(out) <- c("mo", attributes(x)$ab)
+    }
+    out
+  }
+  
+  # run it
+  for (i in seq_len(length(target))) {
+    if (i == 1) {
+      df <- data.frame(object = paste0(c("target[", "current["), i, "]"))
+    }
+    trgt <- get_vector(target[i])
+    crnt <- get_vector(current[i])
+    if (ignore_empty_results == TRUE) {
+      diff <- names(trgt[trgt != crnt & trgt != "." & crnt != "."])  
+    } else {
+      diff <- names(trgt[trgt != crnt])
+    }
+    
+  }
+  
+  stop("THIS FUNCTION IS WORK IN PROGRESS AND NOT AVAILABLE IN THIS BETA VERSION")
+  
 }
 
 #' @method print isolate_identifier

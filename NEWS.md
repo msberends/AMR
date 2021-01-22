@@ -1,5 +1,5 @@
-# AMR 1.5.0.9007
-## <small>Last updated: 18 January 2021</small>
+# AMR 1.5.0.9008
+## <small>Last updated: 22 January 2021</small>
 
 ### New
 * Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the `eucast_rules()` function and in `as.rsi()` to interpret MIC and disk diffusion values. This is now the default guideline in this package.
@@ -32,10 +32,12 @@
 * Updated the data set `microorganisms.codes` (which contains popular LIS and WHONET codes for microorganisms) for some species of *Mycobacterium* that previously incorrectly returned *M. africanum*
 * Added Pretomanid (PMD, J04AK08) to the `antibiotics` data set
 * WHONET code `"PNV"` will now correctly be interpreted as `PHN`, the antibiotic code for phenoxymethylpenicillin ('peni V')
-* Fix for verbose output of `mdro(..., verbose = TRUE)` for German guideline (3MGRN and 4MGRN) and *P. aeruginosa* in Dutch guideline (BRMO)
+* Fix for verbose output of `mdro(..., verbose = TRUE)` for German guideline (3MGRN and 4MGRN) and Dutch guideline (BRMO, only *P. aeruginosa*)
+* `is.rsi.eligible()` now returns `FALSE` immediately if the input does not contain any of the values "R", "S" or "I". This drastically improves speed, also for a lot of other functions that rely on automatic determination of antibiotic columns.
 
 ### Other
 * Big documentation updates
+* Loading the package (i.e., `library(AMR)`) now is ~50 times faster than before
 
 
 # AMR 1.5.0

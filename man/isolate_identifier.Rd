@@ -2,9 +2,12 @@
 % Please edit documentation in R/isolate_identifier.R
 \name{isolate_identifier}
 \alias{isolate_identifier}
+\alias{all.equal.isolate_identifier}
 \title{Create Identifier of an Isolate}
 \usage{
 isolate_identifier(x, col_mo = NULL, cols_ab = NULL)
+
+\method{all.equal}{isolate_identifier}(target, current, ignore_empty_results = TRUE, ...)
 }
 \arguments{
 \item{x}{data with antibiotic columns, such as \code{amox}, \code{AMX} and \code{AMC}}
@@ -12,14 +15,16 @@ isolate_identifier(x, col_mo = NULL, cols_ab = NULL)
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
 \item{cols_ab}{a character vector of column names of \code{x}, or (a combination with) an \href{[ab_class()]}{antibiotic selector function}, such as \code{\link[=carbapenems]{carbapenems()}} and \code{\link[=aminoglycosides]{aminoglycosides()}}}
+
+\item{...}{column name of an antibiotic, see section \emph{Antibiotics} below}
 }
 \description{
 This function will paste the microorganism code with all antimicrobial results into one string for each row in a data set. This is useful to compare isolates, e.g. between institutions or regions, when there is no genotyping available.
 }
-\section{Maturing Lifecycle}{
+\section{Experimental Lifecycle}{
 
-\if{html}{\figure{lifecycle_maturing.svg}{options: style=margin-bottom:5px} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{maturing}. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome \href{https://github.com/msberends/AMR/issues}{to suggest changes at our repository} or \link[=AMR]{write us an email (see section 'Contact Us')}.
+\if{html}{\figure{lifecycle_experimental.svg}{options: style=margin-bottom:5px} \cr}
+The \link[=lifecycle]{lifecycle} of this function is \strong{experimental}. An experimental function is in early stages of development. The unlying code might be changing frequently. Experimental functions might be removed without deprecation, so you are generally best off waiting until a function is more mature before you use it in production code. Experimental functions are only available in development versions of this \code{AMR} package and will thus not be included in releases that are submitted to CRAN, since such functions have not yet matured enough.
 }
 
 \section{Read more on Our Website!}{

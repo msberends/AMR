@@ -585,7 +585,7 @@ get_current_data <- function(arg_name, call) {
       stop_("argument `", arg_name, "` is missing with no default", call = call)
     }
   }
-
+  
   # try a (base R) method, by going over the complete system call stack with sys.frames()
   not_set <- TRUE
   frms <- lapply(sys.frames(), function(el) {
@@ -615,6 +615,7 @@ get_current_data <- function(arg_name, call) {
       NULL
     }
   })
+  
   vars_df <- tryCatch(frms[[which(!vapply(FUN.VALUE = logical(1), frms, is.null))]], error = function(e) NULL)
   if (is.data.frame(vars_df)) {
     return(vars_df)
