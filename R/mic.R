@@ -62,7 +62,7 @@ as.mic <- function(x, na.rm = FALSE) {
   if (is.mic(x)) {
     x
   } else {
-    x <- x %pm>% unlist()
+    x <- unlist(x)
     if (na.rm == TRUE) {
       x <- x[!is.na(x)]
     }

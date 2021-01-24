@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9010</span>
       </span>
     </div>
 
@@ -366,7 +366,7 @@
     <p>A <code><a href='https://rdrr.io/r/base/logical.html'>logical</a></code> vector</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>These functions are context-aware when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>. This means that then the <code>x</code> argument can be left blank, see <em>Examples</em>.</p>
+    <p>These functions are context-aware. This means that then the <code>x</code> argument can be left blank, see <em>Examples</em>.</p>
 <p>The <code>first_isolate()</code> function is a wrapper around the <code><a href='get_episode.html'>is_new_episode()</a></code> function, but more efficient for data sets containing microorganism codes or names.</p>
 <p>All isolates with a microbial ID of <code>NA</code> will be excluded as first isolate.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Why this is so Important</h3>
 
@@ -419,7 +419,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
     <div class='dont-index'><p><code><a href='key_antibiotics.html'>key_antibiotics()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># `example_isolates` is a dataset available in the AMR package.</span>
+    <pre class="examples"><span class='co'># `example_isolates` is a data set available in the AMR package.</span>
 <span class='co'># See ?example_isolates.</span>
 
 <span class='co'># basic filtering on first isolates</span>

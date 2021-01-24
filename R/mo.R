@@ -1546,7 +1546,7 @@ exec_as.mo <- function(x,
       message_(word_wrap("- Try to use as many valid taxonomic names as possible for your input.",
                          extra_indent = 2),
                as_note = FALSE)
-      message_(word_wrap("- Save the output and use it as input for future calculations, e.g. create a new variable to your data using `as.mo()`. All functions in this package that rely on microorganism codes will automatically use that new column where possible. All `mo_*()` functions also do not require you to set their `x` argument as long as you have the dplyr package installed and you have a column of class <mo>.",
+      message_(word_wrap("- Save the output and use it as input for future calculations, e.g. create a new variable to your data using `as.mo()`. All functions in this package that rely on microorganism codes will automatically use that new column where possible. All `mo_*()` functions also do not require you to set their `x` argument as long as you have a column of class <mo>.",
                          extra_indent = 2),
                as_note = FALSE)
       message_(word_wrap("- Use `set_mo_source()` to continually transform your organisation codes to microorganisms codes used by this package, see `?mo_source`.",

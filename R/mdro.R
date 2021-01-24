@@ -37,7 +37,7 @@
 #' @param verbose a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.
 #' @inheritSection eucast_rules Antibiotics
 #' @details 
-#' These functions are context-aware when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`. This means that then the `x` argument can be left blank, see *Examples*.
+#' These functions are context-aware. This means that then the `x` argument can be left blank, see *Examples*.
 #' 
 #' For the `pct_required_classes` argument, values above 1 will be divided by 100. This is to support both fractions (`0.75` or `3/4`) and percentages (`75`).
 #' 
@@ -108,7 +108,7 @@
 #' #>             43            891           1066 
 #' ```
 #' 
-#' The rules set (the `custom` object in this case) could be exported to a shared file location using [saveRDS()] if you collaborate with multiple users. The custom rules set could then be imported using [readRDS()],
+#' The rules set (the `custom` object in this case) could be exported to a shared file location using [saveRDS()] if you collaborate with multiple users. The custom rules set could then be imported using [readRDS()].
 #' @inheritSection as.rsi Interpretation of R and S/I
 #' @return
 #' - CMI 2012 paper - function [mdr_cmi2012()] or [mdro()]:\cr

@@ -37,7 +37,7 @@ rsi_calc <- function(...,
                      only_all_tested = FALSE,
                      only_count = FALSE) {
   meet_criteria(ab_result, allow_class = c("character", "numeric", "integer"), has_length = c(1, 2, 3), .call_depth = 1)
-  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, .call_depth = 1)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE, .call_depth = 1)
   meet_criteria(as_percent, allow_class = "logical", has_length = 1, .call_depth = 1)
   meet_criteria(only_all_tested, allow_class = "logical", has_length = 1, .call_depth = 1)
   meet_criteria(only_count, allow_class = "logical", has_length = 1, .call_depth = 1)
@@ -191,7 +191,7 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   meet_criteria(data, allow_class = "data.frame", contains_column_class = "rsi", .call_depth = 1)
   meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE, .call_depth = 1)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE, .call_depth = 1)
-  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, .call_depth = 1)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE, .call_depth = 1)
   meet_criteria(as_percent, allow_class = "logical", has_length = 1, .call_depth = 1)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1, .call_depth = 1)
   meet_criteria(combine_SI_missing, allow_class = "logical", has_length = 1, .call_depth = 1)

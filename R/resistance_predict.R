@@ -129,10 +129,10 @@ resistance_predict <- function(x,
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(col_ab, allow_class = "character", has_length = 1, is_in = colnames(x))
   meet_criteria(col_date, allow_class = "character", has_length = 1, is_in = colnames(x), allow_NULL = TRUE)
-  meet_criteria(year_min, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE)
-  meet_criteria(year_max, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE)
-  meet_criteria(year_every, allow_class = c("numeric", "integer"), has_length = 1)
-  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(year_min, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE, is_positive = TRUE, is_finite = TRUE)
+  meet_criteria(year_max, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE, is_positive = TRUE, is_finite = TRUE)
+  meet_criteria(year_every, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE)
   meet_criteria(model, allow_class = c("character", "function"), has_length = 1, allow_NULL = TRUE)
   meet_criteria(I_as_S, allow_class = "logical", has_length = 1)
   meet_criteria(preserve_measurements, allow_class = "logical", has_length = 1)
@@ -143,7 +143,7 @@ resistance_predict <- function(x,
   dots <- unlist(list(...))
   if (length(dots) != 0) {
     # backwards compatibility with old arguments
-    dots.names <- dots %pm>% names()
+    dots.names <- names(dots)
     if ("tbl" %in% dots.names) {
       x <- dots[which(dots.names == "tbl")]
     }

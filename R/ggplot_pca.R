@@ -61,7 +61,7 @@
 #' @rdname ggplot_pca
 #' @export
 #' @examples 
-#' # `example_isolates` is a dataset available in the AMR package.
+#' # `example_isolates` is a data set available in the AMR package.
 #' # See ?example_isolates.
 #'
 #' # See ?pca for more info about Principal Component Analysis (PCA).
@@ -109,26 +109,26 @@ ggplot_pca <- function(x,
   
   stop_ifnot_installed("ggplot2")
   meet_criteria(x, allow_class = c("prcomp", "princomp", "PCA", "lda"))
-  meet_criteria(choices, allow_class = c("numeric", "integer"), has_length = 2)
+  meet_criteria(choices, allow_class = c("numeric", "integer"), has_length = 2, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(scale, allow_class = c("numeric", "integer", "logical"), has_length = 1)
   meet_criteria(pc.biplot, allow_class = "logical", has_length = 1)
   meet_criteria(labels, allow_class = "character", allow_NULL = TRUE)
-  meet_criteria(labels_textsize, allow_class = c("numeric", "integer"), has_length = 1)
-  meet_criteria(labels_text_placement, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(labels_textsize, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+  meet_criteria(labels_text_placement, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(groups, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(ellipse, allow_class = "logical", has_length = 1)
-  meet_criteria(ellipse_prob, allow_class = c("numeric", "integer"), has_length = 1)
-  meet_criteria(ellipse_size, allow_class = c("numeric", "integer"), has_length = 1)
-  meet_criteria(ellipse_alpha, allow_class = c("numeric", "integer"), has_length = 1)
-  meet_criteria(points_size, allow_class = c("numeric", "integer"), has_length = 1)
-  meet_criteria(points_alpha, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(ellipse_prob, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+  meet_criteria(ellipse_size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+  meet_criteria(ellipse_alpha, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+  meet_criteria(points_size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+  meet_criteria(points_alpha, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(arrows, allow_class = "logical", has_length = 1)
   meet_criteria(arrows_colour, allow_class = "character", has_length = 1)
-  meet_criteria(arrows_size, allow_class = c("numeric", "integer"), has_length = 1)
-  meet_criteria(arrows_textsize, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(arrows_size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+  meet_criteria(arrows_textsize, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(arrows_textangled, allow_class = "logical", has_length = 1)
-  meet_criteria(arrows_alpha, allow_class = c("numeric", "integer"), has_length = 1)
-  meet_criteria(base_textsize, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(arrows_alpha, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+  meet_criteria(base_textsize, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   
   calculations <- pca_calculations(pca_model = x,
                                    groups = groups, 

@@ -12,9 +12,9 @@ is_new_episode(x, episode_days, ...)
 \arguments{
 \item{x}{vector of dates (class \code{Date} or \code{POSIXt})}
 
-\item{episode_days}{length of the required episode in days, see \emph{Details}}
+\item{episode_days}{length of the required episode length in days, can also be less than a day, see \emph{Details}}
 
-\item{...}{arguments passed on to \code{\link[=as.Date]{as.Date()}}}
+\item{...}{arguments passed on to \code{\link[=as.POSIXct]{as.POSIXct()}}}
 }
 \value{
 \itemize{
@@ -46,14 +46,19 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 }
 
 \examples{
-# `example_isolates` is a dataset available in the AMR package.
+# `example_isolates` is a data set available in the AMR package.
 # See ?example_isolates.
 
-get_episode(example_isolates$date, episode_days = 60)
-is_new_episode(example_isolates$date, episode_days = 60)
+get_episode(example_isolates$date, episode_days = 60)    # indices
+is_new_episode(example_isolates$date, episode_days = 60) # TRUE/FALSE
 
 # filter on results from the third 60-day episode only, using base R
 example_isolates[which(get_episode(example_isolates$date, 60) == 3), ]
+
+# the functions also work for less than a day, e.g. to include one per hour:
+get_episode(c(Sys.time(),
+              Sys.time() + 60 * 60),
+            episode_days = 1/24)
 
 \donttest{
 if (require("dplyr")) {

@@ -44,7 +44,7 @@
 #' }
 availability <- function(tbl, width = NULL) {
   meet_criteria(tbl, allow_class = "data.frame")
-  meet_criteria(width, allow_class = "numeric", allow_NULL = TRUE)
+  meet_criteria(width, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE, is_positive = TRUE, is_finite = TRUE)
   
   x <- vapply(FUN.VALUE = double(1), tbl, function(x) {
     1 - sum(is.na(x)) / length(x) 

@@ -180,12 +180,12 @@ ggplot_rsi <- function(data,
   meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(combine_IR, allow_class = "logical", has_length = 1)
-  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
-  meet_criteria(nrow, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE)
+  meet_criteria(nrow, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(colours, allow_class = c("character", "logical"))
   meet_criteria(datalabels, allow_class = "logical", has_length = 1)
-  meet_criteria(datalabels.size, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(datalabels.size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(datalabels.colour, allow_class = "character", has_length = 1)
   meet_criteria(title, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(subtitle, allow_class = "character", has_length = 1, allow_NULL = TRUE)
@@ -279,7 +279,7 @@ geom_rsi <- function(position = NULL,
   meet_criteria(x, allow_class = "character", has_length = 1)
   meet_criteria(fill, allow_class = "character", has_length = 1)
   meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
-  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(combine_IR, allow_class = "logical", has_length = 1)
@@ -327,7 +327,7 @@ facet_rsi <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
   facet <- facet[1]
   stop_ifnot_installed("ggplot2")
   meet_criteria(facet, allow_class = "character", has_length = 1)
-  meet_criteria(nrow, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE)
+  meet_criteria(nrow, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE, is_positive = TRUE, is_finite = TRUE)
   
   # we work with aes_string later on
   facet_deparse <- deparse(substitute(facet))
@@ -414,11 +414,11 @@ labels_rsi_count <- function(position = NULL,
   meet_criteria(position, allow_class = "character", has_length = 1, is_in = c("fill", "stack", "dodge"), allow_NULL = TRUE)
   meet_criteria(x, allow_class = "character", has_length = 1)
   meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
-  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(combine_IR, allow_class = "logical", has_length = 1)
-  meet_criteria(datalabels.size, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(datalabels.size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(datalabels.colour, allow_class = "character", has_length = 1)
   
   if (is.null(position)) {

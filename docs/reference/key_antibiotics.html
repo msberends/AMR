@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9010</span>
       </span>
     </div>
 
@@ -281,7 +281,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with antibiotics columns, like <code>AMX</code> or <code>amox</code>. Can be left blank when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>.</p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with antibiotics columns, like <code>AMX</code> or <code>amox</code>. Can be left blank to determine automatically</p></td>
     </tr>
     <tr>
       <th>col_mo</th>
@@ -331,7 +331,7 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>key_antibiotics()</code> function is context-aware when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>. This means that then the <code>x</code> argument can be left blank, see <em>Examples</em>.</p>
+    <p>The <code>key_antibiotics()</code> function is context-aware. This means that then the <code>x</code> argument can be left blank, see <em>Examples</em>.</p>
 <p>The function <code>key_antibiotics()</code> returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using <code>key_antibiotics_equal()</code>, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (<code>"."</code>) by <code>key_antibiotics()</code> and ignored by <code>key_antibiotics_equal()</code>.</p>
 <p>The <code><a href='first_isolate.html'>first_isolate()</a></code> function only uses this function on the same microbial species from the same patient. Using this, e.g. an MRSA will be included after a susceptible <em>S. aureus</em> (MSSA) is found within the same patient episode. Without key antibiotic comparison it would not. See <code><a href='first_isolate.html'>first_isolate()</a></code> for more info.</p>
 <p>At default, the antibiotics that are used for <strong>Gram-positive bacteria</strong> are:</p><ul>
@@ -393,7 +393,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
     <div class='dont-index'><p><code><a href='first_isolate.html'>first_isolate()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># `example_isolates` is a dataset available in the AMR package.</span>
+    <pre class="examples"><span class='co'># `example_isolates` is a data set available in the AMR package.</span>
 <span class='co'># See ?example_isolates.</span>
 
 <span class='co'># output of the `key_antibiotics()` function could be like this:</span>

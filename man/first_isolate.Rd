@@ -93,7 +93,7 @@ A \code{\link{logical}} vector
 Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use \code{\link[=is_new_episode]{is_new_episode()}} that also supports grouping with the \code{dplyr} package.
 }
 \details{
-These functions are context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} argument can be left blank, see \emph{Examples}.
+These functions are context-aware. This means that then the \code{x} argument can be left blank, see \emph{Examples}.
 
 The \code{\link[=first_isolate]{first_isolate()}} function is a wrapper around the \code{\link[=is_new_episode]{is_new_episode()}} function, but more efficient for data sets containing microorganism codes or names.
 
@@ -148,7 +148,7 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 }
 
 \examples{
-# `example_isolates` is a dataset available in the AMR package.
+# `example_isolates` is a data set available in the AMR package.
 # See ?example_isolates.
 
 # basic filtering on first isolates

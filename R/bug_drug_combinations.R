@@ -129,7 +129,7 @@ format.bug_drug_combinations <- function(x,
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
-  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(combine_IR, allow_class = "logical", has_length = 1)
   meet_criteria(add_ab_group, allow_class = "logical", has_length = 1)

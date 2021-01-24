@@ -29,7 +29,7 @@
 #' @inheritSection lifecycle Stable Lifecycle
 #' @rdname as.rsi
 #' @param x vector of values (for class [`mic`]: an MIC value in mg/L, for class [`disk`]: a disk diffusion radius in millimetres)
-#' @param mo any (vector of) text that can be coerced to a valid microorganism code with [as.mo()], will be determined automatically if the `dplyr` package is installed
+#' @param mo any (vector of) text that can be coerced to a valid microorganism code with [as.mo()], can be left empty to determine it automatically
 #' @param ab any (vector of) text that can be coerced to a valid antimicrobial code with [as.ab()]
 #' @param uti (Urinary Tract Infection) A vector with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.rsi()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be searched for a 'specimen' and rows containing 'urin' (such as 'urine', 'urina') in that column will be regarded isolates from a UTI. See *Examples*.
 #' @inheritParams first_isolate
@@ -479,7 +479,7 @@ as.rsi.data.frame <- function(x,
                               uti = NULL,
                               conserve_capped_values = FALSE,
                               add_intrinsic_resistance = FALSE,
-                              reference_data = rsi_translation) {
+                              reference_data = AMR::rsi_translation) {
   meet_criteria(x, allow_class = "data.frame") # will also check for dimensions > 0
   meet_criteria(col_mo, allow_class = "character", is_in = colnames(x), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
@@ -994,7 +994,7 @@ plot.rsi <- function(x,
                      main = paste("Resistance Overview of", deparse(substitute(x))),
                      axes = FALSE,
                      ...) {
-  meet_criteria(lwd, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(lwd, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(ylim, allow_class = c("numeric", "integer"), allow_NULL = TRUE)
   meet_criteria(ylab, allow_class = "character", has_length = 1)
   meet_criteria(xlab, allow_class = "character", has_length = 1)

@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9010</span>
       </span>
     </div>
 
@@ -325,7 +325,7 @@ Ordered <a href='https://rdrr.io/r/base/factor.html'>factor</a> with levels <cod
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>These functions are context-aware when used inside <code>dplyr</code> verbs, such as <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>. This means that then the <code>x</code> argument can be left blank, see <em>Examples</em>.</p>
+    <p>These functions are context-aware. This means that then the <code>x</code> argument can be left blank, see <em>Examples</em>.</p>
 <p>For the <code>pct_required_classes</code> argument, values above 1 will be divided by 100. This is to support both fractions (<code>0.75</code> or <code>3/4</code>) and percentages (<code>75</code>).</p>
 <p><strong>Note:</strong> Every test that involves the Enterobacteriaceae family, will internally be performed using its newly named <em>order</em> Enterobacterales, since the Enterobacteriaceae family has been taxonomically reclassified by Adeolu <em>et al.</em> in 2016. Before that, Enterobacteriaceae was the only family under the Enterobacteriales (with an i) order. All species under the old Enterobacteriaceae family are still under the new Enterobacterales (without an i) order, but divided into multiple families. The way tests are performed now by this <code>mdro()</code> function makes sure that results from before 2016 and after 2016 are identical.</p>
     <h2 class="hasAnchor" id="supported-international-national-guidelines"><a class="anchor" href="#supported-international-national-guidelines"></a>Supported International / National Guidelines</h2>
@@ -375,7 +375,7 @@ Ordered <a href='https://rdrr.io/r/base/factor.html'>factor</a> with levels <cod
 <span class='co'>#&gt;             43            891           1066 </span>
 </pre>
 
-<p>The rules set (the <code>custom</code> object in this case) could be exported to a shared file location using <code><a href='https://rdrr.io/r/base/readRDS.html'>saveRDS()</a></code> if you collaborate with multiple users. The custom rules set could then be imported using <code><a href='https://rdrr.io/r/base/readRDS.html'>readRDS()</a></code>,</p>
+<p>The rules set (the <code>custom</code> object in this case) could be exported to a shared file location using <code><a href='https://rdrr.io/r/base/readRDS.html'>saveRDS()</a></code> if you collaborate with multiple users. The custom rules set could then be imported using <code><a href='https://rdrr.io/r/base/readRDS.html'>readRDS()</a></code>.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable Lifecycle</h2>
 
     

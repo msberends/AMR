@@ -61,7 +61,7 @@ as.disk <- function(x, na.rm = FALSE) {
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)
   
   if (!is.disk(x)) {
-    x <- x %pm>% unlist()
+    x <- unlist(x)
     if (na.rm == TRUE) {
       x <- x[!is.na(x)]
     }

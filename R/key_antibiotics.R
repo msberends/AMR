@@ -27,7 +27,7 @@
 #'
 #' These function can be used to determine first isolates (see [first_isolate()]). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates can then be called first 'weighted' isolates.
 #' @inheritSection lifecycle Stable Lifecycle
-#' @param x a [data.frame] with antibiotics columns, like `AMX` or `amox`. Can be left blank when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`.
+#' @param x a [data.frame] with antibiotics columns, like `AMX` or `amox`. Can be left blank to determine automatically
 #' @param y,z character vectors to compare
 #' @inheritParams first_isolate
 #' @param universal_1,universal_2,universal_3,universal_4,universal_5,universal_6 column names of **broad-spectrum** antibiotics, case-insensitive. See details for which antibiotics will be used at default (which are guessed with [guess_ab_col()]).
@@ -36,7 +36,7 @@
 #' @param warnings give a warning about missing antibiotic columns (they will be ignored)
 #' @param ... other arguments passed on to functions
 #' @details 
-#' The [key_antibiotics()] function is context-aware when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`. This means that then the `x` argument can be left blank, see *Examples*.
+#' The [key_antibiotics()] function is context-aware. This means that then the `x` argument can be left blank, see *Examples*.
 #' 
 #' The function [key_antibiotics()] returns a character vector with 12 antibiotic results for every isolate. These isolates can then be compared using [key_antibiotics_equal()], to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (`"."`) by [key_antibiotics()] and ignored by [key_antibiotics_equal()].
 #' 
@@ -77,7 +77,7 @@
 #' @seealso [first_isolate()]
 #' @inheritSection AMR Read more on Our Website!
 #' @examples
-#' # `example_isolates` is a dataset available in the AMR package.
+#' # `example_isolates` is a data set available in the AMR package.
 #' # See ?example_isolates.
 #' 
 #' # output of the `key_antibiotics()` function could be like this:
@@ -158,7 +158,7 @@ key_antibiotics <- function(x,
   dots <- unlist(list(...))
   if (length(dots) != 0) {
     # backwards compatibility with old arguments
-    dots.names <- dots %pm>% names()
+    dots.names <- names(dots)
     if ("info" %in% dots.names) {
       warnings <- dots[which(dots.names == "info")]
     }
@@ -291,7 +291,7 @@ key_antibiotics_equal <- function(y,
   meet_criteria(z, allow_class = "character")
   meet_criteria(type, allow_class = "character", has_length = c(1, 2))
   meet_criteria(ignore_I, allow_class = "logical", has_length = 1)
-  meet_criteria(points_threshold, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(points_threshold, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(info, allow_class = "logical", has_length = 1)
   
   stop_ifnot(length(y) == length(z), "length of `y` and `z` must be equal")

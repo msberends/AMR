@@ -200,8 +200,8 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
                                    "', for which your permission is needed.")),
                   "\n\n",
                   word_wrap("Do you agree that this file will be created?"))
-    if ("rsasdtudioapi" %in% rownames(utils::installed.packages())) {
-      showQuestion <- import_fn("showQuestion", "rstudioapi")
+    showQuestion <- import_fn("showQuestion", "rstudioapi", error_on_fail = FALSE)
+    if (!is.null(showQuestion)) {
       q_continue <- showQuestion("Create new file in home directory", txt)
     } else {
       q_continue <- utils::menu(choices = c("OK", "Cancel"), graphics = FALSE, title = txt)

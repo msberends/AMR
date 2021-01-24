@@ -47,7 +47,7 @@ is.rsi.eligible(x, threshold = 0.05)
   uti = NULL,
   conserve_capped_values = FALSE,
   add_intrinsic_resistance = FALSE,
-  reference_data = rsi_translation
+  reference_data = AMR::rsi_translation
 )
 }
 \arguments{
@@ -57,7 +57,7 @@ is.rsi.eligible(x, threshold = 0.05)
 
 \item{threshold}{maximum fraction of invalid antimicrobial interpretations of \code{x}, see \emph{Examples}}
 
-\item{mo}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}, will be determined automatically if the \code{dplyr} package is installed}
+\item{mo}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}, can be left empty to determine it automatically}
 
 \item{ab}{any (vector of) text that can be coerced to a valid antimicrobial code with \code{\link[=as.ab]{as.ab()}}}
 

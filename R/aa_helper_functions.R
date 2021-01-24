@@ -458,9 +458,9 @@ vector_or <- function(v, quotes = TRUE, reverse = FALSE) {
 
 format_class <- function(class, plural) {
   class.bak <- class
-  class[class %in% c("numeric", "double")] <- "number"
+  class[class == "numeric"] <- "number"
   class[class == "integer"] <- "whole number"
-  if (any(c("numeric", "double") %in% class.bak, na.rm = TRUE) & "integer" %in% class.bak) {
+  if (all(c("numeric", "integer") %in% class.bak, na.rm = TRUE)) {
     class[class %in% c("number", "whole number")] <- "(whole) number"
   }
   class[class == "character"] <- "text string"
@@ -496,6 +496,8 @@ meet_criteria <- function(object,
                           has_length = NULL,
                           looks_like = NULL,
                           is_in = NULL,
+                          is_positive = NULL,
+                          is_finite = NULL,
                           contains_column_class = NULL,
                           allow_NULL = FALSE,
                           allow_NA = FALSE,
@@ -504,6 +506,16 @@ meet_criteria <- function(object,
 
   obj_name <- deparse(substitute(object))
   call_depth <- -2 - abs(.call_depth)
+  
+  # if object is missing, or another error:
+  tryCatch(invisible(object),
+           error = function(e) pkg_env$meet_criteria_error_txt <- e$message)
+  if (!is.null(pkg_env$meet_criteria_error_txt)) {
+    error_txt <- pkg_env$meet_criteria_error_txt
+    pkg_env$meet_criteria_error_txt <- NULL
+    stop(error_txt, call. = FALSE)
+  }
+  pkg_env$meet_criteria_error_txt <- NULL
 
   if (is.null(object)) {
     stop_if(allow_NULL == FALSE, "argument `", obj_name, "` must not be NULL", call = call_depth)
@@ -551,6 +563,24 @@ meet_criteria <- function(object,
                ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1, "either ", ""),
                vector_or(is_in, quotes = !isTRUE(any(c("double", "numeric", "integer") %in% allow_class))),
                call = call_depth)
+  }
+  if (!is.null(is_positive)) {
+    stop_if(is.numeric(object) && !all(object > 0, na.rm = TRUE), "argument `", obj_name,
+            "` must ",
+            ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1,
+                   "be a positive number",
+                   "all be positive numbers"),
+            " (higher than zero)",
+            call = call_depth)
+  }
+  if (!is.null(is_finite)) {
+    stop_if(is.numeric(object) && !all(is.finite(object[!is.na(object)]), na.rm = TRUE), "argument `", obj_name,
+            "` must ",
+            ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1,
+                   "be a finite number",
+                   "all be finite numbers"),
+            " (i.e., not be infinite)",
+            call = call_depth)
   }
   if (!is.null(contains_column_class)) {
     stop_ifnot(any(vapply(FUN.VALUE = logical(1), 

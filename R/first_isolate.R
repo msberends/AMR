@@ -46,7 +46,7 @@
 #' @param include_unknown logical to determine whether 'unknown' microorganisms should be included too, i.e. microbial code `"UNKNOWN"`, which defaults to `FALSE`. For WHONET users, this means that all records with organism code `"con"` (*contamination*) will be excluded at default. Isolates with a microbial ID of `NA` will always be excluded as first isolate.
 #' @param ... arguments passed on to [first_isolate()] when using [filter_first_isolate()], or arguments passed on to [key_antibiotics()] when using [filter_first_weighted_isolate()]
 #' @details 
-#' These functions are context-aware when used inside `dplyr` verbs, such as `filter()`, `mutate()` and `summarise()`. This means that then the `x` argument can be left blank, see *Examples*.
+#' These functions are context-aware. This means that then the `x` argument can be left blank, see *Examples*.
 #' 
 #' The [first_isolate()] function is a wrapper around the [is_new_episode()] function, but more efficient for data sets containing microorganism codes or names.
 #' 
@@ -96,7 +96,7 @@
 #' **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition**, 2014, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
 #' @inheritSection AMR Read more on Our Website!
 #' @examples
-#' # `example_isolates` is a dataset available in the AMR package.
+#' # `example_isolates` is a data set available in the AMR package.
 #' # See ?example_isolates.
 #' 
 #' # basic filtering on first isolates
@@ -172,20 +172,20 @@ first_isolate <- function(x,
     col_keyantibiotics <- NULL
   }
   meet_criteria(col_keyantibiotics, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
-  meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(testcodes_exclude, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(icu_exclude, allow_class = "logical", has_length = 1)
   meet_criteria(specimen_group, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(type, allow_class = "character", has_length = 1)
   meet_criteria(ignore_I, allow_class = "logical", has_length = 1)
-  meet_criteria(points_threshold, allow_class = c("numeric", "integer"), has_length = 1)
+  meet_criteria(points_threshold, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(info, allow_class = "logical", has_length = 1)
   meet_criteria(include_unknown, allow_class = "logical", has_length = 1)
   
   dots <- unlist(list(...))
   if (length(dots) != 0) {
     # backwards compatibility with old arguments
-    dots.names <- dots %pm>% names()
+    dots.names <- names(dots)
     if ("filter_specimen" %in% dots.names) {
       specimen_group <- dots[which(dots.names == "filter_specimen")]
     }

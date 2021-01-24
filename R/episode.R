@@ -28,8 +28,8 @@
 #' These functions determine which items in a vector can be considered (the start of) a new episode, based on the argument `episode_days`. This can be used to determine clinical episodes for any epidemiological analysis. The [get_episode()] function returns the index number of the episode per group, while the [is_new_episode()] function returns values `TRUE`/`FALSE` to indicate whether an item in a vector is the start of a new episode.
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param x vector of dates (class `Date` or `POSIXt`)
-#' @param episode_days length of the required episode in days, see *Details*
-#' @param ... arguments passed on to [as.Date()]
+#' @param episode_days required episode length in days, can also be less than a day, see *Details*
+#' @param ... arguments passed on to [as.POSIXct()]
 #' @details 
 #' Dates are first sorted from old to new. The oldest date will mark the start of the first episode. After this date, the next date will be marked that is at least `episode_days` days later than the start of the first episode. From that second marked date on, the next date will be marked that is at least `episode_days` days later than the start of the second episode which will be the start of the third episode, and so on. Before the vector is being returned, the original order will be restored.
 #' 
@@ -44,14 +44,19 @@
 #' @export
 #' @inheritSection AMR Read more on Our Website!
 #' @examples
-#' # `example_isolates` is a dataset available in the AMR package.
+#' # `example_isolates` is a data set available in the AMR package.
 #' # See ?example_isolates.
 #' 
-#' get_episode(example_isolates$date, episode_days = 60)
-#' is_new_episode(example_isolates$date, episode_days = 60)
+#' get_episode(example_isolates$date, episode_days = 60)    # indices
+#' is_new_episode(example_isolates$date, episode_days = 60) # TRUE/FALSE
 #' 
 #' # filter on results from the third 60-day episode only, using base R
 #' example_isolates[which(get_episode(example_isolates$date, 60) == 3), ]
+#' 
+#' # the functions also work for less than a day, e.g. to include one per hour:
+#' get_episode(c(Sys.time(),
+#'               Sys.time() + 60 * 60),
+#'             episode_days = 1/24)
 #' 
 #' \donttest{
 #' if (require("dplyr")) {
@@ -100,7 +105,9 @@
 #' }
 get_episode <- function(x, episode_days, ...) {
   meet_criteria(x, allow_class = c("Date", "POSIXt"))
-  meet_criteria(episode_days, allow_class = c("numeric", "double", "integer"), has_length = 1)
+  meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+  stop_if(inherits(x, "Date") & episode_days < 1,
+          "argument `episode_days` must be at least 1 (day) when `x` is not a date-time object")
   
   exec_episode(type = "sequential",
                x = x, 
@@ -112,7 +119,9 @@ get_episode <- function(x, episode_days, ...) {
 #' @export
 is_new_episode <- function(x, episode_days, ...) {
   meet_criteria(x, allow_class = c("Date", "POSIXt"))
-  meet_criteria(episode_days, allow_class = c("numeric", "double", "integer"), has_length = 1)
+  meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+  stop_if(inherits(x, "Date") & episode_days < 1,
+          "argument `episode_days` must be at least 1 (day) when `x` is not a date-time object")
   
   exec_episode(type = "logical",
                x = x, 
@@ -121,7 +130,10 @@ is_new_episode <- function(x, episode_days, ...) {
 }
 
 exec_episode <- function(type, x, episode_days, ...) {
-  x <- as.double(as.Date(x, ...)) # as.Date() for POSIX classes
+  x <- as.double(as.POSIXct(x, ...)) # as.POSIXct() for Date classes
+  # since x is now in seconds, get seconds from episode_days as well
+  episode_seconds <- episode_days * 60 * 60 * 24
+  
   if (length(x) == 1) {
     if (type == "logical") {
       return(TRUE)
@@ -129,7 +141,7 @@ exec_episode <- function(type, x, episode_days, ...) {
       return(1)
     }
   } else if (length(x) == 2) {
-    if (max(x) - min(x) >= episode_days) {
+    if (max(x) - min(x) >= episode_seconds) {
       if (type == "logical") {
         return(c(TRUE, TRUE))
       } else if (type == "sequential") {
@@ -146,13 +158,13 @@ exec_episode <- function(type, x, episode_days, ...) {
   
   # I asked on StackOverflow:
   # https://stackoverflow.com/questions/42122245/filter-one-row-every-year
-  exec <- function(x, episode_days) {
+  exec <- function(x, episode_seconds) {
     indices <- integer()
     start <- x[1]
     ind <- 1
     indices[1] <- 1
     for (i in 2:length(x)) {
-      if (isTRUE((x[i] - start) >= episode_days)) {
+      if (isTRUE((x[i] - start) >= episode_seconds)) {
         ind <- ind + 1
         if (type == "logical") {
           indices[ind] <- i
@@ -175,7 +187,7 @@ exec_episode <- function(type, x, episode_days, ...) {
   df <- data.frame(x = x,
                    y = seq_len(length(x))) %pm>%
     pm_arrange(x)
-  df$new <- exec(df$x, episode_days)
+  df$new <- exec(df$x, episode_seconds)
   df %pm>%
     pm_arrange(y) %pm>%
     pm_pull(new)

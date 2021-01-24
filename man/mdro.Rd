@@ -77,7 +77,7 @@ Ordered \link{factor} with levels \code{Negative} < \verb{Positive, unconfirmed}
 Determine which isolates are multidrug-resistant organisms (MDRO) according to international, national and custom guidelines.
 }
 \details{
-These functions are context-aware when used inside \code{dplyr} verbs, such as \code{filter()}, \code{mutate()} and \code{summarise()}. This means that then the \code{x} argument can be left blank, see \emph{Examples}.
+These functions are context-aware. This means that then the \code{x} argument can be left blank, see \emph{Examples}.
 
 For the \code{pct_required_classes} argument, values above 1 will be divided by 100. This is to support both fractions (\code{0.75} or \code{3/4}) and percentages (\code{75}).
 
@@ -137,7 +137,7 @@ table(x)
 #>             43            891           1066 
 }
 
-The rules set (the \code{custom} object in this case) could be exported to a shared file location using \code{\link[=saveRDS]{saveRDS()}} if you collaborate with multiple users. The custom rules set could then be imported using \code{\link[=readRDS]{readRDS()}},
+The rules set (the \code{custom} object in this case) could be exported to a shared file location using \code{\link[=saveRDS]{saveRDS()}} if you collaborate with multiple users. The custom rules set could then be imported using \code{\link[=readRDS]{readRDS()}}.
 }
 
 \section{Stable Lifecycle}{
