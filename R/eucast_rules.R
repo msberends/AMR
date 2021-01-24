@@ -1196,7 +1196,7 @@ eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 11.0)
   
   ab <- as.ab(ab)
   df <- AMR::dosage[which(AMR::dosage$ab %in% ab & AMR::dosage$administration %in% administration), , drop = FALSE]
-  df <- df[match(ab, df$ab), colnames(df)[colnames(df) != "administration"], drop = FALSE]
+  df <- df[which(df$ab == ab), colnames(df)[colnames(df) != "administration"], drop = FALSE]
   rownames(df) <- NULL
   df$ab <- ab
   df

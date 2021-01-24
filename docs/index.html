@@ -43,7 +43,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9010</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9011</span>
       </span>
     </div>
 
@@ -223,20 +223,20 @@ Since you are one of our users, we would like to know how you use the package an
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 
 <span class="va">example_isolates</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>mo <span class="op">=</span> <span class="fu"><a href="reference/mo_property.html">mo_fullname</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>bacteria <span class="op">=</span> <span class="fu"><a href="reference/mo_property.html">mo_fullname</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="reference/mo_property.html">mo_is_gram_negative</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"cefotax"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">mo</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">bacteria</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; NOTE: Using column 'mo' as input for mo_is_gram_negative()</span>
 <span class="co">#&gt; NOTE: Using column 'mo' as input for mo_is_intrinsic_resistant()</span>
 <span class="co">#&gt; NOTE: Determining intrinsic resistance based on 'EUCAST Expert Rules' and</span>
-<span class="co">#&gt;       'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2 from 2020.</span>
+<span class="co">#&gt;       'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2 (2020).</span>
 <span class="co">#&gt; Selecting aminoglycosides: 'AMK' (amikacin), 'GEN' (gentamicin), </span>
 <span class="co">#&gt;                            'KAN' (kanamycin), 'TOB' (tobramycin)</span>
 <span class="co">#&gt; Selecting carbapenems: 'IPM' (imipenem), 'MEM' (meropenem)</span></code></pre></div>
 <p>With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (<code><a href="reference/mo_property.html">mo_is_gram_negative()</a></code> and <code><a href="reference/mo_property.html">mo_is_intrinsic_resistant()</a></code>) and a column selection on two antibiotic groups (<code><a href="reference/antibiotic_class_selectors.html">aminoglycosides()</a></code> and <code><a href="reference/antibiotic_class_selectors.html">carbapenems()</a></code>), the reference data about <a href="./reference/microorganisms.html">all microorganisms</a> and <a href="./reference/antibiotics.html">all antibiotics</a> in the <code>AMR</code> package make sure you get what you meant:</p>
 <table class="table">
 <thead><tr class="header">
-<th align="left">mo</th>
+<th align="left">bacteria</th>
 <th align="center">AMK</th>
 <th align="center">GEN</th>
 <th align="center">KAN</th>
@@ -245,6 +245,24 @@ Since you are one of our users, we would like to know how you use the package an
 <th align="center">MEM</th>
 </tr></thead>
 <tbody>
+<tr class="odd">
+<td align="left"><em>Pseudomonas aeruginosa</em></td>
+<td align="center"></td>
+<td align="center">I</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left"><em>Pseudomonas aeruginosa</em></td>
+<td align="center"></td>
+<td align="center">I</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center"></td>
+</tr>
 <tr class="odd">
 <td align="left"><em>Pseudomonas aeruginosa</em></td>
 <td align="center"></td>
@@ -299,14 +317,32 @@ Since you are one of our users, we would like to know how you use the package an
 <td align="center"></td>
 <td align="center">S</td>
 </tr>
+<tr class="odd">
+<td align="left"><em>Pseudomonas aeruginosa</em></td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center"></td>
+<td align="center">S</td>
+</tr>
+<tr class="even">
+<td align="left"><em>Pseudomonas aeruginosa</em></td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">S</td>
+</tr>
 </tbody>
 </table>
 <p>A base R equivalent would be:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">example_isolates</span><span class="op">$</span><span class="va">mo</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mo_property.html">mo_fullname</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">mo</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">example_isolates</span><span class="op">$</span><span class="va">bacteria</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mo_property.html">mo_fullname</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">mo</span><span class="op">)</span>
 <span class="va">example_isolates</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="fu"><a href="reference/mo_property.html">mo_is_gram_negative</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&amp;</span>
                          <span class="fu"><a href="reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"cefotax"</span><span class="op">)</span><span class="op">)</span>,
-                 <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mo"</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></code></pre></div>
+                 <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"bacteria"</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></code></pre></div>
 </div>
 <div id="partners" class="section level4">
 <h4 class="hasAnchor">

@@ -29,7 +29,7 @@
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param x vector of dates (class `Date` or `POSIXt`)
 #' @param episode_days required episode length in days, can also be less than a day, see *Details*
-#' @param ... arguments passed on to [as.POSIXct()]
+#' @param ... currently not used
 #' @details 
 #' Dates are first sorted from old to new. The oldest date will mark the start of the first episode. After this date, the next date will be marked that is at least `episode_days` days later than the start of the first episode. From that second marked date on, the next date will be marked that is at least `episode_days` days later than the start of the second episode which will be the start of the third episode, and so on. Before the vector is being returned, the original order will be restored.
 #' 
@@ -106,8 +106,6 @@
 get_episode <- function(x, episode_days, ...) {
   meet_criteria(x, allow_class = c("Date", "POSIXt"))
   meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
-  stop_if(inherits(x, "Date") & episode_days < 1,
-          "argument `episode_days` must be at least 1 (day) when `x` is not a date-time object")
   
   exec_episode(type = "sequential",
                x = x, 
@@ -120,8 +118,6 @@ get_episode <- function(x, episode_days, ...) {
 is_new_episode <- function(x, episode_days, ...) {
   meet_criteria(x, allow_class = c("Date", "POSIXt"))
   meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
-  stop_if(inherits(x, "Date") & episode_days < 1,
-          "argument `episode_days` must be at least 1 (day) when `x` is not a date-time object")
   
   exec_episode(type = "logical",
                x = x, 
@@ -130,7 +126,7 @@ is_new_episode <- function(x, episode_days, ...) {
 }
 
 exec_episode <- function(type, x, episode_days, ...) {
-  x <- as.double(as.POSIXct(x, ...)) # as.POSIXct() for Date classes
+  x <- as.double(as.POSIXct(x)) # as.POSIXct() for Date classes
   # since x is now in seconds, get seconds from episode_days as well
   episode_seconds <- episode_days * 60 * 60 * 24
   

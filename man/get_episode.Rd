@@ -12,9 +12,9 @@ is_new_episode(x, episode_days, ...)
 \arguments{
 \item{x}{vector of dates (class \code{Date} or \code{POSIXt})}
 
-\item{episode_days}{length of the required episode length in days, can also be less than a day, see \emph{Details}}
+\item{episode_days}{required episode length in days, can also be less than a day, see \emph{Details}}
 
-\item{...}{arguments passed on to \code{\link[=as.POSIXct]{as.POSIXct()}}}
+\item{...}{currently not used}
 }
 \value{
 \itemize{

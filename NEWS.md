@@ -1,4 +1,4 @@
-# AMR 1.5.0.9010
+# AMR 1.5.0.9011
 ## <small>Last updated: 24 January 2021</small>
 
 ### New
@@ -38,7 +38,7 @@
 
 ### Other
 * Big documentation updates
-* Loading the package (i.e., `library(AMR)`) now is ~50 times faster than before
+* Loading the package (i.e., `library(AMR)`) now is ~50 times faster than before, in costs of package size (increased with ~3 MB)
 
 
 # AMR 1.5.0

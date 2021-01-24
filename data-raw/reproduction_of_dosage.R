@@ -44,6 +44,28 @@ dosage_source <- read_excel("data-raw/Dosages_v_11.0_Breakpoint_Tables.xlsx", sk
   mutate(ab = as.ab(drug),
          ab_name = ab_name(ab, language = NULL))
 
+dosage_source <- bind_rows(
+  # oral
+  dosage_source %>% 
+    filter(standard_dosage %like% " oral") %>%
+    mutate(standard_dosage = gsub("oral.*", "oral", standard_dosage),
+           high_dosage = if_else(high_dosage %like% "oral", 
+                                 gsub("oral.*", "oral", high_dosage),
+                                 NA_character_)),
+  # iv
+  dosage_source %>% 
+    filter(standard_dosage %like% " iv") %>%
+    mutate(standard_dosage = gsub(".* or ", "", standard_dosage),
+           high_dosage = if_else(high_dosage %like% "( or | iv)", 
+                                 gsub(".* or ", "", high_dosage),
+                                 NA_character_)),
+  # im
+  dosage_source %>% 
+    filter(standard_dosage %like% " im")
+) %>% 
+  arrange(drug)
+
+
 get_dosage_lst <- function(col_data) {
   standard <- col_data %>%
     # remove new lines
@@ -90,6 +112,7 @@ standard <- get_dosage_lst(dosage_source$standard_dosage)
 high <- get_dosage_lst(dosage_source$high_dosage)
 uti <- get_dosage_lst(dosage_source$uncomplicated_uti)
 dosage <- bind_rows(
+  # standard dose
   data.frame(
     ab = dosage_source$ab,
     name = dosage_source$ab_name,
@@ -101,6 +124,7 @@ dosage <- bind_rows(
     original_txt = sapply(standard, function(x) x$original_txt),
     stringsAsFactors = FALSE
   ),
+  # high dose
   data.frame(
     ab = dosage_source$ab,
     name = dosage_source$ab_name,
@@ -112,6 +136,7 @@ dosage <- bind_rows(
     original_txt = sapply(high, function(x) x$original_txt),
     stringsAsFactors = FALSE
   ),
+  # UTIs
   data.frame(
     ab = dosage_source$ab,
     name = dosage_source$ab_name,
@@ -124,8 +149,11 @@ dosage <- bind_rows(
     stringsAsFactors = FALSE
   )) %>% 
   mutate(eucast_version = breakpoints_version,
-         dose_times = as.integer(dose_times)) %>% 
+         dose_times = as.integer(dose_times),
+         administration = gsub("([a-z]+) .*", "\\1", administration)) %>% 
   arrange(name, administration, type) %>% 
-  filter(!is.na(dose), dose != ".")
+  filter(!is.na(dose), dose != ".") %>% 
+  as.data.frame(stringsAsFactors = FALSE)
+rownames(dosage) <- NULL
 
 usethis::use_data(dosage, internal = FALSE, overwrite = TRUE, version = 2)

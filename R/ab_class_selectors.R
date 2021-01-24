@@ -207,12 +207,12 @@ ab_selector <- function(ab_class, function_name) {
     } else {
       agents_formatted <- paste0("column '", font_bold(agents, collapse = NULL), "'")
       agents_names <- ab_name(names(agents), tolower = TRUE, language = NULL)
-      need_name <- tolower(agents) != tolower(agents_names)
+      need_name <- tolower(gsub("[^a-zA-Z]", "", agents)) != tolower(gsub("[^a-zA-Z]", "", agents_names))
       agents_formatted[need_name] <- paste0(agents_formatted[need_name],
                                             " (", agents_names[need_name], ")")
       message_("Selecting ", ab_group, ": ", paste(agents_formatted, collapse = ", "),
                as_note = FALSE,
-               extra_indent = nchar(paste0("Selecting ", ab_group, ": ")))
+               extra_indent = 4)
     }
     remember_thrown_message(function_name)
   }

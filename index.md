@@ -32,13 +32,13 @@ library(AMR)
 library(dplyr)
 
 example_isolates %>%
-  mutate(mo = mo_fullname(mo)) %>%
+  mutate(bacteria = mo_fullname(mo)) %>%
   filter(mo_is_gram_negative(), mo_is_intrinsic_resistant(ab = "cefotax")) %>%
-  select(mo, aminoglycosides(), carbapenems())
+  select(bacteria, aminoglycosides(), carbapenems())
 #> NOTE: Using column 'mo' as input for mo_is_gram_negative()
 #> NOTE: Using column 'mo' as input for mo_is_intrinsic_resistant()
 #> NOTE: Determining intrinsic resistance based on 'EUCAST Expert Rules' and
-#>       'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2 from 2020.
+#>       'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2 (2020).
 #> Selecting aminoglycosides: 'AMK' (amikacin), 'GEN' (gentamicin), 
 #>                            'KAN' (kanamycin), 'TOB' (tobramycin)
 #> Selecting carbapenems: 'IPM' (imipenem), 'MEM' (meropenem)
@@ -46,23 +46,26 @@ example_isolates %>%
 
 With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (`mo_is_gram_negative()` and `mo_is_intrinsic_resistant()`) and a column selection on two antibiotic groups (`aminoglycosides()` and `carbapenems()`), the reference data about [all microorganisms](./reference/microorganisms.html) and [all antibiotics](./reference/antibiotics.html) in the `AMR` package make sure you get what you meant:
 
-
-| mo                            |    AMK    |    GEN    |    KAN    |    TOB    |    IPM    |    MEM    |
-|:------------------------------|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
-|*Pseudomonas aeruginosa*       |           |     I     |     R     |     S     |     S     |           |
-|*Pseudomonas aeruginosa*       |     S     |     S     |     R     |     S     |           |     S     |
-|*Pseudomonas aeruginosa*       |     S     |     S     |     R     |     S     |     S     |     S     |
-|*Pseudomonas aeruginosa*       |     S     |     S     |     R     |     S     |     S     |     S     |
-|*Stenotrophomonas maltophilia* |     R     |     R     |     R     |     R     |     R     |     R     |
-|*Pseudomonas aeruginosa*       |     S     |     S     |     R     |     S     |           |     S     |
+|bacteria                       | AMK | GEN | KAN | TOB | IPM | MEM |
+|:------------------------------|:---:|:---:|:---:|:---:|:---:|:---:|
+|*Pseudomonas aeruginosa*       |     |  I  |  R  |  S  |  S  |     |
+|*Pseudomonas aeruginosa*       |     |  I  |  R  |  S  |  S  |     |
+|*Pseudomonas aeruginosa*       |     |  I  |  R  |  S  |  S  |     |
+|*Pseudomonas aeruginosa*       |  S  |  S  |  R  |  S  |     |  S  |
+|*Pseudomonas aeruginosa*       |  S  |  S  |  R  |  S  |  S  |  S  |
+|*Pseudomonas aeruginosa*       |  S  |  S  |  R  |  S  |  S  |  S  |
+|*Stenotrophomonas maltophilia* |  R  |  R  |  R  |  R  |  R  |  R  |
+|*Pseudomonas aeruginosa*       |  S  |  S  |  R  |  S  |     |  S  |
+|*Pseudomonas aeruginosa*       |  S  |  S  |  R  |  S  |     |  S  |
+|*Pseudomonas aeruginosa*       |  S  |  S  |  R  |  S  |  S  |  S  |
 
 A base R equivalent would be:
 
 ```r
-example_isolates$mo <- mo_fullname(example_isolates$mo)
+example_isolates$bacteria <- mo_fullname(example_isolates$mo)
 example_isolates[which(mo_is_gram_negative() &
                          mo_is_intrinsic_resistant(ab = "cefotax")),
-                 c("mo", aminoglycosides(), carbapenems())]
+                 c("bacteria", aminoglycosides(), carbapenems())]
 ```
 
 #### Partners

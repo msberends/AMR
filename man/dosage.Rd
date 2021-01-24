@@ -5,7 +5,7 @@
 \alias{dosage}
 \title{Data Set with Treatment Dosages as Defined by EUCAST}
 \format{
-A \link{data.frame} with 135 observations and 9 variables:
+A \link{data.frame} with 169 observations and 9 variables:
 \itemize{
 \item \code{ab}\cr Antibiotic ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
 \item \code{name}\cr Official name of the antimicrobial agent as used by WHONET/EARS-Net or the WHO
