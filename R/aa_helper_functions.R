@@ -442,7 +442,7 @@ create_ab_documentation <- function(ab) {
   out
 }
 
-vector_or <- function(v, quotes = TRUE, reverse = FALSE) {
+vector_or <- function(v, quotes = TRUE, reverse = FALSE, last_sep = " or ") {
   # makes unique and sorts, and this also removed NAs
   v <- sort(unique(v))
    if (length(v) == 1) {
@@ -451,9 +451,18 @@ vector_or <- function(v, quotes = TRUE, reverse = FALSE) {
   if (reverse == TRUE) {
     v <- rev(v)
   }
+  if (identical(v, c("I", "R", "S"))) {
+    # class <rsi> should be sorted like this
+    v <- c("R", "S", "I")
+  }
+  if (isTRUE(quotes)) {
+    quotes <- '"'
+  } else if (isFALSE(quotes)) {
+    quotes <- ""
+  }
   # all commas except for last item, so will become '"val1", "val2", "val3" or "val4"'
-  paste0(paste0(ifelse(quotes, '"', ""), v[seq_len(length(v) - 1)], ifelse(quotes, '"', ""), collapse = ", "),
-         " or ", paste0(ifelse(quotes, '"', ""), v[length(v)], ifelse(quotes, '"', "")))
+  paste0(paste0(quotes, v[seq_len(length(v) - 1)], quotes, collapse = ", "),
+         last_sep, paste0(quotes, v[length(v)], quotes))
 }
 
 format_class <- function(class, plural) {
@@ -562,6 +571,7 @@ meet_criteria <- function(object,
                "` must be ",
                ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1, "either ", ""),
                vector_or(is_in, quotes = !isTRUE(any(c("double", "numeric", "integer") %in% allow_class))),
+               ifelse(allow_NA == TRUE, ", or NA", ""),
                call = call_depth)
   }
   if (!is.null(is_positive)) {

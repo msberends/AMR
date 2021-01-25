@@ -2016,3 +2016,14 @@ repair_reference_df <- function(reference_df) {
   reference_df[, "mo"] <- as.mo(reference_df[, "mo", drop = TRUE])
   reference_df
 }
+
+strip_words <- function(text, n, side = "right") {
+  out <- lapply(strsplit(x, " "), function(x) {
+    if (side %like% "^r" & length(x) > n) {
+      x[seq_len(length(x) - n)]
+    } else if (side %like% "^l" & length(x) > n) {
+      x[2:length(x)]
+    }
+  })
+  vapply(FUN.VALUE = character(1), out, paste, collapse = " ")
+}

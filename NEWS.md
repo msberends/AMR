@@ -1,5 +1,5 @@
-# AMR 1.5.0.9011
-## <small>Last updated: 24 January 2021</small>
+# AMR 1.5.0.9012
+## <small>Last updated: 25 January 2021</small>
 
 ### New
 * Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the `eucast_rules()` function and in `as.rsi()` to interpret MIC and disk diffusion values. This is now the default guideline in this package.
@@ -35,6 +35,7 @@
 * Fix for verbose output of `mdro(..., verbose = TRUE)` for German guideline (3MGRN and 4MGRN) and Dutch guideline (BRMO, only *P. aeruginosa*)
 * `is.rsi.eligible()` now returns `FALSE` immediately if the input does not contain any of the values "R", "S" or "I". This drastically improves speed, also for a lot of other functions that rely on automatic determination of antibiotic columns.
 * Functions  `get_episode()` and `is_new_episode()` now support less than a day as value for argument `episode_days` (e.g., to include one patient/test per hour)
+* Argument `ampc_cephalosporin_resistance` in `eucast_rules()` now also applies to value "I" (not only "S")
 
 ### Other
 * Big documentation updates

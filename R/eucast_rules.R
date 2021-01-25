@@ -73,7 +73,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param verbose a [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.
 #' @param version_breakpoints the version number to use for the EUCAST Clinical Breakpoints guideline. Can be either `r vector_or(names(EUCAST_VERSION_BREAKPOINTS), reverse = TRUE)`.
 #' @param version_expertrules the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either `r vector_or(names(EUCAST_VERSION_EXPERT_RULES), reverse = TRUE)`.
-#' @param ampc_cephalosporin_resistance a character value that should be applied for AmpC de-repressed cephalosporin-resistant mutants, defaults to `NA`. Currently only works when `version_expertrules` is `3.2`; '*EUCAST Expert Rules v3.2 on Enterobacterales*' states that susceptible (S) results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these agents. A value of `NA` for this argument will remove results for these agents, while e.g. a value of `"R"` will make the results for these agents resistant. Use `NULL` to not alter the results for AmpC de-repressed cephalosporin-resistant mutants. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: *`r gsub("[)(^]", "", gsub("|", ", ", eucast_rules_file[which(eucast_rules_file$reference.version == 3.2 & eucast_rules_file$reference.rule %like% "ampc"), "this_value"][1], fixed = TRUE))`*.
+#' @param ampc_cephalosporin_resistance a character value that should be applied for AmpC de-repressed cephalosporin-resistant mutants, defaults to `NA`. Currently only works when `version_expertrules` is `3.2`; '*EUCAST Expert Rules v3.2 on Enterobacterales*' states that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these agents. A value of `NA` for this argument will remove results for these agents, while e.g. a value of `"R"` will make the results for these agents resistant. Use `NULL` to not alter the results for AmpC de-repressed cephalosporin-resistant mutants. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: `r vector_or(gsub("[^a-zA-Z ]+", "", unlist(strsplit(eucast_rules_file[which(eucast_rules_file$reference.version == 3.2 & eucast_rules_file$reference.rule %like% "ampc"), "this_value"][1], "|", fixed = TRUE))), quotes = "*", last_sep = " and ")`.
 #' @param ... column name of an antibiotic, see section *Antibiotics* below
 #' @param ab any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
 #' @param administration route of administration, either `r vector_or(dosage$administration)`
@@ -173,7 +173,7 @@ eucast_rules <- function(x,
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
   meet_criteria(version_breakpoints, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_BREAKPOINTS)))
   meet_criteria(version_expertrules, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_EXPERT_RULES)))
-  meet_criteria(ampc_cephalosporin_resistance, allow_class = c("rsi", "character"), has_length = 1, allow_NA = TRUE, allow_NULL = TRUE, is_in = c("R", "S", "I"))
+  meet_criteria(ampc_cephalosporin_resistance, has_length = 1, allow_NA = TRUE, allow_NULL = TRUE, is_in = c("R", "S", "I"))
   
   x_deparsed <- deparse(substitute(x))
   if (length(x_deparsed) > 1 || !all(x_deparsed %like% "[a-z]+")) {
@@ -1183,7 +1183,7 @@ edit_rsi <- function(x,
 #' @export
 eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 11.0) {
   meet_criteria(ab, allow_class = c("character", "numeric", "integer", "factor"))
-  meet_criteria(administration, allow_class = "character", is_in = dosage$administration[!is.na(dosage$administration)])
+  meet_criteria(administration, allow_class = "character", is_in = dosage$administration[!is.na(dosage$administration)], has_length = 1)
   meet_criteria(version_breakpoints, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_BREAKPOINTS)))
   
   # show used version_breakpoints number once per session (pkg_env will reload every session)
@@ -1195,9 +1195,21 @@ eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 11.0)
   }
   
   ab <- as.ab(ab)
-  df <- AMR::dosage[which(AMR::dosage$ab %in% ab & AMR::dosage$administration %in% administration), , drop = FALSE]
-  df <- df[which(df$ab == ab), colnames(df)[colnames(df) != "administration"], drop = FALSE]
-  rownames(df) <- NULL
-  df$ab <- ab
-  df
+  lst <- vector("list", length = length(ab))
+  for (i in seq_len(length(ab))) {
+    df <- AMR::dosage[which(AMR::dosage$ab == ab[i] & AMR::dosage$administration == administration), , drop = FALSE]
+    lst[[i]] <- list(ab = "",
+                     name = "",
+                     standard_dosage = ifelse("standard_dosage" %in% df$type,
+                                              df[which(df$type == "standard_dosage"), ]$original_txt, 
+                                              NA_character_),
+                     high_dosage = ifelse("high_dosage" %in% df$type,
+                                          df[which(df$type == "high_dosage"), ]$original_txt, 
+                                          NA_character_))
+  }
+  out <- do.call("rbind", lapply(lst, as.data.frame, stringsAsFactors = FALSE))
+  rownames(out) <- NULL
+  out$ab <- ab
+  out$name <- ab_name(ab, language = NULL)
+  out
 }
