@@ -50,7 +50,7 @@ tetracyclines()
 \item{ab_class}{an antimicrobial class, like \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched (case-insensitive) for this value.}
 }
 \description{
-These functions help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.
+These functions help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. \strong{\Sexpr{ifelse(as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2, paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
 }
 \details{
 \strong{\Sexpr{ifelse(as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2, paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}

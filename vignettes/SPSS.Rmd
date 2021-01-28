@@ -76,10 +76,10 @@ To demonstrate the first point:
 as.mic(0.125)
 as.mic("testvalue")
 
-# the Gram stain is avaiable for all bacteria:
+# the Gram stain is available for all bacteria:
 mo_gramstain("E. coli")
 
-# Klebsiella is intrinsic resistant to amoxicllin, according to EUCAST:
+# Klebsiella is intrinsic resistant to amoxicillin, according to EUCAST:
 klebsiella_test <- data.frame(mo = "klebsiella", 
                               amox = "S",
                               stringsAsFactors = FALSE)

@@ -47,7 +47,7 @@
 #'   # calculate the resistance per group first 
 #'   resistance_data <- example_isolates %>% 
 #'     group_by(order = mo_order(mo),       # group on anything, like order
-#'              genus = mo_genus(mo)) %>%   #  and genus as we do here
+#'              genus = mo_genus(mo)) %>%   #   and genus as we do here;
 #'     summarise_if(is.rsi, resistance)     # then get resistance of all drugs
 #'     
 #'   # now conduct PCA for certain antimicrobial agents
@@ -99,7 +99,7 @@ pca <- function(x,
     
     x <- as.data.frame(new_list, stringsAsFactors = FALSE)
     if (any(vapply(FUN.VALUE = logical(1), x, function(y) !is.numeric(y)))) {
-      warning_("Be sure to first calculate the resistance (or susceptibility) of variables with antimicrobial test results, since PCA works with numeric variables only. See Examples in ?pca.")
+      warning_("Be sure to first calculate the resistance (or susceptibility) of variables with antimicrobial test results, since PCA works with numeric variables only. See Examples in ?pca.", call = FALSE)
     }
     
     # set column names
@@ -117,11 +117,51 @@ pca <- function(x,
   
   pca_data <- x[, which(vapply(FUN.VALUE = logical(1), x, function(x) is.numeric(x)))]
   
-  message_("Columns selected for PCA: ", paste0(font_bold(colnames(pca_data)), collapse = "/"),
+  message_("Columns selected for PCA: ", vector_or(font_bold(colnames(pca_data), collapse = NULL),
+                                                   quotes = "'",
+                                                   last_sep = " and "),
            ". Total observations available: ", nrow(pca_data), ".")
   
-  pca_model <- prcomp(pca_data, retx = retx, center = center, scale. = scale., tol = tol, rank. = rank.)
-  attr(pca_model, "non_numeric_cols") <- x[, vapply(FUN.VALUE = logical(1), x, function(y) !is.numeric(y) & !all(is.na(y))), drop = FALSE]
+  if (as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.4) {
+    # stats::prcomp prior to 3.4.0 does not have the 'rank.' argument
+    pca_model <- prcomp(pca_data, retx = retx, center = center, scale. = scale., tol = tol)
+  } else {
+    pca_model <- prcomp(pca_data, retx = retx, center = center, scale. = scale., tol = tol, rank. = rank.)
+  }
+  groups <- x[, vapply(FUN.VALUE = logical(1), x, function(y) !is.numeric(y) & !all(is.na(y))), drop = FALSE]
+  rownames(groups) <- NULL
+  attr(pca_model, "non_numeric_cols") <- groups
   class(pca_model) <- c("pca", class(pca_model))
   pca_model
+}
+
+#' @method print pca
+#' @export
+#' @noRd
+print.pca <- function(x, ...) {
+  a <- attributes(x)$non_numeric_cols
+  if (!is.null(a)) {
+    print_pca_group(a)
+    class(x) <- class(x)[class(x) != "pca"]
+  }
+  print(x, ...)
+}
+
+#' @method summary pca
+#' @export
+#' @noRd
+summary.pca <- function(object, ...) {
+  a <- attributes(object)$non_numeric_cols
+  if (!is.null(a)) {
+    print_pca_group(a)
+    class(object) <- class(object)[class(object) != "pca"]
+  }
+  summary(object, ...)
+}
+
+print_pca_group <- function(a) {
+  grps <- sort(unique(a[, 1, drop = TRUE]))
+  cat("Groups (n=", length(grps), ", named as '", colnames(a)[1], "'):\n", sep = "")
+  print(grps)
+  cat("\n")
 }

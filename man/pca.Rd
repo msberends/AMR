@@ -80,7 +80,7 @@ if (require("dplyr")) {
   # calculate the resistance per group first 
   resistance_data <- example_isolates \%>\% 
     group_by(order = mo_order(mo),       # group on anything, like order
-             genus = mo_genus(mo)) \%>\%   #  and genus as we do here
+             genus = mo_genus(mo)) \%>\%   #   and genus as we do here;
     summarise_if(is.rsi, resistance)     # then get resistance of all drugs
     
   # now conduct PCA for certain antimicrobial agents

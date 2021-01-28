@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9010</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9013</span>
       </span>
     </div>
 
@@ -333,7 +333,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
   <span class='co'># calculate the resistance per group first </span>
   <span class='va'>resistance_data</span> <span class='op'>&lt;-</span> <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span> 
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='mo_property.html'>mo_order</a></span><span class='op'>(</span><span class='va'>mo</span><span class='op'>)</span>,       <span class='co'># group on anything, like order</span>
-             genus <span class='op'>=</span> <span class='fu'><a href='mo_property.html'>mo_genus</a></span><span class='op'>(</span><span class='va'>mo</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>   <span class='co'>#  and genus as we do here</span>
+             genus <span class='op'>=</span> <span class='fu'><a href='mo_property.html'>mo_genus</a></span><span class='op'>(</span><span class='va'>mo</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>   <span class='co'>#   and genus as we do here;</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise_all.html'>summarise_if</a></span><span class='op'>(</span><span class='va'>is.rsi</span>, <span class='va'>resistance</span><span class='op'>)</span>     <span class='co'># then get resistance of all drugs</span>
     
   <span class='co'># now conduct PCA for certain antimicrobial agents</span>

@@ -31,10 +31,10 @@ on:
     branches:
       - master
 
-name: code-tested
+name: code-coverage
 
 jobs:
-  code-tested:
+  code-coverage:
     runs-on: macOS-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}

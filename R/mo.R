@@ -2018,7 +2018,7 @@ repair_reference_df <- function(reference_df) {
 }
 
 strip_words <- function(text, n, side = "right") {
-  out <- lapply(strsplit(x, " "), function(x) {
+  out <- lapply(strsplit(text, " "), function(x) {
     if (side %like% "^r" & length(x) > n) {
       x[seq_len(length(x) - n)]
     } else if (side %like% "^l" & length(x) > n) {

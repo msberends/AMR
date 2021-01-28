@@ -802,13 +802,13 @@ font_green_bg <- function(..., collapse = " ") {
   try_colour(..., before = "\033[42m", after = "\033[49m", collapse = collapse)
 }
 font_rsi_R_bg <- function(..., collapse = " ") {
-  try_colour(..., before = "\033[48;5;202m", after = "\033[49m", collapse = collapse)
+  try_colour(..., before = "\033[48;5;210m", after = "\033[49m", collapse = collapse)
 }
 font_rsi_S_bg <- function(..., collapse = " ") {
-  try_colour(..., before = "\033[48;5;76m", after = "\033[49m", collapse = collapse)
+  try_colour(..., before = "\033[48;5;113m", after = "\033[49m", collapse = collapse)
 }
 font_rsi_I_bg <- function(..., collapse = " ") {
-  try_colour(..., before = "\033[48;5;148m", after = "\033[49m", collapse = collapse)
+  try_colour(..., before = "\033[48;5;185m", after = "\033[49m", collapse = collapse)
 }
 font_red_bg <- function(..., collapse = " ") {
   try_colour(..., before = "\033[41m", after = "\033[49m", collapse = collapse)

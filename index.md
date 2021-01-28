@@ -20,8 +20,8 @@ This package is [fully independent of any other R package](https://en.wikipedia.
 <div class="main-content" style="display: inline-block;">
   <p>
     <a href="./countries_large.png" target="_blank"><img src="./countries.png" class="countries_map"></a>
-    <strong>Used in 138 countries</strong><br>
-    Since its first public release in early 2018, this package has been downloaded from 138 countries. Click the map to enlarge and to see the country names.</p>
+    <strong>Used in 148 countries</strong><br>
+    Since its first public release in early 2018, this package has been downloaded from 148 countries. Click the map to enlarge and to see the country names.</p>
 </div>
 
 ##### With `AMR` (for R), there's always a knowledgeable microbiologist by your side!
@@ -59,7 +59,7 @@ With only having defined a row filter on Gram-negative bacteria with intrinsic r
 |*Pseudomonas aeruginosa*       |  S  |  S  |  R  |  S  |     |  S  |
 |*Pseudomonas aeruginosa*       |  S  |  S  |  R  |  S  |  S  |  S  |
 
-A base R equivalent would be:
+A base R equivalent would be, giving the exact same results:
 
 ```r
 example_isolates$bacteria <- mo_fullname(example_isolates$mo)
