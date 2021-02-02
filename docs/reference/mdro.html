@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9014</span>
       </span>
     </div>
 
@@ -250,20 +250,26 @@
   pct_required_classes <span class='op'>=</span> <span class='fl'>0.5</span>,
   combine_SI <span class='op'>=</span> <span class='cn'>TRUE</span>,
   verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  only_rsi_columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/any.html'>any</a></span><span class='op'>(</span><span class='fu'><a href='as.rsi.html'>is.rsi</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
 <span class='fu'>custom_mdro_guideline</span><span class='op'>(</span><span class='va'>...</span>, as_factor <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='fu'>brmo</span><span class='op'>(</span><span class='va'>x</span>, guideline <span class='op'>=</span> <span class='st'>"BRMO"</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>brmo</span><span class='op'>(</span><span class='va'>x</span>, guideline <span class='op'>=</span> <span class='st'>"BRMO"</span>, only_rsi_columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/any.html'>any</a></span><span class='op'>(</span><span class='fu'><a href='as.rsi.html'>is.rsi</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>mrgn</span><span class='op'>(</span><span class='va'>x</span>, guideline <span class='op'>=</span> <span class='st'>"MRGN"</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>mrgn</span><span class='op'>(</span><span class='va'>x</span>, guideline <span class='op'>=</span> <span class='st'>"MRGN"</span>, only_rsi_columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/any.html'>any</a></span><span class='op'>(</span><span class='fu'><a href='as.rsi.html'>is.rsi</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>mdr_tb</span><span class='op'>(</span><span class='va'>x</span>, guideline <span class='op'>=</span> <span class='st'>"TB"</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>mdr_tb</span><span class='op'>(</span><span class='va'>x</span>, guideline <span class='op'>=</span> <span class='st'>"TB"</span>, only_rsi_columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/any.html'>any</a></span><span class='op'>(</span><span class='fu'><a href='as.rsi.html'>is.rsi</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>mdr_cmi2012</span><span class='op'>(</span><span class='va'>x</span>, guideline <span class='op'>=</span> <span class='st'>"CMI2012"</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>mdr_cmi2012</span><span class='op'>(</span><span class='va'>x</span>, guideline <span class='op'>=</span> <span class='st'>"CMI2012"</span>, only_rsi_columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/any.html'>any</a></span><span class='op'>(</span><span class='fu'><a href='as.rsi.html'>is.rsi</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>eucast_exceptional_phenotypes</span><span class='op'>(</span><span class='va'>x</span>, guideline <span class='op'>=</span> <span class='st'>"EUCAST"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>eucast_exceptional_phenotypes</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  guideline <span class='op'>=</span> <span class='st'>"EUCAST"</span>,
+  only_rsi_columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/any.html'>any</a></span><span class='op'>(</span><span class='fu'><a href='as.rsi.html'>is.rsi</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -295,6 +301,10 @@
     <tr>
       <th>verbose</th>
       <td><p>a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.</p></td>
+    </tr>
+    <tr>
+      <th>only_rsi_columns</th>
+      <td><p>a logical to indicate whether only antibiotic columns must be detected that were <a href='[rsi]'>transformed to class <code>&lt;rsi&gt;</code></a> on beforehand. Defaults to <code>TRUE</code> if any column of <code>x</code> is of class <code>&lt;rsi&gt;</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -408,7 +418,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 
     
 
-<p>On our website <a href='https://msberends.github.io/AMR/'>https://msberends.github.io/AMR/</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.github.io/AMR/reference/'>complete documentation of all functions</a> and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>. As we would like to better understand the backgrounds and needs of our users, please <a href='https://msberends.github.io/AMR/survey.html'>participate in our survey</a>!</p>
+<p>On our website <a href='https://msberends.github.io/AMR/'>https://msberends.github.io/AMR/</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR data analysis, the <a href='https://msberends.github.io/AMR/reference/'>complete documentation of all functions</a> and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>. As we would like to better understand the backgrounds and needs of our users, please <a href='https://msberends.github.io/AMR/survey.html'>participate in our survey</a>!</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='fu'>mdro</span><span class='op'>(</span><span class='va'>example_isolates</span>, guideline <span class='op'>=</span> <span class='st'>"EUCAST"</span><span class='op'>)</span>

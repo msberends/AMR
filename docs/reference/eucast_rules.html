@@ -83,7 +83,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9014</span>
       </span>
     </div>
 
@@ -253,6 +253,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
   version_breakpoints <span class='op'>=</span> <span class='fl'>11</span>,
   version_expertrules <span class='op'>=</span> <span class='fl'>3.2</span>,
   ampc_cephalosporin_resistance <span class='op'>=</span> <span class='cn'>NA</span>,
+  only_rsi_columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/any.html'>any</a></span><span class='op'>(</span><span class='fu'><a href='as.rsi.html'>is.rsi</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -292,6 +293,10 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     <tr>
       <th>ampc_cephalosporin_resistance</th>
       <td><p>a character value that should be applied for AmpC de-repressed cephalosporin-resistant mutants, defaults to <code>NA</code>. Currently only works when <code>version_expertrules</code> is <code>3.2</code>; '<em>EUCAST Expert Rules v3.2 on Enterobacterales</em>' states that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these agents. A value of <code>NA</code> for this argument will remove results for these agents, while e.g. a value of <code>"R"</code> will make the results for these agents resistant. Use <code>NULL</code> to not alter the results for AmpC de-repressed cephalosporin-resistant mutants. <br /> For <em>EUCAST Expert Rules</em> v3.2, this rule applies to: <em>Citrobacter braakii</em>, <em>Citrobacter freundii</em>, <em>Citrobacter gillenii</em>, <em>Citrobacter murliniae</em>, <em>Citrobacter rodenticum</em>, <em>Citrobacter sedlakii</em>, <em>Citrobacter werkmanii</em>, <em>Citrobacter youngae</em>, <em>Enterobacter</em>, <em>Hafnia alvei</em>, <em>Klebsiella aerogenes</em>, <em>Morganella morganii</em>, <em>Providencia</em> and <em>Serratia</em>.</p></td>
+    </tr>
+    <tr>
+      <th>only_rsi_columns</th>
+      <td><p>a logical to indicate whether only antibiotic columns must be detected that were <a href='[rsi]'>transformed to class <code>&lt;rsi&gt;</code></a> on beforehand. Defaults to <code>TRUE</code> if any column of <code>x</code> is of class <code>&lt;rsi&gt;</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -361,7 +366,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
     
 
-<p>On our website <a href='https://msberends.github.io/AMR/'>https://msberends.github.io/AMR/</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR analysis, the <a href='https://msberends.github.io/AMR/reference/'>complete documentation of all functions</a> and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>. As we would like to better understand the backgrounds and needs of our users, please <a href='https://msberends.github.io/AMR/survey.html'>participate in our survey</a>!</p>
+<p>On our website <a href='https://msberends.github.io/AMR/'>https://msberends.github.io/AMR/</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR data analysis, the <a href='https://msberends.github.io/AMR/reference/'>complete documentation of all functions</a> and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>. As we would like to better understand the backgrounds and needs of our users, please <a href='https://msberends.github.io/AMR/survey.html'>participate in our survey</a>!</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># \donttest{</span>

@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9014</span>
       </span>
     </div>
 
@@ -203,7 +203,7 @@
 <div id="needed-r-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#needed-r-packages" class="anchor"></a>Needed R packages</h2>
-<p>As with many uses in R, we need some additional packages for AMR analysis. Our package works closely together with the <a href="https://www.tidyverse.org">tidyverse packages</a> <a href="https://dplyr.tidyverse.org/"><code>dplyr</code></a> and <a href="https://ggplot2.tidyverse.org"><code>ggplot2</code></a> by Dr Hadley Wickham. The tidyverse tremendously improves the way we conduct data science - it allows for a very natural way of writing syntaxes and creating beautiful plots in R.</p>
+<p>As with many uses in R, we need some additional packages for AMR data analysis. Our package works closely together with the <a href="https://www.tidyverse.org">tidyverse packages</a> <a href="https://dplyr.tidyverse.org/"><code>dplyr</code></a> and <a href="https://ggplot2.tidyverse.org"><code>ggplot2</code></a> by Dr Hadley Wickham. The tidyverse tremendously improves the way we conduct data science - it allows for a very natural way of writing syntaxes and creating beautiful plots in R.</p>
 <p>Our <code>AMR</code> package depends on these packages and even extends their use and functions.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
@@ -216,7 +216,7 @@
 <div id="prediction-analysis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#prediction-analysis" class="anchor"></a>Prediction analysis</h2>
-<p>Our package contains a function <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>, which takes the same input as functions for <a href="./AMR.html">other AMR analysis</a>. Based on a date column, it calculates cases per year and uses a regression model to predict antimicrobial resistance.</p>
+<p>Our package contains a function <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>, which takes the same input as functions for <a href="./AMR.html">other AMR data analysis</a>. Based on a date column, it calculates cases per year and uses a regression model to predict antimicrobial resistance.</p>
 <p>It is basically as easy as:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># resistance prediction of piperacillin/tazobactam (TZP):</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">resistance_predict</span>(<span class="at">tbl =</span> example_isolates, <span class="at">col_date =</span> <span class="st">"date"</span>, <span class="at">col_ab =</span> <span class="st">"TZP"</span>, <span class="at">model =</span> <span class="st">"binomial"</span>)</span>
@@ -265,7 +265,8 @@
 <span class="co"># 26 2027 0.41315710 0.3244399 0.5018743           NA         NA 0.41315710</span>
 <span class="co"># 27 2028 0.43730688 0.3418075 0.5328063           NA         NA 0.43730688</span>
 <span class="co"># 28 2029 0.46175755 0.3597639 0.5637512           NA         NA 0.46175755</span>
-<span class="co"># 29 2030 0.48639359 0.3782932 0.5944939           NA         NA 0.48639359</span></code></pre></div>
+<span class="co"># 29 2030 0.48639359 0.3782932 0.5944939           NA         NA 0.48639359</span>
+<span class="co"># 30 2031 0.51109592 0.3973697 0.6248221           NA         NA 0.51109592</span></code></pre></div>
 <p>The function <code>plot</code> is available in base R, and can be extended by other packages to depend the output based on the type of input. We extended its function to cope with resistance predictions:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">predict_TZP</span><span class="op">)</span></code></pre></div>

@@ -1,6 +1,6 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis for R                        #
+# Antimicrobial Resistance (AMR) Data Analysis for R                   #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
@@ -20,7 +20,7 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR analysis: https://msberends.github.io/AMR/        #
+# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
 #' Key Antibiotics for First (Weighted) Isolates
@@ -234,8 +234,9 @@ key_antibiotics <- function(x,
                      GramPos_4, GramPos_5, GramPos_6)
   gram_positive <- gram_positive[!is.null(gram_positive)]
   gram_positive <- gram_positive[!is.na(gram_positive)]
-  if (length(gram_positive) < 12) {
+  if (length(gram_positive) < 12 & message_not_thrown_before("key_antibiotics.grampos")) {
     warning_("Only using ", length(gram_positive), " different antibiotics as key antibiotics for Gram-positives. See ?key_antibiotics.", call = FALSE)
+    remember_thrown_message("key_antibiotics.grampos")
   }
   
   gram_negative <- c(universal,
@@ -243,8 +244,9 @@ key_antibiotics <- function(x,
                      GramNeg_4, GramNeg_5, GramNeg_6)
   gram_negative <- gram_negative[!is.null(gram_negative)]
   gram_negative <- gram_negative[!is.na(gram_negative)]
-  if (length(gram_negative) < 12) {
+  if (length(gram_negative) < 12 & message_not_thrown_before("key_antibiotics.gramneg")) {
     warning_("Only using ", length(gram_negative), " different antibiotics as key antibiotics for Gram-negatives. See ?key_antibiotics.", call = FALSE)
+    remember_thrown_message("key_antibiotics.gramneg")
   }
   
   x <- as.data.frame(x, stringsAsFactors = FALSE)

@@ -1,6 +1,6 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis for R                        #
+# Antimicrobial Resistance (AMR) Data Analysis for R                   #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
@@ -20,7 +20,7 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR analysis: https://msberends.github.io/AMR/        #
+# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
 #' Data Sets with `r format(nrow(antibiotics) + nrow(antivirals), big.mark = ",")` Antimicrobials
@@ -174,7 +174,7 @@ catalogue_of_life <- list(
 
 #' Data Set with `r format(nrow(example_isolates), big.mark = ",")` Example Isolates
 #'
-#' A data set containing `r format(nrow(example_isolates), big.mark = ",")` microbial isolates with their full antibiograms. The data set reflects reality and can be used to practice AMR analysis. For examples, please read [the tutorial on our website](https://msberends.github.io/AMR/articles/AMR.html).
+#' A data set containing `r format(nrow(example_isolates), big.mark = ",")` microbial isolates with their full antibiograms. The data set reflects reality and can be used to practice AMR data analysis. For examples, please read [the tutorial on our website](https://msberends.github.io/AMR/articles/AMR.html).
 #' @format A [data.frame] with `r format(nrow(example_isolates), big.mark = ",")` observations and `r ncol(example_isolates)` variables:
 #' - `date`\cr date of receipt at the laboratory
 #' - `hospital_id`\cr ID of the hospital, from A to D
@@ -192,7 +192,7 @@ catalogue_of_life <- list(
 
 #' Data Set with Unclean Data
 #'
-#' A data set containing `r format(nrow(example_isolates_unclean), big.mark = ",")` microbial isolates that are not cleaned up and consequently not ready for AMR analysis. This data set can be used for practice.
+#' A data set containing `r format(nrow(example_isolates_unclean), big.mark = ",")` microbial isolates that are not cleaned up and consequently not ready for AMR data analysis. This data set can be used for practice.
 #' @format A [data.frame] with `r format(nrow(example_isolates_unclean), big.mark = ",")` observations and `r ncol(example_isolates_unclean)` variables:
 #' - `patient_id`\cr ID of the patient
 #' - `date`\cr date of receipt at the laboratory

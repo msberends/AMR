@@ -41,7 +41,7 @@ This package can be used for:
   * Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the Catalogue of Life and List of Prokaryotic names with Standing in Nomenclature
   * Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines
   * Retrieving antimicrobial drug names, doses and forms of administration from clinical health care records
-  * Determining first isolates to be used for AMR analysis
+  * Determining first isolates to be used for AMR data analysis
   * Calculating antimicrobial resistance
   * Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO)
   * Calculating (empirical) susceptibility of both mono therapy and combination therapies

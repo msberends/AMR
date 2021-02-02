@@ -89,7 +89,7 @@ The rules set (the `custom` object in this case) could be exported to a shared f
 
 The `mdro()` function always returns an ordered `factor`. For example, the output of the default guideline by Magiorakos *et al.* returns a `factor` with levels 'Negative', 'MDR', 'XDR' or 'PDR' in that order.
 
-The next example uses the `example_isolates` data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR analysis. If we test the MDR/XDR/PDR guideline on this data set, we get:
+The next example uses the `example_isolates` data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR data analysis. If we test the MDR/XDR/PDR guideline on this data set, we get:
 
 ```{r, message = FALSE}
 library(dplyr)   # to support pipes: %>%

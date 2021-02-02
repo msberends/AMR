@@ -1,5 +1,25 @@
-# AMR 1.5.0.9013
-## <small>Last updated: 28 January 2021</small>
+# AMR 1.5.0.9014
+## <small>Last updated:  2 February 2021</small>
+
+### Breaking
+* Functions that are applied to a data set containing antibiotic columns gained the argument `only_rsi_columns`, which defaults to `TRUE` if any of the columns are of class `<rsi>` (i.e., transformed with `as.rsi()`). This increases reliability of automatic determination of antibiotic columns (so only columns that are defined to be `<rsi>` will be affected).
+
+  This change might invalidate existing code. But since the new argument always returns `FALSE` when no `<rsi>` column can be found in the data, this chance is low.
+
+  Affected functions are:
+  * All antibiotic selector functions (`ab_class()` and its wrappers, such as `aminoglocysides()`, `carbapenems()`, `penicillins()`)
+  * All antibiotic filter functions (`filter_ab_class()` and its wrappers, such as `filter_aminoglocysides()`, `filter_carbapenems()`, `filter_penicillins()`)
+  * `eucast_rules()`
+  * `mdro()` (including wrappers such as `brmo()`, `mrgn` and `eucast_exceptional_phenotypes()`)
+  * `guess_ab_col()`
+  
+  You can quickly transform all your eligible columns using either:
+  
+  ```r
+  library(dplyr)
+  your_date %>% mutate_if(is.rsi.eligible, as.rsi)        # old dplyr
+  your_date %>% mutate(across((is.rsi.eligible), as.rsi)) # new dplyr
+  ```
 
 ### New
 * Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the `eucast_rules()` function and in `as.rsi()` to interpret MIC and disk diffusion values. This is now the default guideline in this package.
@@ -28,21 +48,22 @@
   ```
 
 ### Changed
+* `is.rsi()` now returns a vector of `TRUE`/`FALSE` when the input is a data set, in case it will iterate over all columns
 * Using functions without setting a data set (e.g., `mo_is_gram_negative()`, `mo_is_gram_positive()`, `mo_is_intrinsic_resistant()`, `first_isolate()`, `mdro()`) now work with `dplyr`s `group_by()` again
 * Updated the data set `microorganisms.codes` (which contains popular LIS and WHONET codes for microorganisms) for some species of *Mycobacterium* that previously incorrectly returned *M. africanum*
 * Added Pretomanid (PMD, J04AK08) to the `antibiotics` data set
 * WHONET code `"PNV"` will now correctly be interpreted as `PHN`, the antibiotic code for phenoxymethylpenicillin ('peni V')
 * Fix for verbose output of `mdro(..., verbose = TRUE)` for German guideline (3MGRN and 4MGRN) and Dutch guideline (BRMO, only *P. aeruginosa*)
-* `is.rsi.eligible()` now returns `FALSE` immediately if the input does not contain any of the values "R", "S" or "I". This drastically improves speed, also for a lot of other functions that rely on automatic determination of antibiotic columns.
+* `is.rsi.eligible()` now detects if the column name resembles an antibiotic name or code and now returns `TRUE` immediately if the input contains any of the values "R", "S" or "I". This drastically improves speed, also for a lot of other functions that rely on automatic determination of antibiotic columns.
 * Functions  `get_episode()` and `is_new_episode()` now support less than a day as value for argument `episode_days` (e.g., to include one patient/test per hour)
 * Argument `ampc_cephalosporin_resistance` in `eucast_rules()` now also applies to value "I" (not only "S")
 * Updated colours of values R, S and I in tibble printing
 * Functions `print()` and `summary()` on a Principal Components Analysis object (`pca()`) now print additional group info if the original data was grouped using `dplyr::group_by()`
-
+* Improved speed of `guess_ab_col()`
 
 ### Other
 * Big documentation updates
-* Loading the package (i.e., `library(AMR)`) now is ~50 times faster than before, in costs of package size (increased with ~3 MB)
+* Loading the package (i.e., `library(AMR)`) now is ~50 times faster than before, in costs of package size (which increased by ~3 MB)
 
 
 # AMR 1.5.0
@@ -698,7 +719,7 @@ This software is now out of beta and considered stable. Nonetheless, this packag
 We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.gitlab.io/AMR/) (built with the great [`pkgdown`](https://pkgdown.r-lib.org/))
 
 * Contains the complete manual of this package and all of its functions with an explanation of their arguments
-* Contains a comprehensive tutorial about how to conduct antimicrobial resistance analysis, import data from WHONET or SPSS and many more.
+* Contains a comprehensive tutorial about how to conduct AMR data analysis, import data from WHONET or SPSS and many more.
 
 #### New
 * **BREAKING**: removed deprecated functions, arguments and references to 'bactid'. Use `as.mo()` to identify an MO code.
@@ -757,7 +778,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 * New function `mo_uncertainties()` to review values that could be coerced to a valid MO code using `as.mo()`, but with uncertainty.
 * New function `mo_renamed()` to get a list of all returned values from `as.mo()` that have had taxonomic renaming
 * New function `age()` to calculate the (patients) age in years
-* New function `age_groups()` to split ages into custom or predefined groups (like children or elderly). This allows for easier demographic antimicrobial resistance analysis per age group.
+* New function `age_groups()` to split ages into custom or predefined groups (like children or elderly). This allows for easier demographic AMR data analysis per age group.
 * New function `ggplot_rsi_predict()` as well as the base R `plot()` function can now be used for resistance prediction calculated with `resistance_predict()`:
   ```r
   x <- resistance_predict(septic_patients, col_ab = "amox")

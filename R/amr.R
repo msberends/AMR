@@ -1,6 +1,6 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis for R                        #
+# Antimicrobial Resistance (AMR) Data Analysis for R                   #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
@@ -20,7 +20,7 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR analysis: https://msberends.github.io/AMR/        #
+# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
 #' The `AMR` Package
@@ -37,7 +37,7 @@
 #' - Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the Catalogue of Life and List of Prokaryotic names with Standing in Nomenclature
 #' - Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines
 #' - Retrieving antimicrobial drug names, doses and forms of administration from clinical health care records
-#' - Determining first isolates to be used for AMR analysis
+#' - Determining first isolates to be used for AMR data analysis
 #' - Calculating antimicrobial resistance
 #' - Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO)
 #' - Calculating (empirical) susceptibility of both mono therapy and combination therapies
@@ -54,7 +54,7 @@
 #' @section Reference Data Publicly Available:
 #' All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this `AMR` package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find [all download links on our website](https://msberends.github.io/AMR/articles/datasets.html), which is automatically updated with every code change.
 #' @section Read more on Our Website!:
-#' On our website <https://msberends.github.io/AMR/> you can find [a comprehensive tutorial](https://msberends.github.io/AMR/articles/AMR.html) about how to conduct AMR analysis, the [complete documentation of all functions](https://msberends.github.io/AMR/reference/) and [an example analysis using WHONET data](https://msberends.github.io/AMR/articles/WHONET.html). As we would like to better understand the backgrounds and needs of our users, please [participate in our survey](https://msberends.github.io/AMR/survey.html)!
+#' On our website <https://msberends.github.io/AMR/> you can find [a comprehensive tutorial](https://msberends.github.io/AMR/articles/AMR.html) about how to conduct AMR data analysis, the [complete documentation of all functions](https://msberends.github.io/AMR/reference/) and [an example analysis using WHONET data](https://msberends.github.io/AMR/articles/WHONET.html). As we would like to better understand the backgrounds and needs of our users, please [participate in our survey](https://msberends.github.io/AMR/survey.html)!
 #' @section Contact Us:
 #' For suggestions, comments or questions, please contact us at:
 #'

@@ -1,6 +1,6 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis for R                        #
+# Antimicrobial Resistance (AMR) Data Analysis for R                   #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
@@ -20,13 +20,14 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR analysis: https://msberends.github.io/AMR/        #
+# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
 #' Antibiotic Class Selectors
 #' 
 #' These functions help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. \strong{\Sexpr{ifelse(as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2, paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
 #' @inheritSection lifecycle Stable Lifecycle
+#' @param only_rsi_columns a logical to indicate whether only columns of class [`<rsi>`]([rsi]) must be selected. If set to `NULL` (default), it will be `TRUE` if any column of the data was [transformed to class `<rsi>`]([rsi]) on beforehand, and `FALSE` otherwise.
 #' @inheritParams filter_ab_class 
 #' @details \strong{\Sexpr{ifelse(as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2, paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
 #' 
@@ -79,91 +80,95 @@
 #'   example_isolates %>% filter_carbapenems("R", "all")
 #'   example_isolates %>% filter(across(carbapenems(), ~. == "R"))
 #' }
-ab_class <- function(ab_class) {
+ab_class <- function(ab_class, 
+                     only_rsi_columns = NULL) {
   ab_selector(ab_class, function_name = "ab_class")
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-aminoglycosides <- function() {
+aminoglycosides <- function(only_rsi_columns = NULL) {
   ab_selector("aminoglycoside", function_name = "aminoglycosides")
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-carbapenems <- function() {
-  ab_selector("carbapenem", function_name = "carbapenems")
+carbapenems <- function(only_rsi_columns = NULL) {
+  ab_selector("carbapenem", function_name = "carbapenems", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-cephalosporins <- function() {
-  ab_selector("cephalosporin", function_name = "cephalosporins")
+cephalosporins <- function(only_rsi_columns = NULL) {
+  ab_selector("cephalosporin", function_name = "cephalosporins", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-cephalosporins_1st <- function() {
-  ab_selector("cephalosporins.*1", function_name = "cephalosporins_1st")
+cephalosporins_1st <- function(only_rsi_columns = NULL) {
+  ab_selector("cephalosporins.*1", function_name = "cephalosporins_1st", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-cephalosporins_2nd <- function() {
-  ab_selector("cephalosporins.*2", function_name = "cephalosporins_2nd")
+cephalosporins_2nd <- function(only_rsi_columns = NULL) {
+  ab_selector("cephalosporins.*2", function_name = "cephalosporins_2nd", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-cephalosporins_3rd <- function() {
-  ab_selector("cephalosporins.*3", function_name = "cephalosporins_3rd")
+cephalosporins_3rd <- function(only_rsi_columns = NULL) {
+  ab_selector("cephalosporins.*3", function_name = "cephalosporins_3rd", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-cephalosporins_4th <- function() {
-  ab_selector("cephalosporins.*4", function_name = "cephalosporins_4th")
+cephalosporins_4th <- function(only_rsi_columns = NULL) {
+  ab_selector("cephalosporins.*4", function_name = "cephalosporins_4th", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-cephalosporins_5th <- function() {
-  ab_selector("cephalosporins.*5", function_name = "cephalosporins_5th")
+cephalosporins_5th <- function(only_rsi_columns = NULL) {
+  ab_selector("cephalosporins.*5", function_name = "cephalosporins_5th", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-fluoroquinolones <- function() {
-  ab_selector("fluoroquinolone", function_name = "fluoroquinolones")
+fluoroquinolones <- function(only_rsi_columns = NULL) {
+  ab_selector("fluoroquinolone", function_name = "fluoroquinolones", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-glycopeptides <- function() {
-  ab_selector("glycopeptide", function_name = "glycopeptides")
+glycopeptides <- function(only_rsi_columns = NULL) {
+  ab_selector("glycopeptide", function_name = "glycopeptides", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-macrolides <- function() {
-  ab_selector("macrolide", function_name = "macrolides")
+macrolides <- function(only_rsi_columns = NULL) {
+  ab_selector("macrolide", function_name = "macrolides", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-penicillins <- function() {
-  ab_selector("penicillin", function_name = "penicillins")
+penicillins <- function(only_rsi_columns = NULL) {
+  ab_selector("penicillin", function_name = "penicillins", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-tetracyclines <- function() {
-  ab_selector("tetracycline", function_name = "tetracyclines")
+tetracyclines <- function(only_rsi_columns = NULL) {
+  ab_selector("tetracycline", function_name = "tetracyclines", only_rsi_columns = only_rsi_columns)
 }
 
-ab_selector <- function(ab_class, function_name) {
+ab_selector <- function(ab_class,
+                        function_name,
+                        only_rsi_columns) {
   meet_criteria(ab_class, allow_class = "character", has_length = 1, .call_depth = 1)
   meet_criteria(function_name, allow_class = "character", has_length = 1, .call_depth = 1)
+  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1, allow_NULL = TRUE, .call_depth = 1)
   
   if (as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2) {
     warning_("antibiotic class selectors such as ", function_name, 
@@ -173,10 +178,12 @@ ab_selector <- function(ab_class, function_name) {
   }
   
   vars_df <- get_current_data(arg_name = NA, call = -3)
-  
+  if (is.null(only_rsi_columns)) {
+    only_rsi_columns <- any(is.rsi(vars_df))
+  }
   # improve speed here so it will only run once when e.g. in one select call
   if (!identical(pkg_env$ab_selector, unique_call_id())) {
-    ab_in_data <- get_column_abx(vars_df, info = FALSE)
+    ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns)
     pkg_env$ab_selector <- unique_call_id()
     pkg_env$ab_selector_cols <- ab_in_data
   } else {

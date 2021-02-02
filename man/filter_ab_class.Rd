@@ -17,7 +17,14 @@
 \alias{filter_tetracyclines}
 \title{Filter Isolates on Result in Antimicrobial Class}
 \usage{
-filter_ab_class(x, ab_class, result = NULL, scope = "any", ...)
+filter_ab_class(
+  x,
+  ab_class,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = any(is.rsi(x)),
+  ...
+)
 
 filter_aminoglycosides(x, result = NULL, scope = "any", ...)
 
@@ -54,7 +61,9 @@ filter_tetracyclines(x, result = NULL, scope = "any", ...)
 
 \item{scope}{the scope to check which variables to check, can be \code{"any"} (default) or \code{"all"}}
 
-\item{...}{previously used when this package still depended on the \code{dplyr} package, now ignored}
+\item{only_rsi_columns}{a logical to indicate whether only columns must be included that were \href{[rsi]}{transformed to class \verb{<rsi>}} on beforehand. Defaults to \code{TRUE} if any column of \code{x} is of class \verb{<rsi>}.}
+
+\item{...}{arguments passed on to \code{\link[=filter_ab_class]{filter_ab_class()}}}
 }
 \description{
 Filter isolates on results in specific antimicrobial classes. This makes it easy to filter on isolates that were tested for e.g. any aminoglycoside, or to filter on carbapenem-resistant isolates without the need to specify the drugs.

@@ -1,6 +1,6 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis for R                        #
+# Antimicrobial Resistance (AMR) Data Analysis for R                   #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
@@ -20,7 +20,7 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR analysis: https://msberends.github.io/AMR/        #
+# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
 #' Filter Isolates on Result in Antimicrobial Class
@@ -31,7 +31,8 @@
 #' @param ab_class an antimicrobial class, like `"carbapenems"`. The columns `group`, `atc_group1` and `atc_group2` of the [antibiotics] data set will be searched (case-insensitive) for this value.
 #' @param result an antibiotic result: S, I or R (or a combination of more of them)
 #' @param scope the scope to check which variables to check, can be `"any"` (default) or `"all"`
-#' @param ... previously used when this package still depended on the `dplyr` package, now ignored
+#' @param only_rsi_columns a logical to indicate whether only columns must be included that were [transformed to class `<rsi>`]([rsi]) on beforehand. Defaults to `TRUE` if any column of `x` is of class `<rsi>`.
+#' @param ... arguments passed on to [filter_ab_class()]
 #' @details All columns of `x` will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.). This means that a filter function like e.g. [filter_aminoglycosides()] will include column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
 #' @rdname filter_ab_class
 #' @seealso [antibiotic_class_selectors()] for the `select()` equivalent.
@@ -81,6 +82,7 @@ filter_ab_class <- function(x,
                             ab_class,
                             result = NULL,
                             scope = "any",
+                            only_rsi_columns = any(is.rsi(x)),
                             ...) {
   .call_depth <- list(...)$`.call_depth`
   if (is.null(.call_depth)) {

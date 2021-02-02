@@ -18,36 +18,38 @@
 \alias{tetracyclines}
 \title{Antibiotic Class Selectors}
 \usage{
-ab_class(ab_class)
+ab_class(ab_class, only_rsi_columns = NULL)
 
-aminoglycosides()
+aminoglycosides(only_rsi_columns = NULL)
 
-carbapenems()
+carbapenems(only_rsi_columns = NULL)
 
-cephalosporins()
+cephalosporins(only_rsi_columns = NULL)
 
-cephalosporins_1st()
+cephalosporins_1st(only_rsi_columns = NULL)
 
-cephalosporins_2nd()
+cephalosporins_2nd(only_rsi_columns = NULL)
 
-cephalosporins_3rd()
+cephalosporins_3rd(only_rsi_columns = NULL)
 
-cephalosporins_4th()
+cephalosporins_4th(only_rsi_columns = NULL)
 
-cephalosporins_5th()
+cephalosporins_5th(only_rsi_columns = NULL)
 
-fluoroquinolones()
+fluoroquinolones(only_rsi_columns = NULL)
 
-glycopeptides()
+glycopeptides(only_rsi_columns = NULL)
 
-macrolides()
+macrolides(only_rsi_columns = NULL)
 
-penicillins()
+penicillins(only_rsi_columns = NULL)
 
-tetracyclines()
+tetracyclines(only_rsi_columns = NULL)
 }
 \arguments{
 \item{ab_class}{an antimicrobial class, like \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched (case-insensitive) for this value.}
+
+\item{only_rsi_columns}{a logical to indicate whether only columns of class \href{[rsi]}{\verb{<rsi>}} must be selected. If set to \code{NULL} (default), it will be \code{TRUE} if any column of the data was \href{[rsi]}{transformed to class \verb{<rsi>}} on beforehand, and \code{FALSE} otherwise.}
 }
 \description{
 These functions help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. \strong{\Sexpr{ifelse(as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2, paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
@@ -72,7 +74,7 @@ All reference data sets (about microorganisms, antibiotics, R/SI interpretation,
 
 \section{Read more on Our Website!}{
 
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
+On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }
 
 \examples{

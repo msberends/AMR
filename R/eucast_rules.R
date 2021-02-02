@@ -1,6 +1,6 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis for R                        #
+# Antimicrobial Resistance (AMR) Data Analysis for R                   #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
@@ -20,11 +20,11 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR analysis: https://msberends.github.io/AMR/        #
+# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
 # add new version numbers here, and add the rules themselves to "data-raw/eucast_rules.tsv" and rsi_translation
-# (running "data-raw/internals.R" will process the TSV file)
+# (sourcing "data-raw/_internals.R" will process the TSV file)
 EUCAST_VERSION_BREAKPOINTS <- list("11.0" = list(version_txt = "v11.0",
                                                  year = 2021, 
                                                  title = "'EUCAST Clinical Breakpoint Tables'",
@@ -77,6 +77,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param ... column name of an antibiotic, see section *Antibiotics* below
 #' @param ab any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
 #' @param administration route of administration, either `r vector_or(dosage$administration)`
+#' @param only_rsi_columns a logical to indicate whether only antibiotic columns must be detected that were [transformed to class `<rsi>`]([rsi]) on beforehand. Defaults to `TRUE` if any column of `x` is of class `<rsi>`.
 #' @inheritParams first_isolate
 #' @details
 #' **Note:** This function does not translate MIC values to RSI values. Use [as.rsi()] for that. \cr
@@ -165,6 +166,7 @@ eucast_rules <- function(x,
                          version_breakpoints = 11.0,
                          version_expertrules = 3.2,
                          ampc_cephalosporin_resistance = NA,
+                         only_rsi_columns = any(is.rsi(x)),
                          ...) {
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(col_mo, allow_class = "character", has_length = 1, is_in = colnames(x), allow_NULL = TRUE)
@@ -174,6 +176,7 @@ eucast_rules <- function(x,
   meet_criteria(version_breakpoints, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_BREAKPOINTS)))
   meet_criteria(version_expertrules, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_EXPERT_RULES)))
   meet_criteria(ampc_cephalosporin_resistance, has_length = 1, allow_NA = TRUE, allow_NULL = TRUE, is_in = c("R", "S", "I"))
+  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   
   x_deparsed <- deparse(substitute(x))
   if (length(x_deparsed) > 1 || !all(x_deparsed %like% "[a-z]+")) {
@@ -276,6 +279,7 @@ eucast_rules <- function(x,
                             hard_dependencies = NULL,
                             verbose = verbose,
                             info = info,
+                            only_rsi_columns = only_rsi_columns,
                             ...)
   
   AMC <- cols_ab["AMC"]
@@ -748,7 +752,7 @@ eucast_rules <- function(x,
     # this allows: eucast_rules(x, eucast_rules_df = AMR:::eucast_rules_file %>% filter(is.na(have_these_values)))
     eucast_rules_df <- list(...)$eucast_rules_df
   } else {
-    # otherwise internal data file, created in data-raw/internals.R
+    # otherwise internal data file, created in data-raw/_internals.R
     eucast_rules_df <- eucast_rules_file
   }
   

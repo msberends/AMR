@@ -1,6 +1,6 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis for R                        #
+# Antimicrobial Resistance (AMR) Data Analysis for R                   #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
@@ -20,7 +20,7 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR analysis: https://msberends.github.io/AMR/        #
+# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
 #' Interpret MIC and Disk Values, or Clean Raw R/SI Data
@@ -78,6 +78,8 @@
 #' The repository of this package [contains a machine-readable version](https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt) of all guidelines. This is a CSV file consisting of `r format(nrow(AMR::rsi_translation), big.mark = ",")` rows and `r ncol(AMR::rsi_translation)` columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. **This allows for easy implementation of these rules in laboratory information systems (LIS)**. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
 #'
 #' ## Other
+#' 
+#' The function [is.rsi()] detects if the input contains class `<rsi>`. If the input is a data.frame, it returns a vector in which all columns are checked for this class.
 #'
 #' The function [is.rsi.eligible()] returns `TRUE` when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` argument.
 #' @section Interpretation of R and S/I:
@@ -91,7 +93,7 @@
 #'   A microorganism is categorised as *Susceptible, Increased exposure* when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.
 #'
 #' This AMR package honours this new insight. Use [susceptibility()] (equal to [proportion_SI()]) to determine antimicrobial susceptibility and [count_susceptible()] (equal to [count_SI()]) to count susceptible isolates.
-#' @return Ordered [factor] with new class [`rsi`]
+#' @return Ordered factor with new class `<rsi>`
 #' @aliases rsi
 #' @export
 #' @seealso [as.mic()], [as.disk()], [as.mo()]
@@ -189,7 +191,11 @@ as.rsi <- function(x, ...) {
 #' @rdname as.rsi
 #' @export
 is.rsi <- function(x) {
-  inherits(x, "rsi")
+  if (inherits(x, "data.frame")) {
+    unname(vapply(FUN.VALUE = logical(1), x, is.rsi))
+  } else {
+    inherits(x, "rsi")
+  }
 }
 
 #' @rdname as.rsi
@@ -198,8 +204,7 @@ is.rsi.eligible <- function(x, threshold = 0.05) {
   meet_criteria(threshold, allow_class = "numeric", has_length = 1)
   
   stop_if(NCOL(x) > 1, "`x` must be a one-dimensional vector.")
-  if (any(c("logical",
-            "numeric",
+  if (any(c("numeric",
             "integer",
             "mo",
             "ab",
@@ -213,13 +218,26 @@ is.rsi.eligible <- function(x, threshold = 0.05) {
           %in% class(x))) {
     # no transformation needed
     return(FALSE)
-  } else if (!any(c("R", "S", "I") %in% x, na.rm = TRUE)) {
+  } else if (all(x %in% c("R", "S", "I", NA)) & !all(is.na(x))) {
+    return(TRUE)
+  } else if (!any(c("R", "S", "I") %in% x, na.rm = TRUE) & !all(is.na(x))) {
     return(FALSE)
   } else {
-    x <- x[!is.na(x) & !is.null(x) & !identical(x, "")]
+    x <- x[!is.na(x) & !is.null(x) & x != ""]
     if (length(x) == 0) {
+      # no other values than NA or ""
+      cur_col <- get_current_column()
+      if (!is.null(cur_col)) {
+        ab <- suppressWarnings(as.ab(cur_col, fast_mode = TRUE, info = FALSE))
+        if (!is.na(ab)) {
+          # this is a valid antibiotic code
+          return(TRUE)
+        }
+      }
+      # all values empty and no antibiotic col name - return FALSE
       return(FALSE)
     }
+    # transform all values and see if it meets the set threshold
     checked <- suppressWarnings(as.rsi(x))
     outcome <- sum(is.na(checked)) / length(x)
     outcome <= threshold

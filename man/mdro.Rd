@@ -27,20 +27,26 @@ mdro(
   pct_required_classes = 0.5,
   combine_SI = TRUE,
   verbose = FALSE,
+  only_rsi_columns = any(is.rsi(x)),
   ...
 )
 
 custom_mdro_guideline(..., as_factor = TRUE)
 
-brmo(x, guideline = "BRMO", ...)
+brmo(x, guideline = "BRMO", only_rsi_columns = any(is.rsi(x)), ...)
 
-mrgn(x, guideline = "MRGN", ...)
+mrgn(x, guideline = "MRGN", only_rsi_columns = any(is.rsi(x)), ...)
 
-mdr_tb(x, guideline = "TB", ...)
+mdr_tb(x, guideline = "TB", only_rsi_columns = any(is.rsi(x)), ...)
 
-mdr_cmi2012(x, guideline = "CMI2012", ...)
+mdr_cmi2012(x, guideline = "CMI2012", only_rsi_columns = any(is.rsi(x)), ...)
 
-eucast_exceptional_phenotypes(x, guideline = "EUCAST", ...)
+eucast_exceptional_phenotypes(
+  x,
+  guideline = "EUCAST",
+  only_rsi_columns = any(is.rsi(x)),
+  ...
+)
 }
 \arguments{
 \item{x}{a \link{data.frame} with antibiotics columns, like \code{AMX} or \code{amox}. Can be left blank for automatic determination.}
@@ -56,6 +62,8 @@ eucast_exceptional_phenotypes(x, guideline = "EUCAST", ...)
 \item{combine_SI}{a \link{logical} to indicate whether all values of S and I must be merged into one, so resistance is only considered when isolates are R, not I. As this is the default behaviour of the \code{\link[=mdro]{mdro()}} function, it follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. When using \code{combine_SI = FALSE}, resistance is considered when isolates are R or I.}
 
 \item{verbose}{a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.}
+
+\item{only_rsi_columns}{a logical to indicate whether only antibiotic columns must be detected that were \href{[rsi]}{transformed to class \verb{<rsi>}} on beforehand. Defaults to \code{TRUE} if any column of \code{x} is of class \verb{<rsi>}.}
 
 \item{...}{in case of \code{\link[=custom_mdro_guideline]{custom_mdro_guideline()}}: a set of rules, see section \emph{Using Custom Guidelines} below. Otherwise: column name of an antibiotic, see section \emph{Antibiotics} below.}
 
@@ -174,7 +182,7 @@ This AMR package honours this new insight. Use \code{\link[=susceptibility]{susc
 
 \section{Read more on Our Website!}{
 
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
+On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }
 
 \examples{

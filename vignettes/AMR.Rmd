@@ -1,5 +1,5 @@
 ---
-title: "How to conduct AMR analysis"
+title: "How to conduct AMR data analysis"
 author: "Matthijs S. Berends"
 date: '`r format(Sys.Date(), "%d %B %Y")`'
 output: 
@@ -7,7 +7,7 @@ output:
     toc: true
     toc_depth: 3
 vignette: >
-  %\VignetteIndexEntry{How to conduct AMR analysis}
+  %\VignetteIndexEntry{How to conduct AMR data analysis}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-Conducting antimicrobial resistance analysis unfortunately requires in-depth knowledge from different scientific fields, which makes it hard to do right. At least, it requires:
+Conducting AMR data analysis unfortunately requires in-depth knowledge from different scientific fields, which makes it hard to do right. At least, it requires:
 
 * Good questions (always start with those!)
 * A thorough understanding of (clinical) epidemiology, to understand the clinical and epidemiological relevance and possible bias of results
@@ -39,7 +39,7 @@ Conducting antimicrobial resistance analysis unfortunately requires in-depth kno
 
 Of course, we cannot instantly provide you with knowledge and experience. But with this `AMR` package, we aimed at providing (1) tools to simplify antimicrobial resistance data cleaning, transformation and analysis, (2) methods to easily incorporate international guidelines and (3) scientifically reliable reference data, including the requirements mentioned above.
 
-The `AMR` package enables standardised and reproducible antimicrobial resistance analysis, with the application of evidence-based rules, determination of first isolates, translation of various codes for microorganisms and antimicrobial agents, determination of (multi-drug) resistant microorganisms, and calculation of antimicrobial resistance, prevalence and future trends.
+The `AMR` package enables standardised and reproducible AMR data analysis, with the application of evidence-based rules, determination of first isolates, translation of various codes for microorganisms and antimicrobial agents, determination of (multi-drug) resistant microorganisms, and calculation of antimicrobial resistance, prevalence and future trends.
 
 # Preparation 
 
@@ -58,7 +58,7 @@ knitr::kable(data.frame(date = Sys.Date(),
 ``` 
 
 ## Needed R packages
-As with many uses in R, we need some additional packages for AMR analysis. Our package works closely together with the [tidyverse packages](https://www.tidyverse.org) [`dplyr`](https://dplyr.tidyverse.org/) and [`ggplot2`](https://ggplot2.tidyverse.org) by RStudio. The tidyverse tremendously improves the way we conduct data science - it allows for a very natural way of writing syntaxes and creating beautiful plots in R.
+As with many uses in R, we need some additional packages for AMR data analysis. Our package works closely together with the [tidyverse packages](https://www.tidyverse.org) [`dplyr`](https://dplyr.tidyverse.org/) and [`ggplot2`](https://ggplot2.tidyverse.org) by RStudio. The tidyverse tremendously improves the way we conduct data science - it allows for a very natural way of writing syntaxes and creating beautiful plots in R.
 
 We will also use the `cleaner` package, that can be used for cleaning data and creating frequency tables.
 
@@ -73,7 +73,7 @@ library(cleaner)
 ```
 
 # Creation of data
-We will create some fake example data to use for analysis. For antimicrobial resistance analysis, we need at least: a patient ID, name or code of a microorganism, a date and antimicrobial results (an antibiogram). It could also include a specimen type (e.g. to filter on blood or urine), the ward type (e.g. to filter on ICUs). 
+We will create some fake example data to use for analysis. For AMR data analysis, we need at least: a patient ID, name or code of a microorganism, a date and antimicrobial results (an antibiogram). It could also include a specimen type (e.g. to filter on blood or urine), the ward type (e.g. to filter on ICUs). 
 
 With additional columns (like a hospital name, the patients gender of even [well-defined] clinical properties) you can do a comparative analysis, as this tutorial will demonstrate too.
 
@@ -214,9 +214,10 @@ The Clinical and Laboratory Standards Institute (CLSI) appoints this as follows:
 <br>[M39-A4 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition. CLSI, 2014. Chapter 6.4](https://clsi.org/standards/products/microbiology/documents/m39/)
 
 This `AMR` package includes this methodology with the `first_isolate()` function. It adopts the episode of a year (can be changed by user) and it starts counting days after every selected isolate. This new variable can easily be added to our data:
+
 ```{r 1st isolate}
 data <- data %>% 
-  mutate(first = first_isolate(.))
+  mutate(first = first_isolate())
 ```
 
 So only `r percentage(sum(data$first) / nrow(data))` is suitable for resistance analysis! We can now filter on it with the `filter()` function, also from the `dplyr` package:
@@ -237,7 +238,7 @@ data_1st <- data %>%
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
 weighted_df <- data %>%
-  filter(bacteria == as.mo("E. coli")) %>% 
+  filter(bacteria == as.mo("Escherichia coli")) %>% 
   # only most prevalent patient
   filter(patient_id == top_freq(freq(., patient_id), 1)[1]) %>% 
   arrange(date) %>%
@@ -248,7 +249,7 @@ weighted_df <- data %>%
   select(isolate, everything())
 ```
 
-We made a slight twist to the CLSI algorithm, to take into account the antimicrobial susceptibility profile. Have a look at all isolates of patient `r as.data.frame(weighted_df[1, 'patient_id'])`, sorted on date:
+We made a slight twist to the CLSI algorithm, to take into account the antimicrobial susceptibility profile. Have a look at all *E. coli* isolates of patient `r as.data.frame(weighted_df[1, 'patient_id'])`, sorted on date:
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
 weighted_df %>% 
@@ -261,13 +262,13 @@ If a column exists with a name like 'key(...)ab' the `first_isolate()` function 
 
 ```{r 1st weighted, warning = FALSE}
 data <- data %>% 
-  mutate(keyab = key_antibiotics(.)) %>% 
-  mutate(first_weighted = first_isolate(.))
+  mutate(keyab = key_antibiotics()) %>% 
+  mutate(first_weighted = first_isolate())
 ```
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
 weighted_df2 <- data %>%
-  filter(bacteria == as.mo("E. coli")) %>% 
+  filter(bacteria == as.mo("Escherichia coli")) %>% 
   # only most prevalent patient
   filter(patient_id == top_freq(freq(., patient_id), 1)[1]) %>% 
   arrange(date) %>%
@@ -507,7 +508,7 @@ data_1st %>%
 
 ## Independence test
 
-The next example uses the `example_isolates` data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR analysis.
+The next example uses the `example_isolates` data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR data analysis.
 
 We will compare the resistance to fosfomycin (column `FOS`) in hospital A and D. The input for the `fisher.test()` can be retrieved with a transformation like this:
 

@@ -1,6 +1,6 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis for R                        #
+# Antimicrobial Resistance (AMR) Data Analysis for R                   #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
@@ -20,12 +20,12 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR analysis: https://msberends.github.io/AMR/        #
+# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
 #' Random MIC Values/Disk Zones/RSI Generation
 #'
-#' These functions can be used for generating random MIC values and disk diffusion diameters, for AMR analysis practice.
+#' These functions can be used for generating random MIC values and disk diffusion diameters, for AMR data analysis practice.
 #' @inheritSection lifecycle Maturing Lifecycle 
 #' @param size desired size of the returned vector
 #' @param mo any character that can be coerced to a valid microorganism code with [as.mo()]

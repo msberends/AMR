@@ -1,6 +1,6 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis for R                        #
+# Antimicrobial Resistance (AMR) Data Analysis for R                   #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
@@ -20,7 +20,7 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR analysis: https://msberends.github.io/AMR/        #
+# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
 # faster implementation of left_join than using merge() by poorman - we use match():
@@ -670,6 +670,45 @@ get_current_data <- function(arg_name, call) {
           call = call)
   } else {
     stop_("argument `", arg_name, "` is missing with no default", call = call)
+  }
+}
+
+get_current_column <- function() {
+  # try dplyr::cur_columns() first
+  cur_column <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
+  if (!is.null(cur_column)) {
+    out <- tryCatch(cur_column(), error = function(e) NULL)
+    if (!is.null(out)) {
+      return(out)
+    }
+  }
+  
+  # cur_column() doesn't always work (only allowed for conditions set by dplyr), but it's probably still possible:
+  frms <- lapply(sys.frames(), function(el) {
+    if ("i" %in% names(el)) {
+      if ("tibble_vars" %in% names(el)) {
+        # for mutate_if()
+        el$tibble_vars[el$i]
+      } else {
+        # for mutate(across())
+        df <- tryCatch(get_current_data(NA, 0), error = function(e) NULL)
+        if (is.data.frame(df)) {
+          colnames(df)[el$i]
+        } else {
+          el$i
+        }
+      }
+    } else {
+      NULL
+    }
+  })
+  
+  vars <- unlist(frms)
+  if (length(vars) > 0) {
+    vars[length(vars)]
+  } else {
+    # not found, so:
+    NULL
   }
 }
 

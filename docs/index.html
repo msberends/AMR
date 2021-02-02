@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Antimicrobial Resistance Analysis • AMR (for R)</title>
+<title>Antimicrobial Resistance Data Analysis • AMR (for R)</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
-<script src="extra.js"></script><meta property="og:title" content="Antimicrobial Resistance Analysis">
+<script src="extra.js"></script><meta property="og:title" content="Antimicrobial Resistance Data Analysis">
 <meta property="og:description" content="Functions to simplify the analysis and prediction of Antimicrobial 
     Resistance (AMR) and to work with microbial and antimicrobial properties by
     using evidence-based methods, like those defined by Leclercq et al. (2013) 
@@ -43,7 +43,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9014</span>
       </span>
     </div>
 
@@ -205,7 +205,7 @@ Since you are one of our users, we would like to know how you use the package an
 <div id="what-is-amr-for-r" class="section level3">
 <h3 class="hasAnchor">
 <a href="#what-is-amr-for-r" class="anchor"></a>What is <code>AMR</code> (for R)?</h3>
-<p><em>(To find out how to conduct AMR analysis, please <a href="./articles/AMR.html">continue reading here to get started</a>.)</em></p>
+<p><em>(To find out how to conduct AMR data analysis, please <a href="./articles/AMR.html">continue reading here to get started</a>.)</em></p>
 <p><code>AMR</code> is a free, open-source and independent <a href="https://www.r-project.org">R package</a> to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. <strong>Our aim is to provide a standard</strong> for clean and reproducible antimicrobial resistance data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.</p>
 <p>After installing this package, R knows <a href="./reference/microorganisms.html"><strong>~70,000 distinct microbial species</strong></a> and all <a href="./reference/antibiotics.html"><strong>~550 antibiotic, antimycotic and antiviral drugs</strong></a> by name and code (including ATC, EARS-NET, LOINC and SNOMED CT), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data.</p>
 <p>This package is <a href="https://en.wikipedia.org/wiki/Dependency_hell">fully independent of any other R package</a> and works on Windows, macOS and Linux with all versions of R since R-3.0.0 (April 2013). <strong>It was designed to work in any setting, including those with very limited resources</strong>. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the <a href="https://www.rug.nl">University of Groningen</a>, in collaboration with non-profit organisations <a href="https://www.certe.nl">Certe Medical Diagnostics and Advice</a> and <a href="https://www.umcg.nl">University Medical Center Groningen</a>. This R package is <a href="./news">actively maintained</a> and is free software (see <a href="#copyright">Copyright</a>).</p>
@@ -361,7 +361,7 @@ Since you are one of our users, we would like to know how you use the package an
 <li>Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the <a href="http://www.catalogueoflife.org">Catalogue of Life</a> and <a href="https://lpsn.dsmz.de">List of Prokaryotic names with Standing in Nomenclature</a> (<a href="./reference/mo_property.html">manual</a>)</li>
 <li>Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines (<a href="./reference/as.rsi.html">manual</a>)</li>
 <li>Retrieving antimicrobial drug names, doses and forms of administration from clinical health care records (<a href="./reference/ab_from_text.html">manual</a>)</li>
-<li>Determining first isolates to be used for AMR analysis (<a href="./reference/first_isolate.html">manual</a>)</li>
+<li>Determining first isolates to be used for AMR data analysis (<a href="./reference/first_isolate.html">manual</a>)</li>
 <li>Calculating antimicrobial resistance (<a href="./articles/AMR.html">tutorial</a>)</li>
 <li>Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO) (<a href="./articles/MDR.html">tutorial</a>)</li>
 <li>Calculating (empirical) susceptibility of both mono therapy and combination therapies (<a href="./articles/AMR.html">tutorial</a>)</li>
@@ -402,7 +402,7 @@ Since you are one of our users, we would like to know how you use the package an
 <div id="get-started" class="section level3">
 <h3 class="hasAnchor">
 <a href="#get-started" class="anchor"></a>Get started</h3>
-<p>To find out how to conduct AMR analysis, please <a href="./articles/AMR.html">continue reading here to get started</a> or click the links in the ‘How to’ menu.</p>
+<p>To find out how to conduct AMR data analysis, please <a href="./articles/AMR.html">continue reading here to get started</a> or click the links in the ‘How to’ menu.</p>
 </div>
 <div id="short-introduction" class="section level3">
 <h3 class="hasAnchor">
@@ -468,7 +468,7 @@ Since you are one of our users, we would like to know how you use the package an
 <li>Aside from this website with many tutorials, the package itself contains extensive help pages with many examples for all functions.</li>
 <li>The package also contains example data sets:
 <ul>
-<li>The <a href="./reference/example_isolates.html"><code>example_isolates</code> data set</a>. This data set contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR analysis.</li>
+<li>The <a href="./reference/example_isolates.html"><code>example_isolates</code> data set</a>. This data set contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR data analysis.</li>
 <li>The <a href="./reference/WHONET.html"><code>WHONET</code> data set</a>. This data set only contains fake data, but with the exact same structure as files exported by WHONET. Read more about WHONET <a href="./articles/WHONET.html">on its tutorial page</a>.</li>
 </ul>
 </li>

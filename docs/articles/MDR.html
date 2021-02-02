@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9014</span>
       </span>
     </div>
 
@@ -271,7 +271,7 @@
 <h3 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h3>
 <p>The <code><a href="../reference/mdro.html">mdro()</a></code> function always returns an ordered <code>factor</code>. For example, the output of the default guideline by Magiorakos <em>et al.</em> returns a <code>factor</code> with levels ‘Negative’, ‘MDR’, ‘XDR’ or ‘PDR’ in that order.</p>
-<p>The next example uses the <code>example_isolates</code> data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR analysis. If we test the MDR/XDR/PDR guideline on this data set, we get:</p>
+<p>The next example uses the <code>example_isolates</code> data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR data analysis. If we test the MDR/XDR/PDR guideline on this data set, we get:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>   <span class="co"># to support pipes: %&gt;%</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/msberends/cleaner">cleaner</a></span><span class="op">)</span> <span class="co"># to create frequency tables</span></code></pre></div>
@@ -339,17 +339,17 @@ Unique: 2</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">my_TB_data</span><span class="op">)</span>
 <span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span>
-<span class="co"># 1          R         I            I          R            R            R</span>
-<span class="co"># 2          R         S            I          S            R            S</span>
-<span class="co"># 3          R         R            S          S            R            I</span>
-<span class="co"># 4          S         R            R          S            S            R</span>
-<span class="co"># 5          I         R            R          R            R            S</span>
-<span class="co"># 6          I         I            I          R            S            I</span>
+<span class="co"># 1          I         R            R          I            I            S</span>
+<span class="co"># 2          I         S            R          I            R            R</span>
+<span class="co"># 3          S         I            S          I            S            S</span>
+<span class="co"># 4          S         R            I          S            S            S</span>
+<span class="co"># 5          I         S            I          R            S            S</span>
+<span class="co"># 6          S         R            I          R            S            S</span>
 <span class="co">#   kanamycin</span>
-<span class="co"># 1         I</span>
+<span class="co"># 1         S</span>
 <span class="co"># 2         S</span>
-<span class="co"># 3         S</span>
-<span class="co"># 4         S</span>
+<span class="co"># 3         R</span>
+<span class="co"># 4         I</span>
 <span class="co"># 5         R</span>
 <span class="co"># 6         R</span></code></pre></div>
 <p>We can now add the interpretation of MDR-TB to our data set. You can use:</p>
@@ -382,40 +382,40 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistant</td>
-<td align="right">3163</td>
-<td align="right">63.26%</td>
-<td align="right">3163</td>
-<td align="right">63.26%</td>
+<td align="right">3211</td>
+<td align="right">64.22%</td>
+<td align="right">3211</td>
+<td align="right">64.22%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">1009</td>
-<td align="right">20.18%</td>
-<td align="right">4172</td>
-<td align="right">83.44%</td>
+<td align="right">990</td>
+<td align="right">19.80%</td>
+<td align="right">4201</td>
+<td align="right">84.02%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multi-drug-resistant</td>
-<td align="right">466</td>
-<td align="right">9.32%</td>
-<td align="right">4638</td>
-<td align="right">92.76%</td>
+<td align="right">435</td>
+<td align="right">8.70%</td>
+<td align="right">4636</td>
+<td align="right">92.72%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistant</td>
-<td align="right">255</td>
-<td align="right">5.10%</td>
-<td align="right">4893</td>
-<td align="right">97.86%</td>
+<td align="right">258</td>
+<td align="right">5.16%</td>
+<td align="right">4894</td>
+<td align="right">97.88%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensively drug-resistant</td>
-<td align="right">107</td>
-<td align="right">2.14%</td>
+<td align="right">106</td>
+<td align="right">2.12%</td>
 <td align="right">5000</td>
 <td align="right">100.00%</td>
 </tr>

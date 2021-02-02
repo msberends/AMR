@@ -26,6 +26,7 @@ eucast_rules(
   version_breakpoints = 11,
   version_expertrules = 3.2,
   ampc_cephalosporin_resistance = NA,
+  only_rsi_columns = any(is.rsi(x)),
   ...
 )
 
@@ -47,6 +48,8 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 11)
 \item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either "3.2" or "3.1".}
 
 \item{ampc_cephalosporin_resistance}{a character value that should be applied for AmpC de-repressed cephalosporin-resistant mutants, defaults to \code{NA}. Currently only works when \code{version_expertrules} is \code{3.2}; '\emph{EUCAST Expert Rules v3.2 on Enterobacterales}' states that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these agents. A value of \code{NA} for this argument will remove results for these agents, while e.g. a value of \code{"R"} will make the results for these agents resistant. Use \code{NULL} to not alter the results for AmpC de-repressed cephalosporin-resistant mutants. \cr For \emph{EUCAST Expert Rules} v3.2, this rule applies to: \emph{Citrobacter braakii}, \emph{Citrobacter freundii}, \emph{Citrobacter gillenii}, \emph{Citrobacter murliniae}, \emph{Citrobacter rodenticum}, \emph{Citrobacter sedlakii}, \emph{Citrobacter werkmanii}, \emph{Citrobacter youngae}, \emph{Enterobacter}, \emph{Hafnia alvei}, \emph{Klebsiella aerogenes}, \emph{Morganella morganii}, \emph{Providencia} and \emph{Serratia}.}
+
+\item{only_rsi_columns}{a logical to indicate whether only antibiotic columns must be detected that were \href{[rsi]}{transformed to class \verb{<rsi>}} on beforehand. Defaults to \code{TRUE} if any column of \code{x} is of class \verb{<rsi>}.}
 
 \item{...}{column name of an antibiotic, see section \emph{Antibiotics} below}
 
@@ -104,7 +107,7 @@ All reference data sets (about microorganisms, antibiotics, R/SI interpretation,
 
 \section{Read more on Our Website!}{
 
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
+On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }
 
 \examples{

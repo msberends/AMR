@@ -1,6 +1,6 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis for R                        #
+# Antimicrobial Resistance (AMR) Data Analysis for R                   #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
@@ -20,7 +20,7 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR analysis: https://msberends.github.io/AMR/        #
+# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
 #' Determine First (Weighted) Isolates
@@ -255,7 +255,7 @@ first_isolate <- function(x,
   
   # create original row index
   x$newvar_row_index <- seq_len(nrow(x))
-  x$newvar_mo <- x[, col_mo, drop = TRUE]
+  x$newvar_mo <- as.mo(x[, col_mo, drop = TRUE])
   x$newvar_genus_species <- paste(mo_genus(x$newvar_mo), mo_species(x$newvar_mo))
   x$newvar_date <- x[, col_date, drop = TRUE]
   x$newvar_patient_id <- x[, col_patient_id, drop = TRUE]

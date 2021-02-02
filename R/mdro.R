@@ -1,6 +1,6 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis for R                        #
+# Antimicrobial Resistance (AMR) Data Analysis for R                   #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
@@ -20,7 +20,7 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR analysis: https://msberends.github.io/AMR/        #
+# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
 #' Determine Multidrug-Resistant Organisms (MDRO)
@@ -153,6 +153,7 @@ mdro <- function(x,
                  pct_required_classes = 0.5,
                  combine_SI = TRUE,
                  verbose = FALSE,
+                 only_rsi_columns = any(is.rsi(x)),
                  ...) {
   if (missing(x)) {
     x <- get_current_data(arg_name = "x", call = -2)
@@ -432,6 +433,7 @@ mdro <- function(x,
                                 "MNO"),
                               verbose = verbose,
                               info = info,
+                              only_rsi_columns = only_rsi_columns,
                               ...)
   } else if (guideline$code == "eucast3.2") {
     cols_ab <- get_column_abx(x = x,
@@ -457,8 +459,9 @@ mdro <- function(x,
                                                     "TOB",
                                                     "TZD",
                                                     "VAN"),
-                              info = info,
                               verbose = verbose,
+                              info = info,
+                              only_rsi_columns = only_rsi_columns,
                               ...)
   } else if (guideline$code == "tb") {
     cols_ab <- get_column_abx(x = x,
@@ -470,8 +473,9 @@ mdro <- function(x,
                                                     "RIF",
                                                     "RIB",
                                                     "RFP"),
-                              info = info,
                               verbose = verbose,
+                              info = info,
+                              only_rsi_columns = only_rsi_columns,
                               ...)
   } else if (guideline$code == "mrgn") {
     cols_ab <- get_column_abx(x = x,
@@ -483,11 +487,13 @@ mdro <- function(x,
                                                     "CIP"),
                               verbose = verbose,
                               info = info,
+                              only_rsi_columns = only_rsi_columns,
                               ...)
   } else {
     cols_ab <- get_column_abx(x = x,
                               verbose = verbose,
                               info = info,
+                              only_rsi_columns = only_rsi_columns,
                               ...)
   }
   
@@ -1509,55 +1515,55 @@ run_custom_mdro_guideline <- function(df, guideline) {
 
 #' @rdname mdro
 #' @export
-brmo <- function(x, guideline = "BRMO", ...) {
+brmo <- function(x, guideline = "BRMO", only_rsi_columns = any(is.rsi(x)), ...) {
   if (missing(x)) {
     x <- get_current_data(arg_name = "x", call = -2)
   }
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(guideline, allow_class = "character", has_length = 1)
-  mdro(x, guideline = "BRMO", ...)
+  mdro(x, guideline = "BRMO", only_rsi_columns = only_rsi_columns, ...)
 }
 
 #' @rdname mdro
 #' @export
-mrgn <- function(x, guideline = "MRGN", ...) {
+mrgn <- function(x, guideline = "MRGN", only_rsi_columns = any(is.rsi(x)), ...) {
   if (missing(x)) {
     x <- get_current_data(arg_name = "x", call = -2)
   }
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(guideline, allow_class = "character", has_length = 1)
-  mdro(x = x, guideline = "MRGN", ...)
+  mdro(x = x, guideline = "MRGN", only_rsi_columns = only_rsi_columns, ...)
 }
 
 #' @rdname mdro
 #' @export
-mdr_tb <- function(x, guideline = "TB", ...) {
+mdr_tb <- function(x, guideline = "TB", only_rsi_columns = any(is.rsi(x)), ...) {
   if (missing(x)) {
     x <- get_current_data(arg_name = "x", call = -2)
   }
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(guideline, allow_class = "character", has_length = 1)
-  mdro(x = x, guideline = "TB", ...)
+  mdro(x = x, guideline = "TB", only_rsi_columns = only_rsi_columns, ...)
 }
 
 #' @rdname mdro
 #' @export
-mdr_cmi2012 <- function(x, guideline = "CMI2012", ...) {
+mdr_cmi2012 <- function(x, guideline = "CMI2012", only_rsi_columns = any(is.rsi(x)), ...) {
   if (missing(x)) {
     x <- get_current_data(arg_name = "x", call = -2)
   }
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(guideline, allow_class = "character", has_length = 1)
-  mdro(x = x, guideline = "CMI2012", ...)
+  mdro(x = x, guideline = "CMI2012", only_rsi_columns = only_rsi_columns, ...)
 }
 
 #' @rdname mdro
 #' @export
-eucast_exceptional_phenotypes <- function(x, guideline = "EUCAST", ...) {
+eucast_exceptional_phenotypes <- function(x, guideline = "EUCAST", only_rsi_columns = any(is.rsi(x)), ...) {
   if (missing(x)) {
     x <- get_current_data(arg_name = "x", call = -2)
   }
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(guideline, allow_class = "character", has_length = 1)
-  mdro(x = x, guideline = "EUCAST", ...)
+  mdro(x = x, guideline = "EUCAST", only_rsi_columns = only_rsi_columns, ...)
 }

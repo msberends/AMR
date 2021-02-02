@@ -1,6 +1,6 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis for R                        #
+# Antimicrobial Resistance (AMR) Data Analysis for R                   #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
@@ -20,7 +20,7 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR analysis: https://msberends.github.io/AMR/        #
+# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
 ########################################################################
@@ -118,7 +118,7 @@ echo
 echo "••••••••••••••••••••••••••"
 echo "• Updating internal data •"
 echo "••••••••••••••••••••••••••"
-Rscript -e "source('data-raw/internals.R')"
+Rscript -e "source('data-raw/_internals.R')"
 echo
 echo "••••••••••••••••••••"
 echo "• Building package •"

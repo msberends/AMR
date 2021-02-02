@@ -9,7 +9,7 @@
 
 ### What is `AMR` (for R)?
 
-*(To find out how to conduct AMR analysis, please [continue reading here to get started](./articles/AMR.html).)*
+*(To find out how to conduct AMR data analysis, please [continue reading here to get started](./articles/AMR.html).)*
 
 `AMR` is a free, open-source and independent [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible antimicrobial resistance data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.
 
@@ -87,7 +87,7 @@ This package can be used for:
   * Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the [Catalogue of Life](http://www.catalogueoflife.org) and [List of Prokaryotic names with Standing in Nomenclature](https://lpsn.dsmz.de) ([manual](./reference/mo_property.html))
   * Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines ([manual](./reference/as.rsi.html))
   * Retrieving antimicrobial drug names, doses and forms of administration from clinical health care records ([manual](./reference/ab_from_text.html))
-  * Determining first isolates to be used for AMR analysis ([manual](./reference/first_isolate.html))
+  * Determining first isolates to be used for AMR data analysis ([manual](./reference/first_isolate.html))
   * Calculating antimicrobial resistance ([tutorial](./articles/AMR.html))
   * Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO) ([tutorial](./articles/MDR.html))
   * Calculating (empirical) susceptibility of both mono therapy and combination therapies ([tutorial](./articles/AMR.html))
@@ -131,7 +131,7 @@ remotes::install_github("msberends/AMR")
 
 ### Get started
 
-To find out how to conduct AMR analysis, please [continue reading here to get started](./articles/AMR.html) or click the links in the 'How to' menu.
+To find out how to conduct AMR data analysis, please [continue reading here to get started](./articles/AMR.html) or click the links in the 'How to' menu.
 
 ### Short introduction
 
@@ -185,7 +185,7 @@ The `AMR` package basically does four important things:
 
    * Aside from this website with many tutorials, the package itself contains extensive help pages with many examples for all functions.
    * The package also contains example data sets:
-     * The [`example_isolates` data set](./reference/example_isolates.html). This data set contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR analysis.
+     * The [`example_isolates` data set](./reference/example_isolates.html). This data set contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR data analysis.
      * The [`WHONET` data set](./reference/WHONET.html). This data set only contains fake data, but with the exact same structure as files exported by WHONET. Read more about WHONET [on its tutorial page](./articles/WHONET.html).
 
 ### Copyright

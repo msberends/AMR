@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 ```
 
 ## Needed R packages
-As with many uses in R, we need some additional packages for AMR analysis. Our package works closely together with the [tidyverse packages](https://www.tidyverse.org) [`dplyr`](https://dplyr.tidyverse.org/) and [`ggplot2`](https://ggplot2.tidyverse.org) by Dr Hadley Wickham. The tidyverse tremendously improves the way we conduct data science - it allows for a very natural way of writing syntaxes and creating beautiful plots in R.
+As with many uses in R, we need some additional packages for AMR data analysis. Our package works closely together with the [tidyverse packages](https://www.tidyverse.org) [`dplyr`](https://dplyr.tidyverse.org/) and [`ggplot2`](https://ggplot2.tidyverse.org) by Dr Hadley Wickham. The tidyverse tremendously improves the way we conduct data science - it allows for a very natural way of writing syntaxes and creating beautiful plots in R.
 
 Our `AMR` package depends on these packages and even extends their use and functions.
 
@@ -35,7 +35,7 @@ library(AMR)
 ```
 
 ## Prediction analysis
-Our package contains a function `resistance_predict()`, which takes the same input as functions for [other AMR analysis](./AMR.html). Based on a date column, it calculates cases per year and uses a regression model to predict antimicrobial resistance.
+Our package contains a function `resistance_predict()`, which takes the same input as functions for [other AMR data analysis](./AMR.html). Based on a date column, it calculates cases per year and uses a regression model to predict antimicrobial resistance.
 
 It is basically as easy as:
 ```{r, eval = FALSE}

@@ -4,7 +4,12 @@
 \alias{guess_ab_col}
 \title{Guess Antibiotic Column}
 \usage{
-guess_ab_col(x = NULL, search_string = NULL, verbose = FALSE)
+guess_ab_col(
+  x = NULL,
+  search_string = NULL,
+  verbose = FALSE,
+  only_rsi_columns = any(is.rsi(x))
+)
 }
 \arguments{
 \item{x}{a \link{data.frame}}
@@ -12,6 +17,8 @@ guess_ab_col(x = NULL, search_string = NULL, verbose = FALSE)
 \item{search_string}{a text to search \code{x} for, will be checked with \code{\link[=as.ab]{as.ab()}} if this value is not a column in \code{x}}
 
 \item{verbose}{a logical to indicate whether additional info should be printed}
+
+\item{only_rsi_columns}{a logical to indicate whether only antibiotic columns must be detected that were \href{[rsi]}{transformed to class \verb{<rsi>}} on beforehand. Defaults to \code{TRUE} if any column of \code{x} is of class \verb{<rsi>}.}
 }
 \value{
 A column name of \code{x}, or \code{NULL} when no result is found.
@@ -32,7 +39,7 @@ If the unlying code needs breaking changes, they will occur gradually. For examp
 
 \section{Read more on Our Website!}{
 
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
+On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
 }
 
 \examples{

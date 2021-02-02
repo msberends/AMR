@@ -1,6 +1,6 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis for R                        #
+# Antimicrobial Resistance (AMR) Data Analysis for R                   #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
@@ -20,7 +20,7 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR analysis: https://msberends.github.io/AMR/        #
+# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
 #' Transform Input to an Antibiotic ID
@@ -103,19 +103,20 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
   
   initial_search <- is.null(list(...)$initial_search)
   already_regex <- isTRUE(list(...)$already_regex)
+  fast_mode <- isTRUE(list(...)$fast_mode)
   
   if (all(toupper(x) %in% antibiotics$ab)) {
     # valid AB code, but not yet right class
     return(set_clean_class(toupper(x),
                            new_class = c("ab", "character")))
   }
-  
+
   x_bak <- x
   x <- toupper(x)
   # remove diacritics
   x <- iconv(x, from = "UTF-8", to = "ASCII//TRANSLIT")
   x <- gsub('"', "", x, fixed = TRUE)
-  x <- gsub("(specimen|specimen date|specimen_date|spec_date)", "", x, ignore.case = TRUE, perl = TRUE)
+  x <- gsub("(specimen|specimen date|specimen_date|spec_date|^dates?$)", "", x, ignore.case = TRUE, perl = TRUE)
   x_bak_clean <- x
   if (already_regex == FALSE) {
     x_bak_clean <- generalise_antibiotic_name(x_bak_clean)
@@ -145,6 +146,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
   }
   
   for (i in seq_len(length(x))) {
+
     if (initial_search == TRUE) {
       progress$tick()
     }
@@ -161,7 +163,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
       next
     }
     
-    if (isTRUE(flag_multiple_results) & x[i] %like% "[ ]") {
+    if (fast_mode == FALSE && flag_multiple_results == TRUE && x[i] %like% "[ ]") {
       from_text <- tryCatch(suppressWarnings(ab_from_text(x[i], initial_search = FALSE, translate_ab = FALSE)[[1]]),
                             error = function(e) character(0))
     } else {
@@ -282,8 +284,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
     }
     
     # INITIAL SEARCH - More uncertain results ----
-    
-    if (initial_search == TRUE) {
+
+    if (initial_search == TRUE && fast_mode == FALSE) {
       # only run on first try
       
       # try by removing all spaces
@@ -358,7 +360,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
       
       # try from a bigger text, like from a health care record, see ?ab_from_text
       # already calculated above if flag_multiple_results = TRUE
-      if (isTRUE(flag_multiple_results)) {
+      if (flag_multiple_results == TRUE) {
         found <- from_text[1L]
       } else {
         found <- tryCatch(suppressWarnings(ab_from_text(x[i], initial_search = FALSE, translate_ab = FALSE)[[1]][1L]),
@@ -457,7 +459,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
              call = FALSE)
   }
   
-  if (length(x_unknown) > 0) {
+  if (length(x_unknown) > 0 & fast_mode == FALSE) {
     warning_("These values could not be coerced to a valid antimicrobial ID: ",
              paste('"', sort(unique(x_unknown)), '"', sep = "", collapse = ", "),
              ".",
@@ -466,7 +468,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
   
   x_result <- data.frame(x = x_bak_clean, stringsAsFactors = FALSE) %pm>%
     pm_left_join(data.frame(x = x, x_new = x_new, stringsAsFactors = FALSE), by = "x") %pm>%
-   pm_pull(x_new)
+    pm_pull(x_new)
   
   if (length(x_result) == 0) {
     x_result <- NA_character_

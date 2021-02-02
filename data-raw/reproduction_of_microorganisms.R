@@ -1,6 +1,6 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Analysis for R                        #
+# Antimicrobial Resistance (AMR) Data Analysis for R                   #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
@@ -20,7 +20,7 @@
 # useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
 #                                                                      #
 # Visit our website for the full manual and a complete tutorial about  #
-# how to conduct AMR analysis: https://msberends.github.io/AMR/        #
+# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
 # Reproduction of the `microorganisms` data set
@@ -925,7 +925,7 @@ usethis::use_data(rsi_translation, overwrite = TRUE, version = 2)
 usethis::use_data(microorganisms.codes, overwrite = TRUE, version = 2)
 saveRDS(microorganisms.translation, file = "data-raw/microorganisms.translation.rds", version = 2)
 # to save microorganisms.translation internally to the package
-source("data-raw/internals.R")
+source("data-raw/_internals.R")
 
 # load new data sets again
 devtools::load_all(".")
