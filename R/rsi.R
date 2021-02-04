@@ -65,7 +65,7 @@
 #' 
 #' ## Supported Guidelines
 #' 
-#' For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the `guideline` argument are: `r paste0('"', sort(unique(AMR::rsi_translation$guideline)), '"', collapse = ", ")`.
+#' For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the `guideline` argument are: `r vector_and(AMR::rsi_translation$guideline, quotes = TRUE, reverse = TRUE)`.
 #' 
 #' Simply using `"CLSI"` or `"EUCAST"` as input will automatically select the latest version of that guideline. You can set your own data set using the `reference_data` argument. The `guideline` argument will then be ignored.
 #' 
@@ -79,9 +79,9 @@
 #'
 #' ## Other
 #' 
-#' The function [is.rsi()] detects if the input contains class `<rsi>`. If the input is a data.frame, it returns a vector in which all columns are checked for this class.
+#' The function [is.rsi()] detects if the input contains class `<rsi>`. If the input is a data.frame, it iterates over all columns and returns a logical vector.
 #'
-#' The function [is.rsi.eligible()] returns `TRUE` when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` argument.
+#' The function [is.rsi.eligible()] returns `TRUE` when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` argument. If the input is a data.frame, it iterates over all columns and returns a logical vector.
 #' @section Interpretation of R and S/I:
 #' In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories R and S/I as shown below (<https://www.eucast.org/newsiandr/>).
 #'
@@ -203,6 +203,10 @@ is.rsi <- function(x) {
 is.rsi.eligible <- function(x, threshold = 0.05) {
   meet_criteria(threshold, allow_class = "numeric", has_length = 1)
   
+  if (inherits(x, "data.frame")) {
+    return(unname(vapply(FUN.VALUE = logical(1), x, is.rsi.eligible)))
+  }
+  
   stop_if(NCOL(x) > 1, "`x` must be a one-dimensional vector.")
   if (any(c("numeric",
             "integer",
@@ -294,8 +298,8 @@ as.rsi.default <- function(x, ...) {
       if (na_before != na_after) {
         list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ""] %pm>%
           unique() %pm>%
-          sort()
-        list_missing <- paste0('"', list_missing, '"', collapse = ", ")
+          sort() %pm>%
+          vector_and(quotes = TRUE)
         warning_(na_after - na_before, " results truncated (",
                  round(((na_after - na_before) / length(x)) * 100),
                  "%) that were invalid antimicrobial interpretations: ",
@@ -551,7 +555,7 @@ as.rsi.data.frame <- function(x,
         plural <- c("", "s", "a ")
       }
       message_("Assuming value", plural[1], " ", 
-               paste(paste0('"', values, '"'), collapse = ", "),
+               vector_and(values, quotes = TRUE),
                " in column '", font_bold(col_specimen),
                "' reflect", plural[2], " ", plural[3], "urinary tract infection", plural[1],
                ".\n  Use `as.rsi(uti = FALSE)` to prevent this.")
@@ -682,10 +686,9 @@ get_guideline <- function(guideline, reference_data) {
   
   stop_ifnot(guideline_param %in% reference_data$guideline,
              "invalid guideline: '", guideline,
-             "'.\nValid guidelines are: ", paste0("'", unique(reference_data$guideline), "'", collapse = ", "), call = FALSE)
+             "'.\nValid guidelines are: ", vector_and(reference_data$guideline, quotes = TRUE, reverse = TRUE), call = FALSE)
   
   guideline_param
-  
 }
 
 exec_as.rsi <- function(method,

@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9014</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9015</span>
       </span>
     </div>
 
@@ -423,24 +423,27 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <span class='co'># See ?example_isolates.</span>
 
 <span class='co'># basic filtering on first isolates</span>
-<span class='va'>example_isolates</span><span class='op'>[</span><span class='fu'>first_isolate</span><span class='op'>(</span><span class='va'>example_isolates</span><span class='op'>)</span>, <span class='op'>]</span>
+<span class='va'>example_isolates</span><span class='op'>[</span><span class='fu'>first_isolate</span><span class='op'>(</span><span class='op'>)</span>, <span class='op'>]</span>
 
-<span class='co'># filtering based on isolates ----------------------------------------------</span>
 <span class='co'># \donttest{</span>
+<span class='co'># get all first Gram-negatives</span>
+<span class='va'>example_isolates</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'>first_isolate</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>&amp;</span> <span class='fu'><a href='mo_property.html'>mo_is_gram_negative</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>, <span class='op'>]</span>
+
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='co'># filter on first isolates:</span>
+  <span class='co'># filter on first isolates using dplyr:</span>
   <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>first_isolate <span class='op'>=</span> <span class='fu'>first_isolate</span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>first_isolate</span> <span class='op'>==</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>first_isolate</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
  
   <span class='co'># short-hand versions:</span>
   <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>first_isolate</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-  <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
     <span class='fu'>filter_first_isolate</span><span class='op'>(</span><span class='op'>)</span>
-    
   <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
     <span class='fu'>filter_first_weighted_isolate</span><span class='op'>(</span><span class='op'>)</span>
+    
+ <span class='co'># grouped determination of first isolates (also prints group names):</span>
+ <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
+   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>hospital_id</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>first <span class='op'>=</span> <span class='fu'>first_isolate</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
   
   <span class='co'># now let's see if first isolates matter:</span>
   <span class='va'>A</span> <span class='op'>&lt;-</span> <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>

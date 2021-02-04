@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9014</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9015</span>
       </span>
     </div>
 
@@ -363,7 +363,7 @@
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Supported Guidelines</h3>
 
 
-<p>For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the <code>guideline</code> argument are: "CLSI 2010", "CLSI 2011", "CLSI 2012", "CLSI 2013", "CLSI 2014", "CLSI 2015", "CLSI 2016", "CLSI 2017", "CLSI 2018", "CLSI 2019", "EUCAST 2011", "EUCAST 2012", "EUCAST 2013", "EUCAST 2014", "EUCAST 2015", "EUCAST 2016", "EUCAST 2017", "EUCAST 2018", "EUCAST 2019", "EUCAST 2020", "EUCAST 2021".</p>
+<p>For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the <code>guideline</code> argument are: "EUCAST 2021", "EUCAST 2020", "EUCAST 2019", "EUCAST 2018", "EUCAST 2017", "EUCAST 2016", "EUCAST 2015", "EUCAST 2014", "EUCAST 2013", "EUCAST 2012", "EUCAST 2011", "CLSI 2019", "CLSI 2018", "CLSI 2017", "CLSI 2016", "CLSI 2015", "CLSI 2014", "CLSI 2013", "CLSI 2012", "CLSI 2011" and "CLSI 2010".</p>
 <p>Simply using <code>"CLSI"</code> or <code>"EUCAST"</code> as input will automatically select the latest version of that guideline. You can set your own data set using the <code>reference_data</code> argument. The <code>guideline</code> argument will then be ignored.</p>
 
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>After Interpretation</h3>
@@ -379,8 +379,8 @@
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Other</h3>
 
 
-<p>The function <code>is.rsi()</code> detects if the input contains class <code>&lt;rsi&gt;</code>. If the input is a data.frame, it returns a vector in which all columns are checked for this class.</p>
-<p>The function <code>is.rsi.eligible()</code> returns <code>TRUE</code> when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and <code>FALSE</code> otherwise. The threshold of 5% can be set with the <code>threshold</code> argument.</p>
+<p>The function <code>is.rsi()</code> detects if the input contains class <code>&lt;rsi&gt;</code>. If the input is a data.frame, it iterates over all columns and returns a logical vector.</p>
+<p>The function <code>is.rsi.eligible()</code> returns <code>TRUE</code> when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and <code>FALSE</code> otherwise. The threshold of 5% can be set with the <code>threshold</code> argument. If the input is a data.frame, it iterates over all columns and returns a logical vector.</p>
 
     <h2 class="hasAnchor" id="interpretation-of-r-and-s-i"><a class="anchor" href="#interpretation-of-r-and-s-i"></a>Interpretation of R and S/I</h2>
 

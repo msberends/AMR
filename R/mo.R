@@ -1418,7 +1418,7 @@ exec_as.mo <- function(x,
                   " (covering ", percentage(total_failures / total_n),
                   ") could not be coerced and ", plural[3], " considered 'unknown'")
     if (pm_n_distinct(failures) <= 10) {
-      msg <- paste0(msg, ": ", paste('"', unique(failures), '"', sep = "", collapse = ", "))
+      msg <- paste0(msg, ": ", vector_and(failures, quotes = TRUE))
     }
     msg <- paste0(msg,
                   ".\nUse mo_failures() to review ", plural[2], ". Edit the `allow_uncertain` argument if needed (see ?as.mo).\n",
@@ -1450,7 +1450,7 @@ exec_as.mo <- function(x,
     # - Becker et al. 2014, PMID 25278577
     # - Becker et al. 2019, PMID 30872103
     # - Becker et al. 2020, PMID 32056452
-    post_Becker <- character(0) # 2020-10-20 currently all are mentioned in above papers (otherwise uncomment below)
+    post_Becker <- character(0) # 2020-10-20 currently all are mentioned in above papers (otherwise uncomment the section below)
     
     # nolint start
     # if (any(x %in% MO_lookup[which(MO_lookup$species %in% post_Becker), property])) {
@@ -1796,7 +1796,6 @@ print.mo_uncertainties <- function(x, ...) {
     return(NULL)
   }
   message_("Matching scores are based on human pathogenic prevalence and the resemblance between the input and the full taxonomic name. See ?mo_matching_score.", as_note = FALSE)
-  cat("\n")
 
   msg <- ""
   for (i in seq_len(nrow(x))) {
@@ -1807,7 +1806,7 @@ print.mo_uncertainties <- function(x, ...) {
       candidates <- candidates[order(1 - scores)]
       scores_formatted <- trimws(formatC(round(scores, 3), format = "f", digits = 3))
       n_candidates <- length(candidates)
-      candidates <- paste0(candidates, " (", scores_formatted[order(1 - scores)], ")", collapse = ", ")
+      candidates <- vector_and(paste0(candidates, " (", scores_formatted[order(1 - scores)], ")"), quotes = FALSE)
       # align with input after arrow
       candidates <- paste0("\n",
                            strwrap(paste0("Also matched",
@@ -1987,9 +1986,8 @@ replace_ignore_pattern <- function(x, ignore_pattern) {
     ignore_cases <- x %like% ignore_pattern
     if (sum(ignore_cases) > 0) {
       message_("The following input was ignored by `ignore_pattern = \"", ignore_pattern, "\"`: ",
-               paste0("'", sort(unique(x[x %like% ignore_pattern])), "'", collapse = ", "),
-               collapse = ", ")
-      x[x %like% ignore_pattern] <- NA_character_
+               vector_and(x[ignore_cases], quotes = TRUE))
+      x[ignore_cases] <- NA_character_
     }
   }
   x

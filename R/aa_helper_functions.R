@@ -85,7 +85,7 @@ check_dataset_integrity <- function() {
     warning_(ifelse(length(overwritten) == 1,
                     "The following data set is overwritten by your global environment and prevents the AMR package from working correctly: ",
                     "The following data sets are overwritten by your global environment and prevent the AMR package from working correctly: "),
-             paste0("'", overwritten, "'", collapse = ", "),
+             vector_and(overwritten, quotes = "'"),
              ".\nPlease rename your object(s).", call = FALSE)
   }
   # check if other packages did not overwrite our data sets
@@ -442,27 +442,36 @@ create_ab_documentation <- function(ab) {
   out
 }
 
-vector_or <- function(v, quotes = TRUE, reverse = FALSE, last_sep = " or ") {
+vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, last_sep = " or ") {
   # makes unique and sorts, and this also removed NAs
-  v <- sort(unique(v))
-   if (length(v) == 1) {
-    return(paste0(ifelse(quotes, '"', ""), v, ifelse(quotes, '"', "")))
+  v <- unique(v)
+  if (isTRUE(sort)) {
+    v <- sort(v)
   }
-  if (reverse == TRUE) {
+  if (isTRUE(reverse)) {
     v <- rev(v)
-  }
-  if (identical(v, c("I", "R", "S"))) {
-    # class <rsi> should be sorted like this
-    v <- c("R", "S", "I")
   }
   if (isTRUE(quotes)) {
     quotes <- '"'
   } else if (isFALSE(quotes)) {
     quotes <- ""
+  } else {
+    quotes <- quotes[1L]
+  }
+  if (length(v) == 1) {
+    return(paste0(quotes, v, quotes))
+  }
+  if (identical(v, c("I", "R", "S"))) {
+    # class <rsi> should be sorted like this
+    v <- c("R", "S", "I")
   }
   # all commas except for last item, so will become '"val1", "val2", "val3" or "val4"'
   paste0(paste0(quotes, v[seq_len(length(v) - 1)], quotes, collapse = ", "),
          last_sep, paste0(quotes, v[length(v)], quotes))
+}
+
+vector_and <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE) {
+  vector_or(v = v, quotes = quotes, reverse = reverse, sort = sort, last_sep = " and ")
 }
 
 format_class <- function(class, plural) {

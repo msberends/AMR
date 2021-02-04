@@ -212,4 +212,9 @@ test_that("first isolates work", {
   # only one isolate, so return fast
   expect_true(first_isolate(data.frame(mo = "Escherichia coli", date = Sys.Date(), patient = "patient"), info = TRUE))
 
+  # groups
+  x <- example_isolates %>% group_by(ward_icu) %>% mutate(first = first_isolate())
+  y <- example_isolates %>% group_by(ward_icu) %>% mutate(first = first_isolate(.))
+  expect_identical(x, y)
+  
 })

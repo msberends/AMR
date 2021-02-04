@@ -98,7 +98,7 @@ mo_property(x, property = "fullname", language = get_locale(), ...)
 
 \item{open}{browse the URL using \code{\link[utils:browseURL]{browseURL()}}}
 
-\item{property}{one of the column names of the \link{microorganisms} data set: "\code{mo}", "\code{fullname}", "\code{kingdom}", "\code{phylum}", "\code{class}", "\code{order}", "\code{family}", "\code{genus}", "\code{species}", "\code{subspecies}", "\code{rank}", "\code{ref}", "\code{species_id}", "\code{source}", "\code{prevalence}", "\code{snomed}", or must be \code{"shortname"}}
+\item{property}{one of the column names of the \link{microorganisms} data set: "mo", "fullname", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "species_id", "source", "prevalence" or "snomed", or must be \code{"shortname"}}
 }
 \value{
 \itemize{

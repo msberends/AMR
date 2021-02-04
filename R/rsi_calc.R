@@ -27,7 +27,7 @@ dots2vars <- function(...) {
   # this function is to give more informative output about 
   # variable names in count_* and proportion_* functions
   dots <- substitute(list(...))
-  paste(as.character(dots)[2:length(dots)], collapse = ", ")
+  vector_and(as.character(dots)[2:length(dots)], quotes = FALSE)
 }
 
 rsi_calc <- function(...,
@@ -78,7 +78,7 @@ rsi_calc <- function(...,
       dots <- c(dots[dots %in% colnames(dots_df)],
                 eval(parse(text = dots[!dots %in% colnames(dots_df)]), envir = dots_df, enclos = globalenv()))
       dots_not_exist <- dots[!dots %in% colnames(dots_df)]
-      stop_if(length(dots_not_exist) > 0, "column(s) not found: ", paste0("'", dots_not_exist, "'", collapse = ", "), call = -2)
+      stop_if(length(dots_not_exist) > 0, "column(s) not found: ", vector_and(dots_not_exist, quotes = TRUE), call = -2)
       x <- dots_df[, dots, drop = FALSE]
     }
   } else if (ndots == 1) {

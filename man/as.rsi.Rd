@@ -104,7 +104,7 @@ your_data \%>\% mutate(across((is.disk), as.rsi))  # since dplyr 1.0.0
 
 \subsection{Supported Guidelines}{
 
-For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the \code{guideline} argument are: "CLSI 2010", "CLSI 2011", "CLSI 2012", "CLSI 2013", "CLSI 2014", "CLSI 2015", "CLSI 2016", "CLSI 2017", "CLSI 2018", "CLSI 2019", "EUCAST 2011", "EUCAST 2012", "EUCAST 2013", "EUCAST 2014", "EUCAST 2015", "EUCAST 2016", "EUCAST 2017", "EUCAST 2018", "EUCAST 2019", "EUCAST 2020", "EUCAST 2021".
+For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the \code{guideline} argument are: "EUCAST 2021", "EUCAST 2020", "EUCAST 2019", "EUCAST 2018", "EUCAST 2017", "EUCAST 2016", "EUCAST 2015", "EUCAST 2014", "EUCAST 2013", "EUCAST 2012", "EUCAST 2011", "CLSI 2019", "CLSI 2018", "CLSI 2017", "CLSI 2016", "CLSI 2015", "CLSI 2014", "CLSI 2013", "CLSI 2012", "CLSI 2011" and "CLSI 2010".
 
 Simply using \code{"CLSI"} or \code{"EUCAST"} as input will automatically select the latest version of that guideline. You can set your own data set using the \code{reference_data} argument. The \code{guideline} argument will then be ignored.
 }
@@ -121,9 +121,9 @@ The repository of this package \href{https://github.com/msberends/AMR/blob/maste
 
 \subsection{Other}{
 
-The function \code{\link[=is.rsi]{is.rsi()}} detects if the input contains class \verb{<rsi>}. If the input is a data.frame, it returns a vector in which all columns are checked for this class.
+The function \code{\link[=is.rsi]{is.rsi()}} detects if the input contains class \verb{<rsi>}. If the input is a data.frame, it iterates over all columns and returns a logical vector.
 
-The function \code{\link[=is.rsi.eligible]{is.rsi.eligible()}} returns \code{TRUE} when a columns contains at most 5\% invalid antimicrobial interpretations (not S and/or I and/or R), and \code{FALSE} otherwise. The threshold of 5\% can be set with the \code{threshold} argument.
+The function \code{\link[=is.rsi.eligible]{is.rsi.eligible()}} returns \code{TRUE} when a columns contains at most 5\% invalid antimicrobial interpretations (not S and/or I and/or R), and \code{FALSE} otherwise. The threshold of 5\% can be set with the \code{threshold} argument. If the input is a data.frame, it iterates over all columns and returns a logical vector.
 }
 }
 \section{Interpretation of R and S/I}{

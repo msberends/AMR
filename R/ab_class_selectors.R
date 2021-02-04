@@ -82,13 +82,13 @@
 #' }
 ab_class <- function(ab_class, 
                      only_rsi_columns = NULL) {
-  ab_selector(ab_class, function_name = "ab_class")
+  ab_selector(ab_class, function_name = "ab_class", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
 aminoglycosides <- function(only_rsi_columns = NULL) {
-  ab_selector("aminoglycoside", function_name = "aminoglycosides")
+  ab_selector("aminoglycoside", function_name = "aminoglycosides", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
@@ -217,7 +217,7 @@ ab_selector <- function(ab_class,
       need_name <- tolower(gsub("[^a-zA-Z]", "", agents)) != tolower(gsub("[^a-zA-Z]", "", agents_names))
       agents_formatted[need_name] <- paste0(agents_formatted[need_name],
                                             " (", agents_names[need_name], ")")
-      message_("Selecting ", ab_group, ": ", paste(agents_formatted, collapse = ", "),
+      message_("Selecting ", ab_group, ": ", vector_and(agents_formatted, quotes = FALSE),
                as_note = FALSE,
                extra_indent = 4)
     }

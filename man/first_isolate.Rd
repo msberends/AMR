@@ -152,24 +152,27 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 # See ?example_isolates.
 
 # basic filtering on first isolates
-example_isolates[first_isolate(example_isolates), ]
+example_isolates[first_isolate(), ]
 
-# filtering based on isolates ----------------------------------------------
 \donttest{
+# get all first Gram-negatives
+example_isolates[which(first_isolate() & mo_is_gram_negative()), ]
+
 if (require("dplyr")) {
-  # filter on first isolates:
+  # filter on first isolates using dplyr:
   example_isolates \%>\%
-    mutate(first_isolate = first_isolate(.)) \%>\%
-    filter(first_isolate == TRUE)
+    filter(first_isolate())
  
   # short-hand versions:
   example_isolates \%>\%
-    filter(first_isolate())
-  example_isolates \%>\%
     filter_first_isolate()
-    
   example_isolates \%>\%
     filter_first_weighted_isolate()
+    
+ # grouped determination of first isolates (also prints group names):
+ example_isolates \%>\%
+   group_by(hospital_id) \%>\%
+   mutate(first = first_isolate())
   
   # now let's see if first isolates matter:
   A <- example_isolates \%>\%

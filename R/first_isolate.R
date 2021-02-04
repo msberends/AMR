@@ -100,24 +100,27 @@
 #' # See ?example_isolates.
 #' 
 #' # basic filtering on first isolates
-#' example_isolates[first_isolate(example_isolates), ]
+#' example_isolates[first_isolate(), ]
 #' 
-#' # filtering based on isolates ----------------------------------------------
 #' \donttest{
+#' # get all first Gram-negatives
+#' example_isolates[which(first_isolate() & mo_is_gram_negative()), ]
+#'
 #' if (require("dplyr")) {
-#'   # filter on first isolates:
+#'   # filter on first isolates using dplyr:
 #'   example_isolates %>%
-#'     mutate(first_isolate = first_isolate(.)) %>%
-#'     filter(first_isolate == TRUE)
+#'     filter(first_isolate())
 #'  
 #'   # short-hand versions:
 #'   example_isolates %>%
-#'     filter(first_isolate())
-#'   example_isolates %>%
 #'     filter_first_isolate()
-#'     
 #'   example_isolates %>%
 #'     filter_first_weighted_isolate()
+#'     
+#'  # grouped determination of first isolates (also prints group names):
+#'  example_isolates %>%
+#'    group_by(hospital_id) %>%
+#'    mutate(first = first_isolate())
 #'   
 #'   # now let's see if first isolates matter:
 #'   A <- example_isolates %>%
@@ -192,6 +195,14 @@ first_isolate <- function(x,
     if ("tbl" %in% dots.names) {
       x <- dots[which(dots.names == "tbl")]
     }
+  }
+  
+  # fix for using a grouped df as input (a dot as first argument)
+  # such as example_isolates %>% group_by(hospital_id) %>% mutate(first_isolate = first_isolate(.))
+  if (inherits(x, "grouped_df")) {
+    # get_current_data() contains dplyr::cur_data_all()
+    x <- tryCatch(get_current_data(arg_name = "x", 0),
+                  error = function(e) x)
   }
   
   # remove data.table, grouping from tibbles, etc.
@@ -427,12 +438,33 @@ first_isolate <- function(x,
   decimal.mark <- getOption("OutDec")
   big.mark <- ifelse(decimal.mark != ",", ",", ".")
   
+  if (info == TRUE) {
+    # print group name if used in dplyr::group_by()
+    cur_group <- import_fn("cur_group", "dplyr", error_on_fail = FALSE)
+    if (!is.null(cur_group)) {
+      group_df <- tryCatch(cur_group(), error = function(e) data.frame())
+      if (NCOL(group_df) > 0) {
+        # transform factors to characters
+        group <- vapply(FUN.VALUE = character(1), group_df, function(x) {
+          if (is.numeric(x)) {
+            format(x)
+          } else if (is.logical(x)) {
+            as.character(x)
+          } else {
+            paste0('"', x, '"')
+          }
+        })
+        cat("\nGroup: ", paste0(names(group), " = ", group, collapse = ", "), "\n", sep = "")
+      }
+    }
+  }
+  
   # handle empty microorganisms
   if (any(x$newvar_mo == "UNKNOWN", na.rm = TRUE) & info == TRUE) {
     message_(ifelse(include_unknown == TRUE, "Included ", "Excluded "), 
              format(sum(x$newvar_mo == "UNKNOWN", na.rm = TRUE),
                     decimal.mark = decimal.mark, big.mark = big.mark), 
-             " isolates with a microbial ID 'UNKNOWN' (column '", font_bold(col_mo), "')")
+             " isolates with a microbial ID 'UNKNOWN' (in column '", font_bold(col_mo), "')")
   }
   x[which(x$newvar_mo == "UNKNOWN"), "newvar_first_isolate"] <- include_unknown
   
@@ -440,7 +472,7 @@ first_isolate <- function(x,
   if (any(is.na(x$newvar_mo)) & info == TRUE) {
     message_("Excluded ", format(sum(is.na(x$newvar_mo), na.rm = TRUE),
                                  decimal.mark = decimal.mark, big.mark = big.mark), 
-             " isolates with a microbial ID 'NA' (column '", font_bold(col_mo), "')")
+             " isolates with a microbial ID 'NA' (in column '", font_bold(col_mo), "')")
   }
   x[which(is.na(x$newvar_mo)), "newvar_first_isolate"] <- FALSE
   

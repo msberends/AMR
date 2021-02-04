@@ -117,9 +117,7 @@ pca <- function(x,
   
   pca_data <- x[, which(vapply(FUN.VALUE = logical(1), x, function(x) is.numeric(x)))]
   
-  message_("Columns selected for PCA: ", vector_or(font_bold(colnames(pca_data), collapse = NULL),
-                                                   quotes = "'",
-                                                   last_sep = " and "),
+  message_("Columns selected for PCA: ", vector_and(font_bold(colnames(pca_data), collapse = NULL), quotes = TRUE),
            ". Total observations available: ", nrow(pca_data), ".")
   
   if (as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.4) {

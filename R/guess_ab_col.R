@@ -67,6 +67,7 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE, only_r
   meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(search_string, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
+  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   
   if (is.null(x) & is.null(search_string)) {
     return(as.name("guess_ab_col"))
@@ -225,9 +226,9 @@ get_column_abx <- function(x,
     if (info == TRUE & !all(soft_dependencies %in% names(x))) {
       # missing a soft dependency may lower the reliability
       missing <- soft_dependencies[!soft_dependencies %in% names(x)]
-      missing_msg <- paste(paste0(ab_name(missing, tolower = TRUE, language = NULL), 
-                                  " (", font_bold(missing, collapse = NULL), ")"), 
-                           collapse = ", ")
+      missing_msg <- vector_and(paste0(ab_name(missing, tolower = TRUE, language = NULL), 
+                                       " (", font_bold(missing, collapse = NULL), ")"), 
+                                quotes = FALSE)
       message_("Reliability would be improved if these antimicrobial results would be available too: ",
                missing_msg)
     }
@@ -243,7 +244,7 @@ generate_warning_abs_missing <- function(missing, any = FALSE) {
     any_txt <- c("", "are")
   }
   warning_(paste0("Introducing NAs since", any_txt[1], " these antimicrobials ", any_txt[2], " required: ",
-                  paste(missing, collapse = ", ")),
+                  vector_and(missing, quotes = FALSE)),
            immediate = TRUE,
            call = FALSE)
 }

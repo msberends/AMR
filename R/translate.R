@@ -29,7 +29,7 @@
 #' @inheritSection lifecycle Stable Lifecycle
 #' @details Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: <https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv>. This file will be read by all functions where a translated output can be desired, like all [`mo_*`][mo_property()] functions (such as [mo_name()], [mo_gramstain()], [mo_type()], etc.) and [`ab_*`][ab_property()] functions (such as [ab_name()], [ab_group()], etc.). 
 #'
-#' Currently supported languages are: `r paste(sort(gsub(";.*", "", ISOcodes::ISO_639_2[which(ISOcodes::ISO_639_2$Alpha_2 %in% LANGUAGES_SUPPORTED), "Name"])), collapse = ", ")`. Please note that currently not all these languages have translations available for all antimicrobial agents and colloquial microorganism names. 
+#' Currently supported languages are: `r vector_and(gsub(";.*", "", ISOcodes::ISO_639_2[which(ISOcodes::ISO_639_2$Alpha_2 %in% LANGUAGES_SUPPORTED), "Name"]), quotes = FALSE)`. Please note that currently not all these languages have translations available for all antimicrobial agents and colloquial microorganism names. 
 #'
 #' Please suggest your own translations [by creating a new issue on our repository](https://github.com/msberends/AMR/issues/new?title=Translations).
 #'
@@ -83,8 +83,8 @@ get_locale <- function() {
     if (lang %in% LANGUAGES_SUPPORTED) {
       return(lang)
     } else {
-      stop_("unsupported language set as option 'AMR_locale': '", lang, "' - use one of: ",
-            paste0("'", LANGUAGES_SUPPORTED, "'", collapse = ", "))
+      stop_("unsupported language set as option 'AMR_locale': \"", lang, "\" - use either ",
+            vector_or(LANGUAGES_SUPPORTED, quotes = TRUE))
     }
   } else {
     # we now support the LANGUAGE system variable - return it if set
@@ -138,8 +138,8 @@ translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE) {
   from_unique_translated <- from_unique
   
   stop_ifnot(language %in% LANGUAGES_SUPPORTED,
-             "unsupported language: '", language, "' - use one of: ",
-             paste0("'", LANGUAGES_SUPPORTED, "'", collapse = ", "),
+             "unsupported language: \"", language, "\" - use either ",
+             vector_or(LANGUAGES_SUPPORTED, quotes = TRUE),
              call = FALSE)
   
   df_trans <- subset(df_trans, lang == language)

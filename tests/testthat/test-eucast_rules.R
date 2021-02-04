@@ -96,7 +96,8 @@ test_that("EUCAST rules work", {
                                                        AZM = as.rsi("R"),
                                                        CLR = factor("R"),
                                                        stringsAsFactors = FALSE),
-                                            version_expertrules = 3.1)$CLR))
+                                            version_expertrules = 3.1,
+                                            only_rsi_columns = FALSE)$CLR))
   b <- example_isolates$ERY
   expect_identical(a[!is.na(b)],
                    b[!is.na(b)])

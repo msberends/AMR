@@ -1,5 +1,5 @@
-# AMR 1.5.0.9014
-## <small>Last updated:  2 February 2021</small>
+# AMR 1.5.0.9015
+## <small>Last updated:  4 February 2021</small>
 
 ### Breaking
 * Functions that are applied to a data set containing antibiotic columns gained the argument `only_rsi_columns`, which defaults to `TRUE` if any of the columns are of class `<rsi>` (i.e., transformed with `as.rsi()`). This increases reliability of automatic determination of antibiotic columns (so only columns that are defined to be `<rsi>` will be affected).
@@ -48,8 +48,9 @@
   ```
 
 ### Changed
-* `is.rsi()` now returns a vector of `TRUE`/`FALSE` when the input is a data set, in case it will iterate over all columns
+* `is.rsi()` and `is.rsi.eligible()` now return a vector of `TRUE`/`FALSE` when the input is a data set, by iterating over all columns
 * Using functions without setting a data set (e.g., `mo_is_gram_negative()`, `mo_is_gram_positive()`, `mo_is_intrinsic_resistant()`, `first_isolate()`, `mdro()`) now work with `dplyr`s `group_by()` again
+* `first_isolate()` can be used with `group_by()` (also when using a dot `.` as input for the data) and now returns the names of the groups
 * Updated the data set `microorganisms.codes` (which contains popular LIS and WHONET codes for microorganisms) for some species of *Mycobacterium* that previously incorrectly returned *M. africanum*
 * Added Pretomanid (PMD, J04AK08) to the `antibiotics` data set
 * WHONET code `"PNV"` will now correctly be interpreted as `PHN`, the antibiotic code for phenoxymethylpenicillin ('peni V')

@@ -134,7 +134,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
       }
       if (length(abnames) > 1) {
         message_("More than one result was found for item ", index, ": ",
-                 paste0(abnames, collapse = ", "))
+                 vector_and(abnames, quotes = FALSE))
       }
     }
     found[1L]
@@ -454,14 +454,13 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
   x_unknown <- x_unknown[!x_unknown %in% x_unknown_ATCs]
   if (length(x_unknown_ATCs) > 0) {
     warning_("These ATC codes are not (yet) in the antibiotics data set: ",
-             paste('"', sort(unique(x_unknown_ATCs)), '"', sep = "", collapse = ", "),
-             ".",
+             vector_and(x_unknown_ATCs), ".",
              call = FALSE)
   }
   
   if (length(x_unknown) > 0 & fast_mode == FALSE) {
     warning_("These values could not be coerced to a valid antimicrobial ID: ",
-             paste('"', sort(unique(x_unknown)), '"', sep = "", collapse = ", "),
+             vector_and(x_unknown), ".",
              ".",
              call = FALSE)
   }

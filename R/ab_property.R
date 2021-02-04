@@ -225,7 +225,7 @@ ab_url <- function(x, open = FALSE, ...) {
   
   NAs <- ab_name(ab, tolower = TRUE, language = NULL)[!is.na(ab) & is.na(ab_atc(ab))]
   if (length(NAs) > 0) {
-    warning_("No ATC code available for ", paste0(NAs, collapse = ", "), ".")
+    warning_("No ATC code available for ", vector_and(NAs, quotes = FALSE), ".")
   }
   
   if (open == TRUE) {

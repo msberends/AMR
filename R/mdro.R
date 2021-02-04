@@ -497,6 +497,15 @@ mdro <- function(x,
                               ...)
   }
   
+  if (only_rsi_columns == TRUE) {
+    cols_rsi_eligible <- colnames(x[, is.rsi.eligible(x), drop = FALSE])
+    if (length(cols_rsi_eligible) > 0) {
+      message_("These columns might be eligible for determining ", guideline$type, ", but are ignored since `only_rsi_columns` is `TRUE`: ",
+               vector_and(cols_rsi_eligible, quotes = TRUE, sort = FALSE),
+               as_note = TRUE, add_fn = font_red)
+    }
+  }
+  
   # nolint start
   AMC <- cols_ab["AMC"]
   AMK <- cols_ab["AMK"]

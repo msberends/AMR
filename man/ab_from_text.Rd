@@ -18,7 +18,7 @@ ab_from_text(
 
 \item{type}{type of property to search for, either \code{"drug"}, \code{"dose"} or \code{"administration"}, see \emph{Examples}}
 
-\item{collapse}{character to pass on to \code{paste(..., collapse = ...)} to only return one character per element of \code{text}, see \emph{Examples}}
+\item{collapse}{character to pass on to \code{paste(, collapse = ...)} to only return one character per element of \code{text}, see \emph{Examples}}
 
 \item{translate_ab}{if \code{type = "drug"}: a column name of the \link{antibiotics} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}. Defaults to \code{FALSE}. Using \code{TRUE} is equal to using "name".}
 

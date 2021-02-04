@@ -283,9 +283,9 @@ check_validity_mo_source <- function(x, refer_to_name = "`reference_df`", stop_o
       } else {
         plural <- ""
       }
-      stop_("Value", plural, " ", paste0("'", invalid[, 1, drop = TRUE], "'", collapse = ", "), 
+      stop_("Value", plural, " ", vector_and(invalid[, 1, drop = TRUE], quotes = TRUE), 
            " found in ", tolower(refer_to_name), 
-           ", but with invalid microorganism code", plural, " ", paste0("'", invalid$mo, "'", collapse = ", "),
+           ", but with invalid microorganism code", plural, " ", vector_and(invalid$mo, quotes = TRUE),
            call = FALSE)
     } else {
       return(FALSE)

@@ -57,7 +57,8 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
              " (", lst[[v]]$year, ")"))
     }
   }
-  paste0(txt, collapse = ", ")
+  
+  vector_and(txt, quotes = FALSE)
 }
 
 #' Apply EUCAST Rules
@@ -73,7 +74,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param verbose a [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.
 #' @param version_breakpoints the version number to use for the EUCAST Clinical Breakpoints guideline. Can be either `r vector_or(names(EUCAST_VERSION_BREAKPOINTS), reverse = TRUE)`.
 #' @param version_expertrules the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either `r vector_or(names(EUCAST_VERSION_EXPERT_RULES), reverse = TRUE)`.
-#' @param ampc_cephalosporin_resistance a character value that should be applied for AmpC de-repressed cephalosporin-resistant mutants, defaults to `NA`. Currently only works when `version_expertrules` is `3.2`; '*EUCAST Expert Rules v3.2 on Enterobacterales*' states that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these agents. A value of `NA` for this argument will remove results for these agents, while e.g. a value of `"R"` will make the results for these agents resistant. Use `NULL` to not alter the results for AmpC de-repressed cephalosporin-resistant mutants. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: `r vector_or(gsub("[^a-zA-Z ]+", "", unlist(strsplit(eucast_rules_file[which(eucast_rules_file$reference.version == 3.2 & eucast_rules_file$reference.rule %like% "ampc"), "this_value"][1], "|", fixed = TRUE))), quotes = "*", last_sep = " and ")`.
+#' @param ampc_cephalosporin_resistance a character value that should be applied for AmpC de-repressed cephalosporin-resistant mutants, defaults to `NA`. Currently only works when `version_expertrules` is `3.2`; '*EUCAST Expert Rules v3.2 on Enterobacterales*' states that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these agents. A value of `NA` for this argument will remove results for these agents, while e.g. a value of `"R"` will make the results for these agents resistant. Use `NULL` to not alter the results for AmpC de-repressed cephalosporin-resistant mutants. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: `r vector_and(gsub("[^a-zA-Z ]+", "", unlist(strsplit(eucast_rules_file[which(eucast_rules_file$reference.version == 3.2 & eucast_rules_file$reference.rule %like% "ampc"), "this_value"][1], "|", fixed = TRUE))), quotes = "*")`.
 #' @param ... column name of an antibiotic, see section *Antibiotics* below
 #' @param ab any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
 #' @param administration route of administration, either `r vector_or(dosage$administration)`
@@ -281,6 +282,16 @@ eucast_rules <- function(x,
                             info = info,
                             only_rsi_columns = only_rsi_columns,
                             ...)
+  
+  
+  if (only_rsi_columns == TRUE && !paste0(sys.calls()[1], collapse = "") %like% "only_rsi_columns") {
+    cols_rsi_eligible <- colnames(x[, is.rsi.eligible(x), drop = FALSE])
+    if (length(cols_rsi_eligible) > 0) {
+      message_("These columns might be eligible for EUCAST rules, but are ignored since `only_rsi_columns` is `TRUE`: ",
+               vector_and(cols_rsi_eligible, quotes = TRUE, sort = FALSE),
+               as_note = TRUE, add_fn = font_red)
+    }
+  }
   
   AMC <- cols_ab["AMC"]
   AMK <- cols_ab["AMK"]
@@ -737,12 +748,8 @@ eucast_rules <- function(x,
     
   } else {
     if (info == TRUE) {
-      message_("\n\nSkipping inheritance rules defined by this package, such as setting trimethoprim (TMP) = R where trimethoprim/sulfamethoxazole (SXT) = R.",
-               as_note = FALSE,
-               add_fn = font_red)
-      message_("Use eucast_rules(..., rules = \"all\") to also apply those rules.",
-               as_note = FALSE,
-               add_fn = font_red)
+      cat("\n")
+      message_("Skipping inheritance rules defined by this package, such as setting trimethoprim (TMP) = R where trimethoprim/sulfamethoxazole (SXT) = R. Use `eucast_rules(..., rules = \"all\")` to also apply those rules.")
     }
   }
   

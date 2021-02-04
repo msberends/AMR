@@ -123,8 +123,8 @@ as.mic <- function(x, na.rm = FALSE) {
     if (na_before != na_after) {
       list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ""] %pm>%
         unique() %pm>%
-        sort()
-      list_missing <- paste0('"', list_missing, '"', collapse = ", ")
+        sort() %pm>%
+        vector_and(quotes = TRUE)
       warning_(na_after - na_before, " results truncated (",
                round(((na_after - na_before) / length(x)) * 100),
                "%) that were invalid MICs: ",
