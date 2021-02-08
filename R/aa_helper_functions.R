@@ -734,7 +734,7 @@ get_current_column <- function() {
 
 is_null_or_grouped_tbl <- function(x) {
   # attribute "grouped_df" might change at one point, so only set in one place; here.
-  is.null(x) || inherits(x, "grouped_tbl")
+  is.null(x) || inherits(x, "grouped_df")
 }
 
 unique_call_id <- function(entire_session = FALSE) {

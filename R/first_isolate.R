@@ -187,7 +187,8 @@ first_isolate <- function(x = NULL,
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
     # is also fix for using a grouped df as input (a dot as first argument)
-    x <- get_current_data(arg_name = "x", call = -2)
+    x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
+    meet_criteria(x, allow_class = "data.frame")
   }
   # remove data.table, grouping from tibbles, etc.
   x <- as.data.frame(x, stringsAsFactors = FALSE)
@@ -518,7 +519,8 @@ filter_first_isolate <- function(x = NULL,
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
     # is also fix for using a grouped df as input (a dot as first argument)
-    x <- get_current_data(arg_name = "x", call = -2)
+    x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
+    meet_criteria(x, allow_class = "data.frame")
   }
   subset(x, first_isolate(x = x,
                           col_date = col_date,
@@ -543,7 +545,8 @@ filter_first_weighted_isolate <- function(x = NULL,
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
     # is also fix for using a grouped df as input (a dot as first argument)
-    x <- get_current_data(arg_name = "x", call = -2)
+    x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
+    meet_criteria(x, allow_class = "data.frame")
   }
   y <- x
   if (is.null(col_keyantibiotics)) {

@@ -147,9 +147,6 @@ filter_ab_class <- function(x,
   } else {
     scope_txt <- " and "
     scope_fn <- all
-    if (length(agents) > 1) {
-      operator <- gsub("is", "are", operator)
-    }
   }
   if (length(agents) > 1) {
     operator <- " are"

@@ -50,7 +50,7 @@ test_that("first isolates work", {
                       type = "keyantibiotics",
                       info = TRUE),
         na.rm = TRUE)),
-    1396)
+    1395)
 
   # when not ignoring I
   expect_equal(
@@ -65,7 +65,7 @@ test_that("first isolates work", {
                       type = "keyantibiotics",
                       info = TRUE),
         na.rm = TRUE)),
-    1419)
+    1418)
   # when using points
   expect_equal(
     suppressWarnings(
@@ -78,7 +78,7 @@ test_that("first isolates work", {
                       type = "points",
                       info = TRUE),
         na.rm = TRUE)),
-    1399)
+    1398)
 
   # first non-ICU isolates
   expect_equal(

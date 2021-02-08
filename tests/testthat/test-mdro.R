@@ -47,7 +47,7 @@ test_that("mdro works", {
   library(dplyr)
   # example_isolates should have these finding using Dutch guidelines
   expect_equal(as.double(table(outcome)),
-               c(1969, 25, 6)) # 1969 neg, 25 unconfirmed, 6 pos
+               c(1970, 24, 6)) # 1970 neg, 24 unconfirmed, 6 pos
 
   expect_equal(brmo(example_isolates, info = FALSE),
                mdro(example_isolates, guideline = "BRMO", info = FALSE))
@@ -240,5 +240,10 @@ test_that("mdro works", {
                       # since `test` gives an error, it will be ignored with a warning
                       guideline = custom_mdro_guideline(test ~ "A"), 
                       info = FALSE))
+  
+  # print groups
+  library(dplyr)
+  expect_output(x <- mdro(example_isolates %>% group_by(hospital_id), info = TRUE))
+  expect_output(x <- mdro(example_isolates %>% group_by(hospital_id), guideline = custom, info = TRUE))
   
 })
