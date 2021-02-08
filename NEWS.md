@@ -1,30 +1,26 @@
-# AMR 1.5.0.9015
-## <small>Last updated:  4 February 2021</small>
+# AMR 1.5.0.9016
+## <small>Last updated:  8 February 2021</small>
 
-### Breaking
-* Functions that are applied to a data set containing antibiotic columns gained the argument `only_rsi_columns`, which defaults to `TRUE` if any of the columns are of class `<rsi>` (i.e., transformed with `as.rsi()`). This increases reliability of automatic determination of antibiotic columns (so only columns that are defined to be `<rsi>` will be affected).
-
-  This change might invalidate existing code. But since the new argument always returns `FALSE` when no `<rsi>` column can be found in the data, this chance is low.
-
-  Affected functions are:
+### New
+* Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the `eucast_rules()` function and in `as.rsi()` to interpret MIC and disk diffusion values. This is now the default guideline in this package.
+  * Added function `eucast_dosage()` to get a `data.frame` with advised dosages of a certain bug-drug combination, which is based on the new `dosage` data set
+  * Added data set `dosage` to fuel the new `eucast_dosage()` function and to make this data available in a structured way 
+  * Existing data set `example_isolates` now reflects the latest EUCAST rules
+* Added argument `only_rsi_columns` for some functions, which defaults to `FALSE`, to indicate if the functions must only be applied to columns that are of class `<rsi>` (i.e., transformed with `as.rsi()`). This increases speed since automatic determination of antibiotic columns is not needed anymore. Affected functions are:
   * All antibiotic selector functions (`ab_class()` and its wrappers, such as `aminoglocysides()`, `carbapenems()`, `penicillins()`)
   * All antibiotic filter functions (`filter_ab_class()` and its wrappers, such as `filter_aminoglocysides()`, `filter_carbapenems()`, `filter_penicillins()`)
   * `eucast_rules()`
   * `mdro()` (including wrappers such as `brmo()`, `mrgn` and `eucast_exceptional_phenotypes()`)
   * `guess_ab_col()`
-  
-  You can quickly transform all your eligible columns using either:
-  
+* Functions `oxazolidinones()` (an antibiotic selector function) and `filter_oxazolidinones()` (an antibiotic filter function) to select/filter on e.g. linezolid and tedizolid
   ```r
   library(dplyr)
-  your_date %>% mutate_if(is.rsi.eligible, as.rsi)        # old dplyr
-  your_date %>% mutate(across((is.rsi.eligible), as.rsi)) # new dplyr
-  ```
-
-### New
-* Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the `eucast_rules()` function and in `as.rsi()` to interpret MIC and disk diffusion values. This is now the default guideline in this package.
-* Data set `dosage` to fuel the new `eucast_dosage()` function and to make this data available in a structured way 
-* Function `eucast_dosage()` to get a `data.frame` with advised dosages of a certain bug-drug combination, which is based on the new `dosage` data set
+  x <- example_isolates %>% select(date, hospital_id, oxazolidinones())
+  #> Selecting oxazolidinones: column 'LNZ' (linezolid)
+  
+  x <- example_isolates %>% filter_oxazolidinones()
+  #> Filtering on oxazolidinones: value in column `LNZ` (linezolid) is either "R", "S" or "I"
+   ```
 * Support for custom MDRO guidelines, using the new `custom_mdro_guideline()` function, please see `mdro()` for additional info
 * Function `isolate_identifier()`, which will paste a microorganism code with all antimicrobial results of a data set into one string for each row. This is useful to compare isolates, e.g. between institutions or regions, when there is no genotyping available.
 * Function `mo_is_yeast()`, which determines whether a microorganism is a member of the taxonomic class Saccharomycetes or the taxonomic order Saccharomycetales:

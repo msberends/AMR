@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9016</span>
       </span>
     </div>
 
@@ -244,33 +244,35 @@
 </strong></p>
     </div>
 
-    <pre class="usage"><span class='fu'>ab_class</span><span class='op'>(</span><span class='va'>ab_class</span>, only_rsi_columns <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>ab_class</span><span class='op'>(</span><span class='va'>ab_class</span>, only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>aminoglycosides</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'>aminoglycosides</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>carbapenems</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'>carbapenems</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>cephalosporins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'>cephalosporins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>cephalosporins_1st</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'>cephalosporins_1st</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>cephalosporins_2nd</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'>cephalosporins_2nd</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>cephalosporins_3rd</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'>cephalosporins_3rd</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>cephalosporins_4th</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'>cephalosporins_4th</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>cephalosporins_5th</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'>cephalosporins_5th</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>fluoroquinolones</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'>fluoroquinolones</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>glycopeptides</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'>glycopeptides</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>macrolides</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'>macrolides</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>penicillins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'>oxazolidinones</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>tetracyclines</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+<span class='fu'>penicillins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+
+<span class='fu'>tetracyclines</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -281,7 +283,7 @@
     </tr>
     <tr>
       <th>only_rsi_columns</th>
-      <td><p>a logical to indicate whether only columns of class <a href='[rsi]'><code>&lt;rsi&gt;</code></a> must be selected. If set to <code>NULL</code> (default), it will be <code>TRUE</code> if any column of the data was <a href='[rsi]'>transformed to class <code>&lt;rsi&gt;</code></a> on beforehand, and <code>FALSE</code> otherwise.</p></td>
+      <td><p>a logical to indicate whether only columns of class <a href='[rsi]'><code>&lt;rsi&gt;</code></a> must be selected (defaults to <code>FALSE</code>)</p></td>
     </tr>
     </table>
 

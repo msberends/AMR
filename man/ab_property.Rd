@@ -72,7 +72,7 @@ ab_property(x, property = "name", language = get_locale(), ...)
 Use these functions to return a specific property of an antibiotic from the \link{antibiotics} data set. All input values will be evaluated internally with \code{\link[=as.ab]{as.ab()}}.
 }
 \details{
-All output will be \link{translate}d where possible.
+All output \link[=translate]{will be translated} where possible.
 
 The function \code{\link[=ab_url]{ab_url()}} will return the direct URL to the official WHO website. A warning will be returned if the required ATC code is not available.
 }

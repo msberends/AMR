@@ -35,7 +35,7 @@
 #' @param units a logical to indicate whether the units instead of the DDDs itself must be returned, see *Examples*
 #' @param open browse the URL using [utils::browseURL()]
 #' @param ... other arguments passed on to [as.ab()]
-#' @details All output will be [translate]d where possible.
+#' @details All output [will be translated][translate] where possible.
 #' 
 #' The function [ab_url()] will return the direct URL to the official WHO website. A warning will be returned if the required ATC code is not available.
 #' @inheritSection as.ab Source

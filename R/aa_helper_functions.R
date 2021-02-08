@@ -675,7 +675,18 @@ get_current_data <- function(arg_name, call) {
   
   # nothing worked, so:
   if (is.na(arg_name)) {
-    stop_("this function must be used inside valid dplyr selection verbs or inside a data.frame call", 
+    if (isTRUE(is.numeric(call))) {
+      fn <- as.character(sys.call(call + 1)[1])
+      examples <- paste0(", e.g.:\n",
+                         "  your_data %>% select(", fn, "())\n",
+                         "  your_data %>% select(column_a, column_b, ", fn, "())\n",
+                         "  your_data[, ", fn, "()]\n",
+                         '  your_data[, c("column_a", "column_b", ', fn, "())]")
+    } else {
+      examples <- ""
+    }
+    stop_("this function must be used inside valid dplyr selection verbs or inside a data.frame call",
+          examples,
           call = call)
   } else {
     stop_("argument `", arg_name, "` is missing with no default", call = call)
@@ -719,6 +730,11 @@ get_current_column <- function() {
     # not found, so:
     NULL
   }
+}
+
+is_null_or_grouped_tbl <- function(x) {
+  # attribute "grouped_df" might change at one point, so only set in one place; here.
+  is.null(x) || inherits(x, "grouped_tbl")
 }
 
 unique_call_id <- function(entire_session = FALSE) {

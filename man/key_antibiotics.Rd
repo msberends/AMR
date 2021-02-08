@@ -6,7 +6,7 @@
 \title{Key Antibiotics for First (Weighted) Isolates}
 \usage{
 key_antibiotics(
-  x,
+  x = NULL,
   col_mo = NULL,
   universal_1 = guess_ab_col(x, "amoxicillin"),
   universal_2 = guess_ab_col(x, "amoxicillin/clavulanic acid"),
@@ -125,7 +125,7 @@ There are two ways to determine whether isolates can be included as first weight
 Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With \code{ignore_I = FALSE}, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. Read more about this in the \code{\link[=key_antibiotics]{key_antibiotics()}} function.
 \item Using \code{type = "points"} and argument \code{points_threshold}
 
-A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds \code{points_threshold}, which default to \code{2}, an isolate will be (re)selected as a first weighted isolate.
+A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds \code{points_threshold}, which defaults to \code{2}, an isolate will be (re)selected as a first weighted isolate.
 }
 }
 

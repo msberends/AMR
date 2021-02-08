@@ -204,6 +204,7 @@ is.rsi.eligible <- function(x, threshold = 0.05) {
   meet_criteria(threshold, allow_class = "numeric", has_length = 1)
   
   if (inherits(x, "data.frame")) {
+    # iterate this function over all columns
     return(unname(vapply(FUN.VALUE = logical(1), x, is.rsi.eligible)))
   }
   
@@ -235,6 +236,8 @@ is.rsi.eligible <- function(x, threshold = 0.05) {
         ab <- suppressWarnings(as.ab(cur_col, fast_mode = TRUE, info = FALSE))
         if (!is.na(ab)) {
           # this is a valid antibiotic code
+          message_("Column '", font_bold(cur_col), "' is as.rsi()-eligible (despite only having empty values), since it seems to be ",
+                   ab_name(ab, language = NULL, tolower = TRUE), " (", ab, ")")
           return(TRUE)
         }
       }

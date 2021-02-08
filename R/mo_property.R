@@ -44,11 +44,11 @@
 #'
 #' The Gram stain - [mo_gramstain()] - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318)), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`. Functions [mo_is_gram_negative()] and [mo_is_gram_positive()] always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
 #' 
-#' Determination of yeasts - [mo_is_yeast()] - will be based on the taxonomic phylum, class and order. Budding yeasts are true fungi of the phylum Ascomycetes, class Saccharomycetes (also called Hemiascomycetes). The true yeasts are separated into one main order Saccharomycetales. For all microorganisms that are in one of those two groups, the function will return `TRUE`. It returns `FALSE` for all other taxonomic entries.
+#' Determination of yeasts - [mo_is_yeast()] - will be based on the taxonomic kingdom and class. *Budding yeasts* are fungi of the phylum Ascomycetes, class Saccharomycetes (also called Hemiascomycetes). *True yeasts* are aggregated into the underlying order Saccharomycetales. Thus, for all microorganisms that are fungi and member of the taxonomic class Saccharomycetes, the function will return `TRUE`. It returns `FALSE` otherwise (except when the input is `NA` or the MO code is `UNKNOWN`).
 #' 
-#' Intrinsic resistance - [mo_is_intrinsic_resistant()] - will be determined based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(3.2)`. The [mo_is_intrinsic_resistant()] can be vectorised over arguments `x` (input for microorganisms) and over `ab` (input for antibiotics).
+#' Intrinsic resistance - [mo_is_intrinsic_resistant()] - will be determined based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(3.2)`. The [mo_is_intrinsic_resistant()] functions can be vectorised over arguments `x` (input for microorganisms) and over `ab` (input for antibiotics).
 #'
-#' All output will be [translate]d where possible.
+#' All output [will be translated][translate] where possible.
 #'
 #' The function [mo_url()] will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
 #' @inheritSection mo_matching_score Matching Score for Microorganisms
@@ -438,8 +438,7 @@ mo_is_yeast <- function(x, language = get_locale(), ...) {
   load_mo_failures_uncertainties_renamed(metadata)
   
   out <- rep(FALSE, length(x))
-  out[x.kingdom == "Fungi" &
-        ((x.phylum == "Ascomycetes" & x.class == "Saccharomycetes") | x.order == "Saccharomycetales")] <- TRUE
+  out[x.kingdom == "Fungi" & x.class == "Saccharomycetes"] <- TRUE
   out[x.mo %in% c(NA_character_, "UNKNOWN")] <- NA
   out
 }

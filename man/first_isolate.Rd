@@ -12,7 +12,7 @@ Methodology of this function is strictly based on:
 }
 \usage{
 first_isolate(
-  x,
+  x = NULL,
   col_date = NULL,
   col_patient_id = NULL,
   col_mo = NULL,
@@ -33,7 +33,7 @@ first_isolate(
 )
 
 filter_first_isolate(
-  x,
+  x = NULL,
   col_date = NULL,
   col_patient_id = NULL,
   col_mo = NULL,
@@ -41,7 +41,7 @@ filter_first_isolate(
 )
 
 filter_first_weighted_isolate(
-  x,
+  x = NULL,
   col_date = NULL,
   col_patient_id = NULL,
   col_mo = NULL,
@@ -50,7 +50,7 @@ filter_first_weighted_isolate(
 )
 }
 \arguments{
-\item{x}{a \link{data.frame} containing isolates. Can be left blank for automatic determination.}
+\item{x}{a \link{data.frame} containing isolates. Can be left blank for automatic determination, see \emph{Examples}.}
 
 \item{col_date}{column name of the result date (or date that is was received on the lab), defaults to the first column with a date class}
 
@@ -130,7 +130,7 @@ There are two ways to determine whether isolates can be included as first weight
 Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With \code{ignore_I = FALSE}, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. Read more about this in the \code{\link[=key_antibiotics]{key_antibiotics()}} function.
 \item Using \code{type = "points"} and argument \code{points_threshold}
 
-A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds \code{points_threshold}, which default to \code{2}, an isolate will be (re)selected as a first weighted isolate.
+A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds \code{points_threshold}, which defaults to \code{2}, an isolate will be (re)selected as a first weighted isolate.
 }
 }
 
@@ -151,10 +151,12 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 # `example_isolates` is a data set available in the AMR package.
 # See ?example_isolates.
 
-# basic filtering on first isolates
-example_isolates[first_isolate(), ]
+example_isolates[first_isolate(example_isolates), ]
 
 \donttest{
+# faster way, only works in R 3.2 and later:
+example_isolates[first_isolate(), ]
+
 # get all first Gram-negatives
 example_isolates[which(first_isolate() & mo_is_gram_negative()), ]
 

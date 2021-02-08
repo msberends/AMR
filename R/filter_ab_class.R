@@ -31,7 +31,7 @@
 #' @param ab_class an antimicrobial class, like `"carbapenems"`. The columns `group`, `atc_group1` and `atc_group2` of the [antibiotics] data set will be searched (case-insensitive) for this value.
 #' @param result an antibiotic result: S, I or R (or a combination of more of them)
 #' @param scope the scope to check which variables to check, can be `"any"` (default) or `"all"`
-#' @param only_rsi_columns a logical to indicate whether only columns must be included that were [transformed to class `<rsi>`]([rsi]) on beforehand. Defaults to `TRUE` if any column of `x` is of class `<rsi>`.
+#' @param only_rsi_columns a logical to indicate whether only columns must be included that were [transformed to class `<rsi>`]([rsi]) on beforehand (defaults to `FALSE`)
 #' @param ... arguments passed on to [filter_ab_class()]
 #' @details All columns of `x` will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.). This means that a filter function like e.g. [filter_aminoglycosides()] will include column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
 #' @rdname filter_ab_class
@@ -82,7 +82,7 @@ filter_ab_class <- function(x,
                             ab_class,
                             result = NULL,
                             scope = "any",
-                            only_rsi_columns = any(is.rsi(x)),
+                            only_rsi_columns = FALSE,
                             ...) {
   .call_depth <- list(...)$`.call_depth`
   if (is.null(.call_depth)) {
@@ -92,6 +92,7 @@ filter_ab_class <- function(x,
   meet_criteria(ab_class, allow_class = "character", has_length = 1, .call_depth = .call_depth)
   meet_criteria(result, allow_class = "character", has_length = c(1, 2, 3), allow_NULL = TRUE, .call_depth = .call_depth)
   meet_criteria(scope, allow_class = "character", has_length = 1, is_in = c("all", "any"), .call_depth = .call_depth)
+  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1, .call_depth = .call_depth)
 
   check_dataset_integrity()
 
@@ -110,7 +111,7 @@ filter_ab_class <- function(x,
   stop_ifnot(all(scope %in% c("any", "all")), "`scope` must be one of: 'any', 'all'")
   
   # get all columns in data with names that resemble antibiotics
-  ab_in_data <- get_column_abx(x, info = FALSE)
+  ab_in_data <- get_column_abx(x, info = FALSE, only_rsi_columns = only_rsi_columns)
   if (length(ab_in_data) == 0) {
     message_("No columns with class <rsi> found (see ?as.rsi), data left unchanged.")
     return(x.bak)
@@ -132,17 +133,14 @@ filter_ab_class <- function(x,
   # get the columns with a group names in the chosen ab class
   agents <- ab_in_data[names(ab_in_data) %in% ab_reference$ab]
   if (length(agents) == 0) {
-    message_("no antimicrobial agents of class ", ab_group, 
+    message_("No antimicrobial agents of class ", ab_group, 
              " found (such as ", find_ab_names(ab_class, 2), 
-             "), data left unchanged.")
+             ")",
+             ifelse(only_rsi_columns == TRUE, " with class <rsi>,", ","),
+             " data left unchanged.")
     return(x.bak)
   }
   
-  if (length(result) == 1) {
-    operator <- " is "
-  } else {
-    operator <- " is one of "
-  }
   if (scope == "any") {
     scope_txt <- " or "
     scope_fn <- any
@@ -154,9 +152,14 @@ filter_ab_class <- function(x,
     }
   }
   if (length(agents) > 1) {
-    scope <- paste(scope, "of columns ")
+    operator <- " are"
+    scope <- paste("values in", scope, "of columns ")
   } else {
-    scope <- "column "
+    operator <- " is"
+    scope <- "value in column "
+  }
+  if (length(result) > 1) {
+    operator <- paste(operator, "either")
   }
   
   # sort columns on official name
@@ -166,7 +169,9 @@ filter_ab_class <- function(x,
            paste(paste0("`", font_bold(agents, collapse = NULL),
                         "` (", ab_name(names(agents), tolower = TRUE, language = NULL), ")"),
                  collapse = scope_txt),
-           operator, toString(result), as_note = FALSE)
+           operator, " ", vector_or(result, quotes = TRUE),
+           as_note = FALSE,
+           extra_indent = 6)
   x_transposed <- as.list(as.data.frame(t(x[, agents, drop = FALSE]), stringsAsFactors = FALSE))
   filtered <- vapply(FUN.VALUE = logical(1), x_transposed, function(y) scope_fn(y %in% result, na.rm = TRUE))
   x <- x[which(filtered), , drop = FALSE]
@@ -179,11 +184,13 @@ filter_ab_class <- function(x,
 filter_aminoglycosides <- function(x,
                                    result = NULL,
                                    scope = "any",
+                                   only_rsi_columns = FALSE,
                                    ...) {
   filter_ab_class(x = x,
                   ab_class = "aminoglycoside",
                   result = result,
                   scope = scope,
+                  only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
                   ...)
 }
@@ -193,11 +200,13 @@ filter_aminoglycosides <- function(x,
 filter_carbapenems <- function(x,
                                result = NULL,
                                scope = "any",
+                               only_rsi_columns = FALSE,
                                ...) {
   filter_ab_class(x = x,
                   ab_class = "carbapenem",
                   result = result,
                   scope = scope,
+                  only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
                   ...)
 }
@@ -207,11 +216,13 @@ filter_carbapenems <- function(x,
 filter_cephalosporins <- function(x,
                                   result = NULL,
                                   scope = "any",
+                                  only_rsi_columns = FALSE,
                                   ...) {
   filter_ab_class(x = x,
                   ab_class = "cephalosporin",
                   result = result,
                   scope = scope,
+                  only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
                   ...)
 }
@@ -221,11 +232,13 @@ filter_cephalosporins <- function(x,
 filter_1st_cephalosporins <- function(x,
                                       result = NULL,
                                       scope = "any",
+                                      only_rsi_columns = FALSE,
                                       ...) {
   filter_ab_class(x = x,
                   ab_class = "cephalosporins (1st gen.)",
                   result = result,
                   scope = scope,
+                  only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
                   ...)
 }
@@ -235,11 +248,13 @@ filter_1st_cephalosporins <- function(x,
 filter_2nd_cephalosporins <- function(x,
                                       result = NULL,
                                       scope = "any",
+                                      only_rsi_columns = FALSE,
                                       ...) {
   filter_ab_class(x = x,
                   ab_class = "cephalosporins (2nd gen.)",
                   result = result,
                   scope = scope,
+                  only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
                   ...)
 }
@@ -249,11 +264,13 @@ filter_2nd_cephalosporins <- function(x,
 filter_3rd_cephalosporins <- function(x,
                                       result = NULL,
                                       scope = "any",
+                                      only_rsi_columns = FALSE,
                                       ...) {
   filter_ab_class(x = x,
                   ab_class = "cephalosporins (3rd gen.)",
                   result = result,
                   scope = scope,
+                  only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
                   ...)
 }
@@ -263,11 +280,13 @@ filter_3rd_cephalosporins <- function(x,
 filter_4th_cephalosporins <- function(x,
                                       result = NULL,
                                       scope = "any",
+                                      only_rsi_columns = FALSE,
                                       ...) {
   filter_ab_class(x = x,
                   ab_class = "cephalosporins (4th gen.)",
                   result = result,
                   scope = scope,
+                  only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
                   ...)
 }
@@ -277,11 +296,13 @@ filter_4th_cephalosporins <- function(x,
 filter_5th_cephalosporins <- function(x,
                                       result = NULL,
                                       scope = "any",
+                                      only_rsi_columns = FALSE,
                                       ...) {
   filter_ab_class(x = x,
                   ab_class = "cephalosporins (5th gen.)",
                   result = result,
                   scope = scope,
+                  only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
                   ...)
 }
@@ -291,11 +312,13 @@ filter_5th_cephalosporins <- function(x,
 filter_fluoroquinolones <- function(x,
                                     result = NULL,
                                     scope = "any",
+                                    only_rsi_columns = FALSE,
                                     ...) {
   filter_ab_class(x = x,
                   ab_class = "fluoroquinolone",
                   result = result,
                   scope = scope,
+                  only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
                   ...)
 }
@@ -305,11 +328,13 @@ filter_fluoroquinolones <- function(x,
 filter_glycopeptides <- function(x,
                                  result = NULL,
                                  scope = "any",
+                                 only_rsi_columns = FALSE,
                                  ...) {
   filter_ab_class(x = x,
                   ab_class = "glycopeptide",
                   result = result,
                   scope = scope,
+                  only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
                   ...)
 }
@@ -319,11 +344,29 @@ filter_glycopeptides <- function(x,
 filter_macrolides <- function(x,
                               result = NULL,
                               scope = "any",
+                              only_rsi_columns = FALSE,
                               ...) {
   filter_ab_class(x = x,
                   ab_class = "macrolide",
                   result = result,
                   scope = scope,
+                  only_rsi_columns = only_rsi_columns,
+                  .call_depth = 1,
+                  ...)
+}
+
+#' @rdname filter_ab_class
+#' @export
+filter_oxazolidinones <- function(x,
+                                  result = NULL,
+                                  scope = "any",
+                                  only_rsi_columns = FALSE,
+                                  ...) {
+  filter_ab_class(x = x,
+                  ab_class = "oxazolidinone",
+                  result = result,
+                  scope = scope,
+                  only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
                   ...)
 }
@@ -333,11 +376,13 @@ filter_macrolides <- function(x,
 filter_penicillins <- function(x,
                                result = NULL,
                                scope = "any",
+                               only_rsi_columns = FALSE,
                                ...) {
   filter_ab_class(x = x,
                   ab_class = "penicillin",
                   result = result,
                   scope = scope,
+                  only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
                   ...)
 }
@@ -347,11 +392,13 @@ filter_penicillins <- function(x,
 filter_tetracyclines <- function(x,
                                  result = NULL,
                                  scope = "any",
+                                 only_rsi_columns = FALSE,
                                  ...) {
   filter_ab_class(x = x,
                   ab_class = "tetracycline",
                   result = result,
                   scope = scope,
+                  only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
                   ...)
 }
@@ -364,6 +411,7 @@ find_ab_group <- function(ab_class) {
                          "fluoroquinolone",
                          "glycopeptide",
                          "macrolide",
+                         "oxazolidinone",
                          "tetracycline"),
          paste0(ab_class, "s"),
          antibiotics %pm>%

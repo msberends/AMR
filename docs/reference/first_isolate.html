@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9016</span>
       </span>
     </div>
 
@@ -243,7 +243,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>first_isolate</span><span class='op'>(</span>
-  <span class='va'>x</span>,
+  x <span class='op'>=</span> <span class='cn'>NULL</span>,
   col_date <span class='op'>=</span> <span class='cn'>NULL</span>,
   col_patient_id <span class='op'>=</span> <span class='cn'>NULL</span>,
   col_mo <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -264,7 +264,7 @@
 <span class='op'>)</span>
 
 <span class='fu'>filter_first_isolate</span><span class='op'>(</span>
-  <span class='va'>x</span>,
+  x <span class='op'>=</span> <span class='cn'>NULL</span>,
   col_date <span class='op'>=</span> <span class='cn'>NULL</span>,
   col_patient_id <span class='op'>=</span> <span class='cn'>NULL</span>,
   col_mo <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -272,7 +272,7 @@
 <span class='op'>)</span>
 
 <span class='fu'>filter_first_weighted_isolate</span><span class='op'>(</span>
-  <span class='va'>x</span>,
+  x <span class='op'>=</span> <span class='cn'>NULL</span>,
   col_date <span class='op'>=</span> <span class='cn'>NULL</span>,
   col_patient_id <span class='op'>=</span> <span class='cn'>NULL</span>,
   col_mo <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -285,7 +285,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> containing isolates. Can be left blank for automatic determination.</p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> containing isolates. Can be left blank for automatic determination, see <em>Examples</em>.</p></td>
     </tr>
     <tr>
       <th>col_date</th>
@@ -399,7 +399,7 @@
 <li><p>Using <code>type = "keyantibiotics"</code> and argument <code>ignore_I</code></p>
 <p>Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With <code>ignore_I = FALSE</code>, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. Read more about this in the <code><a href='key_antibiotics.html'>key_antibiotics()</a></code> function.</p></li>
 <li><p>Using <code>type = "points"</code> and argument <code>points_threshold</code></p>
-<p>A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds <code>points_threshold</code>, which default to <code>2</code>, an isolate will be (re)selected as a first weighted isolate.</p></li>
+<p>A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds <code>points_threshold</code>, which defaults to <code>2</code>, an isolate will be (re)selected as a first weighted isolate.</p></li>
 </ol>
 
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable Lifecycle</h2>
@@ -422,10 +422,12 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
     <pre class="examples"><span class='co'># `example_isolates` is a data set available in the AMR package.</span>
 <span class='co'># See ?example_isolates.</span>
 
-<span class='co'># basic filtering on first isolates</span>
-<span class='va'>example_isolates</span><span class='op'>[</span><span class='fu'>first_isolate</span><span class='op'>(</span><span class='op'>)</span>, <span class='op'>]</span>
+<span class='va'>example_isolates</span><span class='op'>[</span><span class='fu'>first_isolate</span><span class='op'>(</span><span class='va'>example_isolates</span><span class='op'>)</span>, <span class='op'>]</span>
 
 <span class='co'># \donttest{</span>
+<span class='co'># faster way, only works in R 3.2 and later:</span>
+<span class='va'>example_isolates</span><span class='op'>[</span><span class='fu'>first_isolate</span><span class='op'>(</span><span class='op'>)</span>, <span class='op'>]</span>
+
 <span class='co'># get all first Gram-negatives</span>
 <span class='va'>example_isolates</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'>first_isolate</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>&amp;</span> <span class='fu'><a href='mo_property.html'>mo_is_gram_negative</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>, <span class='op'>]</span>
 

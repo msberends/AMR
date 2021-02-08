@@ -30,7 +30,7 @@
 #' @param x a [data.frame]
 #' @param search_string a text to search `x` for, will be checked with [as.ab()] if this value is not a column in `x`
 #' @param verbose a logical to indicate whether additional info should be printed
-#' @param only_rsi_columns a logical to indicate whether only antibiotic columns must be detected that were [transformed to class `<rsi>`]([rsi]) on beforehand. Defaults to `TRUE` if any column of `x` is of class `<rsi>`.
+#' @param only_rsi_columns a logical to indicate whether only antibiotic columns must be detected that were [transformed to class `<rsi>`]([rsi]) on beforehand (defaults to `FALSE`)
 #' @details You can look for an antibiotic (trade) name or abbreviation and it will search `x` and the [antibiotics] data set for any column containing a name or code of that antibiotic. **Longer columns names take precedence over shorter column names.**
 #' @return A column name of `x`, or `NULL` when no result is found.
 #' @export
@@ -63,7 +63,7 @@
 #'                  AMP_ED20 = "S")
 #' guess_ab_col(df, "ampicillin")
 #' # [1] "AMP_ED20"
-guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE, only_rsi_columns = any(is.rsi(x))) {
+guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE, only_rsi_columns = FALSE) {
   meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(search_string, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(verbose, allow_class = "logical", has_length = 1)

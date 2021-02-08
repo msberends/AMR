@@ -13,6 +13,7 @@
 \alias{filter_fluoroquinolones}
 \alias{filter_glycopeptides}
 \alias{filter_macrolides}
+\alias{filter_oxazolidinones}
 \alias{filter_penicillins}
 \alias{filter_tetracyclines}
 \title{Filter Isolates on Result in Antimicrobial Class}
@@ -22,35 +23,121 @@ filter_ab_class(
   ab_class,
   result = NULL,
   scope = "any",
-  only_rsi_columns = any(is.rsi(x)),
+  only_rsi_columns = FALSE,
   ...
 )
 
-filter_aminoglycosides(x, result = NULL, scope = "any", ...)
+filter_aminoglycosides(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
 
-filter_carbapenems(x, result = NULL, scope = "any", ...)
+filter_carbapenems(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
 
-filter_cephalosporins(x, result = NULL, scope = "any", ...)
+filter_cephalosporins(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
 
-filter_1st_cephalosporins(x, result = NULL, scope = "any", ...)
+filter_1st_cephalosporins(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
 
-filter_2nd_cephalosporins(x, result = NULL, scope = "any", ...)
+filter_2nd_cephalosporins(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
 
-filter_3rd_cephalosporins(x, result = NULL, scope = "any", ...)
+filter_3rd_cephalosporins(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
 
-filter_4th_cephalosporins(x, result = NULL, scope = "any", ...)
+filter_4th_cephalosporins(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
 
-filter_5th_cephalosporins(x, result = NULL, scope = "any", ...)
+filter_5th_cephalosporins(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
 
-filter_fluoroquinolones(x, result = NULL, scope = "any", ...)
+filter_fluoroquinolones(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
 
-filter_glycopeptides(x, result = NULL, scope = "any", ...)
+filter_glycopeptides(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
 
-filter_macrolides(x, result = NULL, scope = "any", ...)
+filter_macrolides(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
 
-filter_penicillins(x, result = NULL, scope = "any", ...)
+filter_oxazolidinones(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
 
-filter_tetracyclines(x, result = NULL, scope = "any", ...)
+filter_penicillins(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
+
+filter_tetracyclines(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{a data set}
@@ -61,7 +148,7 @@ filter_tetracyclines(x, result = NULL, scope = "any", ...)
 
 \item{scope}{the scope to check which variables to check, can be \code{"any"} (default) or \code{"all"}}
 
-\item{only_rsi_columns}{a logical to indicate whether only columns must be included that were \href{[rsi]}{transformed to class \verb{<rsi>}} on beforehand. Defaults to \code{TRUE} if any column of \code{x} is of class \verb{<rsi>}.}
+\item{only_rsi_columns}{a logical to indicate whether only columns must be included that were \href{[rsi]}{transformed to class \verb{<rsi>}} on beforehand (defaults to \code{FALSE})}
 
 \item{...}{arguments passed on to \code{\link[=filter_ab_class]{filter_ab_class()}}}
 }

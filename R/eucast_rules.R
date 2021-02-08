@@ -78,7 +78,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param ... column name of an antibiotic, see section *Antibiotics* below
 #' @param ab any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
 #' @param administration route of administration, either `r vector_or(dosage$administration)`
-#' @param only_rsi_columns a logical to indicate whether only antibiotic columns must be detected that were [transformed to class `<rsi>`]([rsi]) on beforehand. Defaults to `TRUE` if any column of `x` is of class `<rsi>`.
+#' @param only_rsi_columns a logical to indicate whether only antibiotic columns must be detected that were [transformed to class `<rsi>`]([rsi]) on beforehand (defaults to `FALSE`)
 #' @inheritParams first_isolate
 #' @details
 #' **Note:** This function does not translate MIC values to RSI values. Use [as.rsi()] for that. \cr
@@ -167,7 +167,7 @@ eucast_rules <- function(x,
                          version_breakpoints = 11.0,
                          version_expertrules = 3.2,
                          ampc_cephalosporin_resistance = NA,
-                         only_rsi_columns = any(is.rsi(x)),
+                         only_rsi_columns = FALSE,
                          ...) {
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(col_mo, allow_class = "character", has_length = 1, is_in = colnames(x), allow_NULL = TRUE)
@@ -282,17 +282,7 @@ eucast_rules <- function(x,
                             info = info,
                             only_rsi_columns = only_rsi_columns,
                             ...)
-  
-  
-  if (only_rsi_columns == TRUE && !paste0(sys.calls()[1], collapse = "") %like% "only_rsi_columns") {
-    cols_rsi_eligible <- colnames(x[, is.rsi.eligible(x), drop = FALSE])
-    if (length(cols_rsi_eligible) > 0) {
-      message_("These columns might be eligible for EUCAST rules, but are ignored since `only_rsi_columns` is `TRUE`: ",
-               vector_and(cols_rsi_eligible, quotes = TRUE, sort = FALSE),
-               as_note = TRUE, add_fn = font_red)
-    }
-  }
-  
+
   AMC <- cols_ab["AMC"]
   AMK <- cols_ab["AMK"]
   AMP <- cols_ab["AMP"]
@@ -850,7 +840,7 @@ eucast_rules <- function(x,
         # is new rule within group, print its name
         cat(markup_italics_where_needed(word_wrap(rule_current, 
                                                   width = getOption("width") - 30,
-                                                  extra_indent = 4)))
+                                                  extra_indent = 6)))
         warned <- FALSE
       }
     }

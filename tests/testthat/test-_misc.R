@@ -54,3 +54,12 @@ test_that("looking up ab columns works", {
   expect_warning(get_column_abx(dplyr::rename(example_isolates, thisone = AMX), amox = "thisone", tmp = "thisone", verbose = TRUE))
   expect_warning(get_column_abx(dplyr::rename(example_isolates, thisone = AMX), amox = "thisone", tmp = "thisone", verbose = FALSE))
 })
+
+test_that("looking up ab columns works", {
+  skip_on_cran()
+  library(dplyr)
+  
+  # we rely on "grouped_tbl" being a class of grouped tibbles, so:
+  expect_true(is_null_or_grouped_tbl(example_isolates %>% group_by(hospital_id)))
+
+})

@@ -108,7 +108,7 @@
 #'   sum(my_patients$first_weighted, na.rm = TRUE)
 #' }
 #' }
-key_antibiotics <- function(x,
+key_antibiotics <- function(x = NULL,
                             col_mo = NULL,
                             universal_1 = guess_ab_col(x, "amoxicillin"),
                             universal_2 = guess_ab_col(x, "amoxicillin/clavulanic acid"),
@@ -130,10 +130,7 @@ key_antibiotics <- function(x,
                             GramNeg_6 = guess_ab_col(x, "meropenem"),
                             warnings = TRUE,
                             ...) {
-  if (missing(x)) {
-    x <- get_current_data(arg_name = "x", call = -2)
-  }
-  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(universal_1, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(universal_2, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
@@ -154,6 +151,14 @@ key_antibiotics <- function(x,
   meet_criteria(GramNeg_5, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(GramNeg_6, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(warnings, allow_class = "logical", has_length = 1)
+  
+  if (is_null_or_grouped_tbl(x)) {
+    # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
+    # is also fix for using a grouped df as input (a dot as first argument)
+    x <- get_current_data(arg_name = "x", call = -2)
+  }
+  # force regular data.frame, not a tibble or data.table
+  x <- as.data.frame(x, stringsAsFactors = FALSE)
   
   dots <- unlist(list(...))
   if (length(dots) != 0) {
@@ -249,7 +254,6 @@ key_antibiotics <- function(x,
     remember_thrown_message("key_antibiotics.gramneg")
   }
   
-  x <- as.data.frame(x, stringsAsFactors = FALSE)
   x[, col_mo] <- as.mo(x[, col_mo, drop = TRUE])
   x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL)
   x$key_ab <- NA_character_

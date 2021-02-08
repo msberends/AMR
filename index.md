@@ -1,6 +1,6 @@
 # `AMR` (for R) <img src="./logo.png" align="right" height="120px" />
 
-*Note: the rules of 'EUCAST Clinical Breakpoints v11.0 (2021)' will be added in the next release, to be expected in February/March 2021.*
+*Note: the rules of 'EUCAST Clinical Breakpoints v11.0 (2021)' are implemented in [the latest beta version](./#latest-development-version), awaiting the next stable release (expected end of February)*
 
 > <span class="fa fa-clipboard-list" style="color: #128f76; font-size: 20pt; margin-right: 5px;"></span> **PLEASE TAKE PART IN OUR SURVEY!**  
 > Since you are one of our users, we would like to know how you use the package and what it brought you or your organisation. **If you have a minute, please [anonymously fill in this short questionnaire](./survey.html)**. Your valuable input will help to improve the package and its functionalities. You can answer the open questions in either English, Spanish, French, Dutch, or German. Thank you very much in advance!
@@ -39,9 +39,9 @@ example_isolates %>%
 #> NOTE: Using column 'mo' as input for mo_is_intrinsic_resistant()
 #> NOTE: Determining intrinsic resistance based on 'EUCAST Expert Rules' and
 #>       'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2 (2020).
-#> Selecting aminoglycosides: 'AMK' (amikacin), 'GEN' (gentamicin), 
-#>                            'KAN' (kanamycin), 'TOB' (tobramycin)
-#> Selecting carbapenems: 'IPM' (imipenem), 'MEM' (meropenem)
+#> Selecting aminoglycosides: columns 'AMK' (amikacin), 'GEN' (gentamicin), 
+#>       'KAN' (kanamycin) and 'TOB' (tobramycin)
+#> Selecting carbapenems: columns 'IPM' (imipenem) and 'MEM' (meropenem)
 ```
 
 With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (`mo_is_gram_negative()` and `mo_is_intrinsic_resistant()`) and a column selection on two antibiotic groups (`aminoglycosides()` and `carbapenems()`), the reference data about [all microorganisms](./reference/microorganisms.html) and [all antibiotics](./reference/antibiotics.html) in the `AMR` package make sure you get what you meant:

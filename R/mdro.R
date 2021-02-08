@@ -146,19 +146,16 @@
 #'            MRGN = mrgn())
 #' }
 #' }
-mdro <- function(x,
+mdro <- function(x = NULL,
                  guideline = "CMI2012",
                  col_mo = NULL,
                  info = interactive(),
                  pct_required_classes = 0.5,
                  combine_SI = TRUE,
                  verbose = FALSE,
-                 only_rsi_columns = any(is.rsi(x)),
+                 only_rsi_columns = FALSE,
                  ...) {
-  if (missing(x)) {
-    x <- get_current_data(arg_name = "x", call = -2)
-  }
-  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = c("list", "character"), allow_NULL = TRUE)
   if (!is.list(guideline)) {
     meet_criteria(guideline, allow_class = "character", has_length = 1, allow_NULL = TRUE)
@@ -168,8 +165,17 @@ mdro <- function(x,
   meet_criteria(pct_required_classes, allow_class = "numeric", has_length = 1)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
+  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   
   check_dataset_integrity()
+  
+  info.bak <- info
+  if (message_not_thrown_before("mdro")) {
+    remember_thrown_message("mdro")
+  } else {
+    # don't thrown info's more than once per call
+    info <- FALSE
+  }
   
   if (interactive() & verbose == TRUE & info == TRUE) {
     txt <- paste0("WARNING: In Verbose mode, the mdro() function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.",
@@ -187,10 +193,37 @@ mdro <- function(x,
     }
   }
   
+  group_msg <- ""
+  if (info.bak == TRUE) {
+    # print group name if used in dplyr::group_by()
+    cur_group <- import_fn("cur_group", "dplyr", error_on_fail = FALSE)
+    if (!is.null(cur_group)) {
+      group_df <- tryCatch(cur_group(), error = function(e) data.frame())
+      if (NCOL(group_df) > 0) {
+        # transform factors to characters
+        group <- vapply(FUN.VALUE = character(1), group_df, function(x) {
+          if (is.numeric(x)) {
+            format(x)
+          } else if (is.logical(x)) {
+            as.character(x)
+          } else {
+            paste0('"', x, '"')
+          }
+        })
+        group_msg <- paste0("\nGroup: ", paste0(names(group), " = ", group, collapse = ", "), "\n")
+      }
+    }
+  }
+  
+  if (is_null_or_grouped_tbl(x)) {
+    # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
+    # is also fix for using a grouped df as input (a dot as first argument)
+    x <- get_current_data(arg_name = "x", call = -2)
+  }
+  
   # force regular data.frame, not a tibble or data.table
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   
-  stop_ifnot(is.numeric(pct_required_classes), "`pct_required_classes` must be numeric")
   if (pct_required_classes > 1) {
     # allow pct_required_classes = 75 -> pct_required_classes = 0.75
     pct_required_classes <- pct_required_classes / 100
@@ -215,7 +248,8 @@ mdro <- function(x,
       cat(txt, "\n", sep = "")
     }
     x <- run_custom_mdro_guideline(x, guideline)
-    if (info == TRUE) {
+    if (info.bak == TRUE) {
+      cat(group_msg)
       if (sum(!is.na(x$MDRO)) == 0) {
         cat(word_wrap(font_bold(paste0("=> Found 0 MDROs since no isolates are covered by the custom guideline"))))
       } else {
@@ -496,16 +530,7 @@ mdro <- function(x,
                               only_rsi_columns = only_rsi_columns,
                               ...)
   }
-  
-  if (only_rsi_columns == TRUE) {
-    cols_rsi_eligible <- colnames(x[, is.rsi.eligible(x), drop = FALSE])
-    if (length(cols_rsi_eligible) > 0) {
-      message_("These columns might be eligible for determining ", guideline$type, ", but are ignored since `only_rsi_columns` is `TRUE`: ",
-               vector_and(cols_rsi_eligible, quotes = TRUE, sort = FALSE),
-               as_note = TRUE, add_fn = font_red)
-    }
-  }
-  
+
   # nolint start
   AMC <- cols_ab["AMC"]
   AMK <- cols_ab["AMK"]
@@ -1341,7 +1366,8 @@ mdro <- function(x,
     x$reason <- "PDR/MDR/XDR criteria were met"
   }
   
-  if (info == TRUE) {
+  if (info.bak == TRUE) {
+    cat(group_msg)
     if (sum(!is.na(x$MDRO)) == 0) {
       cat(font_bold(paste0("=> Found 0 MDROs since no isolates are covered by the guideline")))
     } else {
@@ -1362,8 +1388,11 @@ mdro <- function(x,
   # Results ----
   if (guideline$code == "cmi2012") {
     if (any(x$MDRO == -1, na.rm = TRUE)) {
-      warning_("NA introduced for isolates where the available percentage of antimicrobial classes was below ",
-               percentage(pct_required_classes), " (set with `pct_required_classes`)", call = FALSE)
+      if (message_not_thrown_before("mdro.availability")) {
+        warning_("NA introduced for isolates where the available percentage of antimicrobial classes was below ",
+                 percentage(pct_required_classes), " (set with `pct_required_classes`)", call = FALSE)
+        remember_thrown_message("mdro.availability")
+      }
       # set these -1s to NA
       x[which(x$MDRO == -1), "MDRO"] <- NA_integer_
     }
@@ -1423,12 +1452,12 @@ custom_mdro_guideline <- function(..., as_factor = TRUE) {
       qry <- as.expression(qry)
     }
     qry <- as.character(qry)
-    # these will prevent vectorisaton, so replace them:
+    # these will prevent vectorisation, so replace them:
     qry <- gsub("&&", "&", qry, fixed = TRUE)
     qry <- gsub("||", "|", qry, fixed = TRUE)
     # support filter()-like writing: custom_mdro_guideline('CIP == "R", AMX == "S"' ~ "result 1")
     qry <- gsub(" *, *", " & ", qry)
-    # format nicely
+    # format nicely, setting spaces around operators
     qry <- gsub(" *([&|+-/*^><==]+) *", " \\1 ", qry)
     qry <- gsub("'", "\"", qry, fixed = TRUE)
     out[[i]]$query <- as.expression(qry)
@@ -1454,21 +1483,23 @@ print.custom_mdro_guideline <- function(x, ...) {
   cat("A set of custom MDRO rules:\n")
   for (i in seq_len(length(x))) {
     rule <- x[[i]]
-    rule$query <- gsub(" & ", " and ", rule$query, fixed = TRUE)
-    rule$query <- gsub(" | ", " or ", rule$query, fixed = TRUE)
-    rule$query <- gsub(" + ", " plus ", rule$query, fixed = TRUE)
-    rule$query <- gsub(" - ", " minus ", rule$query, fixed = TRUE)
-    rule$query <- gsub(" / ", " divided by ", rule$query, fixed = TRUE)
-    rule$query <- gsub(" * ", " times ", rule$query, fixed = TRUE)
-    rule$query <- gsub(" == ", " is ", rule$query, fixed = TRUE)
-    rule$query <- gsub(" > ", " is higher than ", rule$query, fixed = TRUE)
-    rule$query <- gsub(" < ", " is lower than ", rule$query, fixed = TRUE)
-    rule$query <- gsub(" >= ", " is higher than or equal to ", rule$query, fixed = TRUE)
-    rule$query <- gsub(" <= ", " is lower than or equal to ", rule$query, fixed = TRUE)
-    rule$query <- gsub(" ^ ", " to the power of ", rule$query, fixed = TRUE)
-    cat("  ", i, ". ", font_blue(as.character(rule$query)), " -> ", font_red(rule$value), "\n", sep = "")
+    rule$query <- gsub(" & ", font_black(font_italic(" and ")), rule$query, fixed = TRUE)
+    rule$query <- gsub(" | ", font_black(" or "), rule$query, fixed = TRUE)
+    rule$query <- gsub(" + ", font_black(" plus "), rule$query, fixed = TRUE)
+    rule$query <- gsub(" - ", font_black(" minus "), rule$query, fixed = TRUE)
+    rule$query <- gsub(" / ", font_black(" divided by "), rule$query, fixed = TRUE)
+    rule$query <- gsub(" * ", font_black(" times "), rule$query, fixed = TRUE)
+    rule$query <- gsub(" == ", font_black(" is "), rule$query, fixed = TRUE)
+    rule$query <- gsub(" > ", font_black(" is higher than "), rule$query, fixed = TRUE)
+    rule$query <- gsub(" < ", font_black(" is lower than "), rule$query, fixed = TRUE)
+    rule$query <- gsub(" >= ", font_black(" is higher than or equal to "), rule$query, fixed = TRUE)
+    rule$query <- gsub(" <= ", font_black(" is lower than or equal to "), rule$query, fixed = TRUE)
+    rule$query <- gsub(" ^ ", font_black(" to the power of "), rule$query, fixed = TRUE)
+    # replace the black colour 'stops' with blue colour 'starts'
+    rule$query <- gsub("\033[39m", "\033[34m", as.character(rule$query), fixed = TRUE)
+    cat("  ", i, ". ", font_blue(rule$query), font_bold(" -> "), font_red(rule$value), "\n", sep = "")
   }
-  cat("  ", i + 1, ". Otherwise -> ", font_red(paste0("Negative")), "\n", sep = "")
+  cat("  ", i + 1, ". Otherwise", font_bold(" -> "), font_red(paste0("Negative")), "\n", sep = "")
   cat("\nUnmatched rows will return ", font_red("NA"), ".\n", sep = "")
   if (isTRUE(attributes(x)$as_factor)) {
     cat("Results will be of class <factor>, with ordered levels: ", paste0(attributes(x)$values, collapse = " < "), "\n", sep = "")
@@ -1489,7 +1520,9 @@ run_custom_mdro_guideline <- function(df, guideline) {
                       return("error")
                     })
     if (identical(qry, "error")) {
-      warning_("in custom_mdro_guideline(): rule ", i, " (`", guideline[[i]]$query, "`) was ignored because of this error message: ", pkg_env$err_msg,
+      warning_("in custom_mdro_guideline(): rule ", i, 
+               " (`", guideline[[i]]$query, "`) was ignored because of this error message: ",
+               pkg_env$err_msg,
                call = FALSE, 
                add_fn = font_red)
       next
@@ -1524,55 +1557,50 @@ run_custom_mdro_guideline <- function(df, guideline) {
 
 #' @rdname mdro
 #' @export
-brmo <- function(x, guideline = "BRMO", only_rsi_columns = any(is.rsi(x)), ...) {
-  if (missing(x)) {
-    x <- get_current_data(arg_name = "x", call = -2)
-  }
-  meet_criteria(x, allow_class = "data.frame")
-  meet_criteria(guideline, allow_class = "character", has_length = 1)
-  mdro(x, guideline = "BRMO", only_rsi_columns = only_rsi_columns, ...)
+brmo <- function(x = NULL, only_rsi_columns = FALSE, ...) {
+  meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
+  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  stop_if("guideline" %in% names(list(...)),
+          "argument `guideline` must not be set since this is a guideline-specific function")
+  mdro(x = x, only_rsi_columns = only_rsi_columns, guideline = "BRMO", ...)
 }
 
 #' @rdname mdro
 #' @export
-mrgn <- function(x, guideline = "MRGN", only_rsi_columns = any(is.rsi(x)), ...) {
-  if (missing(x)) {
-    x <- get_current_data(arg_name = "x", call = -2)
-  }
-  meet_criteria(x, allow_class = "data.frame")
-  meet_criteria(guideline, allow_class = "character", has_length = 1)
-  mdro(x = x, guideline = "MRGN", only_rsi_columns = only_rsi_columns, ...)
+mrgn <- function(x = NULL, only_rsi_columns = FALSE, ...) {
+  meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
+  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  stop_if("guideline" %in% names(list(...)),
+          "argument `guideline` must not be set since this is a guideline-specific function")
+  mdro(x = x, only_rsi_columns = only_rsi_columns, guideline = "MRGN", ...)
 }
 
 #' @rdname mdro
 #' @export
-mdr_tb <- function(x, guideline = "TB", only_rsi_columns = any(is.rsi(x)), ...) {
-  if (missing(x)) {
-    x <- get_current_data(arg_name = "x", call = -2)
-  }
-  meet_criteria(x, allow_class = "data.frame")
-  meet_criteria(guideline, allow_class = "character", has_length = 1)
-  mdro(x = x, guideline = "TB", only_rsi_columns = only_rsi_columns, ...)
+mdr_tb <- function(x = NULL, only_rsi_columns = FALSE, ...) {
+  meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
+  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  stop_if("guideline" %in% names(list(...)),
+          "argument `guideline` must not be set since this is a guideline-specific function")
+  mdro(x = x, only_rsi_columns = only_rsi_columns, guideline = "TB", ...)
 }
 
 #' @rdname mdro
 #' @export
-mdr_cmi2012 <- function(x, guideline = "CMI2012", only_rsi_columns = any(is.rsi(x)), ...) {
-  if (missing(x)) {
-    x <- get_current_data(arg_name = "x", call = -2)
-  }
-  meet_criteria(x, allow_class = "data.frame")
-  meet_criteria(guideline, allow_class = "character", has_length = 1)
-  mdro(x = x, guideline = "CMI2012", only_rsi_columns = only_rsi_columns, ...)
+mdr_cmi2012 <- function(x = NULL, only_rsi_columns = FALSE, ...) {
+  meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
+  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  stop_if("guideline" %in% names(list(...)),
+          "argument `guideline` must not be set since this is a guideline-specific function")
+  mdro(x = x, only_rsi_columns = only_rsi_columns, guideline = "CMI2012", ...)
 }
 
 #' @rdname mdro
 #' @export
-eucast_exceptional_phenotypes <- function(x, guideline = "EUCAST", only_rsi_columns = any(is.rsi(x)), ...) {
-  if (missing(x)) {
-    x <- get_current_data(arg_name = "x", call = -2)
-  }
-  meet_criteria(x, allow_class = "data.frame")
-  meet_criteria(guideline, allow_class = "character", has_length = 1)
-  mdro(x = x, guideline = "EUCAST", only_rsi_columns = only_rsi_columns, ...)
+eucast_exceptional_phenotypes <- function(x = NULL, only_rsi_columns = FALSE, ...) {
+  meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
+  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  stop_if("guideline" %in% names(list(...)),
+          "argument `guideline` must not be set since this is a guideline-specific function")
+  mdro(x = x, only_rsi_columns = only_rsi_columns, guideline = "EUCAST", ...)
 }

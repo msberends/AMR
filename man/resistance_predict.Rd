@@ -47,7 +47,7 @@ ggplot_rsi_predict(
 )
 }
 \arguments{
-\item{x}{a \link{data.frame} containing isolates. Can be left blank for automatic determination.}
+\item{x}{a \link{data.frame} containing isolates. Can be left blank for automatic determination, see \emph{Examples}.}
 
 \item{col_ab}{column name of \code{x} containing antimicrobial interpretations (\code{"R"}, \code{"I"} and \code{"S"})}
 

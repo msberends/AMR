@@ -14,42 +14,45 @@
 \alias{fluoroquinolones}
 \alias{glycopeptides}
 \alias{macrolides}
+\alias{oxazolidinones}
 \alias{penicillins}
 \alias{tetracyclines}
 \title{Antibiotic Class Selectors}
 \usage{
-ab_class(ab_class, only_rsi_columns = NULL)
+ab_class(ab_class, only_rsi_columns = FALSE)
 
-aminoglycosides(only_rsi_columns = NULL)
+aminoglycosides(only_rsi_columns = FALSE)
 
-carbapenems(only_rsi_columns = NULL)
+carbapenems(only_rsi_columns = FALSE)
 
-cephalosporins(only_rsi_columns = NULL)
+cephalosporins(only_rsi_columns = FALSE)
 
-cephalosporins_1st(only_rsi_columns = NULL)
+cephalosporins_1st(only_rsi_columns = FALSE)
 
-cephalosporins_2nd(only_rsi_columns = NULL)
+cephalosporins_2nd(only_rsi_columns = FALSE)
 
-cephalosporins_3rd(only_rsi_columns = NULL)
+cephalosporins_3rd(only_rsi_columns = FALSE)
 
-cephalosporins_4th(only_rsi_columns = NULL)
+cephalosporins_4th(only_rsi_columns = FALSE)
 
-cephalosporins_5th(only_rsi_columns = NULL)
+cephalosporins_5th(only_rsi_columns = FALSE)
 
-fluoroquinolones(only_rsi_columns = NULL)
+fluoroquinolones(only_rsi_columns = FALSE)
 
-glycopeptides(only_rsi_columns = NULL)
+glycopeptides(only_rsi_columns = FALSE)
 
-macrolides(only_rsi_columns = NULL)
+macrolides(only_rsi_columns = FALSE)
 
-penicillins(only_rsi_columns = NULL)
+oxazolidinones(only_rsi_columns = FALSE)
 
-tetracyclines(only_rsi_columns = NULL)
+penicillins(only_rsi_columns = FALSE)
+
+tetracyclines(only_rsi_columns = FALSE)
 }
 \arguments{
 \item{ab_class}{an antimicrobial class, like \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched (case-insensitive) for this value.}
 
-\item{only_rsi_columns}{a logical to indicate whether only columns of class \href{[rsi]}{\verb{<rsi>}} must be selected. If set to \code{NULL} (default), it will be \code{TRUE} if any column of the data was \href{[rsi]}{transformed to class \verb{<rsi>}} on beforehand, and \code{FALSE} otherwise.}
+\item{only_rsi_columns}{a logical to indicate whether only columns of class \href{[rsi]}{\verb{<rsi>}} must be selected (defaults to \code{FALSE})}
 }
 \description{
 These functions help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. \strong{\Sexpr{ifelse(as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2, paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}

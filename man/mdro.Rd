@@ -20,33 +20,28 @@ See the supported guidelines above for the list of publications used for this fu
 }
 \usage{
 mdro(
-  x,
+  x = NULL,
   guideline = "CMI2012",
   col_mo = NULL,
   info = interactive(),
   pct_required_classes = 0.5,
   combine_SI = TRUE,
   verbose = FALSE,
-  only_rsi_columns = any(is.rsi(x)),
+  only_rsi_columns = FALSE,
   ...
 )
 
 custom_mdro_guideline(..., as_factor = TRUE)
 
-brmo(x, guideline = "BRMO", only_rsi_columns = any(is.rsi(x)), ...)
+brmo(x = NULL, only_rsi_columns = FALSE, ...)
 
-mrgn(x, guideline = "MRGN", only_rsi_columns = any(is.rsi(x)), ...)
+mrgn(x = NULL, only_rsi_columns = FALSE, ...)
 
-mdr_tb(x, guideline = "TB", only_rsi_columns = any(is.rsi(x)), ...)
+mdr_tb(x = NULL, only_rsi_columns = FALSE, ...)
 
-mdr_cmi2012(x, guideline = "CMI2012", only_rsi_columns = any(is.rsi(x)), ...)
+mdr_cmi2012(x = NULL, only_rsi_columns = FALSE, ...)
 
-eucast_exceptional_phenotypes(
-  x,
-  guideline = "EUCAST",
-  only_rsi_columns = any(is.rsi(x)),
-  ...
-)
+eucast_exceptional_phenotypes(x = NULL, only_rsi_columns = FALSE, ...)
 }
 \arguments{
 \item{x}{a \link{data.frame} with antibiotics columns, like \code{AMX} or \code{amox}. Can be left blank for automatic determination.}
@@ -63,7 +58,7 @@ eucast_exceptional_phenotypes(
 
 \item{verbose}{a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.}
 
-\item{only_rsi_columns}{a logical to indicate whether only antibiotic columns must be detected that were \href{[rsi]}{transformed to class \verb{<rsi>}} on beforehand. Defaults to \code{TRUE} if any column of \code{x} is of class \verb{<rsi>}.}
+\item{only_rsi_columns}{a logical to indicate whether only antibiotic columns must be detected that were \href{[rsi]}{transformed to class \verb{<rsi>}} on beforehand (defaults to \code{FALSE})}
 
 \item{...}{in case of \code{\link[=custom_mdro_guideline]{custom_mdro_guideline()}}: a set of rules, see section \emph{Using Custom Guidelines} below. Otherwise: column name of an antibiotic, see section \emph{Antibiotics} below.}
 

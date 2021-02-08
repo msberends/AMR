@@ -27,7 +27,7 @@
 #'
 #' Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use [is_new_episode()] that also supports grouping with the `dplyr` package.
 #' @inheritSection lifecycle Stable Lifecycle
-#' @param x a [data.frame] containing isolates. Can be left blank for automatic determination.
+#' @param x a [data.frame] containing isolates. Can be left blank for automatic determination, see *Examples*.
 #' @param col_date column name of the result date (or date that is was received on the lab), defaults to the first column with a date class
 #' @param col_patient_id column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' or 'patid' (case insensitive)
 #' @param col_mo column name of the IDs of the microorganisms (see [as.mo()]), defaults to the first column of class [`mo`]. Values will be coerced using [as.mo()].
@@ -86,7 +86,7 @@
 #'    
 #' 2. Using `type = "points"` and argument `points_threshold`
 #' 
-#'    A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds `points_threshold`, which default to `2`, an isolate will be (re)selected as a first weighted isolate.
+#'    A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds `points_threshold`, which defaults to `2`, an isolate will be (re)selected as a first weighted isolate.
 #' @rdname first_isolate
 #' @seealso [key_antibiotics()]
 #' @export
@@ -99,10 +99,12 @@
 #' # `example_isolates` is a data set available in the AMR package.
 #' # See ?example_isolates.
 #' 
-#' # basic filtering on first isolates
-#' example_isolates[first_isolate(), ]
+#' example_isolates[first_isolate(example_isolates), ]
 #' 
 #' \donttest{
+#' # faster way, only works in R 3.2 and later:
+#' example_isolates[first_isolate(), ]
+#' 
 #' # get all first Gram-negatives
 #' example_isolates[which(first_isolate() & mo_is_gram_negative()), ]
 #'
@@ -140,7 +142,7 @@
 #'   # when you (erroneously) would have used all isolates for analysis.
 #' }
 #' }
-first_isolate <- function(x,
+first_isolate <- function(x = NULL,
                           col_date = NULL,
                           col_patient_id = NULL,
                           col_mo = NULL,
@@ -158,10 +160,7 @@ first_isolate <- function(x,
                           info = interactive(),
                           include_unknown = FALSE,
                           ...) {
-  if (missing(x)) {
-    x <- get_current_data(arg_name = "x", call = -2)
-  }
-  meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
+  meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE) # also checks dimensions to be >0
   meet_criteria(col_date, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   meet_criteria(col_patient_id, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
@@ -185,6 +184,14 @@ first_isolate <- function(x,
   meet_criteria(info, allow_class = "logical", has_length = 1)
   meet_criteria(include_unknown, allow_class = "logical", has_length = 1)
   
+  if (is_null_or_grouped_tbl(x)) {
+    # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
+    # is also fix for using a grouped df as input (a dot as first argument)
+    x <- get_current_data(arg_name = "x", call = -2)
+  }
+  # remove data.table, grouping from tibbles, etc.
+  x <- as.data.frame(x, stringsAsFactors = FALSE)
+  
   dots <- unlist(list(...))
   if (length(dots) != 0) {
     # backwards compatibility with old arguments
@@ -197,18 +204,7 @@ first_isolate <- function(x,
     }
   }
   
-  # fix for using a grouped df as input (a dot as first argument)
-  # such as example_isolates %>% group_by(hospital_id) %>% mutate(first_isolate = first_isolate(.))
-  if (inherits(x, "grouped_df")) {
-    # get_current_data() contains dplyr::cur_data_all()
-    x <- tryCatch(get_current_data(arg_name = "x", 0),
-                  error = function(e) x)
-  }
-  
-  # remove data.table, grouping from tibbles, etc.
-  x <- as.data.frame(x, stringsAsFactors = FALSE)
-  
- # try to find columns based on type
+  # try to find columns based on type
   # -- mo
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo")
@@ -510,15 +506,20 @@ first_isolate <- function(x,
 
 #' @rdname first_isolate
 #' @export
-filter_first_isolate <- function(x,
+filter_first_isolate <- function(x = NULL,
                                  col_date = NULL,
                                  col_patient_id = NULL,
                                  col_mo = NULL,
                                  ...) {
-  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(col_date, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   meet_criteria(col_patient_id, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  if (is_null_or_grouped_tbl(x)) {
+    # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
+    # is also fix for using a grouped df as input (a dot as first argument)
+    x <- get_current_data(arg_name = "x", call = -2)
+  }
   subset(x, first_isolate(x = x,
                           col_date = col_date,
                           col_patient_id = col_patient_id,
@@ -528,17 +529,22 @@ filter_first_isolate <- function(x,
 
 #' @rdname first_isolate
 #' @export
-filter_first_weighted_isolate <- function(x,
+filter_first_weighted_isolate <- function(x = NULL,
                                           col_date = NULL,
                                           col_patient_id = NULL,
                                           col_mo = NULL,
                                           col_keyantibiotics = NULL,
                                           ...) {
-  meet_criteria(x, allow_class = "data.frame")
+  meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(col_date, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   meet_criteria(col_patient_id, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   meet_criteria(col_keyantibiotics, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  if (is_null_or_grouped_tbl(x)) {
+    # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
+    # is also fix for using a grouped df as input (a dot as first argument)
+    x <- get_current_data(arg_name = "x", call = -2)
+  }
   y <- x
   if (is.null(col_keyantibiotics)) {
     # first try to look for it
