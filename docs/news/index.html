@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9018</span>
       </span>
     </div>
 
@@ -236,22 +236,28 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1509015" class="section level1">
-<h1 class="page-header" data-toc-text="1.5.0.9015">
-<a href="#amr-1509015" class="anchor"></a>AMR 1.5.0.9015<small> Unreleased </small>
+    <div id="amr-1509018" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.0.9018">
+<a href="#amr-1509018" class="anchor"></a>AMR 1.5.0.9018<small> Unreleased </small>
 </h1>
-<div id="last-updated-4-february-2021" class="section level2">
+<div id="last-updated-9-february-2021" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-4-february-2021" class="anchor"></a><small>Last updated: 4 February 2021</small>
+<a href="#last-updated-9-february-2021" class="anchor"></a><small>Last updated: 9 February 2021</small>
 </h2>
-<div id="breaking" class="section level3">
+<div id="new" class="section level3">
 <h3 class="hasAnchor">
-<a href="#breaking" class="anchor"></a>Breaking</h3>
+<a href="#new" class="anchor"></a>New</h3>
 <ul>
 <li>
-<p>Functions that are applied to a data set containing antibiotic columns gained the argument <code>only_rsi_columns</code>, which defaults to <code>TRUE</code> if any of the columns are of class <code>&lt;rsi&gt;</code> (i.e., transformed with <code><a href="../reference/as.rsi.html">as.rsi()</a></code>). This increases reliability of automatic determination of antibiotic columns (so only columns that are defined to be <code>&lt;rsi&gt;</code> will be affected).</p>
-<p>This change might invalidate existing code. But since the new argument always returns <code>FALSE</code> when no <code>&lt;rsi&gt;</code> column can be found in the data, this chance is low.</p>
-<p>Affected functions are:</p>
+<p>Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function and in <code><a href="../reference/as.rsi.html">as.rsi()</a></code> to interpret MIC and disk diffusion values. This is now the default guideline in this package.</p>
+<ul>
+<li>Added function <code><a href="../reference/eucast_rules.html">eucast_dosage()</a></code> to get a <code>data.frame</code> with advised dosages of a certain bug-drug combination, which is based on the new <code>dosage</code> data set</li>
+<li>Added data set <code>dosage</code> to fuel the new <code><a href="../reference/eucast_rules.html">eucast_dosage()</a></code> function and to make this data available in a structured way</li>
+<li>Existing data set <code>example_isolates</code> now reflects the latest EUCAST rules</li>
+</ul>
+</li>
+<li>
+<p>Added argument <code>only_rsi_columns</code> for some functions, which defaults to <code>FALSE</code>, to indicate if the functions must only be applied to columns that are of class <code>&lt;rsi&gt;</code> (i.e., transformed with <code><a href="../reference/as.rsi.html">as.rsi()</a></code>). This increases speed since automatic determination of antibiotic columns is not needed anymore. Affected functions are:</p>
 <ul>
 <li>All antibiotic selector functions (<code><a href="../reference/antibiotic_class_selectors.html">ab_class()</a></code> and its wrappers, such as <code>aminoglocysides()</code>, <code><a href="../reference/antibiotic_class_selectors.html">carbapenems()</a></code>, <code><a href="../reference/antibiotic_class_selectors.html">penicillins()</a></code>)</li>
 <li>All antibiotic filter functions (<code><a href="../reference/filter_ab_class.html">filter_ab_class()</a></code> and its wrappers, such as <code>filter_aminoglocysides()</code>, <code><a href="../reference/filter_ab_class.html">filter_carbapenems()</a></code>, <code><a href="../reference/filter_ab_class.html">filter_penicillins()</a></code>)</li>
@@ -260,22 +266,18 @@
 <code><a href="../reference/mdro.html">mdro()</a></code> (including wrappers such as <code><a href="../reference/mdro.html">brmo()</a></code>, <code>mrgn</code> and <code><a href="../reference/mdro.html">eucast_exceptional_phenotypes()</a></code>)</li>
 <li><code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code></li>
 </ul>
-<p>You can quickly transform all your eligible columns using either:</p>
+</li>
+<li>
+<p>Functions <code><a href="../reference/antibiotic_class_selectors.html">oxazolidinones()</a></code> (an antibiotic selector function) and <code><a href="../reference/filter_ab_class.html">filter_oxazolidinones()</a></code> (an antibiotic filter function) to select/filter on e.g. linezolid and tedizolid</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
-<span class="va">your_date</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">is.rsi.eligible</span>, <span class="va">as.rsi</span><span class="op">)</span>        <span class="co"># old dplyr</span>
-<span class="va">your_date</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="op">(</span><span class="va">is.rsi.eligible</span><span class="op">)</span>, <span class="va">as.rsi</span><span class="op">)</span><span class="op">)</span> <span class="co"># new dplyr</span></code></pre></div>
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">hospital_id</span>, <span class="fu"><a href="../reference/antibiotic_class_selectors.html">oxazolidinones</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; Selecting oxazolidinones: column 'LNZ' (linezolid)</span>
+
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/filter_ab_class.html">filter_oxazolidinones</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; Filtering on oxazolidinones: value in column `LNZ` (linezolid) is either "R", "S" or "I"</span></code></pre></div>
 </li>
-</ul>
-</div>
-<div id="new" class="section level3">
-<h3 class="hasAnchor">
-<a href="#new" class="anchor"></a>New</h3>
-<ul>
-<li><p>Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function and in <code><a href="../reference/as.rsi.html">as.rsi()</a></code> to interpret MIC and disk diffusion values. This is now the default guideline in this package.</p></li>
-<li><p>Data set <code>dosage</code> to fuel the new <code><a href="../reference/eucast_rules.html">eucast_dosage()</a></code> function and to make this data available in a structured way</p></li>
-<li><p>Function <code><a href="../reference/eucast_rules.html">eucast_dosage()</a></code> to get a <code>data.frame</code> with advised dosages of a certain bug-drug combination, which is based on the new <code>dosage</code> data set</p></li>
 <li><p>Support for custom MDRO guidelines, using the new <code><a href="../reference/mdro.html">custom_mdro_guideline()</a></code> function, please see <code><a href="../reference/mdro.html">mdro()</a></code> for additional info</p></li>
 <li><p>Function <code><a href="../reference/isolate_identifier.html">isolate_identifier()</a></code>, which will paste a microorganism code with all antimicrobial results of a data set into one string for each row. This is useful to compare isolates, e.g. between institutions or regions, when there is no genotyping available.</p></li>
 <li>
@@ -320,10 +322,9 @@
 <li>Functions <code><a href="../reference/get_episode.html">get_episode()</a></code> and <code><a href="../reference/get_episode.html">is_new_episode()</a></code> now support less than a day as value for argument <code>episode_days</code> (e.g., to include one patient/test per hour)</li>
 <li>Argument <code>ampc_cephalosporin_resistance</code> in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> now also applies to value “I” (not only “S”)</li>
 <li>Updated colours of values R, S and I in tibble printing</li>
-<li>Functions <code><a href="https://docs.ropensci.org/skimr/reference/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> on a Principal Components Analysis object (<code><a href="../reference/pca.html">pca()</a></code>) now print additional group info if the original data was grouped using <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code>
+<li>Functions <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> on a Principal Components Analysis object (<code><a href="../reference/pca.html">pca()</a></code>) now print additional group info if the original data was grouped using <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code>
 </li>
-<li>Improved speed of <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>
-</li>
+<li>Improved speed and reliability of <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>. As this also internally improves the reliability of <code><a href="../reference/first_isolate.html">first_isolate()</a></code> and <code><a href="../reference/mdro.html">mdro()</a></code>, this might have a slight impact on the results of those functions.</li>
 </ul>
 </div>
 <div id="other" class="section level3">
@@ -641,16 +642,16 @@
 <h1 class="page-header" data-toc-text="1.2.0">
 <a href="#amr-120" class="anchor"></a>AMR 1.2.0<small> 2020-05-28 </small>
 </h1>
-<div id="breaking-1" class="section level3">
+<div id="breaking" class="section level3">
 <h3 class="hasAnchor">
-<a href="#breaking-1" class="anchor"></a>Breaking</h3>
+<a href="#breaking" class="anchor"></a>Breaking</h3>
 <ul>
 <li>
 <p>Removed code dependency on all other R packages, making this package fully independent of the development process of others. This is a major code change, but will probably not be noticeable by most users.</p>
 <p>Making this package independent of especially the tidyverse (e.g. packages <code>dplyr</code> and <code>tidyr</code>) tremendously increases sustainability on the long term, since tidyverse functions change quite often. Good for users, but hard for package maintainers. Most of our functions are replaced with versions that only rely on base R, which keeps this package fully functional for many years to come, without requiring a lot of maintenance to keep up with other packages anymore. Another upside it that this package can now be used with all versions of R since R-3.0.0 (April 2013). Our package is being used in settings where the resources are very limited. Fewer dependencies on newer software is helpful for such settings.</p>
 <p>Negative effects of this change are:</p>
 <ul>
-<li>Function <code>freq()</code> that was borrowed from the <code>cleaner</code> package was removed. Use <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">cleaner::freq()</a></code>, or run <code><a href="https://github.com/msberends/cleaner">library("cleaner")</a></code> before you use <code>freq()</code>.</li>
+<li>Function <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code> that was borrowed from the <code>cleaner</code> package was removed. Use <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">cleaner::freq()</a></code>, or run <code><a href="https://github.com/msberends/cleaner">library("cleaner")</a></code> before you use <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code>.</li>
 <li><del>Printing values of class <code>mo</code> or <code>rsi</code> in a tibble will no longer be in colour and printing <code>rsi</code> in a tibble will show the class <code>&lt;ord&gt;</code>, not <code>&lt;rsi&gt;</code> anymore. This is purely a visual effect.</del></li>
 <li><del>All functions from the <code>mo_*</code> family (like <code><a href="../reference/mo_property.html">mo_name()</a></code> and <code><a href="../reference/mo_property.html">mo_gramstain()</a></code>) are noticeably slower when running on hundreds of thousands of rows.</del></li>
 <li>For developers: classes <code>mo</code> and <code>ab</code> now both also inherit class <code>character</code>, to support any data transformation. This change invalidates code that checks for class length == 1.</li>
@@ -851,9 +852,9 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <h1 class="page-header" data-toc-text="0.9.0">
 <a href="#amr-090" class="anchor"></a>AMR 0.9.0<small> 2019-11-29 </small>
 </h1>
-<div id="breaking-2" class="section level3">
+<div id="breaking-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#breaking-2" class="anchor"></a>Breaking</h3>
+<a href="#breaking-1" class="anchor"></a>Breaking</h3>
 <ul>
 <li>Adopted Adeolu <em>et al.</em> (2016), <a href="https:/pubmed.ncbi.nlm.nih.gov/27620848/">PMID 27620848</a> for the <code>microorganisms</code> data set, which means that the new order Enterobacterales now consists of a part of the existing family Enterobacteriaceae, but that this family has been split into other families as well (like <em>Morganellaceae</em> and <em>Yersiniaceae</em>). Although published in 2016, this information is not yet in the Catalogue of Life version of 2019. All MDRO determinations with <code><a href="../reference/mdro.html">mdro()</a></code> will now use the Enterobacterales order for all guidelines before 2016 that were dependent on the Enterobacteriaceae family.
 <ul>
@@ -959,9 +960,9 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <h1 class="page-header" data-toc-text="0.8.0">
 <a href="#amr-080" class="anchor"></a>AMR 0.8.0<small> 2019-10-15 </small>
 </h1>
-<div id="breaking-3" class="section level3">
+<div id="breaking-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#breaking-3" class="anchor"></a>Breaking</h3>
+<a href="#breaking-2" class="anchor"></a>Breaking</h3>
 <ul>
 <li>
 <p>Determination of first isolates now <strong>excludes</strong> all ‘unknown’ microorganisms at default, i.e. microbial code <code>"UNKNOWN"</code>. They can be included with the new argument <code>include_unknown</code>:</p>
@@ -987,7 +988,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <span class="co">#&gt; invalid microorganism code, NA generated</span></code></pre></div>
 <p>This is important, because a value like <code>"testvalue"</code> could never be understood by e.g. <code><a href="../reference/mo_property.html">mo_name()</a></code>, although the class would suggest a valid microbial code.</p>
 </li>
-<li><p>Function <code>freq()</code> has moved to a new package, <a href="https://github.com/msberends/clean"><code>clean</code></a> (<a href="https://cran.r-project.org/package=clean">CRAN link</a>), since creating frequency tables actually does not fit the scope of this package. The <code>freq()</code> function still works, since it is re-exported from the <code>clean</code> package (which will be installed automatically upon updating this <code>AMR</code> package).</p></li>
+<li><p>Function <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code> has moved to a new package, <a href="https://github.com/msberends/clean"><code>clean</code></a> (<a href="https://cran.r-project.org/package=clean">CRAN link</a>), since creating frequency tables actually does not fit the scope of this package. The <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code> function still works, since it is re-exported from the <code>clean</code> package (which will be installed automatically upon updating this <code>AMR</code> package).</p></li>
 <li><p>Renamed data set <code>septic_patients</code> to <code>example_isolates</code></p></li>
 </ul>
 </div>
@@ -1256,7 +1257,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li>The <code><a href="../reference/age.html">age()</a></code> function gained a new argument <code>exact</code> to determine ages with decimals</li>
 <li>Removed deprecated functions <code>guess_mo()</code>, <code>guess_atc()</code>, <code>EUCAST_rules()</code>, <code>interpretive_reading()</code>, <code><a href="../reference/as.rsi.html">rsi()</a></code>
 </li>
-<li>Frequency tables (<code>freq()</code>):
+<li>Frequency tables (<code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code>):
 <ul>
 <li><p>speed improvement for microbial IDs</p></li>
 <li><p>fixed factor level names for R Markdown</p></li>
@@ -1266,12 +1267,12 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">septic_patients</span> <span class="op">%&gt;%</span> 
-  <span class="fu">freq</span><span class="op">(</span><span class="va">age</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co"># grouped boxplots:</span>
 <span class="va">septic_patients</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">freq</span><span class="op">(</span><span class="va">age</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </li>
 </ul>
@@ -1281,7 +1282,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li>Added ceftazidim intrinsic resistance to <em>Streptococci</em>
 </li>
 <li>Changed default settings for <code><a href="../reference/age_groups.html">age_groups()</a></code>, to let groups of fives and tens end with 100+ instead of 120+</li>
-<li>Fix for <code>freq()</code> for when all values are <code>NA</code>
+<li>Fix for <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code> for when all values are <code>NA</code>
 </li>
 <li>Fix for <code><a href="../reference/first_isolate.html">first_isolate()</a></code> for when dates are missing</li>
 <li>Improved speed of <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>
@@ -1522,7 +1523,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 </li>
 </ul>
 </li>
-<li>Frequency tables (<code>freq()</code> function):
+<li>Frequency tables (<code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code> function):
 <ul>
 <li>
 <p>Support for tidyverse quasiquotation! Now you can create frequency tables of function outcomes:</p>
@@ -1532,15 +1533,15 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <span class="co"># OLD WAY</span>
 <span class="va">septic_patients</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>genus <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">freq</span><span class="op">(</span><span class="va">genus</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span><span class="op">(</span><span class="va">genus</span><span class="op">)</span>
 <span class="co"># NEW WAY</span>
 <span class="va">septic_patients</span> <span class="op">%&gt;%</span> 
-  <span class="fu">freq</span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Even supports grouping variables:</span>
 <span class="va">septic_patients</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">freq</span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </li>
 <li><p>Header info is now available as a list, with the <code>header</code> function</p></li>
 <li><p>The argument <code>header</code> is now set to <code>TRUE</code> at default, even for markdown</p></li>
@@ -1623,7 +1624,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li><p>Using <code>portion_*</code> functions now throws a warning when total available isolate is below argument <code>minimum</code></p></li>
 <li><p>Functions <code>as.mo</code>, <code>as.rsi</code>, <code>as.mic</code>, <code>as.atc</code> and <code>freq</code> will not set package name as attribute anymore</p></li>
 <li>
-<p>Frequency tables - <code>freq()</code>:</p>
+<p>Frequency tables - <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq()</a></code>:</p>
 <ul>
 <li>
 <p>Support for grouping variables, test with:</p>
@@ -1631,14 +1632,14 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <code class="sourceCode R">
 <span class="va">septic_patients</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">freq</span><span class="op">(</span><span class="va">gender</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span></code></pre></div>
 </li>
 <li>
 <p>Support for (un)selecting columns:</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">septic_patients</span> <span class="op">%&gt;%</span> 
-  <span class="fu">freq</span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">count</span>, <span class="op">-</span><span class="va">cum_count</span><span class="op">)</span> <span class="co"># only get item, percent, cum_percent</span></code></pre></div>
 </li>
 <li><p>Check for <code><a href="https://hms.tidyverse.org/reference/Deprecated.html">hms::is.hms</a></code></p></li>
@@ -1656,7 +1657,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li><p>Removed diacritics from all authors (columns <code>microorganisms$ref</code> and <code>microorganisms.old$ref</code>) to comply with CRAN policy to only allow ASCII characters</p></li>
 <li><p>Fix for <code>mo_property</code> not working properly</p></li>
 <li><p>Fix for <code>eucast_rules</code> where some Streptococci would become ceftazidime R in EUCAST rule 4.5</p></li>
-<li><p>Support for named vectors of class <code>mo</code>, useful for <code>top_freq()</code></p></li>
+<li><p>Support for named vectors of class <code>mo</code>, useful for <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">top_freq()</a></code></p></li>
 <li><p><code>ggplot_rsi</code> and <code>scale_y_percent</code> have <code>breaks</code> argument</p></li>
 <li>
 <p>AI improvements for <code>as.mo</code>:</p>
@@ -1824,13 +1825,13 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">my_matrix</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">septic_patients</span>, <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">gender</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-<span class="fu">freq</span><span class="op">(</span><span class="va">my_matrix</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span><span class="op">(</span><span class="va">my_matrix</span><span class="op">)</span></code></pre></div>
 <p>For lists, subsetting is possible:</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">my_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>age <span class="op">=</span> <span class="va">septic_patients</span><span class="op">$</span><span class="va">age</span>, gender <span class="op">=</span> <span class="va">septic_patients</span><span class="op">$</span><span class="va">gender</span><span class="op">)</span>
-<span class="va">my_list</span> <span class="op">%&gt;%</span> <span class="fu">freq</span><span class="op">(</span><span class="va">age</span><span class="op">)</span>
-<span class="va">my_list</span> <span class="op">%&gt;%</span> <span class="fu">freq</span><span class="op">(</span><span class="va">gender</span><span class="op">)</span></code></pre></div>
+<span class="va">my_list</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span>
+<span class="va">my_list</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span></code></pre></div>
 </li>
 </ul>
 </div>
@@ -1904,13 +1905,13 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <ul>
 <li>A vignette to explain its usage</li>
 <li>Support for <code>rsi</code> (antimicrobial resistance) to use as input</li>
-<li>Support for <code>table</code> to use as input: <code>freq(table(x, y))</code>
+<li>Support for <code>table</code> to use as input: <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq(table(x, y))</a></code>
 </li>
 <li>Support for existing functions <code>hist</code> and <code>plot</code> to use a frequency table as input: <code><a href="https://rdrr.io/r/graphics/hist.html">hist(freq(df$age))</a></code>
 </li>
 <li>Support for <code>as.vector</code>, <code>as.data.frame</code>, <code>as_tibble</code> and <code>format</code>
 </li>
-<li>Support for quasiquotation: <code>freq(mydata, mycolumn)</code> is the same as <code>mydata %&gt;% freq(mycolumn)</code>
+<li>Support for quasiquotation: <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html">freq(mydata, mycolumn)</a></code> is the same as <code>mydata %&gt;% freq(mycolumn)</code>
 </li>
 <li>Function <code>top_freq</code> function to return the top/below <em>n</em> items as vector</li>
 <li>Header of frequency tables now also show Mean Absolute Deviaton (MAD) and Interquartile Range (IQR)</li>

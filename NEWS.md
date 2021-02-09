@@ -1,5 +1,5 @@
-# AMR 1.5.0.9017
-## <small>Last updated:  8 February 2021</small>
+# AMR 1.5.0.9018
+## <small>Last updated:  9 February 2021</small>
 
 ### New
 * Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the `eucast_rules()` function and in `as.rsi()` to interpret MIC and disk diffusion values. This is now the default guideline in this package.

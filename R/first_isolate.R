@@ -160,7 +160,12 @@ first_isolate <- function(x = NULL,
                           info = interactive(),
                           include_unknown = FALSE,
                           ...) {
-  meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE) # also checks dimensions to be >0
+  if (is_null_or_grouped_tbl(x)) {
+    # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
+    # is also fix for using a grouped df as input (a dot as first argument)
+    x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
+  }
+  meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
   meet_criteria(col_date, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   meet_criteria(col_patient_id, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
@@ -184,12 +189,6 @@ first_isolate <- function(x = NULL,
   meet_criteria(info, allow_class = "logical", has_length = 1)
   meet_criteria(include_unknown, allow_class = "logical", has_length = 1)
   
-  if (is_null_or_grouped_tbl(x)) {
-    # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
-    # is also fix for using a grouped df as input (a dot as first argument)
-    x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
-    meet_criteria(x, allow_class = "data.frame")
-  }
   # remove data.table, grouping from tibbles, etc.
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   
@@ -512,16 +511,16 @@ filter_first_isolate <- function(x = NULL,
                                  col_patient_id = NULL,
                                  col_mo = NULL,
                                  ...) {
-  meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
-  meet_criteria(col_date, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
-  meet_criteria(col_patient_id, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
-  meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
     # is also fix for using a grouped df as input (a dot as first argument)
     x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
-    meet_criteria(x, allow_class = "data.frame")
   }
+  meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
+  meet_criteria(col_date, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  meet_criteria(col_patient_id, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+
   subset(x, first_isolate(x = x,
                           col_date = col_date,
                           col_patient_id = col_patient_id,
@@ -537,17 +536,17 @@ filter_first_weighted_isolate <- function(x = NULL,
                                           col_mo = NULL,
                                           col_keyantibiotics = NULL,
                                           ...) {
-  meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
-  meet_criteria(col_date, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
-  meet_criteria(col_patient_id, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
-  meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
-  meet_criteria(col_keyantibiotics, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
     # is also fix for using a grouped df as input (a dot as first argument)
     x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
-    meet_criteria(x, allow_class = "data.frame")
   }
+  meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
+  meet_criteria(col_date, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  meet_criteria(col_patient_id, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  meet_criteria(col_keyantibiotics, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+
   y <- x
   if (is.null(col_keyantibiotics)) {
     # first try to look for it

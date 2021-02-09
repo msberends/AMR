@@ -130,7 +130,12 @@ key_antibiotics <- function(x = NULL,
                             GramNeg_6 = guess_ab_col(x, "meropenem"),
                             warnings = TRUE,
                             ...) {
-  meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
+  if (is_null_or_grouped_tbl(x)) {
+    # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
+    # is also fix for using a grouped df as input (a dot as first argument)
+    x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
+  }
+  meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
   meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(universal_1, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(universal_2, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
@@ -152,12 +157,6 @@ key_antibiotics <- function(x = NULL,
   meet_criteria(GramNeg_6, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(warnings, allow_class = "logical", has_length = 1)
   
-  if (is_null_or_grouped_tbl(x)) {
-    # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
-    # is also fix for using a grouped df as input (a dot as first argument)
-    x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
-    meet_criteria(x, allow_class = "data.frame")
-  }
   # force regular data.frame, not a tibble or data.table
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   
