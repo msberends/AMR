@@ -43,7 +43,7 @@
 #' # See ?example_isolates.
 #' 
 #' # this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
-#' example_isolates[, c(carbapenems())]
+#' example_isolates[, carbapenems()]
 #' # this will select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB':
 #' example_isolates[, c("mo", aminoglycosides())]
 #' 

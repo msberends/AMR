@@ -20,7 +20,7 @@ This package is fully independent of any other R package and works on Windows, m
 
 This is the development source of the `AMR` package for R. Not a developer? Then please visit our website [https://msberends.github.io/AMR/](https://msberends.github.io/AMR/) to read more about this package.
 
-*NOTE: this source code is on GitHub (https://github.com/msberends/AMR), but also automatically mirrored to GitLab (https://gitlab.com/msberends/AMR).*
+*NOTE: this source code is on GitHub (https://github.com/msberends/AMR), but also automatically mirrored to our university's Gitea server (https://git.web.rug.nl/P281424/AMR) and to GitLab (https://gitlab.com/msberends/AMR).*
 
 ### How to get this package
 Please see [our website](https://msberends.github.io/AMR/#get-this-package).

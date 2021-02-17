@@ -1806,7 +1806,9 @@ print.mo_uncertainties <- function(x, ...) {
       candidates <- candidates[order(1 - scores)]
       scores_formatted <- trimws(formatC(round(scores, 3), format = "f", digits = 3))
       n_candidates <- length(candidates)
-      candidates <- vector_and(paste0(candidates, " (", scores_formatted[order(1 - scores)], ")"), quotes = FALSE)
+      candidates <- vector_and(paste0(candidates, " (", scores_formatted[order(1 - scores)], ")"),
+                               quotes = FALSE, 
+                               sort = FALSE)
       # align with input after arrow
       candidates <- paste0("\n",
                            strwrap(paste0("Also matched",

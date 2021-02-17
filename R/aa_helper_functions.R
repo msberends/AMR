@@ -82,20 +82,27 @@ check_dataset_integrity <- function() {
   # exception for example_isolates
   overwritten <- overwritten[overwritten != "example_isolates"]
   if (length(overwritten) > 0) {
-    warning_(ifelse(length(overwritten) == 1,
-                    "The following data set is overwritten by your global environment and prevents the AMR package from working correctly: ",
-                    "The following data sets are overwritten by your global environment and prevent the AMR package from working correctly: "),
+    if (length(overwritten) > 1) {
+      plural <- c("s are", "", "s")
+    } else {
+      plural <- c(" is", "s", "")
+    }
+    warning_("The following data set", plural[1],
+             " overwritten by your global environment and prevent", plural[2], 
+             " the AMR package from working correctly: ",
              vector_and(overwritten, quotes = "'"),
-             ".\nPlease rename your object(s).", call = FALSE)
+             ".\nPlease rename your object", plural[3], ".", call = FALSE)
   }
   # check if other packages did not overwrite our data sets
+  valid_microorganisms <- TRUE
+  valid_antibiotics <- TRUE
   tryCatch({
-    check_microorganisms <- all(c("mo", "fullname", "kingdom", "phylum",
+    valid_microorganisms <- all(c("mo", "fullname", "kingdom", "phylum",
                                   "class", "order", "family", "genus",
                                   "species", "subspecies", "rank",
                                   "species_id", "source", "ref", "prevalence") %in% colnames(microorganisms),
                                 na.rm = TRUE)
-    check_antibiotics <- all(c("ab", "atc", "cid", "name", "group",
+    valid_antibiotics <- all(c("ab", "atc", "cid", "name", "group",
                                "atc_group1", "atc_group2", "abbreviations",
                                "synonyms", "oral_ddd", "oral_units",
                                "iv_ddd", "iv_units", "loinc") %in% colnames(antibiotics),
@@ -104,7 +111,7 @@ check_dataset_integrity <- function() {
     # package not yet loaded
     require("AMR")
   })
-  stop_if(!check_microorganisms | !check_antibiotics,
+  stop_if(!valid_microorganisms | !valid_antibiotics,
           "the data set `microorganisms` or `antibiotics` was overwritten in your environment because another package with the same object names was loaded _after_ the AMR package, preventing the AMR package from working correctly. Please load the AMR package last.")
   invisible(TRUE)
 }

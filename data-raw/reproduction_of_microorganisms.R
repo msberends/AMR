@@ -25,8 +25,9 @@
 
 # Reproduction of the `microorganisms` data set
 
-# Data retrieved from the Catalogue of Life (CoL) through the Encyclopaedia of Life:
-# https://opendata.eol.org/dataset/catalogue-of-life/
+# Data retrieved from the Catalogue of Life (CoL):
+# https://download.catalogueoflife.org/col/monthly/life/
+# (download latest dwca, such as https://download.catalogueoflife.org/col/monthly/2020-12-01_dwca.zip)
 # Data retrieved from the Global Biodiversity Information Facility (GBIF): 
 # https://doi.org/10.15468/rffz4x
 #
@@ -38,7 +39,7 @@ library(AMR)
 # also needed: data.table, httr, jsonlite, cleaner, stringr
 
 # unzip and extract taxa.txt (both around 1.5 GB, 3.7-3.9M rows) from Col and GBIF, then:
-data_col_raw <- data.table::fread("data-raw/taxon.tab", quote = "")
+data_col_raw <- data.table::fread("data-raw/taxon.tsv", quote = "")
 data_gbif <- data.table::fread("data-raw/taxa.txt", quote = "")
 
 # merge the two

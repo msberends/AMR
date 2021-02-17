@@ -1,5 +1,5 @@
-# AMR 1.5.0.9018
-## <small>Last updated:  9 February 2021</small>
+# AMR 1.5.0.9019
+## <small>Last updated: 17 February 2021</small>
 
 ### New
 * Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the `eucast_rules()` function and in `as.rsi()` to interpret MIC and disk diffusion values. This is now the default guideline in this package.
@@ -7,10 +7,10 @@
   * Added data set `dosage` to fuel the new `eucast_dosage()` function and to make this data available in a structured way 
   * Existing data set `example_isolates` now reflects the latest EUCAST rules
 * Added argument `only_rsi_columns` for some functions, which defaults to `FALSE`, to indicate if the functions must only be applied to columns that are of class `<rsi>` (i.e., transformed with `as.rsi()`). This increases speed since automatic determination of antibiotic columns is not needed anymore. Affected functions are:
-  * All antibiotic selector functions (`ab_class()` and its wrappers, such as `aminoglocysides()`, `carbapenems()`, `penicillins()`)
-  * All antibiotic filter functions (`filter_ab_class()` and its wrappers, such as `filter_aminoglocysides()`, `filter_carbapenems()`, `filter_penicillins()`)
+  * All antibiotic selector functions (`ab_class()` and its wrappers, such as `aminoglycosides()`, `carbapenems()`, `penicillins()`)
+  * All antibiotic filter functions (`filter_ab_class()` and its wrappers, such as `filter_aminoglycosides()`, `filter_carbapenems()`, `filter_penicillins()`)
   * `eucast_rules()`
-  * `mdro()` (including wrappers such as `brmo()`, `mrgn` and `eucast_exceptional_phenotypes()`)
+  * `mdro()` (including wrappers such as `brmo()`, `mrgn()` and `eucast_exceptional_phenotypes()`)
   * `guess_ab_col()`
 * Functions `oxazolidinones()` (an antibiotic selector function) and `filter_oxazolidinones()` (an antibiotic filter function) to select/filter on e.g. linezolid and tedizolid
   ```r

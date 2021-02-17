@@ -88,7 +88,7 @@ a pre[href], a pre[href]:hover, a pre[href]:focus {
   /* adjusted colour for all real links; having href attribute */
   color: #128f76;
 }
-.ot, .dv {
+.ot, .dv, .fl, .cn {
   /* numbers and TRUE/FALSE */
   color: slategray;
 }
@@ -187,10 +187,13 @@ div[id^=last-updated] h2 {
 }
 
 /* tables, make them look like scientific ones */
-.table {
+table {
   font-size: 90%;
 }
-.table td {
+table * {
+  vertical-align: middle !important;
+}
+table td {
   padding: 4px !important;
 }
 thead {
