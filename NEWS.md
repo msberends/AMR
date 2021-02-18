@@ -1,5 +1,5 @@
-# AMR 1.5.0.9019
-## <small>Last updated: 17 February 2021</small>
+# AMR 1.5.0.9020
+## <small>Last updated: 18 February 2021</small>
 
 ### New
 * Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the `eucast_rules()` function and in `as.rsi()` to interpret MIC and disk diffusion values. This is now the default guideline in this package.
@@ -57,6 +57,7 @@
 * Updated colours of values R, S and I in tibble printing
 * Functions `print()` and `summary()` on a Principal Components Analysis object (`pca()`) now print additional group info if the original data was grouped using `dplyr::group_by()`
 * Improved speed and reliability of `guess_ab_col()`. As this also internally improves the reliability of `first_isolate()` and `mdro()`, this might have a slight impact on the results of those functions.
+* Fix for `mo_name()` when used in other languages than English
 
 ### Other
 * Big documentation updates

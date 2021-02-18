@@ -172,7 +172,10 @@ mo_name <- function(x, language = get_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   
-  translate_AMR(mo_validate(x = x, property = "fullname", language = language, ...), language = language, only_unknown = FALSE)
+  translate_AMR(mo_validate(x = x, property = "fullname", language = language, ...),
+                language = language,
+                only_unknown = FALSE,
+                affect_mo_name = TRUE)
 }
 
 #' @rdname mo_property
@@ -214,7 +217,7 @@ mo_shortname <- function(x, language = get_locale(), ...) {
   
   shortnames[is.na(x.mo)] <- NA_character_
   load_mo_failures_uncertainties_renamed(metadata)
-  translate_AMR(shortnames, language = language, only_unknown = FALSE)
+  translate_AMR(shortnames, language = language, only_unknown = FALSE, affect_mo_name = TRUE)
 }
 
 #' @rdname mo_property

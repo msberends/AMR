@@ -84,6 +84,9 @@ test_that("mo_property works", {
   expect_output(print(mo_gramstain("Escherichia coli", language = "fr")))
 
   expect_error(mo_gramstain("Escherichia coli", language = "UNKNOWN"))
+  
+  dutch <- mo_name(microorganisms$fullname, language = "nl") # should be transformable to English again
+  expect_identical(mo_name(dutch, language = NULL), microorganisms$fullname) # gigantic test - will run ALL names
 
   # manual property function
   expect_error(mo_property("Escherichia coli", property = c("tsn", "fullname")))

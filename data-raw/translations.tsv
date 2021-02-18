@@ -1,407 +1,412 @@
-lang	pattern	replacement	fixed	ignore.case
-de	Coagulase-negative Staphylococcus	Koagulase-negative Staphylococcus	FALSE	FALSE
-de	Coagulase-positive Staphylococcus	Koagulase-positive Staphylococcus	FALSE	FALSE
-de	Beta-haemolytic Streptococcus	Beta-hämolytischer Streptococcus	FALSE	FALSE
-de	unknown Gram-negatives	unbekannte Gramnegativen	FALSE	FALSE
-de	unknown Gram-positives	unbekannte Grampositiven	FALSE	FALSE
-de	unknown name	unbekannte Name	FALSE	FALSE
-de	unknown kingdom	unbekanntes Reich	FALSE	FALSE
-de	unknown phylum	unbekannter Stamm	FALSE	FALSE
-de	unknown class	unbekannte Klasse	FALSE	FALSE
-de	unknown order	unbekannte Ordnung	FALSE	FALSE
-de	unknown family	unbekannte Familie	FALSE	FALSE
-de	unknown genus	unbekannte Gattung	FALSE	FALSE
-de	unknown species	unbekannte Art	FALSE	FALSE
-de	unknown subspecies	unbekannte Unterart	FALSE	FALSE
-de	unknown rank	unbekannter Rang	FALSE	FALSE
-de	CoNS	KNS	TRUE	FALSE
-de	CoPS	KPS	TRUE	FALSE
-de	Gram-negative	Gramnegativ	FALSE	FALSE
-de	Gram-positive	Grampositiv	FALSE	FALSE
-de	Bacteria	Bakterien	FALSE	FALSE
-de	Fungi	Pilze	FALSE	FALSE
-de	Yeasts	Hefen	FALSE	FALSE
-de	Protozoa	Protozoen	FALSE	FALSE
-de	biogroup	Biogruppe	FALSE	FALSE
-de	biotype	Biotyp	FALSE	FALSE
-de	vegetative	vegetativ	FALSE	FALSE
-de	([([ ]*?)group	\\1Gruppe	FALSE	FALSE
-de	([([ ]*?)Group	\\1Gruppe	FALSE	FALSE
-de	no .*growth	keine? .*wachstum	FALSE	TRUE
-de	no|not	keine?	FALSE	TRUE
-
-nl	Coagulase-negative Staphylococcus	Coagulase-negatieve Staphylococcus	FALSE	FALSE
-nl	Coagulase-positive Staphylococcus	Coagulase-positieve Staphylococcus	FALSE	FALSE
-nl	Beta-haemolytic Streptococcus	Beta-hemolytische Streptococcus	FALSE	FALSE
-nl	unknown Gram-negatives	onbekende Gram-negatieven	FALSE	FALSE
-nl	unknown Gram-positives	onbekende Gram-positieven	FALSE	FALSE
-nl	unknown name	onbekende naam	FALSE	FALSE
-nl	unknown kingdom	onbekend koninkrijk	FALSE	FALSE
-nl	unknown phylum	onbekend fylum	FALSE	FALSE
-nl	unknown class	onbekende klasse	FALSE	FALSE
-nl	unknown order	onbekende orde	FALSE	FALSE
-nl	unknown family	onbekende familie	FALSE	FALSE
-nl	unknown genus	onbekend geslacht	FALSE	FALSE
-nl	unknown species	onbekende soort	FALSE	FALSE
-nl	unknown subspecies	onbekende ondersoort	FALSE	FALSE
-nl	unknown rank	onbekende rang	FALSE	FALSE
-nl	CoNS	CNS	TRUE	FALSE
-nl	CoPS	CPS	TRUE	FALSE
-nl	Gram-negative	Gram-negatief	FALSE	FALSE
-nl	Gram-positive	Gram-positief	FALSE	FALSE
-nl	Bacteria	Bacteriën	FALSE	FALSE
-nl	Fungi	Schimmels	FALSE	FALSE
-nl	Yeasts	Gisten	FALSE	FALSE
-nl	Protozoa	Protozoën	FALSE	FALSE
-nl	biogroup	biogroep	FALSE	FALSE
-nl	vegetative	vegetatief	FALSE	FALSE
-nl	([([ ]*?)group	\\1groep	FALSE	FALSE
-nl	([([ ]*?)Group	\\1Groep	FALSE	FALSE
-nl	antibiotic	antibioticum	FALSE	FALSE
-nl	Antibiotic	Antibioticum	FALSE	FALSE
-nl	Drug	Middel	FALSE	FALSE
-nl	drug	middel	FALSE	FALSE
-nl	no .*growth	geen .*groei	FALSE	TRUE
-nl	no|not	geen|niet	FALSE	TRUE
-
-es	Coagulase-negative Staphylococcus	Staphylococcus coagulasa negativo	FALSE	FALSE
-es	Coagulase-positive Staphylococcus	Staphylococcus coagulasa positivo	FALSE	FALSE
-es	Beta-haemolytic Streptococcus	Streptococcus Beta-hemolítico	FALSE	FALSE
-es	unknown Gram-negatives	Gram negativos desconocidos	FALSE	FALSE
-es	unknown Gram-positives	Gram positivos desconocidos	FALSE	FALSE
-es	unknown name	nombre desconocido	FALSE	FALSE
-es	unknown kingdom	reino desconocido	FALSE	FALSE
-es	unknown phylum	filo desconocido	FALSE	FALSE
-es	unknown class	clase desconocida	FALSE	FALSE
-es	unknown order	orden desconocido	FALSE	FALSE
-es	unknown family	familia desconocida	FALSE	FALSE
-es	unknown genus	género desconocido	FALSE	FALSE
-es	unknown species	especie desconocida	FALSE	FALSE
-es	unknown subspecies	subespecie desconocida	FALSE	FALSE
-es	unknown rank	rango desconocido	FALSE	FALSE
-es	CoNS	SCN	TRUE	FALSE
-es	CoPS	SCP	TRUE	FALSE
-es	Gram-negative	Gram negativo	FALSE	FALSE
-es	Gram-positive	Gram positivo	FALSE	FALSE
-es	Bacteria	Bacterias	FALSE	FALSE
-es	Fungi	Hongos	FALSE	FALSE
-es	Yeasts	Levaduras	FALSE	FALSE
-es	Protozoa	Protozoarios	FALSE	FALSE
-es	biogroup	biogrupo	FALSE	FALSE
-es	biotype	biotipo	FALSE	FALSE
-es	vegetative	vegetativo	FALSE	FALSE
-es	([([ ]*?)group	\\1grupo	FALSE	FALSE
-es	([([ ]*?)Group	\\1Grupo	FALSE	FALSE
-es	no .*growth	no .*crecimientonon	FALSE	TRUE
-es	no|not	no|sin	FALSE	TRUE
-
-it	Coagulase-negative Staphylococcus	Staphylococcus negativo coagulasi	FALSE	FALSE
-it	Coagulase-positive Staphylococcus	Staphylococcus positivo coagulasi	FALSE	FALSE
-it	Beta-haemolytic Streptococcus	Streptococcus Beta-emolitico	FALSE	FALSE
-it	unknown Gram-negatives	Gram negativi sconosciuti	FALSE	FALSE
-it	unknown Gram-positives	Gram positivi sconosciuti	FALSE	FALSE
-it	unknown name	nome sconosciuto	FALSE	FALSE
-it	unknown kingdom	regno sconosciuto	FALSE	FALSE
-it	unknown phylum	phylum sconosciuto	FALSE	FALSE
-it	unknown class	classe sconosciuta	FALSE	FALSE
-it	unknown order	ordine sconosciuto	FALSE	FALSE
-it	unknown family	famiglia sconosciuta	FALSE	FALSE
-it	unknown genus	genere sconosciuto	FALSE	FALSE
-it	unknown species	specie sconosciute	FALSE	FALSE
-it	unknown subspecies	sottospecie sconosciute	FALSE	FALSE
-it	unknown rank	grado sconosciuto	FALSE	FALSE
-it	Gram-negative	Gram negativo	FALSE	FALSE
-it	Gram-positive	Gram positivo	FALSE	FALSE
-it	Bacteria	Batteri	FALSE	FALSE
-it	Fungi	Funghi	FALSE	FALSE
-it	Yeasts	Lieviti	FALSE	FALSE
-it	Protozoa	Protozoi	FALSE	FALSE
-it	biogroup	biogruppo	FALSE	FALSE
-it	biotype	biotipo	FALSE	FALSE
-it	vegetative	vegetativo	FALSE	FALSE
-it	([([ ]*?)group	\\1gruppo	FALSE	FALSE
-it	([([ ]*?)Group	\\1Gruppo	FALSE	FALSE
-it	no .*growth	sem .*crescimento	FALSE	TRUE
-it	no|not	sem	FALSE	TRUE
-
-fr	Coagulase-negative Staphylococcus	Staphylococcus à coagulase négative	FALSE	FALSE
-fr	Coagulase-positive Staphylococcus	Staphylococcus à coagulase positif	FALSE	FALSE
-fr	Beta-haemolytic Streptococcus	Streptococcus Bêta-hémolytique	FALSE	FALSE
-fr	unknown Gram-negatives	Gram négatifs inconnus	FALSE	FALSE
-fr	unknown Gram-positives	Gram positifs inconnus	FALSE	FALSE
-fr	unknown name	nom inconnu	FALSE	FALSE
-fr	unknown kingdom	règme inconnu	FALSE	FALSE
-fr	unknown phylum	embranchement inconnu	FALSE	FALSE
-fr	unknown class	classe inconnue	FALSE	FALSE
-fr	unknown order	ordre inconnu	FALSE	FALSE
-fr	unknown family	famille inconnue	FALSE	FALSE
-fr	unknown genus	genre inconnu	FALSE	FALSE
-fr	unknown species	espèce inconnue	FALSE	FALSE
-fr	unknown subspecies	sous-espèce inconnue	FALSE	FALSE
-fr	unknown rank	rang inconnu	FALSE	FALSE
-fr	Gram-negative	Gram négatif	FALSE	FALSE
-fr	Gram-positive	Gram positif	FALSE	FALSE
-fr	Bacteria	Bactéries	FALSE	FALSE
-fr	Fungi	Champignons	FALSE	FALSE
-fr	Yeasts	Levures	FALSE	FALSE
-fr	Protozoa	Protozoaires	FALSE	FALSE
-fr	biogroup	biogroupe	FALSE	FALSE
-fr	vegetative	végétatif	FALSE	FALSE
-fr	([([ ]*?)group	\\1groupe	FALSE	FALSE
-fr	([([ ]*?)Group	\\1Groupe	FALSE	FALSE
-fr	no .*growth	pas .*croissance	FALSE	TRUE
-fr	no|not	non	FALSE	TRUE
-
-pt	Coagulase-negative Staphylococcus	Staphylococcus coagulase negativo	FALSE	FALSE
-pt	Coagulase-positive Staphylococcus	Staphylococcus coagulase positivo	FALSE	FALSE
-pt	Beta-haemolytic Streptococcus	Streptococcus Beta-hemolítico	FALSE	FALSE
-pt	unknown Gram-negatives	Gram negativos desconhecidos	FALSE	FALSE
-pt	unknown Gram-positives	Gram positivos desconhecidos	FALSE	FALSE
-pt	unknown name	nome desconhecido	FALSE	FALSE
-pt	unknown kingdom	reino desconhecido	FALSE	FALSE
-pt	unknown phylum	filo desconhecido	FALSE	FALSE
-pt	unknown class	classe desconhecida	FALSE	FALSE
-pt	unknown order	ordem desconhecido	FALSE	FALSE
-pt	unknown family	família desconhecida	FALSE	FALSE
-pt	unknown genus	gênero desconhecido	FALSE	FALSE
-pt	unknown species	espécies desconhecida	FALSE	FALSE
-pt	unknown subspecies	subespécies desconhecida	FALSE	FALSE
-pt	unknown rank	classificação desconhecido	FALSE	FALSE
-pt	Gram-negative	Gram negativo	FALSE	FALSE
-pt	Gram-positive	Gram positivo	FALSE	FALSE
-pt	Bacteria	Bactérias	FALSE	FALSE
-pt	Fungi	Fungos	FALSE	FALSE
-pt	Yeasts	Leveduras	FALSE	FALSE
-pt	Protozoa	Protozoários	FALSE	FALSE
-pt	biogroup	biogrupo	FALSE	FALSE
-pt	biotype	biótipo	FALSE	FALSE
-pt	vegetative	vegetativo	FALSE	FALSE
-pt	([([ ]*?)group	\\1grupo	FALSE	FALSE
-pt	([([ ]*?)Group	\\1Grupo	FALSE	FALSE
-pt	no .*growth	sem .*crescimento	FALSE	TRUE
-pt	no|not	sem	FALSE	TRUE
-
-de	clavulanic acid	Clavulansäure	FALSE	TRUE
-
-nl	4-aminosalicylic acid	4-aminosalicylzuur
-nl	Adefovir dipivoxil	Adefovir
-nl	Aldesulfone sodium	Aldesulfon
-nl	Amikacin	Amikacine
-nl	Amoxicillin	Amoxicilline
-nl	Amoxicillin/beta-lactamase inhibitor	Amoxicilline/enzymremmer
-nl	Amphotericin B	Amfotericine B
-nl	Ampicillin	Ampicilline
-nl	Ampicillin/beta-lactamase inhibitor	Ampicilline/enzymremmer
-nl	Anidulafungin	Anidulafungine
-nl	Azidocillin	Azidocilline
-nl	Azithromycin	Azitromycine
-nl	Azlocillin	Azlocilline
-nl	Bacampicillin	Bacampicilline
-nl	Bacitracin	Bacitracine
-nl	Benzathine benzylpenicillin	Benzylpenicillinebenzathine
-nl	Benzathine phenoxymethylpenicillin	Fenoxymethylpenicillinebenzathine
-nl	Benzylpenicillin	Benzylpenicilline
-nl	Calcium aminosalicylate	Aminosalicylzuur
-nl	Capreomycin	Capreomycine
-nl	Carbenicillin	Carbenicilline
-nl	Carindacillin	Carindacilline
-nl	Caspofungin	Caspofungine
-nl	Ce(f|ph)acetrile	Cefacetril	FALSE
-nl	Ce(f|ph)alexin	Cefalexine	FALSE	FALSE
-nl	Ce(f|ph)alotin	Cefalotine	FALSE
-nl	Ce(f|ph)amandole	Cefamandol	FALSE
-nl	Ce(f|ph)apirin	Cefapirine	FALSE
-nl	Ce(f|ph)azedone	Cefazedon	FALSE
-nl	Ce(f|ph)azolin	Cefazoline	FALSE
-nl	Ce(f|ph)alothin	Cefalotine	FALSE
-nl	Ce(f|ph)alexin	Cefalexine	FALSE
-nl	Ce(f|ph)epime	Cefepim	FALSE
-nl	Ce(f|ph)ixime	Cefixim	FALSE
-nl	Ce(f|ph)menoxime	Cefmenoxim	FALSE
-nl	Ce(f|ph)metazole	Cefmetazol	FALSE
-nl	Ce(f|ph)odizime	Cefodizim	FALSE
-nl	Ce(f|ph)onicid	Cefonicide	FALSE
-nl	Ce(f|ph)operazone	Cefoperazon	FALSE
-nl	Ce(f|ph)operazone/beta-lactamase inhibitor	Cefoperazon/enzymremmer	FALSE
-nl	Ce(f|ph)otaxime	Cefotaxim	FALSE
-nl	Ce(f|ph)oxitin	Cefoxitine	FALSE
-nl	Ce(f|ph)pirome	Cefpirom	FALSE
-nl	Ce(f|ph)podoxime	Cefpodoxim	FALSE
-nl	Ce(f|ph)radine	Cefradine	FALSE
-nl	Ce(f|ph)sulodin	Cefsulodine	FALSE
-nl	Ce(f|ph)tazidime	Ceftazidim	FALSE
-nl	Ce(f|ph)tezole	Ceftezol	FALSE
-nl	Ce(f|ph)tizoxime	Ceftizoxim	FALSE
-nl	Ce(f|ph)triaxone	Ceftriaxon	FALSE
-nl	Ce(f|ph)uroxime	Cefuroxim	FALSE
-nl	Ce(f|ph)uroxime/metronidazole	Cefuroxim/andere antibacteriele middelen	FALSE
-nl	Chloramphenicol	Chlooramfenicol
-nl	Chlortetracycline	Chloortetracycline
-nl	Cinoxacin	Cinoxacine
-nl	Ciprofloxacin	Ciprofloxacine
-nl	Clarithromycin	Claritromycine
-nl	Clavulanic acid	Clavulaanzuur
-nl	clavulanic acid	clavulaanzuur
-nl	Clindamycin	Clindamycine
-nl	Clometocillin	Clometocilline
-nl	Clotrimazole	Clotrimazol
-nl	Cloxacillin	Cloxacilline
-nl	Colistin	Colistine
-nl	Dapsone	Dapson
-nl	Daptomycin	Daptomycine
-nl	Dibekacin	Dibekacine
-nl	Dicloxacillin	Dicloxacilline
-nl	Dirithromycin	Diritromycine
-nl	Econazole	Econazol
-nl	Enoxacin	Enoxacine
-nl	Epicillin	Epicilline
-nl	Erythromycin	Erytromycine
-nl	Ethambutol/isoniazid	Ethambutol/isoniazide
-nl	Fleroxacin	Fleroxacine
-nl	Flucloxacillin	Flucloxacilline
-nl	Fluconazole	Fluconazol
-nl	Flucytosine	Fluorocytosine
-nl	Flurithromycin	Fluritromycine
-nl	Fosfomycin	Fosfomycine
-nl	Fusidic acid	Fusidinezuur
-nl	Gatifloxacin	Gatifloxacine
-nl	Gemifloxacin	Gemifloxacine
-nl	Gentamicin	Gentamicine
-nl	Grepafloxacin	Grepafloxacine
-nl	Hachimycin	Hachimycine
-nl	Hetacillin	Hetacilline
-nl	Imipenem/cilastatin	Imipenem/enzymremmer
-nl	Inosine pranobex	Inosiplex
-nl	Isepamicin	Isepamicine
-nl	Isoconazole	Isoconazol
-nl	Isoniazid	Isoniazide
-nl	Itraconazole	Itraconazol
-nl	Josamycin	Josamycine
-nl	Kanamycin	Kanamycine
-nl	Ketoconazole	Ketoconazol
-nl	Levofloxacin	Levofloxacine
-nl	Lincomycin	Lincomycine
-nl	Lomefloxacin	Lomefloxacine
-nl	Lysozyme	Lysozym
-nl	Mandelic acid	Amandelzuur
-nl	Metampicillin	Metampicilline
-nl	Meticillin	Meticilline
-nl	Metisazone	Metisazon
-nl	Metronidazole	Metronidazol
-nl	Mezlocillin	Mezlocilline
-nl	Micafungin	Micafungine
-nl	Miconazole	Miconazol
-nl	Midecamycin	Midecamycine
-nl	Miocamycin	Miocamycine
-nl	Moxifloxacin	Moxifloxacine
-nl	Mupirocin	Mupirocine
-nl	Nalidixic acid	Nalidixinezuur
-nl	Neomycin	Neomycine
-nl	Netilmicin	Netilmicine
-nl	Nitrofurantoin	Nitrofurantoine
-nl	Norfloxacin	Norfloxacine
-nl	Novobiocin	Novobiocine
-nl	Nystatin	Nystatine
-nl	Ofloxacin	Ofloxacine
-nl	Oleandomycin	Oleandomycine
-nl	Ornidazole	Ornidazol
-nl	Oxacillin	Oxacilline
-nl	Oxolinic acid	Oxolinezuur
-nl	Oxytetracycline	Oxytetracycline
-nl	Pazufloxacin	Pazufloxacine
-nl	Pefloxacin	Pefloxacine
-nl	Penamecillin	Penamecilline
-nl	Penicillin	Penicilline
-nl	Pheneticillin	Feneticilline
-nl	Phenoxymethylpenicillin	Fenoxymethylpenicilline
-nl	Pipemidic acid	Pipemidinezuur
-nl	Piperacillin	Piperacilline
-nl	Piperacillin/beta-lactamase inhibitor	Piperacilline/enzymremmer
-nl	Piromidic acid	Piromidinezuur
-nl	Pivampicillin	Pivampicilline
-nl	Polymyxin B	Polymyxine B
-nl	Posaconazole	Posaconazol
-nl	Pristinamycin	Pristinamycine
-nl	Procaine benzylpenicillin	Benzylpenicillineprocaine
-nl	Propicillin	Propicilline
-nl	Prulifloxacin	Prulifloxacine
-nl	Quinupristin/dalfopristin	Quinupristine/dalfopristine
-nl	Ribostamycin	Ribostamycine
-nl	Rifabutin	Rifabutine
-nl	Rifampicin	Rifampicine
-nl	Rifampicin/pyrazinamide/ethambutol/isoniazid	Rifampicine/pyrazinamide/ethambutol/isoniazide
-nl	Rifampicin/pyrazinamide/isoniazid	Rifampicine/pyrazinamide/isoniazide
-nl	Rifampicin/isoniazid	Rifampicine/isoniazide
-nl	Rifamycin	Rifamycine
-nl	Rifaximin	Rifaximine
-nl	Rokitamycin	Rokitamycine
-nl	Rosoxacin	Rosoxacine
-nl	Roxithromycin	Roxitromycine
-nl	Rufloxacin	Rufloxacine
-nl	Sisomicin	Sisomicine
-nl	Sodium aminosalicylate	Aminosalicylzuur
-nl	Sparfloxacin	Sparfloxacine
-nl	Spectinomycin	Spectinomycine
-nl	Spiramycin	Spiramycine
-nl	Spiramycin/metronidazole	Spiramycine/metronidazol
-nl	Staphylococcus immunoglobulin	Stafylokokkenimmunoglobuline
-nl	Streptoduocin	Streptoduocine
-nl	Streptomycin	Streptomycine
-nl	Streptomycin/isoniazid	Streptomycine/isoniazide
-nl	Sulbenicillin	Sulbenicilline
-nl	Sulfadiazine/tetroxoprim	Sulfadiazine/tetroxoprim
-nl	Sulfadiazine/trimethoprim	Sulfadiazine/trimethoprim
-nl	Sulfadimidine/trimethoprim	Sulfadimidine/trimethoprim
-nl	Sulfafurazole	Sulfafurazol
-nl	Sulfaisodimidine	Sulfisomidine
-nl	Sulfalene	Sulfaleen
-nl	Sulfamazone	Sulfamazon
-nl	Sulfamerazine/trimethoprim	Sulfamerazine/trimethoprim
-nl	Sulfamethizole	Sulfamethizol
-nl	Sulfamethoxazole	Sulfamethoxazol
-nl	Sulfamethoxazole/trimethoprim	Sulfamethoxazol/trimethoprim
-nl	Sulfametoxydiazine	Sulfamethoxydiazine
-nl	Sulfametrole/trimethoprim	Sulfametrol/trimethoprim
-nl	Sulfamoxole	Sulfamoxol
-nl	Sulfamoxole/trimethoprim	Sulfamoxol/trimethoprim
-nl	Sulfaperin	Sulfaperine
-nl	Sulfaphenazole	Sulfafenazol
-nl	Sulfathiazole	Sulfathiazol
-nl	Sulfathiourea	Sulfathioureum
-nl	Sultamicillin	Sultamicilline
-nl	Talampicillin	Talampicilline
-nl	Teicoplanin	Teicoplanine
-nl	Telithromycin	Telitromycine
-nl	Temafloxacin	Temafloxacine
-nl	Temocillin	Temocilline
-nl	Tenofovir disoproxil	Tenofovir
-nl	Terizidone	Terizidon
-nl	Thiamphenicol	Thiamfenicol
-nl	Thioacetazone/isoniazid	Thioacetazon/isoniazide
-nl	Ticarcillin	Ticarcilline
-nl	Ticarcillin/beta-lactamase inhibitor	Ticarcilline/enzymremmer
-nl	Ticarcillin/clavulanic acid	Ticarcilline/clavulaanzuur
-nl	Tinidazole	Tinidazol
-nl	Tobramycin	Tobramycine
-nl	Trimethoprim/sulfamethoxazole	Cotrimoxazol
-nl	Troleandomycin	Troleandomycine
-nl	Trovafloxacin	Trovafloxacine
-nl	Vancomycin	Vancomycine
-nl	Voriconazole	Voriconazol
-nl	Aminoglycosides	Aminoglycosiden	TRUE	FALSE
-nl	Amphenicols	Amfenicolen	TRUE	FALSE
-nl	Antifungals/antimycotics	Antifungica/antimycotica	TRUE	FALSE
-nl	Antimycobacterials	Antimycobacteriele middelen	TRUE	FALSE
-nl	Beta-lactams/penicillins	Beta-lactams/penicillines	TRUE	FALSE
-nl	Cephalosporins (1st gen.)	Cefalosporines (1e gen.)	TRUE	FALSE
-nl	Cephalosporins (2nd gen.)	Cefalosporines (2e gen.)	TRUE	FALSE
-nl	Cephalosporins (3rd gen.)	Cefalosporines (3e gen.)	TRUE	FALSE
-nl	Cephalosporins (4th gen.)	Cefalosporines (4e gen.)	TRUE	FALSE
-nl	Cephalosporins (5th gen.)	Cefalosporines (5e gen.)	TRUE	FALSE
-nl	Cephalosporins (unclassified gen.)	Cefalosporines (ongeclassificeerd)	TRUE	FALSE
-nl	Cephalosporins	Cefalosporines	TRUE	FALSE
-nl	Glycopeptides	Glycopeptiden	TRUE	FALSE
-nl	Macrolides/lincosamides	Macroliden/lincosamiden	TRUE	FALSE
-nl	Other antibacterials	Overige antibiotica	TRUE	FALSE
-nl	Polymyxins	Polymyxines	TRUE	FALSE
-nl	Quinolones	Quinolonen	TRUE	FALSE
+lang	pattern	replacement	fixed	ignore.case	affect_mo_name
+de	Coagulase-negative Staphylococcus	Koagulase-negative Staphylococcus	FALSE	FALSE	TRUE
+de	Coagulase-positive Staphylococcus	Koagulase-positive Staphylococcus	FALSE	FALSE	TRUE
+de	Beta-haemolytic Streptococcus	Beta-hämolytischer Streptococcus	FALSE	FALSE	TRUE
+de	unknown Gram-negatives	unbekannte Gramnegativen	FALSE	FALSE	TRUE
+de	unknown Gram-positives	unbekannte Grampositiven	FALSE	FALSE	TRUE
+de	unknown fungus	unbekannter Pilze	FALSE	FALSE	TRUE
+de	unknown yeast	unbekannte Hefe	FALSE	FALSE	TRUE
+de	unknown name	unbekannte Name	FALSE	FALSE	TRUE
+de	unknown kingdom	unbekanntes Reich	FALSE	FALSE	TRUE
+de	unknown phylum	unbekannter Stamm	FALSE	FALSE	TRUE
+de	unknown class	unbekannte Klasse	FALSE	FALSE	TRUE
+de	unknown order	unbekannte Ordnung	FALSE	FALSE	TRUE
+de	unknown family	unbekannte Familie	FALSE	FALSE	TRUE
+de	unknown genus	unbekannte Gattung	FALSE	FALSE	TRUE
+de	unknown species	unbekannte Art	FALSE	FALSE	TRUE
+de	unknown subspecies	unbekannte Unterart	FALSE	FALSE	TRUE
+de	unknown rank	unbekannter Rang	FALSE	FALSE	TRUE
+de	CoNS	KNS	TRUE	FALSE	TRUE
+de	CoPS	KPS	TRUE	FALSE	TRUE
+de	Gram-negative	Gramnegativ	FALSE	FALSE	FALSE
+de	Gram-positive	Grampositiv	FALSE	FALSE	FALSE
+de	^Bacteria$	Bakterien	FALSE	FALSE	FALSE
+de	^Fungi$	Pilze	FALSE	FALSE	FALSE
+de	^Yeasts$	Hefen	FALSE	FALSE	FALSE
+de	^Protozoa$	Protozoen	FALSE	FALSE	FALSE
+de	biogroup	Biogruppe	FALSE	FALSE	FALSE
+de	biotype	Biotyp	FALSE	FALSE	FALSE
+de	vegetative	vegetativ	FALSE	FALSE	FALSE
+de	([([ ]*?)group	\\1Gruppe	FALSE	FALSE	FALSE
+de	([([ ]*?)Group	\\1Gruppe	FALSE	FALSE	FALSE
+de	no .*growth	keine? .*wachstum	FALSE	TRUE	FALSE
+de	(^| )no|not	keine?	FALSE	TRUE	FALSE
+nl	Coagulase-negative Staphylococcus	Coagulase-negatieve Staphylococcus	FALSE	FALSE	TRUE
+nl	Coagulase-positive Staphylococcus	Coagulase-positieve Staphylococcus	FALSE	FALSE	TRUE
+nl	Beta-haemolytic Streptococcus	Beta-hemolytische Streptococcus	FALSE	FALSE	TRUE
+nl	unknown Gram-negatives	onbekende Gram-negatieven	FALSE	FALSE	TRUE
+nl	unknown Gram-positives	onbekende Gram-positieven	FALSE	FALSE	TRUE
+nl	unknown fungus	onbekende schimmel	FALSE	FALSE	TRUE
+nl	unknown yeast	onbekende gist	FALSE	FALSE	TRUE
+nl	unknown name	onbekende naam	FALSE	FALSE	TRUE
+nl	unknown kingdom	onbekend koninkrijk	FALSE	FALSE	TRUE
+nl	unknown phylum	onbekend fylum	FALSE	FALSE	TRUE
+nl	unknown class	onbekende klasse	FALSE	FALSE	TRUE
+nl	unknown order	onbekende orde	FALSE	FALSE	TRUE
+nl	unknown family	onbekende familie	FALSE	FALSE	TRUE
+nl	unknown genus	onbekend geslacht	FALSE	FALSE	TRUE
+nl	unknown species	onbekende soort	FALSE	FALSE	TRUE
+nl	unknown subspecies	onbekende ondersoort	FALSE	FALSE	TRUE
+nl	unknown rank	onbekende rang	FALSE	FALSE	TRUE
+nl	CoNS	CNS	TRUE	FALSE	TRUE
+nl	CoPS	CPS	TRUE	FALSE	TRUE
+nl	Gram-negative	Gram-negatief	FALSE	FALSE	FALSE
+nl	Gram-positive	Gram-positief	FALSE	FALSE	FALSE
+nl	^Bacteria$	Bacteriën	FALSE	FALSE	FALSE
+nl	^Fungi$	Schimmels	FALSE	FALSE	FALSE
+nl	^Yeasts$	Gisten	FALSE	FALSE	FALSE
+nl	^Protozoa$	Protozoën	FALSE	FALSE	FALSE
+nl	biogroup	biogroep	FALSE	FALSE	FALSE
+nl	vegetative	vegetatief	FALSE	FALSE	FALSE
+nl	([([ ]*?)group	\\1groep	FALSE	FALSE	FALSE
+nl	([([ ]*?)Group	\\1Groep	FALSE	FALSE	FALSE
+nl	antibiotic	antibioticum	FALSE	FALSE	FALSE
+nl	Antibiotic	Antibioticum	FALSE	FALSE	FALSE
+nl	Drug	Middel	FALSE	FALSE	FALSE
+nl	drug	middel	FALSE	FALSE	FALSE
+nl	no .*growth	geen .*groei	FALSE	TRUE	FALSE
+nl	no|not	geen|niet	FALSE	TRUE	FALSE
+es	Coagulase-negative Staphylococcus	Staphylococcus coagulasa negativo	FALSE	FALSE	TRUE
+es	Coagulase-positive Staphylococcus	Staphylococcus coagulasa positivo	FALSE	FALSE	TRUE
+es	Beta-haemolytic Streptococcus	Streptococcus Beta-hemolítico	FALSE	FALSE	TRUE
+es	unknown Gram-negatives	Gram negativos desconocidos	FALSE	FALSE	TRUE
+es	unknown Gram-positives	Gram positivos desconocidos	FALSE	FALSE	TRUE
+es	unknown fungus	hongo desconocido	FALSE	FALSE	TRUE
+es	unknown yeast	levadura desconocida	FALSE	FALSE	TRUE
+es	unknown name	nombre desconocido	FALSE	FALSE	TRUE
+es	unknown kingdom	reino desconocido	FALSE	FALSE	TRUE
+es	unknown phylum	filo desconocido	FALSE	FALSE	TRUE
+es	unknown class	clase desconocida	FALSE	FALSE	TRUE
+es	unknown order	orden desconocido	FALSE	FALSE	TRUE
+es	unknown family	familia desconocida	FALSE	FALSE	TRUE
+es	unknown genus	género desconocido	FALSE	FALSE	TRUE
+es	unknown species	especie desconocida	FALSE	FALSE	TRUE
+es	unknown subspecies	subespecie desconocida	FALSE	FALSE	TRUE
+es	unknown rank	rango desconocido	FALSE	FALSE	TRUE
+es	CoNS	SCN	TRUE	FALSE	TRUE
+es	CoPS	SCP	TRUE	FALSE	TRUE
+es	Gram-negative	Gram negativo	FALSE	FALSE	FALSE
+es	Gram-positive	Gram positivo	FALSE	FALSE	FALSE
+es	^Bacteria$	Bacterias	FALSE	FALSE	FALSE
+es	^Fungi$	Hongos	FALSE	FALSE	FALSE
+es	^Yeasts$	Levaduras	FALSE	FALSE	FALSE
+es	^Protozoa$	Protozoarios	FALSE	FALSE	FALSE
+es	biogroup	biogrupo	FALSE	FALSE	FALSE
+es	biotype	biotipo	FALSE	FALSE	FALSE
+es	vegetative	vegetativo	FALSE	FALSE	FALSE
+es	([([ ]*?)group	\\1grupo	FALSE	FALSE	FALSE
+es	([([ ]*?)Group	\\1Grupo	FALSE	FALSE	FALSE
+es	no .*growth	no .*crecimientonon	FALSE	TRUE	FALSE
+es	no|not	no|sin	FALSE	TRUE	FALSE
+it	Coagulase-negative Staphylococcus	Staphylococcus negativo coagulasi	FALSE	FALSE	TRUE
+it	Coagulase-positive Staphylococcus	Staphylococcus positivo coagulasi	FALSE	FALSE	TRUE
+it	Beta-haemolytic Streptococcus	Streptococcus Beta-emolitico	FALSE	FALSE	TRUE
+it	unknown Gram-negatives	Gram negativi sconosciuti	FALSE	FALSE	TRUE
+it	unknown Gram-positives	Gram positivi sconosciuti	FALSE	FALSE	TRUE
+it	unknown fungus	fungo sconosciuto	FALSE	FALSE	TRUE
+it	unknown yeast	lievito sconosciuto	FALSE	FALSE	TRUE
+it	unknown name	nome sconosciuto	FALSE	FALSE	TRUE
+it	unknown kingdom	regno sconosciuto	FALSE	FALSE	TRUE
+it	unknown phylum	phylum sconosciuto	FALSE	FALSE	TRUE
+it	unknown class	classe sconosciuta	FALSE	FALSE	TRUE
+it	unknown order	ordine sconosciuto	FALSE	FALSE	TRUE
+it	unknown family	famiglia sconosciuta	FALSE	FALSE	TRUE
+it	unknown genus	genere sconosciuto	FALSE	FALSE	TRUE
+it	unknown species	specie sconosciute	FALSE	FALSE	TRUE
+it	unknown subspecies	sottospecie sconosciute	FALSE	FALSE	TRUE
+it	unknown rank	grado sconosciuto	FALSE	FALSE	TRUE
+it	Gram-negative	Gram negativo	FALSE	FALSE	FALSE
+it	Gram-positive	Gram positivo	FALSE	FALSE	FALSE
+it	^Bacteria$	Batteri	FALSE	FALSE	FALSE
+it	^Fungi$	Funghi	FALSE	FALSE	FALSE
+it	^Yeasts$	Lieviti	FALSE	FALSE	FALSE
+it	^Protozoa$	Protozoi	FALSE	FALSE	FALSE
+it	biogroup	biogruppo	FALSE	FALSE	FALSE
+it	biotype	biotipo	FALSE	FALSE	FALSE
+it	vegetative	vegetativo	FALSE	FALSE	FALSE
+it	([([ ]*?)group	\\1gruppo	FALSE	FALSE	FALSE
+it	([([ ]*?)Group	\\1Gruppo	FALSE	FALSE	FALSE
+it	no .*growth	sem .*crescimento	FALSE	TRUE	FALSE
+it	no|not	sem	FALSE	TRUE	FALSE
+fr	Coagulase-negative Staphylococcus	Staphylococcus à coagulase négative	FALSE	FALSE	TRUE
+fr	Coagulase-positive Staphylococcus	Staphylococcus à coagulase positif	FALSE	FALSE	TRUE
+fr	Beta-haemolytic Streptococcus	Streptococcus Bêta-hémolytique	FALSE	FALSE	TRUE
+fr	unknown Gram-negatives	Gram négatifs inconnus	FALSE	FALSE	TRUE
+fr	unknown Gram-positives	Gram positifs inconnus	FALSE	FALSE	TRUE
+fr	unknown fungus	champignon inconnu	FALSE	FALSE	TRUE
+fr	unknown yeast	levure inconnue	FALSE	FALSE	TRUE
+fr	unknown name	nom inconnu	FALSE	FALSE	TRUE
+fr	unknown kingdom	règme inconnu	FALSE	FALSE	TRUE
+fr	unknown phylum	embranchement inconnu	FALSE	FALSE	TRUE
+fr	unknown class	classe inconnue	FALSE	FALSE	TRUE
+fr	unknown order	ordre inconnu	FALSE	FALSE	TRUE
+fr	unknown family	famille inconnue	FALSE	FALSE	TRUE
+fr	unknown genus	genre inconnu	FALSE	FALSE	TRUE
+fr	unknown species	espèce inconnue	FALSE	FALSE	TRUE
+fr	unknown subspecies	sous-espèce inconnue	FALSE	FALSE	TRUE
+fr	unknown rank	rang inconnu	FALSE	FALSE	TRUE
+fr	Gram-negative	Gram négatif	FALSE	FALSE	FALSE
+fr	Gram-positive	Gram positif	FALSE	FALSE	FALSE
+fr	^Bacteria$	Bactéries	FALSE	FALSE	FALSE
+fr	^Fungi$	Champignons	FALSE	FALSE	FALSE
+fr	^Yeasts$	Levures	FALSE	FALSE	FALSE
+fr	^Protozoa$	Protozoaires	FALSE	FALSE	FALSE
+fr	biogroup	biogroupe	FALSE	FALSE	FALSE
+fr	vegetative	végétatif	FALSE	FALSE	FALSE
+fr	([([ ]*?)group	\\1groupe	FALSE	FALSE	FALSE
+fr	([([ ]*?)Group	\\1Groupe	FALSE	FALSE	FALSE
+fr	no .*growth	pas .*croissance	FALSE	TRUE	FALSE
+fr	no|not	non	FALSE	TRUE	FALSE
+pt	Coagulase-negative Staphylococcus	Staphylococcus coagulase negativo	FALSE	FALSE	TRUE
+pt	Coagulase-positive Staphylococcus	Staphylococcus coagulase positivo	FALSE	FALSE	TRUE
+pt	Beta-haemolytic Streptococcus	Streptococcus Beta-hemolítico	FALSE	FALSE	TRUE
+pt	unknown Gram-negatives	Gram negativos desconhecidos	FALSE	FALSE	TRUE
+pt	unknown Gram-positives	Gram positivos desconhecidos	FALSE	FALSE	TRUE
+pt	unknown fungus	fungo desconhecido	FALSE	FALSE	TRUE
+pt	unknown yeast	levedura desconhecida	FALSE	FALSE	TRUE
+pt	unknown name	nome desconhecido	FALSE	FALSE	TRUE
+pt	unknown kingdom	reino desconhecido	FALSE	FALSE	TRUE
+pt	unknown phylum	filo desconhecido	FALSE	FALSE	TRUE
+pt	unknown class	classe desconhecida	FALSE	FALSE	TRUE
+pt	unknown order	ordem desconhecido	FALSE	FALSE	TRUE
+pt	unknown family	família desconhecida	FALSE	FALSE	TRUE
+pt	unknown genus	gênero desconhecido	FALSE	FALSE	TRUE
+pt	unknown species	espécies desconhecida	FALSE	FALSE	TRUE
+pt	unknown subspecies	subespécies desconhecida	FALSE	FALSE	TRUE
+pt	unknown rank	classificação desconhecido	FALSE	FALSE	TRUE
+pt	Gram-negative	Gram negativo	FALSE	FALSE	FALSE
+pt	Gram-positive	Gram positivo	FALSE	FALSE	FALSE
+pt	^Bacteria$	Bactérias	FALSE	FALSE	FALSE
+pt	^Fungi$	Fungos	FALSE	FALSE	FALSE
+pt	^Yeasts$	Leveduras	FALSE	FALSE	FALSE
+pt	^Protozoa$	Protozoários	FALSE	FALSE	FALSE
+pt	biogroup	biogrupo	FALSE	FALSE	FALSE
+pt	biotype	biótipo	FALSE	FALSE	FALSE
+pt	vegetative	vegetativo	FALSE	FALSE	FALSE
+pt	([([ ]*?)group	\\1grupo	FALSE	FALSE	FALSE
+pt	([([ ]*?)Group	\\1Grupo	FALSE	FALSE	FALSE
+pt	no .*growth	sem .*crescimento	FALSE	TRUE	FALSE
+pt	no|not	sem	FALSE	TRUE	FALSE
+de	clavulanic acid	Clavulansäure	FALSE	TRUE	FALSE
+nl	4-aminosalicylic acid	4-aminosalicylzuur	TRUE	FALSE	FALSE
+nl	Adefovir dipivoxil	Adefovir	TRUE	FALSE	FALSE
+nl	Aldesulfone sodium	Aldesulfon	TRUE	FALSE	FALSE
+nl	Amikacin	Amikacine	TRUE	FALSE	FALSE
+nl	Amoxicillin	Amoxicilline	TRUE	FALSE	FALSE
+nl	Amoxicillin/beta-lactamase inhibitor	Amoxicilline/enzymremmer	TRUE	FALSE	FALSE
+nl	Amphotericin B	Amfotericine B	TRUE	FALSE	FALSE
+nl	Ampicillin	Ampicilline	TRUE	FALSE	FALSE
+nl	Ampicillin/beta-lactamase inhibitor	Ampicilline/enzymremmer	TRUE	FALSE	FALSE
+nl	Anidulafungin	Anidulafungine	TRUE	FALSE	FALSE
+nl	Azidocillin	Azidocilline	TRUE	FALSE	FALSE
+nl	Azithromycin	Azitromycine	TRUE	FALSE	FALSE
+nl	Azlocillin	Azlocilline	TRUE	FALSE	FALSE
+nl	Bacampicillin	Bacampicilline	TRUE	FALSE	FALSE
+nl	Bacitracin	Bacitracine	TRUE	FALSE	FALSE
+nl	Benzathine benzylpenicillin	Benzylpenicillinebenzathine	TRUE	FALSE	FALSE
+nl	Benzathine phenoxymethylpenicillin	Fenoxymethylpenicillinebenzathine	TRUE	FALSE	FALSE
+nl	Benzylpenicillin	Benzylpenicilline	TRUE	FALSE	FALSE
+nl	Calcium aminosalicylate	Aminosalicylzuur	TRUE	FALSE	FALSE
+nl	Capreomycin	Capreomycine	TRUE	FALSE	FALSE
+nl	Carbenicillin	Carbenicilline	TRUE	FALSE	FALSE
+nl	Carindacillin	Carindacilline	TRUE	FALSE	FALSE
+nl	Caspofungin	Caspofungine	TRUE	FALSE	FALSE
+nl	Ce(f|ph)acetrile	Cefacetril	FALSE	FALSE	FALSE
+nl	Ce(f|ph)alexin	Cefalexine	FALSE	FALSE	FALSE
+nl	Ce(f|ph)alotin	Cefalotine	FALSE	FALSE	FALSE
+nl	Ce(f|ph)amandole	Cefamandol	FALSE	FALSE	FALSE
+nl	Ce(f|ph)apirin	Cefapirine	FALSE	FALSE	FALSE
+nl	Ce(f|ph)azedone	Cefazedon	FALSE	FALSE	FALSE
+nl	Ce(f|ph)azolin	Cefazoline	FALSE	FALSE	FALSE
+nl	Ce(f|ph)alothin	Cefalotine	FALSE	FALSE	FALSE
+nl	Ce(f|ph)alexin	Cefalexine	FALSE	FALSE	FALSE
+nl	Ce(f|ph)epime	Cefepim	FALSE	FALSE	FALSE
+nl	Ce(f|ph)ixime	Cefixim	FALSE	FALSE	FALSE
+nl	Ce(f|ph)menoxime	Cefmenoxim	FALSE	FALSE	FALSE
+nl	Ce(f|ph)metazole	Cefmetazol	FALSE	FALSE	FALSE
+nl	Ce(f|ph)odizime	Cefodizim	FALSE	FALSE	FALSE
+nl	Ce(f|ph)onicid	Cefonicide	FALSE	FALSE	FALSE
+nl	Ce(f|ph)operazone	Cefoperazon	FALSE	FALSE	FALSE
+nl	Ce(f|ph)operazone/beta-lactamase inhibitor	Cefoperazon/enzymremmer	FALSE	FALSE	FALSE
+nl	Ce(f|ph)otaxime	Cefotaxim	FALSE	FALSE	FALSE
+nl	Ce(f|ph)oxitin	Cefoxitine	FALSE	FALSE	FALSE
+nl	Ce(f|ph)pirome	Cefpirom	FALSE	FALSE	FALSE
+nl	Ce(f|ph)podoxime	Cefpodoxim	FALSE	FALSE	FALSE
+nl	Ce(f|ph)radine	Cefradine	FALSE	FALSE	FALSE
+nl	Ce(f|ph)sulodin	Cefsulodine	FALSE	FALSE	FALSE
+nl	Ce(f|ph)tazidime	Ceftazidim	FALSE	FALSE	FALSE
+nl	Ce(f|ph)tezole	Ceftezol	FALSE	FALSE	FALSE
+nl	Ce(f|ph)tizoxime	Ceftizoxim	FALSE	FALSE	FALSE
+nl	Ce(f|ph)triaxone	Ceftriaxon	FALSE	FALSE	FALSE
+nl	Ce(f|ph)uroxime	Cefuroxim	FALSE	FALSE	FALSE
+nl	Ce(f|ph)uroxime/metronidazole	Cefuroxim/andere antibacteriele middelen	FALSE	FALSE	FALSE
+nl	Chloramphenicol	Chlooramfenicol	TRUE	FALSE	FALSE
+nl	Chlortetracycline	Chloortetracycline	TRUE	FALSE	FALSE
+nl	Cinoxacin	Cinoxacine	TRUE	FALSE	FALSE
+nl	Ciprofloxacin	Ciprofloxacine	TRUE	FALSE	FALSE
+nl	Clarithromycin	Claritromycine	TRUE	FALSE	FALSE
+nl	Clavulanic acid	Clavulaanzuur	TRUE	FALSE	FALSE
+nl	clavulanic acid	clavulaanzuur	TRUE	FALSE	FALSE
+nl	Clindamycin	Clindamycine	TRUE	FALSE	FALSE
+nl	Clometocillin	Clometocilline	TRUE	FALSE	FALSE
+nl	Clotrimazole	Clotrimazol	TRUE	FALSE	FALSE
+nl	Cloxacillin	Cloxacilline	TRUE	FALSE	FALSE
+nl	Colistin	Colistine	TRUE	FALSE	FALSE
+nl	Dapsone	Dapson	TRUE	FALSE	FALSE
+nl	Daptomycin	Daptomycine	TRUE	FALSE	FALSE
+nl	Dibekacin	Dibekacine	TRUE	FALSE	FALSE
+nl	Dicloxacillin	Dicloxacilline	TRUE	FALSE	FALSE
+nl	Dirithromycin	Diritromycine	TRUE	FALSE	FALSE
+nl	Econazole	Econazol	TRUE	FALSE	FALSE
+nl	Enoxacin	Enoxacine	TRUE	FALSE	FALSE
+nl	Epicillin	Epicilline	TRUE	FALSE	FALSE
+nl	Erythromycin	Erytromycine	TRUE	FALSE	FALSE
+nl	Ethambutol/isoniazid	Ethambutol/isoniazide	TRUE	FALSE	FALSE
+nl	Fleroxacin	Fleroxacine	TRUE	FALSE	FALSE
+nl	Flucloxacillin	Flucloxacilline	TRUE	FALSE	FALSE
+nl	Fluconazole	Fluconazol	TRUE	FALSE	FALSE
+nl	Flucytosine	Fluorocytosine	TRUE	FALSE	FALSE
+nl	Flurithromycin	Fluritromycine	TRUE	FALSE	FALSE
+nl	Fosfomycin	Fosfomycine	TRUE	FALSE	FALSE
+nl	Fusidic acid	Fusidinezuur	TRUE	FALSE	FALSE
+nl	Gatifloxacin	Gatifloxacine	TRUE	FALSE	FALSE
+nl	Gemifloxacin	Gemifloxacine	TRUE	FALSE	FALSE
+nl	Gentamicin	Gentamicine	TRUE	FALSE	FALSE
+nl	Grepafloxacin	Grepafloxacine	TRUE	FALSE	FALSE
+nl	Hachimycin	Hachimycine	TRUE	FALSE	FALSE
+nl	Hetacillin	Hetacilline	TRUE	FALSE	FALSE
+nl	Imipenem/cilastatin	Imipenem/enzymremmer	TRUE	FALSE	FALSE
+nl	Inosine pranobex	Inosiplex	TRUE	FALSE	FALSE
+nl	Isepamicin	Isepamicine	TRUE	FALSE	FALSE
+nl	Isoconazole	Isoconazol	TRUE	FALSE	FALSE
+nl	Isoniazid	Isoniazide	TRUE	FALSE	FALSE
+nl	Itraconazole	Itraconazol	TRUE	FALSE	FALSE
+nl	Josamycin	Josamycine	TRUE	FALSE	FALSE
+nl	Kanamycin	Kanamycine	TRUE	FALSE	FALSE
+nl	Ketoconazole	Ketoconazol	TRUE	FALSE	FALSE
+nl	Levofloxacin	Levofloxacine	TRUE	FALSE	FALSE
+nl	Lincomycin	Lincomycine	TRUE	FALSE	FALSE
+nl	Lomefloxacin	Lomefloxacine	TRUE	FALSE	FALSE
+nl	Lysozyme	Lysozym	TRUE	FALSE	FALSE
+nl	Mandelic acid	Amandelzuur	TRUE	FALSE	FALSE
+nl	Metampicillin	Metampicilline	TRUE	FALSE	FALSE
+nl	Meticillin	Meticilline	TRUE	FALSE	FALSE
+nl	Metisazone	Metisazon	TRUE	FALSE	FALSE
+nl	Metronidazole	Metronidazol	TRUE	FALSE	FALSE
+nl	Mezlocillin	Mezlocilline	TRUE	FALSE	FALSE
+nl	Micafungin	Micafungine	TRUE	FALSE	FALSE
+nl	Miconazole	Miconazol	TRUE	FALSE	FALSE
+nl	Midecamycin	Midecamycine	TRUE	FALSE	FALSE
+nl	Miocamycin	Miocamycine	TRUE	FALSE	FALSE
+nl	Moxifloxacin	Moxifloxacine	TRUE	FALSE	FALSE
+nl	Mupirocin	Mupirocine	TRUE	FALSE	FALSE
+nl	Nalidixic acid	Nalidixinezuur	TRUE	FALSE	FALSE
+nl	Neomycin	Neomycine	TRUE	FALSE	FALSE
+nl	Netilmicin	Netilmicine	TRUE	FALSE	FALSE
+nl	Nitrofurantoin	Nitrofurantoine	TRUE	FALSE	FALSE
+nl	Norfloxacin	Norfloxacine	TRUE	FALSE	FALSE
+nl	Novobiocin	Novobiocine	TRUE	FALSE	FALSE
+nl	Nystatin	Nystatine	TRUE	FALSE	FALSE
+nl	Ofloxacin	Ofloxacine	TRUE	FALSE	FALSE
+nl	Oleandomycin	Oleandomycine	TRUE	FALSE	FALSE
+nl	Ornidazole	Ornidazol	TRUE	FALSE	FALSE
+nl	Oxacillin	Oxacilline	TRUE	FALSE	FALSE
+nl	Oxolinic acid	Oxolinezuur	TRUE	FALSE	FALSE
+nl	Oxytetracycline	Oxytetracycline	TRUE	FALSE	FALSE
+nl	Pazufloxacin	Pazufloxacine	TRUE	FALSE	FALSE
+nl	Pefloxacin	Pefloxacine	TRUE	FALSE	FALSE
+nl	Penamecillin	Penamecilline	TRUE	FALSE	FALSE
+nl	Penicillin	Penicilline	TRUE	FALSE	FALSE
+nl	Pheneticillin	Feneticilline	TRUE	FALSE	FALSE
+nl	Phenoxymethylpenicillin	Fenoxymethylpenicilline	TRUE	FALSE	FALSE
+nl	Pipemidic acid	Pipemidinezuur	TRUE	FALSE	FALSE
+nl	Piperacillin	Piperacilline	TRUE	FALSE	FALSE
+nl	Piperacillin/beta-lactamase inhibitor	Piperacilline/enzymremmer	TRUE	FALSE	FALSE
+nl	Piromidic acid	Piromidinezuur	TRUE	FALSE	FALSE
+nl	Pivampicillin	Pivampicilline	TRUE	FALSE	FALSE
+nl	Polymyxin B	Polymyxine B	TRUE	FALSE	FALSE
+nl	Posaconazole	Posaconazol	TRUE	FALSE	FALSE
+nl	Pristinamycin	Pristinamycine	TRUE	FALSE	FALSE
+nl	Procaine benzylpenicillin	Benzylpenicillineprocaine	TRUE	FALSE	FALSE
+nl	Propicillin	Propicilline	TRUE	FALSE	FALSE
+nl	Prulifloxacin	Prulifloxacine	TRUE	FALSE	FALSE
+nl	Quinupristin/dalfopristin	Quinupristine/dalfopristine	TRUE	FALSE	FALSE
+nl	Ribostamycin	Ribostamycine	TRUE	FALSE	FALSE
+nl	Rifabutin	Rifabutine	TRUE	FALSE	FALSE
+nl	Rifampicin	Rifampicine	TRUE	FALSE	FALSE
+nl	Rifampicin/pyrazinamide/ethambutol/isoniazid	Rifampicine/pyrazinamide/ethambutol/isoniazide	TRUE	FALSE	FALSE
+nl	Rifampicin/pyrazinamide/isoniazid	Rifampicine/pyrazinamide/isoniazide	TRUE	FALSE	FALSE
+nl	Rifampicin/isoniazid	Rifampicine/isoniazide	TRUE	FALSE	FALSE
+nl	Rifamycin	Rifamycine	TRUE	FALSE	FALSE
+nl	Rifaximin	Rifaximine	TRUE	FALSE	FALSE
+nl	Rokitamycin	Rokitamycine	TRUE	FALSE	FALSE
+nl	Rosoxacin	Rosoxacine	TRUE	FALSE	FALSE
+nl	Roxithromycin	Roxitromycine	TRUE	FALSE	FALSE
+nl	Rufloxacin	Rufloxacine	TRUE	FALSE	FALSE
+nl	Sisomicin	Sisomicine	TRUE	FALSE	FALSE
+nl	Sodium aminosalicylate	Aminosalicylzuur	TRUE	FALSE	FALSE
+nl	Sparfloxacin	Sparfloxacine	TRUE	FALSE	FALSE
+nl	Spectinomycin	Spectinomycine	TRUE	FALSE	FALSE
+nl	Spiramycin	Spiramycine	TRUE	FALSE	FALSE
+nl	Spiramycin/metronidazole	Spiramycine/metronidazol	TRUE	FALSE	FALSE
+nl	Staphylococcus immunoglobulin	Stafylokokkenimmunoglobuline	TRUE	FALSE	FALSE
+nl	Streptoduocin	Streptoduocine	TRUE	FALSE	FALSE
+nl	Streptomycin	Streptomycine	TRUE	FALSE	FALSE
+nl	Streptomycin/isoniazid	Streptomycine/isoniazide	TRUE	FALSE	FALSE
+nl	Sulbenicillin	Sulbenicilline	TRUE	FALSE	FALSE
+nl	Sulfadiazine/tetroxoprim	Sulfadiazine/tetroxoprim	TRUE	FALSE	FALSE
+nl	Sulfadiazine/trimethoprim	Sulfadiazine/trimethoprim	TRUE	FALSE	FALSE
+nl	Sulfadimidine/trimethoprim	Sulfadimidine/trimethoprim	TRUE	FALSE	FALSE
+nl	Sulfafurazole	Sulfafurazol	TRUE	FALSE	FALSE
+nl	Sulfaisodimidine	Sulfisomidine	TRUE	FALSE	FALSE
+nl	Sulfalene	Sulfaleen	TRUE	FALSE	FALSE
+nl	Sulfamazone	Sulfamazon	TRUE	FALSE	FALSE
+nl	Sulfamerazine/trimethoprim	Sulfamerazine/trimethoprim	TRUE	FALSE	FALSE
+nl	Sulfamethizole	Sulfamethizol	TRUE	FALSE	FALSE
+nl	Sulfamethoxazole	Sulfamethoxazol	TRUE	FALSE	FALSE
+nl	Sulfamethoxazole/trimethoprim	Sulfamethoxazol/trimethoprim	TRUE	FALSE	FALSE
+nl	Sulfametoxydiazine	Sulfamethoxydiazine	TRUE	FALSE	FALSE
+nl	Sulfametrole/trimethoprim	Sulfametrol/trimethoprim	TRUE	FALSE	FALSE
+nl	Sulfamoxole	Sulfamoxol	TRUE	FALSE	FALSE
+nl	Sulfamoxole/trimethoprim	Sulfamoxol/trimethoprim	TRUE	FALSE	FALSE
+nl	Sulfaperin	Sulfaperine	TRUE	FALSE	FALSE
+nl	Sulfaphenazole	Sulfafenazol	TRUE	FALSE	FALSE
+nl	Sulfathiazole	Sulfathiazol	TRUE	FALSE	FALSE
+nl	Sulfathiourea	Sulfathioureum	TRUE	FALSE	FALSE
+nl	Sultamicillin	Sultamicilline	TRUE	FALSE	FALSE
+nl	Talampicillin	Talampicilline	TRUE	FALSE	FALSE
+nl	Teicoplanin	Teicoplanine	TRUE	FALSE	FALSE
+nl	Telithromycin	Telitromycine	TRUE	FALSE	FALSE
+nl	Temafloxacin	Temafloxacine	TRUE	FALSE	FALSE
+nl	Temocillin	Temocilline	TRUE	FALSE	FALSE
+nl	Tenofovir disoproxil	Tenofovir	TRUE	FALSE	FALSE
+nl	Terizidone	Terizidon	TRUE	FALSE	FALSE
+nl	Thiamphenicol	Thiamfenicol	TRUE	FALSE	FALSE
+nl	Thioacetazone/isoniazid	Thioacetazon/isoniazide	TRUE	FALSE	FALSE
+nl	Ticarcillin	Ticarcilline	TRUE	FALSE	FALSE
+nl	Ticarcillin/beta-lactamase inhibitor	Ticarcilline/enzymremmer	TRUE	FALSE	FALSE
+nl	Ticarcillin/clavulanic acid	Ticarcilline/clavulaanzuur	TRUE	FALSE	FALSE
+nl	Tinidazole	Tinidazol	TRUE	FALSE	FALSE
+nl	Tobramycin	Tobramycine	TRUE	FALSE	FALSE
+nl	Trimethoprim/sulfamethoxazole	Cotrimoxazol	TRUE	FALSE	FALSE
+nl	Troleandomycin	Troleandomycine	TRUE	FALSE	FALSE
+nl	Trovafloxacin	Trovafloxacine	TRUE	FALSE	FALSE
+nl	Vancomycin	Vancomycine	TRUE	FALSE	FALSE
+nl	Voriconazole	Voriconazol	TRUE	FALSE	FALSE
+nl	Aminoglycosides	Aminoglycosiden	TRUE	FALSE	FALSE
+nl	Amphenicols	Amfenicolen	TRUE	FALSE	FALSE
+nl	Antifungals/antimycotics	Antifungica/antimycotica	TRUE	FALSE	FALSE
+nl	Antimycobacterials	Antimycobacteriele middelen	TRUE	FALSE	FALSE
+nl	Beta-lactams/penicillins	Beta-lactams/penicillines	TRUE	FALSE	FALSE
+nl	Cephalosporins (1st gen.)	Cefalosporines (1e gen.)	TRUE	FALSE	FALSE
+nl	Cephalosporins (2nd gen.)	Cefalosporines (2e gen.)	TRUE	FALSE	FALSE
+nl	Cephalosporins (3rd gen.)	Cefalosporines (3e gen.)	TRUE	FALSE	FALSE
+nl	Cephalosporins (4th gen.)	Cefalosporines (4e gen.)	TRUE	FALSE	FALSE
+nl	Cephalosporins (5th gen.)	Cefalosporines (5e gen.)	TRUE	FALSE	FALSE
+nl	Cephalosporins (unclassified gen.)	Cefalosporines (ongeclassificeerd)	TRUE	FALSE	FALSE
+nl	Cephalosporins	Cefalosporines	TRUE	FALSE	FALSE
+nl	Glycopeptides	Glycopeptiden	TRUE	FALSE	FALSE
+nl	Macrolides/lincosamides	Macroliden/lincosamiden	TRUE	FALSE	FALSE
+nl	Other antibacterials	Overige antibiotica	TRUE	FALSE	FALSE
+nl	Polymyxins	Polymyxines	TRUE	FALSE	FALSE
+nl	Quinolones	Quinolonen	TRUE	FALSE	FALSE

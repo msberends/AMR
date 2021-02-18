@@ -125,9 +125,11 @@ It will be downloaded and installed automatically. For RStudio, click on the men
 The latest and unpublished development version can be installed from GitHub using:
 
 ```r
-install.packages("remotes") 
+install.packages("remotes") # if you haven't already
 remotes::install_github("msberends/AMR")
 ```
+
+You can also download the latest build from our repository: <https://github.com/msberends/AMR/raw/master/data-raw/AMR_latest.tar.gz>
 
 ### Get started
 

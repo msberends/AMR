@@ -10,7 +10,7 @@
 
 <img src="https://msberends.github.io/AMR/works_great_on.png" align="center" height="150px" />
 
-The latest built **source package** (`AMR_x.x.x.tar.gz`) can be found in folder [/data-raw/](data-raw).
+The latest built **source package** (`AMR_latest.tar.gz`) can be found in folder [/data-raw/](data-raw).
 
 `AMR` is a free, open-source and independent R package to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. Our aim is to provide a standard for clean and reproducible antimicrobial resistance data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.
  

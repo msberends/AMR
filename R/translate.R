@@ -123,7 +123,7 @@ coerce_language_setting <- function(lang) {
 }
 
 # translate strings based on inst/translations.tsv
-translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE) {
+translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE, affect_mo_name = FALSE) {
   
   if (is.null(language)) {
     return(from)
@@ -146,10 +146,13 @@ translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE) {
   if (only_unknown == TRUE) {
     df_trans <- subset(df_trans, pattern %like% "unknown")
   }
+  if (affect_mo_name == TRUE) {
+    df_trans <- subset(df_trans, affect_mo_name == TRUE)
+  }
   
-  # default case sensitive if value if 'ignore.case' is missing:
+  # default: case sensitive if value if 'ignore.case' is missing:
   df_trans$ignore.case[is.na(df_trans$ignore.case)] <- FALSE
-  # default not using regular expressions (fixed = TRUE) if 'fixed' is missing:
+  # default: not using regular expressions (fixed = TRUE) if 'fixed' is missing:
   df_trans$fixed[is.na(df_trans$fixed)] <- TRUE
   
   # check if text to look for is in one of the patterns
@@ -167,7 +170,8 @@ translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE) {
                                                      replacement = df_trans$replacement[i],
                                                      x = from_unique_translated,
                                                      ignore.case = df_trans$ignore.case[i], 
-                                                     fixed = df_trans$fixed[i]))
+                                                     fixed = df_trans$fixed[i],
+                                                     perl = !df_trans$fixed[i]))
   
   # force UTF-8 for diacritics
   from_unique_translated <- enc2utf8(from_unique_translated)

@@ -31,8 +31,9 @@
 # Data retrieved from the Global Biodiversity Information Facility (GBIF): 
 # https://doi.org/10.15468/rffz4x
 #
-# And from the Leibniz Institute: German Collection of Microorganisms and Cell Cultures (DSMZ)
-# (register first at https://bacdive.dsmz.de/api/pnu/registration/register/ and use API as done below)
+# And from the List of Prokaryotic names with Standing in Nomenclature (LPSN)
+# (register first) https://lpsn.dsmz.de/downloads
+# download the latest CSV file.
 
 library(dplyr)
 library(AMR)
