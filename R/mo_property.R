@@ -723,12 +723,6 @@ mo_validate <- function(x, property, language, ...) {
     x <- exec_as.mo(x, property = property, initial_search = FALSE, language = language, ...)
   } else if (!all(x %in% MO_lookup[, property, drop = TRUE])
              | has_Becker_or_Lancefield) {
-    accepted_args <- names(as.list(args("as.mo")))
-    accepted_args <- accepted_args[!accepted_args %in% c("", "...", "x", "property")]
-    stop_if(!all(names(dots) %in% names(as.list(args("as.mo")))),
-            "invalid argument(s): ", vector_and(names(dots)[!names(dots) %in% names(as.list(args("as.mo")))], quotes = "'"),
-            ".\nAccepted arguments are ", vector_and(accepted_args, quotes = "'"), ".",
-            call = FALSE)
     x <- exec_as.mo(x, property = property, language = language, ...)
   }
   

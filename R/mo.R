@@ -766,21 +766,24 @@ exec_as.mo <- function(x,
           # Streptococci, like GBS = Group B Streptococci (B_STRPT_GRPB)
           x[i] <- lookup(mo == toupper(gsub("g([abcdfghk])s",
                                             "B_STRPT_GRP\\1",
-                                            x_backup_without_spp[i])), uncertainty = -1)
+                                            x_backup_without_spp[i],
+                                            perl = TRUE)), uncertainty = -1)
           next
         }
         if (x_backup_without_spp[i] %like_case% "(streptococ|streptokok).* [abcdfghk]$") {
           # Streptococci in different languages, like "estreptococos grupo B"
           x[i] <- lookup(mo == toupper(gsub(".*(streptococ|streptokok|estreptococ).* ([abcdfghk])$",
                                             "B_STRPT_GRP\\2",
-                                            x_backup_without_spp[i])), uncertainty = -1)
+                                            x_backup_without_spp[i],
+                                            perl = TRUE)), uncertainty = -1)
           next
         }
         if (x_backup_without_spp[i] %like_case% "group [abcdfghk] (streptococ|streptokok|estreptococ)") {
           # Streptococci in different languages, like "Group A Streptococci"
           x[i] <- lookup(mo == toupper(gsub(".*group ([abcdfghk]) (streptococ|streptokok|estreptococ).*",
                                             "B_STRPT_GRP\\1",
-                                            x_backup_without_spp[i])), uncertainty = -1)
+                                            x_backup_without_spp[i],
+                                            perl = TRUE)), uncertainty = -1)
           next
         }
         if (x_backup_without_spp[i] %like_case% "haemoly.*strep") {
@@ -843,7 +846,7 @@ exec_as.mo <- function(x,
             # Salmonella Group A to Z, just return S. species for now
             x[i] <- lookup(genus == "Salmonella", uncertainty = -1)
             next
-          } else if (grepl("[sS]almonella [A-Z][a-z]+ ?.*", x_backup[i], ignore.case = FALSE) &
+          } else if (x_backup[i] %like_case% "[sS]almonella [A-Z][a-z]+ ?.*" &
                      !x_backup[i] %like% "t[iy](ph|f)[iy]") {
             # Salmonella with capital letter species like "Salmonella Goettingen" - they're all S. enterica
             # except for S. typhi, S. paratyphi, S. typhimurium
@@ -1108,7 +1111,7 @@ exec_as.mo <- function(x,
                 cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (3) look for genus only, part of name\n"))
               }
               if (nchar(g.x_backup_without_spp) > 4 & !b.x_trimmed %like_case% " ") {
-                if (!grepl("^[A-Z][a-z]+", b.x_trimmed, ignore.case = FALSE)) {
+                if (!b.x_trimmed %like_case% "^[A-Z][a-z]+") {
                   if (isTRUE(debug)) {
                     message("Running '", paste(b.x_trimmed, "species"), "'")
                   }
@@ -1852,7 +1855,7 @@ print.mo_uncertainties <- function(x, ...) {
                                    width = 0.98 * getOption("width")),
                            collapse = "")
       # after strwrap, make taxonomic names italic
-      candidates <- gsub("([A-Za-z]+)", font_italic("\\1"), candidates)
+      candidates <- gsub("([A-Za-z]+)", font_italic("\\1"), candidates, perl = TRUE)
       candidates <- gsub(paste(font_italic(c("Also", "matched"), collapse = NULL), collapse = " "),
                          "Also matched",
                          candidates, fixed = TRUE)

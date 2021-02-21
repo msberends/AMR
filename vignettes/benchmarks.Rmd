@@ -1,6 +1,5 @@
 ---
 title: "Benchmarks"
-date: '`r format(Sys.Date(), "%d %B %Y")`'
 output: 
   rmarkdown::html_vignette:
     toc: true
@@ -20,7 +19,7 @@ knitr::opts_chunk$set(
   fig.width = 7.5,
   fig.height = 4.5,
   dpi = 75
-) 
+)
 ```
 
 One of the most important features of this package is the complete microbial taxonomic database, supplied by the [Catalogue of Life](http://catalogueoflife.org). We created a function `as.mo()` that transforms any user input value to a valid microbial ID by using intelligent rules combined with the taxonomic tree of Catalogue of Life.

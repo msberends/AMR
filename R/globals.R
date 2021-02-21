@@ -26,6 +26,7 @@
 globalVariables(c(".rowid",
                   "ab",
                   "ab_txt",
+                  "affect_mo_name",
                   "angle",
                   "antibiotic",
                   "antibiotics",
