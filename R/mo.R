@@ -178,13 +178,6 @@ as.mo <- function(x,
     return(set_clean_class(x, new_class = c("mo", "character")))
   }
 
-  if (tryCatch(all(x == "" | gsub(".*(unknown ).*", "unknown name", tolower(x), perl = TRUE) %in% MO_lookup$fullname_lower, na.rm = TRUE)
-               & isFALSE(Becker)
-               & isFALSE(Lancefield), error = function(e) FALSE)) {
-    # to improve speed, special case for taxonomically correct full names (case-insensitive)
-    return(MO_lookup[match(gsub(".*(unknown ).*", "unknown name", tolower(x), perl = TRUE), MO_lookup$fullname_lower), "mo", drop = TRUE])
-  }
-
   # start off with replaced language-specific non-ASCII characters with ASCII characters
   x <- parse_and_convert(x)
   # replace mo codes used in older package versions
@@ -198,6 +191,13 @@ as.mo <- function(x,
   x[trimws2(x) %like% translate_AMR("no .*growth", language = language)] <- NA_character_
   x[trimws2(x) %like% paste0("^(", translate_AMR("no|not", language = language), ") [a-z]+")] <- "UNKNOWN"
   uncertainty_level <- translate_allow_uncertain(allow_uncertain)
+  
+  if (tryCatch(all(x == "" | gsub(".*(unknown ).*", "unknown name", tolower(x), perl = TRUE) %in% MO_lookup$fullname_lower, na.rm = TRUE)
+               & isFALSE(Becker)
+               & isFALSE(Lancefield), error = function(e) FALSE)) {
+    # to improve speed, special case for taxonomically correct full names (case-insensitive)
+    return(MO_lookup[match(gsub(".*(unknown ).*", "unknown name", tolower(x), perl = TRUE), MO_lookup$fullname_lower), "mo", drop = TRUE])
+  }
 
   if (!is.null(reference_df)
       && check_validity_mo_source(reference_df)
@@ -481,11 +481,11 @@ exec_as.mo <- function(x,
     
     # Fill in fullnames and MO codes at once
     known_names <- tolower(x_backup) %in% MO_lookup$fullname_lower
-    x[known_names] <- MO_lookup[match(tolower(x_backup)[known_names], MO_lookup$fullname), property, drop = TRUE]
+    x[known_names] <- MO_lookup[match(tolower(x_backup)[known_names], MO_lookup$fullname_lower), property, drop = TRUE]
     known_codes <- toupper(x_backup) %in% MO_lookup$mo
     x[known_codes] <- MO_lookup[match(toupper(x_backup)[known_codes], MO_lookup$mo), property, drop = TRUE]
     already_known <- known_names | known_codes
-    
+
     # now only continue where the right taxonomic output is not already known
     if (any(!already_known)) {
       x_known <- x[already_known]
@@ -984,7 +984,6 @@ exec_as.mo <- function(x,
                               g.x_backup_without_spp %pm>% substr(1, x_length / 2),
                               ".* ",
                               g.x_backup_without_spp %pm>% substr((x_length / 2) + 1, x_length))
-            print(x_split)
             found <- lookup(fullname_lower %like_case% x_split,
                             haystack = data_to_check)
             if (!is.na(found)) {
@@ -1977,13 +1976,13 @@ parse_and_convert <- function(x) {
       if (NCOL(x) > 2) {
         stop("a maximum of two columns is allowed", call. = FALSE)
       } else if (NCOL(x) == 2) {
-        # support Tidyverse selection like: df %pm>% select(colA, colB)
+        # support Tidyverse selection like: df %>% select(colA, colB)
         # paste these columns together
         x <- as.data.frame(x, stringsAsFactors = FALSE)
         colnames(x) <- c("A", "B")
         x <- paste(x$A, x$B)
       } else {
-        # support Tidyverse selection like: df %pm>% select(colA)
+        # support Tidyverse selection like: df %>% select(colA)
         x <- as.data.frame(x, stringsAsFactors = FALSE)[[1]]
       }
     }
@@ -1991,6 +1990,8 @@ parse_and_convert <- function(x) {
     parsed <- iconv(x, to = "UTF-8")
     parsed[is.na(parsed) & !is.na(x)] <- iconv(x[is.na(parsed) & !is.na(x)], from = "Latin1", to = "ASCII//TRANSLIT")
     parsed <- gsub('"', "", parsed, fixed = TRUE)
+    parsed <- gsub(" +", " ", parsed, perl = TRUE)
+    parsed <- trimws(parsed)
   }, error = function(e) stop(e$message, call. = FALSE)) # this will also be thrown when running `as.mo(no_existing_object)`
   parsed
 }

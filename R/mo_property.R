@@ -694,22 +694,22 @@ mo_property <- function(x, property = "fullname", language = get_locale(), ...) 
 
 mo_validate <- function(x, property, language, ...) {
   check_dataset_integrity()
-  
-  if (tryCatch(all(x[!is.na(x)] %in% MO_lookup$mo) & length(list(...)) == 0, error = function(e) FALSE)) {
-    # special case for mo_* functions where class is already <mo>
-    return(MO_lookup[match(x, MO_lookup$mo), property, drop = TRUE])
-  }
-  
   dots <- list(...)
   Becker <- dots$Becker
-  if (is.null(Becker)) {
+  if (is.null(Becker) | property %in% c("kingdom", "phylum", "class", "order", "family", "genus")) {
     Becker <- FALSE
   }
   Lancefield <- dots$Lancefield
-  if (is.null(Lancefield)) {
+  if (is.null(Lancefield) | property %in% c("kingdom", "phylum", "class", "order", "family", "genus")) {
     Lancefield <- FALSE
   }
+  has_Becker_or_Lancefield <- Becker %in% c(TRUE, "all") | Lancefield %in% c(TRUE, "all")
   
+  if (tryCatch(all(x[!is.na(x)] %in% MO_lookup$mo) & !has_Becker_or_Lancefield, error = function(e) FALSE)) {
+    # special case for mo_* functions where class is already <mo>
+    return(MO_lookup[match(x, MO_lookup$mo), property, drop = TRUE])
+  }
+
   # try to catch an error when inputting an invalid argument
   # so the 'call.' can be set to FALSE
   tryCatch(x[1L] %in% MO_lookup[1, property, drop = TRUE],
@@ -722,8 +722,13 @@ mo_validate <- function(x, property, language, ...) {
     # because it's already a valid MO
     x <- exec_as.mo(x, property = property, initial_search = FALSE, language = language, ...)
   } else if (!all(x %in% MO_lookup[, property, drop = TRUE])
-             | Becker %in% c(TRUE, "all")
-             | Lancefield %in% c(TRUE, "all")) {
+             | has_Becker_or_Lancefield) {
+    accepted_args <- names(as.list(args("as.mo")))
+    accepted_args <- accepted_args[!accepted_args %in% c("", "...", "x", "property")]
+    stop_if(!all(names(dots) %in% names(as.list(args("as.mo")))),
+            "invalid argument(s): ", vector_and(names(dots)[!names(dots) %in% names(as.list(args("as.mo")))], quotes = "'"),
+            ".\nAccepted arguments are ", vector_and(accepted_args, quotes = "'"), ".",
+            call = FALSE)
     x <- exec_as.mo(x, property = property, language = language, ...)
   }
   

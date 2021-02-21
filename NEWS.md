@@ -1,4 +1,4 @@
-# AMR 1.5.0.9021
+# AMR 1.5.0.9022
 ## <small>Last updated: 21 February 2021</small>
 
 ### New
@@ -58,7 +58,8 @@
 * Functions `print()` and `summary()` on a Principal Components Analysis object (`pca()`) now print additional group info if the original data was grouped using `dplyr::group_by()`
 * Improved speed and reliability of `guess_ab_col()`. As this also internally improves the reliability of `first_isolate()` and `mdro()`, this might have a slight impact on the results of those functions.
 * Fix for `mo_name()` when used in other languages than English
-* The `like()` function (and its fast alias `%like%`) now always use Perl compatibility, improving speed for many functions in this package
+* The `like()` function (and its fast alias `%like%`) now always use Perl compatibility, improving speed for many functions in this package (e.g., `as.mo()` is now up to 4 times faster)
+* *Staphylococcus cornubiensis* is now correctly categorised as coagulase-positive
 
 ### Other
 * Big documentation updates

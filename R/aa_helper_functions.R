@@ -112,7 +112,7 @@ check_dataset_integrity <- function() {
     require("AMR")
   })
   stop_if(!valid_microorganisms | !valid_antibiotics,
-          "the data set `microorganisms` or `antibiotics` was overwritten in your environment because another package with the same object names was loaded _after_ the AMR package, preventing the AMR package from working correctly. Please load the AMR package last.")
+          "the data set `microorganisms` or `antibiotics` was overwritten in your environment because another package with the same object name(s) was loaded _after_ the AMR package, preventing the AMR package from working correctly. Please load the AMR package last.")
   invisible(TRUE)
 }
 
@@ -538,7 +538,7 @@ meet_criteria <- function(object,
   if (!is.null(pkg_env$meet_criteria_error_txt)) {
     error_txt <- pkg_env$meet_criteria_error_txt
     pkg_env$meet_criteria_error_txt <- NULL
-    stop(error_txt, call. = FALSE)
+    stop(error_txt, call. = FALSE) # don't use stop_() here, pkg may not be loaded yet
   }
   pkg_env$meet_criteria_error_txt <- NULL
 
@@ -867,7 +867,13 @@ font_grey <- function(..., collapse = " ") {
   try_colour(..., before = "\033[38;5;249m", after = "\033[39m", collapse = collapse)
 }
 font_grey_bg <- function(..., collapse = " ") {
-  try_colour(..., before = "\033[48;5;254m", after = "\033[49m", collapse = collapse)
+  if (tryCatch(rstudioapi::getThemeInfo()$dark == TRUE, error = function(e) FALSE)) {
+    # similar to HTML #444444
+    try_colour(..., before = "\033[48;5;238m", after = "\033[49m", collapse = collapse)  
+  } else {
+    # similar to HTML #eeeeee
+    try_colour(..., before = "\033[48;5;254m", after = "\033[49m", collapse = collapse)
+  }
 }
 font_green_bg <- function(..., collapse = " ") {
   try_colour(..., before = "\033[42m", after = "\033[49m", collapse = collapse)

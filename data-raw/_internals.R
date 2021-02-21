@@ -51,18 +51,19 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
                                            "lentus", "lugdunensis", "massiliensis", "microti",
                                            "muscae", "nepalensis", "pasteuri", "petrasii",
                                            "pettenkoferi", "piscifermentans", "pseudoxylosus",
-                                           "rostri", "saccharolyticus", "saprophyticus",
+                                           "pulvereri", "rostri", "saccharolyticus", "saprophyticus",
                                            "sciuri", "simulans", "stepanovicii", "succinus",
-                                           "vitulinus", "warneri", "xylosus")
+                                           "vitulinus", "vitulus", "warneri", "xylosus")
                    | (MO_staph$species == "schleiferi" & MO_staph$subspecies %in% c("schleiferi", ""))),
              "mo", drop = TRUE]
   } else if (type == "CoPS") {
     MO_staph[which(MO_staph$species %in% c("coagulase-positive",
-                                           "simiae", "agnetis",
+                                           "agnetis", "argenteus",
+                                           "cornubiensis",
                                            "delphini", "lutrae",
                                            "hyicus", "intermedius",
                                            "pseudintermedius", "pseudointermedius",
-                                           "schweitzeri", "argenteus")
+                                           "schweitzeri", "simiae")
                    | (MO_staph$species == "schleiferi" & MO_staph$subspecies == "coagulans")),
              "mo", drop = TRUE]
   }
