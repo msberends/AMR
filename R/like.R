@@ -39,7 +39,7 @@
 #' * Is case-insensitive (use `%like_case%` for case-sensitive matching)
 #' * Supports multiple patterns
 #' * Checks if `pattern` is a regular expression and sets `fixed = TRUE` if not, to greatly improve speed
-#' * Tries again with `perl = TRUE` if regex fails
+#' * Always uses compatibility with Perl
 #' 
 #' Using RStudio? The text `%like%` can also be directly inserted in your code from the Addins menu and can have its own Keyboard Shortcut like `Ctrl+Shift+L` or `Cmd+Shift+L` (see `Tools` > `Modify Keyboard Shortcuts...`).
 #' @source Idea from the [`like` function from the `data.table` package](https://github.com/Rdatatable/data.table/blob/master/R/like.R)
@@ -99,7 +99,7 @@ like <- function(x, pattern, ignore.case = TRUE) {
         if (is.factor(x[i])) {
           res[i] <- as.integer(x[i]) %in% grep(pattern[i], levels(x[i]), ignore.case = FALSE, fixed = fixed)
         } else {
-          res[i] <- grepl(pattern[i], x[i], ignore.case = FALSE, fixed = fixed)
+          res[i] <- grepl(pattern[i], x[i], ignore.case = FALSE, fixed = fixed, perl = !fixed)
         }
       }
       res <- vapply(FUN.VALUE = logical(1), pattern, function(pttrn) grepl(pttrn, x, ignore.case = FALSE, fixed = fixed))
@@ -112,9 +112,9 @@ like <- function(x, pattern, ignore.case = TRUE) {
       # x and pattern are of same length, so items with each other
       for (i in seq_len(length(res))) {
         if (is.factor(x[i])) {
-          res[i] <- as.integer(x[i]) %in% grep(pattern[i], levels(x[i]), ignore.case = FALSE, fixed = fixed)
+          res[i] <- as.integer(x[i]) %in% grep(pattern[i], levels(x[i]), ignore.case = FALSE, fixed = fixed, perl = !fixed)
         } else {
-          res[i] <- grepl(pattern[i], x[i], ignore.case = FALSE, fixed = fixed)
+          res[i] <- grepl(pattern[i], x[i], ignore.case = FALSE, fixed = fixed, perl = !fixed)
         }
       }
       return(res)
@@ -123,22 +123,9 @@ like <- function(x, pattern, ignore.case = TRUE) {
   
   # the regular way how grepl works; just one pattern against one or more x
   if (is.factor(x)) {
-    as.integer(x) %in% grep(pattern, levels(x), ignore.case = FALSE, fixed = fixed)
+    as.integer(x) %in% grep(pattern, levels(x), ignore.case = FALSE, fixed = fixed, perl = !fixed)
   } else {
-    tryCatch(grepl(pattern, x, ignore.case = FALSE, fixed = fixed),
-             error = function(e) {
-               if (grepl("invalid reg(ular )?exp", e$message, ignore.case = TRUE)) {
-                 # try with perl = TRUE:
-                 return(grepl(pattern = pattern, 
-                                    x = x,
-                                    ignore.case = FALSE, 
-                                    fixed = fixed,
-                                    perl = TRUE))
-               } else {
-                 # stop otherwise
-                 stop(e$message)
-               }
-             })
+    grepl(pattern, x, ignore.case = FALSE, fixed = fixed, perl = !fixed)
   }
 }
 
@@ -156,16 +143,4 @@ like <- function(x, pattern, ignore.case = TRUE) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(pattern, allow_NA = FALSE)
   like(x, pattern, ignore.case = FALSE)
-}
-
-"%like_perl%" <- function(x, pattern) {
-  meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(pattern, allow_NA = FALSE)
-  # convenient for e.g. matching all Klebsiella and Raoultella, but not 
-  # K. aerogenes: fullname %like_perl% "^(Klebsiella(?! aerogenes)|Raoultella)"
-  grepl(x = tolower(x),
-        pattern = tolower(pattern),
-        perl = TRUE,
-        fixed = FALSE,
-        ignore.case = TRUE)
 }

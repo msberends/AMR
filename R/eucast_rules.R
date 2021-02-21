@@ -896,7 +896,7 @@ eucast_rules <- function(x,
     target_value <- eucast_rules_df[i, "to_value", drop = TRUE]
     
     if (is.na(source_antibiotics)) {
-      rows <- tryCatch(which(x[, if_mo_property, drop = TRUE] %like_perl% mo_value),
+      rows <- tryCatch(which(x[, if_mo_property, drop = TRUE] %like% mo_value),
                        error = function(e) integer(0))
     } else {
       source_antibiotics <- get_antibiotic_columns(source_antibiotics, x)
@@ -906,17 +906,17 @@ eucast_rules <- function(x,
       if (length(source_antibiotics) == 0) {
         rows <- integer(0)
       } else if (length(source_antibiotics) == 1) {
-        rows <-  tryCatch(which(x[, if_mo_property, drop = TRUE] %like_perl% mo_value
+        rows <-  tryCatch(which(x[, if_mo_property, drop = TRUE] %like% mo_value
                                 & as.rsi_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]),
                           error = function(e) integer(0))
       } else if (length(source_antibiotics) == 2) {
-        rows <-  tryCatch(which(x[, if_mo_property, drop = TRUE] %like_perl% mo_value
+        rows <-  tryCatch(which(x[, if_mo_property, drop = TRUE] %like% mo_value
                                 & as.rsi_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]
                                 & as.rsi_no_warning(x[, source_antibiotics[2L]]) == source_value[2L]),
                           error = function(e) integer(0))
         # nolint start
       # } else if (length(source_antibiotics) == 3) {
-      #   rows <-  tryCatch(which(x[, if_mo_property, drop = TRUE] %like_perl% mo_value
+      #   rows <-  tryCatch(which(x[, if_mo_property, drop = TRUE] %like% mo_value
       #                           & as.rsi_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]
       #                           & as.rsi_no_warning(x[, source_antibiotics[2L]]) == source_value[2L]
       #                           & as.rsi_no_warning(x[, source_antibiotics[3L]]) == source_value[3L]),

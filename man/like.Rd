@@ -34,7 +34,7 @@ The \verb{\%like\%} function:
 \item Is case-insensitive (use \verb{\%like_case\%} for case-sensitive matching)
 \item Supports multiple patterns
 \item Checks if \code{pattern} is a regular expression and sets \code{fixed = TRUE} if not, to greatly improve speed
-\item Tries again with \code{perl = TRUE} if regex fails
+\item Always uses compatibility with Perl
 }
 
 Using RStudio? The text \verb{\%like\%} can also be directly inserted in your code from the Addins menu and can have its own Keyboard Shortcut like \code{Ctrl+Shift+L} or \code{Cmd+Shift+L} (see \code{Tools} > \verb{Modify Keyboard Shortcuts...}).

@@ -159,7 +159,7 @@ jobs:
           _R_CHECK_LENGTH_1_CONDITION_: verbose
           _R_CHECK_LENGTH_1_LOGIC2_: verbose
         run: |
-          R CMD check data-raw/AMR_*.tar.gz --no-manual --no-build-vignettes
+          R CMD check data-raw/AMR_latest.tar.gz --no-manual --no-build-vignettes
 
       - name: Show testthat output
         if: always()

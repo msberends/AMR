@@ -277,6 +277,10 @@ exec_as.mo <- function(x,
 
   check_dataset_integrity()
   
+  if (isTRUE(debug) && initial_search == TRUE) {
+    time_start_tracking()
+  }
+  
   lookup <- function(needle,
                      column = property,
                      haystack = reference_data_to_use,
@@ -295,7 +299,8 @@ exec_as.mo <- function(x,
     # `column` can be NULL for all columns, or a selection
     # returns a character (vector) - if `column` > length 1 then with columns as names
     if (isTRUE(debug_mode)) {
-      cat(font_silver("looking up: ", substitute(needle), collapse = ""))
+      cat(font_silver("Looking up: ", substitute(needle), collapse = ""), 
+          "\n           ", time_track())
     }
     if (length(column) == 1) {
       res_df <- haystack[which(eval(substitute(needle), envir = haystack, enclos = parent.frame())), , drop = FALSE]
@@ -313,7 +318,7 @@ exec_as.mo <- function(x,
         NA_character_
       } else {
         if (isTRUE(debug_mode)) {
-          cat(font_green(paste0(" **MATCH** (", NROW(res_df), " results)\n")))
+          cat(font_green(paste0(" MATCH (", NROW(res_df), " results)\n")))
         }
         if ((length(res) > n | uncertainty > 1) & uncertainty != -1) {
           # save the other possible results as well, but not for forced certain results (then uncertainty == -1)
@@ -327,16 +332,20 @@ exec_as.mo <- function(x,
         res[seq_len(min(n, length(res)))]
       }
     } else {
-      if (isTRUE(debug_mode)) {
-        cat("\n")
-      }
       if (is.null(column)) {
         column <- names(haystack)
       }
       res <- haystack[which(eval(substitute(needle), envir = haystack, enclos = parent.frame())), , drop = FALSE]
       res <- res[seq_len(min(n, nrow(res))), column, drop = TRUE]
       if (NROW(res) == 0) {
+        if (isTRUE(debug_mode)) {
+          cat(font_red(" (no rows)\n"))
+        }
         res <- rep(NA_character_, length(column))
+      } else {
+        if (isTRUE(debug_mode)) {
+          cat(font_green(paste0(" MATCH (", NROW(res), " rows)\n")))
+        }
       }
       res <- as.character(res)
       names(res) <- column
@@ -394,7 +403,7 @@ exec_as.mo <- function(x,
     check_validity_mo_source(reference_df)
     reference_df <- repair_reference_df(reference_df)
   }
-
+  
   # all empty
   if (all(identical(trimws(x_input), "") | is.na(x_input) | length(x) == 0)) {
     if (property == "mo") {
@@ -471,10 +480,10 @@ exec_as.mo <- function(x,
     x_backup[x_backup_untouched == "Fungi"] <- "Fungi" # is literally the kingdom
     
     # Fill in fullnames and MO codes at once
-    known_names <- x_backup %in% MO_lookup$fullname
-    x[known_names] <- MO_lookup[match(x_backup[known_names], MO_lookup$fullname), property, drop = TRUE]
-    known_codes <- x_backup %in% MO_lookup$mo
-    x[known_codes] <- MO_lookup[match(x_backup[known_codes], MO_lookup$mo), property, drop = TRUE]
+    known_names <- tolower(x_backup) %in% MO_lookup$fullname_lower
+    x[known_names] <- MO_lookup[match(tolower(x_backup)[known_names], MO_lookup$fullname), property, drop = TRUE]
+    known_codes <- toupper(x_backup) %in% MO_lookup$mo
+    x[known_codes] <- MO_lookup[match(toupper(x_backup)[known_codes], MO_lookup$mo), property, drop = TRUE]
     already_known <- known_names | known_codes
     
     # now only continue where the right taxonomic output is not already known
@@ -975,6 +984,7 @@ exec_as.mo <- function(x,
                               g.x_backup_without_spp %pm>% substr(1, x_length / 2),
                               ".* ",
                               g.x_backup_without_spp %pm>% substr((x_length / 2) + 1, x_length))
+            print(x_split)
             found <- lookup(fullname_lower %like_case% x_split,
                             haystack = data_to_check)
             if (!is.na(found)) {
@@ -1414,6 +1424,10 @@ exec_as.mo <- function(x,
         close(progress)
       }
       
+      if (isTRUE(debug) && initial_search == TRUE) {
+        cat("Ended search", time_track(), "\n")
+      }
+      
       
       # handling failures ----
       failures <- failures[!failures %in% c(NA, NULL, NaN)]
@@ -1571,6 +1585,10 @@ exec_as.mo <- function(x,
     }
   }
   
+  if (isTRUE(debug) && initial_search == TRUE) {
+    cat("Finished function", time_track(), "\n")
+  }
+
   x
 }
 

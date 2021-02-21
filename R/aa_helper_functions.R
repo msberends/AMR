@@ -1077,6 +1077,14 @@ percentage <- function(x, digits = NULL, ...) {
                     digits = digits, ...)
 }
 
+time_start_tracking <- function() {
+  pkg_env$time_start <- round(as.numeric(Sys.time()) * 1000)
+}
+
+time_track <- function(name = NULL) {
+  paste("(until now:", trimws(round(as.numeric(Sys.time()) * 1000) - pkg_env$time_start), "ms)")
+}
+
 # prevent dependency on package 'backports'
 # these functions were not available in previous versions of R (last checked: R 4.0.3)
 # see here for the full list: https://github.com/r-lib/backports
