@@ -489,10 +489,10 @@ exec_as.mo <- function(x,
     # now only continue where the right taxonomic output is not already known
     if (any(!already_known)) {
       x_known <- x[already_known]
-      
+
       # remove spp and species
-      x <- gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x, perl = TRUE)
-      x <- gsub("(spp.?|subsp.?|subspecies|biovar|serovar|species)", "", x, perl = TRUE)
+      x <- gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x)
+      x <- gsub("(spp.?|subsp.?|subspecies|biovar|serovar|species)", "", x)
       x <- gsub("^([a-z]{2,4})(spe.?)$", "\\1", x, perl = TRUE) # when ending in SPE instead of SPP and preceded by 2-4 characters
       x <- strip_whitespace(x, dyslexia_mode)
       
@@ -528,12 +528,12 @@ exec_as.mo <- function(x,
       # allow characters that resemble others = dyslexia_mode ----
       if (dyslexia_mode == TRUE) {
         x <- tolower(x)
-        x <- gsub("[iy]+", "[iy]+", x, perl = TRUE)
-        x <- gsub("(c|k|q|qu|s|z|x|ks)+", "(c|k|q|qu|s|z|x|ks)+", x, perl = TRUE)
-        x <- gsub("(ph|hp|f|v)+", "(ph|hp|f|v)+", x, perl = TRUE)
-        x <- gsub("(th|ht|t)+", "(th|ht|t)+", x, perl = TRUE)
-        x <- gsub("a+", "a+", x, perl = TRUE)
-        x <- gsub("u+", "u+", x, perl = TRUE)
+        x <- gsub("[iy]+", "[iy]+", x)
+        x <- gsub("(c|k|q|qu|s|z|x|ks)+", "(c|k|q|qu|s|z|x|ks)+", x)
+        x <- gsub("(ph|hp|f|v)+", "(ph|hp|f|v)+", x)
+        x <- gsub("(th|ht|t)+", "(th|ht|t)+", x)
+        x <- gsub("a+", "a+", x)
+        x <- gsub("u+", "u+", x)
         # allow any ending of -um, -us, -ium, -icum, -ius, -icus, -ica, -ia and -a (needs perl for the negative backward lookup):
         x <- gsub("(u\\+\\(c\\|k\\|q\\|qu\\+\\|s\\|z\\|x\\|ks\\)\\+)(?![a-z])",
                   "(u[s|m]|[iy][ck]?u[ms]|[iy]?[ck]?a)", x, perl = TRUE)
@@ -543,9 +543,9 @@ exec_as.mo <- function(x,
                   "(u[s|m]|[iy][ck]?u[ms]|[iy]?[ck]?a)", x, perl = TRUE)
         x <- gsub("(\\[iy\\]\\+a\\+)(?![a-z])",
                   "([iy]*a+|[iy]+a*)", x, perl = TRUE)
-        x <- gsub("e+", "e+", x, perl = TRUE)
-        x <- gsub("o+", "o+", x, perl = TRUE)
-        x <- gsub("(.)\\1+", "\\1+", x, perl = TRUE)
+        x <- gsub("e+", "e+", x)
+        x <- gsub("o+", "o+", x)
+        x <- gsub("(.)\\1+", "\\1+", x)
         # allow multiplication of all other consonants
         x <- gsub("([bdgjlnrw]+)", "\\1+", x, perl = TRUE)
         # allow ending in -en or -us
@@ -554,7 +554,7 @@ exec_as.mo <- function(x,
         # this will allow "Pasteurella damatis" to be correctly read as "Pasteurella dagmatis".
         consonants <- paste(letters[!letters %in% c("a", "e", "i", "o", "u")], collapse = "")
         x[nchar(x_backup_without_spp) > 10] <- gsub("[+]", paste0("+[", consonants, "]?"), x[nchar(x_backup_without_spp) > 10])
-        # allow au and ou after all these regex implementations
+        # allow au and ou after all above regex implementations
         x <- gsub("a+[bcdfghjklmnpqrstvwxyz]?u+[bcdfghjklmnpqrstvwxyz]?", "(a+u+|o+u+)[bcdfghjklmnpqrstvwxyz]?", x, fixed = TRUE)
         x <- gsub("o+[bcdfghjklmnpqrstvwxyz]?u+[bcdfghjklmnpqrstvwxyz]?", "(a+u+|o+u+)[bcdfghjklmnpqrstvwxyz]?", x, fixed = TRUE)
       }
@@ -1469,7 +1469,7 @@ exec_as.mo <- function(x,
           plural <- c("s", "them", "were")
         }
         msg <- paste0("Translation to ", nr2char(length(uncertainties$input)), " microorganism", plural[1],
-                      " was guessed with uncertainty. Use mo_uncertainties() to review ", plural[2], ".")
+                      " was guessed with uncertainty. Use `mo_uncertainties()` to review ", plural[2], ".")
         message_(msg)
       }
       x[already_known] <- x_known
@@ -1807,6 +1807,15 @@ unique.mo <- function(x, incomparables = FALSE, ...) {
   y
 }
 
+#' @method rep mo
+#' @export
+#' @noRd
+rep.mo <- function(x, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
+}
+
 #' @rdname as.mo
 #' @export
 mo_failures <- function() {
@@ -1831,7 +1840,7 @@ print.mo_uncertainties <- function(x, ...) {
   if (NROW(x) == 0) {
     return(NULL)
   }
-  message_("Matching scores are based on human pathogenic prevalence and the resemblance between the input and the full taxonomic name. See ?mo_matching_score.", as_note = FALSE)
+  message_("Matching scores are based on human pathogenic prevalence and the resemblance between the input and the full taxonomic name. See `?mo_matching_score`.", as_note = FALSE)
 
   msg <- ""
   for (i in seq_len(nrow(x))) {
@@ -2009,7 +2018,7 @@ replace_old_mo_codes <- function(x, property) {
     x[which(!is.na(matched))] <- mo_new[which(!is.na(matched))]
     n_matched <- length(matched[!is.na(matched)])
     if (property != "mo") {
-      message_(font_blue("The input contained old microbial codes (from previous package versions). Please update your MO codes with as.mo()."))
+      message_(font_blue("The input contained old microbial codes (from previous package versions). Please update your MO codes with `as.mo()`."))
     } else {
       if (n_matched == 1) {
         message_(font_blue("1 old microbial code (from previous package versions) was updated to a current used MO code."))

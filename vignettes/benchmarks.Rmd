@@ -17,47 +17,47 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#",
   fig.width = 7.5,
-  fig.height = 4.5,
-  dpi = 75
+  fig.height = 5.5,
+  dpi = 100
 )
 ```
 
-One of the most important features of this package is the complete microbial taxonomic database, supplied by the [Catalogue of Life](http://catalogueoflife.org). We created a function `as.mo()` that transforms any user input value to a valid microbial ID by using intelligent rules combined with the taxonomic tree of Catalogue of Life.
+One of the most important features of this package is the complete microbial taxonomic database, supplied by the [Catalogue of Life](http://www.catalogueoflife.org) (CoL) and the [List of Prokaryotic names with Standing in Nomenclature](https://lpsn.dsmz.de) (LPSN). We created a function `as.mo()` that transforms any user input value to a valid microbial ID by using intelligent rules combined with the microbial taxonomy.
 
 Using the `microbenchmark` package, we can review the calculation performance of this function. Its function `microbenchmark()` runs different input expressions independently of each other and measures their time-to-result.
 
 ```{r, message = FALSE, echo = FALSE}
 library(ggplot2)
-ggplot.bm <- function(df, title = NULL) {
-  s <- summary(df)[order(summary(df)$median), ]
-  suppressWarnings(
-    print(
-      s %>%
-        ggplot(aes(x = expr, y = median)) + 
-        geom_linerange(aes(ymin = 0, ymax = median), colour = "#555555") +
-        geom_text(aes(label = round(s$median, 0), hjust = -0.5), size = 3) +
-        geom_point(size = 3, colour = "#555555") + 
-        coord_flip() +
-        scale_y_log10(breaks = c(1, 2, 5, 
-                                 10, 20, 50,
-                                 100, 200, 500,
-                                 1000, 2000, 5000),
-                      limits = c(1, max(s$median) * 2)) +
-        labs(x = "Expression", y = "Median time in milliseconds (log scale)", title = title)
-    )
-  )
+ggplot.bm <- function(df) {
+  reorder <- function(.f, .x, .fun, .desc = TRUE) {
+    summ <- tapply(.x, .f, .fun)
+    factor(.f, levels = names(summ)[order(summ, decreasing = .desc)], ordered = is.ordered(.f))
+  }
+  ggplot(df,
+         aes(x = reorder(expr, time, median), y = time / 1000 / 1000)) + 
+  stat_boxplot(geom = "errorbar", width = 0.5) +
+  geom_boxplot(outlier.alpha = 0) +
+  coord_flip() +
+  scale_y_continuous(trans = "log", breaks = c(1, 2, 5, 
+                                                10, 20, 50,
+                                                100, 200, 500,
+                                                1000, 2000, 5000)) +
+  labs(x = "Expression",
+       y = "Time in milliseconds (log scale)") +
+  theme_minimal() +
+  theme(axis.text.y = element_text(family = "mono"))
 }
 ```
 
 ```{r, message = FALSE}
-microbenchmark <- microbenchmark::microbenchmark
+library(microbenchmark)
 library(AMR)
 library(dplyr)
 ```
 
 In the next test, we try to 'coerce' different input values into the microbial code of *Staphylococcus aureus*. Coercion is a computational process of forcing output based on an input. For microorganism names, coercing user input to taxonomically valid microorganism names is crucial to ensure correct interpretation and to enable grouping based on taxonomic properties. 
 
-The actual result is the same every time: it returns its microorganism code ``r as.character(as.mo("Staphylococcus aureus"))`` (*B* stands for *Bacteria*, the taxonomic kingdom). 
+The actual result is the same every time: it returns its microorganism code ``r as.character(as.mo("Staphylococcus aureus"))`` (*B* stands for *Bacteria*, its taxonomic kingdom). 
 
 But the calculation time differs a lot:
 
@@ -75,31 +75,37 @@ S.aureus <- microbenchmark(
   as.mo("Sthafilokkockus aaureuz"), # incorrect spelling
   as.mo("MRSA"), # Methicillin Resistant S. aureus
   as.mo("VISA"), # Vancomycin Intermediate S. aureus
-  as.mo("VRSA"), # Vancomycin Resistant S. aureus
-  times = 10)
+  times = 25)
 print(S.aureus, unit = "ms", signif = 2)
 ```
 ```{r, echo = FALSE}
 ggplot.bm(S.aureus)
 ```
 
-In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 5 milliseconds means it can determine 200 input values per second. It case of 100 milliseconds, this is only 10 input values per second. It is clear that accepted taxonomic names are extremely fast, but some variations can take up to 500-1000 times as much time.
+In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 5 milliseconds means it can determine 200 input values per second. It case of 200 milliseconds, this is only 5 input values per second. It is clear that accepted taxonomic names are extremely fast, but some variations are up to 200 times slower to determine.
 
-To improve performance, two important calculations take almost no time at all: **repetitive results** and **already precalculated results**.
+To improve performance, we implemented two important algorithms to save unnecessary calculations: **repetitive results** and **already precalculated results**.
 
 ### Repetitive results
 
-Repetitive results are unique values that are present more than once. Unique values will only be calculated once by `as.mo()`. We will use `mo_name()` for this test - a helper function that returns the full microbial name (genus, species and possibly subspecies) which uses `as.mo()` internally.
+Repetitive results are values that are present more than once in a vector. Unique values will only be calculated once by `as.mo()`. So running `as.mo(c("E. coli", "E. coli"))` will check the value `"E. coli"` only once.
+
+To prove this, we will use `mo_name()` for testing - a helper function that returns the full microbial name (genus, species and possibly subspecies) which uses `as.mo()` internally.
 
 ```{r, message = FALSE}
-# take all MO codes from the example_isolates data set
-x <- example_isolates$mo %>%
+# start with the example_isolates data set
+x <- example_isolates %>% 
+  # take all MO codes from the 'mo' column
+  pull(mo) %>%
   # and copy them a thousand times
   rep(1000) %>%
   # then scramble them
   sample()
+
+# what do these values look like? They are of class <mo>:
+head(x)
   
-# as the example_isolates has 2,000 rows, we should have 2 million items
+# as the example_isolates data set has 2,000 rows, we should have 2 million items
 length(x)
 
 # and how many unique values do we have?
@@ -111,11 +117,11 @@ run_it <- microbenchmark(mo_name(x),
 print(run_it, unit = "ms", signif = 3)
 ```
 
-So getting official taxonomic names of `r format(length(x), big.mark = ",")` (!!) items consisting of `r n_distinct(x)` unique values only takes `r round(median(run_it$time, na.rm = TRUE) / 1e9, 3)` seconds. You only lose time on your unique input values.
+So getting official taxonomic names of `r format(length(x), big.mark = ",")` (!!) items consisting of `r n_distinct(x)` unique values only takes `r round(median(run_it$time, na.rm = TRUE) / 1e9, 3)` seconds. That is `r round(mean(run_it$time, na.rm = TRUE) / 1e6 / n_distinct(x), 3)` milliseconds per unique item on average. You only lose time on your unique input values.
 
 ### Precalculated results
 
-What about precalculated results? If the input is an already precalculated result of a helper function like `mo_name()`, it almost doesn't take any time at all (see 'C' below):
+What about precalculated results? If the input is an already precalculated result of a helper function such as `mo_name()`, it almost doesn't take any time at all. In other words, if you run `mo_name()` on a valid taxonomic name, it will return the results immediately (see 'C' below):
 
 ```{r, warning=FALSE, message=FALSE}
 run_it <- microbenchmark(A = mo_name("STAAUR"),
@@ -140,7 +146,7 @@ run_it <- microbenchmark(A = mo_species("aureus"),
 print(run_it, unit = "ms", signif = 3)
 ```
 
-Of course, when running `mo_phylum("Firmicutes")` the function has zero knowledge about the actual microorganism, namely *S. aureus*. But since the result would be `"Firmicutes"` anyway, there is no point in calculating the result. And because this package 'knows' all phyla of all known bacteria (according to the Catalogue of Life), it can just return the initial value immediately.
+Of course, when running `mo_phylum("Firmicutes")` the function has zero knowledge about the actual microorganism, namely *S. aureus*. But since the result would be `"Firmicutes"` anyway, there is no point in calculating the result. And because this package contains all phyla of all known bacteria, it can just return the initial value immediately.
 
 ### Results in other languages
 
@@ -164,4 +170,4 @@ run_it <- microbenchmark(en = mo_name("CoNS", language = "en"),
 print(run_it, unit = "ms", signif = 4)
 ```
 
-Currently supported are German, Dutch, Spanish, Italian, French and Portuguese.
+Currently supported non-English languages are German, Dutch, Spanish, Italian, French and Portuguese.
