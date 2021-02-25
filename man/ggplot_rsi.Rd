@@ -24,8 +24,8 @@ ggplot_rsi(
   minimum = 30,
   language = get_locale(),
   nrow = NULL,
-  colours = c(S = "#61a8ff", SI = "#61a8ff", I = "#61f7ff", IR = "#ff6961", R =
-    "#ff6961"),
+  colours = c(S = "#3CAEA3", SI = "#3CAEA3", I = "#F6D55C", IR = "#ED553B", R =
+    "#ED553B"),
   datalabels = TRUE,
   datalabels.size = 2.5,
   datalabels.colour = "grey15",
@@ -100,7 +100,7 @@ labels_rsi_count(
 
 \item{nrow}{(when using \code{facet}) number of rows}
 
-\item{colours}{a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be \code{FALSE} for standard \link[ggplot2:ggplot]{ggplot2} colours. The default colours are colour-blind friendly.}
+\item{colours}{a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be \code{FALSE} for standard \link[ggplot2:ggplot]{ggplot2} colours. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.}
 
 \item{datalabels}{show datalabels using \code{\link[=labels_rsi_count]{labels_rsi_count()}}}
 
@@ -208,11 +208,6 @@ example_isolates \%>\%
          CIP) \%>\%
   ggplot_rsi(x = "age_group")
   
-# for colourblind mode, use divergent colours from the viridis package:
-example_isolates \%>\%
-  select(AMX, NIT, FOS, TMP, CIP) \%>\%
-  ggplot_rsi() + 
-  scale_fill_viridis_d()
 # a shorter version which also adjusts data label colours:
 example_isolates \%>\%
   select(AMX, NIT, FOS, TMP, CIP) \%>\%

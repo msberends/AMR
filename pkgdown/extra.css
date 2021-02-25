@@ -187,30 +187,30 @@ div[id^=last-updated] h2 {
 }
 
 /* tables, make them look like scientific ones */
-table {
+.table {
   font-size: 90%;
 }
-table * {
+.table * {
   vertical-align: middle !important;
 }
-table td {
+.table td {
   padding: 4px !important;
 }
-thead {
+.table thead {
   border-top: 2px solid black;
   border-bottom: 2px solid black;
 }
-thead ~ tbody {
+.table thead ~ tbody {
   /* only when it has a header */
   border-bottom: 2px solid black;
 }
-thead th {
+.table thead th {
   text-align: inherit; 
 }
-table a:not(.btn), .table a:not(.btn) {
+.table a:not(.btn) {
   text-decoration: inherit;
 }
-table a:not(.btn):hover, .table a:not(.btn):hover {
+.table a:not(.btn):hover {
   text-decoration: underline;
 }
 

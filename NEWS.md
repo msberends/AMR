@@ -1,4 +1,4 @@
-# AMR 1.5.0.9025
+# AMR 1.5.0.9026
 ## <small>Last updated: 25 February 2021</small>
 
 ### New
@@ -63,6 +63,7 @@
 * The `like()` function (and its fast alias `%like%`) now always use Perl compatibility, improving speed for many functions in this package (e.g., `as.mo()` is now up to 4 times faster)
 * *Staphylococcus cornubiensis* is now correctly categorised as coagulase-positive
 * `random_disk()` and `random_mic()` now have an expanded range in their randomisation
+* Support for GISA (glycopeptide-intermediate *S. aureus*), so e.g. `mo_genus("GISA")` will return `"Staphylococcus"` 
 
 ### Other
 * Big documentation updates

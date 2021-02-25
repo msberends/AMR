@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9025</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9026</span>
       </span>
     </div>
 
@@ -256,8 +256,8 @@
   minimum <span class='op'>=</span> <span class='fl'>30</span>,
   language <span class='op'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span><span class='op'>(</span><span class='op'>)</span>,
   nrow <span class='op'>=</span> <span class='cn'>NULL</span>,
-  colours <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>S <span class='op'>=</span> <span class='st'>"#61a8ff"</span>, SI <span class='op'>=</span> <span class='st'>"#61a8ff"</span>, I <span class='op'>=</span> <span class='st'>"#61f7ff"</span>, IR <span class='op'>=</span> <span class='st'>"#ff6961"</span>, R <span class='op'>=</span>
-    <span class='st'>"#ff6961"</span><span class='op'>)</span>,
+  colours <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>S <span class='op'>=</span> <span class='st'>"#3CAEA3"</span>, SI <span class='op'>=</span> <span class='st'>"#3CAEA3"</span>, I <span class='op'>=</span> <span class='st'>"#F6D55C"</span>, IR <span class='op'>=</span> <span class='st'>"#ED553B"</span>, R <span class='op'>=</span>
+    <span class='st'>"#ED553B"</span><span class='op'>)</span>,
   datalabels <span class='op'>=</span> <span class='cn'>TRUE</span>,
   datalabels.size <span class='op'>=</span> <span class='fl'>2.5</span>,
   datalabels.colour <span class='op'>=</span> <span class='st'>"grey15"</span>,
@@ -362,7 +362,7 @@
     </tr>
     <tr>
       <th>colours</th>
-      <td><p>a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be <code>FALSE</code> for standard <a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot2</a> colours. The default colours are colour-blind friendly.</p></td>
+      <td><p>a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be <code>FALSE</code> for standard <a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot2</a> colours. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.</p></td>
     </tr>
     <tr>
       <th>datalabels</th>
@@ -484,11 +484,6 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
          <span class='va'>CIP</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>ggplot_rsi</span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"age_group"</span><span class='op'>)</span>
   
-<span class='co'># for colourblind mode, use divergent colours from the viridis package:</span>
-<span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>AMX</span>, <span class='va'>NIT</span>, <span class='va'>FOS</span>, <span class='va'>TMP</span>, <span class='va'>CIP</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>ggplot_rsi</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> 
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_viridis.html'>scale_fill_viridis_d</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='co'># a shorter version which also adjusts data label colours:</span>
 <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>AMX</span>, <span class='va'>NIT</span>, <span class='va'>FOS</span>, <span class='va'>TMP</span>, <span class='va'>CIP</span><span class='op'>)</span> <span class='op'>%&gt;%</span>

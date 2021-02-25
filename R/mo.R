@@ -711,8 +711,8 @@ exec_as.mo <- function(x,
         }
         
         # translate known trivial abbreviations to genus + species ----
-        if (toupper(x_backup_without_spp[i]) %in% c("MRSA", "MSSA", "VISA", "VRSA", "BORSA")
-            | x_backup_without_spp[i] %like_case% "(^| )(mrsa|mssa|visa|vrsa|borsa|la-?mrsa|ca-?mrsa)( |$)") {
+        if (toupper(x_backup_without_spp[i]) %in% c("MRSA", "MSSA", "VISA", "VRSA", "BORSA", "GISA")
+            | x_backup_without_spp[i] %like_case% "(^| )(mrsa|mssa|visa|vrsa|borsa|gisa|la-?mrsa|ca-?mrsa)( |$)") {
           x[i] <- lookup(fullname == "Staphylococcus aureus", uncertainty = -1)
           next
         }

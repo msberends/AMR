@@ -28,7 +28,7 @@
 #' Functions to plot classes `rsi`, `mic` and `disk`, with support for base R and `ggplot2`.
 #' @inheritSection lifecycle Stable Lifecycle
 #' @inheritSection AMR Read more on Our Website!
-#' @param x MIC values created with [as.mic()] or disk diffusion values created with [as.disk()]
+#' @param x,data MIC values created with [as.mic()] or disk diffusion values created with [as.disk()]
 #' @param mapping aesthetic mappings to use for [`ggplot()`][ggplot2::ggplot()]
 #' @param main,title title of the plot
 #' @param xlab,ylab axis title
@@ -37,7 +37,10 @@
 #' @param guideline interpretation guideline to use, defaults to the latest included EUCAST guideline, see *Details*
 #' @param colours_RSI colours to use for filling in the bars, must be a vector of three values (in the order R, S and I). The default colours are colour-blind friendly.
 #' @param expand logical to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.
-#' @details For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the `guideline` argument are: `r vector_and(AMR::rsi_translation$guideline, quotes = TRUE, reverse = TRUE)`.
+#' @details
+#' The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
+#' 
+#' For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the `guideline` argument are: `r vector_and(AMR::rsi_translation$guideline, quotes = TRUE, reverse = TRUE)`.
 #' 
 #' Simply using `"CLSI"` or `"EUCAST"` as input will automatically select the latest version of that guideline.
 #' @name plot
@@ -62,7 +65,7 @@
 NULL
 
 #' @method plot mic
-#' @importFrom graphics barplot axis mtext
+#' @importFrom graphics barplot axis mtext legend
 #' @export
 #' @rdname plot
 plot.mic <- function(x,
@@ -89,13 +92,13 @@ plot.mic <- function(x,
   
   x <- plot_prepare_table(x, expand = expand)
   
-  cols_sub <- plot_colours_and_sub(x = x, 
-                                   mo = mo, 
-                                   ab = ab,
-                                   guideline = guideline,
-                                   colours_RSI = colours_RSI, 
-                                   fn = as.mic,
-                                   ...)
+  cols_sub <- plot_colours_subtitle_guideline(x = x, 
+                                              mo = mo, 
+                                              ab = ab,
+                                              guideline = guideline,
+                                              colours_RSI = colours_RSI, 
+                                              fn = as.mic,
+                                              ...)
   
   barplot(x,
           col = cols_sub$cols,
@@ -117,7 +120,7 @@ plot.mic <- function(x,
       legend_col <- colours_RSI[2]
     }
     if (colours_RSI[3] %in% cols_sub$cols) {
-      legend_txt <- c(legend_txt, "Incr. exposure")
+      legend_txt <- c(legend_txt, plot_name_of_I(cols_sub$guideline))
       legend_col <- c(legend_col, colours_RSI[3])
     }
     if (colours_RSI[1] %in% cols_sub$cols) {
@@ -194,21 +197,21 @@ ggplot.mic <- function(data,
   title <- gsub(" +", " ", paste0(title, collapse = " "))
   
   x <- plot_prepare_table(data, expand = expand)
-  cols_sub <- plot_colours_and_sub(x = x, 
-                                   mo = mo, 
-                                   ab = ab,
-                                   guideline = guideline,
-                                   colours_RSI = colours_RSI, 
-                                   fn = as.mic,
-                                   ...)
+  cols_sub <- plot_colours_subtitle_guideline(x = x, 
+                                              mo = mo, 
+                                              ab = ab,
+                                              guideline = guideline,
+                                              colours_RSI = colours_RSI, 
+                                              fn = as.mic,
+                                              ...)
   df <- as.data.frame(x, stringsAsFactors = TRUE)
   colnames(df) <- c("mic", "count")
   df$cols <- cols_sub$cols
   df$cols[df$cols == colours_RSI[1]] <- "Resistant"
   df$cols[df$cols == colours_RSI[2]] <- "Susceptible"
-  df$cols[df$cols == colours_RSI[3]] <- "Incr. exposure"
+  df$cols[df$cols == colours_RSI[3]] <- plot_name_of_I(cols_sub$guideline)
   df$cols <- factor(df$cols, 
-                    levels = c("Susceptible", "Incr. exposure", "Resistant"),
+                    levels = c("Susceptible", plot_name_of_I(cols_sub$guideline), "Resistant"),
                     ordered = TRUE)
   if (!is.null(mapping)) {
     p <- ggplot2::ggplot(df, mapping = mapping)
@@ -218,10 +221,11 @@ ggplot.mic <- function(data,
   
   if (any(colours_RSI %in% cols_sub$cols)) {
     p <- p +
-      ggplot2::geom_col(aes(x = mic, y = count, fill = cols)) + 
+      ggplot2::geom_col(ggplot2::aes(x = mic, y = count, fill = cols)) + 
       ggplot2::scale_fill_manual(values = c("Resistant" = colours_RSI[1],
                                             "Susceptible" = colours_RSI[2],
-                                            "Incr. exposure" = colours_RSI[3]),,
+                                            "Incr. exposure" = colours_RSI[3],
+                                            "Intermediate" = colours_RSI[3]),
                                  name = NULL)
   } else {
     p <- p +
@@ -235,7 +239,7 @@ ggplot.mic <- function(data,
 
 #' @method plot disk
 #' @export
-#' @importFrom graphics barplot axis mtext
+#' @importFrom graphics barplot axis mtext legend
 #' @rdname plot
 plot.disk <- function(x,
                       main = paste("Disk zones values of", deparse(substitute(x))),
@@ -261,13 +265,13 @@ plot.disk <- function(x,
   
   x <- plot_prepare_table(x, expand = expand)
   
-  cols_sub <- plot_colours_and_sub(x = x, 
-                                   mo = mo, 
-                                   ab = ab,
-                                   guideline = guideline,
-                                   colours_RSI = colours_RSI, 
-                                   fn = as.disk,
-                                   ...)
+  cols_sub <- plot_colours_subtitle_guideline(x = x, 
+                                              mo = mo, 
+                                              ab = ab,
+                                              guideline = guideline,
+                                              colours_RSI = colours_RSI, 
+                                              fn = as.disk,
+                                              ...)
   
   barplot(x,
           col = cols_sub$cols,
@@ -289,7 +293,7 @@ plot.disk <- function(x,
       legend_col <- colours_RSI[1]
     }
     if (colours_RSI[3] %in% cols_sub$cols) {
-      legend_txt <- c(legend_txt, "Incr. exposure")
+      legend_txt <- c(legend_txt, plot_name_of_I(cols_sub$guideline))
       legend_col <- c(legend_col, colours_RSI[3])
     }
     if (colours_RSI[2] %in% cols_sub$cols) {
@@ -367,21 +371,21 @@ ggplot.disk <- function(data,
   title <- gsub(" +", " ", paste0(title, collapse = " "))
   
   x <- plot_prepare_table(data, expand = expand)
-  cols_sub <- plot_colours_and_sub(x = x,
-                                   mo = mo,
-                                   ab = ab,
-                                   guideline = guideline,
-                                   colours_RSI = colours_RSI,
-                                   fn = as.disk,
-                                   ...)
+  cols_sub <- plot_colours_subtitle_guideline(x = x,
+                                              mo = mo,
+                                              ab = ab,
+                                              guideline = guideline,
+                                              colours_RSI = colours_RSI,
+                                              fn = as.disk,
+                                              ...)
   df <- as.data.frame(x, stringsAsFactors = TRUE)
   colnames(df) <- c("disk", "count")
   df$cols <- cols_sub$cols
   df$cols[df$cols == colours_RSI[1]] <- "Resistant"
   df$cols[df$cols == colours_RSI[2]] <- "Susceptible"
-  df$cols[df$cols == colours_RSI[3]] <- "Incr. exposure"
+  df$cols[df$cols == colours_RSI[3]] <- plot_name_of_I(cols_sub$guideline)
   df$cols <- factor(df$cols, 
-                    levels = c("Resistant", "Incr. exposure", "Susceptible"),
+                    levels = c("Resistant", plot_name_of_I(cols_sub$guideline), "Susceptible"),
                     ordered = TRUE)
   if (!is.null(mapping)) {
     p <- ggplot2::ggplot(df, mapping = mapping)
@@ -394,7 +398,8 @@ ggplot.disk <- function(data,
       ggplot2::geom_col(aes(x = disk, y = count, fill = cols)) + 
       ggplot2::scale_fill_manual(values = c("Resistant" = colours_RSI[1],
                                             "Susceptible" = colours_RSI[2],
-                                            "Incr. exposure" = colours_RSI[3]),
+                                            "Incr. exposure" = colours_RSI[3],
+                                            "Intermediate" = colours_RSI[3]),
                                  name = NULL)
   } else {
     p <- p +
@@ -402,7 +407,7 @@ ggplot.disk <- function(data,
   }
   
   p +
-    ggplot2::labs(title = title, x = xlab, y = ylab, sub = cols_sub$sub)
+    ggplot2::labs(title = title, x = xlab, y = ylab, subtitle = cols_sub$sub)
 }
 
 plot_prepare_table <- function(x, expand) {
@@ -413,7 +418,9 @@ plot_prepare_table <- function(x, expand) {
       while (min(extra_range) / 2 > min(as.double(x))) {
         extra_range <- c(min(extra_range) / 2, extra_range)
       }
-      extra_range <- setNames(rep(0, length(extra_range)), extra_range)
+      nms <- extra_range
+      extra_range <- rep(0, length(extra_range))
+      names(extra_range) <- nms
       x <- table(droplevels(x, as.mic = FALSE))
       extra_range <- extra_range[!names(extra_range) %in% names(x)]
       x <- as.table(c(x, extra_range))
@@ -437,12 +444,22 @@ plot_prepare_table <- function(x, expand) {
   as.table(x)
 }
 
-plot_colours_and_sub <- function(x, mo, ab, guideline, colours_RSI, fn, ...) {
+plot_name_of_I <- function(guideline) {
+  if (!guideline %like% "CLSI" && as.double(gsub("[^0-9]+", "", guideline)) >= 2019) {
+    # interpretation since 2019
+    "Incr. exposure"
+  } else {
+    # interpretation until 2019
+    "Intermediate"
+  }
+}
+
+plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_RSI, fn, ...) {
+  guideline <- get_guideline(guideline, AMR::rsi_translation)
   if (!is.null(mo) && !is.null(ab)) {
     # interpret and give colour based on MIC values
     mo <- as.mo(mo)
     ab <- as.ab(ab)
-    guideline <- get_guideline(guideline, AMR::rsi_translation)
     rsi <- suppressWarnings(suppressMessages(as.rsi(fn(names(x)), mo = mo, ab = ab, guideline = guideline, ...)))
     cols <- character(length = length(rsi))
     cols[is.na(rsi)] <- "#BEBEBE"
@@ -454,16 +471,16 @@ plot_colours_and_sub <- function(x, mo, ab, guideline, colours_RSI, fn, ...) {
     if (all(cols == "#BEBEBE")) {
       message_("No ", guideline, " interpretations found for ", 
                ab_name(ab, language = NULL, tolower = TRUE), " in ", moname)
-      guideline <- ""
+      guideline_txt <- ""
     } else {
-      guideline <- paste0("(following ", guideline, ")")
+      guideline_txt <- paste0("(following ", guideline, ")")
     }
-    sub <- bquote(.(abname)~"in"~italic(.(moname))~.(guideline))
+    sub <- bquote(.(abname)~"in"~italic(.(moname))~.(guideline_txt))
   } else {
     cols <- "#BEBEBE"
     sub <- NULL
   }
-  list(cols = cols, sub = sub)
+  list(cols = cols, sub = sub, guideline = guideline)
 }
 
 

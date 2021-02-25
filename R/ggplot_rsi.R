@@ -36,7 +36,7 @@
 #' @param facet variable to split plots by, either `"interpretation"` (default) or `"antibiotic"` or a grouping variable
 #' @inheritParams proportion
 #' @param nrow (when using `facet`) number of rows
-#' @param colours a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be `FALSE` for standard [ggplot2][ggplot2::ggplot()] colours. The default colours are colour-blind friendly.
+#' @param colours a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be `FALSE` for standard [ggplot2][ggplot2::ggplot()] colours. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.
 #' @param aesthetics aesthetics to apply the colours to, defaults to "fill" but can also be "colour" or "both"
 #' @param datalabels show datalabels using [labels_rsi_count()]
 #' @param datalabels.size size of the datalabels
@@ -119,11 +119,6 @@
 #'          CIP) %>%
 #'   ggplot_rsi(x = "age_group")
 #'   
-#' # for colourblind mode, use divergent colours from the viridis package:
-#' example_isolates %>%
-#'   select(AMX, NIT, FOS, TMP, CIP) %>%
-#'   ggplot_rsi() + 
-#'   scale_fill_viridis_d()
 #' # a shorter version which also adjusts data label colours:
 #' example_isolates %>%
 #'   select(AMX, NIT, FOS, TMP, CIP) %>%
@@ -155,11 +150,11 @@ ggplot_rsi <- function(data,
                        minimum = 30,
                        language = get_locale(),
                        nrow = NULL,
-                       colours = c(S = "#61a8ff",
-                                   SI = "#61a8ff",
-                                   I = "#61f7ff",
-                                   IR = "#ff6961",
-                                   R = "#ff6961"),
+                       colours = c(S = "#3CAEA3",
+                                   SI = "#3CAEA3",
+                                   I = "#F6D55C",
+                                   IR = "#ED553B",
+                                   R = "#ED553B"),
                        datalabels = TRUE,
                        datalabels.size = 2.5,
                        datalabels.colour = "grey15",
@@ -309,17 +304,19 @@ geom_rsi <- function(position = NULL,
     x <- "interpretation"
   }
   
-  ggplot2::layer(geom = "bar", stat = "identity", position = position,
-                 mapping = ggplot2::aes_string(x = x, y = y, fill = fill),
-                 params = list(...), data = function(x) {
-                   rsi_df(data = x,
-                          translate_ab = translate_ab,
-                          language = language,
-                          minimum = minimum,
-                          combine_SI = combine_SI,
-                          combine_IR = combine_IR)
-                 })
-  
+  ggplot2::geom_col(
+    data = function(x) {
+      rsi_df(data = x,
+             translate_ab = translate_ab,
+             language = language,
+             minimum = minimum,
+             combine_SI = combine_SI,
+             combine_IR = combine_IR)
+    },
+    mapping = ggplot2::aes_string(x = x, y = y, fill = fill),
+    position = position,
+    ...
+  )
 }
 
 #' @rdname ggplot_rsi

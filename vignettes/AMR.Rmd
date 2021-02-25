@@ -111,34 +111,26 @@ bacteria <- c("Escherichia coli", "Staphylococcus aureus",
               "Streptococcus pneumoniae", "Klebsiella pneumoniae")
 ```
 
-## Other variables
-For completeness, we can also add the hospital where the patients was admitted and we need to define valid antibmicrobial results for our randomisation:
-
-```{r create other}
-hospitals <- c("Hospital A", "Hospital B", "Hospital C", "Hospital D")
-ab_interpretations <- c("S", "I", "R")
-```
-
 ## Put everything together
 
-Using the `sample()` function, we can randomly select items from all objects we defined earlier. To let our fake data reflect reality a bit, we will also approximately define the probabilities of bacteria and the antibiotic results with the `prob` parameter.
+Using the `sample()` function, we can randomly select items from all objects we defined earlier. To let our fake data reflect reality a bit, we will also approximately define the probabilities of bacteria and the antibiotic results, using the `random_rsi()` function.
 
 ```{r merge data}
 sample_size <- 20000
 data <- data.frame(date = sample(dates, size = sample_size, replace = TRUE),
                    patient_id = sample(patients, size = sample_size, replace = TRUE),
-                   hospital = sample(hospitals, size = sample_size, replace = TRUE,
+                   hospital = sample(c("Hospital A",
+                                       "Hospital B",
+                                       "Hospital C",
+                                       "Hospital D"),
+                                     size = sample_size, replace = TRUE,
                                      prob = c(0.30, 0.35, 0.15, 0.20)),
                    bacteria = sample(bacteria, size = sample_size, replace = TRUE,
                                      prob = c(0.50, 0.25, 0.15, 0.10)),
-                   AMX = sample(ab_interpretations, size = sample_size, replace = TRUE,
-                                 prob = c(0.60, 0.05, 0.35)),
-                   AMC = sample(ab_interpretations, size = sample_size, replace = TRUE,
-                                 prob = c(0.75, 0.10, 0.15)),
-                   CIP = sample(ab_interpretations, size = sample_size, replace = TRUE,
-                                 prob = c(0.80, 0.00, 0.20)),
-                   GEN = sample(ab_interpretations, size = sample_size, replace = TRUE,
-                                 prob = c(0.92, 0.00, 0.08)))
+                   AMX = random_rsi(sample_size, prob_RSI = c(0.35, 0.60, 0.05)),
+                   AMC = random_rsi(sample_size, prob_RSI = c(0.15, 0.75, 0.10)),
+                   CIP = random_rsi(sample_size, prob_RSI = c(0.20, 0.80, 0.00)),
+                   GEN = random_rsi(sample_size, prob_RSI = c(0.08, 0.92, 0.00)))
 ```
 
 Using the `left_join()` function from the `dplyr` package, we can 'map' the gender to the patient ID using the `patients_table` object we created earlier:
@@ -443,6 +435,7 @@ data_1st %>%
 ```
 
 ## Plots
+
 To show results in plots, most R users would nowadays use the `ggplot2` package. This package lets you create plots in layers. You can read more about it [on their website](https://ggplot2.tidyverse.org/). A quick example would look like these syntaxes:
 
 ```{r plot 2, eval = FALSE}
@@ -480,7 +473,7 @@ ggplot(data_1st %>% group_by(genus)) +
   geom_rsi(x = "genus") + 
   # split plots on antibiotic
   facet_rsi(facet = "antibiotic") +
-  # set colours to the R/SI interpretations
+  # set colours to the R/SI interpretations (colour-blind friendly)
   scale_rsi_colours() +
   # show percentages on y axis
   scale_y_percent(breaks = 0:4 * 25) +
@@ -504,6 +497,65 @@ data_1st %>%
              breaks = 0:4 * 25,
              datalabels = FALSE) +
   coord_flip()
+```
+
+### Plotting MIC and disk diffusion values
+
+The AMR package also extends the `plot()` and `ggplot()` functions for plotting minimum inhibitory concentrations (MIC, created with `as.mic()`) and disk diffusion diameters (created with `as.disk()`).
+
+With the `random_mic()` and `random_disk()` functions, we can generate sampled values for the new data types (S3 classes) `<mic>` and `<disk>`:
+
+```{r, results='markup'}
+mic_values <- random_mic(size = 100)
+mic_values
+```
+
+```{r}
+# base R:
+plot(mic_values)
+# ggplot2:
+ggplot(mic_values)
+```
+
+But we could also be more specific, by generating MICs that are likely to be found in *E. coli* for ciprofloxacin:
+
+```{r, results = 'markup', message = FALSE, warning = FALSE}
+# this will generate MICs that are likely to be found in E. coli for ciprofloxacin:
+mic_values_specific <- random_mic(size = 100, mo = "E. coli", ab = "cipro")
+```
+
+For the `plot()` and `ggplot()` function, we can define the microorganism and an antimicrobial agent the same way. This will add the interpretation of those values according to a chosen guidelines (defaults to the latest EUCAST guideline).
+
+Default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red:
+
+```{r, message = FALSE, warning = FALSE}
+# base R:
+plot(mic_values_specific, mo = "E. coli", ab = "cipro")
+# ggplot2:
+ggplot(mic_values_specific, mo = "E. coli", ab = "cipro")
+```
+
+For disk diffusion values, there is not much of a difference in plotting:
+
+```{r, results = 'markup'}
+# this will generate disks that are likely to be found in E. coli for ciprofloxacin:
+disk_values_specific <- random_disk(size = 100, mo = "E. coli", ab = "cipro")
+disk_values_specific
+```
+
+```{r, message = FALSE, warning = FALSE}
+# base R:
+plot(disk_values_specific, mo = "E. coli", ab = "cipro")
+```
+
+And when using the `ggplot2` package, but now choosing the latest implemented CLSI guideline (notice that the EUCAST-specific term "Incr. exposure" has changed to "Intermediate"):
+
+```{r, message = FALSE, warning = FALSE}
+# and ggplot2, but now choosing an old CLSI guideline:
+ggplot(disk_values_specific,
+       mo = "E. coli",
+       ab = "cipro",
+       guideline = "CLSI")
 ```
 
 ## Independence test
