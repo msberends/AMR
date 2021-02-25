@@ -252,12 +252,13 @@ is.rsi.eligible <- function(x, threshold = 0.05) {
 }
 
 #' @export
+# extra param: warn (never throw warning)
 as.rsi.default <- function(x, ...) {
   if (is.rsi(x)) {
     return(x)
   }
   
-  if (inherits(x, "integer") & all(x %in% c(1:3, NA))) {
+  if (inherits(x, c("integer", "numeric", "double")) && all(x %in% c(1:3, NA))) {
     x[x == 1] <- "S"
     x[x == 2] <- "I"
     x[x == 3] <- "R"
@@ -265,11 +266,11 @@ as.rsi.default <- function(x, ...) {
   } else if (!all(is.na(x)) && !identical(levels(x), c("S", "I", "R"))) {
     
     if (!any(x %like% "(R|S|I)", na.rm = TRUE)) {
-      # check if they are actually MICs or disks now that the antibiotic name is valid
+      # check if they are actually MICs or disks
       if (all_valid_mics(x)) {
-        warning_("The input seems to be MIC values. Transform them with as.mic() before running as.rsi() to interpret them.")
+        warning_("The input seems to be MIC values. Transform them with `as.mic()` before running `as.rsi()` to interpret them.")
       } else if (all_valid_disks(x)) {
-        warning_("The input seems to be disk diffusion values. Transform them with as.disk() before running as.rsi() to interpret them.")
+        warning_("The input seems to be disk diffusion values. Transform them with `as.disk()` before running `as.rsi()` to interpret them.")
       }
     }
     
@@ -1008,107 +1009,6 @@ summary.rsi <- function(object, ...) {
   )
   class(value) <- c("summaryDefault", "table")
   value
-}
-
-#' @method plot rsi
-#' @export
-#' @importFrom graphics plot text axis
-#' @rdname plot
-plot.rsi <- function(x,
-                     lwd = 2,
-                     ylim = NULL,
-                     ylab = "Percentage",
-                     xlab = "Antimicrobial Interpretation",
-                     main = paste("Resistance Overview of", deparse(substitute(x))),
-                     axes = FALSE,
-                     ...) {
-  meet_criteria(lwd, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
-  meet_criteria(ylim, allow_class = c("numeric", "integer"), allow_NULL = TRUE)
-  meet_criteria(ylab, allow_class = "character", has_length = 1)
-  meet_criteria(xlab, allow_class = "character", has_length = 1)
-  meet_criteria(main, allow_class = "character", has_length = 1)
-  meet_criteria(axes, allow_class = "logical", has_length = 1)
-  
-  data <- as.data.frame(table(x), stringsAsFactors = FALSE)
-  colnames(data) <- c("x", "n")
-  data$s <- round((data$n / sum(data$n)) * 100, 1)
-  
-  if (!"S" %in% data$x) {
-    data <- rbind(data, data.frame(x = "S", n = 0, s = 0, stringsAsFactors = FALSE),
-                  stringsAsFactors = FALSE)
-  }
-  if (!"I" %in% data$x) {
-    data <- rbind(data, data.frame(x = "I", n = 0, s = 0, stringsAsFactors = FALSE),
-                  stringsAsFactors = FALSE)
-  }
-  if (!"R" %in% data$x) {
-    data <- rbind(data, data.frame(x = "R", n = 0, s = 0, stringsAsFactors = FALSE),
-                  stringsAsFactors = FALSE)
-  }
-  
-  # don't use as.rsi() here, it will confuse plot()
-  data$x <- factor(data$x, levels = c("S", "I", "R"), ordered = TRUE)
-  
-  ymax <- pm_if_else(max(data$s) > 95, 105, 100)
-  
-  plot(x = data$x,
-       y = data$s,
-       lwd = lwd,
-       ylim = c(0, ymax),
-       ylab = ylab,
-       xlab = xlab,
-       main = main,
-       axes = axes,
-       ...)
-  # x axis
-  axis(side = 1, at = 1:pm_n_distinct(data$x), labels = levels(data$x), lwd = 0)
-  # y axis, 0-100%
-  axis(side = 2, at = seq(0, 100, 5))
-  
-  text(x = data$x,
-       y = data$s + 4,
-       labels = paste0(data$s, "% (n = ", data$n, ")"))
-}
-
-
-#' @method barplot rsi
-#' @export
-#' @importFrom graphics barplot axis par
-#' @rdname plot
-barplot.rsi <- function(height,
-                        col = c("chartreuse4", "chartreuse3", "brown3"),
-                        xlab = ifelse(beside, "Antimicrobial Interpretation", ""),
-                        main = paste("Resistance Overview of", deparse(substitute(height))),
-                        ylab = "Frequency",
-                        beside = TRUE,
-                        axes = beside,
-                        ...) {
-  meet_criteria(col, allow_class = "character", has_length = 3)
-  meet_criteria(xlab, allow_class = "character", has_length = 1)
-  meet_criteria(main, allow_class = "character", has_length = 1)
-  meet_criteria(ylab, allow_class = "character", has_length = 1)
-  meet_criteria(beside, allow_class = "logical", has_length = 1)
-  meet_criteria(axes, allow_class = "logical", has_length = 1)
-  
-  if (axes == TRUE) {
-    par(mar =  c(5, 4, 4, 2) + 0.1)
-  } else {
-    par(mar =  c(2, 4, 4, 2) + 0.1)
-  }
-  
-  barplot(as.matrix(table(height)),
-          col = col,
-          xlab = xlab,
-          main = main,
-          ylab = ylab,
-          beside = beside,
-          axes = FALSE,
-          ...)
-  # y axis, 0-100%
-  axis(side = 2, at = seq(0, max(table(height)) + max(table(height)) * 1.1, by = 25))
-  if (axes == TRUE && beside == TRUE) {
-    axis(side = 1, labels = levels(height), at = c(1, 2, 3) + 0.5, lwd = 0)
-  }
 }
 
 #' @method [<- rsi

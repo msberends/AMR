@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9024</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9025</span>
       </span>
     </div>
 
@@ -236,13 +236,13 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1509024" class="section level1">
-<h1 class="page-header" data-toc-text="1.5.0.9024">
-<a href="#amr-1509024" class="anchor"></a>AMR 1.5.0.9024<small> Unreleased </small>
+    <div id="amr-1509025" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.0.9025">
+<a href="#amr-1509025" class="anchor"></a>AMR 1.5.0.9025<small> Unreleased </small>
 </h1>
-<div id="last-updated-22-february-2021" class="section level2">
+<div id="last-updated-25-february-2021" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-22-february-2021" class="anchor"></a><small>Last updated: 22 February 2021</small>
+<a href="#last-updated-25-february-2021" class="anchor"></a><small>Last updated: 25 February 2021</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
@@ -280,6 +280,7 @@
 </li>
 <li><p>Support for custom MDRO guidelines, using the new <code><a href="../reference/mdro.html">custom_mdro_guideline()</a></code> function, please see <code><a href="../reference/mdro.html">mdro()</a></code> for additional info</p></li>
 <li><p>Function <code><a href="../reference/isolate_identifier.html">isolate_identifier()</a></code>, which will paste a microorganism code with all antimicrobial results of a data set into one string for each row. This is useful to compare isolates, e.g. between institutions or regions, when there is no genotyping available.</p></li>
+<li><p><code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> generics for classes <code>&lt;mic&gt;</code> and <code>&lt;disk&gt;</code></p></li>
 <li>
 <p>Function <code><a href="../reference/mo_property.html">mo_is_yeast()</a></code>, which determines whether a microorganism is a member of the taxonomic class Saccharomycetes or the taxonomic order Saccharomycetales:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -321,7 +322,8 @@
 <code><a href="../reference/as.rsi.html">is.rsi.eligible()</a></code> now detects if the column name resembles an antibiotic name or code and now returns <code>TRUE</code> immediately if the input contains any of the values “R”, “S” or “I”. This drastically improves speed, also for a lot of other functions that rely on automatic determination of antibiotic columns.</li>
 <li>Functions <code><a href="../reference/get_episode.html">get_episode()</a></code> and <code><a href="../reference/get_episode.html">is_new_episode()</a></code> now support less than a day as value for argument <code>episode_days</code> (e.g., to include one patient/test per hour)</li>
 <li>Argument <code>ampc_cephalosporin_resistance</code> in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> now also applies to value “I” (not only “S”)</li>
-<li>Updated colours of values R, S and I in tibble printing</li>
+<li>Updated <code><a href="../reference/plot.html">plot()</a></code> functions for classes <code>&lt;mic&gt;</code>, <code>&lt;disk&gt;</code> and <code>&lt;rsi&gt;</code> - the former two now support colouring if you supply the microorganism and antimicrobial agent</li>
+<li>Updated colours to colour-blind friendly version for values R, S and I in tibble printing and for all plot methods (<code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> and using <code><a href="../reference/plot.html">plot()</a></code> on classes <code>&lt;mic&gt;</code>, <code>&lt;disk&gt;</code> and <code>&lt;rsi&gt;</code>)</li>
 <li>Functions <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> on a Principal Components Analysis object (<code><a href="../reference/pca.html">pca()</a></code>) now print additional group info if the original data was grouped using <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code>
 </li>
 <li>Improved speed and reliability of <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>. As this also internally improves the reliability of <code><a href="../reference/first_isolate.html">first_isolate()</a></code> and <code><a href="../reference/mdro.html">mdro()</a></code>, this might have a slight impact on the results of those functions.</li>
@@ -329,6 +331,8 @@
 <li>The <code><a href="../reference/like.html">like()</a></code> function (and its fast alias <code><a href="../reference/like.html">%like%</a></code>) now always use Perl compatibility, improving speed for many functions in this package (e.g., <code><a href="../reference/as.mo.html">as.mo()</a></code> is now up to 4 times faster)</li>
 <li>
 <em>Staphylococcus cornubiensis</em> is now correctly categorised as coagulase-positive</li>
+<li>
+<code><a href="../reference/random.html">random_disk()</a></code> and <code><a href="../reference/random.html">random_mic()</a></code> now have an expanded range in their randomisation</li>
 </ul>
 </div>
 <div id="other" class="section level3">

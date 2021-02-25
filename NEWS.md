@@ -1,5 +1,5 @@
-# AMR 1.5.0.9024
-## <small>Last updated: 22 February 2021</small>
+# AMR 1.5.0.9025
+## <small>Last updated: 25 February 2021</small>
 
 ### New
 * Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the `eucast_rules()` function and in `as.rsi()` to interpret MIC and disk diffusion values. This is now the default guideline in this package.
@@ -23,6 +23,7 @@
    ```
 * Support for custom MDRO guidelines, using the new `custom_mdro_guideline()` function, please see `mdro()` for additional info
 * Function `isolate_identifier()`, which will paste a microorganism code with all antimicrobial results of a data set into one string for each row. This is useful to compare isolates, e.g. between institutions or regions, when there is no genotyping available.
+* `ggplot()` generics for classes `<mic>` and `<disk>`
 * Function `mo_is_yeast()`, which determines whether a microorganism is a member of the taxonomic class Saccharomycetes or the taxonomic order Saccharomycetales:
   ```r
   mo_kingdom(c("Aspergillus", "Candida"))
@@ -54,12 +55,14 @@
 * `is.rsi.eligible()` now detects if the column name resembles an antibiotic name or code and now returns `TRUE` immediately if the input contains any of the values "R", "S" or "I". This drastically improves speed, also for a lot of other functions that rely on automatic determination of antibiotic columns.
 * Functions `get_episode()` and `is_new_episode()` now support less than a day as value for argument `episode_days` (e.g., to include one patient/test per hour)
 * Argument `ampc_cephalosporin_resistance` in `eucast_rules()` now also applies to value "I" (not only "S")
-* Updated colours of values R, S and I in tibble printing
+* Updated `plot()` functions for classes `<mic>`, `<disk>` and `<rsi>` - the former two now support colouring if you supply the microorganism and antimicrobial agent
+* Updated colours to colour-blind friendly version for values R, S and I in tibble printing and for all plot methods (`ggplot_rsi()` and using `plot()` on classes `<mic>`, `<disk>` and `<rsi>`)
 * Functions `print()` and `summary()` on a Principal Components Analysis object (`pca()`) now print additional group info if the original data was grouped using `dplyr::group_by()`
 * Improved speed and reliability of `guess_ab_col()`. As this also internally improves the reliability of `first_isolate()` and `mdro()`, this might have a slight impact on the results of those functions.
 * Fix for `mo_name()` when used in other languages than English
 * The `like()` function (and its fast alias `%like%`) now always use Perl compatibility, improving speed for many functions in this package (e.g., `as.mo()` is now up to 4 times faster)
 * *Staphylococcus cornubiensis* is now correctly categorised as coagulase-positive
+* `random_disk()` and `random_mic()` now have an expanded range in their randomisation
 
 ### Other
 * Big documentation updates

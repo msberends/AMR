@@ -26,7 +26,7 @@ x \%like_case\% pattern
 A \code{\link{logical}} vector
 }
 \description{
-Convenient wrapper around \code{\link[=grep]{grep()}} to match a pattern: \code{x \%like\% pattern}. It always returns a \code{\link{logical}} vector and is always case-insensitive (use \code{x \%like_case\% pattern} for case-sensitive matching). Also, \code{pattern} can be as long as \code{x} to compare items of each index in both vectors, or they both can have the same length to iterate over all cases.
+Convenient wrapper around \code{\link[=grepl]{grepl()}} to match a pattern: \code{x \%like\% pattern}. It always returns a \code{\link{logical}} vector and is always case-insensitive (use \code{x \%like_case\% pattern} for case-sensitive matching). Also, \code{pattern} can be as long as \code{x} to compare items of each index in both vectors, or they both can have the same length to iterate over all cases.
 }
 \details{
 The \verb{\%like\%} function:
@@ -61,11 +61,15 @@ a \%like\% b
 b \%like\% a
 #> FALSE
 
-# also supports multiple patterns, length must be equal to x
+# also supports multiple patterns
 a <- c("Test case", "Something different", "Yet another thing")
 b <- c(     "case",           "diff",      "yet")
 a \%like\% b
 #> TRUE TRUE TRUE
+a[1] \%like\% b
+#> TRUE FALSE FALSE
+a \%like\% b[1]
+#> TRUE FALSE FALSE
 
 # get isolates whose name start with 'Ent' or 'ent'
 \donttest{
@@ -76,5 +80,5 @@ if (require("dplyr")) {
 }
 }
 \seealso{
-\code{\link[=grep]{grep()}}
+\code{\link[=grepl]{grepl()}}
 }

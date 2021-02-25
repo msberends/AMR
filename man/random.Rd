@@ -28,7 +28,7 @@ random_rsi(size, prob_RSI = c(0.33, 0.33, 0.33), ...)
 class \verb{<mic>} for \code{\link[=random_mic]{random_mic()}} (see \code{\link[=as.mic]{as.mic()}}) and class \verb{<disk>} for \code{\link[=random_disk]{random_disk()}} (see \code{\link[=as.disk]{as.disk()}})
 }
 \description{
-These functions can be used for generating random MIC values and disk diffusion diameters, for AMR data analysis practice.
+These functions can be used for generating random MIC values and disk diffusion diameters, for AMR data analysis practice. By providing a microorganism and antimicrobial agent, the generated results will reflect reality as much as possible.
 }
 \details{
 The base R function \code{\link[=sample]{sample()}} is used for generating values.

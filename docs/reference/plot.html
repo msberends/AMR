@@ -49,7 +49,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Plotting for Classes rsi, mic and disk — plot" />
-<meta property="og:description" content="Functions to print classes of the AMR package." />
+<meta property="og:description" content="Functions to plot classes rsi, mic and disk, with support for base R and ggplot2." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9016</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9025</span>
       </span>
     </div>
 
@@ -234,65 +234,78 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plotting for Classes <code>rsi</code>, <code>mic</code> and <code>disk</code></h1>
-    <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/amr.R'><code>R/amr.R</code></a>, <a href='https://github.com/msberends/AMR/blob/master/R/disk.R'><code>R/disk.R</code></a>, <a href='https://github.com/msberends/AMR/blob/master/R/mic.R'><code>R/mic.R</code></a>, and 1 more</small>
+    <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/plot.R'><code>R/plot.R</code></a></small>
     <div class="hidden name"><code>plot.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Functions to print classes of the <code>AMR</code> package.</p>
+    <p>Functions to plot classes <code>rsi</code>, <code>mic</code> and <code>disk</code>, with support for base R and <code>ggplot2</code>.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for disk</span>
-<span class='fu'>plot</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  main <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"Disk zones values of"</span>, <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
-  ylab <span class='op'>=</span> <span class='st'>"Frequency"</span>,
-  xlab <span class='op'>=</span> <span class='st'>"Disk diffusion (mm)"</span>,
-  axes <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for mic</span>
+    <pre class="usage"><span class='co'># S3 method for mic</span>
 <span class='fu'>plot</span><span class='op'>(</span>
   <span class='va'>x</span>,
   main <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"MIC values of"</span>, <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
   ylab <span class='op'>=</span> <span class='st'>"Frequency"</span>,
-  xlab <span class='op'>=</span> <span class='st'>"MIC value"</span>,
-  axes <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  xlab <span class='op'>=</span> <span class='st'>"Minimum Inhibitory Concentration (mg/L)"</span>,
+  mo <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ab <span class='op'>=</span> <span class='cn'>NULL</span>,
+  guideline <span class='op'>=</span> <span class='st'>"EUCAST"</span>,
+  colours_RSI <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#ED553B"</span>, <span class='st'>"#3CAEA3"</span>, <span class='st'>"#F6D55C"</span><span class='op'>)</span>,
+  expand <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
 <span class='co'># S3 method for mic</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/barplot.html'>barplot</a></span><span class='op'>(</span>
-  <span class='va'>height</span>,
-  main <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"MIC values of"</span>, <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span><span class='op'>(</span><span class='va'>height</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  mapping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  title <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"MIC values of"</span>, <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
   ylab <span class='op'>=</span> <span class='st'>"Frequency"</span>,
-  xlab <span class='op'>=</span> <span class='st'>"MIC value"</span>,
-  axes <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  xlab <span class='op'>=</span> <span class='st'>"Minimum Inhibitory Concentration (mg/L)"</span>,
+  mo <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ab <span class='op'>=</span> <span class='cn'>NULL</span>,
+  guideline <span class='op'>=</span> <span class='st'>"EUCAST"</span>,
+  colours_RSI <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#ED553B"</span>, <span class='st'>"#3CAEA3"</span>, <span class='st'>"#F6D55C"</span><span class='op'>)</span>,
+  expand <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for disk</span>
+<span class='fu'>plot</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  main <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"Disk zones values of"</span>, <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
+  ylab <span class='op'>=</span> <span class='st'>"Frequency"</span>,
+  xlab <span class='op'>=</span> <span class='st'>"Disk diffusion diameter (mm)"</span>,
+  mo <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ab <span class='op'>=</span> <span class='cn'>NULL</span>,
+  guideline <span class='op'>=</span> <span class='st'>"EUCAST"</span>,
+  colours_RSI <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#ED553B"</span>, <span class='st'>"#3CAEA3"</span>, <span class='st'>"#F6D55C"</span><span class='op'>)</span>,
+  expand <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for disk</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  mapping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  title <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"Disk zones values of"</span>, <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
+  ylab <span class='op'>=</span> <span class='st'>"Frequency"</span>,
+  xlab <span class='op'>=</span> <span class='st'>"Disk diffusion diameter (mm)"</span>,
+  mo <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ab <span class='op'>=</span> <span class='cn'>NULL</span>,
+  guideline <span class='op'>=</span> <span class='st'>"EUCAST"</span>,
+  colours_RSI <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#ED553B"</span>, <span class='st'>"#3CAEA3"</span>, <span class='st'>"#F6D55C"</span><span class='op'>)</span>,
+  expand <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
 <span class='co'># S3 method for rsi</span>
 <span class='fu'>plot</span><span class='op'>(</span>
   <span class='va'>x</span>,
-  lwd <span class='op'>=</span> <span class='fl'>2</span>,
-  ylim <span class='op'>=</span> <span class='cn'>NULL</span>,
   ylab <span class='op'>=</span> <span class='st'>"Percentage"</span>,
   xlab <span class='op'>=</span> <span class='st'>"Antimicrobial Interpretation"</span>,
   main <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"Resistance Overview of"</span>, <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
-  axes <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='co'># S3 method for rsi</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/barplot.html'>barplot</a></span><span class='op'>(</span>
-  <span class='va'>height</span>,
-  col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"chartreuse4"</span>, <span class='st'>"chartreuse3"</span>, <span class='st'>"brown3"</span><span class='op'>)</span>,
-  xlab <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>beside</span>, <span class='st'>"Antimicrobial Interpretation"</span>, <span class='st'>""</span><span class='op'>)</span>,
-  main <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"Resistance Overview of"</span>, <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span><span class='op'>(</span><span class='va'>height</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
-  ylab <span class='op'>=</span> <span class='st'>"Frequency"</span>,
-  beside <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  axes <span class='op'>=</span> <span class='va'>beside</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -301,62 +314,53 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>the coordinates of points in the plot. Alternatively, a
-      single plotting structure, function or <em>any <span style="R">R</span> object with a
-        <code>plot</code> method</em> can be provided.</p></td>
+      <td><p>MIC values created with <code><a href='as.mic.html'>as.mic()</a></code> or disk diffusion values created with <code><a href='as.disk.html'>as.disk()</a></code></p></td>
     </tr>
     <tr>
-      <th>main</th>
-      <td><p>overall and sub title for the plot.</p></td>
+      <th>main, title</th>
+      <td><p>title of the plot</p></td>
     </tr>
     <tr>
-      <th>ylab</th>
-      <td><p>a label for the y axis.</p></td>
+      <th>xlab, ylab</th>
+      <td><p>axis title</p></td>
     </tr>
     <tr>
-      <th>xlab</th>
-      <td><p>a label for the x axis.</p></td>
+      <th>mo</th>
+      <td><p>any (vector of) text that can be coerced to a valid microorganism code with <code><a href='as.mo.html'>as.mo()</a></code></p></td>
     </tr>
     <tr>
-      <th>axes</th>
-      <td><p>logical.  If <code>TRUE</code>, a vertical (or horizontal, if
-    <code>horiz</code> is true) axis is drawn.</p></td>
+      <th>ab</th>
+      <td><p>any (vector of) text that can be coerced to a valid antimicrobial code with <code><a href='as.ab.html'>as.ab()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>guideline</th>
+      <td><p>interpretation guideline to use, defaults to the latest included EUCAST guideline, see <em>Details</em></p></td>
+    </tr>
+    <tr>
+      <th>colours_RSI</th>
+      <td><p>colours to use for filling in the bars, must be a vector of three values (in the order R, S and I). The default colours are colour-blind friendly.</p></td>
+    </tr>
+    <tr>
+      <th>expand</th>
+      <td><p>logical to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed on to functions</p></td>
+      <td><p>arguments passed on to <code><a href='as.rsi.html'>as.rsi()</a></code></p></td>
     </tr>
     <tr>
-      <th>height</th>
-      <td><p>either a vector or matrix of values describing the
-    bars which make up the plot.  If <code>height</code> is a vector, the
-    plot consists of a sequence of rectangular bars with heights
-    given by the values in the vector.  If <code>height</code> is a matrix
-    and <code>beside</code> is <code>FALSE</code> then each bar of the plot
-    corresponds to a column of <code>height</code>, with the values in the
-    column giving the heights of stacked sub-bars making up the
-    bar.  If <code>height</code> is a matrix and <code>beside</code> is
-    <code>TRUE</code>, then the values in each column are juxtaposed
-    rather than stacked.</p></td>
-    </tr>
-    <tr>
-      <th>ylim</th>
-      <td><p>limits for the y axis.</p></td>
-    </tr>
-    <tr>
-      <th>col</th>
-      <td><p>a vector of colors for the bars or bar components.
-    By default, grey is used if <code>height</code> is a vector, and a
-    gamma-corrected grey palette if <code>height</code> is a matrix.</p></td>
-    </tr>
-    <tr>
-      <th>beside</th>
-      <td><p>a logical value.  If <code>FALSE</code>, the columns of
-    <code>height</code> are portrayed as stacked bars, and if <code>TRUE</code>
-    the columns are portrayed as juxtaposed bars.</p></td>
+      <th>mapping</th>
+      <td><p>aesthetic mappings to use for <code><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot()</a></code></p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>The <code>ggplot</code> functions return a <code><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></code> model that is extendible with any <code>ggplot2</code> function.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the <code>guideline</code> argument are: "EUCAST 2021", "EUCAST 2020", "EUCAST 2019", "EUCAST 2018", "EUCAST 2017", "EUCAST 2016", "EUCAST 2015", "EUCAST 2014", "EUCAST 2013", "EUCAST 2012", "EUCAST 2011", "CLSI 2019", "CLSI 2018", "CLSI 2017", "CLSI 2016", "CLSI 2015", "CLSI 2014", "CLSI 2013", "CLSI 2012", "CLSI 2011" and "CLSI 2010".</p>
+<p>Simply using <code>"CLSI"</code> or <code>"EUCAST"</code> as input will automatically select the latest version of that guideline.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable Lifecycle</h2>
 
     
@@ -370,6 +374,22 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
 <p>On our website <a href='https://msberends.github.io/AMR/'>https://msberends.github.io/AMR/</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR data analysis, the <a href='https://msberends.github.io/AMR/reference/'>complete documentation of all functions</a> and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>. As we would like to better understand the backgrounds and needs of our users, please <a href='https://msberends.github.io/AMR/survey.html'>participate in our survey</a>!</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='va'>some_mic_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>random_mic</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
+<span class='va'>some_disk_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>random_disk</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>100</span>, mo <span class='op'>=</span> <span class='st'>"Escherichia coli"</span>, ab <span class='op'>=</span> <span class='st'>"cipro"</span><span class='op'>)</span>
+
+<span class='fu'>plot</span><span class='op'>(</span><span class='va'>some_mic_values</span><span class='op'>)</span>
+<span class='fu'>plot</span><span class='op'>(</span><span class='va'>some_disk_values</span><span class='op'>)</span>
+
+<span class='co'># when providing the microorganism and antibiotic, colours will show interpretations:</span>
+<span class='fu'>plot</span><span class='op'>(</span><span class='va'>some_mic_values</span>, mo <span class='op'>=</span> <span class='st'>"S. aureus"</span>, ab <span class='op'>=</span> <span class='st'>"ampicillin"</span><span class='op'>)</span>
+<span class='fu'>plot</span><span class='op'>(</span><span class='va'>some_disk_values</span>, mo <span class='op'>=</span> <span class='st'>"Escherichia coli"</span>, ab <span class='op'>=</span> <span class='st'>"cipro"</span><span class='op'>)</span>
+
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='http://ggplot2.tidyverse.org'>"ggplot2"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>some_mic_values</span><span class='op'>)</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>some_disk_values</span>, mo <span class='op'>=</span> <span class='st'>"Escherichia coli"</span>, ab <span class='op'>=</span> <span class='st'>"cipro"</span><span class='op'>)</span>
+<span class='op'>}</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

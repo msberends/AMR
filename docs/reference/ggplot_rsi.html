@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9016</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9025</span>
       </span>
     </div>
 
@@ -286,8 +286,9 @@
 <span class='fu'>scale_y_percent</span><span class='op'>(</span>breaks <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span><span class='op'>)</span>, limits <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
 <span class='fu'>scale_rsi_colours</span><span class='op'>(</span>
-  colours <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>S <span class='op'>=</span> <span class='st'>"#61a8ff"</span>, SI <span class='op'>=</span> <span class='st'>"#61a8ff"</span>, I <span class='op'>=</span> <span class='st'>"#61f7ff"</span>, IR <span class='op'>=</span> <span class='st'>"#ff6961"</span>, R <span class='op'>=</span>
-    <span class='st'>"#ff6961"</span><span class='op'>)</span>
+  colours <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>S <span class='op'>=</span> <span class='st'>"#3CAEA3"</span>, SI <span class='op'>=</span> <span class='st'>"#3CAEA3"</span>, I <span class='op'>=</span> <span class='st'>"#F6D55C"</span>, IR <span class='op'>=</span> <span class='st'>"#ED553B"</span>, R <span class='op'>=</span>
+    <span class='st'>"#ED553B"</span><span class='op'>)</span>,
+  aesthetics <span class='op'>=</span> <span class='st'>"fill"</span>
 <span class='op'>)</span>
 
 <span class='fu'>theme_rsi</span><span class='op'>(</span><span class='op'>)</span>
@@ -361,7 +362,7 @@
     </tr>
     <tr>
       <th>colours</th>
-      <td><p>a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be <code>FALSE</code> to use default <a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot2</a> colours.</p></td>
+      <td><p>a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be <code>FALSE</code> for standard <a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot2</a> colours. The default colours are colour-blind friendly.</p></td>
     </tr>
     <tr>
       <th>datalabels</th>
@@ -398,6 +399,10 @@
     <tr>
       <th>...</th>
       <td><p>other arguments passed on to <code>geom_rsi()</code></p></td>
+    </tr>
+    <tr>
+      <th>aesthetics</th>
+      <td><p>aesthetics to apply the colours to, defaults to "fill" but can also be "colour" or "both"</p></td>
     </tr>
     </table>
 

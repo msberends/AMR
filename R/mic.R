@@ -53,8 +53,9 @@
 #'        ab = "AMX",
 #'        guideline = "EUCAST")
 #'
+#' # plot MIC values, see ?plot
 #' plot(mic_data)
-#' barplot(mic_data)
+#' plot(mic_data, mo = "E. coli", ab = "cipro")
 as.mic <- function(x, na.rm = FALSE) {
   meet_criteria(x, allow_class = c("mic", "character", "numeric", "integer"), allow_NA = TRUE)
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)
@@ -175,9 +176,11 @@ as.numeric.mic <- function(x, ...) {
 #' @method droplevels mic
 #' @export
 #' @noRd
-droplevels.mic <- function(x, exclude = if (any(is.na(levels(x)))) NULL else NA, ...) {
+droplevels.mic <- function(x, exclude = if (any(is.na(levels(x)))) NULL else NA, as.mic = TRUE, ...) {
   x <- droplevels.factor(x, exclude = exclude, ...)
-  class(x) <- c("mic", "ordered", "factor")
+  if (as.mic == TRUE) {
+    class(x) <- c("mic", "ordered", "factor")
+  }
   x
 }
 
@@ -219,54 +222,6 @@ summary.mic <- function(object, ...) {
              "Max." = as.character(sort(x)[n]))
   class(value) <- c("summaryDefault", "table")
   value
-}
-
-#' @method plot mic
-#' @export
-#' @importFrom graphics barplot axis
-#' @rdname plot
-plot.mic <- function(x,
-                     main = paste("MIC values of", deparse(substitute(x))),
-                     ylab = "Frequency",
-                     xlab = "MIC value",
-                     axes = FALSE,
-                     ...) {
-  meet_criteria(main, allow_class = "character", has_length = 1)
-  meet_criteria(ylab, allow_class = "character", has_length = 1)
-  meet_criteria(xlab, allow_class = "character", has_length = 1)
-  meet_criteria(axes, allow_class = "logical", has_length = 1)
-  
-  barplot(table(as.double(x)),
-          ylab = ylab,
-          xlab = xlab,
-          axes = axes,
-          main = main,
-          ...)
-  axis(2, seq(0, max(table(as.double(x)))))
-}
-
-#' @method barplot mic
-#' @export
-#' @importFrom graphics barplot axis
-#' @rdname plot
-barplot.mic <- function(height,
-                        main = paste("MIC values of", deparse(substitute(height))),
-                        ylab = "Frequency",
-                        xlab = "MIC value",
-                        axes = FALSE,
-                        ...) {
-  meet_criteria(main, allow_class = "character", has_length = 1)
-  meet_criteria(ylab, allow_class = "character", has_length = 1)
-  meet_criteria(xlab, allow_class = "character", has_length = 1)
-  meet_criteria(axes, allow_class = "logical", has_length = 1)
-  
-  barplot(table(as.double(height)),
-          ylab = ylab,
-          xlab = xlab,
-          axes = axes,
-          main = main,
-          ...)
-  axis(2, seq(0, max(table(as.double(height)))))
 }
 
 #' @method [ mic

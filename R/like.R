@@ -25,7 +25,7 @@
 
 #' Pattern Matching with Keyboard Shortcut
 #'
-#' Convenient wrapper around [grep()] to match a pattern: `x %like% pattern`. It always returns a [`logical`] vector and is always case-insensitive (use `x %like_case% pattern` for case-sensitive matching). Also, `pattern` can be as long as `x` to compare items of each index in both vectors, or they both can have the same length to iterate over all cases.
+#' Convenient wrapper around [grepl()] to match a pattern: `x %like% pattern`. It always returns a [`logical`] vector and is always case-insensitive (use `x %like_case% pattern` for case-sensitive matching). Also, `pattern` can be as long as `x` to compare items of each index in both vectors, or they both can have the same length to iterate over all cases.
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param x a character vector where matches are sought, or an object which can be coerced by [as.character()] to a character vector.
 #' @param pattern a character string containing a regular expression (or [character] string for `fixed = TRUE`) to be matched in the given character vector. Coerced by [as.character()] to a character string if possible.  If a [character] vector of length 2 or more is supplied, the first element is used with a warning.
@@ -43,7 +43,7 @@
 #' 
 #' Using RStudio? The text `%like%` can also be directly inserted in your code from the Addins menu and can have its own Keyboard Shortcut like `Ctrl+Shift+L` or `Cmd+Shift+L` (see `Tools` > `Modify Keyboard Shortcuts...`).
 #' @source Idea from the [`like` function from the `data.table` package](https://github.com/Rdatatable/data.table/blob/master/R/like.R)
-#' @seealso [grep()]
+#' @seealso [grepl()]
 #' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' # simple test
@@ -53,13 +53,17 @@
 #' #> TRUE
 #' b %like% a
 #' #> FALSE
-#'
-#' # also supports multiple patterns, length must be equal to x
+#' 
+#' # also supports multiple patterns
 #' a <- c("Test case", "Something different", "Yet another thing")
 #' b <- c(     "case",           "diff",      "yet")
 #' a %like% b
 #' #> TRUE TRUE TRUE
-#'
+#' a[1] %like% b
+#' #> TRUE FALSE FALSE
+#' a %like% b[1]
+#' #> TRUE FALSE FALSE
+#' 
 #' # get isolates whose name start with 'Ent' or 'ent'
 #' \donttest{
 #' if (require("dplyr")) {
@@ -71,7 +75,11 @@ like <- function(x, pattern, ignore.case = TRUE) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(pattern, allow_NA = FALSE)
   meet_criteria(ignore.case, allow_class = "logical", has_length = 1)
-
+  
+  if (all(is.na(x))) {
+    return(rep(FALSE, length(x)))
+  }
+  
   # set to fixed if no regex found
   fixed <- !any(is_possibly_regex(pattern))
   if (ignore.case == TRUE) {
@@ -79,53 +87,26 @@ like <- function(x, pattern, ignore.case = TRUE) {
     x <- tolower(x)
     pattern <- tolower(pattern)
   }
-  
-  if (length(pattern) > 1 & length(x) == 1) {
-    x <- rep(x, length(pattern))
-  }
-  
-  if (all(is.na(x))) {
-    return(rep(FALSE, length(x)))
-  }
-    
-  if (length(pattern) > 1) {
-    res <- vector(length = length(pattern))
-    if (length(x) != length(pattern)) {
-      if (length(x) == 1) {
-        x <- rep(x, length(pattern))
-      }
-      # return TRUE for every 'x' that matches any 'pattern', FALSE otherwise
-      for (i in seq_len(length(res))) {
-        if (is.factor(x[i])) {
-          res[i] <- as.integer(x[i]) %in% grep(pattern[i], levels(x[i]), ignore.case = FALSE, fixed = fixed)
-        } else {
-          res[i] <- grepl(pattern[i], x[i], ignore.case = FALSE, fixed = fixed, perl = !fixed)
-        }
-      }
-      res <- vapply(FUN.VALUE = logical(1), pattern, function(pttrn) grepl(pttrn, x, ignore.case = FALSE, fixed = fixed))
-      res2 <- as.logical(rowSums(res))
-      # get only first item of every hit in pattern
-      res2[duplicated(res)] <- FALSE
-      res2[rowSums(res) == 0] <- NA
-      return(res2)
-    } else {
-      # x and pattern are of same length, so items with each other
-      for (i in seq_len(length(res))) {
-        if (is.factor(x[i])) {
-          res[i] <- as.integer(x[i]) %in% grep(pattern[i], levels(x[i]), ignore.case = FALSE, fixed = fixed, perl = !fixed)
-        } else {
-          res[i] <- grepl(pattern[i], x[i], ignore.case = FALSE, fixed = fixed, perl = !fixed)
-        }
-      }
-      return(res)
-    }
-  }
-  
-  # the regular way how grepl works; just one pattern against one or more x
+
   if (is.factor(x)) {
-    as.integer(x) %in% grep(pattern, levels(x), ignore.case = FALSE, fixed = fixed, perl = !fixed)
-  } else {
+    x <- as.character(x)
+  }
+  
+  if (length(pattern) == 1) {
     grepl(pattern, x, ignore.case = FALSE, fixed = fixed, perl = !fixed)
+  } else {
+    if (length(x) == 1) {
+      x <- rep(x, length(pattern))
+    } else if (length(pattern) != length(x)) {
+      stop_("arguments `x` and `pattern` must be of same length, or either one must be 1")
+    }
+    mapply(FUN = grepl,
+           pattern,
+           x,
+           MoreArgs = list(ignore.case = FALSE, fixed = fixed, perl = !fixed),
+           SIMPLIFY = TRUE,
+           USE.NAMES = FALSE)
+    
   }
 }
 

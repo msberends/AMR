@@ -73,16 +73,3 @@
 #' @name AMR
 #' @rdname AMR
 NULL
-
-#' Plotting for Classes `rsi`, `mic` and `disk`
-#' 
-#' Functions to print classes of the `AMR` package.
-#' @inheritSection lifecycle Stable Lifecycle
-#' @inheritSection AMR Read more on Our Website!
-#' @param ... Arguments passed on to functions
-#' @inheritParams base::plot
-#' @inheritParams graphics::barplot
-#' @name plot
-#' @rdname plot
-#' @keywords internal
-NULL

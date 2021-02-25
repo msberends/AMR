@@ -54,8 +54,9 @@ as.rsi(x = as.mic(4),
        ab = "AMX",
        guideline = "EUCAST")
 
+# plot MIC values, see ?plot
 plot(mic_data)
-barplot(mic_data)
+plot(mic_data, mo = "E. coli", ab = "cipro")
 }
 \seealso{
 \code{\link[=as.rsi]{as.rsi()}}

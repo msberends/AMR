@@ -54,8 +54,9 @@ facet_rsi(facet = c("interpretation", "antibiotic"), nrow = NULL)
 scale_y_percent(breaks = seq(0, 1, 0.1), limits = NULL)
 
 scale_rsi_colours(
-  colours = c(S = "#61a8ff", SI = "#61a8ff", I = "#61f7ff", IR = "#ff6961", R =
-    "#ff6961")
+  colours = c(S = "#3CAEA3", SI = "#3CAEA3", I = "#F6D55C", IR = "#ED553B", R =
+    "#ED553B"),
+  aesthetics = "fill"
 )
 
 theme_rsi()
@@ -99,7 +100,7 @@ labels_rsi_count(
 
 \item{nrow}{(when using \code{facet}) number of rows}
 
-\item{colours}{a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be \code{FALSE} to use default \link[ggplot2:ggplot]{ggplot2} colours.}
+\item{colours}{a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be \code{FALSE} for standard \link[ggplot2:ggplot]{ggplot2} colours. The default colours are colour-blind friendly.}
 
 \item{datalabels}{show datalabels using \code{\link[=labels_rsi_count]{labels_rsi_count()}}}
 
@@ -118,6 +119,8 @@ labels_rsi_count(
 \item{y.title}{text to show as y axis description}
 
 \item{...}{other arguments passed on to \code{\link[=geom_rsi]{geom_rsi()}}}
+
+\item{aesthetics}{aesthetics to apply the colours to, defaults to "fill" but can also be "colour" or "both"}
 }
 \description{
 Use these functions to create bar plots for AMR data analysis. All functions rely on \link[ggplot2:ggplot]{ggplot2} functions.

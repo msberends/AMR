@@ -36,7 +36,8 @@
 #' @param facet variable to split plots by, either `"interpretation"` (default) or `"antibiotic"` or a grouping variable
 #' @inheritParams proportion
 #' @param nrow (when using `facet`) number of rows
-#' @param colours a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be `FALSE` to use default [ggplot2][ggplot2::ggplot()] colours.
+#' @param colours a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be `FALSE` for standard [ggplot2][ggplot2::ggplot()] colours. The default colours are colour-blind friendly.
+#' @param aesthetics aesthetics to apply the colours to, defaults to "fill" but can also be "colour" or "both"
 #' @param datalabels show datalabels using [labels_rsi_count()]
 #' @param datalabels.size size of the datalabels
 #' @param datalabels.colour colour of the datalabels
@@ -364,25 +365,27 @@ scale_y_percent <- function(breaks = seq(0, 1, 0.1), limits = NULL) {
 
 #' @rdname ggplot_rsi
 #' @export
-scale_rsi_colours <- function(colours = c(S = "#61a8ff",
-                                          SI = "#61a8ff",
-                                          I = "#61f7ff",
-                                          IR = "#ff6961",
-                                          R = "#ff6961")) {
+scale_rsi_colours <- function(colours = c(S = "#3CAEA3",
+                                          SI = "#3CAEA3",
+                                          I = "#F6D55C",
+                                          IR = "#ED553B",
+                                          R = "#ED553B"),
+                              aesthetics = "fill") {
   stop_ifnot_installed("ggplot2")
   meet_criteria(colours, allow_class = c("character", "logical"))
-  
-  # previous colour: palette = "RdYlGn"
-  # previous colours: values = c("#b22222", "#ae9c20", "#7cfc00")
+  meet_criteria(aesthetics, allow_class = c("character"), has_length = c(1, 2), is_in = c("colour", "color", "fill", "both"))
   
   if (!identical(colours, FALSE)) {
-    original_cols <- c(S = "#61a8ff",
-                       SI = "#61a8ff",
-                       I = "#61f7ff",
-                       IR = "#ff6961",
-                       R = "#ff6961")
+    if ("both" %in% aesthetics) {
+      aesthetics <- c("colour", "fill")
+    }
+    original_cols <- c(S = "#3CAEA3",
+                       SI = "#3CAEA3",
+                       I = "#F6D55C",
+                       IR = "#ED553B",
+                       R = "#ED553B")
     colours <- replace(original_cols, names(colours), colours)
-    ggplot2::scale_fill_manual(values = colours)
+    ggplot2::scale_fill_manual(values = colours, aesthetics = aesthetics)
   }
 }
 
