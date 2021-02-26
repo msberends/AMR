@@ -207,10 +207,11 @@ div[id^=last-updated] h2 {
 .table thead th {
   text-align: inherit; 
 }
-.table a:not(.btn) {
+/* all tables, including argument lists */
+table a:not(.btn) {
   text-decoration: inherit;
 }
-.table a:not(.btn):hover {
+table a:not(.btn):hover {
   text-decoration: underline;
 }
 

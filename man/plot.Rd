@@ -7,6 +7,7 @@
 \alias{plot.disk}
 \alias{ggplot.disk}
 \alias{plot.rsi}
+\alias{ggplot.rsi}
 \title{Plotting for Classes \code{rsi}, \code{mic} and \code{disk}}
 \usage{
 \method{plot}{mic}(
@@ -38,7 +39,7 @@
 
 \method{plot}{disk}(
   x,
-  main = paste("Disk zones values of", deparse(substitute(x))),
+  main = paste("Disk zones of", deparse(substitute(x))),
   ylab = "Frequency",
   xlab = "Disk diffusion diameter (mm)",
   mo = NULL,
@@ -52,7 +53,7 @@
 \method{ggplot}{disk}(
   data,
   mapping = NULL,
-  title = paste("Disk zones values of", deparse(substitute(data))),
+  title = paste("Disk zones of", deparse(substitute(data))),
   ylab = "Frequency",
   xlab = "Disk diffusion diameter (mm)",
   mo = NULL,
@@ -68,6 +69,16 @@
   ylab = "Percentage",
   xlab = "Antimicrobial Interpretation",
   main = paste("Resistance Overview of", deparse(substitute(x))),
+  ...
+)
+
+\method{ggplot}{rsi}(
+  data,
+  mapping = NULL,
+  title = paste("Resistance Overview of", deparse(substitute(data))),
+  xlab = "Antimicrobial Interpretation",
+  ylab = "Frequency",
+  colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
   ...
 )
 }
@@ -121,9 +132,11 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 \examples{
 some_mic_values <- random_mic(size = 100)
 some_disk_values <- random_disk(size = 100, mo = "Escherichia coli", ab = "cipro")
+some_rsi_values <- random_rsi(50, prob_RSI = c(0.30, 0.55, 0.05))
 
 plot(some_mic_values)
 plot(some_disk_values)
+plot(some_rsi_values)
 
 # when providing the microorganism and antibiotic, colours will show interpretations:
 plot(some_mic_values, mo = "S. aureus", ab = "ampicillin")
@@ -132,5 +145,6 @@ plot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
 if (require("ggplot2")) {
   ggplot(some_mic_values)
   ggplot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
+  ggplot(some_rsi_values)
 }
 }

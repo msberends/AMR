@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9026</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9027</span>
       </span>
     </div>
 
@@ -285,11 +285,7 @@
 
 <span class='fu'>scale_y_percent</span><span class='op'>(</span>breaks <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span><span class='op'>)</span>, limits <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>scale_rsi_colours</span><span class='op'>(</span>
-  colours <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>S <span class='op'>=</span> <span class='st'>"#3CAEA3"</span>, SI <span class='op'>=</span> <span class='st'>"#3CAEA3"</span>, I <span class='op'>=</span> <span class='st'>"#F6D55C"</span>, IR <span class='op'>=</span> <span class='st'>"#ED553B"</span>, R <span class='op'>=</span>
-    <span class='st'>"#ED553B"</span><span class='op'>)</span>,
-  aesthetics <span class='op'>=</span> <span class='st'>"fill"</span>
-<span class='op'>)</span>
+<span class='fu'>scale_rsi_colours</span><span class='op'>(</span><span class='va'>...</span>, aesthetics <span class='op'>=</span> <span class='st'>"fill"</span><span class='op'>)</span>
 
 <span class='fu'>theme_rsi</span><span class='op'>(</span><span class='op'>)</span>
 
@@ -362,7 +358,7 @@
     </tr>
     <tr>
       <th>colours</th>
-      <td><p>a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be <code>FALSE</code> for standard <a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot2</a> colours. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.</p></td>
+      <td><p>a named vactor with colour to be used for filling. The default colours are colour-blind friendly.</p></td>
     </tr>
     <tr>
       <th>datalabels</th>
@@ -398,11 +394,11 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other arguments passed on to <code>geom_rsi()</code></p></td>
+      <td><p>other arguments passed on to <code>geom_rsi()</code> or, in case of <code>scale_rsi_colours()</code>, named values to set colours. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red. See <em>Examples</em>.</p></td>
     </tr>
     <tr>
       <th>aesthetics</th>
-      <td><p>aesthetics to apply the colours to, defaults to "fill" but can also be "colour" or "both"</p></td>
+      <td><p>aesthetics to apply the colours to, defaults to "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size"</p></td>
     </tr>
     </table>
 
@@ -414,7 +410,7 @@
 <p><code>geom_rsi()</code> will take any variable from the data that has an <code><a href='as.rsi.html'>rsi</a></code> class (created with <code><a href='as.rsi.html'>as.rsi()</a></code>) using <code><a href='proportion.html'>rsi_df()</a></code> and will plot bars with the percentage R, I and S. The default behaviour is to have the bars stacked and to have the different antibiotics on the x axis.</p>
 <p><code>facet_rsi()</code> creates 2d plots (at default based on S/I/R) using <code><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>ggplot2::facet_wrap()</a></code>.</p>
 <p><code>scale_y_percent()</code> transforms the y axis to a 0 to 100% range using <code><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>ggplot2::scale_y_continuous()</a></code>.</p>
-<p><code>scale_rsi_colours()</code> sets colours to the bars: pastel blue for S, pastel turquoise for I and pastel red for R, using <code><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>ggplot2::scale_fill_manual()</a></code>.</p>
+<p><code>scale_rsi_colours()</code> sets colours to the bars (green for S, yellow for I, and red for R). with multilingual support. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.</p>
 <p><code>theme_rsi()</code> is a [ggplot2 theme][<code><a href='https://ggplot2.tidyverse.org/reference/theme.html'>ggplot2::theme()</a></code> with minimal distraction.</p>
 <p><code>labels_rsi_count()</code> print datalabels on the bars with percentage and amount of isolates using <code><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>ggplot2::geom_text()</a></code>.</p>
 <p><code>ggplot_rsi()</code> is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (<code>%&gt;%</code>). See <em>Examples</em>.</p>

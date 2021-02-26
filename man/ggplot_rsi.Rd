@@ -53,11 +53,7 @@ facet_rsi(facet = c("interpretation", "antibiotic"), nrow = NULL)
 
 scale_y_percent(breaks = seq(0, 1, 0.1), limits = NULL)
 
-scale_rsi_colours(
-  colours = c(S = "#3CAEA3", SI = "#3CAEA3", I = "#F6D55C", IR = "#ED553B", R =
-    "#ED553B"),
-  aesthetics = "fill"
-)
+scale_rsi_colours(..., aesthetics = "fill")
 
 theme_rsi()
 
@@ -100,7 +96,7 @@ labels_rsi_count(
 
 \item{nrow}{(when using \code{facet}) number of rows}
 
-\item{colours}{a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be \code{FALSE} for standard \link[ggplot2:ggplot]{ggplot2} colours. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.}
+\item{colours}{a named vactor with colour to be used for filling. The default colours are colour-blind friendly.}
 
 \item{datalabels}{show datalabels using \code{\link[=labels_rsi_count]{labels_rsi_count()}}}
 
@@ -118,9 +114,9 @@ labels_rsi_count(
 
 \item{y.title}{text to show as y axis description}
 
-\item{...}{other arguments passed on to \code{\link[=geom_rsi]{geom_rsi()}}}
+\item{...}{other arguments passed on to \code{\link[=geom_rsi]{geom_rsi()}} or, in case of \code{\link[=scale_rsi_colours]{scale_rsi_colours()}}, named values to set colours. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red. See \emph{Examples}.}
 
-\item{aesthetics}{aesthetics to apply the colours to, defaults to "fill" but can also be "colour" or "both"}
+\item{aesthetics}{aesthetics to apply the colours to, defaults to "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size"}
 }
 \description{
 Use these functions to create bar plots for AMR data analysis. All functions rely on \link[ggplot2:ggplot]{ggplot2} functions.
@@ -135,7 +131,7 @@ At default, the names of antibiotics will be shown on the plots using \code{\lin
 
 \code{\link[=scale_y_percent]{scale_y_percent()}} transforms the y axis to a 0 to 100\% range using \code{\link[ggplot2:scale_continuous]{ggplot2::scale_y_continuous()}}.
 
-\code{\link[=scale_rsi_colours]{scale_rsi_colours()}} sets colours to the bars: pastel blue for S, pastel turquoise for I and pastel red for R, using \code{\link[ggplot2:scale_manual]{ggplot2::scale_fill_manual()}}.
+\code{\link[=scale_rsi_colours]{scale_rsi_colours()}} sets colours to the bars (green for S, yellow for I, and red for R). with multilingual support. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.
 
 \code{\link[=theme_rsi]{theme_rsi()}} is a [ggplot2 theme][\code{\link[ggplot2:theme]{ggplot2::theme()}} with minimal distraction.
 

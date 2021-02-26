@@ -36,8 +36,8 @@
 #' @param facet variable to split plots by, either `"interpretation"` (default) or `"antibiotic"` or a grouping variable
 #' @inheritParams proportion
 #' @param nrow (when using `facet`) number of rows
-#' @param colours a named vector with colours for the bars. The names must be one or more of: S, SI, I, IR, R or be `FALSE` for standard [ggplot2][ggplot2::ggplot()] colours. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.
-#' @param aesthetics aesthetics to apply the colours to, defaults to "fill" but can also be "colour" or "both"
+#' @param colours a named vactor with colour to be used for filling. The default colours are colour-blind friendly.
+#' @param aesthetics aesthetics to apply the colours to, defaults to "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size"
 #' @param datalabels show datalabels using [labels_rsi_count()]
 #' @param datalabels.size size of the datalabels
 #' @param datalabels.colour colour of the datalabels
@@ -46,7 +46,7 @@
 #' @param caption text to show as caption of the plot
 #' @param x.title text to show as x axis description
 #' @param y.title text to show as y axis description
-#' @param ... other arguments passed on to [geom_rsi()]
+#' @param ... other arguments passed on to [geom_rsi()] or, in case of [scale_rsi_colours()], named values to set colours. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red. See *Examples*.
 #' @details At default, the names of antibiotics will be shown on the plots using [ab_name()]. This can be set with the `translate_ab` argument. See [count_df()].
 #'
 #' ## The Functions
@@ -56,7 +56,7 @@
 #'
 #' [scale_y_percent()] transforms the y axis to a 0 to 100% range using [ggplot2::scale_y_continuous()].
 #'
-#' [scale_rsi_colours()] sets colours to the bars: pastel blue for S, pastel turquoise for I and pastel red for R, using [ggplot2::scale_fill_manual()].
+#' [scale_rsi_colours()] sets colours to the bars (green for S, yellow for I, and red for R). with multilingual support. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.
 #'
 #' [theme_rsi()] is a [ggplot2 theme][[ggplot2::theme()] with minimal distraction.
 #'
@@ -219,11 +219,6 @@ ggplot_rsi <- function(data,
     theme_rsi()
   
   if (fill == "interpretation") {
-    # set RSI colours
-    if (isFALSE(colours) & missing(datalabels.colour)) {
-      # set datalabel colour to middle grey
-      datalabels.colour <- "grey50"
-    }
     p <- p + scale_rsi_colours(colours = colours)
   }
   
@@ -362,28 +357,50 @@ scale_y_percent <- function(breaks = seq(0, 1, 0.1), limits = NULL) {
 
 #' @rdname ggplot_rsi
 #' @export
-scale_rsi_colours <- function(colours = c(S = "#3CAEA3",
-                                          SI = "#3CAEA3",
-                                          I = "#F6D55C",
-                                          IR = "#ED553B",
-                                          R = "#ED553B"),
+scale_rsi_colours <- function(...,
                               aesthetics = "fill") {
   stop_ifnot_installed("ggplot2")
-  meet_criteria(colours, allow_class = c("character", "logical"))
-  meet_criteria(aesthetics, allow_class = c("character"), has_length = c(1, 2), is_in = c("colour", "color", "fill", "both"))
+  meet_criteria(aesthetics, allow_class = c("character"), has_length = c(1, 2), is_in = c("alpha", "colour", "color", "fill", "linetype", "shape", "size"))
   
-  if (!identical(colours, FALSE)) {
-    if ("both" %in% aesthetics) {
-      aesthetics <- c("colour", "fill")
-    }
+  # behaviour until AMR pkg v1.5.0 and also when coming from ggplot_rsi()
+  if ("colours" %in% names(list(...))) {
     original_cols <- c(S = "#3CAEA3",
                        SI = "#3CAEA3",
                        I = "#F6D55C",
                        IR = "#ED553B",
                        R = "#ED553B")
-    colours <- replace(original_cols, names(colours), colours)
-    ggplot2::scale_fill_manual(values = colours, aesthetics = aesthetics)
+    colours <- replace(original_cols, names(list(...)$colours), list(...)$colours)
+    return(ggplot2::scale_fill_manual(values = colours))
   }
+  if (identical(unlist(list(...)), FALSE)) {
+    return(invisible())
+  }
+  
+  names_susceptible <- c("S", "SI", "IS", "S+I", "I+S", "susceptible",
+                         unique(translations_file[which(translations_file$pattern == "susceptible"),
+                                                  "replacement", drop = TRUE]))
+  names_incr_exposure <- c("I", "intermediate", "increased exposure", "incr. exposure",
+                           unique(translations_file[which(translations_file$pattern == "intermediate"),
+                                                    "replacement", drop = TRUE]))
+  names_resistant <- c("R", "IR", "RI", "R+I", "I+R", "resistant",
+                       unique(translations_file[which(translations_file$pattern == "resistant"), 
+                                                "replacement", drop = TRUE]))
+  
+  susceptible <- rep("#3CAEA3", length(names_susceptible))
+  names(susceptible) <- names_susceptible
+  incr_exposure <- rep("#F6D55C", length(names_incr_exposure))
+  names(incr_exposure) <- names_incr_exposure
+  resistant <- rep("#ED553B", length(names_resistant))
+  names(resistant) <- names_resistant
+  
+  original_cols = c(susceptible, incr_exposure, resistant)
+  dots <- c(...)
+  # replace S, I, R as colours: scale_rsi_colours(mydatavalue = "S")
+  dots[dots == "S"] <- "#3CAEA3"
+  dots[dots == "I"] <- "#F6D55C"
+  dots[dots == "R"] <- "#ED553B"
+  colours <- replace(original_cols, names(dots), dots)
+  ggplot2::scale_discrete_manual(aesthetics = aesthetics, values = colours)
 }
 
 #' @rdname ggplot_rsi

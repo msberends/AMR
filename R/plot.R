@@ -50,9 +50,11 @@
 #' @examples 
 #' some_mic_values <- random_mic(size = 100)
 #' some_disk_values <- random_disk(size = 100, mo = "Escherichia coli", ab = "cipro")
+#' some_rsi_values <- random_rsi(50, prob_RSI = c(0.30, 0.55, 0.05))
 #' 
 #' plot(some_mic_values)
 #' plot(some_disk_values)
+#' plot(some_rsi_values)
 #' 
 #' # when providing the microorganism and antibiotic, colours will show interpretations:
 #' plot(some_mic_values, mo = "S. aureus", ab = "ampicillin")
@@ -61,6 +63,7 @@
 #' if (require("ggplot2")) {
 #'   ggplot(some_mic_values)
 #'   ggplot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
+#'   ggplot(some_rsi_values)
 #' }
 NULL
 
@@ -229,7 +232,7 @@ ggplot.mic <- function(data,
                                  name = NULL)
   } else {
     p <- p +
-      ggplot2::geom_col(aes(x = mic, y = count))
+      ggplot2::geom_col(ggplot2::aes(x = mic, y = count))
   }
   
   p +
@@ -242,7 +245,7 @@ ggplot.mic <- function(data,
 #' @importFrom graphics barplot axis mtext legend
 #' @rdname plot
 plot.disk <- function(x,
-                      main = paste("Disk zones values of", deparse(substitute(x))),
+                      main = paste("Disk zones of", deparse(substitute(x))),
                       ylab = "Frequency",
                       xlab = "Disk diffusion diameter (mm)",
                       mo = NULL,
@@ -315,7 +318,7 @@ plot.disk <- function(x,
 #' @export
 #' @noRd
 barplot.disk <- function(height,
-                         main = paste("Disk zones values of", deparse(substitute(height))),
+                         main = paste("Disk zones of", deparse(substitute(height))),
                          ylab = "Frequency",
                          xlab = "Disk diffusion diameter (mm)",
                          mo = NULL,
@@ -350,7 +353,7 @@ barplot.disk <- function(height,
 # will be exported using s3_register() in R/zzz.R
 ggplot.disk <- function(data,
                         mapping = NULL,
-                        title = paste("Disk zones values of", deparse(substitute(data))),
+                        title = paste("Disk zones of", deparse(substitute(data))),
                         ylab = "Frequency",
                         xlab = "Disk diffusion diameter (mm)",
                         mo = NULL,
@@ -395,7 +398,7 @@ ggplot.disk <- function(data,
   
   if (any(colours_RSI %in% cols_sub$cols)) {
     p <- p +
-      ggplot2::geom_col(aes(x = disk, y = count, fill = cols)) + 
+      ggplot2::geom_col(ggplot2::aes(x = disk, y = count, fill = cols)) + 
       ggplot2::scale_fill_manual(values = c("Resistant" = colours_RSI[1],
                                             "Susceptible" = colours_RSI[2],
                                             "Incr. exposure" = colours_RSI[3],
@@ -403,7 +406,7 @@ ggplot.disk <- function(data,
                                  name = NULL)
   } else {
     p <- p +
-      ggplot2::geom_col(aes(x = disk, y = count))
+      ggplot2::geom_col(ggplot2::aes(x = disk, y = count))
   }
   
   p +
@@ -514,7 +517,7 @@ plot.rsi <- function(x,
                   stringsAsFactors = FALSE)
   }
   
-  data$x <- factor(data$x, levels = c("R", "S", "I"), ordered = TRUE)
+  data$x <- factor(data$x, levels = c("S", "I", "R"), ordered = TRUE)
   
   ymax <- pm_if_else(max(data$s) > 95, 105, 100)
   
@@ -558,7 +561,7 @@ barplot.rsi <- function(height,
   main <- gsub(" +", " ", paste0(main, collapse = " "))
   
   x <- table(height)
-  x <- x[c(3, 1, 2)]
+  x <- x[c(1, 2, 3)]
   barplot(x,
           col = colours_RSI,
           xlab = xlab,
@@ -566,4 +569,40 @@ barplot.rsi <- function(height,
           ylab = ylab,
           axes = FALSE)
   axis(2, seq(0, max(x)))
+}
+
+#' @method ggplot rsi
+#' @rdname plot
+# will be exported using s3_register() in R/zzz.R
+ggplot.rsi <- function(data,
+                       mapping = NULL,
+                       title = paste("Resistance Overview of", deparse(substitute(data))),
+                       xlab = "Antimicrobial Interpretation",
+                       ylab = "Frequency",
+                       colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
+                       ...) {
+  stop_ifnot_installed("ggplot2")
+  meet_criteria(title, allow_class = "character")
+  meet_criteria(ylab, allow_class = "character", has_length = 1)
+  meet_criteria(xlab, allow_class = "character", has_length = 1)
+  meet_criteria(colours_RSI, allow_class = "character", has_length = c(1, 3))
+  if (length(colours_RSI) == 1) {
+    colours_RSI <- rep(colours_RSI, 3)
+  }
+  
+  df <- as.data.frame(table(data), stringsAsFactors = TRUE)
+  colnames(df) <- c("rsi", "count")
+  if (!is.null(mapping)) {
+    p <- ggplot2::ggplot(df, mapping = mapping)
+  } else {
+    p <- ggplot2::ggplot(df)
+  }
+  
+  p +
+    ggplot2::geom_col(ggplot2::aes(x = rsi, y = count, fill = rsi)) + 
+    ggplot2::scale_fill_manual(values = c("R" = colours_RSI[1],
+                                          "S" = colours_RSI[2],
+                                          "I" = colours_RSI[3])) +
+    ggplot2::labs(title = title, x = xlab, y = ylab) +
+    ggplot2::theme(legend.position = "none")
 }

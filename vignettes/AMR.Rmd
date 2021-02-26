@@ -510,7 +510,7 @@ mic_values <- random_mic(size = 100)
 mic_values
 ```
 
-```{r}
+```{r mic_plots}
 # base R:
 plot(mic_values)
 # ggplot2:
@@ -520,39 +520,36 @@ ggplot(mic_values)
 But we could also be more specific, by generating MICs that are likely to be found in *E. coli* for ciprofloxacin:
 
 ```{r, results = 'markup', message = FALSE, warning = FALSE}
-# this will generate MICs that are likely to be found in E. coli for ciprofloxacin:
-mic_values_specific <- random_mic(size = 100, mo = "E. coli", ab = "cipro")
+mic_values <- random_mic(size = 100, mo = "E. coli", ab = "cipro")
 ```
 
 For the `plot()` and `ggplot()` function, we can define the microorganism and an antimicrobial agent the same way. This will add the interpretation of those values according to a chosen guidelines (defaults to the latest EUCAST guideline).
 
 Default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red:
 
-```{r, message = FALSE, warning = FALSE}
+```{r mic_plots_mo_ab, message = FALSE, warning = FALSE}
 # base R:
-plot(mic_values_specific, mo = "E. coli", ab = "cipro")
+plot(mic_values, mo = "E. coli", ab = "cipro")
 # ggplot2:
-ggplot(mic_values_specific, mo = "E. coli", ab = "cipro")
+ggplot(mic_values, mo = "E. coli", ab = "cipro")
 ```
 
 For disk diffusion values, there is not much of a difference in plotting:
 
 ```{r, results = 'markup'}
-# this will generate disks that are likely to be found in E. coli for ciprofloxacin:
-disk_values_specific <- random_disk(size = 100, mo = "E. coli", ab = "cipro")
-disk_values_specific
+disk_values <- random_disk(size = 100, mo = "E. coli", ab = "cipro")
+disk_values
 ```
 
-```{r, message = FALSE, warning = FALSE}
+```{r disk_plots, message = FALSE, warning = FALSE}
 # base R:
-plot(disk_values_specific, mo = "E. coli", ab = "cipro")
+plot(disk_values, mo = "E. coli", ab = "cipro")
 ```
 
 And when using the `ggplot2` package, but now choosing the latest implemented CLSI guideline (notice that the EUCAST-specific term "Incr. exposure" has changed to "Intermediate"):
 
-```{r, message = FALSE, warning = FALSE}
-# and ggplot2, but now choosing an old CLSI guideline:
-ggplot(disk_values_specific,
+```{r disk_plots_mo_ab, message = FALSE, warning = FALSE}
+ggplot(disk_values,
        mo = "E. coli",
        ab = "cipro",
        guideline = "CLSI")

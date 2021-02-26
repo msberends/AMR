@@ -50,6 +50,7 @@ pkg_env$mo_failed <- character(0)
   s3_register("skimr::get_skimmers", "rsi")
   s3_register("skimr::get_skimmers", "mic")
   s3_register("skimr::get_skimmers", "disk")
+  s3_register("ggplot2::ggplot", "rsi")
   s3_register("ggplot2::ggplot", "mic")
   s3_register("ggplot2::ggplot", "disk")
   

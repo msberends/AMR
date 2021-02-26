@@ -42,6 +42,7 @@ test_that("rsi works", {
   pdf(NULL) # prevent Rplots.pdf being created
   expect_silent(barplot(as.rsi(c("S", "I", "R"))))
   expect_silent(plot(as.rsi(c("S", "I", "R"))))
+  if (require("ggplot2")) expect_s3_class(ggplot(as.rsi(c("S", "I", "R"))), "gg")
   expect_output(print(as.rsi(c("S", "I", "R"))))
   
   expect_equal(as.character(as.rsi(c(1:3))), c("S", "I", "R"))

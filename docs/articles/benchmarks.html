@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9025</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9027</span>
       </span>
     </div>
 
@@ -226,19 +226,19 @@
   times <span class="op">=</span> <span class="fl">25</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">S.aureus</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
-<span class="co">#                                   expr min    lq mean median    uq max neval</span>
-<span class="co">#                           as.mo("sau")  10  11.0   15   11.0  13.0  47    25</span>
-<span class="co">#                          as.mo("stau")  56  57.0   75   62.0  95.0 100    25</span>
-<span class="co">#                          as.mo("STAU")  54  56.0   67   58.0  66.0 110    25</span>
-<span class="co">#                        as.mo("staaur")  10  11.0   12   11.0  12.0  13    25</span>
-<span class="co">#                        as.mo("STAAUR")  10  11.0   16   11.0  12.0  50    25</span>
-<span class="co">#                     as.mo("S. aureus")  28  31.0   46   33.0  65.0  71    25</span>
-<span class="co">#                      as.mo("S aureus")  29  30.0   42   33.0  64.0  67    25</span>
-<span class="co">#         as.mo("Staphylococcus aureus")   3   3.2    5    3.3   3.7  40    25</span>
-<span class="co">#  as.mo("Staphylococcus aureus (MRSA)") 240 260.0  270  270.0 280.0 290    25</span>
-<span class="co">#       as.mo("Sthafilokkockus aaureuz") 170 200.0  210  200.0 210.0 280    25</span>
-<span class="co">#                          as.mo("MRSA")  10  11.0   17   11.0  13.0  51    25</span>
-<span class="co">#                          as.mo("VISA")  19  20.0   36   21.0  50.0 150    25</span></code></pre></div>
+<span class="co">#                                   expr   min    lq  mean median    uq max neval</span>
+<span class="co">#                           as.mo("sau")   9.9  11.0  13.0   11.0  12.0  43    25</span>
+<span class="co">#                          as.mo("stau")  52.0  55.0  68.0   58.0  86.0  95    25</span>
+<span class="co">#                          as.mo("STAU")  53.0  56.0  73.0   62.0  93.0 100    25</span>
+<span class="co">#                        as.mo("staaur")  10.0  11.0  17.0   11.0  12.0  48    25</span>
+<span class="co">#                        as.mo("STAAUR")  10.0  11.0  14.0   11.0  13.0  48    25</span>
+<span class="co">#                     as.mo("S. aureus")  27.0  28.0  41.0   33.0  60.0  73    25</span>
+<span class="co">#                      as.mo("S aureus")  27.0  28.0  49.0   34.0  64.0 160    25</span>
+<span class="co">#         as.mo("Staphylococcus aureus")   2.9   3.2   4.8    3.4   3.7  36    25</span>
+<span class="co">#  as.mo("Staphylococcus aureus (MRSA)") 250.0 260.0 270.0  270.0 280.0 320    25</span>
+<span class="co">#       as.mo("Sthafilokkockus aaureuz") 170.0 200.0 210.0  210.0 210.0 310    25</span>
+<span class="co">#                          as.mo("MRSA")  10.0  11.0  16.0   12.0  12.0  50    25</span>
+<span class="co">#                          as.mo("VISA")  19.0  20.0  27.0   21.0  23.0  60    25</span></code></pre></div>
 <p><img src="benchmarks_files/figure-html/unnamed-chunk-4-1.png" width="750"></p>
 <p>In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 5 milliseconds means it can determine 200 input values per second. It case of 200 milliseconds, this is only 5 input values per second. It is clear that accepted taxonomic names are extremely fast, but some variations are up to 200 times slower to determine.</p>
 <p>To improve performance, we implemented two important algorithms to save unnecessary calculations: <strong>repetitive results</strong> and <strong>already precalculated results</strong>.</p>
@@ -260,8 +260,8 @@
 <span class="co"># what do these values look like? They are of class &lt;mo&gt;:</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co"># Class &lt;mo&gt;</span>
-<span class="co"># [1] B_ESCHR_COLI B_PROTS_MRBL B_PROTS_MRBL B_PROTS_MRBL B_STPHY_CONS</span>
-<span class="co"># [6] B_ENTRC</span>
+<span class="co"># [1] B_STRPT_PYGN  B_STPHY_HMNS  B_STPHY_CONS  B_STRPT_SLVR  B_ENTRBC_CLOC</span>
+<span class="co"># [6] B_STPHY_CONS</span>
   
 <span class="co"># as the example_isolates data set has 2,000 rows, we should have 2 million items</span>
 <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
@@ -277,8 +277,8 @@
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
 <span class="co">#        expr min  lq mean median  uq max neval</span>
-<span class="co">#  mo_name(x) 160 189  224    201 228 356    10</span></code></pre></div>
-<p>So getting official taxonomic names of 2,000,000 (!!) items consisting of 90 unique values only takes 0.201 seconds. That is 101 nanoseconds on average. You only lose time on your unique input values.</p>
+<span class="co">#  mo_name(x) 161 194  224    204 229 368    10</span></code></pre></div>
+<p>So getting official taxonomic names of 2,000,000 (!!) items consisting of 90 unique values only takes 0.204 seconds. That is 102 nanoseconds on average. You only lose time on your unique input values.</p>
 </div>
 <div id="precalculated-results" class="section level3">
 <h3 class="hasAnchor">
@@ -291,10 +291,10 @@
                          times <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
-<span class="co">#  expr   min    lq  mean median    uq  max neval</span>
-<span class="co">#     A  6.80  7.17  7.46   7.54  7.81  8.0    10</span>
-<span class="co">#     B 24.30 25.80 31.60  26.20 28.80 75.6    10</span>
-<span class="co">#     C  1.59  1.70  1.89   1.84  2.02  2.5    10</span></code></pre></div>
+<span class="co">#  expr   min    lq  mean median    uq   max neval</span>
+<span class="co">#     A  7.45  7.84 12.70   8.62  9.16 51.10    10</span>
+<span class="co">#     B 23.80 24.50 30.60  26.30 28.80 70.20    10</span>
+<span class="co">#     C  1.66  1.74  1.85   1.79  1.92  2.24    10</span></code></pre></div>
 <p>So going from <code><a href="../reference/mo_property.html">mo_name("Staphylococcus aureus")</a></code> to <code>"Staphylococcus aureus"</code> takes 0.0018 seconds - it doesn’t even start calculating <em>if the result would be the same as the expected resulting value</em>. That goes for all helper functions:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">run_it</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html">microbenchmark</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_species</a></span><span class="op">(</span><span class="st">"aureus"</span><span class="op">)</span>,
@@ -309,14 +309,14 @@
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
 <span class="co">#  expr  min   lq mean median   uq  max neval</span>
-<span class="co">#     A 1.25 1.28 1.39   1.39 1.50 1.56    10</span>
-<span class="co">#     B 1.17 1.19 1.41   1.43 1.48 1.92    10</span>
-<span class="co">#     C 1.20 1.33 1.43   1.46 1.50 1.61    10</span>
-<span class="co">#     D 1.43 1.45 1.50   1.49 1.53 1.61    10</span>
-<span class="co">#     E 1.26 1.40 1.45   1.43 1.49 1.81    10</span>
-<span class="co">#     F 1.15 1.17 1.32   1.26 1.44 1.69    10</span>
-<span class="co">#     G 1.19 1.25 1.37   1.35 1.47 1.58    10</span>
-<span class="co">#     H 1.20 1.25 1.46   1.31 1.53 2.33    10</span></code></pre></div>
+<span class="co">#     A 1.59 1.60 1.91   1.97 2.15 2.28    10</span>
+<span class="co">#     B 1.58 1.61 1.87   1.86 1.96 2.39    10</span>
+<span class="co">#     C 1.55 1.57 1.64   1.63 1.69 1.79    10</span>
+<span class="co">#     D 1.57 1.60 1.83   1.72 1.92 2.73    10</span>
+<span class="co">#     E 1.50 1.74 1.86   1.86 2.03 2.24    10</span>
+<span class="co">#     F 1.49 1.55 1.75   1.67 1.90 2.24    10</span>
+<span class="co">#     G 1.54 1.59 1.69   1.65 1.77 1.95    10</span>
+<span class="co">#     H 1.57 1.58 1.75   1.72 1.78 2.21    10</span></code></pre></div>
 <p>Of course, when running <code><a href="../reference/mo_property.html">mo_phylum("Firmicutes")</a></code> the function has zero knowledge about the actual microorganism, namely <em>S. aureus</em>. But since the result would be <code>"Firmicutes"</code> anyway, there is no point in calculating the result. And because this package contains all phyla of all known bacteria, it can just return the initial value immediately.</p>
 </div>
 <div id="results-in-other-languages" class="section level3">
@@ -343,14 +343,14 @@
                          times <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
-<span class="co">#  expr   min    lq  mean median    uq    max neval</span>
-<span class="co">#    en 17.05 17.38 21.26  17.74 18.50  97.23   100</span>
-<span class="co">#    de 19.90 20.33 24.80  20.67 21.06  93.34   100</span>
-<span class="co">#    nl 24.86 25.30 31.21  25.65 26.34 102.20   100</span>
-<span class="co">#    es 19.83 20.22 26.56  20.49 21.20  97.59   100</span>
-<span class="co">#    it 19.79 20.20 26.82  20.63 21.31  94.85   100</span>
-<span class="co">#    fr 19.61 19.87 24.26  20.21 20.68  92.42   100</span>
-<span class="co">#    pt 19.64 20.06 23.78  20.40 21.05  92.91   100</span></code></pre></div>
+<span class="co">#  expr   min    lq  mean median    uq   max neval</span>
+<span class="co">#    en 17.33 18.21 21.97  19.06 20.40 68.32   100</span>
+<span class="co">#    de 20.44 21.37 30.49  22.33 24.97 78.42   100</span>
+<span class="co">#    nl 25.13 26.10 31.91  27.11 28.50 86.00   100</span>
+<span class="co">#    es 20.28 21.16 26.37  22.03 23.67 74.74   100</span>
+<span class="co">#    it 20.06 21.00 26.05  21.95 23.42 94.16   100</span>
+<span class="co">#    fr 19.90 20.63 24.40  21.85 22.82 69.07   100</span>
+<span class="co">#    pt 20.22 21.03 25.63  21.89 23.24 76.63   100</span></code></pre></div>
 <p>Currently supported non-English languages are German, Dutch, Spanish, Italian, French and Portuguese.</p>
 </div>
   </div>
