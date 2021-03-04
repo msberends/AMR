@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data Set with 67,151 Microorganisms}
+\title{Data Set with 69,625 Microorganisms}
 \format{
-A \link{data.frame} with 67,151 observations and 16 variables:
+A \link{data.frame} with 69,625 observations and 16 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}
@@ -13,29 +13,36 @@ A \link{data.frame} with 67,151 observations and 16 variables:
 \item \code{rank}\cr Text of the taxonomic rank of the microorganism, like \code{"species"} or \code{"genus"}
 \item \code{ref}\cr Author(s) and year of concerning scientific publication
 \item \code{species_id}\cr ID of the species as used by the Catalogue of Life
-\item \code{source}\cr Either "CoL", "DSMZ" (see \emph{Source}) or "manually added"
+\item \code{source}\cr Either "CoL", "LPSN" or "manually added" (see \emph{Source})
 \item \code{prevalence}\cr Prevalence of the microorganism, see \code{\link[=as.mo]{as.mo()}}
 \item \code{snomed}\cr SNOMED code of the microorganism. Use \code{\link[=mo_snomed]{mo_snomed()}} to retrieve it quickly, see \code{\link[=mo_property]{mo_property()}}.
 }
 }
 \source{
-Catalogue of Life: Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org} (check included annual version with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}).
+Catalogue of Life: 2019 Annual Checklist
+\itemize{
+\item Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org}
+}
 
-Parte, A.C. (2018). LPSN — List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; \doi{10.1099/ijsem.0.002786}
-
-Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures, Germany, Prokaryotic Nomenclature Up-to-Date, \url{https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date} and \url{https://lpsn.dsmz.de} (check included version with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}).
+List of Prokaryotic names with Standing in Nomenclature: March 2021
+\itemize{
+\item Parte, A.C., Sarda Carbasse, J., Meier-Kolthoff, J.P., Reimer, L.C. and Goker, M. (2020). List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ. International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \doi{10.1099/ijsem.0.004332}
+\item Parte, A.C. (2018). LPSN — List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; \doi{10.1099/ijsem.0.002786}
+\item Parte, A.C. (2014). LPSN — List of Prokaryotic names with Standing in Nomenclature. Nucleic Acids Research, 42, Issue D1, D613–D616; \doi{10.1093/nar/gkt1111}
+\item Euzeby, J.P. (1997). List of Bacterial Names with Standing in Nomenclature: a Folder Available on the Internet. International Journal of Systematic Bacteriology, 47, 590-592; \doi{10.1099/00207713-47-2-590}
+}
 }
 \usage{
 microorganisms
 }
 \description{
-A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using \code{\link[=as.mo]{as.mo()}}.
+A data set containing the microbial taxonomy, last updated in March 2021, of six kingdoms from the Catalogue of Life (CoL) and the List of Prokaryotic names with Standing in Nomenclature (LPSN). MO codes can be looked up using \code{\link[=as.mo]{as.mo()}}.
 }
 \details{
 Please note that entries are only based on the Catalogue of Life and the LPSN (see below). Since these sources incorporate entries based on (recent) publications in the International Journal of Systematic and Evolutionary Microbiology (IJSEM), it can happen that the year of publication is sometimes later than one might expect.
 
-For example, \emph{Staphylococcus pettenkoferi} was newly named in Diagnostic Microbiology and Infectious Disease in 2002 (PMID 12106949), but it was not before 2007 that a publication in IJSEM followed (PMID 17625191). Consequently, the AMR package returns 2007 for \code{mo_year("S. pettenkoferi")}.
-\subsection{Manually additions}{
+For example, \emph{Staphylococcus pettenkoferi} was described for the first time in Diagnostic Microbiology and Infectious Disease in 2002 (\doi{10.1016/s0732-8893(02)00399-1}), but it was not before 2007 that a publication in IJSEM followed (\doi{10.1099/ijs.0.64381-0}). Consequently, the AMR package returns 2007 for \code{mo_year("S. pettenkoferi")}.
+\subsection{Manual additions}{
 
 For convenience, some entries were added manually:
 \itemize{
@@ -46,7 +53,6 @@ For convenience, some entries were added manually:
 \item 1 entry of \emph{Blastocystis} (\emph{Blastocystis hominis}), although it officially does not exist (Noel \emph{et al.} 2005, PMID 15634993)
 \item 5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)
 \item 6 families under the Enterobacterales order, according to Adeolu \emph{et al.} (2016, PMID 27620848), that are not (yet) in the Catalogue of Life
-\item 7,411 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) since the DSMZ contain the latest taxonomic information based on recent publications
 }
 }
 
@@ -63,12 +69,11 @@ The file in \R format (with preserved data structure) can be found here:
 }
 }
 }
-\section{About the Records from DSMZ (see \emph{Source})}{
+\section{About the Records from LPSN (see \emph{Source})}{
 
-Names of prokaryotes are defined as being validly published by the International Code of Nomenclature of Bacteria. Validly published are all names which are included in the Approved Lists of Bacterial Names and the names subsequently published in the International Journal of Systematic Bacteriology (IJSB) and, from January 2000, in the International Journal of Systematic and Evolutionary Microbiology (IJSEM) as original articles or in the validation lists.
-\emph{(from \url{https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date})}
+The List of Prokaryotic names with Standing in Nomenclature (LPSN) provides comprehensive information on the nomenclature of prokaryotes. LPSN is a free to use service founded by Jean P. Euzeby in 1997 and later on maintained by Aidan C. Parte.
 
-In February 2020, the DSMZ records were merged with the List of Prokaryotic names with Standing in Nomenclature (LPSN).
+As of February 2020, the regularly augmented LPSN database at DSMZ is the basis of the new LPSN service. The new database was implemented for the Type-Strain Genome Server and augmented in 2018 to store all kinds of nomenclatural information. Data from the previous version of LPSN and from the Prokaryotic Nomenclature Up-to-date (PNU) service were imported into the new system. PNU had been established in 1993 as a service of the Leibniz Institute DSMZ, and was curated by Norbert Weiss, Manfred Kracht and Dorothea Gleim.
 }
 
 \section{Catalogue of Life}{
@@ -76,7 +81,7 @@ In February 2020, the DSMZ records were merged with the List of Prokaryotic name
 \if{html}{\figure{logo_col.png}{options: height=40px style=margin-bottom:5px} \cr}
 This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, \url{http://www.catalogueoflife.org}). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, \href{https://lpsn.dsmz.de}{lpsn.dsmz.de}). This supplementation is needed until the \href{https://github.com/CatalogueOfLife/general}{CoL+ project} is finished, which we await.
 
-\link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which versions of the CoL and LSPN were included in this package with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}.
+\link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which versions of the CoL and LPSN were included in this package with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}.
 }
 
 \section{Reference Data Publicly Available}{

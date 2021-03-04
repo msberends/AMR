@@ -463,16 +463,22 @@ exec_as.mo <- function(x,
     # translate 'unknown' names back to English
     if (any(x %like% "unbekannt|onbekend|desconocid|sconosciut|iconnu|desconhecid", na.rm = TRUE)) {
       trns <- subset(translations_file, pattern %like% "unknown" | affect_mo_name == TRUE)
-      lapply(seq_len(nrow(trns)),
-             function(i) x <<- gsub(pattern = trns$replacement[i],
-                                    replacement = trns$pattern[i],
-                                    x = x,
-                                    ignore.case = TRUE,
-                                    perl = TRUE))
+      langs <- LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED != "en"]
+      for (l in langs) {
+        for (i in seq_len(nrow(trns))) {
+          if (!is.na(trns[i, l, drop = TRUE])) {
+            x <- gsub(pattern = trns[i, l, drop = TRUE],
+                      replacement = trns$pattern[i],
+                      x = x,
+                      ignore.case = TRUE,
+                      perl = TRUE)
+          }
+        }
+      }
     }
     
     x_backup <- x
-
+    
     # from here on case-insensitive
     x <- tolower(x)
     
@@ -1551,6 +1557,9 @@ exec_as.mo <- function(x,
   if (property == "mo") {
     x <- set_clean_class(x, new_class = c("mo", "character"))
   }
+  
+  # keep track of time
+  end_time <- Sys.time()
 
   if (length(mo_renamed()) > 0) {
     print(mo_renamed())
@@ -1571,10 +1580,9 @@ exec_as.mo <- function(x,
     x <- structure(x, uncertainties = uncertainties)
   } else {
     # keep track of time - give some hints to improve speed if it takes a long time
-    end_time <- Sys.time()
     delta_time <- difftime(end_time, start_time, units = "secs")
     if (delta_time >= 30) {
-      message_("Using `as.mo()` took ", delta_time, " seconds, which is a long time. Some suggestions to improve speed include:")
+      message_("Using `as.mo()` took ", round(delta_time), " seconds, which is a long time. Some suggestions to improve speed include:")
       message_(word_wrap("- Try to use as many valid taxonomic names as possible for your input.",
                          extra_indent = 2),
                as_note = FALSE)
@@ -1922,7 +1930,7 @@ print.mo_renamed <- function(x, ...) {
                     "",
                     paste0(" (",  gsub("et al.", font_italic("et al."), x$old_ref[i]), ")")),
              " was renamed ",
-             ifelse(as.integer(gsub("[^0-9]", "", x$new_ref[i])) < as.integer(gsub("[^0-9]", "", x$old_ref[i])),
+             ifelse(!x$new_ref[i] %in% c("", NA) && as.integer(gsub("[^0-9]", "", x$new_ref[i])) < as.integer(gsub("[^0-9]", "", x$old_ref[i])),
                     font_bold("back to "),
                     ""),
              font_italic(x$new_name[i]),

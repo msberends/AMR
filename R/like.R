@@ -100,13 +100,12 @@ like <- function(x, pattern, ignore.case = TRUE) {
     } else if (length(pattern) != length(x)) {
       stop_("arguments `x` and `pattern` must be of same length, or either one must be 1")
     }
-    mapply(FUN = grepl,
-           pattern,
-           x,
-           MoreArgs = list(ignore.case = FALSE, fixed = fixed, perl = !fixed),
-           SIMPLIFY = TRUE,
-           USE.NAMES = FALSE)
-    
+    unlist(
+      Map(f = grepl,
+          pattern,
+          x,
+          MoreArgs = list(ignore.case = FALSE, fixed = fixed, perl = !fixed)),
+      use.names = FALSE)
   }
 }
 

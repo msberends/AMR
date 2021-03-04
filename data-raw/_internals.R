@@ -175,7 +175,7 @@ microorganisms.translation <- readRDS("data-raw/microorganisms.translation.rds")
 INTRINSIC_R <- create_intr_resistance()
 
 # for checking input in `language` argument in e.g. mo_*() and ab_*() functions
-LANGUAGES_SUPPORTED <- sort(c("en", unique(translations_file$lang)))
+LANGUAGES_SUPPORTED <- sort(c("en", colnames(translations_file)[nchar(colnames(translations_file)) == 2]))
 
 # vectors of CoNS and CoPS, improves speed in as.mo()
 MO_CONS <- create_species_cons_cops("CoNS")

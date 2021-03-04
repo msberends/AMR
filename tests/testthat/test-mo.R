@@ -124,7 +124,6 @@ test_that("as.mo works", {
   expect_identical(as.character(as.mo("S. epidermidis",  Becker = FALSE)), "B_STPHY_EPDR")
   expect_identical(as.character(as.mo("S. epidermidis",  Becker = TRUE)),  "B_STPHY_CONS")
   expect_identical(as.character(as.mo("STAEPI",          Becker = TRUE)),  "B_STPHY_CONS")
-  expect_identical(as.character(as.mo("S. intermedius",  Becker = FALSE)), "B_STPHY_INTR")
   expect_identical(as.character(as.mo("Sta intermedius", Becker = FALSE)), "B_STPHY_INTR")
   expect_identical(as.character(as.mo("Sta intermedius", Becker = TRUE)),  "B_STPHY_COPS")
   expect_identical(as.character(as.mo("STAINT",          Becker = TRUE)),  "B_STPHY_COPS")

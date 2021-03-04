@@ -31,11 +31,11 @@ library(tidyverse)
 snomed <- clipr::read_clip_tbl(skip = 2)
 snomed <- snomed %>%
   dplyr::filter(gsub("(^genus |^familie |^stam |ss.? |subsp.? |subspecies )", "", 
-              Omschrijving.,
-              ignore.case = TRUE) %in% c(microorganisms$fullname, 
-                                         microorganisms.old$fullname)) %>% 
+                     Omschrijving.,
+                     ignore.case = TRUE) %in% c(microorganisms$fullname, 
+                                                microorganisms.old$fullname)) %>% 
   dplyr::transmute(fullname = mo_name(Omschrijving.),
-            snomed = as.integer(Id)) %>% 
+                   snomed = as.integer(Id)) %>% 
   dplyr::filter(!fullname %like% "unknown")
 snomed_trans <- snomed %>%
   group_by(fullname) %>%

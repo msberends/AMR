@@ -1,5 +1,5 @@
-# AMR 1.5.0.9027
-## <small>Last updated: 26 February 2021</small>
+# AMR 1.5.0.9028
+## <small>Last updated:  4 March 2021</small>
 
 ### New
 * Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the `eucast_rules()` function and in `as.rsi()` to interpret MIC and disk diffusion values. This is now the default guideline in this package.
@@ -45,6 +45,14 @@
   ```
 
 ### Changed
+* Microbial taxonomy updated to 3 March 2021 (according to the [LSPN](https://lpsn.dsmz.de))
+  * Added 3,372 new names and 1,523 existing names became synomyms
+  * The URL of a bacterial species (`mo_url()`) will now lead to https://lpsn.dsmz.de
+* Big update for plotting classes `rsi`, `<mic>`, and `<disk>`:
+  * Plotting of MIC and disk diffusion values now support interpretation colouring if you supply the microorganism and antimicrobial agent
+  * All colours were updated to colour-blind friendly versions for values R, S and I for all plot methods (also applies to tibble printing)
+  * Interpretation of MIC and disk diffusion values to R/SI will now be translated if the system language is German, Dutch or Spanish (see `translate`)
+  * Plotting is now possible with base R using `plot()` and with ggplot2 using `ggplot()` on any vector of MIC and disk diffusion values
 * `is.rsi()` and `is.rsi.eligible()` now return a vector of `TRUE`/`FALSE` when the input is a data set, by iterating over all columns
 * Using functions without setting a data set (e.g., `mo_is_gram_negative()`, `mo_is_gram_positive()`, `mo_is_intrinsic_resistant()`, `first_isolate()`, `mdro()`) now work with `dplyr`s `group_by()` again
 * `first_isolate()` can be used with `group_by()` (also when using a dot `.` as input for the data) and now returns the names of the groups
@@ -55,8 +63,6 @@
 * `is.rsi.eligible()` now detects if the column name resembles an antibiotic name or code and now returns `TRUE` immediately if the input contains any of the values "R", "S" or "I". This drastically improves speed, also for a lot of other functions that rely on automatic determination of antibiotic columns.
 * Functions `get_episode()` and `is_new_episode()` now support less than a day as value for argument `episode_days` (e.g., to include one patient/test per hour)
 * Argument `ampc_cephalosporin_resistance` in `eucast_rules()` now also applies to value "I" (not only "S")
-* Updated `plot()` functions for classes `<mic>`, `<disk>` and `<rsi>` - the former two now support colouring if you supply the microorganism and antimicrobial agent
-* Updated colours to colour-blind friendly version for values R, S and I in tibble printing and for all plot methods (`ggplot_rsi()` and using `plot()` on classes `<mic>`, `<disk>` and `<rsi>`)
 * Functions `print()` and `summary()` on a Principal Components Analysis object (`pca()`) now print additional group info if the original data was grouped using `dplyr::group_by()`
 * Improved speed and reliability of `guess_ab_col()`. As this also internally improves the reliability of `first_isolate()` and `mdro()`, this might have a slight impact on the results of those functions.
 * Fix for `mo_name()` when used in other languages than English
@@ -64,6 +70,7 @@
 * *Staphylococcus cornubiensis* is now correctly categorised as coagulase-positive
 * `random_disk()` and `random_mic()` now have an expanded range in their randomisation
 * Support for GISA (glycopeptide-intermediate *S. aureus*), so e.g. `mo_genus("GISA")` will return `"Staphylococcus"` 
+* Added translations of German and Spanish for more than 200 antimicrobial drugs
 
 ### Other
 * Big documentation updates

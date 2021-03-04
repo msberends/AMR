@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Data Set with 67,151 Microorganisms — microorganisms • AMR (for R)</title>
+<title>Data Set with 69,625 Microorganisms — microorganisms • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Data Set with 67,151 Microorganisms — microorganisms" />
-<meta property="og:description" content="A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using as.mo()." />
+<meta property="og:title" content="Data Set with 69,625 Microorganisms — microorganisms" />
+<meta property="og:description" content="A data set containing the microbial taxonomy, last updated in March 2021, of six kingdoms from the Catalogue of Life (CoL) and the List of Prokaryotic names with Standing in Nomenclature (LPSN). MO codes can be looked up using as.mo()." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9016</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9028</span>
       </span>
     </div>
 
@@ -233,13 +233,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Data Set with 67,151 Microorganisms</h1>
+    <h1>Data Set with 69,625 Microorganisms</h1>
     <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/data.R'><code>R/data.R</code></a></small>
     <div class="hidden name"><code>microorganisms.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using <code><a href='as.mo.html'>as.mo()</a></code>.</p>
+    <p>A data set containing the microbial taxonomy, last updated in March 2021, of six kingdoms from the Catalogue of Life (CoL) and the List of Prokaryotic names with Standing in Nomenclature (LPSN). MO codes can be looked up using <code><a href='as.mo.html'>as.mo()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='va'>microorganisms</span></pre>
@@ -247,27 +247,37 @@
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with 67,151 observations and 16 variables:</p><ul>
+    <p>A <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with 69,625 observations and 16 variables:</p><ul>
 <li><p><code>mo</code><br /> ID of microorganism as used by this package</p></li>
 <li><p><code>fullname</code><br /> Full name, like <code>"Escherichia coli"</code></p></li>
 <li><p><code>kingdom</code>, <code>phylum</code>, <code>class</code>, <code>order</code>, <code>family</code>, <code>genus</code>, <code>species</code>, <code>subspecies</code><br /> Taxonomic rank of the microorganism</p></li>
 <li><p><code>rank</code><br /> Text of the taxonomic rank of the microorganism, like <code>"species"</code> or <code>"genus"</code></p></li>
 <li><p><code>ref</code><br /> Author(s) and year of concerning scientific publication</p></li>
 <li><p><code>species_id</code><br /> ID of the species as used by the Catalogue of Life</p></li>
-<li><p><code>source</code><br /> Either "CoL", "DSMZ" (see <em>Source</em>) or "manually added"</p></li>
+<li><p><code>source</code><br /> Either "CoL", "LPSN" or "manually added" (see <em>Source</em>)</p></li>
 <li><p><code>prevalence</code><br /> Prevalence of the microorganism, see <code><a href='as.mo.html'>as.mo()</a></code></p></li>
 <li><p><code>snomed</code><br /> SNOMED code of the microorganism. Use <code><a href='mo_property.html'>mo_snomed()</a></code> to retrieve it quickly, see <code><a href='mo_property.html'>mo_property()</a></code>.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Catalogue of Life: Annual Checklist (public online taxonomic database), <a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a> (check included annual version with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version()</a></code>).</p>
-<p>Parte, A.C. (2018). LPSN — List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; doi: <a href='https://doi.org/10.1099/ijsem.0.002786'>10.1099/ijsem.0.002786</a></p>
-<p>Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures, Germany, Prokaryotic Nomenclature Up-to-Date, <a href='https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date'>https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date</a> and <a href='https://lpsn.dsmz.de'>https://lpsn.dsmz.de</a> (check included version with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version()</a></code>).</p>
+    <p>Catalogue of Life: 2019 Annual Checklist</p><ul>
+<li><p>Annual Checklist (public online taxonomic database), <a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a></p></li>
+</ul>
+
+<p>List of Prokaryotic names with Standing in Nomenclature: March 2021</p><ul>
+<li><p>Parte, A.C., Sarda Carbasse, J., Meier-Kolthoff, J.P., Reimer, L.C. and Goker, M. (2020). List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ. International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; doi: <a href='https://doi.org/10.1099/ijsem.0.004332'>10.1099/ijsem.0.004332</a></p></li>
+<li><p>Parte, A.C. (2018). LPSN — List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; doi: <a href='https://doi.org/10.1099/ijsem.0.002786'>10.1099/ijsem.0.002786</a></p></li>
+<li><p>Parte, A.C. (2014). LPSN — List of Prokaryotic names with Standing in Nomenclature. Nucleic Acids Research, 42, Issue D1, D613–D616; doi: <a href='https://doi.org/10.1093/nar/gkt1111'>10.1093/nar/gkt1111</a></p></li>
+<li><p>Euzeby, J.P. (1997). List of Bacterial Names with Standing in Nomenclature: a Folder Available on the Internet. International Journal of Systematic Bacteriology, 47, 590-592; doi: <a href='https://doi.org/10.1099/00207713-47-2-590'>10.1099/00207713-47-2-590</a></p></li>
+</ul>
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Please note that entries are only based on the Catalogue of Life and the LPSN (see below). Since these sources incorporate entries based on (recent) publications in the International Journal of Systematic and Evolutionary Microbiology (IJSEM), it can happen that the year of publication is sometimes later than one might expect.</p>
-<p>For example, <em>Staphylococcus pettenkoferi</em> was newly named in Diagnostic Microbiology and Infectious Disease in 2002 (PMID 12106949), but it was not before 2007 that a publication in IJSEM followed (PMID 17625191). Consequently, the AMR package returns 2007 for <code><a href='mo_property.html'>mo_year("S. pettenkoferi")</a></code>.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Manually additions</h3>
+<p>For example, <em>Staphylococcus pettenkoferi</em> was described for the first time in Diagnostic Microbiology and Infectious Disease in 2002 (doi: <a href='https://doi.org/10.1016/s0732-8893(02)00399-1'>10.1016/s0732-8893(02)00399-1</a>
+), but it was not before 2007 that a publication in IJSEM followed (doi: <a href='https://doi.org/10.1099/ijs.0.64381-0'>10.1099/ijs.0.64381-0</a>
+). Consequently, the AMR package returns 2007 for <code><a href='mo_property.html'>mo_year("S. pettenkoferi")</a></code>.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Manual additions</h3>
 
 
 <p>For convenience, some entries were added manually:</p><ul>
@@ -278,7 +288,6 @@
 <li><p>1 entry of <em>Blastocystis</em> (<em>Blastocystis hominis</em>), although it officially does not exist (Noel <em>et al.</em> 2005, PMID 15634993)</p></li>
 <li><p>5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)</p></li>
 <li><p>6 families under the Enterobacterales order, according to Adeolu <em>et al.</em> (2016, PMID 27620848), that are not (yet) in the Catalogue of Life</p></li>
-<li><p>7,411 species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) since the DSMZ contain the latest taxonomic information based on recent publications</p></li>
 </ul>
 
 
@@ -294,20 +303,19 @@
 </ul>
 
 
-    <h2 class="hasAnchor" id="about-the-records-from-dsmz-see-source-"><a class="anchor" href="#about-the-records-from-dsmz-see-source-"></a>About the Records from DSMZ (see <em>Source</em>)</h2>
+    <h2 class="hasAnchor" id="about-the-records-from-lpsn-see-source-"><a class="anchor" href="#about-the-records-from-lpsn-see-source-"></a>About the Records from LPSN (see <em>Source</em>)</h2>
 
     
 
-<p>Names of prokaryotes are defined as being validly published by the International Code of Nomenclature of Bacteria. Validly published are all names which are included in the Approved Lists of Bacterial Names and the names subsequently published in the International Journal of Systematic Bacteriology (IJSB) and, from January 2000, in the International Journal of Systematic and Evolutionary Microbiology (IJSEM) as original articles or in the validation lists.
-<em>(from <a href='https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date'>https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date</a>)</em></p>
-<p>In February 2020, the DSMZ records were merged with the List of Prokaryotic names with Standing in Nomenclature (LPSN).</p>
+<p>The List of Prokaryotic names with Standing in Nomenclature (LPSN) provides comprehensive information on the nomenclature of prokaryotes. LPSN is a free to use service founded by Jean P. Euzeby in 1997 and later on maintained by Aidan C. Parte.</p>
+<p>As of February 2020, the regularly augmented LPSN database at DSMZ is the basis of the new LPSN service. The new database was implemented for the Type-Strain Genome Server and augmented in 2018 to store all kinds of nomenclatural information. Data from the previous version of LPSN and from the Prokaryotic Nomenclature Up-to-date (PNU) service were imported into the new system. PNU had been established in 1993 as a service of the Leibniz Institute DSMZ, and was curated by Norbert Weiss, Manfred Kracht and Dorothea Gleim.</p>
     <h2 class="hasAnchor" id="catalogue-of-life"><a class="anchor" href="#catalogue-of-life"></a>Catalogue of Life</h2>
 
     
 
 <p><img src='figures/logo_col.png' height=40px style=margin-bottom:5px /> <br />
 This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, <a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, <a href='https://lpsn.dsmz.de'>lpsn.dsmz.de</a>). This supplementation is needed until the <a href='https://github.com/CatalogueOfLife/general'>CoL+ project</a> is finished, which we await.</p>
-<p><a href='catalogue_of_life.html'>Click here</a> for more information about the included taxa. Check which versions of the CoL and LSPN were included in this package with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version()</a></code>.</p>
+<p><a href='catalogue_of_life.html'>Click here</a> for more information about the included taxa. Check which versions of the CoL and LPSN were included in this package with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version()</a></code>.</p>
     <h2 class="hasAnchor" id="reference-data-publicly-available"><a class="anchor" href="#reference-data-publicly-available"></a>Reference Data Publicly Available</h2>
 
     

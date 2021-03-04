@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9027</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9028</span>
       </span>
     </div>
 
@@ -461,11 +461,20 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
                size <span class='op'>=</span> <span class='fl'>1</span>,
                linetype <span class='op'>=</span> <span class='fl'>2</span>,
                alpha <span class='op'>=</span> <span class='fl'>0.25</span><span class='op'>)</span>
- 
+
+  <span class='co'># you can alter the colours with colour names:</span>
   <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>AMX</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
     <span class='fu'>ggplot_rsi</span><span class='op'>(</span>colours <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>SI <span class='op'>=</span> <span class='st'>"yellow"</span><span class='op'>)</span><span class='op'>)</span>
-  
+
+  <span class='co'># but you can also use the built-in colour-blind friendly colours for</span>
+  <span class='co'># your plots, where "S" is green, "I" is yellow and "R" is red:</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Value1"</span>, <span class='st'>"Value2"</span>, <span class='st'>"Value3"</span><span class='op'>)</span>,
+             y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>,
+             z <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Value4"</span>, <span class='st'>"Value5"</span>, <span class='st'>"Value6"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span>, y <span class='op'>=</span> <span class='va'>y</span>, fill <span class='op'>=</span> <span class='va'>z</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>scale_rsi_colours</span><span class='op'>(</span>Value4 <span class='op'>=</span> <span class='st'>"S"</span>, Value5 <span class='op'>=</span> <span class='st'>"I"</span>, Value6 <span class='op'>=</span> <span class='st'>"R"</span><span class='op'>)</span>
 <span class='op'>}</span>
   
 <span class='co'># \donttest{</span>

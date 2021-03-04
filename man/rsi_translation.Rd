@@ -8,7 +8,7 @@
 A \link{data.frame} with 20,486 observations and 10 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
-\item \code{method}\cr Either "MIC" or "DISK"
+\item \code{method}\cr Either "DISK" or "MIC"
 \item \code{site}\cr Body site, e.g. "Oral" or "Respiratory"
 \item \code{mo}\cr Microbial ID, see \code{\link[=as.mo]{as.mo()}}
 \item \code{ab}\cr Antibiotic ID, see \code{\link[=as.ab]{as.ab()}}

@@ -1,6 +1,6 @@
 # `AMR` (for R) <img src="./logo.png" align="right" height="120px" />
 
-*Note: the rules of 'EUCAST Clinical Breakpoints v11.0 (2021)' are implemented in [the latest beta version](./#latest-development-version), awaiting the next stable release (expected end of February)*
+*Note: the rules of 'EUCAST Clinical Breakpoints v11.0 (2021)' are now implemented*
 
 > <span class="fa fa-clipboard-list" style="color: #128f76; font-size: 20pt; margin-right: 5px;"></span> **PLEASE TAKE PART IN OUR SURVEY!**  
 > Since you are one of our users, we would like to know how you use the package and what it brought you or your organisation. **If you have a minute, please [anonymously fill in this short questionnaire](./survey.html)**. Your valuable input will help to improve the package and its functionalities. You can answer the open questions in either English, Spanish, French, Dutch, or German. Thank you very much in advance!

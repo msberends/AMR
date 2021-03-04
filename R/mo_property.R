@@ -660,10 +660,20 @@ mo_url <- function(x, open = FALSE, language = get_locale(), ...) {
     pm_left_join(pm_select(microorganisms, mo, source, species_id), by = "mo")
   df$url <- ifelse(df$source == "CoL",
                    paste0(catalogue_of_life$url_CoL, "details/species/id/", df$species_id, "/"),
-                   ifelse(df$source == "DSMZ",
-                          paste0(catalogue_of_life$url_DSMZ, "/advanced_search?adv[taxon-name]=", gsub(" ", "+", mo_names), "/"),
-                          NA_character_))
+                   NA_character_)
   u <- df$url
+  u[mo_kingdom(mo) == "Bacteria"] <- paste0(catalogue_of_life$url_LPSN, "/species/", gsub(" ", "-", tolower(mo_names), fixed = TRUE))
+  u[mo_kingdom(mo) == "Bacteria" & mo_rank(mo) == "genus"] <- gsub("/species/",
+                                                                   "/genus/",
+                                                                   u[mo_kingdom(mo) == "Bacteria" & mo_rank(mo) == "genus"],
+                                                                   fixed = TRUE)
+  u[mo_kingdom(mo) == "Bacteria" &
+      mo_rank(mo) %in% c("subsp.", "infraspecies")] <- gsub("/species/",
+                                                            "/subspecies/",
+                                                            u[mo_kingdom(mo) == "Bacteria" &
+                                                                mo_rank(mo) %in% c("subsp.", "infraspecies")],
+                                                            fixed = TRUE)
+  
   names(u) <- mo_names
   
   if (open == TRUE) {

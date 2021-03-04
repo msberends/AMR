@@ -143,7 +143,6 @@ reference:
     - "`as.mic`"
     - "`as.disk`"
     - "`eucast_rules`"
-    - "`plot`"
     - "`isolate_identifier`"
     
   - title: "Analysing data: antimicrobial resistance"
@@ -159,6 +158,7 @@ reference:
     - "`key_antibiotics`"
     - "`mdro`"
     - "`count`"
+    - "`plot`"
     - "`ggplot_rsi`"
     - "`bug_drug_combinations`"
     - "`antibiotic_class_selectors`"

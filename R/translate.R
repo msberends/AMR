@@ -142,7 +142,8 @@ translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE, a
              vector_or(LANGUAGES_SUPPORTED, quotes = TRUE),
              call = FALSE)
   
-  df_trans <- subset(df_trans, lang == language)
+  # only keep lines where translation is available for this language
+  df_trans <- df_trans[which(!is.na(df_trans[, language, drop = TRUE])), , drop = FALSE]
   if (only_unknown == TRUE) {
     df_trans <- subset(df_trans, pattern %like% "unknown")
   }
@@ -150,10 +151,10 @@ translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE, a
     df_trans <- subset(df_trans, affect_mo_name == TRUE)
   }
   
-  # default: case sensitive if value if 'ignore.case' is missing:
-  df_trans$ignore.case[is.na(df_trans$ignore.case)] <- FALSE
-  # default: not using regular expressions (fixed = TRUE) if 'fixed' is missing:
-  df_trans$fixed[is.na(df_trans$fixed)] <- TRUE
+  # default: case sensitive if value if 'case_sensitive' is missing:
+  df_trans$case_sensitive[is.na(df_trans$case_sensitive)] <- TRUE
+  # default: not using regular expressions if 'regular_expr' is missing:
+  df_trans$regular_expr[is.na(df_trans$regular_expr)] <- FALSE
   
   # check if text to look for is in one of the patterns
   any_form_in_patterns <- tryCatch(any(from_unique %like% paste0("(", paste(df_trans$pattern, collapse = "|"), ")")),
@@ -167,11 +168,11 @@ translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE, a
   
   lapply(seq_len(nrow(df_trans)), 
          function(i) from_unique_translated <<- gsub(pattern = df_trans$pattern[i],
-                                                     replacement = df_trans$replacement[i],
+                                                     replacement = df_trans[i, language, drop = TRUE],
                                                      x = from_unique_translated,
-                                                     ignore.case = df_trans$ignore.case[i], 
-                                                     fixed = df_trans$fixed[i],
-                                                     perl = !df_trans$fixed[i]))
+                                                     ignore.case = !df_trans$case_sensitive[i], 
+                                                     fixed = !df_trans$regular_expr[i],
+                                                     perl = df_trans$regular_expr[i]))
   
   # force UTF-8 for diacritics
   from_unique_translated <- enc2utf8(from_unique_translated)

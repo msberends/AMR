@@ -100,11 +100,20 @@
 #'                size = 1,
 #'                linetype = 2,
 #'                alpha = 0.25)
-#'  
+#'
+#'   # you can alter the colours with colour names:
 #'   example_isolates %>%
 #'     select(AMX) %>%
 #'     ggplot_rsi(colours = c(SI = "yellow"))
-#'   
+#'
+#'   # but you can also use the built-in colour-blind friendly colours for
+#'   # your plots, where "S" is green, "I" is yellow and "R" is red:
+#'   data.frame(x = c("Value1", "Value2", "Value3"),
+#'              y = c(1, 2, 3),
+#'              z = c("Value4", "Value5", "Value6")) %>%
+#'     ggplot() +
+#'     geom_col(aes(x = x, y = y, fill = z)) +
+#'     scale_rsi_colours(Value4 = "S", Value5 = "I", Value6 = "R")
 #' }
 #'   
 #' \donttest{
@@ -360,7 +369,7 @@ scale_y_percent <- function(breaks = seq(0, 1, 0.1), limits = NULL) {
 scale_rsi_colours <- function(...,
                               aesthetics = "fill") {
   stop_ifnot_installed("ggplot2")
-  meet_criteria(aesthetics, allow_class = c("character"), has_length = c(1, 2), is_in = c("alpha", "colour", "color", "fill", "linetype", "shape", "size"))
+  meet_criteria(aesthetics, allow_class = "character", is_in = c("alpha", "colour", "color", "fill", "linetype", "shape", "size"))
   
   # behaviour until AMR pkg v1.5.0 and also when coming from ggplot_rsi()
   if ("colours" %in% names(list(...))) {
@@ -376,14 +385,16 @@ scale_rsi_colours <- function(...,
     return(invisible())
   }
   
-  names_susceptible <- c("S", "SI", "IS", "S+I", "I+S", "susceptible",
-                         unique(translations_file[which(translations_file$pattern == "susceptible"),
+  names_susceptible <- c("S", "SI", "IS", "S+I", "I+S", "susceptible", "Susceptible",
+                         unique(translations_file[which(translations_file$pattern == "Susceptible"),
                                                   "replacement", drop = TRUE]))
-  names_incr_exposure <- c("I", "intermediate", "increased exposure", "incr. exposure",
-                           unique(translations_file[which(translations_file$pattern == "intermediate"),
+  names_incr_exposure <- c("I", "intermediate", "increased exposure", "incr. exposure", "Increased exposure", "Incr. exposure",
+                           unique(translations_file[which(translations_file$pattern == "Intermediate"),
+                                                    "replacement", drop = TRUE]),
+                           unique(translations_file[which(translations_file$pattern == "Incr. exposure"),
                                                     "replacement", drop = TRUE]))
-  names_resistant <- c("R", "IR", "RI", "R+I", "I+R", "resistant",
-                       unique(translations_file[which(translations_file$pattern == "resistant"), 
+  names_resistant <- c("R", "IR", "RI", "R+I", "I+R", "resistant", "Resistant",
+                       unique(translations_file[which(translations_file$pattern == "Resistant"), 
                                                 "replacement", drop = TRUE]))
   
   susceptible <- rep("#3CAEA3", length(names_susceptible))
@@ -399,8 +410,8 @@ scale_rsi_colours <- function(...,
   dots[dots == "S"] <- "#3CAEA3"
   dots[dots == "I"] <- "#F6D55C"
   dots[dots == "R"] <- "#ED553B"
-  colours <- replace(original_cols, names(dots), dots)
-  ggplot2::scale_discrete_manual(aesthetics = aesthetics, values = colours)
+  cols <- replace(original_cols, names(dots), dots)
+  ggplot2::scale_discrete_manual(aesthetics = aesthetics, values = cols)
 }
 
 #' @rdname ggplot_rsi

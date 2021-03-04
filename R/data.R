@@ -83,7 +83,7 @@
 
 #' Data Set with `r format(nrow(microorganisms), big.mark = ",")` Microorganisms
 #'
-#' A data set containing the microbial taxonomy of six kingdoms from the Catalogue of Life. MO codes can be looked up using [as.mo()].
+#' A data set containing the microbial taxonomy, last updated in `r catalogue_of_life$yearmonth_LPSN`, of six kingdoms from the Catalogue of Life (CoL) and the List of Prokaryotic names with Standing in Nomenclature (LPSN). MO codes can be looked up using [as.mo()].
 #' @inheritSection catalogue_of_life Catalogue of Life
 #' @format A [data.frame] with `r format(nrow(microorganisms), big.mark = ",")` observations and `r ncol(microorganisms)` variables:
 #' - `mo`\cr ID of microorganism as used by this package
@@ -92,15 +92,15 @@
 #' - `rank`\cr Text of the taxonomic rank of the microorganism, like `"species"` or `"genus"`
 #' - `ref`\cr Author(s) and year of concerning scientific publication
 #' - `species_id`\cr ID of the species as used by the Catalogue of Life
-#' - `source`\cr Either "CoL", "DSMZ" (see *Source*) or "manually added"
+#' - `source`\cr Either `r vector_or(microorganisms$source)` (see *Source*)
 #' - `prevalence`\cr Prevalence of the microorganism, see [as.mo()]
 #' - `snomed`\cr SNOMED code of the microorganism. Use [mo_snomed()] to retrieve it quickly, see [mo_property()].
 #' @details 
 #' Please note that entries are only based on the Catalogue of Life and the LPSN (see below). Since these sources incorporate entries based on (recent) publications in the International Journal of Systematic and Evolutionary Microbiology (IJSEM), it can happen that the year of publication is sometimes later than one might expect.
 #' 
-#' For example, *Staphylococcus pettenkoferi* was newly named in Diagnostic Microbiology and Infectious Disease in 2002 (PMID 12106949), but it was not before 2007 that a publication in IJSEM followed (PMID 17625191). Consequently, the AMR package returns 2007 for `mo_year("S. pettenkoferi")`.
+#' For example, *Staphylococcus pettenkoferi* was described for the first time in Diagnostic Microbiology and Infectious Disease in 2002 (\doi{10.1016/s0732-8893(02)00399-1}), but it was not before 2007 that a publication in IJSEM followed (\doi{10.1099/ijs.0.64381-0}). Consequently, the AMR package returns 2007 for `mo_year("S. pettenkoferi")`.
 #' 
-#' ## Manually additions
+#' ## Manual additions
 #' For convenience, some entries were added manually:
 #' 
 #' - 11 entries of *Streptococcus* (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)
@@ -110,7 +110,6 @@
 #' - 1 entry of *Blastocystis* (*Blastocystis hominis*), although it officially does not exist (Noel *et al.* 2005, PMID 15634993)
 #' - 5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)
 #' - 6 families under the Enterobacterales order, according to Adeolu *et al.* (2016, PMID 27620848), that are not (yet) in the Catalogue of Life
-#' - `r format(nrow(subset(microorganisms, source == "DSMZ")), big.mark = ",")` species from the DSMZ (Deutsche Sammlung von Mikroorganismen und Zellkulturen) since the DSMZ contain the latest taxonomic information based on recent publications
 #' 
 #' ## Direct download
 #' This data set is available as 'flat file' for use even without \R - you can find the file here:
@@ -120,16 +119,21 @@
 #' The file in \R format (with preserved data structure) can be found here:
 #' 
 #' * <https://github.com/msberends/AMR/raw/master/data/microorganisms.rda>
-#' @section About the Records from DSMZ (see *Source*):
-#' Names of prokaryotes are defined as being validly published by the International Code of Nomenclature of Bacteria. Validly published are all names which are included in the Approved Lists of Bacterial Names and the names subsequently published in the International Journal of Systematic Bacteriology (IJSB) and, from January 2000, in the International Journal of Systematic and Evolutionary Microbiology (IJSEM) as original articles or in the validation lists.
-#' *(from <https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date>)*
+#' @section About the Records from LPSN (see *Source*):
+#' The List of Prokaryotic names with Standing in Nomenclature (LPSN) provides comprehensive information on the nomenclature of prokaryotes. LPSN is a free to use service founded by Jean P. Euzeby in 1997 and later on maintained by Aidan C. Parte.
 #' 
-#' In February 2020, the DSMZ records were merged with the List of Prokaryotic names with Standing in Nomenclature (LPSN).
-#' @source Catalogue of Life: Annual Checklist (public online taxonomic database), <http://www.catalogueoflife.org> (check included annual version with [catalogue_of_life_version()]).
+#' As of February 2020, the regularly augmented LPSN database at DSMZ is the basis of the new LPSN service. The new database was implemented for the Type-Strain Genome Server and augmented in 2018 to store all kinds of nomenclatural information. Data from the previous version of LPSN and from the Prokaryotic Nomenclature Up-to-date (PNU) service were imported into the new system. PNU had been established in 1993 as a service of the Leibniz Institute DSMZ, and was curated by Norbert Weiss, Manfred Kracht and Dorothea Gleim.
+#' @source 
+#' `r gsub("{year}", catalogue_of_life$year, catalogue_of_life$version, fixed = TRUE)`
 #' 
-#' Parte, A.C. (2018). LPSN — List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; \doi{10.1099/ijsem.0.002786}
-#'
-#' Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures, Germany, Prokaryotic Nomenclature Up-to-Date, <https://www.dsmz.de/services/online-tools/prokaryotic-nomenclature-up-to-date> and <https://lpsn.dsmz.de> (check included version with [catalogue_of_life_version()]).
+#' * Annual Checklist (public online taxonomic database), <http://www.catalogueoflife.org>
+#' 
+#' List of Prokaryotic names with Standing in Nomenclature: `r catalogue_of_life$yearmonth_LPSN`
+#' 
+#' * Parte, A.C., Sarda Carbasse, J., Meier-Kolthoff, J.P., Reimer, L.C. and Goker, M. (2020). List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ. International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \doi{10.1099/ijsem.0.004332}
+#' * Parte, A.C. (2018). LPSN — List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; \doi{10.1099/ijsem.0.002786}
+#' * Parte, A.C. (2014). LPSN — List of Prokaryotic names with Standing in Nomenclature. Nucleic Acids Research, 42, Issue D1, D613–D616; \doi{10.1093/nar/gkt1111}
+#' * Euzeby, J.P. (1997). List of Bacterial Names with Standing in Nomenclature: a Folder Available on the Internet. International Journal of Systematic Bacteriology, 47, 590-592; \doi{10.1099/00207713-47-2-590}
 #' @inheritSection AMR Reference Data Publicly Available
 #' @inheritSection AMR Read more on Our Website!
 #' @seealso [as.mo()], [mo_property()], [microorganisms.codes], [intrinsic_resistant]
@@ -139,8 +143,8 @@ catalogue_of_life <- list(
   year = 2019,
   version = "Catalogue of Life: {year} Annual Checklist",
   url_CoL = "http://www.catalogueoflife.org/col/",
-  url_DSMZ = "https://lpsn.dsmz.de",
-  yearmonth_DSMZ = "May 2020"
+  url_LPSN = "https://lpsn.dsmz.de",
+  yearmonth_LPSN = "March 2021"
 )
 
 #' Data Set with Previously Accepted Taxonomic Names
@@ -242,7 +246,7 @@ catalogue_of_life <- list(
 #' Data set to interpret MIC and disk diffusion to R/SI values. Included guidelines are CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`) and EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`). Use [as.rsi()] to transform MICs or disks measurements to R/SI values.
 #' @format A [data.frame] with `r format(nrow(rsi_translation), big.mark = ",")` observations and `r ncol(rsi_translation)` variables:
 #' - `guideline`\cr Name of the guideline
-#' - `method`\cr Either "MIC" or "DISK"
+#' - `method`\cr Either `r vector_or(rsi_translation$method)`
 #' - `site`\cr Body site, e.g. "Oral" or "Respiratory"
 #' - `mo`\cr Microbial ID, see [as.mo()]
 #' - `ab`\cr Antibiotic ID, see [as.ab()]

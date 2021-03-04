@@ -185,11 +185,20 @@ if (require("ggplot2") & require("dplyr")) {
                size = 1,
                linetype = 2,
                alpha = 0.25)
- 
+
+  # you can alter the colours with colour names:
   example_isolates \%>\%
     select(AMX) \%>\%
     ggplot_rsi(colours = c(SI = "yellow"))
-  
+
+  # but you can also use the built-in colour-blind friendly colours for
+  # your plots, where "S" is green, "I" is yellow and "R" is red:
+  data.frame(x = c("Value1", "Value2", "Value3"),
+             y = c(1, 2, 3),
+             z = c("Value4", "Value5", "Value6")) \%>\%
+    ggplot() +
+    geom_col(aes(x = x, y = y, fill = z)) +
+    scale_rsi_colours(Value4 = "S", Value5 = "I", Value6 = "R")
 }
   
 \donttest{

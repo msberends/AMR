@@ -1982,7 +1982,7 @@
 "EUCAST 2020"	"MIC"		"Streptococcus pyogenes"	"Azithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus salivarius"	"Azithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus sanguinis"	"Azithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
-"EUCAST 2020"	"MIC"		"Mycobacterium africanum"	"Bedaquiline"	"M.tuberculosis"		0.25	0.25	FALSE
+"EUCAST 2020"	"MIC"		"Mycobacterium tuberculosis"	"Bedaquiline"	"M.tuberculosis"		0.25	0.25	FALSE
 "EUCAST 2020"	"DISK"		"Enterobacterales"	"Ceftobiprole"	"Enterobacterales"	"5ug"	23	23	FALSE
 "EUCAST 2020"	"MIC"		"Enterobacterales"	"Ceftobiprole"	"Enterobacterales"		0.25	0.25	FALSE
 "EUCAST 2020"	"DISK"		"Staphylococcus aureus"	"Ceftobiprole"	"Staphylococcus"	"5ug"	17	17	FALSE
@@ -2367,7 +2367,7 @@
 "EUCAST 2020"	"MIC"		"Streptococcus pyogenes"	"Delafloxacin"	"Streptococcus A,B,C,G"		0.03	0.03	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus salivarius"	"Delafloxacin"	"Streptococcus A,B,C,G"		0.03	0.03	FALSE
 "EUCAST 2020"	"MIC"		"Streptococcus sanguinis"	"Delafloxacin"	"Streptococcus A,B,C,G"		0.03	0.03	FALSE
-"EUCAST 2020"	"MIC"		"Mycobacterium africanum"	"Delamanid"	"M.tuberculosis"		0.06	0.06	FALSE
+"EUCAST 2020"	"MIC"		"Mycobacterium tuberculosis"	"Delamanid"	"M.tuberculosis"		0.06	0.06	FALSE
 "EUCAST 2020"	"MIC"		"Burkholderia pseudomallei"	"Doxycycline"	"B.pseudomallei"		0.001	2	FALSE
 "EUCAST 2020"	"MIC"		"Haemophilus influenzae"	"Doxycycline"	"H.influenzae"		1	2	FALSE
 "EUCAST 2020"	"MIC"		"Kingella kingae"	"Doxycycline"	"K.kingae"		0.5	0.5	FALSE
@@ -3743,7 +3743,7 @@
 "EUCAST 2019"	"MIC"		"Streptococcus pyogenes"	"Azithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus salivarius"	"Azithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus sanguinis"	"Azithromycin"	"Streptococcus A,B,C,G"		0.25	0.5	FALSE
-"EUCAST 2019"	"MIC"		"Mycobacterium africanum"	"Bedaquiline"	"M.tuberculosis"		0.25	0.25	FALSE
+"EUCAST 2019"	"MIC"		"Mycobacterium tuberculosis"	"Bedaquiline"	"M.tuberculosis"		0.25	0.25	FALSE
 "EUCAST 2019"	"DISK"		"Enterobacterales"	"Ceftobiprole"	"Enterobacterales"	"5ug"	23	23	FALSE
 "EUCAST 2019"	"MIC"		"Enterobacterales"	"Ceftobiprole"	"Enterobacterales"		0.25	0.25	FALSE
 "EUCAST 2019"	"DISK"		"Staphylococcus aureus"	"Ceftobiprole"	"Staphylococcus"	"5ug"	17	17	FALSE
@@ -4098,7 +4098,7 @@
 "EUCAST 2019"	"MIC"		"Streptococcus pyogenes"	"Daptomycin"	"Streptococcus A,B,C,G"		1	1	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus salivarius"	"Daptomycin"	"Streptococcus A,B,C,G"		1	1	FALSE
 "EUCAST 2019"	"MIC"		"Streptococcus sanguinis"	"Daptomycin"	"Streptococcus A,B,C,G"		1	1	FALSE
-"EUCAST 2019"	"MIC"		"Mycobacterium africanum"	"Delamanid"	"M.tuberculosis"		0.06	0.06	FALSE
+"EUCAST 2019"	"MIC"		"Mycobacterium tuberculosis"	"Delamanid"	"M.tuberculosis"		0.06	0.06	FALSE
 "EUCAST 2019"	"MIC"		"Haemophilus influenzae"	"Doxycycline"	"H.influenzae"		1	2	FALSE
 "EUCAST 2019"	"MIC"		"Kingella kingae"	"Doxycycline"	"K.kingae"		0.5	0.5	FALSE
 "EUCAST 2019"	"MIC"		"Moraxella catarrhalis"	"Doxycycline"	"M.catarrhalis"		1	2	FALSE
