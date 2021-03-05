@@ -292,9 +292,7 @@ MOs <- MOs %>%
        | rank %in% c("kingdom", "phylum", "class", "order", "family"))
     ~ 2,
     TRUE ~ 3
-  )) %>% 
-  # clean up
-  df_remove_nonASCII()
+  ))
 
 # add all mssing genera, families and orders
 MOs <- MOs %>% 
@@ -359,14 +357,9 @@ MOs <- MOs %>%
   ) %>%
   arrange(fullname)
 
-
-# clean snomed
-for (i in 1:nrow(MOs)) {
-  sno <- as.character(sort(unique(tolower(MOs[i, "snomed"][[1]]))))
-  if (length(sno) > 0) {
-    MOs[i, "snomed"][[1]] <- ifelse(length(sno[!sno == ""]) == 0, list(""), list(sno))
-  }
-}
+# clean up
+MOs <- MOs %>% 
+  df_remove_nonASCII()
 
 
 # Merge synonyms ----------------------------------------------------------

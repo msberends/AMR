@@ -43,21 +43,23 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
   MO_staph <- MO_staph[which(MO_staph$genus == "Staphylococcus"), , drop = FALSE]
   if (type == "CoNS") {
     MO_staph[which(MO_staph$species %in% c("coagulase-negative", "argensis", "arlettae",
-                                           "auricularis", "caeli", "capitis", "caprae", 
-                                           "carnosus", "chromogenes", "cohnii", "condimenti",
+                                           "auricularis", "borealis", "caeli", "capitis", "caprae", 
+                                           "carnosus", "casei", "chromogenes", "cohnii", "condimenti",
+                                           "croceilyticus",
                                            "debuckii", "devriesei", "edaphicus", "epidermidis",
                                            "equorum", "felis", "fleurettii", "gallinarum",
                                            "haemolyticus", "hominis", "jettensis", "kloosii",
                                            "lentus", "lugdunensis", "massiliensis", "microti",
                                            "muscae", "nepalensis", "pasteuri", "petrasii",
-                                           "pettenkoferi", "piscifermentans", "pseudoxylosus",
+                                           "pettenkoferi", "piscifermentans", "pragensis", "pseudoxylosus",
                                            "pulvereri", "rostri", "saccharolyticus", "saprophyticus",
                                            "sciuri", "simulans", "stepanovicii", "succinus",
+                                           "ureilyticus",
                                            "vitulinus", "vitulus", "warneri", "xylosus")
                    | (MO_staph$species == "schleiferi" & MO_staph$subspecies %in% c("schleiferi", ""))),
              "mo", drop = TRUE]
   } else if (type == "CoPS") {
-    MO_staph[which(MO_staph$species %in% c("coagulase-positive",
+    MO_staph[which(MO_staph$species %in% c("coagulase-positive", "coagulans",
                                            "agnetis", "argenteus",
                                            "cornubiensis",
                                            "delphini", "lutrae",

@@ -131,16 +131,15 @@ catalogue_of_life_version <- function() {
 #' @export
 #' @noRd
 print.catalogue_of_life_version <- function(x, ...) {
-  lst <- x
   cat(paste0(font_bold("Included in this AMR package (v", utils::packageDescription("AMR")$Version, ") are:\n\n", collapse = ""),
-             font_underline(lst$CoL$version), "\n",
-             "  Available at: ", lst$CoL$url, "\n",
-             "  Number of included species: ", format(lst$CoL$n, big.mark = ","), "\n",
-             font_underline(paste0(lst$LPSN$version, " (",
-                                   lst$LPSN$yearmonth, ")")), "\n",
-             "  Available at: ", lst$LPSN$url, "\n",
-             "  Number of included species: ", format(lst$LPSN$n, big.mark = ","), "\n\n",
-             "=> Total number of species included:  ", format(lst$total_included$n_total_species, big.mark = ","), "\n",
-             "=> Total number of synonyms included: ", format(lst$total_included$n_total_synonyms, big.mark = ","), "\n\n",
+             font_underline(x$CoL$version), "\n",
+             "  Available at: ", font_blue(x$CoL$url), "\n",
+             "  Number of included microbial species: ", format(x$CoL$n, big.mark = ","), "\n",
+             font_underline(paste0(x$LPSN$version, " (",
+                                   x$LPSN$yearmonth, ")")), "\n",
+             "  Available at: ", font_blue(x$LPSN$url), "\n",
+             "  Number of included bacterial species: ", format(x$LPSN$n, big.mark = ","), "\n\n",
+             "=> Total number of species included:  ", format(x$total_included$n_total_species, big.mark = ","), "\n",
+             "=> Total number of synonyms included: ", format(x$total_included$n_total_synonyms, big.mark = ","), "\n\n",
              "See for more info ?microorganisms and ?catalogue_of_life.\n"))
 }

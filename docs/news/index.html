@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9029</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9030</span>
       </span>
     </div>
 
@@ -236,9 +236,9 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1509029" class="section level1">
-<h1 class="page-header" data-toc-text="1.5.0.9029">
-<a href="#amr-1509029" class="anchor"></a>AMR 1.5.0.9029<small> Unreleased </small>
+    <div id="amr-1509030" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.0.9030">
+<a href="#amr-1509030" class="anchor"></a>AMR 1.5.0.9030<small> Unreleased </small>
 </h1>
 <div id="last-updated-5-march-2021" class="section level2">
 <h2 class="hasAnchor">
@@ -308,9 +308,9 @@
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
-<li>Microbial taxonomy updated to 3 March 2021 (according to the <a href="https://lpsn.dsmz.de">LSPN</a>)
+<li>Updated the bacterial taxonomy to 3 March 2021 (using <a href="https://lpsn.dsmz.de">LSPN</a>)
 <ul>
-<li>Added 3,372 new names and 1,523 existing names became synomyms</li>
+<li>Added 3,372 new species and 1,523 existing species became synomyms</li>
 <li>The URL of a bacterial species (<code><a href="../reference/mo_property.html">mo_url()</a></code>) will now lead to <a href="https://lpsn.dsmz.de" class="uri">https://lpsn.dsmz.de</a>
 </li>
 </ul>
@@ -349,6 +349,7 @@
 <li>Support for GISA (glycopeptide-intermediate <em>S. aureus</em>), so e.g. <code><a href="../reference/mo_property.html">mo_genus("GISA")</a></code> will return <code>"Staphylococcus"</code>
 </li>
 <li>Added translations of German and Spanish for more than 200 antimicrobial drugs</li>
+<li>Speed improvement for <code><a href="../reference/as.ab.html">as.ab()</a></code> when the input is an official name or ATC code</li>
 </ul>
 </div>
 <div id="other" class="section level3">
@@ -1263,7 +1264,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li>Based on the Compound ID, almost 5,000 official brand names have been added from many different countries</li>
 <li>All references to antibiotics in our package now use EARS-Net codes, like <code>AMX</code> for amoxicillin</li>
 <li>Functions <code>atc_certe</code>, <code>ab_umcg</code> and <code>atc_trivial_nl</code> have been removed</li>
-<li>All <code>atc_*</code> functions are superceded by <code>ab_*</code> functions</li>
+<li>All <code>atc_*</code> functions are superseded by <code>ab_*</code> functions</li>
 <li>All output will be translated by using an included translation file which <a href="https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv">can be viewed here</a>
 </li>
 </ul>

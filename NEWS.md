@@ -1,4 +1,4 @@
-# AMR 1.5.0.9029
+# AMR 1.5.0.9030
 ## <small>Last updated:  5 March 2021</small>
 
 ### New
@@ -45,8 +45,8 @@
   ```
 
 ### Changed
-* Microbial taxonomy updated to 3 March 2021 (according to the [LSPN](https://lpsn.dsmz.de))
-  * Added 3,372 new names and 1,523 existing names became synomyms
+* Updated the bacterial taxonomy to 3 March 2021 (using [LSPN](https://lpsn.dsmz.de))
+  * Added 3,372 new species and 1,523 existing species became synomyms
   * The URL of a bacterial species (`mo_url()`) will now lead to https://lpsn.dsmz.de
 * Big update for plotting classes `rsi`, `<mic>`, and `<disk>`:
   * Plotting of MIC and disk diffusion values now support interpretation colouring if you supply the microorganism and antimicrobial agent
@@ -71,6 +71,7 @@
 * `random_disk()` and `random_mic()` now have an expanded range in their randomisation
 * Support for GISA (glycopeptide-intermediate *S. aureus*), so e.g. `mo_genus("GISA")` will return `"Staphylococcus"` 
 * Added translations of German and Spanish for more than 200 antimicrobial drugs
+* Speed improvement for `as.ab()` when the input is an official name or ATC code
 
 ### Other
 * Big documentation updates
@@ -677,7 +678,7 @@ This software is now out of beta and considered stable. Nonetheless, this packag
   * Based on the Compound ID, almost 5,000 official brand names have been added from many different countries
   * All references to antibiotics in our package now use EARS-Net codes, like `AMX` for amoxicillin
   * Functions `atc_certe`, `ab_umcg` and `atc_trivial_nl` have been removed
-  * All `atc_*` functions are superceded by `ab_*` functions
+  * All `atc_*` functions are superseded by `ab_*` functions
   * All output will be translated by using an included translation file which [can be viewed here](https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv)
 * Improvements to plotting AMR results with `ggplot_rsi()`:
   * New argument `colours` to set the bar colours

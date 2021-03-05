@@ -109,7 +109,7 @@ This data set is in R available as `microorganisms`, after you load the `AMR` pa
 Our full taxonomy of microorganisms is based on the authoritative and comprehensive:
 
 * [Catalogue of Life](http://www.catalogueoflife.org) (included version: `r AMR:::catalogue_of_life$year`)
-* [List of Prokaryotic names with Standing in Nomenclature](https://lpsn.dsmz.de) (LPSN, included version: `r AMR:::catalogue_of_life$yearmonth_DSMZ`)
+* [List of Prokaryotic names with Standing in Nomenclature](https://lpsn.dsmz.de) (LPSN, last updated: `r AMR:::catalogue_of_life$yearmonth_LPSN`)
 
 ### Example content
 
@@ -148,7 +148,7 @@ This data set is in R available as `microorganisms.old`, after you load the `AMR
 This data set contains old, previously accepted taxonomic names. The data sources are the same as the `microorganisms` data set:
 
 * [Catalogue of Life](http://www.catalogueoflife.org) (included version: `r AMR:::catalogue_of_life$year`)
-* [List of Prokaryotic names with Standing in Nomenclature](https://lpsn.dsmz.de) (LPSN, included version: `r AMR:::catalogue_of_life$yearmonth_DSMZ`)
+* [List of Prokaryotic names with Standing in Nomenclature](https://lpsn.dsmz.de) (LPSN, last updated: `r AMR:::catalogue_of_life$yearmonth_LPSN`)
 
 ### Example content
 

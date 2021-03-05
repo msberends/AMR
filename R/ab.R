@@ -105,14 +105,29 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
   already_regex <- isTRUE(list(...)$already_regex)
   fast_mode <- isTRUE(list(...)$fast_mode)
   
-  if (all(toupper(x) %in% antibiotics$ab)) {
-    # valid AB code, but not yet right class
-    return(set_clean_class(toupper(x),
-                           new_class = c("ab", "character")))
-  }
 
   x_bak <- x
   x <- toupper(x)
+  x_nonNA <- x[!is.na(x)]
+  
+  if (all(x_nonNA %in% antibiotics$ab, na.rm = TRUE)) {
+    # all valid AB codes, but not yet right class
+    return(set_clean_class(x,
+                           new_class = c("ab", "character")))
+  }
+  if (all(x_nonNA %in% toupper(antibiotics$name), na.rm = TRUE)) {
+    # all valid AB names
+    out <- antibiotics$ab[match(x, toupper(antibiotics$name))]
+    out[is.na(x)] <- NA_character_
+    return(out)
+  }
+  if (all(x_nonNA %in% antibiotics$atc, na.rm = TRUE)) {
+    # all valid ATC codes
+    out <- antibiotics$ab[match(x, antibiotics$atc)]
+    out[is.na(x)] <- NA_character_
+    return(out)
+  }
+  
   # remove diacritics
   x <- iconv(x, from = "UTF-8", to = "ASCII//TRANSLIT")
   x <- gsub('"', "", x, fixed = TRUE)

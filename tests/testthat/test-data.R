@@ -88,13 +88,11 @@ test_that("CoL version info works", {
 })
 
 test_that("CoNS/CoPS are up to date", {
-  skip_on_cran()
   uncategorised <- subset(microorganisms,
                           genus == "Staphylococcus" &
                             !species %in% c("", "aureus") &
                             !mo %in% c(MO_CONS, MO_COPS))
-  if (NROW(uncategorised) > 0) {
-    warning(paste0("Staphylococcal species not categorised as CoNS/CoPS: S. ",
-                   uncategorised$species, " (", uncategorised$mo, ")\n"))
-  }
+  expect(NROW(uncategorised) == 0,
+         failure_message = paste0("Staphylococcal species not categorised as CoNS/CoPS: S. ",
+                                  uncategorised$species, " (", uncategorised$mo, ")"))
 })
