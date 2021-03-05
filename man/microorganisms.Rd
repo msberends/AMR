@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data Set with 69,625 Microorganisms}
+\title{Data Set with 70,026 Microorganisms}
 \format{
-A \link{data.frame} with 69,625 observations and 16 variables:
+A \link{data.frame} with 70,026 observations and 16 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}

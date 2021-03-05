@@ -310,10 +310,12 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
       x_translated <- paste(lapply(strsplit(x[i], "[^A-Z0-9]"),
                                    function(y) {
                                      for (i in seq_len(length(y))) {
-                                       y[i] <- ifelse(tolower(y[i]) %in% tolower(translations_file$replacement),
-                                                      translations_file[which(tolower(translations_file$replacement) == tolower(y[i]) &
-                                                                                !isFALSE(translations_file$fixed)), "pattern"],
-                                                      y[i])
+                                       for (lang in LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED != "en"]) {
+                                         y[i] <- ifelse(tolower(y[i]) %in% tolower(translations_file[, lang, drop = TRUE]),
+                                                        translations_file[which(tolower(translations_file[, lang, drop = TRUE]) == tolower(y[i]) &
+                                                                                  !isFALSE(translations_file$fixed)), "pattern"],
+                                                        y[i])
+                                       }
                                      }
                                      generalise_antibiotic_name(y)
                                    })[[1]],

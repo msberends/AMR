@@ -296,6 +296,79 @@ MOs <- MOs %>%
   # clean up
   df_remove_nonASCII()
 
+# add all mssing genera, families and orders
+MOs <- MOs %>% 
+  bind_rows(
+    MOs %>% 
+      arrange(genus, species) %>%
+      distinct(genus, .keep_all = TRUE) %>%
+      filter(rank == "species", source != "manually added") %>%
+      mutate(mo = gsub("^([A-Z]_[A-Z]+)_.*", "\\1", mo),
+             fullname = genus, 
+             species = "", 
+             subspecies = "", 
+             rank = "genus", 
+             species_id = "",
+             snomed = NA,
+             ref = NA_character_),
+    MOs %>% 
+      group_by(family) %>%
+      filter(!any(rank == "family") & n() > 1) %>%
+      ungroup() %>% 
+      arrange(family) %>%
+      distinct(family, .keep_all = TRUE) %>% 
+      filter(!family %in% c("", NA), source != "manually added") %>%
+      mutate(mo = paste0(substr(kingdom, 1, 1), "_[FAM]_",
+                         abbreviate(family,
+                                    minlength = 8,
+                                    use.classes = TRUE,
+                                    method = "both.sides",
+                                    strict = FALSE)),
+             mo = toupper(mo),
+             fullname = family,
+             genus = "",
+             species = "", 
+             subspecies = "", 
+             rank = "family", 
+             species_id = "",
+             snomed = NA,
+             ref = NA_character_),
+    MOs %>% 
+      group_by(order) %>%
+      filter(!any(rank == "order") & n() > 1) %>%
+      ungroup() %>% 
+      arrange(order) %>%
+      distinct(order, .keep_all = TRUE) %>% 
+      filter(!order %in% c("", NA), source != "manually added") %>%
+      mutate(mo = paste0(substr(kingdom, 1, 1), "_[ORD]_",
+                         abbreviate(order,
+                                    minlength = 8,
+                                    use.classes = TRUE,
+                                    method = "both.sides",
+                                    strict = FALSE)),
+             mo = toupper(mo),
+             fullname = order,
+             family = "",
+             genus = "",
+             species = "", 
+             subspecies = "", 
+             rank = "order", 
+             species_id = "",
+             snomed = NA,
+             ref = NA_character_)
+  ) %>%
+  arrange(fullname)
+
+
+# clean snomed
+for (i in 1:nrow(MOs)) {
+  sno <- as.character(sort(unique(tolower(MOs[i, "snomed"][[1]]))))
+  if (length(sno) > 0) {
+    MOs[i, "snomed"][[1]] <- ifelse(length(sno[!sno == ""]) == 0, list(""), list(sno))
+  }
+}
+
+
 # Merge synonyms ----------------------------------------------------------
 
 # remove synonyms that are now valid names
