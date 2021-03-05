@@ -261,7 +261,6 @@ ggplot.mic <- function(data,
     ggplot2::labs(title = title, x = xlab, y = ylab, subtitle = cols_sub$sub)
 }
 
-
 #' @method plot disk
 #' @export
 #' @importFrom graphics barplot axis mtext legend

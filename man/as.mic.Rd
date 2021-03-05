@@ -44,6 +44,11 @@ is.mic(mic_data)
 # this can also coerce combined MIC/RSI values:
 as.mic("<=0.002; S") # will return <=0.002
 
+# mathematical processing treats MICs as numeric values
+fivenum(mic_data)
+quantile(mic_data)
+all(mic_data < 512)
+
 # interpret MIC values
 as.rsi(x = as.mic(2),
        mo = as.mo("S. pneumoniae"),

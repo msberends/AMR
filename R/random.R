@@ -51,9 +51,9 @@
 #' random_mic(100, "Klebsiella pneumoniae", "meropenem")    # range 0.0625-16
 #' random_mic(100, "Streptococcus pneumoniae", "meropenem") # range 0.0625-4
 #' 
-#' random_disk(100, "Klebsiella pneumoniae")                  # range 11-50
-#' random_disk(100, "Klebsiella pneumoniae", "ampicillin")    # range 6-14
-#' random_disk(100, "Streptococcus pneumoniae", "ampicillin") # range 16-22
+#' random_disk(100, "Klebsiella pneumoniae")                  # range 8-50
+#' random_disk(100, "Klebsiella pneumoniae", "ampicillin")    # range 11-17
+#' random_disk(100, "Streptococcus pneumoniae", "ampicillin") # range 12-27
 #' }
 random_mic <- function(size, mo = NULL, ab = NULL, ...) {
   random_exec("MIC", size = size, mo = mo, ab = ab)

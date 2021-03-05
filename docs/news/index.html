@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9030</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9031</span>
       </span>
     </div>
 
@@ -236,9 +236,9 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1509030" class="section level1">
-<h1 class="page-header" data-toc-text="1.5.0.9030">
-<a href="#amr-1509030" class="anchor"></a>AMR 1.5.0.9030<small> Unreleased </small>
+    <div id="amr-1509031" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.0.9031">
+<a href="#amr-1509031" class="anchor"></a>AMR 1.5.0.9031<small> Unreleased </small>
 </h1>
 <div id="last-updated-5-march-2021" class="section level2">
 <h2 class="hasAnchor">
@@ -280,7 +280,7 @@
 </li>
 <li><p>Support for custom MDRO guidelines, using the new <code><a href="../reference/mdro.html">custom_mdro_guideline()</a></code> function, please see <code><a href="../reference/mdro.html">mdro()</a></code> for additional info</p></li>
 <li><p>Function <code><a href="../reference/isolate_identifier.html">isolate_identifier()</a></code>, which will paste a microorganism code with all antimicrobial results of a data set into one string for each row. This is useful to compare isolates, e.g. between institutions or regions, when there is no genotyping available.</p></li>
-<li><p><code>ggplot()</code> generics for classes <code>&lt;mic&gt;</code> and <code>&lt;disk&gt;</code></p></li>
+<li><p><code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> generics for classes <code>&lt;mic&gt;</code> and <code>&lt;disk&gt;</code></p></li>
 <li>
 <p>Function <code><a href="../reference/mo_property.html">mo_is_yeast()</a></code>, which determines whether a microorganism is a member of the taxonomic class Saccharomycetes or the taxonomic order Saccharomycetales:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -302,6 +302,7 @@
 <span class="fu"><a href="../reference/mo_property.html">mo_type</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Aspergillus"</span>, <span class="st">"Candida"</span><span class="op">)</span>, language <span class="op">=</span> <span class="st">"es"</span><span class="op">)</span> <span class="co"># also supported: de, nl, fr, it, pt</span>
 <span class="co">#&gt; [1] "Hongos"    "Levaduras"</span></code></pre></div>
 </li>
+<li><p>Added Pretomanid (PMD, J04AK08) to the <code>antibiotics</code> data set</p></li>
 </ul>
 </div>
 <div id="changed" class="section level3">
@@ -320,7 +321,7 @@
 <li>Plotting of MIC and disk diffusion values now support interpretation colouring if you supply the microorganism and antimicrobial agent</li>
 <li>All colours were updated to colour-blind friendly versions for values R, S and I for all plot methods (also applies to tibble printing)</li>
 <li>Interpretation of MIC and disk diffusion values to R/SI will now be translated if the system language is German, Dutch or Spanish (see <code>translate</code>)</li>
-<li>Plotting is now possible with base R using <code><a href="../reference/plot.html">plot()</a></code> and with ggplot2 using <code>ggplot()</code> on any vector of MIC and disk diffusion values</li>
+<li>Plotting is now possible with base R using <code><a href="../reference/plot.html">plot()</a></code> and with ggplot2 using <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> on any vector of MIC and disk diffusion values</li>
 </ul>
 </li>
 <li>
@@ -328,9 +329,9 @@
 <li>Using functions without setting a data set (e.g., <code><a href="../reference/mo_property.html">mo_is_gram_negative()</a></code>, <code><a href="../reference/mo_property.html">mo_is_gram_positive()</a></code>, <code><a href="../reference/mo_property.html">mo_is_intrinsic_resistant()</a></code>, <code><a href="../reference/first_isolate.html">first_isolate()</a></code>, <code><a href="../reference/mdro.html">mdro()</a></code>) now work with <code>dplyr</code>s <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> again</li>
 <li>
 <code><a href="../reference/first_isolate.html">first_isolate()</a></code> can be used with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> (also when using a dot <code>.</code> as input for the data) and now returns the names of the groups</li>
+<li>MIC values now allow for any mathematical processing, such as usage inside functions <code><a href="https://rdrr.io/r/base/Extremes.html">min()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code>, <code><a href="https://rdrr.io/r/base/range.html">range()</a></code>, and with binary operators (+, -, etc.). This also enables other functions, such as <code><a href="https://rdrr.io/r/stats/fivenum.html">fivenum()</a></code>.</li>
 <li>Updated the data set <code>microorganisms.codes</code> (which contains popular LIS and WHONET codes for microorganisms) for some species of <em>Mycobacterium</em> that previously incorrectly returned <em>M. africanum</em>
 </li>
-<li>Added Pretomanid (PMD, J04AK08) to the <code>antibiotics</code> data set</li>
 <li>WHONET code <code>"PNV"</code> will now correctly be interpreted as <code>PHN</code>, the antibiotic code for phenoxymethylpenicillin (‘peni V’)</li>
 <li>Fix for verbose output of <code><a href="../reference/mdro.html">mdro(..., verbose = TRUE)</a></code> for German guideline (3MGRN and 4MGRN) and Dutch guideline (BRMO, only <em>P. aeruginosa</em>)</li>
 <li>

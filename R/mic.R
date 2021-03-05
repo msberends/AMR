@@ -42,6 +42,11 @@
 #'
 #' # this can also coerce combined MIC/RSI values:
 #' as.mic("<=0.002; S") # will return <=0.002
+#' 
+#' # mathematical processing treats MICs as numeric values
+#' fivenum(mic_data)
+#' quantile(mic_data)
+#' all(mic_data < 512)
 #'
 #' # interpret MIC values
 #' as.rsi(x = as.mic(2),
@@ -274,6 +279,222 @@ unique.mic <- function(x, incomparables = FALSE, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(x)
   y
+}
+
+#' @method range mic
+#' @export
+#' @noRd
+range.mic <- function(..., na.rm = FALSE) {
+  rng <- sort(c(...))
+  if (na.rm == TRUE) {
+    rng <- rng[!is.na(rng)]
+  }
+  out <- c(as.character(rng[1]), as.character(rng[length(rng)]))
+  as.double(as.mic(out))
+}
+
+#' @method min mic
+#' @export
+#' @noRd
+min.mic <- function(..., na.rm = FALSE) {
+  rng <- sort(c(...))
+  if (na.rm == TRUE) {
+    rng <- rng[!is.na(rng)]
+  }
+  as.double(as.mic(as.character(rng[1])))
+}
+
+#' @method max mic
+#' @export
+#' @noRd
+max.mic <- function(..., na.rm = FALSE) {
+  rng <- sort(c(...))
+  if (na.rm == TRUE) {
+    rng <- rng[!is.na(rng)]
+  }
+  as.double(as.mic(as.character(rng[length(rng)])))
+}
+
+#' @method sum mic
+#' @export
+#' @noRd
+sum.mic <- function(..., na.rm = FALSE) {
+  rng <- sort(c(...))
+  if (na.rm == TRUE) {
+    rng <- rng[!is.na(rng)]
+  }
+  sum(as.double(rng))
+}
+
+#' @method all mic
+#' @export
+#' @noRd
+all.mic <- function(..., na.rm = FALSE) {
+  rng <- sort(c(...))
+  if (na.rm == TRUE) {
+    rng <- rng[!is.na(rng)]
+  }
+  all(as.double(rng))
+}
+
+#' @method any mic
+#' @export
+#' @noRd
+any.mic <- function(..., na.rm = FALSE) {
+  rng <- sort(c(...))
+  if (na.rm == TRUE) {
+    rng <- rng[!is.na(rng)]
+  }
+  any(as.double(rng))
+}
+
+#' @method mean mic
+#' @export
+#' @noRd
+mean.mic <- function(x, na.rm = FALSE, ...) {
+  mean(as.double(x), na.rm = na.rm, ...)
+}
+
+#' @method median mic
+#' @export
+#' @noRd
+median.mic <- function(x, na.rm = FALSE, ...) {
+  median(as.double(x), na.rm = na.rm, ...)
+}
+
+#' @method quantile mic
+#' @export
+#' @noRd
+quantile.mic <- function(x, probs = seq(0, 1, 0.25), na.rm = FALSE,
+                         names = TRUE, type = 7, ...) {
+  quantile(as.double(x), props = props, na.rm = na.rm, names = names, type = type, ...)
+}
+
+#' @method floor mic
+#' @export
+#' @noRd
+floor.mic <- function(x) {
+  floor(as.double(x))
+}
+
+#' @method ceiling mic
+#' @export
+#' @noRd
+ceiling.mic <- function(x) {
+  ceiling(as.double(x))
+}
+
+#' @method + mic
+#' @export
+#' @noRd
+`+.mic` <- function(e1, e2) {
+  as.double(e1) + as.double(e2)
+}
+
+#' @method - mic
+#' @export
+#' @noRd
+`-.mic` <- function(e1, e2) {
+  as.double(e1) - as.double(e2)
+}
+
+#' @method * mic
+#' @export
+#' @noRd
+`*.mic` <- function(e1, e2) {
+  as.double(e1) * as.double(e2)
+}
+
+#' @method / mic
+#' @export
+#' @noRd
+`/.mic` <- function(e1, e2) {
+  as.double(e1) / as.double(e2)
+}
+
+#' @method ^ mic
+#' @export
+#' @noRd
+`^.mic` <- function(e1, e2) {
+  as.double(e1) ^ as.double(e2)
+}
+
+#' @method %% mic
+#' @export
+#' @noRd
+`%%.mic` <- function(e1, e2) {
+  as.double(e1) %% as.double(e2)
+}
+
+#' @method %/% mic
+#' @export
+#' @noRd
+`%/%.mic` <- function(e1, e2) {
+  as.double(e1) %/% as.double(e2)
+}
+
+#' @method == mic
+#' @export
+#' @noRd
+`==.mic` <- function(e1, e2) {
+  as.double(e1) == as.double(e2)
+}
+
+#' @method != mic
+#' @export
+#' @noRd
+`!=.mic` <- function(e1, e2) {
+  as.double(e1) != as.double(e2)
+}
+
+#' @method < mic
+#' @export
+#' @noRd
+`<.mic` <- function(e1, e2) {
+  as.double(e1) < as.double(e2)
+}
+
+#' @method <= mic
+#' @export
+#' @noRd
+`<=.mic` <- function(e1, e2) {
+  as.double(e1) <= as.double(e2)
+}
+
+#' @method >= mic
+#' @export
+#' @noRd
+`>=.mic` <- function(e1, e2) {
+  as.double(e1) >= as.double(e2)
+}
+
+#' @method > mic
+#' @export
+#' @noRd
+`>.mic` <- function(e1, e2) {
+  as.double(e1) > as.double(e2)
+}
+
+#' @method sort mic
+#' @export
+#' @noRd
+sort.mic <- function(x, decreasing = FALSE, ...) {
+  if (decreasing == TRUE) {
+    ord <- order(-as.double(x))
+  } else {
+    ord <- order(as.double(x))  
+  }
+  x[ord]
+}
+
+
+
+#' @method hist mic
+#' @export
+#' @noRd
+hist.mic <- function(x, ...) {
+  warning_("Use `plot()` or `ggplot()` for plotting MIC values", call = FALSE)
+  hist(as.double(x), ...)
 }
 
 # will be exported using s3_register() in R/zzz.R

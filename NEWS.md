@@ -1,4 +1,4 @@
-# AMR 1.5.0.9030
+# AMR 1.5.0.9031
 ## <small>Last updated:  5 March 2021</small>
 
 ### New
@@ -43,6 +43,7 @@
   mo_type(c("Aspergillus", "Candida"), language = "es") # also supported: de, nl, fr, it, pt
   #> [1] "Hongos"    "Levaduras"
   ```
+* Added Pretomanid (PMD, J04AK08) to the `antibiotics` data set
 
 ### Changed
 * Updated the bacterial taxonomy to 3 March 2021 (using [LSPN](https://lpsn.dsmz.de))
@@ -56,8 +57,8 @@
 * `is.rsi()` and `is.rsi.eligible()` now return a vector of `TRUE`/`FALSE` when the input is a data set, by iterating over all columns
 * Using functions without setting a data set (e.g., `mo_is_gram_negative()`, `mo_is_gram_positive()`, `mo_is_intrinsic_resistant()`, `first_isolate()`, `mdro()`) now work with `dplyr`s `group_by()` again
 * `first_isolate()` can be used with `group_by()` (also when using a dot `.` as input for the data) and now returns the names of the groups
+* MIC values now allow for any mathematical processing, such as usage inside functions `min()`, `max()`, `range()`, and with binary operators (+, -, etc.). This also enables other functions, such as `fivenum()`.
 * Updated the data set `microorganisms.codes` (which contains popular LIS and WHONET codes for microorganisms) for some species of *Mycobacterium* that previously incorrectly returned *M. africanum*
-* Added Pretomanid (PMD, J04AK08) to the `antibiotics` data set
 * WHONET code `"PNV"` will now correctly be interpreted as `PHN`, the antibiotic code for phenoxymethylpenicillin ('peni V')
 * Fix for verbose output of `mdro(..., verbose = TRUE)` for German guideline (3MGRN and 4MGRN) and Dutch guideline (BRMO, only *P. aeruginosa*)
 * `is.rsi.eligible()` now detects if the column name resembles an antibiotic name or code and now returns `TRUE` immediately if the input contains any of the values "R", "S" or "I". This drastically improves speed, also for a lot of other functions that rely on automatic determination of antibiotic columns.

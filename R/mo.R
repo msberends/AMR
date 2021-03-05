@@ -1474,8 +1474,8 @@ exec_as.mo <- function(x,
         if (length(uncertainties$input) > 1) {
           plural <- c("s", "them", "were")
         }
-        msg <- paste0("Translation to ", nr2char(length(uncertainties$input)), " microorganism", plural[1],
-                      " was guessed with uncertainty. Use `mo_uncertainties()` to review ", plural[2], ".")
+        msg <- paste0("Translation is uncertain of ", nr2char(length(uncertainties$input)), " microorganism", plural[1],
+                      ". Use `mo_uncertainties()` to review ", plural[2], ".")
         message_(msg)
       }
       x[already_known] <- x_known
