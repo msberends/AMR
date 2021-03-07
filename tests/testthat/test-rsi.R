@@ -95,20 +95,20 @@ test_that("mic2rsi works", {
            mo = "B_STRPT_PNMN",
            ab = "AMP",
            guideline = "EUCAST 2020")),
-    c("S", "S", "I", "I", "R"))
+    c("S", "S", "I", "I", "R"), info = pkg_env$strange)
   # S. pneumoniae/amoxicillin in CLSI 2019: 2-8 ug/ml (R is 8 and > 8)
   expect_equal(as.character(
     as.rsi(x = as.mic(c(1, 2, 4, 8, 16)),
            mo = "B_STRPT_PNMN",
            ab = "AMX",
            guideline = "CLSI 2019")),
-    c("S", "S", "I", "R", "R"))
+    c("S", "S", "I", "R", "R"), info = pkg_env$strange)
 
   # cutoffs at MIC = 8
   expect_equal(as.rsi(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020"),
-               as.rsi("S"), info = paste0(as.mo("E. coli"), as.ab("ampicillin")))
+               as.rsi("S"), info = pkg_env$strange)
   expect_equal(as.rsi(as.mic(32), "E. coli", "ampicillin", guideline = "EUCAST 2020"),
-               as.rsi("R"))
+               as.rsi("R"), info = pkg_env$strange)
   
   expect_true(suppressWarnings(example_isolates %>%
                                  mutate(amox_mic = as.mic(2)) %>%

@@ -721,10 +721,10 @@ exec_as.rsi <- function(method,
   warned <- FALSE
   method_param <- toupper(method)
   
-  genera <- mo_genus(mo)
-  mo_genus <- as.mo(genera)
-  mo_family <- as.mo(mo_family(mo))
-  mo_order <- as.mo(mo_order(mo))
+  genera <- mo_genus(mo, language = NULL)
+  mo_genus <- as.mo(genera, language = NULL)
+  mo_family <- as.mo(mo_family(mo, language = NULL))
+  mo_order <- as.mo(mo_order(mo, language = NULL))
   if (any(genera == "Staphylococcus", na.rm = TRUE)) {
     mo_becker <- as.mo(mo, Becker = TRUE)
   } else {
@@ -809,25 +809,40 @@ exec_as.rsi <- function(method,
         pm_arrange(pm_desc(nchar(mo)))
     }
     
+    get_record <- get_record[1L, , drop = FALSE]
+    
     if (NROW(get_record) > 0) {
-      get_record <- get_record[1L, , drop = FALSE]
-      if (is.na(x[i])) {
+      pkg_env$strange <- list(x_dbl = as.double(x[i]),
+                              x_chr = as.character(x[i]),
+                              get_record = get_record,
+                              guideline_coerced = guideline_coerced,
+                              lookup = c(lookup_mo[i],
+                                         lookup_genus[i],
+                                         lookup_family[i],
+                                         lookup_order[i],
+                                         lookup_becker[i],
+                                         lookup_lancefield[i],
+                                         lookup_other[i]),
+                              is_intrinsic_r = is_intrinsic_r,
+                              c1 = x[i] <= get_record$breakpoint_S,
+                              c2 = guideline_coerced %like% "EUCAST" & x[i] > get_record$breakpoint_R,
+                              c2 = guideline_coerced %like% "CLSI" & x[i] >= get_record$breakpoint_R)
+
+      if (is.na(x[i]) | (is.na(get_record$breakpoint_S) & is.na(get_record$breakpoint_R))) {
         new_rsi[i] <- NA_character_
       } else if (method == "mic") {
-        new_rsi[i] <- quick_case_when(is.na(get_record$breakpoint_S) & is.na(get_record$breakpoint_R) ~ NA_character_,
-                                      isTRUE(conserve_capped_values) & x[i] %like% "^<[0-9]" ~ "S",
+        new_rsi[i] <- quick_case_when(isTRUE(conserve_capped_values) & x[i] %like% "^<[0-9]" ~ "S",
                                       isTRUE(conserve_capped_values) & x[i] %like% "^>[0-9]" ~ "R",
                                       # start interpreting: EUCAST uses <= S and > R, CLSI uses <=S and >= R
-                                      as.double(x[i]) <= get_record$breakpoint_S ~ "S",
-                                      guideline_coerced %like% "EUCAST" & as.double(x[i]) > get_record$breakpoint_R ~ "R",
-                                      guideline_coerced %like% "CLSI" & as.double(x[i]) >= get_record$breakpoint_R ~ "R",
+                                      x[i] <= get_record$breakpoint_S ~ "S",
+                                      guideline_coerced %like% "EUCAST" & x[i] > get_record$breakpoint_R ~ "R",
+                                      guideline_coerced %like% "CLSI" & x[i] >= get_record$breakpoint_R ~ "R",
                                       # return "I" when not match the bottom or top
                                       !is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R) ~ "I",
                                       # and NA otherwise
                                       TRUE ~ NA_character_)
       } else if (method == "disk") {
-        new_rsi[i] <- quick_case_when(is.na(get_record$breakpoint_S) & is.na(get_record$breakpoint_R) ~ NA_character_,
-                                      isTRUE(as.double(x[i]) >= as.double(get_record$breakpoint_S)) ~ "S",
+        new_rsi[i] <- quick_case_when(isTRUE(as.double(x[i]) >= as.double(get_record$breakpoint_S)) ~ "S",
                                       # start interpreting: EUCAST uses >= S and < R, CLSI uses >=S and <= R
                                       guideline_coerced %like% "EUCAST" &
                                         isTRUE(as.double(x[i]) < as.double(get_record$breakpoint_R)) ~ "R",
