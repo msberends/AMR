@@ -25,13 +25,51 @@
 
 #' Transform Input to Minimum Inhibitory Concentrations (MIC)
 #'
-#' This transforms a vector to a new class [`mic`], which is an ordered [factor] with valid minimum inhibitory concentrations (MIC) as levels. Invalid MIC values will be translated as `NA` with a warning.
+#' This ransforms vectors to a new class [`mic`], which treats the input as decimal numbers, while maintaining operators (such as ">=") and only allowing valid MIC values known to the field of (medical) microbiology.
 #' @inheritSection lifecycle Stable Lifecycle
 #' @rdname as.mic
-#' @param x vector
+#' @param x character or numeric vector
 #' @param na.rm a logical indicating whether missing values should be removed
 #' @details To interpret MIC values as RSI values, use [as.rsi()] on MIC values. It supports guidelines from EUCAST and CLSI.
-#' @return Ordered [factor] with additional class [`mic`]
+#' 
+#' This class for MIC values is a quite a special data type: formally it is an ordered factor with valid MIC values as factor levels (to make sure only valid MIC values are retained), but for any mathematical operation it acts as decimal numbers:
+#' 
+#' ```
+#' x <- random_mic(10)
+#' x
+#' #> Class <mic>
+#' #>  [1] 16     1      8      8      64     >=128  0.0625 32     32     16
+#' 
+#' is.factor(x)
+#' #> [1] TRUE
+#' 
+#' x[1] * 2
+#' #> [1] 32
+#' 
+#' median(x)
+#' #> [1] 26
+#' ```
+#' 
+#' This makes it possible to maintain operators that often come with MIC values, such ">=" and "<=", even when filtering using numeric values in data analysis, e.g.:
+#' 
+#' ```
+#' x[x > 4]
+#' #> Class <mic>
+#' #> [1] 16    8     8     64    >=128 32    32    16
+#' 
+#' df <- data.frame(x, hospital = "A")
+#' subset(df, x > 4) # or with dplyr: df %>% filter(x > 4)
+#' #>        x hospital
+#' #> 1     16        A
+#' #> 5     64        A
+#' #> 6  >=128        A
+#' #> 8     32        A
+#' #> 9     32        A
+#' #> 10    16        A
+#' ```
+#' 
+#' The following [generic functions][groupGeneric()] are implemented for the MIC class: `!`, `!=`, `%%`, `%/%`, `&`, `*`, `+`, `-`, `/`, `<`, `<=`, `==`, `>`, `>=`, `^`, `|`, [abs()], [acos()], [acosh()], [all()], [any()], [asin()], [asinh()], [atan()], [atanh()], [ceiling()], [cos()], [cosh()], [cospi()], [cummax()], [cummin()], [cumprod()], [cumsum()], [digamma()], [exp()], [expm1()], [floor()], [gamma()], [lgamma()], [log()], [log10()], [log1p()], [log2()], [max()], [mean()], [median()], [min()], [prod()], [quantile()], [range()], [round()], [sign()], [signif()], [sin()], [sinh()], [sinpi()], [sqrt()], [sum()], [tan()], [tanh()], [tanpi()], [trigamma()] and [trunc()].
+#' @return Ordered [factor] with additional class [`mic`], that in mathematical operations acts as decimal numbers. Bare in mind that the outcome of any mathematical operation on MICs will return a numeric value.
 #' @aliases mic
 #' @export
 #' @seealso [as.rsi()]
@@ -197,6 +235,7 @@ pillar_shaft.mic <- function(x, ...) {
   out <- pasted
   out[is.na(x)] <- font_na(NA)
   out <- gsub("(<|=|>)", font_silver("\\1"), out)
+  out <- gsub("([.]?0+)$", font_white("\\1"), out)
   create_pillar_column(out, align = "right", width = max(nchar(pasted)))
 }
 
@@ -211,22 +250,17 @@ type_sum.mic <- function(x, ...) {
 print.mic <- function(x, ...) {
   cat("Class <mic>\n")
   print(as.character(x), quote = FALSE)
+  att <- attributes(x)
+  if ("na.action" %in% names(att)) {
+    cat(font_silver(paste0("(NA ", class(att$na.action), ": ", paste0(att$na.action, collapse = ", "), ")\n")))
+  }
 }
 
 #' @method summary mic
 #' @export
 #' @noRd
 summary.mic <- function(object, ...) {
-  x <- object
-  n_total <- length(x)
-  x <- x[!is.na(x)]
-  n <- length(x)
-  value <- c("Class" = "mic",
-             "<NA>" = n_total - n,
-             "Min." = as.character(sort(x)[1]),
-             "Max." = as.character(sort(x)[n]))
-  class(value) <- c("summaryDefault", "table")
-  value
+  summary(as.double(object), ...)
 }
 
 #' @method [ mic
@@ -281,85 +315,52 @@ unique.mic <- function(x, incomparables = FALSE, ...) {
   y
 }
 
-#' @method range mic
+#' @method sort mic
 #' @export
 #' @noRd
-range.mic <- function(..., na.rm = FALSE) {
-  rng <- sort(c(...))
-  if (na.rm == TRUE) {
-    rng <- rng[!is.na(rng)]
+sort.mic <- function(x, decreasing = FALSE, ...) {
+  if (decreasing == TRUE) {
+    ord <- order(-as.double(x))
+  } else {
+    ord <- order(as.double(x))
   }
-  out <- c(as.character(rng[1]), as.character(rng[length(rng)]))
-  as.double(as.mic(out))
+  x[ord]
 }
 
-#' @method min mic
+#' @method hist mic
 #' @export
 #' @noRd
-min.mic <- function(..., na.rm = FALSE) {
-  rng <- sort(c(...))
-  if (na.rm == TRUE) {
-    rng <- rng[!is.na(rng)]
-  }
-  as.double(as.mic(as.character(rng[1])))
+hist.mic <- function(x, ...) {
+  warning_("Use `plot()` or `ggplot()` for plotting MIC values", call = FALSE)
+  hist(log2(x))
 }
 
-#' @method max mic
-#' @export
-#' @noRd
-max.mic <- function(..., na.rm = FALSE) {
-  rng <- sort(c(...))
-  if (na.rm == TRUE) {
-    rng <- rng[!is.na(rng)]
-  }
-  as.double(as.mic(as.character(rng[length(rng)])))
+# will be exported using s3_register() in R/zzz.R
+get_skimmers.mic <- function(column) {
+  skimr::sfl(
+    skim_type = "mic",
+    min = ~min(., na.rm = TRUE),
+    max = ~max(., na.rm = TRUE),
+    median = ~median(., na.rm = TRUE),
+    n_unique = ~pm_n_distinct(., na.rm = TRUE),
+    hist_log2 = ~skimr::inline_hist(log2(stats::na.omit(.)))
+  )
 }
 
-#' @method sum mic
-#' @export
-#' @noRd
-sum.mic <- function(..., na.rm = FALSE) {
-  rng <- sort(c(...))
-  if (na.rm == TRUE) {
-    rng <- rng[!is.na(rng)]
-  }
-  sum(as.double(rng))
-}
-
-#' @method all mic
-#' @export
-#' @noRd
-all.mic <- function(..., na.rm = FALSE) {
-  rng <- sort(c(...))
-  if (na.rm == TRUE) {
-    rng <- rng[!is.na(rng)]
-  }
-  all(as.double(rng))
-}
-
-#' @method any mic
-#' @export
-#' @noRd
-any.mic <- function(..., na.rm = FALSE) {
-  rng <- sort(c(...))
-  if (na.rm == TRUE) {
-    rng <- rng[!is.na(rng)]
-  }
-  any(as.double(rng))
-}
+# Miscellaneous mathematical functions ------------------------------------
 
 #' @method mean mic
 #' @export
 #' @noRd
-mean.mic <- function(x, na.rm = FALSE, ...) {
-  mean(as.double(x), na.rm = na.rm, ...)
+mean.mic <- function(x, trim = 0, na.rm = FALSE, ...) {
+  mean(as.double(x), trim = trim, na.rm = na.rm, ...)
 }
 
 #' @method median mic
 #' @export
 #' @noRd
 median.mic <- function(x, na.rm = FALSE, ...) {
-  median(as.double(x), na.rm = na.rm, ...)
+  stats::median(as.double(x), na.rm = na.rm, ...)
 }
 
 #' @method quantile mic
@@ -367,22 +368,236 @@ median.mic <- function(x, na.rm = FALSE, ...) {
 #' @noRd
 quantile.mic <- function(x, probs = seq(0, 1, 0.25), na.rm = FALSE,
                          names = TRUE, type = 7, ...) {
-  quantile(as.double(x), props = props, na.rm = na.rm, names = names, type = type, ...)
+  stats::quantile(as.double(x), props = props, na.rm = na.rm, names = names, type = type, ...)
 }
 
+# Math (see ?groupGeneric) ----------------------------------------------
+
+#' @method abs mic
+#' @export
+#' @noRd
+abs.mic <- function(x) {
+  abs(as.double(x))
+}
+#' @method sign mic
+#' @export
+#' @noRd
+sign.mic <- function(x) {
+  sign(as.double(x))
+}
+#' @method sqrt mic
+#' @export
+#' @noRd
+sqrt.mic <- function(x) {
+  sqrt(as.double(x))
+}
 #' @method floor mic
 #' @export
 #' @noRd
 floor.mic <- function(x) {
   floor(as.double(x))
 }
-
 #' @method ceiling mic
 #' @export
 #' @noRd
 ceiling.mic <- function(x) {
   ceiling(as.double(x))
 }
+#' @method trunc mic
+#' @export
+#' @noRd
+trunc.mic <- function(x, ...) {
+  trunc(as.double(x), ...)
+}
+#' @method round mic
+#' @export
+#' @noRd
+round.mic <- function(x, digits = 0) {
+  round(as.double(x), digits = digits)
+}
+#' @method signif mic
+#' @export
+#' @noRd
+signif.mic <- function(x, digits = 6) {
+  signif(as.double(x), digits = digits)
+}
+#' @method exp mic
+#' @export
+#' @noRd
+exp.mic <- function(x) {
+  exp(as.double(x))
+}
+#' @method log mic
+#' @export
+#' @noRd
+log.mic <- function(x, base = exp(1)) {
+  log(as.double(x), base = base)
+}
+#' @method log10 mic
+#' @export
+#' @noRd
+log10.mic <- function(x) {
+  log10(as.double(x))
+}
+#' @method log2 mic
+#' @export
+#' @noRd
+log2.mic <- function(x) {
+  log2(as.double(x))
+}
+#' @method expm1 mic
+#' @export
+#' @noRd
+expm1.mic <- function(x) {
+  expm1(as.double(x))
+}
+#' @method log1p mic
+#' @export
+#' @noRd
+log1p.mic <- function(x) {
+  log1p(as.double(x))
+}
+#' @method cos mic
+#' @export
+#' @noRd
+cos.mic <- function(x) {
+  cos(as.double(x))
+}
+#' @method sin mic
+#' @export
+#' @noRd
+sin.mic <- function(x) {
+  sin(as.double(x))
+}
+#' @method tan mic
+#' @export
+#' @noRd
+tan.mic <- function(x) {
+  tan(as.double(x))
+}
+#' @method cospi mic
+#' @export
+#' @noRd
+cospi.mic <- function(x) {
+  cospi(as.double(x))
+}
+#' @method sinpi mic
+#' @export
+#' @noRd
+sinpi.mic <- function(x) {
+  sinpi(as.double(x))
+}
+#' @method tanpi mic
+#' @export
+#' @noRd
+tanpi.mic <- function(x) {
+  tanpi(as.double(x))
+}
+#' @method acos mic
+#' @export
+#' @noRd
+acos.mic <- function(x) {
+  acos(as.double(x))
+}
+#' @method asin mic
+#' @export
+#' @noRd
+asin.mic <- function(x) {
+  asin(as.double(x))
+}
+#' @method atan mic
+#' @export
+#' @noRd
+atan.mic <- function(x) {
+  atan(as.double(x))
+}
+#' @method cosh mic
+#' @export
+#' @noRd
+cosh.mic <- function(x) {
+  cosh(as.double(x))
+}
+#' @method sinh mic
+#' @export
+#' @noRd
+sinh.mic <- function(x) {
+  sinh(as.double(x))
+}
+#' @method tanh mic
+#' @export
+#' @noRd
+tanh.mic <- function(x) {
+  tanh(as.double(x))
+}
+#' @method acosh mic
+#' @export
+#' @noRd
+acosh.mic <- function(x) {
+  acosh(as.double(x))
+}
+#' @method asinh mic
+#' @export
+#' @noRd
+asinh.mic <- function(x) {
+  asinh(as.double(x))
+}
+#' @method atanh mic
+#' @export
+#' @noRd
+atanh.mic <- function(x) {
+  atanh(as.double(x))
+}
+#' @method lgamma mic
+#' @export
+#' @noRd
+lgamma.mic <- function(x) {
+  lgamma(as.double(x))
+}
+#' @method gamma mic
+#' @export
+#' @noRd
+gamma.mic <- function(x) {
+  gamma(as.double(x))
+}
+#' @method digamma mic
+#' @export
+#' @noRd
+digamma.mic <- function(x) {
+  digamma(as.double(x))
+}
+#' @method trigamma mic
+#' @export
+#' @noRd
+trigamma.mic <- function(x) {
+  trigamma(as.double(x))
+}
+#' @method cumsum mic
+#' @export
+#' @noRd
+cumsum.mic <- function(x) {
+  cumsum(as.double(x))
+}
+#' @method cumprod mic
+#' @export
+#' @noRd
+cumprod.mic <- function(x) {
+  cumprod(as.double(x))
+}
+#' @method cummax mic
+#' @export
+#' @noRd
+cummax.mic <- function(x) {
+  cummax(as.double(x))
+}
+#' @method cummin mic
+#' @export
+#' @noRd
+cummin.mic <- function(x) {
+  cummin(as.double(x))
+}
+
+# Ops (see ?groupGeneric) -----------------------------------------------
+
 
 #' @method + mic
 #' @export
@@ -433,6 +648,27 @@ ceiling.mic <- function(x) {
   as.double(e1) %/% as.double(e2)
 }
 
+#' @method & mic
+#' @export
+#' @noRd
+`&.mic` <- function(e1, e2) {
+  as.double(e1) & as.double(e2)
+}
+
+#' @method | mic
+#' @export
+#' @noRd
+`|.mic` <- function(e1, e2) {
+  as.double(e1) | as.double(e2)
+}
+
+#' @method ! mic
+#' @export
+#' @noRd
+`!.mic` <- function(x) {
+  !as.double(x)
+}
+
 #' @method == mic
 #' @export
 #' @noRd
@@ -475,36 +711,47 @@ ceiling.mic <- function(x) {
   as.double(e1) > as.double(e2)
 }
 
-#' @method sort mic
+# Summary (see ?groupGeneric) -------------------------------------------
+
+#' @method all mic
 #' @export
 #' @noRd
-sort.mic <- function(x, decreasing = FALSE, ...) {
-  if (decreasing == TRUE) {
-    ord <- order(-as.double(x))
-  } else {
-    ord <- order(as.double(x))  
-  }
-  x[ord]
+all.mic <- function(..., na.rm = FALSE) {
+  all(as.double(c(...)), na.rm = na.rm)
 }
-
-
-
-#' @method hist mic
+#' @method any mic
 #' @export
 #' @noRd
-hist.mic <- function(x, ...) {
-  warning_("Use `plot()` or `ggplot()` for plotting MIC values", call = FALSE)
-  hist(as.double(x), ...)
+any.mic <- function(..., na.rm = FALSE) {
+  any(as.double(c(...)), na.rm = na.rm)
 }
-
-# will be exported using s3_register() in R/zzz.R
-get_skimmers.mic <- function(column) {
-  skimr::sfl(
-    skim_type = "mic",
-    min = ~as.character(sort(stats::na.omit(.))[1]),
-    max = ~as.character(sort(stats::na.omit(.))[length(stats::na.omit(.))]),
-    median = ~as.character(stats::na.omit(.)[as.double(stats::na.omit(.)) == median(as.double(stats::na.omit(.)))])[1],
-    n_unique = ~pm_n_distinct(., na.rm = TRUE),
-    hist_log2 = ~skimr::inline_hist(log2(as.double(stats::na.omit(.))))
-  )
+#' @method sum mic
+#' @export
+#' @noRd
+sum.mic <- function(..., na.rm = FALSE) {
+  sum(as.double(c(...)), na.rm = na.rm)
+}
+#' @method prod mic
+#' @export
+#' @noRd
+prod.mic <- function(..., na.rm = FALSE) {
+  prod(as.double(c(...)), na.rm = na.rm)
+}
+#' @method min mic
+#' @export
+#' @noRd
+min.mic <- function(..., na.rm = FALSE) {
+  min(as.double(c(...)), na.rm = na.rm)
+}
+#' @method max mic
+#' @export
+#' @noRd
+max.mic <- function(..., na.rm = FALSE) {
+  max(as.double(c(...)), na.rm = na.rm)
+}
+#' @method range mic
+#' @export
+#' @noRd
+range.mic <- function(..., na.rm = FALSE) {
+  range(as.double(c(...)), na.rm = na.rm)
 }

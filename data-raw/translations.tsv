@@ -33,7 +33,7 @@ no .*growth	TRUE	FALSE	FALSE	keine? .*wachstum	geen .*groei	no .*crecimientonon	
 no|not	TRUE	FALSE	FALSE	keine?	geen|niet	no|sin	sem	non	sem
 Susceptible	TRUE	FALSE	FALSE	Empfindlich	Gevoelig	Susceptible			
 Intermediate	TRUE	FALSE	FALSE	Mittlere	Intermediair	Intermedio			
-Incr. exposure	TRUE	FALSE	FALSE	Empfindlich, erh Belastung	Gevoelig, 'incr. exposure'	Susceptible, 'incr. exposure'			
+Incr. exposure	TRUE	FALSE	FALSE	Empfindlich, erh Belastung	'Incr. exposure'	'Incr. exposure'			
 Resistant	TRUE	FALSE	FALSE	Resistent	Resistent	Resistente			
 antibiotic	TRUE	TRUE	FALSE	Antibiotikum	antibioticum	antibiótico			
 Antibiotic	TRUE	TRUE	FALSE	Antibiotikum	Antibioticum	Antibiótico			

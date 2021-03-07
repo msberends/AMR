@@ -26,7 +26,7 @@
 #' Random MIC Values/Disk Zones/RSI Generation
 #'
 #' These functions can be used for generating random MIC values and disk diffusion diameters, for AMR data analysis practice. By providing a microorganism and antimicrobial agent, the generated results will reflect reality as much as possible.
-#' @inheritSection lifecycle Maturing Lifecycle 
+#' @inheritSection lifecycle Stable Lifecycle 
 #' @param size desired size of the returned vector
 #' @param mo any character that can be coerced to a valid microorganism code with [as.mo()]
 #' @param ab any character that can be coerced to a valid antimicrobial agent code with [as.ab()]
@@ -119,7 +119,15 @@ random_exec <- function(type, size, mo = NULL, ab = NULL) {
       valid_mics <- suppressWarnings(as.mic(set_range_max / (2 ^ c(-3:3))))
       set_range <- valid_mics[!is.na(valid_mics)]
     }
-    return(as.mic(sample(set_range, size = size, replace = TRUE)))
+    out <- as.mic(sample(set_range, size = size, replace = TRUE))
+    # 50% chance that lowest will get <= and highest will get >=
+    if (runif(1) > 0.5) {
+      out[out == min(out)] <- paste0("<=", out[out == min(out)])
+    }
+    if (runif(1) > 0.5) {
+      out[out == max(out)] <- paste0(">=", out[out == max(out)])
+    }
+    return(out)
   } else if (type == "DISK") {
     set_range <- seq(from = as.integer(min(df$breakpoint_R) / 1.25),
                      to = as.integer(max(df$breakpoint_S) * 1.25),

@@ -26,7 +26,7 @@
 #' Retrieve Antimicrobial Drug Names and Doses from Clinical Text
 #' 
 #' Use this function on e.g. clinical texts from health care records. It returns a [list] with all antimicrobial drugs, doses and forms of administration found in the texts.
-#' @inheritSection lifecycle Maturing Lifecycle
+#' @inheritSection lifecycle Stable Lifecycle
 #' @param text text to analyse
 #' @param type type of property to search for, either `"drug"`, `"dose"` or `"administration"`, see *Examples*
 #' @param collapse character to pass on to `paste(, collapse = ...)` to only return one character per element of `text`, see *Examples*

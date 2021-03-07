@@ -26,7 +26,7 @@
 #' AMR Plots with `ggplot2`
 #'
 #' Use these functions to create bar plots for AMR data analysis. All functions rely on [ggplot2][ggplot2::ggplot()] functions.
-#' @inheritSection lifecycle Maturing Lifecycle
+#' @inheritSection lifecycle Stable Lifecycle
 #' @param data a [data.frame] with column(s) of class [`rsi`] (see [as.rsi()])
 #' @param position position adjustment of bars, either `"fill"`, `"stack"` or `"dodge"`
 #' @param x variable to show on x axis, either `"antibiotic"` (default) or `"interpretation"` or a grouping variable

@@ -961,15 +961,8 @@ formatted_filesize <- function(...) {
 }
 
 create_pillar_column <- function(x, ...) {
-  new_pillar_shaft_simple <- import_fn("new_pillar_shaft_simple", "pillar", error_on_fail = FALSE)
-  if (!is.null(new_pillar_shaft_simple)) {
-    new_pillar_shaft_simple(x, ...)
-  } else {
-    # does not exist in package 'pillar' anymore
-    structure(list(x),
-              class = "pillar_shaft_simple",
-              ...)
-  }
+  new_pillar_shaft_simple <- import_fn("new_pillar_shaft_simple", "pillar")
+  new_pillar_shaft_simple(x, ...)
 }
 
 # copied from vctrs::s3_register by their permission:

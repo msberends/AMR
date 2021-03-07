@@ -108,7 +108,6 @@ plot.mic <- function(x,
                                               fn = as.mic,
                                               language = language,
                                               ...)
-  
   barplot(x,
           col = cols_sub$cols,
           main = main,
@@ -116,7 +115,7 @@ plot.mic <- function(x,
           ylab = ylab,
           xlab = xlab,
           axes = FALSE)
-  axis(2, seq(0, max(as.double(x))))
+  axis(2, seq(0, max(x)))
   if (!is.null(cols_sub$sub)) {
     mtext(side = 3, line = 0.5, adj = 0.5, cex = 0.75, cols_sub$sub)
   }
@@ -124,15 +123,15 @@ plot.mic <- function(x,
   if (any(colours_RSI %in% cols_sub$cols)) {
     legend_txt <- character(0)
     legend_col <- character(0)
-    if (colours_RSI[2] %in% cols_sub$cols) {
+    if (any(cols_sub$cols == colours_RSI[2] & cols_sub$count > 0)) {
       legend_txt <- "Susceptible"
       legend_col <- colours_RSI[2]
     }
-    if (colours_RSI[3] %in% cols_sub$cols) {
+    if (any(cols_sub$cols == colours_RSI[3] & cols_sub$count > 0)) {
       legend_txt <- c(legend_txt, plot_name_of_I(cols_sub$guideline))
       legend_col <- c(legend_col, colours_RSI[3])
     }
-    if (colours_RSI[1] %in% cols_sub$cols) {
+    if (any(cols_sub$cols == colours_RSI[1] & cols_sub$count > 0)) {
       legend_txt <- c(legend_txt, "Resistant")
       legend_col <- c(legend_col, colours_RSI[1])
     }
@@ -317,15 +316,15 @@ plot.disk <- function(x,
   if (any(colours_RSI %in% cols_sub$cols)) {
     legend_txt <- character(0)
     legend_col <- character(0)
-    if (colours_RSI[1] %in% cols_sub$cols) {
+    if (any(cols_sub$cols == colours_RSI[1] & cols_sub$count > 0)) {
       legend_txt <- "Resistant"
       legend_col <- colours_RSI[1]
     }
-    if (colours_RSI[3] %in% cols_sub$cols) {
+    if (any(cols_sub$cols == colours_RSI[3] & cols_sub$count > 0)) {
       legend_txt <- c(legend_txt, plot_name_of_I(cols_sub$guideline))
       legend_col <- c(legend_col, colours_RSI[3])
     }
-    if (colours_RSI[2] %in% cols_sub$cols) {
+    if (any(cols_sub$cols == colours_RSI[2] & cols_sub$count > 0)) {
       legend_txt <- c(legend_txt, "Susceptible")
       legend_col <- c(legend_col, colours_RSI[2])
     }
@@ -459,8 +458,8 @@ plot_prepare_table <- function(x, expand) {
   if (is.mic(x)) {
     if (expand == TRUE) {
       # expand range for MIC by adding factors of 2 from lowest to highest so all MICs in between also print
-      extra_range <- max(as.double(x)) / 2
-      while (min(extra_range) / 2 > min(as.double(x))) {
+      extra_range <- max(x) / 2
+      while (min(extra_range) / 2 > min(x)) {
         extra_range <- c(min(extra_range) / 2, extra_range)
       }
       nms <- extra_range
@@ -525,7 +524,7 @@ plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_RSI, f
     cols <- "#BEBEBE"
     sub <- NULL
   }
-  list(cols = cols, sub = sub, guideline = guideline)
+  list(cols = cols, count = as.double(x), sub = sub, guideline = guideline)
 }
 
 

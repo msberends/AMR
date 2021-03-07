@@ -49,7 +49,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Transform Input to Minimum Inhibitory Concentrations (MIC) — as.mic" />
-<meta property="og:description" content="This transforms a vector to a new class mic, which is an ordered factor with valid minimum inhibitory concentrations (MIC) as levels. Invalid MIC values will be translated as NA with a warning." />
+<meta property="og:description" content="This ransforms vectors to a new class mic, which treats the input as decimal numbers, while maintaining operators (such as &quot;&amp;gt;=&quot;) and only allowing valid MIC values known to the field of (medical) microbiology." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9031</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9032</span>
       </span>
     </div>
 
@@ -239,7 +239,7 @@
     </div>
 
     <div class="ref-description">
-    <p>This transforms a vector to a new class <code>mic</code>, which is an ordered <a href='https://rdrr.io/r/base/factor.html'>factor</a> with valid minimum inhibitory concentrations (MIC) as levels. Invalid MIC values will be translated as <code>NA</code> with a warning.</p>
+    <p>This ransforms vectors to a new class <code>mic</code>, which treats the input as decimal numbers, while maintaining operators (such as "&gt;=") and only allowing valid MIC values known to the field of (medical) microbiology.</p>
     </div>
 
     <pre class="usage"><span class='fu'>as.mic</span><span class='op'>(</span><span class='va'>x</span>, na.rm <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
@@ -251,7 +251,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>vector</p></td>
+      <td><p>character or numeric vector</p></td>
     </tr>
     <tr>
       <th>na.rm</th>
@@ -261,10 +261,41 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Ordered <a href='https://rdrr.io/r/base/factor.html'>factor</a> with additional class <code>mic</code></p>
+    <p>Ordered <a href='https://rdrr.io/r/base/factor.html'>factor</a> with additional class <code>mic</code>, that in mathematical operations acts as decimal numbers. Bare in mind that the outcome of any mathematical operation on MICs will return a numeric value.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>To interpret MIC values as RSI values, use <code><a href='as.rsi.html'>as.rsi()</a></code> on MIC values. It supports guidelines from EUCAST and CLSI.</p>
+<p>This class for MIC values is a quite a special data type: formally it is an ordered factor with valid MIC values as factor levels (to make sure only valid MIC values are retained), but for any mathematical operation it acts as decimal numbers:</p><pre><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>random_mic</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>
+<span class='va'>x</span>
+<span class='co'>#&gt; Class &lt;mic&gt;</span>
+<span class='co'>#&gt;  [1] 16     1      8      8      64     &gt;=128  0.0625 32     32     16</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/factor.html'>is.factor</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='co'>#&gt; [1] TRUE</span>
+
+<span class='va'>x</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>*</span> <span class='fl'>2</span>
+<span class='co'>#&gt; [1] 32</span>
+
+<span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='co'>#&gt; [1] 26</span>
+</pre>
+
+<p>This makes it possible to maintain operators that often come with MIC values, such "&gt;=" and "&lt;=", even when filtering using numeric values in data analysis, e.g.:</p><pre><span class='va'>x</span><span class='op'>[</span><span class='va'>x</span> <span class='op'>&gt;</span> <span class='fl'>4</span><span class='op'>]</span>
+<span class='co'>#&gt; Class &lt;mic&gt;</span>
+<span class='co'>#&gt; [1] 16    8     8     64    &gt;=128 32    32    16</span>
+
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>x</span>, hospital <span class='op'>=</span> <span class='st'>"A"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>x</span> <span class='op'>&gt;</span> <span class='fl'>4</span><span class='op'>)</span> <span class='co'># or with dplyr: df %&gt;% filter(x &gt; 4)</span>
+<span class='co'>#&gt;        x hospital</span>
+<span class='co'>#&gt; 1     16        A</span>
+<span class='co'>#&gt; 5     64        A</span>
+<span class='co'>#&gt; 6  &gt;=128        A</span>
+<span class='co'>#&gt; 8     32        A</span>
+<span class='co'>#&gt; 9     32        A</span>
+<span class='co'>#&gt; 10    16        A</span>
+</pre>
+
+<p>The following <a href='https://rdrr.io/r/base/groupGeneric.html'>generic functions</a> are implemented for the MIC class: <code><a href='https://rdrr.io/r/base/Logic.html'>!</a></code>, <code><a href='https://rdrr.io/r/base/Comparison.html'>!=</a></code>, <code><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></code>, <code><a href='https://rdrr.io/r/base/Arithmetic.html'>%/%</a></code>, <code>&amp;</code>, <code><a href='https://rdrr.io/r/base/Arithmetic.html'>*</a></code>, <code><a href='https://rdrr.io/r/base/Arithmetic.html'>+</a></code>, <code><a href='https://rdrr.io/r/base/Arithmetic.html'>-</a></code>, <code><a href='https://rdrr.io/r/base/Arithmetic.html'>/</a></code>, <code>&lt;</code>, <code>&lt;=</code>, <code><a href='https://rdrr.io/r/base/Comparison.html'>==</a></code>, <code>&gt;</code>, <code>&gt;=</code>, <code><a href='https://rdrr.io/r/base/Arithmetic.html'>^</a></code>, <code><a href='https://rdrr.io/r/base/Logic.html'>|</a></code>, <code><a href='https://rdrr.io/r/base/MathFun.html'>abs()</a></code>, <code><a href='https://rdrr.io/r/base/Trig.html'>acos()</a></code>, <code><a href='https://rdrr.io/r/base/Hyperbolic.html'>acosh()</a></code>, <code><a href='https://rdrr.io/r/base/all.html'>all()</a></code>, <code><a href='https://rdrr.io/r/base/any.html'>any()</a></code>, <code><a href='https://rdrr.io/r/base/Trig.html'>asin()</a></code>, <code><a href='https://rdrr.io/r/base/Hyperbolic.html'>asinh()</a></code>, <code><a href='https://rdrr.io/r/base/Trig.html'>atan()</a></code>, <code><a href='https://rdrr.io/r/base/Hyperbolic.html'>atanh()</a></code>, <code><a href='https://rdrr.io/r/base/Round.html'>ceiling()</a></code>, <code><a href='https://rdrr.io/r/base/Trig.html'>cos()</a></code>, <code><a href='https://rdrr.io/r/base/Hyperbolic.html'>cosh()</a></code>, <code><a href='https://rdrr.io/r/base/Trig.html'>cospi()</a></code>, <code><a href='https://rdrr.io/r/base/cumsum.html'>cummax()</a></code>, <code><a href='https://rdrr.io/r/base/cumsum.html'>cummin()</a></code>, <code><a href='https://rdrr.io/r/base/cumsum.html'>cumprod()</a></code>, <code><a href='https://rdrr.io/r/base/cumsum.html'>cumsum()</a></code>, <code><a href='https://rdrr.io/r/base/Special.html'>digamma()</a></code>, <code><a href='https://rdrr.io/r/base/Log.html'>exp()</a></code>, <code><a href='https://rdrr.io/r/base/Log.html'>expm1()</a></code>, <code><a href='https://rdrr.io/r/base/Round.html'>floor()</a></code>, <code><a href='https://rdrr.io/r/base/Special.html'>gamma()</a></code>, <code><a href='https://rdrr.io/r/base/Special.html'>lgamma()</a></code>, <code><a href='https://rdrr.io/r/base/Log.html'>log()</a></code>, <code><a href='https://rdrr.io/r/base/Log.html'>log10()</a></code>, <code><a href='https://rdrr.io/r/base/Log.html'>log1p()</a></code>, <code><a href='https://rdrr.io/r/base/Log.html'>log2()</a></code>, <code><a href='https://rdrr.io/r/base/Extremes.html'>max()</a></code>, <code><a href='https://rdrr.io/r/base/mean.html'>mean()</a></code>, <code><a href='https://rdrr.io/r/stats/median.html'>median()</a></code>, <code><a href='https://rdrr.io/r/base/Extremes.html'>min()</a></code>, <code><a href='https://rdrr.io/r/base/prod.html'>prod()</a></code>, <code><a href='https://rdrr.io/r/stats/quantile.html'>quantile()</a></code>, <code><a href='https://rdrr.io/r/base/range.html'>range()</a></code>, <code><a href='https://rdrr.io/r/base/Round.html'>round()</a></code>, <code><a href='https://rdrr.io/r/base/sign.html'>sign()</a></code>, <code><a href='https://rdrr.io/r/base/Round.html'>signif()</a></code>, <code><a href='https://rdrr.io/r/base/Trig.html'>sin()</a></code>, <code><a href='https://rdrr.io/r/base/Hyperbolic.html'>sinh()</a></code>, <code><a href='https://rdrr.io/r/base/Trig.html'>sinpi()</a></code>, <code><a href='https://rdrr.io/r/base/MathFun.html'>sqrt()</a></code>, <code><a href='https://rdrr.io/r/base/sum.html'>sum()</a></code>, <code><a href='https://rdrr.io/r/base/Trig.html'>tan()</a></code>, <code><a href='https://rdrr.io/r/base/Hyperbolic.html'>tanh()</a></code>, <code><a href='https://rdrr.io/r/base/Trig.html'>tanpi()</a></code>, <code><a href='https://rdrr.io/r/base/Special.html'>trigamma()</a></code> and <code><a href='https://rdrr.io/r/base/Round.html'>trunc()</a></code>.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable Lifecycle</h2>
 
     
