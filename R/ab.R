@@ -105,7 +105,6 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
   already_regex <- isTRUE(list(...)$already_regex)
   fast_mode <- isTRUE(list(...)$fast_mode)
   
-
   x_bak <- x
   x <- toupper(x)
   x_nonNA <- x[!is.na(x)]

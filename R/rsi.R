@@ -774,6 +774,11 @@ exec_as.rsi <- function(method,
   
   for (i in seq_len(length(x))) {
     is_intrinsic_r <- paste(mo[i], ab) %in% INTRINSIC_R
+    if (is_intrinsic_r == TRUE) {
+      print("====")
+      print(paste(mo[i], ab))
+      print("====")
+    }
     any_is_intrinsic_resistant <- any_is_intrinsic_resistant | is_intrinsic_r
     
     if (isTRUE(add_intrinsic_resistance) & is_intrinsic_r) {
@@ -814,14 +819,22 @@ exec_as.rsi <- function(method,
       if (is.na(x[i])) {
         new_rsi[i] <- NA_character_
       } else if (method == "mic") {
+        print("----")
+        print(str(get_record))
+        print(x[i])
+        print(x[i] <= get_record$breakpoint_S)
+        print(x[i] > get_record$breakpoint_R)
+        print(x[i] >= get_record$breakpoint_R)
+        print(guideline_coerced %like% "EUCAST" & x[i] > get_record$breakpoint_R)
+        print(guideline_coerced %like% "EUCAST" && x[i] > get_record$breakpoint_R)
+        print(guideline_coerced %like% "EUCAST" & (x[i] > get_record$breakpoint_R))
+        print("----")
         new_rsi[i] <- quick_case_when(isTRUE(conserve_capped_values) & x[i] %like% "^<[0-9]" ~ "S",
                                       isTRUE(conserve_capped_values) & x[i] %like% "^>[0-9]" ~ "R",
                                       # start interpreting: EUCAST uses <= S and > R, CLSI uses <=S and >= R
-                                      isTRUE(x[i] <= get_record$breakpoint_S) ~ "S",
-                                      guideline_coerced %like% "EUCAST" &
-                                        isTRUE(x[i] > get_record$breakpoint_R) ~ "R",
-                                      guideline_coerced %like% "CLSI" &
-                                        isTRUE(x[i] >= get_record$breakpoint_R) ~ "R",
+                                      x[i] <= get_record$breakpoint_S ~ "S",
+                                      guideline_coerced %like% "EUCAST" & x[i] > get_record$breakpoint_R ~ "R",
+                                      guideline_coerced %like% "CLSI" & x[i] >= get_record$breakpoint_R ~ "R",
                                       # return "I" when not match the bottom or top
                                       !is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R) ~ "I",
                                       # and NA otherwise
