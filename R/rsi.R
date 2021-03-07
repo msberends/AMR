@@ -814,17 +814,14 @@ exec_as.rsi <- function(method,
       if (is.na(x[i])) {
         new_rsi[i] <- NA_character_
       } else if (method == "mic") {
-        mic_input <- x[i]
-        mic_S <- as.mic(get_record$breakpoint_S)
-        mic_R <- as.mic(get_record$breakpoint_R)
-        new_rsi[i] <- quick_case_when(isTRUE(conserve_capped_values) & mic_input %like% "^<[0-9]" ~ "S",
-                                      isTRUE(conserve_capped_values) & mic_input %like% "^>[0-9]" ~ "R",
+        new_rsi[i] <- quick_case_when(isTRUE(conserve_capped_values) & x[i] %like% "^<[0-9]" ~ "S",
+                                      isTRUE(conserve_capped_values) & x[i] %like% "^>[0-9]" ~ "R",
                                       # start interpreting: EUCAST uses <= S and > R, CLSI uses <=S and >= R
-                                      isTRUE(which(levels(mic_input) == mic_input) <= which(levels(mic_S) == mic_S)) ~ "S",
+                                      isTRUE(x[i] <= get_record$breakpoint_S) ~ "S",
                                       guideline_coerced %like% "EUCAST" &
-                                        isTRUE(which(levels(mic_input) == mic_input) > which(levels(mic_R) == mic_R)) ~ "R",
+                                        isTRUE(x[i] > get_record$breakpoint_R) ~ "R",
                                       guideline_coerced %like% "CLSI" &
-                                        isTRUE(which(levels(mic_input) == mic_input) >= which(levels(mic_R) == mic_R)) ~ "R",
+                                        isTRUE(x[i] >= get_record$breakpoint_R) ~ "R",
                                       # return "I" when not match the bottom or top
                                       !is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R) ~ "I",
                                       # and NA otherwise

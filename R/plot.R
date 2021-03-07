@@ -527,7 +527,6 @@ plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_RSI, f
   list(cols = cols, count = as.double(x), sub = sub, guideline = guideline)
 }
 
-
 #' @method plot rsi
 #' @export
 #' @importFrom graphics plot text axis

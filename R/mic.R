@@ -341,7 +341,7 @@ get_skimmers.mic <- function(column) {
     skim_type = "mic",
     min = ~min(., na.rm = TRUE),
     max = ~max(., na.rm = TRUE),
-    median = ~median(., na.rm = TRUE),
+    median = ~stats::median(., na.rm = TRUE),
     n_unique = ~pm_n_distinct(., na.rm = TRUE),
     hist_log2 = ~skimr::inline_hist(log2(stats::na.omit(.)))
   )
