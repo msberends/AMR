@@ -774,11 +774,6 @@ exec_as.rsi <- function(method,
   
   for (i in seq_len(length(x))) {
     is_intrinsic_r <- paste(mo[i], ab) %in% INTRINSIC_R
-    if (is_intrinsic_r == TRUE) {
-      print("====")
-      print(paste(mo[i], ab))
-      print("====")
-    }
     any_is_intrinsic_resistant <- any_is_intrinsic_resistant | is_intrinsic_r
     
     if (isTRUE(add_intrinsic_resistance) & is_intrinsic_r) {
@@ -813,34 +808,26 @@ exec_as.rsi <- function(method,
         pm_filter(uti == FALSE) %pm>% # 'uti' is a column in rsi_translation
         pm_arrange(pm_desc(nchar(mo)))
     }
-    get_record <- get_record[1L, , drop = FALSE]
     
     if (NROW(get_record) > 0) {
+      get_record <- get_record[1L, , drop = FALSE]
       if (is.na(x[i])) {
         new_rsi[i] <- NA_character_
       } else if (method == "mic") {
-        print("----")
-        print(str(get_record))
-        print(x[i])
-        print(x[i] <= get_record$breakpoint_S)
-        print(x[i] > get_record$breakpoint_R)
-        print(x[i] >= get_record$breakpoint_R)
-        print(guideline_coerced %like% "EUCAST" & x[i] > get_record$breakpoint_R)
-        print(guideline_coerced %like% "EUCAST" && x[i] > get_record$breakpoint_R)
-        print(guideline_coerced %like% "EUCAST" & (x[i] > get_record$breakpoint_R))
-        print("----")
-        new_rsi[i] <- quick_case_when(isTRUE(conserve_capped_values) & x[i] %like% "^<[0-9]" ~ "S",
+        new_rsi[i] <- quick_case_when(is.na(get_record$breakpoint_S) & is.na(get_record$breakpoint_R) ~ NA_character_,
+                                      isTRUE(conserve_capped_values) & x[i] %like% "^<[0-9]" ~ "S",
                                       isTRUE(conserve_capped_values) & x[i] %like% "^>[0-9]" ~ "R",
                                       # start interpreting: EUCAST uses <= S and > R, CLSI uses <=S and >= R
-                                      x[i] <= get_record$breakpoint_S ~ "S",
-                                      guideline_coerced %like% "EUCAST" & x[i] > get_record$breakpoint_R ~ "R",
-                                      guideline_coerced %like% "CLSI" & x[i] >= get_record$breakpoint_R ~ "R",
+                                      as.double(x[i]) <= get_record$breakpoint_S ~ "S",
+                                      guideline_coerced %like% "EUCAST" & as.double(x[i]) > get_record$breakpoint_R ~ "R",
+                                      guideline_coerced %like% "CLSI" & as.double(x[i]) >= get_record$breakpoint_R ~ "R",
                                       # return "I" when not match the bottom or top
                                       !is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R) ~ "I",
                                       # and NA otherwise
                                       TRUE ~ NA_character_)
       } else if (method == "disk") {
-        new_rsi[i] <- quick_case_when(isTRUE(as.double(x[i]) >= as.double(get_record$breakpoint_S)) ~ "S",
+        new_rsi[i] <- quick_case_when(is.na(get_record$breakpoint_S) & is.na(get_record$breakpoint_R) ~ NA_character_,
+                                      isTRUE(as.double(x[i]) >= as.double(get_record$breakpoint_S)) ~ "S",
                                       # start interpreting: EUCAST uses >= S and < R, CLSI uses >=S and <= R
                                       guideline_coerced %like% "EUCAST" &
                                         isTRUE(as.double(x[i]) < as.double(get_record$breakpoint_R)) ~ "R",

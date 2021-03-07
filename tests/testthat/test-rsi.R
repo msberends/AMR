@@ -106,7 +106,7 @@ test_that("mic2rsi works", {
 
   # cutoffs at MIC = 8
   expect_equal(as.rsi(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020"),
-               as.rsi("S"))
+               as.rsi("S"), info = paste0(as.mo("E. coli"), as.ab("ampicillin")))
   expect_equal(as.rsi(as.mic(32), "E. coli", "ampicillin", guideline = "EUCAST 2020"),
                as.rsi("R"))
   
