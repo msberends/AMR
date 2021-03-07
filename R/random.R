@@ -121,10 +121,10 @@ random_exec <- function(type, size, mo = NULL, ab = NULL) {
     }
     out <- as.mic(sample(set_range, size = size, replace = TRUE))
     # 50% chance that lowest will get <= and highest will get >=
-    if (runif(1) > 0.5) {
+    if (stats::runif(1) > 0.5) {
       out[out == min(out)] <- paste0("<=", out[out == min(out)])
     }
-    if (runif(1) > 0.5) {
+    if (stats::runif(1) > 0.5) {
       out[out == max(out)] <- paste0(">=", out[out == max(out)])
     }
     return(out)

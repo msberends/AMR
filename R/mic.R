@@ -68,7 +68,7 @@
 #' #> 10    16        A
 #' ```
 #' 
-#' The following [generic functions][groupGeneric()] are implemented for the MIC class: `!`, `!=`, `%%`, `%/%`, `&`, `*`, `+`, `-`, `/`, `<`, `<=`, `==`, `>`, `>=`, `^`, `|`, [abs()], [acos()], [acosh()], [all()], [any()], [asin()], [asinh()], [atan()], [atanh()], [ceiling()], [cos()], [cosh()], [cospi()], [cummax()], [cummin()], [cumprod()], [cumsum()], [digamma()], [exp()], [expm1()], [floor()], [gamma()], [lgamma()], [log()], [log10()], [log1p()], [log2()], [max()], [mean()], [median()], [min()], [prod()], [quantile()], [range()], [round()], [sign()], [signif()], [sin()], [sinh()], [sinpi()], [sqrt()], [sum()], [tan()], [tanh()], [tanpi()], [trigamma()] and [trunc()].
+#' The following [generic functions][groupGeneric()] are implemented for the MIC class: `!`, `!=`, `%%`, `%/%`, `&`, `*`, `+`, `-`, `/`, `<`, `<=`, `==`, `>`, `>=`, `^`, `|`, [abs()], [acos()], [acosh()], [all()], [any()], [asin()], [asinh()], [atan()], [atanh()], [ceiling()], [cos()], [cosh()], [cospi()], [cummax()], [cummin()], [cumprod()], [cumsum()], [digamma()], [exp()], [expm1()], [floor()], [gamma()], [lgamma()], [log()], [log1p()], [log2()], [log10()], [max()], [mean()], [min()], [prod()], [range()], [round()], [sign()], [signif()], [sin()], [sinh()], [sinpi()], [sqrt()], [sum()], [tan()], [tanh()], [tanpi()], [trigamma()] and [trunc()]. Some functions of the `stats` package are also implemented: [median()], [quantile()], [mad()], [IQR()], [fivenum()]. Also, [boxplot.stats()] is supported. Since [sd()] and [var()] are non-generic functions, these could not be extended. Use [mad()] as an alternative, or use e.g. `sd(as.numeric(x))` where `x` is your vector of MIC values.
 #' @return Ordered [factor] with additional class [`mic`], that in mathematical operations acts as decimal numbers. Bare in mind that the outcome of any mathematical operation on MICs will return a numeric value.
 #' @aliases mic
 #' @export
@@ -118,29 +118,29 @@ as.mic <- function(x, na.rm = FALSE) {
     x <- gsub("\u2264", "<=", x, fixed = TRUE)
     x <- gsub("\u2265", ">=", x, fixed = TRUE)
     # remove space between operator and number ("<= 0.002" -> "<=0.002")
-    x <- gsub("(<|=|>) +", "\\1", x)
+    x <- gsub("(<|=|>) +", "\\1", x, perl = TRUE)
     # transform => to >= and =< to <=
     x <- gsub("=<", "<=", x, fixed = TRUE)
     x <- gsub("=>", ">=", x, fixed = TRUE)
     # dots without a leading zero must start with 0
-    x <- gsub("([^0-9]|^)[.]", "\\10.", x)
+    x <- gsub("([^0-9]|^)[.]", "\\10.", x, perl = TRUE)
     # values like "<=0.2560.512" should be 0.512
-    x <- gsub(".*[.].*[.]", "0.", x)
+    x <- gsub(".*[.].*[.]", "0.", x, perl = TRUE)
     # remove ending .0
-    x <- gsub("[.]+0$", "", x)
+    x <- gsub("[.]+0$", "", x, perl = TRUE)
     # remove all after last digit
-    x <- gsub("[^0-9]+$", "", x)
+    x <- gsub("[^0-9]+$", "", x, perl = TRUE)
     # keep only one zero before dot
-    x <- gsub("0+[.]", "0.", x)
+    x <- gsub("0+[.]", "0.", x, perl = TRUE)
     # starting 00 is probably 0.0 if there's no dot yet
     x[!x %like% "[.]"] <- gsub("^00", "0.0", x[!x %like% "[.]"])
     # remove last zeroes
-    x <- gsub("([.].?)0+$", "\\1", x)
-    x <- gsub("(.*[.])0+$", "\\10", x)
+    x <- gsub("([.].?)0+$", "\\1", x, perl = TRUE)
+    x <- gsub("(.*[.])0+$", "\\10", x, perl = TRUE)
     # remove ending .0 again
     x[x %like% "[.]"] <- gsub("0+$", "", x[x %like% "[.]"])
     # never end with dot
-    x <- gsub("[.]$", "", x)
+    x <- gsub("[.]$", "", x, perl = TRUE)
     # force to be character
     x <- as.character(x)
     # trim it
@@ -199,21 +199,21 @@ is.mic <- function(x) {
 #' @export
 #' @noRd
 as.double.mic <- function(x, ...) {
-  as.double(gsub("[<=>]+", "", as.character(x)))
+  as.double(gsub("[<=>]+", "", as.character(x), perl = TRUE))
 }
 
 #' @method as.integer mic
 #' @export
 #' @noRd
 as.integer.mic <- function(x, ...) {
-  as.integer(gsub("[<=>]+", "", as.character(x)))
+  as.integer(gsub("[<=>]+", "", as.character(x), perl = TRUE))
 }
 
 #' @method as.numeric mic
 #' @export
 #' @noRd
 as.numeric.mic <- function(x, ...) {
-  as.numeric(gsub("[<=>]+", "", as.character(x)))
+  as.numeric(gsub("[<=>]+", "", as.character(x), perl = TRUE))
 }
 
 #' @method droplevels mic
@@ -261,6 +261,13 @@ print.mic <- function(x, ...) {
 #' @noRd
 summary.mic <- function(object, ...) {
   summary(as.double(object), ...)
+}
+
+#' @method as.matrix mic
+#' @export
+#' @noRd
+as.matrix.mic <- function(x, ...) {
+  as.matrix(as.double(x), ...)
 }
 
 #' @method [ mic
@@ -328,10 +335,11 @@ sort.mic <- function(x, decreasing = FALSE, ...) {
 }
 
 #' @method hist mic
+#' @importFrom graphics hist
 #' @export
 #' @noRd
 hist.mic <- function(x, ...) {
-  warning_("Use `plot()` or `ggplot()` for plotting MIC values", call = FALSE)
+  warning_("Use `plot()` or `ggplot()` for optimal plotting of MIC values", call = FALSE)
   hist(log2(x))
 }
 
@@ -357,18 +365,20 @@ mean.mic <- function(x, trim = 0, na.rm = FALSE, ...) {
 }
 
 #' @method median mic
+#' @importFrom stats median
 #' @export
 #' @noRd
 median.mic <- function(x, na.rm = FALSE, ...) {
-  stats::median(as.double(x), na.rm = na.rm, ...)
+  median(as.double(x), na.rm = na.rm, ...)
 }
 
 #' @method quantile mic
+#' @importFrom stats quantile
 #' @export
 #' @noRd
 quantile.mic <- function(x, probs = seq(0, 1, 0.25), na.rm = FALSE,
                          names = TRUE, type = 7, ...) {
-  stats::quantile(as.double(x), props = props, na.rm = na.rm, names = names, type = type, ...)
+  quantile(as.double(x), probs = probs, na.rm = na.rm, names = names, type = type, ...)
 }
 
 # Math (see ?groupGeneric) ----------------------------------------------
