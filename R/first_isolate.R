@@ -37,13 +37,14 @@
 #' @param col_keyantibiotics column name of the key antibiotics to determine first (weighted) isolates, see [key_antibiotics()]. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use `col_keyantibiotics = FALSE` to prevent this.
 #' @param episode_days episode in days after which a genus/species combination will be determined as 'first isolate' again. The default of 365 days is based on the guideline by CLSI, see *Source*. 
 #' @param testcodes_exclude character vector with test codes that should be excluded (case-insensitive)
-#' @param icu_exclude logical whether ICU isolates should be excluded (rows with value `TRUE` in the column set with `col_icu`)
+#' @param icu_exclude logical to indicate whether ICU isolates should be excluded (rows with value `TRUE` in the column set with `col_icu`)
 #' @param specimen_group value in the column set with `col_specimen` to filter on
 #' @param type type to determine weighed isolates; can be `"keyantibiotics"` or `"points"`, see *Details*
-#' @param ignore_I logical to determine whether antibiotic interpretations with `"I"` will be ignored when `type = "keyantibiotics"`, see *Details*
+#' @param ignore_I logical to indicate whether antibiotic interpretations with `"I"` will be ignored when `type = "keyantibiotics"`, see *Details*
 #' @param points_threshold points until the comparison of key antibiotics will lead to inclusion of an isolate when `type = "points"`, see *Details*
 #' @param info print progress
-#' @param include_unknown logical to determine whether 'unknown' microorganisms should be included too, i.e. microbial code `"UNKNOWN"`, which defaults to `FALSE`. For WHONET users, this means that all records with organism code `"con"` (*contamination*) will be excluded at default. Isolates with a microbial ID of `NA` will always be excluded as first isolate.
+#' @param include_unknown logical to indicate whether 'unknown' microorganisms should be included too, i.e. microbial code `"UNKNOWN"`, which defaults to `FALSE`. For WHONET users, this means that all records with organism code `"con"` (*contamination*) will be excluded at default. Isolates with a microbial ID of `NA` will always be excluded as first isolate.
+#' @param include_untested_rsi logical to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use `include_untested_rsi = FALSE` to always return `FALSE` for such rows. This checks the data set for columns of class `<rsi>` and consequently requires transforming columns with antibiotic results using [as.rsi()] first.
 #' @param ... arguments passed on to [first_isolate()] when using [filter_first_isolate()], or arguments passed on to [key_antibiotics()] when using [filter_first_weighted_isolate()]
 #' @details 
 #' These functions are context-aware. This means that then the `x` argument can be left blank, see *Examples*.
@@ -159,6 +160,7 @@ first_isolate <- function(x = NULL,
                           points_threshold = 2,
                           info = interactive(),
                           include_unknown = FALSE,
+                          include_untested_rsi = TRUE,
                           ...) {
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
@@ -188,6 +190,7 @@ first_isolate <- function(x = NULL,
   meet_criteria(points_threshold, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(info, allow_class = "logical", has_length = 1)
   meet_criteria(include_unknown, allow_class = "logical", has_length = 1)
+  meet_criteria(include_untested_rsi, allow_class = "logical", has_length = 1)
   
   # remove data.table, grouping from tibbles, etc.
   x <- as.data.frame(x, stringsAsFactors = FALSE)
@@ -471,6 +474,14 @@ first_isolate <- function(x = NULL,
              " isolates with a microbial ID 'NA' (in column '", font_bold(col_mo), "')")
   }
   x[which(is.na(x$newvar_mo)), "newvar_first_isolate"] <- FALSE
+  
+  # handle isolates without antibiogram
+  if (include_untested_rsi == FALSE && any(is.rsi(x))) {
+    rsi_all_NA <- which(unname(vapply(FUN.VALUE = logical(1), 
+                                      as.data.frame(t(x[, is.rsi(x), drop = FALSE])),
+                                      function(rsi_values) all(is.na(rsi_values)))))
+    x[rsi_all_NA, "newvar_first_isolate"] <- FALSE
+  }
   
   # arrange back according to original sorting again
   x <- x[order(x$newvar_row_index), ]

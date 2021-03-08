@@ -58,7 +58,7 @@ key_antibiotics_equal(
 
 \item{type}{type to determine weighed isolates; can be \code{"keyantibiotics"} or \code{"points"}, see \emph{Details}}
 
-\item{ignore_I}{logical to determine whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantibiotics"}, see \emph{Details}}
+\item{ignore_I}{logical to indicate whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantibiotics"}, see \emph{Details}}
 
 \item{points_threshold}{points until the comparison of key antibiotics will lead to inclusion of an isolate when \code{type = "points"}, see \emph{Details}}
 

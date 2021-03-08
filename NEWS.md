@@ -1,5 +1,5 @@
-# AMR 1.5.0.9034
-## <small>Last updated:  7 March 2021</small>
+# AMR 1.5.0.9039
+## <small>Last updated:  8 March 2021</small>
 
 ### New
 * Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the `eucast_rules()` function and in `as.rsi()` to interpret MIC and disk diffusion values. This is now the default guideline in this package.
@@ -73,6 +73,7 @@
 * Support for GISA (glycopeptide-intermediate *S. aureus*), so e.g. `mo_genus("GISA")` will return `"Staphylococcus"` 
 * Added translations of German and Spanish for more than 200 antimicrobial drugs
 * Speed improvement for `as.ab()` when the input is an official name or ATC code
+* Added argument `include_untested_rsi` to the `first_isolate()` functions (defaults to `TRUE` to keep existing behaviour), to be able to exclude rows where all R/SI values (class `<rsi>`, see `as.rsi()`) are empty
 
 ### Other
 * Big documentation updates

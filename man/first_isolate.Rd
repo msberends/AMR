@@ -29,6 +29,7 @@ first_isolate(
   points_threshold = 2,
   info = interactive(),
   include_unknown = FALSE,
+  include_untested_rsi = TRUE,
   ...
 )
 
@@ -70,19 +71,21 @@ filter_first_weighted_isolate(
 
 \item{testcodes_exclude}{character vector with test codes that should be excluded (case-insensitive)}
 
-\item{icu_exclude}{logical whether ICU isolates should be excluded (rows with value \code{TRUE} in the column set with \code{col_icu})}
+\item{icu_exclude}{logical to indicate whether ICU isolates should be excluded (rows with value \code{TRUE} in the column set with \code{col_icu})}
 
 \item{specimen_group}{value in the column set with \code{col_specimen} to filter on}
 
 \item{type}{type to determine weighed isolates; can be \code{"keyantibiotics"} or \code{"points"}, see \emph{Details}}
 
-\item{ignore_I}{logical to determine whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantibiotics"}, see \emph{Details}}
+\item{ignore_I}{logical to indicate whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantibiotics"}, see \emph{Details}}
 
 \item{points_threshold}{points until the comparison of key antibiotics will lead to inclusion of an isolate when \code{type = "points"}, see \emph{Details}}
 
 \item{info}{print progress}
 
-\item{include_unknown}{logical to determine whether 'unknown' microorganisms should be included too, i.e. microbial code \code{"UNKNOWN"}, which defaults to \code{FALSE}. For WHONET users, this means that all records with organism code \code{"con"} (\emph{contamination}) will be excluded at default. Isolates with a microbial ID of \code{NA} will always be excluded as first isolate.}
+\item{include_unknown}{logical to indicate whether 'unknown' microorganisms should be included too, i.e. microbial code \code{"UNKNOWN"}, which defaults to \code{FALSE}. For WHONET users, this means that all records with organism code \code{"con"} (\emph{contamination}) will be excluded at default. Isolates with a microbial ID of \code{NA} will always be excluded as first isolate.}
+
+\item{include_untested_rsi}{logical to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use \code{include_untested_rsi = FALSE} to always return \code{FALSE} for such rows. This checks the data set for columns of class \verb{<rsi>} and consequently requires transforming columns with antibiotic results using \code{\link[=as.rsi]{as.rsi()}} first.}
 
 \item{...}{arguments passed on to \code{\link[=first_isolate]{first_isolate()}} when using \code{\link[=filter_first_isolate]{filter_first_isolate()}}, or arguments passed on to \code{\link[=key_antibiotics]{key_antibiotics()}} when using \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_isolate()}}}
 }

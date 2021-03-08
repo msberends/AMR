@@ -337,17 +337,13 @@ as.rsi.mic <- function(x,
   meet_criteria(reference_data, allow_class = "data.frame")
   check_reference_data(reference_data)
   
-  pkg_env$strange <- list(before = ab)
-  
   # for dplyr's across()
   cur_column_dplyr <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
-  if (!is.null(cur_column_dplyr)) {
+  if (!is.null(cur_column_dplyr) && tryCatch(is.data.frame(get_current_data("ab", 0)), error = function(e) FALSE)) {
     # try to get current column, which will only be available when in across()
     ab <- tryCatch(cur_column_dplyr(),
                    error = function(e) ab)
   }
-  
-  pkg_env$strange$afteracross <- ab
   
   # for auto-determining mo
   mo_var_found <- ""
@@ -373,7 +369,6 @@ as.rsi.mic <- function(x,
   }
   
   ab_coerced <- suppressWarnings(as.ab(ab))
-  pkg_env$strange$coerced <- ab_coerced
   mo_coerced <- suppressWarnings(as.mo(mo))
   guideline_coerced <- get_guideline(guideline, reference_data)
   if (is.na(ab_coerced)) {
@@ -433,7 +428,7 @@ as.rsi.disk <- function(x,
   
   # for dplyr's across()
   cur_column_dplyr <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
-  if (!is.null(cur_column_dplyr)) {
+  if (!is.null(cur_column_dplyr) && tryCatch(is.data.frame(get_current_data("ab", 0)), error = function(e) FALSE)) {
     # try to get current column, which will only be available when in across()
     ab <- tryCatch(cur_column_dplyr(),
                    error = function(e) ab)
@@ -709,9 +704,6 @@ exec_as.rsi <- function(method,
                         conserve_capped_values, 
                         add_intrinsic_resistance,
                         reference_data) {
-  pkg_env$strange$exec <- ab
-  pkg_env$strange$names <- names(pkg_env$strange)
-  
   metadata_mo <- get_mo_failures_uncertainties_renamed()
   
   x_bak <- data.frame(x_mo = paste0(x, mo), stringsAsFactors = FALSE)

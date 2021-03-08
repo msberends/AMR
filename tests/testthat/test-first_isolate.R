@@ -196,6 +196,10 @@ test_that("first isolates work", {
   expect_equal(sum(first_isolate(test_unknown)),
                1045)
   
+  # empty rsi results
+  expect_equal(sum(first_isolate(example_isolates, include_untested_rsi = FALSE)),
+               1287)
+  
   # shortcuts
   expect_identical(filter_first_isolate(example_isolates),
                    subset(example_isolates, first_isolate(example_isolates)))
