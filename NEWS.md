@@ -1,4 +1,4 @@
-# AMR 1.5.0.9039
+# AMR 1.5.0.9040
 ## <small>Last updated:  8 March 2021</small>
 
 ### New
@@ -22,7 +22,6 @@
   #> Filtering on oxazolidinones: value in column `LNZ` (linezolid) is either "R", "S" or "I"
    ```
 * Support for custom MDRO guidelines, using the new `custom_mdro_guideline()` function, please see `mdro()` for additional info
-* Function `isolate_identifier()`, which will paste a microorganism code with all antimicrobial results of a data set into one string for each row. This is useful to compare isolates, e.g. between institutions or regions, when there is no genotyping available.
 * `ggplot()` generics for classes `<mic>` and `<disk>`
 * Function `mo_is_yeast()`, which determines whether a microorganism is a member of the taxonomic class Saccharomycetes or the taxonomic order Saccharomycetales:
   ```r
@@ -57,7 +56,16 @@
 * `is.rsi()` and `is.rsi.eligible()` now return a vector of `TRUE`/`FALSE` when the input is a data set, by iterating over all columns
 * Using functions without setting a data set (e.g., `mo_is_gram_negative()`, `mo_is_gram_positive()`, `mo_is_intrinsic_resistant()`, `first_isolate()`, `mdro()`) now work with `dplyr`s `group_by()` again
 * `first_isolate()` can be used with `group_by()` (also when using a dot `.` as input for the data) and now returns the names of the groups
-* MIC values now allow for any mathematical processing, such as usage inside functions `min()`, `max()`, `range()`, and with binary operators (+, -, etc.). This also enables other functions, such as `fivenum()`.
+* MIC values (see `as.mic()`) can now be used in any mathematical processing, such as usage inside functions `min()`, `max()`, `range()`, and with binary operators (+, -, etc.). This allows easy distribution analysis and fast filtering on MIC values:
+  ```r
+  x <- random_mic(10)
+  x
+  #> Class <mic>
+  #>  [1] 0.5    64     64     128    0.125  4      0.5    0.0625 0.0625 0.125 
+  x[x > 4]
+  #> Class <mic>
+  #> [1] 64  64  128
+  ```
 * Updated the data set `microorganisms.codes` (which contains popular LIS and WHONET codes for microorganisms) for some species of *Mycobacterium* that previously incorrectly returned *M. africanum*
 * WHONET code `"PNV"` will now correctly be interpreted as `PHN`, the antibiotic code for phenoxymethylpenicillin ('peni V')
 * Fix for verbose output of `mdro(..., verbose = TRUE)` for German guideline (3MGRN and 4MGRN) and Dutch guideline (BRMO, only *P. aeruginosa*)

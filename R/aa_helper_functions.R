@@ -507,12 +507,12 @@ format_class <- function(class, plural) {
   if ("isolate_identifier" %in% class) {
     class <- "created with isolate_identifier()"
   }
-  if (any(c("mo", "ab", "rsi", "disk", "mic") %in% class)) {
+  if (any(c("mo", "ab", "rsi") %in% class)) {
     class <- paste0("of class <", class[1L], ">")
   }
   class[class == class.bak] <- paste0("of class <", class[class == class.bak], ">")
   # output
-  vector_or(class, quotes = FALSE)
+  vector_or(class, quotes = FALSE, sort = FALSE)
 }
 
 # a check for every single argument in all functions

@@ -100,13 +100,13 @@
 #' plot(mic_data)
 #' plot(mic_data, mo = "E. coli", ab = "cipro")
 as.mic <- function(x, na.rm = FALSE) {
-  meet_criteria(x, allow_class = c("mic", "character", "numeric", "integer"), allow_NA = TRUE)
+  meet_criteria(x, allow_class = c("mic", "character", "numeric", "integer", "factor"), allow_NA = TRUE)
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)
   
   if (is.mic(x)) {
     x
   } else {
-    x <- unlist(x)
+    x <- as.character(unlist(x))
     if (na.rm == TRUE) {
       x <- x[!is.na(x)]
     }

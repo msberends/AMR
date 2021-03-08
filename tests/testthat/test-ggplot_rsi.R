@@ -71,5 +71,19 @@ test_that("ggplot_rsi works", {
                         ggplot(aes(x = ab, y = n)) +
                         geom_col())$data),
                "data.frame")
-
+  
+  expect_equal(class((data.frame(ab = as.ab(c("amx", "amc")),
+                                 n = c(40, 100)) %>%
+                        ggplot(aes(x = ab, y = n)) +
+                        geom_col())$data),
+               "data.frame")
+  
+  # support for manual colours
+  expect_equal(class((ggplot(data.frame(x = c("Value1", "Value2", "Value3"),
+                                        y = c(1, 2, 3),
+                                        z = c("Value4", "Value5", "Value6"))) +
+                        geom_col(aes(x = x, y = y, fill = z)) +
+                        scale_rsi_colours(Value4 = "S", Value5 = "I", Value6 = "R"))$data),
+               "data.frame")
+  
 })
