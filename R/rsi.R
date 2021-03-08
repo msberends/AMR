@@ -337,6 +337,8 @@ as.rsi.mic <- function(x,
   meet_criteria(reference_data, allow_class = "data.frame")
   check_reference_data(reference_data)
   
+  pkg_env$strange <- list(before = ab)
+  
   # for dplyr's across()
   cur_column_dplyr <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
   if (!is.null(cur_column_dplyr)) {
@@ -344,6 +346,8 @@ as.rsi.mic <- function(x,
     ab <- tryCatch(cur_column_dplyr(),
                    error = function(e) ab)
   }
+  
+  pkg_env$strange$afteracross <- ab
   
   # for auto-determining mo
   mo_var_found <- ""
@@ -369,6 +373,7 @@ as.rsi.mic <- function(x,
   }
   
   ab_coerced <- suppressWarnings(as.ab(ab))
+  pkg_env$strange$coerced <- ab_coerced
   mo_coerced <- suppressWarnings(as.mo(mo))
   guideline_coerced <- get_guideline(guideline, reference_data)
   if (is.na(ab_coerced)) {
@@ -704,6 +709,8 @@ exec_as.rsi <- function(method,
                         conserve_capped_values, 
                         add_intrinsic_resistance,
                         reference_data) {
+  pkg_env$strange$exec <- ab
+  pkg_env$strange$names <- names(pkg_env$strange)
   
   metadata_mo <- get_mo_failures_uncertainties_renamed()
   
@@ -812,22 +819,6 @@ exec_as.rsi <- function(method,
     get_record <- get_record[1L, , drop = FALSE]
     
     if (NROW(get_record) > 0) {
-      pkg_env$strange <- list(x_dbl = as.double(x[i]),
-                              x_chr = as.character(x[i]),
-                              get_record = get_record,
-                              guideline_coerced = guideline_coerced,
-                              lookup = c(lookup_mo[i],
-                                         lookup_genus[i],
-                                         lookup_family[i],
-                                         lookup_order[i],
-                                         lookup_becker[i],
-                                         lookup_lancefield[i],
-                                         lookup_other[i]),
-                              is_intrinsic_r = is_intrinsic_r,
-                              c1 = x[i] <= get_record$breakpoint_S,
-                              c2 = guideline_coerced %like% "EUCAST" & x[i] > get_record$breakpoint_R,
-                              c2 = guideline_coerced %like% "CLSI" & x[i] >= get_record$breakpoint_R)
-
       if (is.na(x[i]) | (is.na(get_record$breakpoint_S) & is.na(get_record$breakpoint_R))) {
         new_rsi[i] <- NA_character_
       } else if (method == "mic") {
