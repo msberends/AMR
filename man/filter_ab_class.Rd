@@ -148,7 +148,7 @@ filter_tetracyclines(
 
 \item{scope}{the scope to check which variables to check, can be \code{"any"} (default) or \code{"all"}}
 
-\item{only_rsi_columns}{a logical to indicate whether only columns must be included that were \href{[rsi]}{transformed to class \verb{<rsi>}} on beforehand (defaults to \code{FALSE})}
+\item{only_rsi_columns}{a logical to indicate whether only columns must be included that were transformed to class \verb{<rsi>} (see \code{\link[=as.rsi]{as.rsi()}}) on beforehand (defaults to \code{FALSE})}
 
 \item{...}{arguments passed on to \code{\link[=filter_ab_class]{filter_ab_class()}}}
 }

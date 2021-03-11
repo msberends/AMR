@@ -56,7 +56,7 @@ test_that("EUCAST rules work", {
   a <- data.frame(mo = c("Klebsiella pneumoniae",
                          "Pseudomonas aeruginosa",
                          "Enterobacter cloacae"),
-                  amox = "-",           # Amoxicillin
+                  amox = "-",        # Amoxicillin
                   stringsAsFactors = FALSE)
   b <- data.frame(mo = c("Klebsiella pneumoniae",
                          "Pseudomonas aeruginosa",
@@ -124,7 +124,7 @@ test_that("EUCAST rules work", {
   expect_identical(
     eucast_rules(data.frame(mo = c("Escherichia coli", "Enterobacter cloacae"),
                             cefotax = as.rsi(c("S", "S"))),
-                 ampc_cephalosporin_resistance = "R",
+                 ampc_cephalosporin_resistance = TRUE,
                  info = FALSE)$cefotax,
     as.rsi(c("S", "R")))
   expect_identical(

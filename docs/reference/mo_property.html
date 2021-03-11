@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9031</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9041</span>
       </span>
     </div>
 
@@ -334,7 +334,7 @@
 <li><p>An <a href='https://rdrr.io/r/base/integer.html'>integer</a> in case of <code>mo_year()</code></p></li>
 <li><p>A <a href='https://rdrr.io/r/base/list.html'>list</a> in case of <code>mo_taxonomy()</code> and <code>mo_info()</code></p></li>
 <li><p>A named <a href='https://rdrr.io/r/base/character.html'>character</a> in case of <code>mo_url()</code></p></li>
-<li><p>A <a href='https://rdrr.io/r/base/double.html'>double</a> in case of <code>mo_snomed()</code></p></li>
+<li><p>A <a href='https://rdrr.io/r/base/numeric.html'>numeric</a> in case of <code>mo_snomed()</code></p></li>
 <li><p>A <a href='https://rdrr.io/r/base/character.html'>character</a> in all other cases</p></li>
 </ul>
 
@@ -353,6 +353,7 @@
 <p>Intrinsic resistance - <code>mo_is_intrinsic_resistant()</code> - will be determined based on the <a href='intrinsic_resistant.html'>intrinsic_resistant</a> data set, which is based on <a href='https://www.eucast.org/expert_rules_and_intrinsic_resistance/'>'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2</a> (2020). The <code>mo_is_intrinsic_resistant()</code> functions can be vectorised over arguments <code>x</code> (input for microorganisms) and over <code>ab</code> (input for antibiotics).</p>
 <p>All output <a href='translate.html'>will be translated</a> where possible.</p>
 <p>The function <code>mo_url()</code> will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.</p>
+<p>SNOMED codes - <code>mo_snomed()</code> - are from the US Edition of SNOMED CT from 1 September 2020. See the <a href='microorganisms.html'>microorganisms</a> data set for more info.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable Lifecycle</h2>
 
     
@@ -375,7 +376,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <li><p><i>k<sub>n</sub></i> is the taxonomic kingdom of <i>n</i>, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.</p></li>
 </ul>
 
-<p>The grouping into human pathogenic prevalence (\(p\)) is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence. <strong>Group 1</strong> (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is <em>Enterococcus</em>, <em>Staphylococcus</em> or <em>Streptococcus</em>. This group consequently contains all common Gram-negative bacteria, such as <em>Pseudomonas</em> and <em>Legionella</em> and all species within the order Enterobacterales. <strong>Group 2</strong> consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is <em>Absidia</em>, <em>Acremonium</em>, <em>Actinotignum</em>, <em>Alternaria</em>, <em>Anaerosalibacter</em>, <em>Apophysomyces</em>, <em>Arachnia</em>, <em>Aspergillus</em>, <em>Aureobacterium</em>, <em>Aureobasidium</em>, <em>Bacteroides</em>, <em>Basidiobolus</em>, <em>Beauveria</em>, <em>Blastocystis</em>, <em>Branhamella</em>, <em>Calymmatobacterium</em>, <em>Candida</em>, <em>Capnocytophaga</em>, <em>Catabacter</em>, <em>Chaetomium</em>, <em>Chryseobacterium</em>, <em>Chryseomonas</em>, <em>Chrysonilia</em>, <em>Cladophialophora</em>, <em>Cladosporium</em>, <em>Conidiobolus</em>, <em>Cryptococcus</em>, <em>Curvularia</em>, <em>Exophiala</em>, <em>Exserohilum</em>, <em>Flavobacterium</em>, <em>Fonsecaea</em>, <em>Fusarium</em>, <em>Fusobacterium</em>, <em>Hendersonula</em>, <em>Hypomyces</em>, <em>Koserella</em>, <em>Lelliottia</em>, <em>Leptosphaeria</em>, <em>Leptotrichia</em>, <em>Malassezia</em>, <em>Malbranchea</em>, <em>Mortierella</em>, <em>Mucor</em>, <em>Mycocentrospora</em>, <em>Mycoplasma</em>, <em>Nectria</em>, <em>Ochroconis</em>, <em>Oidiodendron</em>, <em>Phoma</em>, <em>Piedraia</em>, <em>Pithomyces</em>, <em>Pityrosporum</em>, <em>Prevotella</em>,\<em>Pseudallescheria</em>, <em>Rhizomucor</em>, <em>Rhizopus</em>, <em>Rhodotorula</em>, <em>Scolecobasidium</em>, <em>Scopulariopsis</em>, <em>Scytalidium</em>,<em>Sporobolomyces</em>, <em>Stachybotrys</em>, <em>Stomatococcus</em>, <em>Treponema</em>, <em>Trichoderma</em>, <em>Trichophyton</em>, <em>Trichosporon</em>, <em>Tritirachium</em> or <em>Ureaplasma</em>. <strong>Group 3</strong> consists of all other microorganisms.</p>
+<p>The grouping into human pathogenic prevalence (\(p\)) is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence. <strong>Group 1</strong> (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is <em>Enterococcus</em>, <em>Staphylococcus</em> or <em>Streptococcus</em>. This group consequently contains all common Gram-negative bacteria, such as <em>Pseudomonas</em> and <em>Legionella</em> and all species within the order Enterobacterales. <strong>Group 2</strong> consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is <em>Absidia</em>, <em>Acremonium</em>, <em>Actinotignum</em>, <em>Alternaria</em>, <em>Anaerosalibacter</em>, <em>Apophysomyces</em>, <em>Arachnia</em>, <em>Aspergillus</em>, <em>Aureobacterium</em>, <em>Aureobasidium</em>, <em>Bacteroides</em>, <em>Basidiobolus</em>, <em>Beauveria</em>, <em>Blastocystis</em>, <em>Branhamella</em>, <em>Calymmatobacterium</em>, <em>Candida</em>, <em>Capnocytophaga</em>, <em>Catabacter</em>, <em>Chaetomium</em>, <em>Chryseobacterium</em>, <em>Chryseomonas</em>, <em>Chrysonilia</em>, <em>Cladophialophora</em>, <em>Cladosporium</em>, <em>Conidiobolus</em>, <em>Cryptococcus</em>, <em>Curvularia</em>, <em>Exophiala</em>, <em>Exserohilum</em>, <em>Flavobacterium</em>, <em>Fonsecaea</em>, <em>Fusarium</em>, <em>Fusobacterium</em>, <em>Hendersonula</em>, <em>Hypomyces</em>, <em>Koserella</em>, <em>Lelliottia</em>, <em>Leptosphaeria</em>, <em>Leptotrichia</em>, <em>Malassezia</em>, <em>Malbranchea</em>, <em>Mortierella</em>, <em>Mucor</em>, <em>Mycocentrospora</em>, <em>Mycoplasma</em>, <em>Nectria</em>, <em>Ochroconis</em>, <em>Oidiodendron</em>, <em>Phoma</em>, <em>Piedraia</em>, <em>Pithomyces</em>, <em>Pityrosporum</em>, <em>Prevotella</em>, <em>Pseudallescheria</em>, <em>Rhizomucor</em>, <em>Rhizopus</em>, <em>Rhodotorula</em>, <em>Scolecobasidium</em>, <em>Scopulariopsis</em>, <em>Scytalidium</em>,<em>Sporobolomyces</em>, <em>Stachybotrys</em>, <em>Stomatococcus</em>, <em>Treponema</em>, <em>Trichoderma</em>, <em>Trichophyton</em>, <em>Trichosporon</em>, <em>Tritirachium</em> or <em>Ureaplasma</em>. <strong>Group 3</strong> consists of all other microorganisms.</p>
 <p>All matches are sorted descending on their matching score and for all user input values, the top match will be returned. This will lead to the effect that e.g., <code>"E. coli"</code> will return the microbial ID of <em>Escherichia coli</em> (\(m = 0.688\), a highly prevalent microorganism found in humans) and not <em>Entamoeba coli</em> (\(m = 0.079\), a less prevalent microorganism in humans), although the latter would alphabetically come first.</p>
     <h2 class="hasAnchor" id="catalogue-of-life"><a class="anchor" href="#catalogue-of-life"></a>Catalogue of Life</h2>
 
@@ -393,7 +394,9 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 <li><p>Becker K <em>et al.</em> <strong>Implications of identifying the recently defined members of the <em>S. aureus</em> complex, <em>S. argenteus</em> and <em>S. schweitzeri</em>: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).</strong> 2019. Clin Microbiol Infect; doi: <a href='https://doi.org/10.1016/j.cmi.2019.02.028'>10.1016/j.cmi.2019.02.028</a></p></li>
 <li><p>Becker K <em>et al.</em> <strong>Emergence of coagulase-negative staphylococci</strong> 2020. Expert Rev Anti Infect Ther. 18(4):349-366; doi: <a href='https://doi.org/10.1080/14787210.2020.1730813'>10.1080/14787210.2020.1730813</a></p></li>
 <li><p>Lancefield RC <strong>A serological differentiation of human and other groups of hemolytic streptococci</strong>. 1933. J Exp Med. 57(4): 571–95; doi: <a href='https://doi.org/10.1084/jem.57.4.571'>10.1084/jem.57.4.571</a></p></li>
-<li><p>Catalogue of Life: Annual Checklist (public online taxonomic database), <a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a> (check included annual version with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version()</a></code>).</p></li>
+<li><p>Catalogue of Life: 2019 Annual Checklist, <a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a></p></li>
+<li><p>List of Prokaryotic names with Standing in Nomenclature (March 2021), doi: <a href='https://doi.org/10.1099/ijsem.0.004332'>10.1099/ijsem.0.004332</a></p></li>
+<li><p>US Edition of SNOMED CT from 1 September 2020, retrieved from the Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS), OID 2.16.840.1.114222.4.11.1009, version 12; url: <a href='https://phinvads.cdc.gov/vads/ViewValueSet.action?oid=2.16.840.1.114222.4.11.1009'>https://phinvads.cdc.gov/vads/ViewValueSet.action?oid=2.16.840.1.114222.4.11.1009</a></p></li>
 </ol>
 
     <h2 class="hasAnchor" id="reference-data-publicly-available"><a class="anchor" href="#reference-data-publicly-available"></a>Reference Data Publicly Available</h2>
@@ -505,7 +508,8 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 
 <span class='co'># get a list with the complete taxonomy (from kingdom to subspecies)</span>
 <span class='fu'>mo_taxonomy</span><span class='op'>(</span><span class='st'>"E. coli"</span><span class='op'>)</span>
-<span class='co'># get a list with the taxonomy, the authors, Gram-stain and URL to the online database</span>
+<span class='co'># get a list with the taxonomy, the authors, Gram-stain,</span>
+<span class='co'>#   SNOMED codes, and URL to the online database</span>
 <span class='fu'>mo_info</span><span class='op'>(</span><span class='st'>"E. coli"</span><span class='op'>)</span>
 <span class='co'># }</span>
 </pre>

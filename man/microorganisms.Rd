@@ -15,21 +15,26 @@ A \link{data.frame} with 70,026 observations and 16 variables:
 \item \code{species_id}\cr ID of the species as used by the Catalogue of Life
 \item \code{source}\cr Either "CoL", "LPSN" or "manually added" (see \emph{Source})
 \item \code{prevalence}\cr Prevalence of the microorganism, see \code{\link[=as.mo]{as.mo()}}
-\item \code{snomed}\cr SNOMED code of the microorganism. Use \code{\link[=mo_snomed]{mo_snomed()}} to retrieve it quickly, see \code{\link[=mo_property]{mo_property()}}.
+\item \code{snomed}\cr Systematized Nomenclature of Medicine (SNOMED) code of the microorganism, according to the US Edition of SNOMED CT from 1 September 2020 (see \emph{Source}). Use \code{\link[=mo_snomed]{mo_snomed()}} to retrieve it quickly, see \code{\link[=mo_property]{mo_property()}}.
 }
 }
 \source{
-Catalogue of Life: 2019 Annual Checklist
+Catalogue of Life: 2019 Annual Checklist as currently implemented in this \code{AMR} package:
 \itemize{
 \item Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org}
 }
 
-List of Prokaryotic names with Standing in Nomenclature: March 2021
+List of Prokaryotic names with Standing in Nomenclature (March 2021) as currently implemented in this \code{AMR} package:
 \itemize{
 \item Parte, A.C., Sarda Carbasse, J., Meier-Kolthoff, J.P., Reimer, L.C. and Goker, M. (2020). List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ. International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \doi{10.1099/ijsem.0.004332}
 \item Parte, A.C. (2018). LPSN — List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; \doi{10.1099/ijsem.0.002786}
 \item Parte, A.C. (2014). LPSN — List of Prokaryotic names with Standing in Nomenclature. Nucleic Acids Research, 42, Issue D1, D613–D616; \doi{10.1093/nar/gkt1111}
 \item Euzeby, J.P. (1997). List of Bacterial Names with Standing in Nomenclature: a Folder Available on the Internet. International Journal of Systematic Bacteriology, 47, 590-592; \doi{10.1099/00207713-47-2-590}
+}
+
+US Edition of SNOMED CT from 1 September 2020 as currently implemented in this \code{AMR} package:
+\itemize{
+\item Retrieved from the Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS), OID 2.16.840.1.114222.4.11.1009, version 12; url: \url{https://phinvads.cdc.gov/vads/ViewValueSet.action?oid=2.16.840.1.114222.4.11.1009}
 }
 }
 \usage{

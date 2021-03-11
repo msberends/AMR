@@ -18,7 +18,7 @@ guess_ab_col(
 
 \item{verbose}{a logical to indicate whether additional info should be printed}
 
-\item{only_rsi_columns}{a logical to indicate whether only antibiotic columns must be detected that were \href{[rsi]}{transformed to class \verb{<rsi>}} on beforehand (defaults to \code{FALSE})}
+\item{only_rsi_columns}{a logical to indicate whether only antibiotic columns must be detected that were transformed to class \verb{<rsi>} (see \code{\link[=as.rsi]{as.rsi()}}) on beforehand (defaults to \code{FALSE})}
 }
 \value{
 A column name of \code{x}, or \code{NULL} when no result is found.

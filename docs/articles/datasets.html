@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9031</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9041</span>
       </span>
     </div>
 
@@ -187,12 +187,12 @@
 
       
 
-      </header><script src="datasets_files/header-attrs-2.6/header-attrs.js"></script><div class="row">
+      </header><script src="datasets_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Data sets for download / own use</h1>
             
-            <h4 class="date">05 March 2021</h4>
+            <h4 class="date">11 March 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/master/vignettes/datasets.Rmd"><code>vignettes/datasets.Rmd</code></a></small>
       <div class="hidden name"><code>datasets.Rmd</code></div>
@@ -209,23 +209,24 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <div id="microorganisms-currently-accepted-names" class="section level2">
 <h2 class="hasAnchor">
 <a href="#microorganisms-currently-accepted-names" class="anchor"></a>Microorganisms (currently accepted names)</h2>
-<p>A data set with 70,026 rows and 16 columns, containing the following column names:<br><em>class</em>, <em>family</em>, <em>fullname</em>, <em>genus</em>, <em>kingdom</em>, <em>mo</em>, <em>order</em>, <em>phylum</em>, <em>prevalence</em>, <em>rank</em>, <em>ref</em>, <em>snomed</em>, <em>source</em>, <em>species</em>, <em>species_id</em> and <em>subspecies</em>.</p>
+<p>A data set with 70,026 rows and 16 columns, containing the following column names:<br><em>mo</em>, <em>fullname</em>, <em>kingdom</em>, <em>phylum</em>, <em>class</em>, <em>order</em>, <em>family</em>, <em>genus</em>, <em>species</em>, <em>subspecies</em>, <em>rank</em>, <em>ref</em>, <em>species_id</em>, <em>source</em>, <em>prevalence</em> and <em>snomed</em>.</p>
 <p>This data set is in R available as <code>microorganisms</code>, after you load the <code>AMR</code> package.</p>
-<p>It was last updated on 5 March 2021 10:46:55 CET. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/microorganisms.html">here</a>.</p>
+<p>It was last updated on 11 March 2021 09:32:27 UTC. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/microorganisms.html">here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/microorganisms.rds">R file</a> (2.2 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/microorganisms.xlsx">Excel file</a> (6.3 MB)<br>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/microorganisms.xlsx">Excel file</a> (6.4 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/microorganisms.txt">plain text file</a> (13.9 MB)<br>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/microorganisms.txt">plain text file</a> (14.8 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/microorganisms.sas">SAS file</a> (27.4 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/microorganisms.sav">SPSS file</a> (29.9 MB)<br>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/microorganisms.sav">SPSS file</a> (27.8 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/microorganisms.dta">Stata file</a> (26.9 MB)</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/microorganisms.dta">Stata file</a> (25.1 MB)</li>
 </ul>
+<p><strong>NOTE: The exported files for SAS, SPSS and Stata do not contain SNOMED codes, as their file size would exceed 100 MB; the file size limit of GitHub.</strong> Advice? Use R instead.</p>
 <div id="source" class="section level3">
 <h3 class="hasAnchor">
 <a href="#source" class="anchor"></a>Source</h3>
@@ -235,6 +236,7 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <a href="http://www.catalogueoflife.org">Catalogue of Life</a> (included version: 2019)</li>
 <li>
 <a href="https://lpsn.dsmz.de">List of Prokaryotic names with Standing in Nomenclature</a> (LPSN, last updated: March 2021)</li>
+<li>US Edition of SNOMED CT from 1 September 2020, retrieved from the <a href="https://phinvads.cdc.gov/vads/ViewValueSet.action?oid=2.16.840.1.114222.4.11.1009">Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS)</a>, OID 2.16.840.1.114222.4.11.1009, version 12</li>
 </ul>
 </div>
 <div id="example-content" class="section level3">
@@ -276,22 +278,22 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <p>Example rows when filtering on genus <em>Escherichia</em>:</p>
 <table class="table">
 <colgroup>
-<col width="5%">
-<col width="9%">
-<col width="3%">
-<col width="6%">
+<col width="4%">
 <col width="8%">
-<col width="6%">
-<col width="7%">
+<col width="3%">
 <col width="5%">
+<col width="7%">
+<col width="6%">
+<col width="6%">
+<col width="4%">
 <col width="4%">
 <col width="4%">
 <col width="3%">
-<col width="9%">
-<col width="13%">
-<col width="3%">
+<col width="8%">
+<col width="11%">
+<col width="2%">
 <col width="4%">
-<col width="4%">
+<col width="15%">
 </colgroup>
 <thead><tr class="header">
 <th align="center">mo</th>
@@ -364,7 +366,7 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <td align="center">3254b3db31bf16fdde669ac57bf8c4fe</td>
 <td align="center">CoL</td>
 <td align="center">1</td>
-<td align="center">112283007</td>
+<td align="center">1095001000112106, 715307006, 737528008, …</td>
 </tr>
 <tr class="even">
 <td align="center">B_ESCHR_FRGS</td>
@@ -418,7 +420,7 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <td align="center">792928</td>
 <td align="center">LPSN</td>
 <td align="center">1</td>
-<td align="center"></td>
+<td align="center">14961000146107</td>
 </tr>
 </tbody>
 </table>
@@ -427,10 +429,10 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <div id="microorganisms-previously-accepted-names" class="section level2">
 <h2 class="hasAnchor">
 <a href="#microorganisms-previously-accepted-names" class="anchor"></a>Microorganisms (previously accepted names)</h2>
-<p>A data set with 14,100 rows and 4 columns, containing the following column names:<br><em>fullname</em>, <em>fullname_new</em>, <em>prevalence</em> and <em>ref</em>.</p>
+<p>A data set with 14,100 rows and 4 columns, containing the following column names:<br><em>fullname</em>, <em>fullname_new</em>, <em>ref</em> and <em>prevalence</em>.</p>
 <p><strong>Note:</strong> remember that the ‘ref’ columns contains the scientific reference to the old taxonomic entries, i.e. of column <em>‘fullname’</em>. For the scientific reference of the new names, i.e. of column <em>‘fullname_new’</em>, see the <code>microorganisms</code> data set.</p>
 <p>This data set is in R available as <code>microorganisms.old</code>, after you load the <code>AMR</code> package.</p>
-<p>It was last updated on 5 March 2021 10:46:55 CET. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/microorganisms.old.html">here</a>.</p>
+<p>It was last updated on 5 March 2021 09:46:55 UTC. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/microorganisms.old.html">here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/microorganisms.old.rds">R file</a> (0.2 MB)<br>
@@ -493,9 +495,9 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <div id="antibiotic-agents" class="section level2">
 <h2 class="hasAnchor">
 <a href="#antibiotic-agents" class="anchor"></a>Antibiotic agents</h2>
-<p>A data set with 456 rows and 14 columns, containing the following column names:<br><em>ab</em>, <em>abbreviations</em>, <em>atc</em>, <em>atc_group1</em>, <em>atc_group2</em>, <em>cid</em>, <em>group</em>, <em>iv_ddd</em>, <em>iv_units</em>, <em>loinc</em>, <em>name</em>, <em>oral_ddd</em>, <em>oral_units</em> and <em>synonyms</em>.</p>
+<p>A data set with 456 rows and 14 columns, containing the following column names:<br><em>ab</em>, <em>atc</em>, <em>cid</em>, <em>name</em>, <em>group</em>, <em>atc_group1</em>, <em>atc_group2</em>, <em>abbreviations</em>, <em>synonyms</em>, <em>oral_ddd</em>, <em>oral_units</em>, <em>iv_ddd</em>, <em>iv_units</em> and <em>loinc</em>.</p>
 <p>This data set is in R available as <code>antibiotics</code>, after you load the <code>AMR</code> package.</p>
-<p>It was last updated on 14 January 2021 16:04:41 CET. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/antibiotics.html">here</a>.</p>
+<p>It was last updated on 8 March 2021 18:20:46 UTC. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/antibiotics.html">here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/antibiotics.rds">R file</a> (32 kB)<br>
@@ -661,9 +663,9 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <div id="antiviral-agents" class="section level2">
 <h2 class="hasAnchor">
 <a href="#antiviral-agents" class="anchor"></a>Antiviral agents</h2>
-<p>A data set with 102 rows and 9 columns, containing the following column names:<br><em>atc</em>, <em>atc_group</em>, <em>cid</em>, <em>iv_ddd</em>, <em>iv_units</em>, <em>name</em>, <em>oral_ddd</em>, <em>oral_units</em> and <em>synonyms</em>.</p>
+<p>A data set with 102 rows and 9 columns, containing the following column names:<br><em>atc</em>, <em>cid</em>, <em>name</em>, <em>atc_group</em>, <em>synonyms</em>, <em>oral_ddd</em>, <em>oral_units</em>, <em>iv_ddd</em> and <em>iv_units</em>.</p>
 <p>This data set is in R available as <code>antivirals</code>, after you load the <code>AMR</code> package.</p>
-<p>It was last updated on 29 August 2020 21:53:07 CEST. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/antibiotics.html">here</a>.</p>
+<p>It was last updated on 29 August 2020 19:53:07 UTC. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/antibiotics.html">here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/antivirals.rds">R file</a> (5 kB)<br>
@@ -788,9 +790,9 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <div id="intrinsic-bacterial-resistance" class="section level2">
 <h2 class="hasAnchor">
 <a href="#intrinsic-bacterial-resistance" class="anchor"></a>Intrinsic bacterial resistance</h2>
-<p>A data set with 93,892 rows and 2 columns, containing the following column names:<br><em>antibiotic</em> and <em>microorganism</em>.</p>
+<p>A data set with 93,892 rows and 2 columns, containing the following column names:<br><em>microorganism</em> and <em>antibiotic</em>.</p>
 <p>This data set is in R available as <code>intrinsic_resistant</code>, after you load the <code>AMR</code> package.</p>
-<p>It was last updated on 5 March 2021 10:46:55 CET. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/intrinsic_resistant.html">here</a>.</p>
+<p>It was last updated on 5 March 2021 09:46:55 UTC. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/intrinsic_resistant.html">here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/intrinsic_resistant.rds">R file</a> (69 kB)<br>
@@ -1003,9 +1005,9 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <div id="interpretation-from-mic-values-disk-diameters-to-rsi" class="section level2">
 <h2 class="hasAnchor">
 <a href="#interpretation-from-mic-values-disk-diameters-to-rsi" class="anchor"></a>Interpretation from MIC values / disk diameters to R/SI</h2>
-<p>A data set with 20,486 rows and 10 columns, containing the following column names:<br><em>ab</em>, <em>breakpoint_R</em>, <em>breakpoint_S</em>, <em>disk_dose</em>, <em>guideline</em>, <em>method</em>, <em>mo</em>, <em>ref_tbl</em>, <em>site</em> and <em>uti</em>.</p>
+<p>A data set with 20,486 rows and 10 columns, containing the following column names:<br><em>guideline</em>, <em>method</em>, <em>site</em>, <em>mo</em>, <em>ab</em>, <em>ref_tbl</em>, <em>disk_dose</em>, <em>breakpoint_S</em>, <em>breakpoint_R</em> and <em>uti</em>.</p>
 <p>This data set is in R available as <code>rsi_translation</code>, after you load the <code>AMR</code> package.</p>
-<p>It was last updated on 5 March 2021 10:46:55 CET. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/rsi_translation.html">here</a>.</p>
+<p>It was last updated on 5 March 2021 09:46:55 UTC. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/rsi_translation.html">here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/rsi_translation.rds">R file</a> (34 kB)<br>
@@ -1133,9 +1135,9 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <div id="dosage-guidelines-from-eucast" class="section level2">
 <h2 class="hasAnchor">
 <a href="#dosage-guidelines-from-eucast" class="anchor"></a>Dosage guidelines from EUCAST</h2>
-<p>A data set with 169 rows and 9 columns, containing the following column names:<br><em>ab</em>, <em>administration</em>, <em>dose</em>, <em>dose_times</em>, <em>eucast_version</em>, <em>name</em>, <em>notes</em>, <em>original_txt</em> and <em>type</em>.</p>
+<p>A data set with 169 rows and 9 columns, containing the following column names:<br><em>ab</em>, <em>name</em>, <em>type</em>, <em>dose</em>, <em>dose_times</em>, <em>administration</em>, <em>notes</em>, <em>original_txt</em> and <em>eucast_version</em>.</p>
 <p>This data set is in R available as <code>dosage</code>, after you load the <code>AMR</code> package.</p>
-<p>It was last updated on 25 January 2021 21:58:20 CET. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/dosage.html">here</a>.</p>
+<p>It was last updated on 25 January 2021 20:58:20 UTC. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/dosage.html">here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/dosage.rds">R file</a> (3 kB)<br>

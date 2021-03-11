@@ -1,5 +1,5 @@
-# AMR 1.5.0.9040
-## <small>Last updated:  8 March 2021</small>
+# AMR 1.5.0.9041
+## <small>Last updated: 11 March 2021</small>
 
 ### New
 * Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the `eucast_rules()` function and in `as.rsi()` to interpret MIC and disk diffusion values. This is now the default guideline in this package.
@@ -43,6 +43,20 @@
   #> [1] "Hongos"    "Levaduras"
   ```
 * Added Pretomanid (PMD, J04AK08) to the `antibiotics` data set
+* MIC values (see `as.mic()`) can now be used in any mathematical processing, such as usage inside functions `min()`, `max()`, `range()`, and with binary operators (`+`, `-`, etc.). This allows for easy distribution analysis and fast filtering on MIC values:
+  ```r
+  x <- random_mic(10)
+  x
+  #> Class <mic>
+  #>  [1] 128   0.5   2     0.125 64    0.25  >=256 8     16    4
+  x[x > 4]
+  #> Class <mic>
+  #> [1] 128   64    >=256 8     16
+  range(x)
+  #> [1]   0.125 256.000
+  range(log2(x))
+  #> [1] -3  8
+  ```
 
 ### Changed
 * Updated the bacterial taxonomy to 3 March 2021 (using [LSPN](https://lpsn.dsmz.de))
@@ -53,19 +67,10 @@
   * All colours were updated to colour-blind friendly versions for values R, S and I for all plot methods (also applies to tibble printing)
   * Interpretation of MIC and disk diffusion values to R/SI will now be translated if the system language is German, Dutch or Spanish (see `translate`)
   * Plotting is now possible with base R using `plot()` and with ggplot2 using `ggplot()` on any vector of MIC and disk diffusion values
+* Updated SNOMED codes to US Edition of SNOMED CT from 1 September 2020 and added the source to the help page of the `microorganisms` data set
 * `is.rsi()` and `is.rsi.eligible()` now return a vector of `TRUE`/`FALSE` when the input is a data set, by iterating over all columns
 * Using functions without setting a data set (e.g., `mo_is_gram_negative()`, `mo_is_gram_positive()`, `mo_is_intrinsic_resistant()`, `first_isolate()`, `mdro()`) now work with `dplyr`s `group_by()` again
 * `first_isolate()` can be used with `group_by()` (also when using a dot `.` as input for the data) and now returns the names of the groups
-* MIC values (see `as.mic()`) can now be used in any mathematical processing, such as usage inside functions `min()`, `max()`, `range()`, and with binary operators (+, -, etc.). This allows easy distribution analysis and fast filtering on MIC values:
-  ```r
-  x <- random_mic(10)
-  x
-  #> Class <mic>
-  #>  [1] 0.5    64     64     128    0.125  4      0.5    0.0625 0.0625 0.125 
-  x[x > 4]
-  #> Class <mic>
-  #> [1] 64  64  128
-  ```
 * Updated the data set `microorganisms.codes` (which contains popular LIS and WHONET codes for microorganisms) for some species of *Mycobacterium* that previously incorrectly returned *M. africanum*
 * WHONET code `"PNV"` will now correctly be interpreted as `PHN`, the antibiotic code for phenoxymethylpenicillin ('peni V')
 * Fix for verbose output of `mdro(..., verbose = TRUE)` for German guideline (3MGRN and 4MGRN) and Dutch guideline (BRMO, only *P. aeruginosa*)

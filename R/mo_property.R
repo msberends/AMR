@@ -51,6 +51,8 @@
 #' All output [will be translated][translate] where possible.
 #'
 #' The function [mo_url()] will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
+#' 
+#' SNOMED codes - [mo_snomed()] - are from the `r SNOMED_VERSION$current_source`. See the [microorganisms] data set for more info.
 #' @inheritSection mo_matching_score Matching Score for Microorganisms
 #' @inheritSection catalogue_of_life Catalogue of Life
 #' @inheritSection as.mo Source
@@ -60,7 +62,7 @@
 #' - An [integer] in case of [mo_year()]
 #' - A [list] in case of [mo_taxonomy()] and [mo_info()]
 #' - A named [character] in case of [mo_url()]
-#' - A [double] in case of [mo_snomed()]
+#' - A [numeric] in case of [mo_snomed()]
 #' - A [character] in all other cases
 #' @export
 #' @seealso [microorganisms]
@@ -161,7 +163,8 @@
 #' 
 #' # get a list with the complete taxonomy (from kingdom to subspecies)
 #' mo_taxonomy("E. coli")
-#' # get a list with the taxonomy, the authors, Gram-stain and URL to the online database
+#' # get a list with the taxonomy, the authors, Gram-stain,
+#' #   SNOMED codes, and URL to the online database
 #' mo_info("E. coli")
 #' }
 mo_name <- function(x, language = get_locale(), ...) {
@@ -629,7 +632,8 @@ mo_info <- function(x, language = get_locale(),  ...) {
       list(synonyms = mo_synonyms(y),
            gramstain = mo_gramstain(y, language = language),
            url = unname(mo_url(y, open = FALSE)),
-           ref = mo_ref(y))))
+           ref = mo_ref(y),
+           snomed = unlist(mo_snomed(y)))))
   if (length(info) > 1) {
     names(info) <- mo_name(x)
     result <- info
@@ -659,10 +663,10 @@ mo_url <- function(x, open = FALSE, language = get_locale(), ...) {
   df <- data.frame(mo, stringsAsFactors = FALSE) %pm>%
     pm_left_join(pm_select(microorganisms, mo, source, species_id), by = "mo")
   df$url <- ifelse(df$source == "CoL",
-                   paste0(catalogue_of_life$url_CoL, "details/species/id/", df$species_id, "/"),
+                   paste0(CATALOGUE_OF_LIFE$url_CoL, "details/species/id/", df$species_id, "/"),
                    NA_character_)
   u <- df$url
-  u[mo_kingdom(mo) == "Bacteria"] <- paste0(catalogue_of_life$url_LPSN, "/species/", gsub(" ", "-", tolower(mo_names), fixed = TRUE))
+  u[mo_kingdom(mo) == "Bacteria"] <- paste0(CATALOGUE_OF_LIFE$url_LPSN, "/species/", gsub(" ", "-", tolower(mo_names), fixed = TRUE))
   u[mo_kingdom(mo) == "Bacteria" & mo_rank(mo) == "genus"] <- gsub("/species/",
                                                                    "/genus/",
                                                                    u[mo_kingdom(mo) == "Bacteria" & mo_rank(mo) == "genus"],

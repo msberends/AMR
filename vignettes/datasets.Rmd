@@ -31,12 +31,12 @@ structure_txt <- function(dataset) {
   paste0("A data set with ",
          format(nrow(dataset), big.mark = ","), " rows and ", 
          ncol(dataset), " columns, containing the following column names:  \n",
-         AMR:::vector_or(colnames(dataset), quotes = "*", last_sep = " and "), ".")
+         AMR:::vector_or(colnames(dataset), quotes = "*", last_sep = " and ", sort = FALSE), ".")
 }
 
 download_txt <- function(filename) {
   msg <- paste0("It was last updated on ", 
-                trimws(format(file.mtime(paste0("../data/", filename, ".rda")), "%e %B %Y %H:%M:%S %Z")), 
+                trimws(format(file.mtime(paste0("../data/", filename, ".rda")), "%e %B %Y %H:%M:%S %Z", tz = "UTC")), 
                 ". Find more info about the structure of this data set [here](https://msberends.github.io/AMR/reference/", ifelse(filename == "antivirals", "antibiotics", filename), ".html).\n")
   github_base <- "https://github.com/msberends/AMR/raw/master/data-raw/"
   filename <- paste0("../data-raw/", filename)
@@ -104,12 +104,15 @@ This data set is in R available as `microorganisms`, after you load the `AMR` pa
 
 `r download_txt("microorganisms")`
 
+**NOTE: The exported files for SAS, SPSS and Stata do not contain SNOMED codes, as their file size would exceed 100 MB; the file size limit of GitHub.** Advice? Use R instead.
+
 ### Source
 
 Our full taxonomy of microorganisms is based on the authoritative and comprehensive:
 
-* [Catalogue of Life](http://www.catalogueoflife.org) (included version: `r AMR:::catalogue_of_life$year`)
-* [List of Prokaryotic names with Standing in Nomenclature](https://lpsn.dsmz.de) (LPSN, last updated: `r AMR:::catalogue_of_life$yearmonth_LPSN`)
+* [Catalogue of Life](http://www.catalogueoflife.org) (included version: `r AMR:::CATALOGUE_OF_LIFE$year`)
+* [List of Prokaryotic names with Standing in Nomenclature](https://lpsn.dsmz.de) (LPSN, last updated: `r AMR:::CATALOGUE_OF_LIFE$yearmonth_LPSN`)
+* `r AMR:::SNOMED_VERSION$current_source`, retrieved from the [`r AMR:::SNOMED_VERSION$title`](`r AMR:::SNOMED_VERSION$url`), OID `r AMR:::SNOMED_VERSION$current_oid`, version `r AMR:::SNOMED_VERSION$current_version`
 
 ### Example content
 
@@ -147,8 +150,8 @@ This data set is in R available as `microorganisms.old`, after you load the `AMR
 
 This data set contains old, previously accepted taxonomic names. The data sources are the same as the `microorganisms` data set:
 
-* [Catalogue of Life](http://www.catalogueoflife.org) (included version: `r AMR:::catalogue_of_life$year`)
-* [List of Prokaryotic names with Standing in Nomenclature](https://lpsn.dsmz.de) (LPSN, last updated: `r AMR:::catalogue_of_life$yearmonth_LPSN`)
+* [Catalogue of Life](http://www.catalogueoflife.org) (included version: `r AMR:::CATALOGUE_OF_LIFE$year`)
+* [List of Prokaryotic names with Standing in Nomenclature](https://lpsn.dsmz.de) (LPSN, last updated: `r AMR:::CATALOGUE_OF_LIFE$yearmonth_LPSN`)
 
 ### Example content
 

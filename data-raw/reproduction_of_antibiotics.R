@@ -166,7 +166,7 @@ abx2$abbr <- lapply(as.list(abx2$abbr), function(x) unlist(strsplit(x, "|", fixe
 # vector with official names, returns vector with CIDs
 get_CID <- function(ab) {
   CID <- rep(NA_integer_, length(ab))
-  p <- progress_estimated(n = length(ab), min_time = 0)
+  p <- progress_ticker(n = length(ab), min_time = 0)
   for (i in 1:length(ab)) {
     p$tick()$print()
 
@@ -208,10 +208,10 @@ abx2[is.na(CIDs),] %>% View()
 # returns list with synonyms (brand names), with CIDs as names
 get_synonyms <- function(CID, clean = TRUE) {
   synonyms <- rep(NA_character_, length(CID))
-  p <- progress_estimated(n = length(CID), min_time = 0)
+  #p <- progress_ticker(n = length(CID), min_time = 0)
 
   for (i in 1:length(CID)) {
-    p$tick()$print()
+    #p$tick()$print()
 
     synonyms_txt <- ""
 
@@ -564,6 +564,14 @@ antibiotics[which(antibiotics$ab == "CPT"), "atc"] <- "J01DI02"
 antibiotics[which(antibiotics$ab == "FAR"), "atc"] <- "J01DI03"
 # ceftobiprole
 antibiotics[which(antibiotics$ab == "BPR"), "atc"] <- "J01DI01"
+# ceftazidime / avibactam
+antibiotics[which(antibiotics$ab == "CZA"), "atc"] <- "J01DD52"
+antibiotics[which(antibiotics$ab == "CZA"), "cid"] <- 90643431
+antibiotics[which(antibiotics$ab == "CZA"), "atc_group1"] <- "Other beta-lactam antibacterials"
+antibiotics[which(antibiotics$ab == "CZA"), "atc_group2"] <- "Third-generation cephalosporins"
+antibiotics[which(antibiotics$ab == "CZA"), "iv_ddd"] <- 6
+antibiotics[which(antibiotics$ab == "CZA"), "iv_units"] <- "g"
+antibiotics[which(antibiotics$ab == "CZA"), "synonyms"] <- list(c("Avycaz", "Zavicefta"))
 
 # typo
 antibiotics[which(antibiotics$ab == "RXT"), "name"] <- "Roxithromycin"

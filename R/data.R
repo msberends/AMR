@@ -83,7 +83,7 @@
 
 #' Data Set with `r format(nrow(microorganisms), big.mark = ",")` Microorganisms
 #'
-#' A data set containing the microbial taxonomy, last updated in `r catalogue_of_life$yearmonth_LPSN`, of six kingdoms from the Catalogue of Life (CoL) and the List of Prokaryotic names with Standing in Nomenclature (LPSN). MO codes can be looked up using [as.mo()].
+#' A data set containing the microbial taxonomy, last updated in `r CATALOGUE_OF_LIFE$yearmonth_LPSN`, of six kingdoms from the Catalogue of Life (CoL) and the List of Prokaryotic names with Standing in Nomenclature (LPSN). MO codes can be looked up using [as.mo()].
 #' @inheritSection catalogue_of_life Catalogue of Life
 #' @format A [data.frame] with `r format(nrow(microorganisms), big.mark = ",")` observations and `r ncol(microorganisms)` variables:
 #' - `mo`\cr ID of microorganism as used by this package
@@ -94,7 +94,7 @@
 #' - `species_id`\cr ID of the species as used by the Catalogue of Life
 #' - `source`\cr Either `r vector_or(microorganisms$source)` (see *Source*)
 #' - `prevalence`\cr Prevalence of the microorganism, see [as.mo()]
-#' - `snomed`\cr SNOMED code of the microorganism. Use [mo_snomed()] to retrieve it quickly, see [mo_property()].
+#' - `snomed`\cr Systematized Nomenclature of Medicine (SNOMED) code of the microorganism, according to the `r SNOMED_VERSION$current_source` (see *Source*). Use [mo_snomed()] to retrieve it quickly, see [mo_property()].
 #' @details 
 #' Please note that entries are only based on the Catalogue of Life and the LPSN (see below). Since these sources incorporate entries based on (recent) publications in the International Journal of Systematic and Evolutionary Microbiology (IJSEM), it can happen that the year of publication is sometimes later than one might expect.
 #' 
@@ -124,28 +124,24 @@
 #' 
 #' As of February 2020, the regularly augmented LPSN database at DSMZ is the basis of the new LPSN service. The new database was implemented for the Type-Strain Genome Server and augmented in 2018 to store all kinds of nomenclatural information. Data from the previous version of LPSN and from the Prokaryotic Nomenclature Up-to-date (PNU) service were imported into the new system. PNU had been established in 1993 as a service of the Leibniz Institute DSMZ, and was curated by Norbert Weiss, Manfred Kracht and Dorothea Gleim.
 #' @source 
-#' `r gsub("{year}", catalogue_of_life$year, catalogue_of_life$version, fixed = TRUE)`
+#' `r gsub("{year}", CATALOGUE_OF_LIFE$year, CATALOGUE_OF_LIFE$version, fixed = TRUE)` as currently implemented in this `AMR` package:
 #' 
 #' * Annual Checklist (public online taxonomic database), <http://www.catalogueoflife.org>
 #' 
-#' List of Prokaryotic names with Standing in Nomenclature: `r catalogue_of_life$yearmonth_LPSN`
+#' List of Prokaryotic names with Standing in Nomenclature (`r CATALOGUE_OF_LIFE$yearmonth_LPSN`) as currently implemented in this `AMR` package:
 #' 
 #' * Parte, A.C., Sarda Carbasse, J., Meier-Kolthoff, J.P., Reimer, L.C. and Goker, M. (2020). List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ. International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \doi{10.1099/ijsem.0.004332}
 #' * Parte, A.C. (2018). LPSN — List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; \doi{10.1099/ijsem.0.002786}
 #' * Parte, A.C. (2014). LPSN — List of Prokaryotic names with Standing in Nomenclature. Nucleic Acids Research, 42, Issue D1, D613–D616; \doi{10.1093/nar/gkt1111}
 #' * Euzeby, J.P. (1997). List of Bacterial Names with Standing in Nomenclature: a Folder Available on the Internet. International Journal of Systematic Bacteriology, 47, 590-592; \doi{10.1099/00207713-47-2-590}
+#' 
+#' `r SNOMED_VERSION$current_source` as currently implemented in this `AMR` package:
+#' 
+#' * Retrieved from the `r SNOMED_VERSION$title`, OID `r SNOMED_VERSION$current_oid`, version `r SNOMED_VERSION$current_version`; url: <`r SNOMED_VERSION$url`>
 #' @inheritSection AMR Reference Data Publicly Available
 #' @inheritSection AMR Read more on Our Website!
 #' @seealso [as.mo()], [mo_property()], [microorganisms.codes], [intrinsic_resistant]
 "microorganisms"
-
-catalogue_of_life <- list(
-  year = 2019,
-  version = "Catalogue of Life: {year} Annual Checklist",
-  url_CoL = "http://www.catalogueoflife.org/col/",
-  url_LPSN = "https://lpsn.dsmz.de",
-  yearmonth_LPSN = "March 2021"
-)
 
 #' Data Set with Previously Accepted Taxonomic Names
 #'

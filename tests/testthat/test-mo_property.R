@@ -50,7 +50,8 @@ test_that("mo_property works", {
   expect_equal(class(mo_synonyms(c("Candida albicans", "Escherichia coli"))), "list")
   expect_equal(names(mo_info("Escherichia coli")), c("kingdom", "phylum", "class", "order",
                                             "family", "genus", "species", "subspecies",
-                                            "synonyms", "gramstain", "url", "ref"))
+                                            "synonyms", "gramstain", "url", "ref",
+                                            "snomed"))
   expect_equal(class(mo_info(c("Escherichia coli", "Staphylococcus aureus"))), "list")
 
   expect_equal(mo_ref("Escherichia coli"), "Castellani et al., 1919")
@@ -102,7 +103,7 @@ test_that("mo_property works", {
   expect_identical(suppressWarnings(mo_ref("Chlamydia psittaci")), "Page, 1968")
   expect_identical(mo_ref("Chlamydophila psittaci"), "Everett et al., 1999")
 
-  expect_equal(mo_snomed("Escherichia coli"), 112283007)
+  expect_true(112283007 %in% mo_snomed("Escherichia coli"))
   
   # old codes must throw a warning in mo_* family
   expect_message(mo_name(c("B_ESCHR_COL", "B_STPHY_AUR")))

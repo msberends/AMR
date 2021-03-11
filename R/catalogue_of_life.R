@@ -108,15 +108,15 @@ catalogue_of_life_version <- function() {
   
   check_dataset_integrity()
   
-  # see the `catalogue_of_life` list in R/data.R
+  # see the `CATALOGUE_OF_LIFE` list in R/globals.R
   lst <- list(CoL =
-                list(version = gsub("{year}", catalogue_of_life$year, catalogue_of_life$version, fixed = TRUE),
-                     url = gsub("{year}", catalogue_of_life$year, catalogue_of_life$url_CoL, fixed = TRUE),
+                list(version = gsub("{year}", CATALOGUE_OF_LIFE$year, CATALOGUE_OF_LIFE$version, fixed = TRUE),
+                     url = gsub("{year}", CATALOGUE_OF_LIFE$year, CATALOGUE_OF_LIFE$url_CoL, fixed = TRUE),
                      n = nrow(pm_filter(microorganisms, source == "CoL"))),
               LPSN =
                 list(version = "List of Prokaryotic names with Standing in Nomenclature",
-                     url = catalogue_of_life$url_LPSN,
-                     yearmonth = catalogue_of_life$yearmonth_LPSN,
+                     url = CATALOGUE_OF_LIFE$url_LPSN,
+                     yearmonth = CATALOGUE_OF_LIFE$yearmonth_LPSN,
                      n = nrow(pm_filter(microorganisms, source == "LPSN"))),
               total_included =
                 list(

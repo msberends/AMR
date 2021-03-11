@@ -219,11 +219,11 @@ changed_md5 <- function(object) {
     compared
   }, error = function(e) TRUE)
 }
-usethis::ui_done(paste0("Saving raw data to {usethis::ui_value('/data-raw/')}"))
 
 # give official names to ABs and MOs
 rsi <- dplyr::mutate(rsi_translation, ab = ab_name(ab), mo = mo_name(mo))
 if (changed_md5(rsi)) {
+  usethis::ui_info(paste0("Saving {usethis::ui_value('rsi_translation')} to {usethis::ui_value('/data-raw/')}"))
   write_md5(rsi)
   try(saveRDS(rsi, "data-raw/rsi_translation.rds", version = 2, compress = "xz"), silent = TRUE)
   try(write.table(rsi, "data-raw/rsi_translation.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
@@ -235,16 +235,18 @@ if (changed_md5(rsi)) {
 
 mo <- dplyr::mutate_if(microorganisms, ~!is.numeric(.), as.character)
 if (changed_md5(mo)) {
+  usethis::ui_info(paste0("Saving {usethis::ui_value('microorganisms')} to {usethis::ui_value('/data-raw/')}"))
   write_md5(mo)
   try(saveRDS(mo, "data-raw/microorganisms.rds", version = 2, compress = "xz"), silent = TRUE)
   try(write.table(mo, "data-raw/microorganisms.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
-  try(haven::write_sas(mo, "data-raw/microorganisms.sas"), silent = TRUE)
-  try(haven::write_sav(mo, "data-raw/microorganisms.sav"), silent = TRUE)
-  try(haven::write_dta(mo, "data-raw/microorganisms.dta"), silent = TRUE)
+  try(haven::write_sas(dplyr::select(mo, -snomed), "data-raw/microorganisms.sas"), silent = TRUE)
+  try(haven::write_sav(dplyr::select(mo, -snomed), "data-raw/microorganisms.sav"), silent = TRUE)
+  try(haven::write_dta(dplyr::select(mo, -snomed), "data-raw/microorganisms.dta"), silent = TRUE)
   try(openxlsx::write.xlsx(mo, "data-raw/microorganisms.xlsx"), silent = TRUE)
 }
 
 if (changed_md5(microorganisms.old)) {
+  usethis::ui_info(paste0("Saving {usethis::ui_value('microorganisms.old')} to {usethis::ui_value('/data-raw/')}"))
   write_md5(microorganisms.old)
   try(saveRDS(microorganisms.old, "data-raw/microorganisms.old.rds", version = 2, compress = "xz"), silent = TRUE)
   try(write.table(microorganisms.old, "data-raw/microorganisms.old.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
@@ -256,6 +258,7 @@ if (changed_md5(microorganisms.old)) {
 
 ab <- dplyr::mutate_if(antibiotics, ~!is.numeric(.), as.character)
 if (changed_md5(ab)) {
+  usethis::ui_info(paste0("Saving {usethis::ui_value('antibiotics')} to {usethis::ui_value('/data-raw/')}"))
   write_md5(ab)
   try(saveRDS(ab, "data-raw/antibiotics.rds", version = 2, compress = "xz"), silent = TRUE)
   try(write.table(ab, "data-raw/antibiotics.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
@@ -267,6 +270,7 @@ if (changed_md5(ab)) {
 
 av <- dplyr::mutate_if(antivirals, ~!is.numeric(.), as.character)
 if (changed_md5(av)) {
+  usethis::ui_info(paste0("Saving {usethis::ui_value('antivirals')} to {usethis::ui_value('/data-raw/')}"))
   write_md5(av)
   try(saveRDS(av, "data-raw/antivirals.rds", version = 2, compress = "xz"), silent = TRUE)
   try(write.table(av, "data-raw/antivirals.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
@@ -277,6 +281,7 @@ if (changed_md5(av)) {
 }
 
 if (changed_md5(intrinsic_resistant)) {
+  usethis::ui_info(paste0("Saving {usethis::ui_value('intrinsic_resistant')} to {usethis::ui_value('/data-raw/')}"))
   write_md5(intrinsic_resistant)
   try(saveRDS(intrinsic_resistant, "data-raw/intrinsic_resistant.rds", version = 2, compress = "xz"), silent = TRUE)
   try(write.table(intrinsic_resistant, "data-raw/intrinsic_resistant.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
@@ -287,6 +292,7 @@ if (changed_md5(intrinsic_resistant)) {
 }
 
 if (changed_md5(dosage)) {
+  usethis::ui_info(paste0("Saving {usethis::ui_value('dosage')} to {usethis::ui_value('/data-raw/')}"))
   write_md5(dosage)
   try(saveRDS(dosage, "data-raw/dosage.rds", version = 2, compress = "xz"), silent = TRUE)
   try(write.table(dosage, "data-raw/dosage.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)

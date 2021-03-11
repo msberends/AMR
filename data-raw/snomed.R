@@ -26,89 +26,44 @@
 library(AMR)
 library(tidyverse)
 
-# go to https://www.nictiz.nl/standaardisatie/terminologiecentrum/referentielijsten/micro-organismen/ (Ctrl/Cmd + A in table)
-# read the table from clipboard
-snomed <- clipr::read_clip_tbl(skip = 2)
-snomed <- snomed %>%
-  dplyr::filter(gsub("(^genus |^familie |^stam |ss.? |subsp.? |subspecies )", "", 
-                     Omschrijving.,
-                     ignore.case = TRUE) %in% c(microorganisms$fullname, 
-                                                microorganisms.old$fullname)) %>% 
-  dplyr::transmute(fullname = mo_name(Omschrijving.),
-                   snomed = as.integer(Id)) %>% 
-  dplyr::filter(!fullname %like% "unknown")
-snomed_trans <- snomed %>%
-  group_by(fullname) %>%
-  mutate(snomed_list = list(snomed)) %>%
-  ungroup() %>%
-  select(fullname, snomed = snomed_list) %>%
-  distinct(fullname, .keep_all = TRUE)
+# we will use Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS)
+# as a source, which copies directly from the latest US SNOMED CT version
+# - go to https://phinvads.cdc.gov/vads/ViewValueSet.action?oid=2.16.840.1.114222.4.11.1009
+# - check that current online version is higher than SNOMED_VERSION$current_version
+# - if so, click on 'Download Value Set', choose 'TXT'
+snomed <- read_tsv("data-raw/SNOMED_PHVS_Microorganism_CDC_V12.txt", skip = 3) %>% 
+  select(1:2) %>% 
+  set_names(c("snomed", "mo"))
 
-microorganisms <- AMR::microorganisms %>% 
-  left_join(snomed_trans)
-# remove the NULLs, set to NA
-microorganisms$snomed <- lapply(microorganisms$snomed, function(x) if (length(x) == 0)  NA else x)
+# save all valid genera, species and subspecies
+vctr <- unique(unlist(strsplit(c(microorganisms$fullname, microorganisms.old$fullname), " ")))
+vctr <- tolower(vctr[vctr %like% "^[a-z]+$"])
 
-microorganisms <- dataset_UTF8_to_ASCII(microorganisms)
+# remove all parts of the name that are no valid values in genera, species or subspecies
+snomed <- snomed %>% 
+  mutate(fullname = vapply(FUN.VALUE = character(1),
+                           # split on space and/or comma
+                           strsplit(tolower(mo), "[ ,]"),
+                           function(x) trimws(paste0(x[x %in% vctr], collapse = " "))),
+         # remove " group"
+         fullname = gsub(" group", "", fullname, fixed = TRUE))
 
-usethis::use_data(microorganisms, overwrite = TRUE)
-rm(microorganisms)
+snomed_keep <- snomed %>% 
+  filter(fullname %in% tolower(c(microorganisms$fullname, microorganisms.old$fullname))) %>% 
+  group_by(fullname_lower = fullname) %>% 
+  summarise(snomed = list(snomed))
 
-# OLD ---------------------------------------------------------------------
+# save to microorganisms data set
+microorganisms <- microorganisms %>%
+  # remove old snomed
+  select(-snomed) %>%
+  # create dummy var for joining
+  mutate(fullname_lower = tolower(fullname)) %>%
+  # join new snomed
+  left_join(snomed_keep) %>%
+  # remove dummy var
+  select(-fullname_lower) %>% 
+  AMR:::dataset_UTF8_to_ASCII()
+usethis::use_data(microorganisms, overwrite = TRUE, compress = "xz")
 
-# baseUrl <- 'https://browser.ihtsdotools.org/snowstorm/snomed-ct'
-# edition <- 'MAIN'
-# version <- '2019-07-31'
-# 
-# microorganisms.snomed <- data.frame(conceptid = character(0),
-#                                     mo = character(0),
-#                                     stringsAsFactors = FALSE)
-# microorganisms$snomed <- ""
-# 
-# # for (i in 1:50) {
-# for (i in 1:1000) {
-#   
-#   if (i %% 10 == 0) {
-#     cat(paste0(i, " - ", cleaner::percentage(i / nrow(microorganisms)), "\n"))
-#   }
-#   
-#   mo_data <- microorganisms %>% 
-#     filter(mo == microorganisms$mo[i]) %>% 
-#     as.list()
-#   
-#   if (!mo_data$rank %in% c("genus", "species")) {
-#     next
-#   }
-#   
-#   searchTerm <- paste0(
-#     ifelse(mo_data$rank == "genus", "Genus ", ""),
-#     mo_data$fullname, 
-#     " (organism)")
-#   
-#   url <- paste0(baseUrl, '/browser/',
-#                 edition, '/', 
-#                 version, 
-#                 '/descriptions?term=', curl::curl_escape(searchTerm),
-#                 '&mode=fullText&activeFilter=true&limit=', 250)
-#   results <- url %>% 
-#     httr::GET() %>%
-#     httr::content(type = "text", encoding = "UTF-8") %>% 
-#     jsonlite::fromJSON(flatten = TRUE) %>% 
-#     .$items
-#   if (NROW(results) == 0) {
-#     next
-#   } else {
-#     message("Adding ", crayon::italic(mo_data$fullname))
-#   }
-#   
-#   tryCatch(
-#     microorganisms$snomed[i] <- results %>% filter(term == searchTerm) %>% pull(concept.conceptId),
-#     error = function(e) invisible()
-#   )
-#   
-#   if (nrow(results) > 1) {
-#       microorganisms.snomed <- microorganisms.snomed %>% 
-#         bind_rows(tibble(conceptid = results %>% filter(term != searchTerm) %>% pull(concept.conceptId) %>% unique(),
-#                          mo = as.character(mo_data$mo)))
-#   }
-# }
+# don't forget to update the version number in SNOMED_VERSION in ./R/globals.R!

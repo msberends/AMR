@@ -27,10 +27,10 @@
 # NOTE TO SELF: could also have done this with the 'lifecycle' package, but why add a package dependency for such an easy job??
 ###############
 
-#' Lifecycles of Functions in the `amr` Package
+#' Lifecycles of Functions in the `AMR` Package
 #' @name lifecycle
 #' @rdname lifecycle
-#' @description Functions in this `AMR` package are categorised using [the lifecycle circle of the Tidyverse as found on www.tidyverse.org/lifecycle](https://www.Tidyverse.org/lifecycle).
+#' @description Functions in this `AMR` package are categorised using [the lifecycle circle of the Tidyverse as found on www.tidyverse.org/lifecycle](https://lifecycle.r-lib.org/articles/stages.html).
 #' 
 #' \if{html}{\figure{lifecycle_tidyverse.svg}{options: height=200px style=margin-bottom:5px} \cr}
 #' This page contains a section for every lifecycle (with text borrowed from the aforementioned Tidyverse website), so they can be used in the manual pages of the functions. 

@@ -2,9 +2,9 @@
 % Please edit documentation in R/lifecycle.R
 \name{lifecycle}
 \alias{lifecycle}
-\title{Lifecycles of Functions in the \code{amr} Package}
+\title{Lifecycles of Functions in the \code{AMR} Package}
 \description{
-Functions in this \code{AMR} package are categorised using \href{https://www.Tidyverse.org/lifecycle}{the lifecycle circle of the Tidyverse as found on www.tidyverse.org/lifecycle}.
+Functions in this \code{AMR} package are categorised using \href{https://lifecycle.r-lib.org/articles/stages.html}{the lifecycle circle of the Tidyverse as found on www.tidyverse.org/lifecycle}.
 
 \if{html}{\figure{lifecycle_tidyverse.svg}{options: height=200px style=margin-bottom:5px} \cr}
 This page contains a section for every lifecycle (with text borrowed from the aforementioned Tidyverse website), so they can be used in the manual pages of the functions.
