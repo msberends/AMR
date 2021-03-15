@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9040</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0</span>
       </span>
     </div>
 
@@ -236,14 +236,10 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1509040" class="section level1">
-<h1 class="page-header" data-toc-text="1.5.0.9040">
-<a href="#amr-1509040" class="anchor"></a>AMR 1.5.0.9040<small> Unreleased </small>
+    <div id="amr-160" class="section level1">
+<h1 class="page-header" data-toc-text="1.6.0">
+<a href="#amr-160" class="anchor"></a>AMR 1.6.0<small> Unreleased </small>
 </h1>
-<div id="last-updated-8-march-2021" class="section level2">
-<h2 class="hasAnchor">
-<a href="#last-updated-8-march-2021" class="anchor"></a><small>Last updated: 8 March 2021</small>
-</h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h3>
@@ -279,7 +275,7 @@
 <span class="co">#&gt; Filtering on oxazolidinones: value in column `LNZ` (linezolid) is either "R", "S" or "I"</span></code></pre></div>
 </li>
 <li><p>Support for custom MDRO guidelines, using the new <code><a href="../reference/mdro.html">custom_mdro_guideline()</a></code> function, please see <code><a href="../reference/mdro.html">mdro()</a></code> for additional info</p></li>
-<li><p><code>ggplot()</code> generics for classes <code>&lt;mic&gt;</code> and <code>&lt;disk&gt;</code></p></li>
+<li><p><code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> generics for classes <code>&lt;mic&gt;</code> and <code>&lt;disk&gt;</code></p></li>
 <li>
 <p>Function <code><a href="../reference/mo_property.html">mo_is_yeast()</a></code>, which determines whether a microorganism is a member of the taxonomic class Saccharomycetes or the taxonomic order Saccharomycetales:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -302,60 +298,71 @@
 <span class="co">#&gt; [1] "Hongos"    "Levaduras"</span></code></pre></div>
 </li>
 <li><p>Added Pretomanid (PMD, J04AK08) to the <code>antibiotics</code> data set</p></li>
+<li>
+<p>MIC values (see <code><a href="../reference/as.mic.html">as.mic()</a></code>) can now be used in any mathematical processing, such as usage inside functions <code><a href="https://rdrr.io/r/base/Extremes.html">min()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code>, <code><a href="https://rdrr.io/r/base/range.html">range()</a></code>, and with binary operators (<code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>, etc.). This allows for easy distribution analysis and fast filtering on MIC values:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/random.html">random_mic</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
+<span class="va">x</span>
+<span class="co">#&gt; Class &lt;mic&gt;</span>
+<span class="co">#&gt;  [1] 128   0.5   2     0.125 64    0.25  &gt;=256 8     16    4</span>
+<span class="va">x</span><span class="op">[</span><span class="va">x</span> <span class="op">&gt;</span> <span class="fl">4</span><span class="op">]</span>
+<span class="co">#&gt; Class &lt;mic&gt;</span>
+<span class="co">#&gt; [1] 128   64    &gt;=256 8     16</span>
+<span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+<span class="co">#&gt; [1]   0.125 256.000</span>
+<span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log2</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] -3  8</span></code></pre></div>
+</li>
 </ul>
 </div>
 <div id="changed" class="section level3">
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
-<li>
-<p>Updated the bacterial taxonomy to 3 March 2021 (using <a href="https://lpsn.dsmz.de">LSPN</a>)</p>
+<li>Updated the bacterial taxonomy to 3 March 2021 (using <a href="https://lpsn.dsmz.de">LSPN</a>)
 <ul>
 <li>Added 3,372 new species and 1,523 existing species became synomyms</li>
 <li>The URL of a bacterial species (<code><a href="../reference/mo_property.html">mo_url()</a></code>) will now lead to <a href="https://lpsn.dsmz.de" class="uri">https://lpsn.dsmz.de</a>
 </li>
 </ul>
 </li>
-<li>
-<p>Big update for plotting classes <code>rsi</code>, <code>&lt;mic&gt;</code>, and <code>&lt;disk&gt;</code>:</p>
+<li>Big update for plotting classes <code>rsi</code>, <code>&lt;mic&gt;</code>, and <code>&lt;disk&gt;</code>:
 <ul>
 <li>Plotting of MIC and disk diffusion values now support interpretation colouring if you supply the microorganism and antimicrobial agent</li>
 <li>All colours were updated to colour-blind friendly versions for values R, S and I for all plot methods (also applies to tibble printing)</li>
 <li>Interpretation of MIC and disk diffusion values to R/SI will now be translated if the system language is German, Dutch or Spanish (see <code>translate</code>)</li>
-<li>Plotting is now possible with base R using <code><a href="../reference/plot.html">plot()</a></code> and with ggplot2 using <code>ggplot()</code> on any vector of MIC and disk diffusion values</li>
+<li>Plotting is now possible with base R using <code><a href="../reference/plot.html">plot()</a></code> and with ggplot2 using <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> on any vector of MIC and disk diffusion values</li>
 </ul>
 </li>
-<li><p><code><a href="../reference/as.rsi.html">is.rsi()</a></code> and <code><a href="../reference/as.rsi.html">is.rsi.eligible()</a></code> now return a vector of <code>TRUE</code>/<code>FALSE</code> when the input is a data set, by iterating over all columns</p></li>
-<li><p>Using functions without setting a data set (e.g., <code><a href="../reference/mo_property.html">mo_is_gram_negative()</a></code>, <code><a href="../reference/mo_property.html">mo_is_gram_positive()</a></code>, <code><a href="../reference/mo_property.html">mo_is_intrinsic_resistant()</a></code>, <code><a href="../reference/first_isolate.html">first_isolate()</a></code>, <code><a href="../reference/mdro.html">mdro()</a></code>) now work with <code>dplyr</code>s <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> again</p></li>
-<li><p><code><a href="../reference/first_isolate.html">first_isolate()</a></code> can be used with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> (also when using a dot <code>.</code> as input for the data) and now returns the names of the groups</p></li>
+<li>Updated SNOMED codes to US Edition of SNOMED CT from 1 September 2020 and added the source to the help page of the <code>microorganisms</code> data set</li>
 <li>
-<p>MIC values (see <code><a href="../reference/as.mic.html">as.mic()</a></code>) can now be used in any mathematical processing, such as usage inside functions <code><a href="https://rdrr.io/r/base/Extremes.html">min()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code>, <code><a href="https://rdrr.io/r/base/range.html">range()</a></code>, and with binary operators (+, -, etc.). This allows easy distribution analysis and fast filtering on MIC values:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/random.html">random_mic</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
-<span class="va">x</span>
-<span class="co">#&gt; Class &lt;mic&gt;</span>
-<span class="co">#&gt;  [1] 0.5    64     64     128    0.125  4      0.5    0.0625 0.0625 0.125 </span>
-<span class="va">x</span><span class="op">[</span><span class="va">x</span> <span class="op">&gt;</span> <span class="fl">4</span><span class="op">]</span>
-<span class="co">#&gt; Class &lt;mic&gt;</span>
-<span class="co">#&gt; [1] 64  64  128</span></code></pre></div>
+<code><a href="../reference/as.rsi.html">is.rsi()</a></code> and <code><a href="../reference/as.rsi.html">is.rsi.eligible()</a></code> now return a vector of <code>TRUE</code>/<code>FALSE</code> when the input is a data set, by iterating over all columns</li>
+<li>Using functions without setting a data set (e.g., <code><a href="../reference/mo_property.html">mo_is_gram_negative()</a></code>, <code><a href="../reference/mo_property.html">mo_is_gram_positive()</a></code>, <code><a href="../reference/mo_property.html">mo_is_intrinsic_resistant()</a></code>, <code><a href="../reference/first_isolate.html">first_isolate()</a></code>, <code><a href="../reference/mdro.html">mdro()</a></code>) now work with <code>dplyr</code>s <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> again</li>
+<li>
+<code><a href="../reference/first_isolate.html">first_isolate()</a></code> can be used with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> (also when using a dot <code>.</code> as input for the data) and now returns the names of the groups</li>
+<li>Updated the data set <code>microorganisms.codes</code> (which contains popular LIS and WHONET codes for microorganisms) for some species of <em>Mycobacterium</em> that previously incorrectly returned <em>M. africanum</em>
 </li>
-<li><p>Updated the data set <code>microorganisms.codes</code> (which contains popular LIS and WHONET codes for microorganisms) for some species of <em>Mycobacterium</em> that previously incorrectly returned <em>M. africanum</em></p></li>
-<li><p>WHONET code <code>"PNV"</code> will now correctly be interpreted as <code>PHN</code>, the antibiotic code for phenoxymethylpenicillin (‘peni V’)</p></li>
-<li><p>Fix for verbose output of <code><a href="../reference/mdro.html">mdro(..., verbose = TRUE)</a></code> for German guideline (3MGRN and 4MGRN) and Dutch guideline (BRMO, only <em>P. aeruginosa</em>)</p></li>
-<li><p><code><a href="../reference/as.rsi.html">is.rsi.eligible()</a></code> now detects if the column name resembles an antibiotic name or code and now returns <code>TRUE</code> immediately if the input contains any of the values “R”, “S” or “I”. This drastically improves speed, also for a lot of other functions that rely on automatic determination of antibiotic columns.</p></li>
-<li><p>Functions <code><a href="../reference/get_episode.html">get_episode()</a></code> and <code><a href="../reference/get_episode.html">is_new_episode()</a></code> now support less than a day as value for argument <code>episode_days</code> (e.g., to include one patient/test per hour)</p></li>
-<li><p>Argument <code>ampc_cephalosporin_resistance</code> in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> now also applies to value “I” (not only “S”)</p></li>
-<li><p>Functions <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> on a Principal Components Analysis object (<code><a href="../reference/pca.html">pca()</a></code>) now print additional group info if the original data was grouped using <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code></p></li>
-<li><p>Improved speed and reliability of <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>. As this also internally improves the reliability of <code><a href="../reference/first_isolate.html">first_isolate()</a></code> and <code><a href="../reference/mdro.html">mdro()</a></code>, this might have a slight impact on the results of those functions.</p></li>
-<li><p>Fix for <code><a href="../reference/mo_property.html">mo_name()</a></code> when used in other languages than English</p></li>
-<li><p>The <code><a href="../reference/like.html">like()</a></code> function (and its fast alias <code><a href="../reference/like.html">%like%</a></code>) now always use Perl compatibility, improving speed for many functions in this package (e.g., <code><a href="../reference/as.mo.html">as.mo()</a></code> is now up to 4 times faster)</p></li>
-<li><p><em>Staphylococcus cornubiensis</em> is now correctly categorised as coagulase-positive</p></li>
-<li><p><code><a href="../reference/random.html">random_disk()</a></code> and <code><a href="../reference/random.html">random_mic()</a></code> now have an expanded range in their randomisation</p></li>
-<li><p>Support for GISA (glycopeptide-intermediate <em>S. aureus</em>), so e.g. <code><a href="../reference/mo_property.html">mo_genus("GISA")</a></code> will return <code>"Staphylococcus"</code></p></li>
-<li><p>Added translations of German and Spanish for more than 200 antimicrobial drugs</p></li>
-<li><p>Speed improvement for <code><a href="../reference/as.ab.html">as.ab()</a></code> when the input is an official name or ATC code</p></li>
-<li><p>Added argument <code>include_untested_rsi</code> to the <code><a href="../reference/first_isolate.html">first_isolate()</a></code> functions (defaults to <code>TRUE</code> to keep existing behaviour), to be able to exclude rows where all R/SI values (class <code>&lt;rsi&gt;</code>, see <code><a href="../reference/as.rsi.html">as.rsi()</a></code>) are empty</p></li>
+<li>WHONET code <code>"PNV"</code> will now correctly be interpreted as <code>PHN</code>, the antibiotic code for phenoxymethylpenicillin (‘peni V’)</li>
+<li>Fix for verbose output of <code><a href="../reference/mdro.html">mdro(..., verbose = TRUE)</a></code> for German guideline (3MGRN and 4MGRN) and Dutch guideline (BRMO, only <em>P. aeruginosa</em>)</li>
+<li>
+<code><a href="../reference/as.rsi.html">is.rsi.eligible()</a></code> now detects if the column name resembles an antibiotic name or code and now returns <code>TRUE</code> immediately if the input contains any of the values “R”, “S” or “I”. This drastically improves speed, also for a lot of other functions that rely on automatic determination of antibiotic columns.</li>
+<li>Functions <code><a href="../reference/get_episode.html">get_episode()</a></code> and <code><a href="../reference/get_episode.html">is_new_episode()</a></code> now support less than a day as value for argument <code>episode_days</code> (e.g., to include one patient/test per hour)</li>
+<li>Argument <code>ampc_cephalosporin_resistance</code> in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> now also applies to value “I” (not only “S”)</li>
+<li>Functions <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> on a Principal Components Analysis object (<code><a href="../reference/pca.html">pca()</a></code>) now print additional group info if the original data was grouped using <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code>
+</li>
+<li>Improved speed and reliability of <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>. As this also internally improves the reliability of <code><a href="../reference/first_isolate.html">first_isolate()</a></code> and <code><a href="../reference/mdro.html">mdro()</a></code>, this might have a slight impact on the results of those functions.</li>
+<li>Fix for <code><a href="../reference/mo_property.html">mo_name()</a></code> when used in other languages than English</li>
+<li>The <code><a href="../reference/like.html">like()</a></code> function (and its fast alias <code><a href="../reference/like.html">%like%</a></code>) now always use Perl compatibility, improving speed for many functions in this package (e.g., <code><a href="../reference/as.mo.html">as.mo()</a></code> is now up to 4 times faster)</li>
+<li>
+<em>Staphylococcus cornubiensis</em> is now correctly categorised as coagulase-positive</li>
+<li>
+<code><a href="../reference/random.html">random_disk()</a></code> and <code><a href="../reference/random.html">random_mic()</a></code> now have an expanded range in their randomisation</li>
+<li>Support for GISA (glycopeptide-intermediate <em>S. aureus</em>), so e.g. <code><a href="../reference/mo_property.html">mo_genus("GISA")</a></code> will return <code>"Staphylococcus"</code>
+</li>
+<li>Added translations of German and Spanish for more than 200 antimicrobial drugs</li>
+<li>Speed improvement for <code><a href="../reference/as.ab.html">as.ab()</a></code> when the input is an official name or ATC code</li>
+<li>Added argument <code>include_untested_rsi</code> to the <code><a href="../reference/first_isolate.html">first_isolate()</a></code> functions (defaults to <code>TRUE</code> to keep existing behaviour), to be able to exclude rows where all R/SI values (class <code>&lt;rsi&gt;</code>, see <code><a href="../reference/as.rsi.html">as.rsi()</a></code>) are empty</li>
 </ul>
 </div>
 <div id="other" class="section level3">
@@ -365,7 +372,6 @@
 <li>Big documentation updates</li>
 <li>Loading the package (i.e., <code><a href="https://msberends.github.io/AMR/">library(AMR)</a></code>) now is ~50 times faster than before, in costs of package size (which increased by ~3 MB)</li>
 </ul>
-</div>
 </div>
 </div>
     <div id="amr-150" class="section level1">
@@ -857,7 +863,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 </ul>
 </li>
 <li>Input values for <code><a href="../reference/as.disk.html">as.disk()</a></code> limited to a maximum of 50 millimeters</li>
-<li>Added a lifecycle state to every function, following <a href="https://www.tidyverse.org/lifecycle">the lifecycle circle of the <code>tidyverse</code></a>
+<li>Added a lifecycle state to every function, following the lifecycle circle of the <code>tidyverse</code>
 </li>
 <li>For in <code><a href="../reference/as.ab.html">as.ab()</a></code>: support for drugs starting with “co-” like co-amoxiclav, co-trimoxazole, co-trimazine and co-trimazole (thanks to Peter Dutey)</li>
 <li>Changes to the <code>antibiotics</code> data set (thanks to Peter Dutey):

@@ -1,5 +1,5 @@
-# AMR 1.5.0.9041
-## <small>Last updated: 11 March 2021</small>
+# AMR 1.6.0
+
 
 ### New
 * Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the `eucast_rules()` function and in `as.rsi()` to interpret MIC and disk diffusion values. This is now the default guideline in this package.
@@ -407,7 +407,7 @@ This software is now out of beta and considered stable. Nonetheless, this packag
   * Speed improvements, especially for the *G. species* format (G for genus), like *E. coli* and *K pneumoniae*
   * Support for more common codes used in laboratory information systems
 * Input values for `as.disk()` limited to a maximum of 50 millimeters
-* Added a lifecycle state to every function, following [the lifecycle circle of the `tidyverse`](https://www.tidyverse.org/lifecycle)
+* Added a lifecycle state to every function, following the lifecycle circle of the `tidyverse`
 * For in `as.ab()`: support for drugs starting with "co-" like co-amoxiclav, co-trimoxazole, co-trimazine and co-trimazole (thanks to Peter Dutey)
 * Changes to the `antibiotics` data set (thanks to Peter Dutey):
   * Added more synonyms to colistin, imipenem and piperacillin/tazobactam

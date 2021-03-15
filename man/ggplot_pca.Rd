@@ -106,7 +106,7 @@ ggplot_pca(
 Produces a \code{ggplot2} variant of a so-called \href{https://en.wikipedia.org/wiki/Biplot}{biplot} for PCA (principal component analysis), but is more flexible and more appealing than the base \R \code{\link[=biplot]{biplot()}} function.
 }
 \details{
-The colours for labels and points can be changed by adding another scale layer for colour, like \code{scale_colour_viridis_d()} or \code{scale_colour_brewer()}.
+The colours for labels and points can be changed by adding another scale layer for colour, such as \code{scale_colour_viridis_d()} and \code{scale_colour_brewer()}.
 }
 \section{Stable Lifecycle}{
 

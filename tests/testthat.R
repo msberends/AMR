@@ -24,8 +24,8 @@
 # ==================================================================== #
 
 # the testthat package is in Suggests, but very old R versions will not be
-# able to install it. Yet, we want checks in those R versions as well, so
-# only run unit tests in later R versions:
+# able to install it. Yet, we want basic R CMD CHECK's in those R versions 
+# as well, so only run unit tests in later R versions:
 if (require("testthat")) {
   library(testthat, warn.conflicts = FALSE)
   library(AMR)
