@@ -93,6 +93,14 @@ plot.mic <- function(x,
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
   
+  # translate if not specifically set
+  if (missing(ylab)) {
+    ylab <- translate_AMR(ylab, language = language)
+  }
+  if (missing(xlab)) {
+    xlab <- translate_AMR(xlab, language = language)
+  }
+  
   if (length(colours_RSI) == 1) {
     colours_RSI <- rep(colours_RSI, 3)
   }
@@ -135,13 +143,14 @@ plot.mic <- function(x,
       legend_txt <- c(legend_txt, "Resistant")
       legend_col <- c(legend_col, colours_RSI[1])
     }
-    legend("top", 
+    legend("top",
            x.intersp = 0.5,
            legend = translate_AMR(legend_txt, language = language),
            fill = legend_col,
            horiz = TRUE,
-           cex = 0.75, 
-           box.lwd = 0, 
+           cex = 0.75,
+           box.lwd = 0,
+           box.col = "#FFFFFF55",
            bg = "#FFFFFF55")
   }
 }
@@ -169,6 +178,14 @@ barplot.mic <- function(height,
   meet_criteria(colours_RSI, allow_class = "character", has_length = c(1, 3))
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
+  
+  # translate if not specifically set
+  if (missing(ylab)) {
+    ylab <- translate_AMR(ylab, language = language)
+  }
+  if (missing(xlab)) {
+    xlab <- translate_AMR(xlab, language = language)
+  }
   
   main <- gsub(" +", " ", paste0(main, collapse = " "))
   
@@ -208,6 +225,14 @@ ggplot.mic <- function(data,
   meet_criteria(colours_RSI, allow_class = "character", has_length = c(1, 3))
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
+  
+  # translate if not specifically set
+  if (missing(ylab)) {
+    ylab <- translate_AMR(ylab, language = language)
+  }
+  if (missing(xlab)) {
+    xlab <- translate_AMR(xlab, language = language)
+  }
   
   if ("main" %in% names(list(...))) {
     title <- list(...)$main
@@ -285,6 +310,14 @@ plot.disk <- function(x,
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
   
+  # translate if not specifically set
+  if (missing(ylab)) {
+    ylab <- translate_AMR(ylab, language = language)
+  }
+  if (missing(xlab)) {
+    xlab <- translate_AMR(xlab, language = language)
+  }
+  
   if (length(colours_RSI) == 1) {
     colours_RSI <- rep(colours_RSI, 3)
   }
@@ -333,8 +366,9 @@ plot.disk <- function(x,
            legend = translate_AMR(legend_txt, language = language),
            fill = legend_col,
            horiz = TRUE,
-           cex = 0.75, 
-           box.lwd = 0, 
+           cex = 0.75,
+           box.lwd = 0,
+           box.col = "#FFFFFF55",
            bg = "#FFFFFF55")
   }
 }
@@ -362,6 +396,14 @@ barplot.disk <- function(height,
   meet_criteria(colours_RSI, allow_class = "character", has_length = c(1, 3))
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
+  
+  # translate if not specifically set
+  if (missing(ylab)) {
+    ylab <- translate_AMR(ylab, language = language)
+  }
+  if (missing(xlab)) {
+    xlab <- translate_AMR(xlab, language = language)
+  }
   
   main <- gsub(" +", " ", paste0(main, collapse = " "))
   
@@ -401,6 +443,14 @@ ggplot.disk <- function(data,
   meet_criteria(colours_RSI, allow_class = "character", has_length = c(1, 3))
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
+  
+  # translate if not specifically set
+  if (missing(ylab)) {
+    ylab <- translate_AMR(ylab, language = language)
+  }
+  if (missing(xlab)) {
+    xlab <- translate_AMR(xlab, language = language)
+  }
   
   if ("main" %in% names(list(...))) {
     title <- list(...)$main
@@ -452,79 +502,6 @@ ggplot.disk <- function(data,
   
   p +
     ggplot2::labs(title = title, x = xlab, y = ylab, subtitle = cols_sub$sub)
-}
-
-plot_prepare_table <- function(x, expand) {
-  if (is.mic(x)) {
-    if (expand == TRUE) {
-      # expand range for MIC by adding factors of 2 from lowest to highest so all MICs in between also print
-      extra_range <- max(x) / 2
-      while (min(extra_range) / 2 > min(x)) {
-        extra_range <- c(min(extra_range) / 2, extra_range)
-      }
-      nms <- extra_range
-      extra_range <- rep(0, length(extra_range))
-      names(extra_range) <- nms
-      x <- table(droplevels(x, as.mic = FALSE))
-      extra_range <- extra_range[!names(extra_range) %in% names(x)]
-      x <- as.table(c(x, extra_range))
-    } else {
-      x <- table(droplevels(x, as.mic = FALSE))
-    }
-    x <- x[order(as.double(as.mic(names(x))))]
-  } else if (is.disk(x)) {
-    if (expand == TRUE) {
-      # expand range for disks from lowest to highest so all mm's in between also print
-      extra_range <- rep(0, max(x) - min(x) - 1)
-      names(extra_range) <- seq(min(x) + 1, max(x) - 1)
-      x <- table(x)
-      extra_range <- extra_range[!names(extra_range) %in% names(x)]
-      x <- as.table(c(x, extra_range))
-    } else {
-      x <- table(x)
-    }
-    x <- x[order(as.double(names(x)))]
-  }
-  as.table(x)
-}
-
-plot_name_of_I <- function(guideline) {
-  if (!guideline %like% "CLSI" && as.double(gsub("[^0-9]+", "", guideline)) >= 2019) {
-    # interpretation since 2019
-    "Incr. exposure"
-  } else {
-    # interpretation until 2019
-    "Intermediate"
-  }
-}
-
-plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_RSI, fn, language, ...) {
-  guideline <- get_guideline(guideline, AMR::rsi_translation)
-  if (!is.null(mo) && !is.null(ab)) {
-    # interpret and give colour based on MIC values
-    mo <- as.mo(mo)
-    ab <- as.ab(ab)
-    rsi <- suppressWarnings(suppressMessages(as.rsi(fn(names(x)), mo = mo, ab = ab, guideline = guideline, ...)))
-    cols <- character(length = length(rsi))
-    cols[is.na(rsi)] <- "#BEBEBE"
-    cols[rsi == "R"] <- colours_RSI[1]
-    cols[rsi == "S"] <- colours_RSI[2]
-    cols[rsi == "I"] <- colours_RSI[3]
-    moname <- mo_name(mo, language = language)
-    abname <- ab_name(ab, language = language)
-    if (all(cols == "#BEBEBE")) {
-      message_("No ", guideline, " interpretations found for ", 
-               ab_name(ab, language = NULL, tolower = TRUE), " in ", moname)
-      guideline_txt <- ""
-    } else {
-      guideline_txt <- paste0("(", guideline, ")")
-    }
-    sub <- bquote(.(abname)~"in"~italic(.(moname))~.(guideline_txt))
-  } else {
-    cols <- "#BEBEBE"
-    sub <- NULL
-  }
-  list(cols = cols, count = as.double(x), sub = sub, guideline = guideline)
 }
 
 #' @method plot rsi
@@ -599,6 +576,14 @@ barplot.rsi <- function(height,
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
   
+  # translate if not specifically set
+  if (missing(ylab)) {
+    ylab <- translate_AMR(ylab, language = language)
+  }
+  if (missing(xlab)) {
+    xlab <- translate_AMR(xlab, language = language)
+  }
+  
   if (length(colours_RSI) == 1) {
     colours_RSI <- rep(colours_RSI, 3)
   }
@@ -624,12 +609,21 @@ ggplot.rsi <- function(data,
                        xlab = "Antimicrobial Interpretation",
                        ylab = "Frequency",
                        colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
+                       language = get_locale(),
                        ...) {
   stop_ifnot_installed("ggplot2")
   meet_criteria(title, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(ylab, allow_class = "character", has_length = 1)
   meet_criteria(xlab, allow_class = "character", has_length = 1)
   meet_criteria(colours_RSI, allow_class = "character", has_length = c(1, 3))
+  
+  # translate if not specifically set
+  if (missing(ylab)) {
+    ylab <- translate_AMR(ylab, language = language)
+  }
+  if (missing(xlab)) {
+    xlab <- translate_AMR(xlab, language = language)
+  }
   
   if ("main" %in% names(list(...))) {
     title <- list(...)$main
@@ -657,4 +651,77 @@ ggplot.rsi <- function(data,
                                           "I" = colours_RSI[3])) +
     ggplot2::labs(title = title, x = xlab, y = ylab) +
     ggplot2::theme(legend.position = "none")
+}
+
+plot_prepare_table <- function(x, expand) {
+  if (is.mic(x)) {
+    if (expand == TRUE) {
+      # expand range for MIC by adding factors of 2 from lowest to highest so all MICs in between also print
+      extra_range <- max(x) / 2
+      while (min(extra_range) / 2 > min(x)) {
+        extra_range <- c(min(extra_range) / 2, extra_range)
+      }
+      nms <- extra_range
+      extra_range <- rep(0, length(extra_range))
+      names(extra_range) <- nms
+      x <- table(droplevels(x, as.mic = FALSE))
+      extra_range <- extra_range[!names(extra_range) %in% names(x)]
+      x <- as.table(c(x, extra_range))
+    } else {
+      x <- table(droplevels(x, as.mic = FALSE))
+    }
+    x <- x[order(as.double(as.mic(names(x))))]
+  } else if (is.disk(x)) {
+    if (expand == TRUE) {
+      # expand range for disks from lowest to highest so all mm's in between also print
+      extra_range <- rep(0, max(x) - min(x) - 1)
+      names(extra_range) <- seq(min(x) + 1, max(x) - 1)
+      x <- table(x)
+      extra_range <- extra_range[!names(extra_range) %in% names(x)]
+      x <- as.table(c(x, extra_range))
+    } else {
+      x <- table(x)
+    }
+    x <- x[order(as.double(names(x)))]
+  }
+  as.table(x)
+}
+
+plot_name_of_I <- function(guideline) {
+  if (!guideline %like% "CLSI" && as.double(gsub("[^0-9]+", "", guideline)) >= 2019) {
+    # interpretation since 2019
+    "Incr. exposure"
+  } else {
+    # interpretation until 2019
+    "Intermediate"
+  }
+}
+
+plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_RSI, fn, language, ...) {
+  guideline <- get_guideline(guideline, AMR::rsi_translation)
+  if (!is.null(mo) && !is.null(ab)) {
+    # interpret and give colour based on MIC values
+    mo <- as.mo(mo)
+    ab <- as.ab(ab)
+    rsi <- suppressWarnings(suppressMessages(as.rsi(fn(names(x)), mo = mo, ab = ab, guideline = guideline, ...)))
+    cols <- character(length = length(rsi))
+    cols[is.na(rsi)] <- "#BEBEBE"
+    cols[rsi == "R"] <- colours_RSI[1]
+    cols[rsi == "S"] <- colours_RSI[2]
+    cols[rsi == "I"] <- colours_RSI[3]
+    moname <- mo_name(mo, language = language)
+    abname <- ab_name(ab, language = language)
+    if (all(cols == "#BEBEBE")) {
+      message_("No ", guideline, " interpretations found for ", 
+               ab_name(ab, language = NULL, tolower = TRUE), " in ", moname)
+      guideline_txt <- ""
+    } else {
+      guideline_txt <- paste0("(", guideline, ")")
+    }
+    sub <- bquote(.(abname)~"-"~italic(.(moname))~.(guideline_txt))
+  } else {
+    cols <- "#BEBEBE"
+    sub <- NULL
+  }
+  list(cols = cols, count = as.double(x), sub = sub, guideline = guideline)
 }

@@ -27,6 +27,7 @@ eucast_rules(
   version_expertrules = 3.2,
   ampc_cephalosporin_resistance = NA,
   only_rsi_columns = FALSE,
+  custom_rules = NULL,
   ...
 )
 
@@ -39,7 +40,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 11)
 
 \item{info}{a logical to indicate whether progress should be printed to the console, defaults to only print while in interactive sessions}
 
-\item{rules}{a character vector that specifies which rules should be applied. Must be one or more of \code{"breakpoints"}, \code{"expert"}, \code{"other"}, \code{"all"}, and defaults to \code{c("breakpoints", "expert")}. The default value can be set to another value, e.g. using \code{options(AMR_eucastrules = "all")}.}
+\item{rules}{a character vector that specifies which rules should be applied. Must be one or more of \code{"breakpoints"}, \code{"expert"}, \code{"other"}, \code{"custom"}, \code{"all"}, and defaults to \code{c("breakpoints", "expert")}. The default value can be set to another value, e.g. using \code{options(AMR_eucastrules = "all")}. If using \code{"custom"}, be sure to fill in argument \code{custom_rules} too. Custom rules can be created with \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}.}
 
 \item{verbose}{a \link{logical} to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.}
 
@@ -50,6 +51,8 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 11)
 \item{ampc_cephalosporin_resistance}{a character value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants, defaults to \code{NA}. Currently only works when \code{version_expertrules} is \code{3.2}; '\emph{EUCAST Expert Rules v3.2 on Enterobacterales}' states that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three agents. A value of \code{NA} (the default) for this argument will remove results for these three agents, while e.g. a value of \code{"R"} will make the results for these agents resistant. Use \code{NULL} or \code{FALSE} to not alter results for these three agents of AmpC de-repressed cephalosporin-resistant mutants. Using \code{TRUE} is equal to using \code{"R"}. \cr For \emph{EUCAST Expert Rules} v3.2, this rule applies to: \emph{Citrobacter braakii}, \emph{Citrobacter freundii}, \emph{Citrobacter gillenii}, \emph{Citrobacter murliniae}, \emph{Citrobacter rodenticum}, \emph{Citrobacter sedlakii}, \emph{Citrobacter werkmanii}, \emph{Citrobacter youngae}, \emph{Enterobacter}, \emph{Hafnia alvei}, \emph{Klebsiella aerogenes}, \emph{Morganella morganii}, \emph{Providencia} and \emph{Serratia}.}
 
 \item{only_rsi_columns}{a logical to indicate whether only antibiotic columns must be detected that were transformed to class \verb{<rsi>} (see \code{\link[=as.rsi]{as.rsi()}}) on beforehand (defaults to \code{FALSE})}
+
+\item{custom_rules}{custom rules to apply, created with \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}}
 
 \item{...}{column name of an antibiotic, see section \emph{Antibiotics} below}
 
@@ -70,6 +73,15 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
 \strong{Note:} When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.
 
 The file containing all EUCAST rules is located here: \url{https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv}.
+\subsection{Custom Rules}{
+
+Custom rules can be created using \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}, e.g.:\preformatted{x <- custom_eucast_rules(AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
+                         AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I")
+
+eucast_rules(example_isolates, rules = "custom", custom_rules = x)
+}
+}
+
 \subsection{'Other' Rules}{
 
 Before further processing, two non-EUCAST rules about drug combinations can be applied to improve the efficacy of the EUCAST rules, and the reliability of your data (analysis). These rules are:

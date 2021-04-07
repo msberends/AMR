@@ -160,7 +160,7 @@ updated_microorganisms <- taxonomy %>%
                              TRUE ~ "subsp."),
             ref = get_author_year(authors),
             species_id = as.character(record_no),
-            source = "LSPN",
+            source = "LPSN",
             prevalence = 0,
             snomed = NA)
 

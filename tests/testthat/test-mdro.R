@@ -228,8 +228,11 @@ test_that("mdro works", {
                                   "ERY == 'R' & age > 60" ~ "Elderly Type B",
                                   as_factor = TRUE)
   expect_output(print(custom))
+  expect_output(print(c(custom, custom)))
+  expect_output(print(as.list(custom, custom)))
+  
   expect_output(x <- mdro(example_isolates, guideline = custom, info = TRUE))
-  expect_equal(as.double(table(x)), c(1066, 43, 891))
+  expect_equal(as.double(table(x)), c(1070, 198, 732))
   
   expect_output(print(custom_mdro_guideline(AMX == "R" ~ "test", as_factor = FALSE)))
   expect_error(custom_mdro_guideline())

@@ -39,6 +39,10 @@ antibiotic	TRUE	TRUE	FALSE	Antibiotikum	antibioticum	antibiótico
 Antibiotic	TRUE	TRUE	FALSE	Antibiotikum	Antibioticum	Antibiótico			
 Drug	TRUE	TRUE	FALSE	Medikament	Middel	Fármaco			
 drug	TRUE	TRUE	FALSE	Medikament	middel	fármaco			
+Frequency	FALSE	TRUE	FALSE	Zahl	Aantal				
+Minimum Inhibitory Concentration (mg/L)	FALSE	FALSE	FALSE	Minimale Hemm-Konzentration (mg/L)	Minimale inhiberende concentratie (mg/L)				
+Disk diffusion diameter (mm)	FALSE	FALSE	FALSE	Durchmesser der Scheibenzone (mm)	Diameter diskzone (mm)				
+Antimicrobial Interpretation	FALSE	FALSE	FALSE	Antimikrobielle Auswertung	Antimicrobiële interpretatie				
 4-aminosalicylic acid	FALSE	TRUE	FALSE	4-Aminosalicylsäure	4-aminosalicylzuur	Ácido 4-aminosalicílico			
 Adefovir dipivoxil	FALSE	TRUE	FALSE	Adefovir Dipivoxil	Adefovir	Adefovir dipivoxil			
 Aldesulfone sodium	FALSE	TRUE	FALSE	Aldesulfon-Natrium	Aldesulfon	Aldesulfona sódica			

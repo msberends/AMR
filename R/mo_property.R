@@ -723,20 +723,13 @@ mo_validate <- function(x, property, language, ...) {
     # special case for mo_* functions where class is already <mo>
     return(MO_lookup[match(x, MO_lookup$mo), property, drop = TRUE])
   }
-
+  
   # try to catch an error when inputting an invalid argument
   # so the 'call.' can be set to FALSE
   tryCatch(x[1L] %in% MO_lookup[1, property, drop = TRUE],
            error = function(e) stop(e$message, call. = FALSE))
-  
-  if (is.mo(x)
-      & !Becker %in% c(TRUE, "all")
-      & !Lancefield %in% c(TRUE, "all")) {
-    # this will not reset mo_uncertainties and mo_failures
-    # because it's already a valid MO
-    x <- exec_as.mo(x, property = property, initial_search = FALSE, language = language, ...)
-  } else if (!all(x %in% MO_lookup[, property, drop = TRUE])
-             | has_Becker_or_Lancefield) {
+
+  if (!all(x[!is.na(x)] %in% MO_lookup[, property, drop = TRUE]) | has_Becker_or_Lancefield) {
     x <- exec_as.mo(x, property = property, language = language, ...)
   }
   

@@ -1654,10 +1654,28 @@ pillar_shaft.mo <- function(x, ...) {
   out[!is.na(x)] <- gsub("^([A-Z]+_)(.*)", paste0(font_subtle("\\1"), "\\2"), out[!is.na(x)], perl = TRUE)
   # and grey out every _
   out[!is.na(x)] <- gsub("_", font_subtle("_"), out[!is.na(x)])
-
+  
   # markup NA and UNKNOWN
   out[is.na(x)] <- font_na("  NA")
   out[x == "UNKNOWN"] <- font_na("  UNKNOWN")
+  
+  if (!all(x[!is.na(x)] %in% MO_lookup$mo)) {
+    # markup old mo codes
+    out[!x %in% MO_lookup$mo] <- font_italic(font_na(x[!x %in% MO_lookup$mo], 
+                                                     collapse = NULL),
+                                             collapse = NULL)
+    # throw a warning with the affected column name
+    mo <- tryCatch(search_type_in_df(get_current_data(arg_name = "x", call = 0), type = "mo", info = FALSE),
+                   error = function(e) NULL)
+    if (!is.null(mo)) {
+      col <- paste0("Column '", mo, "'")
+    } else {
+      col <- "The data"
+    }
+    warning_(col, " contains old microbial codes (from a previous AMR package version). ",
+             "Please update your MO codes with `as.mo()`.",
+             call = FALSE)
+  }
 
   # make it always fit exactly
   max_char <- max(nchar(x))
@@ -1753,11 +1771,16 @@ summary.mo <- function(object, ...) {
 #' @export
 #' @noRd
 as.data.frame.mo <- function(x, ...) {
+  if (!all(x[!is.na(x)] %in% MO_lookup$mo)) {
+    warning_("The data contains old microbial codes (from a previous AMR package version). ",
+             "Please update your MO codes with `as.mo()`.",
+             call = FALSE)
+  }
   nm <- deparse1(substitute(x))
   if (!"nm" %in% names(list(...))) {
-    as.data.frame.vector(as.mo(x), ..., nm = nm)
+    as.data.frame.vector(x, ..., nm = nm)
   } else {
-    as.data.frame.vector(as.mo(x), ...)
+    as.data.frame.vector(x, ...)
   }
 }
 
@@ -1875,6 +1898,7 @@ print.mo_uncertainties <- function(x, ...) {
                            collapse = "")
       # after strwrap, make taxonomic names italic
       candidates <- gsub("([A-Za-z]+)", font_italic("\\1"), candidates, perl = TRUE)
+      candidates <- gsub(font_italic("and"), "and", candidates, fixed = TRUE)
       candidates <- gsub(paste(font_italic(c("Also", "matched"), collapse = NULL), collapse = " "),
                          "Also matched",
                          candidates, fixed = TRUE)
@@ -2028,13 +2052,15 @@ replace_old_mo_codes <- function(x, property) {
     x[which(!is.na(matched))] <- mo_new[which(!is.na(matched))]
     n_matched <- length(matched[!is.na(matched)])
     if (property != "mo") {
-      message_(font_blue("The input contained old microbial codes (from previous package versions). Please update your MO codes with `as.mo()`."))
+      message_(font_blue(paste0("The input contained ", n_matched,
+                                " old microbial code", ifelse(n_matched == 1, "", "s"),
+                                " (from a previous AMR package version). Please update your MO codes with `as.mo()`.")))
     } else {
-      if (n_matched == 1) {
-        message_(font_blue("1 old microbial code (from previous package versions) was updated to a current used MO code."))
-      } else {
-        message_(font_blue(n_matched, "old microbial codes (from previous package versions) were updated to current used MO codes.")) 
-      }
+      message_(font_blue(paste0(n_matched, " old microbial code", ifelse(n_matched == 1, "", "s"), 
+                                " (from a previous AMR package version) ", 
+                                ifelse(n_matched == 1, "was", "were"), 
+                                " updated to ", ifelse(n_matched == 1, "a ", ""), 
+                                "currently used MO code", ifelse(n_matched == 1, "", "s"), ".")))
     }
   }
   x

@@ -149,8 +149,8 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
 #' }
 #' }
 age_groups <- function(x, split_at = c(12, 25, 55, 75), na.rm = FALSE) {
-  meet_criteria(x, allow_class = c("numeric", "integer"), is_positive = TRUE, is_finite = TRUE)
-  meet_criteria(split_at, allow_class = c("numeric", "integer", "character"), is_positive = TRUE, is_finite = TRUE)
+  meet_criteria(x, allow_class = c("numeric", "integer"), is_positive_or_zero = TRUE, is_finite = TRUE)
+  meet_criteria(split_at, allow_class = c("numeric", "integer", "character"), is_positive_or_zero = TRUE, is_finite = TRUE)
   meet_criteria(na.rm, allow_class = "logical", has_length = 1) 
   
   if (any(x < 0, na.rm = TRUE)) {

@@ -19,11 +19,10 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <script src="extra.js"></script><meta property="og:title" content="Antimicrobial Resistance Data Analysis">
-<meta property="og:description" content="Functions to simplify the analysis and prediction of Antimicrobial 
-    Resistance (AMR) and to work with microbial and antimicrobial properties by
-    using evidence-based methods, like those defined by Leclercq et al. (2013) 
-    &lt;doi:10.1111/j.1469-0691.2011.03703.x&gt; and containing reference data such as 
-    LPSN &lt;doi:10.1099/ijsem.0.004332&gt;.">
+<meta property="og:description" content="Functions to simplify and standardise antimicrobial resistance (AMR)
+    data analysis and to work with microbial and antimicrobial properties by
+    using evidence-based methods and reliable reference data such as LPSN
+    &lt;doi:10.1099/ijsem.0.004332&gt;.">
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -43,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9000</span>
       </span>
     </div>
 
@@ -197,7 +196,7 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#amr-for-r-" class="anchor"></a><code>AMR</code> (for R) <img src="./logo.png" align="right" height="120px">
 </h1></div>
-<p><em>Note: the rules of ‘EUCAST Clinical Breakpoints v11.0 (2021)’ are now implemented</em></p>
+<p><em>Note: the rules of ‘EUCAST Clinical Breakpoints v11.0 (2021)’ are now implemented.</em></p>
 <blockquote>
 <p><span class="fa fa-clipboard-list" style="color: #128f76; font-size: 20pt; margin-right: 5px;"></span> <strong>PLEASE TAKE PART IN OUR SURVEY!</strong><br>
 Since you are one of our users, we would like to know how you use the package and what it brought you or your organisation. <strong>If you have a minute, please <a href="./survey.html">anonymously fill in this short questionnaire</a></strong>. Your valuable input will help to improve the package and its functionalities. You can answer the open questions in either English, Spanish, French, Dutch, or German. Thank you very much in advance! <br><a class="btn btn-info btn-amr" href="./survey.html">Take me to the 5-min survey!</a></p>

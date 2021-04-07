@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9000</span>
       </span>
     </div>
 
@@ -374,10 +374,19 @@ Ordered <a href='https://rdrr.io/r/base/factor.html'>factor</a> with levels <cod
 <span class='co'>#&gt; Unmatched rows will return NA.</span>
 </pre>
 
-<p>The outcome of the function can be used for the <code>guideline</code> argument in the <code>mdro()</code> function:</p><pre><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>mdro</span><span class='op'>(</span><span class='va'>example_isolates</span>, guideline <span class='op'>=</span> <span class='va'>custom</span><span class='op'>)</span>
+<p>The outcome of the function can be used for the <code>guideline</code> argument in the <code>mdro()</code> function:</p><pre><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>mdro</span><span class='op'>(</span><span class='va'>example_isolates</span>,
+          guideline <span class='op'>=</span> <span class='va'>custom</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-<span class='co'>#&gt; Elderly Type A Elderly Type B       Negative </span>
-<span class='co'>#&gt;             43            891           1066 </span>
+<span class='co'>#&gt;       Negative Elderly Type A Elderly Type B</span>
+<span class='co'>#&gt;           1070            198            732</span>
+</pre>
+
+<p>Rules can also be combined with other custom rules by using <code><a href='https://rdrr.io/r/base/c.html'>c()</a></code>:</p><pre><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>mdro</span><span class='op'>(</span><span class='va'>example_isolates</span>,
+          guideline <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>custom</span>, 
+                        <span class='fu'>custom_mdro_guideline</span><span class='op'>(</span><span class='va'>ERY</span> <span class='op'>==</span> <span class='st'>"R"</span> <span class='op'>&amp;</span> <span class='va'>age</span> <span class='op'>&gt;</span> <span class='fl'>50</span> <span class='op'>~</span> <span class='st'>"Elderly Type C"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='co'>#&gt;       Negative Elderly Type A Elderly Type B Elderly Type C </span>
+<span class='co'>#&gt;            961            198            732            109</span>
 </pre>
 
 <p>The rules set (the <code>custom</code> object in this case) could be exported to a shared file location using <code><a href='https://rdrr.io/r/base/readRDS.html'>saveRDS()</a></code> if you collaborate with multiple users. The custom rules set could then be imported using <code><a href='https://rdrr.io/r/base/readRDS.html'>readRDS()</a></code>.</p>

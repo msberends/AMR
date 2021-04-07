@@ -80,11 +80,10 @@ test_that("EUCAST rules work", {
   library(dplyr, warn.conflicts = FALSE)
   expect_equal(suppressWarnings(
     example_isolates %>%
+      filter(mo_family(mo) == "Enterobacteriaceae") %>%
       mutate(TIC = as.rsi("R"),
              PIP = as.rsi("S")) %>%
       eucast_rules(col_mo = "mo", version_expertrules = 3.1, info = FALSE) %>%
-      left_join_microorganisms(by = "mo") %>%
-      filter(family == "Enterobacteriaceae") %>%
       pull(PIP) %>%
       unique() %>%
       as.character()),
@@ -144,4 +143,22 @@ test_that("EUCAST rules work", {
   expect_equal(nrow(eucast_dosage(c("tobra", "genta", "cipro"))), 3)
   expect_s3_class(eucast_dosage(c("tobra", "genta", "cipro")), "data.frame")
   
+})
+
+test_that("Custom EUCAST rules work", {
+  
+  skip_on_cran()
+  x <- custom_eucast_rules(AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
+                           AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I")
+  expect_output(print(x))
+  expect_output(print(c(x, x)))
+  expect_output(print(as.list(x, x)))
+  
+  # this custom rules makes 8 changes
+  expect_equal(nrow(eucast_rules(example_isolates,
+                                 rules = "custom",
+                                 custom_rules = x,
+                                 info = FALSE,
+                                 verbose = TRUE)),
+               8)
 })

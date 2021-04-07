@@ -28,12 +28,12 @@ context("skewness.R")
 test_that("skewness works", {
   skip_on_cran()
   expect_equal(skewness(example_isolates$age),
-               -0.8958019,
+               -1.212888,
                tolerance = 0.00001)
   expect_equal(unname(skewness(data.frame(example_isolates$age))),
-               -0.8958019,
+               -1.212888,
                tolerance = 0.00001)
   expect_equal(skewness(matrix(example_isolates$age)),
-               -0.8958019,
+               -1.212888,
                tolerance = 0.00001)
 })

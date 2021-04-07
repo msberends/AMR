@@ -28,20 +28,20 @@ context("kurtosis.R")
 test_that("kurtosis works", {
   skip_on_cran()
   expect_equal(kurtosis(example_isolates$age),
-               3.549319,
+               5.227999,
                tolerance = 0.00001)
   
   expect_equal(unname(kurtosis(data.frame(example_isolates$age))),
-               3.549319,
+               5.227999,
                tolerance = 0.00001)
   expect_equal(unname(kurtosis(data.frame(example_isolates$age), excess = TRUE)),
-               0.549319,
+               2.227999,
                tolerance = 0.00001)
   
   expect_equal(kurtosis(matrix(example_isolates$age)),
-               3.549319,
+               5.227999,
                tolerance = 0.00001)
   expect_equal(kurtosis(matrix(example_isolates$age), excess = TRUE),
-               0.549319,
+               2.227999,
                tolerance = 0.00001)
 })

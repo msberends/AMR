@@ -1,6 +1,6 @@
 Package: AMR
-Version: 1.6.0
-Date: 2021-03-14
+Version: 1.6.0.9000
+Date: 2021-04-07
 Title: Antimicrobial Resistance Data Analysis
 Authors@R: c(
     person(role = c("aut", "cre"), 
@@ -35,11 +35,10 @@ Authors@R: c(
            family = "Souverein", given = "Dennis", email = "d.souvereing@streeklabhaarlem.nl"),
     person(role = "ctb",
            family = "Underwood", given = "Anthony", email = "au3@sanger.ac.uk"))
-Description: Functions to simplify the analysis and prediction of Antimicrobial 
-    Resistance (AMR) and to work with microbial and antimicrobial properties by
-    using evidence-based methods, like those defined by Leclercq et al. (2013) 
-    <doi:10.1111/j.1469-0691.2011.03703.x> and containing reference data such as 
-    LPSN <doi:10.1099/ijsem.0.004332>.
+Description: Functions to simplify and standardise antimicrobial resistance (AMR)
+    data analysis and to work with microbial and antimicrobial properties by
+    using evidence-based methods and reliable reference data such as LPSN
+    <doi:10.1099/ijsem.0.004332>.
 Depends:
     R (>= 3.0.0)
 Suggests:

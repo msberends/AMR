@@ -83,7 +83,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9000</span>
       </span>
     </div>
 
@@ -254,6 +254,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
   version_expertrules <span class='op'>=</span> <span class='fl'>3.2</span>,
   ampc_cephalosporin_resistance <span class='op'>=</span> <span class='cn'>NA</span>,
   only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  custom_rules <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -276,7 +277,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     </tr>
     <tr>
       <th>rules</th>
-      <td><p>a character vector that specifies which rules should be applied. Must be one or more of <code>"breakpoints"</code>, <code>"expert"</code>, <code>"other"</code>, <code>"all"</code>, and defaults to <code><a href='https://rdrr.io/r/base/c.html'>c("breakpoints", "expert")</a></code>. The default value can be set to another value, e.g. using <code><a href='https://rdrr.io/r/base/options.html'>options(AMR_eucastrules = "all")</a></code>.</p></td>
+      <td><p>a character vector that specifies which rules should be applied. Must be one or more of <code>"breakpoints"</code>, <code>"expert"</code>, <code>"other"</code>, <code>"custom"</code>, <code>"all"</code>, and defaults to <code><a href='https://rdrr.io/r/base/c.html'>c("breakpoints", "expert")</a></code>. The default value can be set to another value, e.g. using <code><a href='https://rdrr.io/r/base/options.html'>options(AMR_eucastrules = "all")</a></code>. If using <code>"custom"</code>, be sure to fill in argument <code>custom_rules</code> too. Custom rules can be created with <code><a href='custom_eucast_rules.html'>custom_eucast_rules()</a></code>.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -297,6 +298,10 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     <tr>
       <th>only_rsi_columns</th>
       <td><p>a logical to indicate whether only antibiotic columns must be detected that were transformed to class <code>&lt;rsi&gt;</code> (see <code><a href='as.rsi.html'>as.rsi()</a></code>) on beforehand (defaults to <code>FALSE</code>)</p></td>
+    </tr>
+    <tr>
+      <th>custom_rules</th>
+      <td><p>custom rules to apply, created with <code><a href='custom_eucast_rules.html'>custom_eucast_rules()</a></code></p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -332,7 +337,17 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 
     <p><strong>Note:</strong> This function does not translate MIC values to RSI values. Use <code><a href='as.rsi.html'>as.rsi()</a></code> for that. <br />
 <strong>Note:</strong> When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.</p>
-<p>The file containing all EUCAST rules is located here: <a href='https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv'>https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv</a>.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>'Other' Rules</h3>
+<p>The file containing all EUCAST rules is located here: <a href='https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv'>https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv</a>.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Custom Rules</h3>
+
+
+<p>Custom rules can be created using <code><a href='custom_eucast_rules.html'>custom_eucast_rules()</a></code>, e.g.:</p><pre><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='custom_eucast_rules.html'>custom_eucast_rules</a></span><span class='op'>(</span><span class='va'>AMC</span> <span class='op'>==</span> <span class='st'>"R"</span> <span class='op'>&amp;</span> <span class='va'>genus</span> <span class='op'>==</span> <span class='st'>"Klebsiella"</span> <span class='op'>~</span> <span class='va'>aminopenicillins</span> <span class='op'>==</span> <span class='st'>"R"</span>,
+                         <span class='va'>AMC</span> <span class='op'>==</span> <span class='st'>"I"</span> <span class='op'>&amp;</span> <span class='va'>genus</span> <span class='op'>==</span> <span class='st'>"Klebsiella"</span> <span class='op'>~</span> <span class='va'>aminopenicillins</span> <span class='op'>==</span> <span class='st'>"I"</span><span class='op'>)</span>
+
+<span class='fu'>eucast_rules</span><span class='op'>(</span><span class='va'>example_isolates</span>, rules <span class='op'>=</span> <span class='st'>"custom"</span>, custom_rules <span class='op'>=</span> <span class='va'>x</span><span class='op'>)</span>
+</pre>
+
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>'Other' Rules</h3>
 
 
 <p>Before further processing, two non-EUCAST rules about drug combinations can be applied to improve the efficacy of the EUCAST rules, and the reliability of your data (analysis). These rules are:</p><ol>

@@ -143,6 +143,7 @@ reference:
     - "`as.mic`"
     - "`as.disk`"
     - "`eucast_rules`"
+    - "`custom_eucast_rules`"
     
   - title: "Analysing data: antimicrobial resistance"
     desc: >

@@ -83,6 +83,7 @@
   xlab = "Antimicrobial Interpretation",
   ylab = "Frequency",
   colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
+  language = get_locale(),
   ...
 )
 }

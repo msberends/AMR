@@ -134,7 +134,7 @@ create_intr_resistance <- function() {
 
 
 
-# Save internal data sets to R/sysdata.rda --------------------------------
+# Save internal data to R/sysdata.rda -------------------------------------
 
 # See 'data-raw/eucast_rules.tsv' for the EUCAST reference file
 eucast_rules_file <- utils::read.delim(file = "data-raw/eucast_rules.tsv",
@@ -188,6 +188,35 @@ AB_lookup <- create_AB_lookup()
 MO_lookup <- create_MO_lookup()
 MO.old_lookup <- create_MO.old_lookup()
 
+# antibiotic groups
+# (these will also be used for eucast_rules() and understanding data-raw/eucast_rules.tsv)
+globalenv_before_ab <- c(ls(envir = globalenv()), "globalenv_before_ab")
+AMINOGLYCOSIDES <- antibiotics %>% filter(group %like% "aminoglycoside") %>% pull(ab)
+AMINOPENICILLINS <- as.ab(c("AMP", "AMX"))
+CARBAPENEMS <- antibiotics %>% filter(group %like% "carbapenem") %>% pull(ab)
+CEPHALOSPORINS <- antibiotics %>% filter(group %like% "cephalosporin") %>% pull(ab)
+CEPHALOSPORINS_1ST <- antibiotics %>% filter(group %like% "cephalosporin.*1") %>% pull(ab)
+CEPHALOSPORINS_2ND <- antibiotics %>% filter(group %like% "cephalosporin.*2") %>% pull(ab)
+CEPHALOSPORINS_3RD <- antibiotics %>% filter(group %like% "cephalosporin.*3") %>% pull(ab)
+CEPHALOSPORINS_EXCEPT_CAZ <- CEPHALOSPORINS[CEPHALOSPORINS != "CAZ"]
+FLUOROQUINOLONES <- antibiotics %>% filter(atc_group2 %like% "fluoroquinolone") %>% pull(ab)
+LIPOGLYCOPEPTIDES <- as.ab(c("DAL", "ORI", "TLV")) # dalba/orita/tela
+GLYCOPEPTIDES <- antibiotics %>% filter(group %like% "glycopeptide") %>% pull(ab)
+GLYCOPEPTIDES_EXCEPT_LIPO <- GLYCOPEPTIDES[!GLYCOPEPTIDES %in% LIPOGLYCOPEPTIDES]
+LINCOSAMIDES <- antibiotics %>% filter(atc_group2 %like% "lincosamide") %>% pull(ab) %>% c("PRL")
+MACROLIDES <- antibiotics %>% filter(atc_group2 %like% "macrolide") %>% pull(ab)
+OXAZOLIDINONES <- antibiotics %>% filter(group %like% "oxazolidinone") %>% pull(ab)
+PENICILLINS <- antibiotics %>% filter(group %like% "penicillin") %>% pull(ab)
+POLYMYXINS <- antibiotics %>% filter(group %like% "polymyxin") %>% pull(ab)
+STREPTOGRAMINS <- antibiotics %>% filter(atc_group2 %like% "streptogramin") %>% pull(ab)
+TETRACYCLINES <- antibiotics %>% filter(atc_group2 %like% "tetracycline") %>% pull(ab)
+TETRACYCLINES_EXCEPT_TGC <- TETRACYCLINES[TETRACYCLINES != "TGC"]
+UREIDOPENICILLINS <- as.ab(c("PIP", "TZP", "AZL", "MEZ"))
+BETALACTAMS <- c(PENICILLINS, CEPHALOSPORINS, CARBAPENEMS)
+
+DEFINED_AB_GROUPS <- ls(envir = globalenv())
+DEFINED_AB_GROUPS <- DEFINED_AB_GROUPS[!DEFINED_AB_GROUPS %in% globalenv_before_ab]
+
 # Export to package as internal data ----
 usethis::use_data(eucast_rules_file, 
                   translations_file,
@@ -199,6 +228,29 @@ usethis::use_data(eucast_rules_file,
                   AB_lookup,
                   MO_lookup,
                   MO.old_lookup,
+                  AMINOGLYCOSIDES,
+                  AMINOPENICILLINS,
+                  CARBAPENEMS,
+                  CEPHALOSPORINS,
+                  CEPHALOSPORINS_1ST,
+                  CEPHALOSPORINS_2ND,
+                  CEPHALOSPORINS_3RD,
+                  CEPHALOSPORINS_EXCEPT_CAZ,
+                  FLUOROQUINOLONES,
+                  LIPOGLYCOPEPTIDES,
+                  GLYCOPEPTIDES,
+                  GLYCOPEPTIDES_EXCEPT_LIPO,
+                  LINCOSAMIDES,
+                  MACROLIDES,
+                  OXAZOLIDINONES,
+                  PENICILLINS,
+                  POLYMYXINS,
+                  STREPTOGRAMINS,
+                  TETRACYCLINES,
+                  TETRACYCLINES_EXCEPT_TGC,
+                  UREIDOPENICILLINS,
+                  BETALACTAMS,
+                  DEFINED_AB_GROUPS,
                   internal = TRUE,
                   overwrite = TRUE,
                   version = 2,

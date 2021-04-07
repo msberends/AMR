@@ -504,8 +504,8 @@ format_class <- function(class, plural) {
   if ("matrix" %in% class) {
     class <- "a matrix"
   }
-  if ("isolate_identifier" %in% class) {
-    class <- "created with isolate_identifier()"
+  if ("custom_eucast_rules" %in% class) {
+    class <- "input created with `custom_eucast_rules()`"
   }
   if (any(c("mo", "ab", "rsi") %in% class)) {
     class <- paste0("of class <", class[1L], ">")
@@ -522,6 +522,7 @@ meet_criteria <- function(object,
                           looks_like = NULL,
                           is_in = NULL,
                           is_positive = NULL,
+                          is_positive_or_zero = NULL,
                           is_finite = NULL,
                           contains_column_class = NULL,
                           allow_NULL = FALSE,
@@ -594,9 +595,16 @@ meet_criteria <- function(object,
     stop_if(is.numeric(object) && !all(object > 0, na.rm = TRUE), "argument `", obj_name,
             "` must ",
             ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1,
-                   "be a positive number",
-                   "all be positive numbers"),
-            " (higher than zero)",
+                   "be a number higher than zero",
+                   "all be numbers higher than zero"),
+            call = call_depth)
+  }
+  if (!is.null(is_positive_or_zero)) {
+    stop_if(is.numeric(object) && !all(object >= 0, na.rm = TRUE), "argument `", obj_name,
+            "` must ",
+            ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1,
+                   "be zero or a positive number",
+                   "all be zero or numbers higher than zero"),
             call = call_depth)
   }
   if (!is.null(is_finite)) {

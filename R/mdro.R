@@ -102,10 +102,22 @@
 #' The outcome of the function can be used for the `guideline` argument in the [mdro()] function:
 #' 
 #' ```
-#' x <- mdro(example_isolates, guideline = custom)
+#' x <- mdro(example_isolates,
+#'           guideline = custom)
 #' table(x)
-#' #> Elderly Type A Elderly Type B       Negative 
-#' #>             43            891           1066 
+#' #>       Negative Elderly Type A Elderly Type B
+#' #>           1070            198            732
+#' ```
+#' 
+#' Rules can also be combined with other custom rules by using [c()]:
+#' 
+#' ```
+#' x <- mdro(example_isolates,
+#'           guideline = c(custom, 
+#'                         custom_mdro_guideline(ERY == "R" & age > 50 ~ "Elderly Type C")))
+#' table(x)
+#' #>       Negative Elderly Type A Elderly Type B Elderly Type C 
+#' #>            961            198            732            109
 #' ```
 #' 
 #' The rules set (the `custom` object in this case) could be exported to a shared file location using [saveRDS()] if you collaborate with multiple users. The custom rules set could then be imported using [readRDS()].
@@ -246,7 +258,7 @@ mdro <- function(x = NULL,
       txt <- word_wrap(txt)
       cat(txt, "\n", sep = "")
     }
-    x <- run_custom_mdro_guideline(x, guideline)
+    x <- run_custom_mdro_guideline(df = x, guideline = guideline, info = info)
     if (info.bak == TRUE) {
       cat(group_msg)
       if (sum(!is.na(x$MDRO)) == 0) {
@@ -1434,6 +1446,8 @@ mdro <- function(x = NULL,
 #' @rdname mdro
 #' @export
 custom_mdro_guideline <- function(..., as_factor = TRUE) {
+  meet_criteria(as_factor, allow_class = "logical", has_length = 1)
+  
   dots <- tryCatch(list(...),
                    error = function(e) "error")
   stop_if(identical(dots, "error"),
@@ -1470,9 +1484,47 @@ custom_mdro_guideline <- function(..., as_factor = TRUE) {
   
   names(out) <- paste0("rule", seq_len(n_dots))
   out <- set_clean_class(out, new_class = c("custom_mdro_guideline", "list"))
-  attr(out, "values") <- c("Negative", vapply(FUN.VALUE = character(1), out, function(x) x$value))
+  attr(out, "values") <- unname(c("Negative", vapply(FUN.VALUE = character(1), unclass(out), function(x) x$value)))
   attr(out, "as_factor") <- as_factor
   out
+}
+
+#' @method c custom_mdro_guideline
+#' @noRd
+#' @export
+c.custom_mdro_guideline <- function(x, ..., as_factor = NULL) {
+  if (length(list(...)) == 0) {
+    return(x)
+  }
+  if (!is.null(as_factor)) {
+    meet_criteria(as_factor, allow_class = "logical", has_length = 1)
+  } else {
+    as_factor <- attributes(x)$as_factor
+  }
+  for (g in list(...)) {
+    stop_ifnot(inherits(g, "custom_mdro_guideline"),
+               "for combining custom MDRO guidelines, all rules must be created with `custom_mdro_guideline()`",
+               call = FALSE)
+    vals <- attributes(x)$values
+    if (!all(attributes(g)$values %in% vals)) {
+      vals <- unname(unique(c(vals, attributes(g)$values)))
+    }
+    attributes(g) <- NULL
+    x <- c(unclass(x), unclass(g))
+    attr(x, "values") <- vals
+  }
+  names(x) <- paste0("rule", seq_len(length(x)))
+  x <- set_clean_class(x, new_class = c("custom_mdro_guideline", "list"))
+  attr(x, "values") <- vals
+  attr(x, "as_factor") <- as_factor
+  x
+}
+
+#' @method as.list custom_mdro_guideline
+#' @noRd
+#' @export
+as.list.custom_mdro_guideline <- function(x, ...) {
+  c(x, ...)
 }
 
 #' @method print custom_mdro_guideline
@@ -1482,23 +1534,10 @@ print.custom_mdro_guideline <- function(x, ...) {
   cat("A set of custom MDRO rules:\n")
   for (i in seq_len(length(x))) {
     rule <- x[[i]]
-    rule$query <- gsub(" & ", font_black(font_italic(" and ")), rule$query, fixed = TRUE)
-    rule$query <- gsub(" | ", font_black(" or "), rule$query, fixed = TRUE)
-    rule$query <- gsub(" + ", font_black(" plus "), rule$query, fixed = TRUE)
-    rule$query <- gsub(" - ", font_black(" minus "), rule$query, fixed = TRUE)
-    rule$query <- gsub(" / ", font_black(" divided by "), rule$query, fixed = TRUE)
-    rule$query <- gsub(" * ", font_black(" times "), rule$query, fixed = TRUE)
-    rule$query <- gsub(" == ", font_black(" is "), rule$query, fixed = TRUE)
-    rule$query <- gsub(" > ", font_black(" is higher than "), rule$query, fixed = TRUE)
-    rule$query <- gsub(" < ", font_black(" is lower than "), rule$query, fixed = TRUE)
-    rule$query <- gsub(" >= ", font_black(" is higher than or equal to "), rule$query, fixed = TRUE)
-    rule$query <- gsub(" <= ", font_black(" is lower than or equal to "), rule$query, fixed = TRUE)
-    rule$query <- gsub(" ^ ", font_black(" to the power of "), rule$query, fixed = TRUE)
-    # replace the black colour 'stops' with blue colour 'starts'
-    rule$query <- gsub("\033[39m", "\033[34m", as.character(rule$query), fixed = TRUE)
-    cat("  ", i, ". ", font_blue(rule$query), font_bold(" -> "), font_red(rule$value), "\n", sep = "")
+    rule$query <- format_custom_query_rule(rule$query)
+    cat("  ", i, ". ", font_bold("If "), font_blue(rule$query), font_bold(" then: "), font_red(rule$value), "\n", sep = "")
   }
-  cat("  ", i + 1, ". Otherwise", font_bold(" -> "), font_red(paste0("Negative")), "\n", sep = "")
+  cat("  ", i + 1, ". ", font_bold("Otherwise: "), font_red(paste0("Negative")), "\n", sep = "")
   cat("\nUnmatched rows will return ", font_red("NA"), ".\n", sep = "")
   if (isTRUE(attributes(x)$as_factor)) {
     cat("Results will be of class <factor>, with ordered levels: ", paste0(attributes(x)$values, collapse = " < "), "\n", sep = "")
@@ -1507,7 +1546,7 @@ print.custom_mdro_guideline <- function(x, ...) {
   }
 }
 
-run_custom_mdro_guideline <- function(df, guideline) {
+run_custom_mdro_guideline <- function(df, guideline, info) {
   n_dots <- length(guideline)
   stop_if(n_dots == 0, "no custom guidelines set", call = -2)
   out <- character(length = NROW(df))
@@ -1520,7 +1559,7 @@ run_custom_mdro_guideline <- function(df, guideline) {
                     })
     if (identical(qry, "error")) {
       warning_("in custom_mdro_guideline(): rule ", i, 
-               " (`", guideline[[i]]$query, "`) was ignored because of this error message: ",
+               " (`", as.character(guideline[[i]]$query), "`) was ignored because of this error message: ",
                pkg_env$err_msg,
                call = FALSE, 
                add_fn = font_red)
@@ -1529,9 +1568,16 @@ run_custom_mdro_guideline <- function(df, guideline) {
     stop_ifnot(is.logical(qry), "in custom_mdro_guideline(): rule ", i, " (`", guideline[[i]]$query, 
                "`) must return `TRUE` or `FALSE`, not ", 
                format_class(class(qry), plural = FALSE), call = FALSE)
+    
+    new_mdros <- which(qry == TRUE & out == "")
+    
+    if (info == TRUE) {
+      cat(word_wrap("- Custom MDRO rule ", i, ": `", as.character(guideline[[i]]$query),
+                    "` (", length(new_mdros),  " rows matched)"), "\n", sep = "")
+    }
     val <- guideline[[i]]$value
-    out[which(qry)] <- val
-    reasons[which(qry)] <- paste0("matched rule ", gsub("rule", "", names(guideline)[i]), ": ", as.character(guideline[[i]]$query))
+    out[new_mdros] <- val
+    reasons[new_mdros] <- paste0("matched rule ", gsub("rule", "", names(guideline)[i]), ": ", as.character(guideline[[i]]$query))
   }
   out[out == ""] <- "Negative"
   reasons[out == "Negative"] <- "no rules matched"
@@ -1540,8 +1586,7 @@ run_custom_mdro_guideline <- function(df, guideline) {
     out <- factor(out, levels = attributes(guideline)$values, ordered = TRUE)
   }
   
-  rsi_cols <- vapply(FUN.VALUE = logical(1), df, function(x) is.rsi(x))
-  columns_nonsusceptible <- as.data.frame(t(df[, rsi_cols] == "R"))
+  columns_nonsusceptible <- as.data.frame(t(df[, is.rsi(df)] == "R"))
   columns_nonsusceptible <- vapply(FUN.VALUE = character(1), 
                                    columns_nonsusceptible, 
                                    function(x) paste0(rownames(columns_nonsusceptible)[which(x)], collapse = " "))

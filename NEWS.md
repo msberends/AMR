@@ -1,5 +1,19 @@
-# AMR 1.6.0
+# AMR 1.6.0.9000
+## <small>Last updated:  7 April 2021</small>
 
+### New
+* Function `custom_eucast_rules()` that brings support for custom AMR rules in `eucast_rules()`
+
+# Changed
+* Custom MDRO guidelines (`mdro()`, `custom_mdro_guideline()`):
+  * Custom MDRO guidelines can now be combined with other custom MDRO guidelines using `c()`
+  * Fix for applying the rules; in previous versions, rows were interpreted according to the last matched rule. Now, rows are interpreted according to the first matched rule
+* Fix for `age_groups()` for persons aged zero
+* The `example_isolates` data set now contains some (fictitious) zero-year old patients
+* Fix for minor translation errors
+* Printing of microbial codes in a `data.frame` or `tibble` now gives a warning if the data contains old microbial codes (from a previous AMR package version)
+
+# AMR 1.6.0
 
 ### New
 * Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the `eucast_rules()` function and in `as.rsi()` to interpret MIC and disk diffusion values. This is now the default guideline in this package.
@@ -59,7 +73,7 @@
   ```
 
 ### Changed
-* Updated the bacterial taxonomy to 3 March 2021 (using [LSPN](https://lpsn.dsmz.de))
+* Updated the bacterial taxonomy to 3 March 2021 (using [LPSN](https://lpsn.dsmz.de))
   * Added 3,372 new species and 1,523 existing species became synomyms
   * The URL of a bacterial species (`mo_url()`) will now lead to https://lpsn.dsmz.de
 * Big update for plotting classes `rsi`, `<mic>`, and `<disk>`:

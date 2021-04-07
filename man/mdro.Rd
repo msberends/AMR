@@ -134,10 +134,19 @@ You can print the rules set in the console for an overview. Colours will help re
 #> Unmatched rows will return NA.
 }
 
-The outcome of the function can be used for the \code{guideline} argument in the \code{\link[=mdro]{mdro()}} function:\preformatted{x <- mdro(example_isolates, guideline = custom)
+The outcome of the function can be used for the \code{guideline} argument in the \code{\link[=mdro]{mdro()}} function:\preformatted{x <- mdro(example_isolates,
+          guideline = custom)
 table(x)
-#> Elderly Type A Elderly Type B       Negative 
-#>             43            891           1066 
+#>       Negative Elderly Type A Elderly Type B
+#>           1070            198            732
+}
+
+Rules can also be combined with other custom rules by using \code{\link[=c]{c()}}:\preformatted{x <- mdro(example_isolates,
+          guideline = c(custom, 
+                        custom_mdro_guideline(ERY == "R" & age > 50 ~ "Elderly Type C")))
+table(x)
+#>       Negative Elderly Type A Elderly Type B Elderly Type C 
+#>            961            198            732            109
 }
 
 The rules set (the \code{custom} object in this case) could be exported to a shared file location using \code{\link[=saveRDS]{saveRDS()}} if you collaborate with multiple users. The custom rules set could then be imported using \code{\link[=readRDS]{readRDS()}}.
