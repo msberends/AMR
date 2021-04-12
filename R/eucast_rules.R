@@ -339,7 +339,7 @@ eucast_rules <- function(x,
       strsplit(",") %pm>%
       unlist() %pm>%
       trimws() %pm>%
-      vapply(FUN.VALUE = character(1), function(x) if (x %in% antibiotics$ab) ab_name(x, language = NULL, tolower = TRUE) else x) %pm>%
+      vapply(FUN.VALUE = character(1), function(x) if (x %in% antibiotics$ab) ab_name(x, language = NULL, tolower = TRUE, fast_mode = TRUE) else x) %pm>%
       sort() %pm>%
       paste(collapse = ", ")
     x <- gsub("_", " ", x, fixed = TRUE)
@@ -448,29 +448,43 @@ eucast_rules <- function(x,
                          font_red(paste0("v", utils::packageDescription("AMR")$Version, ", ", 
                                          format(as.Date(utils::packageDescription("AMR")$Date), format = "%Y"))), "), see ?eucast_rules\n"))))
     }
-    
     ab_enzyme <- subset(antibiotics, name %like% "/")[, c("ab", "name")]
-    ab_enzyme$base_name <- gsub("^([a-zA-Z0-9]+).*", "\\1", ab_enzyme$name)
-    ab_enzyme$base_ab <- as.ab(ab_enzyme$base_name)
+    colnames(ab_enzyme) <- c("enzyme_ab", "enzyme_name")
+    ab_enzyme$base_name <- gsub("^([a-zA-Z0-9]+).*", "\\1", ab_enzyme$enzyme_name)
+    ab_enzyme$base_ab <- antibiotics[match(ab_enzyme$base_name, antibiotics$name), "ab", drop = TRUE]
+    ab_enzyme <- subset(ab_enzyme, !is.na(base_ab))
+    # make ampicillin and amoxicillin interchangable
+    ampi <- subset(ab_enzyme, base_ab == "AMX")
+    ampi$base_ab <- "AMP"
+    ampi$base_name <- ab_name("AMP", language = NULL)
+    amox <- subset(ab_enzyme, base_ab == "AMP")
+    amox$base_ab <- "AMX"
+    amox$base_name <- ab_name("AMX", language = NULL)
+    # merge and sort
+    ab_enzyme <- rbind(ab_enzyme, ampi, amox)
+    ab_enzyme <- ab_enzyme[order(ab_enzyme$enzyme_name), ]
+    
     for (i in seq_len(nrow(ab_enzyme))) {
-      if (all(c(ab_enzyme[i, ]$ab, ab_enzyme[i, ]$base_ab) %in% names(cols_ab), na.rm = TRUE)) {
-        ab_name_base <- ab_name(cols_ab[ab_enzyme[i, ]$base_ab], language = NULL, tolower = TRUE)
-        ab_name_enzyme <- ab_name(cols_ab[ab_enzyme[i, ]$ab], language = NULL, tolower = TRUE)
+      # check if both base and base + enzyme inhibitor are part of the data set
+      if (all(c(ab_enzyme$base_ab[i], ab_enzyme$enzyme_ab[i]) %in% names(cols_ab), na.rm = TRUE)) {
+        col_base <- unname(cols_ab[ab_enzyme$base_ab[i]])
+        col_enzyme <- unname(cols_ab[ab_enzyme$enzyme_ab[i]])
         
         # Set base to R where base + enzyme inhibitor is R ----
-        rule_current <- paste0("Set ", ab_name_base, " (", cols_ab[ab_enzyme[i, ]$base_ab], ") = R where ",
-                               ab_name_enzyme, " (", cols_ab[ab_enzyme[i, ]$ab], ") = R")
+        rule_current <- paste0(ab_enzyme$base_name[i], " ('", font_bold(col_base), "') = R if ",
+                               tolower(ab_enzyme$enzyme_name[i]), " ('", font_bold(col_enzyme), "') = R")
         if (info == TRUE) {
-          cat(word_wrap(rule_current))
-          cat("\n")
+          cat(word_wrap(rule_current, 
+                        width = getOption("width") - 30,
+                        extra_indent = 6))
         }
         run_changes <- edit_rsi(x = x,
                                 col_mo = col_mo,
                                 to = "R",
                                 rule = c(rule_current, "Other rules", "",
                                          paste0("Non-EUCAST: AMR package v", utils::packageDescription("AMR")$Version)),
-                                rows = which(as.rsi_no_warning(x[, cols_ab[ab_enzyme[i, ]$ab]]) == "R"),
-                                cols = cols_ab[ab_enzyme[i, ]$base_ab],
+                                rows = which(as.rsi_no_warning(x[, col_enzyme, drop = TRUE]) == "R"),
+                                cols = col_base,
                                 last_verbose_info = verbose_info,
                                 original_data = x.bak,
                                 warned = warned,
@@ -491,19 +505,21 @@ eucast_rules <- function(x,
         }
         
         # Set base + enzyme inhibitor to S where base is S ----
-        rule_current <- paste0("Set ", ab_name_enzyme, " (", cols_ab[ab_enzyme[i, ]$ab], ") = S where ",
-                               ab_name_base, " (", cols_ab[ab_enzyme[i, ]$base_ab], ") = S")
+        rule_current <- paste0(ab_enzyme$enzyme_name[i], " ('", font_bold(col_enzyme), "') = S if ",
+                               tolower(ab_enzyme$base_name[i]), " ('", font_bold(col_base), "') = S")
+
         if (info == TRUE) {
-          cat(word_wrap(rule_current))
-          cat("\n")
+          cat(word_wrap(rule_current, 
+                        width = getOption("width") - 30,
+                        extra_indent = 6))
         }
         run_changes <- edit_rsi(x = x,
                                 col_mo = col_mo,
                                 to = "S",
                                 rule = c(rule_current, "Other rules", "", 
                                          paste0("Non-EUCAST: AMR package v", utils::packageDescription("AMR")$Version)),
-                                rows = which(as.rsi_no_warning(x[, cols_ab[ab_enzyme[i, ]$base_ab]]) == "S"),
-                                cols = cols_ab[ab_enzyme[i, ]$ab],
+                                rows = which(as.rsi_no_warning(x[, col_base, drop = TRUE]) == "S"),
+                                cols = col_enzyme,
                                 last_verbose_info = verbose_info,
                                 original_data = x.bak,
                                 warned = warned,
@@ -580,6 +596,14 @@ eucast_rules <- function(x,
     rule_next <- eucast_rules_df[min(nrow(eucast_rules_df), i + 1), "reference.rule", drop = TRUE]
     rule_group_previous <- eucast_rules_df[max(1, i - 1), "reference.rule_group", drop = TRUE]
     rule_group_current <- eucast_rules_df[i, "reference.rule_group", drop = TRUE]
+    # don't apply rules if user doesn't want to apply them
+    if (rule_group_current %like% "breakpoint" & !any(c("all", "breakpoints") %in% rules)) {
+      next
+    }
+    if (rule_group_current %like% "expert" & !any(c("all", "expert") %in% rules)) {
+      next
+    }
+    
     if (isFALSE(info) | isFALSE(verbose)) {
       rule_text <- ""
     } else {
@@ -598,14 +622,6 @@ eucast_rules <- function(x,
     }
     if (i == nrow(eucast_rules_df)) {
       rule_next <- ""
-    }
-    
-    # don't apply rules if user doesn't want to apply them
-    if (rule_group_current %like% "breakpoint" & !any(c("all", "breakpoints") %in% rules)) {
-      next
-    }
-    if (rule_group_current %like% "expert" & !any(c("all", "expert") %in% rules)) {
-      next
     }
     
     if (info == TRUE) {

@@ -65,7 +65,7 @@ filter_first_weighted_isolate(
 
 \item{col_icu}{column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU)}
 
-\item{col_keyantibiotics}{column name of the key antibiotics to determine first (weighted) isolates, see \code{\link[=key_antibiotics]{key_antibiotics()}}. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use \code{col_keyantibiotics = FALSE} to prevent this.}
+\item{col_keyantibiotics}{column name of the key antibiotics to determine first (weighted) isolates, see \code{\link[=key_antibiotics]{key_antibiotics()}}. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use \code{col_keyantibiotics = FALSE} to prevent this. Can also be the output of \code{\link[=key_antibiotics]{key_antibiotics()}}.}
 
 \item{episode_days}{episode in days after which a genus/species combination will be determined as 'first isolate' again. The default of 365 days is based on the guideline by CLSI, see \emph{Source}.}
 

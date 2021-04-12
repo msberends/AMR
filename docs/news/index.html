@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9001</span>
       </span>
     </div>
 
@@ -236,19 +236,39 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1609000" class="section level1">
-<h1 class="page-header" data-toc-text="1.6.0.9000">
-<a href="#amr-1609000" class="anchor"></a>AMR 1.6.0.9000<small> Unreleased </small>
+    <div id="amr-1609001" class="section level1">
+<h1 class="page-header" data-toc-text="1.6.0.9001">
+<a href="#amr-1609001" class="anchor"></a>AMR 1.6.0.9001<small> Unreleased </small>
 </h1>
-<div id="last-updated-7-april-2021" class="section level2">
+<div id="last-updated-12-april-2021" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-7-april-2021" class="anchor"></a><small>Last updated: 7 April 2021</small>
+<a href="#last-updated-12-april-2021" class="anchor"></a><small>Last updated: 12 April 2021</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h3>
 <ul>
 <li>Function <code><a href="../reference/custom_eucast_rules.html">custom_eucast_rules()</a></code> that brings support for custom AMR rules in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>
+</li>
+</ul>
+</div>
+<div id="changed" class="section level3">
+<h3 class="hasAnchor">
+<a href="#changed" class="anchor"></a>Changed</h3>
+<ul>
+<li>Custom MDRO guidelines (<code><a href="../reference/mdro.html">mdro()</a></code>, <code><a href="../reference/mdro.html">custom_mdro_guideline()</a></code>):
+<ul>
+<li>Custom MDRO guidelines can now be combined with other custom MDRO guidelines using <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>
+</li>
+<li>Fix for applying the rules; in previous versions, rows were interpreted according to the last matched rule. Now, rows are interpreted according to the first matched rule</li>
+</ul>
+</li>
+<li>Fix for <code><a href="../reference/age_groups.html">age_groups()</a></code> for persons aged zero</li>
+<li>The <code>example_isolates</code> data set now contains some (fictitious) zero-year old patients</li>
+<li>Fix for minor translation errors</li>
+<li>Printing of microbial codes in a <code>data.frame</code> or <code>tibble</code> now gives a warning if the data contains old microbial codes (from a previous AMR package version)</li>
+<li>
+<code><a href="../reference/first_isolate.html">first_isolate()</a></code> can now take a vector of values for <code>col_keyantibiotics</code> and can have an episode length of <code>Inf</code>
 </li>
 </ul>
 </div>

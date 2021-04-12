@@ -591,7 +591,7 @@ meet_criteria <- function(object,
                ifelse(allow_NA == TRUE, ", or NA", ""),
                call = call_depth)
   }
-  if (!is.null(is_positive)) {
+  if (isTRUE(is_positive)) {
     stop_if(is.numeric(object) && !all(object > 0, na.rm = TRUE), "argument `", obj_name,
             "` must ",
             ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1,
@@ -599,7 +599,7 @@ meet_criteria <- function(object,
                    "all be numbers higher than zero"),
             call = call_depth)
   }
-  if (!is.null(is_positive_or_zero)) {
+  if (isTRUE(is_positive_or_zero)) {
     stop_if(is.numeric(object) && !all(object >= 0, na.rm = TRUE), "argument `", obj_name,
             "` must ",
             ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1,
@@ -607,7 +607,7 @@ meet_criteria <- function(object,
                    "all be zero or numbers higher than zero"),
             call = call_depth)
   }
-  if (!is.null(is_finite)) {
+  if (isTRUE(is_finite)) {
     stop_if(is.numeric(object) && !all(is.finite(object[!is.na(object)]), na.rm = TRUE), "argument `", obj_name,
             "` must ",
             ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1,

@@ -12,7 +12,7 @@ is_new_episode(x, episode_days, ...)
 \arguments{
 \item{x}{vector of dates (class \code{Date} or \code{POSIXt})}
 
-\item{episode_days}{required episode length in days, can also be less than a day, see \emph{Details}}
+\item{episode_days}{required episode length in days, can also be less than a day or \code{Inf}, see \emph{Details}}
 
 \item{...}{currently not used}
 }
@@ -90,7 +90,7 @@ if (require("dplyr")) {
   # grouping on patients and microorganisms leads to the same results
   # as first_isolate():
   x <- example_isolates \%>\%
-    filter(first_isolate(., include_unknown = TRUE))
+    filter_first_isolate(include_unknown = TRUE)
     
   y <- example_isolates \%>\%
     group_by(patient_id, mo) \%>\%

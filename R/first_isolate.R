@@ -34,7 +34,7 @@
 #' @param col_testcode column name of the test codes. Use `col_testcode = NULL` to **not** exclude certain test codes (such as test codes for screening). In that case `testcodes_exclude` will be ignored.
 #' @param col_specimen column name of the specimen type or group
 #' @param col_icu column name of the logicals (`TRUE`/`FALSE`) whether a ward or department is an Intensive Care Unit (ICU)
-#' @param col_keyantibiotics column name of the key antibiotics to determine first (weighted) isolates, see [key_antibiotics()]. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use `col_keyantibiotics = FALSE` to prevent this.
+#' @param col_keyantibiotics column name of the key antibiotics to determine first (weighted) isolates, see [key_antibiotics()]. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use `col_keyantibiotics = FALSE` to prevent this. Can also be the output of [key_antibiotics()].
 #' @param episode_days episode in days after which a genus/species combination will be determined as 'first isolate' again. The default of 365 days is based on the guideline by CLSI, see *Source*. 
 #' @param testcodes_exclude character vector with test codes that should be excluded (case-insensitive)
 #' @param icu_exclude logical to indicate whether ICU isolates should be excluded (rows with value `TRUE` in the column set with `col_icu`)
@@ -177,11 +177,17 @@ first_isolate <- function(x = NULL,
   }
   meet_criteria(col_specimen, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   meet_criteria(col_icu, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
-  if (isFALSE(col_keyantibiotics)) {
-    col_keyantibiotics <- NULL
+  if (length(col_keyantibiotics) > 1) {
+    meet_criteria(col_keyantibiotics, allow_class = "character", has_length = nrow(x))
+    x$keyabcol <- col_keyantibiotics
+    col_keyantibiotics <- "keyabcol"
+  } else {
+    if (isFALSE(col_keyantibiotics)) {
+      col_keyantibiotics <- NULL
+    }
+    meet_criteria(col_keyantibiotics, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   }
-  meet_criteria(col_keyantibiotics, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
-  meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+  meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = FALSE)
   meet_criteria(testcodes_exclude, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(icu_exclude, allow_class = "logical", has_length = 1)
   meet_criteria(specimen_group, allow_class = "character", has_length = 1, allow_NULL = TRUE)

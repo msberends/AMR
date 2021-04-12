@@ -28,7 +28,7 @@
 #' These functions determine which items in a vector can be considered (the start of) a new episode, based on the argument `episode_days`. This can be used to determine clinical episodes for any epidemiological analysis. The [get_episode()] function returns the index number of the episode per group, while the [is_new_episode()] function returns values `TRUE`/`FALSE` to indicate whether an item in a vector is the start of a new episode.
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param x vector of dates (class `Date` or `POSIXt`)
-#' @param episode_days required episode length in days, can also be less than a day, see *Details*
+#' @param episode_days required episode length in days, can also be less than a day or `Inf`, see *Details*
 #' @param ... currently not used
 #' @details 
 #' Dates are first sorted from old to new. The oldest date will mark the start of the first episode. After this date, the next date will be marked that is at least `episode_days` days later than the start of the first episode. From that second marked date on, the next date will be marked that is at least `episode_days` days later than the start of the second episode which will be the start of the third episode, and so on. Before the vector is being returned, the original order will be restored.
@@ -88,7 +88,7 @@
 #'   # grouping on patients and microorganisms leads to the same results
 #'   # as first_isolate():
 #'   x <- example_isolates %>%
-#'     filter(first_isolate(., include_unknown = TRUE))
+#'     filter_first_isolate(include_unknown = TRUE)
 #'     
 #'   y <- example_isolates %>%
 #'     group_by(patient_id, mo) %>%
@@ -105,7 +105,7 @@
 #' }
 get_episode <- function(x, episode_days, ...) {
   meet_criteria(x, allow_class = c("Date", "POSIXt"))
-  meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+  meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = FALSE)
   
   exec_episode(type = "sequential",
                x = x, 
@@ -117,7 +117,7 @@ get_episode <- function(x, episode_days, ...) {
 #' @export
 is_new_episode <- function(x, episode_days, ...) {
   meet_criteria(x, allow_class = c("Date", "POSIXt"))
-  meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+  meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = FALSE)
   
   exec_episode(type = "logical",
                x = x, 

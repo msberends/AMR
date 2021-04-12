@@ -173,10 +173,16 @@ key_antibiotics <- function(x = NULL,
   # -- mo
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo")
-    stop_if(is.null(col_mo), "`col_mo` must be set")
   } else {
     stop_ifnot(col_mo %in% colnames(x), "column '", col_mo, "' (`col_mo`) not found")
   }
+  if (is.null(col_mo)) {
+    warning_("No column found for `col_mo`, ignoring antimicrobial agents set for Gram-negative and Gram-positive bacteria", call = FALSE)
+    x$gramstain <- NA_character_
+  } else {
+    x$gramstain <- mo_gramstain(as.mo(x[, col_mo, drop = TRUE]), language = NULL)
+  }
+  x$key_ab <- NA_character_
   
   # check columns
   col.list <- c(universal_1, universal_2, universal_3, universal_4, universal_5, universal_6,
@@ -239,7 +245,7 @@ key_antibiotics <- function(x = NULL,
                      GramPos_4, GramPos_5, GramPos_6)
   gram_positive <- gram_positive[!is.null(gram_positive)]
   gram_positive <- gram_positive[!is.na(gram_positive)]
-  if (length(gram_positive) < 12 & message_not_thrown_before("key_antibiotics.grampos")) {
+  if (length(gram_positive) < 12 & !all(is.na(x$gramstain)) & message_not_thrown_before("key_antibiotics.grampos")) {
     warning_("Only using ", length(gram_positive), " different antibiotics as key antibiotics for Gram-positives. See ?key_antibiotics.", call = FALSE)
     remember_thrown_message("key_antibiotics.grampos")
   }
@@ -249,33 +255,29 @@ key_antibiotics <- function(x = NULL,
                      GramNeg_4, GramNeg_5, GramNeg_6)
   gram_negative <- gram_negative[!is.null(gram_negative)]
   gram_negative <- gram_negative[!is.na(gram_negative)]
-  if (length(gram_negative) < 12 & message_not_thrown_before("key_antibiotics.gramneg")) {
+  if (length(gram_negative) < 12 & !all(is.na(x$gramstain)) & message_not_thrown_before("key_antibiotics.gramneg")) {
     warning_("Only using ", length(gram_negative), " different antibiotics as key antibiotics for Gram-negatives. See ?key_antibiotics.", call = FALSE)
     remember_thrown_message("key_antibiotics.gramneg")
   }
   
-  x[, col_mo] <- as.mo(x[, col_mo, drop = TRUE])
-  x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL)
-  x$key_ab <- NA_character_
-  
   # Gram +
   x$key_ab <- pm_if_else(x$gramstain == "Gram-positive",
-                      tryCatch(apply(X = x[, gram_positive],
-                                     MARGIN = 1,
-                                     FUN = function(x) paste(x, collapse = "")),
-                               error = function(e) paste0(rep(".", 12), collapse = "")),
-                      x$key_ab)
+                         tryCatch(apply(X = x[, gram_positive],
+                                        MARGIN = 1,
+                                        FUN = function(x) paste(x, collapse = "")),
+                                  error = function(e) paste0(rep(".", 12), collapse = "")),
+                         as.character(x$key_ab))
   
   # Gram -
   x$key_ab <- pm_if_else(x$gramstain == "Gram-negative",
-                      tryCatch(apply(X = x[, gram_negative],
-                                     MARGIN = 1,
-                                     FUN = function(x) paste(x, collapse = "")),
-                               error = function(e) paste0(rep(".", 12), collapse = "")),
-                      x$key_ab)
+                         tryCatch(apply(X = x[, gram_negative],
+                                        MARGIN = 1,
+                                        FUN = function(x) paste(x, collapse = "")),
+                                  error = function(e) paste0(rep(".", 12), collapse = "")),
+                         as.character(x$key_ab))
   
   # format
-  key_abs <- toupper(gsub("[^SIR]", ".", gsub("(NA|NULL)", ".", x$key_ab)))
+  key_abs <- toupper(gsub("(NA|NULL|[^RSIrsi])", ".", x$key_ab))
   
   if (pm_n_distinct(key_abs) == 1) {
     warning_("No distinct key antibiotics determined.", call = FALSE)

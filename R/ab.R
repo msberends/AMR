@@ -155,7 +155,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
   }
   
   if (initial_search == TRUE) {
-    progress <- progress_ticker(n = length(x), n_min = ifelse(isTRUE(info), 25, length(x) + 1)) # start if n >= 25
+    progress <- progress_ticker(n = length(x),
+                                n_min = ifelse(isTRUE(info) & isFALSE(fast_mode), 25, length(x) + 1)) # start if n >= 25
     on.exit(close(progress))
   }
   
