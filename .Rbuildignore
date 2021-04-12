@@ -1,3 +1,4 @@
+^.*\.RData$
 ^.*\.Rproj$
 ^\.Renviron$
 ^\.Rprofile$

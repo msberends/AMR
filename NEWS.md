@@ -1,4 +1,4 @@
-# AMR 1.6.0.9001
+# AMR 1.6.0.9002
 ## <small>Last updated: 12 April 2021</small>
 
 ### New
@@ -13,6 +13,7 @@
 * Fix for minor translation errors
 * Printing of microbial codes in a `data.frame` or `tibble` now gives a warning if the data contains old microbial codes (from a previous AMR package version)
 * `first_isolate()` can now take a vector of values for `col_keyantibiotics` and can have an episode length of `Inf`
+* Fixed an installation error on R-3.0
 
 # AMR 1.6.0
 

@@ -1095,8 +1095,8 @@ time_track <- function(name = NULL) {
   paste("(until now:", trimws(round(as.numeric(Sys.time()) * 1000) - pkg_env$time_start), "ms)")
 }
 
-# prevent dependency on package 'backports'
-# these functions were not available in previous versions of R (last checked: R 4.0.3)
+# prevent dependency on package 'backports' ----
+# these functions were not available in previous versions of R (last checked: R 4.0.5)
 # see here for the full list: https://github.com/r-lib/backports
 strrep <- function(x, times) {
   x <- as.character(x)
@@ -1142,4 +1142,11 @@ isNamespaceLoaded <- function(pkg) {
 }
 lengths <- function(x, use.names = TRUE) {
   vapply(x, length, FUN.VALUE = NA_integer_, USE.NAMES = use.names)
+}
+
+if (as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.1) {
+  # R-3.0 does not contain these functions, set them here to prevent installation failure
+  cospi <- function(...) 1
+  sinpi <- function(...) 1
+  tanpi <- function(...) 1
 }

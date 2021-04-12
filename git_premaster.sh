@@ -125,6 +125,7 @@ echo "• Building package •"
 echo "••••••••••••••••••••"
 echo "• Building 'data-raw/AMR_latest.tar.gz'..."
 Rscript -e "x <- devtools::build(path = 'data-raw', vignettes = FALSE, manual = FALSE, binary = FALSE, quiet = TRUE)"
+rm data-raw/AMR_latest.tar.gz
 mv data-raw/AMR_*.tar.gz data-raw/AMR_latest.tar.gz
 echo "• Installing..."
 Rscript -e "devtools::install(quiet = TRUE, dependencies = FALSE)"
