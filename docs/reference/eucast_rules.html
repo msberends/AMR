@@ -83,7 +83,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9006</span>
       </span>
     </div>
 
@@ -336,8 +336,8 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><strong>Note:</strong> This function does not translate MIC values to RSI values. Use <code><a href='as.rsi.html'>as.rsi()</a></code> for that. <br />
-<strong>Note:</strong> When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance.</p>
-<p>The file containing all EUCAST rules is located here: <a href='https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv'>https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv</a>.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Custom Rules</h3>
+<strong>Note:</strong> When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance. <br /></p>
+<p>The file containing all EUCAST rules is located here: <a href='https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv'>https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv</a>.  <strong>Note:</strong> Old taxonomic names are replaced with the current taxonomy where applicable. For example, <em>Ochrobactrum anthropi</em> was renamed to <em>Brucella anthropi</em> in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The file used as input for this <code>AMR</code> package contains the taxonomy updated until <a href='catalogue_of_life.html'>March 2021</a>.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Custom Rules</h3>
 
 
 <p>Custom rules can be created using <code><a href='custom_eucast_rules.html'>custom_eucast_rules()</a></code>, e.g.:</p><pre><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='custom_eucast_rules.html'>custom_eucast_rules</a></span><span class='op'>(</span><span class='va'>AMC</span> <span class='op'>==</span> <span class='st'>"R"</span> <span class='op'>&amp;</span> <span class='va'>genus</span> <span class='op'>==</span> <span class='st'>"Klebsiella"</span> <span class='op'>~</span> <span class='va'>aminopenicillins</span> <span class='op'>==</span> <span class='st'>"R"</span>,

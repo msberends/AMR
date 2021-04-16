@@ -1,4 +1,4 @@
-# AMR 1.6.0.9005
+# AMR 1.6.0.9006
 ## <small>Last updated: 16 April 2021</small>
 
 ### New
