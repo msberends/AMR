@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9003</span>
       </span>
     </div>
 
@@ -257,7 +257,7 @@
     </tr>
     <tr>
       <th>pattern</th>
-      <td><p>a character string containing a regular expression (or <a href='https://rdrr.io/r/base/character.html'>character</a> string for <code>fixed = TRUE</code>) to be matched in the given character vector. Coerced by <code><a href='https://rdrr.io/r/base/character.html'>as.character()</a></code> to a character string if possible.  If a <a href='https://rdrr.io/r/base/character.html'>character</a> vector of length 2 or more is supplied, the first element is used with a warning.</p></td>
+      <td><p>a character vector containing regular expressions (or a <a href='https://rdrr.io/r/base/character.html'>character</a> string for <code>fixed = TRUE</code>) to be matched in the given character vector. Coerced by <code><a href='https://rdrr.io/r/base/character.html'>as.character()</a></code> to a character string if possible.</p></td>
     </tr>
     <tr>
       <th>ignore.case</th>
@@ -267,16 +267,16 @@
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Idea from the <a href='https://github.com/Rdatatable/data.table/blob/ec1259af1bf13fc0c96a1d3f9e84d55d8106a9a4/R/like.R'><code>like</code> function from the <code>data.table</code> package</a></p>
+    <p>Idea from the <a href='https://github.com/Rdatatable/data.table/blob/ec1259af1bf13fc0c96a1d3f9e84d55d8106a9a4/R/like.R'><code>like</code> function from the <code>data.table</code> package</a>, although altered as explained in <em>Details</em>.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <a href='https://rdrr.io/r/base/logical.html'>logical</a> vector</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>%like%</code> function:</p><ul>
+    <p>This <code>%like%</code> function:</p><ul>
 <li><p>Is case-insensitive (use <code>%like_case%</code> for case-sensitive matching)</p></li>
 <li><p>Supports multiple patterns</p></li>
-<li><p>Checks if <code>pattern</code> is a regular expression and sets <code>fixed = TRUE</code> if not, to greatly improve speed</p></li>
+<li><p>Checks if <code>pattern</code> is a valid regular expression and sets <code>fixed = TRUE</code> if not, to greatly improve speed (vectorised over <code>pattern</code>)</p></li>
 <li><p>Always uses compatibility with Perl unless <code>fixed = TRUE</code>, to greatly improve speed</p></li>
 </ul>
 

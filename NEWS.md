@@ -1,5 +1,5 @@
-# AMR 1.6.0.9002
-## <small>Last updated: 12 April 2021</small>
+# AMR 1.6.0.9003
+## <small>Last updated: 16 April 2021</small>
 
 ### New
 * Function `custom_eucast_rules()` that brings support for custom AMR rules in `eucast_rules()`
@@ -13,6 +13,7 @@
 * Fix for minor translation errors
 * Printing of microbial codes in a `data.frame` or `tibble` now gives a warning if the data contains old microbial codes (from a previous AMR package version)
 * `first_isolate()` can now take a vector of values for `col_keyantibiotics` and can have an episode length of `Inf`
+* `like()` (and `%like%`) now checks if `pattern` is a *valid* regular expression
 * Fixed an installation error on R-3.0
 
 # AMR 1.6.0

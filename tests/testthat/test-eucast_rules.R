@@ -38,7 +38,7 @@ test_that("EUCAST rules work", {
                  "reference.version",
                  "note"))
   MOs_mentioned <- unique(eucast_rules_file$this_value)
-  MOs_mentioned <- sort(trimws(unlist(strsplit(MOs_mentioned[!is_possibly_regex(MOs_mentioned)], ",", fixed = TRUE))))
+  MOs_mentioned <- sort(trimws(unlist(strsplit(MOs_mentioned[!is_valid_regex(MOs_mentioned)], ",", fixed = TRUE))))
   MOs_test <- suppressWarnings(suppressMessages(mo_name(MOs_mentioned)))
   expect_length(MOs_mentioned[MOs_test != MOs_mentioned], 0)
   

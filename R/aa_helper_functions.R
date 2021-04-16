@@ -211,10 +211,20 @@ search_type_in_df <- function(x, type, info = TRUE) {
   found
 }
 
-is_possibly_regex <- function(x) {
-  tryCatch(vapply(FUN.VALUE = character(1), strsplit(x, ""),
-                  function(y) any(y %in% c("$", "(", ")", "*", "+", "-", ".", "?", "[", "]", "^", "{", "|", "}", "\\"), na.rm = TRUE)),
-           error = function(e) rep(TRUE, length(x)))
+is_valid_regex <- function(x) {
+  regex_at_all <- tryCatch(vapply(FUN.VALUE = logical(1),
+                                  X = strsplit(x, ""),
+                                  FUN = function(y) any(y %in% c("$", "(", ")", "*", "+", "-",
+                                                                 ".", "?", "[", "]", "^", "{", 
+                                                                 "|", "}", "\\"),
+                                                        na.rm = TRUE)),
+                           error = function(e) rep(TRUE, length(x)))
+  regex_valid <- vapply(FUN.VALUE = logical(1),
+                        X = c("[.", "."),
+                        FUN = function(y) !"try-error" %in% class(try(grepl(y, ""),
+                                                                      silent = TRUE)),
+                        USE.NAMES = FALSE)
+  regex_at_all & regex_valid
 }
 
 stop_ifnot_installed <- function(package) {

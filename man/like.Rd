@@ -6,7 +6,7 @@
 \alias{\%like_case\%}
 \title{Vectorised Pattern Matching with Keyboard Shortcut}
 \source{
-Idea from the \href{https://github.com/Rdatatable/data.table/blob/ec1259af1bf13fc0c96a1d3f9e84d55d8106a9a4/R/like.R}{\code{like} function from the \code{data.table} package}
+Idea from the \href{https://github.com/Rdatatable/data.table/blob/ec1259af1bf13fc0c96a1d3f9e84d55d8106a9a4/R/like.R}{\code{like} function from the \code{data.table} package}, although altered as explained in \emph{Details}.
 }
 \usage{
 like(x, pattern, ignore.case = TRUE)
@@ -18,7 +18,7 @@ x \%like_case\% pattern
 \arguments{
 \item{x}{a character vector where matches are sought, or an object which can be coerced by \code{\link[=as.character]{as.character()}} to a character vector.}
 
-\item{pattern}{a character string containing a regular expression (or \link{character} string for \code{fixed = TRUE}) to be matched in the given character vector. Coerced by \code{\link[=as.character]{as.character()}} to a character string if possible.  If a \link{character} vector of length 2 or more is supplied, the first element is used with a warning.}
+\item{pattern}{a character vector containing regular expressions (or a \link{character} string for \code{fixed = TRUE}) to be matched in the given character vector. Coerced by \code{\link[=as.character]{as.character()}} to a character string if possible.}
 
 \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case sensitive} and if \code{TRUE}, case is ignored during matching.}
 }
@@ -29,11 +29,11 @@ A \link{logical} vector
 Convenient wrapper around \code{\link[=grepl]{grepl()}} to match a pattern: \code{x \%like\% pattern}. It always returns a \code{\link{logical}} vector and is always case-insensitive (use \code{x \%like_case\% pattern} for case-sensitive matching). Also, \code{pattern} can be as long as \code{x} to compare items of each index in both vectors, or they both can have the same length to iterate over all cases.
 }
 \details{
-The \verb{\%like\%} function:
+This \verb{\%like\%} function:
 \itemize{
 \item Is case-insensitive (use \verb{\%like_case\%} for case-sensitive matching)
 \item Supports multiple patterns
-\item Checks if \code{pattern} is a regular expression and sets \code{fixed = TRUE} if not, to greatly improve speed
+\item Checks if \code{pattern} is a valid regular expression and sets \code{fixed = TRUE} if not, to greatly improve speed (vectorised over \code{pattern})
 \item Always uses compatibility with Perl unless \code{fixed = TRUE}, to greatly improve speed
 }
 

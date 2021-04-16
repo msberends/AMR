@@ -28,21 +28,21 @@
 #' Convenient wrapper around [grepl()] to match a pattern: `x %like% pattern`. It always returns a [`logical`] vector and is always case-insensitive (use `x %like_case% pattern` for case-sensitive matching). Also, `pattern` can be as long as `x` to compare items of each index in both vectors, or they both can have the same length to iterate over all cases.
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param x a character vector where matches are sought, or an object which can be coerced by [as.character()] to a character vector.
-#' @param pattern a character string containing a regular expression (or [character] string for `fixed = TRUE`) to be matched in the given character vector. Coerced by [as.character()] to a character string if possible.  If a [character] vector of length 2 or more is supplied, the first element is used with a warning.
+#' @param pattern a character vector containing regular expressions (or a [character] string for `fixed = TRUE`) to be matched in the given character vector. Coerced by [as.character()] to a character string if possible.
 #' @param ignore.case if `FALSE`, the pattern matching is *case sensitive* and if `TRUE`, case is ignored during matching.
 #' @return A [logical] vector
 #' @name like
 #' @rdname like
 #' @export
 #' @details
-#' The `%like%` function:
+#' This `%like%` function:
 #' * Is case-insensitive (use `%like_case%` for case-sensitive matching)
 #' * Supports multiple patterns
-#' * Checks if `pattern` is a regular expression and sets `fixed = TRUE` if not, to greatly improve speed
+#' * Checks if `pattern` is a valid regular expression and sets `fixed = TRUE` if not, to greatly improve speed (vectorised over `pattern`)
 #' * Always uses compatibility with Perl unless `fixed = TRUE`, to greatly improve speed
 #' 
 #' Using RStudio? The text `%like%` can also be directly inserted in your code from the Addins menu and can have its own Keyboard Shortcut like `Ctrl+Shift+L` or `Cmd+Shift+L` (see `Tools` > `Modify Keyboard Shortcuts...`).
-#' @source Idea from the [`like` function from the `data.table` package](https://github.com/Rdatatable/data.table/blob/ec1259af1bf13fc0c96a1d3f9e84d55d8106a9a4/R/like.R)
+#' @source Idea from the [`like` function from the `data.table` package](https://github.com/Rdatatable/data.table/blob/ec1259af1bf13fc0c96a1d3f9e84d55d8106a9a4/R/like.R), although altered as explained in *Details*.
 #' @seealso [grepl()]
 #' @inheritSection AMR Read more on Our Website!
 #' @examples
@@ -79,9 +79,10 @@ like <- function(x, pattern, ignore.case = TRUE) {
   if (all(is.na(x))) {
     return(rep(FALSE, length(x)))
   }
-  
-  # set to fixed if no regex found
-  fixed <- !any(is_possibly_regex(pattern))
+
+  # set to fixed if no valid regex (vectorised)
+  fixed <- !is_valid_regex(pattern)
+
   if (ignore.case == TRUE) {
     # set here, otherwise if fixed = TRUE, this warning will be thrown: argument `ignore.case = TRUE` will be ignored
     x <- tolower(x)
@@ -91,7 +92,7 @@ like <- function(x, pattern, ignore.case = TRUE) {
   if (is.factor(x)) {
     x <- as.character(x)
   }
-  
+
   if (length(pattern) == 1) {
     grepl(pattern, x, ignore.case = FALSE, fixed = fixed, perl = !fixed)
   } else {
@@ -105,7 +106,9 @@ like <- function(x, pattern, ignore.case = TRUE) {
       mapply(FUN = grepl,
              x = x,
              pattern = pattern,
-             MoreArgs = list(ignore.case = FALSE, fixed = fixed, perl = !fixed),
+             fixed = fixed,
+             perl = !fixed,
+             MoreArgs = list(ignore.case = FALSE),
              SIMPLIFY = FALSE,
              USE.NAMES = FALSE)
     )
