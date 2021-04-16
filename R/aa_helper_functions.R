@@ -217,10 +217,11 @@ is_valid_regex <- function(x) {
                                   FUN = function(y) any(y %in% c("$", "(", ")", "*", "+", "-",
                                                                  ".", "?", "[", "]", "^", "{", 
                                                                  "|", "}", "\\"),
-                                                        na.rm = TRUE)),
+                                                        na.rm = TRUE),
+                                  USE.NAMES = FALSE),
                            error = function(e) rep(TRUE, length(x)))
   regex_valid <- vapply(FUN.VALUE = logical(1),
-                        X = c("[.", "."),
+                        X = x,
                         FUN = function(y) !"try-error" %in% class(try(grepl(y, ""),
                                                                       silent = TRUE)),
                         USE.NAMES = FALSE)

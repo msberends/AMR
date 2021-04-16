@@ -65,7 +65,7 @@ jobs:
           - {os: ubuntu-20.04,   r: '3.6',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-20.04,   r: '3.5',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-20.04,   r: '3.4',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
-          - {os: ubuntu-20.04,   r: '3.3',     allowfail: false  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: ubuntu-20.04,   r: '3.3',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           # - {os: ubuntu-20.04,   r: '3.2',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           # - {os: ubuntu-20.04,   r: '3.1',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-20.04,   r: '3.0',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
