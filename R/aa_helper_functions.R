@@ -222,7 +222,7 @@ is_valid_regex <- function(x) {
                            error = function(e) rep(TRUE, length(x)))
   regex_valid <- vapply(FUN.VALUE = logical(1),
                         X = x,
-                        FUN = function(y) !"try-error" %in% class(try(grepl(y, ""),
+                        FUN = function(y) !"try-error" %in% class(try(grepl(y, "", perl = TRUE),
                                                                       silent = TRUE)),
                         USE.NAMES = FALSE)
   regex_at_all & regex_valid
