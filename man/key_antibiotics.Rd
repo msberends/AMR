@@ -62,7 +62,7 @@ key_antibiotics_equal(
 
 \item{points_threshold}{points until the comparison of key antibiotics will lead to inclusion of an isolate when \code{type = "points"}, see \emph{Details}}
 
-\item{info}{print progress}
+\item{info}{a \link{logical} to indicate whether a progress bar should be printed, defaults to \code{TRUE} only in interactive mode}
 }
 \description{
 These function can be used to determine first isolates (see \code{\link[=first_isolate]{first_isolate()}}). Using key antibiotics to determine first isolates is more reliable than without key antibiotics. These selected isolates can then be called first 'weighted' isolates.

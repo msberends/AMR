@@ -6,7 +6,7 @@
 \alias{is.ab}
 \title{Transform Input to an Antibiotic ID}
 \usage{
-as.ab(x, flag_multiple_results = TRUE, info = TRUE, ...)
+as.ab(x, flag_multiple_results = TRUE, info = interactive(), ...)
 
 is.ab(x)
 }
@@ -15,7 +15,7 @@ is.ab(x)
 
 \item{flag_multiple_results}{logical to indicate whether a note should be printed to the console that probably more than one antibiotic code or name can be retrieved from a single input value.}
 
-\item{info}{logical to indicate whether a progress bar should be printed}
+\item{info}{a \link{logical} to indicate whether a progress bar should be printed, defaults to \code{TRUE} only in interactive mode}
 
 \item{...}{arguments passed on to internal functions}
 }

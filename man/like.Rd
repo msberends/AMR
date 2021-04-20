@@ -29,12 +29,12 @@ A \link{logical} vector
 Convenient wrapper around \code{\link[=grepl]{grepl()}} to match a pattern: \code{x \%like\% pattern}. It always returns a \code{\link{logical}} vector and is always case-insensitive (use \code{x \%like_case\% pattern} for case-sensitive matching). Also, \code{pattern} can be as long as \code{x} to compare items of each index in both vectors, or they both can have the same length to iterate over all cases.
 }
 \details{
-This \verb{\%like\%} function:
+These \code{\link[=like]{like()}} and \verb{\%like\%} functions:
 \itemize{
-\item Is case-insensitive (use \verb{\%like_case\%} for case-sensitive matching)
-\item Supports multiple patterns
-\item Checks if \code{pattern} is a valid regular expression and sets \code{fixed = TRUE} if not, to greatly improve speed (vectorised over \code{pattern})
-\item Always uses compatibility with Perl unless \code{fixed = TRUE}, to greatly improve speed
+\item Are case-insensitive (use \verb{\%like_case\%} for case-sensitive matching)
+\item Support multiple patterns
+\item Check if \code{pattern} is a valid regular expression and sets \code{fixed = TRUE} if not, to greatly improve speed (vectorised over \code{pattern})
+\item Always use compatibility with Perl unless \code{fixed = TRUE}, to greatly improve speed
 }
 
 Using RStudio? The text \verb{\%like\%} can also be directly inserted in your code from the Addins menu and can have its own Keyboard Shortcut like \code{Ctrl+Shift+L} or \code{Cmd+Shift+L} (see \code{Tools} > \verb{Modify Keyboard Shortcuts...}).
@@ -53,7 +53,6 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 }
 
 \examples{
-# simple test
 a <- "This is a test"
 b <- "TEST"
 a \%like\% b
@@ -72,11 +71,11 @@ a \%like\% b[1]
 #> TRUE FALSE FALSE
 
 # get isolates whose name start with 'Ent' or 'ent'
-\donttest{
+example_isolates[which(mo_name() \%like\% "^ent"), ]
+
 if (require("dplyr")) {
   example_isolates \%>\%
     filter(mo_name() \%like\% "^ent")
-}
 }
 }
 \seealso{

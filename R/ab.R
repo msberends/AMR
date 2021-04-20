@@ -29,7 +29,7 @@
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param x character vector to determine to antibiotic ID
 #' @param flag_multiple_results logical to indicate whether a note should be printed to the console that probably more than one antibiotic code or name can be retrieved from a single input value.
-#' @param info logical to indicate whether a progress bar should be printed
+#' @param info a [logical] to indicate whether a progress bar should be printed, defaults to `TRUE` only in interactive mode
 #' @param ... arguments passed on to internal functions
 #' @rdname as.ab
 #' @inheritSection WHOCC WHOCC
@@ -90,7 +90,7 @@
 #'     rename_with(as.ab, where(is.rsi))
 #'    
 #' }
-as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
+as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   meet_criteria(x, allow_class = c("character", "numeric", "integer", "factor"), allow_NA = TRUE)
   meet_criteria(flag_multiple_results, allow_class = "logical", has_length = 1)
   meet_criteria(info, allow_class = "logical", has_length = 1)
@@ -155,8 +155,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = TRUE, ...) {
   }
   
   if (initial_search == TRUE) {
-    progress <- progress_ticker(n = length(x),
-                                n_min = ifelse(isTRUE(info) & isFALSE(fast_mode), 25, length(x) + 1)) # start if n >= 25
+    progress <- progress_ticker(n = length(x), n_min = 25, print = info) # start if n >= 25
     on.exit(close(progress))
   }
   

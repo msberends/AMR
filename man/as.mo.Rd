@@ -17,6 +17,7 @@ as.mo(
   reference_df = get_mo_source(),
   ignore_pattern = getOption("AMR_ignore_pattern"),
   language = get_locale(),
+  info = interactive(),
   ...
 )
 
@@ -46,6 +47,8 @@ This excludes \emph{Enterococci} at default (who are in group D), use \code{Lanc
 \item{ignore_pattern}{a regular expression (case-insensitive) of which all matches in \code{x} must return \code{NA}. This can be convenient to exclude known non-relevant input and can also be set with the option \code{AMR_ignore_pattern}, e.g. \code{options(AMR_ignore_pattern = "(not reported|contaminated flora)")}.}
 
 \item{language}{language to translate text like "no growth", which defaults to the system language (see \code{\link[=get_locale]{get_locale()}})}
+
+\item{info}{a \link{logical} to indicate if a progress bar should be printed if more than 25 items are to be coerced, defaults to \code{TRUE} only in interactive mode}
 
 \item{...}{other arguments passed on to functions}
 }

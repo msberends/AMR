@@ -932,8 +932,8 @@ font_stripstyle <- function(x) {
   gsub("(?:(?:\\x{001b}\\[)|\\x{009b})(?:(?:[0-9]{1,3})?(?:(?:;[0-9]{0,3})*)?[A-M|f-m])|\\x{001b}[A-M]", "", x, perl = TRUE)
 }
 
-progress_ticker <- function(n = 1, n_min = 0, ...) {
-  if (!interactive() || n < n_min) {
+progress_ticker <- function(n = 1, n_min = 0, print = TRUE, ...) {
+  if (print == FALSE || n < n_min) {
     pb <- list()
     pb$tick <- function() {
       invisible()

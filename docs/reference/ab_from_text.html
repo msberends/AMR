@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9040</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9007</span>
       </span>
     </div>
 
@@ -248,6 +248,7 @@
   collapse <span class='op'>=</span> <span class='cn'>NULL</span>,
   translate_ab <span class='op'>=</span> <span class='cn'>FALSE</span>,
   thorough_search <span class='op'>=</span> <span class='cn'>NULL</span>,
+  info <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -273,6 +274,10 @@
     <tr>
       <th>thorough_search</th>
       <td><p>logical to indicate whether the input must be extensively searched for misspelling and other faulty input values. Setting this to <code>TRUE</code> will take considerably more time than when using <code>FALSE</code>. At default, it will turn <code>TRUE</code> when all input elements contain a maximum of three words.</p></td>
+    </tr>
+    <tr>
+      <th>info</th>
+      <td><p>logical to indicate whether a progress bar should be printed, defaults to <code>TRUE</code> only in interactive mode</p></td>
     </tr>
     <tr>
       <th>...</th>

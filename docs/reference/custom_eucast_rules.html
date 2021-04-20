@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create Custom EUCAST Rules — custom_eucast_rules • AMR (for R)</title>
+<title>Define Custom EUCAST Rules — custom_eucast_rules • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Create Custom EUCAST Rules — custom_eucast_rules" />
-<meta property="og:description" content="Create Custom EUCAST Rules" />
+<meta property="og:title" content="Define Custom EUCAST Rules — custom_eucast_rules" />
+<meta property="og:description" content="Define custom EUCAST rules for your organisation or specific analysis and use the output of this function in eucast_rules()." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9007</span>
       </span>
     </div>
 
@@ -233,13 +233,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create Custom EUCAST Rules</h1>
+    <h1>Define Custom EUCAST Rules</h1>
     <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/custom_eucast_rules.R'><code>R/custom_eucast_rules.R</code></a></small>
     <div class="hidden name"><code>custom_eucast_rules.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Create Custom EUCAST Rules</p>
+    <p>Define custom EUCAST rules for your organisation or specific analysis and use the output of this function in <code><a href='eucast_rules.html'>eucast_rules()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>custom_eucast_rules</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
@@ -253,21 +253,97 @@
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A <a href='https://rdrr.io/r/base/list.html'>list</a> containing the custom rules</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This documentation page will be updated shortly. <strong>This function is experimental.</strong></p>
+    <p>Some organisations have their own adoption of EUCAST rules. This function can be used to define custom EUCAST rules to be used in the <code><a href='eucast_rules.html'>eucast_rules()</a></code> function.</p>
     <h2 class="hasAnchor" id="how-it-works"><a class="anchor" href="#how-it-works"></a>How it works</h2>
 
     
 
-<p>..</p>
-<p>It is also possible to define antibiotic groups instead of single antibiotics. The following groups are allowed (case-insensitive): <code>aminoglycosides</code>, <code>aminopenicillins</code>, <code>betalactams</code>, <code>carbapenems</code>, <code>cephalosporins</code>, <code>cephalosporins_1st</code>, <code>cephalosporins_2nd</code>, <code>cephalosporins_3rd</code>, <code>cephalosporins_except_caz</code>, <code>fluoroquinolones</code>, <code>glycopeptides</code>, <code>glycopeptides_except_lipo</code>, <code>lincosamides</code>, <code>lipoglycopeptides</code>, <code>macrolides</code>, <code>oxazolidinones</code>, <code>penicillins</code>, <code>polymyxins</code>, <code>streptogramins</code>, <code>tetracyclines</code>, <code>tetracyclines_except_tgc</code> and <code>ureidopenicillins</code>.</p>
-    <h2 class="hasAnchor" id="experimental-lifecycle"><a class="anchor" href="#experimental-lifecycle"></a>Experimental Lifecycle</h2>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Basics</h3>
+
+
+<p>If you are familiar with the <code><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when()</a></code> function of the <code>dplyr</code> package, you will recognise the input method to set your own rules. Rules must be set using what <span style="R">R</span> considers to be the 'formula notation'. The rule itself is written <em>before</em> the tilde (<code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>) and the consequence of the rule is written <em>after</em> the tilde:</p><pre><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>custom_eucast_rules</span><span class='op'>(</span><span class='va'>TZP</span> <span class='op'>==</span> <span class='st'>"S"</span> <span class='op'>~</span> <span class='va'>aminopenicillins</span> <span class='op'>==</span> <span class='st'>"S"</span>,
+                         <span class='va'>TZP</span> <span class='op'>==</span> <span class='st'>"R"</span> <span class='op'>~</span> <span class='va'>aminopenicillins</span> <span class='op'>==</span> <span class='st'>"R"</span><span class='op'>)</span>
+</pre>
+
+<p>These are two custom EUCAST rules: if TZP (piperacillin/tazobactam) is "S", all aminopenicillins (ampicillin and amoxicillin) must be made "S", and if TZP is "R", aminopenicillins must be made "R". These rules can also be printed to the console, so it is immediately clear how they work:</p><pre><span class='va'>x</span>
+<span class='co'>#&gt; A set of custom EUCAST rules:</span>
+<span class='co'>#&gt; </span>
+<span class='co'>#&gt;   1. If TZP is S then set to S:</span>
+<span class='co'>#&gt;      amoxicillin (AMX), ampicillin (AMP)</span>
+<span class='co'>#&gt; </span>
+<span class='co'>#&gt;   2. If TZP is R then set to R:</span>
+<span class='co'>#&gt;      amoxicillin (AMX), ampicillin (AMP)</span>
+</pre>
+
+<p>The rules (the part <em>before</em> the tilde, in above example <code>TZP == "S"</code> and <code>TZP == "R"</code>) must be evaluable in your data set: it should be able to run as a filter in your data set without errors. This means for the above example that the column <code>TZP</code> must exist. We will create a sample data set and test the rules set:</p><pre><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>mo <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"E. coli"</span>, <span class='st'>"K. pneumoniae"</span><span class='op'>)</span>,
+                 TZP <span class='op'>=</span> <span class='st'>"R"</span>,
+                 amox <span class='op'>=</span> <span class='st'>""</span>,
+                 AMP <span class='op'>=</span> <span class='st'>""</span><span class='op'>)</span>
+<span class='va'>df</span>
+<span class='co'>#&gt;              mo TZP amox AMP</span>
+<span class='co'>#&gt; 1       E. coli   R         </span>
+<span class='co'>#&gt; 2 K. pneumoniae   R         </span>
+                 
+<span class='fu'><a href='eucast_rules.html'>eucast_rules</a></span><span class='op'>(</span><span class='va'>df</span>, rules <span class='op'>=</span> <span class='st'>"custom"</span>, custom_rules <span class='op'>=</span> <span class='va'>x</span><span class='op'>)</span>
+<span class='co'>#&gt;              mo TZP amox AMP</span>
+<span class='co'>#&gt; 1       E. coli   R    R   R     </span>
+<span class='co'>#&gt; 2 K. pneumoniae   R    R   R  </span>
+</pre>
+
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Using taxonomic properties in rules</h3>
+
+
+<p>There is one exception in variables used for the rules: all column names of the <a href='microorganisms.html'>microorganisms</a> data set can also be used, but do not have to exist in the data set. These column names are: <code>mo</code>, <code>fullname</code>, <code>kingdom</code>, <code>phylum</code>, <code>class</code>, <code>order</code>, <code>family</code>, <code>genus</code>, <code>species</code>, <code>subspecies</code>, <code>rank</code>, <code>ref</code>, <code>species_id</code>, <code>source</code>, <code>prevalence</code> and <code>snomed</code>. Thus, this next example will work as well, despite the fact that the <code>df</code> data set does not contain a column <code>genus</code>:</p><pre><span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'>custom_eucast_rules</span><span class='op'>(</span><span class='va'>TZP</span> <span class='op'>==</span> <span class='st'>"S"</span> <span class='op'>&amp;</span> <span class='va'>genus</span> <span class='op'>==</span> <span class='st'>"Klebsiella"</span> <span class='op'>~</span> <span class='va'>aminopenicillins</span> <span class='op'>==</span> <span class='st'>"S"</span>,
+                         <span class='va'>TZP</span> <span class='op'>==</span> <span class='st'>"R"</span> <span class='op'>&amp;</span> <span class='va'>genus</span> <span class='op'>==</span> <span class='st'>"Klebsiella"</span> <span class='op'>~</span> <span class='va'>aminopenicillins</span> <span class='op'>==</span> <span class='st'>"R"</span><span class='op'>)</span>
+
+<span class='fu'><a href='eucast_rules.html'>eucast_rules</a></span><span class='op'>(</span><span class='va'>df</span>, rules <span class='op'>=</span> <span class='st'>"custom"</span>, custom_rules <span class='op'>=</span> <span class='va'>y</span><span class='op'>)</span>
+<span class='co'>#&gt;              mo TZP amox AMP</span>
+<span class='co'>#&gt; 1       E. coli   R         </span>
+<span class='co'>#&gt; 2 K. pneumoniae   R    R   R</span>
+</pre>
+
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage of antibiotic group names</h3>
+
+
+<p>It is possible to define antibiotic groups instead of single antibiotics for the rule consequence, the part <em>after</em> the tilde. In above examples, the antibiotic group <code>aminopenicillins</code> is used to include ampicillin and amoxicillin. The following groups are allowed (case-insensitive). Within parentheses are the antibiotic agents that will be matched when running the rule.</p><ul>
+<li><p><code>aminoglycosides</code><br />(amikacin, amikacin/fosfomycin, amphotericin B-high, apramycin, arbekacin, astromicin, bekanamycin, dibekacin, framycetin, gentamicin, gentamicin-high, habekacin, hygromycin, isepamicin, kanamycin, kanamycin-high, kanamycin/cephalexin, micronomicin, neomycin, netilmicin, pentisomicin, plazomicin, propikacin, ribostamycin, sisomicin, streptoduocin, streptomycin, streptomycin-high, tobramycin, tobramycin-high)</p></li>
+<li><p><code>aminopenicillins</code><br />(amoxicillin, ampicillin)</p></li>
+<li><p><code>betalactams</code><br />(amoxicillin, amoxicillin/clavulanic acid, amoxicillin/sulbactam, ampicillin, ampicillin/sulbactam, apalcillin, aspoxicillin, avibactam, azidocillin, azlocillin, aztreonam, aztreonam/avibactam, bacampicillin, benzathine benzylpenicillin, benzathine phenoxymethylpenicillin, benzylpenicillin, biapenem, cadazolid, carbenicillin, carindacillin, cefacetrile, cefaclor, cefadroxil, cefaloridine, cefamandole, cefatrizine, cefazedone, cefazolin, cefcapene, cefcapene pivoxil, cefdinir, cefditoren, cefditoren pivoxil, cefepime, cefepime/clavulanic acid, cefepime/tazobactam, cefetamet, cefetamet pivoxil, cefetecol (Cefcatacol), cefetrizole, cefixime, cefmenoxime, cefmetazole, cefodizime, cefonicid, cefoperazone, cefoperazone/sulbactam, ceforanide, cefoselis, cefotaxime, cefotaxime/clavulanic acid, cefotaxime/sulbactam, cefotetan, cefotiam, cefotiam hexetil, cefovecin, cefoxitin, cefoxitin screening, cefozopran, cefpimizole, cefpiramide, cefpirome, cefpodoxime, cefpodoxime proxetil, cefpodoxime/clavulanic acid, cefprozil, cefquinome, cefroxadine, cefsulodin, cefsumide, ceftaroline, ceftaroline/avibactam, ceftazidime, ceftazidime/avibactam, ceftazidime/clavulanic acid, cefteram, cefteram pivoxil, ceftezole, ceftibuten, ceftiofur, ceftizoxime, ceftizoxime alapivoxil, ceftobiprole, ceftobiprole medocaril, ceftolozane/enzyme inhibitor, ceftolozane/tazobactam, ceftriaxone, cefuroxime, cefuroxime axetil, cephalexin, cephalothin, cephapirin, cephradine, ciclacillin, clometocillin, cloxacillin, dicloxacillin, doripenem, epicillin, ertapenem, flucloxacillin, hetacillin, imipenem, imipenem/EDTA, imipenem/relebactam, latamoxef, lenampicillin, loracarbef, mecillinam (Amdinocillin), meropenem, meropenem/nacubactam, meropenem/vaborbactam, metampicillin, methicillin, mezlocillin, mezlocillin/sulbactam, nacubactam, nafcillin, oxacillin, panipenem, penamecillin, penicillin/novobiocin, penicillin/sulbactam, phenethicillin, phenoxymethylpenicillin, piperacillin, piperacillin/sulbactam, piperacillin/tazobactam, piridicillin, pivampicillin, pivmecillinam, procaine benzylpenicillin, propicillin, razupenem, ritipenem, ritipenem acoxil, sarmoxicillin, sulbactam, sulbenicillin, sultamicillin, talampicillin, tazobactam, tebipenem, temocillin, ticarcillin, ticarcillin/clavulanic acid)</p></li>
+<li><p><code>carbapenems</code><br />(biapenem, doripenem, ertapenem, imipenem, imipenem/EDTA, imipenem/relebactam, meropenem, meropenem/nacubactam, meropenem/vaborbactam, panipenem, razupenem, ritipenem, ritipenem acoxil, tebipenem)</p></li>
+<li><p><code>cephalosporins</code><br />(cadazolid, cefacetrile, cefaclor, cefadroxil, cefaloridine, cefamandole, cefatrizine, cefazedone, cefazolin, cefcapene, cefcapene pivoxil, cefdinir, cefditoren, cefditoren pivoxil, cefepime, cefepime/clavulanic acid, cefepime/tazobactam, cefetamet, cefetamet pivoxil, cefetecol (Cefcatacol), cefetrizole, cefixime, cefmenoxime, cefmetazole, cefodizime, cefonicid, cefoperazone, cefoperazone/sulbactam, ceforanide, cefoselis, cefotaxime, cefotaxime/clavulanic acid, cefotaxime/sulbactam, cefotetan, cefotiam, cefotiam hexetil, cefovecin, cefoxitin, cefoxitin screening, cefozopran, cefpimizole, cefpiramide, cefpirome, cefpodoxime, cefpodoxime proxetil, cefpodoxime/clavulanic acid, cefprozil, cefquinome, cefroxadine, cefsulodin, cefsumide, ceftaroline, ceftaroline/avibactam, ceftazidime, ceftazidime/avibactam, ceftazidime/clavulanic acid, cefteram, cefteram pivoxil, ceftezole, ceftibuten, ceftiofur, ceftizoxime, ceftizoxime alapivoxil, ceftobiprole, ceftobiprole medocaril, ceftolozane/enzyme inhibitor, ceftolozane/tazobactam, ceftriaxone, cefuroxime, cefuroxime axetil, cephalexin, cephalothin, cephapirin, cephradine, latamoxef, loracarbef)</p></li>
+<li><p><code>cephalosporins_1st</code><br />(cefacetrile, cefadroxil, cefaloridine, cefatrizine, cefazedone, cefazolin, cefroxadine, ceftezole, cephalexin, cephalothin, cephapirin, cephradine)</p></li>
+<li><p><code>cephalosporins_2nd</code><br />(cefaclor, cefamandole, cefmetazole, cefonicid, ceforanide, cefotetan, cefotiam, cefoxitin, cefoxitin screening, cefprozil, cefuroxime, cefuroxime axetil, loracarbef)</p></li>
+<li><p><code>cephalosporins_3rd</code><br />(cadazolid, cefcapene, cefcapene pivoxil, cefdinir, cefditoren, cefditoren pivoxil, cefetamet, cefetamet pivoxil, cefixime, cefmenoxime, cefodizime, cefoperazone, cefoperazone/sulbactam, cefotaxime, cefotaxime/clavulanic acid, cefotaxime/sulbactam, cefotiam hexetil, cefovecin, cefpimizole, cefpiramide, cefpodoxime, cefpodoxime proxetil, cefpodoxime/clavulanic acid, cefsulodin, ceftazidime, ceftazidime/avibactam, ceftazidime/clavulanic acid, cefteram, cefteram pivoxil, ceftibuten, ceftiofur, ceftizoxime, ceftizoxime alapivoxil, ceftriaxone, latamoxef)</p></li>
+<li><p><code>cephalosporins_except_caz</code><br />(cadazolid, cefacetrile, cefaclor, cefadroxil, cefaloridine, cefamandole, cefatrizine, cefazedone, cefazolin, cefcapene, cefcapene pivoxil, cefdinir, cefditoren, cefditoren pivoxil, cefepime, cefepime/clavulanic acid, cefepime/tazobactam, cefetamet, cefetamet pivoxil, cefetecol (Cefcatacol), cefetrizole, cefixime, cefmenoxime, cefmetazole, cefodizime, cefonicid, cefoperazone, cefoperazone/sulbactam, ceforanide, cefoselis, cefotaxime, cefotaxime/clavulanic acid, cefotaxime/sulbactam, cefotetan, cefotiam, cefotiam hexetil, cefovecin, cefoxitin, cefoxitin screening, cefozopran, cefpimizole, cefpiramide, cefpirome, cefpodoxime, cefpodoxime proxetil, cefpodoxime/clavulanic acid, cefprozil, cefquinome, cefroxadine, cefsulodin, cefsumide, ceftaroline, ceftaroline/avibactam, ceftazidime/avibactam, ceftazidime/clavulanic acid, cefteram, cefteram pivoxil, ceftezole, ceftibuten, ceftiofur, ceftizoxime, ceftizoxime alapivoxil, ceftobiprole, ceftobiprole medocaril, ceftolozane/enzyme inhibitor, ceftolozane/tazobactam, ceftriaxone, cefuroxime, cefuroxime axetil, cephalexin, cephalothin, cephapirin, cephradine, latamoxef, loracarbef)</p></li>
+<li><p><code>fluoroquinolones</code><br />(ciprofloxacin, enoxacin, fleroxacin, gatifloxacin, gemifloxacin, grepafloxacin, levofloxacin, lomefloxacin, moxifloxacin, norfloxacin, ofloxacin, pazufloxacin, pefloxacin, prulifloxacin, rufloxacin, sparfloxacin, temafloxacin, trovafloxacin)</p></li>
+<li><p><code>glycopeptides</code><br />(avoparcin, dalbavancin, norvancomycin, oritavancin, ramoplanin, teicoplanin, teicoplanin-macromethod, telavancin, vancomycin, vancomycin-macromethod)</p></li>
+<li><p><code>glycopeptides_except_lipo</code><br />(avoparcin, norvancomycin, ramoplanin, teicoplanin, teicoplanin-macromethod, vancomycin, vancomycin-macromethod)</p></li>
+<li><p><code>lincosamides</code><br />(clindamycin, lincomycin, pirlimycin)</p></li>
+<li><p><code>lipoglycopeptides</code><br />(dalbavancin, oritavancin, telavancin)</p></li>
+<li><p><code>macrolides</code><br />(azithromycin, clarithromycin, dirithromycin, erythromycin, flurithromycin, josamycin, midecamycin, miocamycin, oleandomycin, rokitamycin, roxithromycin, spiramycin, telithromycin, troleandomycin)</p></li>
+<li><p><code>oxazolidinones</code><br />(cycloserine, linezolid, tedizolid, thiacetazone)</p></li>
+<li><p><code>penicillins</code><br />(amoxicillin, amoxicillin/clavulanic acid, amoxicillin/sulbactam, ampicillin, ampicillin/sulbactam, apalcillin, aspoxicillin, avibactam, azidocillin, azlocillin, aztreonam, aztreonam/avibactam, bacampicillin, benzathine benzylpenicillin, benzathine phenoxymethylpenicillin, benzylpenicillin, carbenicillin, carindacillin, ciclacillin, clometocillin, cloxacillin, dicloxacillin, epicillin, flucloxacillin, hetacillin, lenampicillin, mecillinam (Amdinocillin), metampicillin, methicillin, mezlocillin, mezlocillin/sulbactam, nacubactam, nafcillin, oxacillin, penamecillin, penicillin/novobiocin, penicillin/sulbactam, phenethicillin, phenoxymethylpenicillin, piperacillin, piperacillin/sulbactam, piperacillin/tazobactam, piridicillin, pivampicillin, pivmecillinam, procaine benzylpenicillin, propicillin, sarmoxicillin, sulbactam, sulbenicillin, sultamicillin, talampicillin, tazobactam, temocillin, ticarcillin, ticarcillin/clavulanic acid)</p></li>
+<li><p><code>polymyxins</code><br />(colistin, polymyxin B, polymyxin B/polysorbate 80)</p></li>
+<li><p><code>streptogramins</code><br />(pristinamycin, quinupristin/dalfopristin)</p></li>
+<li><p><code>tetracyclines</code><br />(chlortetracycline, clomocycline, demeclocycline, doxycycline, eravacycline, lymecycline, metacycline, minocycline, oxytetracycline, penimepicycline, rolitetracycline, tetracycline, tigecycline)</p></li>
+<li><p><code>tetracyclines_except_tgc</code><br />(chlortetracycline, clomocycline, demeclocycline, doxycycline, eravacycline, lymecycline, metacycline, minocycline, oxytetracycline, penimepicycline, rolitetracycline, tetracycline)</p></li>
+<li><p><code>ureidopenicillins</code><br />(azlocillin, mezlocillin, piperacillin, piperacillin/tazobactam)</p></li>
+</ul>
+
+
+    <h2 class="hasAnchor" id="maturing-lifecycle"><a class="anchor" href="#maturing-lifecycle"></a>Maturing Lifecycle</h2>
 
     
 
-<p><img src='figures/lifecycle_experimental.svg' style=margin-bottom:5px /> <br />
-The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>experimental</strong>. An experimental function is in early stages of development. The unlying code might be changing frequently. Experimental functions might be removed without deprecation, so you are generally best off waiting until a function is more mature before you use it in production code. Experimental functions are only available in development versions of this <code>AMR</code> package and will thus not be included in releases that are submitted to CRAN, since such functions have not yet matured enough.</p>
+<p><img src='figures/lifecycle_maturing.svg' style=margin-bottom:5px /> <br />
+The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing</strong>. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome <a href='https://github.com/msberends/AMR/issues'>to suggest changes at our repository</a> or <a href='AMR.html'>write us an email (see section 'Contact Us')</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>custom_eucast_rules</span><span class='op'>(</span><span class='va'>AMC</span> <span class='op'>==</span> <span class='st'>"R"</span> <span class='op'>&amp;</span> <span class='va'>genus</span> <span class='op'>==</span> <span class='st'>"Klebsiella"</span> <span class='op'>~</span> <span class='va'>aminopenicillins</span> <span class='op'>==</span> <span class='st'>"R"</span>,

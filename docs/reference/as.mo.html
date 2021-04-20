@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9007</span>
       </span>
     </div>
 
@@ -250,6 +250,7 @@
   reference_df <span class='op'>=</span> <span class='fu'><a href='mo_source.html'>get_mo_source</a></span><span class='op'>(</span><span class='op'>)</span>,
   ignore_pattern <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"AMR_ignore_pattern"</span><span class='op'>)</span>,
   language <span class='op'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span><span class='op'>(</span><span class='op'>)</span>,
+  info <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -293,6 +294,10 @@
     <tr>
       <th>language</th>
       <td><p>language to translate text like "no growth", which defaults to the system language (see <code><a href='translate.html'>get_locale()</a></code>)</p></td>
+    </tr>
+    <tr>
+      <th>info</th>
+      <td><p>a <a href='https://rdrr.io/r/base/logical.html'>logical</a> to indicate if a progress bar should be printed if more than 25 items are to be coerced, defaults to <code>TRUE</code> only in interactive mode</p></td>
     </tr>
     <tr>
       <th>...</th>

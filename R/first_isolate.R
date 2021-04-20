@@ -42,7 +42,7 @@
 #' @param type type to determine weighed isolates; can be `"keyantibiotics"` or `"points"`, see *Details*
 #' @param ignore_I logical to indicate whether antibiotic interpretations with `"I"` will be ignored when `type = "keyantibiotics"`, see *Details*
 #' @param points_threshold points until the comparison of key antibiotics will lead to inclusion of an isolate when `type = "points"`, see *Details*
-#' @param info print progress
+#' @param info a [logical] to indicate whether a progress bar should be printed, defaults to `TRUE` only in interactive mode
 #' @param include_unknown logical to indicate whether 'unknown' microorganisms should be included too, i.e. microbial code `"UNKNOWN"`, which defaults to `FALSE`. For WHONET users, this means that all records with organism code `"con"` (*contamination*) will be excluded at default. Isolates with a microbial ID of `NA` will always be excluded as first isolate.
 #' @param include_untested_rsi logical to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use `include_untested_rsi = FALSE` to always return `FALSE` for such rows. This checks the data set for columns of class `<rsi>` and consequently requires transforming columns with antibiotic results using [as.rsi()] first.
 #' @param ... arguments passed on to [first_isolate()] when using [filter_first_isolate()], or arguments passed on to [key_antibiotics()] when using [filter_first_weighted_isolate()]

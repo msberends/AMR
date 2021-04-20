@@ -23,17 +23,76 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Create Custom EUCAST Rules
+#' Define Custom EUCAST Rules
 #' 
-#' @inheritSection lifecycle Experimental Lifecycle
+#' Define custom EUCAST rules for your organisation or specific analysis and use the output of this function in [eucast_rules()].
+#' @inheritSection lifecycle Maturing Lifecycle
 #' @param ... rules in formula notation, see *Examples*
 #' @details
-#' This documentation page will be updated shortly. **This function is experimental.**
+#' Some organisations have their own adoption of EUCAST rules. This function can be used to define custom EUCAST rules to be used in the [eucast_rules()] function.
 #' 
 #' @section How it works:
-#' ..
 #' 
-#' It is also possible to define antibiotic groups instead of single antibiotics. The following groups are allowed (case-insensitive): `r vector_and(tolower(DEFINED_AB_GROUPS), quote = "``")`.
+#' ### Basics
+#' 
+#' If you are familiar with the [`case_when()`][dplyr::case_when()] function of the `dplyr` package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation'. The rule itself is written *before* the tilde (`~`) and the consequence of the rule is written *after* the tilde:
+#' 
+#' ```
+#' x <- custom_eucast_rules(TZP == "S" ~ aminopenicillins == "S",
+#'                          TZP == "R" ~ aminopenicillins == "R")
+#' ```
+#' 
+#' These are two custom EUCAST rules: if TZP (piperacillin/tazobactam) is "S", all aminopenicillins (ampicillin and amoxicillin) must be made "S", and if TZP is "R", aminopenicillins must be made "R". These rules can also be printed to the console, so it is immediately clear how they work:
+#' 
+#' ```
+#' x
+#' #> A set of custom EUCAST rules:
+#' #> 
+#' #>   1. If TZP is S then set to S:
+#' #>      amoxicillin (AMX), ampicillin (AMP)
+#' #> 
+#' #>   2. If TZP is R then set to R:
+#' #>      amoxicillin (AMX), ampicillin (AMP)
+#' ```
+#' 
+#' The rules (the part *before* the tilde, in above example `TZP == "S"` and `TZP == "R"`) must be evaluable in your data set: it should be able to run as a filter in your data set without errors. This means for the above example that the column `TZP` must exist. We will create a sample data set and test the rules set:
+#' 
+#' ```
+#' df <- data.frame(mo = c("E. coli", "K. pneumoniae"),
+#'                  TZP = "R",
+#'                  amox = "",
+#'                  AMP = "")
+#' df
+#' #>              mo TZP amox AMP
+#' #> 1       E. coli   R         
+#' #> 2 K. pneumoniae   R         
+#'                  
+#' eucast_rules(df, rules = "custom", custom_rules = x)
+#' #>              mo TZP amox AMP
+#' #> 1       E. coli   R    R   R     
+#' #> 2 K. pneumoniae   R    R   R  
+#' ```
+#' 
+#' ### Using taxonomic properties in rules
+#' 
+#' There is one exception in variables used for the rules: all column names of the [microorganisms] data set can also be used, but do not have to exist in the data set. These column names are: `r vector_and(colnames(microorganisms), quote = "``", sort = FALSE)`. Thus, this next example will work as well, despite the fact that the `df` data set does not contain a column `genus`:
+#' 
+#' ```
+#' y <- custom_eucast_rules(TZP == "S" & genus == "Klebsiella" ~ aminopenicillins == "S",
+#'                          TZP == "R" & genus == "Klebsiella" ~ aminopenicillins == "R")
+#'
+#' eucast_rules(df, rules = "custom", custom_rules = y)
+#' #>              mo TZP amox AMP
+#' #> 1       E. coli   R         
+#' #> 2 K. pneumoniae   R    R   R
+#' ```
+#' 
+#' ### Usage of antibiotic group names
+#' 
+#' It is possible to define antibiotic groups instead of single antibiotics for the rule consequence, the part *after* the tilde. In above examples, the antibiotic group `aminopenicillins` is used to include ampicillin and amoxicillin. The following groups are allowed (case-insensitive). Within parentheses are the antibiotic agents that will be matched when running the rule.
+#' 
+#' `r paste0("  * ", sapply(DEFINED_AB_GROUPS, function(x) paste0("``", tolower(x), "``\\cr(", paste0(sort(ab_name(eval(parse(text = x), envir = asNamespace("AMR")), language = NULL, tolower = TRUE)), collapse = ", "), ")"), USE.NAMES = FALSE), "\n", collapse = "")`
+#' @returns A [list] containing the custom rules
 #' @export
 #' @examples
 #' x <- custom_eucast_rules(AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",

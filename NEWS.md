@@ -1,5 +1,5 @@
-# AMR 1.6.0.9006
-## <small>Last updated: 16 April 2021</small>
+# AMR 1.6.0.9007
+## <small>Last updated: 20 April 2021</small>
 
 ### New
 * Function `custom_eucast_rules()` that brings support for custom AMR rules in `eucast_rules()`
@@ -15,6 +15,7 @@
 * `first_isolate()` can now take a vector of values for `col_keyantibiotics` and can have an episode length of `Inf`
 * `like()` (and `%like%`) now checks if `pattern` is a *valid* regular expression
 * Fixed an installation error on R-3.0
+* Added `info` argument to `as.mo()` to turn on/off the progress bar
 
 # AMR 1.6.0
 

@@ -35,18 +35,17 @@
 #' @rdname like
 #' @export
 #' @details
-#' This `%like%` function:
-#' * Is case-insensitive (use `%like_case%` for case-sensitive matching)
-#' * Supports multiple patterns
-#' * Checks if `pattern` is a valid regular expression and sets `fixed = TRUE` if not, to greatly improve speed (vectorised over `pattern`)
-#' * Always uses compatibility with Perl unless `fixed = TRUE`, to greatly improve speed
+#' These [like()] and `%like%` functions:
+#' * Are case-insensitive (use `%like_case%` for case-sensitive matching)
+#' * Support multiple patterns
+#' * Check if `pattern` is a valid regular expression and sets `fixed = TRUE` if not, to greatly improve speed (vectorised over `pattern`)
+#' * Always use compatibility with Perl unless `fixed = TRUE`, to greatly improve speed
 #' 
 #' Using RStudio? The text `%like%` can also be directly inserted in your code from the Addins menu and can have its own Keyboard Shortcut like `Ctrl+Shift+L` or `Cmd+Shift+L` (see `Tools` > `Modify Keyboard Shortcuts...`).
 #' @source Idea from the [`like` function from the `data.table` package](https://github.com/Rdatatable/data.table/blob/ec1259af1bf13fc0c96a1d3f9e84d55d8106a9a4/R/like.R), although altered as explained in *Details*.
 #' @seealso [grepl()]
 #' @inheritSection AMR Read more on Our Website!
 #' @examples
-#' # simple test
 #' a <- "This is a test"
 #' b <- "TEST"
 #' a %like% b
@@ -65,11 +64,11 @@
 #' #> TRUE FALSE FALSE
 #' 
 #' # get isolates whose name start with 'Ent' or 'ent'
-#' \donttest{
+#' example_isolates[which(mo_name() %like% "^ent"), ]
+#' 
 #' if (require("dplyr")) {
 #'   example_isolates %>%
 #'     filter(mo_name() %like% "^ent")
-#' }
 #' }
 like <- function(x, pattern, ignore.case = TRUE) {
   meet_criteria(x, allow_NA = TRUE)

@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9007</span>
       </span>
     </div>
 
@@ -360,7 +360,7 @@ Ordered <a href='https://rdrr.io/r/base/factor.html'>factor</a> with levels <cod
 
 
 <p>Custom guidelines can be set with the <code>custom_mdro_guideline()</code> function. This is of great importance if you have custom rules to determine MDROs in your hospital, e.g., rules that are dependent on ward, state of contact isolation or other variables in your data.</p>
-<p>If you are familiar with <code><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when()</a></code> of the <code>dplyr</code> package, you will recognise the input method to set your own rules. Rules must be set using what <span style="R">R</span> considers to be the 'formula notation':</p><pre><span class='va'>custom</span> <span class='op'>&lt;-</span> <span class='fu'>custom_mdro_guideline</span><span class='op'>(</span><span class='va'>CIP</span> <span class='op'>==</span> <span class='st'>"R"</span> <span class='op'>&amp;</span> <span class='va'>age</span> <span class='op'>&gt;</span> <span class='fl'>60</span> <span class='op'>~</span> <span class='st'>"Elderly Type A"</span>,
+<p>If you are familiar with the <code><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when()</a></code> function of the <code>dplyr</code> package, you will recognise the input method to set your own rules. Rules must be set using what <span style="R">R</span> considers to be the 'formula notation'. The rule is written <em>before</em> the tilde (<code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>) and the consequence of the rule is written <em>after</em> the tilde:</p><pre><span class='va'>custom</span> <span class='op'>&lt;-</span> <span class='fu'>custom_mdro_guideline</span><span class='op'>(</span><span class='va'>CIP</span> <span class='op'>==</span> <span class='st'>"R"</span> <span class='op'>&amp;</span> <span class='va'>age</span> <span class='op'>&gt;</span> <span class='fl'>60</span> <span class='op'>~</span> <span class='st'>"Elderly Type A"</span>,
                                 <span class='va'>ERY</span> <span class='op'>==</span> <span class='st'>"R"</span> <span class='op'>&amp;</span> <span class='va'>age</span> <span class='op'>&gt;</span> <span class='fl'>60</span> <span class='op'>~</span> <span class='st'>"Elderly Type B"</span><span class='op'>)</span>
 </pre>
 

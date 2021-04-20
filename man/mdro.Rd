@@ -119,7 +119,7 @@ Please suggest your own (country-specific) guidelines by letting us know: \url{h
 
 Custom guidelines can be set with the \code{\link[=custom_mdro_guideline]{custom_mdro_guideline()}} function. This is of great importance if you have custom rules to determine MDROs in your hospital, e.g., rules that are dependent on ward, state of contact isolation or other variables in your data.
 
-If you are familiar with \code{case_when()} of the \code{dplyr} package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation':\preformatted{custom <- custom_mdro_guideline(CIP == "R" & age > 60 ~ "Elderly Type A",
+If you are familiar with the \code{\link[dplyr:case_when]{case_when()}} function of the \code{dplyr} package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation'. The rule is written \emph{before} the tilde (\code{~}) and the consequence of the rule is written \emph{after} the tilde:\preformatted{custom <- custom_mdro_guideline(CIP == "R" & age > 60 ~ "Elderly Type A",
                                 ERY == "R" & age > 60 ~ "Elderly Type B")
 }
 

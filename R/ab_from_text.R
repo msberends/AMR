@@ -32,6 +32,7 @@
 #' @param collapse character to pass on to `paste(, collapse = ...)` to only return one character per element of `text`, see *Examples*
 #' @param translate_ab if `type = "drug"`: a column name of the [antibiotics] data set to translate the antibiotic abbreviations to, using [ab_property()]. Defaults to `FALSE`. Using `TRUE` is equal to using "name".
 #' @param thorough_search logical to indicate whether the input must be extensively searched for misspelling and other faulty input values. Setting this to `TRUE` will take considerably more time than when using `FALSE`. At default, it will turn `TRUE` when all input elements contain a maximum of three words.
+#' @param info logical to indicate whether a progress bar should be printed, defaults to `TRUE` only in interactive mode
 #' @param ... arguments passed on to [as.ab()]
 #' @details This function is also internally used by [as.ab()], although it then only searches for the first drug name and will throw a note if more drug names could have been returned. Note: the [as.ab()] function may use very long regular expression to match brand names of antimicrobial agents. This may fail on some systems.
 #' 
@@ -92,6 +93,7 @@ ab_from_text <- function(text,
                          collapse = NULL,
                          translate_ab = FALSE,
                          thorough_search = NULL,
+                         info = interactive(),
                          ...) {
   if (missing(type)) {
     type <- type[1L]
@@ -102,12 +104,13 @@ ab_from_text <- function(text,
   meet_criteria(collapse, has_length = 1, allow_NULL = TRUE)
   meet_criteria(translate_ab, allow_NULL = FALSE) # get_translate_ab() will be more informative about what's allowed
   meet_criteria(thorough_search, allow_class = "logical", has_length = 1, allow_NULL = TRUE)
+  meet_criteria(info, allow_class = "logical", has_length = 1)
 
   type <- tolower(trimws(type))
   
   text <- tolower(as.character(text))
   text_split_all <- strsplit(text, "[ ;.,:\\|]")
-  progress <- progress_ticker(n = length(text_split_all), n_min = 5)
+  progress <- progress_ticker(n = length(text_split_all), n_min = 5, print = info)
   on.exit(close(progress))
   
   if (type %like% "(drug|ab|anti)") {

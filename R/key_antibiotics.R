@@ -314,10 +314,8 @@ key_antibiotics_equal <- function(y,
   
   result <- logical(length(x))
   
-  if (info_needed == TRUE) {
-    p <- progress_ticker(length(x))
-    on.exit(close(p))
-  }
+  p <- progress_ticker(length(x), print = info_needed)
+  on.exit(close(p))
   
   for (i in seq_len(length(x))) {
     
@@ -375,8 +373,8 @@ key_antibiotics_equal <- function(y,
       }
     }
   }
-  if (info_needed == TRUE) {
-    close(p)
-  }
+
+  
+  close(p)
   result
 }

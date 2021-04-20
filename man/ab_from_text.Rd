@@ -10,6 +10,7 @@ ab_from_text(
   collapse = NULL,
   translate_ab = FALSE,
   thorough_search = NULL,
+  info = interactive(),
   ...
 )
 }
@@ -23,6 +24,8 @@ ab_from_text(
 \item{translate_ab}{if \code{type = "drug"}: a column name of the \link{antibiotics} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}. Defaults to \code{FALSE}. Using \code{TRUE} is equal to using "name".}
 
 \item{thorough_search}{logical to indicate whether the input must be extensively searched for misspelling and other faulty input values. Setting this to \code{TRUE} will take considerably more time than when using \code{FALSE}. At default, it will turn \code{TRUE} when all input elements contain a maximum of three words.}
+
+\item{info}{logical to indicate whether a progress bar should be printed, defaults to \code{TRUE} only in interactive mode}
 
 \item{...}{arguments passed on to \code{\link[=as.ab]{as.ab()}}}
 }

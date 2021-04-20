@@ -46,7 +46,7 @@ A data set containing the microbial taxonomy, last updated in March 2021, of six
 \details{
 Please note that entries are only based on the Catalogue of Life and the LPSN (see below). Since these sources incorporate entries based on (recent) publications in the International Journal of Systematic and Evolutionary Microbiology (IJSEM), it can happen that the year of publication is sometimes later than one might expect.
 
-For example, \emph{Staphylococcus pettenkoferi} was described for the first time in Diagnostic Microbiology and Infectious Disease in 2002 (\doi{10.1016/s0732-8893(02)00399-1}), but it was not before 2007 that a publication in IJSEM followed (\doi{10.1099/ijs.0.64381-0}). Consequently, the AMR package returns 2007 for \code{mo_year("S. pettenkoferi")}.
+For example, \emph{Staphylococcus pettenkoferi} was described for the first time in Diagnostic Microbiology and Infectious Disease in 2002 (\doi{10.1016/s0732-8893(02)00399-1}), but it was not before 2007 that a publication in IJSEM followed (\doi{10.1099/ijs.0.64381-0}). Consequently, the \code{AMR} package returns 2007 for \code{mo_year("S. pettenkoferi")}.
 \subsection{Manual additions}{
 
 For convenience, some entries were added manually:

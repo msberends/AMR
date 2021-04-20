@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.5.0.9016</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9007</span>
       </span>
     </div>
 
@@ -242,7 +242,7 @@
     <p>Use this function to determine the antibiotic code of one or more antibiotics. The data set <a href='antibiotics.html'>antibiotics</a> will be searched for abbreviations, official names and synonyms (brand names).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>as.ab</span><span class='op'>(</span><span class='va'>x</span>, flag_multiple_results <span class='op'>=</span> <span class='cn'>TRUE</span>, info <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>as.ab</span><span class='op'>(</span><span class='va'>x</span>, flag_multiple_results <span class='op'>=</span> <span class='cn'>TRUE</span>, info <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>is.ab</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
@@ -259,7 +259,7 @@
     </tr>
     <tr>
       <th>info</th>
-      <td><p>logical to indicate whether a progress bar should be printed</p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/logical.html'>logical</a> to indicate whether a progress bar should be printed, defaults to <code>TRUE</code> only in interactive mode</p></td>
     </tr>
     <tr>
       <th>...</th>

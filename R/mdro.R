@@ -78,7 +78,7 @@
 #' 
 #' Custom guidelines can be set with the [custom_mdro_guideline()] function. This is of great importance if you have custom rules to determine MDROs in your hospital, e.g., rules that are dependent on ward, state of contact isolation or other variables in your data.
 #' 
-#' If you are familiar with `case_when()` of the `dplyr` package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation':
+#' If you are familiar with the [`case_when()`][dplyr::case_when()] function of the `dplyr` package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation'. The rule is written *before* the tilde (`~`) and the consequence of the rule is written *after* the tilde:
 #' 
 #' ```
 #' custom <- custom_mdro_guideline(CIP == "R" & age > 60 ~ "Elderly Type A",

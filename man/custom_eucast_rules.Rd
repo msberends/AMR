@@ -2,30 +2,102 @@
 % Please edit documentation in R/custom_eucast_rules.R
 \name{custom_eucast_rules}
 \alias{custom_eucast_rules}
-\title{Create Custom EUCAST Rules}
+\title{Define Custom EUCAST Rules}
 \usage{
 custom_eucast_rules(...)
 }
 \arguments{
 \item{...}{rules in formula notation, see \emph{Examples}}
 }
+\value{
+A \link{list} containing the custom rules
+}
 \description{
-Create Custom EUCAST Rules
+Define custom EUCAST rules for your organisation or specific analysis and use the output of this function in \code{\link[=eucast_rules]{eucast_rules()}}.
 }
 \details{
-This documentation page will be updated shortly. \strong{This function is experimental.}
+Some organisations have their own adoption of EUCAST rules. This function can be used to define custom EUCAST rules to be used in the \code{\link[=eucast_rules]{eucast_rules()}} function.
 }
 \section{How it works}{
 
-..
+\subsection{Basics}{
 
-It is also possible to define antibiotic groups instead of single antibiotics. The following groups are allowed (case-insensitive): \code{aminoglycosides}, \code{aminopenicillins}, \code{betalactams}, \code{carbapenems}, \code{cephalosporins}, \code{cephalosporins_1st}, \code{cephalosporins_2nd}, \code{cephalosporins_3rd}, \code{cephalosporins_except_caz}, \code{fluoroquinolones}, \code{glycopeptides}, \code{glycopeptides_except_lipo}, \code{lincosamides}, \code{lipoglycopeptides}, \code{macrolides}, \code{oxazolidinones}, \code{penicillins}, \code{polymyxins}, \code{streptogramins}, \code{tetracyclines}, \code{tetracyclines_except_tgc} and \code{ureidopenicillins}.
+If you are familiar with the \code{\link[dplyr:case_when]{case_when()}} function of the \code{dplyr} package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation'. The rule itself is written \emph{before} the tilde (\code{~}) and the consequence of the rule is written \emph{after} the tilde:\preformatted{x <- custom_eucast_rules(TZP == "S" ~ aminopenicillins == "S",
+                         TZP == "R" ~ aminopenicillins == "R")
 }
 
-\section{Experimental Lifecycle}{
+These are two custom EUCAST rules: if TZP (piperacillin/tazobactam) is "S", all aminopenicillins (ampicillin and amoxicillin) must be made "S", and if TZP is "R", aminopenicillins must be made "R". These rules can also be printed to the console, so it is immediately clear how they work:\preformatted{x
+#> A set of custom EUCAST rules:
+#> 
+#>   1. If TZP is S then set to S:
+#>      amoxicillin (AMX), ampicillin (AMP)
+#> 
+#>   2. If TZP is R then set to R:
+#>      amoxicillin (AMX), ampicillin (AMP)
+}
 
-\if{html}{\figure{lifecycle_experimental.svg}{options: style=margin-bottom:5px} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{experimental}. An experimental function is in early stages of development. The unlying code might be changing frequently. Experimental functions might be removed without deprecation, so you are generally best off waiting until a function is more mature before you use it in production code. Experimental functions are only available in development versions of this \code{AMR} package and will thus not be included in releases that are submitted to CRAN, since such functions have not yet matured enough.
+The rules (the part \emph{before} the tilde, in above example \code{TZP == "S"} and \code{TZP == "R"}) must be evaluable in your data set: it should be able to run as a filter in your data set without errors. This means for the above example that the column \code{TZP} must exist. We will create a sample data set and test the rules set:\preformatted{df <- data.frame(mo = c("E. coli", "K. pneumoniae"),
+                 TZP = "R",
+                 amox = "",
+                 AMP = "")
+df
+#>              mo TZP amox AMP
+#> 1       E. coli   R         
+#> 2 K. pneumoniae   R         
+                 
+eucast_rules(df, rules = "custom", custom_rules = x)
+#>              mo TZP amox AMP
+#> 1       E. coli   R    R   R     
+#> 2 K. pneumoniae   R    R   R  
+}
+}
+
+\subsection{Using taxonomic properties in rules}{
+
+There is one exception in variables used for the rules: all column names of the \link{microorganisms} data set can also be used, but do not have to exist in the data set. These column names are: \code{mo}, \code{fullname}, \code{kingdom}, \code{phylum}, \code{class}, \code{order}, \code{family}, \code{genus}, \code{species}, \code{subspecies}, \code{rank}, \code{ref}, \code{species_id}, \code{source}, \code{prevalence} and \code{snomed}. Thus, this next example will work as well, despite the fact that the \code{df} data set does not contain a column \code{genus}:\preformatted{y <- custom_eucast_rules(TZP == "S" & genus == "Klebsiella" ~ aminopenicillins == "S",
+                         TZP == "R" & genus == "Klebsiella" ~ aminopenicillins == "R")
+
+eucast_rules(df, rules = "custom", custom_rules = y)
+#>              mo TZP amox AMP
+#> 1       E. coli   R         
+#> 2 K. pneumoniae   R    R   R
+}
+}
+
+\subsection{Usage of antibiotic group names}{
+
+It is possible to define antibiotic groups instead of single antibiotics for the rule consequence, the part \emph{after} the tilde. In above examples, the antibiotic group \code{aminopenicillins} is used to include ampicillin and amoxicillin. The following groups are allowed (case-insensitive). Within parentheses are the antibiotic agents that will be matched when running the rule.
+\itemize{
+\item \code{aminoglycosides}\cr(amikacin, amikacin/fosfomycin, amphotericin B-high, apramycin, arbekacin, astromicin, bekanamycin, dibekacin, framycetin, gentamicin, gentamicin-high, habekacin, hygromycin, isepamicin, kanamycin, kanamycin-high, kanamycin/cephalexin, micronomicin, neomycin, netilmicin, pentisomicin, plazomicin, propikacin, ribostamycin, sisomicin, streptoduocin, streptomycin, streptomycin-high, tobramycin, tobramycin-high)
+\item \code{aminopenicillins}\cr(amoxicillin, ampicillin)
+\item \code{betalactams}\cr(amoxicillin, amoxicillin/clavulanic acid, amoxicillin/sulbactam, ampicillin, ampicillin/sulbactam, apalcillin, aspoxicillin, avibactam, azidocillin, azlocillin, aztreonam, aztreonam/avibactam, bacampicillin, benzathine benzylpenicillin, benzathine phenoxymethylpenicillin, benzylpenicillin, biapenem, cadazolid, carbenicillin, carindacillin, cefacetrile, cefaclor, cefadroxil, cefaloridine, cefamandole, cefatrizine, cefazedone, cefazolin, cefcapene, cefcapene pivoxil, cefdinir, cefditoren, cefditoren pivoxil, cefepime, cefepime/clavulanic acid, cefepime/tazobactam, cefetamet, cefetamet pivoxil, cefetecol (Cefcatacol), cefetrizole, cefixime, cefmenoxime, cefmetazole, cefodizime, cefonicid, cefoperazone, cefoperazone/sulbactam, ceforanide, cefoselis, cefotaxime, cefotaxime/clavulanic acid, cefotaxime/sulbactam, cefotetan, cefotiam, cefotiam hexetil, cefovecin, cefoxitin, cefoxitin screening, cefozopran, cefpimizole, cefpiramide, cefpirome, cefpodoxime, cefpodoxime proxetil, cefpodoxime/clavulanic acid, cefprozil, cefquinome, cefroxadine, cefsulodin, cefsumide, ceftaroline, ceftaroline/avibactam, ceftazidime, ceftazidime/avibactam, ceftazidime/clavulanic acid, cefteram, cefteram pivoxil, ceftezole, ceftibuten, ceftiofur, ceftizoxime, ceftizoxime alapivoxil, ceftobiprole, ceftobiprole medocaril, ceftolozane/enzyme inhibitor, ceftolozane/tazobactam, ceftriaxone, cefuroxime, cefuroxime axetil, cephalexin, cephalothin, cephapirin, cephradine, ciclacillin, clometocillin, cloxacillin, dicloxacillin, doripenem, epicillin, ertapenem, flucloxacillin, hetacillin, imipenem, imipenem/EDTA, imipenem/relebactam, latamoxef, lenampicillin, loracarbef, mecillinam (Amdinocillin), meropenem, meropenem/nacubactam, meropenem/vaborbactam, metampicillin, methicillin, mezlocillin, mezlocillin/sulbactam, nacubactam, nafcillin, oxacillin, panipenem, penamecillin, penicillin/novobiocin, penicillin/sulbactam, phenethicillin, phenoxymethylpenicillin, piperacillin, piperacillin/sulbactam, piperacillin/tazobactam, piridicillin, pivampicillin, pivmecillinam, procaine benzylpenicillin, propicillin, razupenem, ritipenem, ritipenem acoxil, sarmoxicillin, sulbactam, sulbenicillin, sultamicillin, talampicillin, tazobactam, tebipenem, temocillin, ticarcillin, ticarcillin/clavulanic acid)
+\item \code{carbapenems}\cr(biapenem, doripenem, ertapenem, imipenem, imipenem/EDTA, imipenem/relebactam, meropenem, meropenem/nacubactam, meropenem/vaborbactam, panipenem, razupenem, ritipenem, ritipenem acoxil, tebipenem)
+\item \code{cephalosporins}\cr(cadazolid, cefacetrile, cefaclor, cefadroxil, cefaloridine, cefamandole, cefatrizine, cefazedone, cefazolin, cefcapene, cefcapene pivoxil, cefdinir, cefditoren, cefditoren pivoxil, cefepime, cefepime/clavulanic acid, cefepime/tazobactam, cefetamet, cefetamet pivoxil, cefetecol (Cefcatacol), cefetrizole, cefixime, cefmenoxime, cefmetazole, cefodizime, cefonicid, cefoperazone, cefoperazone/sulbactam, ceforanide, cefoselis, cefotaxime, cefotaxime/clavulanic acid, cefotaxime/sulbactam, cefotetan, cefotiam, cefotiam hexetil, cefovecin, cefoxitin, cefoxitin screening, cefozopran, cefpimizole, cefpiramide, cefpirome, cefpodoxime, cefpodoxime proxetil, cefpodoxime/clavulanic acid, cefprozil, cefquinome, cefroxadine, cefsulodin, cefsumide, ceftaroline, ceftaroline/avibactam, ceftazidime, ceftazidime/avibactam, ceftazidime/clavulanic acid, cefteram, cefteram pivoxil, ceftezole, ceftibuten, ceftiofur, ceftizoxime, ceftizoxime alapivoxil, ceftobiprole, ceftobiprole medocaril, ceftolozane/enzyme inhibitor, ceftolozane/tazobactam, ceftriaxone, cefuroxime, cefuroxime axetil, cephalexin, cephalothin, cephapirin, cephradine, latamoxef, loracarbef)
+\item \code{cephalosporins_1st}\cr(cefacetrile, cefadroxil, cefaloridine, cefatrizine, cefazedone, cefazolin, cefroxadine, ceftezole, cephalexin, cephalothin, cephapirin, cephradine)
+\item \code{cephalosporins_2nd}\cr(cefaclor, cefamandole, cefmetazole, cefonicid, ceforanide, cefotetan, cefotiam, cefoxitin, cefoxitin screening, cefprozil, cefuroxime, cefuroxime axetil, loracarbef)
+\item \code{cephalosporins_3rd}\cr(cadazolid, cefcapene, cefcapene pivoxil, cefdinir, cefditoren, cefditoren pivoxil, cefetamet, cefetamet pivoxil, cefixime, cefmenoxime, cefodizime, cefoperazone, cefoperazone/sulbactam, cefotaxime, cefotaxime/clavulanic acid, cefotaxime/sulbactam, cefotiam hexetil, cefovecin, cefpimizole, cefpiramide, cefpodoxime, cefpodoxime proxetil, cefpodoxime/clavulanic acid, cefsulodin, ceftazidime, ceftazidime/avibactam, ceftazidime/clavulanic acid, cefteram, cefteram pivoxil, ceftibuten, ceftiofur, ceftizoxime, ceftizoxime alapivoxil, ceftriaxone, latamoxef)
+\item \code{cephalosporins_except_caz}\cr(cadazolid, cefacetrile, cefaclor, cefadroxil, cefaloridine, cefamandole, cefatrizine, cefazedone, cefazolin, cefcapene, cefcapene pivoxil, cefdinir, cefditoren, cefditoren pivoxil, cefepime, cefepime/clavulanic acid, cefepime/tazobactam, cefetamet, cefetamet pivoxil, cefetecol (Cefcatacol), cefetrizole, cefixime, cefmenoxime, cefmetazole, cefodizime, cefonicid, cefoperazone, cefoperazone/sulbactam, ceforanide, cefoselis, cefotaxime, cefotaxime/clavulanic acid, cefotaxime/sulbactam, cefotetan, cefotiam, cefotiam hexetil, cefovecin, cefoxitin, cefoxitin screening, cefozopran, cefpimizole, cefpiramide, cefpirome, cefpodoxime, cefpodoxime proxetil, cefpodoxime/clavulanic acid, cefprozil, cefquinome, cefroxadine, cefsulodin, cefsumide, ceftaroline, ceftaroline/avibactam, ceftazidime/avibactam, ceftazidime/clavulanic acid, cefteram, cefteram pivoxil, ceftezole, ceftibuten, ceftiofur, ceftizoxime, ceftizoxime alapivoxil, ceftobiprole, ceftobiprole medocaril, ceftolozane/enzyme inhibitor, ceftolozane/tazobactam, ceftriaxone, cefuroxime, cefuroxime axetil, cephalexin, cephalothin, cephapirin, cephradine, latamoxef, loracarbef)
+\item \code{fluoroquinolones}\cr(ciprofloxacin, enoxacin, fleroxacin, gatifloxacin, gemifloxacin, grepafloxacin, levofloxacin, lomefloxacin, moxifloxacin, norfloxacin, ofloxacin, pazufloxacin, pefloxacin, prulifloxacin, rufloxacin, sparfloxacin, temafloxacin, trovafloxacin)
+\item \code{glycopeptides}\cr(avoparcin, dalbavancin, norvancomycin, oritavancin, ramoplanin, teicoplanin, teicoplanin-macromethod, telavancin, vancomycin, vancomycin-macromethod)
+\item \code{glycopeptides_except_lipo}\cr(avoparcin, norvancomycin, ramoplanin, teicoplanin, teicoplanin-macromethod, vancomycin, vancomycin-macromethod)
+\item \code{lincosamides}\cr(clindamycin, lincomycin, pirlimycin)
+\item \code{lipoglycopeptides}\cr(dalbavancin, oritavancin, telavancin)
+\item \code{macrolides}\cr(azithromycin, clarithromycin, dirithromycin, erythromycin, flurithromycin, josamycin, midecamycin, miocamycin, oleandomycin, rokitamycin, roxithromycin, spiramycin, telithromycin, troleandomycin)
+\item \code{oxazolidinones}\cr(cycloserine, linezolid, tedizolid, thiacetazone)
+\item \code{penicillins}\cr(amoxicillin, amoxicillin/clavulanic acid, amoxicillin/sulbactam, ampicillin, ampicillin/sulbactam, apalcillin, aspoxicillin, avibactam, azidocillin, azlocillin, aztreonam, aztreonam/avibactam, bacampicillin, benzathine benzylpenicillin, benzathine phenoxymethylpenicillin, benzylpenicillin, carbenicillin, carindacillin, ciclacillin, clometocillin, cloxacillin, dicloxacillin, epicillin, flucloxacillin, hetacillin, lenampicillin, mecillinam (Amdinocillin), metampicillin, methicillin, mezlocillin, mezlocillin/sulbactam, nacubactam, nafcillin, oxacillin, penamecillin, penicillin/novobiocin, penicillin/sulbactam, phenethicillin, phenoxymethylpenicillin, piperacillin, piperacillin/sulbactam, piperacillin/tazobactam, piridicillin, pivampicillin, pivmecillinam, procaine benzylpenicillin, propicillin, sarmoxicillin, sulbactam, sulbenicillin, sultamicillin, talampicillin, tazobactam, temocillin, ticarcillin, ticarcillin/clavulanic acid)
+\item \code{polymyxins}\cr(colistin, polymyxin B, polymyxin B/polysorbate 80)
+\item \code{streptogramins}\cr(pristinamycin, quinupristin/dalfopristin)
+\item \code{tetracyclines}\cr(chlortetracycline, clomocycline, demeclocycline, doxycycline, eravacycline, lymecycline, metacycline, minocycline, oxytetracycline, penimepicycline, rolitetracycline, tetracycline, tigecycline)
+\item \code{tetracyclines_except_tgc}\cr(chlortetracycline, clomocycline, demeclocycline, doxycycline, eravacycline, lymecycline, metacycline, minocycline, oxytetracycline, penimepicycline, rolitetracycline, tetracycline)
+\item \code{ureidopenicillins}\cr(azlocillin, mezlocillin, piperacillin, piperacillin/tazobactam)
+}
+}
+}
+
+\section{Maturing Lifecycle}{
+
+\if{html}{\figure{lifecycle_maturing.svg}{options: style=margin-bottom:5px} \cr}
+The \link[=lifecycle]{lifecycle} of this function is \strong{maturing}. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome \href{https://github.com/msberends/AMR/issues}{to suggest changes at our repository} or \link[=AMR]{write us an email (see section 'Contact Us')}.
 }
 
 \examples{

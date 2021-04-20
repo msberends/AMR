@@ -38,6 +38,7 @@
 #' @param reference_df a [data.frame] to be used for extra reference when translating `x` to a valid [`mo`]. See [set_mo_source()] and [get_mo_source()] to automate the usage of your own codes (e.g. used in your analysis or organisation).
 #' @param ignore_pattern a regular expression (case-insensitive) of which all matches in `x` must return `NA`. This can be convenient to exclude known non-relevant input and can also be set with the option `AMR_ignore_pattern`, e.g. `options(AMR_ignore_pattern = "(not reported|contaminated flora)")`.
 #' @param language language to translate text like "no growth", which defaults to the system language (see [get_locale()])
+#' @param info a [logical] to indicate if a progress bar should be printed if more than 25 items are to be coerced, defaults to `TRUE` only in interactive mode
 #' @param ... other arguments passed on to functions
 #' @rdname as.mo
 #' @aliases mo
@@ -161,6 +162,7 @@ as.mo <- function(x,
                   reference_df = get_mo_source(),
                   ignore_pattern = getOption("AMR_ignore_pattern"),
                   language = get_locale(),
+                  info = interactive(),
                   ...) {
   meet_criteria(x, allow_class = c("mo", "data.frame", "list", "character", "numeric", "integer", "factor"), allow_NA = TRUE)
   meet_criteria(Becker, allow_class = c("logical", "character"), has_length = 1)
@@ -169,7 +171,8 @@ as.mo <- function(x,
   meet_criteria(reference_df, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(ignore_pattern, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
-
+  meet_criteria(info, allow_class = "logical", has_length = 1)
+  
   check_dataset_integrity()
 
   if (tryCatch(all(x[!is.na(x)] %in% MO_lookup$mo)
@@ -227,6 +230,7 @@ as.mo <- function(x,
                      reference_df = reference_df,
                      ignore_pattern = ignore_pattern,
                      language = language,
+                     info = info,
                      ...)
   }
 
@@ -253,6 +257,7 @@ exec_as.mo <- function(x,
                        Lancefield = FALSE,
                        allow_uncertain = TRUE,
                        reference_df = get_mo_source(),
+                       info = interactive(),
                        property = "mo",
                        initial_search = TRUE,
                        dyslexia_mode = FALSE,
@@ -600,7 +605,7 @@ exec_as.mo <- function(x,
       }
       
       if (initial_search == TRUE) {
-        progress <- progress_ticker(n = length(x[!already_known]), n_min = 25) # start if n >= 25
+        progress <- progress_ticker(n = length(x[!already_known]), n_min = 25, print = info) # start if n >= 25
         on.exit(close(progress))
       }
       
