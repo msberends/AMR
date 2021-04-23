@@ -497,10 +497,10 @@ first_isolate <- function(x = NULL,
     n_found <- sum(x$newvar_first_isolate, na.rm = TRUE)
     p_found_total <- percentage(n_found / nrow(x[which(!is.na(x$newvar_mo)), , drop = FALSE]), digits = 1)
     p_found_scope <- percentage(n_found / scope.size, digits = 1)
-    if (!p_found_total %like% "[.]") {
+    if (p_found_total %unlike% "[.]") {
       p_found_total <- gsub("%", ".0%", p_found_total, fixed = TRUE)
     }
-    if (!p_found_scope %like% "[.]") {
+    if (p_found_scope %unlike% "[.]") {
       p_found_scope <- gsub("%", ".0%", p_found_scope, fixed = TRUE)
     }
     # mark up number of found

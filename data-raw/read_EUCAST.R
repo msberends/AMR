@@ -136,8 +136,8 @@ read_EUCAST <- function(sheet, file, guideline_name) {
               disk_R = ifelse(has_zone_diameters, G, NA_character_)) %>% 
     filter(!is.na(drug),
            !(is.na(MIC_S) & is.na(MIC_R) & is.na(disk_S) & is.na(disk_R)),
-           !MIC_S %like% "(MIC|S ≤|note)",
-           !MIC_S %like% "^[-]",
+           MIC_S %unlike% "(MIC|S ≤|note)",
+           MIC_S %unlike% "^[-]",
            drug != MIC_S,) %>% 
     mutate(administration = case_when(drug %like% "[( ]oral" ~ "oral",
                                       drug %like% "[( ]iv"   ~ "iv",

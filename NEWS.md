@@ -1,5 +1,5 @@
-# AMR 1.6.0.9007
-## <small>Last updated: 20 April 2021</small>
+# AMR 1.6.0.9008
+## <small>Last updated: 23 April 2021</small>
 
 ### New
 * Function `custom_eucast_rules()` that brings support for custom AMR rules in `eucast_rules()`
@@ -13,9 +13,19 @@
 * Fix for minor translation errors
 * Printing of microbial codes in a `data.frame` or `tibble` now gives a warning if the data contains old microbial codes (from a previous AMR package version)
 * `first_isolate()` can now take a vector of values for `col_keyantibiotics` and can have an episode length of `Inf`
-* `like()` (and `%like%`) now checks if `pattern` is a *valid* regular expression
+* Extended the `like()` functions:
+  * Now checks if `pattern` is a *valid* regular expression
+  * Added `%unlike%` and `%unlike_case%` (as negations of the existing `%like%` and `%like_case%`). This greatly improves readability:
+    ```r
+    if (!grepl("EUCAST", guideline)) ...
+    # same:
+    if (guideline %unlike% "EUCAST") ...
+    ```
+  * Altered the RStudio addin, so it now iterates over `%like%` -> `%unlike%` -> `%like_case%` -> `%unlike_case%` if you keep pressing your keyboard shortcut
 * Fixed an installation error on R-3.0
 * Added `info` argument to `as.mo()` to turn on/off the progress bar
+* Fixed a bug that `col_mo` for some functions (esp. `eucast_rules()` and `mdro()`) could not be column names of the `microorganisms` data set as it would throw an error
+
 
 # AMR 1.6.0
 

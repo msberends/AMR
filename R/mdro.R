@@ -311,7 +311,6 @@ mdro <- function(x = NULL,
     col_mo <- "mo"
   }
   stop_if(is.null(col_mo), "`col_mo` must be set")
-  stop_ifnot(col_mo %in% colnames(x), "column '", col_mo, "' (`col_mo`) not found")
   
   if (guideline$code == "cmi2012") {
     guideline$name <- "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance."
@@ -761,7 +760,11 @@ mdro <- function(x = NULL,
       row_filter <- x[which(row_filter), "row_number", drop = TRUE]
       rows <- rows[rows %in% row_filter]
       x[rows, "MDRO"] <<- to
-      x[rows, "reason"] <<- paste0(any_all, " of the required antibiotics ", ifelse(any_all == "any", "is", "are"), " R")
+      x[rows, "reason"] <<- paste0(any_all, 
+                                   " of the required antibiotics ",
+                                   ifelse(any_all == "any", "is", "are"),
+                                   " R",
+                                   ifelse(!isTRUE(combine_SI), " or I", ""))
     }
   }
   trans_tbl2 <- function(txt, rows, lst) {
@@ -814,6 +817,9 @@ mdro <- function(x = NULL,
   }
   
   x[, col_mo] <- as.mo(as.character(x[, col_mo, drop = TRUE]))
+  # rename col_mo to prevent interference with joined columns
+  colnames(x)[colnames(x) == col_mo] <- ".col_mo"
+  col_mo <- ".col_mo"
   # join to microorganisms data set
   x <- left_join_microorganisms(x, by = col_mo)
   x$MDRO <- ifelse(!is.na(x$genus), 1, NA_integer_)
@@ -1027,7 +1033,10 @@ mdro <- function(x = NULL,
     # PDR (=4): all agents are R 
     x[which(x$classes_affected == 999 & x$classes_in_guideline == x$classes_available), "MDRO"] <- 4
     if (verbose == TRUE) {
-      x[which(x$MDRO == 4), "reason"] <- paste("all antibiotics in all", x$classes_in_guideline[which(x$MDRO == 4)], "classes were tested R or I")
+      x[which(x$MDRO == 4), "reason"] <- paste("all antibiotics in all",
+                                               x$classes_in_guideline[which(x$MDRO == 4)], 
+                                               "classes were tested R",
+                                               ifelse(!isTRUE(combine_SI), " or I", ""))
     }
     
     # not enough classes available
@@ -1390,7 +1399,12 @@ mdro <- function(x = NULL,
   # some more info on negative results
   if (verbose == TRUE) {
     if (guideline$code == "cmi2012") {
-      x[which(x$MDRO == 1 & !is.na(x$classes_affected)), "reason"] <- paste0(x$classes_affected[which(x$MDRO == 1 & !is.na(x$classes_affected))], " of ", x$classes_available[which(x$MDRO == 1 & !is.na(x$classes_affected))], " available classes contain R or I (3 required for MDR)")
+      x[which(x$MDRO == 1 & !is.na(x$classes_affected)), "reason"] <- paste0(x$classes_affected[which(x$MDRO == 1 & !is.na(x$classes_affected))],
+                                                                             " of ",
+                                                                             x$classes_available[which(x$MDRO == 1 & !is.na(x$classes_affected))],
+                                                                             " available classes contain R",
+                                                                             ifelse(!isTRUE(combine_SI), " or I", ""),
+                                                                             " (3 required for MDR)")
     } else {
       x[which(x$MDRO == 1), "reason"] <- "too few antibiotics are R"
     }
@@ -1431,8 +1445,10 @@ mdro <- function(x = NULL,
   }
   
   if (verbose == TRUE) {
+    colnames(x)[colnames(x) == col_mo] <- "microorganism"
+    x$microorganism <- mo_name(x$microorganism, language = NULL)
     x[, c("row_number",
-          col_mo,
+          "microorganism",
           "MDRO",
           "reason",
           "columns_nonsusceptible"), 

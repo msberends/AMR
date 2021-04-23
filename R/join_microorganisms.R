@@ -279,7 +279,7 @@ check_groups_before_join <- function(x, fn) {
   if (is.data.frame(x) && !is.null(attributes(x)$groups)) {
     x <- pm_ungroup(x)
     attr(x, "groups") <- NULL
-    class(x) <- class(x)[!class(x) %like% "group"]
+    class(x) <- class(x)[class(x) %unlike% "group"]
     warning_("Groups are dropped, since the ", fn, "() function relies on merge() from base R.", call = FALSE)
   }
   x

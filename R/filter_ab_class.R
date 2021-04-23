@@ -425,7 +425,7 @@ find_ab_group <- function(ab_class) {
 
 find_ab_names <- function(ab_group, n = 3) {
   ab_group <- gsub("[^a-zA-Z0-9]", ".*", ab_group)
-  drugs <- antibiotics[which(antibiotics$group %like% ab_group & !antibiotics$ab %like% "[0-9]$"), ]$name
+  drugs <- antibiotics[which(antibiotics$group %like% ab_group & antibiotics$ab %unlike% "[0-9]$"), ]$name
   paste0(sort(ab_name(sample(drugs, size = min(n, length(drugs)), replace = FALSE),
                       tolower = TRUE, language = NULL)), 
          collapse = ", ")

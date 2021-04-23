@@ -114,8 +114,8 @@ abx_atc2 <- ab_old %>%
   filter(!atc %in% abx_atc1$atc,
          is.na(ears_net),
          !is.na(atc_group1),
-         !atc_group1 %like% ("virus|vaccin|viral|immun"),
-         !official %like% "(combinations| with )") %>%
+         atc_group1 %unlike% ("virus|vaccin|viral|immun"),
+         official %unlike% "(combinations| with )") %>%
   mutate(ab = NA_character_) %>%
   as.data.frame(stringsAsFactors = FALSE) %>%
   select(ab, atc, name = official)

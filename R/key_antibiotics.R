@@ -136,7 +136,7 @@ key_antibiotics <- function(x = NULL,
     x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
   }
   meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
-  meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE, is_in = colnames(x))
   meet_criteria(universal_1, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(universal_2, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(universal_3, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
@@ -173,8 +173,6 @@ key_antibiotics <- function(x = NULL,
   # -- mo
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo")
-  } else {
-    stop_ifnot(col_mo %in% colnames(x), "column '", col_mo, "' (`col_mo`) not found")
   }
   if (is.null(col_mo)) {
     warning_("No column found for `col_mo`, ignoring antimicrobial agents set for Gram-negative and Gram-positive bacteria", call = FALSE)

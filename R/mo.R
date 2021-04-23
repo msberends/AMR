@@ -708,7 +708,7 @@ exec_as.mo <- function(x,
         
         # check for very small input, but ignore the O antigens of E. coli
         if (nchar(gsub("[^a-zA-Z]", "", x_trimmed[i])) < 3
-            & !toupper(x_backup_without_spp[i]) %like_case% "O?(26|103|104|104|111|121|145|157)") {
+            & toupper(x_backup_without_spp[i]) %unlike_case% "O?(26|103|104|104|111|121|145|157)") {
           # fewer than 3 chars and not looked for species, add as failure
           x[i] <- lookup(mo == "UNKNOWN")
           if (initial_search == TRUE) {
@@ -860,7 +860,7 @@ exec_as.mo <- function(x,
             x[i] <- lookup(genus == "Salmonella", uncertainty = -1)
             next
           } else if (x_backup[i] %like_case% "[sS]almonella [A-Z][a-z]+ ?.*" &
-                     !x_backup[i] %like% "t[iy](ph|f)[iy]") {
+                     x_backup[i] %unlike% "t[iy](ph|f)[iy]") {
             # Salmonella with capital letter species like "Salmonella Goettingen" - they're all S. enterica
             # except for S. typhi, S. paratyphi, S. typhimurium
             x[i] <- lookup(fullname == "Salmonella enterica", uncertainty = -1)
@@ -916,7 +916,7 @@ exec_as.mo <- function(x,
           # FIRST TRY FULLNAMES AND CODES ----
           # if only genus is available, return only genus
           
-          if (all(!c(x[i], b.x_trimmed) %like_case% " ")) {
+          if (all(c(x[i], b.x_trimmed) %unlike_case% " ")) {
             found <- lookup(fullname_lower %in% c(h.x_species, i.x_trimmed_species),
                             haystack = data_to_check)
             if (!is.na(found)) {
@@ -1123,8 +1123,8 @@ exec_as.mo <- function(x,
               if (isTRUE(debug)) {
                 cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (3) look for genus only, part of name\n"))
               }
-              if (nchar(g.x_backup_without_spp) > 4 & !b.x_trimmed %like_case% " ") {
-                if (!b.x_trimmed %like_case% "^[A-Z][a-z]+") {
+              if (nchar(g.x_backup_without_spp) > 4 & b.x_trimmed %unlike_case% " ") {
+                if (b.x_trimmed %unlike_case% "^[A-Z][a-z]+") {
                   if (isTRUE(debug)) {
                     message("Running '", paste(b.x_trimmed, "species"), "'")
                   }
@@ -1268,7 +1268,7 @@ exec_as.mo <- function(x,
                                         stringsAsFactors = FALSE)
                 return(found)
               }
-              if (b.x_trimmed %like_case% "(fungus|fungi)" & !b.x_trimmed %like_case% "fungiphrya") {
+              if (b.x_trimmed %like_case% "(fungus|fungi)" & b.x_trimmed %unlike_case% "fungiphrya") {
                 found <- "F_FUNGUS"
                 found_result <- found
                 found <- lookup(mo == found)

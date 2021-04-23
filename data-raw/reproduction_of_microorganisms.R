@@ -382,7 +382,7 @@ MOs <- MOs %>%
 
 # what characters are in the fullnames?
 table(sort(unlist(strsplit(x = paste(MOs$fullname, collapse = ""), split = ""))))
-MOs %>% filter(!fullname %like% "^[a-z ]+$") %>% arrange(fullname) %>% View()
+MOs %>% filter(fullname %unlike% "^[a-z ]+$") %>% arrange(fullname) %>% View()
 
 table(MOs$kingdom, MOs$rank)
 table(AMR::microorganisms$kingdom, AMR::microorganisms$rank)

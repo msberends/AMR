@@ -190,7 +190,7 @@ eucast_rules <- function(x,
   }
   
   x_deparsed <- deparse(substitute(x))
-  if (length(x_deparsed) > 1 || !all(x_deparsed %like% "[a-z]+")) {
+  if (length(x_deparsed) > 1 || any(x_deparsed %unlike% "[a-z]+")) {
     x_deparsed <- "your_data"
   }
   
@@ -225,8 +225,6 @@ eucast_rules <- function(x,
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo", info = info)
     stop_if(is.null(col_mo), "`col_mo` must be set")
-  } else {
-    stop_ifnot(col_mo %in% colnames(x), "column '", col_mo, "' (`col_mo`) not found")
   }
   
   decimal.mark <- getOption("OutDec")
@@ -420,8 +418,11 @@ eucast_rules <- function(x,
     pm_distinct(`.rowid`, .keep_all = TRUE) %pm>% 
     as.data.frame(stringsAsFactors = FALSE)
   x[, col_mo] <- as.mo(as.character(x[, col_mo, drop = TRUE]))
-  x <- x %pm>%
-    left_join_microorganisms(by = col_mo, suffix = c("_oldcols", ""))
+  # rename col_mo to prevent interference with joined columns
+  colnames(x)[colnames(x) == col_mo] <- ".col_mo"
+  col_mo <- ".col_mo"
+  # join to microorganisms data set
+  x <- left_join_microorganisms(x, by = col_mo, suffix = c("_oldcols", ""))
   x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL)
   x$genus_species <- paste(x$genus, x$species)
   if (info == TRUE & NROW(x) > 10000) {
@@ -480,7 +481,6 @@ eucast_rules <- function(x,
                         extra_indent = 6))
         }
         run_changes <- edit_rsi(x = x,
-                                col_mo = col_mo,
                                 to = "R",
                                 rule = c(rule_current, "Other rules", "",
                                          paste0("Non-EUCAST: AMR package v", utils::packageDescription("AMR")$Version)),
@@ -515,7 +515,6 @@ eucast_rules <- function(x,
                         extra_indent = 6))
         }
         run_changes <- edit_rsi(x = x,
-                                col_mo = col_mo,
                                 to = "S",
                                 rule = c(rule_current, "Other rules", "", 
                                          paste0("Non-EUCAST: AMR package v", utils::packageDescription("AMR")$Version)),
@@ -569,19 +568,19 @@ eucast_rules <- function(x,
   # filter on user-set guideline versions ----
   if (any(c("all", "breakpoints") %in% rules)) {
     eucast_rules_df <- subset(eucast_rules_df,
-                              !reference.rule_group %like% "breakpoint" |
+                              reference.rule_group %unlike% "breakpoint" |
                                 (reference.rule_group %like% "breakpoint" & reference.version == version_breakpoints))
   }
   if (any(c("all", "expert") %in% rules)) {
     eucast_rules_df <- subset(eucast_rules_df,
-                              !reference.rule_group %like% "expert" |
+                              reference.rule_group %unlike% "expert" |
                                 (reference.rule_group %like% "expert" & reference.version == version_expertrules))
   }
   # filter out AmpC de-repressed cephalosporin-resistant mutants ----
   # cefotaxime, ceftriaxone, ceftazidime
   if (is.null(ampc_cephalosporin_resistance) || isFALSE(ampc_cephalosporin_resistance)) {
     eucast_rules_df <- subset(eucast_rules_df,
-                              !reference.rule %like% "ampc")
+                              reference.rule %unlike% "ampc")
   } else {
     if (isTRUE(ampc_cephalosporin_resistance)) {
       ampc_cephalosporin_resistance <- "R"
@@ -627,7 +626,7 @@ eucast_rules <- function(x,
     
     if (info == TRUE) {
       # Print EUCAST intro ------------------------------------------------------
-      if (!rule_group_current %like% "other" & eucast_notification_shown == FALSE) {
+      if (rule_group_current %unlike% "other" & eucast_notification_shown == FALSE) {
         cat(
           paste0("\n", font_grey(strrep("-", 0.95 * options()$width)), "\n",
                  word_wrap("Rules by the ", font_bold("European Committee on Antimicrobial Susceptibility Testing (EUCAST)")), "\n", 
@@ -750,7 +749,6 @@ eucast_rules <- function(x,
     # Apply rule on data ------------------------------------------------------
     # this will return the unique number of changes
     run_changes <- edit_rsi(x = x,
-                            col_mo = col_mo,
                             to = target_value,
                             rule = c(rule_text, rule_group_current, rule_current, 
                                      ifelse(rule_group_current %like% "breakpoint",
@@ -803,7 +801,6 @@ eucast_rules <- function(x,
         warned <- FALSE
       }
       run_changes <- edit_rsi(x = x,
-                              col_mo = col_mo,
                               to = target_value,
                               rule = c(rule_text, 
                                        "Custom EUCAST rules",
@@ -949,13 +946,12 @@ eucast_rules <- function(x,
 }
 
 # helper function for editing the table ----
-edit_rsi <- function(x, 
-                     col_mo,
-                     to, 
-                     rule, 
+edit_rsi <- function(x,
+                     to,
+                     rule,
                      rows,
                      cols,
-                     last_verbose_info, 
+                     last_verbose_info,
                      original_data,
                      warned,
                      info,

@@ -71,7 +71,49 @@ addin_insert_in <- function() {
 
 # No export, no Rd
 addin_insert_like <- function() {
-  import_fn("insertText", "rstudioapi")(" %like% ")
+  # we want Shift + Ctrl/Cmd + L to iterate over %like%, %unlike%, %like_case%, and %unlike_case%
+  
+  getActiveDocumentContext <- import_fn("getActiveDocumentContext", "rstudioapi")
+  insertText <- import_fn("insertText", "rstudioapi")
+  modifyRange <- import_fn("modifyRange", "rstudioapi")
+  document_range <- import_fn("document_range", "rstudioapi")
+  document_position <- import_fn("document_position", "rstudioapi")
+  
+  context <- getActiveDocumentContext()
+  current_row <- context$selection[[1]]$range$end[1]
+  current_col <- context$selection[[1]]$range$end[2]
+  current_row_txt <- context$contents[current_row]
+  if (is.null(current_row) || current_row_txt %unlike% "%(un)?like") {
+    insertText(" %like% ")
+    return(invisible())
+  }
+  
+  pos_preceded_by <- function(txt) {
+    if (tryCatch(substr(current_row_txt, current_col - nchar(trimws(txt, which = "right")), current_col) == trimws(txt, which = "right"),
+                 error = function(e) FALSE)) {
+      return(TRUE)
+    }
+    tryCatch(substr(current_row_txt, current_col - nchar(txt), current_col) %like% paste0("^", txt),
+             error = function(e) FALSE)
+  }
+  replace_pos <- function(old, with) {
+    modifyRange(document_range(document_position(current_row, current_col - nchar(old)),
+                               document_position(current_row, current_col)),
+                text = with,
+                id = context$id)
+  }
+  
+  if (pos_preceded_by(" %like% ")) {
+    replace_pos(" %like% ", with = " %unlike% ")
+  } else if (pos_preceded_by(" %unlike% ")) {
+    replace_pos(" %unlike% ", with = " %like_case% ")
+  } else if (pos_preceded_by(" %like_case% ")) {
+    replace_pos(" %like_case% ", with = " %unlike_case% ")
+  } else if (pos_preceded_by(" %unlike_case% ")) {
+    replace_pos(" %unlike_case% ", with = " %like% ")
+  } else {
+    insertText(" %like% ")
+  }
 }
 
 check_dataset_integrity <- function() {
@@ -234,8 +276,8 @@ stop_ifnot_installed <- function(package) {
   vapply(FUN.VALUE = character(1), package, function(pkg)
     tryCatch(get(".packageName", envir = asNamespace(pkg)),
              error = function(e) {
-               if (package == "rstudioapi") {
-                 stop("This function only works in RStudio.", call. = FALSE)
+               if (pkg == "rstudioapi") {
+                 stop("This function only works in RStudio when using R >= 3.2.", call. = FALSE)
                } else if (pkg != "base") {
                  stop("This requires the '", pkg, "' package.",
                       "\nTry to install it with: install.packages(\"", pkg, "\")",
@@ -652,7 +694,7 @@ get_current_data <- function(arg_name, call) {
       return(out)
     }
   }
-  
+
   if (as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2) {
     # R-3.0 and R-3.1 do not have an `x` element in the call stack, rendering this function useless
     if (is.na(arg_name)) {
@@ -660,6 +702,7 @@ get_current_data <- function(arg_name, call) {
       warning_("this function can only be used in R >= 3.2", call = call)
       return(data.frame())
     } else {
+      # mimic a default R error, e.g. for example_isolates[which(mo_name() %like% "^ent"), ] 
       stop_("argument `", arg_name, "` is missing with no default", call = call)
     }
   }
@@ -669,12 +712,17 @@ get_current_data <- function(arg_name, call) {
   frms <- lapply(sys.frames(), function(el) {
     if (not_set == TRUE && ".Generic" %in% names(el)) {
       if (tryCatch(".data" %in% names(el) && is.data.frame(el$`.data`), error = function(e) FALSE)) {
-        # dplyr? - an element `.data` will be in the system call stack
-        # will be used in dplyr::select() (but not in dplyr::filter(), dplyr::mutate() or dplyr::summarise())
+        # - - - -
+        # dplyr
+        # - - - -
+        # an element `.data` will be in the system call stack when using dplyr::select()
+        # [but not when using dplyr::filter(), dplyr::mutate() or dplyr::summarise()]
         not_set <<- FALSE
         el$`.data`
       } else if (tryCatch(any(c("x", "xx") %in% names(el)), error = function(e) FALSE)) {
-        # otherwise try base R:
+        # - - - -
+        # base R
+        # - - - -
         # an element `x` will be in this environment for only cols, e.g. `example_isolates[, carbapenems()]`
         # an element `xx` will be in this environment for rows + cols, e.g. `example_isolates[c(1:3), carbapenems()]`
         if (tryCatch(is.data.frame(el$xx), error = function(e) FALSE)) {
@@ -694,6 +742,7 @@ get_current_data <- function(arg_name, call) {
     }
   })
   
+  # lookup the matched frame and return its value: a data.frame
   vars_df <- tryCatch(frms[[which(!vapply(FUN.VALUE = logical(1), frms, is.null))]], error = function(e) NULL)
   if (is.data.frame(vars_df)) {
     return(vars_df)
@@ -1157,6 +1206,7 @@ lengths <- function(x, use.names = TRUE) {
 
 if (as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.1) {
   # R-3.0 does not contain these functions, set them here to prevent installation failure
+  # (required for extension of the <mic> class)
   cospi <- function(...) 1
   sinpi <- function(...) 1
   tanpi <- function(...) 1

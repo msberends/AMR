@@ -133,7 +133,7 @@ as.mic <- function(x, na.rm = FALSE) {
     # keep only one zero before dot
     x <- gsub("0+[.]", "0.", x, perl = TRUE)
     # starting 00 is probably 0.0 if there's no dot yet
-    x[!x %like% "[.]"] <- gsub("^00", "0.0", x[!x %like% "[.]"])
+    x[x %unlike% "[.]"] <- gsub("^00", "0.0", x[!x %like% "[.]"])
     # remove last zeroes
     x <- gsub("([.].?)0+$", "\\1", x, perl = TRUE)
     x <- gsub("(.*[.])0+$", "\\10", x, perl = TRUE)

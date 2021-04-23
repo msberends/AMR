@@ -688,7 +688,7 @@ plot_prepare_table <- function(x, expand) {
 }
 
 plot_name_of_I <- function(guideline) {
-  if (!guideline %like% "CLSI" && as.double(gsub("[^0-9]+", "", guideline)) >= 2019) {
+  if (guideline %unlike% "CLSI" && as.double(gsub("[^0-9]+", "", guideline)) >= 2019) {
     # interpretation since 2019
     "Incr. exposure"
   } else {

@@ -389,7 +389,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       
       # first 5 except for cephalosporins, then first 7 (those cephalosporins all start quite the same!)
       found <- suppressWarnings(as.ab(substr(x[i], 1, 5), initial_search = FALSE))
-      if (!is.na(found) && !ab_group(found, initial_search = FALSE) %like% "cephalosporins") {
+      if (!is.na(found) && ab_group(found, initial_search = FALSE) %unlike% "cephalosporins") {
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next
       }

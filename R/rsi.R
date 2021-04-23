@@ -265,7 +265,7 @@ as.rsi.default <- function(x, ...) {
     
   } else if (!all(is.na(x)) && !identical(levels(x), c("S", "I", "R"))) {
     
-    if (!any(x %like% "(R|S|I)", na.rm = TRUE)) {
+    if (all(x %unlike% "(R|S|I)", na.rm = TRUE)) {
       # check if they are actually MICs or disks
       if (all_valid_mics(x)) {
         warning_("The input seems to be MIC values. Transform them with `as.mic()` before running `as.rsi()` to interpret them.")
@@ -683,7 +683,7 @@ get_guideline <- function(guideline, reference_data) {
   if (guideline_param %in% c("CLSI", "EUCAST")) {
     guideline_param <- rev(sort(subset(reference_data, guideline %like% guideline_param)$guideline))[1L]
   }
-  if (!guideline_param %like% " ") {
+  if (guideline_param %unlike% " ") {
     # like 'EUCAST2020', should be 'EUCAST 2020'
     guideline_param <- gsub("([a-z]+)([0-9]+)", "\\1 \\2", guideline_param, ignore.case = TRUE)
   }
@@ -776,7 +776,7 @@ exec_as.rsi <- function(method,
     any_is_intrinsic_resistant <- any_is_intrinsic_resistant | is_intrinsic_r
     
     if (isTRUE(add_intrinsic_resistance) & is_intrinsic_r) {
-      if (!guideline_coerced %like% "EUCAST") {
+      if (guideline_coerced %unlike% "EUCAST") {
         if (message_not_thrown_before("as.rsi2")) {
           warning_("Using 'add_intrinsic_resistance' is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.", call = FALSE)
           remember_thrown_message("as.rsi2")

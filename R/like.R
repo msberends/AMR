@@ -35,13 +35,13 @@
 #' @rdname like
 #' @export
 #' @details
-#' These [like()] and `%like%` functions:
-#' * Are case-insensitive (use `%like_case%` for case-sensitive matching)
+#' These [like()] and `%like%`/`%unlike%` functions:
+#' * Are case-insensitive (use `%like_case%`/`%unlike_case%` for case-sensitive matching)
 #' * Support multiple patterns
 #' * Check if `pattern` is a valid regular expression and sets `fixed = TRUE` if not, to greatly improve speed (vectorised over `pattern`)
 #' * Always use compatibility with Perl unless `fixed = TRUE`, to greatly improve speed
 #' 
-#' Using RStudio? The text `%like%` can also be directly inserted in your code from the Addins menu and can have its own Keyboard Shortcut like `Ctrl+Shift+L` or `Cmd+Shift+L` (see `Tools` > `Modify Keyboard Shortcuts...`).
+#' Using RStudio? The `%like%`/`%unlike%` functions can also be directly inserted in your code from the Addins menu and can have its own keyboard shortcut like `Shift+Ctrl+L` or `Shift+Cmd+L` (see menu `Tools` > `Modify Keyboard Shortcuts...`). If you keep pressing your shortcut, the inserted text will be iterated over `%like%` -> `%unlike%` -> `%like_case%` -> `%unlike_case%`.
 #' @source Idea from the [`like` function from the `data.table` package](https://github.com/Rdatatable/data.table/blob/ec1259af1bf13fc0c96a1d3f9e84d55d8106a9a4/R/like.R), although altered as explained in *Details*.
 #' @seealso [grepl()]
 #' @inheritSection AMR Read more on Our Website!
@@ -58,17 +58,24 @@
 #' b <- c(     "case",           "diff",      "yet")
 #' a %like% b
 #' #> TRUE TRUE TRUE
+#' a %unlike% b
+#' #> FALSE FALSE FALSE
+#' 
 #' a[1] %like% b
 #' #> TRUE FALSE FALSE
 #' a %like% b[1]
 #' #> TRUE FALSE FALSE
 #' 
 #' # get isolates whose name start with 'Ent' or 'ent'
+#' example_isolates[which(mo_name(example_isolates$mo) %like% "^ent"), ]
+#' \donttest{
+#' # faster way, only works in R 3.2 and later:
 #' example_isolates[which(mo_name() %like% "^ent"), ]
 #' 
 #' if (require("dplyr")) {
 #'   example_isolates %>%
 #'     filter(mo_name() %like% "^ent")
+#' }
 #' }
 like <- function(x, pattern, ignore.case = TRUE) {
   meet_criteria(x, allow_NA = TRUE)
@@ -124,8 +131,24 @@ like <- function(x, pattern, ignore.case = TRUE) {
 
 #' @rdname like
 #' @export
+"%unlike%" <- function(x, pattern) {
+  meet_criteria(x, allow_NA = TRUE)
+  meet_criteria(pattern, allow_NA = FALSE)
+  !like(x, pattern, ignore.case = TRUE)
+}
+
+#' @rdname like
+#' @export
 "%like_case%" <- function(x, pattern) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(pattern, allow_NA = FALSE)
   like(x, pattern, ignore.case = FALSE)
+}
+
+#' @rdname like
+#' @export
+"%unlike_case%" <- function(x, pattern) {
+  meet_criteria(x, allow_NA = TRUE)
+  meet_criteria(pattern, allow_NA = FALSE)
+  !like(x, pattern, ignore.case = FALSE)
 }

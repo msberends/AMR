@@ -9,9 +9,9 @@ files <- xml2::read_html(paste0("https://github.com/nathaneastwood/poorman/tree/
 # get full URLs of all raw R files
 files <- sort(paste0("https://raw.githubusercontent.com", gsub("blob/", "", files[files %like% "/R/.*.R$"])))
 # remove files with only pkg specific code
-files <- files[!files %like% "(zzz|init)[.]R$"]
+files <- files[files %unlike% "(zzz|init)[.]R$"]
 # also, there's a lot of functions we don't use
-files <- files[!files %like% "(slice|glimpse|recode|replace_na|coalesce)[.]R$"]
+files <- files[files %unlike% "(slice|glimpse|recode|replace_na|coalesce)[.]R$"]
 
 # add our prepend file, containing info about the source of the data
 intro <- readLines("data-raw/poorman_prepend.R")
