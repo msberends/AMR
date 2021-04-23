@@ -1,4 +1,4 @@
-# AMR 1.6.0.9008
+# AMR 1.6.0.9009
 ## <small>Last updated: 23 April 2021</small>
 
 ### New
@@ -25,6 +25,9 @@
 * Fixed an installation error on R-3.0
 * Added `info` argument to `as.mo()` to turn on/off the progress bar
 * Fixed a bug that `col_mo` for some functions (esp. `eucast_rules()` and `mdro()`) could not be column names of the `microorganisms` data set as it would throw an error
+* Using `first_isolate()` with key antibiotics:
+  * Fixed a bug in the algorithm when using `type == "points"`, that now leads to inclusion of slightly more isolates
+  * Big speed improvement for `key_antibiotics_equal()` when using `type == "points"`
 
 
 # AMR 1.6.0

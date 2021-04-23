@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9009</span>
       </span>
     </div>
 
@@ -236,9 +236,9 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1609008" class="section level1">
-<h1 class="page-header" data-toc-text="1.6.0.9008">
-<a href="#amr-1609008" class="anchor"></a>AMR 1.6.0.9008<small> Unreleased </small>
+    <div id="amr-1609009" class="section level1">
+<h1 class="page-header" data-toc-text="1.6.0.9009">
+<a href="#amr-1609009" class="anchor"></a>AMR 1.6.0.9009<small> Unreleased </small>
 </h1>
 <div id="last-updated-23-april-2021" class="section level2">
 <h2 class="hasAnchor">
@@ -287,6 +287,13 @@
 <li>Fixed an installation error on R-3.0</li>
 <li>Added <code>info</code> argument to <code><a href="../reference/as.mo.html">as.mo()</a></code> to turn on/off the progress bar</li>
 <li>Fixed a bug that <code>col_mo</code> for some functions (esp. <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> and <code><a href="../reference/mdro.html">mdro()</a></code>) could not be column names of the <code>microorganisms</code> data set as it would throw an error</li>
+<li>Using <code><a href="../reference/first_isolate.html">first_isolate()</a></code> with key antibiotics:
+<ul>
+<li>Fixed a bug in the algorithm when using <code>type == "points"</code>, that now leads to inclusion of slightly more isolates</li>
+<li>Big speed improvement for <code><a href="../reference/key_antibiotics.html">key_antibiotics_equal()</a></code> when using <code>type == "points"</code>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>

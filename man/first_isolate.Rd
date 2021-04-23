@@ -81,7 +81,7 @@ filter_first_weighted_isolate(
 
 \item{points_threshold}{points until the comparison of key antibiotics will lead to inclusion of an isolate when \code{type = "points"}, see \emph{Details}}
 
-\item{info}{a \link{logical} to indicate whether a progress bar should be printed, defaults to \code{TRUE} only in interactive mode}
+\item{info}{a \link{logical} to indicate info should be printed, defaults to \code{TRUE} only in interactive mode}
 
 \item{include_unknown}{logical to indicate whether 'unknown' microorganisms should be included too, i.e. microbial code \code{"UNKNOWN"}, which defaults to \code{FALSE}. For WHONET users, this means that all records with organism code \code{"con"} (\emph{contamination}) will be excluded at default. Isolates with a microbial ID of \code{NA} will always be excluded as first isolate.}
 

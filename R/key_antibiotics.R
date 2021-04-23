@@ -286,93 +286,75 @@ key_antibiotics <- function(x = NULL,
 }
 
 #' @rdname key_antibiotics
+#' @param info unused - previously used to indicate whether a progress bar should print
+#' @param na.rm a [logical] to indicate whether comparison with `NA` should return `FALSE` (defaults to `TRUE` for backwards compatibility)
 #' @export
 key_antibiotics_equal <- function(y,
                                   z,
                                   type = c("keyantibiotics", "points"),
                                   ignore_I = TRUE,
                                   points_threshold = 2,
-                                  info = FALSE) {
+                                  info = FALSE,
+                                  na.rm = TRUE,
+                                  ...) {
   meet_criteria(y, allow_class = "character")
   meet_criteria(z, allow_class = "character")
-  meet_criteria(type, allow_class = "character", has_length = c(1, 2))
+  if (length(type) == 2) {
+    type <- type[1L]
+  }
+  meet_criteria(type, allow_class = "character", has_length = 1, is_in = c("keyantibiotics", "points"))
   meet_criteria(ignore_I, allow_class = "logical", has_length = 1)
   meet_criteria(points_threshold, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(info, allow_class = "logical", has_length = 1)
-  
+  meet_criteria(na.rm, allow_class = "logical", has_length = 1)
   stop_ifnot(length(y) == length(z), "length of `y` and `z` must be equal")
-  # y is active row, z is lag
-  x <- y
-  y <- z
+
+  key2rsi <- function(val) {
+    as.double(as.rsi(gsub(".", NA_character_, unlist(strsplit(val, "")), fixed = TRUE)))
+  }
+  y <- lapply(y, key2rsi)
+  z <- lapply(z, key2rsi)
   
-  type <- type[1]
-  
-  # only show progress bar on points or when at least 5000 isolates
-  info_needed <- info == TRUE & (type == "points" | length(x) > 5000)
-  
-  result <- logical(length(x))
-  
-  p <- progress_ticker(length(x), print = info_needed)
-  on.exit(close(p))
-  
-  for (i in seq_len(length(x))) {
-    
-    if (info_needed == TRUE) {
-      p$tick()
+  determine_equality <- function(a, b, type, points_threshold, ignore_I) {
+    if (length(a) != length(b)) {
+      # incomparable, so not equal
+      return(FALSE)
     }
+    # ignore NAs on both sides
+    NA_ind <- which(is.na(a) | is.na(b))
+    a[NA_ind] <- NA_real_
+    b[NA_ind] <- NA_real_
     
-    if (is.na(x[i])) {
-      x[i] <- ""
-    }
-    if (is.na(y[i])) {
-      y[i] <- ""
-    }
-    
-    if (x[i] == y[i]) {
-      
-      result[i] <- TRUE
-      
-    } else if (nchar(x[i]) != nchar(y[i])) {
-      
-      result[i] <- FALSE
-      
+    if (type == "points") {
+      # count points for every single character:
+      # - no change is 0 points
+      # - I <-> S|R is 0.5 point
+      # - S|R <-> R|S is 1 point
+      # use the levels of as.rsi (S = 1, I = 2, R = 3)
+      (sum(abs(a - b), na.rm = TRUE) / 2) < points_threshold
     } else {
-      
-      x_split <- strsplit(x[i], "")[[1]]
-      y_split <- strsplit(y[i], "")[[1]]
-      
-      if (type == "keyantibiotics") {
-        
-        if (ignore_I == TRUE) {
-          x_split[x_split == "I"] <- "."
-          y_split[y_split == "I"] <- "."
-        }
-        
-        y_split[x_split == "."] <- "."
-        x_split[y_split == "."] <- "."
-        
-        result[i] <- all(x_split == y_split)
-        
-      } else if (type == "points") {
-        # count points for every single character:
-        # - no change is 0 points
-        # - I <-> S|R is 0.5 point
-        # - S|R <-> R|S is 1 point
-        # use the levels of as.rsi (S = 1, I = 2, R = 3)
-        
-        suppressWarnings(x_split <- x_split %pm>% as.rsi() %pm>% as.double())
-        suppressWarnings(y_split <- y_split %pm>% as.rsi() %pm>% as.double())
-        
-        points <- (x_split - y_split) %pm>% abs() %pm>% sum(na.rm = TRUE) / 2
-        result[i] <- points >= points_threshold
-        
-      } else {
-        stop("`", type, '` is not a valid value for type, must be "points" or "keyantibiotics". See ?key_antibiotics')
+      if (ignore_I == TRUE) {
+        ind <- which(a == 2 | b == 2) # since as.double(as.rsi("I")) == 2
+        a[ind] <- NA_real_
+        b[ind] <- NA_real_
       }
+      all(a == b, na.rm = TRUE)
     }
   }
-
+  out <- unlist(mapply(FUN = determine_equality,
+                       y,
+                       z,
+                       MoreArgs = list(type = type,
+                                       points_threshold = points_threshold,
+                                       ignore_I = ignore_I),
+                       SIMPLIFY = FALSE,
+                       USE.NAMES = FALSE))
+  if (na.rm == FALSE) {
+    out[is.na(y) | is.na(z)] <- NA
+  } else  {
+    # NA means not equal if `na.rm == TRUE`, as per the manual
+    out[is.na(y) | is.na(z)] <- FALSE
+  }
   
-  close(p)
-  result
+  out
 }

@@ -263,8 +263,8 @@ as.rsi.default <- function(x, ...) {
     x[x == 2] <- "I"
     x[x == 3] <- "R"
     
-  } else if (!all(is.na(x)) && !identical(levels(x), c("S", "I", "R"))) {
-    
+  } else if (!all(is.na(x)) && !identical(levels(x), c("S", "I", "R")) && !all(x %in% c("R", "S", "I", NA))) {
+
     if (all(x %unlike% "(R|S|I)", na.rm = TRUE)) {
       # check if they are actually MICs or disks
       if (all_valid_mics(x)) {
