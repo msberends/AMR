@@ -1,8 +1,16 @@
-# AMR 1.6.0.9009
-## <small>Last updated: 23 April 2021</small>
+# AMR 1.6.0.9010
+## <small>Last updated: 26 April 2021</small>
 
 ### New
 * Function `custom_eucast_rules()` that brings support for custom AMR rules in `eucast_rules()`
+* Support for all four methods to determine first isolates as summarised by Hindler *et al* (doi: [10.1086/511864](https://doi.org/10.1086/511864)): isolate-based, patient-based, episode-based and phenotype-based. The last method is now the default.
+  * Since fungal isolates can also be selected, new functions `key_antimicrobials()` and `all_antimicrobials()` have replaced the now deprecated function `key_antibiotics()`
+  * Using `key_antimicrobials()` still only selects six preferred antibiotics for Gram-negatives, six for Gram-positives, and six universal antibiotics. It has a new `antifungal` argument to set antifungal agents (antimycotics).
+  * The `first_isolate()` function gained the argument `method` that has to be "phenotype-based", "episode-based", "patient-based", or "isolate-based". The old behaviour is equal to "episode-based", while the new default is "phenotype-based".
+  * Using `type == "points"` in the `first_isolate()` function for phenotype-based selection will now consider all antimicrobial drugs in the data set, using the new `all_antimicrobials()`
+  * The `first_isolate()` function can now take a vector of values for `col_keyantibiotics` and can have an episode length of `Inf`
+  * The `filter_first_isolate()` function has not changed, as it uses the episode-based method. The `filter_first_weighted_isolate()` may now include more isolates as uses the phenotype-based method.
+  * The documentation of the `first_isolate()` and `key_antimicrobials()` functions has been completely rewritten.
 
 ### Changed
 * Custom MDRO guidelines (`mdro()`, `custom_mdro_guideline()`):
@@ -12,7 +20,6 @@
 * The `example_isolates` data set now contains some (fictitious) zero-year old patients
 * Fix for minor translation errors
 * Printing of microbial codes in a `data.frame` or `tibble` now gives a warning if the data contains old microbial codes (from a previous AMR package version)
-* `first_isolate()` can now take a vector of values for `col_keyantibiotics` and can have an episode length of `Inf`
 * Extended the `like()` functions:
   * Now checks if `pattern` is a *valid* regular expression
   * Added `%unlike%` and `%unlike_case%` (as negations of the existing `%like%` and `%like_case%`). This greatly improves readability:
@@ -25,9 +32,6 @@
 * Fixed an installation error on R-3.0
 * Added `info` argument to `as.mo()` to turn on/off the progress bar
 * Fixed a bug that `col_mo` for some functions (esp. `eucast_rules()` and `mdro()`) could not be column names of the `microorganisms` data set as it would throw an error
-* Using `first_isolate()` with key antibiotics:
-  * Fixed a bug in the algorithm when using `type == "points"`, that now leads to inclusion of slightly more isolates
-  * Big speed improvement for `key_antibiotics_equal()` when using `type == "points"`
 
 
 # AMR 1.6.0

@@ -19,12 +19,13 @@ first_isolate(
   col_testcode = NULL,
   col_specimen = NULL,
   col_icu = NULL,
-  col_keyantibiotics = NULL,
+  col_keyantimicrobials = NULL,
   episode_days = 365,
   testcodes_exclude = NULL,
   icu_exclude = FALSE,
   specimen_group = NULL,
-  type = "keyantibiotics",
+  type = "points",
+  method = c("phenotype-based", "episode-based", "patient-based", "isolate-based"),
   ignore_I = TRUE,
   points_threshold = 2,
   info = interactive(),
@@ -38,6 +39,7 @@ filter_first_isolate(
   col_date = NULL,
   col_patient_id = NULL,
   col_mo = NULL,
+  method = "episode-based",
   ...
 )
 
@@ -46,7 +48,7 @@ filter_first_weighted_isolate(
   col_date = NULL,
   col_patient_id = NULL,
   col_mo = NULL,
-  col_keyantibiotics = NULL,
+  method = "phenotype-based",
   ...
 )
 }
@@ -65,7 +67,7 @@ filter_first_weighted_isolate(
 
 \item{col_icu}{column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU)}
 
-\item{col_keyantibiotics}{column name of the key antibiotics to determine first (weighted) isolates, see \code{\link[=key_antibiotics]{key_antibiotics()}}. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use \code{col_keyantibiotics = FALSE} to prevent this. Can also be the output of \code{\link[=key_antibiotics]{key_antibiotics()}}.}
+\item{col_keyantimicrobials}{(only useful when \code{method = "phenotype-based"}) column name of the key antimicrobials to determine first (weighted) isolates, see \code{\link[=key_antimicrobials]{key_antimicrobials()}}. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' or 'antimicrobials' (case insensitive). Use \code{col_keyantimicrobials = FALSE} to prevent this. Can also be the output of \code{\link[=key_antimicrobials]{key_antimicrobials()}}.}
 
 \item{episode_days}{episode in days after which a genus/species combination will be determined as 'first isolate' again. The default of 365 days is based on the guideline by CLSI, see \emph{Source}.}
 
@@ -75,11 +77,13 @@ filter_first_weighted_isolate(
 
 \item{specimen_group}{value in the column set with \code{col_specimen} to filter on}
 
-\item{type}{type to determine weighed isolates; can be \code{"keyantibiotics"} or \code{"points"}, see \emph{Details}}
+\item{type}{type to determine weighed isolates; can be \code{"keyantimicrobials"} or \code{"points"}, see \emph{Details}}
 
-\item{ignore_I}{logical to indicate whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantibiotics"}, see \emph{Details}}
+\item{method}{the algorithm to apply, either \code{"phenotype-based"}, \code{"episode-based"}, \code{"patient-based"} or \code{"isolate-based"} (can be abbreviated), see \emph{Details}}
 
-\item{points_threshold}{points until the comparison of key antibiotics will lead to inclusion of an isolate when \code{type = "points"}, see \emph{Details}}
+\item{ignore_I}{logical to indicate whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantimicrobials"}, see \emph{Details}}
+
+\item{points_threshold}{minimum number of points to require before differences in the antibiogram will lead to inclusion of an isolate when \code{type = "points"}, see \emph{Details}}
 
 \item{info}{a \link{logical} to indicate info should be printed, defaults to \code{TRUE} only in interactive mode}
 
@@ -87,7 +91,7 @@ filter_first_weighted_isolate(
 
 \item{include_untested_rsi}{logical to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use \code{include_untested_rsi = FALSE} to always return \code{FALSE} for such rows. This checks the data set for columns of class \verb{<rsi>} and consequently requires transforming columns with antibiotic results using \code{\link[=as.rsi]{as.rsi()}} first.}
 
-\item{...}{arguments passed on to \code{\link[=first_isolate]{first_isolate()}} when using \code{\link[=filter_first_isolate]{filter_first_isolate()}}, or arguments passed on to \code{\link[=key_antibiotics]{key_antibiotics()}} when using \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_isolate()}}}
+\item{...}{arguments passed on to \code{\link[=first_isolate]{first_isolate()}} when using \code{\link[=filter_first_isolate]{filter_first_isolate()}}, or arguments passed on to \code{\link[=key_antimicrobials]{key_antimicrobials()}} otherwise (such as \code{universal}, \code{gram_negative}, \code{gram_positive})}
 }
 \value{
 A \code{\link{logical}} vector
@@ -96,47 +100,77 @@ A \code{\link{logical}} vector
 Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use \code{\link[=is_new_episode]{is_new_episode()}} that also supports grouping with the \code{dplyr} package.
 }
 \details{
+To conduct epidemiological analyses on antimicrobial resistance data, only so-called first isolates should be included to prevent overestimation and underestimation of antimicrobial resistance. Different algorithms can be used to do so, see below.
+
 These functions are context-aware. This means that then the \code{x} argument can be left blank, see \emph{Examples}.
 
 The \code{\link[=first_isolate]{first_isolate()}} function is a wrapper around the \code{\link[=is_new_episode]{is_new_episode()}} function, but more efficient for data sets containing microorganism codes or names.
 
 All isolates with a microbial ID of \code{NA} will be excluded as first isolate.
-\subsection{Why this is so Important}{
+\subsection{Different algorithms}{
 
-To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode \href{https://pubmed.ncbi.nlm.nih.gov/17304462/}{(Hindler \emph{et al.} 2007)}. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all \emph{S. aureus} isolates would be overestimated, because you included this MRSA more than once. It would be \href{https://en.wikipedia.org/wiki/Selection_bias}{selection bias}.
+According to Hindler \emph{et al.} (2007, \doi{10.1086/511864}), there are different algorithms to select first isolates with increasing reliability: isolate-based, patient-based, episode-based and phenotype-based. All algorithms select on a combination of the taxonomic genus and species (not subspecies).
+
+All mentioned algorithms are covered in the \code{\link[=first_isolate]{first_isolate()}} function:\tabular{ll}{
+   \strong{Algorithm} \tab \strong{Function to apply} \cr
+   Isolate-based \tab \code{first_isolate(x, method = "isolate-based")} \cr
+   \emph{(= all isolates)} \tab  \cr
+    \tab  \cr
+    \tab  \cr
+   Patient-based \tab \code{first_isolate(x, method = "patient-based")} \cr
+   \emph{(= first isolate per patient)} \tab  \cr
+    \tab  \cr
+    \tab  \cr
+   Episode-based \tab \code{first_isolate(x, method = "episode-based")}, or: \cr
+   \emph{(= first isolate per episode)} \tab  \cr
+   - 7-Day interval from initial isolate \tab - \code{first_isolate(x, method = "e", episode_days = 7)} \cr
+   - 30-Day interval from initial isolate \tab - \code{first_isolate(x, method = "e", episode_days = 30)} \cr
+    \tab  \cr
+    \tab  \cr
+   Phenotype-based \tab \code{first_isolate(x, method = "phenotype-based")}, or: \cr
+   \emph{(= first isolate per phenotype)} \tab  \cr
+   - Major difference in any antimicrobial result \tab - \code{first_isolate(x, type = "points")} \cr
+   - Any difference in key antimicrobial results \tab - \code{first_isolate(x, type = "keyantimicrobials")} \cr
 }
 
-\subsection{\verb{filter_*()} Shortcuts}{
+\subsection{Isolate-based}{
 
-The functions \code{\link[=filter_first_isolate]{filter_first_isolate()}} and \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_isolate()}} are helper functions to quickly filter on first isolates.
-
-The function \code{\link[=filter_first_isolate]{filter_first_isolate()}} is essentially equal to either:\preformatted{  x[first_isolate(x, ...), ]
-  
-  x \%>\% filter(first_isolate(...))
+This algorithm does not require any selection, as all isolates should be included. It does, however, respect all arguments set in the \code{\link[=first_isolate]{first_isolate()}} function. For example, the default setting for \code{include_unknown} (\code{FALSE}) will omit selection of rows without a microbial ID.
 }
 
-The function \code{\link[=filter_first_weighted_isolate]{filter_first_weighted_isolate()}} is essentially equal to:\preformatted{  x \%>\%
-    mutate(keyab = key_antibiotics(.)) \%>\%
-    mutate(only_weighted_firsts = first_isolate(x,
-                                                col_keyantibiotics = "keyab", ...)) \%>\%
-    filter(only_weighted_firsts == TRUE) \%>\%
-    select(-only_weighted_firsts, -keyab)
-}
-}
-}
-\section{Key Antibiotics}{
+\subsection{Patient-based}{
 
-There are two ways to determine whether isolates can be included as first weighted isolates which will give generally the same results:
+To include every genus-species combination per patient once, set the \code{episode_days} to \code{Inf}. Although often inappropriate, this algorithm makes sure that no duplicate isolates are selected from the same patient.
+}
+
+\subsection{Episode-based}{
+
+To include every genus-species combination per patient episode once, set the \code{episode_days} to a sensible number of days. Depending on the type of analysis, this could be 14, 30, 60 or 365. Short episodes are common for analysing specific hospital or ward data, long episodes are common for analysing regional and national data.
+
+This is the most common algorithm to correct for duplicate isolates. Patients are categorised into episodes based on their ID and dates (e.g., the date of specimen receipt or laboratory result). While this is a common algorithm, it does not take into account antimicrobial test results. This means that e.g. a methicillin-resistant \emph{Staphylococcus aureus} (MRSA) isolate cannot be differentiated from a wildtype \emph{Staphylococcus aureus} isolate.
+}
+
+\subsection{Phenotype-based}{
+
+This is a more reliable algorithm, since it also \emph{weighs} the antibiogram (antimicrobial test results) yielding so-called 'first weighted isolates'. There are two different methods to weigh the antibiogram:
 \enumerate{
-\item Using \code{type = "keyantibiotics"} and argument \code{ignore_I}
-
-Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With \code{ignore_I = FALSE}, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. Read more about this in the \code{\link[=key_antibiotics]{key_antibiotics()}} function.
 \item Using \code{type = "points"} and argument \code{points_threshold}
 
-A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds \code{points_threshold}, which defaults to \code{2}, an isolate will be (re)selected as a first weighted isolate.
-}
+This method weighs \emph{all} antimicrobial agents available in the data set. Any difference from I to S or R (or vice versa) counts as 0.5 points, a difference from S to R (or vice versa) counts as 1 point. When the sum of points exceeds \code{points_threshold}, which defaults to \code{2}, an isolate will be selected as a first weighted isolate.
+
+All antimicrobials are internally selected using the \code{\link[=all_antimicrobials]{all_antimicrobials()}} function. The output of this function does not need to be passed to the \code{\link[=first_isolate]{first_isolate()}} function.
+\item Using \code{type = "keyantimicrobials"} and argument \code{ignore_I}
+
+This method only weighs specific antimicrobial agents, called \emph{key antimicrobials}. Any difference from S to R (or vice versa) in these key antimicrobials will select an isolate as a first weighted isolate. With \code{ignore_I = FALSE}, also differences from I to S or R (or vice versa) will lead to this.
+
+Key antimicrobials are internally selected using the \code{\link[=key_antimicrobials]{key_antimicrobials()}} function, but can also be added manually as a variable to the data and set in the \code{col_keyantimicrobials} argument. Another option is to pass the output of the \code{\link[=key_antimicrobials]{key_antimicrobials()}} function directly to the \code{col_keyantimicrobials} argument.
 }
 
+The default algorithm is phenotype-based (using \code{type = "points"}) and episode-based (using \code{episode_days = 365}). This makes sure that every genus-species combination is selected per patient once per year, while taking into account all antimicrobial test results.
+}
+
+}
+}
 \section{Stable Lifecycle}{
 
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
@@ -155,7 +189,6 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 # See ?example_isolates.
 
 example_isolates[first_isolate(example_isolates), ]
-
 \donttest{
 # faster way, only works in R 3.2 and later:
 example_isolates[first_isolate(), ]
@@ -193,11 +226,11 @@ if (require("dplyr")) {
  
   # Have a look at A and B.
   # B is more reliable because every isolate is counted only once.
-  # Gentamicin resistance in hospital D appears to be 3.7\% higher than
+  # Gentamicin resistance in hospital D appears to be 4.2\% higher than
   # when you (erroneously) would have used all isolates for analysis.
 }
 }
 }
 \seealso{
-\code{\link[=key_antibiotics]{key_antibiotics()}}
+\code{\link[=key_antimicrobials]{key_antimicrobials()}}
 }

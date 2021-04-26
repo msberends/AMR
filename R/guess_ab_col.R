@@ -102,6 +102,7 @@ get_column_abx <- function(x,
                            verbose = FALSE,
                            info = TRUE,
                            only_rsi_columns = FALSE,
+                           sort = TRUE,
                            ...) {
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(soft_dependencies, allow_class = "character", allow_NULL = TRUE)
@@ -109,6 +110,7 @@ get_column_abx <- function(x,
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
   meet_criteria(info, allow_class = "logical", has_length = 1)
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  meet_criteria(sort, allow_class = "logical", has_length = 1)
   
   if (info == TRUE) {
     message_("Auto-guessing columns suitable for analysis", appendLF = FALSE, as_note = FALSE)
@@ -186,11 +188,15 @@ get_column_abx <- function(x,
   }
   
   # sort on name
-  x <- x[order(names(x), x)]
+  if (sort == TRUE) {
+    x <- x[order(names(x), x)]
+  }
   duplicates <- c(x[duplicated(x)], x[duplicated(names(x))]) 
   duplicates <- duplicates[unique(names(duplicates))]
   x <- c(x[!names(x) %in% names(duplicates)], duplicates)
-  x <- x[order(names(x), x)]
+  if (sort == TRUE) {
+    x <- x[order(names(x), x)]
+  }
   
   # succeeded with auto-guessing
   if (info == TRUE) {

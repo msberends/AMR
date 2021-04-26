@@ -155,7 +155,7 @@ reference:
     - "`count`"
     - "`is_new_episode`"
     - "`first_isolate`"
-    - "`key_antibiotics`"
+    - "`key_antimicrobials`"
     - "`mdro`"
     - "`count`"
     - "`plot`"

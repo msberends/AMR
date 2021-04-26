@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9010</span>
       </span>
     </div>
 
@@ -236,19 +236,33 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1609009" class="section level1">
-<h1 class="page-header" data-toc-text="1.6.0.9009">
-<a href="#amr-1609009" class="anchor"></a>AMR 1.6.0.9009<small> Unreleased </small>
+    <div id="amr-1609010" class="section level1">
+<h1 class="page-header" data-toc-text="1.6.0.9010">
+<a href="#amr-1609010" class="anchor"></a>AMR 1.6.0.9010<small> Unreleased </small>
 </h1>
-<div id="last-updated-23-april-2021" class="section level2">
+<div id="last-updated-26-april-2021" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-23-april-2021" class="anchor"></a><small>Last updated: 23 April 2021</small>
+<a href="#last-updated-26-april-2021" class="anchor"></a><small>Last updated: 26 April 2021</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h3>
 <ul>
 <li>Function <code><a href="../reference/custom_eucast_rules.html">custom_eucast_rules()</a></code> that brings support for custom AMR rules in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>
+</li>
+<li>Support for all four methods to determine first isolates as summarised by Hindler <em>et al</em> (doi: <a href="https://doi.org/10.1086/511864">10.1086/511864</a>): isolate-based, patient-based, episode-based and phenotype-based. The last method is now the default.
+<ul>
+<li>Since fungal isolates can also be selected, new functions <code><a href="../reference/key_antimicrobials.html">key_antimicrobials()</a></code> and <code><a href="../reference/key_antimicrobials.html">all_antimicrobials()</a></code> have replaced the now deprecated function <code><a href="../reference/AMR-deprecated.html">key_antibiotics()</a></code>
+</li>
+<li>Using <code><a href="../reference/key_antimicrobials.html">key_antimicrobials()</a></code> still only selects six preferred antibiotics for Gram-negatives, six for Gram-positives, and six universal antibiotics. It has a new <code>antifungal</code> argument to set antifungal agents (antimycotics).</li>
+<li>The <code><a href="../reference/first_isolate.html">first_isolate()</a></code> function gained the argument <code>method</code> that has to be “phenotype-based”, “episode-based”, “patient-based”, or “isolate-based”. The old behaviour is equal to “episode-based”, while the new default is “phenotype-based”.</li>
+<li>Using <code>type == "points"</code> in the <code><a href="../reference/first_isolate.html">first_isolate()</a></code> function for phenotype-based selection will now consider all antimicrobial drugs in the data set, using the new <code><a href="../reference/key_antimicrobials.html">all_antimicrobials()</a></code>
+</li>
+<li>The <code><a href="../reference/first_isolate.html">first_isolate()</a></code> function can now take a vector of values for <code>col_keyantibiotics</code> and can have an episode length of <code>Inf</code>
+</li>
+<li>The <code><a href="../reference/first_isolate.html">filter_first_isolate()</a></code> function has not changed, as it uses the episode-based method. The <code><a href="../reference/first_isolate.html">filter_first_weighted_isolate()</a></code> may now include more isolates as uses the phenotype-based method.</li>
+<li>The documentation of the <code><a href="../reference/first_isolate.html">first_isolate()</a></code> and <code><a href="../reference/key_antimicrobials.html">key_antimicrobials()</a></code> functions has been completely rewritten.</li>
+</ul>
 </li>
 </ul>
 </div>
@@ -267,9 +281,6 @@
 <li>The <code>example_isolates</code> data set now contains some (fictitious) zero-year old patients</li>
 <li>Fix for minor translation errors</li>
 <li>Printing of microbial codes in a <code>data.frame</code> or <code>tibble</code> now gives a warning if the data contains old microbial codes (from a previous AMR package version)</li>
-<li>
-<code><a href="../reference/first_isolate.html">first_isolate()</a></code> can now take a vector of values for <code>col_keyantibiotics</code> and can have an episode length of <code>Inf</code>
-</li>
 <li>Extended the <code><a href="../reference/like.html">like()</a></code> functions:
 <ul>
 <li><p>Now checks if <code>pattern</code> is a <em>valid</em> regular expression</p></li>
@@ -287,13 +298,6 @@
 <li>Fixed an installation error on R-3.0</li>
 <li>Added <code>info</code> argument to <code><a href="../reference/as.mo.html">as.mo()</a></code> to turn on/off the progress bar</li>
 <li>Fixed a bug that <code>col_mo</code> for some functions (esp. <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> and <code><a href="../reference/mdro.html">mdro()</a></code>) could not be column names of the <code>microorganisms</code> data set as it would throw an error</li>
-<li>Using <code><a href="../reference/first_isolate.html">first_isolate()</a></code> with key antibiotics:
-<ul>
-<li>Fixed a bug in the algorithm when using <code>type == "points"</code>, that now leads to inclusion of slightly more isolates</li>
-<li>Big speed improvement for <code><a href="../reference/key_antibiotics.html">key_antibiotics_equal()</a></code> when using <code>type == "points"</code>
-</li>
-</ul>
-</li>
 </ul>
 </div>
 </div>
@@ -487,7 +491,7 @@
 <li>
 <code><a href="../reference/first_isolate.html">first_isolate()</a></code>,</li>
 <li>
-<code><a href="../reference/key_antibiotics.html">key_antibiotics()</a></code>,</li>
+<code><a href="../reference/AMR-deprecated.html">key_antibiotics()</a></code>,</li>
 <li>
 <code><a href="../reference/mdro.html">mdro()</a></code>,</li>
 <li>
@@ -1205,7 +1209,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li>Renamed function <code>p.symbol()</code> to <code><a href="../reference/AMR-deprecated.html">p_symbol()</a></code> (the former is now deprecated and will be removed in a future version)</li>
 <li>Using negative values for <code>x</code> in <code><a href="../reference/age_groups.html">age_groups()</a></code> will now introduce <code>NA</code>s and not return an error anymore</li>
 <li>Fix for determining the system’s language</li>
-<li>Fix for <code><a href="../reference/key_antibiotics.html">key_antibiotics()</a></code> on foreign systems</li>
+<li>Fix for <code><a href="../reference/AMR-deprecated.html">key_antibiotics()</a></code> on foreign systems</li>
 <li>Added 80 new LIS codes for microorganisms</li>
 <li>Relabeled the factor levels of <code><a href="../reference/mdro.html">mdr_tb()</a></code>
 </li>
@@ -1654,7 +1658,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 </ul>
 </li>
 <li>Function <code><a href="../reference/ggplot_rsi.html">scale_y_percent()</a></code> now contains the <code>limits</code> argument</li>
-<li>Automatic argument filling for <code><a href="../reference/mdro.html">mdro()</a></code>, <code><a href="../reference/key_antibiotics.html">key_antibiotics()</a></code> and <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>
+<li>Automatic argument filling for <code><a href="../reference/mdro.html">mdro()</a></code>, <code><a href="../reference/AMR-deprecated.html">key_antibiotics()</a></code> and <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>
 </li>
 <li>Updated examples for resistance prediction (<code><a href="../reference/resistance_predict.html">resistance_predict()</a></code> function)</li>
 <li>Fix for <code><a href="../reference/as.mic.html">as.mic()</a></code> to support more values ending in (several) zeroes</li>

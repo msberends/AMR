@@ -1027,10 +1027,8 @@ summary.rsi <- function(object, ...) {
 #' @method c rsi
 #' @export
 #' @noRd
-c.rsi <- function(x, ...) {
-  y <- unlist(lapply(list(...), as.character))
-  x <- as.character(x)
-  as.rsi(c(x, y))
+c.rsi <- function(...) {
+  as.rsi(unlist(lapply(list(...), as.character)))
 }
 
 #' @method unique rsi

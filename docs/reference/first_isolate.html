@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9010</span>
       </span>
     </div>
 
@@ -250,12 +250,13 @@
   col_testcode <span class='op'>=</span> <span class='cn'>NULL</span>,
   col_specimen <span class='op'>=</span> <span class='cn'>NULL</span>,
   col_icu <span class='op'>=</span> <span class='cn'>NULL</span>,
-  col_keyantibiotics <span class='op'>=</span> <span class='cn'>NULL</span>,
+  col_keyantimicrobials <span class='op'>=</span> <span class='cn'>NULL</span>,
   episode_days <span class='op'>=</span> <span class='fl'>365</span>,
   testcodes_exclude <span class='op'>=</span> <span class='cn'>NULL</span>,
   icu_exclude <span class='op'>=</span> <span class='cn'>FALSE</span>,
   specimen_group <span class='op'>=</span> <span class='cn'>NULL</span>,
-  type <span class='op'>=</span> <span class='st'>"keyantibiotics"</span>,
+  type <span class='op'>=</span> <span class='st'>"points"</span>,
+  method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"phenotype-based"</span>, <span class='st'>"episode-based"</span>, <span class='st'>"patient-based"</span>, <span class='st'>"isolate-based"</span><span class='op'>)</span>,
   ignore_I <span class='op'>=</span> <span class='cn'>TRUE</span>,
   points_threshold <span class='op'>=</span> <span class='fl'>2</span>,
   info <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span>,
@@ -269,6 +270,7 @@
   col_date <span class='op'>=</span> <span class='cn'>NULL</span>,
   col_patient_id <span class='op'>=</span> <span class='cn'>NULL</span>,
   col_mo <span class='op'>=</span> <span class='cn'>NULL</span>,
+  method <span class='op'>=</span> <span class='st'>"episode-based"</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -277,7 +279,7 @@
   col_date <span class='op'>=</span> <span class='cn'>NULL</span>,
   col_patient_id <span class='op'>=</span> <span class='cn'>NULL</span>,
   col_mo <span class='op'>=</span> <span class='cn'>NULL</span>,
-  col_keyantibiotics <span class='op'>=</span> <span class='cn'>NULL</span>,
+  method <span class='op'>=</span> <span class='st'>"phenotype-based"</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -313,8 +315,8 @@
       <td><p>column name of the logicals (<code>TRUE</code>/<code>FALSE</code>) whether a ward or department is an Intensive Care Unit (ICU)</p></td>
     </tr>
     <tr>
-      <th>col_keyantibiotics</th>
-      <td><p>column name of the key antibiotics to determine first (weighted) isolates, see <code><a href='key_antibiotics.html'>key_antibiotics()</a></code>. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' (case insensitive). Use <code>col_keyantibiotics = FALSE</code> to prevent this. Can also be the output of <code><a href='key_antibiotics.html'>key_antibiotics()</a></code>.</p></td>
+      <th>col_keyantimicrobials</th>
+      <td><p>(only useful when <code>method = "phenotype-based"</code>) column name of the key antimicrobials to determine first (weighted) isolates, see <code><a href='key_antimicrobials.html'>key_antimicrobials()</a></code>. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' or 'antimicrobials' (case insensitive). Use <code>col_keyantimicrobials = FALSE</code> to prevent this. Can also be the output of <code><a href='key_antimicrobials.html'>key_antimicrobials()</a></code>.</p></td>
     </tr>
     <tr>
       <th>episode_days</th>
@@ -334,15 +336,19 @@
     </tr>
     <tr>
       <th>type</th>
-      <td><p>type to determine weighed isolates; can be <code>"keyantibiotics"</code> or <code>"points"</code>, see <em>Details</em></p></td>
+      <td><p>type to determine weighed isolates; can be <code>"keyantimicrobials"</code> or <code>"points"</code>, see <em>Details</em></p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>the algorithm to apply, either <code>"phenotype-based"</code>, <code>"episode-based"</code>, <code>"patient-based"</code> or <code>"isolate-based"</code> (can be abbreviated), see <em>Details</em></p></td>
     </tr>
     <tr>
       <th>ignore_I</th>
-      <td><p>logical to indicate whether antibiotic interpretations with <code>"I"</code> will be ignored when <code>type = "keyantibiotics"</code>, see <em>Details</em></p></td>
+      <td><p>logical to indicate whether antibiotic interpretations with <code>"I"</code> will be ignored when <code>type = "keyantimicrobials"</code>, see <em>Details</em></p></td>
     </tr>
     <tr>
       <th>points_threshold</th>
-      <td><p>points until the comparison of key antibiotics will lead to inclusion of an isolate when <code>type = "points"</code>, see <em>Details</em></p></td>
+      <td><p>minimum number of points to require before differences in the antibiogram will lead to inclusion of an isolate when <code>type = "points"</code>, see <em>Details</em></p></td>
     </tr>
     <tr>
       <th>info</th>
@@ -358,7 +364,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>arguments passed on to <code>first_isolate()</code> when using <code>filter_first_isolate()</code>, or arguments passed on to <code><a href='key_antibiotics.html'>key_antibiotics()</a></code> when using <code>filter_first_weighted_isolate()</code></p></td>
+      <td><p>arguments passed on to <code>first_isolate()</code> when using <code>filter_first_isolate()</code>, or arguments passed on to <code><a href='key_antimicrobials.html'>key_antimicrobials()</a></code> otherwise (such as <code>universal</code>, <code>gram_negative</code>, <code>gram_positive</code>)</p></td>
     </tr>
     </table>
 
@@ -371,41 +377,68 @@
     <p>A <code><a href='https://rdrr.io/r/base/logical.html'>logical</a></code> vector</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>These functions are context-aware. This means that then the <code>x</code> argument can be left blank, see <em>Examples</em>.</p>
+    <p>To conduct epidemiological analyses on antimicrobial resistance data, only so-called first isolates should be included to prevent overestimation and underestimation of antimicrobial resistance. Different algorithms can be used to do so, see below.</p>
+<p>These functions are context-aware. This means that then the <code>x</code> argument can be left blank, see <em>Examples</em>.</p>
 <p>The <code>first_isolate()</code> function is a wrapper around the <code><a href='get_episode.html'>is_new_episode()</a></code> function, but more efficient for data sets containing microorganism codes or names.</p>
-<p>All isolates with a microbial ID of <code>NA</code> will be excluded as first isolate.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Why this is so Important</h3>
+<p>All isolates with a microbial ID of <code>NA</code> will be excluded as first isolate.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Different algorithms</h3>
 
 
-<p>To conduct an analysis of antimicrobial resistance, you should only include the first isolate of every patient per episode <a href='https://pubmed.ncbi.nlm.nih.gov/17304462/'>(Hindler <em>et al.</em> 2007)</a>. If you would not do this, you could easily get an overestimate or underestimate of the resistance of an antibiotic. Imagine that a patient was admitted with an MRSA and that it was found in 5 different blood cultures the following week. The resistance percentage of oxacillin of all <em>S. aureus</em> isolates would be overestimated, because you included this MRSA more than once. It would be <a href='https://en.wikipedia.org/wiki/Selection_bias'>selection bias</a>.</p>
+<p>According to Hindler <em>et al.</em> (2007, doi: <a href='https://doi.org/10.1086/511864'>10.1086/511864</a>
+), there are different algorithms to select first isolates with increasing reliability: isolate-based, patient-based, episode-based and phenotype-based. All algorithms select on a combination of the taxonomic genus and species (not subspecies).</p>
+<p>All mentioned algorithms are covered in the <code>first_isolate()</code> function:</p><table class='table'>
+<tr><td><strong>Algorithm</strong></td><td><strong>Function to apply</strong></td></tr>
+<tr><td>Isolate-based</td><td><code>first_isolate(x, method = "isolate-based")</code></td></tr>
+<tr><td><em>(= all isolates)</em></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td>Patient-based</td><td><code>first_isolate(x, method = "patient-based")</code></td></tr>
+<tr><td><em>(= first isolate per patient)</em></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td>Episode-based</td><td><code>first_isolate(x, method = "episode-based")</code>, or:</td></tr>
+<tr><td><em>(= first isolate per episode)</em></td><td></td></tr>
+<tr><td>- 7-Day interval from initial isolate</td><td>- <code>first_isolate(x, method = "e", episode_days = 7)</code></td></tr>
+<tr><td>- 30-Day interval from initial isolate</td><td>- <code>first_isolate(x, method = "e", episode_days = 30)</code></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td>Phenotype-based</td><td><code>first_isolate(x, method = "phenotype-based")</code>, or:</td></tr>
+<tr><td><em>(= first isolate per phenotype)</em></td><td></td></tr>
+<tr><td>- Major difference in any antimicrobial result</td><td>- <code>first_isolate(x, type = "points")</code></td></tr>
+<tr><td>- Any difference in key antimicrobial results</td><td>- <code>first_isolate(x, type = "keyantimicrobials")</code></td></tr>
+</table>
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>filter_*()</code> Shortcuts</h3>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Isolate-based</h4>
 
 
-<p>The functions <code>filter_first_isolate()</code> and <code>filter_first_weighted_isolate()</code> are helper functions to quickly filter on first isolates.</p>
-<p>The function <code>filter_first_isolate()</code> is essentially equal to either:</p><pre>  <span class='va'>x</span><span class='op'>[</span><span class='fu'>first_isolate</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>, <span class='op'>]</span>
-  
-  <span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>first_isolate</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span><span class='op'>)</span>
-</pre>
+<p>This algorithm does not require any selection, as all isolates should be included. It does, however, respect all arguments set in the <code>first_isolate()</code> function. For example, the default setting for <code>include_unknown</code> (<code>FALSE</code>) will omit selection of rows without a microbial ID.</p>
 
-<p>The function <code>filter_first_weighted_isolate()</code> is essentially equal to:</p><pre>  <span class='va'>x</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>keyab <span class='op'>=</span> <span class='fu'><a href='key_antibiotics.html'>key_antibiotics</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>only_weighted_firsts <span class='op'>=</span> <span class='fu'>first_isolate</span><span class='op'>(</span><span class='va'>x</span>,
-                                                col_keyantibiotics <span class='op'>=</span> <span class='st'>"keyab"</span>, <span class='va'>...</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>only_weighted_firsts</span> <span class='op'>==</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>only_weighted_firsts</span>, <span class='op'>-</span><span class='va'>keyab</span><span class='op'>)</span>
-</pre>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Patient-based</h4>
 
 
-    <h2 class="hasAnchor" id="key-antibiotics"><a class="anchor" href="#key-antibiotics"></a>Key Antibiotics</h2>
+<p>To include every genus-species combination per patient once, set the <code>episode_days</code> to <code>Inf</code>. Although often inappropriate, this algorithm makes sure that no duplicate isolates are selected from the same patient.</p>
 
-    
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Episode-based</h4>
 
-<p>There are two ways to determine whether isolates can be included as first weighted isolates which will give generally the same results:</p><ol>
-<li><p>Using <code>type = "keyantibiotics"</code> and argument <code>ignore_I</code></p>
-<p>Any difference from S to R (or vice versa) will (re)select an isolate as a first weighted isolate. With <code>ignore_I = FALSE</code>, also differences from I to S|R (or vice versa) will lead to this. This is a reliable method and 30-35 times faster than method 2. Read more about this in the <code><a href='key_antibiotics.html'>key_antibiotics()</a></code> function.</p></li>
+
+<p>To include every genus-species combination per patient episode once, set the <code>episode_days</code> to a sensible number of days. Depending on the type of analysis, this could be 14, 30, 60 or 365. Short episodes are common for analysing specific hospital or ward data, long episodes are common for analysing regional and national data.</p>
+<p>This is the most common algorithm to correct for duplicate isolates. Patients are categorised into episodes based on their ID and dates (e.g., the date of specimen receipt or laboratory result). While this is a common algorithm, it does not take into account antimicrobial test results. This means that e.g. a methicillin-resistant <em>Staphylococcus aureus</em> (MRSA) isolate cannot be differentiated from a wildtype <em>Staphylococcus aureus</em> isolate.</p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Phenotype-based</h4>
+
+
+<p>This is a more reliable algorithm, since it also <em>weighs</em> the antibiogram (antimicrobial test results) yielding so-called 'first weighted isolates'. There are two different methods to weigh the antibiogram:</p><ol>
 <li><p>Using <code>type = "points"</code> and argument <code>points_threshold</code></p>
-<p>A difference from I to S|R (or vice versa) means 0.5 points, a difference from S to R (or vice versa) means 1 point. When the sum of points exceeds <code>points_threshold</code>, which defaults to <code>2</code>, an isolate will be (re)selected as a first weighted isolate.</p></li>
+<p>This method weighs <em>all</em> antimicrobial agents available in the data set. Any difference from I to S or R (or vice versa) counts as 0.5 points, a difference from S to R (or vice versa) counts as 1 point. When the sum of points exceeds <code>points_threshold</code>, which defaults to <code>2</code>, an isolate will be selected as a first weighted isolate.</p>
+<p>All antimicrobials are internally selected using the <code><a href='key_antimicrobials.html'>all_antimicrobials()</a></code> function. The output of this function does not need to be passed to the <code>first_isolate()</code> function.</p></li>
+<li><p>Using <code>type = "keyantimicrobials"</code> and argument <code>ignore_I</code></p>
+<p>This method only weighs specific antimicrobial agents, called <em>key antimicrobials</em>. Any difference from S to R (or vice versa) in these key antimicrobials will select an isolate as a first weighted isolate. With <code>ignore_I = FALSE</code>, also differences from I to S or R (or vice versa) will lead to this.</p>
+<p>Key antimicrobials are internally selected using the <code><a href='key_antimicrobials.html'>key_antimicrobials()</a></code> function, but can also be added manually as a variable to the data and set in the <code>col_keyantimicrobials</code> argument. Another option is to pass the output of the <code><a href='key_antimicrobials.html'>key_antimicrobials()</a></code> function directly to the <code>col_keyantimicrobials</code> argument.</p></li>
 </ol>
+
+<p>The default algorithm is phenotype-based (using <code>type = "points"</code>) and episode-based (using <code>episode_days = 365</code>). This makes sure that every genus-species combination is selected per patient once per year, while taking into account all antimicrobial test results.</p>
+
+
 
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable Lifecycle</h2>
 
@@ -421,14 +454,13 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <p>On our website <a href='https://msberends.github.io/AMR/'>https://msberends.github.io/AMR/</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR data analysis, the <a href='https://msberends.github.io/AMR/reference/'>complete documentation of all functions</a> and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>. As we would like to better understand the backgrounds and needs of our users, please <a href='https://msberends.github.io/AMR/survey.html'>participate in our survey</a>!</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='key_antibiotics.html'>key_antibiotics()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='key_antimicrobials.html'>key_antimicrobials()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># `example_isolates` is a data set available in the AMR package.</span>
 <span class='co'># See ?example_isolates.</span>
 
 <span class='va'>example_isolates</span><span class='op'>[</span><span class='fu'>first_isolate</span><span class='op'>(</span><span class='va'>example_isolates</span><span class='op'>)</span>, <span class='op'>]</span>
-
 <span class='co'># \donttest{</span>
 <span class='co'># faster way, only works in R 3.2 and later:</span>
 <span class='va'>example_isolates</span><span class='op'>[</span><span class='fu'>first_isolate</span><span class='op'>(</span><span class='op'>)</span>, <span class='op'>]</span>
@@ -466,7 +498,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
  
   <span class='co'># Have a look at A and B.</span>
   <span class='co'># B is more reliable because every isolate is counted only once.</span>
-  <span class='co'># Gentamicin resistance in hospital D appears to be 3.7% higher than</span>
+  <span class='co'># Gentamicin resistance in hospital D appears to be 4.2% higher than</span>
   <span class='co'># when you (erroneously) would have used all isolates for analysis.</span>
 <span class='op'>}</span>
 <span class='co'># }</span>

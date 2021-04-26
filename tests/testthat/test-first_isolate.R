@@ -28,58 +28,29 @@ context("first_isolate.R")
 test_that("first isolates work", {
   skip_on_cran()
   
-  # first isolates
-  expect_equal(
-    sum(
-      first_isolate(x = example_isolates,
-                    col_date = "date",
-                    col_patient_id = "patient_id",
-                    col_mo = "mo",
-                    info = TRUE),
-      na.rm = TRUE),
-    1300)
-
-  # first weighted isolates
-  ex_iso_with_keyab <- example_isolates
-  ex_iso_with_keyab$keyab <- key_antibiotics(example_isolates, warnings = FALSE)
-  expect_equal(
-    suppressWarnings(
-      sum(
-        first_isolate(x = ex_iso_with_keyab,
-                      # let syntax determine arguments automatically
-                      type = "keyantibiotics",
-                      info = TRUE),
-        na.rm = TRUE)),
-    1398)
-
-  # when not ignoring I
-  expect_equal(
-    suppressWarnings(
-      sum(
-        first_isolate(x = ex_iso_with_keyab,
-                      col_date = "date",
-                      col_patient_id = "patient_id",
-                      col_mo = "mo",
-                      col_keyantibiotics = "keyab",
-                      ignore_I = FALSE,
-                      type = "keyantibiotics",
-                      info = TRUE),
-        na.rm = TRUE)),
-    1421)
-  # when using points
-  expect_equal(
-    suppressWarnings(
-      sum(
-        first_isolate(x = ex_iso_with_keyab,
-                      col_date = "date",
-                      col_patient_id = "patient_id",
-                      col_mo = "mo",
-                      col_keyantibiotics = "keyab",
-                      type = "points",
-                      info = TRUE),
-        na.rm = TRUE)),
-    1348)
-
+  # all four methods
+  expect_equal(sum(first_isolate(x = example_isolates, method = "isolate-based", info = TRUE), na.rm = TRUE),
+               1984)
+  expect_equal(sum(first_isolate(x = example_isolates, method = "patient-based", info = TRUE), na.rm = TRUE),
+               1265)
+  expect_equal(sum(first_isolate(x = example_isolates, method = "episode-based", info = TRUE), na.rm = TRUE),
+               1300)
+  expect_equal(sum(first_isolate(x = example_isolates, method = "phenotype-based", info = TRUE), na.rm = TRUE),
+               1379)
+  
+  # Phenotype-based, using key antimicrobials
+  expect_equal(sum(first_isolate(x = example_isolates,
+                                 method = "phenotype-based",
+                                 type = "keyantimicrobials",
+                                 antifungal = NULL, info = TRUE), na.rm = TRUE),
+               1395)
+  expect_equal(sum(first_isolate(x = example_isolates,
+                                 method = "phenotype-based",
+                                 type = "keyantimicrobials",
+                                 antifungal = NULL, info = TRUE, ignore_I = FALSE), na.rm = TRUE),
+               1418)
+  
+  
   # first non-ICU isolates
   expect_equal(
     sum(
@@ -91,7 +62,7 @@ test_that("first isolates work", {
                     info = TRUE,
                     icu_exclude = TRUE),
       na.rm = TRUE),
-    881)
+    941)
 
   # set 1500 random observations to be of specimen type 'Urine'
   random_rows <- sample(x = 1:2000, size = 1500, replace = FALSE)
@@ -157,11 +128,13 @@ test_that("first isolates work", {
                      mutate(mo = as.character(mo)) %>%
                      first_isolate(col_date = "date",
                                    col_mo = "mo",
-                                   col_patient_id = "patient_id"),
+                                   col_patient_id = "patient_id",
+                                   info = FALSE),
                    example_isolates %>%
                      first_isolate(col_date = "date",
                                    col_mo = "mo",
-                                   col_patient_id = "patient_id"))
+                                   col_patient_id = "patient_id",
+                                   info = FALSE))
   
   # support for WHONET
   expect_message(example_isolates %>%
@@ -182,31 +155,29 @@ test_that("first isolates work", {
                     col_mo = "mo",
                     info = TRUE),
       na.rm = TRUE),
-    1305)
+    1382)
   
   # unknown MOs
   test_unknown <- example_isolates
   test_unknown$mo <- ifelse(test_unknown$mo == "B_ESCHR_COLI", "UNKNOWN", test_unknown$mo)
   expect_equal(sum(first_isolate(test_unknown, include_unknown = FALSE)), 
-               1045)
+               1108)
   expect_equal(sum(first_isolate(test_unknown, include_unknown = TRUE)),
-               1528)
+               1591)
   
   test_unknown$mo <- ifelse(test_unknown$mo == "UNKNOWN", NA, test_unknown$mo)
   expect_equal(sum(first_isolate(test_unknown)),
-               1045)
+               1108)
   
   # empty rsi results
   expect_equal(sum(first_isolate(example_isolates, include_untested_rsi = FALSE)),
-               1287)
+               1366)
   
   # shortcuts
   expect_identical(filter_first_isolate(example_isolates),
-                   subset(example_isolates, first_isolate(example_isolates)))
-  ex <- example_isolates
-  ex$keyab <- key_antibiotics(ex)
+                   subset(example_isolates, first_isolate(example_isolates, method = "episode-based")))
   expect_identical(filter_first_weighted_isolate(example_isolates),
-                   subset(example_isolates, first_isolate(ex)))
+                   subset(example_isolates, first_isolate(example_isolates, method = "phenotype-based")))
   
   # notice that all mo's are distinct, so all are TRUE
   expect_true(all(example_isolates %pm>%

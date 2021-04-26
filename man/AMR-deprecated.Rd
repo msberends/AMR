@@ -3,9 +3,47 @@
 \name{AMR-deprecated}
 \alias{AMR-deprecated}
 \alias{p_symbol}
+\alias{key_antibiotics}
+\alias{key_antibiotics_equal}
 \title{Deprecated Functions}
 \usage{
 p_symbol(p, emptychar = " ")
+
+key_antibiotics(
+  x = NULL,
+  col_mo = NULL,
+  universal_1 = guess_ab_col(x, "amoxicillin"),
+  universal_2 = guess_ab_col(x, "amoxicillin/clavulanic acid"),
+  universal_3 = guess_ab_col(x, "cefuroxime"),
+  universal_4 = guess_ab_col(x, "piperacillin/tazobactam"),
+  universal_5 = guess_ab_col(x, "ciprofloxacin"),
+  universal_6 = guess_ab_col(x, "trimethoprim/sulfamethoxazole"),
+  GramPos_1 = guess_ab_col(x, "vancomycin"),
+  GramPos_2 = guess_ab_col(x, "teicoplanin"),
+  GramPos_3 = guess_ab_col(x, "tetracycline"),
+  GramPos_4 = guess_ab_col(x, "erythromycin"),
+  GramPos_5 = guess_ab_col(x, "oxacillin"),
+  GramPos_6 = guess_ab_col(x, "rifampin"),
+  GramNeg_1 = guess_ab_col(x, "gentamicin"),
+  GramNeg_2 = guess_ab_col(x, "tobramycin"),
+  GramNeg_3 = guess_ab_col(x, "colistin"),
+  GramNeg_4 = guess_ab_col(x, "cefotaxime"),
+  GramNeg_5 = guess_ab_col(x, "ceftazidime"),
+  GramNeg_6 = guess_ab_col(x, "meropenem"),
+  warnings = TRUE,
+  ...
+)
+
+key_antibiotics_equal(
+  y,
+  z,
+  type = "keyantimicrobials",
+  ignore_I = TRUE,
+  points_threshold = 2,
+  info = FALSE,
+  na.rm = TRUE,
+  ...
+)
 }
 \description{
 These functions are so-called '\link{Deprecated}'. They will be removed in a future release. Using the functions will give a warning with the name of the function it has been replaced by (if there is one).

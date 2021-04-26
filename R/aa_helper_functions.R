@@ -190,8 +190,8 @@ search_type_in_df <- function(x, type, info = TRUE) {
   }
   # -- key antibiotics
   if (type == "keyantibiotics") {
-    if (any(colnames(x) %like% "^key.*(ab|antibiotics)")) {
-      found <- sort(colnames(x)[colnames(x) %like% "^key.*(ab|antibiotics)"])[1]
+    if (any(colnames(x) %like% "^key.*(ab|antibiotics|antimicrobials)")) {
+      found <- sort(colnames(x)[colnames(x) %like% "^key.*(ab|antibiotics|antimicrobials)"])[1]
     }
   }
   # -- date
@@ -318,7 +318,9 @@ word_wrap <- function(...,
   msg <- paste0(c(...), collapse = "")
   
   if (isTRUE(as_note)) {
-    msg <- paste0("NOTE: ", gsub("^note:? ?", "", msg, ignore.case = TRUE))
+    # \u2139 is a symbol officially named 'information source'
+    # \ufe0f can add the blue square around it: \u2139\ufe0f
+    msg <- paste0("\u2139 ", gsub("^note:? ?", "", msg, ignore.case = TRUE))
   }
   
   if (msg %like% "\n") {
@@ -352,8 +354,8 @@ word_wrap <- function(...,
   msg <- paste0(msg, collapse = " ")
   msg <- gsub("\n ", "\n", msg, fixed = TRUE)
   
-  if (msg_stripped %like% "^NOTE: ") {
-    indentation <- 6 + extra_indent
+  if (msg_stripped %like% "\u2139 ") {
+    indentation <- 2 + extra_indent
   } else if (msg_stripped %like% "^=> ") {
     indentation <- 3 + extra_indent
   } else {
