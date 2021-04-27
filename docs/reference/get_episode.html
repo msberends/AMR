@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9011</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9012</span>
       </span>
     </div>
 
@@ -337,7 +337,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
   <span class='co'># grouping on patients and microorganisms leads to the same results</span>
   <span class='co'># as first_isolate():</span>
   <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='first_isolate.html'>filter_first_isolate</a></span><span class='op'>(</span>include_unknown <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+    <span class='fu'><a href='first_isolate.html'>filter_first_isolate</a></span><span class='op'>(</span>include_unknown <span class='op'>=</span> <span class='cn'>TRUE</span>,
+                         method <span class='op'>=</span> <span class='st'>"episode-based"</span><span class='op'>)</span>
     
   <span class='va'>y</span> <span class='op'>&lt;-</span> <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>patient_id</span>, <span class='va'>mo</span><span class='op'>)</span> <span class='op'>%&gt;%</span>

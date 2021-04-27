@@ -47,7 +47,7 @@ test_that("episodes work", {
   
   suppressMessages(
     x <- example_isolates %>%
-      mutate(out = first_isolate(., include_unknown = TRUE, info = FALSE))
+      mutate(out = first_isolate(., include_unknown = TRUE, method = "episode-based", info = FALSE))
   )
   
   y <- example_isolates %>%

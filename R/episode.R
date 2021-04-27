@@ -88,7 +88,8 @@
 #'   # grouping on patients and microorganisms leads to the same results
 #'   # as first_isolate():
 #'   x <- example_isolates %>%
-#'     filter_first_isolate(include_unknown = TRUE)
+#'     filter_first_isolate(include_unknown = TRUE,
+#'                          method = "episode-based")
 #'     
 #'   y <- example_isolates %>%
 #'     group_by(patient_id, mo) %>%
