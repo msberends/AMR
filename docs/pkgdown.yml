@@ -1,4 +1,4 @@
-pandoc: 2.11.2
+pandoc: '2.6'
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
@@ -12,7 +12,7 @@ articles:
   datasets: datasets.html
   resistance_predict: resistance_predict.html
   welcome_to_AMR: welcome_to_AMR.html
-last_built: 2021-04-26T21:56Z
+last_built: 2021-04-27T08:22Z
 urls:
   reference: https://msberends.github.io/AMR//reference
   article: https://msberends.github.io/AMR//articles
