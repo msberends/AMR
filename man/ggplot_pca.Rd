@@ -100,7 +100,7 @@ ggplot_pca(
 
 \item{base_textsize}{the text size for all plot elements except the labels and arrows}
 
-\item{...}{Arguments passed on to functions}
+\item{...}{arguments passed on to functions}
 }
 \description{
 Produces a \code{ggplot2} variant of a so-called \href{https://en.wikipedia.org/wiki/Biplot}{biplot} for PCA (principal component analysis), but is more flexible and more appealing than the base \R \code{\link[=biplot]{biplot()}} function.

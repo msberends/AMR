@@ -25,7 +25,7 @@
 
 #' Determine First (Weighted) Isolates
 #'
-#' Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use [is_new_episode()] that also supports grouping with the `dplyr` package.
+#' Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. These functions support all four methods as summarised by Hindler *et al.* in 2007 (\doi{10.1086/511864}). To determine patient episodes not necessarily based on microorganisms, use [is_new_episode()] that also supports grouping with the `dplyr` package.
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param x a [data.frame] containing isolates. Can be left blank for automatic determination, see *Examples*.
 #' @param col_date column name of the result date (or date that is was received on the lab), defaults to the first column with a date class
@@ -40,15 +40,15 @@
 #' @param icu_exclude logical to indicate whether ICU isolates should be excluded (rows with value `TRUE` in the column set with `col_icu`)
 #' @param specimen_group value in the column set with `col_specimen` to filter on
 #' @param type type to determine weighed isolates; can be `"keyantimicrobials"` or `"points"`, see *Details*
-#' @param method the algorithm to apply, either `"phenotype-based"`, `"episode-based"`, `"patient-based"` or `"isolate-based"` (can be abbreviated), see *Details*
+#' @param method the method to apply, either `"phenotype-based"`, `"episode-based"`, `"patient-based"` or `"isolate-based"` (can be abbreviated), see *Details*. The default is `"phenotype-based"` if antimicrobial test results are present in the data, and `"episode-based"` otherwise.
 #' @param ignore_I logical to indicate whether antibiotic interpretations with `"I"` will be ignored when `type = "keyantimicrobials"`, see *Details*
 #' @param points_threshold minimum number of points to require before differences in the antibiogram will lead to inclusion of an isolate when `type = "points"`, see *Details*
 #' @param info a [logical] to indicate info should be printed, defaults to `TRUE` only in interactive mode
 #' @param include_unknown logical to indicate whether 'unknown' microorganisms should be included too, i.e. microbial code `"UNKNOWN"`, which defaults to `FALSE`. For WHONET users, this means that all records with organism code `"con"` (*contamination*) will be excluded at default. Isolates with a microbial ID of `NA` will always be excluded as first isolate.
 #' @param include_untested_rsi logical to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use `include_untested_rsi = FALSE` to always return `FALSE` for such rows. This checks the data set for columns of class `<rsi>` and consequently requires transforming columns with antibiotic results using [as.rsi()] first.
-#' @param ... arguments passed on to [first_isolate()] when using [filter_first_isolate()], or arguments passed on to [key_antimicrobials()] otherwise (such as `universal`, `gram_negative`, `gram_positive`)
+#' @param ... arguments passed on to [first_isolate()] when using [filter_first_isolate()], otherwise arguments passed on to [key_antimicrobials()] (such as `universal`, `gram_negative`, `gram_positive`)
 #' @details 
-#' To conduct epidemiological analyses on antimicrobial resistance data, only so-called first isolates should be included to prevent overestimation and underestimation of antimicrobial resistance. Different algorithms can be used to do so, see below.
+#' To conduct epidemiological analyses on antimicrobial resistance data, only so-called first isolates should be included to prevent overestimation and underestimation of antimicrobial resistance. Different methods can be used to do so, see below.
 #' 
 #' These functions are context-aware. This means that then the `x` argument can be left blank, see *Examples*.
 #' 
@@ -56,51 +56,51 @@
 #' 
 #' All isolates with a microbial ID of `NA` will be excluded as first isolate.
 #' 
-#' ## Different algorithms
+#' ## Different methods
 #' 
-#' According to Hindler *et al.* (2007, \doi{10.1086/511864}), there are different algorithms to select first isolates with increasing reliability: isolate-based, patient-based, episode-based and phenotype-based. All algorithms select on a combination of the taxonomic genus and species (not subspecies). 
+#' According to Hindler *et al.* (2007, \doi{10.1086/511864}), there are different methods (algorithms) to select first isolates with increasing reliability: isolate-based, patient-based, episode-based and phenotype-based. All methods select on a combination of the taxonomic genus and species (not subspecies). 
 #' 
-#' All mentioned algorithms are covered in the [first_isolate()] function:
+#' All mentioned methods are covered in the [first_isolate()] function:
 #' 
 #' 
-#' | **Algorithm**                                    | **Function to apply**                                 |
+#' | **Method**                                       | **Function to apply**                                 |
 #' |--------------------------------------------------|-------------------------------------------------------|
-#' | Isolate-based                                    | `first_isolate(x, method = "isolate-based")`          |
+#' | **Isolate-based**                                | `first_isolate(x, method = "isolate-based")`          |
 #' | *(= all isolates)*                               |                                                       |
 #' |                                                  |                                                       |
 #' |                                                  |                                                       |
-#' | Patient-based                                    | `first_isolate(x, method = "patient-based")`          |
+#' | **Patient-based**                                | `first_isolate(x, method = "patient-based")`          |
 #' | *(= first isolate per patient)*                  |                                                       |
 #' |                                                  |                                                       |
 #' |                                                  |                                                       |
-#' | Episode-based                                    | `first_isolate(x, method = "episode-based")`, or:     |
+#' | **Episode-based**                                | `first_isolate(x, method = "episode-based")`, or:     |
 #' | *(= first isolate per episode)*                  |                                                       |
 #' | - 7-Day interval from initial isolate            | - `first_isolate(x, method = "e", episode_days = 7)`  |
 #' | - 30-Day interval from initial isolate           | - `first_isolate(x, method = "e", episode_days = 30)` |
 #' |                                                  |                                                       |
 #' |                                                  |                                                       |
-#' | Phenotype-based                                  | `first_isolate(x, method = "phenotype-based")`, or:   |
+#' | **Phenotype-based**                              | `first_isolate(x, method = "phenotype-based")`, or:   |
 #' | *(= first isolate per phenotype)*                |                                                       |
 #' | - Major difference in any antimicrobial result   | - `first_isolate(x, type = "points")`                 |
 #' | - Any difference in key antimicrobial results    | - `first_isolate(x, type = "keyantimicrobials")`      |
 #' 
 #' ### Isolate-based
 #' 
-#' This algorithm does not require any selection, as all isolates should be included. It does, however, respect all arguments set in the [first_isolate()] function. For example, the default setting for `include_unknown` (`FALSE`) will omit selection of rows without a microbial ID.
+#' This method does not require any selection, as all isolates should be included. It does, however, respect all arguments set in the [first_isolate()] function. For example, the default setting for `include_unknown` (`FALSE`) will omit selection of rows without a microbial ID.
 #' 
 #' ### Patient-based
 #' 
-#' To include every genus-species combination per patient once, set the `episode_days` to `Inf`. Although often inappropriate, this algorithm makes sure that no duplicate isolates are selected from the same patient.
+#' To include every genus-species combination per patient once, set the `episode_days` to `Inf`. Although often inappropriate, this method makes sure that no duplicate isolates are selected from the same patient. In a large longitudinal data set, this could mean that isolates are *excluded* that were found years after the initial isolate.
 #' 
 #' ### Episode-based
 #' 
 #' To include every genus-species combination per patient episode once, set the `episode_days` to a sensible number of days. Depending on the type of analysis, this could be 14, 30, 60 or 365. Short episodes are common for analysing specific hospital or ward data, long episodes are common for analysing regional and national data.
 #' 
-#' This is the most common algorithm to correct for duplicate isolates. Patients are categorised into episodes based on their ID and dates (e.g., the date of specimen receipt or laboratory result). While this is a common algorithm, it does not take into account antimicrobial test results. This means that e.g. a methicillin-resistant *Staphylococcus aureus* (MRSA) isolate cannot be differentiated from a wildtype *Staphylococcus aureus* isolate.
+#' This is the most common method to correct for duplicate isolates. Patients are categorised into episodes based on their ID and dates (e.g., the date of specimen receipt or laboratory result). While this is a common method, it does not take into account antimicrobial test results. This means that e.g. a methicillin-resistant *Staphylococcus aureus* (MRSA) isolate cannot be differentiated from a wildtype *Staphylococcus aureus* isolate.
 #' 
 #' ### Phenotype-based
 #' 
-#' This is a more reliable algorithm, since it also *weighs* the antibiogram (antimicrobial test results) yielding so-called 'first weighted isolates'. There are two different methods to weigh the antibiogram:
+#' This is a more reliable method, since it also *weighs* the antibiogram (antimicrobial test results) yielding so-called 'first weighted isolates'. There are two different methods to weigh the antibiogram:
 #' 
 #' 1. Using `type = "points"` and argument `points_threshold`
 #' 
@@ -116,14 +116,16 @@
 #'    Key antimicrobials are internally selected using the [key_antimicrobials()] function, but can also be added manually as a variable to the data and set in the `col_keyantimicrobials` argument. Another option is to pass the output of the [key_antimicrobials()] function directly to the `col_keyantimicrobials` argument.
 #'    
 #'    
-#' The default algorithm is phenotype-based (using `type = "points"`) and episode-based (using `episode_days = 365`). This makes sure that every genus-species combination is selected per patient once per year, while taking into account all antimicrobial test results.
+#' The default method is phenotype-based (using `type = "points"`) and episode-based (using `episode_days = 365`). This makes sure that every genus-species combination is selected per patient once per year, while taking into account all antimicrobial test results. If no antimicrobial test results are available in the data set, only the episode-based method is applied at default.
 #' @rdname first_isolate
 #' @seealso [key_antimicrobials()]
 #' @export
 #' @return A [`logical`] vector
 #' @source Methodology of this function is strictly based on:
 #' 
-#' **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition**, 2014, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
+#' - **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition**, 2014, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
+#' 
+#' - Hindler JF and Stelling J (2007). **Analysis and Presentation of Cumulative Antibiograms: A New Consensus Guideline from the Clinical and Laboratory Standards Institute.** Clinical Infectious Diseases, 44(6), 867–873. \doi{10.1086/511864}
 #' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' # `example_isolates` is a data set available in the AMR package.
@@ -142,11 +144,9 @@
 #'   example_isolates %>%
 #'     filter(first_isolate())
 #'  
-#'   # short-hand versions:
+#'   # short-hand version:
 #'   example_isolates %>%
 #'     filter_first_isolate()
-#'   example_isolates %>%
-#'     filter_first_weighted_isolate()
 #'     
 #'  # grouped determination of first isolates (also prints group names):
 #'  example_isolates %>%
@@ -160,7 +160,7 @@
 #'               resistance = resistance(GEN))  # gentamicin resistance
 #'  
 #'   B <- example_isolates %>%
-#'     filter_first_weighted_isolate() %>%      # the 1st isolate filter
+#'     filter_first_isolate() %>%               # the 1st isolate filter
 #'     group_by(hospital_id) %>%
 #'     summarise(count = n_rsi(GEN),            # gentamicin availability
 #'               resistance = resistance(GEN))  # gentamicin resistance
@@ -220,9 +220,7 @@ first_isolate <- function(x = NULL,
   meet_criteria(col_specimen, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   meet_criteria(col_icu, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   # method
-  if (missing(method)) {
-    method <- method[1L]
-  }
+  method <- coerce_method(method)
   meet_criteria(method, allow_class = "character", has_length = 1, is_in = c("phenotype-based", "episode-based", "patient-based", "isolate-based", "p", "e", "i"))
   # key antimicrobials
   if (length(col_keyantimicrobials) > 1) {
@@ -233,7 +231,7 @@ first_isolate <- function(x = NULL,
     if (isFALSE(col_keyantimicrobials)) {
       col_keyantimicrobials <- NULL
       # method cannot be phenotype-based anymore
-      if (method %in% c("phenotype-based", "p")) {
+      if (method == "phenotype-based") {
         method <- "episode-based"
       }
     }
@@ -250,10 +248,17 @@ first_isolate <- function(x = NULL,
   meet_criteria(include_unknown, allow_class = "logical", has_length = 1)
   meet_criteria(include_untested_rsi, allow_class = "logical", has_length = 1)
   
-  method[method == "p"] <- "phenotype-based"
-  method[method == "e"] <- "episode-based"
-  method[method == "i"] <- "isolate-based"
-  if (info == TRUE) {
+  # remove data.table, grouping from tibbles, etc.
+  x <- as.data.frame(x, stringsAsFactors = FALSE)
+  
+  any_col_contains_rsi <- any(vapply(FUN.VALUE = logical(1), 
+                                     X = x, 
+                                     FUN = function(x) any(as.character(x) %in% c("R", "S", "I"), na.rm = TRUE),
+                                     USE.NAMES = FALSE))
+  if (method == "phenotype-based" & !any_col_contains_rsi) {
+    method <- "episode-based"
+  }
+  if (info == TRUE & message_not_thrown_before("first_isolate.method")) {
     message_(paste0("Determining first isolates using the '", font_bold(method), "' method",
                     ifelse(method %in% c("episode-based", "phenotype-based"),
                            ifelse(is.infinite(episode_days),
@@ -262,10 +267,8 @@ first_isolate <- function(x = NULL,
                            "")),
              as_note = FALSE,
              add_fn = font_black)
+    remember_thrown_message("first_isolate.method")
   }
-  
-  # remove data.table, grouping from tibbles, etc.
-  x <- as.data.frame(x, stringsAsFactors = FALSE)
   
   # try to find columns based on type
   # -- mo
@@ -360,10 +363,11 @@ first_isolate <- function(x = NULL,
     testcodes_exclude <- NULL
   }
   # remove testcodes
-  if (!is.null(testcodes_exclude) & info == TRUE) {
+  if (!is.null(testcodes_exclude) & info == TRUE & message_not_thrown_before("first_isolate.excludingtestcodes")) {
     message_("Excluding test codes: ", toString(paste0("'", testcodes_exclude, "'")),
              add_fn = font_black,
              as_note = FALSE)
+    remember_thrown_message("first_isolate.excludingtestcodes")
   }
   
   if (is.null(col_specimen)) {
@@ -373,10 +377,11 @@ first_isolate <- function(x = NULL,
   # filter on specimen group and keyantibiotics when they are filled in
   if (!is.null(specimen_group)) {
     check_columns_existance(col_specimen, x)
-    if (info == TRUE) {
+    if (info == TRUE & message_not_thrown_before("first_isolate.excludingspecimen")) {
       message_("Excluding other than specimen group '", specimen_group, "'",
                add_fn = font_black,
                as_note = FALSE)
+      remember_thrown_message("first_isolate.excludingspecimen")
     }
   }
   if (!is.null(col_keyantimicrobials)) {
@@ -449,18 +454,16 @@ first_isolate <- function(x = NULL,
                               FALSE,
                               TRUE)
   x$episode_group <- paste(x$newvar_patient_id, x$newvar_genus_species)
-  x$more_than_episode_ago <- unlist(lapply(unique(x$episode_group),
-                                           function(g,
-                                                    df = x,
-                                                    days = episode_days) {
-                                             is_new_episode(x = df[which(df$episode_group == g), ]$newvar_date,
-                                                            episode_days = days)
-                                           }))
+  x$more_than_episode_ago <- unlist(lapply(split(x$newvar_date,
+                                                 x$episode_group), 
+                                           is_new_episode,
+                                           episode_days = episode_days),
+                                    use.names = FALSE)
   
   weighted.notice <- ""
   if (!is.null(col_keyantimicrobials)) {
     weighted.notice <- "weighted "
-    if (info == TRUE) {
+    if (info == TRUE & message_not_thrown_before("first_isolate.type")) {
       if (type == "keyantimicrobials") {
         message_("Basing inclusion on key antimicrobials, ",
                  ifelse(ignore_I == FALSE, "not ", ""),
@@ -474,6 +477,7 @@ first_isolate <- function(x = NULL,
                  add_fn = font_black,
                  as_note = FALSE)
       }
+      remember_thrown_message("first_isolate.type")
     }
     type_param <- type
     
@@ -481,8 +485,7 @@ first_isolate <- function(x = NULL,
                                             z = pm_lag(x$newvar_key_ab),
                                             type = type_param,
                                             ignore_I = ignore_I,
-                                            points_threshold = points_threshold,
-                                            na.rm = TRUE)
+                                            points_threshold = points_threshold)
     # with key antibiotics
     x$newvar_first_isolate <- pm_if_else(x$newvar_row_index_sorted >= row.start &
                                            x$newvar_row_index_sorted <= row.end &
@@ -540,7 +543,8 @@ first_isolate <- function(x = NULL,
           }
         })
         message_("\nGroup: ", paste0(names(group), " = ", group, collapse = ", "), "\n",
-                 as_note = FALSE)
+                 as_note = FALSE,
+                 add_fn = font_red)
       }
     }
   }
@@ -608,7 +612,8 @@ filter_first_isolate <- function(x = NULL,
                                  col_date = NULL,
                                  col_patient_id = NULL,
                                  col_mo = NULL,
-                                 method = "episode-based",
+                                 episode_days = 365,
+                                 method = c("phenotype-based", "episode-based", "patient-based", "isolate-based"),
                                  ...) {
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
@@ -619,39 +624,27 @@ filter_first_isolate <- function(x = NULL,
   meet_criteria(col_date, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   meet_criteria(col_patient_id, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
-  meet_criteria(method, allow_class = "character", has_length = 1, is_in = c("phenotype-based", "episode-based", "patient-based", "isolate-based"))
+  meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = FALSE)
+  method <- coerce_method(method)
+  meet_criteria(method, allow_class = "character", has_length = 1, is_in = c("phenotype-based", "episode-based", "patient-based", "isolate-based", "p", "e", "i"))
   
   subset(x, first_isolate(x = x,
                           col_date = col_date,
                           col_patient_id = col_patient_id,
                           col_mo = col_mo,
+                          episode_days = episode_days,
                           method = method,
                           ...))
 }
 
-#' @rdname first_isolate
-#' @export
-filter_first_weighted_isolate <- function(x = NULL,
-                                          col_date = NULL,
-                                          col_patient_id = NULL,
-                                          col_mo = NULL,
-                                          method = "phenotype-based",
-                                          ...) {
-  if (is_null_or_grouped_tbl(x)) {
-    # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
-    # is also fix for using a grouped df as input (a dot as first argument)
-    x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
+coerce_method <- function(method) {
+  if (is.null(method)) {
+    return(method)
   }
-  meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
-  meet_criteria(col_date, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
-  meet_criteria(col_patient_id, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
-  meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
-  meet_criteria(method, allow_class = "character", has_length = 1, is_in = c("phenotype-based", "episode-based", "patient-based", "isolate-based"))
-  
-  subset(x, first_isolate(x = x,
-                          col_date = col_date,
-                          col_patient_id = col_patient_id,
-                          col_mo = col_mo,
-                          method = method,
-                          ...))
+  method <- tolower(as.character(method[1L]))
+  method[method %like% "^(p$|pheno)"] <- "phenotype-based"
+  method[method %like% "^(e$|episode)"] <- "episode-based"
+  method[method %like% "^patient"] <- "patient-based"
+  method[method %like% "^(i$|iso)"] <- "isolate-based"
+  method
 }

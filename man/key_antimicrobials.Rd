@@ -29,7 +29,6 @@ antimicrobials_equal(
   type = c("points", "keyantimicrobials"),
   ignore_I = TRUE,
   points_threshold = 2,
-  info = FALSE,
   ...
 )
 }
@@ -48,7 +47,7 @@ antimicrobials_equal(
 
 \item{only_rsi_columns}{a logical to indicate whether only columns must be included that were transformed to class \verb{<rsi>} (see \code{\link[=as.rsi]{as.rsi()}}) on beforehand (defaults to \code{FALSE})}
 
-\item{...}{ignored, allows for future extensions}
+\item{...}{ignored, only in place to allow future extensions}
 
 \item{y, z}{character vectors to compare}
 
@@ -57,8 +56,6 @@ antimicrobials_equal(
 \item{ignore_I}{logical to indicate whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantimicrobials"}, see \emph{Details}}
 
 \item{points_threshold}{minimum number of points to require before differences in the antibiogram will lead to inclusion of an isolate when \code{type = "points"}, see \emph{Details}}
-
-\item{info}{unused - previously used to indicate whether a progress bar should print}
 }
 \description{
 These functions can be used to determine first weighted isolates by considering the phenotype for isolate selection (see \code{\link[=first_isolate]{first_isolate()}}). Using a phenotype-based method to determine first isolates is more reliable than methods that disregard phenotypes.

@@ -29,4 +29,17 @@ test_that("deprecated functions work", {
   skip_on_cran()
   expect_identical(suppressWarnings(p_symbol(c(0.001, 0.01, 0.05, 0.1, 1, NA, 3))),
                    c("***", "**", "*", ".", " ", NA, NA))
+  
+  expect_warning(key_antibiotics(example_isolates))
+  expect_identical(suppressWarnings(key_antibiotics(example_isolates)),
+                   key_antimicrobials(example_isolates, antifungal = NULL))
+  
+  expect_warning(key_antibiotics_equal("S", "S"))
+  expect_identical(suppressWarnings(key_antibiotics_equal("S", "S")),
+                   antimicrobials_equal("S", "S", type = "keyantimicrobials"))
+  
+  expect_warning(filter_first_weighted_isolate(example_isolates))
+  expect_identical(suppressWarnings(filter_first_weighted_isolate(example_isolates)),
+                   filter_first_isolate(example_isolates))
+  
 })

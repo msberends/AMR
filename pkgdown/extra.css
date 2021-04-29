@@ -25,14 +25,18 @@
 # ==================================================================== #
 */
 
-/* R for Data Science (r4ds) */
-#r4ds a {
-  display: inline-flex;
-  align-items: center;
-  text-align: right;
+/* R for Data Science (r4ds) on vignettes (articles) */
+#r4ds {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
 }
-#r4ds img {
-  margin-left: 10px;
+#r4ds .txt {
+  width: 67%;
+}
+#r4ds .img {
+  width: 33%;
 }
 
 /* class for footer */
@@ -196,16 +200,20 @@ div[id^=last-updated] h2 {
 .table td {
   padding: 4px !important;
 }
-.table thead {
+.table thead,
+.template-reference-topic .table tr:first-child {
+  /* tables in manual are in LaTeX and thus have no thead */
   border-top: 2px solid black;
   border-bottom: 2px solid black;
 }
-.table thead ~ tbody {
+.table thead ~ tbody,
+.template-reference-topic .table tr:last-child {
   /* only when it has a header */
+  /* tables in manual are in LaTeX and thus have no thead */
   border-bottom: 2px solid black;
 }
 .table thead th {
-  text-align: inherit; 
+  /* text-align: inherit; */
 }
 /* all tables, including argument lists */
 table a:not(.btn) {
@@ -227,6 +235,8 @@ table a:not(.btn):hover {
 }
 .template-reference-topic h4 {
   font-size: 15px;
+  font-weight: bold;
+  padding-top: 35px;
 }
 
 .template-home h4 {

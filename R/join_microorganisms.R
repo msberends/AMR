@@ -33,7 +33,7 @@
 #' @param x existing table to join, or character vector
 #' @param by a variable to join by - if left empty will search for a column with class [`mo`] (created with [as.mo()]) or will be `"mo"` if that column name exists in `x`, could otherwise be a column name of `x` with values that exist in `microorganisms$mo` (such as `by = "bacteria_id"`), or another column in [microorganisms] (but then it should be named, like `by = c("bacteria_id" = "fullname")`)
 #' @param suffix if there are non-joined duplicate variables in `x` and `y`, these suffixes will be added to the output to disambiguate them. Should be a character vector of length 2.
-#' @param ... ignored
+#' @param ... ignored, only in place to allow future extensions
 #' @details **Note:** As opposed to the `join()` functions of `dplyr`, [character] vectors are supported and at default existing columns will get a suffix `"2"` and the newly joined columns will not get a suffix. 
 #' 
 #' If the `dplyr` package is installed, their join functions will be used. Otherwise, the much slower [merge()] function from base R will be used.

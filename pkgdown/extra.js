@@ -30,12 +30,6 @@ $('head').append('<!-- Updated Font Awesome library --><link rel="stylesheet" hr
 
 $(document).ready(function() {
 
-  // add SurveyMonkey
-  // $('body').append('<script>(function(t,e,s,o){var n,a,c;t.SMCX=t.SMCX||[],e.getElementById(o)||(n=e.getElementsByTagName(s),a=n[n.length-1],c=e.createElement(s),c.type="text/javascript",c.async=!0,c.id=o,c.src=["https:"===location.protocol?"https://":"http://","widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgd_2BrwaGaWbg59AiLjNGdPaaJiBHKqgXKIw46VauwBvZ67.js"].join(""),a.parentNode.insertBefore(c,a))})(window,document,"script","smcx-sdk");</script>');
-  // add link to survey at home sidebar
-  // $('.template-home #sidebar .list-unstyled:first').append('<li><strong>Please fill in our survey at</strong> <br><a href="https://www.surveymonkey.com/r/AMR_for_R" target="_blank">https://www.surveymonkey.com/r/AMR_for_R</a></li>');
-
-
   // remove version label from header
   $(".version.label").remove();
 
@@ -46,20 +40,32 @@ $(document).ready(function() {
     window.location.replace(url_new);
   }
 
-  // Replace 'Value' in manual to 'Returned value'
+  // replace 'Value' in manual with 'Returned value'
   $(".template-reference-topic h2#value").text("Returned value");
+  
+  // replace \donttest and \dontrun texts in Examples
+  $("pre.examples").html($("pre.examples").html().replaceAll("# \\donttest{", ""));
+  $("pre.examples").html($("pre.examples").html().replaceAll("# \\dontrun{", ""));
+  $("pre.examples").html($("pre.examples").html().replaceAll("# }", ""));
 
   // PR for 'R for Data Science' on How To pages
   if ($(".template-article").length > 0) {
-    $('#sidebar').prepend(
+    $('#pkgdown-sidebar').prepend(
     '<div id="r4ds">' +
-    '  <a target="_blank" href="https://r4ds.had.co.nz/">' +
-    '    Learn R reading this great book: R for Data Science.' +
-    '    <br><br>' +
-    '    Click to read it online - it was published for free.' +
-    '    <img src="https://github.com/msberends/AMR/raw/master/docs/cover_r4ds.png" height="100px">' +
-    '  </a>     ' +
-    '  <hr>' +
+    '  <div class="txt">' +
+    '    <p>' +
+    '      Learn R reading this great book: <i>R for Data Science</i>.' +
+    '      <br><br>' +
+    '      <a target="_blank" href="https://r4ds.had.co.nz/">' +
+    '        Click to read it online - it was published for free.' +
+    '      </a>' +
+    '    </p>' +
+    '  </div>' +
+    '  <div class="img">' +
+    '    <a target="_blank" href="https://r4ds.had.co.nz/">' +
+    '      <img src="https://github.com/msberends/AMR/raw/master/docs/cover_r4ds.png">' +
+    '    </a>' +
+    '  </div>' +
     '</div>');
   }
 
@@ -96,8 +102,8 @@ $(document).ready(function() {
   }
   $(".template-authors").html(doct_tit($(".template-authors").html()));
   $(".template-citation-authors").html(doct_tit($(".template-citation-authors").html()));
-  $('.template-citation-authors h1').eq(0).text('How to cite');
-  $('.template-citation-authors h1').eq(1).text('All contributors');
+  $('.template-citation-authors h1').eq(0).html("How to cite the <code>AMR</code> package");
+  $('.template-citation-authors h1').eq(1).html("All contributors of the <code>AMR</code> package");
   $(".developers").html(doct_tit($(".developers").html()));
   $(".developers a[href='authors.html']").text("All contributors...");
 

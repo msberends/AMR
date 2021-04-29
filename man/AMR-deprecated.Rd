@@ -3,11 +3,20 @@
 \name{AMR-deprecated}
 \alias{AMR-deprecated}
 \alias{p_symbol}
+\alias{filter_first_weighted_isolate}
 \alias{key_antibiotics}
 \alias{key_antibiotics_equal}
 \title{Deprecated Functions}
 \usage{
 p_symbol(p, emptychar = " ")
+
+filter_first_weighted_isolate(
+  x = NULL,
+  col_date = NULL,
+  col_patient_id = NULL,
+  col_mo = NULL,
+  ...
+)
 
 key_antibiotics(
   x = NULL,

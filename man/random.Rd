@@ -20,7 +20,7 @@ random_rsi(size, prob_RSI = c(0.33, 0.33, 0.33), ...)
 
 \item{ab}{any character that can be coerced to a valid antimicrobial agent code with \code{\link[=as.ab]{as.ab()}}}
 
-\item{...}{extension for future versions, not used at the moment}
+\item{...}{ignored, only in place to allow future extensions}
 
 \item{prob_RSI}{a vector of length 3: the probabilities for R (1st value), S (2nd value) and I (3rd value)}
 }

@@ -176,8 +176,7 @@ test_that("first isolates work", {
   # shortcuts
   expect_identical(filter_first_isolate(example_isolates),
                    subset(example_isolates, first_isolate(example_isolates, method = "episode-based")))
-  expect_identical(filter_first_weighted_isolate(example_isolates),
-                   subset(example_isolates, first_isolate(example_isolates, method = "phenotype-based")))
+
   
   # notice that all mo's are distinct, so all are TRUE
   expect_true(all(example_isolates %pm>%

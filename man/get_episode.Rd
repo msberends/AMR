@@ -14,7 +14,7 @@ is_new_episode(x, episode_days, ...)
 
 \item{episode_days}{required episode length in days, can also be less than a day or \code{Inf}, see \emph{Details}}
 
-\item{...}{currently not used}
+\item{...}{ignored, only in place to allow future extensions}
 }
 \value{
 \itemize{
@@ -28,9 +28,9 @@ These functions determine which items in a vector can be considered (the start o
 \details{
 Dates are first sorted from old to new. The oldest date will mark the start of the first episode. After this date, the next date will be marked that is at least \code{episode_days} days later than the start of the first episode. From that second marked date on, the next date will be marked that is at least \code{episode_days} days later than the start of the second episode which will be the start of the third episode, and so on. Before the vector is being returned, the original order will be restored.
 
-The \code{\link[=first_isolate]{first_isolate()}} function is a wrapper around the \code{\link[=is_new_episode]{is_new_episode()}} function, but is more efficient for data sets containing microorganism codes or names.
+The \code{\link[=first_isolate]{first_isolate()}} function is a wrapper around the \code{\link[=is_new_episode]{is_new_episode()}} function, but is more efficient for data sets containing microorganism codes or names and allows for different isolate selection methods.
 
-The \code{dplyr} package is not required for these functions to work, but these functions support \link[dplyr:group_by]{variable grouping} and work conveniently inside \code{dplyr} verbs such as \code{\link[dplyr:filter]{filter()}}, \code{\link[dplyr:mutate]{mutate()}} and \code{\link[dplyr:summarise]{summarise()}}.
+The \code{dplyr} package is not required for these functions to work, but these functions do support \link[dplyr:group_by]{variable grouping} and work conveniently inside \code{dplyr} verbs such as \code{\link[dplyr:filter]{filter()}}, \code{\link[dplyr:mutate]{mutate()}} and \code{\link[dplyr:summarise]{summarise()}}.
 }
 \section{Stable Lifecycle}{
 
@@ -87,8 +87,8 @@ if (require("dplyr")) {
               n_episodes_30  = sum(is_new_episode(date, episode_days = 30)))
     
     
-  # grouping on patients and microorganisms leads to the same results
-  # as first_isolate():
+  # grouping on patients and microorganisms leads to the same
+  # results as first_isolate() when using 'episode-based':
   x <- example_isolates \%>\%
     filter_first_isolate(include_unknown = TRUE,
                          method = "episode-based")

@@ -30,7 +30,7 @@ anti_join_microorganisms(x, by = NULL, ...)
 
 \item{suffix}{if there are non-joined duplicate variables in \code{x} and \code{y}, these suffixes will be added to the output to disambiguate them. Should be a character vector of length 2.}
 
-\item{...}{ignored}
+\item{...}{ignored, only in place to allow future extensions}
 }
 \description{
 Join the data set \link{microorganisms} easily to an existing table or character vector.

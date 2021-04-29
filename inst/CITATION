@@ -4,10 +4,11 @@ citEntry(
   entry        = "Article",
   title        = "AMR - An R Package for Working with Antimicrobial Resistance Data",
   author       = "M S Berends and C F Luz and A W Friedrich and B N M Sinha and C J Albers and C Glasner",
+  doi          = {10.1101/810622},
   journal      = "bioRxiv",
   publisher    = "Cold Spring Harbor Laboratory",
   year         = 2021,
-  url          = "https://doi.org/10.1101/810622",
+  url          = "https://www.biorxiv.org/content/10.1101/810622v4",
   textVersion  = "Berends MS, Luz CF et al. (2021). AMR - An R Package for Working with Antimicrobial Resistance Data. bioRxiv, https://doi.org/10.1101/810622"
 )
 

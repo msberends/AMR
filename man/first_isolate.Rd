@@ -3,12 +3,13 @@
 \name{first_isolate}
 \alias{first_isolate}
 \alias{filter_first_isolate}
-\alias{filter_first_weighted_isolate}
 \title{Determine First (Weighted) Isolates}
 \source{
 Methodology of this function is strictly based on:
-
-\strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
+\itemize{
+\item \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
+\item Hindler JF and Stelling J (2007). \strong{Analysis and Presentation of Cumulative Antibiograms: A New Consensus Guideline from the Clinical and Laboratory Standards Institute.} Clinical Infectious Diseases, 44(6), 867–873. \doi{10.1086/511864}
+}
 }
 \usage{
 first_isolate(
@@ -39,16 +40,8 @@ filter_first_isolate(
   col_date = NULL,
   col_patient_id = NULL,
   col_mo = NULL,
-  method = "episode-based",
-  ...
-)
-
-filter_first_weighted_isolate(
-  x = NULL,
-  col_date = NULL,
-  col_patient_id = NULL,
-  col_mo = NULL,
-  method = "phenotype-based",
+  episode_days = 365,
+  method = c("phenotype-based", "episode-based", "patient-based", "isolate-based"),
   ...
 )
 }
@@ -79,7 +72,7 @@ filter_first_weighted_isolate(
 
 \item{type}{type to determine weighed isolates; can be \code{"keyantimicrobials"} or \code{"points"}, see \emph{Details}}
 
-\item{method}{the algorithm to apply, either \code{"phenotype-based"}, \code{"episode-based"}, \code{"patient-based"} or \code{"isolate-based"} (can be abbreviated), see \emph{Details}}
+\item{method}{the method to apply, either \code{"phenotype-based"}, \code{"episode-based"}, \code{"patient-based"} or \code{"isolate-based"} (can be abbreviated), see \emph{Details}. The default is \code{"phenotype-based"} if antimicrobial test results are present in the data, and \code{"episode-based"} otherwise.}
 
 \item{ignore_I}{logical to indicate whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantimicrobials"}, see \emph{Details}}
 
@@ -91,43 +84,43 @@ filter_first_weighted_isolate(
 
 \item{include_untested_rsi}{logical to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use \code{include_untested_rsi = FALSE} to always return \code{FALSE} for such rows. This checks the data set for columns of class \verb{<rsi>} and consequently requires transforming columns with antibiotic results using \code{\link[=as.rsi]{as.rsi()}} first.}
 
-\item{...}{arguments passed on to \code{\link[=first_isolate]{first_isolate()}} when using \code{\link[=filter_first_isolate]{filter_first_isolate()}}, or arguments passed on to \code{\link[=key_antimicrobials]{key_antimicrobials()}} otherwise (such as \code{universal}, \code{gram_negative}, \code{gram_positive})}
+\item{...}{arguments passed on to \code{\link[=first_isolate]{first_isolate()}} when using \code{\link[=filter_first_isolate]{filter_first_isolate()}}, otherwise arguments passed on to \code{\link[=key_antimicrobials]{key_antimicrobials()}} (such as \code{universal}, \code{gram_negative}, \code{gram_positive})}
 }
 \value{
 A \code{\link{logical}} vector
 }
 \description{
-Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. To determine patient episodes not necessarily based on microorganisms, use \code{\link[=is_new_episode]{is_new_episode()}} that also supports grouping with the \code{dplyr} package.
+Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. These functions support all four methods as summarised by Hindler \emph{et al.} in 2007 (\doi{10.1086/511864}). To determine patient episodes not necessarily based on microorganisms, use \code{\link[=is_new_episode]{is_new_episode()}} that also supports grouping with the \code{dplyr} package.
 }
 \details{
-To conduct epidemiological analyses on antimicrobial resistance data, only so-called first isolates should be included to prevent overestimation and underestimation of antimicrobial resistance. Different algorithms can be used to do so, see below.
+To conduct epidemiological analyses on antimicrobial resistance data, only so-called first isolates should be included to prevent overestimation and underestimation of antimicrobial resistance. Different methods can be used to do so, see below.
 
 These functions are context-aware. This means that then the \code{x} argument can be left blank, see \emph{Examples}.
 
 The \code{\link[=first_isolate]{first_isolate()}} function is a wrapper around the \code{\link[=is_new_episode]{is_new_episode()}} function, but more efficient for data sets containing microorganism codes or names.
 
 All isolates with a microbial ID of \code{NA} will be excluded as first isolate.
-\subsection{Different algorithms}{
+\subsection{Different methods}{
 
-According to Hindler \emph{et al.} (2007, \doi{10.1086/511864}), there are different algorithms to select first isolates with increasing reliability: isolate-based, patient-based, episode-based and phenotype-based. All algorithms select on a combination of the taxonomic genus and species (not subspecies).
+According to Hindler \emph{et al.} (2007, \doi{10.1086/511864}), there are different methods (algorithms) to select first isolates with increasing reliability: isolate-based, patient-based, episode-based and phenotype-based. All methods select on a combination of the taxonomic genus and species (not subspecies).
 
-All mentioned algorithms are covered in the \code{\link[=first_isolate]{first_isolate()}} function:\tabular{ll}{
-   \strong{Algorithm} \tab \strong{Function to apply} \cr
-   Isolate-based \tab \code{first_isolate(x, method = "isolate-based")} \cr
+All mentioned methods are covered in the \code{\link[=first_isolate]{first_isolate()}} function:\tabular{ll}{
+   \strong{Method} \tab \strong{Function to apply} \cr
+   \strong{Isolate-based} \tab \code{first_isolate(x, method = "isolate-based")} \cr
    \emph{(= all isolates)} \tab  \cr
     \tab  \cr
     \tab  \cr
-   Patient-based \tab \code{first_isolate(x, method = "patient-based")} \cr
+   \strong{Patient-based} \tab \code{first_isolate(x, method = "patient-based")} \cr
    \emph{(= first isolate per patient)} \tab  \cr
     \tab  \cr
     \tab  \cr
-   Episode-based \tab \code{first_isolate(x, method = "episode-based")}, or: \cr
+   \strong{Episode-based} \tab \code{first_isolate(x, method = "episode-based")}, or: \cr
    \emph{(= first isolate per episode)} \tab  \cr
    - 7-Day interval from initial isolate \tab - \code{first_isolate(x, method = "e", episode_days = 7)} \cr
    - 30-Day interval from initial isolate \tab - \code{first_isolate(x, method = "e", episode_days = 30)} \cr
     \tab  \cr
     \tab  \cr
-   Phenotype-based \tab \code{first_isolate(x, method = "phenotype-based")}, or: \cr
+   \strong{Phenotype-based} \tab \code{first_isolate(x, method = "phenotype-based")}, or: \cr
    \emph{(= first isolate per phenotype)} \tab  \cr
    - Major difference in any antimicrobial result \tab - \code{first_isolate(x, type = "points")} \cr
    - Any difference in key antimicrobial results \tab - \code{first_isolate(x, type = "keyantimicrobials")} \cr
@@ -135,24 +128,24 @@ All mentioned algorithms are covered in the \code{\link[=first_isolate]{first_is
 
 \subsection{Isolate-based}{
 
-This algorithm does not require any selection, as all isolates should be included. It does, however, respect all arguments set in the \code{\link[=first_isolate]{first_isolate()}} function. For example, the default setting for \code{include_unknown} (\code{FALSE}) will omit selection of rows without a microbial ID.
+This method does not require any selection, as all isolates should be included. It does, however, respect all arguments set in the \code{\link[=first_isolate]{first_isolate()}} function. For example, the default setting for \code{include_unknown} (\code{FALSE}) will omit selection of rows without a microbial ID.
 }
 
 \subsection{Patient-based}{
 
-To include every genus-species combination per patient once, set the \code{episode_days} to \code{Inf}. Although often inappropriate, this algorithm makes sure that no duplicate isolates are selected from the same patient.
+To include every genus-species combination per patient once, set the \code{episode_days} to \code{Inf}. Although often inappropriate, this method makes sure that no duplicate isolates are selected from the same patient. In a large longitudinal data set, this could mean that isolates are \emph{excluded} that were found years after the initial isolate.
 }
 
 \subsection{Episode-based}{
 
 To include every genus-species combination per patient episode once, set the \code{episode_days} to a sensible number of days. Depending on the type of analysis, this could be 14, 30, 60 or 365. Short episodes are common for analysing specific hospital or ward data, long episodes are common for analysing regional and national data.
 
-This is the most common algorithm to correct for duplicate isolates. Patients are categorised into episodes based on their ID and dates (e.g., the date of specimen receipt or laboratory result). While this is a common algorithm, it does not take into account antimicrobial test results. This means that e.g. a methicillin-resistant \emph{Staphylococcus aureus} (MRSA) isolate cannot be differentiated from a wildtype \emph{Staphylococcus aureus} isolate.
+This is the most common method to correct for duplicate isolates. Patients are categorised into episodes based on their ID and dates (e.g., the date of specimen receipt or laboratory result). While this is a common method, it does not take into account antimicrobial test results. This means that e.g. a methicillin-resistant \emph{Staphylococcus aureus} (MRSA) isolate cannot be differentiated from a wildtype \emph{Staphylococcus aureus} isolate.
 }
 
 \subsection{Phenotype-based}{
 
-This is a more reliable algorithm, since it also \emph{weighs} the antibiogram (antimicrobial test results) yielding so-called 'first weighted isolates'. There are two different methods to weigh the antibiogram:
+This is a more reliable method, since it also \emph{weighs} the antibiogram (antimicrobial test results) yielding so-called 'first weighted isolates'. There are two different methods to weigh the antibiogram:
 \enumerate{
 \item Using \code{type = "points"} and argument \code{points_threshold}
 
@@ -166,7 +159,7 @@ This method only weighs specific antimicrobial agents, called \emph{key antimicr
 Key antimicrobials are internally selected using the \code{\link[=key_antimicrobials]{key_antimicrobials()}} function, but can also be added manually as a variable to the data and set in the \code{col_keyantimicrobials} argument. Another option is to pass the output of the \code{\link[=key_antimicrobials]{key_antimicrobials()}} function directly to the \code{col_keyantimicrobials} argument.
 }
 
-The default algorithm is phenotype-based (using \code{type = "points"}) and episode-based (using \code{episode_days = 365}). This makes sure that every genus-species combination is selected per patient once per year, while taking into account all antimicrobial test results.
+The default method is phenotype-based (using \code{type = "points"}) and episode-based (using \code{episode_days = 365}). This makes sure that every genus-species combination is selected per patient once per year, while taking into account all antimicrobial test results. If no antimicrobial test results are available in the data set, only the episode-based method is applied at default.
 }
 
 }
@@ -201,11 +194,9 @@ if (require("dplyr")) {
   example_isolates \%>\%
     filter(first_isolate())
  
-  # short-hand versions:
+  # short-hand version:
   example_isolates \%>\%
     filter_first_isolate()
-  example_isolates \%>\%
-    filter_first_weighted_isolate()
     
  # grouped determination of first isolates (also prints group names):
  example_isolates \%>\%
@@ -219,7 +210,7 @@ if (require("dplyr")) {
               resistance = resistance(GEN))  # gentamicin resistance
  
   B <- example_isolates \%>\%
-    filter_first_weighted_isolate() \%>\%      # the 1st isolate filter
+    filter_first_isolate() \%>\%               # the 1st isolate filter
     group_by(hospital_id) \%>\%
     summarise(count = n_rsi(GEN),            # gentamicin availability
               resistance = resistance(GEN))  # gentamicin resistance

@@ -29,13 +29,13 @@
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param x vector of dates (class `Date` or `POSIXt`)
 #' @param episode_days required episode length in days, can also be less than a day or `Inf`, see *Details*
-#' @param ... currently not used
+#' @param ... ignored, only in place to allow future extensions
 #' @details 
 #' Dates are first sorted from old to new. The oldest date will mark the start of the first episode. After this date, the next date will be marked that is at least `episode_days` days later than the start of the first episode. From that second marked date on, the next date will be marked that is at least `episode_days` days later than the start of the second episode which will be the start of the third episode, and so on. Before the vector is being returned, the original order will be restored.
 #' 
-#' The [first_isolate()] function is a wrapper around the [is_new_episode()] function, but is more efficient for data sets containing microorganism codes or names.
+#' The [first_isolate()] function is a wrapper around the [is_new_episode()] function, but is more efficient for data sets containing microorganism codes or names and allows for different isolate selection methods.
 #' 
-#' The `dplyr` package is not required for these functions to work, but these functions support [variable grouping][dplyr::group_by()] and work conveniently inside `dplyr` verbs such as [`filter()`][dplyr::filter()], [`mutate()`][dplyr::mutate()] and [`summarise()`][dplyr::summarise()].
+#' The `dplyr` package is not required for these functions to work, but these functions do support [variable grouping][dplyr::group_by()] and work conveniently inside `dplyr` verbs such as [`filter()`][dplyr::filter()], [`mutate()`][dplyr::mutate()] and [`summarise()`][dplyr::summarise()].
 #' @return 
 #' * [get_episode()]: a [double] vector
 #' * [is_new_episode()]: a [logical] vector
@@ -85,8 +85,8 @@
 #'               n_episodes_30  = sum(is_new_episode(date, episode_days = 30)))
 #'     
 #'     
-#'   # grouping on patients and microorganisms leads to the same results
-#'   # as first_isolate():
+#'   # grouping on patients and microorganisms leads to the same
+#'   # results as first_isolate() when using 'episode-based':
 #'   x <- example_isolates %>%
 #'     filter_first_isolate(include_unknown = TRUE,
 #'                          method = "episode-based")
@@ -127,7 +127,7 @@ is_new_episode <- function(x, episode_days, ...) {
 }
 
 exec_episode <- function(type, x, episode_days, ...) {
-  x <- as.double(as.POSIXct(x)) # as.POSIXct() for Date classes
+  x <- as.double(as.POSIXct(x)) # as.POSIXct() required for Date classes
   # since x is now in seconds, get seconds from episode_days as well
   episode_seconds <- episode_days * 60 * 60 * 24
   

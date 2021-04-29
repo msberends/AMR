@@ -31,7 +31,7 @@
 #' @param mo any character that can be coerced to a valid microorganism code with [as.mo()]
 #' @param ab any character that can be coerced to a valid antimicrobial agent code with [as.ab()]
 #' @param prob_RSI a vector of length 3: the probabilities for R (1st value), S (2nd value) and I (3rd value)
-#' @param ... extension for future versions, not used at the moment
+#' @param ... ignored, only in place to allow future extensions
 #' @details The base R function [sample()] is used for generating values.
 #' 
 #' Generated values are based on the latest EUCAST guideline implemented in the [rsi_translation] data set. To create specific generated values per bug or drug, set the `mo` and/or `ab` argument.

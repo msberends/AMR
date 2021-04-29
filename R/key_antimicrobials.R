@@ -35,7 +35,7 @@
 #' @param gram_positive names of antibiotic agents for **Gram-negatives**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default agents.
 #' @param antifungal names of antifungal agents for **fungi**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default agents.
 #' @param only_rsi_columns a logical to indicate whether only columns must be included that were transformed to class `<rsi>` (see [as.rsi()]) on beforehand (defaults to `FALSE`)
-#' @param ... ignored, allows for future extensions
+#' @param ... ignored, only in place to allow future extensions
 #' @details 
 #' The [key_antimicrobials()] and [all_antimicrobials()] functions are context-aware. This means that then the `x` argument can be left blank, see *Examples*.
 #' 
@@ -264,14 +264,12 @@ generate_antimcrobials_string <- function(df) {
 }
 
 #' @rdname key_antimicrobials
-#' @param info unused - previously used to indicate whether a progress bar should print
 #' @export
 antimicrobials_equal <- function(y,
                                   z,
                                   type = c("points", "keyantimicrobials"),
                                   ignore_I = TRUE,
                                   points_threshold = 2,
-                                  info = FALSE,
                                   ...) {
   meet_criteria(y, allow_class = "character")
   meet_criteria(z, allow_class = "character")
@@ -279,7 +277,6 @@ antimicrobials_equal <- function(y,
   meet_criteria(type, allow_class = "character", has_length = 1, is_in = c("points", "keyantimicrobials"))
   meet_criteria(ignore_I, allow_class = "logical", has_length = 1)
   meet_criteria(points_threshold, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
-  meet_criteria(info, allow_class = "logical", has_length = 1)
   stop_ifnot(length(y) == length(z), "length of `y` and `z` must be equal")
 
   key2rsi <- function(val) {

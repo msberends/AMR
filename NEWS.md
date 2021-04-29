@@ -1,15 +1,14 @@
-# AMR 1.6.0.9012
-## <small>Last updated: 27 April 2021</small>
+# AMR 1.6.0.9013
+## <small>Last updated: 29 April 2021</small>
 
 ### New
 * Function `custom_eucast_rules()` that brings support for custom AMR rules in `eucast_rules()`
 * Support for all four methods to determine first isolates as summarised by Hindler *et al* (doi: [10.1086/511864](https://doi.org/10.1086/511864)): isolate-based, patient-based, episode-based and phenotype-based. The last method is now the default.
-  * Since fungal isolates can also be selected, new functions `key_antimicrobials()` and `all_antimicrobials()` have replaced the now deprecated function `key_antibiotics()`
-  * Using `key_antimicrobials()` still only selects six preferred antibiotics for Gram-negatives, six for Gram-positives, and six universal antibiotics. It has a new `antifungal` argument to set antifungal agents (antimycotics).
-  * The `first_isolate()` function gained the argument `method` that has to be "phenotype-based", "episode-based", "patient-based", or "isolate-based". The old behaviour is equal to "episode-based", while the new default is "phenotype-based".
+  * The `first_isolate()` function gained the argument `method` that has to be "phenotype-based", "episode-based", "patient-based", or "isolate-based". The old behaviour is equal to "episode-based". The new default is "phenotype-based" if antimicrobial test results are available, and "episode-based" otherwise. This new default will yield slightly more isolates for selection (which is a good thing).
+  * Since fungal isolates can also be selected, the functions `key_antibiotics()` and `key_antibiotics_equal()` are now deprecated in favour of the `key_antimicrobials()` and `antimicrobial_equal()` functions. Also, the new `all_antimicrobials()` function works like the old `key_antibiotics()` function, but includes any column with antimicrobial test results. Using `key_antimicrobials()` still only selects six preferred antibiotics for Gram-negatives, six for Gram-positives, and six universal antibiotics. It has a new `antifungal` argument to set antifungal agents (antimycotics).
   * Using `type == "points"` in the `first_isolate()` function for phenotype-based selection will now consider all antimicrobial drugs in the data set, using the new `all_antimicrobials()`
   * The `first_isolate()` function can now take a vector of values for `col_keyantibiotics` and can have an episode length of `Inf`
-  * The `filter_first_isolate()` function has not changed, as it uses the episode-based method. The `filter_first_weighted_isolate()` may now include more isolates as uses the phenotype-based method.
+  * Since the phenotype-based method is the new default, `filter_first_isolate()` renders the `filter_first_weighted_isolate()` function redundant. For this reason, `filter_first_weighted_isolate()` is now deprecated.
   * The documentation of the `first_isolate()` and `key_antimicrobials()` functions has been completely rewritten.
 
 ### Changed
