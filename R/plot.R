@@ -586,6 +586,8 @@ barplot.rsi <- function(height,
   
   if (length(colours_RSI) == 1) {
     colours_RSI <- rep(colours_RSI, 3)
+  } else {
+    colours_RSI <- c(colours_RSI[2], colours_RSI[3], colours_RSI[1])
   }
   main <- gsub(" +", " ", paste0(main, collapse = " "))
   

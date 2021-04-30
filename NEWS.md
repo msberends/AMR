@@ -1,5 +1,5 @@
-# AMR 1.6.0.9013
-## <small>Last updated: 29 April 2021</small>
+# `AMR` 1.6.0.9014
+## <small>Last updated: 30 April 2021</small>
 
 ### New
 * Function `custom_eucast_rules()` that brings support for custom AMR rules in `eucast_rules()`
@@ -31,9 +31,11 @@
 * Fixed an installation error on R-3.0
 * Added `info` argument to `as.mo()` to turn on/off the progress bar
 * Fixed a bug that `col_mo` for some functions (esp. `eucast_rules()` and `mdro()`) could not be column names of the `microorganisms` data set as it would throw an error
+* Fix for transforming numeric values to RSI (`as.rsi()`) when the `vctrs` package is loaded (i.e., when using tidyverse)
+* Colour fix for using `barplot()` on an RSI class
 
 
-# AMR 1.6.0
+# `AMR` 1.6.0
 
 ### New
 * Support for EUCAST Clinical Breakpoints v11.0 (2021), effective in the `eucast_rules()` function and in `as.rsi()` to interpret MIC and disk diffusion values. This is now the default guideline in this package.
@@ -127,7 +129,7 @@
 * Loading the package (i.e., `library(AMR)`) now is ~50 times faster than before, in costs of package size (which increased by ~3 MB)
 
 
-# AMR 1.5.0
+# `AMR` 1.5.0
 
 ### New
 * Functions `get_episode()` and `is_new_episode()` to determine (patient) episodes which are not necessarily based on microorganisms. The `get_episode()` function returns the index number of the episode per group, while the `is_new_episode()` function returns values `TRUE`/`FALSE` to indicate whether an item in a vector is the start of a new episode. They also support `dplyr`s grouping (i.e. using `group_by()`):
@@ -204,7 +206,7 @@
 * Added CodeFactor as a continuous code review to this package: <https://www.codefactor.io/repository/github/msberends/amr/>
 * Added Dr. Rogier Schade as contributor
 
-# AMR 1.4.0
+# `AMR` 1.4.0
 
 ### New
 * Support for 'EUCAST Expert Rules' / 'EUCAST Intrinsic Resistance and Unusual Phenotypes' version 3.2 of May 2020. With this addition to the previously implemented version 3.1 of 2016, the `eucast_rules()` function can now correct for more than 180 different antibiotics and the `mdro()` function can determine multidrug resistance based on more than 150 different antibiotics. All previously implemented versions of the EUCAST rules are now maintained and kept available in this package. The `eucast_rules()` function consequently gained the arguments `version_breakpoints` (at the moment defaults to v10.0, 2020) and `version_expertrules` (at the moment defaults to v3.2, 2020). The `example_isolates` data set now also reflects the change from v3.1 to v3.2. The `mdro()` function now accepts `guideline == "EUCAST3.1"` and `guideline == "EUCAST3.2"`.
@@ -276,7 +278,7 @@
 * Removed unnecessary references to the `base` package
 * Added packages that could be useful for some functions to the `Suggests` field of the `DESCRIPTION` file
 
-# AMR 1.3.0
+# `AMR` 1.3.0
 
 ### New
 * Function `ab_from_text()` to retrieve antimicrobial drug names, doses and forms of administration from clinical texts in e.g. health care records, which also corrects for misspelling since it uses `as.ab()` internally
@@ -329,7 +331,7 @@
 ### Other
 * Moved primary location of this project from GitLab to [GitHub](https://github.com/msberends/AMR), giving us native support for automated syntax checking without being dependent on external services such as AppVeyor and Travis CI.
 
-# AMR 1.2.0
+# `AMR` 1.2.0
 
 ### Breaking 
 * Removed code dependency on all other R packages, making this package fully independent of the development process of others. This is a major code change, but will probably not be noticeable by most users.
@@ -367,7 +369,7 @@
 * Removed previously deprecated function `p.symbol()` - it was replaced with `p_symbol()`
 * Removed function `read.4d()`, that was only useful for reading data from an old test database.
 
-# AMR 1.1.0
+# `AMR` 1.1.0
 
 ### New
 * Support for easy principal component analysis for AMR, using the new `pca()` function 
@@ -389,7 +391,7 @@
 * Support for the upcoming `dplyr` version 1.0.0
 * More robust assigning for classes `rsi` and `mic`
 
-# AMR 1.0.1
+# `AMR` 1.0.1
 
 ### Changed
 * Fixed important floating point error for some MIC comparisons in EUCAST 2020 guideline
@@ -405,7 +407,7 @@
 * Added `uti` (as abbreviation of urinary tract infections) as argument to `as.rsi()`, so interpretation of MIC values and disk zones can be made dependent on isolates specifically from UTIs
 * Info printing in functions `eucast_rules()`, `first_isolate()`, `mdro()` and `resistance_predict()` will now at default only print when R is in an interactive mode (i.e. not in RMarkdown)
 
-# AMR 1.0.0
+# `AMR` 1.0.0
 
 This software is now out of beta and considered stable. Nonetheless, this package will be developed continually.
 
@@ -453,7 +455,7 @@ This software is now out of beta and considered stable. Nonetheless, this packag
 * Full support for the upcoming R 4.0
 * Removed unnecessary `AMR::` calls
 
-# AMR 0.9.0
+# `AMR` 0.9.0
 
 ### Breaking
 * Adopted Adeolu *et al.* (2016), [PMID 27620848](https:/pubmed.ncbi.nlm.nih.gov/27620848/) for the `microorganisms` data set, which means that the new order Enterobacterales now consists of a part of the existing family Enterobacteriaceae, but that this family has been split into other families as well (like *Morganellaceae* and *Yersiniaceae*). Although published in 2016, this information is not yet in the Catalogue of Life version of 2019. All MDRO determinations with `mdro()` will now use the Enterobacterales order for all guidelines before 2016 that were dependent on the Enterobacteriaceae family.
@@ -519,7 +521,7 @@ This software is now out of beta and considered stable. Nonetheless, this packag
 * Change dependency on `clean` to `cleaner`, as this package was renamed accordingly upon CRAN request
 * Added Dr. Sofia Ny as contributor
 
-# AMR 0.8.0
+# `AMR` 0.8.0
 
 ### Breaking
 * Determination of first isolates now **excludes** all 'unknown' microorganisms at default, i.e. microbial code `"UNKNOWN"`. They can be included with the new argument `include_unknown`:
@@ -648,7 +650,7 @@ This software is now out of beta and considered stable. Nonetheless, this packag
 * Added Prof. Dr. Casper Albers as doctoral advisor and added Dr. Judith Fonville, Eric Hazenberg, Dr. Bart Meijer, Dr. Dennis Souverein and Annick Lenglet as contributors
 * Cleaned the coding style of every single syntax line in this package with the help of the `lintr` package
 
-# AMR 0.7.1
+# `AMR` 0.7.1
 
 #### New
 * Function `rsi_df()` to transform a `data.frame` to a data set containing only the microbial interpretation (S, I, R), the antibiotic, the percentage of S/I/R and the number of available isolates. This is a convenient combination of the existing functions `count_df()` and `portion_df()` to immediately show resistance percentages and number of available isolates:
@@ -709,7 +711,7 @@ This software is now out of beta and considered stable. Nonetheless, this packag
 #### Other
 * Fixed a note thrown by CRAN tests
 
-# AMR 0.7.0
+# `AMR` 0.7.0
 
 #### New
 * Support for translation of disk diffusion and MIC values to RSI values (i.e. antimicrobial interpretations). Supported guidelines are EUCAST (2011 to 2019) and CLSI (2011 to 2019). Use `as.rsi()` on an MIC value (created with `as.mic()`), a disk diffusion value (created with the new `as.disk()`) or on a complete date set containing columns with MIC or disk diffusion values.
@@ -767,13 +769,13 @@ This software is now out of beta and considered stable. Nonetheless, this packag
 #### Other
 * Support for R 3.6.0 and later by providing support for [staged install](https://developer.r-project.org/Blog/public/2019/02/14/staged-install/index.html)
 
-# AMR 0.6.1
+# `AMR` 0.6.1
 
 #### Changed
 * Fixed a critical bug when using `eucast_rules()` with `verbose = TRUE`
 * Coercion of microbial IDs are now written to the package namespace instead of the user's home folder, to comply with the CRAN policy
 
-# AMR 0.6.0
+# `AMR` 0.6.0
 
 **New website!**
 
@@ -966,7 +968,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 #### Other
 * Updated licence text to emphasise GPL 2.0 and that this is an R package.
 
-# AMR 0.5.0
+# `AMR` 0.5.0
 
 #### New
 * Repository moved to GitLab
@@ -1049,7 +1051,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 * Updated vignettes to comply with README
 
 
-# AMR 0.4.0
+# `AMR` 0.4.0
 
 #### New
 * The data set `microorganisms` now contains **all microbial taxonomic data from ITIS** (kingdoms Bacteria, Fungi and Protozoa), the Integrated Taxonomy Information System, available via https://itis.gov. The data set now contains more than 18,000 microorganisms with all known bacteria, fungi and protozoa according ITIS with genus, species, subspecies, family, order, class, phylum and subkingdom. The new data set `microorganisms.old` contains all previously known taxonomic names from those kingdoms.
@@ -1160,7 +1162,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 #### Other
 * More unit tests to ensure better integrity of functions
 
-# AMR 0.3.0
+# `AMR` 0.3.0
 
 #### New
 * **BREAKING**: `rsi_df` was removed in favour of new functions `portion_R`, `portion_IR`, `portion_I`, `portion_SI` and `portion_S` to selectively calculate resistance or susceptibility. These functions are 20 to 30 times faster than the old `rsi` function. The old function still works, but is deprecated.
@@ -1230,7 +1232,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
   * Windows: https://ci.appveyor.com/project/msberends/amr
 * Added thesis advisors to DESCRIPTION file
 
-# AMR 0.2.0
+# `AMR` 0.2.0
 
 #### New
 * Full support for Windows, Linux and macOS
@@ -1265,7 +1267,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 * Added build tests for Linux and macOS using Travis CI (https://travis-ci.org/msberends/AMR)
 * Added line coverage checking using CodeCov (https://codecov.io/gh/msberends/AMR/tree/master/R)
 
-# AMR 0.1.1
+# `AMR` 0.1.1
 
 * `EUCAST_rules` applies for amoxicillin even if ampicillin is missing
 * Edited column names to comply with GLIMS, the laboratory information system
@@ -1273,6 +1275,6 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 * Renamed 'Daily Defined Dose' to 'Defined Daily Dose'
 * Added barplots for `rsi` and `mic` classes
 
-# AMR 0.1.0
+# `AMR` 0.1.0
 
 * First submission to CRAN.

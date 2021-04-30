@@ -39,14 +39,19 @@ $(document).ready(function() {
   if (url_old != url_new) {
     window.location.replace(url_new);
   }
+  
+  // Edit title of manual
+  $('.template-reference-index h1').text('Manual');
 
   // replace 'Value' in manual with 'Returned value'
   $(".template-reference-topic h2#value").text("Returned value");
   
   // replace \donttest and \dontrun texts in Examples
-  $("pre.examples").html($("pre.examples").html().replaceAll("# \\donttest{", ""));
-  $("pre.examples").html($("pre.examples").html().replaceAll("# \\dontrun{", ""));
-  $("pre.examples").html($("pre.examples").html().replaceAll("# }", ""));
+  if ($("pre.examples").length > 0) {
+    $("pre.examples").html($("pre.examples").html().replaceAll("# \\donttest{", ""));
+    $("pre.examples").html($("pre.examples").html().replaceAll("# \\dontrun{", ""));
+    $("pre.examples").html($("pre.examples").html().replaceAll("# }", ""));
+  }
 
   // PR for 'R for Data Science' on How To pages
   if ($(".template-article").length > 0) {
@@ -106,9 +111,6 @@ $(document).ready(function() {
   $('.template-citation-authors h1').eq(1).html("All contributors of the <code>AMR</code> package");
   $(".developers").html(doct_tit($(".developers").html()));
   $(".developers a[href='authors.html']").text("All contributors...");
-
-  // Edit title of manual
-  $('.template-reference-index h1').text('Manual');
 });
 
 $('head').append("<!-- Global site tag (gtag.js) - Google Analytics --> <script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-172114740-1\"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-172114740-1'); </script><!-- Matomo --><script type='text/javascript'> var _paq = _paq || []; /* tracker methods like 'setCustomDimension' should be called before 'trackPageView' */ _paq.push(['setDomains', ['*.msberends.github.io/AMR']]); _paq.push(['enableCrossDomainLinking']); _paq.push(['trackPageView']); _paq.push(['enableLinkTracking']); (function() { var u='https://analyse.uscloud.nl/'; _paq.push(['setTrackerUrl', u+'piwik.php']); _paq.push(['setSiteId', '3']); var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);  })();</script><!-- End Matomo Code -->");

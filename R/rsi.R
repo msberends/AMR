@@ -259,9 +259,10 @@ as.rsi.default <- function(x, ...) {
   }
   
   if (inherits(x, c("integer", "numeric", "double")) && all(x %in% c(1:3, NA))) {
-    x[x == 1] <- "S"
-    x[x == 2] <- "I"
-    x[x == 3] <- "R"
+    x <- as.character(x) # this is needed to prevent the vctrs pkg to throw an error
+    x[x == "1"] <- "S"
+    x[x == "2"] <- "I"
+    x[x == "3"] <- "R"
     
   } else if (!all(is.na(x)) && !identical(levels(x), c("S", "I", "R")) && !all(x %in% c("R", "S", "I", NA))) {
 

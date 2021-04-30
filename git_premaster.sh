@@ -99,7 +99,7 @@ else
 fi
 # set version number to DESCRIPTION and NEWS files
 sed -i -- "s/^Version: .*/Version: ${new_version}/" DESCRIPTION
-sed -i -- "1s/.*/# AMR ${new_version}/" NEWS.md
+sed -i -- "1s/.*/# \`AMR\` ${new_version}/" NEWS.md
 rm *-- || true
 echo "• First 3 lines of DESCRIPTION:"
 head -3 DESCRIPTION

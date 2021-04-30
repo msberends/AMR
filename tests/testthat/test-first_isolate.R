@@ -175,7 +175,7 @@ test_that("first isolates work", {
   
   # shortcuts
   expect_identical(filter_first_isolate(example_isolates),
-                   subset(example_isolates, first_isolate(example_isolates, method = "episode-based")))
+                   subset(example_isolates, first_isolate(example_isolates)))
 
   
   # notice that all mo's are distinct, so all are TRUE
