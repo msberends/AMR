@@ -1677,7 +1677,7 @@ pillar_shaft.mo <- function(x, ...) {
     } else {
       col <- "The data"
     }
-    warning_(col, " contains old microbial codes (from a previous AMR package version). ",
+    warning_(col, " contains old MO codes (from a previous AMR package version). ",
              "Please update your MO codes with `as.mo()`.",
              call = FALSE)
   }
@@ -1751,6 +1751,11 @@ print.mo <- function(x, print.shortnames = FALSE, ...) {
   }
   x <- as.character(x)
   names(x) <- x_names
+  if (!all(x[!is.na(x)] %in% MO_lookup$mo)) {
+    warning_("Some MO codes are from a previous AMR package version. ",
+             "Please update these MO codes with `as.mo()`.",
+             call = FALSE)
+  }
   print.default(x, quote = FALSE)
 }
 
@@ -1777,7 +1782,7 @@ summary.mo <- function(object, ...) {
 #' @noRd
 as.data.frame.mo <- function(x, ...) {
   if (!all(x[!is.na(x)] %in% MO_lookup$mo)) {
-    warning_("The data contains old microbial codes (from a previous AMR package version). ",
+    warning_("The data contains old MO codes (from a previous AMR package version). ",
              "Please update your MO codes with `as.mo()`.",
              call = FALSE)
   }
@@ -1812,8 +1817,8 @@ as.data.frame.mo <- function(x, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
   # must only contain valid MOs
-  class_integrity_check(y, "microorganism code", c(as.character(microorganisms$mo),
-                                                   as.character(microorganisms.translation$mo_old)))
+  return_after_integrity_check(y, "microorganism code", c(as.character(microorganisms$mo),
+                                                          as.character(microorganisms.translation$mo_old)))
 }
 #' @method [[<- mo
 #' @export
@@ -1822,18 +1827,18 @@ as.data.frame.mo <- function(x, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
   # must only contain valid MOs
-  class_integrity_check(y, "microorganism code", c(as.character(microorganisms$mo),
-                                                   as.character(microorganisms.translation$mo_old)))
+  return_after_integrity_check(y, "microorganism code", c(as.character(microorganisms$mo),
+                                                          as.character(microorganisms.translation$mo_old)))
 }
 #' @method c mo
 #' @export
 #' @noRd
-c.mo <- function(x, ...) {
+c.mo <- function(...) {
+  x <- list(...)[[1L]]
   y <- NextMethod()
   attributes(y) <- attributes(x)
-  # must only contain valid MOs
-  class_integrity_check(y, "microorganism code", c(as.character(microorganisms$mo),
-                                                   as.character(microorganisms.translation$mo_old)))
+  return_after_integrity_check(y, "microorganism code", c(as.character(microorganisms$mo),
+                                                          as.character(microorganisms.translation$mo_old)))
 }
 
 #' @method unique mo
@@ -2058,10 +2063,10 @@ replace_old_mo_codes <- function(x, property) {
     n_matched <- length(matched[!is.na(matched)])
     if (property != "mo") {
       message_(font_blue(paste0("The input contained ", n_matched,
-                                " old microbial code", ifelse(n_matched == 1, "", "s"),
+                                " old MO code", ifelse(n_matched == 1, "", "s"),
                                 " (from a previous AMR package version). Please update your MO codes with `as.mo()`.")))
     } else {
-      message_(font_blue(paste0(n_matched, " old microbial code", ifelse(n_matched == 1, "", "s"), 
+      message_(font_blue(paste0(n_matched, " old MO code", ifelse(n_matched == 1, "", "s"), 
                                 " (from a previous AMR package version) ", 
                                 ifelse(n_matched == 1, "was", "were"), 
                                 " updated to ", ifelse(n_matched == 1, "a ", ""), 
@@ -2100,7 +2105,7 @@ repair_reference_df <- function(reference_df) {
   reference_df[, "x"] <- as.character(reference_df[, "x", drop = TRUE])
   reference_df[, "mo"] <- as.character(reference_df[, "mo", drop = TRUE])
   
-  # some microbial codes might be old
+  # some MO codes might be old
   reference_df[, "mo"] <- as.mo(reference_df[, "mo", drop = TRUE])
   reference_df
 }

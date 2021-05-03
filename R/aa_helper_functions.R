@@ -458,7 +458,7 @@ stop_ifnot <- function(expr, ..., call = TRUE) {
          ifelse(!is.na(y), y, NA))
 }
 
-class_integrity_check <- function(value, type, check_vector) {
+return_after_integrity_check <- function(value, type, check_vector) {
   if (!all(value[!is.na(value)] %in% check_vector)) {
     warning_(paste0("invalid ", type, ", NA generated"), call = FALSE)
     value[!value %in% check_vector] <- NA

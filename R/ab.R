@@ -551,7 +551,7 @@ as.data.frame.ab <- function(x, ...) {
 "[<-.ab" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  class_integrity_check(y, "antimicrobial code", antibiotics$ab)
+  return_after_integrity_check(y, "antimicrobial code", antibiotics$ab)
 }
 #' @method [[<- ab
 #' @export
@@ -559,15 +559,16 @@ as.data.frame.ab <- function(x, ...) {
 "[[<-.ab" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  class_integrity_check(y, "antimicrobial code", antibiotics$ab)
+  return_after_integrity_check(y, "antimicrobial code", antibiotics$ab)
 }
 #' @method c ab
 #' @export
 #' @noRd
-c.ab <- function(x, ...) {
+c.ab <- function(...) {
+  x <- list(...)[[1L]]
   y <- NextMethod()
   attributes(y) <- attributes(x)
-  class_integrity_check(y, "antimicrobial code", antibiotics$ab)
+  return_after_integrity_check(y, "antimicrobial code", antibiotics$ab)
 }
 
 #' @method unique ab

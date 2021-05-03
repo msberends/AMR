@@ -15,8 +15,8 @@ This package is [fully independent of any other R package](https://en.wikipedia.
 <div class="main-content" style="display: inline-block;">
   <p>
     <a href="./countries_large.png" target="_blank"><img src="./countries.png" class="countries_map"></a>
-    <strong>Used in 155 countries</strong><br>
-    Since its first public release in early 2018, this package has been downloaded from 155 countries. Click the map to enlarge and to see the country names.</p>
+    <strong>Used in 162 countries</strong><br>
+    Since its first public release in early 2018, this package has been downloaded from 162 countries. Click the map to enlarge and to see the country names.</p>
 </div>
 
 ##### With `AMR` (for R), there's always a knowledgeable microbiologist by your side!

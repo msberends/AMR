@@ -182,11 +182,8 @@ print.disk <- function(x, ...) {
 #' @method c disk
 #' @export
 #' @noRd
-c.disk <- function(x, ...) {
-  y <- NextMethod()
-  y <- as.disk(y)
-  attributes(y) <- attributes(x)
-  y
+c.disk <- function(...) {
+  as.disk(unlist(lapply(list(...), as.character)))
 }
 
 #' @method unique disk

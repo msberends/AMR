@@ -307,10 +307,8 @@ as.matrix.mic <- function(x, ...) {
 #' @method c mic
 #' @export
 #' @noRd
-c.mic <- function(x, ...) {
-  y <- unlist(lapply(list(...), as.character))
-  x <- as.character(x)
-  as.mic(c(x, y))
+c.mic <- function(...) {
+  as.mic(unlist(lapply(list(...), as.character)))
 }
 
 #' @method unique mic

@@ -115,5 +115,8 @@ italicise_taxonomy <- function(string, type = c("markdown", "ansi")) {
 #' @rdname italicise_taxonomy
 #' @export
 italicize_taxonomy <- function(string, type = c("markdown", "ansi")) {
-  italicise(string = string, type = type)
+  if (missing(type)) {
+    type <- "markdown"
+  }
+  italicise_taxonomy(string = string, type = type)
 }

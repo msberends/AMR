@@ -177,6 +177,7 @@ reference:
     - "`availability`"
     - "`get_locale`"
     - "`ggplot_pca`"
+    - "`italicise_taxonomy`"
     - "`join`"
     - "`like`"
     - "`mo_matching_score`"
