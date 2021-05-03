@@ -1,8 +1,9 @@
-# `AMR` 1.6.0.9014
-## <small>Last updated: 30 April 2021</small>
+# `AMR` 1.6.0.9015
+## <small>Last updated:  3 May 2021</small>
 
 ### New
 * Function `custom_eucast_rules()` that brings support for custom AMR rules in `eucast_rules()`
+* Function `italicise_taxonomy()` to make taxonomic names within a string italic, with support for markdown and ANSI
 * Support for all four methods to determine first isolates as summarised by Hindler *et al* (doi: [10.1086/511864](https://doi.org/10.1086/511864)): isolate-based, patient-based, episode-based and phenotype-based. The last method is now the default.
   * The `first_isolate()` function gained the argument `method` that has to be "phenotype-based", "episode-based", "patient-based", or "isolate-based". The old behaviour is equal to "episode-based". The new default is "phenotype-based" if antimicrobial test results are available, and "episode-based" otherwise. This new default will yield slightly more isolates for selection (which is a good thing).
   * Since fungal isolates can also be selected, the functions `key_antibiotics()` and `key_antibiotics_equal()` are now deprecated in favour of the `key_antimicrobials()` and `antimicrobial_equal()` functions. Also, the new `all_antimicrobials()` function works like the old `key_antibiotics()` function, but includes any column with antimicrobial test results. Using `key_antimicrobials()` still only selects six preferred antibiotics for Gram-negatives, six for Gram-positives, and six universal antibiotics. It has a new `antifungal` argument to set antifungal agents (antimycotics).

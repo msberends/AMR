@@ -65,7 +65,6 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @details
 #' **Note:** This function does not translate MIC values to RSI values. Use [as.rsi()] for that. \cr
 #' **Note:** When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance. \cr
-
 #'
 #' The file containing all EUCAST rules is located here: <https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv>.  **Note:** Old taxonomic names are replaced with the current taxonomy where applicable. For example, *Ochrobactrum anthropi* was renamed to *Brucella anthropi* in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The file used as input for this `AMR` package contains the taxonomy updated until [`r CATALOGUE_OF_LIFE$yearmonth_LPSN`][catalogue_of_life()].
 #' 
@@ -322,17 +321,6 @@ eucast_rules <- function(x,
     }
     cols_ab[match(x_new, names(cols_ab))]
   }
-  markup_italics_where_needed <- function(x) {
-    # returns names found in family, genus or species as italics
-    if (!has_colour()) {
-      return(x)
-    }
-    x <- unlist(strsplit(x, " "))
-    ind <- gsub("[)(:]", "", x) %in% c(MO_lookup[which(MO_lookup$rank %in% c("family", "genus")), ]$fullname,
-                                       MO_lookup[which(MO_lookup$rank == "species"), ]$species)
-    x[ind] <- font_italic(x[ind], collapse = NULL)
-    paste(x, collapse = " ")
-  }
   get_antibiotic_names <- function(x) {
     x <- x %pm>%
       strsplit(",") %pm>%
@@ -343,6 +331,7 @@ eucast_rules <- function(x,
       paste(collapse = ", ")
     x <- gsub("_", " ", x, fixed = TRUE)
     x <- gsub("except CAZ", paste("except", ab_name("CAZ", language = NULL, tolower = TRUE)), x, fixed = TRUE)
+    x <- gsub("except TGC", paste("except", ab_name("TGC", language = NULL, tolower = TRUE)), x, fixed = TRUE)
     x <- gsub("cephalosporins (1st|2nd|3rd|4th|5th)", "cephalosporins (\\1 gen.)", x)
     x
   }
@@ -655,9 +644,10 @@ eucast_rules <- function(x,
       # Print rule  -------------------------------------------------------------
       if (rule_current != rule_previous) {
         # is new rule within group, print its name
-        cat(markup_italics_where_needed(word_wrap(rule_current, 
-                                                  width = getOption("width") - 30,
-                                                  extra_indent = 6)))
+        cat(italicise_taxonomy(word_wrap(rule_current, 
+                                         width = getOption("width") - 30,
+                                         extra_indent = 6),
+                               type = "ansi"))
         warned <- FALSE
       }
     }
@@ -795,9 +785,10 @@ eucast_rules <- function(x,
                           get_antibiotic_names(cols))
       if (info == TRUE) {
         # print rule
-        cat(markup_italics_where_needed(word_wrap(format_custom_query_rule(rule$query, colours = FALSE), 
-                                                  width = getOption("width") - 30,
-                                                  extra_indent = 6)))
+        cat(italicise_taxonomy(word_wrap(format_custom_query_rule(rule$query, colours = FALSE), 
+                                         width = getOption("width") - 30,
+                                         extra_indent = 6),
+                               type = "ansi"))
         warned <- FALSE
       }
       run_changes <- edit_rsi(x = x,

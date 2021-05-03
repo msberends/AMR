@@ -93,6 +93,7 @@
 #' 
 #' `r paste0("  * ", sapply(DEFINED_AB_GROUPS, function(x) paste0("``", tolower(x), "``\\cr(", paste0(sort(ab_name(eval(parse(text = x), envir = asNamespace("AMR")), language = NULL, tolower = TRUE)), collapse = ", "), ")"), USE.NAMES = FALSE), "\n", collapse = "")`
 #' @returns A [list] containing the custom rules
+#' @inheritSection AMR Read more on Our Website!
 #' @export
 #' @examples
 #' x <- custom_eucast_rules(AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",

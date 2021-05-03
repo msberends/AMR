@@ -52,7 +52,10 @@ $(document).ready(function() {
     $("pre.examples").html($("pre.examples").html().replaceAll("# \\dontrun{", ""));
     $("pre.examples").html($("pre.examples").html().replaceAll("# }", ""));
   }
-
+  
+  // remove leading newline in code examples on changelog
+  $("body .template-news").html($("body .template-news").html().replaceAll('sourceCode R">\n<span', 'sourceCode R"><span'));
+  
   // PR for 'R for Data Science' on How To pages
   if ($(".template-article").length > 0) {
     $('#pkgdown-sidebar').prepend(

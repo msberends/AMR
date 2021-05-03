@@ -477,7 +477,6 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   if (length(x_unknown) > 0 & fast_mode == FALSE) {
     warning_("These values could not be coerced to a valid antimicrobial ID: ",
              vector_and(x_unknown), ".",
-             ".",
              call = FALSE)
   }
   
