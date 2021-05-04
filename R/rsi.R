@@ -259,12 +259,22 @@ as.rsi.default <- function(x, ...) {
   }
   
   if (inherits(x, c("integer", "numeric", "double")) && all(x %in% c(1:3, NA))) {
-    x <- as.character(x) # this is needed to prevent the vctrs pkg to throw an error
-    x[x == "1"] <- "S"
-    x[x == "2"] <- "I"
-    x[x == "3"] <- "R"
+    x.bak <- x
+    x <- as.character(x) # this is needed to prevent the vctrs pkg from throwing an error
     
-  } else if (!all(is.na(x)) && !identical(levels(x), c("S", "I", "R")) && !all(x %in% c("R", "S", "I", NA))) {
+    # support haven package for importing e.g., from SPSS - it adds the 'labels' attribute
+    lbls <- attributes(x)$labels
+    if (!is.null(lbls) && all(c("R", "S", "I") %in% names(lbls)) && all(c(1:3) %in% lbls)) {
+      x[x.bak == 1] <- names(lbls[lbls == 1])
+      x[x.bak == 2] <- names(lbls[lbls == 2])
+      x[x.bak == 3] <- names(lbls[lbls == 3])
+    } else {
+      x[x.bak == 1] <- "S"
+      x[x.bak == 2] <- "I"
+      x[x.bak == 3] <- "R"  
+    }
+
+  } else if (!all(is.na(x)) && !identical(levels(x), c("R", "S", "I")) && !all(x %in% c("R", "S", "I", NA))) {
 
     if (all(x %unlike% "(R|S|I)", na.rm = TRUE)) {
       # check if they are actually MICs or disks

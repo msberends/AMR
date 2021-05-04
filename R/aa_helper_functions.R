@@ -841,6 +841,14 @@ message_not_thrown_before <- function(fn, entire_session = FALSE) {
   is.null(pkg_env[[paste0("thrown_msg.", fn)]]) || !identical(pkg_env[[paste0("thrown_msg.", fn)]], unique_call_id(entire_session))
 }
 
+reset_all_thrown_messages <- function() {
+  # for unit tests, where the environment and highest system call do not change
+  # can be found in tests/testthat/*.R
+  pkg_env_contents <- ls(envir = pkg_env)
+  rm(list = pkg_env_contents[pkg_env_contents %like% "^thrown_msg."],
+     envir = pkg_env)
+}
+
 has_colour <- function() {
   # this is a base R version of crayon::has_color, but disables colours on emacs
   
