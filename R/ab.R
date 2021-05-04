@@ -169,8 +169,6 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       next
     }
     if (identical(x[i], "") |
-        # no short names:
-        nchar(x[i]) <= 2 |
         # prevent "bacteria" from coercing to TMP, since Bacterial is a brand name of it:
         identical(tolower(x[i]), "bacteria")) {
       x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
@@ -238,7 +236,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     
     # exact abbreviation
     abbr_found <- unlist(lapply(AB_lookup$generalised_abbreviations,
-                                function(s) x[i] %in% s))
+                                # require at least 2 characters for abbreviations
+                                function(s) x[i] %in% s & nchar(x[i]) >= 2))
     found <- antibiotics$ab[abbr_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)

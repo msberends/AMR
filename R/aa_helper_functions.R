@@ -129,11 +129,14 @@ check_dataset_integrity <- function() {
     } else {
       plural <- c(" is", "s", "")
     }
-    warning_("The following data set", plural[1],
-             " overwritten by your global environment and prevent", plural[2], 
-             " the AMR package from working correctly: ",
-             vector_and(overwritten, quotes = "'"),
-             ".\nPlease rename your object", plural[3], ".", call = FALSE)
+    if (message_not_thrown_before("dataset_overwritten")) {
+      warning_("The following data set", plural[1],
+               " overwritten by your global environment and prevent", plural[2], 
+               " the AMR package from working correctly: ",
+               vector_and(overwritten, quotes = "'"),
+               ".\nPlease rename your object", plural[3], ".", call = FALSE)
+      remember_thrown_message("dataset_overwritten")
+    }
   }
   # check if other packages did not overwrite our data sets
   valid_microorganisms <- TRUE
@@ -836,13 +839,6 @@ remember_thrown_message <- function(fn, entire_session = FALSE) {
 
 message_not_thrown_before <- function(fn, entire_session = FALSE) {
   is.null(pkg_env[[paste0("thrown_msg.", fn)]]) || !identical(pkg_env[[paste0("thrown_msg.", fn)]], unique_call_id(entire_session))
-}
-
-reset_all_thrown_messages <- function() {
-  # for unit tests, where the environment and highest system call do not change
-  pkg_env_contents <- ls(envir = pkg_env)
-  rm(list = pkg_env_contents[pkg_env_contents %like% "^thrown_msg."],
-     envir = pkg_env)
 }
 
 has_colour <- function() {

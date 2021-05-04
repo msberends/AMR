@@ -223,59 +223,6 @@ print.custom_eucast_rules <- function(x, ...) {
   }
 }
 
-run_custom_eucast_rules <- function(df, rule, info) {
-  n_dots <- length(rule)
-  stop_if(n_dots == 0, "no custom rules set", call = -2)
-  out <- character(length = NROW(df))
-  reasons <- character(length = NROW(df))
-  for (i in seq_len(n_dots)) {
-    qry <- tryCatch(eval(parse(text = rule[[i]]$query), envir = df, enclos = parent.frame()),
-                    error = function(e) { 
-                      pkg_env$err_msg <- e$message
-                      return("error")
-                    })
-    if (identical(qry, "error")) {
-      warning_("in custom_eucast_rules(): rule ", i, 
-               " (`", as.character(rule[[i]]$query), "`) was ignored because of this error message: ",
-               pkg_env$err_msg,
-               call = FALSE, 
-               add_fn = font_red)
-      next
-    }
-    stop_ifnot(is.logical(qry), "in custom_eucast_rules(): rule ", i, " (`", rule[[i]]$query, 
-               "`) must return `TRUE` or `FALSE`, not ", 
-               format_class(class(qry), plural = FALSE), call = FALSE)
-    
-    new_eucasts <- which(qry == TRUE & out == "")
-    
-    if (info == TRUE) {
-      cat(word_wrap("- Custom EUCAST rule ", i, ": `", as.character(rule[[i]]$query),
-                    "` (", length(new_eucasts),  " rows matched)"), "\n", sep = "")
-    }
-    val <- rule[[i]]$value
-    out[new_eucasts] <- val
-    reasons[new_eucasts] <- paste0("matched rule ", gsub("rule", "", names(rule)[i]), ": ", as.character(rule[[i]]$query))
-  }
-  out[out == ""] <- "Negative"
-  reasons[out == "Negative"] <- "no rules matched"
-  
-  if (isTRUE(attributes(rule)$as_factor)) {
-    out <- factor(out, levels = attributes(rule)$values, ordered = TRUE)
-  }
-  
-  columns_nonsusceptible <- as.data.frame(t(df[, is.rsi(df)] == "R"))
-  columns_nonsusceptible <- vapply(FUN.VALUE = character(1), 
-                                   columns_nonsusceptible, 
-                                   function(x) paste0(rownames(columns_nonsusceptible)[which(x)], collapse = " "))
-  columns_nonsusceptible[is.na(out)] <- NA_character_
-  
-  data.frame(row_number = seq_len(NROW(df)),
-             EUCAST = out,
-             reason = reasons,
-             columns_nonsusceptible = columns_nonsusceptible,
-             stringsAsFactors = FALSE)
-}
-
 format_custom_query_rule <- function(query, colours = has_colour()) {
   query <- gsub(" & ", font_black(font_bold(" and ")), query, fixed = TRUE)
   query <- gsub(" | ", font_black(" or "), query, fixed = TRUE)

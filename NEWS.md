@@ -1,5 +1,5 @@
-# `AMR` 1.6.0.9016
-## <small>Last updated:  3 May 2021</small>
+# `AMR` 1.6.0.9017
+## <small>Last updated:  4 May 2021</small>
 
 ### New
 * Function `custom_eucast_rules()` that brings support for custom AMR rules in `eucast_rules()`
@@ -34,6 +34,8 @@
 * Fixed a bug that `col_mo` for some functions (esp. `eucast_rules()` and `mdro()`) could not be column names of the `microorganisms` data set as it would throw an error
 * Fix for transforming numeric values to RSI (`as.rsi()`) when the `vctrs` package is loaded (i.e., when using tidyverse)
 * Colour fix for using `barplot()` on an RSI class
+* Added 25 common system codes for bacteria to the `microorganisms.codes` data set
+* Added 16 common system codes for antimicrobial agents to the `antibiotics` data set
 
 
 # `AMR` 1.6.0

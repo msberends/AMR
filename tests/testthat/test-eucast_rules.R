@@ -149,7 +149,8 @@ test_that("Custom EUCAST rules work", {
   
   skip_on_cran()
   x <- custom_eucast_rules(AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
-                           AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I")
+                           AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I",
+                           AMX == "S" ~ AMC == "S")
   expect_output(print(x))
   expect_output(print(c(x, x)))
   expect_output(print(as.list(x, x)))

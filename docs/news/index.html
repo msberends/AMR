@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9016</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9017</span>
       </span>
     </div>
 
@@ -236,12 +236,12 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1609016" class="section level1">
-<h1 class="page-header" data-toc-text="1.6.0.9016">
-<a href="#amr-1609016" class="anchor"></a><small> Unreleased </small><code>AMR</code> 1.6.0.9016</h1>
-<div id="last-updated-3-may-2021" class="section level2">
+    <div id="amr-1609017" class="section level1">
+<h1 class="page-header" data-toc-text="1.6.0.9017">
+<a href="#amr-1609017" class="anchor"></a><small> Unreleased </small><code>AMR</code> 1.6.0.9017</h1>
+<div id="last-updated-4-may-2021" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-3-may-2021" class="anchor"></a><small>Last updated: 3 May 2021</small>
+<a href="#last-updated-4-may-2021" class="anchor"></a><small>Last updated: 4 May 2021</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
@@ -298,6 +298,8 @@
 <li>Fixed a bug that <code>col_mo</code> for some functions (esp. <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> and <code><a href="../reference/mdro.html">mdro()</a></code>) could not be column names of the <code>microorganisms</code> data set as it would throw an error</li>
 <li>Fix for transforming numeric values to RSI (<code><a href="../reference/as.rsi.html">as.rsi()</a></code>) when the <code>vctrs</code> package is loaded (i.e., when using tidyverse)</li>
 <li>Colour fix for using <code><a href="https://rdrr.io/r/graphics/barplot.html">barplot()</a></code> on an RSI class</li>
+<li>Added 25 common system codes for bacteria to the <code>microorganisms.codes</code> data set</li>
+<li>Added 16 common system codes for antimicrobial agents to the <code>antibiotics</code> data set</li>
 </ul>
 </div>
 </div>

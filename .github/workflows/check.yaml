@@ -50,7 +50,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest,   r: 'devel',   allowfail: false}
+          - {os: macOS-latest,   r: 'devel',   allowfail: true}
           - {os: macOS-latest,   r: 'release', allowfail: false}
           - {os: macOS-latest,   r: 'oldrel',  allowfail: false}
           
