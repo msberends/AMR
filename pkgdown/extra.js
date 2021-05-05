@@ -54,7 +54,9 @@ $(document).ready(function() {
   }
   
   // remove leading newline in code examples on changelog
-  $("body .template-news").html($("body .template-news").html().replaceAll('sourceCode R">\n<span', 'sourceCode R"><span'));
+  if ($("body .template-news").length > 0) {
+    $("body .template-news").html($("body .template-news").html().replaceAll('sourceCode R">\n<span', 'sourceCode R"><span'));
+  }
   
   // PR for 'R for Data Science' on How To pages
   if ($(".template-article").length > 0) {
