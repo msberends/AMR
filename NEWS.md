@@ -1,5 +1,5 @@
-# `AMR` 1.6.0.9019
-## <small>Last updated:  5 May 2021</small>
+# `AMR` 1.6.0.9020
+## <small>Last updated:  6 May 2021</small>
 
 ### New
 * Function `custom_eucast_rules()` that brings support for custom AMR rules in `eucast_rules()`
@@ -36,6 +36,7 @@
 * Colour fix for using `barplot()` on an RSI class
 * Added 25 common system codes for bacteria to the `microorganisms.codes` data set
 * Added 16 common system codes for antimicrobial agents to the `antibiotics` data set
+* Fix for using `skimr::skim()` on classes `mo`, `mic` and `disk` when using the just released `dplyr` v1.0.6
 
 
 # `AMR` 1.6.0

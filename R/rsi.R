@@ -934,28 +934,16 @@ get_skimmers.rsi <- function(column) {
   # get the variable name 'skim_variable'
   name_call <- function(.data) {
     calls <- sys.calls()
+    frms <- sys.frames()
     calls_txt <- vapply(calls, function(x) paste(deparse(x), collapse = ""), FUN.VALUE = character(1))
     if (any(calls_txt %like% "skim_variable", na.rm = TRUE)) {
       ind <- which(calls_txt %like% "skim_variable")[1L]
-      vars <- tryCatch(eval(parse(text = ".data$skim_variable"), envir = sys.frame(ind)), 
+      vars <- tryCatch(eval(parse(text = ".data$skim_variable$rsi"), envir = frms[[ind]]), 
                        error = function(e) NULL)
+      tryCatch(ab_name(as.character(calls[[length(calls)]][[2]]), language = NULL),
+               error = function(e) NA_character_)
     } else {
-      vars <- NULL
-    }
-    i <- tryCatch(attributes(calls[[length(calls)]])$position, 
-                  error = function(e) NULL)
-    if (is.null(vars) | is.null(i)) {
       NA_character_
-    } else {
-      lengths <- vapply(FUN.VALUE = double(1), vars, length)
-      when_starts_rsi <- which(names(vapply(FUN.VALUE = double(1), vars, length)) == "rsi")
-      offset <- sum(lengths[c(1:when_starts_rsi - 1)])
-      var <- vars$rsi[i - offset]
-      if (!isFALSE(var == "data")) {
-        NA_character_
-      } else{
-        ab_name(var)
-      }
     }
   }
   

@@ -1732,9 +1732,9 @@ freq.mo <- function(x, ...) {
 get_skimmers.mo <- function(column) {
   skimr::sfl(
     skim_type = "mo",
-    unique_total = ~pm_n_distinct(., na.rm = TRUE),
-    gram_negative = ~sum(mo_is_gram_negative(stats::na.omit(.))),
-    gram_positive = ~sum(mo_is_gram_positive(stats::na.omit(.))),
+    unique_total = ~length(unique(stats::na.omit(.))),
+    gram_negative = ~sum(mo_is_gram_negative(.), na.rm = TRUE),
+    gram_positive = ~sum(mo_is_gram_positive(.), na.rm = TRUE),
     top_genus = ~names(sort(-table(mo_genus(stats::na.omit(.), language = NULL))))[1L],
     top_species = ~names(sort(-table(mo_name(stats::na.omit(.), language = NULL))))[1L]
   )

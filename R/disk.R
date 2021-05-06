@@ -202,7 +202,7 @@ get_skimmers.disk <- function(column) {
     min = ~min(as.double(.), na.rm = TRUE),
     max = ~max(as.double(.), na.rm = TRUE),
     median = ~stats::median(as.double(.), na.rm = TRUE),
-    n_unique = ~pm_n_distinct(., na.rm = TRUE),
+    n_unique = ~length(unique(stats::na.omit(.))),
     hist = ~skimr::inline_hist(stats::na.omit(as.double(.)))
   )
 }
