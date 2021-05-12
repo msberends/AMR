@@ -36,16 +36,16 @@
 #' @param col_icu column name of the logicals (`TRUE`/`FALSE`) whether a ward or department is an Intensive Care Unit (ICU)
 #' @param col_keyantimicrobials (only useful when `method = "phenotype-based"`) column name of the key antimicrobials to determine first (weighted) isolates, see [key_antimicrobials()]. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' or 'antimicrobials' (case insensitive). Use `col_keyantimicrobials = FALSE` to prevent this. Can also be the output of [key_antimicrobials()].
 #' @param episode_days episode in days after which a genus/species combination will be determined as 'first isolate' again. The default of 365 days is based on the guideline by CLSI, see *Source*. 
-#' @param testcodes_exclude character vector with test codes that should be excluded (case-insensitive)
-#' @param icu_exclude logical to indicate whether ICU isolates should be excluded (rows with value `TRUE` in the column set with `col_icu`)
+#' @param testcodes_exclude a [character] vector with test codes that should be excluded (case-insensitive)
+#' @param icu_exclude a [logical] to indicate whether ICU isolates should be excluded (rows with value `TRUE` in the column set with `col_icu`)
 #' @param specimen_group value in the column set with `col_specimen` to filter on
 #' @param type type to determine weighed isolates; can be `"keyantimicrobials"` or `"points"`, see *Details*
 #' @param method the method to apply, either `"phenotype-based"`, `"episode-based"`, `"patient-based"` or `"isolate-based"` (can be abbreviated), see *Details*. The default is `"phenotype-based"` if antimicrobial test results are present in the data, and `"episode-based"` otherwise.
-#' @param ignore_I logical to indicate whether antibiotic interpretations with `"I"` will be ignored when `type = "keyantimicrobials"`, see *Details*
+#' @param ignore_I [logical] to indicate whether antibiotic interpretations with `"I"` will be ignored when `type = "keyantimicrobials"`, see *Details*
 #' @param points_threshold minimum number of points to require before differences in the antibiogram will lead to inclusion of an isolate when `type = "points"`, see *Details*
 #' @param info a [logical] to indicate info should be printed, defaults to `TRUE` only in interactive mode
-#' @param include_unknown logical to indicate whether 'unknown' microorganisms should be included too, i.e. microbial code `"UNKNOWN"`, which defaults to `FALSE`. For WHONET users, this means that all records with organism code `"con"` (*contamination*) will be excluded at default. Isolates with a microbial ID of `NA` will always be excluded as first isolate.
-#' @param include_untested_rsi logical to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use `include_untested_rsi = FALSE` to always return `FALSE` for such rows. This checks the data set for columns of class `<rsi>` and consequently requires transforming columns with antibiotic results using [as.rsi()] first.
+#' @param include_unknown a [logical] to indicate whether 'unknown' microorganisms should be included too, i.e. microbial code `"UNKNOWN"`, which defaults to `FALSE`. For WHONET users, this means that all records with organism code `"con"` (*contamination*) will be excluded at default. Isolates with a microbial ID of `NA` will always be excluded as first isolate.
+#' @param include_untested_rsi a [logical] to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use `include_untested_rsi = FALSE` to always return `FALSE` for such rows. This checks the data set for columns of class `<rsi>` and consequently requires transforming columns with antibiotic results using [as.rsi()] first.
 #' @param ... arguments passed on to [first_isolate()] when using [filter_first_isolate()], otherwise arguments passed on to [key_antimicrobials()] (such as `universal`, `gram_negative`, `gram_positive`)
 #' @details 
 #' To conduct epidemiological analyses on antimicrobial resistance data, only so-called first isolates should be included to prevent overestimation and underestimation of antimicrobial resistance. Different methods can be used to do so, see below.

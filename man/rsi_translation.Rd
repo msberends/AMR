@@ -16,7 +16,7 @@ A \link{data.frame} with 20,486 observations and 10 variables:
 \item \code{disk_dose}\cr Dose of the used disk diffusion method
 \item \code{breakpoint_S}\cr Lowest MIC value or highest number of millimetres that leads to "S"
 \item \code{breakpoint_R}\cr Highest MIC value or lowest number of millimetres that leads to "R"
-\item \code{uti}\cr A logical value (\code{TRUE}/\code{FALSE}) to indicate whether the rule applies to a urinary tract infection (UTI)
+\item \code{uti}\cr A \link{logical} value (\code{TRUE}/\code{FALSE}) to indicate whether the rule applies to a urinary tract infection (UTI)
 }
 }
 \usage{

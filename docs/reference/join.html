@@ -49,7 +49,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Join microorganisms to a Data Set — join" />
-<meta property="og:description" content="Join the data set microorganisms easily to an existing table or character vector." />
+<meta property="og:description" content="Join the data set microorganisms easily to an existing data set or to a character vector." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9021</span>
       </span>
     </div>
 
@@ -239,7 +239,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Join the data set <a href='microorganisms.html'>microorganisms</a> easily to an existing table or character vector.</p>
+    <p>Join the data set <a href='microorganisms.html'>microorganisms</a> easily to an existing data set or to a <a href='https://rdrr.io/r/base/character.html'>character</a> vector.</p>
     </div>
 
     <pre class="usage"><span class='fu'>inner_join_microorganisms</span><span class='op'>(</span><span class='va'>x</span>, by <span class='op'>=</span> <span class='cn'>NULL</span>, suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2"</span>, <span class='st'>""</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -259,7 +259,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>existing table to join, or character vector</p></td>
+      <td><p>existing data set to join, or <a href='https://rdrr.io/r/base/character.html'>character</a> vector. In case of a <a href='https://rdrr.io/r/base/character.html'>character</a> vector, the resulting <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> will contain a column 'x' with these values.</p></td>
     </tr>
     <tr>
       <th>by</th>
@@ -267,7 +267,7 @@
     </tr>
     <tr>
       <th>suffix</th>
-      <td><p>if there are non-joined duplicate variables in <code>x</code> and <code>y</code>, these suffixes will be added to the output to disambiguate them. Should be a character vector of length 2.</p></td>
+      <td><p>if there are non-joined duplicate variables in <code>x</code> and <code>y</code>, these suffixes will be added to the output to disambiguate them. Should be a <a href='https://rdrr.io/r/base/character.html'>character</a> vector of length 2.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -275,10 +275,13 @@
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><strong>Note:</strong> As opposed to the <code>join()</code> functions of <code>dplyr</code>, <a href='https://rdrr.io/r/base/character.html'>character</a> vectors are supported and at default existing columns will get a suffix <code>"2"</code> and the newly joined columns will not get a suffix.</p>
-<p>If the <code>dplyr</code> package is installed, their join functions will be used. Otherwise, the much slower <code><a href='https://rdrr.io/r/base/merge.html'>merge()</a></code> function from base R will be used.</p>
+<p>If the <code>dplyr</code> package is installed, their join functions will be used. Otherwise, the much slower <code><a href='https://rdrr.io/r/base/merge.html'>merge()</a></code> and <code><a href='https://rdrr.io/r/base/interaction.html'>interaction()</a></code> functions from base R will be used.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable Lifecycle</h2>
 
     
@@ -294,7 +297,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='fu'>left_join_microorganisms</span><span class='op'>(</span><span class='fu'><a href='as.mo.html'>as.mo</a></span><span class='op'>(</span><span class='st'>"K. pneumoniae"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'>left_join_microorganisms</span><span class='op'>(</span><span class='st'>"B_KLBSL_PNE"</span><span class='op'>)</span>
+<span class='fu'>left_join_microorganisms</span><span class='op'>(</span><span class='st'>"B_KLBSL_PNMN"</span><span class='op'>)</span>
 
 <span class='co'># \donttest{</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>

@@ -10,7 +10,7 @@ italicise_taxonomy(string, type = c("markdown", "ansi"))
 italicize_taxonomy(string, type = c("markdown", "ansi"))
 }
 \arguments{
-\item{string}{a character (vector)}
+\item{string}{a \link{character} (vector)}
 
 \item{type}{type of conversion of the taxonomic names, either "markdown" or "ansi", see \emph{Details}}
 }
@@ -40,4 +40,13 @@ italicise_taxonomy("An overview of Staphylococcus aureus isolates")
 italicise_taxonomy("An overview of S. aureus isolates")
 
 cat(italicise_taxonomy("An overview of S. aureus isolates", type = "ansi"))
+
+# since ggplot2 supports no markdown (yet), use
+# italicise_taxonomy() and the `ggtext` pkg for titles:
+
+if (require("ggplot2") && require("ggtext")) {
+  ggplot(example_isolates$AMC,
+         title = italicise_taxonomy("Amoxi/clav in E. coli")) +
+    theme(plot.title = ggtext::element_markdown())
+}
 }

@@ -27,8 +27,8 @@
 #'
 #' Use this function to determine the antibiotic code of one or more antibiotics. The data set [antibiotics] will be searched for abbreviations, official names and synonyms (brand names).
 #' @inheritSection lifecycle Stable Lifecycle
-#' @param x character vector to determine to antibiotic ID
-#' @param flag_multiple_results logical to indicate whether a note should be printed to the console that probably more than one antibiotic code or name can be retrieved from a single input value.
+#' @param x a [character] vector to determine to antibiotic ID
+#' @param flag_multiple_results a [logical] to indicate whether a note should be printed to the console that probably more than one antibiotic code or name can be retrieved from a single input value.
 #' @param info a [logical] to indicate whether a progress bar should be printed, defaults to `TRUE` only in interactive mode
 #' @param ... arguments passed on to internal functions
 #' @rdname as.ab

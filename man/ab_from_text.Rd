@@ -19,13 +19,13 @@ ab_from_text(
 
 \item{type}{type of property to search for, either \code{"drug"}, \code{"dose"} or \code{"administration"}, see \emph{Examples}}
 
-\item{collapse}{character to pass on to \code{paste(, collapse = ...)} to only return one character per element of \code{text}, see \emph{Examples}}
+\item{collapse}{a \link{character} to pass on to \code{paste(, collapse = ...)} to only return one \link{character} per element of \code{text}, see \emph{Examples}}
 
 \item{translate_ab}{if \code{type = "drug"}: a column name of the \link{antibiotics} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}. Defaults to \code{FALSE}. Using \code{TRUE} is equal to using "name".}
 
-\item{thorough_search}{logical to indicate whether the input must be extensively searched for misspelling and other faulty input values. Setting this to \code{TRUE} will take considerably more time than when using \code{FALSE}. At default, it will turn \code{TRUE} when all input elements contain a maximum of three words.}
+\item{thorough_search}{a \link{logical} to indicate whether the input must be extensively searched for misspelling and other faulty input values. Setting this to \code{TRUE} will take considerably more time than when using \code{FALSE}. At default, it will turn \code{TRUE} when all input elements contain a maximum of three words.}
 
-\item{info}{logical to indicate whether a progress bar should be printed, defaults to \code{TRUE} only in interactive mode}
+\item{info}{a \link{logical} to indicate whether a progress bar should be printed, defaults to \code{TRUE} only in interactive mode}
 
 \item{...}{arguments passed on to \code{\link[=as.ab]{as.ab()}}}
 }
@@ -41,7 +41,7 @@ This function is also internally used by \code{\link[=as.ab]{as.ab()}}, although
 
 At default, the function will search for antimicrobial drug names. All text elements will be searched for official names, ATC codes and brand names. As it uses \code{\link[=as.ab]{as.ab()}} internally, it will correct for misspelling.
 
-With \code{type = "dose"} (or similar, like "dosing", "doses"), all text elements will be searched for numeric values that are higher than 100 and do not resemble years. The output will be numeric. It supports any unit (g, mg, IE, etc.) and multiple values in one clinical text, see \emph{Examples}.
+With \code{type = "dose"} (or similar, like "dosing", "doses"), all text elements will be searched for \link{numeric} values that are higher than 100 and do not resemble years. The output will be \link{numeric}. It supports any unit (g, mg, IE, etc.) and multiple values in one clinical text, see \emph{Examples}.
 
 With \code{type = "administration"} (or abbreviations, like "admin", "adm"), all text elements will be searched for a form of drug administration. It supports the following forms (including common abbreviations): buccal, implant, inhalation, instillation, intravenous, nasal, oral, parenteral, rectal, sublingual, transdermal and vaginal. Abbreviations for oral (such as 'po', 'per os') will become "oral", all values for intravenous (such as 'iv', 'intraven') will become "iv". It supports multiple values in one clinical text, see \emph{Examples}.
 }

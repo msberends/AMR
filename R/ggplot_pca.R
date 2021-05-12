@@ -33,18 +33,18 @@
 #' @param labels_textsize the size of the text used for the labels
 #' @param labels_text_placement adjustment factor the placement of the variable names (`>=1` means further away from the arrow head)
 #' @param groups an optional vector of groups for the labels, with the same length as `labels`. If set, the points and labels will be coloured according to these groups. When using the [pca()] function as input for `x`, this will be determined automatically based on the attribute `non_numeric_cols`, see [pca()].
-#' @param ellipse a logical to indicate whether a normal data ellipse should be drawn for each group (set with `groups`)
+#' @param ellipse a [logical] to indicate whether a normal data ellipse should be drawn for each group (set with `groups`)
 #' @param ellipse_prob statistical size of the ellipse in normal probability
 #' @param ellipse_size the size of the ellipse line
 #' @param ellipse_alpha the alpha (transparency) of the ellipse line
 #' @param points_size the size of the points
 #' @param points_alpha the alpha (transparency) of the points
-#' @param arrows a logical to indicate whether arrows should be drawn
+#' @param arrows a [logical] to indicate whether arrows should be drawn
 #' @param arrows_textsize the size of the text for variable names
 #' @param arrows_colour the colour of the arrow and their text
 #' @param arrows_size the size (thickness) of the arrow lines
 #' @param arrows_textsize the size of the text at the end of the arrows
-#' @param arrows_textangled a logical whether the text at the end of the arrows should be angled
+#' @param arrows_textangled a [logical] whether the text at the end of the arrows should be angled
 #' @param arrows_alpha the alpha (transparency) of the arrows and their text
 #' @param base_textsize the text size for all plot elements except the labels and arrows
 #' @param ... arguments passed on to functions

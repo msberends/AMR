@@ -74,7 +74,7 @@ ggplot_pca(
 
 \item{groups}{an optional vector of groups for the labels, with the same length as \code{labels}. If set, the points and labels will be coloured according to these groups. When using the \code{\link[=pca]{pca()}} function as input for \code{x}, this will be determined automatically based on the attribute \code{non_numeric_cols}, see \code{\link[=pca]{pca()}}.}
 
-\item{ellipse}{a logical to indicate whether a normal data ellipse should be drawn for each group (set with \code{groups})}
+\item{ellipse}{a \link{logical} to indicate whether a normal data ellipse should be drawn for each group (set with \code{groups})}
 
 \item{ellipse_prob}{statistical size of the ellipse in normal probability}
 
@@ -86,7 +86,7 @@ ggplot_pca(
 
 \item{points_alpha}{the alpha (transparency) of the points}
 
-\item{arrows}{a logical to indicate whether arrows should be drawn}
+\item{arrows}{a \link{logical} to indicate whether arrows should be drawn}
 
 \item{arrows_colour}{the colour of the arrow and their text}
 
@@ -94,7 +94,7 @@ ggplot_pca(
 
 \item{arrows_textsize}{the size of the text at the end of the arrows}
 
-\item{arrows_textangled}{a logical whether the text at the end of the arrows should be angled}
+\item{arrows_textangled}{a \link{logical} whether the text at the end of the arrows should be angled}
 
 \item{arrows_alpha}{the alpha (transparency) of the arrows and their text}
 

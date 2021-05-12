@@ -88,7 +88,7 @@ mo_url(x, open = FALSE, language = get_locale(), ...)
 mo_property(x, property = "fullname", language = get_locale(), ...)
 }
 \arguments{
-\item{x}{any character (vector) that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}. Can be left blank for auto-guessing the column containing microorganism codes if used in a data set, see \emph{Examples}.}
+\item{x}{any \link{character} (vector) that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}. Can be left blank for auto-guessing the column containing microorganism codes if used in a data set, see \emph{Examples}.}
 
 \item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can be overwritten by setting the option \code{AMR_locale}, e.g. \code{options(AMR_locale = "de")}, see \link{translate}. Also used to translate text like "no growth". Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 

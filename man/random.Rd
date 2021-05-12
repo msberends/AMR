@@ -16,9 +16,9 @@ random_rsi(size, prob_RSI = c(0.33, 0.33, 0.33), ...)
 \arguments{
 \item{size}{desired size of the returned vector}
 
-\item{mo}{any character that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
+\item{mo}{any \link{character} that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
 
-\item{ab}{any character that can be coerced to a valid antimicrobial agent code with \code{\link[=as.ab]{as.ab()}}}
+\item{ab}{any \link{character} that can be coerced to a valid antimicrobial agent code with \code{\link[=as.ab]{as.ab()}}}
 
 \item{...}{ignored, only in place to allow future extensions}
 

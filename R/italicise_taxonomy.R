@@ -27,7 +27,7 @@
 #' 
 #' According to the binomial nomenclature, the lowest four taxonomic levels (family, genus, species, subspecies) should be printed in italic. This function finds taxonomic names within strings and makes them italic.
 #' @inheritSection lifecycle Maturing Lifecycle
-#' @param string a character (vector)
+#' @param string a [character] (vector)
 #' @param type type of conversion of the taxonomic names, either "markdown" or "ansi", see *Details*
 #' @details 
 #' This function finds the taxonomic names and makes them italic based on the [microorganisms] data set.
@@ -42,6 +42,15 @@
 #' italicise_taxonomy("An overview of S. aureus isolates")
 #' 
 #' cat(italicise_taxonomy("An overview of S. aureus isolates", type = "ansi"))
+#' 
+#' # since ggplot2 supports no markdown (yet), use
+#' # italicise_taxonomy() and the `ggtext` pkg for titles:
+#' 
+#' if (require("ggplot2") && require("ggtext")) {
+#'   ggplot(example_isolates$AMC,
+#'          title = italicise_taxonomy("Amoxi/clav in E. coli")) +
+#'     theme(plot.title = ggtext::element_markdown())
+#' }
 italicise_taxonomy <- function(string, type = c("markdown", "ansi")) {
   if (missing(type)) {
     type <- "markdown"

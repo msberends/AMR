@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9020</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9021</span>
       </span>
     </div>
 
@@ -236,12 +236,12 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1609020" class="section level1">
-<h1 class="page-header" data-toc-text="1.6.0.9020">
-<a href="#amr-1609020" class="anchor"></a><small> Unreleased </small><code>AMR</code> 1.6.0.9020</h1>
-<div id="last-updated-6-may-2021" class="section level2">
+    <div id="amr-1609021" class="section level1">
+<h1 class="page-header" data-toc-text="1.6.0.9021">
+<a href="#amr-1609021" class="anchor"></a><small> Unreleased </small><code>AMR</code> 1.6.0.9021</h1>
+<div id="last-updated-12-may-2021" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-6-may-2021" class="anchor"></a><small>Last updated: 6 May 2021</small>
+<a href="#last-updated-12-may-2021" class="anchor"></a><small>Last updated: 12 May 2021</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
@@ -301,6 +301,9 @@
 <li>Added 25 common system codes for bacteria to the <code>microorganisms.codes</code> data set</li>
 <li>Added 16 common system codes for antimicrobial agents to the <code>antibiotics</code> data set</li>
 <li>Fix for using <code><a href="https://docs.ropensci.org/skimr/reference/skim.html">skimr::skim()</a></code> on classes <code>mo</code>, <code>mic</code> and <code>disk</code> when using the just released <code>dplyr</code> v1.0.6</li>
+<li>Updated <code><a href="https://docs.ropensci.org/skimr/reference/skim.html">skimr::skim()</a></code> usage for MIC values to also include 25th and 75th percentiles</li>
+<li>Fix for plotting missing MIC/disk diffusion values</li>
+<li>Updated join functions to always use <code>dplyr</code> join functions if the <code>dplyr</code> package is installed - now also preserving grouped variables</li>
 </ul>
 </div>
 </div>
@@ -343,7 +346,7 @@
 <span class="co">#&gt; Filtering on oxazolidinones: value in column `LNZ` (linezolid) is either "R", "S" or "I"</span></code></pre></div>
 </li>
 <li><p>Support for custom MDRO guidelines, using the new <code><a href="../reference/mdro.html">custom_mdro_guideline()</a></code> function, please see <code><a href="../reference/mdro.html">mdro()</a></code> for additional info</p></li>
-<li><p><code>ggplot()</code> generics for classes <code>&lt;mic&gt;</code> and <code>&lt;disk&gt;</code></p></li>
+<li><p><code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> generics for classes <code>&lt;mic&gt;</code> and <code>&lt;disk&gt;</code></p></li>
 <li>
 <p>Function <code><a href="../reference/mo_property.html">mo_is_yeast()</a></code>, which determines whether a microorganism is a member of the taxonomic class Saccharomycetes or the taxonomic order Saccharomycetales:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -400,7 +403,7 @@
 <li>Plotting of MIC and disk diffusion values now support interpretation colouring if you supply the microorganism and antimicrobial agent</li>
 <li>All colours were updated to colour-blind friendly versions for values R, S and I for all plot methods (also applies to tibble printing)</li>
 <li>Interpretation of MIC and disk diffusion values to R/SI will now be translated if the system language is German, Dutch or Spanish (see <code>translate</code>)</li>
-<li>Plotting is now possible with base R using <code><a href="../reference/plot.html">plot()</a></code> and with ggplot2 using <code>ggplot()</code> on any vector of MIC and disk diffusion values</li>
+<li>Plotting is now possible with base R using <code><a href="../reference/plot.html">plot()</a></code> and with ggplot2 using <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> on any vector of MIC and disk diffusion values</li>
 </ul>
 </li>
 <li>Updated SNOMED codes to US Edition of SNOMED CT from 1 September 2020 and added the source to the help page of the <code>microorganisms</code> data set</li>
@@ -417,7 +420,7 @@
 <code><a href="../reference/as.rsi.html">is.rsi.eligible()</a></code> now detects if the column name resembles an antibiotic name or code and now returns <code>TRUE</code> immediately if the input contains any of the values “R”, “S” or “I”. This drastically improves speed, also for a lot of other functions that rely on automatic determination of antibiotic columns.</li>
 <li>Functions <code><a href="../reference/get_episode.html">get_episode()</a></code> and <code><a href="../reference/get_episode.html">is_new_episode()</a></code> now support less than a day as value for argument <code>episode_days</code> (e.g., to include one patient/test per hour)</li>
 <li>Argument <code>ampc_cephalosporin_resistance</code> in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> now also applies to value “I” (not only “S”)</li>
-<li>Functions <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> on a Principal Components Analysis object (<code><a href="../reference/pca.html">pca()</a></code>) now print additional group info if the original data was grouped using <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code>
+<li>Functions <code><a href="https://docs.ropensci.org/skimr/reference/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> on a Principal Components Analysis object (<code><a href="../reference/pca.html">pca()</a></code>) now print additional group info if the original data was grouped using <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code>
 </li>
 <li>Improved speed and reliability of <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>. As this also internally improves the reliability of <code><a href="../reference/first_isolate.html">first_isolate()</a></code> and <code><a href="../reference/mdro.html">mdro()</a></code>, this might have a slight impact on the results of those functions.</li>
 <li>Fix for <code><a href="../reference/mo_property.html">mo_name()</a></code> when used in other languages than English</li>

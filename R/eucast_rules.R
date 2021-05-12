@@ -50,16 +50,16 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see *Details*.
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param x data with antibiotic columns, such as `amox`, `AMX` and `AMC`
-#' @param info a logical to indicate whether progress should be printed to the console, defaults to only print while in interactive sessions
-#' @param rules a character vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expert"`, `"other"`, `"custom"`, `"all"`, and defaults to `c("breakpoints", "expert")`. The default value can be set to another value, e.g. using `options(AMR_eucastrules = "all")`. If using `"custom"`, be sure to fill in argument `custom_rules` too. Custom rules can be created with [custom_eucast_rules()].
+#' @param info a [logical] to indicate whether progress should be printed to the console, defaults to only print while in interactive sessions
+#' @param rules a [character] vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expert"`, `"other"`, `"custom"`, `"all"`, and defaults to `c("breakpoints", "expert")`. The default value can be set to another value, e.g. using `options(AMR_eucastrules = "all")`. If using `"custom"`, be sure to fill in argument `custom_rules` too. Custom rules can be created with [custom_eucast_rules()].
 #' @param verbose a [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.
 #' @param version_breakpoints the version number to use for the EUCAST Clinical Breakpoints guideline. Can be either `r vector_or(names(EUCAST_VERSION_BREAKPOINTS), reverse = TRUE)`.
 #' @param version_expertrules the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either `r vector_or(names(EUCAST_VERSION_EXPERT_RULES), reverse = TRUE)`.
-#' @param ampc_cephalosporin_resistance a character value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants, defaults to `NA`. Currently only works when `version_expertrules` is `3.2`; '*EUCAST Expert Rules v3.2 on Enterobacterales*' states that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three agents. A value of `NA` (the default) for this argument will remove results for these three agents, while e.g. a value of `"R"` will make the results for these agents resistant. Use `NULL` or `FALSE` to not alter results for these three agents of AmpC de-repressed cephalosporin-resistant mutants. Using `TRUE` is equal to using `"R"`. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: `r vector_and(gsub("[^a-zA-Z ]+", "", unlist(strsplit(eucast_rules_file[which(eucast_rules_file$reference.version == 3.2 & eucast_rules_file$reference.rule %like% "ampc"), "this_value"][1], "|", fixed = TRUE))), quotes = "*")`.
+#' @param ampc_cephalosporin_resistance a [character] value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants, defaults to `NA`. Currently only works when `version_expertrules` is `3.2`; '*EUCAST Expert Rules v3.2 on Enterobacterales*' states that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three agents. A value of `NA` (the default) for this argument will remove results for these three agents, while e.g. a value of `"R"` will make the results for these agents resistant. Use `NULL` or `FALSE` to not alter results for these three agents of AmpC de-repressed cephalosporin-resistant mutants. Using `TRUE` is equal to using `"R"`. \cr For *EUCAST Expert Rules* v3.2, this rule applies to: `r vector_and(gsub("[^a-zA-Z ]+", "", unlist(strsplit(eucast_rules_file[which(eucast_rules_file$reference.version == 3.2 & eucast_rules_file$reference.rule %like% "ampc"), "this_value"][1], "|", fixed = TRUE))), quotes = "*")`.
 #' @param ... column name of an antibiotic, see section *Antibiotics* below
 #' @param ab any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
 #' @param administration route of administration, either `r vector_or(dosage$administration)`
-#' @param only_rsi_columns a logical to indicate whether only antibiotic columns must be detected that were transformed to class `<rsi>` (see [as.rsi()]) on beforehand (defaults to `FALSE`)
+#' @param only_rsi_columns a [logical] to indicate whether only antibiotic columns must be detected that were transformed to class `<rsi>` (see [as.rsi()]) on beforehand (defaults to `FALSE`)
 #' @param custom_rules custom rules to apply, created with [custom_eucast_rules()]
 #' @inheritParams first_isolate
 #' @details
@@ -398,7 +398,7 @@ eucast_rules <- function(x,
                          paste0(x, collapse = "")
                        })
   
-  # save original table, with the new .rowid column
+  # save original [table], with the new .rowid column
   x.bak <- x
   # keep only unique rows for MO and ABx
   x <- x %pm>% 
@@ -902,9 +902,9 @@ eucast_rules <- function(x,
     cat(paste0(font_grey(strrep("-", 0.95 * options()$width)), "\n"))
     
     if (verbose == FALSE & total_n_added + total_n_changed > 0) {
-      cat("\n", word_wrap("Use ", font_bold("eucast_rules(..., verbose = TRUE)"), " (on your original data) to get a data.frame with all specified edits instead."), "\n\n", sep = "")
+      cat("\n", word_wrap("Use ", font_bold("eucast_rules(..., verbose = TRUE)"), " (on your original data) to get a [data.frame] with all specified edits instead."), "\n\n", sep = "")
     } else if (verbose == TRUE) {
-      cat("\n", word_wrap("Used 'Verbose mode' (", font_bold("verbose = TRUE"), "), which returns a data.frame with all specified edits.\nUse ", font_bold("verbose = FALSE"), " to apply the rules on your data."), "\n\n", sep = "")
+      cat("\n", word_wrap("Used 'Verbose mode' (", font_bold("verbose = TRUE"), "), which returns a [data.frame] with all specified edits.\nUse ", font_bold("verbose = FALSE"), " to apply the rules on your data."), "\n\n", sep = "")
     }
   }
   
@@ -936,7 +936,7 @@ eucast_rules <- function(x,
   }
 }
 
-# helper function for editing the table ----
+# helper function for editing the [table] ----
 edit_rsi <- function(x,
                      to,
                      rule,
@@ -975,14 +975,14 @@ edit_rsi <- function(x,
       # insert into original table
       new_edits[rows, cols] <- to,
       warning = function(w) {
-        if (w$message %like% "invalid factor level") {
+        if (w$message %like% "invalid [factor] level") {
           xyz <- vapply(FUN.VALUE = logical(1), cols, function(col) {
             new_edits[, col] <<- factor(x = as.character(pm_pull(new_edits, col)),
                                         levels = unique(c(to, levels(pm_pull(new_edits, col)))))
             TRUE
           })
           suppressWarnings(new_edits[rows, cols] <<- to)
-          warning_('Value "', to, '" added to the factor levels of column(s) `', paste(cols, collapse = "`, `"), "` because this value was not an existing factor level. A better way is to use as.rsi() on beforehand on antimicrobial columns to guarantee the right structure.", call = FALSE)
+          warning_('Value "', to, '" added to the [factor] levels of column(s) `', paste(cols, collapse = "`, `"), "` because this value was not an existing [factor] level. A better way is to use as.rsi() on beforehand on antimicrobial columns to guarantee the right structure.", call = FALSE)
           txt_warning()
           warned <- FALSE
         } else {

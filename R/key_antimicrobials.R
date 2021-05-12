@@ -28,18 +28,18 @@
 #' These functions can be used to determine first weighted isolates by considering the phenotype for isolate selection (see [first_isolate()]). Using a phenotype-based method to determine first isolates is more reliable than methods that disregard phenotypes.
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param x a [data.frame] with antibiotics columns, like `AMX` or `amox`. Can be left blank to determine automatically
-#' @param y,z character vectors to compare
+#' @param y,z [character] vectors to compare
 #' @inheritParams first_isolate
 #' @param universal names of **broad-spectrum** antimicrobial agents, case-insensitive. Set to `NULL` to ignore. See *Details* for the default agents.
 #' @param gram_negative names of antibiotic agents for **Gram-positives**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default agents.
 #' @param gram_positive names of antibiotic agents for **Gram-negatives**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default agents.
 #' @param antifungal names of antifungal agents for **fungi**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default agents.
-#' @param only_rsi_columns a logical to indicate whether only columns must be included that were transformed to class `<rsi>` (see [as.rsi()]) on beforehand (defaults to `FALSE`)
+#' @param only_rsi_columns a [logical] to indicate whether only columns must be included that were transformed to class `<rsi>` (see [as.rsi()]) on beforehand (defaults to `FALSE`)
 #' @param ... ignored, only in place to allow future extensions
 #' @details 
 #' The [key_antimicrobials()] and [all_antimicrobials()] functions are context-aware. This means that then the `x` argument can be left blank, see *Examples*.
 #' 
-#' The function [key_antimicrobials()] returns a character vector with 12 antimicrobial results for every isolate. The function [all_antimicrobials()] returns a character vector with all antimicrobial results for every isolate. These vectors can then be compared using [antimicrobials_equal()], to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (`"."`) by [key_antimicrobials()] and ignored by [antimicrobials_equal()].
+#' The function [key_antimicrobials()] returns a [character] vector with 12 antimicrobial results for every isolate. The function [all_antimicrobials()] returns a [character] vector with all antimicrobial results for every isolate. These vectors can then be compared using [antimicrobials_equal()], to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (`"."`) by [key_antimicrobials()] and ignored by [antimicrobials_equal()].
 #' 
 #' Please see the [first_isolate()] function how these important functions enable the 'phenotype-based' method for determination of first isolates.
 #'
@@ -96,7 +96,7 @@
 #' # TRUE, because I is ignored (as well as missing values)
 #'
 #' antimicrobials_equal(strainA, strainB, type = "keyantimicrobials", ignore_I = FALSE)
-#' # FALSE, because I is not ignored and so the 4th character differs
+#' # FALSE, because I is not ignored and so the 4th [character] differs
 #'
 #' \donttest{
 #' if (require("dplyr")) {
@@ -140,7 +140,7 @@ key_antimicrobials <- function(x = NULL,
   meet_criteria(antifungal, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   
-  # force regular data.frame, not a tibble or data.table
+  # force regular [data.frame], not a tibble or data.table
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   cols <- get_column_abx(x, info = FALSE, only_rsi_columns = only_rsi_columns)
   
@@ -237,7 +237,7 @@ all_antimicrobials <- function(x = NULL,
   meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   
-  # force regular data.frame, not a tibble or data.table
+  # force regular [data.frame], not a tibble or data.table
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   cols <- get_column_abx(x, only_rsi_columns = only_rsi_columns, info = FALSE, sort = FALSE)
   

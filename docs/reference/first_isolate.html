@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9021</span>
       </span>
     </div>
 
@@ -318,11 +318,11 @@
     </tr>
     <tr>
       <th>testcodes_exclude</th>
-      <td><p>character vector with test codes that should be excluded (case-insensitive)</p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/character.html'>character</a> vector with test codes that should be excluded (case-insensitive)</p></td>
     </tr>
     <tr>
       <th>icu_exclude</th>
-      <td><p>logical to indicate whether ICU isolates should be excluded (rows with value <code>TRUE</code> in the column set with <code>col_icu</code>)</p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/logical.html'>logical</a> to indicate whether ICU isolates should be excluded (rows with value <code>TRUE</code> in the column set with <code>col_icu</code>)</p></td>
     </tr>
     <tr>
       <th>specimen_group</th>
@@ -338,7 +338,7 @@
     </tr>
     <tr>
       <th>ignore_I</th>
-      <td><p>logical to indicate whether antibiotic interpretations with <code>"I"</code> will be ignored when <code>type = "keyantimicrobials"</code>, see <em>Details</em></p></td>
+      <td><p><a href='https://rdrr.io/r/base/logical.html'>logical</a> to indicate whether antibiotic interpretations with <code>"I"</code> will be ignored when <code>type = "keyantimicrobials"</code>, see <em>Details</em></p></td>
     </tr>
     <tr>
       <th>points_threshold</th>
@@ -350,11 +350,11 @@
     </tr>
     <tr>
       <th>include_unknown</th>
-      <td><p>logical to indicate whether 'unknown' microorganisms should be included too, i.e. microbial code <code>"UNKNOWN"</code>, which defaults to <code>FALSE</code>. For WHONET users, this means that all records with organism code <code>"con"</code> (<em>contamination</em>) will be excluded at default. Isolates with a microbial ID of <code>NA</code> will always be excluded as first isolate.</p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/logical.html'>logical</a> to indicate whether 'unknown' microorganisms should be included too, i.e. microbial code <code>"UNKNOWN"</code>, which defaults to <code>FALSE</code>. For WHONET users, this means that all records with organism code <code>"con"</code> (<em>contamination</em>) will be excluded at default. Isolates with a microbial ID of <code>NA</code> will always be excluded as first isolate.</p></td>
     </tr>
     <tr>
       <th>include_untested_rsi</th>
-      <td><p>logical to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use <code>include_untested_rsi = FALSE</code> to always return <code>FALSE</code> for such rows. This checks the data set for columns of class <code>&lt;rsi&gt;</code> and consequently requires transforming columns with antibiotic results using <code><a href='as.rsi.html'>as.rsi()</a></code> first.</p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/logical.html'>logical</a> to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use <code>include_untested_rsi = FALSE</code> to always return <code>FALSE</code> for such rows. This checks the data set for columns of class <code>&lt;rsi&gt;</code> and consequently requires transforming columns with antibiotic results using <code><a href='as.rsi.html'>as.rsi()</a></code> first.</p></td>
     </tr>
     <tr>
       <th>...</th>

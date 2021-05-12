@@ -27,8 +27,8 @@
 #'
 #' Convenient wrapper around [grepl()] to match a pattern: `x %like% pattern`. It always returns a [`logical`] vector and is always case-insensitive (use `x %like_case% pattern` for case-sensitive matching). Also, `pattern` can be as long as `x` to compare items of each index in both vectors, or they both can have the same length to iterate over all cases.
 #' @inheritSection lifecycle Stable Lifecycle
-#' @param x a character vector where matches are sought, or an object which can be coerced by [as.character()] to a character vector.
-#' @param pattern a character vector containing regular expressions (or a [character] string for `fixed = TRUE`) to be matched in the given character vector. Coerced by [as.character()] to a character string if possible.
+#' @param x a [character] vector where matches are sought, or an object which can be coerced by [as.character()] to a [character] vector.
+#' @param pattern a [character] vector containing regular expressions (or a [character] string for `fixed = TRUE`) to be matched in the given [character] vector. Coerced by [as.character()] to a [character] string if possible.
 #' @param ignore.case if `FALSE`, the pattern matching is *case sensitive* and if `TRUE`, case is ignored during matching.
 #' @return A [logical] vector
 #' @name like

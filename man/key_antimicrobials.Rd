@@ -45,15 +45,15 @@ antimicrobials_equal(
 
 \item{antifungal}{names of antifungal agents for \strong{fungi}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default agents.}
 
-\item{only_rsi_columns}{a logical to indicate whether only columns must be included that were transformed to class \verb{<rsi>} (see \code{\link[=as.rsi]{as.rsi()}}) on beforehand (defaults to \code{FALSE})}
+\item{only_rsi_columns}{a \link{logical} to indicate whether only columns must be included that were transformed to class \verb{<rsi>} (see \code{\link[=as.rsi]{as.rsi()}}) on beforehand (defaults to \code{FALSE})}
 
 \item{...}{ignored, only in place to allow future extensions}
 
-\item{y, z}{character vectors to compare}
+\item{y, z}{\link{character} vectors to compare}
 
 \item{type}{type to determine weighed isolates; can be \code{"keyantimicrobials"} or \code{"points"}, see \emph{Details}}
 
-\item{ignore_I}{logical to indicate whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantimicrobials"}, see \emph{Details}}
+\item{ignore_I}{\link{logical} to indicate whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantimicrobials"}, see \emph{Details}}
 
 \item{points_threshold}{minimum number of points to require before differences in the antibiogram will lead to inclusion of an isolate when \code{type = "points"}, see \emph{Details}}
 }
@@ -63,7 +63,7 @@ These functions can be used to determine first weighted isolates by considering 
 \details{
 The \code{\link[=key_antimicrobials]{key_antimicrobials()}} and \code{\link[=all_antimicrobials]{all_antimicrobials()}} functions are context-aware. This means that then the \code{x} argument can be left blank, see \emph{Examples}.
 
-The function \code{\link[=key_antimicrobials]{key_antimicrobials()}} returns a character vector with 12 antimicrobial results for every isolate. The function \code{\link[=all_antimicrobials]{all_antimicrobials()}} returns a character vector with all antimicrobial results for every isolate. These vectors can then be compared using \code{\link[=antimicrobials_equal]{antimicrobials_equal()}}, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (\code{"."}) by \code{\link[=key_antimicrobials]{key_antimicrobials()}} and ignored by \code{\link[=antimicrobials_equal]{antimicrobials_equal()}}.
+The function \code{\link[=key_antimicrobials]{key_antimicrobials()}} returns a \link{character} vector with 12 antimicrobial results for every isolate. The function \code{\link[=all_antimicrobials]{all_antimicrobials()}} returns a \link{character} vector with all antimicrobial results for every isolate. These vectors can then be compared using \code{\link[=antimicrobials_equal]{antimicrobials_equal()}}, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (\code{"."}) by \code{\link[=key_antimicrobials]{key_antimicrobials()}} and ignored by \code{\link[=antimicrobials_equal]{antimicrobials_equal()}}.
 
 Please see the \code{\link[=first_isolate]{first_isolate()}} function how these important functions enable the 'phenotype-based' method for determination of first isolates.
 
@@ -133,7 +133,7 @@ antimicrobials_equal(strainA, strainB, type = "keyantimicrobials")
 # TRUE, because I is ignored (as well as missing values)
 
 antimicrobials_equal(strainA, strainB, type = "keyantimicrobials", ignore_I = FALSE)
-# FALSE, because I is not ignored and so the 4th character differs
+# FALSE, because I is not ignored and so the 4th [character] differs
 
 \donttest{
 if (require("dplyr")) {

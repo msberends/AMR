@@ -17,8 +17,8 @@ A \link{data.frame} with 500 observations and 53 variables:
 \item \code{Sex}\cr Fictitious gender of patient
 \item \code{Age}\cr Fictitious age of patient
 \item \verb{Age category}\cr Age group, can also be looked up using \code{\link[=age_groups]{age_groups()}}
-\item \verb{Date of admission}\cr Date of hospital admission
-\item \verb{Specimen date}\cr Date when specimen was received at laboratory
+\item \verb{Date of admission}\cr \link{Date} of hospital admission
+\item \verb{Specimen date}\cr \link{Date} when specimen was received at laboratory
 \item \verb{Specimen type}\cr Specimen type or group
 \item \verb{Specimen type (Numeric)}\cr Translation of \code{"Specimen type"}
 \item \code{Reason}\cr Reason of request with Differential Diagnosis
@@ -31,7 +31,7 @@ A \link{data.frame} with 500 observations and 53 variables:
 \item \verb{MRSA screening test}\cr Microorganism is possible MRSA?
 \item \verb{Inducible clindamycin resistance}\cr Clindamycin can be induced?
 \item \code{Comment}\cr Other comments
-\item \verb{Date of data entry}\cr Date this data was entered in WHONET
+\item \verb{Date of data entry}\cr \link{Date} this data was entered in WHONET
 \item \code{AMP_ND10:CIP_EE}\cr 28 different antibiotics. You can lookup the abbreviations in the \link{antibiotics} data set, or use e.g. \code{\link[=ab_name]{ab_name("AMP")}} to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using \code{\link[=as.rsi]{as.rsi()}}.
 }
 }

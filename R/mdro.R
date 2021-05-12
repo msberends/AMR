@@ -34,7 +34,7 @@
 #' @inheritParams eucast_rules
 #' @param pct_required_classes minimal required percentage of antimicrobial classes that must be available per isolate, rounded down. For example, with the default guideline, 17 antimicrobial classes must be available for *S. aureus*. Setting this `pct_required_classes` argument to `0.5` (default) means that for every *S. aureus* isolate at least 8 different classes must be available. Any lower number of available classes will return `NA` for that isolate.
 #' @param combine_SI a [logical] to indicate whether all values of S and I must be merged into one, so resistance is only considered when isolates are R, not I. As this is the default behaviour of the [mdro()] function, it follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. When using `combine_SI = FALSE`, resistance is considered when isolates are R or I.
-#' @param verbose a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.
+#' @param verbose a [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.
 #' @inheritSection eucast_rules Antibiotics
 #' @details 
 #' These functions are context-aware. This means that then the `x` argument can be left blank, see *Examples*.
@@ -136,7 +136,7 @@
 #' @export
 #' @inheritSection AMR Read more on Our Website!
 #' @source
-#' See the supported guidelines above for the list of publications used for this function.
+#' See the supported guidelines above for the [list] of publications used for this function.
 #' @examples
 #' mdro(example_isolates, guideline = "EUCAST")
 #' 
@@ -232,7 +232,7 @@ mdro <- function(x = NULL,
     }
   }
 
-  # force regular data.frame, not a tibble or data.table
+  # force regular [data.frame], not a tibble or data.table
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   
   if (pct_required_classes > 1) {
@@ -252,7 +252,7 @@ mdro <- function(x = NULL,
     if (info == TRUE) {
       txt <- paste0("Determining MDROs based on custom rules",
                     ifelse(isTRUE(attributes(guideline)$as_factor),
-                           paste0(", resulting in factor levels: ", paste0(attributes(guideline)$values, collapse = " < ")),
+                           paste0(", resulting in [factor] levels: ", paste0(attributes(guideline)$values, collapse = " < ")),
                            ""),
                     ".")
       txt <- word_wrap(txt)
@@ -361,7 +361,7 @@ mdro <- function(x = NULL,
   if (guideline$code == "cmi2012") {
     cols_ab <- get_column_abx(x = x,
                               soft_dependencies = c(
-                                # table 1 (S aureus):
+                                # [table] 1 (S aureus):
                                 "GEN",
                                 "RIF",
                                 "CPT",
@@ -384,7 +384,7 @@ mdro <- function(x = NULL,
                                 "TCY",
                                 "DOX",
                                 "MNO",
-                                # table 2 (Enterococcus)
+                                # [table] 2 (Enterococcus)
                                 "GEH",
                                 "STH",
                                 "IPM",
@@ -402,7 +402,7 @@ mdro <- function(x = NULL,
                                 "QDA",
                                 "DOX",
                                 "MNO",
-                                # table 3 (Enterobacteriaceae)
+                                # [table] 3 (Enterobacteriaceae)
                                 "GEN",
                                 "TOB",
                                 "AMK",
@@ -434,7 +434,7 @@ mdro <- function(x = NULL,
                                 "TCY",
                                 "DOX",
                                 "MNO",
-                                # table 4 (Pseudomonas)
+                                # [table] 4 (Pseudomonas)
                                 "GEN",
                                 "TOB",
                                 "AMK",
@@ -452,7 +452,7 @@ mdro <- function(x = NULL,
                                 "FOS",
                                 "COL",
                                 "PLB",
-                                # table 5 (Acinetobacter)
+                                # [table] 5 (Acinetobacter)
                                 "GEN",
                                 "TOB",
                                 "AMK",
@@ -1340,7 +1340,7 @@ mdro <- function(x = NULL,
       ab
     }
     drug_is_R <- function(ab) {
-      # returns logical vector
+      # returns [logical] vector
       ab <- prepare_drug(ab)
       if (length(ab) == 0) {
         rep(FALSE, NROW(x))
@@ -1351,7 +1351,7 @@ mdro <- function(x = NULL,
       }
     }
     drug_is_not_R <- function(ab) {
-      # returns logical vector
+      # returns [logical] vector
       ab <- prepare_drug(ab)
       if (length(ab) == 0) {
         rep(TRUE, NROW(x))

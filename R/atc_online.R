@@ -27,7 +27,7 @@
 #'
 #' Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic), such as the name, defined daily dose (DDD) or standard unit.
 #' @inheritSection lifecycle Stable Lifecycle
-#' @param atc_code a character or character vector with ATC code(s) of antibiotic(s)
+#' @param atc_code a [character] or [character] vector with ATC code(s) of antibiotic(s)
 #' @param property property of an ATC code. Valid values are `"ATC"`, `"Name"`, `"DDD"`, `"U"` (`"unit"`), `"Adm.R"`, `"Note"` and `groups`. For this last option, all hierarchical groups of an ATC code will be returned, see *Examples*.
 #' @param administration type of administration when using `property = "Adm.R"`, see *Details*
 #' @param url url of website of the WHOCC. The sign `%s` can be used as a placeholder for ATC codes.

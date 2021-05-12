@@ -24,21 +24,24 @@ semi_join_microorganisms(x, by = NULL, ...)
 anti_join_microorganisms(x, by = NULL, ...)
 }
 \arguments{
-\item{x}{existing table to join, or character vector}
+\item{x}{existing data set to join, or \link{character} vector. In case of a \link{character} vector, the resulting \link{data.frame} will contain a column 'x' with these values.}
 
 \item{by}{a variable to join by - if left empty will search for a column with class \code{\link{mo}} (created with \code{\link[=as.mo]{as.mo()}}) or will be \code{"mo"} if that column name exists in \code{x}, could otherwise be a column name of \code{x} with values that exist in \code{microorganisms$mo} (such as \code{by = "bacteria_id"}), or another column in \link{microorganisms} (but then it should be named, like \code{by = c("bacteria_id" = "fullname")})}
 
-\item{suffix}{if there are non-joined duplicate variables in \code{x} and \code{y}, these suffixes will be added to the output to disambiguate them. Should be a character vector of length 2.}
+\item{suffix}{if there are non-joined duplicate variables in \code{x} and \code{y}, these suffixes will be added to the output to disambiguate them. Should be a \link{character} vector of length 2.}
 
 \item{...}{ignored, only in place to allow future extensions}
 }
+\value{
+a \link{data.frame}
+}
 \description{
-Join the data set \link{microorganisms} easily to an existing table or character vector.
+Join the data set \link{microorganisms} easily to an existing data set or to a \link{character} vector.
 }
 \details{
 \strong{Note:} As opposed to the \code{join()} functions of \code{dplyr}, \link{character} vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix.
 
-If the \code{dplyr} package is installed, their join functions will be used. Otherwise, the much slower \code{\link[=merge]{merge()}} function from base R will be used.
+If the \code{dplyr} package is installed, their join functions will be used. Otherwise, the much slower \code{\link[=merge]{merge()}} and \code{\link[=interaction]{interaction()}} functions from base R will be used.
 }
 \section{Stable Lifecycle}{
 
@@ -55,7 +58,7 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 
 \examples{
 left_join_microorganisms(as.mo("K. pneumoniae"))
-left_join_microorganisms("B_KLBSL_PNE")
+left_join_microorganisms("B_KLBSL_PNMN")
 
 \donttest{
 if (require("dplyr")) {

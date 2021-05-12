@@ -64,9 +64,9 @@ filter_first_isolate(
 
 \item{episode_days}{episode in days after which a genus/species combination will be determined as 'first isolate' again. The default of 365 days is based on the guideline by CLSI, see \emph{Source}.}
 
-\item{testcodes_exclude}{character vector with test codes that should be excluded (case-insensitive)}
+\item{testcodes_exclude}{a \link{character} vector with test codes that should be excluded (case-insensitive)}
 
-\item{icu_exclude}{logical to indicate whether ICU isolates should be excluded (rows with value \code{TRUE} in the column set with \code{col_icu})}
+\item{icu_exclude}{a \link{logical} to indicate whether ICU isolates should be excluded (rows with value \code{TRUE} in the column set with \code{col_icu})}
 
 \item{specimen_group}{value in the column set with \code{col_specimen} to filter on}
 
@@ -74,15 +74,15 @@ filter_first_isolate(
 
 \item{method}{the method to apply, either \code{"phenotype-based"}, \code{"episode-based"}, \code{"patient-based"} or \code{"isolate-based"} (can be abbreviated), see \emph{Details}. The default is \code{"phenotype-based"} if antimicrobial test results are present in the data, and \code{"episode-based"} otherwise.}
 
-\item{ignore_I}{logical to indicate whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantimicrobials"}, see \emph{Details}}
+\item{ignore_I}{\link{logical} to indicate whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantimicrobials"}, see \emph{Details}}
 
 \item{points_threshold}{minimum number of points to require before differences in the antibiogram will lead to inclusion of an isolate when \code{type = "points"}, see \emph{Details}}
 
 \item{info}{a \link{logical} to indicate info should be printed, defaults to \code{TRUE} only in interactive mode}
 
-\item{include_unknown}{logical to indicate whether 'unknown' microorganisms should be included too, i.e. microbial code \code{"UNKNOWN"}, which defaults to \code{FALSE}. For WHONET users, this means that all records with organism code \code{"con"} (\emph{contamination}) will be excluded at default. Isolates with a microbial ID of \code{NA} will always be excluded as first isolate.}
+\item{include_unknown}{a \link{logical} to indicate whether 'unknown' microorganisms should be included too, i.e. microbial code \code{"UNKNOWN"}, which defaults to \code{FALSE}. For WHONET users, this means that all records with organism code \code{"con"} (\emph{contamination}) will be excluded at default. Isolates with a microbial ID of \code{NA} will always be excluded as first isolate.}
 
-\item{include_untested_rsi}{logical to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use \code{include_untested_rsi = FALSE} to always return \code{FALSE} for such rows. This checks the data set for columns of class \verb{<rsi>} and consequently requires transforming columns with antibiotic results using \code{\link[=as.rsi]{as.rsi()}} first.}
+\item{include_untested_rsi}{a \link{logical} to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use \code{include_untested_rsi = FALSE} to always return \code{FALSE} for such rows. This checks the data set for columns of class \verb{<rsi>} and consequently requires transforming columns with antibiotic results using \code{\link[=as.rsi]{as.rsi()}} first.}
 
 \item{...}{arguments passed on to \code{\link[=first_isolate]{first_isolate()}} when using \code{\link[=filter_first_isolate]{filter_first_isolate()}}, otherwise arguments passed on to \code{\link[=key_antimicrobials]{key_antimicrobials()}} (such as \code{universal}, \code{gram_negative}, \code{gram_positive})}
 }

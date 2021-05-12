@@ -27,6 +27,17 @@
 pkg_env <- new.env(hash = FALSE)
 pkg_env$mo_failed <- character(0)
 
+# determine info icon for messages
+utf8_supported <- isTRUE(base::l10n_info()$`UTF-8`)
+is_latex <- tryCatch(import_fn("is_latex_output", "knitr", error_on_fail = FALSE)(),
+                     error = function(e) FALSE)
+if (utf8_supported && !is_latex) {
+  # \u2139 is a symbol officially named 'information source'
+  pkg_env$info_icon <- "\u2139"
+} else {
+  pkg_env$info_icon <- "i"
+}
+
 .onLoad <- function(libname, pkgname) {
   # Support for tibble headers (type_sum) and tibble columns content (pillar_shaft)
   # without the need to depend on other packages. This was suggested by the 

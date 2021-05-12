@@ -22,7 +22,7 @@ atc_online_groups(atc_code, ...)
 atc_online_ddd(atc_code, ...)
 }
 \arguments{
-\item{atc_code}{a character or character vector with ATC code(s) of antibiotic(s)}
+\item{atc_code}{a \link{character} or \link{character} vector with ATC code(s) of antibiotic(s)}
 
 \item{property}{property of an ATC code. Valid values are \code{"ATC"}, \code{"Name"}, \code{"DDD"}, \code{"U"} (\code{"unit"}), \code{"Adm.R"}, \code{"Note"} and \code{groups}. For this last option, all hierarchical groups of an ATC code will be returned, see \emph{Examples}.}
 

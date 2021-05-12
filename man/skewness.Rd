@@ -18,7 +18,7 @@ skewness(x, na.rm = FALSE)
 \arguments{
 \item{x}{a vector of values, a \link{matrix} or a \link{data.frame}}
 
-\item{na.rm}{a logical value indicating whether \code{NA} values should be stripped before the computation proceeds}
+\item{na.rm}{a \link{logical} value indicating whether \code{NA} values should be stripped before the computation proceeds}
 }
 \description{
 Skewness is a measure of the asymmetry of the probability distribution of a real-valued random variable about its mean.

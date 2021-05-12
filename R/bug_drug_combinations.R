@@ -28,11 +28,11 @@
 #' Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use [format()] on the result to prettify it to a publicable/printable format, see *Examples*.
 #' @inheritSection lifecycle Stable Lifecycle
 #' @inheritParams eucast_rules
-#' @param combine_IR logical to indicate whether values R and I should be summed
-#' @param add_ab_group logical to indicate where the group of the antimicrobials must be included as a first column
-#' @param remove_intrinsic_resistant logical to indicate that rows and columns with 100% resistance for all tested antimicrobials must be removed from the table
-#' @param FUN function to call on the `mo` column to transform the microorganism IDs, defaults to [mo_shortname()] 
-#' @param translate_ab character of length 1 containing column names of the [antibiotics] data set
+#' @param combine_IR a [logical] to indicate whether values R and I should be summed
+#' @param add_ab_group a [logical] to indicate where the group of the antimicrobials must be included as a first column
+#' @param remove_intrinsic_resistant [logical] to indicate that rows and columns with 100% resistance for all tested antimicrobials must be removed from the table
+#' @param FUN the function to call on the `mo` column to transform the microorganism IDs, defaults to [mo_shortname()] 
+#' @param translate_ab a [character] of length 1 containing column names of the [antibiotics] data set
 #' @param ... arguments passed on to `FUN`
 #' @inheritParams rsi_df
 #' @inheritParams base::formatC

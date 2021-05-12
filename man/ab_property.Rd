@@ -48,13 +48,13 @@ ab_property(x, property = "name", language = get_locale(), ...)
 
 \item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
-\item{tolower}{logical to indicate whether the first character of every output should be transformed to a lower case character. This will lead to e.g. "polymyxin B" and not "polymyxin b".}
+\item{tolower}{a \link{logical} to indicate whether the first \link{character} of every output should be transformed to a lower case \link{character}. This will lead to e.g. "polymyxin B" and not "polymyxin b".}
 
 \item{...}{other arguments passed on to \code{\link[=as.ab]{as.ab()}}}
 
 \item{administration}{way of administration, either \code{"oral"} or \code{"iv"}}
 
-\item{units}{a logical to indicate whether the units instead of the DDDs itself must be returned, see \emph{Examples}}
+\item{units}{a \link{logical} to indicate whether the units instead of the DDDs itself must be returned, see \emph{Examples}}
 
 \item{open}{browse the URL using \code{\link[utils:browseURL]{utils::browseURL()}}}
 

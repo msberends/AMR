@@ -31,8 +31,8 @@
 #' @param position position adjustment of bars, either `"fill"`, `"stack"` or `"dodge"`
 #' @param x variable to show on x axis, either `"antibiotic"` (default) or `"interpretation"` or a grouping variable
 #' @param fill variable to categorise using the plots legend, either `"antibiotic"` (default) or `"interpretation"` or a grouping variable
-#' @param breaks numeric vector of positions
-#' @param limits numeric vector of length two providing limits of the scale, use `NA` to refer to the existing minimum or maximum
+#' @param breaks a [numeric] vector of positions
+#' @param limits a [numeric] vector of length two providing limits of the scale, use `NA` to refer to the existing minimum or maximum
 #' @param facet variable to split plots by, either `"interpretation"` (default) or `"antibiotic"` or a grouping variable
 #' @inheritParams proportion
 #' @param nrow (when using `facet`) number of rows

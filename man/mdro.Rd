@@ -16,7 +16,7 @@
 \alias{eucast_exceptional_phenotypes}
 \title{Determine Multidrug-Resistant Organisms (MDRO)}
 \source{
-See the supported guidelines above for the list of publications used for this function.
+See the supported guidelines above for the \link{list} of publications used for this function.
 }
 \usage{
 mdro(
@@ -50,15 +50,15 @@ eucast_exceptional_phenotypes(x = NULL, only_rsi_columns = FALSE, ...)
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{info}{a logical to indicate whether progress should be printed to the console, defaults to only print while in interactive sessions}
+\item{info}{a \link{logical} to indicate whether progress should be printed to the console, defaults to only print while in interactive sessions}
 
 \item{pct_required_classes}{minimal required percentage of antimicrobial classes that must be available per isolate, rounded down. For example, with the default guideline, 17 antimicrobial classes must be available for \emph{S. aureus}. Setting this \code{pct_required_classes} argument to \code{0.5} (default) means that for every \emph{S. aureus} isolate at least 8 different classes must be available. Any lower number of available classes will return \code{NA} for that isolate.}
 
 \item{combine_SI}{a \link{logical} to indicate whether all values of S and I must be merged into one, so resistance is only considered when isolates are R, not I. As this is the default behaviour of the \code{\link[=mdro]{mdro()}} function, it follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. When using \code{combine_SI = FALSE}, resistance is considered when isolates are R or I.}
 
-\item{verbose}{a logical to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.}
+\item{verbose}{a \link{logical} to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.}
 
-\item{only_rsi_columns}{a logical to indicate whether only antibiotic columns must be detected that were transformed to class \verb{<rsi>} (see \code{\link[=as.rsi]{as.rsi()}}) on beforehand (defaults to \code{FALSE})}
+\item{only_rsi_columns}{a \link{logical} to indicate whether only antibiotic columns must be detected that were transformed to class \verb{<rsi>} (see \code{\link[=as.rsi]{as.rsi()}}) on beforehand (defaults to \code{FALSE})}
 
 \item{...}{in case of \code{\link[=custom_mdro_guideline]{custom_mdro_guideline()}}: a set of rules, see section \emph{Using Custom Guidelines} below. Otherwise: column name of an antibiotic, see section \emph{Antibiotics} below.}
 

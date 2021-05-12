@@ -28,8 +28,8 @@
 #' These functions can be used for generating random MIC values and disk diffusion diameters, for AMR data analysis practice. By providing a microorganism and antimicrobial agent, the generated results will reflect reality as much as possible.
 #' @inheritSection lifecycle Stable Lifecycle 
 #' @param size desired size of the returned vector
-#' @param mo any character that can be coerced to a valid microorganism code with [as.mo()]
-#' @param ab any character that can be coerced to a valid antimicrobial agent code with [as.ab()]
+#' @param mo any [character] that can be coerced to a valid microorganism code with [as.mo()]
+#' @param ab any [character] that can be coerced to a valid antimicrobial agent code with [as.ab()]
 #' @param prob_RSI a vector of length 3: the probabilities for R (1st value), S (2nd value) and I (3rd value)
 #' @param ... ignored, only in place to allow future extensions
 #' @details The base R function [sample()] is used for generating values.

@@ -27,11 +27,11 @@
 #'
 #' Use this function to determine a valid microorganism ID ([`mo`]). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see *Source*). The input can be almost anything: a full name (like `"Staphylococcus aureus"`), an abbreviated name (such as `"S. aureus"`), an abbreviation known in the field (such as `"MRSA"`), or just a genus. See *Examples*.
 #' @inheritSection lifecycle Stable Lifecycle
-#' @param x a character vector or a [data.frame] with one or two columns
-#' @param Becker a logical to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker *et al.* (1,2,3).
+#' @param x a [character] vector or a [data.frame] with one or two columns
+#' @param Becker a [logical] to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker *et al.* (1,2,3).
 #'
 #' This excludes *Staphylococcus aureus* at default, use `Becker = "all"` to also categorise *S. aureus* as "CoPS".
-#' @param Lancefield a logical to indicate whether beta-haemolytic *Streptococci* should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (4). These *Streptococci* will be categorised in their first group, e.g. *Streptococcus dysgalactiae* will be group C, although officially it was also categorised into groups G and L.
+#' @param Lancefield a [logical] to indicate whether beta-haemolytic *Streptococci* should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (4). These *Streptococci* will be categorised in their first group, e.g. *Streptococcus dysgalactiae* will be group C, although officially it was also categorised into groups G and L.
 #'
 #' This excludes *Enterococci* at default (who are in group D), use `Lancefield = "all"` to also categorise all *Enterococci* as group D.
 #' @param allow_uncertain a number between `0` (or `"none"`) and `3` (or `"all"`), or `TRUE` (= `2`) or `FALSE` (= `0`) to indicate whether the input should be checked for less probable results, see *Details*
@@ -245,10 +245,10 @@ is.mo <- function(x) {
 }
 
 # param property a column name of microorganisms
-# param initial_search logical - is FALSE when coming from uncertain tries, which uses exec_as.mo internally too
-# param dyslexia_mode logical - also check for characters that resemble others
-# param debug logical - show different lookup texts while searching
-# param reference_data_to_use data.frame - the data set to check for
+# param initial_search [logical] - is FALSE when coming from uncertain tries, which uses exec_as.mo internally too
+# param dyslexia_mode [logical] - also check for characters that resemble others
+# param debug [logical] - show different lookup texts while searching
+# param reference_data_to_use [data.frame] - the data set to check for
 # param actual_uncertainty - (only for initial_search = FALSE) the actual uncertainty level used in the function for score calculation (sometimes passed as 2 or 3 by uncertain_fn())
 # param actual_input - (only for initial_search = FALSE) the actual, original input
 # param language - used for translating "no growth", etc.
@@ -304,7 +304,7 @@ exec_as.mo <- function(x,
     }
 
     # `column` can be NULL for all columns, or a selection
-    # returns a character (vector) - if `column` > length 1 then with columns as names
+    # returns a [character] (vector) - if `column` > length 1 then with columns as names
     if (isTRUE(debug_mode)) {
       cat(font_silver("Looking up: ", substitute(needle), collapse = ""), 
           "\n           ", time_track())

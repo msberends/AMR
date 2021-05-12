@@ -321,9 +321,7 @@ word_wrap <- function(...,
   msg <- paste0(c(...), collapse = "")
   
   if (isTRUE(as_note)) {
-    # \u2139 is a symbol officially named 'information source'
-    # \ufe0f can add the blue square around it: \u2139\ufe0f
-    msg <- paste0("\u2139 ", gsub("^note:? ?", "", msg, ignore.case = TRUE))
+    msg <- paste0(pkg_env$info_icon, " ", gsub("^note:? ?", "", msg, ignore.case = TRUE))
   }
   
   if (msg %like% "\n") {
@@ -539,7 +537,7 @@ vector_and <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE) {
   vector_or(v = v, quotes = quotes, reverse = reverse, sort = sort, last_sep = " and ")
 }
 
-format_class <- function(class, plural) {
+format_class <- function(class, plural = FALSE) {
   class.bak <- class
   class[class == "numeric"] <- "number"
   class[class == "integer"] <- "whole number"
@@ -553,9 +551,7 @@ format_class <- function(class, plural) {
                                                         ifelse(plural, "s", ""))
   # exceptions
   class[class == "logical"] <- ifelse(plural, "a vector of `TRUE`/`FALSE`", "`TRUE` or `FALSE`")
-  if ("data.frame" %in% class) {
-    class <- "a data set"
-  }
+  class[class == "data.frame"] <- "a data set"
   if ("list" %in% class) {
     class <- "a list"
   }

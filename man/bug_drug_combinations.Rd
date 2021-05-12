@@ -29,23 +29,23 @@ bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname, ...)
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{FUN}{function to call on the \code{mo} column to transform the microorganism IDs, defaults to \code{\link[=mo_shortname]{mo_shortname()}}}
+\item{FUN}{the function to call on the \code{mo} column to transform the microorganism IDs, defaults to \code{\link[=mo_shortname]{mo_shortname()}}}
 
 \item{...}{arguments passed on to \code{FUN}}
 
-\item{translate_ab}{character of length 1 containing column names of the \link{antibiotics} data set}
+\item{translate_ab}{a \link{character} of length 1 containing column names of the \link{antibiotics} data set}
 
 \item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
 \item{minimum}{the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
 
-\item{combine_SI}{a logical to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the argument \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is \code{TRUE}.}
+\item{combine_SI}{a \link{logical} to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the argument \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is \code{TRUE}.}
 
-\item{combine_IR}{logical to indicate whether values R and I should be summed}
+\item{combine_IR}{a \link{logical} to indicate whether values R and I should be summed}
 
-\item{add_ab_group}{logical to indicate where the group of the antimicrobials must be included as a first column}
+\item{add_ab_group}{a \link{logical} to indicate where the group of the antimicrobials must be included as a first column}
 
-\item{remove_intrinsic_resistant}{logical to indicate that rows and columns with 100\% resistance for all tested antimicrobials must be removed from the table}
+\item{remove_intrinsic_resistant}{\link{logical} to indicate that rows and columns with 100\% resistance for all tested antimicrobials must be removed from the table}
 
 \item{decimal.mark}{the character to be used to indicate the numeric
     decimal point.}

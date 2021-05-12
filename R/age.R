@@ -29,8 +29,8 @@
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param x date(s), will be coerced with [as.POSIXlt()]
 #' @param reference reference date(s) (defaults to today), will be coerced with [as.POSIXlt()]
-#' @param exact a logical to indicate whether age calculation should be exact, i.e. with decimals. It divides the number of days of [year-to-date](https://en.wikipedia.org/wiki/Year-to-date) (YTD) of `x` by the number of days in the year of `reference` (either 365 or 366).
-#' @param na.rm a logical to indicate whether missing values should be removed
+#' @param exact a [logical] to indicate whether age calculation should be exact, i.e. with decimals. It divides the number of days of [year-to-date](https://en.wikipedia.org/wiki/Year-to-date) (YTD) of `x` by the number of days in the year of `reference` (either 365 or 366).
+#' @param na.rm a [logical] to indicate whether missing values should be removed
 #' @param ... arguments passed on to [as.POSIXlt()], such as `origin`
 #' @details Ages below 0 will be returned as `NA` with a warning. Ages above 120 will only give a warning.
 #' @return An [integer] (no decimals) if `exact = FALSE`, a [double] (with decimals) otherwise
@@ -105,7 +105,7 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
 #' @param na.rm a [logical] to indicate whether missing values should be removed
 #' @details To split ages, the input for the `split_at` argument can be:
 #' 
-#' * A numeric vector. A value of e.g. `c(10, 20)` will split `x` on 0-9, 10-19 and 20+. A value of only `50` will split `x` on 0-49 and 50+.
+#' * A [numeric] vector. A value of e.g. `c(10, 20)` will split `x` on 0-9, 10-19 and 20+. A value of only `50` will split `x` on 0-49 and 50+.
 #'   The default is to split on young children (0-11), youth (12-24), young adults (25-54), middle-aged adults (55-74) and elderly (75+).
 #' * A character:
 #'   - `"children"` or `"kids"`, equivalent of: `c(0, 1, 2, 4, 6, 13, 18)`. This will split on 0, 1, 2-3, 4-5, 6-12, 13-17 and 18+.

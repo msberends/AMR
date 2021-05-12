@@ -27,12 +27,12 @@
 #' 
 #' Performs a principal component analysis (PCA) based on a data set with automatic determination for afterwards plotting the groups and labels, and automatic filtering on only suitable (i.e. non-empty and numeric) variables.
 #' @inheritSection lifecycle Stable Lifecycle
-#' @param x a [data.frame] containing numeric columns
+#' @param x a [data.frame] containing [numeric] columns
 #' @param ... columns of `x` to be selected for PCA, can be unquoted since it supports quasiquotation.
 #' @inheritParams stats::prcomp
 #' @details The [pca()] function takes a [data.frame] as input and performs the actual PCA with the \R function [prcomp()].
 #' 
-#' The result of the [pca()] function is a [prcomp] object, with an additional attribute `non_numeric_cols` which is a vector with the column names of all columns that do not contain numeric values. These are probably the groups and labels, and will be used by [ggplot_pca()].
+#' The result of the [pca()] function is a [prcomp] object, with an additional attribute `non_numeric_cols` which is a vector with the column names of all columns that do not contain [numeric] values. These are probably the groups and labels, and will be used by [ggplot_pca()].
 #' @return An object of classes [pca] and [prcomp]
 #' @importFrom stats prcomp
 #' @export
@@ -99,14 +99,14 @@ pca <- function(x,
     
     x <- as.data.frame(new_list, stringsAsFactors = FALSE)
     if (any(vapply(FUN.VALUE = logical(1), x, function(y) !is.numeric(y)))) {
-      warning_("Be sure to first calculate the resistance (or susceptibility) of variables with antimicrobial test results, since PCA works with numeric variables only. See Examples in ?pca.", call = FALSE)
+      warning_("Be sure to first calculate the resistance (or susceptibility) of variables with antimicrobial test results, since PCA works with [numeric] variables only. See Examples in ?pca.", call = FALSE)
     }
     
     # set column names
     tryCatch(colnames(x) <- as.character(dots)[2:length(dots)],
              error = function(e) warning("column names could not be set"))
     
-    # keep only numeric columns
+    # keep only [numeric] columns
     x <- x[, vapply(FUN.VALUE = logical(1), x, function(y) is.numeric(y))]
     # bind the data set with the non-numeric columns
     x <- cbind(x.bak[, vapply(FUN.VALUE = logical(1), x.bak, function(y) !is.numeric(y) & !all(is.na(y))), drop = FALSE], x)

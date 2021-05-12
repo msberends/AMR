@@ -25,17 +25,17 @@
 
 #' Interpret MIC and Disk Values, or Clean Raw R/SI Data
 #'
-#' Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class [`rsi`], which is an ordered factor with levels `S < I < R`. Values that cannot be interpreted will be returned as `NA` with a warning.
+#' Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class [`rsi`], which is an ordered [factor] with levels `S < I < R`.
 #' @inheritSection lifecycle Stable Lifecycle
 #' @rdname as.rsi
-#' @param x vector of values (for class [`mic`]: an MIC value in mg/L, for class [`disk`]: a disk diffusion radius in millimetres)
-#' @param mo any (vector of) text that can be coerced to a valid microorganism code with [as.mo()], can be left empty to determine it automatically
+#' @param x vector of values (for class [`mic`]: MIC values in mg/L, for class [`disk`]: a disk diffusion radius in millimetres)
+#' @param mo any (vector of) text that can be coerced to valid microorganism codes with [as.mo()], can be left empty to determine it automatically
 #' @param ab any (vector of) text that can be coerced to a valid antimicrobial code with [as.ab()]
-#' @param uti (Urinary Tract Infection) A vector with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.rsi()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be searched for a 'specimen' and rows containing 'urin' (such as 'urine', 'urina') in that column will be regarded isolates from a UTI. See *Examples*.
+#' @param uti (Urinary Tract Infection) A vector with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.rsi()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See *Examples*.
 #' @inheritParams first_isolate
 #' @param guideline defaults to the latest included EUCAST guideline, see *Details* for all options
-#' @param conserve_capped_values a logical to indicate that MIC values starting with `">"` (but not `">="`) must always return "R" , and that MIC values starting with `"<"` (but not `"<="`) must always return "S"
-#' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a logical to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.2)`.
+#' @param conserve_capped_values a [logical] to indicate that MIC values starting with `">"` (but not `">="`) must always return "R" , and that MIC values starting with `"<"` (but not `"<="`) must always return "S"
+#' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.2)`.
 #' @param reference_data a [data.frame] to be used for interpretation, which defaults to the [rsi_translation] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [rsi_translation] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*
 #' @param ... for using on a [data.frame]: names of columns to apply [as.rsi()] on (supports tidy selection like `AMX:VAN`). Otherwise: arguments passed on to methods.
@@ -49,23 +49,23 @@
 #' 2. For **interpreting minimum inhibitory concentration (MIC) values** according to EUCAST or CLSI. You must clean your MIC values first using [as.mic()], that also gives your columns the new data class [`mic`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` argument.
 #'    * Using `dplyr`, R/SI interpretation can be done very easily with either: 
 #'      ```
-#'      your_data %>% mutate_if(is.mic, as.rsi)         # until dplyr 1.0.0
-#'      your_data %>% mutate(across((is.mic), as.rsi))  # since dplyr 1.0.0
+#'      your_data %>% mutate_if(is.mic, as.rsi)             # until dplyr 1.0.0
+#'      your_data %>% mutate(across(where(is.mic), as.rsi)) # since dplyr 1.0.0
 #'      ```
 #'    * Operators like "<=" will be stripped before interpretation. When using `conserve_capped_values = TRUE`, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (`conserve_capped_values = FALSE`) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
 #'      
 #' 3. For **interpreting disk diffusion diameters** according to EUCAST or CLSI. You must clean your disk zones first using [as.disk()], that also gives your columns the new data class [`disk`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` argument.
 #'    * Using `dplyr`, R/SI interpretation can be done very easily with either: 
 #'      ```
-#'      your_data %>% mutate_if(is.disk, as.rsi)         # until dplyr 1.0.0
-#'      your_data %>% mutate(across((is.disk), as.rsi))  # since dplyr 1.0.0
+#'      your_data %>% mutate_if(is.disk, as.rsi)             # until dplyr 1.0.0
+#'      your_data %>% mutate(across(where(is.disk), as.rsi)) # since dplyr 1.0.0
 #'      ```
 #' 
 #' 4. For **interpreting a complete data set**, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running `as.rsi(data)`.
 #' 
 #' ## Supported Guidelines
 #' 
-#' For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the `guideline` argument are: `r vector_and(AMR::rsi_translation$guideline, quotes = TRUE, reverse = TRUE)`.
+#' For interpreting MIC values as well as disk diffusion diameters, currently supported guidelines to be used as input for the `guideline` argument are: `r vector_and(AMR::rsi_translation$guideline, quotes = TRUE, reverse = TRUE)`.
 #' 
 #' Simply using `"CLSI"` or `"EUCAST"` as input will automatically select the latest version of that guideline. You can set your own data set using the `reference_data` argument. The `guideline` argument will then be ignored.
 #' 
@@ -79,9 +79,9 @@
 #'
 #' ## Other
 #' 
-#' The function [is.rsi()] detects if the input contains class `<rsi>`. If the input is a data.frame, it iterates over all columns and returns a logical vector.
+#' The function [is.rsi()] detects if the input contains class `<rsi>`. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
 #'
-#' The function [is.rsi.eligible()] returns `TRUE` when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` argument. If the input is a data.frame, it iterates over all columns and returns a logical vector.
+#' The function [is.rsi.eligible()] returns `TRUE` when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` argument. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
 #' @section Interpretation of R and S/I:
 #' In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories R and S/I as shown below (<https://www.eucast.org/newsiandr/>).
 #'
@@ -93,7 +93,7 @@
 #'   A microorganism is categorised as *Susceptible, Increased exposure* when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.
 #'
 #' This AMR package honours this new insight. Use [susceptibility()] (equal to [proportion_SI()]) to determine antimicrobial susceptibility and [count_susceptible()] (equal to [count_SI()]) to count susceptible isolates.
-#' @return Ordered factor with new class `<rsi>`
+#' @return Ordered [factor] with new class `<rsi>`
 #' @aliases rsi
 #' @export
 #' @seealso [as.mic()], [as.disk()], [as.mo()]
@@ -546,7 +546,7 @@ as.rsi.data.frame <- function(x,
   }
   if (!is.null(col_uti)) {
     if (is.logical(col_uti)) {
-      # already a logical vector as input
+      # already a [logical] vector as input
       if (length(col_uti) == 1) {
         uti <- rep(col_uti, NROW(x))
       } else {
@@ -555,7 +555,7 @@ as.rsi.data.frame <- function(x,
     } else {
       # column found, transform to logical
       stop_if(length(col_uti) != 1 | !col_uti %in% colnames(x),
-              "argument `uti` must be a logical vector, of must be a single column name of `x`")
+              "argument `uti` must be a [logical] vector, of must be a single column name of `x`")
       uti <- as.logical(x[, col_uti, drop = TRUE])
     }
   } else {

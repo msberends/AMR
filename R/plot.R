@@ -37,7 +37,7 @@
 #' @param guideline interpretation guideline to use, defaults to the latest included EUCAST guideline, see *Details*
 #' @param colours_RSI colours to use for filling in the bars, must be a vector of three values (in the order R, S and I). The default colours are colour-blind friendly.
 #' @param language language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant', defaults to system language (see [get_locale()]) and can be overwritten by setting the option `AMR_locale`, e.g. `options(AMR_locale = "de")`, see [translate]. Use `language = NULL` or `language = ""` to prevent translation.
-#' @param expand logical to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.
+#' @param expand a [logical] to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.
 #' @details
 #' The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
 #' 
@@ -656,6 +656,8 @@ ggplot.rsi <- function(data,
 }
 
 plot_prepare_table <- function(x, expand) {
+  x <- x[!is.na(x)]
+  stop_if(length(x) == 0, "no observations to plot", call = FALSE)
   if (is.mic(x)) {
     if (expand == TRUE) {
       # expand range for MIC by adding factors of 2 from lowest to highest so all MICs in between also print

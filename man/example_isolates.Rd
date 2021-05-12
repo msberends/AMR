@@ -9,9 +9,9 @@ A \link{data.frame} with 2,000 observations and 49 variables:
 \itemize{
 \item \code{date}\cr date of receipt at the laboratory
 \item \code{hospital_id}\cr ID of the hospital, from A to D
-\item \code{ward_icu}\cr logical to determine if ward is an intensive care unit
-\item \code{ward_clinical}\cr logical to determine if ward is a regular clinical ward
-\item \code{ward_outpatient}\cr logical to determine if ward is an outpatient clinic
+\item \code{ward_icu}\cr \link{logical} to determine if ward is an intensive care unit
+\item \code{ward_clinical}\cr \link{logical} to determine if ward is a regular clinical ward
+\item \code{ward_outpatient}\cr \link{logical} to determine if ward is an outpatient clinic
 \item \code{age}\cr age of the patient
 \item \code{gender}\cr gender of the patient
 \item \code{patient_id}\cr ID of the patient

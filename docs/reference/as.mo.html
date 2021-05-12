@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9010</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9021</span>
       </span>
     </div>
 
@@ -267,16 +267,16 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a character vector or a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with one or two columns</p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/character.html'>character</a> vector or a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with one or two columns</p></td>
     </tr>
     <tr>
       <th>Becker</th>
-      <td><p>a logical to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker <em>et al.</em> (1,2,3).</p>
+      <td><p>a <a href='https://rdrr.io/r/base/logical.html'>logical</a> to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker <em>et al.</em> (1,2,3).</p>
 <p>This excludes <em>Staphylococcus aureus</em> at default, use <code>Becker = "all"</code> to also categorise <em>S. aureus</em> as "CoPS".</p></td>
     </tr>
     <tr>
       <th>Lancefield</th>
-      <td><p>a logical to indicate whether beta-haemolytic <em>Streptococci</em> should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (4). These <em>Streptococci</em> will be categorised in their first group, e.g. <em>Streptococcus dysgalactiae</em> will be group C, although officially it was also categorised into groups G and L.</p>
+      <td><p>a <a href='https://rdrr.io/r/base/logical.html'>logical</a> to indicate whether beta-haemolytic <em>Streptococci</em> should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (4). These <em>Streptococci</em> will be categorised in their first group, e.g. <em>Streptococcus dysgalactiae</em> will be group C, although officially it was also categorised into groups G and L.</p>
 <p>This excludes <em>Enterococci</em> at default (who are in group D), use <code>Lancefield = "all"</code> to also categorise all <em>Enterococci</em> as group D.</p></td>
     </tr>
     <tr>

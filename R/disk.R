@@ -29,7 +29,7 @@
 #' @inheritSection lifecycle Stable Lifecycle
 #' @rdname as.disk
 #' @param x vector
-#' @param na.rm a logical indicating whether missing values should be removed
+#' @param na.rm a [logical] indicating whether missing values should be removed
 #' @details Interpret disk values as RSI values with [as.rsi()]. It supports guidelines from EUCAST and CLSI.
 #' @return An [integer] with additional class [`disk`]
 #' @aliases disk

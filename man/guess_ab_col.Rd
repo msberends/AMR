@@ -16,9 +16,9 @@ guess_ab_col(
 
 \item{search_string}{a text to search \code{x} for, will be checked with \code{\link[=as.ab]{as.ab()}} if this value is not a column in \code{x}}
 
-\item{verbose}{a logical to indicate whether additional info should be printed}
+\item{verbose}{a \link{logical} to indicate whether additional info should be printed}
 
-\item{only_rsi_columns}{a logical to indicate whether only antibiotic columns must be detected that were transformed to class \verb{<rsi>} (see \code{\link[=as.rsi]{as.rsi()}}) on beforehand (defaults to \code{FALSE})}
+\item{only_rsi_columns}{a \link{logical} to indicate whether only antibiotic columns must be detected that were transformed to class \verb{<rsi>} (see \code{\link[=as.rsi]{as.rsi()}}) on beforehand (defaults to \code{FALSE})}
 }
 \value{
 A column name of \code{x}, or \code{NULL} when no result is found.

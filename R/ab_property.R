@@ -28,11 +28,11 @@
 #' Use these functions to return a specific property of an antibiotic from the [antibiotics] data set. All input values will be evaluated internally with [as.ab()].
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param x any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
-#' @param tolower logical to indicate whether the first character of every output should be transformed to a lower case character. This will lead to e.g. "polymyxin B" and not "polymyxin b".
+#' @param tolower a [logical] to indicate whether the first [character] of every output should be transformed to a lower case [character]. This will lead to e.g. "polymyxin B" and not "polymyxin b".
 #' @param property one of the column names of one of the [antibiotics] data set
 #' @param language language of the returned text, defaults to system language (see [get_locale()]) and can also be set with `getOption("AMR_locale")`. Use `language = NULL` or `language = ""` to prevent translation.
 #' @param administration way of administration, either `"oral"` or `"iv"`
-#' @param units a logical to indicate whether the units instead of the DDDs itself must be returned, see *Examples*
+#' @param units a [logical] to indicate whether the units instead of the DDDs itself must be returned, see *Examples*
 #' @param open browse the URL using [utils::browseURL()]
 #' @param ... other arguments passed on to [as.ab()]
 #' @details All output [will be translated][translate] where possible.

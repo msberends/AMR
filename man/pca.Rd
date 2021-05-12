@@ -15,7 +15,7 @@ pca(
 )
 }
 \arguments{
-\item{x}{a \link{data.frame} containing numeric columns}
+\item{x}{a \link{data.frame} containing \link{numeric} columns}
 
 \item{...}{columns of \code{x} to be selected for PCA, can be unquoted since it supports quasiquotation.}
 
@@ -57,7 +57,7 @@ Performs a principal component analysis (PCA) based on a data set with automatic
 \details{
 The \code{\link[=pca]{pca()}} function takes a \link{data.frame} as input and performs the actual PCA with the \R function \code{\link[=prcomp]{prcomp()}}.
 
-The result of the \code{\link[=pca]{pca()}} function is a \link{prcomp} object, with an additional attribute \code{non_numeric_cols} which is a vector with the column names of all columns that do not contain numeric values. These are probably the groups and labels, and will be used by \code{\link[=ggplot_pca]{ggplot_pca()}}.
+The result of the \code{\link[=pca]{pca()}} function is a \link{prcomp} object, with an additional attribute \code{non_numeric_cols} which is a vector with the column names of all columns that do not contain \link{numeric} values. These are probably the groups and labels, and will be used by \code{\link[=ggplot_pca]{ggplot_pca()}}.
 }
 \section{Stable Lifecycle}{
 

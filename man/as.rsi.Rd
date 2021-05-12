@@ -51,33 +51,33 @@ is.rsi.eligible(x, threshold = 0.05)
 )
 }
 \arguments{
-\item{x}{vector of values (for class \code{\link{mic}}: an MIC value in mg/L, for class \code{\link{disk}}: a disk diffusion radius in millimetres)}
+\item{x}{vector of values (for class \code{\link{mic}}: MIC values in mg/L, for class \code{\link{disk}}: a disk diffusion radius in millimetres)}
 
 \item{...}{for using on a \link{data.frame}: names of columns to apply \code{\link[=as.rsi]{as.rsi()}} on (supports tidy selection like \code{AMX:VAN}). Otherwise: arguments passed on to methods.}
 
 \item{threshold}{maximum fraction of invalid antimicrobial interpretations of \code{x}, see \emph{Examples}}
 
-\item{mo}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}, can be left empty to determine it automatically}
+\item{mo}{any (vector of) text that can be coerced to valid microorganism codes with \code{\link[=as.mo]{as.mo()}}, can be left empty to determine it automatically}
 
 \item{ab}{any (vector of) text that can be coerced to a valid antimicrobial code with \code{\link[=as.ab]{as.ab()}}}
 
 \item{guideline}{defaults to the latest included EUCAST guideline, see \emph{Details} for all options}
 
-\item{uti}{(Urinary Tract Infection) A vector with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.rsi]{as.rsi()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be searched for a 'specimen' and rows containing 'urin' (such as 'urine', 'urina') in that column will be regarded isolates from a UTI. See \emph{Examples}.}
+\item{uti}{(Urinary Tract Infection) A vector with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.rsi]{as.rsi()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See \emph{Examples}.}
 
-\item{conserve_capped_values}{a logical to indicate that MIC values starting with \code{">"} (but not \code{">="}) must always return "R" , and that MIC values starting with \code{"<"} (but not \code{"<="}) must always return "S"}
+\item{conserve_capped_values}{a \link{logical} to indicate that MIC values starting with \code{">"} (but not \code{">="}) must always return "R" , and that MIC values starting with \code{"<"} (but not \code{"<="}) must always return "S"}
 
-\item{add_intrinsic_resistance}{\emph{(only useful when using a EUCAST guideline)} a logical to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in \emph{Klebsiella} species. Determination is based on the \link{intrinsic_resistant} data set, that itself is based on \href{https://www.eucast.org/expert_rules_and_intrinsic_resistance/}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2} (2020).}
+\item{add_intrinsic_resistance}{\emph{(only useful when using a EUCAST guideline)} a \link{logical} to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in \emph{Klebsiella} species. Determination is based on the \link{intrinsic_resistant} data set, that itself is based on \href{https://www.eucast.org/expert_rules_and_intrinsic_resistance/}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2} (2020).}
 
 \item{reference_data}{a \link{data.frame} to be used for interpretation, which defaults to the \link{rsi_translation} data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the \link{rsi_translation} data set (same column names and column types). Please note that the \code{guideline} argument will be ignored when \code{reference_data} is manually set.}
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 }
 \value{
-Ordered factor with new class \verb{<rsi>}
+Ordered \link{factor} with new class \verb{<rsi>}
 }
 \description{
-Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class \code{\link{rsi}}, which is an ordered factor with levels \verb{S < I < R}. Values that cannot be interpreted will be returned as \code{NA} with a warning.
+Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class \code{\link{rsi}}, which is an ordered \link{factor} with levels \verb{S < I < R}.
 }
 \details{
 \subsection{How it Works}{
@@ -87,15 +87,15 @@ The \code{\link[=as.rsi]{as.rsi()}} function works in four ways:
 \item For \strong{cleaning raw / untransformed data}. The data will be cleaned to only contain values S, I and R and will try its best to determine this with some intelligence. For example, mixed values with R/SI interpretations and MIC values such as \code{"<0.25; S"} will be coerced to \code{"S"}. Combined interpretations for multiple test methods (as seen in laboratory records) such as \code{"S; S"} will be coerced to \code{"S"}, but a value like \code{"S; I"} will return \code{NA} with a warning that the input is unclear.
 \item For \strong{interpreting minimum inhibitory concentration (MIC) values} according to EUCAST or CLSI. You must clean your MIC values first using \code{\link[=as.mic]{as.mic()}}, that also gives your columns the new data class \code{\link{mic}}. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the \code{mo} argument.
 \itemize{
-\item Using \code{dplyr}, R/SI interpretation can be done very easily with either:\preformatted{your_data \%>\% mutate_if(is.mic, as.rsi)         # until dplyr 1.0.0
-your_data \%>\% mutate(across((is.mic), as.rsi))  # since dplyr 1.0.0
+\item Using \code{dplyr}, R/SI interpretation can be done very easily with either:\preformatted{your_data \%>\% mutate_if(is.mic, as.rsi)             # until dplyr 1.0.0
+your_data \%>\% mutate(across(where(is.mic), as.rsi)) # since dplyr 1.0.0
 }
 \item Operators like "<=" will be stripped before interpretation. When using \code{conserve_capped_values = TRUE}, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (\code{conserve_capped_values = FALSE}) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
 }
 \item For \strong{interpreting disk diffusion diameters} according to EUCAST or CLSI. You must clean your disk zones first using \code{\link[=as.disk]{as.disk()}}, that also gives your columns the new data class \code{\link{disk}}. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the \code{mo} argument.
 \itemize{
-\item Using \code{dplyr}, R/SI interpretation can be done very easily with either:\preformatted{your_data \%>\% mutate_if(is.disk, as.rsi)         # until dplyr 1.0.0
-your_data \%>\% mutate(across((is.disk), as.rsi))  # since dplyr 1.0.0
+\item Using \code{dplyr}, R/SI interpretation can be done very easily with either:\preformatted{your_data \%>\% mutate_if(is.disk, as.rsi)             # until dplyr 1.0.0
+your_data \%>\% mutate(across(where(is.disk), as.rsi)) # since dplyr 1.0.0
 }
 }
 \item For \strong{interpreting a complete data set}, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running \code{as.rsi(data)}.
@@ -104,7 +104,7 @@ your_data \%>\% mutate(across((is.disk), as.rsi))  # since dplyr 1.0.0
 
 \subsection{Supported Guidelines}{
 
-For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the \code{guideline} argument are: "EUCAST 2021", "EUCAST 2020", "EUCAST 2019", "EUCAST 2018", "EUCAST 2017", "EUCAST 2016", "EUCAST 2015", "EUCAST 2014", "EUCAST 2013", "EUCAST 2012", "EUCAST 2011", "CLSI 2019", "CLSI 2018", "CLSI 2017", "CLSI 2016", "CLSI 2015", "CLSI 2014", "CLSI 2013", "CLSI 2012", "CLSI 2011" and "CLSI 2010".
+For interpreting MIC values as well as disk diffusion diameters, currently supported guidelines to be used as input for the \code{guideline} argument are: "EUCAST 2021", "EUCAST 2020", "EUCAST 2019", "EUCAST 2018", "EUCAST 2017", "EUCAST 2016", "EUCAST 2015", "EUCAST 2014", "EUCAST 2013", "EUCAST 2012", "EUCAST 2011", "CLSI 2019", "CLSI 2018", "CLSI 2017", "CLSI 2016", "CLSI 2015", "CLSI 2014", "CLSI 2013", "CLSI 2012", "CLSI 2011" and "CLSI 2010".
 
 Simply using \code{"CLSI"} or \code{"EUCAST"} as input will automatically select the latest version of that guideline. You can set your own data set using the \code{reference_data} argument. The \code{guideline} argument will then be ignored.
 }
@@ -121,9 +121,9 @@ The repository of this package \href{https://github.com/msberends/AMR/blob/maste
 
 \subsection{Other}{
 
-The function \code{\link[=is.rsi]{is.rsi()}} detects if the input contains class \verb{<rsi>}. If the input is a data.frame, it iterates over all columns and returns a logical vector.
+The function \code{\link[=is.rsi]{is.rsi()}} detects if the input contains class \verb{<rsi>}. If the input is a \link{data.frame}, it iterates over all columns and returns a \link{logical} vector.
 
-The function \code{\link[=is.rsi.eligible]{is.rsi.eligible()}} returns \code{TRUE} when a columns contains at most 5\% invalid antimicrobial interpretations (not S and/or I and/or R), and \code{FALSE} otherwise. The threshold of 5\% can be set with the \code{threshold} argument. If the input is a data.frame, it iterates over all columns and returns a logical vector.
+The function \code{\link[=is.rsi.eligible]{is.rsi.eligible()}} returns \code{TRUE} when a columns contains at most 5\% invalid antimicrobial interpretations (not S and/or I and/or R), and \code{FALSE} otherwise. The threshold of 5\% can be set with the \code{threshold} argument. If the input is a \link{data.frame}, it iterates over all columns and returns a \link{logical} vector.
 }
 }
 \section{Interpretation of R and S/I}{
