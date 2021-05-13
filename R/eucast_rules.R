@@ -240,7 +240,13 @@ eucast_rules <- function(x,
         cat(font_subtle(" (no changes)\n"))
       } else {
         # opening
-        cat(font_grey(" ("))
+        if (n_added > 0 & n_changed == 0) {
+          cat(font_green(" ("))
+        } else if (n_added == 0 & n_changed > 0) {
+          cat(font_blue(" ("))
+        } else {
+          cat(font_grey(" ("))
+        }
         # additions
         if (n_added > 0) {
           if (n_added == 1) {
@@ -262,7 +268,13 @@ eucast_rules <- function(x,
           }
         } 
         # closing
-        cat(font_grey(")\n"))
+        if (n_added > 0 & n_changed == 0) {
+          cat(font_green(")\n"))
+        } else if (n_added == 0 & n_changed > 0) {
+          cat(font_blue(")\n"))
+        } else {
+          cat(font_grey(")\n"))
+        }
       }
       warned <<- FALSE
     }
@@ -398,7 +410,7 @@ eucast_rules <- function(x,
                          paste0(x, collapse = "")
                        })
   
-  # save original [table], with the new .rowid column
+  # save original table, with the new .rowid column
   x.bak <- x
   # keep only unique rows for MO and ABx
   x <- x %pm>% 
@@ -413,7 +425,7 @@ eucast_rules <- function(x,
   # join to microorganisms data set
   x <- left_join_microorganisms(x, by = col_mo, suffix = c("_oldcols", ""))
   x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL)
-  x$genus_species <- paste(x$genus, x$species)
+  x$genus_species <- trimws(paste(x$genus, x$species))
   if (info == TRUE & NROW(x) > 10000) {
     message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
   }
@@ -902,21 +914,23 @@ eucast_rules <- function(x,
     cat(paste0(font_grey(strrep("-", 0.95 * options()$width)), "\n"))
     
     if (verbose == FALSE & total_n_added + total_n_changed > 0) {
-      cat("\n", word_wrap("Use ", font_bold("eucast_rules(..., verbose = TRUE)"), " (on your original data) to get a [data.frame] with all specified edits instead."), "\n\n", sep = "")
+      cat("\n", word_wrap("Use ", font_bold("eucast_rules(..., verbose = TRUE)"), " (on your original data) to get a data.frame with all specified edits instead."), "\n\n", sep = "")
     } else if (verbose == TRUE) {
-      cat("\n", word_wrap("Used 'Verbose mode' (", font_bold("verbose = TRUE"), "), which returns a [data.frame] with all specified edits.\nUse ", font_bold("verbose = FALSE"), " to apply the rules on your data."), "\n\n", sep = "")
+      cat("\n", word_wrap("Used 'Verbose mode' (", font_bold("verbose = TRUE"), "), which returns a data.frame with all specified edits.\nUse ", font_bold("verbose = FALSE"), " to apply the rules on your data."), "\n\n", sep = "")
     }
   }
   
   if (length(warn_lacking_rsi_class) > 0) {
     warn_lacking_rsi_class <- unique(warn_lacking_rsi_class)
+    # take order from original data set
+    warn_lacking_rsi_class <- warn_lacking_rsi_class[order(colnames(x.bak))]
+    warn_lacking_rsi_class <- warn_lacking_rsi_class[!is.na(warn_lacking_rsi_class)]
     warning_("Not all columns with antimicrobial results are of class <rsi>. Transform them on beforehand, with e.g.:\n",
-             "  ", x_deparsed, " %>% mutate_if(is.rsi.eligible, as.rsi)\n",
-             "  ", x_deparsed, " %>% mutate(across((is.rsi.eligible), as.rsi))\n",
-             "  ", x_deparsed, " %>% as.rsi(", ifelse(length(warn_lacking_rsi_class) == 1, 
+             "  - ", x_deparsed, " %>% as.rsi(", ifelse(length(warn_lacking_rsi_class) == 1, 
                                                       warn_lacking_rsi_class,
-                                                      paste0(warn_lacking_rsi_class[1], ":", warn_lacking_rsi_class[length(warn_lacking_rsi_class)])), 
-             ")",
+                                                      paste0(warn_lacking_rsi_class[1], ":", warn_lacking_rsi_class[length(warn_lacking_rsi_class)])), ")\n", 
+             "  - ", x_deparsed, " %>% mutate_if(is.rsi.eligible, as.rsi)\n",
+             "  - ", x_deparsed, " %>% mutate(across(where(is.rsi.eligible), as.rsi))",
              call = FALSE)
   }
   
@@ -936,7 +950,7 @@ eucast_rules <- function(x,
   }
 }
 
-# helper function for editing the [table] ----
+# helper function for editing the table ----
 edit_rsi <- function(x,
                      to,
                      rule,
@@ -961,7 +975,7 @@ edit_rsi <- function(x,
   }
   txt_warning <- function() {
     if (warned == FALSE) {
-      if (info == TRUE) cat("", font_yellow_bg(font_black(" WARNING ")))
+      if (info == TRUE) cat(" ", font_rsi_I_bg(" WARNING "), sep = "")
     }
     warned <<- TRUE 
   }
@@ -975,20 +989,22 @@ edit_rsi <- function(x,
       # insert into original table
       new_edits[rows, cols] <- to,
       warning = function(w) {
-        if (w$message %like% "invalid [factor] level") {
+        if (w$message %like% "invalid factor level") {
           xyz <- vapply(FUN.VALUE = logical(1), cols, function(col) {
             new_edits[, col] <<- factor(x = as.character(pm_pull(new_edits, col)),
                                         levels = unique(c(to, levels(pm_pull(new_edits, col)))))
             TRUE
           })
           suppressWarnings(new_edits[rows, cols] <<- to)
-          warning_('Value "', to, '" added to the [factor] levels of column(s) `', paste(cols, collapse = "`, `"), "` because this value was not an existing [factor] level. A better way is to use as.rsi() on beforehand on antimicrobial columns to guarantee the right structure.", call = FALSE)
+          warning_("Value \"", to, "\" added to the factor levels of column", ifelse(length(cols) == 1, "", "s"), 
+                   " ", vector_and(cols, quotes = "`", sort = FALSE), 
+                   " because this value was not an existing factor level.",
+                   call = FALSE)
           txt_warning()
           warned <- FALSE
         } else {
           warning_(w$message, call = FALSE)
           txt_warning()
-          cat("\n") # txt_warning() does not append a "\n" on itself
         }
       },
       error = function(e) {

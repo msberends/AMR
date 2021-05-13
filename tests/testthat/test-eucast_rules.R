@@ -77,17 +77,18 @@ test_that("EUCAST rules work", {
   expect_equal(suppressWarnings(eucast_rules(a, "mo", info = FALSE)), b)
   
   # piperacillin must be R in Enterobacteriaceae when tica is R
-  library(dplyr, warn.conflicts = FALSE)
-  expect_equal(suppressWarnings(
-    example_isolates %>%
-      filter(mo_family(mo) == "Enterobacteriaceae") %>%
-      mutate(TIC = as.rsi("R"),
-             PIP = as.rsi("S")) %>%
-      eucast_rules(col_mo = "mo", version_expertrules = 3.1, info = FALSE) %>%
-      pull(PIP) %>%
-      unique() %>%
-      as.character()),
-    "R")
+  if (require("dplyr")) {
+    expect_equal(suppressWarnings(
+      example_isolates %>%
+        filter(mo_family(mo) == "Enterobacteriaceae") %>%
+        mutate(TIC = as.rsi("R"),
+               PIP = as.rsi("S")) %>%
+        eucast_rules(col_mo = "mo", version_expertrules = 3.1, info = FALSE) %>%
+        pull(PIP) %>%
+        unique() %>%
+        as.character()),
+      "R")
+  }
   
   # Azithromycin and Clarythromycin must be equal to Erythromycin
   a <- suppressWarnings(as.rsi(eucast_rules(data.frame(mo = example_isolates$mo,
@@ -114,7 +115,9 @@ test_that("EUCAST rules work", {
     "S")
   
   # also test norf
-  expect_output(suppressWarnings(eucast_rules(example_isolates %>% mutate(NOR = "S", NAL = "S"), info = TRUE)))
+  if (require("dplyr")) {
+    expect_output(suppressWarnings(eucast_rules(example_isolates %>% mutate(NOR = "S", NAL = "S"), info = TRUE)))
+  }
   
   # check verbose output
   expect_output(suppressWarnings(eucast_rules(example_isolates, verbose = TRUE, rules = "all", info = TRUE)))

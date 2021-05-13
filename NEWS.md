@@ -1,5 +1,5 @@
-# `AMR` 1.6.0.9021
-## <small>Last updated: 12 May 2021</small>
+# `AMR` 1.6.0.9022
+## <small>Last updated: 13 May 2021</small>
 
 ### New
 * Function `custom_eucast_rules()` that brings support for custom AMR rules in `eucast_rules()`

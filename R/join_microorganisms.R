@@ -105,7 +105,7 @@ semi_join_microorganisms <- function(x, by = NULL, ...) {
   meet_criteria(x, allow_class = c("data.frame", "character"))
   meet_criteria(by, allow_class = "character", allow_NULL = TRUE)
   
-  join_microorganisms(type = "semi_join", x = x, by = by, suffix = suffix, ...)
+  join_microorganisms(type = "semi_join", x = x, by = by, ...)
 }
 
 #' @rdname join
@@ -114,7 +114,7 @@ anti_join_microorganisms <- function(x, by = NULL, ...) {
   meet_criteria(x, allow_class = c("data.frame", "character"))
   meet_criteria(by, allow_class = "character", allow_NULL = TRUE)
   
-  join_microorganisms(type = "anti_join", x = x, by = by, suffix = suffix, ...)
+  join_microorganisms(type = "anti_join", x = x, by = by, ...)
 }
 
 join_microorganisms <- function(type, x, by, suffix, ...) {
@@ -126,8 +126,12 @@ join_microorganisms <- function(type, x, by, suffix, ...) {
   }
   if (is.null(by)) {
     by <- search_type_in_df(x, "mo", info = FALSE)
-    stop_if(is.null(by), "cannot join - no column with microorganism names or codes found")
-    # message_('Joining, by = "', by, '"', add_fn = font_black, as_note = FALSE) # message same as dplyr::join functions
+    if (is.null(by) && NCOL(x) == 1) {
+      by <- colnames(x)[1L]
+    } else {
+      stop_if(is.null(by), "no column with microorganism names or codes found, set this column with `by`", call = -2)
+    }
+    message_('Joining, by = "', by, '"', add_fn = font_black, as_note = FALSE) # message same as dplyr::join functions
   }
   if (!all(x[, by, drop = TRUE] %in% MO_lookup$mo, na.rm = TRUE)) {
     x$join.mo <- as.mo(x[, by, drop = TRUE])
@@ -166,7 +170,7 @@ join_microorganisms <- function(type, x, by, suffix, ...) {
   }
   
   if (type %like% "full|left|right|inner" && NROW(joined) > NROW(x)) {
-    warning_("The newly joined tbl contains ", nrow(joined) - nrow(x), " rows more that its original.", call = FALSE)
+    warning_("The newly joined data set contains ", nrow(joined) - nrow(x), " rows more than the number of rows of `x`.", call = FALSE)
   }
   
   joined

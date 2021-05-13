@@ -195,7 +195,7 @@ as.rsi(x = as.disk(18),
 if (require("dplyr")) {
   df \%>\% mutate_if(is.mic, as.rsi)
   df \%>\% mutate_if(function(x) is.mic(x) | is.disk(x), as.rsi)
-  df \%>\% mutate(across((is.mic), as.rsi))
+  df \%>\% mutate(across(where(is.mic), as.rsi))
   df \%>\% mutate_at(vars(AMP:TOB), as.rsi)
   df \%>\% mutate(across(AMP:TOB, as.rsi))
  
@@ -240,7 +240,7 @@ if (require("dplyr")) {
     
   # note: from dplyr 1.0.0 on, this will be: 
   # example_isolates \%>\%
-  #   mutate(across((is.rsi.eligible), as.rsi))
+  #   mutate(across(where(is.rsi.eligible), as.rsi))
 }
 }
 }
