@@ -102,12 +102,13 @@ jobs:
         shell: Rscript {0}
         
       - name: Query dependencies
+        if: matrix.config.r != '3.0'
         run: |
           saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
         shell: Rscript {0}
 
       - name: Cache R packages
-        if: runner.os != 'Windows'
+        if: runner.os != 'Windows' && matrix.config.r != '3.0'
         # && matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2'
         uses: actions/cache@v1
         with:
@@ -145,7 +146,8 @@ jobs:
           _R_CHECK_LENGTH_1_LOGIC2_: verbose
         run: |
           tar -xf data-raw/AMR_latest.tar.gz
-          R CMD check AMR -no-manual -as-cran
+          rm -rf AMR/vignettes
+          R CMD check AMR
         shell: bash
         
       - name: Run R CMD check on Linux and macOS
@@ -158,12 +160,15 @@ jobs:
           _R_CHECK_LENGTH_1_LOGIC2_: verbose
         run: |
           tar -xf data-raw/AMR_latest.tar.gz
+          rm -rf AMR/vignettes
           R CMD check AMR --no-manual --as-cran
         shell: bash
 
       - name: Show testthat output
         if: always()
-        run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
+        run: |
+          ls -lh
+          find check -name 'testthat.Rout*' -exec cat '{}' \; || true
         shell: bash
 
       - name: Upload check results

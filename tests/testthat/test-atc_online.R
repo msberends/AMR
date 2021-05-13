@@ -27,6 +27,7 @@ context("atc_online.R")
 
 test_that("atc_online works", {
   skip_on_cran()
+  skip_if_not_installed("curl")
   skip_if_not(curl::has_internet())
   
   expect_gte(length(atc_online_groups(ab_atc("AMX"))), 1)
