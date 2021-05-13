@@ -145,7 +145,7 @@ jobs:
           _R_CHECK_LENGTH_1_LOGIC2_: verbose
         run: |
           tar -xf data-raw/AMR_latest.tar.gz
-          R CMD CHECK AMR -no-manual -as-cran
+          R CMD check AMR -no-manual -as-cran
         shell: bash
         
       - name: Run R CMD check on Linux and macOS
@@ -158,7 +158,7 @@ jobs:
           _R_CHECK_LENGTH_1_LOGIC2_: verbose
         run: |
           tar -xf data-raw/AMR_latest.tar.gz
-          R CMD CHECK AMR --no-manual --as-cran
+          R CMD check AMR --no-manual --as-cran
         shell: bash
 
       - name: Show testthat output
