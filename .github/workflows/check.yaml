@@ -94,11 +94,15 @@ jobs:
           r-version: ${{ matrix.config.r }}
 
       - uses: r-lib/actions/setup-pandoc@master
-
-      - name: Query dependencies
-        # if: matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2'
+      
+      - name: Install remotes package
+        if: matrix.config.r != '3.0'
         run: |
           install.packages('remotes')
+        shell: Rscript {0}
+        
+      - name: Query dependencies
+        run: |
           saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
         shell: Rscript {0}
 
@@ -110,28 +114,16 @@ jobs:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ matrix.config.os }}-r-${{ matrix.config.r }}-3-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ matrix.config.os }}-r-${{ matrix.config.r }}-3-
-
-      # - name: Install Linux dependencies
-      #   if: runner.os == 'Linux' && matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2'
-      #   env:
-      #     RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
-      #   run: |
-      #     Rscript -e "remotes::install_github('r-hub/sysreqs')"
-      #     sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
-      #     sudo -s eval "$sysreqs"
           
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
-        # if: matrix.config.r == '3.0' || matrix.config.r == '3.1' || matrix.config.r == '3.2'
-        # env:
-        #   RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
         # update the below with sysreqs::sysreqs("DESCRIPTION") and check the "DEB" entries (for Ubuntu).
         # we don't want to depend on the sysreqs pkg here, as it requires a quite new R version
         run: |
           sudo apt install -y libssl-dev pandoc pandoc-citeproc libxml2-dev libicu-dev libcurl4-openssl-dev
 
-      - name: Install package dependencies
-      #   if: matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2'
+      - name: Update package dependencies using remotes package
+        if: matrix.config.r != '3.0'
         run: |
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
@@ -143,28 +135,8 @@ jobs:
           as.data.frame(utils::installed.packages())[, "Version", drop = FALSE]
         shell: Rscript {0}
 
-      # - name: Run R CMD check
-      #   if: matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2'
-      #   env:
-      #     _R_CHECK_CRAN_INCOMING_: false
-      #     _R_CHECK_LENGTH_1_CONDITION_: verbose
-      #     _R_CHECK_LENGTH_1_LOGIC2_: verbose
-      #   run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
-      #   shell: Rscript {0}
-      
-      - name: Unpack AMR package on Linux and macOS
-        if: runner.os != 'Windows'
-        run: |
-          ls -lh
-          tar -xvf data-raw/AMR_latest.tar.gz
-          
-      - name: Unpack AMR package on Windows
+      - name: Run R CMD check on Windows
         if: runner.os == 'Windows'
-        run: |
-          tar -xvf data-raw/AMR_latest.tar.gz
-        
-      - name: Run R CMD check
-        # if: matrix.config.r == '3.0' || matrix.config.r == '3.1' || matrix.config.r == '3.2'
         env:
           _R_CHECK_CRAN_INCOMING_: false
           _R_CHECK_FORCE_SUGGESTS_: false
@@ -172,7 +144,22 @@ jobs:
           _R_CHECK_LENGTH_1_CONDITION_: verbose
           _R_CHECK_LENGTH_1_LOGIC2_: verbose
         run: |
-          R CMD check AMR --no-manual --no-build-vignettes
+          tar -xf data-raw/AMR_latest.tar.gz
+          R CMD CHECK AMR -no-manual -as-cran
+        shell: bash
+        
+      - name: Run R CMD check on Linux and macOS
+        if: runner.os != 'Windows'
+        env:
+          _R_CHECK_CRAN_INCOMING_: false
+          _R_CHECK_FORCE_SUGGESTS_: false
+          _R_CHECK_DEPENDS_ONLY_: true
+          _R_CHECK_LENGTH_1_CONDITION_: verbose
+          _R_CHECK_LENGTH_1_LOGIC2_: verbose
+        run: |
+          tar -xf data-raw/AMR_latest.tar.gz
+          R CMD CHECK AMR --no-manual --as-cran
+        shell: bash
 
       - name: Show testthat output
         if: always()
