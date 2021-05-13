@@ -119,7 +119,7 @@ test_that("mdro works", {
                      pza = sample_rsi(),
                      MFX = sample_rsi(),
                      KAN = sample_rsi())
-  expect_gt(n_distinct(mdr_tb(x)), 2)
+  expect_gt(length(unique(mdr_tb(x))), 2)
   
   # check the guideline by Magiorakos  et al. (2012), the default guideline
   stau <- data.frame(mo = c("S. aureus", "S. aureus", "S. aureus", "S. aureus"), 

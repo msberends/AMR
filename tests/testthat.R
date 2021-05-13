@@ -27,7 +27,10 @@
 # able to install it. Yet, we want basic R CMD CHECK's in those R versions 
 # as well, so only run unit tests in later R versions:
 if (require("testthat", warn.conflicts = FALSE)) {
-  library(testthat)
   library(AMR)
+  # print non-base packages
+  print(as.data.frame(utils::installed.packages())[which(is.na(as.data.frame(utils::installed.packages())$Priority)),
+                                                   "Version",
+                                                   drop = FALSE])
   test_check("AMR")
 }

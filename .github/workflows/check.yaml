@@ -144,6 +144,7 @@ jobs:
           _R_CHECK_DEPENDS_ONLY_: true
           _R_CHECK_LENGTH_1_CONDITION_: verbose
           _R_CHECK_LENGTH_1_LOGIC2_: verbose
+          R_LIBS_USER: ${{ env.R_LIBS_USER }}
         run: |
           tar -xf data-raw/AMR_latest.tar.gz
           rm -rf AMR/vignettes
@@ -158,10 +159,11 @@ jobs:
           _R_CHECK_DEPENDS_ONLY_: true
           _R_CHECK_LENGTH_1_CONDITION_: verbose
           _R_CHECK_LENGTH_1_LOGIC2_: verbose
+          R_LIBS_USER: ${{ env.R_LIBS_USER }}
         run: |
           tar -xf data-raw/AMR_latest.tar.gz
           rm -rf AMR/vignettes
-          R CMD check AMR --no-manual --as-cran --no-vignettes --library='/Users/runner/work/_temp/Library'
+          R CMD check AMR --no-manual --no-vignettes
         shell: bash
 
       - name: Show testthat output

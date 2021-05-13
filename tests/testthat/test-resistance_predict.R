@@ -48,10 +48,12 @@ test_that("prediction of rsi works", {
                                                          info = TRUE)))
   pdf(NULL) # prevent Rplots.pdf being created
   expect_silent(plot(x))
-  expect_silent(ggplot_rsi_predict(x))
-  expect_silent(ggplot(x))
-  expect_error(ggplot_rsi_predict(example_isolates))
-
+  if (suppressWarnings(require("ggplot2"))) {
+    expect_silent(ggplot_rsi_predict(x))
+    expect_silent(ggplot(x))
+    expect_error(ggplot_rsi_predict(example_isolates))
+  }
+  
   expect_output(rsi_predict(x = subset(example_isolates, mo == "B_ESCHR_COLI"),
                             model = "binomial",
                             col_ab = "AMX",
