@@ -28,10 +28,8 @@ context("mo.R")
 test_that("as.mo works", {
   
   skip_on_cran()
-  
-  library(dplyr, warn.conflicts = FALSE)
- 
-  MOs <- microorganisms %>% filter(!is.na(mo), nchar(mo) > 3)
+
+  MOs <- subset(microorganisms, !is.na(mo) & nchar(mo) > 3)
   expect_identical(as.character(MOs$mo), as.character(as.mo(MOs$mo)))
   
   expect_identical(
@@ -152,37 +150,43 @@ test_that("as.mo works", {
   expect_identical(as.character(as.mo("S. salivarius",  Lancefield = FALSE)), "B_STRPT_SLVR")
   expect_identical(as.character(as.mo("S. salivarius",  Lancefield = TRUE)),  "B_STRPT_GRPK") # group K
 
-  # select with one column
-  expect_identical(
-    example_isolates[1:10, ] %>%
-      left_join_microorganisms() %>%
-      select(genus) %>%
-      as.mo() %>%
-      as.character(),
-    c("B_ESCHR", "B_ESCHR", "B_STPHY", "B_STPHY", "B_STPHY",
-      "B_STPHY", "B_STPHY", "B_STPHY", "B_STPHY", "B_STPHY"))
-  
-  # select with two columns
-  expect_identical(
-    example_isolates[1:10, ] %>%
-      pull(mo),
-    example_isolates[1:10, ] %>%
-      left_join_microorganisms() %>%
-      select(genus, species) %>%
-      as.mo())
+  if (require("dplyr")) {
+    # select with one column
+    expect_identical(
+      example_isolates[1:10, ] %>%
+        left_join_microorganisms() %>%
+        select(genus) %>%
+        as.mo() %>%
+        as.character(),
+      c("B_ESCHR", "B_ESCHR", "B_STPHY", "B_STPHY", "B_STPHY",
+        "B_STPHY", "B_STPHY", "B_STPHY", "B_STPHY", "B_STPHY"))
+    
+    # select with two columns
+    expect_identical(
+      example_isolates[1:10, ] %>%
+        pull(mo),
+      example_isolates[1:10, ] %>%
+        left_join_microorganisms() %>%
+        select(genus, species) %>%
+        as.mo())
+    
+    # too many columns
+    expect_error(example_isolates %>% select(1:3) %>% as.mo())
+    
+    # test pull
+    expect_equal(nrow(example_isolates %>% mutate(mo = as.mo(mo))),
+                 2000)
+    expect_true(example_isolates %>% pull(mo) %>% is.mo())
+  }
 
   # unknown results
   expect_warning(as.mo(c("INVALID", "Yeah, unknown")))
   
-  # too many columns
-  expect_error(example_isolates %>% select(1:3) %>% as.mo())
-  
+ 
   # print
   expect_output(print(as.mo(c("B_ESCHR_COLI", NA))))
   
-  # test pull
-  expect_equal(nrow(example_isolates %>% mutate(mo = as.mo(mo))),
-               2000)
+ 
   
   # test data.frame
   expect_equal(nrow(data.frame(test = as.mo("B_ESCHR_COLI"))),
@@ -265,7 +269,6 @@ test_that("as.mo works", {
                rep("UNKNOWN", 3))
   
   expect_null(mo_failures())
-  expect_true(example_isolates %>% pull(mo) %>% is.mo())
   
   expect_error(translate_allow_uncertain(5))
 

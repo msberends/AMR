@@ -54,7 +54,8 @@ test_that("disk works", {
   }
   expect_output(print(as.disk(12)))
   
-  library(dplyr, warn.conflicts = FALSE)
-  expect_output(print(tibble(d = as.disk(12))))
+  if (require("dplyr")) {
+    expect_output(print(tibble(d = as.disk(12))))
+  }
 
 })

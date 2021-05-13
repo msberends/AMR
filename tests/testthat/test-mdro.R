@@ -44,7 +44,6 @@ test_that("mdro works", {
   # check class
   expect_equal(class(outcome), c("ordered", "factor"))
 
-  library(dplyr)
   # example_isolates should have these finding using Dutch guidelines
   expect_equal(as.double(table(outcome)),
                c(1970, 24, 6)) # 1970 neg, 24 unconfirmed, 6 pos
@@ -245,8 +244,8 @@ test_that("mdro works", {
                       info = FALSE))
   
   # print groups
-  library(dplyr)
-  expect_output(x <- mdro(example_isolates %>% group_by(hospital_id), info = TRUE))
-  expect_output(x <- mdro(example_isolates %>% group_by(hospital_id), guideline = custom, info = TRUE))
-  
+  if (require("dplyr")) {
+    expect_output(x <- mdro(example_isolates %>% group_by(hospital_id), info = TRUE))
+    expect_output(x <- mdro(example_isolates %>% group_by(hospital_id), guideline = custom, info = TRUE))
+  }
 })

@@ -131,11 +131,12 @@ test_that("mo_property works", {
   expect_equal(mo_name("test", reference_df = data.frame(col1 = "test", mo = "B_ESCHR_COLI")), 
                "Escherichia coli")
   
-  library(dplyr)
-  expect_equal(example_isolates %>% filter(mo_is_gram_negative()) %>% nrow(),
-               730)
-  expect_equal(example_isolates %>% filter(mo_is_gram_positive()) %>% nrow(),
-               1238)
-  expect_equal(example_isolates %>% filter(mo_is_intrinsic_resistant(ab = "Vancomycin")) %>% nrow(),
-               710)
+  if (require("dplyr")) {
+    expect_equal(example_isolates %>% filter(mo_is_gram_negative()) %>% nrow(),
+                 730)
+    expect_equal(example_isolates %>% filter(mo_is_gram_positive()) %>% nrow(),
+                 1238)
+    expect_equal(example_isolates %>% filter(mo_is_intrinsic_resistant(ab = "Vancomycin")) %>% nrow(),
+                 710)
+  }
 })

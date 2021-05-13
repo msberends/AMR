@@ -37,6 +37,5 @@ test_that("key_antimcrobials work", {
   expect_true(antimicrobials_equal(".SS", "SI.", ignore_I = TRUE, type = "keyantimicrobials"))
   expect_false(antimicrobials_equal(".SS", "SI.", ignore_I = FALSE, type = "keyantimicrobials"))
   
-  library(dplyr, warn.conflicts = FALSE)
-  expect_warning(key_antimicrobials(example_isolates %>% slice(rep(1, 10))))
+  expect_warning(key_antimicrobials(example_isolates[rep(1, 10), ]))
 })

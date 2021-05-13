@@ -41,18 +41,18 @@ test_that("episodes work", {
   expect_equal(get_episode(test_df$date, 365),
                c(1, 1, 2, 2, 2, 3, 3, 4, 1, 2, 2, 2, 3))
   
-  library(dplyr)
-  expect_identical(test_df %>% group_by(patient_id) %>% mutate(f = is_new_episode(date, 365)) %>% pull(f),
-                   c(TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, TRUE))
-  
-  suppressMessages(
-    x <- example_isolates %>%
-      mutate(out = first_isolate(., include_unknown = TRUE, method = "episode-based", info = FALSE))
-  )
-  
-  y <- example_isolates %>%
-    group_by(patient_id, mo) %>%
-    mutate(out = is_new_episode(date, 365))
-  
-  expect_identical(which(x$out), which(y$out))
+  if (require("dplyr")) {
+    expect_identical(test_df %>% group_by(patient_id) %>% mutate(f = is_new_episode(date, 365)) %>% pull(f),
+                     c(TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, TRUE))
+    
+    suppressMessages(
+      x <- example_isolates %>%
+        mutate(out = first_isolate(., include_unknown = TRUE, method = "episode-based", info = FALSE))
+    )
+    y <- example_isolates %>%
+      group_by(patient_id, mo) %>%
+      mutate(out = is_new_episode(date, 365))
+    
+    expect_identical(which(x$out), which(y$out))
+  }
 })

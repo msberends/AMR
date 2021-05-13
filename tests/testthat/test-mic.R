@@ -62,8 +62,9 @@ test_that("mic works", {
   
   expect_s3_class(summary(as.mic(c(2, 8))), c("summaryDefault", "table"))
   
-  library(dplyr, warn.conflicts = FALSE)
-  expect_output(print(tibble(m = as.mic(2:4))))
+  if (require("dplyr")) {
+    expect_output(print(tibble(m = as.mic(2:4))))
+  }
 })
 
 test_that("mathematical functions on mic work", {

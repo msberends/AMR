@@ -59,30 +59,36 @@ test_that("rsi works", {
   expect_identical(as.logical(lapply(example_isolates, is.rsi.eligible)),
                    rep(FALSE, length(example_isolates)))
   
-  library(dplyr, warn.conflicts = FALSE)
-  # 40 rsi columns
-  expect_equal(example_isolates %>%
-                 mutate_at(vars(PEN:RIF), as.character) %>%
-                 lapply(is.rsi.eligible) %>%
-                 as.logical() %>%
-                 sum(),
-               40)
-  
-  expect_output(print(tibble(ab = as.rsi("S"))))
-  
   expect_error(as.rsi.mic(as.mic(16)))
   expect_error(as.rsi.disk(as.disk(16)))
   
   expect_error(get_guideline("this one does not exist"))
   
-  expect_s3_class(example_isolates %>%
-                    mutate(m = as.mic(2),
-                           d = as.disk(20)) %>% 
-                    skimr::skim(),
-                  "data.frame")
-  expect_s3_class(skimr::skim(example_isolates),
-                  "data.frame")
-
+  if (require("dplyr")) {
+    # 40 rsi columns
+    expect_equal(example_isolates %>%
+                   mutate_at(vars(PEN:RIF), as.character) %>%
+                   lapply(is.rsi.eligible) %>%
+                   as.logical() %>%
+                   sum(),
+                 40)
+    expect_equal(sum(is.rsi(example_isolates)), 40)
+    
+    expect_output(print(tibble(ab = as.rsi("S"))))
+  }
+  
+   if (require("skimr")) {
+    expect_s3_class(skim(example_isolates),
+                    "data.frame")
+    if (require("dplyr")) {
+      expect_s3_class(example_isolates %>%
+                        mutate(m = as.mic(2),
+                               d = as.disk(20)) %>% 
+                        skim(),
+                      "data.frame")
+    }
+  }
+  
 })
 
 test_that("mic2rsi works", {
@@ -110,12 +116,14 @@ test_that("mic2rsi works", {
   expect_equal(as.rsi(as.mic(32), "E. coli", "ampicillin", guideline = "EUCAST 2020"),
                as.rsi("R"))
   
-  expect_true(suppressWarnings(example_isolates %>%
-                                 mutate(amox_mic = as.mic(2)) %>%
-                                 select(mo, amox_mic) %>%
-                                 as.rsi() %>%
-                                 pull(amox_mic) %>%
-                                 is.rsi()))
+  if (require("dplyr")) {
+    expect_true(suppressWarnings(example_isolates %>%
+                                   mutate(amox_mic = as.mic(2)) %>%
+                                   select(mo, amox_mic) %>%
+                                   as.rsi() %>%
+                                   pull(amox_mic) %>%
+                                   is.rsi()))
+  }
 })
 
 test_that("disk2rsi works", {
@@ -140,13 +148,15 @@ test_that("disk2rsi works", {
            ab = "ERY",
            guideline = "CLSI")),
     "R")
-
-  expect_true(example_isolates %>%
-                mutate(amox_disk = as.disk(15)) %>%
-                select(mo, amox_disk) %>%
-                as.rsi(guideline = "CLSI") %>%
-                pull(amox_disk) %>%
-                is.rsi())
+  
+  if (require("dplyr")) {
+    expect_true(example_isolates %>%
+                  mutate(amox_disk = as.disk(15)) %>%
+                  select(mo, amox_disk) %>%
+                  as.rsi(guideline = "CLSI") %>%
+                  pull(amox_disk) %>%
+                  is.rsi())
+  }
   
   # frequency tables
   if (require("cleaner")) {
@@ -165,20 +175,18 @@ test_that("data.frame2rsi works", {
                    TOB = as.disk(16),
                    ERY = "R", # note about assigning <rsi> class
                    CLR = "V") # note about cleaning
-  expect_s3_class(suppressWarnings(as.rsi(df)), "data.frame")
+  expect_s3_class(suppressWarnings(as.rsi(df)),
+                  "data.frame")
   
   expect_s3_class(suppressWarnings(as.rsi(data.frame(mo = "Escherichia coli",
-                                                     amoxi = c("R", "S", "I", "invalid")))$amoxi), "rsi")
-  expect_warning(data.frame(mo = "E. coli",
-                            NIT = c("<= 2", 32)) %>%
-                   as.rsi())
-  expect_message(data.frame(mo = "E. coli",
-                            NIT = c("<= 2", 32),
-                            uti = TRUE) %>%
-                   as.rsi())
-  expect_message(
-    data.frame(mo = "E. coli",
-               NIT = c("<= 2", 32),
-               specimen = c("urine", "blood")) %>%
-      as.rsi())
+                                                     amoxi = c("R", "S", "I", "invalid")))$amoxi),
+                  "rsi")
+  expect_warning(as.rsi(data.frame(mo = "E. coli",
+                                   NIT = c("<= 2", 32))))
+  expect_message(as.rsi(data.frame(mo = "E. coli",
+                                   NIT = c("<= 2", 32),
+                                   uti = TRUE)))
+  expect_message(as.rsi(data.frame(mo = "E. coli",
+                                   NIT = c("<= 2", 32),
+                                   specimen = c("urine", "blood"))))
 })

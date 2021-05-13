@@ -57,9 +57,10 @@ test_that("looking up ab columns works", {
 
 test_that("looking up ab columns works", {
   skip_on_cran()
-  library(dplyr)
-  
-  # we rely on "grouped_tbl" being a class of grouped tibbles, so:
-  expect_true(is_null_or_grouped_tbl(example_isolates %>% group_by(hospital_id)))
+
+  # we rely on "grouped_tbl" being a class of grouped tibbles, so implement a test that checks for this:
+  if (require("dplyr")) {
+    expect_true(is_null_or_grouped_tbl(example_isolates %>% group_by(hospital_id)))
+  }
 
 })

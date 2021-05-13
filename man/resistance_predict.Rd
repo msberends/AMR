@@ -4,6 +4,7 @@
 \alias{resistance_predict}
 \alias{rsi_predict}
 \alias{plot.resistance_predict}
+\alias{ggplot.resistance_predict}
 \alias{ggplot_rsi_predict}
 \title{Predict antimicrobial resistance}
 \usage{
@@ -38,6 +39,8 @@ rsi_predict(
 )
 
 \method{plot}{resistance_predict}(x, main = paste("Resistance Prediction of", x_name), ...)
+
+\method{ggplot}{resistance_predict}(x, main = paste("Resistance Prediction of", x_name), ribbon = TRUE, ...)
 
 ggplot_rsi_predict(
   x,

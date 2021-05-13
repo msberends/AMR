@@ -56,7 +56,7 @@ test_that("imports work", {
   call_functions <- c(
     # cleaner
     "freq.default" = "cleaner",
-    # skmir
+    # skimr
     "inline_hist" = "skimr",
     "sfl" = "skimr",
     # set_mo_source

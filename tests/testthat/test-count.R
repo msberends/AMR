@@ -41,42 +41,6 @@ test_that("counts work", {
   expect_equal(suppressWarnings(count_S(example_isolates$AMX)) + count_I(example_isolates$AMX),
                count_SI(example_isolates$AMX))
   
-  library(dplyr, warn.conflicts = FALSE)
-  expect_equal(example_isolates %>% count_susceptible(AMC), 1433)
-  expect_equal(example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = TRUE), 1687)
-  expect_equal(example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = FALSE), 1764)
-  expect_equal(example_isolates %>% count_all(AMC, GEN, only_all_tested = TRUE), 1798)
-  expect_equal(example_isolates %>% count_all(AMC, GEN, only_all_tested = FALSE), 1936)
-  expect_identical(example_isolates %>% count_all(AMC, GEN, only_all_tested = TRUE),
-                   example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = TRUE) +
-                     example_isolates %>% count_resistant(AMC, GEN, only_all_tested = TRUE))
-  
-  # count of cases
-  expect_equal(example_isolates %>%
-                 group_by(hospital_id) %>%
-                 summarise(cipro = count_susceptible(CIP),
-                           genta = count_susceptible(GEN),
-                           combination = count_susceptible(CIP, GEN)) %>%
-                 pull(combination),
-               c(253, 465, 192, 558))
-  
-  # count_df
-  expect_equal(
-    example_isolates %>% select(AMX) %>% count_df() %>% pull(value),
-    c(example_isolates$AMX %>% count_susceptible(),
-      example_isolates$AMX %>% count_resistant())
-  )
-  expect_equal(
-    example_isolates %>% select(AMX) %>% count_df(combine_IR = TRUE) %>% pull(value),
-    c(suppressWarnings(example_isolates$AMX %>% count_S()),
-      suppressWarnings(example_isolates$AMX %>% count_IR()))
-  )
-  expect_equal(
-    example_isolates %>% select(AMX) %>% count_df(combine_SI = FALSE) %>% pull(value),
-    c(suppressWarnings(example_isolates$AMX %>% count_S()),
-      example_isolates$AMX %>% count_I(),
-      example_isolates$AMX %>% count_R())
-  )
   
   # warning for speed loss
   reset_all_thrown_messages()
@@ -94,11 +58,49 @@ test_that("counts work", {
   expect_error(count_df(c("A", "B", "C")))
   expect_error(count_df(example_isolates[, "date"]))
   
-  # grouping in rsi_calc_df() (= backbone of rsi_df())
-  expect_true("hospital_id" %in% (example_isolates %>% 
-                group_by(hospital_id) %>% 
-                select(hospital_id, AMX, CIP, gender) %>%
-                rsi_df() %>% 
-                colnames()))
+  if (require("dplyr")) {
+    expect_equal(example_isolates %>% count_susceptible(AMC), 1433)
+    expect_equal(example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = TRUE), 1687)
+    expect_equal(example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = FALSE), 1764)
+    expect_equal(example_isolates %>% count_all(AMC, GEN, only_all_tested = TRUE), 1798)
+    expect_equal(example_isolates %>% count_all(AMC, GEN, only_all_tested = FALSE), 1936)
+    expect_identical(example_isolates %>% count_all(AMC, GEN, only_all_tested = TRUE),
+                     example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = TRUE) +
+                       example_isolates %>% count_resistant(AMC, GEN, only_all_tested = TRUE))
+    
+    # count of cases
+    expect_equal(example_isolates %>%
+                   group_by(hospital_id) %>%
+                   summarise(cipro = count_susceptible(CIP),
+                             genta = count_susceptible(GEN),
+                             combination = count_susceptible(CIP, GEN)) %>%
+                   pull(combination),
+                 c(253, 465, 192, 558))
+    
+    # count_df
+    expect_equal(
+      example_isolates %>% select(AMX) %>% count_df() %>% pull(value),
+      c(example_isolates$AMX %>% count_susceptible(),
+        example_isolates$AMX %>% count_resistant())
+    )
+    expect_equal(
+      example_isolates %>% select(AMX) %>% count_df(combine_IR = TRUE) %>% pull(value),
+      c(suppressWarnings(example_isolates$AMX %>% count_S()),
+        suppressWarnings(example_isolates$AMX %>% count_IR()))
+    )
+    expect_equal(
+      example_isolates %>% select(AMX) %>% count_df(combine_SI = FALSE) %>% pull(value),
+      c(suppressWarnings(example_isolates$AMX %>% count_S()),
+        example_isolates$AMX %>% count_I(),
+        example_isolates$AMX %>% count_R())
+    )
+    
+    # grouping in rsi_calc_df() (= backbone of rsi_df())
+    expect_true("hospital_id" %in% (example_isolates %>% 
+                                      group_by(hospital_id) %>% 
+                                      select(hospital_id, AMX, CIP, gender) %>%
+                                      rsi_df() %>% 
+                                      colnames()))
+  }
   
 })

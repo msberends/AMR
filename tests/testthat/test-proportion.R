@@ -52,30 +52,49 @@ test_that("proportions works", {
                0.9382647,
                tolerance = 0.0001)
 
-  library(dplyr)
-  # percentages
-  expect_equal(example_isolates %>%
-                 group_by(hospital_id) %>%
-                 summarise(R = proportion_R(CIP, as_percent = TRUE),
-                           I = proportion_I(CIP, as_percent = TRUE),
-                           S = proportion_S(CIP, as_percent = TRUE),
-                           n = n_rsi(CIP),
-                           total = n()) %>%
-                 pull(n) %>%
-                 sum(),
-               1409)
-
-  # count of cases
-  expect_equal(example_isolates %>%
-                 group_by(hospital_id) %>%
-                 summarise(cipro_p = proportion_SI(CIP, as_percent = TRUE),
-                           cipro_n = n_rsi(CIP),
-                           genta_p = proportion_SI(GEN, as_percent = TRUE),
-                           genta_n = n_rsi(GEN),
-                           combination_p = proportion_SI(CIP, GEN, as_percent = TRUE),
-                           combination_n = n_rsi(CIP, GEN)) %>%
-                 pull(combination_n),
-               c(305, 617, 241, 711))
+  if (require("dplyr")) {
+    # percentages
+    expect_equal(example_isolates %>%
+                   group_by(hospital_id) %>%
+                   summarise(R = proportion_R(CIP, as_percent = TRUE),
+                             I = proportion_I(CIP, as_percent = TRUE),
+                             S = proportion_S(CIP, as_percent = TRUE),
+                             n = n_rsi(CIP),
+                             total = n()) %>%
+                   pull(n) %>%
+                   sum(),
+                 1409)
+    
+    # count of cases
+    expect_equal(example_isolates %>%
+                   group_by(hospital_id) %>%
+                   summarise(cipro_p = proportion_SI(CIP, as_percent = TRUE),
+                             cipro_n = n_rsi(CIP),
+                             genta_p = proportion_SI(GEN, as_percent = TRUE),
+                             genta_n = n_rsi(GEN),
+                             combination_p = proportion_SI(CIP, GEN, as_percent = TRUE),
+                             combination_n = n_rsi(CIP, GEN)) %>%
+                   pull(combination_n),
+                 c(305, 617, 241, 711))
+    
+    # proportion_df
+    expect_equal(
+      example_isolates %>% select(AMX) %>% proportion_df() %>% pull(value),
+      c(example_isolates$AMX %>% proportion_SI(),
+        example_isolates$AMX %>% proportion_R())
+    )
+    expect_equal(
+      example_isolates %>% select(AMX) %>% proportion_df(combine_IR = TRUE) %>% pull(value),
+      c(example_isolates$AMX %>% proportion_S(),
+        example_isolates$AMX %>% proportion_IR())
+    )
+    expect_equal(
+      example_isolates %>% select(AMX) %>% proportion_df(combine_SI = FALSE) %>% pull(value),
+      c(example_isolates$AMX %>% proportion_S(),
+        example_isolates$AMX %>% proportion_I(),
+        example_isolates$AMX %>% proportion_R())
+    )
+  }
   
   reset_all_thrown_messages()
   expect_warning(proportion_R(as.character(example_isolates$AMC)))
@@ -115,24 +134,6 @@ test_that("proportions works", {
   expect_warning(proportion_I(as.character(example_isolates$GEN)))
   reset_all_thrown_messages()
   expect_warning(proportion_S(example_isolates$AMC, as.character(example_isolates$GEN)))
-
-  # proportion_df
-  expect_equal(
-    example_isolates %>% select(AMX) %>% proportion_df() %>% pull(value),
-    c(example_isolates$AMX %>% proportion_SI(),
-      example_isolates$AMX %>% proportion_R())
-  )
-  expect_equal(
-    example_isolates %>% select(AMX) %>% proportion_df(combine_IR = TRUE) %>% pull(value),
-    c(example_isolates$AMX %>% proportion_S(),
-      example_isolates$AMX %>% proportion_IR())
-  )
-  expect_equal(
-    example_isolates %>% select(AMX) %>% proportion_df(combine_SI = FALSE) %>% pull(value),
-    c(example_isolates$AMX %>% proportion_S(),
-      example_isolates$AMX %>% proportion_I(),
-      example_isolates$AMX %>% proportion_R())
-  )
   
   expect_error(proportion_df(c("A", "B", "C")))
   expect_error(proportion_df(example_isolates[, "date"]))

@@ -1,4 +1,4 @@
-# `AMR` 1.6.0.9022
+# `AMR` 1.6.0.9023
 ## <small>Last updated: 13 May 2021</small>
 
 ### New
@@ -11,6 +11,7 @@
   * The `first_isolate()` function can now take a vector of values for `col_keyantibiotics` and can have an episode length of `Inf`
   * Since the phenotype-based method is the new default, `filter_first_isolate()` renders the `filter_first_weighted_isolate()` function redundant. For this reason, `filter_first_weighted_isolate()` is now deprecated.
   * The documentation of the `first_isolate()` and `key_antimicrobials()` functions has been completely rewritten.
+* Added `ggplot()` method for `resistance_predict()` 
 
 ### Changed
 * Custom MDRO guidelines (`mdro()`, `custom_mdro_guideline()`):
