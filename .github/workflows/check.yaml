@@ -175,4 +175,4 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: ${{ matrix.config.os }}-r${{ matrix.config.r }}-results
-          path: *.Rcheck
+          path: AMR.Rcheck
