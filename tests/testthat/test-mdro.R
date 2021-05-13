@@ -244,7 +244,7 @@ test_that("mdro works", {
                       info = FALSE))
   
   # print groups
-  if (require("dplyr")) {
+  if (suppressWarnings(require("dplyr"))) {
     expect_output(x <- mdro(example_isolates %>% group_by(hospital_id), info = TRUE))
     expect_output(x <- mdro(example_isolates %>% group_by(hospital_id), guideline = custom, info = TRUE))
   }

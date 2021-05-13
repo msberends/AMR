@@ -42,7 +42,7 @@ test_that("rsi works", {
   pdf(NULL) # prevent Rplots.pdf being created
   expect_silent(barplot(as.rsi(c("S", "I", "R"))))
   expect_silent(plot(as.rsi(c("S", "I", "R"))))
-  if (require("ggplot2")) expect_s3_class(ggplot(as.rsi(c("S", "I", "R"))), "gg")
+  if (suppressWarnings(require("ggplot2"))) expect_s3_class(ggplot(as.rsi(c("S", "I", "R"))), "gg")
   expect_output(print(as.rsi(c("S", "I", "R"))))
   
   expect_equal(as.character(as.rsi(c(1:3))), c("S", "I", "R"))
@@ -64,7 +64,7 @@ test_that("rsi works", {
   
   expect_error(get_guideline("this one does not exist"))
   
-  if (require("dplyr")) {
+  if (suppressWarnings(require("dplyr"))) {
     # 40 rsi columns
     expect_equal(example_isolates %>%
                    mutate_at(vars(PEN:RIF), as.character) %>%
@@ -77,10 +77,10 @@ test_that("rsi works", {
     expect_output(print(tibble(ab = as.rsi("S"))))
   }
   
-   if (require("skimr")) {
+   if (suppressWarnings(require("skimr"))) {
     expect_s3_class(skim(example_isolates),
                     "data.frame")
-    if (require("dplyr")) {
+    if (suppressWarnings(require("dplyr"))) {
       expect_s3_class(example_isolates %>%
                         mutate(m = as.mic(2),
                                d = as.disk(20)) %>% 
@@ -116,7 +116,7 @@ test_that("mic2rsi works", {
   expect_equal(as.rsi(as.mic(32), "E. coli", "ampicillin", guideline = "EUCAST 2020"),
                as.rsi("R"))
   
-  if (require("dplyr")) {
+  if (suppressWarnings(require("dplyr"))) {
     expect_true(suppressWarnings(example_isolates %>%
                                    mutate(amox_mic = as.mic(2)) %>%
                                    select(mo, amox_mic) %>%
@@ -149,7 +149,7 @@ test_that("disk2rsi works", {
            guideline = "CLSI")),
     "R")
   
-  if (require("dplyr")) {
+  if (suppressWarnings(require("dplyr"))) {
     expect_true(example_isolates %>%
                   mutate(amox_disk = as.disk(15)) %>%
                   select(mo, amox_disk) %>%
@@ -159,7 +159,7 @@ test_that("disk2rsi works", {
   }
   
   # frequency tables
-  if (require("cleaner")) {
+  if (suppressWarnings(require("cleaner"))) {
     expect_s3_class(cleaner::freq(example_isolates$AMX), "freq")
   }
 })

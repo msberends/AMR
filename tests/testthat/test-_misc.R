@@ -51,15 +51,17 @@ test_that("looking up ab columns works", {
   expect_warning(generate_warning_abs_missing(c("AMP", "AMX"), any = TRUE))
   expect_warning(get_column_abx(example_isolates, hard_dependencies = "FUS"))
   expect_message(get_column_abx(example_isolates, soft_dependencies = "FUS"))
-  expect_warning(get_column_abx(dplyr::rename(example_isolates, thisone = AMX), amox = "thisone", tmp = "thisone", verbose = TRUE))
-  expect_warning(get_column_abx(dplyr::rename(example_isolates, thisone = AMX), amox = "thisone", tmp = "thisone", verbose = FALSE))
+  if (suppressWarnings(require("dplyr"))) {
+    expect_warning(get_column_abx(rename(example_isolates, thisone = AMX), amox = "thisone", tmp = "thisone", verbose = TRUE))
+    expect_warning(get_column_abx(rename(example_isolates, thisone = AMX), amox = "thisone", tmp = "thisone", verbose = FALSE))
+  }
 })
 
 test_that("looking up ab columns works", {
   skip_on_cran()
-
+  
   # we rely on "grouped_tbl" being a class of grouped tibbles, so implement a test that checks for this:
-  if (require("dplyr")) {
+  if (suppressWarnings(require("dplyr"))) {
     expect_true(is_null_or_grouped_tbl(example_isolates %>% group_by(hospital_id)))
   }
 

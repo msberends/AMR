@@ -32,7 +32,7 @@ test_that("ggplot_rsi works", {
   skip_if_not_installed("ggplot2")
   skip_if_not_installed("dplyr")
   
-  if (require("dplyr") & require("ggplot2")) {
+  if (suppressWarnings(require("dplyr")) & suppressWarnings(require("ggplot2"))) {
     
     pdf(NULL) # prevent Rplots.pdf being created
     

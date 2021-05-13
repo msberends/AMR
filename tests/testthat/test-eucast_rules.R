@@ -77,7 +77,7 @@ test_that("EUCAST rules work", {
   expect_equal(suppressWarnings(eucast_rules(a, "mo", info = FALSE)), b)
   
   # piperacillin must be R in Enterobacteriaceae when tica is R
-  if (require("dplyr")) {
+  if (suppressWarnings(require("dplyr"))) {
     expect_equal(suppressWarnings(
       example_isolates %>%
         filter(mo_family(mo) == "Enterobacteriaceae") %>%
@@ -115,7 +115,7 @@ test_that("EUCAST rules work", {
     "S")
   
   # also test norf
-  if (require("dplyr")) {
+  if (suppressWarnings(require("dplyr"))) {
     expect_output(suppressWarnings(eucast_rules(example_isolates %>% mutate(NOR = "S", NAL = "S"), info = TRUE)))
   }
   

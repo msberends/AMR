@@ -121,28 +121,34 @@ test_that("first isolates work", {
                              col_date = "non-existing col",
                              col_mo = "mo"))
 
-  require("dplyr")
-  
-  # if mo is not an mo class, result should be the same
-  expect_identical(example_isolates %>%
-                     mutate(mo = as.character(mo)) %>%
-                     first_isolate(col_date = "date",
-                                   col_mo = "mo",
-                                   col_patient_id = "patient_id",
-                                   info = FALSE),
-                   example_isolates %>%
-                     first_isolate(col_date = "date",
-                                   col_mo = "mo",
-                                   col_patient_id = "patient_id",
-                                   info = FALSE))
-  
-  # support for WHONET
-  expect_message(example_isolates %>%
-                   select(-patient_id) %>%
-                   mutate(`First name` = "test",
-                          `Last name` = "test", 
-                          Sex = "Female") %>% 
-                   first_isolate(info = TRUE))
+  if (suppressWarnings(require("dplyr"))) {
+    # if mo is not an mo class, result should be the same
+    expect_identical(example_isolates %>%
+                       mutate(mo = as.character(mo)) %>%
+                       first_isolate(col_date = "date",
+                                     col_mo = "mo",
+                                     col_patient_id = "patient_id",
+                                     info = FALSE),
+                     example_isolates %>%
+                       first_isolate(col_date = "date",
+                                     col_mo = "mo",
+                                     col_patient_id = "patient_id",
+                                     info = FALSE))
+    
+    # support for WHONET
+    expect_message(example_isolates %>%
+                     select(-patient_id) %>%
+                     mutate(`First name` = "test",
+                            `Last name` = "test", 
+                            Sex = "Female") %>% 
+                     first_isolate(info = TRUE))
+    
+    # groups
+    x <- example_isolates %>% group_by(ward_icu) %>% mutate(first = first_isolate())
+    y <- example_isolates %>% group_by(ward_icu) %>% mutate(first = first_isolate(.))
+    expect_identical(x, y)
+    
+  }
 
   # missing dates should be no problem
   df <- example_isolates
@@ -185,10 +191,4 @@ test_that("first isolates work", {
   
   # only one isolate, so return fast
   expect_true(first_isolate(data.frame(mo = "Escherichia coli", date = Sys.Date(), patient = "patient"), info = TRUE))
-
-  # groups
-  x <- example_isolates %>% group_by(ward_icu) %>% mutate(first = first_isolate())
-  y <- example_isolates %>% group_by(ward_icu) %>% mutate(first = first_isolate(.))
-  expect_identical(x, y)
-  
 })

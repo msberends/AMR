@@ -52,7 +52,7 @@ test_that("proportions works", {
                0.9382647,
                tolerance = 0.0001)
 
-  if (require("dplyr")) {
+  if (suppressWarnings(require("dplyr"))) {
     # percentages
     expect_equal(example_isolates %>%
                    group_by(hospital_id) %>%

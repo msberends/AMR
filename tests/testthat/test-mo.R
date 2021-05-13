@@ -150,7 +150,7 @@ test_that("as.mo works", {
   expect_identical(as.character(as.mo("S. salivarius",  Lancefield = FALSE)), "B_STRPT_SLVR")
   expect_identical(as.character(as.mo("S. salivarius",  Lancefield = TRUE)),  "B_STRPT_GRPK") # group K
 
-  if (require("dplyr")) {
+  if (suppressWarnings(require("dplyr"))) {
     # select with one column
     expect_identical(
       example_isolates[1:10, ] %>%
@@ -282,8 +282,10 @@ test_that("as.mo works", {
   expect_equal(suppressWarnings(as.character(as.mo(c("yeasts", "fungi")))), 
                c("F_YEAST", "F_FUNGUS"))
   
-  # print tibble
-  expect_output(print(tibble(mo = as.mo("B_ESCHR_COLI"))))
+  if (suppressWarnings(require("dplyr"))) {
+    # print tibble
+    expect_output(print(tibble(mo = as.mo("B_ESCHR_COLI"))))
+  }
   
   # assigning and subsetting
   x <- example_isolates$mo
@@ -299,7 +301,7 @@ test_that("as.mo works", {
                c("B_ESCHR_COLI", NA))
   
   # frequency tables
-  if (require("cleaner")) {
+  if (suppressWarnings(require("cleaner"))) {
     expect_s3_class(cleaner::freq(example_isolates$mo), "freq")
   }
   

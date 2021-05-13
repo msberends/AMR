@@ -131,7 +131,7 @@ test_that("mo_property works", {
   expect_equal(mo_name("test", reference_df = data.frame(col1 = "test", mo = "B_ESCHR_COLI")), 
                "Escherichia coli")
   
-  if (require("dplyr")) {
+  if (suppressWarnings(require("dplyr"))) {
     expect_equal(example_isolates %>% filter(mo_is_gram_negative()) %>% nrow(),
                  730)
     expect_equal(example_isolates %>% filter(mo_is_gram_positive()) %>% nrow(),

@@ -41,7 +41,7 @@ test_that("episodes work", {
   expect_equal(get_episode(test_df$date, 365),
                c(1, 1, 2, 2, 2, 3, 3, 4, 1, 2, 2, 2, 3))
   
-  if (require("dplyr")) {
+  if (suppressWarnings(require("dplyr"))) {
     expect_identical(test_df %>% group_by(patient_id) %>% mutate(f = is_new_episode(date, 365)) %>% pull(f),
                      c(TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, TRUE))
     

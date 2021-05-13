@@ -109,7 +109,9 @@ test_that("imports work", {
     fn <- names(import_functions)[i]
     pkg <- unname(import_functions[i])
     # function should exist in foreign pkg namespace
-    expect(!is.null(import_fn(name = fn, pkg = pkg, error_on_fail = FALSE)),
-           failure_message = paste0("Function ", pkg, "::", fn, "() does not exist anymore"))
+    if (pkg %in% rownames(installed.packages())) {
+      expect(!is.null(import_fn(name = fn, pkg = pkg, error_on_fail = FALSE)),
+             failure_message = paste0("Function ", pkg, "::", fn, "() does not exist anymore"))
+    }
   }
 })

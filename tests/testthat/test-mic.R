@@ -53,7 +53,7 @@ test_that("mic works", {
   expect_silent(plot(as.mic(c(1, 2, 4, 8))))
   expect_silent(plot(as.mic(c(1, 2, 4, 8)), expand = FALSE))
   expect_silent(plot(as.mic(c(1, 2, 4, 8)), mo = "esco", ab = "cipr"))
-  if (require("ggplot2")) {
+  if (suppressWarnings(require("ggplot2"))) {
     expect_s3_class(ggplot(as.mic(c(1, 2, 4, 8))), "gg")
     expect_s3_class(ggplot(as.mic(c(1, 2, 4, 8)), expand = FALSE), "gg")
     expect_s3_class(ggplot(as.mic(c(1, 2, 4, 8, 32)), mo = "esco", ab = "cipr"), "gg")
@@ -62,7 +62,7 @@ test_that("mic works", {
   
   expect_s3_class(summary(as.mic(c(2, 8))), c("summaryDefault", "table"))
   
-  if (require("dplyr")) {
+  if (suppressWarnings(require("dplyr"))) {
     expect_output(print(tibble(m = as.mic(2:4))))
   }
 })

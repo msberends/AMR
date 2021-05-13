@@ -28,7 +28,7 @@ context("filter_ab_class.R")
 test_that("ATC-group filtering works", {
   skip_on_cran()
   
-  if (require("dplyr")) {
+  if (suppressWarnings(require("dplyr"))) {
     expect_gt(example_isolates %>% filter_ab_class("carbapenem") %>% nrow(), 0)
     expect_gt(example_isolates %>% filter_aminoglycosides() %>% ncol(), 0)
     expect_gt(example_isolates %>% filter_carbapenems() %>% ncol(), 0)
