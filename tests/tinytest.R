@@ -27,7 +27,7 @@
 if (identical(Sys.getenv("R_TINYTEST"), "true")) {
   print(Sys.getenv("R_LIBS_USER"))
   .libPaths(c("/Users/runner/work/_temp/Library", .libPaths()))
-y  print(.libPaths())
+  print(.libPaths())
   print(as.data.frame(utils::installed.packages())[, "Version", drop = FALSE])
   library(tinytest)
   library(AMR)
