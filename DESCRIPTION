@@ -1,6 +1,6 @@
 Package: AMR
-Version: 1.6.0.9030
-Date: 2021-05-13
+Version: 1.6.0.9031
+Date: 2021-05-15
 Title: Antimicrobial Resistance Data Analysis
 Authors@R: c(
     person(role = c("aut", "cre"), 
@@ -55,9 +55,9 @@ Suggests:
     rstudioapi,
     rvest,
     skimr,
-    testthat,
     tidyr,
-    xml2
+    tinytest,
+    xml2, 
 VignetteBuilder: knitr,rmarkdown
 URL: https://msberends.github.io/AMR/, https://github.com/msberends/AMR
 BugReports: https://github.com/msberends/AMR/issues

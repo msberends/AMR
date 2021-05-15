@@ -1,5 +1,5 @@
-# `AMR` 1.6.0.9030
-## <small>Last updated: 13 May 2021</small>
+# `AMR` 1.6.0.9031
+## <small>Last updated: 15 May 2021</small>
 
 ### New
 * Function `custom_eucast_rules()` that brings support for custom AMR rules in `eucast_rules()`
@@ -32,7 +32,7 @@
   * Altered the RStudio addin, so it now iterates over `%like%` -> `%unlike%` -> `%like_case%` -> `%unlike_case%` if you keep pressing your keyboard shortcut
 * Fixed an installation error on R-3.0
 * Added `info` argument to `as.mo()` to turn on/off the progress bar
-* Fixed a bug that `col_mo` for some functions (esp. `eucast_rules()` and `mdro()`) could not be column names of the `microorganisms` data set as it would throw an error
+* Fixed a bug where `col_mo` in some functions (esp. `eucast_rules()` and `mdro()`) could not be a column name of the `microorganisms` data set as it would throw an error
 * Fix for transforming numeric values to RSI (`as.rsi()`) when the `vctrs` package is loaded (i.e., when using tidyverse)
 * Colour fix for using `barplot()` on an RSI class
 * Added 25 common system codes for bacteria to the `microorganisms.codes` data set
@@ -41,6 +41,9 @@
 * Updated `skimr::skim()` usage for MIC values to also include 25th and 75th percentiles
 * Fix for plotting missing MIC/disk diffusion values
 * Updated join functions to always use `dplyr` join functions if the `dplyr` package is installed - now also preserving grouped variables
+
+### Other
+* All unit tests are now processed by the `tinytest` package, instead of the `testthat` package. The `testthat` package unfortunately requires tons of dependencies that are also heavy and only usable for recent R versions, defeating the purpose to test our package under less recent R versions. On the contrary, the `tinytest` package is very lightweight and dependency-free.
 
 
 # `AMR` 1.6.0
