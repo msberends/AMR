@@ -23,7 +23,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-pkg_suggests <- trimws(unlist(strsplit(packageDescription("AMR")$Suggests, ",(\n)?")))
+pkg_suggests <- AMR:::trimws(unlist(strsplit(packageDescription("AMR")$Suggests, ",(\n)?")))
 
 to_install <- pkg_suggests[!pkg_suggests %in% rownames(utils::installed.packages())]
 to_update <- as.data.frame(old.packages(), stringsAsFactors = FALSE)
