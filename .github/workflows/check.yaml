@@ -108,20 +108,20 @@ jobs:
         run: |
           sudo apt install -y libssl-dev pandoc pandoc-citeproc libxml2-dev libicu-dev libcurl4-openssl-dev
 
-      - name: Update package dependencies
-        run: |
-          install.packages("data-raw/AMR_latest.tar.gz")
-          source("data-raw/_install_deps.R")
-        shell: Rscript {0}
-        
       - name: Cache R packages
         # if: runner.os != 'Windows'
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ matrix.config.os }}-r-${{ matrix.config.r }} # -${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ matrix.config.os }}-r-${{ matrix.config.r }}
+          key: ${{ matrix.config.os }}-r-${{ matrix.config.r }}-20
+          restore-keys: ${{ matrix.config.os }}-r-${{ matrix.config.r }}-20
 
+      - name: Update AMR package dependencies
+        run: |
+          install.packages("data-raw/AMR_latest.tar.gz")
+          source("data-raw/_install_deps.R")
+        shell: Rscript {0}
+        
       - name: Session info
         run: |
           options(width = 100)
@@ -161,10 +161,10 @@ jobs:
           R CMD check AMR --no-manual --no-vignettes
         shell: bash
 
-      - name: Show testthat output
+      - name: Show unit tests output
         if: always()
         run: |
-          find . -name 'testthat.Rout*' -exec cat '{}' \; || true
+          find . -name 'tinytest.Rout*' -exec cat '{}' \; || true
         shell: bash
 
       - name: Upload check results
