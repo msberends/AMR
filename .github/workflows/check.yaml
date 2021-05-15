@@ -108,14 +108,9 @@ jobs:
         run: |
           sudo apt install -y libssl-dev pandoc pandoc-citeproc libxml2-dev libicu-dev libcurl4-openssl-dev
 
-      - name: Install AMR package
-        if: always()
-        run: |
-          R CMD install data-raw/AMR_latest.tar.gz
-        shell: bash
-
       - name: Update package dependencies
         run: |
+          install.packages("data-raw/AMR_latest.tar.gz")
           source("data-raw/_install_deps.R")
         shell: Rscript {0}
         
