@@ -109,7 +109,7 @@ jobs:
           sudo apt install -y libssl-dev pandoc pandoc-citeproc libxml2-dev libicu-dev libcurl4-openssl-dev
 
       - name: Cache R packages
-        # if: runner.os != 'Windows'
+        if: runner.os != 'Windows'
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
