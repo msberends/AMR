@@ -25,6 +25,7 @@
 
 # test only on GitHub Actions and at home - not on CRAN as tests are lengthy
 if (identical(Sys.getenv("R_TINYTEST"), "true")) {
+  print(.libPaths())
   print(as.data.frame(utils::installed.packages())[, "Version", drop = FALSE])
   library(tinytest)
   library(AMR)
