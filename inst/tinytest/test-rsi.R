@@ -34,7 +34,7 @@ expect_inherits(unique(x[1], x[9]), "rsi")
 pdf(NULL) # prevent Rplots.pdf being created
 expect_silent(barplot(as.rsi(c("S", "I", "R"))))
 expect_silent(plot(as.rsi(c("S", "I", "R"))))
-if (suppressWarnings(require("ggplot2"))) expect_inherits(ggplot(as.rsi(c("S", "I", "R"))), "gg")
+if (pkg_is_available("ggplot2")) expect_inherits(ggplot(as.rsi(c("S", "I", "R"))), "gg")
 expect_stdout(print(as.rsi(c("S", "I", "R"))))
 expect_equal(as.character(as.rsi(c(1:3))), c("S", "I", "R"))
 expect_equal(suppressWarnings(as.logical(as.rsi("INVALID VALUE"))), NA)
@@ -49,7 +49,7 @@ expect_identical(as.logical(lapply(example_isolates, is.rsi.eligible)),
 expect_error(as.rsi.mic(as.mic(16)))
 expect_error(as.rsi.disk(as.disk(16)))
 expect_error(get_guideline("this one does not exist"))
-if (suppressWarnings(require("dplyr"))) {
+if (pkg_is_available("dplyr")) {
   # 40 rsi columns
   expect_equal(example_isolates %>%
                  mutate_at(vars(PEN:RIF), as.character) %>%
@@ -61,10 +61,10 @@ if (suppressWarnings(require("dplyr"))) {
   
   expect_stdout(print(tibble(ab = as.rsi("S"))))
 }
-if (suppressWarnings(require("skimr"))) {
+if (pkg_is_available("skimr")) {
   expect_inherits(skim(example_isolates),
                   "data.frame")
-  if (suppressWarnings(require("dplyr"))) {
+  if (pkg_is_available("dplyr")) {
     expect_inherits(example_isolates %>%
                       mutate(m = as.mic(2),
                              d = as.disk(20)) %>% 
@@ -94,7 +94,7 @@ expect_equal(as.rsi(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020
              as.rsi("S"))
 expect_equal(as.rsi(as.mic(32), "E. coli", "ampicillin", guideline = "EUCAST 2020"),
              as.rsi("R"))
-if (suppressWarnings(require("dplyr"))) {
+if (pkg_is_available("dplyr")) {
   expect_true(suppressWarnings(example_isolates %>%
                                  mutate(amox_mic = as.mic(2)) %>%
                                  select(mo, amox_mic) %>%
@@ -121,7 +121,7 @@ expect_equal(as.character(
          ab = "ERY",
          guideline = "CLSI")),
   "R")
-if (suppressWarnings(require("dplyr"))) {
+if (pkg_is_available("dplyr")) {
   expect_true(example_isolates %>%
                 mutate(amox_disk = as.disk(15)) %>%
                 select(mo, amox_disk) %>%
@@ -130,7 +130,7 @@ if (suppressWarnings(require("dplyr"))) {
                 is.rsi())
 }
 # frequency tables
-if (suppressWarnings(require("cleaner"))) {
+if (pkg_is_available("cleaner")) {
   expect_inherits(cleaner::freq(example_isolates$AMX), "freq")
 }
 

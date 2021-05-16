@@ -23,7 +23,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-if (suppressWarnings(require("dplyr"))) {
+if (pkg_is_available("dplyr")) {
   expect_stdout(AMX_R <- example_isolates %>%
                   filter(mo == "B_ESCHR_COLI") %>%
                   rsi_predict(col_ab = "AMX",
@@ -43,7 +43,7 @@ expect_stdout(x <- suppressMessages(resistance_predict(example_isolates,
                                                        info = TRUE)))
 pdf(NULL) # prevent Rplots.pdf being created
 expect_silent(plot(x))
-if (suppressWarnings(require("ggplot2"))) {
+if (pkg_is_available("ggplot2")) {
   expect_silent(ggplot_rsi_predict(x))
   expect_silent(ggplot(x))
   expect_error(ggplot_rsi_predict(example_isolates))

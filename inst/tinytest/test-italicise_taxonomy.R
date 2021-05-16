@@ -27,7 +27,7 @@ expect_identical(italicise_taxonomy("test for E. coli"),
                  "test for *E. coli*")
 expect_identical(italicise_taxonomy("test for E. coli"),
                  italicize_taxonomy("test for E. coli"))
-if (has_colour()) {
+if (AMR:::has_colour()) {
   expect_identical(italicise_taxonomy("test for E. coli", type = "ansi"),
                    "test for \033[3mE. coli\033[23m")
 }

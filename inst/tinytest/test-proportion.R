@@ -45,7 +45,7 @@ expect_equal(example_isolates %>% proportion_SI(AMC, GEN, only_all_tested = TRUE
              0.9382647,
              tolerance = 0.0001)
 
-if (suppressWarnings(require("dplyr"))) {
+if (pkg_is_available("dplyr")) {
   # percentages
   expect_equal(example_isolates %>%
                  group_by(hospital_id) %>%
@@ -88,14 +88,14 @@ if (suppressWarnings(require("dplyr"))) {
       example_isolates$AMX %>% proportion_R())
   )
 }
-reset_all_thrown_messages()
+AMR:::reset_all_thrown_messages()
 expect_warning(proportion_R(as.character(example_isolates$AMC)))
-reset_all_thrown_messages()
+AMR:::reset_all_thrown_messages()
 expect_warning(proportion_S(as.character(example_isolates$AMC)))
-reset_all_thrown_messages()
+AMR:::reset_all_thrown_messages()
 expect_warning(proportion_S(as.character(example_isolates$AMC,
                                          example_isolates$GEN)))
-reset_all_thrown_messages()
+AMR:::reset_all_thrown_messages()
 expect_warning(n_rsi(as.character(example_isolates$AMC,
                                   example_isolates$GEN)))
 expect_equal(suppressWarnings(n_rsi(as.character(example_isolates$AMC,
@@ -120,11 +120,11 @@ expect_identical(suppressWarnings(proportion_S(example_isolates$AMX, minimum = n
                  NA_real_)
 
 # warning for speed loss
-reset_all_thrown_messages()
+AMR:::reset_all_thrown_messages()
 expect_warning(proportion_R(as.character(example_isolates$GEN)))
-reset_all_thrown_messages()
+AMR:::reset_all_thrown_messages()
 expect_warning(proportion_I(as.character(example_isolates$GEN)))
-reset_all_thrown_messages()
+AMR:::reset_all_thrown_messages()
 expect_warning(proportion_S(example_isolates$AMC, as.character(example_isolates$GEN)))
 expect_error(proportion_df(c("A", "B", "C")))
 expect_error(proportion_df(example_isolates[, "date"]))

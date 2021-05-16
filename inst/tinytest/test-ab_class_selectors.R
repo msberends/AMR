@@ -23,20 +23,20 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-if (suppressWarnings(require("dplyr"))) {
-expect_true(example_isolates %>% select(aminoglycosides()) %>% ncol() < ncol(example_isolates))
-expect_true(example_isolates %>% select(carbapenems()) %>% ncol() < ncol(example_isolates))
-expect_true(example_isolates %>% select(cephalosporins()) %>% ncol() < ncol(example_isolates))
-expect_true(example_isolates %>% select(cephalosporins_1st()) %>% ncol() < ncol(example_isolates))
-expect_true(example_isolates %>% select(cephalosporins_2nd()) %>% ncol() < ncol(example_isolates))
-expect_true(example_isolates %>% select(cephalosporins_3rd()) %>% ncol() < ncol(example_isolates))
-expect_true(example_isolates %>% select(cephalosporins_4th()) %>% ncol() < ncol(example_isolates))
-expect_true(example_isolates %>% select(cephalosporins_5th()) %>% ncol() < ncol(example_isolates))
-expect_true(example_isolates %>% select(fluoroquinolones()) %>% ncol() < ncol(example_isolates))
-expect_true(example_isolates %>% select(glycopeptides()) %>% ncol() < ncol(example_isolates))
-expect_true(example_isolates %>% select(macrolides()) %>% ncol() < ncol(example_isolates))
-expect_true(example_isolates %>% select(oxazolidinones()) %>% ncol() < ncol(example_isolates))
-expect_true(example_isolates %>% select(penicillins()) %>% ncol() < ncol(example_isolates))
-expect_true(example_isolates %>% select(tetracyclines()) %>% ncol() < ncol(example_isolates))
+if (pkg_is_available("dplyr")) {
+  expect_true(example_isolates %>% select(aminoglycosides()) %>% ncol() < ncol(example_isolates))
+  expect_true(example_isolates %>% select(carbapenems()) %>% ncol() < ncol(example_isolates))
+  expect_true(example_isolates %>% select(cephalosporins()) %>% ncol() < ncol(example_isolates))
+  expect_true(example_isolates %>% select(cephalosporins_1st()) %>% ncol() < ncol(example_isolates))
+  expect_true(example_isolates %>% select(cephalosporins_2nd()) %>% ncol() < ncol(example_isolates))
+  expect_true(example_isolates %>% select(cephalosporins_3rd()) %>% ncol() < ncol(example_isolates))
+  expect_true(example_isolates %>% select(cephalosporins_4th()) %>% ncol() < ncol(example_isolates))
+  expect_true(example_isolates %>% select(cephalosporins_5th()) %>% ncol() < ncol(example_isolates))
+  expect_true(example_isolates %>% select(fluoroquinolones()) %>% ncol() < ncol(example_isolates))
+  expect_true(example_isolates %>% select(glycopeptides()) %>% ncol() < ncol(example_isolates))
+  expect_true(example_isolates %>% select(macrolides()) %>% ncol() < ncol(example_isolates))
+  expect_true(example_isolates %>% select(oxazolidinones()) %>% ncol() < ncol(example_isolates))
+  expect_true(example_isolates %>% select(penicillins()) %>% ncol() < ncol(example_isolates))
+  expect_true(example_isolates %>% select(tetracyclines()) %>% ncol() < ncol(example_isolates))
 }
 

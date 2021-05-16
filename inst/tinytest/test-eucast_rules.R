@@ -24,15 +24,15 @@
 # ==================================================================== #
 
 # thoroughly check input table
-expect_equal(colnames(eucast_rules_file),
+expect_equal(colnames(AMR:::eucast_rules_file),
              c("if_mo_property", "like.is.one_of", "this_value",
                "and_these_antibiotics", "have_these_values",
                "then_change_these_antibiotics", "to_value",
                "reference.rule", "reference.rule_group",
                "reference.version",
                "note"))
-MOs_mentioned <- unique(eucast_rules_file$this_value)
-MOs_mentioned <- sort(trimws(unlist(strsplit(MOs_mentioned[!is_valid_regex(MOs_mentioned)], ",", fixed = TRUE))))
+MOs_mentioned <- unique(AMR:::eucast_rules_file$this_value)
+MOs_mentioned <- sort(trimws(unlist(strsplit(MOs_mentioned[!AMR:::is_valid_regex(MOs_mentioned)], ",", fixed = TRUE))))
 MOs_test <- suppressWarnings(suppressMessages(mo_name(MOs_mentioned)))
 expect_true(length(MOs_mentioned[MOs_test != MOs_mentioned]) == 0)
 
@@ -71,7 +71,7 @@ b <- data.frame(mo = c("Staphylococcus aureus",
 expect_equal(suppressWarnings(eucast_rules(a, "mo", info = FALSE)), b)
 
 # piperacillin must be R in Enterobacteriaceae when tica is R
-if (suppressWarnings(require("dplyr"))) {
+if (pkg_is_available("dplyr")) {
   expect_equal(suppressWarnings(
     example_isolates %>%
       filter(mo_family(mo) == "Enterobacteriaceae") %>%
@@ -109,7 +109,7 @@ expect_equal(
   "S")
 
 # also test norf
-if (suppressWarnings(require("dplyr"))) {
+if (pkg_is_available("dplyr")) {
   expect_stdout(suppressWarnings(eucast_rules(example_isolates %>% mutate(NOR = "S", NAL = "S"), info = TRUE)))
 }
 

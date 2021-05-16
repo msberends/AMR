@@ -144,7 +144,7 @@ expect_identical(as.character(as.mo("S. sanguinis",   Lancefield = TRUE)),  "B_S
 expect_identical(as.character(as.mo("S. salivarius",  Lancefield = FALSE)), "B_STRPT_SLVR")
 expect_identical(as.character(as.mo("S. salivarius",  Lancefield = TRUE)),  "B_STRPT_GRPK") # group K
 
-if (suppressWarnings(require("dplyr"))) {
+if (pkg_is_available("dplyr")) {
   # select with one column
   expect_identical(
     example_isolates[1:10, ] %>%
@@ -273,7 +273,7 @@ expect_equal(as.character(as.mo(c("meningococ", "gonococ", "pneumococ"))),
 expect_equal(suppressWarnings(as.character(as.mo(c("yeasts", "fungi")))), 
              c("F_YEAST", "F_FUNGUS"))
 
-if (suppressWarnings(require("dplyr"))) {
+if (pkg_is_available("dplyr")) {
   # print tibble
   expect_stdout(print(tibble(mo = as.mo("B_ESCHR_COLI"))))
 }
@@ -292,6 +292,6 @@ expect_equal(as.character(as.mo(c("E. coli", "E. coli ignorethis"), ignore_patte
              c("B_ESCHR_COLI", NA))
 
 # frequency tables
-if (suppressWarnings(require("cleaner"))) {
+if (pkg_is_available("cleaner")) {
   expect_inherits(cleaner::freq(example_isolates$mo), "freq")
 }

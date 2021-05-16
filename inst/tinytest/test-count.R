@@ -38,9 +38,9 @@ expect_equal(suppressWarnings(count_S(example_isolates$AMX)) + count_I(example_i
 
 
 # warning for speed loss
-reset_all_thrown_messages()
+AMR:::reset_all_thrown_messages()
 expect_warning(count_resistant(as.character(example_isolates$AMC)))
-reset_all_thrown_messages()
+AMR:::reset_all_thrown_messages()
 expect_warning(count_resistant(example_isolates$AMC,
                                as.character(example_isolates$GEN)))
 
@@ -53,7 +53,7 @@ expect_error(count_susceptible("test", as_percent = "test"))
 expect_error(count_df(c("A", "B", "C")))
 expect_error(count_df(example_isolates[, "date"]))
 
-if (suppressWarnings(require("dplyr"))) {
+if (pkg_is_available("dplyr")) {
   expect_equal(example_isolates %>% count_susceptible(AMC), 1433)
   expect_equal(example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = TRUE), 1687)
   expect_equal(example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = FALSE), 1764)

@@ -26,7 +26,7 @@
 pkg_suggests <- AMR:::trimws(unlist(strsplit(packageDescription("AMR")$Suggests, ",(\n)?")))
 
 to_install <- pkg_suggests[!pkg_suggests %in% rownames(utils::installed.packages())]
-to_update <- as.data.frame(old.packages(), stringsAsFactors = FALSE)
+to_update <- as.data.frame(utils::old.packages(repos = "https://cran.rstudio.com/"), stringsAsFactors = FALSE)
 
 for (i in seq_len(length(to_install))) {
   cat("Installing package", to_install[i], "\n")
@@ -37,7 +37,7 @@ for (i in seq_len(length(to_install))) {
 }
 
 for (i in seq_len(length(to_update))) {
-  cat("Updating package", to_install[i], "\n")
+  cat("Updating package", to_update[i], "\n")
   tryCatch(update.packages(to_update[i], repos = "https://cran.rstudio.com/", ask = FALSE),
            # message = function(m) invisible(),
            warning = function(w) message(w$message),

@@ -49,7 +49,7 @@ expect_silent(barplot(as.mic(c(1, 2, 4, 8))))
 expect_silent(plot(as.mic(c(1, 2, 4, 8))))
 expect_silent(plot(as.mic(c(1, 2, 4, 8)), expand = FALSE))
 expect_silent(plot(as.mic(c(1, 2, 4, 8)), mo = "esco", ab = "cipr"))
-if (suppressWarnings(require("ggplot2"))) {
+if (pkg_is_available("ggplot2")) {
   expect_inherits(ggplot(as.mic(c(1, 2, 4, 8))), "gg")
   expect_inherits(ggplot(as.mic(c(1, 2, 4, 8)), expand = FALSE), "gg")
   expect_inherits(ggplot(as.mic(c(1, 2, 4, 8, 32)), mo = "esco", ab = "cipr"), "gg")
@@ -58,7 +58,7 @@ expect_stdout(print(as.mic(c(1, 2, 4, 8))))
 
 expect_inherits(summary(as.mic(c(2, 8))), c("summaryDefault", "table"))
 
-if (suppressWarnings(require("dplyr"))) {
+if (pkg_is_available("dplyr")) {
   expect_stdout(print(tibble(m = as.mic(2:4))))
 }
 

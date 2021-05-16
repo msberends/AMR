@@ -103,7 +103,7 @@ for (i in seq_len(length(import_functions))) {
   pkg <- unname(import_functions[i])
   # function should exist in foreign pkg namespace
   if (pkg %in% rownames(installed.packages())) {
-    tst <- !is.null(import_fn(name = fn, pkg = pkg, error_on_fail = FALSE))
+    tst <- !is.null(AMR:::import_fn(name = fn, pkg = pkg, error_on_fail = FALSE))
     expect_true(tst,
                 info = ifelse(tst,
                               "All external function references exist.",

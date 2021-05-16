@@ -119,7 +119,7 @@ expect_equal(mo_is_intrinsic_resistant(c("Escherichia coli", "Staphylococcus aur
 # with reference data
 expect_equal(mo_name("test", reference_df = data.frame(col1 = "test", mo = "B_ESCHR_COLI")), 
              "Escherichia coli")
-if (suppressWarnings(require("dplyr"))) {
+if (pkg_is_available("dplyr")) {
   expect_equal(example_isolates %>% filter(mo_is_gram_negative()) %>% nrow(),
                730)
   expect_equal(example_isolates %>% filter(mo_is_gram_positive()) %>% nrow(),

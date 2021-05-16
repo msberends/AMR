@@ -23,7 +23,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-if (suppressWarnings(require("dplyr")) & suppressWarnings(require("ggplot2"))) {
+if (pkg_is_available("dplyr") & pkg_is_available("ggplot2")) {
   
   pdf(NULL) # prevent Rplots.pdf being created
   

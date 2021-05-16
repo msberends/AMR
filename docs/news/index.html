@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9040</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9041</span>
       </span>
     </div>
 
@@ -236,9 +236,9 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1609040" class="section level1">
-<h1 class="page-header" data-toc-text="1.6.0.9040">
-<a href="#amr-1609040" class="anchor"></a><small> Unreleased </small><code>AMR</code> 1.6.0.9040</h1>
+    <div id="amr-1609041" class="section level1">
+<h1 class="page-header" data-toc-text="1.6.0.9041">
+<a href="#amr-1609041" class="anchor"></a><small> Unreleased </small><code>AMR</code> 1.6.0.9041</h1>
 <div id="last-updated-16-may-2021" class="section level2">
 <h2 class="hasAnchor">
 <a href="#last-updated-16-may-2021" class="anchor"></a><small>Last updated: 16 May 2021</small>
@@ -253,7 +253,7 @@
 <li>Support for all four methods to determine first isolates as summarised by Hindler <em>et al.</em> (doi: <a href="https://doi.org/10.1086/511864">10.1086/511864</a>): isolate-based, patient-based, episode-based and phenotype-based. The last method is now the default.
 <ul>
 <li>The <code><a href="../reference/first_isolate.html">first_isolate()</a></code> function gained the argument <code>method</code> that has to be “phenotype-based”, “episode-based”, “patient-based”, or “isolate-based”. The old behaviour is equal to “episode-based”. The new default is “phenotype-based” if antimicrobial test results are available, and “episode-based” otherwise. This new default will yield slightly more isolates for selection (which is a good thing).</li>
-<li>Since fungal isolates can also be selected, the functions <code><a href="../reference/AMR-deprecated.html">key_antibiotics()</a></code> and <code><a href="../reference/AMR-deprecated.html">key_antibiotics_equal()</a></code> are now deprecated in favour of the <code><a href="../reference/key_antimicrobials.html">key_antimicrobials()</a></code> and <code>antimicrobial_equal()</code> functions. Also, the new <code><a href="../reference/key_antimicrobials.html">all_antimicrobials()</a></code> function works like the old <code><a href="../reference/AMR-deprecated.html">key_antibiotics()</a></code> function, but includes any column with antimicrobial test results. Using <code><a href="../reference/key_antimicrobials.html">key_antimicrobials()</a></code> still only selects six preferred antibiotics for Gram-negatives, six for Gram-positives, and six universal antibiotics. It has a new <code>antifungal</code> argument to set antifungal agents (antimycotics).</li>
+<li>Since fungal isolates can also be selected, the functions <code><a href="../reference/AMR-deprecated.html">key_antibiotics()</a></code> and <code><a href="../reference/AMR-deprecated.html">key_antibiotics_equal()</a></code> are now deprecated in favour of the <code><a href="../reference/key_antimicrobials.html">key_antimicrobials()</a></code> and <code><a href="../reference/key_antimicrobials.html">antimicrobials_equal()</a></code> functions. Also, the new <code><a href="../reference/key_antimicrobials.html">all_antimicrobials()</a></code> function works like the old <code><a href="../reference/AMR-deprecated.html">key_antibiotics()</a></code> function, but includes any column with antimicrobial test results. Using <code><a href="../reference/key_antimicrobials.html">key_antimicrobials()</a></code> still only selects six preferred antibiotics for Gram-negatives, six for Gram-positives, and six universal antibiotics. It has a new <code>antifungal</code> argument to set antifungal agents (antimycotics).</li>
 <li>Using <code>type == "points"</code> in the <code><a href="../reference/first_isolate.html">first_isolate()</a></code> function for phenotype-based selection will now consider all antimicrobial drugs in the data set, using the new <code><a href="../reference/key_antimicrobials.html">all_antimicrobials()</a></code>
 </li>
 <li>The <code><a href="../reference/first_isolate.html">first_isolate()</a></code> function can now take a vector of values for <code>col_keyantibiotics</code> and can have an episode length of <code>Inf</code>
@@ -306,6 +306,7 @@
 <li>Updated <code><a href="https://docs.ropensci.org/skimr/reference/skim.html">skimr::skim()</a></code> usage for MIC values to also include 25th and 75th percentiles</li>
 <li>Fix for plotting missing MIC/disk diffusion values</li>
 <li>Updated join functions to always use <code>dplyr</code> join functions if the <code>dplyr</code> package is installed - now also preserving grouped variables</li>
+<li>Fix for filtering on antibiotic classes (such as <code><a href="../reference/filter_ab_class.html">filter_cephalosporins()</a></code>)</li>
 </ul>
 </div>
 <div id="other" class="section level3">

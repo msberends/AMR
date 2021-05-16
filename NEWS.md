@@ -1,4 +1,4 @@
-# `AMR` 1.6.0.9040
+# `AMR` 1.6.0.9041
 ## <small>Last updated: 16 May 2021</small>
 
 ### New
@@ -6,7 +6,7 @@
 * Function `italicise_taxonomy()` to make taxonomic names within a string italic, with support for markdown and ANSI
 * Support for all four methods to determine first isolates as summarised by Hindler *et al.* (doi: [10.1086/511864](https://doi.org/10.1086/511864)): isolate-based, patient-based, episode-based and phenotype-based. The last method is now the default.
   * The `first_isolate()` function gained the argument `method` that has to be "phenotype-based", "episode-based", "patient-based", or "isolate-based". The old behaviour is equal to "episode-based". The new default is "phenotype-based" if antimicrobial test results are available, and "episode-based" otherwise. This new default will yield slightly more isolates for selection (which is a good thing).
-  * Since fungal isolates can also be selected, the functions `key_antibiotics()` and `key_antibiotics_equal()` are now deprecated in favour of the `key_antimicrobials()` and `antimicrobial_equal()` functions. Also, the new `all_antimicrobials()` function works like the old `key_antibiotics()` function, but includes any column with antimicrobial test results. Using `key_antimicrobials()` still only selects six preferred antibiotics for Gram-negatives, six for Gram-positives, and six universal antibiotics. It has a new `antifungal` argument to set antifungal agents (antimycotics).
+  * Since fungal isolates can also be selected, the functions `key_antibiotics()` and `key_antibiotics_equal()` are now deprecated in favour of the `key_antimicrobials()` and `antimicrobials_equal()` functions. Also, the new `all_antimicrobials()` function works like the old `key_antibiotics()` function, but includes any column with antimicrobial test results. Using `key_antimicrobials()` still only selects six preferred antibiotics for Gram-negatives, six for Gram-positives, and six universal antibiotics. It has a new `antifungal` argument to set antifungal agents (antimycotics).
   * Using `type == "points"` in the `first_isolate()` function for phenotype-based selection will now consider all antimicrobial drugs in the data set, using the new `all_antimicrobials()`
   * The `first_isolate()` function can now take a vector of values for `col_keyantibiotics` and can have an episode length of `Inf`
   * Since the phenotype-based method is the new default, `filter_first_isolate()` renders the `filter_first_weighted_isolate()` function redundant. For this reason, `filter_first_weighted_isolate()` is now deprecated.
@@ -41,6 +41,7 @@
 * Updated `skimr::skim()` usage for MIC values to also include 25th and 75th percentiles
 * Fix for plotting missing MIC/disk diffusion values
 * Updated join functions to always use `dplyr` join functions if the `dplyr` package is installed - now also preserving grouped variables
+* Fix for filtering on antibiotic classes (such as `filter_cephalosporins()`)
 
 ### Other
 * All unit tests are now processed by the `tinytest` package, instead of the `testthat` package. The `testthat` package unfortunately requires tons of dependencies that are also heavy and only usable for recent R versions, defeating the purpose to test our package under less recent R versions. On the contrary, the `tinytest` package is very lightweight and dependency-free.

@@ -435,7 +435,7 @@ first_isolate <- function(x = NULL,
   if (length(c(row.start:row.end)) == pm_n_distinct(x[c(row.start:row.end), col_mo, drop = TRUE])) {
     if (info == TRUE) {
       message_("=> Found ", font_bold(paste(length(c(row.start:row.end)), "first isolates")),
-               ", as all isolates were different microorganisms",
+               ", as all isolates were different microbial species",
                add_fn = font_black,
                as_note = FALSE)
     }

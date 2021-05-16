@@ -52,7 +52,7 @@ jobs:
         config:
           - {os: macOS-latest,   r: 'devel',   allowfail: true}
           - {os: macOS-latest,   r: 'release', allowfail: false}
-          - {os: macOS-latest,   r: 'oldrel',  allowfail: false}
+          - {os: macOS-latest,   r: 'oldrel',  allowfail: true}
           
           - {os: windows-latest, r: 'devel',   allowfail: false}
           - {os: windows-latest, r: 'release', allowfail: false}
@@ -106,8 +106,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ matrix.config.os }}-r-${{ matrix.config.r }}-3
-          restore-keys: ${{ matrix.config.os }}-r-${{ matrix.config.r }}-3
+          key: ${{ matrix.config.os }}-r-${{ matrix.config.r }}-v4
 
       - name: Update AMR package dependencies
         run: |

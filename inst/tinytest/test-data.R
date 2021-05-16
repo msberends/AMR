@@ -23,7 +23,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-expect_true(check_dataset_integrity()) # in misc.R
+expect_true(AMR:::check_dataset_integrity()) # in misc.R
 
 # IDs should always be unique
 expect_identical(nrow(microorganisms), length(unique(microorganisms$mo)))
@@ -34,14 +34,14 @@ expect_identical(class(antibiotics$ab), c("ab", "character"))
 # check cross table reference
 expect_true(all(microorganisms.codes$mo %in% microorganisms$mo))
 expect_true(all(example_isolates$mo %in% microorganisms$mo))
-expect_true(all(microorganisms.translation$mo_new %in% microorganisms$mo))
+expect_true(all(AMR:::microorganisms.translation$mo_new %in% microorganisms$mo))
+expect_false(any(AMR:::microorganisms.translation$mo_old %in% microorganisms$mo))
 expect_true(all(rsi_translation$mo %in% microorganisms$mo))
 expect_true(all(rsi_translation$ab %in% antibiotics$ab))
 expect_true(all(intrinsic_resistant$microorganism %in% microorganisms$fullname)) # also important for mo_is_intrinsic_resistant()
 expect_true(all(intrinsic_resistant$antibiotic %in% antibiotics$name))
 expect_false(any(is.na(microorganisms.codes$code)))
 expect_false(any(is.na(microorganisms.codes$mo)))
-expect_false(any(microorganisms.translation$mo_old %in% microorganisms$mo))
 expect_true(all(dosage$ab %in% antibiotics$ab))
 expect_true(all(dosage$name %in% antibiotics$name))
 
@@ -52,7 +52,7 @@ expect_identical(as.ab(antibiotics$name), antibiotics$ab)
 datasets <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item"]
 for (i in seq_len(length(datasets))) {
   dataset <- get(datasets[i], envir = asNamespace("AMR"))
-  expect_identical(dataset_UTF8_to_ASCII(dataset), dataset, info = datasets[i])
+  expect_identical(AMR:::dataset_UTF8_to_ASCII(dataset), dataset, info = datasets[i])
 }
 
 df <- AMR:::MO_lookup
@@ -76,7 +76,7 @@ expect_stdout(print(catalogue_of_life_version()))
 uncategorised <- subset(microorganisms,
                         genus == "Staphylococcus" &
                           !species %in% c("", "aureus") &
-                          !mo %in% c(MO_CONS, MO_COPS))
+                          !mo %in% c(AMR:::MO_CONS, AMR:::MO_COPS))
 expect_true(NROW(uncategorised) == 0, 
             info = ifelse(NROW(uncategorised) == 0,
                           "All staphylococcal species categorised as CoNS/CoPS.",

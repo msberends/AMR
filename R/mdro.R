@@ -306,7 +306,7 @@ mdro <- function(x = NULL,
   }
   if (is.null(col_mo) & guideline$code == "tb") {
     message_("No column found as input for `col_mo`, ",
-             font_bold(paste0("assuming all records contain", font_italic("Mycobacterium tuberculosis"), ".")))
+             font_bold(paste0("assuming all rows contain ", font_italic("Mycobacterium tuberculosis"), ".")))
     x$mo <- as.mo("Mycobacterium tuberculosis") # consider overkill at all times: MO_lookup[which(MO_lookup$fullname == "Mycobacterium tuberculosis"), "mo", drop = TRUE]
     col_mo <- "mo"
   }

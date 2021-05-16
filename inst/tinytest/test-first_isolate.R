@@ -110,7 +110,7 @@ expect_error(first_isolate(example_isolates,
                            col_date = "non-existing col",
                            col_mo = "mo"))
 
-if (suppressWarnings(require("dplyr"))) {
+if (pkg_is_available("dplyr")) {
   # if mo is not an mo class, result should be the same
   expect_identical(example_isolates %>%
                      mutate(mo = as.character(mo)) %>%
@@ -174,9 +174,7 @@ expect_identical(filter_first_isolate(example_isolates),
 
 
 # notice that all mo's are distinct, so all are TRUE
-expect_true(all(example_isolates %pm>%
-                  pm_distinct(mo, .keep_all = TRUE) %pm>%
-                  first_isolate(info = TRUE) == TRUE))
+expect_true(all(first_isolate(AMR:::pm_distinct(example_isolates, mo, .keep_all = TRUE), info = TRUE) == TRUE))
 
 # only one isolate, so return fast
 expect_true(first_isolate(data.frame(mo = "Escherichia coli", date = Sys.Date(), patient = "patient"), info = TRUE))

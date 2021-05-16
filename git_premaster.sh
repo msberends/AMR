@@ -133,7 +133,7 @@ echo
 echo "•••••••••••••••••"
 echo "• Building site •"
 echo "•••••••••••••••••"
-Rscript -e "suppressMessages(pkgdown::build_site(lazy = $lazy, examples = FALSE))"
+Rscript -e "suppressMessages(pkgdown::build_site(lazy = $lazy, examples = FALSE, install = FALSE))"
 # always rebuild datasets vignette 
 Rscript -e "pkgdown::build_article('datasets', lazy = FALSE, quiet = TRUE)"
 # add the survey page

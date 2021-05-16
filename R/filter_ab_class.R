@@ -125,11 +125,11 @@ filter_ab_class <- function(x,
                          group %like% ab_class | 
                            atc_group1 %like% ab_class | 
                            atc_group2 %like% ab_class)
-  ab_group <- find_ab_group(ab_class)
-  if (ab_group == "") {
+  if (nrow(ab_reference) == 0) {
     message_("Unknown antimicrobial class '", ab_class.bak, "', data left unchanged.")
     return(x.bak)
   }
+  ab_group <- find_ab_group(ab_class.bak)
   # get the columns with a group names in the chosen ab class
   agents <- ab_in_data[names(ab_in_data) %in% ab_reference$ab]
   if (length(agents) == 0) {
