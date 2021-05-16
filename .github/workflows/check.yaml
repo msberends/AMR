@@ -89,17 +89,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: r-lib/actions/setup-r@master
+      - uses: r-lib/actions/setup-r@v1
         with:
           r-version: ${{ matrix.config.r }}
-
-      # - uses: r-lib/actions/setup-pandoc@master
-      
-      # - name: Query dependencies
-      #   if: matrix.config.r != '3.0'
-      #   run: |
-      #     saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-      #   shell: Rscript {0}
 
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
@@ -108,7 +100,8 @@ jobs:
         run: |
           sudo apt install -y libssl-dev pandoc pandoc-citeproc libxml2-dev libicu-dev libcurl4-openssl-dev
 
-      - name: Cache R packages
+      - name: Restore cached R packages
+        # this step will add the step 'Post Restore cached R packages' on a succesful run
         if: runner.os != 'Windows'
         uses: actions/cache@v1
         with:
@@ -122,7 +115,7 @@ jobs:
           source("data-raw/_install_deps.R")
         shell: Rscript {0}
         
-      - name: Session info
+      - name: Show session info
         run: |
           options(width = 100)
           utils::sessionInfo()
@@ -137,8 +130,9 @@ jobs:
           _R_CHECK_DEPENDS_ONLY_: true
           _R_CHECK_LENGTH_1_CONDITION_: verbose
           _R_CHECK_LENGTH_1_LOGIC2_: verbose
-          R_LIBS_USER: ${{ env.R_LIBS_USER }}
-          R_TINYTEST: true
+          # during 'R CMD check', R_LIBS_USER will be overwritten, so:
+          R_LIBS_USER_GH_ACTIONS: ${{ env.R_LIBS_USER }}
+          R_RUN_TINYTEST: true
         run: |
           tar -xf data-raw/AMR_latest.tar.gz
           rm -rf AMR/vignettes
@@ -153,8 +147,9 @@ jobs:
           _R_CHECK_DEPENDS_ONLY_: true
           _R_CHECK_LENGTH_1_CONDITION_: verbose
           _R_CHECK_LENGTH_1_LOGIC2_: verbose
-          R_LIBS_USER: ${{ env.R_LIBS_USER }}
-          R_TINYTEST: true
+          # during 'R CMD check', R_LIBS_USER will be overwritten, so:
+          R_LIBS_USER_GH_ACTIONS: ${{ env.R_LIBS_USER }}
+          R_RUN_TINYTEST: true
         run: |
           tar -xf data-raw/AMR_latest.tar.gz
           rm -rf AMR/vignettes
@@ -167,9 +162,9 @@ jobs:
           find . -name 'tinytest.Rout*' -exec cat '{}' \; || true
         shell: bash
 
-      - name: Upload check results
-        if: failure()
-        uses: actions/upload-artifact@master
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.config.os }}-r${{ matrix.config.r }}-results
+          name: artifacts-${{ matrix.config.os }}-r${{ matrix.config.r }}
           path: AMR.Rcheck

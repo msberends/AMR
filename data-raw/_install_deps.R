@@ -43,5 +43,3 @@ for (i in seq_len(length(to_update))) {
            warning = function(w) message(w$message),
            error = function(e) message(e$message))
 }
-
-# saveRDS(to_update, ".github/depends.Rds", version = 2)

@@ -24,12 +24,12 @@
 # ==================================================================== #
 
 unjoined <- example_isolates
-inner <- example_isolates %>% inner_join_microorganisms()
-left <- example_isolates %>% left_join_microorganisms()
-semi <- example_isolates %>% semi_join_microorganisms()
-anti <- example_isolates %>% anti_join_microorganisms()
-suppressWarnings(right <- example_isolates %>% right_join_microorganisms())
-suppressWarnings(full <- example_isolates %>% full_join_microorganisms())
+inner <- inner_join_microorganisms(example_isolates)
+left <- left_join_microorganisms(example_isolates)
+semi <- semi_join_microorganisms(example_isolates)
+anti <- anti_join_microorganisms(example_isolates)
+suppressWarnings(right <- right_join_microorganisms(example_isolates))
+suppressWarnings(full <- full_join_microorganisms(example_isolates))
 
 expect_true(ncol(unjoined) < ncol(inner))
 expect_true(nrow(unjoined) == nrow(inner))
