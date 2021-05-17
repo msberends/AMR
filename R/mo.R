@@ -469,7 +469,7 @@ exec_as.mo <- function(x,
     x <- strip_whitespace(x, dyslexia_mode)
     # translate 'unknown' names back to English
     if (any(x %like% "unbekannt|onbekend|desconocid|sconosciut|iconnu|desconhecid", na.rm = TRUE)) {
-      trns <- subset(translations_file, pattern %like% "unknown" | only_affect_mo_names == TRUE)
+      trns <- subset(translations_file, pattern %like% "unknown" | affect_mo_name == TRUE)
       langs <- LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED != "en"]
       for (l in langs) {
         for (i in seq_len(nrow(trns))) {

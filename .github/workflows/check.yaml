@@ -109,9 +109,10 @@ jobs:
           key: ${{ matrix.config.os }}-r-${{ matrix.config.r }}-v4
 
       - name: Install AMR and tinytest and update dependencies
+        # some old R instances have trouble installing tinytest, so we ship it too
         run: |
           install.packages("data-raw/AMR_latest.tar.gz")
-          install.packages("data-raw/tinytest_1.2.4.tar.gz")
+          trimws <- AMR:::trimws; install.packages("data-raw/tinytest_1.2.4.tar.gz")
           source("data-raw/_install_deps.R")
         shell: Rscript {0}
         

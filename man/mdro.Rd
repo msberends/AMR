@@ -80,7 +80,7 @@ Ordered \link{factor} with levels \code{Negative} < \verb{Positive, unconfirmed}
 Determine which isolates are multidrug-resistant organisms (MDRO) according to international, national and custom guidelines.
 }
 \details{
-These functions are context-aware. This means that then the \code{x} argument can be left blank, see \emph{Examples}.
+These functions are context-aware. This means that the \code{x} argument can be left blank if used inside a \link{data.frame} call, see \emph{Examples}.
 
 For the \code{pct_required_classes} argument, values above 1 will be divided by 100. This is to support both fractions (\code{0.75} or \code{3/4}) and percentages (\code{75}).
 

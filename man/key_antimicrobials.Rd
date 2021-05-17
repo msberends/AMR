@@ -61,7 +61,7 @@ antimicrobials_equal(
 These functions can be used to determine first weighted isolates by considering the phenotype for isolate selection (see \code{\link[=first_isolate]{first_isolate()}}). Using a phenotype-based method to determine first isolates is more reliable than methods that disregard phenotypes.
 }
 \details{
-The \code{\link[=key_antimicrobials]{key_antimicrobials()}} and \code{\link[=all_antimicrobials]{all_antimicrobials()}} functions are context-aware. This means that then the \code{x} argument can be left blank, see \emph{Examples}.
+The \code{\link[=key_antimicrobials]{key_antimicrobials()}} and \code{\link[=all_antimicrobials]{all_antimicrobials()}} functions are context-aware. This means that the \code{x} argument can be left blank if used inside a \link{data.frame} call, see \emph{Examples}.
 
 The function \code{\link[=key_antimicrobials]{key_antimicrobials()}} returns a \link{character} vector with 12 antimicrobial results for every isolate. The function \code{\link[=all_antimicrobials]{all_antimicrobials()}} returns a \link{character} vector with all antimicrobial results for every isolate. These vectors can then be compared using \code{\link[=antimicrobials_equal]{antimicrobials_equal()}}, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (\code{"."}) by \code{\link[=key_antimicrobials]{key_antimicrobials()}} and ignored by \code{\link[=antimicrobials_equal]{antimicrobials_equal()}}.
 
