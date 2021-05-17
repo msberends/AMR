@@ -126,7 +126,7 @@ jobs:
         run: |
           tar -xf data-raw/AMR_latest.tar.gz
           rm -rf AMR/vignettes
-          Rscript -e "writeLines(readLines('DESCRIPTION')[!grepl('VignetteBuilder', readLines('DESCRIPTION'))], 'DESCRIPTION')"
+          Rscript -e "writeLines(readLines('AMR/DESCRIPTION')[!grepl('VignetteBuilder', readLines('AMR/DESCRIPTION'))], 'AMR/DESCRIPTION')"
         shell: bash
         
       - name: Run R CMD check
