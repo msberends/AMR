@@ -123,7 +123,11 @@ coerce_language_setting <- function(lang) {
 }
 
 # translate strings based on inst/translations.tsv
-translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE, affect_mo_name = FALSE) {
+translate_AMR <- function(from,
+                          language = get_locale(), 
+                          only_unknown = FALSE,
+                          only_affect_ab_names = FALSE,
+                          only_affect_mo_names = FALSE) {
   
   if (is.null(language)) {
     return(from)
@@ -144,11 +148,19 @@ translate_AMR <- function(from, language = get_locale(), only_unknown = FALSE, a
   
   # only keep lines where translation is available for this language
   df_trans <- df_trans[which(!is.na(df_trans[, language, drop = TRUE])), , drop = FALSE]
+  # and where the original string is not equal to the string in the target language
+  df_trans <- df_trans[which(df_trans[, "pattern", drop = TRUE] != df_trans[, language, drop = TRUE]), , drop = FALSE]
   if (only_unknown == TRUE) {
     df_trans <- subset(df_trans, pattern %like% "unknown")
   }
-  if (affect_mo_name == TRUE) {
+  if (only_affect_ab_names == TRUE) {
+    df_trans <- subset(df_trans, affect_ab_name == TRUE)
+  }
+  if (only_affect_mo_names == TRUE) {
     df_trans <- subset(df_trans, affect_mo_name == TRUE)
+  }
+  if (NROW(df_trans) == 0) {
+    return(from)
   }
   
   # default: case sensitive if value if 'case_sensitive' is missing:

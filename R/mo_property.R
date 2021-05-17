@@ -178,7 +178,7 @@ mo_name <- function(x, language = get_locale(), ...) {
   translate_AMR(mo_validate(x = x, property = "fullname", language = language, ...),
                 language = language,
                 only_unknown = FALSE,
-                affect_mo_name = TRUE)
+                only_affect_mo_names = TRUE)
 }
 
 #' @rdname mo_property
@@ -220,7 +220,7 @@ mo_shortname <- function(x, language = get_locale(), ...) {
   
   shortnames[is.na(x.mo)] <- NA_character_
   load_mo_failures_uncertainties_renamed(metadata)
-  translate_AMR(shortnames, language = language, only_unknown = FALSE, affect_mo_name = TRUE)
+  translate_AMR(shortnames, language = language, only_unknown = FALSE, only_affect_mo_names = TRUE)
 }
 
 #' @rdname mo_property

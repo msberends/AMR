@@ -60,6 +60,7 @@ CATALOGUE_OF_LIFE <- list(
 globalVariables(c(".rowid",
                   "ab",
                   "ab_txt",
+                  "affect_ab_name",
                   "affect_mo_name",
                   "angle",
                   "antibiotic",
