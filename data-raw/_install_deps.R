@@ -28,7 +28,7 @@ install.packages("data-raw/AMR_latest.tar.gz", dependencies = FALSE)
 # some old R instances have trouble installing tinytest, so we ship it too
 # R < 3.2 does not contain trimws(), which is part of this script and of a tinytest script
 trimws <- AMR:::trimws
-intall.packages("data-raw/tinytest_1.2.4.tar.gz")
+install.packages("data-raw/tinytest_1.2.4.tar.gz")
 
 pkg_suggests <- trimws(unlist(strsplit(packageDescription("AMR")$Suggests, ",(\n)?")))
 
