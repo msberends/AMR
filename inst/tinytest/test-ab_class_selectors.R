@@ -23,20 +23,21 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-if (pkg_is_available("dplyr")) {
-  expect_true(example_isolates %>% select(aminoglycosides()) %>% ncol() < ncol(example_isolates))
-  expect_true(example_isolates %>% select(carbapenems()) %>% ncol() < ncol(example_isolates))
-  expect_true(example_isolates %>% select(cephalosporins()) %>% ncol() < ncol(example_isolates))
-  expect_true(example_isolates %>% select(cephalosporins_1st()) %>% ncol() < ncol(example_isolates))
-  expect_true(example_isolates %>% select(cephalosporins_2nd()) %>% ncol() < ncol(example_isolates))
-  expect_true(example_isolates %>% select(cephalosporins_3rd()) %>% ncol() < ncol(example_isolates))
-  expect_true(example_isolates %>% select(cephalosporins_4th()) %>% ncol() < ncol(example_isolates))
-  expect_true(example_isolates %>% select(cephalosporins_5th()) %>% ncol() < ncol(example_isolates))
-  expect_true(example_isolates %>% select(fluoroquinolones()) %>% ncol() < ncol(example_isolates))
-  expect_true(example_isolates %>% select(glycopeptides()) %>% ncol() < ncol(example_isolates))
-  expect_true(example_isolates %>% select(macrolides()) %>% ncol() < ncol(example_isolates))
-  expect_true(example_isolates %>% select(oxazolidinones()) %>% ncol() < ncol(example_isolates))
-  expect_true(example_isolates %>% select(penicillins()) %>% ncol() < ncol(example_isolates))
-  expect_true(example_isolates %>% select(tetracyclines()) %>% ncol() < ncol(example_isolates))
+if (as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) >= 3.2) {
+  # antibiotic class selectors require at least R-3.2
+  expect_true(ncol(example_isolates[, aminoglycosides(), drop = FALSE]) < ncol(example_isolates))
+  expect_true(ncol(example_isolates[, betalactams(), drop = FALSE]) < ncol(example_isolates))
+  expect_true(ncol(example_isolates[, carbapenems(), drop = FALSE]) < ncol(example_isolates))
+  expect_true(ncol(example_isolates[, cephalosporins(), drop = FALSE]) < ncol(example_isolates))
+  expect_true(ncol(example_isolates[, cephalosporins_1st(), drop = FALSE]) < ncol(example_isolates))
+  expect_true(ncol(example_isolates[, cephalosporins_2nd(), drop = FALSE]) < ncol(example_isolates))
+  expect_true(ncol(example_isolates[, cephalosporins_3rd(), drop = FALSE]) < ncol(example_isolates))
+  expect_true(ncol(example_isolates[, cephalosporins_4th(), drop = FALSE]) < ncol(example_isolates))
+  expect_true(ncol(example_isolates[, cephalosporins_5th(), drop = FALSE]) < ncol(example_isolates))
+  expect_true(ncol(example_isolates[, fluoroquinolones(), drop = FALSE]) < ncol(example_isolates))
+  expect_true(ncol(example_isolates[, glycopeptides(), drop = FALSE]) < ncol(example_isolates))
+  expect_true(ncol(example_isolates[, macrolides(), drop = FALSE]) < ncol(example_isolates))
+  expect_true(ncol(example_isolates[, oxazolidinones(), drop = FALSE]) < ncol(example_isolates))
+  expect_true(ncol(example_isolates[, penicillins(), drop = FALSE]) < ncol(example_isolates))
+  expect_true(ncol(example_isolates[, tetracyclines(), drop = FALSE]) < ncol(example_isolates))
 }
-

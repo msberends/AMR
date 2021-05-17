@@ -32,6 +32,8 @@
 #' @details \strong{\Sexpr{ifelse(as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2, paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
 #' 
 #' All columns will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.) in the [antibiotics] data set. This means that a selector like e.g. [aminoglycosides()] will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
+#' 
+#' The group of betalactams consists of all carbapenems, cephalosporins and penicillins.
 #' @rdname antibiotic_class_selectors
 #' @seealso [filter_ab_class()] for the `filter()` equivalent.
 #' @name antibiotic_class_selectors
@@ -91,6 +93,11 @@ aminoglycosides <- function(only_rsi_columns = FALSE) {
   ab_selector("aminoglycoside", function_name = "aminoglycosides", only_rsi_columns = only_rsi_columns)
 }
 
+#' @rdname antibiotic_class_selectors
+#' @export
+betalactams <- function(only_rsi_columns = FALSE) {
+  ab_selector("carbapenem|cephalosporin|penicillin", function_name = "betalactams", only_rsi_columns = only_rsi_columns)
+}
 #' @rdname antibiotic_class_selectors
 #' @export
 carbapenems <- function(only_rsi_columns = FALSE) {
@@ -187,7 +194,7 @@ ab_selector <- function(ab_class,
 
   # improve speed here so it will only run once when e.g. in one select call
   if (!identical(pkg_env$ab_selector, unique_call_id())) {
-    ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns)
+    ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
     pkg_env$ab_selector <- unique_call_id()
     pkg_env$ab_selector_cols <- ab_in_data
   } else {
@@ -212,6 +219,7 @@ ab_selector <- function(ab_class,
   }
   # get the columns with a group names in the chosen ab class
   agents <- ab_in_data[names(ab_in_data) %in% ab_reference$ab]
+    
   if (message_not_thrown_before(function_name)) {
     if (length(agents) == 0) {
       message_("No antimicrobial agents of class ", ab_group, " found", examples, ".")

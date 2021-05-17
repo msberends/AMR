@@ -1172,14 +1172,13 @@ strrep <- function(x, times) {
     paste0(replicate(times, x), collapse = "")
   }, list(x = x, times = times), MoreArgs = list()), use.names = FALSE)
 }
-trimws <- function(x, which = c("both", "left", "right")) {
+trimws <- function(x, which = c("both", "left", "right"), whitespace = "[ \t\r\n]") {
   which <- match.arg(which)
   mysub <- function(re, x) sub(re, "", x, perl = TRUE)
-  if (which == "left")
-    return(mysub("^[ \t\r\n]+", x))
-  if (which == "right")
-    return(mysub("[ \t\r\n]+$", x))
-  mysub("[ \t\r\n]+$", mysub("^[ \t\r\n]+", x))
+  switch(which,
+         left = mysub(paste0("^", whitespace, "+"), x),
+         right = mysub(paste0(whitespace, "+$"), x),
+         both = mysub(paste0(whitespace, "+$"), mysub(paste0("^", whitespace, "+"), x)))
 }
 isFALSE <- function(x) {
   is.logical(x) && length(x) == 1L && !is.na(x) && !x

@@ -1,5 +1,5 @@
-# `AMR` 1.6.0.9043
-## <small>Last updated: 17 May 2021</small>
+# `AMR` 1.6.0.9044
+## <small>Last updated: 18 May 2021</small>
 
 ### New
 * Function `custom_eucast_rules()` that brings support for custom AMR rules in `eucast_rules()`
@@ -11,7 +11,9 @@
   * The `first_isolate()` function can now take a vector of values for `col_keyantibiotics` and can have an episode length of `Inf`
   * Since the phenotype-based method is the new default, `filter_first_isolate()` renders the `filter_first_weighted_isolate()` function redundant. For this reason, `filter_first_weighted_isolate()` is now deprecated.
   * The documentation of the `first_isolate()` and `key_antimicrobials()` functions has been completely rewritten.
-* Added `ggplot()` method for `resistance_predict()` 
+* Function `betalactams()` as additional antbiotic column selector and function `filter_betalactams()` as additional antbiotic column filter. The group of betalactams consists of all carbapenems, cephalosporins and penicillins.
+* A `ggplot()` method for `resistance_predict()` 
+
 
 ### Changed
 * Custom MDRO guidelines (`mdro()`, `custom_mdro_guideline()`):
@@ -41,7 +43,8 @@
 * Updated `skimr::skim()` usage for MIC values to also include 25th and 75th percentiles
 * Fix for plotting missing MIC/disk diffusion values
 * Updated join functions to always use `dplyr` join functions if the `dplyr` package is installed - now also preserving grouped variables
-* Fix for filtering on antibiotic classes (such as `filter_cephalosporins()`)
+* Fix for filtering on antibiotic classes (such as `filter_cephalosporins()`), which now also supports dplyr groups
+* Antibiotic class selectors (such as `cephalosporins()`) now maintain the column order from the original data
 
 ### Other
 * All unit tests are now processed by the `tinytest` package, instead of the `testthat` package. The `testthat` package unfortunately requires tons of dependencies that are also heavy and only usable for recent R versions, defeating the purpose to test our package under less recent R versions. On the contrary, the `tinytest` package is very lightweight and dependency-free.

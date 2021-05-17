@@ -4,6 +4,7 @@
 \alias{antibiotic_class_selectors}
 \alias{ab_class}
 \alias{aminoglycosides}
+\alias{betalactams}
 \alias{carbapenems}
 \alias{cephalosporins}
 \alias{cephalosporins_1st}
@@ -22,6 +23,8 @@
 ab_class(ab_class, only_rsi_columns = FALSE)
 
 aminoglycosides(only_rsi_columns = FALSE)
+
+betalactams(only_rsi_columns = FALSE)
 
 carbapenems(only_rsi_columns = FALSE)
 
@@ -61,6 +64,8 @@ These functions help to select the columns of antibiotics that are of a specific
 \strong{\Sexpr{ifelse(as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2, paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
 
 All columns will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.) in the \link{antibiotics} data set. This means that a selector like e.g. \code{\link[=aminoglycosides]{aminoglycosides()}} will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
+
+The group of betalactams consists of all carbapenems, cephalosporins and penicillins.
 }
 \section{Stable Lifecycle}{
 

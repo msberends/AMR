@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9021</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9044</span>
       </span>
     </div>
 
@@ -259,6 +259,14 @@
   <span class='va'>...</span>
 <span class='op'>)</span>
 
+<span class='fu'>filter_betalactams</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  result <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scope <span class='op'>=</span> <span class='st'>"any"</span>,
+  only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
 <span class='fu'>filter_carbapenems</span><span class='op'>(</span>
   <span class='va'>x</span>,
   result <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -395,6 +403,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>All columns of <code>x</code> will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.). This means that a filter function like e.g. <code>filter_aminoglycosides()</code> will include column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.</p>
+<p>The group of betalactams consists of all carbapenems, cephalosporins and penicillins.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable Lifecycle</h2>
 
     

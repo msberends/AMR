@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9021</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9044</span>
       </span>
     </div>
 
@@ -375,7 +375,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>To conduct epidemiological analyses on antimicrobial resistance data, only so-called first isolates should be included to prevent overestimation and underestimation of antimicrobial resistance. Different methods can be used to do so, see below.</p>
-<p>These functions are context-aware. This means that then the <code>x</code> argument can be left blank, see <em>Examples</em>.</p>
+<p>These functions are context-aware. This means that the <code>x</code> argument can be left blank if used inside a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> call, see <em>Examples</em>.</p>
 <p>The <code>first_isolate()</code> function is a wrapper around the <code><a href='get_episode.html'>is_new_episode()</a></code> function, but more efficient for data sets containing microorganism codes or names.</p>
 <p>All isolates with a microbial ID of <code>NA</code> will be excluded as first isolate.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Different methods</h3>
 

@@ -34,6 +34,8 @@
 #' @param only_rsi_columns a [logical] to indicate whether only columns must be included that were transformed to class `<rsi>` (see [as.rsi()]) on beforehand (defaults to `FALSE`)
 #' @param ... arguments passed on to [filter_ab_class()]
 #' @details All columns of `x` will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.). This means that a filter function like e.g. [filter_aminoglycosides()] will include column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
+#' 
+#' The group of betalactams consists of all carbapenems, cephalosporins and penicillins.
 #' @rdname filter_ab_class
 #' @seealso [antibiotic_class_selectors()] for the `select()` equivalent.
 #' @export
@@ -88,16 +90,16 @@ filter_ab_class <- function(x,
   if (is.null(.call_depth)) {
     .call_depth <- 0
   }
+  
   meet_criteria(x, allow_class = "data.frame", .call_depth = .call_depth)
   meet_criteria(ab_class, allow_class = "character", has_length = 1, .call_depth = .call_depth)
   meet_criteria(result, allow_class = "character", has_length = c(1, 2, 3), allow_NULL = TRUE, .call_depth = .call_depth)
   meet_criteria(scope, allow_class = "character", has_length = 1, is_in = c("all", "any"), .call_depth = .call_depth)
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1, .call_depth = .call_depth)
-
+  
   check_dataset_integrity()
 
   # save to return later
-  x_class <- class(x)
   x.bak <- x
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   
@@ -111,14 +113,24 @@ filter_ab_class <- function(x,
   stop_ifnot(all(scope %in% c("any", "all")), "`scope` must be one of: 'any', 'all'")
   
   # get all columns in data with names that resemble antibiotics
-  ab_in_data <- get_column_abx(x, info = FALSE, only_rsi_columns = only_rsi_columns)
+  ab_in_data <- get_column_abx(x, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
+  
+  # improve speed here so it will only run once when e.g. in one select call
+  if (!identical(pkg_env$filter_ab_selector, unique_call_id())) {
+    ab_in_data <- get_column_abx(x, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
+    pkg_env$filter_ab_selector <- unique_call_id()
+    pkg_env$filter_ab_selector_cols <- ab_in_data
+  } else {
+    ab_in_data <- pkg_env$filter_ab_selector_cols
+  }
+  
   if (length(ab_in_data) == 0) {
-    message_("No columns with class <rsi> found (see ?as.rsi), data left unchanged.")
+    message_("No columns with antibiotic test results found (see ?as.rsi), data left unchanged.")
     return(x.bak)
   }
   # get reference data
   ab_class.bak <- ab_class
-  ab_class <- gsub("[^a-zA-Z0-9]+", ".*", ab_class)
+  ab_class <- gsub("[^a-zA-Z|0-9]+", ".*", ab_class)
   ab_class <- gsub("(ph|f)", "(ph|f)", ab_class)
   ab_class <- gsub("(t|th)", "(t|th)", ab_class)
   ab_reference <- subset(antibiotics,
@@ -133,8 +145,8 @@ filter_ab_class <- function(x,
   # get the columns with a group names in the chosen ab class
   agents <- ab_in_data[names(ab_in_data) %in% ab_reference$ab]
   if (length(agents) == 0) {
-    message_("No antimicrobial agents of class ", ab_group, 
-             " found (such as ", find_ab_names(ab_class, 2), 
+    message_("No antimicrobial agents of class '", ab_group, 
+             "' found (such as ", find_ab_names(ab_class, 2), 
              ")",
              ifelse(only_rsi_columns == TRUE, " with class <rsi>,", ","),
              " data left unchanged.")
@@ -162,18 +174,22 @@ filter_ab_class <- function(x,
   # sort columns on official name
   agents <- agents[order(ab_name(names(agents), language = NULL))]
   
+  agents_formatted <- paste0("'", font_bold(agents, collapse = NULL), "'")
+  agents_names <- ab_name(names(agents), tolower = TRUE, language = NULL)
+  need_name <- tolower(gsub("[^a-zA-Z]", "", agents)) != tolower(gsub("[^a-zA-Z]", "", agents_names))
+  agents_formatted[need_name] <- paste0(agents_formatted[need_name],
+                                        " (", agents_names[need_name], ")")
+  
   message_("Filtering on ", ab_group, ": ", scope,
-           paste(paste0("`", font_bold(agents, collapse = NULL),
-                        "` (", ab_name(names(agents), tolower = TRUE, language = NULL), ")"),
-                 collapse = scope_txt),
+           vector_or(agents_formatted, quotes = FALSE, last_sep = scope_txt),
            operator, " ", vector_or(result, quotes = TRUE),
            as_note = FALSE,
            extra_indent = 6)
   x_transposed <- as.list(as.data.frame(t(x[, agents, drop = FALSE]), stringsAsFactors = FALSE))
   filtered <- vapply(FUN.VALUE = logical(1), x_transposed, function(y) scope_fn(y %in% result, na.rm = TRUE))
-  x <- x[which(filtered), , drop = FALSE]
-  class(x) <- x_class
-  x
+  
+  # this returns the original data with the filtering, also preserving attributes (such as dplyr groups)
+  x.bak[which(filtered), , drop = FALSE]
 }
 
 #' @rdname filter_ab_class
@@ -192,6 +208,21 @@ filter_aminoglycosides <- function(x,
                   ...)
 }
 
+#' @rdname filter_ab_class
+#' @export
+filter_betalactams <- function(x,
+                               result = NULL,
+                               scope = "any",
+                               only_rsi_columns = FALSE,
+                               ...) {
+  filter_ab_class(x = x,
+                  ab_class = "carbapenem|cephalosporin|penicillin",
+                  result = result,
+                  scope = scope,
+                  only_rsi_columns = only_rsi_columns,
+                  .call_depth = 1,
+                  ...)
+}
 #' @rdname filter_ab_class
 #' @export
 filter_carbapenems <- function(x,
@@ -401,8 +432,10 @@ filter_tetracyclines <- function(x,
 }
 
 find_ab_group <- function(ab_class) {
+  ab_class[ab_class == "carbapenem|cephalosporin|penicillin"] <- "betalactam"
   ab_class <- gsub("[^a-zA-Z0-9]", ".*", ab_class)
   ifelse(ab_class %in% c("aminoglycoside",
+                         "betalactam",
                          "carbapenem",
                          "cephalosporin",
                          "fluoroquinolone",
@@ -424,9 +457,20 @@ find_ab_group <- function(ab_class) {
 }
 
 find_ab_names <- function(ab_group, n = 3) {
-  ab_group <- gsub("[^a-zA-Z0-9]", ".*", ab_group)
-  drugs <- antibiotics[which(antibiotics$group %like% ab_group & antibiotics$ab %unlike% "[0-9]$"), ]$name
-  paste0(sort(ab_name(sample(drugs, size = min(n, length(drugs)), replace = FALSE),
-                      tolower = TRUE, language = NULL)), 
-         collapse = ", ")
+  ab_group <- gsub("[^a-zA-Z|0-9]", ".*", ab_group)
+  
+  # try popular first, they have DDDs
+  drugs <- antibiotics[which((!is.na(antibiotics$iv_ddd) | !is.na(antibiotics$oral_ddd)) &
+                               antibiotics$name %unlike% " " &
+                               antibiotics$group %like% ab_group &
+                               antibiotics$ab %unlike% "[0-9]$"), ]$name
+  if (length(drugs) < n) {
+    # now try it all
+    drugs <- antibiotics[which(antibiotics$group %like% ab_group &
+                                 antibiotics$ab %unlike% "[0-9]$"), ]$name
+  }
+  vector_or(ab_name(sample(drugs, size = min(n, length(drugs)), replace = FALSE),
+                    tolower = TRUE,
+                    language = NULL),
+            quotes = FALSE)
 }

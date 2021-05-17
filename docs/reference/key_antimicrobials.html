@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9021</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9044</span>
       </span>
     </div>
 
@@ -323,7 +323,7 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>key_antimicrobials()</code> and <code>all_antimicrobials()</code> functions are context-aware. This means that then the <code>x</code> argument can be left blank, see <em>Examples</em>.</p>
+    <p>The <code>key_antimicrobials()</code> and <code>all_antimicrobials()</code> functions are context-aware. This means that the <code>x</code> argument can be left blank if used inside a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> call, see <em>Examples</em>.</p>
 <p>The function <code>key_antimicrobials()</code> returns a <a href='https://rdrr.io/r/base/character.html'>character</a> vector with 12 antimicrobial results for every isolate. The function <code>all_antimicrobials()</code> returns a <a href='https://rdrr.io/r/base/character.html'>character</a> vector with all antimicrobial results for every isolate. These vectors can then be compared using <code>antimicrobials_equal()</code>, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (<code>"."</code>) by <code>key_antimicrobials()</code> and ignored by <code>antimicrobials_equal()</code>.</p>
 <p>Please see the <code><a href='first_isolate.html'>first_isolate()</a></code> function how these important functions enable the 'phenotype-based' method for determination of first isolates.</p>
 <p>The default antimicrobial agents used for <strong>all rows</strong> (set in <code>universal</code>) are:</p><ul>

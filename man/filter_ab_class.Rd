@@ -3,6 +3,7 @@
 \name{filter_ab_class}
 \alias{filter_ab_class}
 \alias{filter_aminoglycosides}
+\alias{filter_betalactams}
 \alias{filter_carbapenems}
 \alias{filter_cephalosporins}
 \alias{filter_1st_cephalosporins}
@@ -28,6 +29,14 @@ filter_ab_class(
 )
 
 filter_aminoglycosides(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
+
+filter_betalactams(
   x,
   result = NULL,
   scope = "any",
@@ -157,6 +166,8 @@ Filter isolates on results in specific antimicrobial classes. This makes it easy
 }
 \details{
 All columns of \code{x} will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.). This means that a filter function like e.g. \code{\link[=filter_aminoglycosides]{filter_aminoglycosides()}} will include column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
+
+The group of betalactams consists of all carbapenems, cephalosporins and penicillins.
 }
 \section{Stable Lifecycle}{
 

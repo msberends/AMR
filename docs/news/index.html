@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9043</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9044</span>
       </span>
     </div>
 
@@ -236,12 +236,12 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1609043" class="section level1">
-<h1 class="page-header" data-toc-text="1.6.0.9043">
-<a href="#amr-1609043" class="anchor"></a><small> Unreleased </small><code>AMR</code> 1.6.0.9043</h1>
-<div id="last-updated-17-may-2021" class="section level2">
+    <div id="amr-1609044" class="section level1">
+<h1 class="page-header" data-toc-text="1.6.0.9044">
+<a href="#amr-1609044" class="anchor"></a><small> Unreleased </small><code>AMR</code> 1.6.0.9044</h1>
+<div id="last-updated-18-may-2021" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-17-may-2021" class="anchor"></a><small>Last updated: 17 May 2021</small>
+<a href="#last-updated-18-may-2021" class="anchor"></a><small>Last updated: 18 May 2021</small>
 </h2>
 <div id="new" class="section level3">
 <h3 class="hasAnchor">
@@ -262,7 +262,8 @@
 <li>The documentation of the <code><a href="../reference/first_isolate.html">first_isolate()</a></code> and <code><a href="../reference/key_antimicrobials.html">key_antimicrobials()</a></code> functions has been completely rewritten.</li>
 </ul>
 </li>
-<li>Added <code>ggplot()</code> method for <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>
+<li>Function <code><a href="../reference/antibiotic_class_selectors.html">betalactams()</a></code> as additional antbiotic column selector and function <code><a href="../reference/filter_ab_class.html">filter_betalactams()</a></code> as additional antbiotic column filter. The group of betalactams consists of all carbapenems, cephalosporins and penicillins.</li>
+<li>A <code>ggplot()</code> method for <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>
 </li>
 </ul>
 </div>
@@ -306,7 +307,8 @@
 <li>Updated <code><a href="https://docs.ropensci.org/skimr/reference/skim.html">skimr::skim()</a></code> usage for MIC values to also include 25th and 75th percentiles</li>
 <li>Fix for plotting missing MIC/disk diffusion values</li>
 <li>Updated join functions to always use <code>dplyr</code> join functions if the <code>dplyr</code> package is installed - now also preserving grouped variables</li>
-<li>Fix for filtering on antibiotic classes (such as <code><a href="../reference/filter_ab_class.html">filter_cephalosporins()</a></code>)</li>
+<li>Fix for filtering on antibiotic classes (such as <code><a href="../reference/filter_ab_class.html">filter_cephalosporins()</a></code>), which now also supports dplyr groups</li>
+<li>Antibiotic class selectors (such as <code><a href="../reference/antibiotic_class_selectors.html">cephalosporins()</a></code>) now maintain the column order from the original data</li>
 </ul>
 </div>
 <div id="other" class="section level3">
