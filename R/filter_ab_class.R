@@ -40,9 +40,12 @@
 #' @seealso [antibiotic_class_selectors()] for the `select()` equivalent.
 #' @export
 #' @examples
-#' filter_aminoglycosides(example_isolates)
-#' 
+#' x <- filter_carbapenems(example_isolates)
 #' \donttest{
+#' # base R filter options (requires R >= 3.2)
+#' example_isolates[filter_carbapenems(), ]
+#' example_isolates[which(filter_carbapenems() & mo_is_gram_negative()), ]
+#' 
 #' if (require("dplyr")) {
 #'
 #'   # filter on isolates that have any result for any aminoglycoside
@@ -78,6 +81,7 @@
 #'   example_isolates %>% filter_carbapenems("R", "all")
 #'   example_isolates %>% filter(across(carbapenems(), ~. == "R"))
 #'   example_isolates %>% filter(across(carbapenems(), function(x) x == "R"))
+#'   example_isolates %>% filter(filter_carbapenems("R", "all"))
 #' }
 #' }
 filter_ab_class <- function(x,
@@ -90,15 +94,29 @@ filter_ab_class <- function(x,
   if (is.null(.call_depth)) {
     .call_depth <- 0
   }
+  .fn <- list(...)$`.fn`
+  if (is.null(.fn)) {
+    .fn <- "filter_ab_class"
+  }
   
+  return_only_row_indices <- FALSE
+  if (missing(x) || is_null_or_grouped_tbl(x)) {
+    # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
+    # is also fix for using a grouped df as input (a dot as first argument)
+    x <- get_current_data(arg_name = "x", call = -2 - .call_depth)
+    return_only_row_indices <- TRUE
+  }
   meet_criteria(x, allow_class = "data.frame", .call_depth = .call_depth)
   meet_criteria(ab_class, allow_class = "character", has_length = 1, .call_depth = .call_depth)
-  meet_criteria(result, allow_class = "character", has_length = c(1, 2, 3), allow_NULL = TRUE, .call_depth = .call_depth)
+  if (!is.null(result)) {
+    result <- toupper(result)
+  }
+  meet_criteria(result, allow_class = "character", has_length = c(1, 2, 3), is_in = c("S", "I", "R"), allow_NULL = TRUE, .call_depth = .call_depth)
   meet_criteria(scope, allow_class = "character", has_length = 1, is_in = c("all", "any"), .call_depth = .call_depth)
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1, .call_depth = .call_depth)
   
   check_dataset_integrity()
-
+  
   # save to return later
   x.bak <- x
   x <- as.data.frame(x, stringsAsFactors = FALSE)
@@ -108,9 +126,6 @@ filter_ab_class <- function(x,
   }
   # make result = "SI" works too:
   result <- unlist(strsplit(result, ""))
-  
-  stop_ifnot(all(result %in% c("S", "I", "R")), "`result` must be one or more of: 'S', 'I', 'R'")
-  stop_ifnot(all(scope %in% c("any", "all")), "`scope` must be one of: 'any', 'all'")
   
   # get all columns in data with names that resemble antibiotics
   ab_in_data <- get_column_abx(x, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
@@ -180,16 +195,18 @@ filter_ab_class <- function(x,
   agents_formatted[need_name] <- paste0(agents_formatted[need_name],
                                         " (", agents_names[need_name], ")")
   
-  message_("Filtering on ", ab_group, ": ", scope,
+  message_("Applying `", .fn, "()`: ", scope,
            vector_or(agents_formatted, quotes = FALSE, last_sep = scope_txt),
-           operator, " ", vector_or(result, quotes = TRUE),
-           as_note = FALSE,
-           extra_indent = 6)
+           operator, " ", vector_or(result, quotes = TRUE))
   x_transposed <- as.list(as.data.frame(t(x[, agents, drop = FALSE]), stringsAsFactors = FALSE))
   filtered <- vapply(FUN.VALUE = logical(1), x_transposed, function(y) scope_fn(y %in% result, na.rm = TRUE))
   
-  # this returns the original data with the filtering, also preserving attributes (such as dplyr groups)
-  x.bak[which(filtered), , drop = FALSE]
+  if (return_only_row_indices == TRUE) {
+    filtered
+  } else {
+    # this returns the original data with the filtering, also preserving attributes (such as dplyr groups)
+    x.bak[which(filtered), , drop = FALSE]
+  }
 }
 
 #' @rdname filter_ab_class
@@ -205,6 +222,7 @@ filter_aminoglycosides <- function(x,
                   scope = scope,
                   only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
+                  .fn = "filter_aminoglycosides",
                   ...)
 }
 
@@ -221,6 +239,7 @@ filter_betalactams <- function(x,
                   scope = scope,
                   only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
+                  .fn = "filter_betalactams",
                   ...)
 }
 #' @rdname filter_ab_class
@@ -236,6 +255,7 @@ filter_carbapenems <- function(x,
                   scope = scope,
                   only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
+                  .fn = "filter_carbapenems",
                   ...)
 }
 
@@ -252,6 +272,7 @@ filter_cephalosporins <- function(x,
                   scope = scope,
                   only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
+                  .fn = "filter_cephalosporins",
                   ...)
 }
 
@@ -268,6 +289,7 @@ filter_1st_cephalosporins <- function(x,
                   scope = scope,
                   only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
+                  .fn = "filter_1st_cephalosporins",
                   ...)
 }
 
@@ -284,6 +306,7 @@ filter_2nd_cephalosporins <- function(x,
                   scope = scope,
                   only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
+                  .fn = "filter_2nd_cephalosporins",
                   ...)
 }
 
@@ -300,6 +323,7 @@ filter_3rd_cephalosporins <- function(x,
                   scope = scope,
                   only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
+                  .fn = "filter_3rd_cephalosporins",
                   ...)
 }
 
@@ -316,6 +340,7 @@ filter_4th_cephalosporins <- function(x,
                   scope = scope,
                   only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
+                  .fn = "filter_4th_cephalosporins",
                   ...)
 }
 
@@ -332,6 +357,7 @@ filter_5th_cephalosporins <- function(x,
                   scope = scope,
                   only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
+                  .fn = "filter_5th_cephalosporins",
                   ...)
 }
 
@@ -348,6 +374,7 @@ filter_fluoroquinolones <- function(x,
                   scope = scope,
                   only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
+                  .fn = "filter_fluoroquinolones",
                   ...)
 }
 
@@ -364,6 +391,7 @@ filter_glycopeptides <- function(x,
                   scope = scope,
                   only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
+                  .fn = "filter_glycopeptides",
                   ...)
 }
 
@@ -380,6 +408,7 @@ filter_macrolides <- function(x,
                   scope = scope,
                   only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
+                  .fn = "filter_macrolides",
                   ...)
 }
 
@@ -396,6 +425,7 @@ filter_oxazolidinones <- function(x,
                   scope = scope,
                   only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
+                  .fn = "filter_oxazolidinones",
                   ...)
 }
 
@@ -412,6 +442,7 @@ filter_penicillins <- function(x,
                   scope = scope,
                   only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
+                  .fn = "filter_penicillins",
                   ...)
 }
 
@@ -428,6 +459,7 @@ filter_tetracyclines <- function(x,
                   scope = scope,
                   only_rsi_columns = only_rsi_columns,
                   .call_depth = 1,
+                  .fn = "filter_tetracyclines",
                   ...)
 }
 
@@ -448,7 +480,7 @@ find_ab_group <- function(ab_class) {
            subset(group %like% ab_class | 
                     atc_group1 %like% ab_class | 
                     atc_group2 %like% ab_class) %pm>%
-          pm_pull(group) %pm>%
+           pm_pull(group) %pm>%
            unique() %pm>%
            tolower() %pm>%
            sort() %pm>% 
@@ -466,7 +498,9 @@ find_ab_names <- function(ab_group, n = 3) {
                                antibiotics$ab %unlike% "[0-9]$"), ]$name
   if (length(drugs) < n) {
     # now try it all
-    drugs <- antibiotics[which(antibiotics$group %like% ab_group &
+    drugs <- antibiotics[which((antibiotics$group %like% ab_group |
+                                  antibiotics$atc_group1 %like% ab_group |
+                                  antibiotics$atc_group2 %like% ab_group) &
                                  antibiotics$ab %unlike% "[0-9]$"), ]$name
   }
   vector_or(ab_name(sample(drugs, size = min(n, length(drugs)), replace = FALSE),

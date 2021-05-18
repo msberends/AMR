@@ -493,14 +493,30 @@ dataset_UTF8_to_ASCII <- function(df) {
 }
 
 # for eucast_rules() and mdro(), creates markdown output with URLs and names
-create_ab_documentation <- function(ab) {
+create_eucast_ab_documentation <- function() {
+  x <- trimws(unique(toupper(unlist(strsplit(eucast_rules_file$then_change_these_antibiotics, ",")))))
+  ab <- character()
+  for (val in x) {
+    if (val %in% ls(envir = asNamespace("AMR"))) {
+      # antibiotic group names, as defined in data-raw/_internals.R, such as `CARBAPENEMS`
+      val <- eval(parse(text = val), envir = asNamespace("AMR"))
+    } else if (val %in% AB_lookup$ab) {
+      # separate drugs, such as `AMX`
+      val <- as.ab(val)
+    } else {
+      stop_("antimicrobial agent (group) not found in EUCAST rules file: ", val.bak, call = FALSE)
+    }
+    ab <- c(ab, val)
+  }
+  ab <- unique(ab)
+  atcs <- ab_atc(ab)
+  # only keep ABx with an ATC code:
+  ab <- ab[!is.na(atcs)]
   ab_names <- ab_name(ab, language = NULL, tolower = TRUE)
   ab <- ab[order(ab_names)]
   ab_names <- ab_names[order(ab_names)]
-  atcs <- ab_atc(ab)
-  atcs[!is.na(atcs)] <- paste0("[", atcs[!is.na(atcs)], "](", ab_url(ab[!is.na(atcs)]), ")")
-  atcs[is.na(atcs)] <- "no ATC code"
-  out <- paste0(ab_names, " (`", ab, "`, ", atcs, ")", collapse = ", ")
+  atc_txt <- paste0("[", atcs[!is.na(atcs)], "](", ab_url(ab), ")")
+  out <- paste0(ab_names, " (`", ab, "`, ", atc_txt, ")", collapse = ", ")
   substr(out, 1, 1) <- toupper(substr(out, 1, 1))
   out
 }
@@ -638,9 +654,10 @@ meet_criteria <- function(object,
       object <- tolower(object)
       is_in <- tolower(is_in)
     }
-    stop_ifnot(all(object %in% is_in, na.rm = TRUE), "argument `", obj_name,
-               "` must be ",
-               ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1, "either ", ""),
+    stop_ifnot(all(object %in% is_in, na.rm = TRUE), "argument `", obj_name, "` ",
+               ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1, 
+                      "must be either ",
+                      "must only contain values "),
                vector_or(is_in, quotes = !isTRUE(any(c("double", "numeric", "integer") %in% allow_class))),
                ifelse(allow_NA == TRUE, ", or NA", ""),
                call = call_depth)
@@ -696,7 +713,7 @@ get_current_data <- function(arg_name, call) {
     }
   }
 
-  if (as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2) {
+  if (current_R_older_than(3.2)) {
     # R-3.0 and R-3.1 do not have an `x` element in the call stack, rendering this function useless
     if (is.na(arg_name)) {
       # like in carbapenems() etc.
@@ -1157,6 +1174,10 @@ time_track <- function(name = NULL) {
   paste("(until now:", trimws(round(as.numeric(Sys.time()) * 1000) - pkg_env$time_start), "ms)")
 }
 
+current_R_older_than <- function(version) {
+  as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < version
+}
+
 # prevent dependency on package 'backports' ----
 # these functions were not available in previous versions of R (last checked: R 4.0.5)
 # see here for the full list: https://github.com/r-lib/backports
@@ -1205,7 +1226,7 @@ lengths <- function(x, use.names = TRUE) {
   vapply(x, length, FUN.VALUE = NA_integer_, USE.NAMES = use.names)
 }
 
-if (as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.1) {
+if (current_R_older_than(3.1)) {
   # R-3.0 does not contain these functions, set them here to prevent installation failure
   # (required for extension of the <mic> class)
   cospi <- function(...) 1

@@ -178,9 +178,12 @@ If the unlying code needs breaking changes, they will occur gradually. For examp
 }
 
 \examples{
-filter_aminoglycosides(example_isolates)
-
+x <- filter_carbapenems(example_isolates)
 \donttest{
+# base R filter options (requires R >= 3.2)
+example_isolates[filter_carbapenems(), ]
+example_isolates[which(filter_carbapenems() & mo_is_gram_negative()), ]
+
 if (require("dplyr")) {
 
   # filter on isolates that have any result for any aminoglycoside
@@ -216,6 +219,7 @@ if (require("dplyr")) {
   example_isolates \%>\% filter_carbapenems("R", "all")
   example_isolates \%>\% filter(across(carbapenems(), ~. == "R"))
   example_isolates \%>\% filter(across(carbapenems(), function(x) x == "R"))
+  example_isolates \%>\% filter(filter_carbapenems("R", "all"))
 }
 }
 }

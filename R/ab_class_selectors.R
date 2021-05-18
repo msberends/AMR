@@ -183,7 +183,7 @@ ab_selector <- function(ab_class,
   meet_criteria(function_name, allow_class = "character", has_length = 1, .call_depth = 1)
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1, .call_depth = 1)
   
-  if (as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2) {
+  if (current_R_older_than(3.2)) {
     warning_("antibiotic class selectors such as ", function_name, 
              "() require R version 3.2 or later - you have ", R.version.string,
              call = FALSE)
@@ -229,11 +229,9 @@ ab_selector <- function(ab_class,
       need_name <- tolower(gsub("[^a-zA-Z]", "", agents)) != tolower(gsub("[^a-zA-Z]", "", agents_names))
       agents_formatted[need_name] <- paste0(agents_formatted[need_name],
                                             " (", agents_names[need_name], ")")
-      message_("Selecting ", ab_group, ": ",
+      message_("Applying `", function_name, "()`: selecting ",
                ifelse(length(agents) == 1, "column ", "columns "),
-               vector_and(agents_formatted, quotes = FALSE),
-               as_note = FALSE,
-               extra_indent = 6)
+               vector_and(agents_formatted, quotes = FALSE))
     }
     remember_thrown_message(function_name)
   }

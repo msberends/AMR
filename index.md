@@ -30,13 +30,13 @@ example_isolates %>%
   mutate(bacteria = mo_fullname(mo)) %>%
   filter(mo_is_gram_negative(), mo_is_intrinsic_resistant(ab = "cefotax")) %>%
   select(bacteria, aminoglycosides(), carbapenems())
-#> NOTE: Using column 'mo' as input for mo_is_gram_negative()
-#> NOTE: Using column 'mo' as input for mo_is_intrinsic_resistant()
-#> NOTE: Determining intrinsic resistance based on 'EUCAST Expert Rules' and
-#>       'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2 (2020).
-#> Selecting aminoglycosides: columns 'AMK' (amikacin), 'GEN' (gentamicin), 
-#>       'KAN' (kanamycin) and 'TOB' (tobramycin)
-#> Selecting carbapenems: columns 'IPM' (imipenem) and 'MEM' (meropenem)
+#> ℹ Using column 'mo' as input for mo_is_gram_negative()
+#> ℹ Using column 'mo' as input for mo_is_intrinsic_resistant()
+#> ℹ Determining intrinsic resistance based on 'EUCAST Expert Rules' and 'EUCAST Intrinsic
+#>   Resistance and Unusual Phenotypes' v3.2 (2020)
+#> ℹ Applying `aminoglycosides()`: selecting columns 'AMK' (amikacin), 'GEN' (gentamicin), 'KAN'
+#>   (kanamycin) and 'TOB' (tobramycin)
+#> ℹ Applying `carbapenems()`: selecting columns 'IPM' (imipenem) and 'MEM' (meropenem)
 ```
 
 With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (`mo_is_gram_negative()` and `mo_is_intrinsic_resistant()`) and a column selection on two antibiotic groups (`aminoglycosides()` and `carbapenems()`), the reference data about [all microorganisms](./reference/microorganisms.html) and [all antibiotics](./reference/antibiotics.html) in the `AMR` package make sure you get what you meant:

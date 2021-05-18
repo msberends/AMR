@@ -106,7 +106,7 @@ pca <- function(x,
     tryCatch(colnames(x) <- as.character(dots)[2:length(dots)],
              error = function(e) warning("column names could not be set"))
     
-    # keep only [numeric] columns
+    # keep only numeric columns
     x <- x[, vapply(FUN.VALUE = logical(1), x, function(y) is.numeric(y))]
     # bind the data set with the non-numeric columns
     x <- cbind(x.bak[, vapply(FUN.VALUE = logical(1), x.bak, function(y) !is.numeric(y) & !all(is.na(y))), drop = FALSE], x)
@@ -120,7 +120,7 @@ pca <- function(x,
   message_("Columns selected for PCA: ", vector_and(font_bold(colnames(pca_data), collapse = NULL), quotes = TRUE),
            ". Total observations available: ", nrow(pca_data), ".")
   
-  if (as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.4) {
+  if (current_R_older_than(3.4)) {
     # stats::prcomp prior to 3.4.0 does not have the 'rank.' argument
     pca_model <- prcomp(pca_data, retx = retx, center = center, scale. = scale., tol = tol)
   } else {

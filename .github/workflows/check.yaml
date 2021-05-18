@@ -127,6 +127,7 @@ jobs:
           tar -xf data-raw/AMR_latest.tar.gz
           rm -rf AMR/vignettes
           Rscript -e "writeLines(readLines('AMR/DESCRIPTION')[!grepl('VignetteBuilder', readLines('AMR/DESCRIPTION'))], 'AMR/DESCRIPTION')"
+          cat AMR/DESCRIPTION
         shell: bash
         
       - name: Run R CMD check
@@ -140,7 +141,7 @@ jobs:
           R_LIBS_USER_GH_ACTIONS: ${{ env.R_LIBS_USER }}
           R_RUN_TINYTEST: true
         run: |
-          R CMD check --no-manual --no-vignettes AMR
+          R CMD check --no-manual --no-vignettes --no-build-vignettes --ignore-vignettes AMR
         shell: bash
 
       - name: Show unit tests output

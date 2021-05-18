@@ -93,9 +93,9 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @section Antibiotics:
 #' To define antibiotics column names, leave as it is to determine it automatically with [guess_ab_col()] or input a text (case-insensitive), or use `NULL` to skip a column (e.g. `TIC = NULL` to skip ticarcillin). Manually defined but non-existing columns will be skipped with a warning.
 #'
-#' The following antibiotics are used for the functions [eucast_rules()] and [mdro()]. These are shown below in the format 'name (`antimicrobial ID`, [ATC code](https://www.whocc.no/atc/structure_and_principles/))', sorted alphabetically:
+#' The following antibiotics are eligible for the functions [eucast_rules()] and [mdro()]. These are shown below in the format 'name (`antimicrobial ID`, [ATC code](https://www.whocc.no/atc/structure_and_principles/))', sorted alphabetically:
 #'
-#' `r create_ab_documentation(c("AMC", "AMK", "AMP", "AMX", "APL", "APX", "ATM", "AVB", "AVO", "AZD", "AZL", "AZM", "BAM", "BPR", "CAC", "CAT", "CAZ", "CCP", "CCV", "CCX", "CDC", "CDR", "CDZ", "CEC", "CED", "CEI", "CEM", "CEP", "CFM", "CFM1", "CFP", "CFR", "CFS", "CFZ", "CHE", "CHL", "CIC", "CID", "CIP", "CLI", "CLM", "CLO", "CLR", "CMX", "CMZ", "CND", "COL", "CPD", "CPI", "CPL", "CPM", "CPO", "CPR", "CPT", "CPX", "CRB", "CRD", "CRN", "CRO", "CSL", "CTB", "CTC", "CTF", "CTL", "CTS", "CTT", "CTX", "CTZ", "CXM", "CYC", "CZA", "CZD", "CZO", "CZP", "CZX", "DAL", "DAP", "DIC", "DIR", "DIT", "DIX", "DIZ", "DKB", "DOR", "DOX", "ENX", "EPC", "ERY", "ETP", "FEP", "FLC", "FLE", "FLR1", "FOS", "FOV", "FOX", "FOX1", "FUS", "GAT", "GEM", "GEN", "GRX", "HAP", "HET", "IPM", "ISE", "JOS", "KAN", "LEN", "LEX", "LIN", "LNZ", "LOM", "LOR", "LTM", "LVX", "MAN", "MCM", "MEC", "MEM", "MET", "MEV", "MEZ", "MFX", "MID", "MNO", "MTM", "NAC", "NAF", "NAL", "NEO", "NET", "NIT", "NOR", "NOV", "NVA", "OFX", "OLE", "ORI", "OXA", "PAZ", "PEF", "PEN", "PHE", "PHN", "PIP", "PLB", "PME", "PNM", "PRC", "PRI", "PRL", "PRP", "PRU", "PVM", "QDA", "RAM", "RFL", "RID", "RIF", "ROK", "RST", "RXT", "SAM", "SBC", "SDI", "SDM", "SIS", "SLF", "SLF1", "SLF10", "SLF11", "SLF12", "SLF13", "SLF2", "SLF3", "SLF4", "SLF5", "SLF6", "SLF7", "SLF8", "SLF9", "SLT1", "SLT2", "SLT3", "SLT4", "SLT5", "SLT6", "SMX", "SPI", "SPX", "SRX", "STR", "STR1", "SUD", "SUL", "SUT", "SXT", "SZO", "TAL", "TAZ", "TCC", "TCM", "TCY", "TEC", "TEM", "TGC", "THA", "TIC", "TIO", "TLT", "TLV", "TMP", "TMX", "TOB", "TRL", "TVA", "TZD", "TZP", "VAN"))`
+#' `r create_eucast_ab_documentation()`
 #' @aliases EUCAST
 #' @rdname eucast_rules
 #' @export
@@ -317,21 +317,23 @@ eucast_rules <- function(x,
   
   # Some helper functions ---------------------------------------------------
   get_antibiotic_columns <- function(x, cols_ab) {
-    x <- strsplit(x, ", *")[[1]]
+    x <- trimws(unique(toupper(unlist(strsplit(x, ",")))))
     x_new <- character()
     for (val in x) {
-      if (toupper(val) %in% ls(envir = asNamespace("AMR"))) {
+      if (val %in% ls(envir = asNamespace("AMR"))) {
         # antibiotic group names, as defined in data-raw/_internals.R, such as `CARBAPENEMS`
-        val <- eval(parse(text = toupper(val)), envir = asNamespace("AMR"))
-      } else if (toupper(val) %in% AB_lookup$ab) {
+        val <- eval(parse(text = val), envir = asNamespace("AMR"))
+      } else if (val %in% AB_lookup$ab) {
         # separate drugs, such as `AMX`
         val <- as.ab(val)
       } else {
-        stop_("antimicrobial agent (group) not found in EUCAST rules file: ", val, call = FALSE)
+        stop_("unknown antimicrobial agent (group) in EUCAST rules file: ", val, call = FALSE)
       }
       x_new <- c(x_new, val)
     }
-    cols_ab[match(x_new, names(cols_ab))]
+    x_new <- unique(x_new)
+    out <- cols_ab[match(x_new, names(cols_ab))]
+    out[!is.na(out)]
   }
   get_antibiotic_names <- function(x) {
     x <- x %pm>%

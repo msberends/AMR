@@ -1,4 +1,4 @@
-# `AMR` 1.6.0.9044
+# `AMR` 1.6.0.9047
 ## <small>Last updated: 18 May 2021</small>
 
 ### New
@@ -43,11 +43,23 @@
 * Updated `skimr::skim()` usage for MIC values to also include 25th and 75th percentiles
 * Fix for plotting missing MIC/disk diffusion values
 * Updated join functions to always use `dplyr` join functions if the `dplyr` package is installed - now also preserving grouped variables
-* Fix for filtering on antibiotic classes (such as `filter_cephalosporins()`), which now also supports dplyr groups
+* Updates for filtering on antibiotic classes (e.g., using `filter_carbapenems()`):
+  * Support for dplyr groups
+  * Support for base R row filtering:
+    ```r
+    dim(example_isolates)
+    #> [1] 2000   49
+    
+    example_isolates[filter_carbapenems(), ]
+    #> ℹ Applying `filter_carbapenems()`: values in any of columns 'IPM' (imipenem)
+    #>   or 'MEM' (meropenem) are either "R", "S" or "I"
+    #> [1] 962  49
+    ```
 * Antibiotic class selectors (such as `cephalosporins()`) now maintain the column order from the original data
+* Fix for selecting columns using `fluoroquinolones()`
 
 ### Other
-* All unit tests are now processed by the `tinytest` package, instead of the `testthat` package. The `testthat` package unfortunately requires tons of dependencies that are also heavy and only usable for recent R versions, defeating the purpose to test our package under less recent R versions. On the contrary, the `tinytest` package is very lightweight and dependency-free.
+* All unit tests are now processed by the `tinytest` package, instead of the `testthat` package. The `testthat` package unfortunately requires tons of dependencies that are also heavy and only usable for recent R versions, disallowing developers to test a package under any R 3.* version. On the contrary, the `tinytest` package is very lightweight and dependency-free.
 
 
 # `AMR` 1.6.0
