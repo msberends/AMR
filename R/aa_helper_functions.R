@@ -509,7 +509,7 @@ create_eucast_ab_documentation <- function() {
       # separate drugs, such as `AMX`
       val <- as.ab(val)
     } else {
-      stop_("antimicrobial agent (group) not found in EUCAST rules file: ", val.bak, call = FALSE)
+      val <- as.rsi(NA)
     }
     ab <- c(ab, val)
   }

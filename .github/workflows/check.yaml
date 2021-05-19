@@ -127,6 +127,7 @@ jobs:
           tar -xf data-raw/AMR_latest.tar.gz
           rm -rf AMR/vignettes
           Rscript -e "writeLines(readLines('AMR/DESCRIPTION')[!grepl('VignetteBuilder', readLines('AMR/DESCRIPTION'))], 'AMR/DESCRIPTION')"
+          Rscript -e "writeLines(readLines('AMR/DESCRIPTION')[gsub(' +', '', readLines('AMR/DESCRIPTION')) != ''], 'AMR/DESCRIPTION')"
           find AMR -name 'DESCRIPTION' -exec cat '{}' \; || true
         shell: bash
         

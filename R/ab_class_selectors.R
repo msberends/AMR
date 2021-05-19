@@ -299,6 +299,7 @@ all_any_ab_selector <- function(type, ..., na.rm = TRUE) {
   cols_ab <- c(...)
   result <- cols_ab[toupper(cols_ab) %in% c("R", "S", "I")]
   if (length(result) == 0) {
+    message_("Filtering ", type, " of columns ", vector_and(font_bold(cols_ab, collapse = NULL), quotes = "'"), ' to contain value "R", "S" or "I"')
     result <- c("R", "S", "I")
   }
   cols_ab <- cols_ab[!cols_ab %in% result]

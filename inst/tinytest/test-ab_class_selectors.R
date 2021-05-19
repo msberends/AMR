@@ -44,20 +44,20 @@ if (!AMR:::current_R_older_than(3.2)) {
   # Examples:
   
   # select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB'
-  expect_equal(ncol(example_isolates[, c("mo", aminoglycosides())]), 5)
+  expect_equal(ncol(example_isolates[, c("mo", aminoglycosides())]), 5, tolerance = 0.5)
   
   # filter using any() or all()
-  expect_equal(nrow(example_isolates[any(carbapenems() == "R"), ]), 55)
-  expect_equal(nrow(subset(example_isolates, any(carbapenems() == "R"))), 55)
+  expect_equal(nrow(example_isolates[any(carbapenems() == "R"), ]), 55, tolerance = 0.5)
+  expect_equal(nrow(subset(example_isolates, any(carbapenems() == "R"))), 55, tolerance = 0.5)
   
   # filter on any or all results in the carbapenem columns (i.e., IPM, MEM):
-  expect_equal(nrow(example_isolates[any(carbapenems()), ]), 962)
-  expect_equal(nrow(example_isolates[all(carbapenems()), ]), 756)
+  expect_equal(nrow(example_isolates[any(carbapenems()), ]), 962, tolerance = 0.5)
+  expect_equal(nrow(example_isolates[all(carbapenems()), ]), 756, tolerance = 0.5)
   
   # filter with multiple antibiotic selectors using c()
-  expect_equal(nrow(example_isolates[all(c(carbapenems(), aminoglycosides()) == "R"), ]), 26)
+  expect_equal(nrow(example_isolates[all(c(carbapenems(), aminoglycosides()) == "R"), ]), 26, tolerance = 0.5)
   
   # filter + select in one go: get penicillins in carbapenems-resistant strains
-  expect_equal(nrow(example_isolates[any(carbapenems() == "R"), penicillins()]), 55)
-  expect_equal(ncol(example_isolates[any(carbapenems() == "R"), penicillins()]), 7)
+  expect_equal(nrow(example_isolates[any(carbapenems() == "R"), penicillins()]), 55, tolerance = 0.5)
+  expect_equal(ncol(example_isolates[any(carbapenems() == "R"), penicillins()]), 7, tolerance = 0.5)
 }
