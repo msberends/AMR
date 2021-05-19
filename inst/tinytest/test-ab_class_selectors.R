@@ -23,7 +23,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-if (current_R_older_than(3.2)) {
+if (!AMR:::current_R_older_than(3.2)) {
   # antibiotic class selectors require at least R-3.2
   expect_true(ncol(example_isolates[, aminoglycosides(), drop = FALSE]) < ncol(example_isolates))
   expect_true(ncol(example_isolates[, betalactams(), drop = FALSE]) < ncol(example_isolates))
@@ -40,4 +40,24 @@ if (current_R_older_than(3.2)) {
   expect_true(ncol(example_isolates[, oxazolidinones(), drop = FALSE]) < ncol(example_isolates))
   expect_true(ncol(example_isolates[, penicillins(), drop = FALSE]) < ncol(example_isolates))
   expect_true(ncol(example_isolates[, tetracyclines(), drop = FALSE]) < ncol(example_isolates))
+  
+  # Examples:
+  
+  # select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB'
+  expect_equal(ncol(example_isolates[, c("mo", aminoglycosides())]), 5)
+  
+  # filter using any() or all()
+  expect_equal(nrow(example_isolates[any(carbapenems() == "R"), ]), 55)
+  expect_equal(nrow(subset(example_isolates, any(carbapenems() == "R"))), 55)
+  
+  # filter on any or all results in the carbapenem columns (i.e., IPM, MEM):
+  expect_equal(nrow(example_isolates[any(carbapenems()), ]), 962)
+  expect_equal(nrow(example_isolates[all(carbapenems()), ]), 756)
+  
+  # filter with multiple antibiotic selectors using c()
+  expect_equal(nrow(example_isolates[all(c(carbapenems(), aminoglycosides()) == "R"), ]), 26)
+  
+  # filter + select in one go: get penicillins in carbapenems-resistant strains
+  expect_equal(nrow(example_isolates[any(carbapenems() == "R"), penicillins()]), 55)
+  expect_equal(ncol(example_isolates[any(carbapenems() == "R"), penicillins()]), 7)
 }

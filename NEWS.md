@@ -1,5 +1,24 @@
-# `AMR` 1.6.0.9047
-## <small>Last updated: 18 May 2021</small>
+# `AMR` 1.6.0.9048
+## <small>Last updated: 19 May 2021</small>
+
+### Breaking change
+* All antibiotic class selectors (such as `carbapenems()`, `aminoglycosides()`) can now be used for filtering as well, making all their accompanying `filter_*()` functions redundant (such as `filter_carbapenems()`, `filter_aminoglycosides()`). These functions are now deprecated and will be removed in a next release.
+  ```r
+  # select columns with results for carbapenems
+  example_isolates[, carbapenems()]           # base R
+  example_isolates %>% select(carbapenems())  # dplyr
+  
+  # filter rows for resistance in any carbapenem
+  example_isolates[any(carbapenems() == "R"), ]                  # base R
+  example_isolates %>% filter(any(carbapenems() == "R"))         # dplyr
+  example_isolates %>% filter(if_any(carbapenems(), ~.x == "R")) # dplyr (formal)
+  
+  # filter rows for resistance in all carbapenems
+  example_isolates[all(carbapenems() == "R"), ]           # base R
+  example_isolates[carbapenems() == "R", ]
+  example_isolates %>% filter(all(carbapenems() == "R"))  # dplyr
+  example_isolates %>% filter(carbapenems() == "R")
+  ```
 
 ### New
 * Function `custom_eucast_rules()` that brings support for custom AMR rules in `eucast_rules()`

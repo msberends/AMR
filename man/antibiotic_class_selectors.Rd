@@ -58,12 +58,14 @@ tetracyclines(only_rsi_columns = FALSE)
 \item{only_rsi_columns}{a \link{logical} to indicate whether only columns of class \verb{<rsi>} must be selected (defaults to \code{FALSE}), see \code{\link[=as.rsi]{as.rsi()}}}
 }
 \description{
-These functions help to select the columns of antibiotics that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. \strong{\Sexpr{ifelse(as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2, paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
+These functions help to filter and select columns with antibiotic test results that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. \strong{\Sexpr{ifelse(as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2, paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
 }
 \details{
 \strong{\Sexpr{ifelse(as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2, paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
 
-All columns will be searched for known antibiotic names, abbreviations, brand names and codes (ATC, EARS-Net, WHO, etc.) in the \link{antibiotics} data set. This means that a selector like e.g. \code{\link[=aminoglycosides]{aminoglycosides()}} will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
+These functions can be used in data set calls for selecting columns and filtering rows, see \emph{Examples}. They support base R, but work more convenient in dplyr functions such as \code{\link[dplyr:select]{select()}}, \code{\link[dplyr:filter]{filter()}} and \code{\link[dplyr:summarise]{summarise()}}.
+
+All columns in the data in which these functions are called will be searched for known antibiotic names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) in the \link{antibiotics} data set. This means that a selector like e.g. \code{\link[=aminoglycosides]{aminoglycosides()}} will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
 
 The group of betalactams consists of all carbapenems, cephalosporins and penicillins.
 }
@@ -89,10 +91,30 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 # `example_isolates` is a data set available in the AMR package.
 # See ?example_isolates.
 
-# this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
+# Base R ------------------------------------------------------------------
+
+# select columns 'IPM' (imipenem) and 'MEM' (meropenem)
 example_isolates[, carbapenems()]
-# this will select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB':
+
+# select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB'
 example_isolates[, c("mo", aminoglycosides())]
+
+# filter using any() or all()
+example_isolates[any(carbapenems() == "R"), ]
+subset(example_isolates, any(carbapenems() == "R"))
+
+# filter on any or all results in the carbapenem columns (i.e., IPM, MEM):
+example_isolates[any(carbapenems()), ]
+example_isolates[all(carbapenems()), ]
+
+# filter with multiple antibiotic selectors using c()
+example_isolates[all(c(carbapenems(), aminoglycosides()) == "R"), ]
+
+# filter + select in one go: get penicillins in carbapenems-resistant strains
+example_isolates[any(carbapenems() == "R"), penicillins()]
+
+
+# dplyr -------------------------------------------------------------------
 
 if (require("dplyr")) {
 
@@ -103,6 +125,20 @@ if (require("dplyr")) {
   # this will select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB':
   example_isolates \%>\% 
     select(mo, aminoglycosides())
+    
+ # any() and all() work in dplyr's filter() too:
+ example_isolates \%>\% 
+    filter(any(aminoglycosides() == "R"),
+           all(cephalosporins_2nd() == "R"))
+    
+ # also works with c():
+ example_isolates \%>\% 
+    filter(any(c(carbapenems(), aminoglycosides()) == "R"))
+    
+ # not setting any/all will automatically apply all():
+ example_isolates \%>\% 
+    filter(aminoglycosides() == "R")
+ #> i Assuming a filter on all 4 aminoglycosides.
     
   # this will select columns 'mo' and all antimycobacterial drugs ('RIF'):
   example_isolates \%>\% 
@@ -122,12 +158,10 @@ if (require("dplyr")) {
     select(penicillins())         # only the 'J01CA01' column will be selected
     
     
-  # with dplyr 1.0.0 and higher (that adds 'across()'), this is equal:
+  # with dplyr 1.0.0 and higher (that adds 'across()'), this is all equal:
   # (though the row names on the first are more correct)
-  example_isolates \%>\% filter_carbapenems("R", "all")
-  example_isolates \%>\% filter(across(carbapenems(), ~. == "R"))
+  example_isolates[carbapenems() == "R", ]
+  example_isolates \%>\% filter(carbapenems() == "R")
+  example_isolates \%>\% filter(across(carbapenems(), ~.x == "R"))
 }
-}
-\seealso{
-\code{\link[=filter_ab_class]{filter_ab_class()}} for the \code{filter()} equivalent.
 }

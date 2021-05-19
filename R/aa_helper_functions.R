@@ -336,6 +336,9 @@ word_wrap <- function(...,
                   collapse = "\n"))
   }
   
+  # correct for operators (will add the space later on)
+  ops <- "([,./><\\]\\[])"
+  msg <- gsub(paste0(ops, " ", ops), "\\1\\2", msg, perl = TRUE)
   # we need to correct for already applied style, that adds text like "\033[31m\"
   msg_stripped <- font_stripstyle(msg)
   # where are the spaces now?
@@ -352,6 +355,8 @@ word_wrap <- function(...,
   # put it together
   msg <- unlist(strsplit(msg, " "))
   msg[replace_spaces] <- paste0(msg[replace_spaces], "\n")
+  # add space around operators again
+  msg <- gsub(paste0(ops, ops), "\\1 \\2", msg, perl = TRUE)
   msg <- paste0(msg, collapse = " ")
   msg <- gsub("\n ", "\n", msg, fixed = TRUE)
   
@@ -365,7 +370,7 @@ word_wrap <- function(...,
   msg <- gsub("\n", paste0("\n", strrep(" ", indentation)), msg, fixed = TRUE)
   # remove trailing empty characters
   msg <- gsub("(\n| )+$", "", msg)
-  
+
   if (length(add_fn) > 0) {
     if (!is.list(add_fn)) {
       add_fn <- list(add_fn)
@@ -709,7 +714,7 @@ get_current_data <- function(arg_name, call) {
   if (!is.null(cur_data_all)) {
     out <- tryCatch(cur_data_all(), error = function(e) NULL)
     if (is.data.frame(out)) {
-      return(out)
+      return(structure(out, type = "dplyr_cur_data_all"))
     }
   }
 
@@ -727,6 +732,7 @@ get_current_data <- function(arg_name, call) {
   
   # try a (base R) method, by going over the complete system call stack with sys.frames()
   not_set <- TRUE
+  source <- "base_R"
   frms <- lapply(sys.frames(), function(el) {
     if (not_set == TRUE && ".Generic" %in% names(el)) {
       if (tryCatch(".data" %in% names(el) && is.data.frame(el$`.data`), error = function(e) FALSE)) {
@@ -736,6 +742,7 @@ get_current_data <- function(arg_name, call) {
         # an element `.data` will be in the system call stack when using dplyr::select()
         # [but not when using dplyr::filter(), dplyr::mutate() or dplyr::summarise()]
         not_set <<- FALSE
+        source <<- "dplyr_selector"
         el$`.data`
       } else if (tryCatch(any(c("x", "xx") %in% names(el)), error = function(e) FALSE)) {
         # - - - -
@@ -763,7 +770,7 @@ get_current_data <- function(arg_name, call) {
   # lookup the matched frame and return its value: a data.frame
   vars_df <- tryCatch(frms[[which(!vapply(FUN.VALUE = logical(1), frms, is.null))]], error = function(e) NULL)
   if (is.data.frame(vars_df)) {
-    return(vars_df)
+    return(structure(vars_df, type = source))
   }
   
   # nothing worked, so:

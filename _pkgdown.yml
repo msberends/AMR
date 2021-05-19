@@ -149,7 +149,7 @@ reference:
     desc: >
       Use these function for the analysis part. You can use `susceptibility()` or `resistance()` on any antibiotic column.
       Be sure to first select the isolates that are appropiate for analysis, by using `first_isolate()` or `is_new_episode()`.
-      You can also filter your data on certain resistance in certain antibiotic classes (`filter_ab_class()`), or determine multi-drug resistant microorganisms (MDRO, `mdro()`).
+      You can also filter your data on certain resistance in certain antibiotic classes (`carbapenems()`, `aminoglycosides()`), or determine multi-drug resistant microorganisms (MDRO, `mdro()`).
     contents:
     - "`proportion`"
     - "`count`"
@@ -162,7 +162,6 @@ reference:
     - "`ggplot_rsi`"
     - "`bug_drug_combinations`"
     - "`antibiotic_class_selectors`"
-    - "`filter_ab_class`"
     - "`resistance_predict`"
     - "`guess_ab_col`"
     

@@ -6,6 +6,22 @@
 \alias{filter_first_weighted_isolate}
 \alias{key_antibiotics}
 \alias{key_antibiotics_equal}
+\alias{filter_ab_class}
+\alias{filter_aminoglycosides}
+\alias{filter_betalactams}
+\alias{filter_carbapenems}
+\alias{filter_cephalosporins}
+\alias{filter_1st_cephalosporins}
+\alias{filter_2nd_cephalosporins}
+\alias{filter_3rd_cephalosporins}
+\alias{filter_4th_cephalosporins}
+\alias{filter_5th_cephalosporins}
+\alias{filter_fluoroquinolones}
+\alias{filter_glycopeptides}
+\alias{filter_macrolides}
+\alias{filter_oxazolidinones}
+\alias{filter_penicillins}
+\alias{filter_tetracyclines}
 \title{Deprecated Functions}
 \usage{
 p_symbol(p, emptychar = " ")
@@ -53,9 +69,141 @@ key_antibiotics_equal(
   na.rm = TRUE,
   ...
 )
+
+filter_ab_class(
+  x,
+  ab_class,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
+
+filter_aminoglycosides(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
+
+filter_betalactams(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
+
+filter_carbapenems(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
+
+filter_cephalosporins(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
+
+filter_1st_cephalosporins(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
+
+filter_2nd_cephalosporins(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
+
+filter_3rd_cephalosporins(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
+
+filter_4th_cephalosporins(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
+
+filter_5th_cephalosporins(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
+
+filter_fluoroquinolones(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
+
+filter_glycopeptides(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
+
+filter_macrolides(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
+
+filter_oxazolidinones(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
+
+filter_penicillins(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
+
+filter_tetracyclines(
+  x,
+  result = NULL,
+  scope = "any",
+  only_rsi_columns = FALSE,
+  ...
+)
 }
 \description{
-These functions are so-called '\link{Deprecated}'. They will be removed in a future release. Using the functions will give a warning with the name of the function it has been replaced by (if there is one).
+These functions are so-called '\link{Deprecated}'. \strong{They will be removed in a future release.} Using the functions will give a warning with the name of the function it has been replaced by (if there is one).
+}
+\details{
+All antibiotic class selectors (such as \code{\link[=carbapenems]{carbapenems()}}, \code{\link[=aminoglycosides]{aminoglycosides()}}) can now be used for filtering as well, making all their accompanying \verb{filter_*()} functions redundant (such as \code{\link[=filter_carbapenems]{filter_carbapenems()}}, \code{\link[=filter_aminoglycosides]{filter_aminoglycosides()}}).
 }
 \section{Retired Lifecycle}{
 
