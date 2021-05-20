@@ -52,13 +52,13 @@ jobs:
         config:
           - {os: macOS-latest,   r: 'devel',   allowfail: true}
           - {os: macOS-latest,   r: 'release', allowfail: false}
-          - {os: macOS-latest,   r: 'oldrel',  allowfail: true}
+          - {os: macOS-latest,   r: 'oldrel',  allowfail: false}
           
-          - {os: windows-latest, r: 'devel',   allowfail: false}
+          - {os: windows-latest, r: 'devel',   allowfail: true}
           - {os: windows-latest, r: 'release', allowfail: false}
           - {os: windows-latest, r: 'oldrel',  allowfail: false}
           
-          - {os: ubuntu-20.04,   r: 'devel',   allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: ubuntu-20.04,   r: 'devel',   allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-20.04,   r: 'release', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-20.04,   r: 'oldrel',  allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-20.04,   r: '4.0',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
@@ -66,11 +66,11 @@ jobs:
           - {os: ubuntu-20.04,   r: '3.5',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-20.04,   r: '3.4',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-20.04,   r: '3.3',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
-          - {os: ubuntu-20.04,   r: '3.2',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
-          - {os: ubuntu-20.04,   r: '3.1',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: ubuntu-20.04,   r: '3.2',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: ubuntu-20.04,   r: '3.1',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-20.04,   r: '3.0',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           
-          - {os: ubuntu-16.04,   r: 'devel',   allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          - {os: ubuntu-16.04,   r: 'devel',   allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: 'release', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: 'oldrel',  allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: '4.0',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
@@ -78,8 +78,8 @@ jobs:
           - {os: ubuntu-16.04,   r: '3.5',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: '3.4',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: '3.3',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-          - {os: ubuntu-16.04,   r: '3.2',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-          - {os: ubuntu-16.04,   r: '3.1',     allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          - {os: ubuntu-16.04,   r: '3.2',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          - {os: ubuntu-16.04,   r: '3.1',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
           - {os: ubuntu-16.04,   r: '3.0',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
 
     env:
@@ -124,8 +124,9 @@ jobs:
           as.data.frame(utils::installed.packages())[, "Version", drop = FALSE]
         shell: Rscript {0}
         
-      - name: Only keep vignettes on release version
-        if: matrix.config.r != 'release'
+      # - name: Only keep vignettes on release version
+      - name: Remove vignettes
+        # if: matrix.config.r != 'release'
         # writing to DESCRIPTION2 and then moving to DESCRIPTION is required for R < 3.3 as writeLines() cannot overwrite
         run: |
           rm -rf AMR/vignettes

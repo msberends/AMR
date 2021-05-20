@@ -1150,6 +1150,9 @@ percentage <- function(x, digits = NULL, ...) {
     if (is.null(digits)) {
       digits <- getdecimalplaces(x)
     }
+    if (is.null(digits) || is.na(digits) || !is.numeric(digits)) {
+      digits <- 2
+    }
 
     # round right: percentage(0.4455) and format(as.percentage(0.4455), 1) should return "44.6%", not "44.5%"
     x_formatted <- format(round2(as.double(x), digits = digits + 2) * 100,
