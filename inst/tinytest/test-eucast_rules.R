@@ -32,7 +32,7 @@ expect_equal(colnames(AMR:::eucast_rules_file),
                "reference.version",
                "note"))
 MOs_mentioned <- unique(AMR:::eucast_rules_file$this_value)
-MOs_mentioned <- sort(trimws(unlist(strsplit(MOs_mentioned[!AMR:::is_valid_regex(MOs_mentioned)], ",", fixed = TRUE))))
+MOs_mentioned <- sort(AMR:::trimws(unlist(strsplit(MOs_mentioned[!AMR:::is_valid_regex(MOs_mentioned)], ",", fixed = TRUE))))
 MOs_test <- suppressWarnings(suppressMessages(mo_name(MOs_mentioned)))
 expect_true(length(MOs_mentioned[MOs_test != MOs_mentioned]) == 0)
 
