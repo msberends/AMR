@@ -108,7 +108,7 @@
 #'         custom_eucast_rules(TZP == "R" ~ carbapenems == "R"))
 #' x2
 custom_eucast_rules <- function(...) {
-
+  
   dots <- tryCatch(list(...),
                    error = function(e) "error")
   stop_if(identical(dots, "error"),
@@ -150,7 +150,6 @@ custom_eucast_rules <- function(...) {
       result_group <- tryCatch(
         suppressWarnings(as.ab(result_group,
                                fast_mode = TRUE,
-                               info = FALSE, 
                                flag_multiple_results = FALSE)),
         error = function(e) NA_character_)
     }
@@ -203,7 +202,9 @@ print.custom_eucast_rules <- function(x, ...) {
   for (i in seq_len(length(x))) {
     rule <- x[[i]]
     rule$query <- format_custom_query_rule(rule$query)
-    if (rule$result_value == "R") {
+    if (is.na(rule$result_value)) {
+      val <- font_red("<NA>")
+    } else if (rule$result_value == "R") {
       val <- font_rsi_R_bg(font_black(" R "))
     } else if (rule$result_value == "S") {
       val <- font_rsi_S_bg(font_black(" S "))

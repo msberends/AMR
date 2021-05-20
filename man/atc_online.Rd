@@ -61,7 +61,7 @@ Abbreviations of return values when using \code{property = "U"} (unit):
 \item \code{"TU"} = thousand units
 \item \code{"MU"} = million units
 \item \code{"mmol"} = millimole
-\item \code{"ml"} = milliliter (e.g. eyedrops)
+\item \code{"ml"} = millilitre (e.g. eyedrops)
 }
 
 \strong{N.B. This function requires an internet connection and only works if the following packages are installed: \code{curl}, \code{rvest}, \code{xml2}.}

@@ -23,7 +23,10 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-if (tryCatch(curl::has_internet(), error = function(e) FALSE)) {
+if (pkg_is_available("curl", also_load = FALSE) &&
+    pkg_is_available("rvest", also_load = FALSE) &&
+    pkg_is_available("xml2", also_load = FALSE) &&
+    tryCatch(curl::has_internet(), error = function(e) FALSE)) {
   expect_true(length(atc_online_groups(ab_atc("AMX"))) >= 1)
   expect_equal(atc_online_ddd(ab_atc("AMX"), administration = "O"), 1.5)
   expect_equal(atc_online_ddd(ab_atc("AMX"), administration = "P"), 3)

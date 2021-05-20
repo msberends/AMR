@@ -35,17 +35,17 @@ expect_equal(proportion_R(example_isolates$AMX) + proportion_I(example_isolates$
 expect_equal(proportion_S(example_isolates$AMX) + proportion_I(example_isolates$AMX),
              proportion_SI(example_isolates$AMX))
 
-expect_equal(example_isolates %>% proportion_SI(AMC),
-             0.7626397,
-             tolerance = 0.0001)
-expect_equal(example_isolates %>% proportion_SI(AMC, GEN),
-             0.9408,
-             tolerance = 0.0001)
-expect_equal(example_isolates %>% proportion_SI(AMC, GEN, only_all_tested = TRUE),
-             0.9382647,
-             tolerance = 0.0001)
-
 if (pkg_is_available("dplyr")) {
+  expect_equal(example_isolates %>% proportion_SI(AMC),
+               0.7626397,
+               tolerance = 0.0001)
+  expect_equal(example_isolates %>% proportion_SI(AMC, GEN),
+               0.9408,
+               tolerance = 0.0001)
+  expect_equal(example_isolates %>% proportion_SI(AMC, GEN, only_all_tested = TRUE),
+               0.9382647,
+               tolerance = 0.0001)
+  
   # percentages
   expect_equal(example_isolates %>%
                  group_by(hospital_id) %>%

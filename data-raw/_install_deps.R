@@ -23,32 +23,31 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-install.packages("data-raw/AMR_latest.tar.gz", dependencies = FALSE)
-
 # some old R instances have trouble installing tinytest, so we ship it too
 install.packages("data-raw/tinytest_1.2.4.patched.tar.gz")
 
-pkg_suggests <- AMR:::trimws(unlist(strsplit(packageDescription("AMR")$Suggests, ",(\n)?")))
+descr <- readLines("AMR/DESCRIPTION")
+pkg_suggests <- gsub(".*Suggests: (.*)*?[A-Z].*", "\\1", paste0(descr, "*", collapse = ""), perl = FALSE)
+pkg_suggests <- unlist(strsplit(pkg_suggests, "[,* ]"))
+pkg_suggests <- pkg_suggests[pkg_suggests != ""]
+cat("Packages listed in Suggests:", paste(pkg_suggests, collapse = ", "), "\n")
 
 to_install <- pkg_suggests[!pkg_suggests %in% rownames(utils::installed.packages())]
 to_update <- as.data.frame(utils::old.packages(repos = "https://cran.rstudio.com/"), stringsAsFactors = FALSE)
+to_update <- to_update[which(to_update$Package %in% pkg_suggests), "Package", drop = TRUE]
 
 for (i in seq_len(length(to_install))) {
-  if (isTRUE(is.character(to_install[i]))) {
-    cat("Installing package", to_install[i], "\n")
-    tryCatch(install.packages(to_install[i], repos = "https://cran.rstudio.com/", dependencies = TRUE, quiet = TRUE),
-             # message = function(m) invisible(),
-             warning = function(w) message(w$message),
-             error = function(e) message(e$message))
-  }
+  cat("Installing package", to_install[i], "\n")
+  tryCatch(install.packages(to_install[i], repos = "https://cran.rstudio.com/", dependencies = TRUE, quiet = TRUE),
+           # message = function(m) invisible(),
+           warning = function(w) message(w$message),
+           error = function(e) message(e$message))
 }
 
 for (i in seq_len(length(to_update))) {
-  if (isTRUE(is.character(to_update[i]))) {
-    cat("Updating package", to_update[i], "\n")
-    tryCatch(update.packages(to_update[i], repos = "https://cran.rstudio.com/", ask = FALSE),
-             # message = function(m) invisible(),
-             warning = function(w) message(w$message),
-             error = function(e) message(e$message))
-  }
+  cat("Updating package", to_update[i], "\n")
+  tryCatch(update.packages(to_update[i], repos = "https://cran.rstudio.com/", ask = FALSE),
+           # message = function(m) invisible(),
+           warning = function(w) message(w$message),
+           error = function(e) message(e$message))
 }

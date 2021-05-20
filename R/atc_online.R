@@ -56,7 +56,7 @@
 #' - `"TU"` = thousand units
 #' - `"MU"` = million units
 #' - `"mmol"` = millimole
-#' - `"ml"` = milliliter (e.g. eyedrops)
+#' - `"ml"` = millilitre (e.g. eyedrops)
 #' 
 #' **N.B. This function requires an internet connection and only works if the following packages are installed: `curl`, `rvest`, `xml2`.**
 #' @export
