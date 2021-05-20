@@ -39,6 +39,8 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
   
   if (pkg_is_available("tinytest")) {
     library(AMR)
-    out <- test_package("AMR")
+    out <- test_package("AMR", verbose = FALSE)
+    print(attributes(out)$duration)
+    print(summary(out))
   }
 }
