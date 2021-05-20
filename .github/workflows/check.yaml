@@ -113,8 +113,8 @@ jobs:
         if: always()
         run: |
           tar -xf data-raw/AMR_latest.tar.gz
-          source("data-raw/_install_deps.R")
-        shell: Rscript {0}
+          Rscript -e "source('data-raw/_install_deps.R')"
+        shell: bash
         
       - name: Show session info
         if: always()
