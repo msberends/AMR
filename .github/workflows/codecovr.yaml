@@ -75,7 +75,7 @@ jobs:
           library(tinytest)
           source_files <- list.files("R", pattern = ".R$", full.names = TRUE)
           test_files <- list.files("inst/tinytest", full.names = TRUE)
-          cov <- covr::file_coverage(source_files = source_files, test_files = test_files, line_exclusions = list("R/atc_online.R", "R/mo_source.R", "R/translate.R", "R/resistance_predict.R", "R/aa_helper_functions.R", "R/aa_helper_pm_functions.R", "R/zzz.R"))
+          cov <- covr::file_coverage(source_files = source_files, test_files = test_files, parent_env = asNamespace("AMR"), line_exclusions = list("R/atc_online.R", "R/mo_source.R", "R/translate.R", "R/resistance_predict.R", "R/aa_helper_functions.R", "R/aa_helper_pm_functions.R", "R/zzz.R"))
           attr(cov, which = "package") <- list(path = ".") # until https://github.com/r-lib/covr/issues/478 is solved
           covr::codecov(cov, quiet = FALSE)
         shell: Rscript {0}
