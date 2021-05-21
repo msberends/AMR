@@ -49,7 +49,7 @@ expect_silent(barplot(as.mic(c(1, 2, 4, 8))))
 expect_silent(plot(as.mic(c(1, 2, 4, 8))))
 expect_silent(plot(as.mic(c(1, 2, 4, 8)), expand = FALSE))
 expect_silent(plot(as.mic(c(1, 2, 4, 8)), mo = "esco", ab = "cipr"))
-if (pkg_is_available("ggplot2")) {
+if (AMR:::pkg_is_available("ggplot2")) {
   expect_inherits(ggplot(as.mic(c(1, 2, 4, 8))), "gg")
   expect_inherits(ggplot(as.mic(c(1, 2, 4, 8)), expand = FALSE), "gg")
   expect_inherits(ggplot(as.mic(c(1, 2, 4, 8, 32)), mo = "esco", ab = "cipr"), "gg")
@@ -58,7 +58,7 @@ expect_stdout(print(as.mic(c(1, 2, 4, 8))))
 
 expect_inherits(summary(as.mic(c(2, 8))), c("summaryDefault", "table"))
 
-if (pkg_is_available("dplyr")) {
+if (AMR:::pkg_is_available("dplyr")) {
   expect_stdout(print(tibble(m = as.mic(2:4))))
 }
 
@@ -85,9 +85,11 @@ suppressWarnings(expect_identical(log1p(x), log1p(x_double)))
 suppressWarnings(expect_identical(cos(x), cos(x_double)))
 suppressWarnings(expect_identical(sin(x), sin(x_double)))
 suppressWarnings(expect_identical(tan(x), tan(x_double)))
-suppressWarnings(expect_identical(cospi(x), cospi(x_double)))
-suppressWarnings(expect_identical(sinpi(x), sinpi(x_double)))
-suppressWarnings(expect_identical(tanpi(x), tanpi(x_double)))
+if (!AMR:::current_R_older_than(3.1)) {
+  suppressWarnings(expect_identical(cospi(x), cospi(x_double)))
+  suppressWarnings(expect_identical(sinpi(x), sinpi(x_double)))
+  suppressWarnings(expect_identical(tanpi(x), tanpi(x_double)))
+}
 suppressWarnings(expect_identical(acos(x), acos(x_double)))
 suppressWarnings(expect_identical(asin(x), asin(x_double)))
 suppressWarnings(expect_identical(atan(x), atan(x_double)))
@@ -105,7 +107,7 @@ suppressWarnings(expect_identical(cumsum(x), cumsum(x_double)))
 suppressWarnings(expect_identical(cumprod(x), cumprod(x_double)))
 suppressWarnings(expect_identical(cummax(x), cummax(x_double)))
 suppressWarnings(expect_identical(cummin(x), cummin(x_double)))
-suppressWarnings(expect_identical(!x, !(x_double)))
+suppressWarnings(expect_identical(!x, !x_double))
 
 suppressWarnings(expect_identical(all(x), all(x_double)))
 suppressWarnings(expect_identical(any(x), any(x_double)))

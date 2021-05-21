@@ -42,12 +42,12 @@ expect_inherits(pca_model, "pca")
 
 pdf(NULL) # prevent Rplots.pdf being created
 
-if (pkg_is_available("ggplot2")) {
+if (AMR:::pkg_is_available("ggplot2")) {
   ggplot_pca(pca_model, ellipse = TRUE)
   ggplot_pca(pca_model, arrows_textangled = FALSE)
 }
 
-if (pkg_is_available("dplyr")) {
+if (AMR:::pkg_is_available("dplyr")) {
   resistance_data <- example_isolates %>% 
     group_by(order = mo_order(mo),
              genus = mo_genus(mo)) %>%
@@ -56,7 +56,7 @@ if (pkg_is_available("dplyr")) {
     pca(AMC, CXM, CTX, CAZ, GEN, TOB, TMP, "SXT") 
   expect_inherits(pca_result, "prcomp")
   
-  if (pkg_is_available("ggplot2")) {
+  if (AMR:::pkg_is_available("ggplot2")) {
     ggplot_pca(pca_result, ellipse = TRUE)
     ggplot_pca(pca_result, ellipse = FALSE, arrows_textangled = FALSE, scale = FALSE)
   }

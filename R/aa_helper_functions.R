@@ -290,6 +290,15 @@ stop_ifnot_installed <- function(package) {
   return(invisible())
 }
 
+pkg_is_available <- function(pkg, also_load = TRUE) {
+  if (also_load == TRUE) {
+    out <- suppressWarnings(require(pkg, character.only = TRUE, warn.conflicts = FALSE, quietly = TRUE))
+  } else {
+    out <- requireNamespace(pkg, quietly = TRUE)
+  }
+  isTRUE(out)
+}
+
 import_fn <- function(name, pkg, error_on_fail = TRUE) {
   if (isTRUE(error_on_fail)) {
     stop_ifnot_installed(pkg)
@@ -1189,7 +1198,7 @@ current_R_older_than <- function(version) {
 }
 
 # prevent dependency on package 'backports' ----
-# these functions were not available in previous versions of R (last checked: R 4.0.5)
+# these functions were not available in previous versions of R (last checked: R 4.1.0)
 # see here for the full list: https://github.com/r-lib/backports
 strrep <- function(x, times) {
   x <- as.character(x)
@@ -1242,4 +1251,8 @@ if (current_R_older_than(3.1)) {
   cospi <- function(...) 1
   sinpi <- function(...) 1
   tanpi <- function(...) 1
+}
+dir.exists <- function (paths) {
+  x = base::file.info(paths)$isdir
+  !is.na(x) & x
 }

@@ -26,9 +26,11 @@
 on:
   push:
     branches:
+      - premaster
       - master
   pull_request:
     branches:
+      - premaster
       - master
 
 name: code-coverage
@@ -67,5 +69,10 @@ jobs:
         shell: Rscript {0}
 
       - name: Test coverage
-        run: covr::codecov(line_exclusions = list("R/atc_online.R", "R/mo_source.R", "R/translate.R", "R/resistance_predict.R", "R/aa_helper_functions.R", "R/aa_helper_pm_functions.R", "R/zzz.R"), quiet = FALSE)
+        run: |
+          source_files <- list.files("R", pattern = ".R$", full.names = TRUE)
+          test_files <- list.files("inst/tinytest", full.names = TRUE)
+          cov <- covr::file_coverage(source_files = source_files, test_files = test_files, line_exclusions = list("R/atc_online.R", "R/mo_source.R", "R/translate.R", "R/resistance_predict.R", "R/aa_helper_functions.R", "R/aa_helper_pm_functions.R", "R/zzz.R"))
+          attr(cov, which = "package") <- list(path = ".") # until https://github.com/r-lib/covr/issues/478 is solved
+          covr::codecov(cov, quiet = FALSE)
         shell: Rscript {0}

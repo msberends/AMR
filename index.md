@@ -1,7 +1,5 @@
 # `AMR` (for R) <img src="./logo.png" align="right" height="120px" />
 
-*Note: the rules of 'EUCAST Clinical Breakpoints v11.0 (2021)' are now implemented.*
-
 ### What is `AMR` (for R)?
 
 *(To find out how to conduct AMR data analysis, please [continue reading here to get started](./articles/AMR.html).)*
@@ -30,13 +28,13 @@ example_isolates %>%
   mutate(bacteria = mo_fullname(mo)) %>%
   filter(mo_is_gram_negative(), mo_is_intrinsic_resistant(ab = "cefotax")) %>%
   select(bacteria, aminoglycosides(), carbapenems())
-#> ℹ Using column 'mo' as input for mo_is_gram_negative()
-#> ℹ Using column 'mo' as input for mo_is_intrinsic_resistant()
+#> ℹ Using column 'mo' as input for `mo_is_gram_negative()`
+#> ℹ Using column 'mo' as input for `mo_is_intrinsic_resistant()`
 #> ℹ Determining intrinsic resistance based on 'EUCAST Expert Rules' and 'EUCAST Intrinsic
 #>   Resistance and Unusual Phenotypes' v3.2 (2020)
-#> ℹ Applying `aminoglycosides()`: selecting columns 'AMK' (amikacin), 'GEN' (gentamicin), 'KAN'
+#> ℹ For `aminoglycosides()` using columns: 'AMK' (amikacin), 'GEN' (gentamicin), 'KAN'
 #>   (kanamycin) and 'TOB' (tobramycin)
-#> ℹ Applying `carbapenems()`: selecting columns 'IPM' (imipenem) and 'MEM' (meropenem)
+#> ℹ For `carbapenems()` using columns: 'IPM' (imipenem) and 'MEM' (meropenem)
 ```
 
 With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (`mo_is_gram_negative()` and `mo_is_intrinsic_resistant()`) and a column selection on two antibiotic groups (`aminoglycosides()` and `carbapenems()`), the reference data about [all microorganisms](./reference/microorganisms.html) and [all antibiotics](./reference/antibiotics.html) in the `AMR` package make sure you get what you meant:

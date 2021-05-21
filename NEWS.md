@@ -1,5 +1,5 @@
-# `AMR` 1.6.0.9054
-## <small>Last updated: 20 May 2021</small>
+# `AMR` 1.6.0.9055
+## <small>Last updated: 21 May 2021</small>
 
 ### Breaking change
 * All antibiotic class selectors (such as `carbapenems()`, `aminoglycosides()`) can now be used for filtering as well, making all their accompanying `filter_*()` functions redundant (such as `filter_carbapenems()`, `filter_aminoglycosides()`). These functions are now deprecated and will be removed in a next release.
@@ -62,18 +62,6 @@
 * Updated `skimr::skim()` usage for MIC values to also include 25th and 75th percentiles
 * Fix for plotting missing MIC/disk diffusion values
 * Updated join functions to always use `dplyr` join functions if the `dplyr` package is installed - now also preserving grouped variables
-* Updates for filtering on antibiotic classes (e.g., using `filter_carbapenems()`):
-  * Support for dplyr groups
-  * Support for base R row filtering:
-    ```r
-    dim(example_isolates)
-    #> [1] 2000   49
-    
-    example_isolates[filter_carbapenems(), ]
-    #> ℹ Applying `filter_carbapenems()`: values in any of columns 'IPM' (imipenem)
-    #>   or 'MEM' (meropenem) are either "R", "S" or "I"
-    #> [1] 962  49
-    ```
 * Antibiotic class selectors (such as `cephalosporins()`) now maintain the column order from the original data
 * Fix for selecting columns using `fluoroquinolones()`
 
