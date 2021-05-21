@@ -63,13 +63,16 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages(c("remotes"))
+          install.packages(c("remotes", "tinytest"))
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("covr")
+          remotes::install_local("data-raw/AMR_latest.tar.gz")
         shell: Rscript {0}
 
       - name: Test coverage
         run: |
+          library(AMR)
+          library(tinytest)
           source_files <- list.files("R", pattern = ".R$", full.names = TRUE)
           test_files <- list.files("inst/tinytest", full.names = TRUE)
           cov <- covr::file_coverage(source_files = source_files, test_files = test_files, line_exclusions = list("R/atc_online.R", "R/mo_source.R", "R/translate.R", "R/resistance_predict.R", "R/aa_helper_functions.R", "R/aa_helper_pm_functions.R", "R/zzz.R"))
