@@ -43,39 +43,40 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: r-lib/actions/setup-r@master
-
+      - uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: release
+          
       - uses: r-lib/actions/setup-pandoc@master
 
-      - name: Query dependencies
-        run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
-        shell: Rscript {0}
-
-      - name: Cache R packages
+      - name: Restore cached R packages
+        # this step will add the step 'Post Restore cached R packages' on a succesful run
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+          key: macOS-latest-r-release-v4
 
-      - name: Install dependencies
+      - name: Unpack AMR and install R dependencies
         run: |
-          install.packages(c("remotes", "tinytest"))
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran("covr")
-          remotes::install_local("data-raw/AMR_latest.tar.gz")
+          tar -xf data-raw/AMR_latest.tar.gz
+          Rscript -e "source('data-raw/_install_deps.R')"
+          Rscript -e "install.packages('covr')"
+        shell: bash
+        
+      - name: Show session info
+        run: |
+          options(width = 100)
+          utils::sessionInfo()
+          as.data.frame(utils::installed.packages())[, "Version", drop = FALSE]
         shell: Rscript {0}
 
       - name: Test coverage
         run: |
           library(AMR)
           library(tinytest)
-          source_files <- list.files("R", pattern = ".R$", full.names = TRUE)
-          test_files <- list.files("inst/tinytest", full.names = TRUE)
+          source_files <- list.files("AMR/R", pattern = ".R$", full.names = TRUE)
+          test_files <- list.files("AMR/inst/tinytest", full.names = TRUE)
           cov <- covr::file_coverage(source_files = source_files, test_files = test_files, parent_env = asNamespace("AMR"), line_exclusions = list("R/atc_online.R", "R/mo_source.R", "R/translate.R", "R/resistance_predict.R", "R/aa_helper_functions.R", "R/aa_helper_pm_functions.R", "R/zzz.R"))
-          attr(cov, which = "package") <- list(path = ".") # until https://github.com/r-lib/covr/issues/478 is solved
+          attr(cov, which = "package") <- list(path = "AMR") # until https://github.com/r-lib/covr/issues/478 is solved
           covr::codecov(cov, quiet = FALSE)
         shell: Rscript {0}

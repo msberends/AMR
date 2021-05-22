@@ -25,17 +25,15 @@
 
 # some old R instances have trouble installing tinytest, so we ship it too
 install.packages("data-raw/tinytest_1.2.4.patched.tar.gz")
+install.packages("data-raw/AMR_latest.tar.gz", dependencies = FALSE)
 
-descr <- readLines("AMR/DESCRIPTION")
-pkg_suggests <- gsub(".*Suggests: (.*)*?[A-Z].*", "\\1", paste0(descr, "*", collapse = ""), perl = FALSE)
-pkg_suggests <- unlist(strsplit(pkg_suggests, "[,* ]"))
-pkg_suggests <- pkg_suggests[pkg_suggests != ""]
+pkg_suggests <- gsub("[^a-zA-Z0-9]+", "", unlist(strsplit(packageDescription("AMR", fields = "Suggests"), ", ?")))
 cat("Packages listed in Suggests:", paste(pkg_suggests, collapse = ", "), "\n")
 
 to_install <- pkg_suggests[!pkg_suggests %in% rownames(utils::installed.packages())]
-to_update <- as.data.frame(utils::old.packages(repos = "https://cran.rstudio.com/"), stringsAsFactors = FALSE)
-to_update <- to_update[which(to_update$Package %in% pkg_suggests), "Package", drop = TRUE]
-
+if (length(to_install) == 0) {
+  message("Nothing to install")
+}
 for (i in seq_len(length(to_install))) {
   cat("Installing package", to_install[i], "\n")
   tryCatch(install.packages(to_install[i], repos = "https://cran.rstudio.com/", dependencies = TRUE, quiet = TRUE),
@@ -44,6 +42,11 @@ for (i in seq_len(length(to_install))) {
            error = function(e) message(e$message))
 }
 
+to_update <- as.data.frame(utils::old.packages(repos = "https://cran.rstudio.com/"), stringsAsFactors = FALSE)
+to_update <- to_update[which(to_update$Package %in% pkg_suggests), "Package", drop = TRUE]
+if (length(to_update) == 0) {
+  message("Nothing to update")
+}
 for (i in seq_len(length(to_update))) {
   cat("Updating package", to_update[i], "\n")
   tryCatch(update.packages(to_update[i], repos = "https://cran.rstudio.com/", ask = FALSE),
