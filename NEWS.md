@@ -1,4 +1,4 @@
-# `AMR` 1.6.0.9058
+# `AMR` 1.6.0.9060
 ## <small>Last updated: 22 May 2021</small>
 
 ### Breaking change

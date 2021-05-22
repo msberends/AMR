@@ -60,7 +60,6 @@ jobs:
         run: |
           tar -xf data-raw/AMR_latest.tar.gz
           Rscript -e "source('data-raw/_install_deps.R')"
-          Rscript -e "install.packages('covr')"
         shell: bash
         
       - name: Show session info
@@ -76,10 +75,11 @@ jobs:
         run: |
           library(AMR)
           library(tinytest)
+          library(covr)
           source_files <- list.files("AMR/R", pattern = ".R$", full.names = TRUE)
           test_files <- list.files("AMR/inst/tinytest", full.names = TRUE)
-          cov <- covr::file_coverage(source_files = source_files, test_files = test_files, parent_env = asNamespace("AMR"), line_exclusions = list("R/atc_online.R", "R/mo_source.R", "R/translate.R", "R/resistance_predict.R", "R/aa_helper_functions.R", "R/aa_helper_pm_functions.R", "R/zzz.R"))
+          cov <- file_coverage(source_files = source_files, test_files = test_files, parent_env = asNamespace("AMR"), line_exclusions = list("AMR/R/atc_online.R", "AMR/R/mo_source.R", "AMR/R/translate.R", "AMR/R/resistance_predict.R", "AMR/R/aa_helper_functions.R", "AMR/R/aa_helper_pm_functions.R", "AMR/R/zzz.R"))
           print(cov)
-          attr(cov, which = "package") <- list(path = "") # until https://github.com/r-lib/covr/issues/478 is solved
-          covr::codecov(cov, quiet = FALSE)
+          attr(cov, which = "package") <- list(path = ".") # until https://github.com/r-lib/covr/issues/478 is solved
+          codecov(coverage = cov, quiet = FALSE)
         shell: Rscript {0}

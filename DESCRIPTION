@@ -1,5 +1,5 @@
 Package: AMR
-Version: 1.6.0.9058
+Version: 1.6.0.9060
 Date: 2021-05-22
 Title: Antimicrobial Resistance Data Analysis
 Authors@R: c(
@@ -43,6 +43,7 @@ Depends:
     R (>= 3.0.0)
 Suggests:
     cleaner,
+    covr,
     curl,
     dplyr,
     ggplot2,

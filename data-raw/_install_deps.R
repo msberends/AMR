@@ -32,7 +32,7 @@ cat("Packages listed in Suggests:", paste(pkg_suggests, collapse = ", "), "\n")
 
 to_install <- pkg_suggests[!pkg_suggests %in% rownames(utils::installed.packages())]
 if (length(to_install) == 0) {
-  message("Nothing to install")
+  message("\nNothing to install\n")
 }
 for (i in seq_len(length(to_install))) {
   cat("Installing package", to_install[i], "\n")
@@ -45,7 +45,7 @@ for (i in seq_len(length(to_install))) {
 to_update <- as.data.frame(utils::old.packages(repos = "https://cran.rstudio.com/"), stringsAsFactors = FALSE)
 to_update <- to_update[which(to_update$Package %in% pkg_suggests), "Package", drop = TRUE]
 if (length(to_update) == 0) {
-  message("Nothing to update")
+  message("\nNothing to update\n")
 }
 for (i in seq_len(length(to_update))) {
   cat("Updating package", to_update[i], "\n")
