@@ -58,10 +58,10 @@ tetracyclines(only_rsi_columns = FALSE)
 \item{only_rsi_columns}{a \link{logical} to indicate whether only columns of class \verb{<rsi>} must be selected (defaults to \code{FALSE}), see \code{\link[=as.rsi]{as.rsi()}}}
 }
 \description{
-These functions help to filter and select columns with antibiotic test results that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. \strong{\Sexpr{ifelse(as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2, paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
+These functions help to filter and select columns with antibiotic test results that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. \strong{\Sexpr{ifelse(getRversion() < "3.2", paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
 }
 \details{
-\strong{\Sexpr{ifelse(as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2, paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
+\strong{\Sexpr{ifelse(getRversion() < "3.2", paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
 
 These functions can be used in data set calls for selecting columns and filtering rows, see \emph{Examples}. They support base R, but work more convenient in dplyr functions such as \code{\link[dplyr:select]{select()}}, \code{\link[dplyr:filter]{filter()}} and \code{\link[dplyr:summarise]{summarise()}}.
 

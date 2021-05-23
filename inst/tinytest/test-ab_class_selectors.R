@@ -23,7 +23,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-if (!AMR:::current_R_older_than(3.2)) {
+if (getRversion() >= "3.2") {
   # antibiotic class selectors require at least R-3.2
   expect_true(ncol(example_isolates[, aminoglycosides(), drop = FALSE]) < ncol(example_isolates))
   expect_true(ncol(example_isolates[, betalactams(), drop = FALSE]) < ncol(example_isolates))

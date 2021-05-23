@@ -1,5 +1,5 @@
-# `AMR` 1.6.0.9061
-## <small>Last updated: 23 May 2021</small>
+# `AMR` 1.6.0.9062
+## <small>Last updated: 24 May 2021</small>
 
 ### Breaking change
 * All antibiotic class selectors (such as `carbapenems()`, `aminoglycosides()`) can now be used for filtering as well, making all their accompanying `filter_*()` functions redundant (such as `filter_carbapenems()`, `filter_aminoglycosides()`). These functions are now deprecated and will be removed in a next release.

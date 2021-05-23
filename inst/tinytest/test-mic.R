@@ -85,7 +85,7 @@ suppressWarnings(expect_identical(log1p(x), log1p(x_double)))
 suppressWarnings(expect_identical(cos(x), cos(x_double)))
 suppressWarnings(expect_identical(sin(x), sin(x_double)))
 suppressWarnings(expect_identical(tan(x), tan(x_double)))
-if (!AMR:::current_R_older_than(3.1)) {
+if (getRversion() >= "3.1") {
   suppressWarnings(expect_identical(cospi(x), cospi(x_double)))
   suppressWarnings(expect_identical(sinpi(x), sinpi(x_double)))
   suppressWarnings(expect_identical(tanpi(x), tanpi(x_double)))

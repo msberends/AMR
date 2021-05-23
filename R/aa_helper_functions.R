@@ -727,7 +727,7 @@ get_current_data <- function(arg_name, call) {
     }
   }
 
-  if (current_R_older_than(3.2)) {
+  if (getRversion() < "3.2") {
     # R-3.0 and R-3.1 do not have an `x` element in the call stack, rendering this function useless
     if (is.na(arg_name)) {
       # like in carbapenems() etc.
@@ -893,7 +893,7 @@ has_colour <- function() {
     if (Sys.getenv("RSTUDIO", "") == "") {
       return(FALSE)
     }
-    if ((cols <- Sys.getenv("RSTUDIO_CONSOLE_COLOR", "")) != "" && !is.na(as.numeric(cols))) {
+    if ((cols <- Sys.getenv("RSTUDIO_CONSOLE_COLOR", "")) != "" && !is.na(as.double(cols))) {
       return(TRUE)
     }
     tryCatch(get("isAvailable", envir = asNamespace("rstudioapi"))(), error = function(e) return(FALSE)) &&
@@ -1186,15 +1186,11 @@ percentage <- function(x, digits = NULL, ...) {
 }
 
 time_start_tracking <- function() {
-  pkg_env$time_start <- round(as.numeric(Sys.time()) * 1000)
+  pkg_env$time_start <- round(as.double(Sys.time()) * 1000)
 }
 
 time_track <- function(name = NULL) {
-  paste("(until now:", trimws(round(as.numeric(Sys.time()) * 1000) - pkg_env$time_start), "ms)")
-}
-
-current_R_older_than <- function(version) {
-  as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < version
+  paste("(until now:", trimws(round(as.double(Sys.time()) * 1000) - pkg_env$time_start), "ms)")
 }
 
 # prevent dependency on package 'backports' ----
@@ -1245,7 +1241,7 @@ lengths <- function(x, use.names = TRUE) {
   vapply(x, length, FUN.VALUE = NA_integer_, USE.NAMES = use.names)
 }
 
-if (current_R_older_than(3.1)) {
+if (getRversion() < "3.1") {
   # R-3.0 does not contain these functions, set them here to prevent installation failure
   # (required for extension of the <mic> class)
   cospi <- function(...) 1

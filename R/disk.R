@@ -85,7 +85,7 @@ as.disk <- function(x, na.rm = FALSE) {
                fixed = TRUE)
       x_clean <- gsub(remove, "", x, ignore.case = TRUE, fixed = fixed)
       # remove everything that is not a number or dot
-      as.numeric(gsub("[^0-9.]+", "", x_clean))
+      as.double(gsub("[^0-9.]+", "", x_clean))
     }
     
     # round up and make it an integer

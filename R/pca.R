@@ -120,7 +120,7 @@ pca <- function(x,
   message_("Columns selected for PCA: ", vector_and(font_bold(colnames(pca_data), collapse = NULL), quotes = TRUE),
            ". Total observations available: ", nrow(pca_data), ".")
   
-  if (current_R_older_than(3.4)) {
+  if (getRversion() < "3.4.0") {
     # stats::prcomp prior to 3.4.0 does not have the 'rank.' argument
     pca_model <- prcomp(pca_data, retx = retx, center = center, scale. = scale., tol = tol)
   } else {

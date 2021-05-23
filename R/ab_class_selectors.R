@@ -25,11 +25,11 @@
 
 #' Antibiotic Class Selectors
 #' 
-#' These functions help to filter and select columns with antibiotic test results that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. \strong{\Sexpr{ifelse(as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2, paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
+#' These functions help to filter and select columns with antibiotic test results that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. \strong{\Sexpr{ifelse(getRversion() < "3.2", paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param ab_class an antimicrobial class, such as `"carbapenems"`. The columns `group`, `atc_group1` and `atc_group2` of the [antibiotics] data set will be searched (case-insensitive) for this value.
 #' @param only_rsi_columns a [logical] to indicate whether only columns of class `<rsi>` must be selected (defaults to `FALSE`), see [as.rsi()]
-#' @details \strong{\Sexpr{ifelse(as.double(R.Version()$major) + (as.double(R.Version()$minor) / 10) < 3.2, paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
+#' @details \strong{\Sexpr{ifelse(getRversion() < "3.2", paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
 #' 
 #' 
 #' These functions can be used in data set calls for selecting columns and filtering rows, see *Examples*. They support base R, but work more convenient in dplyr functions such as [`select()`][dplyr::select()], [`filter()`][dplyr::filter()] and [`summarise()`][dplyr::summarise()].
@@ -220,7 +220,7 @@ ab_selector <- function(ab_class,
   meet_criteria(function_name, allow_class = "character", has_length = 1, .call_depth = 1)
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1, .call_depth = 1)
   
-  if (current_R_older_than(3.2)) {
+  if (getRversion() < "3.2") {
     warning_("antibiotic class selectors such as ", function_name, 
              "() require R version 3.2 or later - you have ", R.version.string,
              call = FALSE)

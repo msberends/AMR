@@ -75,11 +75,16 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
   # add decimals
   if (exact == TRUE) {
     # get dates of `x` when `x` would have the year of `reference`
-    x_in_reference_year <- as.POSIXlt(paste0(format(as.Date(reference), "%Y"), format(as.Date(x), "-%m-%d")))
+    x_in_reference_year <- as.POSIXlt(paste0(format(as.Date(reference), "%Y"),
+                                             format(as.Date(x), "-%m-%d")),
+                                      format = "%Y-%m-%d")
     # get differences in days
-    n_days_x_rest <- as.double(difftime(as.Date(reference), as.Date(x_in_reference_year), units = "days"))
+    n_days_x_rest <- as.double(difftime(as.Date(reference), 
+                                        as.Date(x_in_reference_year),
+                                        units = "days"))
     # get numbers of days the years of `reference` has for a reliable denominator
-    n_days_reference_year <- as.POSIXlt(paste0(format(as.Date(reference), "%Y"), "-12-31"))$yday + 1
+    n_days_reference_year <- as.POSIXlt(paste0(format(as.Date(reference), "%Y"), "-12-31"),
+                                        format = "%Y-%m-%d")$yday + 1
     # add decimal parts of year
     mod <- n_days_x_rest / n_days_reference_year
     # negative mods are cases where `x_in_reference_year` > `reference` - so 'add' a year
@@ -100,7 +105,11 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
     ages <- ages[!is.na(ages)]
   }
   
-  ages
+  if (exact == TRUE) {
+    as.double(ages)
+  } else {
+    as.integer(ages)
+  }
 }
 
 #' Split Ages into Age Groups
