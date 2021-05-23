@@ -222,6 +222,9 @@ table a:not(.btn) {
 table a:not(.btn):hover {
   text-decoration: underline;
 }
+.template-article thead th {
+  text-align: inherit;
+}
 
 /* text below header in manual overview */
 .template-reference-index h2 ~ p {

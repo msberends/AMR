@@ -50,17 +50,22 @@ jobs:
       fail-fast: false
       matrix:
         config:
+          # these are the developmental version of R - we allow those tests to fail
           - {os: macOS-latest,   r: 'devel',   allowfail: true}
-          - {os: macOS-latest,   r: 'release', allowfail: false}
-          - {os: macOS-latest,   r: 'oldrel',  allowfail: false}
-          
           - {os: windows-latest, r: 'devel',   allowfail: true}
-          - {os: windows-latest, r: 'release', allowfail: false}
-          - {os: windows-latest, r: 'oldrel',  allowfail: false}
-          
           - {os: ubuntu-20.04,   r: 'devel',   allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          
+          # these are the current release of R
+          - {os: macOS-latest,   r: 'release', allowfail: false}
+          - {os: windows-latest, r: 'release', allowfail: false}
           - {os: ubuntu-20.04,   r: 'release', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          
+          # these are the previous release of R
+          - {os: macOS-latest,   r: 'oldrel',  allowfail: false}
+          - {os: windows-latest, r: 'oldrel',  allowfail: false}
           - {os: ubuntu-20.04,   r: 'oldrel',  allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          
+          # test against all released versions of R >= 3.0, we support them all!
           - {os: ubuntu-20.04,   r: '4.1',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-20.04,   r: '4.0',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-20.04,   r: '3.6',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}

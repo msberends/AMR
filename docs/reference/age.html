@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9055</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9061</span>
       </span>
     </div>
 
@@ -249,11 +249,11 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>date(s), will be coerced with <code><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXlt()</a></code></p></td>
+      <td><p>date(s), <a href='https://rdrr.io/r/base/character.html'>character</a> (vectors) will be coerced with <code><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXlt()</a></code></p></td>
     </tr>
     <tr>
       <th>reference</th>
-      <td><p>reference date(s) (defaults to today), will be coerced with <code><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXlt()</a></code></p></td>
+      <td><p>reference date(s) (defaults to today), <a href='https://rdrr.io/r/base/character.html'>character</a> (vectors) will be coerced with <code><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXlt()</a></code></p></td>
     </tr>
     <tr>
       <th>exact</th>
@@ -275,6 +275,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Ages below 0 will be returned as <code>NA</code> with a warning. Ages above 120 will only give a warning.</p>
+<p>This function vectorises over both <code>x</code> and <code>reference</code>, meaning that either can have a length of 1 while the other argument has a larger length.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable Lifecycle</h2>
 
     

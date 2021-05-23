@@ -1,5 +1,5 @@
-# `AMR` 1.6.0.9060
-## <small>Last updated: 22 May 2021</small>
+# `AMR` 1.6.0.9061
+## <small>Last updated: 23 May 2021</small>
 
 ### Breaking change
 * All antibiotic class selectors (such as `carbapenems()`, `aminoglycosides()`) can now be used for filtering as well, making all their accompanying `filter_*()` functions redundant (such as `filter_carbapenems()`, `filter_aminoglycosides()`). These functions are now deprecated and will be removed in a next release.
@@ -64,6 +64,7 @@
 * Updated join functions to always use `dplyr` join functions if the `dplyr` package is installed - now also preserving grouped variables
 * Antibiotic class selectors (such as `cephalosporins()`) now maintain the column order from the original data
 * Fix for selecting columns using `fluoroquinolones()`
+* `age()` now vectorises over both `x` and `reference`
 
 ### Other
 * All unit tests are now processed by the `tinytest` package, instead of the `testthat` package. The `testthat` package unfortunately requires tons of dependencies that are also heavy and only usable for recent R versions, disallowing developers to test a package under any R 3.* version. On the contrary, the `tinytest` package is very lightweight and dependency-free.

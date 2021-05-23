@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9060</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9061</span>
       </span>
     </div>
 
@@ -236,12 +236,12 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1609060" class="section level1">
-<h1 class="page-header" data-toc-text="1.6.0.9060">
-<a href="#amr-1609060" class="anchor"></a><small> Unreleased </small><code>AMR</code> 1.6.0.9060</h1>
-<div id="last-updated-22-may-2021" class="section level2">
+    <div id="amr-1609061" class="section level1">
+<h1 class="page-header" data-toc-text="1.6.0.9061">
+<a href="#amr-1609061" class="anchor"></a><small> Unreleased </small><code>AMR</code> 1.6.0.9061</h1>
+<div id="last-updated-23-may-2021" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-22-may-2021" class="anchor"></a><small>Last updated: 22 May 2021</small>
+<a href="#last-updated-23-may-2021" class="anchor"></a><small>Last updated: 23 May 2021</small>
 </h2>
 <div id="breaking-change" class="section level3">
 <h3 class="hasAnchor">
@@ -334,6 +334,9 @@
 <li>Updated join functions to always use <code>dplyr</code> join functions if the <code>dplyr</code> package is installed - now also preserving grouped variables</li>
 <li>Antibiotic class selectors (such as <code><a href="../reference/antibiotic_class_selectors.html">cephalosporins()</a></code>) now maintain the column order from the original data</li>
 <li>Fix for selecting columns using <code><a href="../reference/antibiotic_class_selectors.html">fluoroquinolones()</a></code>
+</li>
+<li>
+<code><a href="../reference/age.html">age()</a></code> now vectorises over both <code>x</code> and <code>reference</code>
 </li>
 </ul>
 </div>

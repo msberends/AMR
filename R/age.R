@@ -27,12 +27,14 @@
 #'
 #' Calculates age in years based on a reference date, which is the sytem date at default.
 #' @inheritSection lifecycle Stable Lifecycle
-#' @param x date(s), will be coerced with [as.POSIXlt()]
-#' @param reference reference date(s) (defaults to today), will be coerced with [as.POSIXlt()]
+#' @param x date(s), [character] (vectors) will be coerced with [as.POSIXlt()]
+#' @param reference reference date(s) (defaults to today), [character] (vectors) will be coerced with [as.POSIXlt()]
 #' @param exact a [logical] to indicate whether age calculation should be exact, i.e. with decimals. It divides the number of days of [year-to-date](https://en.wikipedia.org/wiki/Year-to-date) (YTD) of `x` by the number of days in the year of `reference` (either 365 or 366).
 #' @param na.rm a [logical] to indicate whether missing values should be removed
 #' @param ... arguments passed on to [as.POSIXlt()], such as `origin`
 #' @details Ages below 0 will be returned as `NA` with a warning. Ages above 120 will only give a warning.
+#' 
+#' This function vectorises over both `x` and `reference`, meaning that either can have a length of 1 while the other argument has a larger length.
 #' @return An [integer] (no decimals) if `exact = FALSE`, a [double] (with decimals) otherwise
 #' @seealso To split ages into groups, use the [age_groups()] function.
 #' @inheritSection AMR Read more on Our Website!
@@ -53,8 +55,13 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)
   
   if (length(x) != length(reference)) {
-    stop_if(length(reference) != 1, "`x` and `reference` must be of same length, or `reference` must be of length 1.")
-    reference <- rep(reference, length(x))
+    if (length(x) == 1) {
+      x <- rep(x, length(reference))
+    } else if (length(reference) == 1) {
+      reference <- rep(reference, length(x))
+    } else {
+      stop_("`x` and `reference` must be of same length, or `reference` must be of length 1.")
+    }
   }
   x <- as.POSIXlt(x, ...)
   reference <- as.POSIXlt(reference, ...)
@@ -68,15 +75,15 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
   # add decimals
   if (exact == TRUE) {
     # get dates of `x` when `x` would have the year of `reference`
-    x_in_reference_year <- as.POSIXlt(paste0(format(reference, "%Y"), format(x, "-%m-%d")))
+    x_in_reference_year <- as.POSIXlt(paste0(format(as.Date(reference), "%Y"), format(as.Date(x), "-%m-%d")))
     # get differences in days
-    n_days_x_rest <- as.double(difftime(reference, x_in_reference_year, units = "days"))
+    n_days_x_rest <- as.double(difftime(as.Date(reference), as.Date(x_in_reference_year), units = "days"))
     # get numbers of days the years of `reference` has for a reliable denominator
-    n_days_reference_year <- as.POSIXlt(paste0(format(reference, "%Y"), "-12-31"))$yday + 1
+    n_days_reference_year <- as.POSIXlt(paste0(format(as.Date(reference), "%Y"), "-12-31"))$yday + 1
     # add decimal parts of year
     mod <- n_days_x_rest / n_days_reference_year
     # negative mods are cases where `x_in_reference_year` > `reference` - so 'add' a year
-    mod[mod < 0] <- 1 + mod[mod < 0]
+    mod[mod < 0] <- mod[mod < 0] + 1
     # and finally add to ages
     ages <- ages + mod
   }
