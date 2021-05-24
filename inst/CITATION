@@ -4,7 +4,7 @@ citEntry(
   entry        = "Article",
   title        = "AMR - An R Package for Working with Antimicrobial Resistance Data",
   author       = "M S Berends and C F Luz and A W Friedrich and B N M Sinha and C J Albers and C Glasner",
-  doi          = {10.1101/810622},
+  doi          = "10.1101/810622",
   journal      = "Journal of Statistical Software",
   pages        = "Accepted for publication",
   year         = 2021,

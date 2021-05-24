@@ -273,7 +273,7 @@ first_isolate <- function(x = NULL,
   # try to find columns based on type
   # -- mo
   if (is.null(col_mo)) {
-    col_mo <- search_type_in_df(x = x, type = "mo")
+    col_mo <- search_type_in_df(x = x, type = "mo", info = info)
     stop_if(is.null(col_mo), "`col_mo` must be set")
   }
   
@@ -299,7 +299,7 @@ first_isolate <- function(x = NULL,
       x$keyantimicrobials <- all_antimicrobials(x, only_rsi_columns = FALSE)
       col_keyantimicrobials <- "keyantimicrobials"
     } else if (type == "keyantimicrobials" & is.null(col_keyantimicrobials)) {
-      col_keyantimicrobials <- search_type_in_df(x = x, type = "keyantibiotics")
+      col_keyantimicrobials <- search_type_in_df(x = x, type = "keyantimicrobials", info = info)
       if (is.null(col_keyantimicrobials)) {
         # still not found as a column, create it ourselves
         x$keyantimicrobials <- key_antimicrobials(x, only_rsi_columns = FALSE, col_mo = col_mo, ...)
@@ -310,7 +310,7 @@ first_isolate <- function(x = NULL,
   
   # -- date
   if (is.null(col_date)) {
-    col_date <- search_type_in_df(x = x, type = "date")
+    col_date <- search_type_in_df(x = x, type = "date", info = info)
     stop_if(is.null(col_date), "`col_date` must be set")
   }
   
@@ -322,14 +322,14 @@ first_isolate <- function(x = NULL,
       col_patient_id <- "patient_id"
       message_("Using combined columns '", font_bold("First name"), "', '", font_bold("Last name"), "' and '", font_bold("Sex"), "' as input for `col_patient_id`")
     } else {
-      col_patient_id <- search_type_in_df(x = x, type = "patient_id")
+      col_patient_id <- search_type_in_df(x = x, type = "patient_id", info = info)
     }
     stop_if(is.null(col_patient_id), "`col_patient_id` must be set")
   }
 
   # -- specimen
   if (is.null(col_specimen) & !is.null(specimen_group)) {
-    col_specimen <- search_type_in_df(x = x, type = "specimen")
+    col_specimen <- search_type_in_df(x = x, type = "specimen", info = info)
   }
   
   # check if columns exist

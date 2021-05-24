@@ -215,7 +215,6 @@ is.rsi.eligible <- function(x, threshold = 0.05) {
             "ab",
             "Date",
             "POSIXt",
-            "rsi",
             "raw",
             "hms",
             "mic",

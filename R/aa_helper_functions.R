@@ -192,7 +192,7 @@ search_type_in_df <- function(x, type, info = TRUE) {
 
   }
   # -- key antibiotics
-  if (type == "keyantibiotics") {
+  if (type %in% c("keyantibiotics", "keyantimicrobials")) {
     if (any(colnames(x) %like% "^key.*(ab|antibiotics|antimicrobials)")) {
       found <- sort(colnames(x)[colnames(x) %like% "^key.*(ab|antibiotics|antimicrobials)"])[1]
     }
@@ -865,7 +865,7 @@ unique_call_id <- function(entire_session = FALSE) {
     # combination of environment ID (like "0x7fed4ee8c848")
     # and highest system call
     call <- paste0(deparse(sys.calls()[[1]]), collapse = "")
-    if (call %like% "run_test_dir|test_all|tinytest|test_package|testthat") {
+    if (!interactive() || call %like% "run_test_dir|test_all|tinytest|test_package|testthat") {
       # unit tests will keep the same call and environment - give them a unique ID
       call <- paste0(sample(c(c(0:9), letters[1:6]), size = 64, replace = TRUE), collapse = "")
     }
@@ -1122,7 +1122,7 @@ s3_register <- function(generic, class, method = NULL) {
 
 # works exactly like round(), but rounds `round2(44.55, 1)` to 44.6 instead of 44.5
 # and adds decimal zeroes until `digits` is reached when force_zero = TRUE
-round2 <- function(x, digits = 0, force_zero = TRUE) {
+round2 <- function(x, digits = 1, force_zero = TRUE) {
   x <- as.double(x)
   # https://stackoverflow.com/a/12688836/4575331
   val <- (trunc((abs(x) * 10 ^ digits) + 0.5) / 10 ^ digits) * sign(x)
@@ -1174,7 +1174,7 @@ percentage <- function(x, digits = NULL, ...) {
     # round right: percentage(0.4455) and format(as.percentage(0.4455), 1) should return "44.6%", not "44.5%"
     x_formatted <- format(round2(as.double(x), digits = digits + 2) * 100,
                           scientific = FALSE,
-                          digits = digits,
+                          digits = max(1, digits),
                           nsmall = digits,
                           ...)
     x_formatted <- paste0(x_formatted, "%")

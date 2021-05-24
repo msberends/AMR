@@ -170,11 +170,14 @@ data <- data %>%
   mutate(bacteria = as.mo(bacteria))
 ```
 
-We also want to transform the antibiotics, because in real life data we don't know if they are really clean. The `as.rsi()` function ensures reliability and reproducibility in these kind of variables. The `mutate_at()` will run the `as.rsi()` function on defined variables:
+We also want to transform the antibiotics, because in real life data we don't know if they are really clean. The `as.rsi()` function ensures reliability and reproducibility in these kind of variables. The `is.rsi.eligible()` can check which columns are probably columns with R/SI test results. Using `mutate()` and `across()`, we can apply the transformation to the formal `<rsi>` class:
 
 ```{r transform abx}
+is.rsi.eligible(data)
+colnames(data)[is.rsi.eligible(data)]
+
 data <- data %>%
-  mutate_at(vars(AMX:GEN), as.rsi)
+  mutate(across(where(is.rsi.eligible), as.rsi))
 ```
 
 Finally, we will apply [EUCAST rules](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) on our antimicrobial results. In Europe, most medical microbiological laboratories already apply these rules. Our package features their latest insights on intrinsic resistance and exceptional phenotypes. Moreover, the `eucast_rules()` function can also apply additional rules, like forcing <help title="ATC: J01CA01">ampicillin</help> = R when <help title="ATC: J01CR02">amoxicillin/clavulanic acid</help> = R.
@@ -205,11 +208,13 @@ The Clinical and Laboratory Standards Institute (CLSI) appoints this as follows:
 > *(...) When preparing a cumulative antibiogram to guide clinical decisions about empirical antimicrobial therapy of initial infections, **only the first isolate of a given species per patient, per analysis period (eg, one year) should be included, irrespective of body site, antimicrobial susceptibility profile, or other phenotypical characteristics (eg, biotype)**. The first isolate is easily identified, and cumulative antimicrobial susceptibility test data prepared using the first isolate are generally comparable to cumulative antimicrobial susceptibility test data calculated by other methods, providing duplicate isolates are excluded.*
 <br>[M39-A4 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition. CLSI, 2014. Chapter 6.4](https://clsi.org/standards/products/microbiology/documents/m39/)
 
-This `AMR` package includes this methodology with the `first_isolate()` function. It adopts the episode of a year (can be changed by user) and it starts counting days after every selected isolate. This new variable can easily be added to our data:
+This `AMR` package includes this methodology with the `first_isolate()` function and is able to apply the four different methods as defined by [Hindler *et al.* in 2007](https://academic.oup.com/cid/article/44/6/867/364325): phenotype-based, episode-based, patient-based, isolate-based. The right method depends on your goals and analysis, but the default phenotype-based method is in any case the method to properly correct for most duplicate isolates. This method also takes into account the antimicrobial susceptibility test results using `all_microbials()`. Read more about the methods on the `first_isolate()` page.
+
+The outcome of the function can easily be added to our data:
 
 ```{r 1st isolate}
 data <- data %>% 
-  mutate(first = first_isolate())
+  mutate(first = first_isolate(info = TRUE))
 ```
 
 So only `r percentage(sum(data$first) / nrow(data))` is suitable for resistance analysis! We can now filter on it with the `filter()` function, also from the `dplyr` package:
@@ -219,79 +224,14 @@ data_1st <- data %>%
   filter(first == TRUE)
 ```
 
-For future use, the above two syntaxes can be shortened with the `filter_first_isolate()` function:
+For future use, the above two syntaxes can be shortened:
 
-```{r 1st isolate filter 2, eval = FALSE}
+```{r 1st isolate filter 2}
 data_1st <- data %>% 
   filter_first_isolate()
 ```
 
-## First *weighted* isolates
-
-```{r, echo = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
-weighted_df <- data %>%
-  filter(bacteria == as.mo("Escherichia coli")) %>% 
-  # only most prevalent patient
-  filter(patient_id == top_freq(freq(., patient_id), 1)[1]) %>% 
-  arrange(date) %>%
-  select(date, patient_id, bacteria, AMX:GEN, first) %>% 
-  # maximum of 10 rows
-  .[1:min(10, nrow(.)),] %>% 
-  mutate(isolate = row_number()) %>% 
-  select(isolate, everything())
-```
-
-We made a slight twist to the CLSI algorithm, to take into account the antimicrobial susceptibility profile. Have a look at all *E. coli* isolates of patient `r as.data.frame(weighted_df[1, 'patient_id'])`, sorted on date:
-
-```{r, echo = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
-weighted_df %>% 
-  knitr::kable(align = "c")
-```
-
-Only `r sum(weighted_df$first)` isolates are marked as 'first' according to CLSI guideline. But when reviewing the antibiogram, it is obvious that some isolates are absolutely different strains and should be included too. This is why we weigh isolates, based on their antibiogram. The `key_antibiotics()` function adds a vector with 18 key antibiotics: 6 broad spectrum ones, 6 small spectrum for Gram negatives and 6 small spectrum for Gram positives. These can be defined by the user.
-
-If a column exists with a name like 'key(...)ab' the `first_isolate()` function will automatically use it and determine the first weighted isolates. Mind the NOTEs in below output: 
-
-```{r 1st weighted, warning = FALSE}
-data <- data %>% 
-  mutate(keyab = key_antibiotics()) %>% 
-  mutate(first_weighted = first_isolate())
-```
-
-```{r, echo = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
-weighted_df2 <- data %>%
-  filter(bacteria == as.mo("Escherichia coli")) %>% 
-  # only most prevalent patient
-  filter(patient_id == top_freq(freq(., patient_id), 1)[1]) %>% 
-  arrange(date) %>%
-  select(date, patient_id, bacteria, AMX:GEN, first, first_weighted) %>% 
-  # maximum of 10 rows
-  .[1:min(10, nrow(.)),] %>% 
-  mutate(isolate = row_number()) %>% 
-  select(isolate, everything())
-
-weighted_df2 %>% 
-  knitr::kable(align = "c")
-```
-
-Instead of `r sum(weighted_df$first)`, now `r sum(weighted_df2$first_weighted)` isolates are flagged. In total, `r percentage(sum(data$first_weighted) / nrow(data))` of all isolates are marked 'first weighted' - `r percentage((sum(data$first_weighted) / nrow(data)) - (sum(data$first) / nrow(data)))` more than when using the CLSI guideline. In real life, this novel algorithm will yield 5-10% more isolates than the classic CLSI guideline.
-
-As with `filter_first_isolate()`, there's a shortcut for this new algorithm too:
-```{r 1st isolate filter 3, results = 'hide', message = FALSE, warning = FALSE}
-data_1st <- data %>% 
-  filter_first_weighted_isolate()
-```
-
-So we end up with `r format(nrow(data_1st), big.mark = ",")` isolates for analysis. 
-
-We can remove unneeded columns:
-
-```{r}
-data_1st <- data_1st %>% 
-  select(-c(first, keyab))
-```
-
-Now our data looks like:
+So we end up with `r format(nrow(data_1st), big.mark = ",")` isolates for analysis. Now our data looks like:
 
 ```{r preview data set 3, eval = FALSE}
 head(data_1st)
@@ -327,6 +267,20 @@ data_1st %>%
 
 ## Overview of different bug/drug combinations
 
+Using [Tidyverse selections](https://tidyselect.r-lib.org/reference/language.html), you can also select or filter columns based on the antibiotic class they are in:
+
+```{r bug_drg 2a, eval = FALSE}
+data_1st %>% 
+  filter(any(aminoglycosides() == "R"))
+```
+
+```{r bug_drg 2b, echo = FALSE, results = 'asis'}
+knitr::kable(data_1st %>% 
+               filter(any(aminoglycosides() == "R")) %>% 
+               head(),
+             align = "c")
+```
+
 If you want to get a quick glance of the number of isolates in different bug/drug combinations, you can use the `bug_drug_combinations()` function:
 
 ```{r bug_drg 1a, eval = FALSE}
@@ -342,27 +296,28 @@ knitr::kable(data_1st %>%
              align = "c")
 ```
 
-Using [Tidyverse selections](https://tidyselect.r-lib.org/reference/language.html), you can also select columns based on the antibiotic class they are in:
 
-```{r bug_drg 2a, eval = FALSE}
+```{r bug_drg 3a, eval = FALSE}
 data_1st %>% 
-  select(bacteria, fluoroquinolones()) %>% 
+  select(bacteria, aminoglycosides()) %>% 
   bug_drug_combinations()
 ```
 
 
-```{r bug_drg 2b, echo = FALSE, results = 'asis'}
+```{r bug_drg 3b, echo = FALSE, results = 'asis'}
 knitr::kable(data_1st %>% 
-               select(bacteria, fluoroquinolones()) %>% 
+               select(bacteria, aminoglycosides()) %>% 
                bug_drug_combinations(),
              align = "c")
 ```
 
-This will only give you the crude numbers in the data. To calculate antimicrobial resistance, we use the `resistance()` and `susceptibility()` functions.
+This will only give you the crude numbers in the data. To calculate antimicrobial resistance in a more sensible way, also by correcting for too few results, we use the `resistance()` and `susceptibility()` functions.
 
 ## Resistance percentages
 
 The functions `resistance()` and `susceptibility()` can be used to calculate antimicrobial resistance or susceptibility. For more specific analyses, the functions `proportion_S()`, `proportion_SI()`, `proportion_I()`, `proportion_IR()` and `proportion_R()` can be used to determine the proportion of a specific antimicrobial outcome. 
+
+All these functions contain a `minimum` argument, denoting the minimum required number of test results for returning a value. These functions will otherwise return `NA`. The default is `minimum = 30`, following the [CLSI M39-A4 guideline](https://clsi.org/standards/products/microbiology/documents/m39/) for applying microbial epidemiology.
 
 As per the EUCAST guideline of 2019, we calculate resistance as the proportion of R (`proportion_R()`, equal to `resistance()`) and susceptibility as the proportion of S and I (`proportion_SI()`, equal to `susceptibility()`). These functions can be used on their own:
 
@@ -370,7 +325,7 @@ As per the EUCAST guideline of 2019, we calculate resistance as the proportion o
 data_1st %>% resistance(AMX)
 ```
 
-Or can be used in conjuction with `group_by()` and `summarise()`, both from the `dplyr` package:
+Or can be used in conjunction with `group_by()` and `summarise()`, both from the `dplyr` package:
 
 ```{r, eval = FALSE}
 data_1st %>% 

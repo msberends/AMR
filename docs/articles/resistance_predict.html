@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9011</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.0</span>
       </span>
     </div>
 
@@ -47,14 +47,14 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
     Home
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     How to
      
@@ -63,77 +63,77 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../articles/AMR.html">
-        <span class="fa fa-directions"></span>
+        <span class="fas fa-directions"></span>
          
         Conduct AMR analysis
       </a>
     </li>
     <li>
       <a href="../articles/resistance_predict.html">
-        <span class="fa fa-dice"></span>
+        <span class="fas fa-dice"></span>
          
         Predict antimicrobial resistance
       </a>
     </li>
     <li>
       <a href="../articles/datasets.html">
-        <span class="fa fa-database"></span>
+        <span class="fas fa-database"></span>
          
         Data sets for download / own use
       </a>
     </li>
     <li>
       <a href="../articles/PCA.html">
-        <span class="fa fa-compress"></span>
+        <span class="fas fa-compress"></span>
          
         Conduct principal component analysis for AMR
       </a>
     </li>
     <li>
       <a href="../articles/MDR.html">
-        <span class="fa fa-skull-crossbones"></span>
+        <span class="fas fa-skull-crossbones"></span>
          
         Determine multi-drug resistance (MDR)
       </a>
     </li>
     <li>
       <a href="../articles/WHONET.html">
-        <span class="fa fa-globe-americas"></span>
+        <span class="fas fa-globe-americas"></span>
          
         Work with WHONET data
       </a>
     </li>
     <li>
       <a href="../articles/SPSS.html">
-        <span class="fa fa-file-upload"></span>
+        <span class="fas fa-file-upload"></span>
          
         Import data from SPSS/SAS/Stata
       </a>
     </li>
     <li>
       <a href="../articles/EUCAST.html">
-        <span class="fa fa-exchange-alt"></span>
+        <span class="fas fa-exchange-alt"></span>
          
         Apply EUCAST rules
       </a>
     </li>
     <li>
       <a href="../reference/mo_property.html">
-        <span class="fa fa-bug"></span>
+        <span class="fas fa-bug"></span>
          
         Get properties of a microorganism
       </a>
     </li>
     <li>
       <a href="../reference/ab_property.html">
-        <span class="fa fa-capsules"></span>
+        <span class="fas fa-capsules"></span>
          
         Get properties of an antibiotic
       </a>
     </li>
     <li>
       <a href="../articles/benchmarks.html">
-        <span class="fa fa-shipping-fast"></span>
+        <span class="fas fa-shipping-fast"></span>
          
         Other: benchmarks
       </a>
@@ -142,21 +142,21 @@
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-book-open"></span>
+    <span class="fas fa-book-open"></span>
      
     Manual
   </a>
 </li>
 <li>
   <a href="../authors.html">
-    <span class="fa fa-users"></span>
+    <span class="fas fa-users"></span>
      
     Authors
   </a>
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="far fa far fa-newspaper"></span>
+    <span class="far fa-newspaper"></span>
      
     Changelog
   </a>
@@ -165,14 +165,14 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/msberends/AMR">
-    <span class="fab fa fab fa-github"></span>
+    <span class="fab fa-github"></span>
      
     Source Code
   </a>
 </li>
 <li>
   <a href="../survey.html">
-    <span class="fa fa-clipboard-list"></span>
+    <span class="fas fa-clipboard-list"></span>
      
     Survey
   </a>
@@ -187,8 +187,7 @@
 
       
 
-      </header><link href="resistance_predict_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="resistance_predict_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="resistance_predict_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>How to predict antimicrobial resistance</h1>
@@ -206,37 +205,37 @@
 <a href="#needed-r-packages" class="anchor"></a>Needed R packages</h2>
 <p>As with many uses in R, we need some additional packages for AMR data analysis. Our package works closely together with the <a href="https://www.tidyverse.org">tidyverse packages</a> <a href="https://dplyr.tidyverse.org/"><code>dplyr</code></a> and <a href="https://ggplot2.tidyverse.org"><code>ggplot2</code></a> by Dr Hadley Wickham. The tidyverse tremendously improves the way we conduct data science - it allows for a very natural way of writing syntaxes and creating beautiful plots in R.</p>
 <p>Our <code>AMR</code> package depends on these packages and even extends their use and functions.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span>
 
 <span class="co"># (if not yet installed, install with:)</span>
-<span class="co"># install.packages(c("tidyverse", "AMR"))</span></pre></div>
+<span class="co"># install.packages(c("tidyverse", "AMR"))</span></code></pre></div>
 </div>
 <div id="prediction-analysis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#prediction-analysis" class="anchor"></a>Prediction analysis</h2>
 <p>Our package contains a function <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>, which takes the same input as functions for <a href="./AMR.html">other AMR data analysis</a>. Based on a date column, it calculates cases per year and uses a regression model to predict antimicrobial resistance.</p>
 <p>It is basically as easy as:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># resistance prediction of piperacillin/tazobactam (TZP):</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw">resistance_predict</span>(<span class="dt">tbl =</span> example_isolates, <span class="dt">col_date =</span> <span class="st">"date"</span>, <span class="dt">col_ab =</span> <span class="st">"TZP"</span>, <span class="dt">model =</span> <span class="st">"binomial"</span>)</a>
-<a class="sourceLine" id="cb2-3" title="3"></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="co"># or:</span></a>
-<a class="sourceLine" id="cb2-5" title="5">example_isolates <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-6" title="6"><span class="st">  </span><span class="kw">resistance_predict</span>(<span class="dt">col_ab =</span> <span class="st">"TZP"</span>,</a>
-<a class="sourceLine" id="cb2-7" title="7">                     model  <span class="st">"binomial"</span>)</a>
-<a class="sourceLine" id="cb2-8" title="8"></a>
-<a class="sourceLine" id="cb2-9" title="9"><span class="co"># to bind it to object 'predict_TZP' for example:</span></a>
-<a class="sourceLine" id="cb2-10" title="10">predict_TZP &lt;-<span class="st"> </span>example_isolates <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-11" title="11"><span class="st">  </span><span class="kw">resistance_predict</span>(<span class="dt">col_ab =</span> <span class="st">"TZP"</span>,</a>
-<a class="sourceLine" id="cb2-12" title="12">                     <span class="dt">model =</span> <span class="st">"binomial"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># resistance prediction of piperacillin/tazobactam (TZP):</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">resistance_predict</span>(<span class="at">tbl =</span> example_isolates, <span class="at">col_date =</span> <span class="st">"date"</span>, <span class="at">col_ab =</span> <span class="st">"TZP"</span>, <span class="at">model =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># or:</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>example_isolates <span class="sc">%&gt;%</span> </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">resistance_predict</span>(<span class="at">col_ab =</span> <span class="st">"TZP"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                     model  <span class="st">"binomial"</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># to bind it to object 'predict_TZP' for example:</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>predict_TZP <span class="ot">&lt;-</span> example_isolates <span class="sc">%&gt;%</span> </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">resistance_predict</span>(<span class="at">col_ab =</span> <span class="st">"TZP"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">model =</span> <span class="st">"binomial"</span>)</span></code></pre></div>
 <p>The function will look for a date column itself if <code>col_date</code> is not set.</p>
 <p>When running any of these commands, a summary of the regression model will be printed unless using <code><a href="../reference/resistance_predict.html">resistance_predict(..., info = FALSE)</a></code>.</p>
 <pre><code># ℹ Using column 'date' as input for `col_date`.</code></pre>
 <p>This text is only a printed summary - the actual result (output) of the function is a <code>data.frame</code> containing for each year: the number of observations, the actual observed resistance, the estimated resistance and the standard error below and above the estimation:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">predict_TZP</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">predict_TZP</span>
 <span class="co">#    year      value    se_min    se_max observations   observed  estimated</span>
 <span class="co"># 1  2002 0.20000000        NA        NA           15 0.20000000 0.05616378</span>
 <span class="co"># 2  2003 0.06250000        NA        NA           32 0.06250000 0.06163839</span>
@@ -267,30 +266,31 @@
 <span class="co"># 27 2028 0.43730688 0.3418075 0.5328063           NA         NA 0.43730688</span>
 <span class="co"># 28 2029 0.46175755 0.3597639 0.5637512           NA         NA 0.46175755</span>
 <span class="co"># 29 2030 0.48639359 0.3782932 0.5944939           NA         NA 0.48639359</span>
-<span class="co"># 30 2031 0.51109592 0.3973697 0.6248221           NA         NA 0.51109592</span></pre></div>
+<span class="co"># 30 2031 0.51109592 0.3973697 0.6248221           NA         NA 0.51109592</span></code></pre></div>
 <p>The function <code>plot</code> is available in base R, and can be extended by other packages to depend the output based on the type of input. We extended its function to cope with resistance predictions:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">predict_TZP</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">predict_TZP</span><span class="op">)</span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-4-1.png" width="720"></p>
 <p>This is the fastest way to plot the result. It automatically adds the right axes, error bars, titles, number of available observations and type of model.</p>
 <p>We also support the <code>ggplot2</code> package with our custom function <code><a href="../reference/resistance_predict.html">ggplot_rsi_predict()</a></code> to create more appealing plots:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="va">predict_TZP</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="va">predict_TZP</span><span class="op">)</span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-5-1.png" width="720"></p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="co"># choose for error bars instead of a ribbon</span>
-<span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="va">predict_TZP</span>, ribbon <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="va">predict_TZP</span>, ribbon <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-5-2.png" width="720"></p>
 <div id="choosing-the-right-model" class="section level3">
 <h3 class="hasAnchor">
 <a href="#choosing-the-right-model" class="anchor"></a>Choosing the right model</h3>
 <p>Resistance is not easily predicted; if we look at vancomycin resistance in Gram-positive bacteria, the spread (i.e. standard error) is enormous:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">example_isolates</span> <span class="op">%&gt;%</span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">example_isolates</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="va">mo</span>, language <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">==</span> <span class="st">"Gram-positive"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span><span class="op">(</span>col_ab <span class="op">=</span> <span class="st">"VAN"</span>, year_min <span class="op">=</span> <span class="fl">2010</span>, info <span class="op">=</span> <span class="cn">FALSE</span>, model <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co"># ℹ Using column 'date' as input for `col_date`.</span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-6-1.png" width="720"></p>
 <p>Vancomycin resistance could be 100% in ten years, but might also stay around 0%.</p>
 <p>You can define the model with the <code>model</code> parameter. The model chosen above is a generalised linear regression model using a binomial distribution, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance.</p>
@@ -331,16 +331,17 @@
 </tbody>
 </table>
 <p>For the vancomycin resistance in Gram-positive bacteria, a linear model might be more appropriate since no binomial distribution is to be expected based on the observed years:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="va">example_isolates</span> <span class="op">%&gt;%</span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">example_isolates</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="va">mo</span>, language <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">==</span> <span class="st">"Gram-positive"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span><span class="op">(</span>col_ab <span class="op">=</span> <span class="st">"VAN"</span>, year_min <span class="op">=</span> <span class="fl">2010</span>, info <span class="op">=</span> <span class="cn">FALSE</span>, model <span class="op">=</span> <span class="st">"linear"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co"># ℹ Using column 'date' as input for `col_date`.</span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-7-1.png" width="720"></p>
 <p>This seems more likely, doesn’t it?</p>
 <p>The model itself is also available from the object, as an <code>attribute</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op">(</span><span class="va">predict_TZP</span><span class="op">)</span><span class="op">$</span><span class="va">model</span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op">(</span><span class="va">predict_TZP</span><span class="op">)</span><span class="op">$</span><span class="va">model</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">$</span><span class="va">family</span>
 <span class="co"># </span>
@@ -350,7 +351,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span>
 <span class="co">#                  Estimate  Std. Error   z value     Pr(&gt;|z|)</span>
 <span class="co"># (Intercept) -200.67944891 46.17315349 -4.346237 1.384932e-05</span>
-<span class="co"># year           0.09883005  0.02295317  4.305725 1.664395e-05</span></pre></div>
+<span class="co"># year           0.09883005  0.02295317  4.305725 1.664395e-05</span></code></pre></div>
 </div>
 </div>
   </div>

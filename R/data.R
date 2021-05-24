@@ -71,7 +71,7 @@
 #'
 #' WHONET 2019 software: <http://www.whonet.org/software.html>
 #'
-#' European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <http://ec.europa.eu/health/documents/community-register/html/atc.htm>
+#' European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm>
 #' @inheritSection AMR Reference Data Publicly Available
 #' @inheritSection WHOCC WHOCC
 #' @inheritSection AMR Read more on Our Website!

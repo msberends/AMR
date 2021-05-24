@@ -168,11 +168,3 @@ echo "•••••••••"
 echo "• Done •"
 echo "••••••••"
 echo
-
-read -p "Use R-hub to simulate all CRAN checks (y/N)? " choice
-case "$choice" in
-  y|Y|j|J ) ;;
-  * ) exit 1;;
-esac
-Rscript -e "rhub::check(devtools::build(), platform = rhub::platforms()[!is.na(rhub::platforms()$`cran-name`), 'name'])"
-echo

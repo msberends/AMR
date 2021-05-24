@@ -1,5 +1,5 @@
-# `AMR` 1.6.0.9065
-## <small>Last updated: 24 May 2021</small>
+# `AMR` 1.7.0
+
 
 ### Breaking change
 * All antibiotic class selectors (such as `carbapenems()`, `aminoglycosides()`) can now be used for filtering as well, making all their accompanying `filter_*()` functions redundant (such as `filter_carbapenems()`, `filter_aminoglycosides()`). These functions are now deprecated and will be removed in a next release.
@@ -906,7 +906,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
   * Emphasised in manual that penicillin is meant as benzylpenicillin (ATC [J01CE01](https://www.whocc.no/atc_ddd_index/?code=J01CE01))
   * New info is returned when running this function, stating exactly what has been changed or added. Use `eucast_rules(..., verbose = TRUE)` to get a data set with all changed per bug and drug combination.
 * Removed data sets `microorganisms.oldDT`, `microorganisms.prevDT`, `microorganisms.unprevDT` and `microorganismsDT` since they were no longer needed and only contained info already available in the `microorganisms` data set
-* Added 65 antibiotics to the `antibiotics` data set, from the [Pharmaceuticals Community Register](http://ec.europa.eu/health/documents/community-register/html/atc.htm) of the European Commission
+* Added 65 antibiotics to the `antibiotics` data set, from the [Pharmaceuticals Community Register](https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm) of the European Commission
 * Removed columns `atc_group1_nl` and `atc_group2_nl` from the `antibiotics` data set
 * Functions `atc_ddd()` and `atc_groups()` have been renamed `atc_online_ddd()` and `atc_online_groups()`. The old functions are deprecated and will be removed in a future version.
 * Function `guess_mo()` is now deprecated in favour of `as.mo()` and will be removed in future versions
