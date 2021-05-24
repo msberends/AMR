@@ -72,7 +72,7 @@
 #' count_susceptible(example_isolates$AMX)
 #' susceptibility(example_isolates$AMX) * n_rsi(example_isolates$AMX)
 #'
-#' 
+#' \donttest{
 #' if (require("dplyr")) {
 #'   example_isolates %>%
 #'     group_by(hospital_id) %>%
@@ -105,6 +105,7 @@
 #'     select(hospital_id, AMX, CIP) %>%
 #'     group_by(hospital_id) %>%
 #'     count_df(translate = FALSE)
+#' }
 #' }
 count_resistant <- function(..., only_all_tested = FALSE) {
   rsi_calc(...,

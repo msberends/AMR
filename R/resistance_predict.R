@@ -70,6 +70,7 @@
 #'                         year_min = 2010,
 #'                         model = "binomial")
 #' plot(x)
+#' \donttest{
 #' if (require("ggplot2")) {
 #'   ggplot_rsi_predict(x)
 #' }
@@ -113,6 +114,7 @@
 #'          y = "%R",
 #'          x = "Year") +
 #'     theme_minimal(base_size = 13)
+#' }
 #' }
 resistance_predict <- function(x,
                                col_ab,

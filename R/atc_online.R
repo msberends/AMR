@@ -64,7 +64,7 @@
 #' @inheritSection AMR Read more on Our Website!
 #' @source <https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/>
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # oral DDD (Defined Daily Dose) of amoxicillin
 #' atc_online_property("J01CA04", "DDD", "O")
 #' 

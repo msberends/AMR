@@ -115,7 +115,7 @@ example_isolates[any(carbapenems() == "R"), penicillins()]
 
 
 # dplyr -------------------------------------------------------------------
-
+\donttest{
 if (require("dplyr")) {
 
   # this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
@@ -163,5 +163,6 @@ if (require("dplyr")) {
   example_isolates[carbapenems() == "R", ]
   example_isolates \%>\% filter(carbapenems() == "R")
   example_isolates \%>\% filter(across(carbapenems(), ~.x == "R"))
+}
 }
 }

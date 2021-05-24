@@ -157,7 +157,7 @@ n_rsi(example_isolates$AMX)
 count_susceptible(example_isolates$AMX)
 susceptibility(example_isolates$AMX) * n_rsi(example_isolates$AMX)
 
-
+\donttest{
 if (require("dplyr")) {
   example_isolates \%>\%
     group_by(hospital_id) \%>\%
@@ -190,6 +190,7 @@ if (require("dplyr")) {
     select(hospital_id, AMX, CIP) \%>\%
     group_by(hospital_id) \%>\%
     count_df(translate = FALSE)
+}
 }
 }
 \seealso{

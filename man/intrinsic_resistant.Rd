@@ -33,11 +33,13 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 }
 
 \examples{
+\donttest{
 if (require("dplyr")) {
   intrinsic_resistant \%>\%
     filter(antibiotic == "Vancomycin", microorganism \%like\% "Enterococcus") \%>\% 
     pull(microorganism)
   # [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"
+}
 }
 }
 \keyword{datasets}

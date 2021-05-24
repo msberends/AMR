@@ -70,7 +70,7 @@
 #' 
 #' 
 #' # dplyr -------------------------------------------------------------------
-#' 
+#' \donttest{
 #' if (require("dplyr")) {
 #' 
 #'   # this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
@@ -118,6 +118,7 @@
 #'   example_isolates[carbapenems() == "R", ]
 #'   example_isolates %>% filter(carbapenems() == "R")
 #'   example_isolates %>% filter(across(carbapenems(), ~.x == "R"))
+#' }
 #' }
 ab_class <- function(ab_class, 
                      only_rsi_columns = FALSE) {

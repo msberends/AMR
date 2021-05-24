@@ -42,7 +42,6 @@
 #' # See ?example_isolates.
 #'
 #' \donttest{
-#' 
 #' if (require("dplyr")) {
 #'   # calculate the resistance per group first 
 #'   resistance_data <- example_isolates %>% 

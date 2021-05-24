@@ -61,10 +61,12 @@
 #' plot(some_mic_values, mo = "S. aureus", ab = "ampicillin")
 #' plot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
 #' 
+#' \donttest{
 #' if (require("ggplot2")) {
 #'   ggplot(some_mic_values)
 #'   ggplot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
 #'   ggplot(some_rsi_values)
+#' }
 #' }
 NULL
 

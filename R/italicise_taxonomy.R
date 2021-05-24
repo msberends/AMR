@@ -45,11 +45,12 @@
 #' 
 #' # since ggplot2 supports no markdown (yet), use
 #' # italicise_taxonomy() and the `ggtext` pkg for titles:
-#' 
+#' \donttest{
 #' if (require("ggplot2") && require("ggtext")) {
 #'   ggplot(example_isolates$AMC,
 #'          title = italicise_taxonomy("Amoxi/clav in E. coli")) +
 #'     theme(plot.title = ggtext::element_markdown())
+#' }
 #' }
 italicise_taxonomy <- function(string, type = c("markdown", "ansi")) {
   if (missing(type)) {

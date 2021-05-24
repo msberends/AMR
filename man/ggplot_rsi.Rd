@@ -154,6 +154,7 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 }
 
 \examples{
+\donttest{
 if (require("ggplot2") & require("dplyr")) {
  
   # get antimicrobial results for drugs against a UTI:
@@ -203,7 +204,6 @@ if (require("ggplot2") & require("dplyr")) {
     scale_rsi_colours(Value4 = "S", Value5 = "I", Value6 = "R")
 }
   
-\donttest{
 # resistance of ciprofloxacine per age group
 example_isolates \%>\%
   mutate(first_isolate = first_isolate(.)) \%>\%

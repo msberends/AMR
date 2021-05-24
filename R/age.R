@@ -88,13 +88,13 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
     # add decimal parts of year
     mod <- n_days_x_rest / n_days_reference_year
     # negative mods are cases where `x_in_reference_year` > `reference` - so 'add' a year
-    mod[mod < 0] <- mod[mod < 0] + 1
+    mod[!is.na(mod) & mod < 0] <- mod[!is.na(mod) & mod < 0] + 1
     # and finally add to ages
     ages <- ages + mod
   }
   
   if (any(ages < 0, na.rm = TRUE)) {
-    ages[ages < 0] <- NA
+    ages[!is.na(ages) & ages < 0] <- NA
     warning_("NAs introduced for ages below 0.", call = TRUE)
   }
   if (any(ages > 120, na.rm = TRUE)) {

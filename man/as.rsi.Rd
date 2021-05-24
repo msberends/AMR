@@ -161,12 +161,12 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 
 \examples{
 summary(example_isolates) # see all R/SI results at a glance
-
+\donttest{
 if (require("skimr")) {
   # class <rsi> supported in skim() too:
   skim(example_isolates)
 }
-
+}
 # For INTERPRETING disk diffusion and MIC values -----------------------
        
 # a whole data set, even with combined MIC values and disk zones

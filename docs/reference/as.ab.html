@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9055</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.6.0.9063</span>
       </span>
     </div>
 
@@ -347,7 +347,7 @@ This package contains <strong>all ~550 antibiotic, antimycotic and antiviral dru
 <span class='co'># they use as.ab() internally:</span>
 <span class='fu'><a href='ab_property.html'>ab_name</a></span><span class='op'>(</span><span class='st'>"J01FA01"</span><span class='op'>)</span>    <span class='co'># "Erythromycin"</span>
 <span class='fu'><a href='ab_property.html'>ab_name</a></span><span class='op'>(</span><span class='st'>"eryt"</span><span class='op'>)</span>       <span class='co'># "Erythromycin"</span>
-
+<span class='co'># \donttest{</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
 
   <span class='co'># you can quickly rename &lt;rsi&gt; columns using dplyr &gt;= 1.0.0:</span>
@@ -355,6 +355,7 @@ This package contains <strong>all ~550 antibiotic, antimycotic and antiviral dru
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename_with</a></span><span class='op'>(</span><span class='va'>as.ab</span>, <span class='fu'>where</span><span class='op'>(</span><span class='va'>is.rsi</span><span class='op'>)</span><span class='op'>)</span>
    
 <span class='op'>}</span>
+<span class='co'># }</span>
 </pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

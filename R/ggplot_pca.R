@@ -65,6 +65,7 @@
 #' # See ?example_isolates.
 #'
 #' # See ?pca for more info about Principal Component Analysis (PCA).
+#' \donttest{
 #' if (require("dplyr")) {
 #'   pca_model <- example_isolates %>% 
 #'     filter(mo_genus(mo) == "Staphylococcus") %>% 
@@ -83,6 +84,7 @@
 #'       scale_colour_viridis_d() +
 #'       labs(title = "Title here")
 #'   }
+#' }
 #' }
 ggplot_pca <- function(x,
                        choices = 1:2,

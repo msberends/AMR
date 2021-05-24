@@ -80,7 +80,7 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 }
 
 \examples{
-\donttest{
+\dontrun{
 # oral DDD (Defined Daily Dose) of amoxicillin
 atc_online_property("J01CA04", "DDD", "O")
 

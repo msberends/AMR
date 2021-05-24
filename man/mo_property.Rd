@@ -280,6 +280,7 @@ mo_fullname("S. pyogenes",
 mo_is_yeast(c("Candida", "E. coli"))      # TRUE, FALSE
 
 # gram stains and intrinsic resistance can also be used as a filter in dplyr verbs
+\donttest{
 if (require("dplyr")) {
   example_isolates \%>\%
     filter(mo_is_gram_positive())
@@ -294,6 +295,7 @@ mo_taxonomy("E. coli")
 # get a list with the taxonomy, the authors, Gram-stain,
 #   SNOMED codes, and URL to the online database
 mo_info("E. coli")
+}
 }
 }
 \seealso{

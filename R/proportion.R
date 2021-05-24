@@ -103,6 +103,7 @@
 #' proportion_IR(example_isolates$AMX)
 #' proportion_R(example_isolates$AMX)
 #'
+#' \donttest{
 #' if (require("dplyr")) {
 #'   example_isolates %>%
 #'     group_by(hospital_id) %>%
@@ -160,6 +161,7 @@
 #'     select(hospital_id, AMX, CIP) %>%
 #'     group_by(hospital_id) %>%
 #'     proportion_df(translate = FALSE)
+#' }
 #' }
 resistance <- function(...,
                        minimum = 30,

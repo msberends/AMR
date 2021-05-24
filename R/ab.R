@@ -82,13 +82,14 @@
 #' # they use as.ab() internally:
 #' ab_name("J01FA01")    # "Erythromycin"
 #' ab_name("eryt")       # "Erythromycin"
-#' 
+#' \donttest{
 #' if (require("dplyr")) {
 #' 
 #'   # you can quickly rename <rsi> columns using dplyr >= 1.0.0:
 #'   example_isolates %>%
 #'     rename_with(as.ab, where(is.rsi))
 #'    
+#' }
 #' }
 as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   meet_criteria(x, allow_class = c("character", "numeric", "integer", "factor"), allow_NA = TRUE)

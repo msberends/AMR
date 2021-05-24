@@ -35,12 +35,13 @@
 #' @export
 #' @examples
 #' availability(example_isolates)
-#'
+#' \donttest{
 #' if (require("dplyr")) {
 #'   example_isolates %>%
 #'     filter(mo == as.mo("E. coli")) %>%
 #'     select_if(is.rsi) %>%
 #'     availability()
+#' }
 #' }
 availability <- function(tbl, width = NULL) {
   meet_criteria(tbl, allow_class = "data.frame")

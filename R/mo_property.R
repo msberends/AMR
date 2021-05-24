@@ -152,6 +152,7 @@
 #' mo_is_yeast(c("Candida", "E. coli"))      # TRUE, FALSE
 #' 
 #' # gram stains and intrinsic resistance can also be used as a filter in dplyr verbs
+#' \donttest{
 #' if (require("dplyr")) {
 #'   example_isolates %>%
 #'     filter(mo_is_gram_positive())
@@ -166,6 +167,7 @@
 #' # get a list with the taxonomy, the authors, Gram-stain,
 #' #   SNOMED codes, and URL to the online database
 #' mo_info("E. coli")
+#' }
 #' }
 mo_name <- function(x, language = get_locale(), ...) {
   if (missing(x)) {

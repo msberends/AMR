@@ -67,6 +67,7 @@
 #' @export
 #' @inheritSection AMR Read more on Our Website!
 #' @examples
+#' \donttest{
 #' if (require("ggplot2") & require("dplyr")) {
 #'  
 #'   # get antimicrobial results for drugs against a UTI:
@@ -116,7 +117,6 @@
 #'     scale_rsi_colours(Value4 = "S", Value5 = "I", Value6 = "R")
 #' }
 #'   
-#' \donttest{
 #' # resistance of ciprofloxacine per age group
 #' example_isolates %>%
 #'   mutate(first_isolate = first_isolate(.)) %>%

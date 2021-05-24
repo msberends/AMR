@@ -102,13 +102,14 @@ ab_atc("seephthriaaksone") # and even this works
 # they use as.ab() internally:
 ab_name("J01FA01")    # "Erythromycin"
 ab_name("eryt")       # "Erythromycin"
-
+\donttest{
 if (require("dplyr")) {
 
   # you can quickly rename <rsi> columns using dplyr >= 1.0.0:
   example_isolates \%>\%
     rename_with(as.ab, where(is.rsi))
    
+}
 }
 }
 \seealso{

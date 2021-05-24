@@ -269,11 +269,13 @@
 #' @inheritSection AMR Reference Data Publicly Available
 #' @inheritSection AMR Read more on Our Website!
 #' @examples
+#' \donttest{
 #' if (require("dplyr")) {
 #'   intrinsic_resistant %>%
 #'     filter(antibiotic == "Vancomycin", microorganism %like% "Enterococcus") %>% 
 #'     pull(microorganism)
 #'   # [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"
+#' }
 #' }
 "intrinsic_resistant"
 

@@ -121,6 +121,7 @@ If the unlying code needs breaking changes, they will occur gradually. For examp
 # See ?example_isolates.
 
 # See ?pca for more info about Principal Component Analysis (PCA).
+\donttest{
 if (require("dplyr")) {
   pca_model <- example_isolates \%>\% 
     filter(mo_genus(mo) == "Staphylococcus") \%>\% 
@@ -139,5 +140,6 @@ if (require("dplyr")) {
       scale_colour_viridis_d() +
       labs(title = "Title here")
   }
+}
 }
 }

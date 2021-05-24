@@ -24,7 +24,7 @@
 # ==================================================================== #
 
 # some old R instances have trouble installing tinytest, so we ship it too
-install.packages("data-raw/tinytest_1.2.4.patched.tar.gz")
+install.packages("data-raw/tinytest_1.2.4.10.tar.gz")
 install.packages("data-raw/AMR_latest.tar.gz", dependencies = FALSE)
 
 pkg_suggests <- gsub("[^a-zA-Z0-9]+", "", unlist(strsplit(packageDescription("AMR", fields = "Suggests"), ", ?")))

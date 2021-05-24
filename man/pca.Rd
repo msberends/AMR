@@ -77,7 +77,6 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 # See ?example_isolates.
 
 \donttest{
-
 if (require("dplyr")) {
   # calculate the resistance per group first 
   resistance_data <- example_isolates \%>\% 

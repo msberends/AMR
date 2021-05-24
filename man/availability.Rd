@@ -35,11 +35,12 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 
 \examples{
 availability(example_isolates)
-
+\donttest{
 if (require("dplyr")) {
   example_isolates \%>\%
     filter(mo == as.mo("E. coli")) \%>\%
     select_if(is.rsi) \%>\%
     availability()
+}
 }
 }

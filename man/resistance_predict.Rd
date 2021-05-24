@@ -137,6 +137,7 @@ x <- resistance_predict(example_isolates,
                         year_min = 2010,
                         model = "binomial")
 plot(x)
+\donttest{
 if (require("ggplot2")) {
   ggplot_rsi_predict(x)
 }
@@ -180,6 +181,7 @@ if (require("dplyr") & require("ggplot2")) {
          y = "\%R",
          x = "Year") +
     theme_minimal(base_size = 13)
+}
 }
 }
 \seealso{
