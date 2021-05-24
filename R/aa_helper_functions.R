@@ -716,6 +716,11 @@ meet_criteria <- function(object,
 }
 
 get_current_data <- function(arg_name, call) {
+  # check if retrieved before, then get it from package environment
+  if (identical(unique_call_id(entire_session = FALSE), pkg_env$get_current_data.call)) {
+    return(pkg_env$get_current_data.out)
+  }
+  
   # try dplyr::cur_data_all() first to support dplyr groups
   # only useful for e.g. dplyr::filter(), dplyr::mutate() and dplyr::summarise()
   # not useful (throws error) with e.g. dplyr::select() - but that will be caught later in this function
@@ -723,7 +728,10 @@ get_current_data <- function(arg_name, call) {
   if (!is.null(cur_data_all)) {
     out <- tryCatch(cur_data_all(), error = function(e) NULL)
     if (is.data.frame(out)) {
-      return(structure(out, type = "dplyr_cur_data_all"))
+      out <- structure(out, type = "dplyr_cur_data_all")
+      pkg_env$get_current_data.call <- unique_call_id(entire_session = FALSE)
+      pkg_env$get_current_data.out <- out
+      return(out)
     }
   }
 
@@ -779,7 +787,10 @@ get_current_data <- function(arg_name, call) {
   # lookup the matched frame and return its value: a data.frame
   vars_df <- tryCatch(frms[[which(!vapply(FUN.VALUE = logical(1), frms, is.null))]], error = function(e) NULL)
   if (is.data.frame(vars_df)) {
-    return(structure(vars_df, type = source))
+    out <- structure(vars_df, type = source)
+    pkg_env$get_current_data.call <- unique_call_id(entire_session = FALSE)
+    pkg_env$get_current_data.out <- out
+    return(out)
   }
   
   # nothing worked, so:

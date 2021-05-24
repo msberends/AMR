@@ -36,5 +36,6 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
                         verbose = FALSE)
     cat(attributes(out)$duration, "\n")
     print(summary(out))
+    print(warnings())
   }
 }

@@ -104,6 +104,12 @@ get_column_abx <- function(x,
                            only_rsi_columns = FALSE,
                            sort = TRUE,
                            ...) {
+  
+  # check if retrieved before, then get it from package environment
+  if (identical(unique_call_id(entire_session = FALSE), pkg_env$get_column_abx.call)) {
+    return(pkg_env$get_column_abx.out)
+  }
+  
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(soft_dependencies, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(hard_dependencies, allow_class = "character", allow_NULL = TRUE)
@@ -184,6 +190,8 @@ get_column_abx <- function(x,
     if (info == TRUE) {
       message_("No columns found.")
     }
+    pkg_env$get_column_abx.call <- unique_call_id(entire_session = FALSE)
+    pkg_env$get_column_abx.out <- x
     return(x)
   }
   
@@ -239,6 +247,9 @@ get_column_abx <- function(x,
                missing_msg)
     }
   }
+  
+  pkg_env$get_column_abx.call <- unique_call_id(entire_session = FALSE)
+  pkg_env$get_column_abx.out <- x
   x
 }
 

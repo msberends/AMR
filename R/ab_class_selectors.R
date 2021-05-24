@@ -228,16 +228,9 @@ ab_selector <- function(ab_class,
     return(NULL)
   }
   
+  # to improve speed, get_current_data() and get_column_abx() only run once when e.g. in a select or group call
   vars_df <- get_current_data(arg_name = NA, call = -3)
-
-  # improve speed here so it will only run once when e.g. in one select call
-  if (!identical(pkg_env$ab_selector, unique_call_id())) {
-    ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
-    pkg_env$ab_selector <- unique_call_id()
-    pkg_env$ab_selector_cols <- ab_in_data
-  } else {
-    ab_in_data <- pkg_env$ab_selector_cols
-  }
+  ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
   
   if (length(ab_in_data) == 0) {
     message_("No antimicrobial agents found.")

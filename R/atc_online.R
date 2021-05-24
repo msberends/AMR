@@ -64,14 +64,16 @@
 #' @inheritSection AMR Read more on Our Website!
 #' @source <https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/>
 #' @examples
-#' \dontrun{
-#' # oral DDD (Defined Daily Dose) of amoxicillin
-#' atc_online_property("J01CA04", "DDD", "O")
+#' \donttest{
+#' if (requireNamespace("curl") && requireNamespace("rvest") && requireNamespace("xml2")) { 
+#'   # oral DDD (Defined Daily Dose) of amoxicillin
+#'   atc_online_property("J01CA04", "DDD", "O")
 #' 
-#' # parenteral DDD (Defined Daily Dose) of amoxicillin
-#' atc_online_property("J01CA04", "DDD", "P")
+#'   # parenteral DDD (Defined Daily Dose) of amoxicillin
+#'   atc_online_property("J01CA04", "DDD", "P")
 #'
-#' atc_online_property("J01CA04", property = "groups") # search hierarchical groups of amoxicillin
+#'   atc_online_property("J01CA04", property = "groups") # search hierarchical groups of amoxicillin
+#' }
 #' }
 atc_online_property <- function(atc_code,
                                 property,
