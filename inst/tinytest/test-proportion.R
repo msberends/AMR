@@ -88,14 +88,12 @@ if (AMR:::pkg_is_available("dplyr")) {
       example_isolates$AMX %>% proportion_R())
   )
 }
-AMR:::reset_all_thrown_messages()
+
 expect_warning(proportion_R(as.character(example_isolates$AMC)))
-AMR:::reset_all_thrown_messages()
 expect_warning(proportion_S(as.character(example_isolates$AMC)))
-AMR:::reset_all_thrown_messages()
 expect_warning(proportion_S(as.character(example_isolates$AMC,
                                          example_isolates$GEN)))
-AMR:::reset_all_thrown_messages()
+
 expect_warning(n_rsi(as.character(example_isolates$AMC,
                                   example_isolates$GEN)))
 expect_equal(suppressWarnings(n_rsi(as.character(example_isolates$AMC,
@@ -120,11 +118,8 @@ expect_identical(suppressWarnings(proportion_S(example_isolates$AMX, minimum = n
                  NA_real_)
 
 # warning for speed loss
-AMR:::reset_all_thrown_messages()
 expect_warning(proportion_R(as.character(example_isolates$GEN)))
-AMR:::reset_all_thrown_messages()
 expect_warning(proportion_I(as.character(example_isolates$GEN)))
-AMR:::reset_all_thrown_messages()
 expect_warning(proportion_S(example_isolates$AMC, as.character(example_isolates$GEN)))
 expect_error(proportion_df(c("A", "B", "C")))
 expect_error(proportion_df(example_isolates[, "date"]))

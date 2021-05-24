@@ -45,6 +45,7 @@ expect_warning(eucast_rules(data.frame(mo = "Escherichia coli", vancomycin = "S"
 
 expect_identical(colnames(example_isolates),
                  colnames(suppressWarnings(eucast_rules(example_isolates, info = FALSE))))
+
 expect_stdout(suppressMessages(eucast_rules(example_isolates, info = TRUE)))
 
 a <- data.frame(mo = c("Klebsiella pneumoniae",
@@ -84,7 +85,7 @@ if (AMR:::pkg_is_available("dplyr")) {
     "R")
 }
 
-# Azithromycin and Clarythromycin must be equal to Erythromycin
+# azithromycin and clarythromycin must be equal to Erythromycin
 a <- suppressWarnings(as.rsi(eucast_rules(data.frame(mo = example_isolates$mo,
                                                      ERY = example_isolates$ERY,
                                                      AZM = as.rsi("R"),
@@ -117,18 +118,21 @@ if (AMR:::pkg_is_available("dplyr")) {
 expect_stdout(suppressWarnings(eucast_rules(example_isolates, verbose = TRUE, rules = "all", info = TRUE)))
 
 # AmpC de-repressed cephalo mutants
+
 expect_identical(
   eucast_rules(data.frame(mo = c("Escherichia coli", "Enterobacter cloacae"),
                           cefotax = as.rsi(c("S", "S"))),
                ampc_cephalosporin_resistance = TRUE,
                info = FALSE)$cefotax,
   as.rsi(c("S", "R")))
+
 expect_identical(
   eucast_rules(data.frame(mo = c("Escherichia coli", "Enterobacter cloacae"),
                           cefotax = as.rsi(c("S", "S"))),
                ampc_cephalosporin_resistance = NA,
                info = FALSE)$cefotax,
   as.rsi(c("S", NA)))
+
 expect_identical(
   eucast_rules(data.frame(mo = c("Escherichia coli", "Enterobacter cloacae"),
                           cefotax = as.rsi(c("S", "S"))),

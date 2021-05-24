@@ -36,11 +36,9 @@ expect_equal(count_R(example_isolates$AMX) + count_I(example_isolates$AMX),
 expect_equal(suppressWarnings(count_S(example_isolates$AMX)) + count_I(example_isolates$AMX),
              count_SI(example_isolates$AMX))
 
-
 # warning for speed loss
-AMR:::reset_all_thrown_messages()
 expect_warning(count_resistant(as.character(example_isolates$AMC)))
-AMR:::reset_all_thrown_messages()
+
 expect_warning(count_resistant(example_isolates$AMC,
                                as.character(example_isolates$GEN)))
 

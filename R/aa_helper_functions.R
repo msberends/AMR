@@ -864,8 +864,13 @@ unique_call_id <- function(entire_session = FALSE) {
   } else {
     # combination of environment ID (like "0x7fed4ee8c848")
     # and highest system call
+    call <- paste0(deparse(sys.calls()[[1]]), collapse = "")
+    if (call %like% "run_test_dir|test_all|tinytest|test_package|testthat") {
+      # unit tests will keep the same call and environment - give them a unique ID
+      call <- paste0(sample(c(c(0:9), letters[1:6]), size = 64, replace = TRUE), collapse = "")
+    }
     c(envir = gsub("<environment: (.*)>", "\\1", utils::capture.output(sys.frames()[[1]])),
-      call = paste0(deparse(sys.calls()[[1]]), collapse = ""))
+      call = call)
   }
 }
 
@@ -879,14 +884,6 @@ remember_thrown_message <- function(fn, entire_session = FALSE) {
 
 message_not_thrown_before <- function(fn, entire_session = FALSE) {
   is.null(pkg_env[[paste0("thrown_msg.", fn)]]) || !identical(pkg_env[[paste0("thrown_msg.", fn)]], unique_call_id(entire_session))
-}
-
-reset_all_thrown_messages <- function() {
-  # for unit tests, where the environment and highest system call do not change
-  # can be found in tests/testthat/*.R
-  pkg_env_contents <- ls(envir = pkg_env)
-  rm(list = pkg_env_contents[pkg_env_contents %like% "^thrown_msg."],
-     envir = pkg_env)
 }
 
 has_colour <- function() {

@@ -115,35 +115,35 @@
 #'     ggplot() +
 #'     geom_col(aes(x = x, y = y, fill = z)) +
 #'     scale_rsi_colours(Value4 = "S", Value5 = "I", Value6 = "R")
+#'   
+#'   # resistance of ciprofloxacine per age group
+#'   example_isolates %>%
+#'     mutate(first_isolate = first_isolate()) %>%
+#'     filter(first_isolate == TRUE,
+#'            mo == as.mo("E. coli")) %>%
+#'     # age_groups() is also a function in this AMR package:
+#'     group_by(age_group = age_groups(age)) %>%
+#'     select(age_group,
+#'            CIP) %>%
+#'     ggplot_rsi(x = "age_group")
+#'   
+#'   # a shorter version which also adjusts data label colours:
+#'   example_isolates %>%
+#'     select(AMX, NIT, FOS, TMP, CIP) %>%
+#'     ggplot_rsi(colours = FALSE)
+#'
+#'
+#'   # it also supports groups (don't forget to use the group var on `x` or `facet`):
+#'   example_isolates %>%
+#'     select(hospital_id, AMX, NIT, FOS, TMP, CIP) %>%
+#'     group_by(hospital_id) %>%
+#'     ggplot_rsi(x = "hospital_id",
+#'                facet = "antibiotic",
+#'                nrow = 1,
+#'                title = "AMR of Anti-UTI Drugs Per Hospital",
+#'                x.title = "Hospital",
+#'                datalabels = FALSE)
 #' }
-#'   
-#' # resistance of ciprofloxacine per age group
-#' example_isolates %>%
-#'   mutate(first_isolate = first_isolate(.)) %>%
-#'   filter(first_isolate == TRUE,
-#'          mo == as.mo("E. coli")) %>%
-#'   # age_groups() is also a function in this AMR package:
-#'   group_by(age_group = age_groups(age)) %>%
-#'   select(age_group,
-#'          CIP) %>%
-#'   ggplot_rsi(x = "age_group")
-#'   
-#' # a shorter version which also adjusts data label colours:
-#' example_isolates %>%
-#'   select(AMX, NIT, FOS, TMP, CIP) %>%
-#'   ggplot_rsi(colours = FALSE)
-#'
-#'
-#' # it also supports groups (don't forget to use the group var on `x` or `facet`):
-#' example_isolates %>%
-#'   select(hospital_id, AMX, NIT, FOS, TMP, CIP) %>%
-#'   group_by(hospital_id) %>%
-#'   ggplot_rsi(x = "hospital_id",
-#'              facet = "antibiotic",
-#'              nrow = 1,
-#'              title = "AMR of Anti-UTI Drugs Per Hospital",
-#'              x.title = "Hospital",
-#'              datalabels = FALSE)
 #' }
 ggplot_rsi <- function(data,
                        position = NULL,

@@ -121,6 +121,7 @@ jobs:
       # - name: Only keep vignettes on release version
       - name: Remove vignettes
         # if: matrix.config.r != 'release'
+        if: always()
         # writing to DESCRIPTION2 and then moving to DESCRIPTION is required for R < 3.3 as writeLines() cannot overwrite
         run: |
           rm -rf AMR/vignettes
