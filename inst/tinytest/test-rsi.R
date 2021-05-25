@@ -45,7 +45,7 @@ expect_equal(summary(as.rsi(c("S", "R"))),
                          "- %S" = "50.0% (n=1)",
                          "- %I" = " 0.0% (n=0)"), class = c("summaryDefault", "table")))
 expect_identical(as.logical(lapply(example_isolates, is.rsi.eligible)),
-                 rep(FALSE, length(example_isolates)))
+                 as.logical(lapply(example_isolates, is.rsi)))
 expect_error(as.rsi.mic(as.mic(16)))
 expect_error(as.rsi.disk(as.disk(16)))
 expect_error(get_guideline("this one does not exist"))
