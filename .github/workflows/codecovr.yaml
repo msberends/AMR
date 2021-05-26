@@ -91,5 +91,3 @@ jobs:
           library(tinytest)
           covr::codecov(line_exclusions = list("R/atc_online.R", "R/mo_source.R", "R/translate.R", "R/resistance_predict.R", "R/aa_helper_functions.R", "R/aa_helper_pm_functions.R", "R/zzz.R"))
         shell: Rscript {0}
-      
-      

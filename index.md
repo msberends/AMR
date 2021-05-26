@@ -98,7 +98,7 @@ This package can be used for:
 
 #### Latest released version
 
-This package is available on the [rOpenSci R-universe platform](https://ropensci.org/r-universe/), as CRAN does not allow frequent updates of large packages. With CRAN, we cannot update this package frequently enough to implement the latest EUCAST/CLSI guidelines or the latest microbial taxonomy.
+This package is [available here](https://msberends.r-universe.dev) on the [rOpenSci R-universe platform](https://ropensci.org/r-universe/), as CRAN does not allow frequent updates of large packages (though the `AMR` package is only 7-9 MB). With CRAN, we apparently cannot update this package frequently enough to implement the latest EUCAST/CLSI guidelines or the latest microbial taxonomy.
 
 Install this package in R by using the command:
 
@@ -111,9 +111,6 @@ It will be downloaded and installed automatically.
 **Note:** Not all functions on this website may be available in this latest release. To use all functions and data sets mentioned on this website, install the latest development version.
 
 #### Latest development version
-![R-code-check](https://github.com/msberends/AMR/workflows/R-code-check/badge.svg?branch=master)
-[![CodeFactor](https://www.codefactor.io/repository/github/msberends/amr/badge)](https://www.codefactor.io/repository/github/msberends/amr)
-[![Codecov](https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gh/msberends/AMR?branch=master)
 
 The latest and unpublished development version can be installed from GitHub using:
 
@@ -121,6 +118,10 @@ The latest and unpublished development version can be installed from GitHub usin
 install.packages("remotes") # if you haven't already
 remotes::install_github("msberends/AMR")
 ```
+
+![R-code-check](https://github.com/msberends/AMR/workflows/R-code-check/badge.svg?branch=master)
+![[CodeFactor](https://www.codefactor.io/repository/github/msberends/amr/badge)](https://www.codefactor.io/repository/github/msberends/amr)
+![[Codecov](https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gh/msberends/AMR?branch=master)
 
 You can also download the latest build from our repository: <https://github.com/msberends/AMR/raw/master/data-raw/AMR_latest.tar.gz>
 

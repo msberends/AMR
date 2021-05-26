@@ -339,17 +339,17 @@ Unique: 2</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">my_TB_data</span><span class="op">)</span>
 <span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span>
-<span class="co"># 1          R         I            I          I            S            R</span>
-<span class="co"># 2          R         R            S          R            S            S</span>
-<span class="co"># 3          I         R            S          S            S            R</span>
-<span class="co"># 4          I         I            I          R            S            I</span>
-<span class="co"># 5          I         R            R          I            R            S</span>
-<span class="co"># 6          R         R            R          R            I            S</span>
+<span class="co"># 1          I         I            I          I            S            S</span>
+<span class="co"># 2          R         I            S          I            I            I</span>
+<span class="co"># 3          S         R            R          R            R            I</span>
+<span class="co"># 4          S         R            S          S            R            S</span>
+<span class="co"># 5          R         S            I          R            S            R</span>
+<span class="co"># 6          R         R            R          R            I            I</span>
 <span class="co">#   kanamycin</span>
-<span class="co"># 1         S</span>
+<span class="co"># 1         I</span>
 <span class="co"># 2         I</span>
-<span class="co"># 3         R</span>
-<span class="co"># 4         S</span>
+<span class="co"># 3         S</span>
+<span class="co"># 4         R</span>
 <span class="co"># 5         I</span>
 <span class="co"># 6         I</span></code></pre></div>
 <p>We can now add the interpretation of MDR-TB to our data set. You can use:</p>
@@ -367,7 +367,7 @@ Unique: 2</p>
 <p>Class: factor &gt; ordered (numeric)<br>
 Length: 5,000<br>
 Levels: 5: Negative &lt; Mono-resistant &lt; Poly-resistant &lt; Multi-drug-resistant &lt;…<br>
-Available: 5,000 (100%, NA: 0 = 0%)<br>
+Available: 5,000 (100.0%, NA: 0 = 0.0%)<br>
 Unique: 5</p>
 <table class="table">
 <thead><tr class="header">
@@ -382,40 +382,40 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistant</td>
-<td align="right">3200</td>
-<td align="right">64.00%</td>
-<td align="right">3200</td>
-<td align="right">64.00%</td>
+<td align="right">3271</td>
+<td align="right">65.42%</td>
+<td align="right">3271</td>
+<td align="right">65.42%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">1014</td>
-<td align="right">20.28%</td>
-<td align="right">4214</td>
-<td align="right">84.28%</td>
+<td align="right">949</td>
+<td align="right">18.98%</td>
+<td align="right">4220</td>
+<td align="right">84.40%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multi-drug-resistant</td>
-<td align="right">455</td>
-<td align="right">9.10%</td>
+<td align="right">449</td>
+<td align="right">8.98%</td>
 <td align="right">4669</td>
 <td align="right">93.38%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistant</td>
-<td align="right">252</td>
-<td align="right">5.04%</td>
-<td align="right">4921</td>
-<td align="right">98.42%</td>
+<td align="right">240</td>
+<td align="right">4.80%</td>
+<td align="right">4909</td>
+<td align="right">98.18%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensively drug-resistant</td>
-<td align="right">79</td>
-<td align="right">1.58%</td>
+<td align="right">91</td>
+<td align="right">1.82%</td>
 <td align="right">5000</td>
 <td align="right">100.00%</td>
 </tr>
