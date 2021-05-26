@@ -165,8 +165,10 @@ if (require("dplyr") & require("ggplot2")) {
                        model = "binomial",
                        info = FALSE,
                        minimum = 15)
+                       
+  ggplot(data)
 
-  ggplot(data,
+  ggplot(as.data.frame(data),
          aes(x = year)) +
     geom_col(aes(y = value),
              fill = "grey75") +
