@@ -97,16 +97,16 @@ This package can be used for:
 ### Get this package
 
 #### Latest released version
-[![CRAN](https://www.r-pkg.org/badges/version-ago/AMR)](https://cran.r-project.org/package=AMR)
-[![CRANlogs](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](https://cran.r-project.org/package=AMR)
 
-This package is available [here on the official R network (CRAN)](https://cran.r-project.org/package=AMR), which has a peer-reviewed submission process. Install this package in R from CRAN by using the command:
+This package is available on the [rOpenSci R-universe platform](https://ropensci.org/r-universe/), as CRAN does not allow frequent updates of large packages. With CRAN, we cannot update this package frequently enough to implement the latest EUCAST/CLSI guidelines or the latest microbial taxonomy.
+
+Install this package in R by using the command:
 
 ```r
-install.packages("AMR")
+install.packages("AMR", repos = "https://msberends.r-universe.dev")
 ```
 
-It will be downloaded and installed automatically. For RStudio, click on the menu *Tools* > *Install Packages...* and then type in "AMR" and press <kbd>Install</kbd>.
+It will be downloaded and installed automatically.
 
 **Note:** Not all functions on this website may be available in this latest release. To use all functions and data sets mentioned on this website, install the latest development version.
 
