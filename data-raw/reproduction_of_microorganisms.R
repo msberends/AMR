@@ -872,12 +872,12 @@ View(old_new)
 # set new MO codes as names to existing data sets
 rsi_translation$mo <- mo_name(rsi_translation$mo, language = NULL)
 microorganisms.codes$mo <- mo_name(microorganisms.codes$mo, language = NULL)
-microorganisms.translation <- AMR:::microorganisms.translation %>%
-  bind_rows(tibble(mo_old = AMR:::microorganisms.translation$mo_new, mo_new = mo_old)) %>%
-  filter(!mo_old %in% MOs$mo) %>% 
-  mutate(mo_new = mo_name(mo_new, language = NULL)) %>% 
-  bind_rows(old_new %>% select(mo_old, mo_new)) %>% 
-  distinct(mo_old, .keep_all = TRUE)
+# microorganisms.translation <- AMR:::microorganisms.translation %>%
+#   bind_rows(tibble(mo_old = AMR:::microorganisms.translation$mo_new, mo_new = mo_old)) %>%
+#   filter(!mo_old %in% MOs$mo) %>% 
+#   mutate(mo_new = mo_name(mo_new, language = NULL)) %>% 
+#   bind_rows(old_new %>% select(mo_old, mo_new)) %>% 
+#   distinct(mo_old, .keep_all = TRUE)
 
 # arrange the data sets to save
 MOs <- MOs %>% arrange(fullname)
@@ -911,23 +911,23 @@ devtools::load_all(".")
 rsi_translation$mo <- as.mo(rsi_translation$mo)
 microorganisms.codes$mo <- as.mo(microorganisms.codes$mo)
 class(microorganisms.codes$mo) <- c("mo", "character")
-microorganisms.translation <- microorganisms.translation %>%
-  # (to do: add last package version to column pkg_version)
-  left_join(microorganisms.old[, c("fullname", "fullname_new")], # microorganisms.old is now new and loaded
-            by = c("mo_new" = "fullname")) %>%
-  mutate(name = ifelse(!is.na(fullname_new), fullname_new, mo_new)) %>% 
-  left_join(microorganisms[, c("fullname", "mo")],               # as is microorganisms
-            by = c("name" = "fullname")) %>% 
-  select(mo_old, mo_new = mo) %>% 
-  filter(!is.na(mo_old), !is.na(mo_new))
-class(microorganisms.translation$mo_old) <- "character" # no class <mo> since those aren't valid MO codes
-class(microorganisms.translation$mo_new) <- c("mo", "character")
+# microorganisms.translation <- microorganisms.translation %>%
+#   # (to do: add last package version to column pkg_version)
+#   left_join(microorganisms.old[, c("fullname", "fullname_new")], # microorganisms.old is now new and loaded
+#             by = c("mo_new" = "fullname")) %>%
+#   mutate(name = ifelse(!is.na(fullname_new), fullname_new, mo_new)) %>% 
+#   left_join(microorganisms[, c("fullname", "mo")],               # as is microorganisms
+#             by = c("name" = "fullname")) %>% 
+#   select(mo_old, mo_new = mo) %>% 
+#   filter(!is.na(mo_old), !is.na(mo_new))
+# class(microorganisms.translation$mo_old) <- "character" # no class <mo> since those aren't valid MO codes
+# class(microorganisms.translation$mo_new) <- c("mo", "character")
 # save those to the package
 usethis::use_data(rsi_translation, overwrite = TRUE, version = 2)
 usethis::use_data(microorganisms.codes, overwrite = TRUE, version = 2)
-saveRDS(microorganisms.translation, file = "data-raw/microorganisms.translation.rds", version = 2)
+# saveRDS(microorganisms.translation, file = "data-raw/microorganisms.translation.rds", version = 2)
 # to save microorganisms.translation internally to the package
-source("data-raw/_internals.R")
+# source("data-raw/_internals.R")
 
 # load new data sets again
 devtools::load_all(".")
@@ -935,7 +935,7 @@ devtools::load_all(".")
 # and check: these codes should not be missing (will otherwise throw a unit test error):
 AMR::microorganisms.codes %>% filter(!mo %in% MOs$mo)
 AMR::rsi_translation %>% filter(!mo %in% MOs$mo)
-AMR:::microorganisms.translation %>% filter(!mo_new %in% MOs$mo)
+# AMR:::microorganisms.translation %>% filter(!mo_new %in% MOs$mo)
 
 # update the example_isolates data set
 example_isolates$mo <- as.mo(example_isolates$mo)

@@ -34,8 +34,6 @@ expect_identical(class(antibiotics$ab), c("ab", "character"))
 # check cross table reference
 expect_true(all(microorganisms.codes$mo %in% microorganisms$mo))
 expect_true(all(example_isolates$mo %in% microorganisms$mo))
-expect_true(all(AMR:::microorganisms.translation$mo_new %in% microorganisms$mo))
-expect_false(any(AMR:::microorganisms.translation$mo_old %in% microorganisms$mo))
 expect_true(all(rsi_translation$mo %in% microorganisms$mo))
 expect_true(all(rsi_translation$ab %in% antibiotics$ab))
 expect_true(all(intrinsic_resistant$microorganism %in% microorganisms$fullname)) # also important for mo_is_intrinsic_resistant()

@@ -472,8 +472,8 @@ first_isolate <- function(x = NULL,
                  as_note = FALSE)
       }
       if (type == "points") {
-        message_("Basing inclusion on all antimicrobial results, using a points threshold of "
-                 , points_threshold,
+        message_("Basing inclusion on all antimicrobial results, using a points threshold of ",
+                 points_threshold,
                  add_fn = font_black,
                  as_note = FALSE)
       }

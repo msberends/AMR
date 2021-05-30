@@ -380,37 +380,37 @@ MOs.old <- microorganisms.old %>%
 # Keep old codes for translation ------------------------------------------
 
 # add removed microbial IDs to the internal translation table so old package versions keep working
-MOs.translation <- microorganisms %>% 
-  filter(!mo %in% MOs$mo) %>%
-  select(mo, fullname) %>%
-  left_join(new_synonyms) %>% 
-  left_join(MOs %>% transmute(fullname_new = fullname, mo2 = as.character(mo))) %>% 
-  select(mo_old = mo, mo_new = mo2) %>% 
-  distinct()
-MOs.translation <- AMR:::microorganisms.translation %>% 
-  left_join(MOs.translation %>% select(mo_new_update = mo_new, mo_new = mo_old)) %>% 
-  mutate(mo_new = as.character(ifelse(!is.na(mo_new_update), mo_new_update, mo_new))) %>% 
-  select(-mo_new_update) %>% 
-  bind_rows(
-    # old IDs used in microorganisms.codes must put in here as well
-    microorganisms.codes %>%
-      filter(!mo %in% MOs$mo) %>%
-      transmute(mo_old = mo, fullname = mo_name(mo)) %>%
-      left_join(MOs.old %>%
-                  select(fullname, fullname_new)) %>%
-      left_join(MOs %>%
-                  select(mo_new = mo, fullname_new = fullname)) %>%
-      transmute(mo_old = as.character(mo_old), mo_new)) %>% 
-  arrange(mo_old) %>% 
-  filter(mo_old != mo_new,
-         !mo_old %in% MOs$mo) %>%
-  left_join(., ., 
-            by = c("mo_new" = "mo_old"), 
-            suffix = c("", ".2")) %>%
-  mutate(mo_new = ifelse(!is.na(mo_new.2), mo_new.2, mo_new)) %>% 
-  distinct(mo_old, mo_new) %>% 
-  # clean up
-  df_remove_nonASCII()
+# MOs.translation <- microorganisms %>% 
+#   filter(!mo %in% MOs$mo) %>%
+#   select(mo, fullname) %>%
+#   left_join(new_synonyms) %>% 
+#   left_join(MOs %>% transmute(fullname_new = fullname, mo2 = as.character(mo))) %>% 
+#   select(mo_old = mo, mo_new = mo2) %>% 
+#   distinct()
+# MOs.translation <- AMR:::microorganisms.translation %>% 
+#   left_join(MOs.translation %>% select(mo_new_update = mo_new, mo_new = mo_old)) %>% 
+#   mutate(mo_new = as.character(ifelse(!is.na(mo_new_update), mo_new_update, mo_new))) %>% 
+#   select(-mo_new_update) %>% 
+#   bind_rows(
+#     # old IDs used in microorganisms.codes must put in here as well
+#     microorganisms.codes %>%
+#       filter(!mo %in% MOs$mo) %>%
+#       transmute(mo_old = mo, fullname = mo_name(mo)) %>%
+#       left_join(MOs.old %>%
+#                   select(fullname, fullname_new)) %>%
+#       left_join(MOs %>%
+#                   select(mo_new = mo, fullname_new = fullname)) %>%
+#       transmute(mo_old = as.character(mo_old), mo_new)) %>% 
+#   arrange(mo_old) %>% 
+#   filter(mo_old != mo_new,
+#          !mo_old %in% MOs$mo) %>%
+#   left_join(., ., 
+#             by = c("mo_new" = "mo_old"), 
+#             suffix = c("", ".2")) %>%
+#   mutate(mo_new = ifelse(!is.na(mo_new.2), mo_new.2, mo_new)) %>% 
+#   distinct(mo_old, mo_new) %>% 
+#   # clean up
+#   df_remove_nonASCII()
 
 message("microorganisms new:     ", sum(!MOs$fullname %in% c(microorganisms$fullname, MOs.old$fullname)))
 message("microorganisms renamed: ", sum(!MOs.old$fullname %in% microorganisms.old$fullname))
@@ -424,12 +424,12 @@ class(MOs.translation$mo_new) <- c("mo", "character")
 
 microorganisms <- MOs
 microorganisms.old <- MOs.old
-microorganisms.translation <- MOs.translation
+# microorganisms.translation <- MOs.translation
 
 # on the server, do:
 usethis::use_data(microorganisms, overwrite = TRUE, version = 2, compress = "xz")
 usethis::use_data(microorganisms.old, overwrite = TRUE, version = 2)
-saveRDS(microorganisms.translation, file = "data-raw/microorganisms.translation.rds", version = 2)
+# saveRDS(microorganisms.translation, file = "data-raw/microorganisms.translation.rds", version = 2)
 rm(microorganisms)
 rm(microorganisms.old)
 rm(microorganisms.translation)

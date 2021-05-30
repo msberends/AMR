@@ -72,4 +72,76 @@ if (utf8_supported && !is_latex) {
       invisible(get_mo_source())
     }
   }, silent = TRUE)
+  
+  
+  # reference data - they have additional columns compared to `antibiotics` and `microorganisms` to improve speed
+  assign(x = "AB_lookup", value = create_AB_lookup(), envir = asNamespace("AMR"))
+  assign(x = "MO_lookup", value = create_MO_lookup(), envir = asNamespace("AMR"))
+  assign(x = "MO.old_lookup", value = create_MO.old_lookup(), envir = asNamespace("AMR"))
+  # for mo_is_intrinsic_resistant() - saves a lot of time when executed on this vector
+  assign(x = "INTRINSIC_R", value = create_intr_resistance(), envir = asNamespace("AMR"))
+}
+
+
+# Helper functions --------------------------------------------------------
+
+create_AB_lookup <- function() {
+  AB_lookup <- AMR::antibiotics
+  AB_lookup$generalised_name <- generalise_antibiotic_name(AB_lookup$name)
+  AB_lookup$generalised_synonyms <- lapply(AB_lookup$synonyms, generalise_antibiotic_name)
+  AB_lookup$generalised_abbreviations <- lapply(AB_lookup$abbreviations, generalise_antibiotic_name)
+  AB_lookup$generalised_loinc <- lapply(AB_lookup$loinc, generalise_antibiotic_name)
+  AB_lookup$generalised_all <- unname(lapply(as.list(as.data.frame(t(AB_lookup[, 
+                                                                               c("ab", "atc", "cid", "name",
+                                                                                 colnames(AB_lookup)[colnames(AB_lookup) %like% "generalised"]),
+                                                                               drop = FALSE]),
+                                                                   stringsAsFactors = FALSE)),
+                                             function(x) {
+                                               x <- generalise_antibiotic_name(unname(unlist(x)))
+                                               x[x != ""]
+                                             }))
+  AB_lookup
+}
+
+create_MO_lookup <- function() {
+  MO_lookup <- AMR::microorganisms
+  
+  MO_lookup$kingdom_index <- NA_real_
+  MO_lookup[which(MO_lookup$kingdom == "Bacteria" | MO_lookup$mo == "UNKNOWN"), "kingdom_index"] <- 1
+  MO_lookup[which(MO_lookup$kingdom == "Fungi"), "kingdom_index"] <- 2
+  MO_lookup[which(MO_lookup$kingdom == "Protozoa"), "kingdom_index"] <- 3
+  MO_lookup[which(MO_lookup$kingdom == "Archaea"), "kingdom_index"] <- 4
+  # all the rest
+  MO_lookup[which(is.na(MO_lookup$kingdom_index)), "kingdom_index"] <- 5
+  
+  # use this paste instead of `fullname` to work with Viridans Group Streptococci, etc.
+  MO_lookup$fullname_lower <- tolower(trimws(paste(MO_lookup$genus, 
+                                                   MO_lookup$species,
+                                                   MO_lookup$subspecies)))
+  ind <- MO_lookup$genus == "" | grepl("^[(]unknown ", MO_lookup$fullname, perl = TRUE)
+  MO_lookup[ind, "fullname_lower"] <- tolower(MO_lookup[ind, "fullname"])
+  MO_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", MO_lookup$fullname_lower, perl = TRUE))
+  
+  # add a column with only "e coli" like combinations
+  MO_lookup$g_species <- gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO_lookup$fullname_lower, perl = TRUE)
+  
+  # so arrange data on prevalence first, then kingdom, then full name
+  MO_lookup[order(MO_lookup$prevalence, MO_lookup$kingdom_index, MO_lookup$fullname_lower), ]
+}
+
+create_MO.old_lookup <- function() {
+  MO.old_lookup <- AMR::microorganisms.old
+  MO.old_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", tolower(trimws(MO.old_lookup$fullname))))
+  
+  # add a column with only "e coli"-like combinations
+  MO.old_lookup$g_species <- trimws(gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO.old_lookup$fullname_lower))
+  
+  # so arrange data on prevalence first, then full name
+  MO.old_lookup[order(MO.old_lookup$prevalence, MO.old_lookup$fullname_lower), ]
+}
+
+create_intr_resistance <- function() {
+  # for mo_is_intrinsic_resistant() - saves a lot of time when executed on this vector
+  paste(AMR::microorganisms[match(AMR::intrinsic_resistant$microorganism, AMR::microorganisms$fullname), "mo", drop = TRUE],
+        AMR::antibiotics[match(AMR::intrinsic_resistant$antibiotic, AMR::antibiotics$name), "ab", drop = TRUE])
 }

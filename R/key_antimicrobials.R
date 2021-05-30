@@ -140,7 +140,7 @@ key_antimicrobials <- function(x = NULL,
   meet_criteria(antifungal, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   
-  # force regular [data.frame], not a tibble or data.table
+  # force regular data.frame, not a tibble or data.table
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   cols <- get_column_abx(x, info = FALSE, only_rsi_columns = only_rsi_columns)
   
@@ -237,7 +237,7 @@ all_antimicrobials <- function(x = NULL,
   meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   
-  # force regular [data.frame], not a tibble or data.table
+  # force regular data.frame, not a tibble or data.table
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   cols <- get_column_abx(x, only_rsi_columns = only_rsi_columns, info = FALSE, sort = FALSE)
   

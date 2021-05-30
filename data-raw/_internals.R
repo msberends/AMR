@@ -31,8 +31,46 @@ devtools::load_all(quiet = TRUE)
 
 old_globalenv <- ls(envir = globalenv())
 
-# Helper functions --------------------------------------------------------
+# Save internal data to R/sysdata.rda -------------------------------------
 
+# See 'data-raw/eucast_rules.tsv' for the EUCAST reference file
+eucast_rules_file <- utils::read.delim(file = "data-raw/eucast_rules.tsv",
+                                       skip = 10,
+                                       sep = "\t",
+                                       stringsAsFactors = FALSE,
+                                       header = TRUE,
+                                       strip.white = TRUE,
+                                       na = c(NA, "", NULL)) %>% 
+  # take the order of the reference.rule_group column in the original data file
+  mutate(reference.rule_group = factor(reference.rule_group,
+                                       levels = unique(reference.rule_group),
+                                       ordered = TRUE),
+         sorting_rule = ifelse(grepl("^Table", reference.rule, ignore.case = TRUE), 1, 2)) %>% 
+  arrange(reference.rule_group,
+          reference.version,
+          sorting_rule,
+          reference.rule) %>% 
+  mutate(reference.rule_group = as.character(reference.rule_group)) %>% 
+  select(-sorting_rule)
+
+# Translations
+translations_file <- utils::read.delim(file = "data-raw/translations.tsv",
+                                       sep = "\t",
+                                       stringsAsFactors = FALSE,
+                                       header = TRUE,
+                                       blank.lines.skip = TRUE,
+                                       fill = TRUE,
+                                       strip.white = TRUE,
+                                       encoding = "UTF-8",
+                                       fileEncoding = "UTF-8",
+                                       na.strings = c(NA, "", NULL),
+                                       allowEscapes = TRUE, # else "\\1" will be imported as "\\\\1"
+                                       quote = "")
+
+# for checking input in `language` argument in e.g. mo_*() and ab_*() functions
+LANGUAGES_SUPPORTED <- sort(c("en", colnames(translations_file)[nchar(colnames(translations_file)) == 2]))
+
+# vectors of CoNS and CoPS, improves speed in as.mo()
 create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
   # Determination of which staphylococcal species are CoNS/CoPS according to:
   # - Becker et al. 2014, PMID 25278577
@@ -70,123 +108,8 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
              "mo", drop = TRUE]
   }
 }
-
-create_AB_lookup <- function() {
-  AB_lookup <- AMR::antibiotics
-  AB_lookup$generalised_name <- generalise_antibiotic_name(AB_lookup$name)
-  AB_lookup$generalised_synonyms <- lapply(AB_lookup$synonyms, generalise_antibiotic_name)
-  AB_lookup$generalised_abbreviations <- lapply(AB_lookup$abbreviations, generalise_antibiotic_name)
-  AB_lookup$generalised_loinc <- lapply(AB_lookup$loinc, generalise_antibiotic_name)
-  AB_lookup$generalised_all <- unname(lapply(as.list(as.data.frame(t(AB_lookup[, 
-                                                                               c("ab", "atc", "cid", "name",
-                                                                                 colnames(AB_lookup)[colnames(AB_lookup) %like% "generalised"]),
-                                                                               drop = FALSE]),
-                                                                   stringsAsFactors = FALSE)),
-                                             function(x) {
-                                               x <- generalise_antibiotic_name(unname(unlist(x)))
-                                               x[x != ""]
-                                             }))
-  AB_lookup
-}
-
-create_MO_lookup <- function() {
-  MO_lookup <- AMR::microorganisms
-  
-  MO_lookup$kingdom_index <- NA_real_
-  MO_lookup[which(MO_lookup$kingdom == "Bacteria" | MO_lookup$mo == "UNKNOWN"), "kingdom_index"] <- 1
-  MO_lookup[which(MO_lookup$kingdom == "Fungi"), "kingdom_index"] <- 2
-  MO_lookup[which(MO_lookup$kingdom == "Protozoa"), "kingdom_index"] <- 3
-  MO_lookup[which(MO_lookup$kingdom == "Archaea"), "kingdom_index"] <- 4
-  # all the rest
-  MO_lookup[which(is.na(MO_lookup$kingdom_index)), "kingdom_index"] <- 5
-  
-  # use this paste instead of `fullname` to work with Viridans Group Streptococci, etc.
-  MO_lookup$fullname_lower <- tolower(trimws(paste(MO_lookup$genus, 
-                                                   MO_lookup$species,
-                                                   MO_lookup$subspecies)))
-  ind <- MO_lookup$genus == "" | grepl("^[(]unknown ", MO_lookup$fullname)
-  MO_lookup[ind, "fullname_lower"] <- tolower(MO_lookup[ind, "fullname"])
-  MO_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", MO_lookup$fullname_lower, perl = TRUE))
-  
-  # add a column with only "e coli" like combinations
-  MO_lookup$g_species <- gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO_lookup$fullname_lower, perl = TRUE)
-  
-  # so arrange data on prevalence first, then kingdom, then full name
-  MO_lookup[order(MO_lookup$prevalence, MO_lookup$kingdom_index, MO_lookup$fullname_lower), ]
-}
-
-create_MO.old_lookup <- function() {
-  MO.old_lookup <- AMR::microorganisms.old
-  MO.old_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", tolower(trimws(MO.old_lookup$fullname))))
-  
-  # add a column with only "e coli"-like combinations
-  MO.old_lookup$g_species <- trimws(gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO.old_lookup$fullname_lower))
-  
-  # so arrange data on prevalence first, then full name
-  MO.old_lookup[order(MO.old_lookup$prevalence, MO.old_lookup$fullname_lower), ]
-}
-
-create_intr_resistance <- function() {
-  # for mo_is_intrinsic_resistant() - saves a lot of time when executed on this vector
-  paste(AMR::microorganisms[match(AMR::intrinsic_resistant$microorganism, AMR::microorganisms$fullname), "mo", drop = TRUE],
-        AMR::antibiotics[match(AMR::intrinsic_resistant$antibiotic, AMR::antibiotics$name), "ab", drop = TRUE])
-}
-
-
-
-# Save internal data to R/sysdata.rda -------------------------------------
-
-# See 'data-raw/eucast_rules.tsv' for the EUCAST reference file
-eucast_rules_file <- utils::read.delim(file = "data-raw/eucast_rules.tsv",
-                                       skip = 10,
-                                       sep = "\t",
-                                       stringsAsFactors = FALSE,
-                                       header = TRUE,
-                                       strip.white = TRUE,
-                                       na = c(NA, "", NULL)) %>% 
-  # take the order of the reference.rule_group column in the original data file
-  mutate(reference.rule_group = factor(reference.rule_group,
-                                       levels = unique(reference.rule_group),
-                                       ordered = TRUE),
-         sorting_rule = ifelse(grepl("^Table", reference.rule, ignore.case = TRUE), 1, 2)) %>% 
-  arrange(reference.rule_group,
-          reference.version,
-          sorting_rule,
-          reference.rule) %>% 
-  mutate(reference.rule_group = as.character(reference.rule_group)) %>% 
-  select(-sorting_rule)
-
-# Translations
-translations_file <- utils::read.delim(file = "data-raw/translations.tsv",
-                                       sep = "\t",
-                                       stringsAsFactors = FALSE,
-                                       header = TRUE,
-                                       blank.lines.skip = TRUE,
-                                       fill = TRUE,
-                                       strip.white = TRUE,
-                                       encoding = "UTF-8",
-                                       fileEncoding = "UTF-8",
-                                       na.strings = c(NA, "", NULL),
-                                       allowEscapes = TRUE, # else "\\1" will be imported as "\\\\1"
-                                       quote = "")
-
-# Old microorganism codes
-microorganisms.translation <- readRDS("data-raw/microorganisms.translation.rds")
-
-# for mo_is_intrinsic_resistant() - saves a lot of time when executed on this vector
-INTRINSIC_R <- create_intr_resistance()
-
-# for checking input in `language` argument in e.g. mo_*() and ab_*() functions
-LANGUAGES_SUPPORTED <- sort(c("en", colnames(translations_file)[nchar(colnames(translations_file)) == 2]))
-
-# vectors of CoNS and CoPS, improves speed in as.mo()
 MO_CONS <- create_species_cons_cops("CoNS")
 MO_COPS <- create_species_cons_cops("CoPS")
-
-# reference data - they have additional columns compared to `antibiotics` and `microorganisms` to improve speed
-AB_lookup <- create_AB_lookup()
-MO_lookup <- create_MO_lookup()
-MO.old_lookup <- create_MO.old_lookup()
 
 # antibiotic groups
 # (these will also be used for eucast_rules() and understanding data-raw/eucast_rules.tsv)
@@ -220,14 +143,10 @@ DEFINED_AB_GROUPS <- DEFINED_AB_GROUPS[!DEFINED_AB_GROUPS %in% globalenv_before_
 # Export to package as internal data ----
 usethis::use_data(eucast_rules_file, 
                   translations_file,
-                  microorganisms.translation,
-                  INTRINSIC_R,
                   LANGUAGES_SUPPORTED,
                   MO_CONS,
                   MO_COPS,
                   AB_lookup,
-                  MO_lookup,
-                  MO.old_lookup,
                   AMINOGLYCOSIDES,
                   AMINOPENICILLINS,
                   CARBAPENEMS,

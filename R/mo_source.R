@@ -275,9 +275,9 @@ check_validity_mo_source <- function(x, refer_to_name = "`reference_df`", stop_o
       return(FALSE)
     }
   }
-  if (!all(x$mo %in% c("", microorganisms$mo, microorganisms.translation$mo_old), na.rm = TRUE)) {
+  if (!all(x$mo %in% c("", microorganisms$mo), na.rm = TRUE)) {
     if (stop_on_error == TRUE) {
-      invalid <- x[which(!x$mo %in% c("", microorganisms$mo, microorganisms.translation$mo_old)), , drop = FALSE]
+      invalid <- x[which(!x$mo %in% c("", microorganisms$mo)), , drop = FALSE]
       if (nrow(invalid) > 1) {
         plural <- "s"
       } else {

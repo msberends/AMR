@@ -178,9 +178,7 @@ search_type_in_df <- function(x, type, info = TRUE) {
       found <- sort(colnames(x)[vapply(FUN.VALUE = logical(1), x, is.mo)])[1]
     } else if ("mo" %in% colnames(x) &
                suppressWarnings(
-                 all(x$mo %in% c(NA,
-                                 microorganisms$mo,
-                                 microorganisms.translation$mo_old)))) {
+                 all(x$mo %in% c(NA, microorganisms$mo)))) {
       found <- "mo"
     } else if (any(colnames(x) %like% "^(mo|microorganism|organism|bacteria|ba[ck]terie)s?$")) {
       found <- sort(colnames(x)[colnames(x) %like% "^(mo|microorganism|organism|bacteria|ba[ck]terie)s?$"])[1]

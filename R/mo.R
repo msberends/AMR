@@ -1817,8 +1817,7 @@ as.data.frame.mo <- function(x, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
   # must only contain valid MOs
-  return_after_integrity_check(y, "microorganism code", c(as.character(microorganisms$mo),
-                                                          as.character(microorganisms.translation$mo_old)))
+  return_after_integrity_check(y, "microorganism code", as.character(microorganisms$mo))
 }
 #' @method [[<- mo
 #' @export
@@ -1827,8 +1826,7 @@ as.data.frame.mo <- function(x, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
   # must only contain valid MOs
-  return_after_integrity_check(y, "microorganism code", c(as.character(microorganisms$mo),
-                                                          as.character(microorganisms.translation$mo_old)))
+  return_after_integrity_check(y, "microorganism code", as.character(microorganisms$mo))
 }
 #' @method c mo
 #' @export
@@ -1837,8 +1835,7 @@ c.mo <- function(...) {
   x <- list(...)[[1L]]
   y <- NextMethod()
   attributes(y) <- attributes(x)
-  return_after_integrity_check(y, "microorganism code", c(as.character(microorganisms$mo),
-                                                          as.character(microorganisms.translation$mo_old)))
+  return_after_integrity_check(y, "microorganism code", as.character(microorganisms$mo))
 }
 
 #' @method unique mo
@@ -2053,23 +2050,39 @@ parse_and_convert <- function(x) {
 }
 
 replace_old_mo_codes <- function(x, property) {
-  if (any(toupper(x) %in% microorganisms.translation$mo_old, na.rm = TRUE)) {
+  ind <- x %like% "[A-Z_]" & !x %in% MO_lookup$mo
+  if (any(ind)) {
     # get the ones that match
-    matched <- match(toupper(x), microorganisms.translation$mo_old)
-    # and their new codes
-    mo_new <- microorganisms.translation$mo_new[matched]
+    affected <- x[ind]
+    affected_unique <- unique(affected)
+    all_direct_matches <- TRUE
+    # find their new codes, once per code
+    solved_unique <- unlist(lapply(strsplit(affected_unique, ""), 
+                                   function(m) {
+                                     m <- m[3:length(m)]
+                                     m <- m[m != "_"]
+                                     m <- tolower(paste0(m, ".*", collapse = ""))
+                                     out <- MO_lookup$mo[MO_lookup$fullname_lower %like_case% m]
+                                     if (length(out) > 1) {
+                                       all_direct_matches <<- FALSE
+                                     }
+                                     out[1L]
+                                   }), use.names = FALSE)
+    solved <- solved_unique[match(affected, affected_unique)]
     # assign on places where a match was found
-    x[which(!is.na(matched))] <- mo_new[which(!is.na(matched))]
-    n_matched <- length(matched[!is.na(matched)])
+    x[ind] <- solved
+    n_matched <- length(affected[!is.na(affected)])
+    n_unique <- length(affected_unique[!is.na(affected_unique)])
     if (property != "mo") {
       message_(font_blue(paste0("The input contained ", n_matched,
                                 " old MO code", ifelse(n_matched == 1, "", "s"),
-                                " (from a previous AMR package version). Please update your MO codes with `as.mo()`.")))
+                                " (", n_unique, " unique, from a previous AMR package version). Please update your MO codes with `as.mo()` to increase speed.")))
     } else {
       message_(font_blue(paste0(n_matched, " old MO code", ifelse(n_matched == 1, "", "s"), 
-                                " (from a previous AMR package version) ", 
+                                " (", n_unique, " unique, from a previous AMR package version) ", 
                                 ifelse(n_matched == 1, "was", "were"), 
-                                " updated to ", ifelse(n_matched == 1, "a ", ""), 
+                                ifelse(all_direct_matches, " updated ", font_bold(" guessed ")),
+                                "to ", ifelse(n_matched == 1, "a ", ""), 
                                 "currently used MO code", ifelse(n_matched == 1, "", "s"), ".")))
     }
   }

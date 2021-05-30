@@ -1,5 +1,10 @@
-# `AMR` 1.7.0
+# `AMR` 1.7.0.9000
+## <small>Last updated: 30 May 2021</small>
+### Changed
+* As requested by CRAN administrators: decreased package size by 3 MB in costs of a ~50 times slower loading time of the package (i.e., `library(AMR)`)
 
+
+# `AMR` 1.7.0
 
 ### Breaking change
 * All antibiotic class selectors (such as `carbapenems()`, `aminoglycosides()`) can now be used for filtering as well, making all their accompanying `filter_*()` functions redundant (such as `filter_carbapenems()`, `filter_aminoglycosides()`). These functions are now deprecated and will be removed in a next release.
