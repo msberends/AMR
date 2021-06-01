@@ -1,6 +1,11 @@
-# `AMR` 1.7.0.9000
-## <small>Last updated: 30 May 2021</small>
+# `AMR` 1.7.0.9001
+## <small>Last updated:  1 June 2021</small>
+
+### New
+* Support for CLSI 2020 guideline for interpreting MICs and disk diffusion values (using `as.rsi()`)
+
 ### Changed
+* `bug_drug_combinations()` now supports grouping using the `dplyr` package
 * As requested by CRAN administrators: decreased package size by 3 MB in costs of a ~50 times slower loading time of the package (i.e., `library(AMR)`)
 
 

@@ -2,10 +2,9 @@ library(dplyr)
 library(readr)
 library(tidyr)
 
-# Installed WHONET 2019 software on Windows (http://www.whonet.org/software.html),
-#    opened C:\WHONET\Codes\WHONETCodes.mdb in MS Access
-#    and exported table 'DRGLST1' to MS Excel
-DRGLST1 <- readxl::read_excel("data-raw/DRGLST1.xlsx", na = c("", "NA", "-"))
+# Installed WHONET software on Windows (http://www.whonet.org/software.html),
+#    imported C:\WHONET\Codes\DRGLST1.txt
+DRGLST1 <- readr::read_tsv("data-raw/DRGLST1.txt", na = c("", "NA", "-"))
 rsi_trans <- DRGLST1 %>%
   # only keep CLSI and EUCAST guidelines:
   filter(GUIDELINES %like% "^(CLSI|EUCST)")
@@ -13,6 +12,9 @@ if (any(is.na(rsi_trans$BREAKPOINT_TYPE)) | !"Human" %in% rsi_trans$BREAKPOINT_T
   stop("Check column BREAKPOINT_TYPE - something is WRONG!")
 }
 rsi_trans <- rsi_trans %>% 
+  ##### If looking for adding a specific guideline, do it here!
+  # filter(GUIDELINES == "CLSI20") %>% 
+  #####
   filter(BREAKPOINT_TYPE == "Human") %>% 
   mutate(DISK_S = ifelse(as.double(DISK_S) > 50, 50, DISK_S),
          MIC_R = ifelse(as.double(MIC_R) %in% c(1025, 129, 513), as.double(MIC_R) - 1, MIC_R)) %>%
@@ -50,7 +52,7 @@ rsi_trans <- bind_rows(tbl_mic, tbl_disk) %>%
   select(-ends_with("_mic"), -ends_with("_disk"))
 
 # add extra CLSI general guidelines
-clsi_general <- read_tsv("data-raw/DRGLST.txt") %>%
+clsi_general <- readr::read_tsv("data-raw/DRGLST.txt") %>%
   filter(CLSI == "X") %>%
   select(WHON5_CODE, 
          disk_dose = POTENCY, 
@@ -76,13 +78,13 @@ clsi_general <- read_tsv("data-raw/DRGLST.txt") %>%
 
 
 # add new EUCAST with read_EUCAST.R
-# 2020-04-14 did that now for 2019 and 2020
 
+# 2020-04-14 did that now for 2019 and 2020
 rsi_trans <- rsi_trans %>%
   filter(guideline != "EUCAST 2019") %>% 
   bind_rows(new_EUCAST) %>% 
   bind_rows(clsi_general) %>% 
-  mutate(uti = site %like% "(UTI|urinary)") %>% 
+  mutate(uti = site %like% "(UTI|urinary|urine)") %>% 
   as.data.frame(stringsAsFactors = FALSE) %>%
   # force classes again
   mutate(mo = as.mo(mo),

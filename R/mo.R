@@ -23,9 +23,9 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Transform Input to a Microorganism ID
+#' Transform Input to a Microorganism Code
 #'
-#' Use this function to determine a valid microorganism ID ([`mo`]). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see *Source*). The input can be almost anything: a full name (like `"Staphylococcus aureus"`), an abbreviated name (such as `"S. aureus"`), an abbreviation known in the field (such as `"MRSA"`), or just a genus. See *Examples*.
+#' Use this function to determine a valid microorganism code ([`mo`]). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see *Source*). The input can be almost anything: a full name (like `"Staphylococcus aureus"`), an abbreviated name (such as `"S. aureus"`), an abbreviation known in the field (such as `"MRSA"`), or just a genus. See *Examples*.
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param x a [character] vector or a [data.frame] with one or two columns
 #' @param Becker a [logical] to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker *et al.* (1,2,3).
@@ -46,7 +46,7 @@
 #' @details
 #' ## General Info
 #'
-#' A microorganism ID from this package (class: [`mo`]) is human readable and typically looks like these examples:
+#' A microorganism (MO) code from this package (class: [`mo`]) is human readable and typically looks like these examples:
 #' ```
 #'   Code               Full name
 #'   ---------------    --------------------------------------
@@ -2050,7 +2050,7 @@ parse_and_convert <- function(x) {
 }
 
 replace_old_mo_codes <- function(x, property) {
-  ind <- x %like% "[A-Z_]" & !x %in% MO_lookup$mo
+  ind <- x %like_case% "^[A-Z]_[A-Z_]+$" & !x %in% MO_lookup$mo
   if (any(ind)) {
     # get the ones that match
     affected <- x[ind]
@@ -2059,31 +2059,43 @@ replace_old_mo_codes <- function(x, property) {
     # find their new codes, once per code
     solved_unique <- unlist(lapply(strsplit(affected_unique, ""), 
                                    function(m) {
-                                     m <- m[3:length(m)]
-                                     m <- m[m != "_"]
-                                     m <- tolower(paste0(m, ".*", collapse = ""))
-                                     out <- MO_lookup$mo[MO_lookup$fullname_lower %like_case% m]
-                                     if (length(out) > 1) {
+                                     kingdom <- paste0("^", m[1])
+                                     name <- m[3:length(m)]
+                                     name[name == "_"] <- " "
+                                     name <- tolower(paste0(name, ".*", collapse = ""))
+                                     name <- gsub(" .*", " ", name, fixed = TRUE)
+                                     name <- paste0("^", name)
+                                     results <- MO_lookup$mo[MO_lookup$kingdom %like_case% kingdom & 
+                                                               MO_lookup$fullname_lower %like_case% name]
+                                     if (length(results) > 1) {
                                        all_direct_matches <<- FALSE
                                      }
-                                     out[1L]
+                                     results[1L]
                                    }), use.names = FALSE)
     solved <- solved_unique[match(affected, affected_unique)]
     # assign on places where a match was found
     x[ind] <- solved
     n_matched <- length(affected[!is.na(affected)])
     n_unique <- length(affected_unique[!is.na(affected_unique)])
-    if (property != "mo") {
-      message_(font_blue(paste0("The input contained ", n_matched,
-                                " old MO code", ifelse(n_matched == 1, "", "s"),
-                                " (", n_unique, " unique, from a previous AMR package version). Please update your MO codes with `as.mo()` to increase speed.")))
+    if (n_unique < n_matched) {
+      n_unique <- paste0(n_unique, " unique, ")
     } else {
-      message_(font_blue(paste0(n_matched, " old MO code", ifelse(n_matched == 1, "", "s"), 
-                                " (", n_unique, " unique, from a previous AMR package version) ", 
-                                ifelse(n_matched == 1, "was", "were"), 
-                                ifelse(all_direct_matches, " updated ", font_bold(" guessed ")),
-                                "to ", ifelse(n_matched == 1, "a ", ""), 
-                                "currently used MO code", ifelse(n_matched == 1, "", "s"), ".")))
+      n_unique <- ""
+    }
+    if (property != "mo") {
+      warning_(paste0("The input contained ", n_matched,
+                      " old MO code", ifelse(n_matched == 1, "", "s"),
+                      " (", n_unique, "from a previous AMR package version). ",
+                      "Please update your MO codes with `as.mo()` to increase speed."),
+               call = FALSE)
+    } else {
+      warning_(paste0(n_matched, " old MO code", ifelse(n_matched == 1, "", "s"), 
+                      " (", n_unique, "from a previous AMR package version) ", 
+                      ifelse(n_matched == 1, "was", "were"), 
+                      ifelse(all_direct_matches, " updated ", font_bold(" guessed ")),
+                      "to ", ifelse(n_matched == 1, "a ", ""), 
+                      "currently used MO code", ifelse(n_matched == 1, "", "s"), "."),
+               call = FALSE)
     }
   }
   x

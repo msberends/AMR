@@ -54,14 +54,14 @@
 #' @section Reference Data Publicly Available:
 #' All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this `AMR` package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find [all download links on our website](https://msberends.github.io/AMR/articles/datasets.html), which is automatically updated with every code change.
 #' @section Read more on Our Website!:
-#' On our website <https://msberends.github.io/AMR/> you can find [a comprehensive tutorial](https://msberends.github.io/AMR/articles/AMR.html) about how to conduct AMR data analysis, the [complete documentation of all functions](https://msberends.github.io/AMR/reference/) and [an example analysis using WHONET data](https://msberends.github.io/AMR/articles/WHONET.html). As we would like to better understand the backgrounds and needs of our users, please [participate in our survey](https://msberends.github.io/AMR/survey.html)!
+#' On our website <https://msberends.github.io/AMR/> you can find [a comprehensive tutorial](https://msberends.github.io/AMR/articles/AMR.html) about how to conduct AMR data analysis, the [complete documentation of all functions](https://msberends.github.io/AMR/reference/) and [an example analysis using WHONET data](https://msberends.github.io/AMR/articles/WHONET.html).
 #' @section Contact Us:
 #' For suggestions, comments or questions, please contact us at:
 #'
 #' Matthijs S. Berends \cr
 #' m.s.berends \[at\] umcg \[dot\] nl \cr
 #' University of Groningen
-#' Department of Medical Microbiology
+#' Department of Medical Microbiology and Infection Prevention
 #' University Medical Center Groningen \cr
 #' Post Office Box 30001 \cr
 #' 9700 RB Groningen \cr

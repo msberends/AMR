@@ -98,15 +98,22 @@ This package can be used for:
 
 #### Latest released version
 
-This package is [available here](https://msberends.r-universe.dev) on the [rOpenSci R-universe platform](https://ropensci.org/r-universe/), as CRAN does not allow frequent updates of large packages (though the `AMR` package is only 7-9 MB). With CRAN, we apparently cannot update this package frequently enough to implement the latest EUCAST/CLSI guidelines or the latest microbial taxonomy.
+This package is [available here](https://msberends.r-universe.dev) on the [rOpenSci R-universe platform](https://ropensci.org/r-universe/), as CRAN does not allow frequent updates of large packages (though the `AMR` package is only 7-9 MB). We are working on splitting this package into two: a new data package containing the microbial taxonomy, and the `AMR` package that only contains all functions.
 
-Install this package in R by using the command:
+In the meanwhile, you have to add [our R-universe address](https://msberends.r-universe.dev) to your list of repositories ('repos'), by running:
 
 ```r
-install.packages("AMR", repos = "https://msberends.r-universe.dev")
+options(repos = c(getOption("repos"),
+                  msberends = "https://msberends.r-universe.dev"))
 ```
 
-It will be downloaded and installed automatically.
+You can now install or update the `AMR` package in the same way you are used to:
+
+```r
+install.packages("AMR")
+```
+
+It will be downloaded and installed automatically. For RStudio, click on the menu *Tools* > *Install Packages...* and then type in "AMR" and press <kbd>Install</kbd>.
 
 **Note:** Not all functions on this website may be available in this latest release. To use all functions and data sets mentioned on this website, install the latest development version.
 

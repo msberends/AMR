@@ -53,7 +53,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: macOS-latest-r-release-v4
+          key: macOS-latest-r-release-v5-codecovr
 
       - name: Unpack AMR and install R dependencies
         run: |

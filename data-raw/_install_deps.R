@@ -26,7 +26,7 @@
 # some old R instances have trouble installing tinytest, so we ship it too
 install.packages("data-raw/tinytest_1.2.4.10.tar.gz")
 install.packages("data-raw/AMR_latest.tar.gz", dependencies = FALSE)
-install.packages("covr")
+install.packages("covr", repos = "https://cran.rstudio.com/")
 
 pkg_suggests <- gsub("[^a-zA-Z0-9]+", "", unlist(strsplit(packageDescription("AMR", fields = "Suggests"), ", ?")))
 cat("Packages listed in Suggests:", paste(pkg_suggests, collapse = ", "), "\n")

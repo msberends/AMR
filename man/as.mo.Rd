@@ -7,7 +7,7 @@
 \alias{mo_failures}
 \alias{mo_uncertainties}
 \alias{mo_renamed}
-\title{Transform Input to a Microorganism ID}
+\title{Transform Input to a Microorganism Code}
 \usage{
 as.mo(
   x,
@@ -56,12 +56,12 @@ This excludes \emph{Enterococci} at default (who are in group D), use \code{Lanc
 A \link{character} \link{vector} with additional class \code{\link{mo}}
 }
 \description{
-Use this function to determine a valid microorganism ID (\code{\link{mo}}). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see \emph{Source}). The input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (such as \code{"S. aureus"}), an abbreviation known in the field (such as \code{"MRSA"}), or just a genus. See \emph{Examples}.
+Use this function to determine a valid microorganism code (\code{\link{mo}}). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see \emph{Source}). The input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (such as \code{"S. aureus"}), an abbreviation known in the field (such as \code{"MRSA"}), or just a genus. See \emph{Examples}.
 }
 \details{
 \subsection{General Info}{
 
-A microorganism ID from this package (class: \code{\link{mo}}) is human readable and typically looks like these examples:\preformatted{  Code               Full name
+A microorganism (MO) code from this package (class: \code{\link{mo}}) is human readable and typically looks like these examples:\preformatted{  Code               Full name
   ---------------    --------------------------------------
   B_KLBSL            Klebsiella
   B_KLBSL_PNMN       Klebsiella pneumoniae
@@ -180,7 +180,7 @@ All reference data sets (about microorganisms, antibiotics, R/SI interpretation,
 
 \section{Read more on Our Website!}{
 
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}. As we would like to better understand the backgrounds and needs of our users, please \href{https://msberends.github.io/AMR/survey.html}{participate in our survey}!
+On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
 }
 
 \examples{

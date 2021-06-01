@@ -31,7 +31,7 @@
 #' @param combine_IR a [logical] to indicate whether values R and I should be summed
 #' @param add_ab_group a [logical] to indicate where the group of the antimicrobials must be included as a first column
 #' @param remove_intrinsic_resistant [logical] to indicate that rows and columns with 100% resistance for all tested antimicrobials must be removed from the table
-#' @param FUN the function to call on the `mo` column to transform the microorganism IDs, defaults to [mo_shortname()] 
+#' @param FUN the function to call on the `mo` column to transform the microorganism codes, defaults to [mo_shortname()] 
 #' @param translate_ab a [character] of length 1 containing column names of the [antibiotics] data set
 #' @param ... arguments passed on to `FUN`
 #' @inheritParams rsi_df
@@ -74,42 +74,87 @@ bug_drug_combinations <- function(x,
     stop_ifnot(col_mo %in% colnames(x), "column '", col_mo, "' (`col_mo`) not found")
   }
   
-  x_class <- class(x)
+  x.bak <- x
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   x[, col_mo] <- FUN(x[, col_mo, drop = TRUE], ...)
-  x <- x[, c(col_mo, names(which(vapply(FUN.VALUE = logical(1), x, is.rsi)))), drop = FALSE]
   
   unique_mo <- sort(unique(x[, col_mo, drop = TRUE]))
   
-  out <- data.frame(mo = character(0),
-                    ab = character(0),
-                    S = integer(0),
-                    I = integer(0),
-                    R = integer(0),
-                    total = integer(0),
-                    stringsAsFactors = FALSE)
-  
-  for (i in seq_len(length(unique_mo))) {
-    # filter on MO group and only select R/SI columns
-    x_mo_filter <- x[which(x[, col_mo, drop = TRUE] == unique_mo[i]), names(which(vapply(FUN.VALUE = logical(1), x, is.rsi))), drop = FALSE]
-    # turn and merge everything
-    pivot <- lapply(x_mo_filter, function(x) {
-      m <- as.matrix(table(x))
-      data.frame(S = m["S", ], I = m["I", ], R = m["R", ], stringsAsFactors = FALSE)
-    })
-    merged <- do.call(rbind, pivot)
-    out_group <- data.frame(mo = unique_mo[i],
-                            ab = rownames(merged),
-                            S = merged$S,
-                            I = merged$I,
-                            R = merged$R,
-                            total = merged$S + merged$I + merged$R,
-                            stringsAsFactors = FALSE)
-    out <- rbind(out, out_group, stringsAsFactors = FALSE)
+  # select only groups and antibiotics
+  if (inherits(x.bak, "grouped_df")) {
+    data_has_groups <- TRUE
+    groups <- setdiff(names(attributes(x.bak)$groups), ".rows")
+    x <- x[, c(groups, col_mo, colnames(x)[vapply(FUN.VALUE = logical(1), x, is.rsi)]), drop = FALSE]
+  } else {
+    data_has_groups <- FALSE
+    x <- x[, c(col_mo, names(which(vapply(FUN.VALUE = logical(1), x, is.rsi)))), drop = FALSE]
   }
   
-  set_clean_class(out,
-                  new_class = c("bug_drug_combinations", x_class))
+  run_it <- function(x) {
+    out <- data.frame(mo = character(0),
+                      ab = character(0),
+                      S = integer(0),
+                      I = integer(0),
+                      R = integer(0),
+                      total = integer(0),
+                      stringsAsFactors = FALSE)
+    if (data_has_groups) {
+      group_values <- unique(x[, which(colnames(x) %in% groups), drop = FALSE])
+      rownames(group_values) <- NULL
+      x <- x[, which(!colnames(x) %in% groups), drop = FALSE]
+    }
+    
+    for (i in seq_len(length(unique_mo))) {
+      # filter on MO group and only select R/SI columns
+      x_mo_filter <- x[which(x[, col_mo, drop = TRUE] == unique_mo[i]), names(which(vapply(FUN.VALUE = logical(1), x, is.rsi))), drop = FALSE]
+      # turn and merge everything
+      pivot <- lapply(x_mo_filter, function(x) {
+        m <- as.matrix(table(x))
+        data.frame(S = m["S", ], I = m["I", ], R = m["R", ], stringsAsFactors = FALSE)
+      })
+      merged <- do.call(rbind, pivot)
+      out_group <- data.frame(mo = unique_mo[i],
+                              ab = rownames(merged),
+                              S = merged$S,
+                              I = merged$I,
+                              R = merged$R,
+                              total = merged$S + merged$I + merged$R,
+                              stringsAsFactors = FALSE)
+      if (data_has_groups) {
+        if (nrow(group_values) < nrow(out_group)) {
+          # repeat group_values for the number of rows in out_group
+          repeated <- rep(seq_len(nrow(group_values)),
+                          each = nrow(out_group) / nrow(group_values))
+          group_values <- group_values[repeated, , drop = FALSE]
+        }
+        out_group <- cbind(group_values, out_group)
+      }
+      out <- rbind(out, out_group, stringsAsFactors = FALSE)
+    }
+    out
+  }
+  # based on pm_apply_grouped_function
+  apply_group <- function(.data, fn, groups, drop = FALSE, ...) {
+    grouped <- pm_split_into_groups(.data, groups, drop)
+    res <- do.call(rbind, unname(lapply(grouped, fn, ...)))
+    if (any(groups %in% colnames(res))) {
+      class(res) <- c("grouped_data", class(res))
+      res <- pm_set_groups(res, groups[groups %in% colnames(res)])
+    }
+    res
+  }
+  
+  if (data_has_groups) {
+    out <- apply_group(x, "run_it", groups)
+    rownames(out) <- NULL
+    set_clean_class(out,
+                    new_class = c("grouped", "bug_drug_combinations", "data.frame"))
+  } else {
+    out <- run_it(x)
+    rownames(out) <- NULL
+    set_clean_class(out,
+                    new_class = c("bug_drug_combinations", "data.frame"))
+  }
 }
 
 #' @method format bug_drug_combinations
@@ -136,6 +181,21 @@ format.bug_drug_combinations <- function(x,
   meet_criteria(remove_intrinsic_resistant, allow_class = "logical", has_length = 1)
   meet_criteria(decimal.mark, allow_class = "character", has_length = 1)
   meet_criteria(big.mark, allow_class = "character", has_length = 1)
+  
+  if (inherits(x, "grouped")) {
+    # bug_drug_combinations() has been run on groups, so de-group here
+    warning_("formatting the output of `bug_drug_combinations()` does not support grouped variables, they are ignored", call = FALSE)
+    idx <- split(seq_len(nrow(x)), paste0(x$mo, "%%", x$ab))
+    x <- data.frame(mo = gsub("(.*)%%(.*)", "\\1", names(idx)),
+                    ab = gsub("(.*)%%(.*)", "\\2", names(idx)),
+                    S = sapply(idx, function(i) sum(y$S[i], na.rm = TRUE)), 
+                    I = sapply(idx, function(i) sum(y$I[i], na.rm = TRUE)), 
+                    R = sapply(idx, function(i) sum(y$R[i], na.rm = TRUE)),
+                    total = sapply(idx, function(i) sum(y$S[i], na.rm = TRUE) + 
+                                     sum(y$I[i], na.rm = TRUE) +
+                                     sum(y$R[i], na.rm = TRUE)),
+                    stringsAsFactors = FALSE)
+  }
   
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   x <- subset(x, total >= minimum)
@@ -249,7 +309,9 @@ format.bug_drug_combinations <- function(x,
 print.bug_drug_combinations <- function(x, ...) {
   x_class <- class(x)
   print(set_clean_class(x, 
-                        new_class = x_class[x_class != "bug_drug_combinations"]),
+                        new_class = x_class[!x_class %in% c("bug_drug_combinations", "grouped")]),
         ...)
-  message_("Use 'format()' on this result to get a publishable/printable format.", as_note = FALSE)
+  message_("Use 'format()' on this result to get a publishable/printable format.",
+           ifelse(inherits(x, "grouped"), " Note: The grouping variable(s) will be ignored.", ""),
+           as_note = FALSE)
 }
