@@ -10059,7 +10059,7 @@
 "CLSI 2020"	"MIC"		"Vibrio"	"Ampicillin/sulbactam"	"M45 Table 20"		8	32	FALSE
 "CLSI 2020"	"DISK"		"(unknown name)"	"Ampicillin/sulbactam"	"Generic CLSI rules"	"10-10ug"	15	11	FALSE
 "CLSI 2020"	"MIC"		"(unknown name)"	"Ampicillin/sulbactam"	"Generic CLSI rules"	"10-10ug"	8	32	FALSE
-"CLSI 2020"	"DISK"		"Enterobacteriaceae"	"Sulfamethoxazole"	"Table 2A"	"200 – 300ug"	17	12	FALSE
+"CLSI 2020"	"DISK"		"Enterobacteriaceae"	"Sulfamethoxazole"	"Table 2A"	"200 - 300ug"	17	12	FALSE
 "CLSI 2020"	"MIC"		"Enterobacteriaceae"	"Sulfamethoxazole"	"Table 2A"		256	512	FALSE
 "CLSI 2020"	"DISK"		"Neisseria meningitidis"	"Sulfamethoxazole"	"Table 2I"	"200-300ug"			FALSE
 "CLSI 2020"	"MIC"		"Neisseria meningitidis"	"Sulfamethoxazole"	"Table 2I"		2	8	FALSE
@@ -10068,7 +10068,7 @@
 "CLSI 2020"	"DISK"		"Vibrio"	"Sulfamethoxazole"	"M45 Table 20"	"200ug"	17	12	FALSE
 "CLSI 2020"	"DISK"		"(unknown name)"	"Sulfamethoxazole"	"Generic CLSI rules"	"200-300ug"	17	12	FALSE
 "CLSI 2020"	"MIC"		"(unknown name)"	"Sulfamethoxazole"	"Generic CLSI rules"	"200-300ug"	256	512	FALSE
-"CLSI 2020"	"DISK"		"Enterobacteriaceae"	"Sulfisoxazole"	"Table 2A"	"200 – 300ug"	17	12	FALSE
+"CLSI 2020"	"DISK"		"Enterobacteriaceae"	"Sulfisoxazole"	"Table 2A"	"200 - 300ug"	17	12	FALSE
 "CLSI 2020"	"MIC"		"Enterobacteriaceae"	"Sulfisoxazole"	"Table 2A"		256	512	FALSE
 "CLSI 2020"	"DISK"		"Neisseria meningitidis"	"Sulfisoxazole"	"Table 2I"	"200-300ug"			FALSE
 "CLSI 2020"	"MIC"		"Neisseria meningitidis"	"Sulfisoxazole"	"Table 2I"		2	8	FALSE
@@ -10092,7 +10092,7 @@
 "CLSI 2020"	"MIC"		"Streptococcus pneumoniae"	"Sparfloxacin"	"Table 2G"		0.5	2	FALSE
 "CLSI 2020"	"DISK"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	19	15	FALSE
 "CLSI 2020"	"MIC"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5ug"	0.5	2	FALSE
-"CLSI 2020"	"DISK"		"Enterobacteriaceae"	"Sulfonamide"	"Table 2A"	"200 – 300ug"	17	12	FALSE
+"CLSI 2020"	"DISK"		"Enterobacteriaceae"	"Sulfonamide"	"Table 2A"	"200 - 300ug"	17	12	FALSE
 "CLSI 2020"	"MIC"		"Enterobacteriaceae"	"Sulfonamide"	"Table 2A"		256	512	FALSE
 "CLSI 2020"	"DISK"		"Neisseria meningitidis"	"Sulfonamide"	"Table 2I"	"200-300ug"			FALSE
 "CLSI 2020"	"MIC"		"Neisseria meningitidis"	"Sulfonamide"	"Table 2I"		2	8	FALSE

@@ -48,7 +48,6 @@ expect_equal(as.character(as.mo("Strepto")), "B_STRPT")
 expect_equal(as.character(as.mo("Streptococcus")), "B_STRPT") # not Peptostreptoccus
 expect_equal(as.character(as.mo("Estreptococos grupo B")), "B_STRPT_GRPB")
 expect_equal(as.character(as.mo("Group B Streptococci")), "B_STRPT_GRPB")
-expect_equal(as.character(suppressWarnings(as.mo("B_STRPT_PNE"))), "B_STRPT_PNMN") # old MO code (<=v0.8.0)
 expect_equal(as.character(as.mo(c("mycobacterie", "mycobakterium"))), c("B_MYCBC", "B_MYCBC"))
 
 expect_equal(as.character(as.mo(c("GAS", "GBS", "a MGS", "haemoly strep"))), c("B_STRPT_GRPA", "B_STRPT_GRPB", "B_STRPT_MILL", "B_STRPT_HAEM"))
