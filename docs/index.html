@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.0.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1</span>
       </span>
     </div>
 
@@ -376,13 +376,9 @@
 <div id="latest-released-version" class="section level4">
 <h4 class="hasAnchor">
 <a href="#latest-released-version" class="anchor"></a>Latest released version</h4>
-<p>This package is <a href="https://msberends.r-universe.dev">available here</a> on the <a href="https://ropensci.org/r-universe/">rOpenSci R-universe platform</a>, as CRAN does not allow frequent updates of large packages (though the <code>AMR</code> package is only 7-9 MB). We are working on splitting this package into two: a new data package containing the microbial taxonomy, and the <code>AMR</code> package that only contains all functions.</p>
-<p>In the meanwhile, you have to add <a href="https://msberends.r-universe.dev">our R-universe address</a> to your list of repositories (‘repos’), by running:</p>
+<p><a href="https://cran.r-project.org/package=AMR"><img src="https://www.r-pkg.org/badges/version-ago/AMR" alt="CRAN"></a> <a href="https://cran.r-project.org/package=AMR"><img src="https://cranlogs.r-pkg.org/badges/grand-total/AMR" alt="CRANlogs"></a></p>
+<p>This package is available <a href="https://cran.r-project.org/package=AMR">here on the official R network (CRAN)</a>. Install this package in R from CRAN by using the command:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/options.html">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span>,
-                  msberends <span class="op">=</span> <span class="st">"https://msberends.r-universe.dev"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>You can now install or update the <code>AMR</code> package in the same way you are used to:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"AMR"</span><span class="op">)</span></code></pre></div>
 <p>It will be downloaded and installed automatically. For RStudio, click on the menu <em>Tools</em> &gt; <em>Install Packages…</em> and then type in “AMR” and press <kbd>Install</kbd>.</p>
 <p><strong>Note:</strong> Not all functions on this website may be available in this latest release. To use all functions and data sets mentioned on this website, install the latest development version.</p>
@@ -390,11 +386,23 @@
 <div id="latest-development-version" class="section level4">
 <h4 class="hasAnchor">
 <a href="#latest-development-version" class="anchor"></a>Latest development version</h4>
-<p>The latest and unpublished development version can be installed from GitHub using:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<p><img src="https://github.com/msberends/AMR/workflows/R-code-check/badge.svg?branch=master" alt="R-code-check"><img src="https://www.codefactor.io/repository/github/msberends/amr" alt="CodeFactor"><img src="https://codecov.io/gh/msberends/AMR?branch=master" alt="Codecov"></p>
+<p>The latest and unpublished development version can be installed from GitHub in two ways:</p>
+<ol>
+<li>
+<p>Directly, using:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span> <span class="co"># if you haven't already</span>
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"msberends/AMR"</span><span class="op">)</span></code></pre></div>
-<p><img src="https://github.com/msberends/AMR/workflows/R-code-check/badge.svg?branch=master" alt="R-code-check"><img src="https://www.codefactor.io/repository/github/msberends/amr" alt="CodeFactor"><img src="https://codecov.io/gh/msberends/AMR?branch=master" alt="Codecov"></p>
+</li>
+<li>
+<p>From the <a href="https://ropensci.org/r-universe/">rOpenSci R-universe platform</a>, by adding <a href="https://msberends.r-universe.dev">our R-universe address</a> to your list of repositories (‘repos’):</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/options.html">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span>,
+                  msberends <span class="op">=</span> <span class="st">"https://msberends.r-universe.dev"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>After this, you can install and update this <code>AMR</code> package like any official release (using <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("AMR")</a></code> or in RStudio via <em>Tools</em> &gt; <em>Check of Package Updates…</em>).</p>
+</li>
+</ol>
 <p>You can also download the latest build from our repository: <a href="https://github.com/msberends/AMR/raw/master/data-raw/AMR_latest.tar.gz" class="uri">https://github.com/msberends/AMR/raw/master/data-raw/AMR_latest.tar.gz</a></p>
 </div>
 </div>

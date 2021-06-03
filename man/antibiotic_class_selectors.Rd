@@ -118,6 +118,11 @@ example_isolates[any(carbapenems() == "R"), penicillins()]
 \donttest{
 if (require("dplyr")) {
 
+  # get AMR for all aminoglycosides e.g., per hospital:
+  example_isolates \%>\%
+    group_by(hospital_id) \%>\% 
+    summarise(across(aminoglycosides(), resistance))
+
   # this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
   example_isolates \%>\% 
     select(carbapenems())

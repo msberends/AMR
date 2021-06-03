@@ -98,16 +98,10 @@ This package can be used for:
 
 #### Latest released version
 
-This package is [available here](https://msberends.r-universe.dev) on the [rOpenSci R-universe platform](https://ropensci.org/r-universe/), as CRAN does not allow frequent updates of large packages (though the `AMR` package is only 7-9 MB). We are working on splitting this package into two: a new data package containing the microbial taxonomy, and the `AMR` package that only contains all functions.
+[![CRAN](https://www.r-pkg.org/badges/version-ago/AMR)](https://cran.r-project.org/package=AMR)
+[![CRANlogs](https://cranlogs.r-pkg.org/badges/grand-total/AMR)](https://cran.r-project.org/package=AMR)
 
-In the meanwhile, you have to add [our R-universe address](https://msberends.r-universe.dev) to your list of repositories ('repos'), by running:
-
-```r
-options(repos = c(getOption("repos"),
-                  msberends = "https://msberends.r-universe.dev"))
-```
-
-You can now install or update the `AMR` package in the same way you are used to:
+This package is available [here on the official R network (CRAN)](https://cran.r-project.org/package=AMR). Install this package in R from CRAN by using the command:
 
 ```r
 install.packages("AMR")
@@ -117,18 +111,27 @@ It will be downloaded and installed automatically. For RStudio, click on the men
 
 **Note:** Not all functions on this website may be available in this latest release. To use all functions and data sets mentioned on this website, install the latest development version.
 
+
 #### Latest development version
-
-The latest and unpublished development version can be installed from GitHub using:
-
-```r
-install.packages("remotes") # if you haven't already
-remotes::install_github("msberends/AMR")
-```
 
 ![R-code-check](https://github.com/msberends/AMR/workflows/R-code-check/badge.svg?branch=master)
 ![[CodeFactor](https://www.codefactor.io/repository/github/msberends/amr/badge)](https://www.codefactor.io/repository/github/msberends/amr)
 ![[Codecov](https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gh/msberends/AMR?branch=master)
+
+The latest and unpublished development version can be installed from GitHub in two ways:
+
+1. Directly, using:
+   ```r
+   install.packages("remotes") # if you haven't already
+   remotes::install_github("msberends/AMR")
+   ```
+   
+2. From the [rOpenSci R-universe platform](https://ropensci.org/r-universe/), by adding [our R-universe address](https://msberends.r-universe.dev) to your list of repositories ('repos'):
+   ```r
+   options(repos = c(getOption("repos"),
+                     msberends = "https://msberends.r-universe.dev"))
+   ```
+   After this, you can install and update this `AMR` package like any official release (e.g., using `install.packages("AMR")` or in RStudio via *Tools* > *Check for Package Updates...*).
 
 You can also download the latest build from our repository: <https://github.com/msberends/AMR/raw/master/data-raw/AMR_latest.tar.gz>
 

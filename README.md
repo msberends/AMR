@@ -23,14 +23,7 @@ This is the development source of the `AMR` package for R. Not a developer? Then
 ### How to get this package
 Please see [our website](https://msberends.github.io/AMR/#get-this-package).
 
-You have to add [our R-universe address](https://msberends.r-universe.dev) to your list of repositories ('repos'), by running:
-
-```r
-options(repos = c(getOption("repos"),
-                  msberends = "https://msberends.r-universe.dev"))
-```
-
-You can now install or update the `AMR` package in the same way you are used to:
+You can install or update the `AMR` package from CRAN using:
 
 ```r
 install.packages("AMR")

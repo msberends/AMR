@@ -1,18 +1,8 @@
-# `AMR` 1.7.0.9002
-## <small>Last updated:  1 June 2021</small>
-
-### New
-* Support for CLSI 2020 guideline for interpreting MICs and disk diffusion values (using `as.rsi()`)
-
-### Changed
-* `bug_drug_combinations()` now supports grouping using the `dplyr` package
-* As requested by CRAN administrators: decreased package size by 3 MB in costs of a ~50 times slower loading time of the package (i.e., `library(AMR)`)
-
-
-# `AMR` 1.7.0
+# `AMR` 1.7.1
 
 ### Breaking change
-* All antibiotic class selectors (such as `carbapenems()`, `aminoglycosides()`) can now be used for filtering as well, making all their accompanying `filter_*()` functions redundant (such as `filter_carbapenems()`, `filter_aminoglycosides()`). These functions are now deprecated and will be removed in a next release.
+* Support for CLSI 2020 guideline for interpreting MICs and disk diffusion values (using `as.rsi()`)
+* All antibiotic class selectors (such as `carbapenems()`, `aminoglycosides()`) can now be used for filtering as well, making all their accompanying `filter_*()` functions redundant (such as `filter_carbapenems()`, `filter_aminoglycosides()`). These functions are now deprecated and will be removed in a next release. Examples of how the selectors can be used for filtering:
   ```r
   # select columns with results for carbapenems
   example_isolates[, carbapenems()]           # base R
@@ -45,6 +35,7 @@
 
 
 ### Changed
+* `bug_drug_combinations()` now supports grouping using the `dplyr` package
 * Custom MDRO guidelines (`mdro()`, `custom_mdro_guideline()`):
   * Custom MDRO guidelines can now be combined with other custom MDRO guidelines using `c()`
   * Fix for applying the rules; in previous versions, rows were interpreted according to the last matched rule. Now, rows are interpreted according to the first matched rule
@@ -77,6 +68,7 @@
 * `age()` now vectorises over both `x` and `reference`
 
 ### Other
+* As requested by CRAN administrators: decreased package size by 3 MB in costs of a slower loading time of the package
 * All unit tests are now processed by the `tinytest` package, instead of the `testthat` package. The `testthat` package unfortunately requires tons of dependencies that are also heavy and only usable for recent R versions, disallowing developers to test a package under any R 3.* version. On the contrary, the `tinytest` package is very lightweight and dependency-free.
 
 

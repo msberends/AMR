@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1</span>
       </span>
     </div>
 
@@ -315,35 +315,1218 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <p>On our website <a href='https://msberends.github.io/AMR/'>https://msberends.github.io/AMR/</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR data analysis, the <a href='https://msberends.github.io/AMR/reference/'>complete documentation of all functions</a> and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># `example_isolates` is a data set available in the AMR package.</span>
+    <pre class="examples"><div class='input'><span class='co'># `example_isolates` is a data set available in the AMR package.</span>
 <span class='co'># See ?example_isolates.</span>
 
 <span class='co'># Base R ------------------------------------------------------------------</span>
 
 <span class='co'># select columns 'IPM' (imipenem) and 'MEM' (meropenem)</span>
 <span class='va'>example_isolates</span><span class='op'>[</span>, <span class='fu'>carbapenems</span><span class='op'>(</span><span class='op'>)</span><span class='op'>]</span>
-
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>ℹ For </span><span style='color: #0000BB;background-color: #E4E4E4;'>`carbapenems()`</span><span style='color: #0000BB;'> using columns: '</span><span style='color: #0000BB;font-weight: bold;'>IPM</span><span style='color: #0000BB;'>' (imipenem) and '</span><span style='color: #0000BB;font-weight: bold;'>MEM</span><span style='color: #0000BB;'>' (meropenem)</span><span></span></div><div class='output co'>#&gt;      IPM  MEM
+#&gt; 1   &lt;NA&gt; &lt;NA&gt;
+#&gt; 2   &lt;NA&gt; &lt;NA&gt;
+#&gt; 3   &lt;NA&gt; &lt;NA&gt;
+#&gt; 4   &lt;NA&gt; &lt;NA&gt;
+#&gt; 5   &lt;NA&gt; &lt;NA&gt;
+#&gt; 6   &lt;NA&gt; &lt;NA&gt;
+#&gt; 7   &lt;NA&gt; &lt;NA&gt;
+#&gt; 8   &lt;NA&gt; &lt;NA&gt;
+#&gt; 9   &lt;NA&gt; &lt;NA&gt;
+#&gt; 10  &lt;NA&gt; &lt;NA&gt;
+#&gt; 11  &lt;NA&gt; &lt;NA&gt;
+#&gt; 12  &lt;NA&gt; &lt;NA&gt;
+#&gt; 13     S &lt;NA&gt;
+#&gt; 14     S &lt;NA&gt;
+#&gt; 15  &lt;NA&gt; &lt;NA&gt;
+#&gt; 16     S &lt;NA&gt;
+#&gt; 17     S &lt;NA&gt;
+#&gt; 18  &lt;NA&gt; &lt;NA&gt;
+#&gt; 19  &lt;NA&gt; &lt;NA&gt;
+#&gt; 20  &lt;NA&gt; &lt;NA&gt;
+#&gt; 21  &lt;NA&gt; &lt;NA&gt;
+#&gt; 22     S &lt;NA&gt;
+#&gt; 23     S &lt;NA&gt;
+#&gt; 24     S &lt;NA&gt;
+#&gt; 25  &lt;NA&gt; &lt;NA&gt;
+#&gt; 26  &lt;NA&gt; &lt;NA&gt;
+#&gt; 27  &lt;NA&gt; &lt;NA&gt;
+#&gt; 28  &lt;NA&gt; &lt;NA&gt;
+#&gt; 29  &lt;NA&gt; &lt;NA&gt;
+#&gt; 30  &lt;NA&gt; &lt;NA&gt;
+#&gt; 31  &lt;NA&gt; &lt;NA&gt;
+#&gt; 32  &lt;NA&gt; &lt;NA&gt;
+#&gt; 33     S &lt;NA&gt;
+#&gt; 34     S &lt;NA&gt;
+#&gt; 35     S &lt;NA&gt;
+#&gt; 36     S &lt;NA&gt;
+#&gt; 37  &lt;NA&gt; &lt;NA&gt;
+#&gt; 38     S &lt;NA&gt;
+#&gt; 39     S &lt;NA&gt;
+#&gt; 40  &lt;NA&gt; &lt;NA&gt;
+#&gt; 41  &lt;NA&gt; &lt;NA&gt;
+#&gt; 42  &lt;NA&gt; &lt;NA&gt;
+#&gt; 43  &lt;NA&gt; &lt;NA&gt;
+#&gt; 44  &lt;NA&gt; &lt;NA&gt;
+#&gt; 45     S &lt;NA&gt;
+#&gt; 46  &lt;NA&gt; &lt;NA&gt;
+#&gt; 47  &lt;NA&gt; &lt;NA&gt;
+#&gt; 48     S    S
+#&gt; 49     S &lt;NA&gt;
+#&gt; 50     S &lt;NA&gt;
+#&gt; 51     S &lt;NA&gt;
+#&gt; 52  &lt;NA&gt; &lt;NA&gt;
+#&gt; 53  &lt;NA&gt; &lt;NA&gt;
+#&gt; 54  &lt;NA&gt; &lt;NA&gt;
+#&gt; 55  &lt;NA&gt; &lt;NA&gt;
+#&gt; 56  &lt;NA&gt; &lt;NA&gt;
+#&gt; 57  &lt;NA&gt; &lt;NA&gt;
+#&gt; 58  &lt;NA&gt; &lt;NA&gt;
+#&gt; 59  &lt;NA&gt; &lt;NA&gt;
+#&gt; 60  &lt;NA&gt; &lt;NA&gt;
+#&gt; 61  &lt;NA&gt; &lt;NA&gt;
+#&gt; 62  &lt;NA&gt; &lt;NA&gt;
+#&gt; 63  &lt;NA&gt; &lt;NA&gt;
+#&gt; 64  &lt;NA&gt; &lt;NA&gt;
+#&gt; 65     S &lt;NA&gt;
+#&gt; 66     S &lt;NA&gt;
+#&gt; 67     S &lt;NA&gt;
+#&gt; 68  &lt;NA&gt; &lt;NA&gt;
+#&gt; 69  &lt;NA&gt; &lt;NA&gt;
+#&gt; 70  &lt;NA&gt; &lt;NA&gt;
+#&gt; 71     S &lt;NA&gt;
+#&gt; 72     S &lt;NA&gt;
+#&gt; 73     S &lt;NA&gt;
+#&gt; 74     S &lt;NA&gt;
+#&gt; 75  &lt;NA&gt; &lt;NA&gt;
+#&gt; 76     S &lt;NA&gt;
+#&gt; 77  &lt;NA&gt; &lt;NA&gt;
+#&gt; 78     S &lt;NA&gt;
+#&gt; 79     S &lt;NA&gt;
+#&gt; 80  &lt;NA&gt; &lt;NA&gt;
+#&gt; 81  &lt;NA&gt; &lt;NA&gt;
+#&gt; 82  &lt;NA&gt; &lt;NA&gt;
+#&gt; 83  &lt;NA&gt; &lt;NA&gt;
+#&gt; 84     S &lt;NA&gt;
+#&gt; 85     S &lt;NA&gt;
+#&gt; 86     S &lt;NA&gt;
+#&gt; 87     S &lt;NA&gt;
+#&gt; 88     S &lt;NA&gt;
+#&gt; 89     S &lt;NA&gt;
+#&gt; 90  &lt;NA&gt; &lt;NA&gt;
+#&gt; 91  &lt;NA&gt; &lt;NA&gt;
+#&gt; 92  &lt;NA&gt; &lt;NA&gt;
+#&gt; 93  &lt;NA&gt; &lt;NA&gt;
+#&gt; 94  &lt;NA&gt; &lt;NA&gt;
+#&gt; 95  &lt;NA&gt; &lt;NA&gt;
+#&gt; 96  &lt;NA&gt; &lt;NA&gt;
+#&gt; 97  &lt;NA&gt; &lt;NA&gt;
+#&gt; 98  &lt;NA&gt; &lt;NA&gt;
+#&gt; 99  &lt;NA&gt; &lt;NA&gt;
+#&gt; 100 &lt;NA&gt; &lt;NA&gt;
+#&gt; 101    S &lt;NA&gt;
+#&gt; 102 &lt;NA&gt; &lt;NA&gt;
+#&gt; 103 &lt;NA&gt; &lt;NA&gt;
+#&gt; 104 &lt;NA&gt; &lt;NA&gt;
+#&gt; 105 &lt;NA&gt; &lt;NA&gt;
+#&gt; 106 &lt;NA&gt; &lt;NA&gt;
+#&gt; 107 &lt;NA&gt; &lt;NA&gt;
+#&gt; 108 &lt;NA&gt; &lt;NA&gt;
+#&gt; 109 &lt;NA&gt; &lt;NA&gt;
+#&gt; 110 &lt;NA&gt; &lt;NA&gt;
+#&gt; 111 &lt;NA&gt; &lt;NA&gt;
+#&gt; 112 &lt;NA&gt; &lt;NA&gt;
+#&gt; 113 &lt;NA&gt; &lt;NA&gt;
+#&gt; 114 &lt;NA&gt; &lt;NA&gt;
+#&gt; 115 &lt;NA&gt; &lt;NA&gt;
+#&gt; 116    S &lt;NA&gt;
+#&gt; 117 &lt;NA&gt; &lt;NA&gt;
+#&gt; 118    S &lt;NA&gt;
+#&gt; 119    S &lt;NA&gt;
+#&gt; 120    S &lt;NA&gt;
+#&gt; 121    S &lt;NA&gt;
+#&gt; 122    S &lt;NA&gt;
+#&gt; 123 &lt;NA&gt; &lt;NA&gt;
+#&gt; 124 &lt;NA&gt; &lt;NA&gt;
+#&gt; 125 &lt;NA&gt; &lt;NA&gt;
+#&gt; 126 &lt;NA&gt; &lt;NA&gt;
+#&gt; 127 &lt;NA&gt; &lt;NA&gt;
+#&gt; 128 &lt;NA&gt; &lt;NA&gt;
+#&gt; 129    S &lt;NA&gt;
+#&gt; 130    S &lt;NA&gt;
+#&gt; 131 &lt;NA&gt; &lt;NA&gt;
+#&gt; 132 &lt;NA&gt; &lt;NA&gt;
+#&gt; 133 &lt;NA&gt; &lt;NA&gt;
+#&gt; 134 &lt;NA&gt; &lt;NA&gt;
+#&gt; 135 &lt;NA&gt; &lt;NA&gt;
+#&gt; 136 &lt;NA&gt; &lt;NA&gt;
+#&gt; 137 &lt;NA&gt; &lt;NA&gt;
+#&gt; 138 &lt;NA&gt; &lt;NA&gt;
+#&gt; 139    S &lt;NA&gt;
+#&gt; 140 &lt;NA&gt; &lt;NA&gt;
+#&gt; 141 &lt;NA&gt; &lt;NA&gt;
+#&gt; 142 &lt;NA&gt; &lt;NA&gt;
+#&gt; 143    S &lt;NA&gt;
+#&gt; 144 &lt;NA&gt; &lt;NA&gt;
+#&gt; 145 &lt;NA&gt; &lt;NA&gt;
+#&gt; 146 &lt;NA&gt; &lt;NA&gt;
+#&gt; 147 &lt;NA&gt; &lt;NA&gt;
+#&gt; 148 &lt;NA&gt; &lt;NA&gt;
+#&gt; 149 &lt;NA&gt; &lt;NA&gt;
+#&gt; 150 &lt;NA&gt; &lt;NA&gt;
+#&gt; 151 &lt;NA&gt; &lt;NA&gt;
+#&gt; 152 &lt;NA&gt; &lt;NA&gt;
+#&gt; 153    S    S
+#&gt; 154    S    S
+#&gt; 155    S    S
+#&gt; 156 &lt;NA&gt; &lt;NA&gt;
+#&gt; 157 &lt;NA&gt; &lt;NA&gt;
+#&gt; 158 &lt;NA&gt; &lt;NA&gt;
+#&gt; 159 &lt;NA&gt; &lt;NA&gt;
+#&gt; 160    S &lt;NA&gt;
+#&gt; 161 &lt;NA&gt; &lt;NA&gt;
+#&gt; 162    S &lt;NA&gt;
+#&gt; 163 &lt;NA&gt; &lt;NA&gt;
+#&gt; 164 &lt;NA&gt; &lt;NA&gt;
+#&gt; 165 &lt;NA&gt; &lt;NA&gt;
+#&gt; 166 &lt;NA&gt; &lt;NA&gt;
+#&gt; 167 &lt;NA&gt; &lt;NA&gt;
+#&gt; 168 &lt;NA&gt; &lt;NA&gt;
+#&gt; 169 &lt;NA&gt; &lt;NA&gt;
+#&gt; 170 &lt;NA&gt; &lt;NA&gt;
+#&gt; 171 &lt;NA&gt; &lt;NA&gt;
+#&gt; 172 &lt;NA&gt; &lt;NA&gt;
+#&gt; 173 &lt;NA&gt; &lt;NA&gt;
+#&gt; 174 &lt;NA&gt; &lt;NA&gt;
+#&gt; 175 &lt;NA&gt; &lt;NA&gt;
+#&gt; 176    S &lt;NA&gt;
+#&gt; 177 &lt;NA&gt; &lt;NA&gt;
+#&gt; 178 &lt;NA&gt; &lt;NA&gt;
+#&gt; 179 &lt;NA&gt; &lt;NA&gt;
+#&gt; 180 &lt;NA&gt; &lt;NA&gt;
+#&gt; 181 &lt;NA&gt; &lt;NA&gt;
+#&gt; 182 &lt;NA&gt; &lt;NA&gt;
+#&gt; 183    S &lt;NA&gt;
+#&gt; 184    S &lt;NA&gt;
+#&gt; 185 &lt;NA&gt; &lt;NA&gt;
+#&gt; 186 &lt;NA&gt; &lt;NA&gt;
+#&gt; 187 &lt;NA&gt; &lt;NA&gt;
+#&gt; 188 &lt;NA&gt; &lt;NA&gt;
+#&gt; 189 &lt;NA&gt; &lt;NA&gt;
+#&gt; 190 &lt;NA&gt; &lt;NA&gt;
+#&gt; 191 &lt;NA&gt; &lt;NA&gt;
+#&gt; 192 &lt;NA&gt; &lt;NA&gt;
+#&gt; 193 &lt;NA&gt; &lt;NA&gt;
+#&gt; 194    S &lt;NA&gt;
+#&gt; 195    S &lt;NA&gt;
+#&gt; 196 &lt;NA&gt; &lt;NA&gt;
+#&gt; 197 &lt;NA&gt; &lt;NA&gt;
+#&gt; 198 &lt;NA&gt; &lt;NA&gt;
+#&gt; 199    S &lt;NA&gt;
+#&gt; 200 &lt;NA&gt; &lt;NA&gt;
+#&gt; 201 &lt;NA&gt; &lt;NA&gt;
+#&gt; 202 &lt;NA&gt; &lt;NA&gt;
+#&gt; 203 &lt;NA&gt; &lt;NA&gt;
+#&gt; 204    S &lt;NA&gt;
+#&gt; 205    S &lt;NA&gt;
+#&gt; 206 &lt;NA&gt; &lt;NA&gt;
+#&gt; 207    S    S
+#&gt; 208    S &lt;NA&gt;
+#&gt; 209    S &lt;NA&gt;
+#&gt; 210    S &lt;NA&gt;
+#&gt; 211    S &lt;NA&gt;
+#&gt; 212    I &lt;NA&gt;
+#&gt; 213    S &lt;NA&gt;
+#&gt; 214 &lt;NA&gt; &lt;NA&gt;
+#&gt; 215 &lt;NA&gt; &lt;NA&gt;
+#&gt; 216    S &lt;NA&gt;
+#&gt; 217 &lt;NA&gt; &lt;NA&gt;
+#&gt; 218 &lt;NA&gt; &lt;NA&gt;
+#&gt; 219 &lt;NA&gt; &lt;NA&gt;
+#&gt; 220 &lt;NA&gt; &lt;NA&gt;
+#&gt; 221 &lt;NA&gt; &lt;NA&gt;
+#&gt; 222 &lt;NA&gt; &lt;NA&gt;
+#&gt; 223 &lt;NA&gt; &lt;NA&gt;
+#&gt; 224    S &lt;NA&gt;
+#&gt; 225    S &lt;NA&gt;
+#&gt; 226    S &lt;NA&gt;
+#&gt; 227    S &lt;NA&gt;
+#&gt; 228    S &lt;NA&gt;
+#&gt; 229 &lt;NA&gt; &lt;NA&gt;
+#&gt; 230    S &lt;NA&gt;
+#&gt; 231    S &lt;NA&gt;
+#&gt; 232    S &lt;NA&gt;
+#&gt; 233 &lt;NA&gt; &lt;NA&gt;
+#&gt; 234 &lt;NA&gt; &lt;NA&gt;
+#&gt; 235 &lt;NA&gt; &lt;NA&gt;
+#&gt; 236 &lt;NA&gt; &lt;NA&gt;
+#&gt; 237    S    S
+#&gt; 238    S &lt;NA&gt;
+#&gt; 239    S &lt;NA&gt;
+#&gt; 240    S    S
+#&gt; 241    S &lt;NA&gt;
+#&gt; 242    S    S
+#&gt; 243 &lt;NA&gt; &lt;NA&gt;
+#&gt; 244 &lt;NA&gt; &lt;NA&gt;
+#&gt; 245 &lt;NA&gt; &lt;NA&gt;
+#&gt; 246    S    S
+#&gt; 247    S    S
+#&gt; 248    S    S
+#&gt; 249 &lt;NA&gt; &lt;NA&gt;
+#&gt; 250 &lt;NA&gt; &lt;NA&gt;
+#&gt; 251    S    S
+#&gt; 252 &lt;NA&gt; &lt;NA&gt;
+#&gt; 253    S &lt;NA&gt;
+#&gt; 254    S &lt;NA&gt;
+#&gt; 255 &lt;NA&gt; &lt;NA&gt;
+#&gt; 256 &lt;NA&gt; &lt;NA&gt;
+#&gt; 257 &lt;NA&gt; &lt;NA&gt;
+#&gt; 258 &lt;NA&gt; &lt;NA&gt;
+#&gt; 259 &lt;NA&gt; &lt;NA&gt;
+#&gt; 260 &lt;NA&gt; &lt;NA&gt;
+#&gt; 261 &lt;NA&gt;    S
+#&gt; 262 &lt;NA&gt; &lt;NA&gt;
+#&gt; 263 &lt;NA&gt; &lt;NA&gt;
+#&gt; 264    S &lt;NA&gt;
+#&gt; 265    S &lt;NA&gt;
+#&gt; 266 &lt;NA&gt; &lt;NA&gt;
+#&gt; 267 &lt;NA&gt; &lt;NA&gt;
+#&gt; 268 &lt;NA&gt; &lt;NA&gt;
+#&gt; 269 &lt;NA&gt; &lt;NA&gt;
+#&gt; 270 &lt;NA&gt; &lt;NA&gt;
+#&gt; 271 &lt;NA&gt; &lt;NA&gt;
+#&gt; 272 &lt;NA&gt; &lt;NA&gt;
+#&gt; 273 &lt;NA&gt; &lt;NA&gt;
+#&gt; 274 &lt;NA&gt; &lt;NA&gt;
+#&gt; 275 &lt;NA&gt; &lt;NA&gt;
+#&gt; 276 &lt;NA&gt; &lt;NA&gt;
+#&gt; 277 &lt;NA&gt; &lt;NA&gt;
+#&gt; 278    S    S
+#&gt; 279    S    S
+#&gt; 280    S    S
+#&gt; 281 &lt;NA&gt; &lt;NA&gt;
+#&gt; 282 &lt;NA&gt; &lt;NA&gt;
+#&gt; 283 &lt;NA&gt;    S
+#&gt; 284 &lt;NA&gt;    S
+#&gt; 285 &lt;NA&gt;    S
+#&gt; 286 &lt;NA&gt;    S
+#&gt; 287 &lt;NA&gt; &lt;NA&gt;
+#&gt; 288 &lt;NA&gt; &lt;NA&gt;
+#&gt; 289 &lt;NA&gt; &lt;NA&gt;
+#&gt; 290 &lt;NA&gt; &lt;NA&gt;
+#&gt; 291 &lt;NA&gt; &lt;NA&gt;
+#&gt; 292 &lt;NA&gt; &lt;NA&gt;
+#&gt; 293 &lt;NA&gt; &lt;NA&gt;
+#&gt; 294 &lt;NA&gt;    S
+#&gt; 295 &lt;NA&gt; &lt;NA&gt;
+#&gt; 296 &lt;NA&gt; &lt;NA&gt;
+#&gt; 297 &lt;NA&gt; &lt;NA&gt;
+#&gt; 298    S    S
+#&gt; 299    S    S
+#&gt; 300 &lt;NA&gt; &lt;NA&gt;
+#&gt; 301 &lt;NA&gt; &lt;NA&gt;
+#&gt; 302 &lt;NA&gt; &lt;NA&gt;
+#&gt; 303 &lt;NA&gt; &lt;NA&gt;
+#&gt; 304 &lt;NA&gt; &lt;NA&gt;
+#&gt; 305 &lt;NA&gt; &lt;NA&gt;
+#&gt; 306 &lt;NA&gt; &lt;NA&gt;
+#&gt; 307    S &lt;NA&gt;
+#&gt; 308 &lt;NA&gt; &lt;NA&gt;
+#&gt; 309    S    S
+#&gt; 310 &lt;NA&gt; &lt;NA&gt;
+#&gt; 311 &lt;NA&gt; &lt;NA&gt;
+#&gt; 312 &lt;NA&gt;    S
+#&gt; 313    S    S
+#&gt; 314    S    S
+#&gt; 315    S    S
+#&gt; 316    S    S
+#&gt; 317 &lt;NA&gt; &lt;NA&gt;
+#&gt; 318 &lt;NA&gt; &lt;NA&gt;
+#&gt; 319 &lt;NA&gt; &lt;NA&gt;
+#&gt; 320 &lt;NA&gt;    S
+#&gt; 321 &lt;NA&gt;    S
+#&gt; 322    S    S
+#&gt; 323    S    S
+#&gt; 324 &lt;NA&gt; &lt;NA&gt;
+#&gt; 325 &lt;NA&gt; &lt;NA&gt;
+#&gt; 326 &lt;NA&gt; &lt;NA&gt;
+#&gt; 327 &lt;NA&gt; &lt;NA&gt;
+#&gt; 328 &lt;NA&gt; &lt;NA&gt;
+#&gt; 329 &lt;NA&gt; &lt;NA&gt;
+#&gt; 330 &lt;NA&gt; &lt;NA&gt;
+#&gt; 331 &lt;NA&gt; &lt;NA&gt;
+#&gt; 332 &lt;NA&gt; &lt;NA&gt;
+#&gt; 333 &lt;NA&gt; &lt;NA&gt;
+#&gt; 334 &lt;NA&gt; &lt;NA&gt;
+#&gt; 335 &lt;NA&gt; &lt;NA&gt;
+#&gt; 336 &lt;NA&gt; &lt;NA&gt;
+#&gt; 337    R &lt;NA&gt;
+#&gt; 338    R &lt;NA&gt;
+#&gt; 339 &lt;NA&gt; &lt;NA&gt;
+#&gt; 340    S    S
+#&gt; 341 &lt;NA&gt; &lt;NA&gt;
+#&gt; 342 &lt;NA&gt; &lt;NA&gt;
+#&gt; 343    S    S
+#&gt; 344    S &lt;NA&gt;
+#&gt; 345 &lt;NA&gt; &lt;NA&gt;
+#&gt; 346 &lt;NA&gt; &lt;NA&gt;
+#&gt; 347 &lt;NA&gt; &lt;NA&gt;
+#&gt; 348 &lt;NA&gt; &lt;NA&gt;
+#&gt; 349 &lt;NA&gt; &lt;NA&gt;
+#&gt; 350 &lt;NA&gt;    S
+#&gt; 351 &lt;NA&gt; &lt;NA&gt;
+#&gt; 352 &lt;NA&gt; &lt;NA&gt;
+#&gt; 353 &lt;NA&gt; &lt;NA&gt;
+#&gt; 354    S    S
+#&gt; 355 &lt;NA&gt; &lt;NA&gt;
+#&gt; 356    S    S
+#&gt; 357 &lt;NA&gt; &lt;NA&gt;
+#&gt; 358    S    S
+#&gt; 359 &lt;NA&gt; &lt;NA&gt;
+#&gt; 360    S    S
+#&gt; 361    S    S
+#&gt; 362 &lt;NA&gt; &lt;NA&gt;
+#&gt; 363 &lt;NA&gt;    S
+#&gt; 364 &lt;NA&gt;    S
+#&gt; 365 &lt;NA&gt;    S
+#&gt; 366 &lt;NA&gt; &lt;NA&gt;
+#&gt; 367 &lt;NA&gt; &lt;NA&gt;
+#&gt; 368    S    S
+#&gt; 369    S    S
+#&gt; 370    S    S
+#&gt; 371    S    S
+#&gt; 372 &lt;NA&gt; &lt;NA&gt;
+#&gt; 373 &lt;NA&gt; &lt;NA&gt;
+#&gt; 374 &lt;NA&gt; &lt;NA&gt;
+#&gt; 375 &lt;NA&gt; &lt;NA&gt;
+#&gt; 376 &lt;NA&gt; &lt;NA&gt;
+#&gt; 377 &lt;NA&gt; &lt;NA&gt;
+#&gt; 378 &lt;NA&gt; &lt;NA&gt;
+#&gt; 379 &lt;NA&gt; &lt;NA&gt;
+#&gt; 380 &lt;NA&gt; &lt;NA&gt;
+#&gt; 381    R    R
+#&gt; 382 &lt;NA&gt; &lt;NA&gt;
+#&gt; 383 &lt;NA&gt; &lt;NA&gt;
+#&gt; 384 &lt;NA&gt; &lt;NA&gt;
+#&gt; 385    S    S
+#&gt; 386 &lt;NA&gt; &lt;NA&gt;
+#&gt; 387 &lt;NA&gt; &lt;NA&gt;
+#&gt; 388 &lt;NA&gt; &lt;NA&gt;
+#&gt; 389    S    S
+#&gt; 390    S    S
+#&gt; 391    S    S
+#&gt; 392    S &lt;NA&gt;
+#&gt; 393    S    S
+#&gt; 394 &lt;NA&gt; &lt;NA&gt;
+#&gt; 395    S    S
+#&gt; 396 &lt;NA&gt; &lt;NA&gt;
+#&gt; 397 &lt;NA&gt; &lt;NA&gt;
+#&gt; 398 &lt;NA&gt; &lt;NA&gt;
+#&gt; 399 &lt;NA&gt; &lt;NA&gt;
+#&gt; 400    S    S
+#&gt; 401    S    S
+#&gt; 402    S    S
+#&gt; 403    S    S
+#&gt; 404 &lt;NA&gt; &lt;NA&gt;
+#&gt; 405    S    S
+#&gt; 406 &lt;NA&gt;    S
+#&gt; 407 &lt;NA&gt;    S
+#&gt; 408 &lt;NA&gt;    S
+#&gt; 409    S    S
+#&gt; 410    S    S
+#&gt; 411 &lt;NA&gt;    S
+#&gt; 412 &lt;NA&gt; &lt;NA&gt;
+#&gt; 413 &lt;NA&gt; &lt;NA&gt;
+#&gt; 414 &lt;NA&gt; &lt;NA&gt;
+#&gt; 415    S    S
+#&gt; 416 &lt;NA&gt; &lt;NA&gt;
+#&gt; 417 &lt;NA&gt; &lt;NA&gt;
+#&gt; 418 &lt;NA&gt; &lt;NA&gt;
+#&gt; 419 &lt;NA&gt; &lt;NA&gt;
+#&gt; 420 &lt;NA&gt; &lt;NA&gt;
+#&gt; 421 &lt;NA&gt; &lt;NA&gt;
+#&gt; 422 &lt;NA&gt; &lt;NA&gt;
+#&gt; 423 &lt;NA&gt; &lt;NA&gt;
+#&gt; 424    S    S
+#&gt; 425    S    S
+#&gt; 426 &lt;NA&gt; &lt;NA&gt;
+#&gt; 427 &lt;NA&gt; &lt;NA&gt;
+#&gt; 428 &lt;NA&gt; &lt;NA&gt;
+#&gt; 429 &lt;NA&gt; &lt;NA&gt;
+#&gt; 430 &lt;NA&gt; &lt;NA&gt;
+#&gt; 431 &lt;NA&gt; &lt;NA&gt;
+#&gt; 432 &lt;NA&gt; &lt;NA&gt;
+#&gt; 433 &lt;NA&gt; &lt;NA&gt;
+#&gt; 434 &lt;NA&gt; &lt;NA&gt;
+#&gt; 435 &lt;NA&gt; &lt;NA&gt;
+#&gt; 436 &lt;NA&gt; &lt;NA&gt;
+#&gt; 437 &lt;NA&gt; &lt;NA&gt;
+#&gt; 438    S    S
+#&gt; 439    S    S
+#&gt; 440    S    S
+#&gt; 441    S    S
+#&gt; 442 &lt;NA&gt; &lt;NA&gt;
+#&gt; 443 &lt;NA&gt;    S
+#&gt; 444 &lt;NA&gt;    S
+#&gt; 445 &lt;NA&gt; &lt;NA&gt;
+#&gt; 446 &lt;NA&gt; &lt;NA&gt;
+#&gt; 447 &lt;NA&gt; &lt;NA&gt;
+#&gt; 448 &lt;NA&gt; &lt;NA&gt;
+#&gt; 449    S    S
+#&gt; 450    S    S
+#&gt; 451 &lt;NA&gt; &lt;NA&gt;
+#&gt; 452 &lt;NA&gt; &lt;NA&gt;
+#&gt; 453 &lt;NA&gt; &lt;NA&gt;
+#&gt; 454 &lt;NA&gt; &lt;NA&gt;
+#&gt; 455 &lt;NA&gt; &lt;NA&gt;
+#&gt; 456 &lt;NA&gt; &lt;NA&gt;
+#&gt; 457    S    S
+#&gt; 458    S    S
+#&gt; 459 &lt;NA&gt; &lt;NA&gt;
+#&gt; 460 &lt;NA&gt; &lt;NA&gt;
+#&gt; 461    R    R
+#&gt; 462    R    R
+#&gt; 463    R    R
+#&gt; 464 &lt;NA&gt; &lt;NA&gt;
+#&gt; 465 &lt;NA&gt; &lt;NA&gt;
+#&gt; 466 &lt;NA&gt; &lt;NA&gt;
+#&gt; 467 &lt;NA&gt;    S
+#&gt; 468 &lt;NA&gt;    S
+#&gt; 469    S &lt;NA&gt;
+#&gt; 470 &lt;NA&gt; &lt;NA&gt;
+#&gt; 471 &lt;NA&gt;    S
+#&gt; 472 &lt;NA&gt;    S
+#&gt; 473 &lt;NA&gt;    S
+#&gt; 474 &lt;NA&gt;    S
+#&gt; 475 &lt;NA&gt; &lt;NA&gt;
+#&gt; 476 &lt;NA&gt; &lt;NA&gt;
+#&gt; 477 &lt;NA&gt; &lt;NA&gt;
+#&gt; 478    S    S
+#&gt; 479 &lt;NA&gt; &lt;NA&gt;
+#&gt; 480    S    S
+#&gt; 481    S    S
+#&gt; 482 &lt;NA&gt;    S
+#&gt; 483 &lt;NA&gt;    S
+#&gt; 484 &lt;NA&gt; &lt;NA&gt;
+#&gt; 485    S    S
+#&gt; 486    S    S
+#&gt; 487 &lt;NA&gt; &lt;NA&gt;
+#&gt; 488 &lt;NA&gt;    S
+#&gt; 489    S    S
+#&gt; 490    S    S
+#&gt; 491    S    S
+#&gt; 492    S    S
+#&gt; 493 &lt;NA&gt;    S
+#&gt; 494 &lt;NA&gt;    S
+#&gt; 495 &lt;NA&gt;    S
+#&gt; 496 &lt;NA&gt;    S
+#&gt; 497 &lt;NA&gt; &lt;NA&gt;
+#&gt; 498 &lt;NA&gt; &lt;NA&gt;
+#&gt; 499 &lt;NA&gt; &lt;NA&gt;
+#&gt; 500 &lt;NA&gt; &lt;NA&gt;
+#&gt;  [ reached 'max' / getOption("max.print") -- omitted 1500 rows ]</div><div class='input'>
 <span class='co'># select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB'</span>
 <span class='va'>example_isolates</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mo"</span>, <span class='fu'>aminoglycosides</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>]</span>
-
+</div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>ℹ For </span><span style='color: #0000BB;background-color: #E4E4E4;'>`aminoglycosides()`</span><span style='color: #0000BB;'> using columns: '</span><span style='color: #0000BB;font-weight: bold;'>AMK</span><span style='color: #0000BB;'>' (amikacin), '</span><span style='color: #0000BB;font-weight: bold;'>GEN</span><span style='color: #0000BB;'>'</span>
+#&gt; <span class='message'>  (gentamicin), '</span><span style='color: #0000BB;font-weight: bold;'>KAN</span><span style='color: #0000BB;'>' (kanamycin) and '</span><span style='color: #0000BB;font-weight: bold;'>TOB</span><span style='color: #0000BB;'>' (tobramycin)</span><span></span></div><div class='output co'>#&gt;               mo  GEN  TOB  AMK  KAN
+#&gt; 1   B_ESCHR_COLI &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 2   B_ESCHR_COLI &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 3   B_STPHY_EPDR &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 4   B_STPHY_EPDR &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 5   B_STPHY_EPDR &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 6   B_STPHY_EPDR &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 7   B_STPHY_AURS &lt;NA&gt;    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 8   B_STPHY_AURS &lt;NA&gt;    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 9   B_STPHY_EPDR &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 10  B_STPHY_EPDR &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 11  B_STPHY_EPDR &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 12  B_STPHY_EPDR &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 13  B_ESCHR_COLI &lt;NA&gt;    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 14  B_ESCHR_COLI &lt;NA&gt;    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 15  B_CTRBC_FRND &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 16  B_PROTS_MRBL &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 17  B_PROTS_MRBL &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 18  B_STPHY_EPDR &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 19  B_STPHY_EPDR &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 20  B_STPHY_CONS &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 21  B_STPHY_HMNS &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 22  B_SERRT_MRCS &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 23  B_SERRT_MRCS &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 24  B_SERRT_MRCS &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 25  B_STPHY_CONS &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 26  B_STPHY_CONS &lt;NA&gt;    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 27  B_STPHY_EPDR &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 28  B_ENTRC_FACM    R    R    R    R
+#&gt; 29  B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 30  B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 31  B_STPHY_HMNS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 32  B_STPHY_EPDR    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 33  B_KLBSL_PNMN    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 34  B_KLBSL_PNMN    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 35  B_ESCHR_COLI    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 36  B_PSDMN_AERG    I    S &lt;NA&gt;    R
+#&gt; 37  B_STPHY_CONS    R    R    R    R
+#&gt; 38  B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 39  B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 40  B_STRPT_SNGN    R    R    R    R
+#&gt; 41  B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 42  B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 43  B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 44  B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 45  B_ENTRC_FCLS    R    R    R    R
+#&gt; 46  B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 47  F_CANDD_GLBR &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 48  B_STRPT_GRPB    R    R    R    R
+#&gt; 49  B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 50  B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 51  B_KLBSL_PNMN    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 52  B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 53  B_STPHY_CONS    R    R    R    R
+#&gt; 54  B_STPHY_CONS    R    R    R    R
+#&gt; 55  B_STRPT_PNMN    R    R    R    R
+#&gt; 56  B_STRPT_PNMN    R    R    R    R
+#&gt; 57  B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 58  B_STRPT_ANGN    R    R    R    R
+#&gt; 59  B_STRPT_ANGN    R    R    R    R
+#&gt; 60  B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 61  B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 62  B_STPHY_EPDR    R    R    R    R
+#&gt; 63  B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 64  B_STRPT_PNMN    R    R    R    R
+#&gt; 65  B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 66  B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 67  B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 68  B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 69       B_CRYNB &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 70  B_STPHY_HMNS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 71  B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 72  B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 73  B_ENTRC_FCLS    R    R    R    R
+#&gt; 74  B_ENTRC_FCLS    R    R    R    R
+#&gt; 75  B_STPHY_HMNS    I &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 76  B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 77  B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 78  B_PSDMN_AERG    I    S &lt;NA&gt;    R
+#&gt; 79  B_PSDMN_AERG    I    S &lt;NA&gt;    R
+#&gt; 80  B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 81  B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 82  B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 83  B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 84  B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 85  B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 86  B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 87  B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 88  B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 89  B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 90  B_STRPT_SLVR    R    R    R    R
+#&gt; 91  B_STRPT_SLVR    R    R    R    R
+#&gt; 92  B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 93  B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 94  B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 95  B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 96  B_CMPYL_JEJN &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 97  B_STPHY_EPDR    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 98      B_MCRCCC    S    R &lt;NA&gt; &lt;NA&gt;
+#&gt; 99  B_STPHY_EPDR    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 100 B_STRPT_PNMN    R    R    R    R
+#&gt; 101      B_ACNTB    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 102 B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 103 B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 104 B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 105 B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 106 B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 107 B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 108 B_STPHY_EPDR    R    R    R    R
+#&gt; 109 B_STRPT_PNMN    R    R    R    R
+#&gt; 110 B_STRPT_PNMN    R    R    R    R
+#&gt; 111 B_STPHY_CONS    R    R    R    R
+#&gt; 112 B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 113 B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 114 B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 115 B_STPHY_HMNS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 116 B_PROTS_MRBL    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 117 B_BCTRD_FRGL &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 118 B_PROTS_MRBL    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 119 B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 120 B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 121 B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 122 B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 123 B_STPHY_EPDR    R    R    R    R
+#&gt; 124 B_STPHY_EPDR    R    R    R    R
+#&gt; 125 B_STPHY_CONS    R    R    R    R
+#&gt; 126 B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 127 B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 128 B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 129 B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 130 B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 131 B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 132 B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 133 B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 134 B_STRPT_PNMN    R    R    R    R
+#&gt; 135      B_CRYNB &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 136 B_STRPT_PNMN    R    R    R    R
+#&gt; 137 B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 138 B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 139 B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 140 B_STPHY_HMNS    R    R    R    R
+#&gt; 141 B_STPHY_CONS    R    R    R    R
+#&gt; 142 B_STPHY_EPDR    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 143 B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 144 B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 145 B_STPHY_CONS    R    R    R    R
+#&gt; 146 B_STPHY_CONS    R    R    R    R
+#&gt; 147 B_STRPT_PNMN    R    R    R    R
+#&gt; 148 B_STRPT_PNMN    R    R    R    R
+#&gt; 149 B_STRPT_PNMN    R    R    R    R
+#&gt; 150 B_STRPT_PNMN    R    R    R    R
+#&gt; 151 B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 152 B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 153 B_STRPT_PYGN    R    R    R    R
+#&gt; 154 B_STRPT_GRPA    R    R    R    R
+#&gt; 155 B_STRPT_GRPA    R    R    R    R
+#&gt; 156 B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 157 B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 158 B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 159 B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 160      B_ENTRC &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 161 B_STPHY_CONS    R    R    R    R
+#&gt; 162      B_ENTRC &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 163 B_STPHY_CONS    R    R    R    R
+#&gt; 164 B_STPHY_CONS    I &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 165 B_STPHY_CONS    I &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 166 B_STPHY_CONS    R    R    R    R
+#&gt; 167      B_CRYNB &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 168 B_STPHY_EPDR    R    R    R    R
+#&gt; 169 B_STPHY_EPDR    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 170 B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 171 B_STPHY_HMNS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 172 B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 173 B_HMPHL_PRNF &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 174 B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 175 B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 176 B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 177 B_STRPT_PNMN    R    R    R    R
+#&gt; 178 B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 179 B_STRPT_MITS    R    R    R    R
+#&gt; 180 B_STRPT_MITS    R    R    R    R
+#&gt; 181 B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 182 B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 183 B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 184 B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 185 B_STPHY_EPDR    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 186 B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 187 B_STPHY_CONS    R    R    R    R
+#&gt; 188 B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 189 B_STPHY_EPDR    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 190 B_STPHY_EPDR    R    R    R    R
+#&gt; 191 B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 192 B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 193 B_STRPT_PNMN    R    R    R    R
+#&gt; 194 B_KLBSL_PNMN    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 195 B_KLBSL_PNMN    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 196 B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 197 B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 198 B_STPHY_CONS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 199 B_ESCHR_COLI    S    S &lt;NA&gt; &lt;NA&gt;
+#&gt; 200 B_STPHY_AURS    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt;  [ reached 'max' / getOption("max.print") -- omitted 1800 rows ]</div><div class='input'>
 <span class='co'># filter using any() or all()</span>
 <span class='va'>example_isolates</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/any.html'>any</a></span><span class='op'>(</span><span class='fu'>carbapenems</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>==</span> <span class='st'>"R"</span><span class='op'>)</span>, <span class='op'>]</span>
-<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>example_isolates</span>, <span class='fu'><a href='https://rdrr.io/r/base/any.html'>any</a></span><span class='op'>(</span><span class='fu'>carbapenems</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>==</span> <span class='st'>"R"</span><span class='op'>)</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>ℹ Assuming a filter on all 2 carbapenems. Wrap around </span><span style='color: #0000BB;background-color: #E4E4E4;'>`all()`</span><span style='color: #0000BB;'> or </span><span style='color: #0000BB;background-color: #E4E4E4;'>`any()`</span><span style='color: #0000BB;'> to</span>
+#&gt; <span class='message'>  prevent this note.</span><span></span></div><div class='output co'>#&gt;            date hospital_id ward_icu ward_clinical ward_outpatient age gender
+#&gt; 381  2004-11-03           B     TRUE         FALSE           FALSE  80      F
+#&gt; 461  2005-04-21           B     TRUE         FALSE           FALSE  82      F
+#&gt; 462  2005-04-22           B     TRUE         FALSE           FALSE  82      F
+#&gt; 463  2005-04-22           B     TRUE         FALSE           FALSE  82      F
+#&gt; 698  2007-02-21           D    FALSE          TRUE           FALSE  61      F
+#&gt; 799  2007-12-15           A    FALSE          TRUE           FALSE  72      M
+#&gt; 918  2008-12-06           D    FALSE          TRUE           FALSE  43      F
+#&gt; 1147 2011-03-16           B     TRUE          TRUE           FALSE  83      M
+#&gt; 1149 2011-03-19           B     TRUE          TRUE           FALSE  83      M
+#&gt; 1156 2011-04-06           D     TRUE          TRUE           FALSE  74      M
+#&gt; 1157 2011-04-11           C    FALSE          TRUE           FALSE  74      M
+#&gt; 1172 2011-05-09           D     TRUE          TRUE           FALSE  82      F
+#&gt; 1210 2011-08-01           D    FALSE          TRUE           FALSE  63      M
+#&gt; 1213 2011-08-18           B    FALSE          TRUE           FALSE  75      F
+#&gt; 1217 2011-09-01           B    FALSE          TRUE           FALSE  71      M
+#&gt; 1218 2011-09-01           B    FALSE          TRUE           FALSE  71      M
+#&gt; 1242 2011-11-04           D    FALSE          TRUE           FALSE  70      M
+#&gt; 1243 2011-11-07           D    FALSE          TRUE           FALSE  70      M
+#&gt; 1246 2011-11-10           D    FALSE          TRUE           FALSE  90      F
+#&gt; 1259 2012-02-06           D     TRUE          TRUE           FALSE  80      M
+#&gt;      patient_id           mo  PEN  OXA  FLC  AMX  AMC  AMP TZP  CZO  FEP  CXM
+#&gt; 381      D65308 B_STNTR_MLTP    R &lt;NA&gt; &lt;NA&gt;    R    R    R   R    R &lt;NA&gt;    R
+#&gt; 461      452212      B_ENTRC &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 462      452212      B_ENTRC &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 463      452212 B_ENTRC_FACM &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R    R    R
+#&gt; 698      8BBC46 B_ENTRC_FACM &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R    R    R
+#&gt; 799      401043 B_ENTRC_FACM &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R    R    R
+#&gt; 918      501361 B_STNTR_MLTP    R &lt;NA&gt; &lt;NA&gt;    R    R    R   R    R &lt;NA&gt;    R
+#&gt; 1147     0D7D34 B_STPHY_EPDR    R    R    R    R    R    R   R    R    R    R
+#&gt; 1149     0D7D34 B_STPHY_EPDR    R    R    R    R    R    R   R    R    R    R
+#&gt; 1156     329273 B_STPHY_CONS    R    R    R    R    R    R   R    R    R    R
+#&gt; 1157     A26784 B_STPHY_CONS    R    R    R    R    R    R   R    R    R    R
+#&gt; 1172     207325 B_ENTRC_FACM &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R    R    R
+#&gt; 1210     F8DB34 B_STPHY_CONS    R    R    R    R    R    R   R    R    R    R
+#&gt; 1213     A81782 B_STPHY_CONS    R    R    R    R    R    R   R    R    R    R
+#&gt; 1217     50C8DB B_STPHY_EPDR    R    R    R    R    R    R   R    R    R    R
+#&gt; 1218     50C8DB B_STPHY_CONS    R    R    R    R    R    R   R    R    R    R
+#&gt; 1242     443847 B_STPHY_CONS    R    R    R    R    R    R   R    R    R    R
+#&gt; 1243     116866 B_STPHY_CONS    R    R    R    R    R    R   R    R    R    R
+#&gt; 1246     F86227 B_STPHY_CONS    R    R    R    R    R    R   R    R    R    R
+#&gt; 1259     967247 B_STPHY_CONS    R    R    R    R    R    R   R    R    R    R
+#&gt;       FOX  CTX  CAZ  CRO  GEN  TOB  AMK  KAN  TMP  SXT  NIT  FOS  LNZ  CIP  MFX
+#&gt; 381     R    R    R    R    R    R    R    R    R    S &lt;NA&gt;    R    R &lt;NA&gt; &lt;NA&gt;
+#&gt; 461  &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 462  &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 463     R    R    R    R    R    R    R    R    R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 698     R    R    R    R    R    R    R    R    R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 799     R    R    R    R    R    R    R    R    R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;
+#&gt; 918     R    R    R    R    R    R    R    R    R    S    R    R    R    S &lt;NA&gt;
+#&gt; 1147    R    R    R    R    I &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S &lt;NA&gt;
+#&gt; 1149    R    R    R    R    I &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S &lt;NA&gt;
+#&gt; 1156    R    R    R    R    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;
+#&gt; 1157    R    R    R    R    I &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    I &lt;NA&gt;
+#&gt; 1172    R    R    R    R    R    R    R    R    R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 1210    R    R    R    R    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;
+#&gt; 1213    R    R    R    R    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;
+#&gt; 1217    R    R    R    R    I &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S &lt;NA&gt;
+#&gt; 1218    R    R    R    R    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S &lt;NA&gt;
+#&gt; 1242    R    R    R    R    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S &lt;NA&gt;
+#&gt; 1243    R    R    R    R    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;
+#&gt; 1246    R    R    R    R    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;
+#&gt; 1259    R    R    R    R    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;
+#&gt;      VAN  TEC  TCY  TGC  DOX ERY  CLI AZM IPM MEM  MTR  CHL COL  MUP  RIF
+#&gt; 381    R    R    R &lt;NA&gt;    R   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt;    R
+#&gt; 461    S &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt;   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 462    S &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt;   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 463    S &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 698    S &lt;NA&gt;    S &lt;NA&gt; &lt;NA&gt;   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 799    S &lt;NA&gt;    S &lt;NA&gt; &lt;NA&gt;   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 918    R    R    R &lt;NA&gt;    R   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt;    R
+#&gt; 1147   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1149   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1156   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1157   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    S   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1172   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1210   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1213   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1217   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   S    S   S   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt;    S
+#&gt; 1218   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    S   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt;    S
+#&gt; 1242   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1243   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1246   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1259   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt;  [ reached 'max' / getOption("max.print") -- omitted 29 rows ]</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>example_isolates</span>, <span class='fu'><a href='https://rdrr.io/r/base/any.html'>any</a></span><span class='op'>(</span><span class='fu'>carbapenems</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>==</span> <span class='st'>"R"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>ℹ Assuming a filter on all 2 carbapenems. Wrap around </span><span style='color: #0000BB;background-color: #E4E4E4;'>`all()`</span><span style='color: #0000BB;'> or </span><span style='color: #0000BB;background-color: #E4E4E4;'>`any()`</span><span style='color: #0000BB;'> to</span>
+#&gt; <span class='message'>  prevent this note.</span><span></span></div><div class='output co'>#&gt;            date hospital_id ward_icu ward_clinical ward_outpatient age gender
+#&gt; 381  2004-11-03           B     TRUE         FALSE           FALSE  80      F
+#&gt; 461  2005-04-21           B     TRUE         FALSE           FALSE  82      F
+#&gt; 462  2005-04-22           B     TRUE         FALSE           FALSE  82      F
+#&gt; 463  2005-04-22           B     TRUE         FALSE           FALSE  82      F
+#&gt; 698  2007-02-21           D    FALSE          TRUE           FALSE  61      F
+#&gt; 799  2007-12-15           A    FALSE          TRUE           FALSE  72      M
+#&gt; 918  2008-12-06           D    FALSE          TRUE           FALSE  43      F
+#&gt; 1147 2011-03-16           B     TRUE          TRUE           FALSE  83      M
+#&gt; 1149 2011-03-19           B     TRUE          TRUE           FALSE  83      M
+#&gt; 1156 2011-04-06           D     TRUE          TRUE           FALSE  74      M
+#&gt; 1157 2011-04-11           C    FALSE          TRUE           FALSE  74      M
+#&gt; 1172 2011-05-09           D     TRUE          TRUE           FALSE  82      F
+#&gt; 1210 2011-08-01           D    FALSE          TRUE           FALSE  63      M
+#&gt; 1213 2011-08-18           B    FALSE          TRUE           FALSE  75      F
+#&gt; 1217 2011-09-01           B    FALSE          TRUE           FALSE  71      M
+#&gt; 1218 2011-09-01           B    FALSE          TRUE           FALSE  71      M
+#&gt; 1242 2011-11-04           D    FALSE          TRUE           FALSE  70      M
+#&gt; 1243 2011-11-07           D    FALSE          TRUE           FALSE  70      M
+#&gt; 1246 2011-11-10           D    FALSE          TRUE           FALSE  90      F
+#&gt; 1259 2012-02-06           D     TRUE          TRUE           FALSE  80      M
+#&gt;      patient_id           mo  PEN  OXA  FLC  AMX  AMC  AMP TZP  CZO  FEP  CXM
+#&gt; 381      D65308 B_STNTR_MLTP    R &lt;NA&gt; &lt;NA&gt;    R    R    R   R    R &lt;NA&gt;    R
+#&gt; 461      452212      B_ENTRC &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 462      452212      B_ENTRC &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 463      452212 B_ENTRC_FACM &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R    R    R
+#&gt; 698      8BBC46 B_ENTRC_FACM &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R    R    R
+#&gt; 799      401043 B_ENTRC_FACM &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R    R    R
+#&gt; 918      501361 B_STNTR_MLTP    R &lt;NA&gt; &lt;NA&gt;    R    R    R   R    R &lt;NA&gt;    R
+#&gt; 1147     0D7D34 B_STPHY_EPDR    R    R    R    R    R    R   R    R    R    R
+#&gt; 1149     0D7D34 B_STPHY_EPDR    R    R    R    R    R    R   R    R    R    R
+#&gt; 1156     329273 B_STPHY_CONS    R    R    R    R    R    R   R    R    R    R
+#&gt; 1157     A26784 B_STPHY_CONS    R    R    R    R    R    R   R    R    R    R
+#&gt; 1172     207325 B_ENTRC_FACM &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R    R    R
+#&gt; 1210     F8DB34 B_STPHY_CONS    R    R    R    R    R    R   R    R    R    R
+#&gt; 1213     A81782 B_STPHY_CONS    R    R    R    R    R    R   R    R    R    R
+#&gt; 1217     50C8DB B_STPHY_EPDR    R    R    R    R    R    R   R    R    R    R
+#&gt; 1218     50C8DB B_STPHY_CONS    R    R    R    R    R    R   R    R    R    R
+#&gt; 1242     443847 B_STPHY_CONS    R    R    R    R    R    R   R    R    R    R
+#&gt; 1243     116866 B_STPHY_CONS    R    R    R    R    R    R   R    R    R    R
+#&gt; 1246     F86227 B_STPHY_CONS    R    R    R    R    R    R   R    R    R    R
+#&gt; 1259     967247 B_STPHY_CONS    R    R    R    R    R    R   R    R    R    R
+#&gt;       FOX  CTX  CAZ  CRO  GEN  TOB  AMK  KAN  TMP  SXT  NIT  FOS  LNZ  CIP  MFX
+#&gt; 381     R    R    R    R    R    R    R    R    R    S &lt;NA&gt;    R    R &lt;NA&gt; &lt;NA&gt;
+#&gt; 461  &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 462  &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 463     R    R    R    R    R    R    R    R    R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 698     R    R    R    R    R    R    R    R    R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 799     R    R    R    R    R    R    R    R    R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;
+#&gt; 918     R    R    R    R    R    R    R    R    R    S    R    R    R    S &lt;NA&gt;
+#&gt; 1147    R    R    R    R    I &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S &lt;NA&gt;
+#&gt; 1149    R    R    R    R    I &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S &lt;NA&gt;
+#&gt; 1156    R    R    R    R    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;
+#&gt; 1157    R    R    R    R    I &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    I &lt;NA&gt;
+#&gt; 1172    R    R    R    R    R    R    R    R    R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 1210    R    R    R    R    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;
+#&gt; 1213    R    R    R    R    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;
+#&gt; 1217    R    R    R    R    I &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S &lt;NA&gt;
+#&gt; 1218    R    R    R    R    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S &lt;NA&gt;
+#&gt; 1242    R    R    R    R    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S &lt;NA&gt;
+#&gt; 1243    R    R    R    R    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;
+#&gt; 1246    R    R    R    R    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;
+#&gt; 1259    R    R    R    R    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;
+#&gt;      VAN  TEC  TCY  TGC  DOX ERY  CLI AZM IPM MEM  MTR  CHL COL  MUP  RIF
+#&gt; 381    R    R    R &lt;NA&gt;    R   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt;    R
+#&gt; 461    S &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt;   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 462    S &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt;   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 463    S &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 698    S &lt;NA&gt;    S &lt;NA&gt; &lt;NA&gt;   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 799    S &lt;NA&gt;    S &lt;NA&gt; &lt;NA&gt;   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 918    R    R    R &lt;NA&gt;    R   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt;    R
+#&gt; 1147   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1149   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1156   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1157   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    S   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1172   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1210   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1213   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1217   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   S    S   S   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt;    S
+#&gt; 1218   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    S   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt;    S
+#&gt; 1242   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1243   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1246   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1259   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S   R    R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt;  [ reached 'max' / getOption("max.print") -- omitted 29 rows ]</div><div class='input'>
 <span class='co'># filter on any or all results in the carbapenem columns (i.e., IPM, MEM):</span>
 <span class='va'>example_isolates</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/any.html'>any</a></span><span class='op'>(</span><span class='fu'>carbapenems</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>, <span class='op'>]</span>
-<span class='va'>example_isolates</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/all.html'>all</a></span><span class='op'>(</span><span class='fu'>carbapenems</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>, <span class='op'>]</span>
-
+</div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>ℹ Filtering any of columns '</span><span style='color: #0000BB;font-weight: bold;'>IPM</span><span style='color: #0000BB;'>' and '</span><span style='color: #0000BB;font-weight: bold;'>MEM</span><span style='color: #0000BB;'>' to contain value "R", "S" or "I"</span><span></span></div><div class='output co'>#&gt;          date hospital_id ward_icu ward_clinical ward_outpatient age gender
+#&gt; 13 2002-01-19           D    FALSE          TRUE           FALSE  71      M
+#&gt; 14 2002-01-19           D    FALSE          TRUE           FALSE  71      M
+#&gt; 16 2002-01-22           B     TRUE         FALSE           FALSE  50      M
+#&gt; 17 2002-01-22           B     TRUE         FALSE           FALSE  50      M
+#&gt; 22 2002-02-05           B     TRUE         FALSE           FALSE  45      F
+#&gt; 23 2002-02-05           B     TRUE         FALSE           FALSE  45      F
+#&gt; 24 2002-02-05           B     TRUE         FALSE           FALSE  45      F
+#&gt; 33 2002-02-27           D    FALSE          TRUE           FALSE  85      F
+#&gt; 34 2002-02-27           D    FALSE          TRUE           FALSE  85      F
+#&gt; 35 2002-03-08           C    FALSE          TRUE           FALSE  69      M
+#&gt; 36 2002-03-16           C    FALSE          TRUE           FALSE  69      M
+#&gt; 38 2002-04-01           B     TRUE         FALSE           FALSE  46      F
+#&gt; 39 2002-04-01           B     TRUE         FALSE           FALSE  46      F
+#&gt; 45 2002-04-08           A     TRUE          TRUE           FALSE  78      M
+#&gt; 48 2002-04-14           C    FALSE         FALSE            TRUE  73      M
+#&gt; 49 2002-04-23           B     TRUE         FALSE           FALSE  69      F
+#&gt; 50 2002-04-23           B     TRUE         FALSE           FALSE  69      F
+#&gt; 51 2002-04-26           D    FALSE          TRUE           FALSE  79      M
+#&gt; 65 2002-06-05           D    FALSE          TRUE           FALSE  20      F
+#&gt; 66 2002-06-06           D    FALSE          TRUE           FALSE  20      F
+#&gt;    patient_id           mo  PEN  OXA  FLC  AMX AMC  AMP  TZP  CZO  FEP CXM  FOX
+#&gt; 13     738003 B_ESCHR_COLI    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   I &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;
+#&gt; 14     738003 B_ESCHR_COLI    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   I &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;
+#&gt; 16     F35553 B_PROTS_MRBL    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   I &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;
+#&gt; 17     F35553 B_PROTS_MRBL    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   I &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;
+#&gt; 22     067927 B_SERRT_MRCS    R &lt;NA&gt; &lt;NA&gt;    R   R    R &lt;NA&gt;    R &lt;NA&gt;   R    R
+#&gt; 23     067927 B_SERRT_MRCS    R &lt;NA&gt; &lt;NA&gt;    R   R    R &lt;NA&gt;    R &lt;NA&gt;   R    R
+#&gt; 24     067927 B_SERRT_MRCS    R &lt;NA&gt; &lt;NA&gt;    R   R    R &lt;NA&gt;    R &lt;NA&gt;   R    R
+#&gt; 33     066895 B_KLBSL_PNMN    R &lt;NA&gt; &lt;NA&gt;    R   I    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;
+#&gt; 34     066895 B_KLBSL_PNMN    R &lt;NA&gt; &lt;NA&gt;    R   I    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;
+#&gt; 35     4FC193 B_ESCHR_COLI    R &lt;NA&gt; &lt;NA&gt;    R   R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt;
+#&gt; 36     4FC193 B_PSDMN_AERG    R &lt;NA&gt; &lt;NA&gt;    R   R    R &lt;NA&gt;    R &lt;NA&gt;   R    R
+#&gt; 38     496896 B_ESCHR_COLI    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   I &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   I &lt;NA&gt;
+#&gt; 39     496896 B_ESCHR_COLI    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   I &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   I &lt;NA&gt;
+#&gt; 45     130252 B_ENTRC_FCLS &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt; &lt;NA&gt;    R    R   R    R
+#&gt; 48     F30196 B_STRPT_GRPB    S &lt;NA&gt;    S    S   S    S    S    S    S   S    S
+#&gt; 49     EE2510 B_ESCHR_COLI    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   I &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;   I &lt;NA&gt;
+#&gt; 50     EE2510 B_ESCHR_COLI    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   I &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;   I &lt;NA&gt;
+#&gt; 51     D10443 B_KLBSL_PNMN    R &lt;NA&gt; &lt;NA&gt;    R   S    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;
+#&gt; 65     24D393 B_ESCHR_COLI    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   I &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;
+#&gt; 66     24D393 B_ESCHR_COLI    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   I &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;
+#&gt;     CTX  CAZ  CRO  GEN  TOB  AMK  KAN TMP SXT  NIT  FOS  LNZ  CIP  MFX VAN  TEC
+#&gt; 13    S &lt;NA&gt;    S &lt;NA&gt;    S &lt;NA&gt; &lt;NA&gt;   S   S &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;   R    R
+#&gt; 14    S &lt;NA&gt;    S &lt;NA&gt;    S &lt;NA&gt; &lt;NA&gt;   S   S &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;   R    R
+#&gt; 16    S    S    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S   S    R &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 17    S    S    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S   S    R &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 22 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S   S    R &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 23 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S   S    R &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 24 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S   S    R &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 33    S    S    S    S    S &lt;NA&gt; &lt;NA&gt;   S   S    S &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 34    S    S    S    S    S &lt;NA&gt; &lt;NA&gt;   S   S    S &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 35    S    S    S    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S   S &lt;NA&gt; &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 36    R    R    R    I    S &lt;NA&gt;    R   R   R &lt;NA&gt; &lt;NA&gt;    R    I &lt;NA&gt;   R    R
+#&gt; 38    S    S    S    S    S &lt;NA&gt; &lt;NA&gt;   S   S    S &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 39    S    S    S    S    S &lt;NA&gt; &lt;NA&gt;   S   S    S &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 45    R    R    R    R    R    R    R   R   R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;
+#&gt; 48    S    R    S    R    R    R    R   S   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;
+#&gt; 49    S    S    S    S    S &lt;NA&gt; &lt;NA&gt;   R   R    R &lt;NA&gt;    R    R    R   R    R
+#&gt; 50    S    S    S    S    S &lt;NA&gt; &lt;NA&gt;   R   R    R &lt;NA&gt;    R    R    R   R    R
+#&gt; 51    S    S    S    S    S &lt;NA&gt; &lt;NA&gt;   S   S    S &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 65    S    S    S    S    S &lt;NA&gt; &lt;NA&gt;   S   S    S &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 66    S    S    S    S    S &lt;NA&gt; &lt;NA&gt;   S   S    S &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt;     TCY  TGC  DOX ERY  CLI AZM IPM  MEM  MTR  CHL  COL  MUP  RIF
+#&gt; 13 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 14 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 16    R    R    R   R    R   R   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;    R
+#&gt; 17    R    R    R   R    R   R   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;    R
+#&gt; 22    R    R    R   R    R   R   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;    R
+#&gt; 23    R    R    R   R    R   R   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;    R
+#&gt; 24    R    R    R   R    R   R   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;    R
+#&gt; 33 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 34 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 35 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 36    R    R    R   R    R   R   S &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 38 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 39 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 45    R &lt;NA&gt; &lt;NA&gt;   R    R   R   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;
+#&gt; 48    S &lt;NA&gt;    S   S &lt;NA&gt;   S   S    S &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;
+#&gt; 49 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 50 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 51 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 65 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 66 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt;  [ reached 'max' / getOption("max.print") -- omitted 942 rows ]</div><div class='input'><span class='va'>example_isolates</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/all.html'>all</a></span><span class='op'>(</span><span class='fu'>carbapenems</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>, <span class='op'>]</span>
+</div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>ℹ Filtering all of columns '</span><span style='color: #0000BB;font-weight: bold;'>IPM</span><span style='color: #0000BB;'>' and '</span><span style='color: #0000BB;font-weight: bold;'>MEM</span><span style='color: #0000BB;'>' to contain value "R", "S" or "I"</span><span></span></div><div class='output co'>#&gt;           date hospital_id ward_icu ward_clinical ward_outpatient age gender
+#&gt; 48  2002-04-14           C    FALSE         FALSE            TRUE  73      M
+#&gt; 153 2003-04-08           B     TRUE         FALSE           FALSE  74      M
+#&gt; 154 2003-04-08           B     TRUE         FALSE           FALSE  74      M
+#&gt; 155 2003-04-08           B     TRUE         FALSE           FALSE  74      M
+#&gt; 207 2003-08-14           D    FALSE          TRUE           FALSE   0      F
+#&gt; 237 2003-10-16           B     TRUE         FALSE           FALSE  63      F
+#&gt; 240 2003-10-20           B     TRUE         FALSE           FALSE  52      M
+#&gt; 242 2003-10-20           B     TRUE         FALSE           FALSE  52      M
+#&gt; 246 2003-11-04           B     TRUE         FALSE           FALSE  87      F
+#&gt; 247 2003-11-04           B     TRUE         FALSE           FALSE  87      F
+#&gt; 248 2003-11-04           B     TRUE         FALSE           FALSE  87      F
+#&gt; 251 2003-11-21           B     TRUE         FALSE           FALSE  77      F
+#&gt; 278 2004-02-10           B     TRUE         FALSE           FALSE  71      F
+#&gt; 279 2004-02-10           B     TRUE         FALSE           FALSE  71      F
+#&gt; 280 2004-02-10           B     TRUE         FALSE           FALSE  71      F
+#&gt; 298 2004-03-03           D    FALSE          TRUE           FALSE  74      M
+#&gt; 299 2004-03-03           D    FALSE          TRUE           FALSE  74      M
+#&gt; 309 2004-04-07           C    FALSE          TRUE           FALSE  86      F
+#&gt; 313 2004-04-15           B     TRUE         FALSE           FALSE  87      F
+#&gt; 314 2004-04-15           B     TRUE         FALSE           FALSE  87      F
+#&gt;     patient_id            mo PEN  OXA  FLC  AMX AMC  AMP TZP  CZO FEP CXM FOX
+#&gt; 48      F30196  B_STRPT_GRPB   S &lt;NA&gt;    S    S   S    S   S    S   S   S   S
+#&gt; 153     114570  B_STRPT_PYGN   S &lt;NA&gt;    S    S   S    S   S    S   S   S   S
+#&gt; 154     114570  B_STRPT_GRPA   S &lt;NA&gt;    S    S   S    S   S    S   S   S   S
+#&gt; 155     114570  B_STRPT_GRPA   S &lt;NA&gt;    S    S   S    S   S    S   S   S   S
+#&gt; 207     F71508  B_STRPT_GRPB   S &lt;NA&gt;    S    S   S    S   S    S   S   S   S
+#&gt; 237     650870  B_ESCHR_COLI   R &lt;NA&gt; &lt;NA&gt;    R   R    R   S &lt;NA&gt;   S   S   S
+#&gt; 240     F35553 B_ENTRBC_CLOC   R &lt;NA&gt; &lt;NA&gt;    R   R    R   S    R   S   R   R
+#&gt; 242     F35553 B_ENTRBC_CLOC   R &lt;NA&gt; &lt;NA&gt;    R   R    R   S    R   S   R   R
+#&gt; 246     2FC253  B_ESCHR_COLI   R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;   S &lt;NA&gt;   S   S   S
+#&gt; 247     2FC253  B_ESCHR_COLI   R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;   S &lt;NA&gt;   S   S   S
+#&gt; 248     2FC253  B_ESCHR_COLI   R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;   S &lt;NA&gt;   S   S   S
+#&gt; 251     550406  B_ESCHR_COLI   R &lt;NA&gt; &lt;NA&gt;    R   R    R   S &lt;NA&gt;   S   I   R
+#&gt; 278     F24801  B_STRPT_GRPB   S &lt;NA&gt;    S    S   S    S   S    S   S   S   S
+#&gt; 279     F24801  B_STRPT_AGLC   S &lt;NA&gt;    S    S   S    S   S    S   S   S   S
+#&gt; 280     F24801  B_STRPT_GRPB   S &lt;NA&gt;    S    S   S    S   S    S   S   S   S
+#&gt; 298     1435C8  B_ESCHR_COLI   R &lt;NA&gt; &lt;NA&gt;    S   S    S   S &lt;NA&gt;   S   S   S
+#&gt; 299     1435C8  B_ESCHR_COLI   R &lt;NA&gt; &lt;NA&gt;    S   S    S   S &lt;NA&gt;   S   S   S
+#&gt; 309     765860  B_STRPT_GRPA   S &lt;NA&gt;    S    S   S    S   S    S   S   S   S
+#&gt; 313     386739  B_ESCHR_COLI   R &lt;NA&gt; &lt;NA&gt;    R   I    R   S &lt;NA&gt;   S   S   S
+#&gt; 314     386739  B_ESCHR_COLI   R &lt;NA&gt; &lt;NA&gt;    R   I    R   S &lt;NA&gt;   S   S   S
+#&gt;      CTX  CAZ  CRO GEN TOB AMK  KAN  TMP  SXT  NIT  FOS  LNZ  CIP  MFX VAN  TEC
+#&gt; 48     S    R    S   R   R   R    R    S    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;
+#&gt; 153    S    R    S   R   R   R    R    S    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;
+#&gt; 154    S    R    S   R   R   R    R    S    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;
+#&gt; 155    S    R    S   R   R   R    R    S    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;
+#&gt; 207    S    R    S   R   R   R    R    S    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;
+#&gt; 237    S    S    S   S   S   S &lt;NA&gt; &lt;NA&gt;    S    S &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 240 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S   S   S &lt;NA&gt; &lt;NA&gt;    S    R &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 242 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S   S   S &lt;NA&gt; &lt;NA&gt;    S    R &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 246    S    S    S   S   S   S &lt;NA&gt; &lt;NA&gt;    S    S &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 247    S    S    S   S   S   S &lt;NA&gt; &lt;NA&gt;    S    S &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 248    S    S    S   S   S   S &lt;NA&gt; &lt;NA&gt;    S    S &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 251    S    S    S   S   S   S &lt;NA&gt; &lt;NA&gt;    S    S &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 278    S    R    S   R   R   R    R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;
+#&gt; 279    S    R    S   R   R   R    R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;
+#&gt; 280    S    R    S   R   R   R    R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;
+#&gt; 298    S    S    S   S   S   S &lt;NA&gt; &lt;NA&gt;    S    S &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 299    S    S    S   S   S   S &lt;NA&gt; &lt;NA&gt;    S    S &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 309    S    R    S   R   R   R    R    S    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;
+#&gt; 313    S    S    S   S   S   S &lt;NA&gt; &lt;NA&gt;    S    S &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt; 314    S    S    S   S   S   S &lt;NA&gt; &lt;NA&gt;    S    S &lt;NA&gt;    R    S &lt;NA&gt;   R    R
+#&gt;      TCY  TGC  DOX ERY  CLI AZM IPM MEM  MTR  CHL  COL  MUP  RIF
+#&gt; 48     S &lt;NA&gt;    S   S &lt;NA&gt;   S   S   S &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;
+#&gt; 153    S &lt;NA&gt;    S   S    S   S   S   S &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;
+#&gt; 154    S &lt;NA&gt;    S   S    S   S   S   S &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;
+#&gt; 155    S &lt;NA&gt;    S   S    S   S   S   S &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;
+#&gt; 207    R &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;   S   S   S &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;
+#&gt; 237 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 240 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 242 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 246 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 247 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 248 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 251 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 278    R &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;   S   S   S &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;
+#&gt; 279    R &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;   S   S   S &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;
+#&gt; 280    R &lt;NA&gt; &lt;NA&gt;   S &lt;NA&gt;   S   S   S &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;
+#&gt; 298 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 299 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 309    R &lt;NA&gt; &lt;NA&gt;   S    S   S   S   S &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt;
+#&gt; 313 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt; 314 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R    R   R   S   S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R
+#&gt;  [ reached 'max' / getOption("max.print") -- omitted 736 rows ]</div><div class='input'>
 <span class='co'># filter with multiple antibiotic selectors using c()</span>
 <span class='va'>example_isolates</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/all.html'>all</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'>carbapenems</span><span class='op'>(</span><span class='op'>)</span>, <span class='fu'>aminoglycosides</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>==</span> <span class='st'>"R"</span><span class='op'>)</span>, <span class='op'>]</span>
-
+</div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>ℹ Assuming a filter on all 6 carbapenems, aminoglycosides. Wrap around</span>
+#&gt; <span class='message'>  </span><span style='color: #0000BB;background-color: #E4E4E4;'>`all()`</span><span style='color: #0000BB;'> or </span><span style='color: #0000BB;background-color: #E4E4E4;'>`any()`</span><span style='color: #0000BB;'> to prevent this note.</span><span></span></div><div class='output co'>#&gt;            date hospital_id ward_icu ward_clinical ward_outpatient age gender
+#&gt; 381  2004-11-03           B     TRUE         FALSE           FALSE  80      F
+#&gt; 463  2005-04-22           B     TRUE         FALSE           FALSE  82      F
+#&gt; 698  2007-02-21           D    FALSE          TRUE           FALSE  61      F
+#&gt; 799  2007-12-15           A    FALSE          TRUE           FALSE  72      M
+#&gt; 918  2008-12-06           D    FALSE          TRUE           FALSE  43      F
+#&gt; 1172 2011-05-09           D     TRUE          TRUE           FALSE  82      F
+#&gt; 1262 2012-03-12           B     TRUE          TRUE           FALSE  80      M
+#&gt; 1281 2012-05-19           A    FALSE         FALSE            TRUE  89      F
+#&gt; 1302 2012-07-17           D     TRUE          TRUE           FALSE  83      M
+#&gt; 1307 2012-07-20           D    FALSE          TRUE           FALSE  66      F
+#&gt; 1308 2012-07-20           D    FALSE          TRUE           FALSE  66      F
+#&gt; 1324 2012-09-18           D    FALSE          TRUE           FALSE  62      M
+#&gt; 1328 2012-10-04           D    FALSE          TRUE           FALSE  62      M
+#&gt; 1334 2012-10-18           D     TRUE          TRUE           FALSE  65      F
+#&gt; 1449 2014-01-14           B    FALSE          TRUE           FALSE  81      M
+#&gt; 1450 2014-01-14           B    FALSE          TRUE           FALSE  81      M
+#&gt; 1624 2015-10-06           B     TRUE          TRUE           FALSE  79      F
+#&gt; 1625 2015-10-07           B     TRUE          TRUE           FALSE  79      F
+#&gt; 1626 2015-10-07           B     TRUE          TRUE           FALSE  79      F
+#&gt; 1690 2016-03-27           D    FALSE          TRUE           FALSE  47      M
+#&gt;      patient_id           mo  PEN  OXA  FLC  AMX  AMC  AMP TZP CZO  FEP CXM FOX
+#&gt; 381      D65308 B_STNTR_MLTP    R &lt;NA&gt; &lt;NA&gt;    R    R    R   R   R &lt;NA&gt;   R   R
+#&gt; 463      452212 B_ENTRC_FACM &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R   R    R   R   R
+#&gt; 698      8BBC46 B_ENTRC_FACM &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R   R    R   R   R
+#&gt; 799      401043 B_ENTRC_FACM &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R   R    R   R   R
+#&gt; 918      501361 B_STNTR_MLTP    R &lt;NA&gt; &lt;NA&gt;    R    R    R   R   R &lt;NA&gt;   R   R
+#&gt; 1172     207325 B_ENTRC_FACM &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R   R    R   R   R
+#&gt; 1262     582258 B_STPHY_CONS    R    R    R    R    R    R   R   R    R   R   R
+#&gt; 1281     C25552 B_STPHY_CONS    R    R    R    R    R    R   R   R    R   R   R
+#&gt; 1302     F05015 B_STPHY_CONS    R    R    R    R    R    R   R   R    R   R   R
+#&gt; 1307     404299 B_STPHY_CONS    R    R    R    R    R    R   R   R    R   R   R
+#&gt; 1308     404299 B_STPHY_CONS    R    R    R    R    R    R   R   R    R   R   R
+#&gt; 1324     431647 B_STPHY_CONS    R    R    R    R    R    R   R   R    R   R   R
+#&gt; 1328     431647 B_STPHY_CONS    R    R    R    R    R    R   R   R    R   R   R
+#&gt; 1334     E4F322 B_ENTRC_FACM    R    R    R    R    R    R   R   R    R   R   R
+#&gt; 1449     8F77B2 B_ENTRC_FACM    R    R    R    R    R    R   R   R    R   R   R
+#&gt; 1450     8F77B2 B_ENTRC_FACM    R    R    R    R    R    R   R   R    R   R   R
+#&gt; 1624     A76045 B_ENTRC_FACM    R    R    R    R    R    R   R   R    R   R   R
+#&gt; 1625     A76045 B_ENTRC_FACM    R    R    R    R    R    R   R   R    R   R   R
+#&gt; 1626     A76045 B_ENTRC_FACM    R    R    R    R    R    R   R   R    R   R   R
+#&gt; 1690     960787 B_ENTRC_FACM    R    R    R    R    R    R   R   R    R   R   R
+#&gt;      CTX CAZ CRO GEN TOB AMK KAN TMP  SXT  NIT  FOS  LNZ  CIP  MFX  VAN  TEC
+#&gt; 381    R   R   R   R   R   R   R   R    S &lt;NA&gt;    R    R &lt;NA&gt; &lt;NA&gt;    R    R
+#&gt; 463    R   R   R   R   R   R   R   R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S &lt;NA&gt;
+#&gt; 698    R   R   R   R   R   R   R   R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S &lt;NA&gt;
+#&gt; 799    R   R   R   R   R   R   R   R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;    S &lt;NA&gt;
+#&gt; 918    R   R   R   R   R   R   R   R    S    R    R    R    S &lt;NA&gt;    R    R
+#&gt; 1172   R   R   R   R   R   R   R   R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S &lt;NA&gt;
+#&gt; 1262   R   R   R   R   R   R   R   R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S &lt;NA&gt;    S &lt;NA&gt;
+#&gt; 1281   R   R   R   R   R   R   R   R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;    S &lt;NA&gt;
+#&gt; 1302   R   R   R   R   R   R   R   S    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S &lt;NA&gt;    S &lt;NA&gt;
+#&gt; 1307   R   R   R   R   R   R   R   R    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    S &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 1308   R   R   R   R   R   R   R   R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;    S &lt;NA&gt;
+#&gt; 1324   R   R   R   R   R   R   R   R    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt;    S &lt;NA&gt;
+#&gt; 1328   R   R   R   R   R   R   R   R    R    S &lt;NA&gt; &lt;NA&gt;    R &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+#&gt; 1334   R   R   R   R   R   R   R   R    R    S &lt;NA&gt;    S &lt;NA&gt; &lt;NA&gt;    S &lt;NA&gt;
+#&gt; 1449   R   R   R   R   R   R   R   R    R    S &lt;NA&gt;    S &lt;NA&gt; &lt;NA&gt;    S    S
+#&gt; 1450   R   R   R   R   R   R   R   R    R    S &lt;NA&gt;    S &lt;NA&gt; &lt;NA&gt;    S    S
+#&gt; 1624   R   R   R   R   R   R   R   R    R    S &lt;NA&gt;    S &lt;NA&gt; &lt;NA&gt;    S    S
+#&gt; 1625   R   R   R   R   R   R   R   R    R    S &lt;NA&gt;    S &lt;NA&gt; &lt;NA&gt;    S    S
+#&gt; 1626   R   R   R   R   R   R   R   R    R    S &lt;NA&gt;    S &lt;NA&gt; &lt;NA&gt;    S    S
+#&gt; 1690   R   R   R   R   R   R   R   R    R    S &lt;NA&gt;    S &lt;NA&gt; &lt;NA&gt;    S    S
+#&gt;       TCY  TGC  DOX ERY CLI AZM IPM MEM  MTR  CHL COL  MUP  RIF
+#&gt; 381     R &lt;NA&gt;    R   R   R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt;    R
+#&gt; 463     R &lt;NA&gt; &lt;NA&gt;   R   R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 698     S &lt;NA&gt; &lt;NA&gt;   R   R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 799     S &lt;NA&gt; &lt;NA&gt;   R   R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 918     R &lt;NA&gt;    R   R   R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt;    R
+#&gt; 1172 &lt;NA&gt; &lt;NA&gt;    S   R   R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1262 &lt;NA&gt; &lt;NA&gt;    S   R   R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1281 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R   R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1302 &lt;NA&gt; &lt;NA&gt;    R   R   R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1307 &lt;NA&gt; &lt;NA&gt;    R   R   R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1308 &lt;NA&gt; &lt;NA&gt;    S   R   S   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1324 &lt;NA&gt; &lt;NA&gt;    R   R   S   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1328    R &lt;NA&gt;    R   R   R   R   R   R &lt;NA&gt; &lt;NA&gt;   R    S    S
+#&gt; 1334 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R   R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1449 &lt;NA&gt;    S &lt;NA&gt;   R   R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1450 &lt;NA&gt;    S &lt;NA&gt;   R   R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1624 &lt;NA&gt;    S &lt;NA&gt;   R   R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1625 &lt;NA&gt;    S &lt;NA&gt;   R   R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1626 &lt;NA&gt;    S &lt;NA&gt;   R   R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt; 1690 &lt;NA&gt;    S &lt;NA&gt;   R   R   R   R   R &lt;NA&gt; &lt;NA&gt;   R &lt;NA&gt; &lt;NA&gt;
+#&gt;  [ reached 'max' / getOption("max.print") -- omitted 6 rows ]</div><div class='input'>
 <span class='co'># filter + select in one go: get penicillins in carbapenems-resistant strains</span>
 <span class='va'>example_isolates</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/any.html'>any</a></span><span class='op'>(</span><span class='fu'>carbapenems</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>==</span> <span class='st'>"R"</span><span class='op'>)</span>, <span class='fu'>penicillins</span><span class='op'>(</span><span class='op'>)</span><span class='op'>]</span>
-
+</div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>ℹ For </span><span style='color: #0000BB;background-color: #E4E4E4;'>`penicillins()`</span><span style='color: #0000BB;'> using columns: '</span><span style='color: #0000BB;font-weight: bold;'>AMC</span><span style='color: #0000BB;'>' (amoxicillin/clavulanic acid),</span>
+#&gt; <span class='message'>  '</span><span style='color: #0000BB;font-weight: bold;'>AMP</span><span style='color: #0000BB;'>' (ampicillin), '</span><span style='color: #0000BB;font-weight: bold;'>AMX</span><span style='color: #0000BB;'>' (amoxicillin), '</span><span style='color: #0000BB;font-weight: bold;'>FLC</span><span style='color: #0000BB;'>' (flucloxacillin), '</span><span style='color: #0000BB;font-weight: bold;'>OXA</span><span style='color: #0000BB;'>'</span>
+#&gt; <span class='message'>  (oxacillin), '</span><span style='color: #0000BB;font-weight: bold;'>PEN</span><span style='color: #0000BB;'>' (benzylpenicillin) and '</span><span style='color: #0000BB;font-weight: bold;'>TZP</span><span style='color: #0000BB;'>' (piperacillin/tazobactam)</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>ℹ Assuming a filter on all 2 carbapenems. Wrap around </span><span style='color: #0000BB;background-color: #E4E4E4;'>`all()`</span><span style='color: #0000BB;'> or </span><span style='color: #0000BB;background-color: #E4E4E4;'>`any()`</span><span style='color: #0000BB;'> to</span>
+#&gt; <span class='message'>  prevent this note.</span><span></span></div><div class='output co'>#&gt;       PEN  OXA  FLC  AMX  AMC  AMP TZP
+#&gt; 381     R &lt;NA&gt; &lt;NA&gt;    R    R    R   R
+#&gt; 461  &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R
+#&gt; 462  &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R
+#&gt; 463  &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R
+#&gt; 698  &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R
+#&gt; 799  &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R
+#&gt; 918     R &lt;NA&gt; &lt;NA&gt;    R    R    R   R
+#&gt; 1147    R    R    R    R    R    R   R
+#&gt; 1149    R    R    R    R    R    R   R
+#&gt; 1156    R    R    R    R    R    R   R
+#&gt; 1157    R    R    R    R    R    R   R
+#&gt; 1172 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   R
+#&gt; 1210    R    R    R    R    R    R   R
+#&gt; 1213    R    R    R    R    R    R   R
+#&gt; 1217    R    R    R    R    R    R   R
+#&gt; 1218    R    R    R    R    R    R   R
+#&gt; 1242    R    R    R    R    R    R   R
+#&gt; 1243    R    R    R    R    R    R   R
+#&gt; 1246    R    R    R    R    R    R   R
+#&gt; 1259    R    R    R    R    R    R   R
+#&gt; 1260    R    R    R    R    R    R   R
+#&gt; 1262    R    R    R    R    R    R   R
+#&gt; 1268    R    R    R    R    R    R   R
+#&gt; 1269    R    R    R    R    R    R   R
+#&gt; 1281    R    R    R    R    R    R   R
+#&gt; 1302    R    R    R    R    R    R   R
+#&gt; 1307    R    R    R    R    R    R   R
+#&gt; 1308    R    R    R    R    R    R   R
+#&gt; 1311    R    R    R    R    R    R   R
+#&gt; 1315    R    R    R    R    R    R   R
+#&gt; 1321    R    R    R    R    R    R   R
+#&gt; 1324    R    R    R    R    R    R   R
+#&gt; 1326    R    R    R    R    R    R   R
+#&gt; 1328    R    R    R    R    R    R   R
+#&gt; 1334    R    R    R    R    R    R   R
+#&gt; 1346 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    R    R    R   R
+#&gt; 1449    R    R    R    R    R    R   R
+#&gt; 1450    R    R    R    R    R    R   R
+#&gt; 1624    R    R    R    R    R    R   R
+#&gt; 1625    R    R    R    R    R    R   R
+#&gt; 1626    R    R    R    R    R    R   R
+#&gt; 1690    R    R    R    R    R    R   R
+#&gt; 1693    R    R    R    R    R    R   R
+#&gt; 1696    R    R    R    R    R    R   R
+#&gt; 1723    R    R    R    R    R    R   R
+#&gt; 1906    R    R    R    R    R    R   R
+#&gt; 1908    R    R    R    R    R    R   R
+#&gt; 1929    R    R    R    R    R    R   R
+#&gt; 1945    R    R    R    R    R    R   R</div><div class='input'>
 
 <span class='co'># dplyr -------------------------------------------------------------------</span>
 <span class='co'># \donttest{</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+
+  <span class='co'># get AMR for all aminoglycosides e.g., per hospital:</span>
+  <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>hospital_id</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span><span class='op'>(</span><span class='fu'>aminoglycosides</span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>resistance</span><span class='op'>)</span><span class='op'>)</span>
 
   <span class='co'># this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):</span>
   <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span> 
@@ -391,8 +1574,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
   <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>carbapenems</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>==</span> <span class='st'>"R"</span><span class='op'>)</span>
   <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span><span class='op'>(</span><span class='fu'>carbapenems</span><span class='op'>(</span><span class='op'>)</span>, <span class='op'>~</span><span class='va'>.x</span> <span class='op'>==</span> <span class='st'>"R"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
-<span class='co'># }</span>
-</pre>
+</div><div class='output co'>#&gt; <span class='error'>Error: </span></div><div class='input'><span class='co'># }</span>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
