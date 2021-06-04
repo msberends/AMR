@@ -34,7 +34,7 @@ old_globalenv <- ls(envir = globalenv())
 # Save internal data to R/sysdata.rda -------------------------------------
 
 # See 'data-raw/eucast_rules.tsv' for the EUCAST reference file
-eucast_rules_file <- utils::read.delim(file = "data-raw/eucast_rules.tsv",
+EUCAST_RULES_DF <- utils::read.delim(file = "data-raw/eucast_rules.tsv",
                                        skip = 10,
                                        sep = "\t",
                                        stringsAsFactors = FALSE,
@@ -54,7 +54,7 @@ eucast_rules_file <- utils::read.delim(file = "data-raw/eucast_rules.tsv",
   select(-sorting_rule)
 
 # Translations
-translations_file <- utils::read.delim(file = "data-raw/translations.tsv",
+TRANSLATIONS <- utils::read.delim(file = "data-raw/translations.tsv",
                                        sep = "\t",
                                        stringsAsFactors = FALSE,
                                        header = TRUE,
@@ -68,7 +68,7 @@ translations_file <- utils::read.delim(file = "data-raw/translations.tsv",
                                        quote = "")
 
 # for checking input in `language` argument in e.g. mo_*() and ab_*() functions
-LANGUAGES_SUPPORTED <- sort(c("en", colnames(translations_file)[nchar(colnames(translations_file)) == 2]))
+LANGUAGES_SUPPORTED <- sort(c("en", colnames(TRANSLATIONS)[nchar(colnames(TRANSLATIONS)) == 2]))
 
 # vectors of CoNS and CoPS, improves speed in as.mo()
 create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
@@ -121,6 +121,8 @@ CEPHALOSPORINS <- antibiotics %>% filter(group %like% "cephalosporin") %>% pull(
 CEPHALOSPORINS_1ST <- antibiotics %>% filter(group %like% "cephalosporin.*1") %>% pull(ab)
 CEPHALOSPORINS_2ND <- antibiotics %>% filter(group %like% "cephalosporin.*2") %>% pull(ab)
 CEPHALOSPORINS_3RD <- antibiotics %>% filter(group %like% "cephalosporin.*3") %>% pull(ab)
+CEPHALOSPORINS_4TH <- antibiotics %>% filter(group %like% "cephalosporin.*4") %>% pull(ab)
+CEPHALOSPORINS_5TH <- antibiotics %>% filter(group %like% "cephalosporin.*5") %>% pull(ab)
 CEPHALOSPORINS_EXCEPT_CAZ <- CEPHALOSPORINS[CEPHALOSPORINS != "CAZ"]
 FLUOROQUINOLONES <- antibiotics %>% filter(atc_group2 %like% "fluoroquinolone") %>% pull(ab)
 LIPOGLYCOPEPTIDES <- as.ab(c("DAL", "ORI", "TLV")) # dalba/orita/tela
@@ -131,6 +133,7 @@ MACROLIDES <- antibiotics %>% filter(atc_group2 %like% "macrolide") %>% pull(ab)
 OXAZOLIDINONES <- antibiotics %>% filter(group %like% "oxazolidinone") %>% pull(ab)
 PENICILLINS <- antibiotics %>% filter(group %like% "penicillin") %>% pull(ab)
 POLYMYXINS <- antibiotics %>% filter(group %like% "polymyxin") %>% pull(ab)
+QUINOLONES <- antibiotics %>% filter(group %like% "quinolone") %>% pull(ab)
 STREPTOGRAMINS <- antibiotics %>% filter(atc_group2 %like% "streptogramin") %>% pull(ab)
 TETRACYCLINES <- antibiotics %>% filter(atc_group2 %like% "tetracycline") %>% pull(ab)
 TETRACYCLINES_EXCEPT_TGC <- TETRACYCLINES[TETRACYCLINES != "TGC"]
@@ -141,8 +144,8 @@ DEFINED_AB_GROUPS <- ls(envir = globalenv())
 DEFINED_AB_GROUPS <- DEFINED_AB_GROUPS[!DEFINED_AB_GROUPS %in% globalenv_before_ab]
 
 # Export to package as internal data ----
-usethis::use_data(eucast_rules_file, 
-                  translations_file,
+usethis::use_data(EUCAST_RULES_DF, 
+                  TRANSLATIONS,
                   LANGUAGES_SUPPORTED,
                   MO_CONS,
                   MO_COPS,
@@ -153,6 +156,8 @@ usethis::use_data(eucast_rules_file,
                   CEPHALOSPORINS_1ST,
                   CEPHALOSPORINS_2ND,
                   CEPHALOSPORINS_3RD,
+                  CEPHALOSPORINS_4TH,
+                  CEPHALOSPORINS_5TH,
                   CEPHALOSPORINS_EXCEPT_CAZ,
                   FLUOROQUINOLONES,
                   LIPOGLYCOPEPTIDES,
@@ -163,6 +168,7 @@ usethis::use_data(eucast_rules_file,
                   OXAZOLIDINONES,
                   PENICILLINS,
                   POLYMYXINS,
+                  QUINOLONES,
                   STREPTOGRAMINS,
                   TETRACYCLINES,
                   TETRACYCLINES_EXCEPT_TGC,

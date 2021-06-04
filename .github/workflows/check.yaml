@@ -32,9 +32,9 @@ on:
     branches:
       - master
   schedule:
-    # run a schedule everyday at 3 AM.
+    # run a schedule everyday at 1 AM.
     # this is to check that all dependencies are still available (see R/zzz.R)
-    - cron:  '0 3 * * *'
+    - cron:  '0 1 * * *'
 
 name: R-code-check
 
@@ -98,8 +98,7 @@ jobs:
 
       - name: Restore cached R packages
         # this step will add the step 'Post Restore cached R packages' on a succesful run
-        if: runner.os != 'Windows'
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ matrix.config.os }}-r-${{ matrix.config.r }}-v4

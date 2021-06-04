@@ -1,3 +1,10 @@
+# `AMR` 1.7.1.9000
+## <small>Last updated:  4 June 2021</small>
+
+### Changed
+* Added more antibiotic class selectors, such as `lincosamides()` and `lipoglycopeptides()`
+
+
 # `AMR` 1.7.1
 
 ### Breaking change

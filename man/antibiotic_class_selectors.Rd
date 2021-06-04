@@ -4,6 +4,7 @@
 \alias{antibiotic_class_selectors}
 \alias{ab_class}
 \alias{aminoglycosides}
+\alias{aminopenicillins}
 \alias{betalactams}
 \alias{carbapenems}
 \alias{cephalosporins}
@@ -14,15 +15,23 @@
 \alias{cephalosporins_5th}
 \alias{fluoroquinolones}
 \alias{glycopeptides}
+\alias{lincosamides}
+\alias{lipoglycopeptides}
 \alias{macrolides}
 \alias{oxazolidinones}
 \alias{penicillins}
+\alias{polymyxins}
+\alias{streptogramins}
+\alias{quinolones}
 \alias{tetracyclines}
+\alias{ureidopenicillins}
 \title{Antibiotic Class Selectors}
 \usage{
 ab_class(ab_class, only_rsi_columns = FALSE)
 
 aminoglycosides(only_rsi_columns = FALSE)
+
+aminopenicillins(only_rsi_columns = FALSE)
 
 betalactams(only_rsi_columns = FALSE)
 
@@ -44,13 +53,25 @@ fluoroquinolones(only_rsi_columns = FALSE)
 
 glycopeptides(only_rsi_columns = FALSE)
 
+lincosamides(only_rsi_columns = FALSE)
+
+lipoglycopeptides(only_rsi_columns = FALSE)
+
 macrolides(only_rsi_columns = FALSE)
 
 oxazolidinones(only_rsi_columns = FALSE)
 
 penicillins(only_rsi_columns = FALSE)
 
+polymyxins(only_rsi_columns = FALSE)
+
+streptogramins(only_rsi_columns = FALSE)
+
+quinolones(only_rsi_columns = FALSE)
+
 tetracyclines(only_rsi_columns = FALSE)
+
+ureidopenicillins(only_rsi_columns = FALSE)
 }
 \arguments{
 \item{ab_class}{an antimicrobial class, such as \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched (case-insensitive) for this value.}
@@ -58,17 +79,43 @@ tetracyclines(only_rsi_columns = FALSE)
 \item{only_rsi_columns}{a \link{logical} to indicate whether only columns of class \verb{<rsi>} must be selected (defaults to \code{FALSE}), see \code{\link[=as.rsi]{as.rsi()}}}
 }
 \description{
-These functions help to filter and select columns with antibiotic test results that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. \strong{\Sexpr{ifelse(getRversion() < "3.2", paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
+These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. \strong{\Sexpr{ifelse(getRversion() < "3.2", paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
 }
 \details{
 \strong{\Sexpr{ifelse(getRversion() < "3.2", paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
 
 These functions can be used in data set calls for selecting columns and filtering rows, see \emph{Examples}. They support base R, but work more convenient in dplyr functions such as \code{\link[dplyr:select]{select()}}, \code{\link[dplyr:filter]{filter()}} and \code{\link[dplyr:summarise]{summarise()}}.
 
-All columns in the data in which these functions are called will be searched for known antibiotic names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) in the \link{antibiotics} data set. This means that a selector like e.g. \code{\link[=aminoglycosides]{aminoglycosides()}} will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
-
-The group of betalactams consists of all carbapenems, cephalosporins and penicillins.
+All columns in the data in which these functions are called will be searched for known antibiotic names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) in the \link{antibiotics} data set. This means that a selector such as \code{\link[=aminoglycosides]{aminoglycosides()}} will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc. Use the \code{\link[=ab_class]{ab_class()}} function to filter/select on a manually defined antibiotic class.
 }
+\section{Full list of supported agents}{
+
+\itemize{
+\item \code{aminoglycosides()} can select amikacin (AMK), amikacin/fosfomycin (AKF), amphotericin B-high (AMH), apramycin (APR), arbekacin (ARB), astromicin (AST), bekanamycin (BEK), dibekacin (DKB), framycetin (FRM), gentamicin (GEN), gentamicin-high (GEH), habekacin (HAB), hygromycin (HYG), isepamicin (ISE), kanamycin (KAN), kanamycin-high (KAH), kanamycin/cephalexin (KAC), micronomicin (MCR), neomycin (NEO), netilmicin (NET), pentisomicin (PIM), plazomicin (PLZ), propikacin (PKA), ribostamycin (RST), sisomicin (SIS), streptoduocin (STR), streptomycin (STR1), streptomycin-high (STH), tobramycin (TOB) and tobramycin-high (TOH)
+\item \code{aminopenicillins()} can select amoxicillin (AMX) and ampicillin (AMP)
+\item \code{betalactams()} can select amoxicillin (AMX), amoxicillin/clavulanic acid (AMC), amoxicillin/sulbactam (AXS), ampicillin (AMP), ampicillin/sulbactam (SAM), apalcillin (APL), aspoxicillin (APX), avibactam (AVB), azidocillin (AZD), azlocillin (AZL), aztreonam (ATM), aztreonam/avibactam (AZA), bacampicillin (BAM), benzathine benzylpenicillin (BNB), benzathine phenoxymethylpenicillin (BNP), benzylpenicillin (PEN), biapenem (BIA), cadazolid (CDZ), carbenicillin (CRB), carindacillin (CRN), cefacetrile (CAC), cefaclor (CEC), cefadroxil (CFR), cefaloridine (RID), cefamandole (MAN), cefatrizine (CTZ), cefazedone (CZD), cefazolin (CZO), cefcapene (CCP), cefcapene pivoxil (CCX), cefdinir (CDR), cefditoren (DIT), cefditoren pivoxil (DIX), cefepime (FEP), cefepime/clavulanic acid (CPC), cefepime/tazobactam (FPT), cefetamet (CAT), cefetamet pivoxil (CPI), cefetecol (Cefcatacol) (CCL), cefetrizole (CZL), cefixime (CFM), cefmenoxime (CMX), cefmetazole (CMZ), cefodizime (DIZ), cefonicid (CID), cefoperazone (CFP), cefoperazone/sulbactam (CSL), ceforanide (CND), cefoselis (CSE), cefotaxime (CTX), cefotaxime/clavulanic acid (CTC), cefotaxime/sulbactam (CTS), cefotetan (CTT), cefotiam (CTF), cefotiam hexetil (CHE), cefovecin (FOV), cefoxitin (FOX), cefoxitin screening (FOX1), cefozopran (ZOP), cefpimizole (CFZ), cefpiramide (CPM), cefpirome (CPO), cefpodoxime (CPD), cefpodoxime proxetil (CPX), cefpodoxime/clavulanic acid (CDC), cefprozil (CPR), cefquinome (CEQ), cefroxadine (CRD), cefsulodin (CFS), cefsumide (CSU), ceftaroline (CPT), ceftaroline/avibactam (CPA), ceftazidime (CAZ), ceftazidime/avibactam (CZA), ceftazidime/clavulanic acid (CCV), cefteram (CEM), cefteram pivoxil (CPL), ceftezole (CTL), ceftibuten (CTB), ceftiofur (TIO), ceftizoxime (CZX), ceftizoxime alapivoxil (CZP), ceftobiprole (BPR), ceftobiprole medocaril (CFM1), ceftolozane/enzyme inhibitor (CEI), ceftolozane/tazobactam (CZT), ceftriaxone (CRO), cefuroxime (CXM), cefuroxime axetil (CXA), cephalexin (LEX), cephalothin (CEP), cephapirin (HAP), cephradine (CED), ciclacillin (CIC), clometocillin (CLM), cloxacillin (CLO), dicloxacillin (DIC), doripenem (DOR), epicillin (EPC), ertapenem (ETP), flucloxacillin (FLC), hetacillin (HET), imipenem (IPM), imipenem/EDTA (IPE), imipenem/relebactam (IMR), latamoxef (LTM), lenampicillin (LEN), loracarbef (LOR), mecillinam (Amdinocillin) (MEC), meropenem (MEM), meropenem/nacubactam (MNC), meropenem/vaborbactam (MEV), metampicillin (MTM), methicillin (MET), mezlocillin (MEZ), mezlocillin/sulbactam (MSU), nacubactam (NAC), nafcillin (NAF), oxacillin (OXA), panipenem (PAN), penamecillin (PNM), penicillin/novobiocin (PNO), penicillin/sulbactam (PSU), phenethicillin (PHE), phenoxymethylpenicillin (PHN), piperacillin (PIP), piperacillin/sulbactam (PIS), piperacillin/tazobactam (TZP), piridicillin (PRC), pivampicillin (PVM), pivmecillinam (PME), procaine benzylpenicillin (PRB), propicillin (PRP), razupenem (RZM), ritipenem (RIT), ritipenem acoxil (RIA), sarmoxicillin (SRX), sulbactam (SUL), sulbenicillin (SBC), sultamicillin (SLT6), talampicillin (TAL), tazobactam (TAZ), tebipenem (TBP), temocillin (TEM), ticarcillin (TIC) and ticarcillin/clavulanic acid (TCC)
+\item \code{carbapenems()} can select biapenem (BIA), doripenem (DOR), ertapenem (ETP), imipenem (IPM), imipenem/EDTA (IPE), imipenem/relebactam (IMR), meropenem (MEM), meropenem/nacubactam (MNC), meropenem/vaborbactam (MEV), panipenem (PAN), razupenem (RZM), ritipenem (RIT), ritipenem acoxil (RIA) and tebipenem (TBP)
+\item \code{cephalosporins()} can select cadazolid (CDZ), cefacetrile (CAC), cefaclor (CEC), cefadroxil (CFR), cefaloridine (RID), cefamandole (MAN), cefatrizine (CTZ), cefazedone (CZD), cefazolin (CZO), cefcapene (CCP), cefcapene pivoxil (CCX), cefdinir (CDR), cefditoren (DIT), cefditoren pivoxil (DIX), cefepime (FEP), cefepime/clavulanic acid (CPC), cefepime/tazobactam (FPT), cefetamet (CAT), cefetamet pivoxil (CPI), cefetecol (Cefcatacol) (CCL), cefetrizole (CZL), cefixime (CFM), cefmenoxime (CMX), cefmetazole (CMZ), cefodizime (DIZ), cefonicid (CID), cefoperazone (CFP), cefoperazone/sulbactam (CSL), ceforanide (CND), cefoselis (CSE), cefotaxime (CTX), cefotaxime/clavulanic acid (CTC), cefotaxime/sulbactam (CTS), cefotetan (CTT), cefotiam (CTF), cefotiam hexetil (CHE), cefovecin (FOV), cefoxitin (FOX), cefoxitin screening (FOX1), cefozopran (ZOP), cefpimizole (CFZ), cefpiramide (CPM), cefpirome (CPO), cefpodoxime (CPD), cefpodoxime proxetil (CPX), cefpodoxime/clavulanic acid (CDC), cefprozil (CPR), cefquinome (CEQ), cefroxadine (CRD), cefsulodin (CFS), cefsumide (CSU), ceftaroline (CPT), ceftaroline/avibactam (CPA), ceftazidime (CAZ), ceftazidime/avibactam (CZA), ceftazidime/clavulanic acid (CCV), cefteram (CEM), cefteram pivoxil (CPL), ceftezole (CTL), ceftibuten (CTB), ceftiofur (TIO), ceftizoxime (CZX), ceftizoxime alapivoxil (CZP), ceftobiprole (BPR), ceftobiprole medocaril (CFM1), ceftolozane/enzyme inhibitor (CEI), ceftolozane/tazobactam (CZT), ceftriaxone (CRO), cefuroxime (CXM), cefuroxime axetil (CXA), cephalexin (LEX), cephalothin (CEP), cephapirin (HAP), cephradine (CED), latamoxef (LTM) and loracarbef (LOR)
+\item \code{cephalosporins_1st()} can select cefacetrile (CAC), cefadroxil (CFR), cefaloridine (RID), cefatrizine (CTZ), cefazedone (CZD), cefazolin (CZO), cefroxadine (CRD), ceftezole (CTL), cephalexin (LEX), cephalothin (CEP), cephapirin (HAP) and cephradine (CED)
+\item \code{cephalosporins_2nd()} can select cefaclor (CEC), cefamandole (MAN), cefmetazole (CMZ), cefonicid (CID), ceforanide (CND), cefotetan (CTT), cefotiam (CTF), cefoxitin (FOX), cefoxitin screening (FOX1), cefprozil (CPR), cefuroxime (CXM), cefuroxime axetil (CXA) and loracarbef (LOR)
+\item \code{cephalosporins_3rd()} can select cadazolid (CDZ), cefcapene (CCP), cefcapene pivoxil (CCX), cefdinir (CDR), cefditoren (DIT), cefditoren pivoxil (DIX), cefetamet (CAT), cefetamet pivoxil (CPI), cefixime (CFM), cefmenoxime (CMX), cefodizime (DIZ), cefoperazone (CFP), cefoperazone/sulbactam (CSL), cefotaxime (CTX), cefotaxime/clavulanic acid (CTC), cefotaxime/sulbactam (CTS), cefotiam hexetil (CHE), cefovecin (FOV), cefpimizole (CFZ), cefpiramide (CPM), cefpodoxime (CPD), cefpodoxime proxetil (CPX), cefpodoxime/clavulanic acid (CDC), cefsulodin (CFS), ceftazidime (CAZ), ceftazidime/avibactam (CZA), ceftazidime/clavulanic acid (CCV), cefteram (CEM), cefteram pivoxil (CPL), ceftibuten (CTB), ceftiofur (TIO), ceftizoxime (CZX), ceftizoxime alapivoxil (CZP), ceftriaxone (CRO) and latamoxef (LTM)
+\item \code{cephalosporins_4th()} can select cefepime (FEP), cefepime/clavulanic acid (CPC), cefepime/tazobactam (FPT), cefetecol (Cefcatacol) (CCL), cefoselis (CSE), cefozopran (ZOP), cefpirome (CPO) and cefquinome (CEQ)
+\item \code{cephalosporins_5th()} can select ceftaroline (CPT), ceftaroline/avibactam (CPA), ceftobiprole (BPR), ceftobiprole medocaril (CFM1), ceftolozane/enzyme inhibitor (CEI) and ceftolozane/tazobactam (CZT)
+\item \code{fluoroquinolones()} can select ciprofloxacin (CIP), enoxacin (ENX), fleroxacin (FLE), gatifloxacin (GAT), gemifloxacin (GEM), grepafloxacin (GRX), levofloxacin (LVX), lomefloxacin (LOM), moxifloxacin (MFX), norfloxacin (NOR), ofloxacin (OFX), pazufloxacin (PAZ), pefloxacin (PEF), prulifloxacin (PRU), rufloxacin (RFL), sparfloxacin (SPX), temafloxacin (TMX) and trovafloxacin (TVA)
+\item \code{glycopeptides()} can select avoparcin (AVO), dalbavancin (DAL), norvancomycin (NVA), oritavancin (ORI), ramoplanin (RAM), teicoplanin (TEC), teicoplanin-macromethod (TCM), telavancin (TLV), vancomycin (VAN) and vancomycin-macromethod (VAM)
+\item \code{lincosamides()} can select clindamycin (CLI), lincomycin (LIN) and pirlimycin (PRL)
+\item \code{lipoglycopeptides()} can select dalbavancin (DAL), oritavancin (ORI) and telavancin (TLV)
+\item \code{macrolides()} can select azithromycin (AZM), clarithromycin (CLR), dirithromycin (DIR), erythromycin (ERY), flurithromycin (FLR1), josamycin (JOS), midecamycin (MID), miocamycin (MCM), oleandomycin (OLE), rokitamycin (ROK), roxithromycin (RXT), spiramycin (SPI), telithromycin (TLT) and troleandomycin (TRL)
+\item \code{oxazolidinones()} can select cycloserine (CYC), linezolid (LNZ), tedizolid (TZD) and thiacetazone (THA)
+\item \code{penicillins()} can select amoxicillin (AMX), amoxicillin/clavulanic acid (AMC), amoxicillin/sulbactam (AXS), ampicillin (AMP), ampicillin/sulbactam (SAM), apalcillin (APL), aspoxicillin (APX), avibactam (AVB), azidocillin (AZD), azlocillin (AZL), aztreonam (ATM), aztreonam/avibactam (AZA), bacampicillin (BAM), benzathine benzylpenicillin (BNB), benzathine phenoxymethylpenicillin (BNP), benzylpenicillin (PEN), carbenicillin (CRB), carindacillin (CRN), ciclacillin (CIC), clometocillin (CLM), cloxacillin (CLO), dicloxacillin (DIC), epicillin (EPC), flucloxacillin (FLC), hetacillin (HET), lenampicillin (LEN), mecillinam (Amdinocillin) (MEC), metampicillin (MTM), methicillin (MET), mezlocillin (MEZ), mezlocillin/sulbactam (MSU), nacubactam (NAC), nafcillin (NAF), oxacillin (OXA), penamecillin (PNM), penicillin/novobiocin (PNO), penicillin/sulbactam (PSU), phenethicillin (PHE), phenoxymethylpenicillin (PHN), piperacillin (PIP), piperacillin/sulbactam (PIS), piperacillin/tazobactam (TZP), piridicillin (PRC), pivampicillin (PVM), pivmecillinam (PME), procaine benzylpenicillin (PRB), propicillin (PRP), sarmoxicillin (SRX), sulbactam (SUL), sulbenicillin (SBC), sultamicillin (SLT6), talampicillin (TAL), tazobactam (TAZ), temocillin (TEM), ticarcillin (TIC) and ticarcillin/clavulanic acid (TCC)
+\item \code{polymyxins()} can select colistin (COL), polymyxin B (PLB) and polymyxin B/polysorbate 80 (POP)
+\item \code{streptogramins()} can select pristinamycin (PRI) and quinupristin/dalfopristin (QDA)
+\item \code{quinolones()} can select besifloxacin (BES), cinoxacin (CIN), ciprofloxacin (CIP), clinafloxacin (CLX), danofloxacin (DAN), delafloxacin (DFX), difloxacin (DIF), enoxacin (ENX), enrofloxacin (ENR), finafloxacin (FIN), fleroxacin (FLE), flumequine (FLM), garenoxacin (GRN), gatifloxacin (GAT), gemifloxacin (GEM), grepafloxacin (GRX), levofloxacin (LVX), levonadifloxacin (LND), lomefloxacin (LOM), marbofloxacin (MAR), metioxate (MXT), miloxacin (MIL), moxifloxacin (MFX), nadifloxacin (NAD), nalidixic acid (NAL), nifuroquine (NIF), nitroxoline (NTR), norfloxacin (NOR), ofloxacin (OFX), orbifloxacin (ORB), oxolinic acid (OXO), pazufloxacin (PAZ), pefloxacin (PEF), pipemidic acid (PPA), piromidic acid (PIR), pradofloxacin (PRA), premafloxacin (PRX), prulifloxacin (PRU), rosoxacin (ROS), rufloxacin (RFL), sarafloxacin (SAR), sitafloxacin (SIT), sparfloxacin (SPX), temafloxacin (TMX), tilbroquinol (TBQ), tioxacin (TXC), tosufloxacin (TFX) and trovafloxacin (TVA)
+\item \code{tetracyclines()} can select chlortetracycline (CTE), clomocycline (CLM1), demeclocycline (DEM), doxycycline (DOX), eravacycline (ERV), lymecycline (LYM), metacycline (MTC), minocycline (MNO), oxytetracycline (OXY), penimepicycline (PNM1), rolitetracycline (RLT), tetracycline (TCY) and tigecycline (TGC)
+\item \code{ureidopenicillins()} can select azlocillin (AZL), mezlocillin (MEZ), piperacillin (PIP) and piperacillin/tazobactam (TZP)
+}
+}
+
 \section{Stable Lifecycle}{
 
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
@@ -91,7 +138,7 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 # `example_isolates` is a data set available in the AMR package.
 # See ?example_isolates.
 
-# Base R ------------------------------------------------------------------
+# base R ------------------------------------------------------------------
 
 # select columns 'IPM' (imipenem) and 'MEM' (meropenem)
 example_isolates[, carbapenems()]
@@ -149,7 +196,6 @@ if (require("dplyr")) {
   example_isolates \%>\% 
     select(mo, ab_class("mycobact"))
     
-    
   # get bug/drug combinations for only macrolides in Gram-positives:
   example_isolates \%>\% 
     filter(mo_is_gram_positive()) \%>\% 
@@ -157,14 +203,12 @@ if (require("dplyr")) {
     bug_drug_combinations() \%>\%
     format()
     
-    
   data.frame(some_column = "some_value",
              J01CA01 = "S") \%>\%   # ATC code of ampicillin
     select(penicillins())         # only the 'J01CA01' column will be selected
     
     
   # with dplyr 1.0.0 and higher (that adds 'across()'), this is all equal:
-  # (though the row names on the first are more correct)
   example_isolates[carbapenems() == "R", ]
   example_isolates \%>\% filter(carbapenems() == "R")
   example_isolates \%>\% filter(across(carbapenems(), ~.x == "R"))

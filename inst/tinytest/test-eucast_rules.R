@@ -24,14 +24,14 @@
 # ==================================================================== #
 
 # thoroughly check input table
-expect_equal(colnames(AMR:::eucast_rules_file),
+expect_equal(colnames(AMR:::EUCAST_RULES_DF),
              c("if_mo_property", "like.is.one_of", "this_value",
                "and_these_antibiotics", "have_these_values",
                "then_change_these_antibiotics", "to_value",
                "reference.rule", "reference.rule_group",
                "reference.version",
                "note"))
-MOs_mentioned <- unique(AMR:::eucast_rules_file$this_value)
+MOs_mentioned <- unique(AMR:::EUCAST_RULES_DF$this_value)
 MOs_mentioned <- sort(AMR:::trimws(unlist(strsplit(MOs_mentioned[!AMR:::is_valid_regex(MOs_mentioned)], ",", fixed = TRUE))))
 MOs_test <- suppressWarnings(suppressMessages(mo_name(MOs_mentioned)))
 expect_true(length(MOs_mentioned[MOs_test != MOs_mentioned]) == 0)

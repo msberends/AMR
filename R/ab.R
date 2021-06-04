@@ -325,9 +325,9 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
                                    function(y) {
                                      for (i in seq_len(length(y))) {
                                        for (lang in LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED != "en"]) {
-                                         y[i] <- ifelse(tolower(y[i]) %in% tolower(translations_file[, lang, drop = TRUE]),
-                                                        translations_file[which(tolower(translations_file[, lang, drop = TRUE]) == tolower(y[i]) &
-                                                                                  !isFALSE(translations_file$fixed)), "pattern"],
+                                         y[i] <- ifelse(tolower(y[i]) %in% tolower(TRANSLATIONS[, lang, drop = TRUE]),
+                                                        TRANSLATIONS[which(tolower(TRANSLATIONS[, lang, drop = TRUE]) == tolower(y[i]) &
+                                                                                  !isFALSE(TRANSLATIONS$fixed)), "pattern"],
                                                         y[i])
                                        }
                                      }

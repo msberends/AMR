@@ -506,7 +506,7 @@ dataset_UTF8_to_ASCII <- function(df) {
 
 # for eucast_rules() and mdro(), creates markdown output with URLs and names
 create_eucast_ab_documentation <- function() {
-  x <- trimws(unique(toupper(unlist(strsplit(eucast_rules_file$then_change_these_antibiotics, ",")))))
+  x <- trimws(unique(toupper(unlist(strsplit(EUCAST_RULES_DF$then_change_these_antibiotics, ",")))))
   ab <- character()
   for (val in x) {
     if (val %in% ls(envir = asNamespace("AMR"))) {
@@ -713,9 +713,10 @@ meet_criteria <- function(object,
   return(invisible())
 }
 
-get_current_data <- function(arg_name, call) {
-  # check if retrieved before, then get it from package environment
-  if (identical(unique_call_id(entire_session = FALSE), pkg_env$get_current_data.call)) {
+get_current_data <- function(arg_name, call, reuse_equal_call = TRUE) {
+  # check if retrieved before, then get it from package environment to improve speed
+  if (reuse_equal_call == TRUE &&
+      identical(unique_call_id(entire_session = FALSE), pkg_env$get_current_data.call)) {
     return(pkg_env$get_current_data.out)
   }
   
@@ -735,9 +736,10 @@ get_current_data <- function(arg_name, call) {
 
   if (getRversion() < "3.2") {
     # R-3.0 and R-3.1 do not have an `x` element in the call stack, rendering this function useless
+    # R-3.2 was released in April 2015
     if (is.na(arg_name)) {
-      # like in carbapenems() etc.
-      warning_("this function can only be used in R >= 3.2", call = call)
+      # such as for carbapenems() etc.
+      warning_("this function requires R version 3.2 or later - you have ", R.version.string, call = call)
       return(data.frame())
     } else {
       # mimic a default R error, e.g. for example_isolates[which(mo_name() %like% "^ent"), ] 

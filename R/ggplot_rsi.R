@@ -386,15 +386,15 @@ scale_rsi_colours <- function(...,
   }
   
   names_susceptible <- c("S", "SI", "IS", "S+I", "I+S", "susceptible", "Susceptible",
-                         unique(translations_file[which(translations_file$pattern == "Susceptible"),
+                         unique(TRANSLATIONS[which(TRANSLATIONS$pattern == "Susceptible"),
                                                   "replacement", drop = TRUE]))
   names_incr_exposure <- c("I", "intermediate", "increased exposure", "incr. exposure", "Increased exposure", "Incr. exposure",
-                           unique(translations_file[which(translations_file$pattern == "Intermediate"),
+                           unique(TRANSLATIONS[which(TRANSLATIONS$pattern == "Intermediate"),
                                                     "replacement", drop = TRUE]),
-                           unique(translations_file[which(translations_file$pattern == "Incr. exposure"),
+                           unique(TRANSLATIONS[which(TRANSLATIONS$pattern == "Incr. exposure"),
                                                     "replacement", drop = TRUE]))
   names_resistant <- c("R", "IR", "RI", "R+I", "I+R", "resistant", "Resistant",
-                       unique(translations_file[which(translations_file$pattern == "Resistant"), 
+                       unique(TRANSLATIONS[which(TRANSLATIONS$pattern == "Resistant"), 
                                                 "replacement", drop = TRUE]))
   
   susceptible <- rep("#3CAEA3", length(names_susceptible))

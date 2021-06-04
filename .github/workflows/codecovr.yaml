@@ -50,7 +50,7 @@ jobs:
 
       - name: Restore cached R packages
         # this step will add the step 'Post Restore cached R packages' on a succesful run
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ${{ env.R_LIBS_USER }}
           key: macOS-latest-r-release-v5-codecovr
@@ -68,20 +68,6 @@ jobs:
           as.data.frame(utils::installed.packages())[, "Version", drop = FALSE]
         shell: Rscript {0}
 
-      # - name: Test coverage
-      #   env:
-      #     CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      #   run: |
-      #     library(AMR)
-      #     library(tinytest)
-      #     library(covr)
-      #     source_files <- list.files("R", pattern = ".R$", full.names = TRUE)
-      #     test_files <- list.files("inst/tinytest", full.names = TRUE)
-      #     cov <- file_coverage(source_files = source_files, test_files = test_files, parent_env = asNamespace("AMR"), line_exclusions = list("R/atc_online.R", "R/mo_source.R", "R/translate.R", "R/resistance_predict.R", "R/aa_helper_functions.R", "R/aa_helper_pm_functions.R", "R/zzz.R"))
-      #     attr(cov, which = "package") <- list(path = ".") # until https://github.com/r-lib/covr/issues/478 is solved
-      #     codecov(coverage = cov, quiet = FALSE)
-      #   shell: Rscript {0}
-      
       - name: Test coverage
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
@@ -89,5 +75,6 @@ jobs:
         run: |
           library(AMR)
           library(tinytest)
-          covr::codecov(line_exclusions = list("R/atc_online.R", "R/mo_source.R", "R/translate.R", "R/resistance_predict.R", "R/aa_helper_functions.R", "R/aa_helper_pm_functions.R", "R/zzz.R"))
+          x <- covr::codecov(line_exclusions = list("R/atc_online.R", "R/mo_source.R", "R/translate.R", "R/resistance_predict.R", "R/aa_helper_functions.R", "R/aa_helper_pm_functions.R", "R/zzz.R"))
+          print(x)
         shell: Rscript {0}

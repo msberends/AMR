@@ -32,7 +32,7 @@ for (i in seq_len(nrow(antibiotics))) {
 }
 
 int_resis <- eucast_rules(int_resis, 
-                          eucast_rules_df = subset(AMR:::eucast_rules_file,
+                          eucast_rules_df = subset(AMR:::EUCAST_RULES_DF,
                                                    is.na(have_these_values) & reference.version == 3.2),
                           info = FALSE)
 

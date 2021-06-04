@@ -136,7 +136,7 @@ translate_AMR <- function(from,
     return(from)
   }
   
-  df_trans <- translations_file # internal data file
+  df_trans <- TRANSLATIONS # internal data file
   from.bak <- from
   from_unique <- unique(from)
   from_unique_translated <- from_unique
