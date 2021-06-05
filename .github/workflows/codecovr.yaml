@@ -48,12 +48,18 @@ jobs:
           
       - uses: r-lib/actions/setup-pandoc@master
 
+      - name: Query dependencies
+        # this will change once a week, so it will cache dependency updates
+        run: |
+          writeLines(paste(format(Sys.Date(), "week %V %Y"), sprintf("R-%i.%i", getRversion()$major, getRversion()$minor)), ".github/week-R-version")
+        shell: Rscript {0}
+        
       - name: Restore cached R packages
         # this step will add the step 'Post Restore cached R packages' on a succesful run
         uses: actions/cache@v2
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: macOS-latest-r-release-v5-codecovr
+          key: ${{ matrix.config.os }}-${{ hashFiles('.github/week-R-version') }}-v4
 
       - name: Unpack AMR and install R dependencies
         run: |
@@ -73,6 +79,7 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
           R_RUN_TINYTEST: true
         run: |
+          install.packages("covr", repos = "https://cran.rstudio.com/")
           library(AMR)
           library(tinytest)
           x <- covr::codecov(line_exclusions = list("R/atc_online.R", "R/mo_source.R", "R/translate.R", "R/resistance_predict.R", "R/aa_helper_functions.R", "R/aa_helper_pm_functions.R", "R/zzz.R"))

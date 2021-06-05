@@ -1,5 +1,5 @@
-# `AMR` 1.7.1.9000
-## <small>Last updated:  4 June 2021</small>
+# `AMR` 1.7.1.9001
+## <small>Last updated:  5 June 2021</small>
 
 ### Changed
 * Added more antibiotic class selectors, such as `lincosamides()` and `lipoglycopeptides()`
@@ -8,7 +8,6 @@
 # `AMR` 1.7.1
 
 ### Breaking change
-* Support for CLSI 2020 guideline for interpreting MICs and disk diffusion values (using `as.rsi()`)
 * All antibiotic class selectors (such as `carbapenems()`, `aminoglycosides()`) can now be used for filtering as well, making all their accompanying `filter_*()` functions redundant (such as `filter_carbapenems()`, `filter_aminoglycosides()`). These functions are now deprecated and will be removed in a next release. Examples of how the selectors can be used for filtering:
   ```r
   # select columns with results for carbapenems
@@ -28,6 +27,7 @@
   ```
 
 ### New
+* Support for CLSI 2020 guideline for interpreting MICs and disk diffusion values (using `as.rsi()`)
 * Function `custom_eucast_rules()` that brings support for custom AMR rules in `eucast_rules()`
 * Function `italicise_taxonomy()` to make taxonomic names within a string italic, with support for markdown and ANSI
 * Support for all four methods to determine first isolates as summarised by Hindler *et al.* (doi: [10.1086/511864](https://doi.org/10.1086/511864)): isolate-based, patient-based, episode-based and phenotype-based. The last method is now the default.

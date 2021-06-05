@@ -50,7 +50,7 @@ For suggestions, comments or questions, please contact us at:
 Matthijs S. Berends \cr
 m.s.berends [at] umcg [dot] nl \cr
 University of Groningen
-Department of Medical Microbiology and Infection Prevention
+Department of Medical Microbiology and Infection Prevention \cr
 University Medical Center Groningen \cr
 Post Office Box 30001 \cr
 9700 RB Groningen \cr

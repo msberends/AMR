@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9001</span>
       </span>
     </div>
 
@@ -236,12 +236,12 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1719000" class="section level1">
-<h1 class="page-header" data-toc-text="1.7.1.9000">
-<a href="#amr-1719000" class="anchor"></a><small> Unreleased </small><code>AMR</code> 1.7.1.9000</h1>
-<div id="last-updated-4-june-2021" class="section level2">
+    <div id="amr-1719001" class="section level1">
+<h1 class="page-header" data-toc-text="1.7.1.9001">
+<a href="#amr-1719001" class="anchor"></a><small> Unreleased </small><code>AMR</code> 1.7.1.9001</h1>
+<div id="last-updated-5-june-2021" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-4-june-2021" class="anchor"></a><small>Last updated: 4 June 2021</small>
+<a href="#last-updated-5-june-2021" class="anchor"></a><small>Last updated: 5 June 2021</small>
 </h2>
 <div id="changed" class="section level3">
 <h3 class="hasAnchor">
@@ -260,7 +260,6 @@
 <h3 class="hasAnchor">
 <a href="#breaking-change" class="anchor"></a>Breaking change</h3>
 <ul>
-<li><p>Support for CLSI 2020 guideline for interpreting MICs and disk diffusion values (using <code><a href="../reference/as.rsi.html">as.rsi()</a></code>)</p></li>
 <li>
 <p>All antibiotic class selectors (such as <code><a href="../reference/antibiotic_class_selectors.html">carbapenems()</a></code>, <code><a href="../reference/antibiotic_class_selectors.html">aminoglycosides()</a></code>) can now be used for filtering as well, making all their accompanying <code>filter_*()</code> functions redundant (such as <code><a href="../reference/AMR-deprecated.html">filter_carbapenems()</a></code>, <code><a href="../reference/AMR-deprecated.html">filter_aminoglycosides()</a></code>). These functions are now deprecated and will be removed in a next release. Examples of how the selectors can be used for filtering:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -286,6 +285,7 @@
 <h3 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h3>
 <ul>
+<li>Support for CLSI 2020 guideline for interpreting MICs and disk diffusion values (using <code><a href="../reference/as.rsi.html">as.rsi()</a></code>)</li>
 <li>Function <code><a href="../reference/custom_eucast_rules.html">custom_eucast_rules()</a></code> that brings support for custom AMR rules in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>
 </li>
 <li>Function <code><a href="../reference/italicise_taxonomy.html">italicise_taxonomy()</a></code> to make taxonomic names within a string italic, with support for markdown and ANSI</li>
