@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9002</span>
       </span>
     </div>
 
@@ -236,19 +236,24 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1719001" class="section level1">
-<h1 class="page-header" data-toc-text="1.7.1.9001">
-<a href="#amr-1719001" class="anchor"></a><small> Unreleased </small><code>AMR</code> 1.7.1.9001</h1>
-<div id="last-updated-5-june-2021" class="section level2">
+    <div id="amr-1719002" class="section level1">
+<h1 class="page-header" data-toc-text="1.7.1.9002">
+<a href="#amr-1719002" class="anchor"></a><small> Unreleased </small><code>AMR</code> 1.7.1.9002</h1>
+<div id="last-updated-14-june-2021" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-5-june-2021" class="anchor"></a><small>Last updated: 5 June 2021</small>
+<a href="#last-updated-14-june-2021" class="anchor"></a><small>Last updated: 14 June 2021</small>
 </h2>
 <div id="changed" class="section level3">
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
 <ul>
-<li>Added more antibiotic class selectors, such as <code><a href="../reference/antibiotic_class_selectors.html">lincosamides()</a></code> and <code><a href="../reference/antibiotic_class_selectors.html">lipoglycopeptides()</a></code>
+<li>Added more antibiotic class selectors: <code><a href="../reference/antibiotic_class_selectors.html">aminopenicillins()</a></code>, <code><a href="../reference/antibiotic_class_selectors.html">lincosamides()</a></code>, <code><a href="../reference/antibiotic_class_selectors.html">lipoglycopeptides()</a></code>, <code><a href="../reference/antibiotic_class_selectors.html">polymyxins()</a></code>, <code><a href="../reference/antibiotic_class_selectors.html">quinolones()</a></code>, <code><a href="../reference/antibiotic_class_selectors.html">streptogramins()</a></code> and <code><a href="../reference/antibiotic_class_selectors.html">ureidopenicillins()</a></code>
 </li>
+<li>Added <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">ggplot2::autoplot()</a></code> generic for classes <code>&lt;mic&gt;</code>, <code>&lt;disk&gt;</code>, <code>&lt;rsi&gt;</code> and <code>&lt;resistance_predict&gt;</code>
+</li>
+<li>Fix to prevent introducing <code>NA</code>s for old MO codes when running <code><a href="../reference/as.mo.html">as.mo()</a></code> on them</li>
+<li>Added more informative error messages when any of the <code>proportion_*()</code> and <code>count_*()</code> functions fail</li>
+<li>Fix for using antibiotic selectors multiple times in one call (e.g., using in <code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code> and immediately after in <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code>)</li>
 </ul>
 </div>
 </div>
@@ -302,7 +307,7 @@
 </ul>
 </li>
 <li>Function <code><a href="../reference/antibiotic_class_selectors.html">betalactams()</a></code> as additional antbiotic column selector and function <code><a href="../reference/AMR-deprecated.html">filter_betalactams()</a></code> as additional antbiotic column filter. The group of betalactams consists of all carbapenems, cephalosporins and penicillins.</li>
-<li>A <code>ggplot()</code> method for <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>
+<li>A <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> method for <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>
 </li>
 </ul>
 </div>
@@ -403,7 +408,7 @@
 <span class="co">#&gt; Filtering on oxazolidinones: value in column `LNZ` (linezolid) is either "R", "S" or "I"</span></code></pre></div>
 </li>
 <li><p>Support for custom MDRO guidelines, using the new <code><a href="../reference/mdro.html">custom_mdro_guideline()</a></code> function, please see <code><a href="../reference/mdro.html">mdro()</a></code> for additional info</p></li>
-<li><p><code>ggplot()</code> generics for classes <code>&lt;mic&gt;</code> and <code>&lt;disk&gt;</code></p></li>
+<li><p><code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> generics for classes <code>&lt;mic&gt;</code> and <code>&lt;disk&gt;</code></p></li>
 <li>
 <p>Function <code><a href="../reference/mo_property.html">mo_is_yeast()</a></code>, which determines whether a microorganism is a member of the taxonomic class Saccharomycetes or the taxonomic order Saccharomycetales:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -460,7 +465,7 @@
 <li>Plotting of MIC and disk diffusion values now support interpretation colouring if you supply the microorganism and antimicrobial agent</li>
 <li>All colours were updated to colour-blind friendly versions for values R, S and I for all plot methods (also applies to tibble printing)</li>
 <li>Interpretation of MIC and disk diffusion values to R/SI will now be translated if the system language is German, Dutch or Spanish (see <code>translate</code>)</li>
-<li>Plotting is now possible with base R using <code><a href="../reference/plot.html">plot()</a></code> and with ggplot2 using <code>ggplot()</code> on any vector of MIC and disk diffusion values</li>
+<li>Plotting is now possible with base R using <code><a href="../reference/plot.html">plot()</a></code> and with ggplot2 using <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> on any vector of MIC and disk diffusion values</li>
 </ul>
 </li>
 <li>Updated SNOMED codes to US Edition of SNOMED CT from 1 September 2020 and added the source to the help page of the <code>microorganisms</code> data set</li>
@@ -498,7 +503,7 @@
 <a href="#other-1" class="anchor"></a>Other</h3>
 <ul>
 <li>Big documentation updates</li>
-<li>Loading the package (i.e., <code><a href="https://msberends.github.io/AMR/">library(AMR)</a></code>) now is ~50 times faster than before, in costs of package size (which increased by ~3 MB)</li>
+<li>Loading the package (i.e., <code><a href="https://github.com/msberends/AMR">library(AMR)</a></code>) now is ~50 times faster than before, in costs of package size (which increased by ~3 MB)</li>
 </ul>
 </div>
 </div>
@@ -629,7 +634,7 @@
 <p>Curious about which enterococci are actually intrinsic resistant to vancomycin?</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/msberends/AMR">AMR</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="va">intrinsic_resistant</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">antibiotic</span> <span class="op">==</span> <span class="st">"Vancomycin"</span>, <span class="va">microorganism</span> <span class="op">%like%</span> <span class="st">"Enterococcus"</span><span class="op">)</span> <span class="op">%&gt;%</span> 

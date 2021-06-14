@@ -287,6 +287,11 @@ ggplot.mic <- function(data,
     ggplot2::labs(title = title, x = xlab, y = ylab, subtitle = cols_sub$sub)
 }
 
+#' @method autoplot mic
+#' @rdname plot
+# will be exported using s3_register() in R/zzz.R
+autoplot.mic <- ggplot.mic
+
 #' @method plot disk
 #' @export
 #' @importFrom graphics barplot axis mtext legend
@@ -506,6 +511,11 @@ ggplot.disk <- function(data,
     ggplot2::labs(title = title, x = xlab, y = ylab, subtitle = cols_sub$sub)
 }
 
+#' @method autoplot disk
+#' @rdname plot
+# will be exported using s3_register() in R/zzz.R
+autoplot.disk <- ggplot.disk
+
 #' @method plot rsi
 #' @export
 #' @importFrom graphics plot text axis
@@ -656,6 +666,11 @@ ggplot.rsi <- function(data,
     ggplot2::labs(title = title, x = xlab, y = ylab) +
     ggplot2::theme(legend.position = "none")
 }
+
+#' @method autoplot rsi
+#' @rdname plot
+# will be exported using s3_register() in R/zzz.R
+autoplot.rsi <- ggplot.rsi
 
 plot_prepare_table <- function(x, expand) {
   x <- x[!is.na(x)]

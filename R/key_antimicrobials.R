@@ -130,7 +130,7 @@ key_antimicrobials <- function(x = NULL,
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
     # is also fix for using a grouped df as input (a dot as first argument)
-    x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
+    x <- tryCatch(get_current_data(arg_name = "x", call = -2, reuse_from_1st_call = FALSE), error = function(e) x)
   }
   meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
   meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE, is_in = colnames(x))
@@ -232,7 +232,7 @@ all_antimicrobials <- function(x = NULL,
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
     # is also fix for using a grouped df as input (a dot as first argument)
-    x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
+    x <- tryCatch(get_current_data(arg_name = "x", call = -2, reuse_from_1st_call = FALSE), error = function(e) x)
   }
   meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)

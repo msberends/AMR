@@ -65,6 +65,10 @@ if (utf8_supported && !is_latex) {
   s3_register("ggplot2::ggplot", "mic")
   s3_register("ggplot2::ggplot", "disk")
   s3_register("ggplot2::ggplot", "resistance_predict")
+  s3_register("ggplot2::autoplot", "rsi")
+  s3_register("ggplot2::autoplot", "mic")
+  s3_register("ggplot2::autoplot", "disk")
+  s3_register("ggplot2::autoplot", "resistance_predict")
   
   # if mo source exists, fire it up (see mo_source())
   try({

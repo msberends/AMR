@@ -4,10 +4,13 @@
 \alias{plot}
 \alias{plot.mic}
 \alias{ggplot.mic}
+\alias{autoplot.mic}
 \alias{plot.disk}
 \alias{ggplot.disk}
+\alias{autoplot.disk}
 \alias{plot.rsi}
 \alias{ggplot.rsi}
+\alias{autoplot.rsi}
 \title{Plotting for Classes \code{rsi}, \code{mic} and \code{disk}}
 \usage{
 \method{plot}{mic}(
@@ -25,6 +28,21 @@
 )
 
 \method{ggplot}{mic}(
+  data,
+  mapping = NULL,
+  title = paste("MIC values of", deparse(substitute(data))),
+  ylab = "Frequency",
+  xlab = "Minimum Inhibitory Concentration (mg/L)",
+  mo = NULL,
+  ab = NULL,
+  guideline = "EUCAST",
+  colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
+  language = get_locale(),
+  expand = TRUE,
+  ...
+)
+
+\method{autoplot}{mic}(
   data,
   mapping = NULL,
   title = paste("MIC values of", deparse(substitute(data))),
@@ -68,6 +86,21 @@
   ...
 )
 
+\method{autoplot}{disk}(
+  data,
+  mapping = NULL,
+  title = paste("Disk zones of", deparse(substitute(data))),
+  ylab = "Frequency",
+  xlab = "Disk diffusion diameter (mm)",
+  mo = NULL,
+  ab = NULL,
+  guideline = "EUCAST",
+  colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
+  language = get_locale(),
+  expand = TRUE,
+  ...
+)
+
 \method{plot}{rsi}(
   x,
   ylab = "Percentage",
@@ -77,6 +110,17 @@
 )
 
 \method{ggplot}{rsi}(
+  data,
+  mapping = NULL,
+  title = paste("Resistance Overview of", deparse(substitute(data))),
+  xlab = "Antimicrobial Interpretation",
+  ylab = "Frequency",
+  colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
+  language = get_locale(),
+  ...
+)
+
+\method{autoplot}{rsi}(
   data,
   mapping = NULL,
   title = paste("Resistance Overview of", deparse(substitute(data))),

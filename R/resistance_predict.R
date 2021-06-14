@@ -143,7 +143,7 @@ resistance_predict <- function(x,
   meet_criteria(info, allow_class = "logical", has_length = 1)
   
   stop_if(is.null(model), 'choose a regression model with the `model` argument, e.g. resistance_predict(..., model = "binomial")')
-
+  
   dots <- unlist(list(...))
   if (length(dots) != 0) {
     # backwards compatibility with old arguments
@@ -321,7 +321,7 @@ plot.resistance_predict <- function(x, main = paste("Resistance Prediction of", 
   } else {
     ylab <- "%IR"
   }
-
+  
   plot(x = x$year,
        y = x$value,
        ylim = c(0, 1),
@@ -349,20 +349,6 @@ plot.resistance_predict <- function(x, main = paste("Resistance Prediction of", 
          y = subset(x, is.na(observations))$value,
          pch = 19,
          col = "grey40")
-}
-
-
-#' @method ggplot resistance_predict
-#' @rdname resistance_predict
-# will be exported using s3_register() in R/zzz.R
-ggplot.resistance_predict <- function(x,
-                               main = paste("Resistance Prediction of", x_name),
-                               ribbon = TRUE,
-                               ...) {
-  x_name <- paste0(ab_name(attributes(x)$ab), " (", attributes(x)$ab, ")")
-  meet_criteria(main, allow_class = "character", has_length = 1)
-  meet_criteria(ribbon, allow_class = "logical", has_length = 1)
-  ggplot_rsi_predict(x = x, main = main, ribbon = ribbon, ...)
 }
 
 #' @rdname resistance_predict
@@ -407,3 +393,21 @@ ggplot_rsi_predict <- function(x,
                         colour = "grey40")
   p
 }
+
+#' @method ggplot resistance_predict
+#' @rdname resistance_predict
+# will be exported using s3_register() in R/zzz.R
+ggplot.resistance_predict <- function(x,
+                                      main = paste("Resistance Prediction of", x_name),
+                                      ribbon = TRUE,
+                                      ...) {
+  x_name <- paste0(ab_name(attributes(x)$ab), " (", attributes(x)$ab, ")")
+  meet_criteria(main, allow_class = "character", has_length = 1)
+  meet_criteria(ribbon, allow_class = "logical", has_length = 1)
+  ggplot_rsi_predict(x = x, main = main, ribbon = ribbon, ...)
+}
+
+#' @method autoplot resistance_predict
+#' @rdname resistance_predict
+# will be exported using s3_register() in R/zzz.R
+autoplot.resistance_predict <- ggplot.resistance_predict

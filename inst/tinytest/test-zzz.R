@@ -24,7 +24,7 @@
 # ==================================================================== #
 
 # Check if these function still exist in the package (all are in Suggests field)
-# Since GitHub Action runs every night, we will get emailed when a dependency fails based on this unit test
+# Since GitHub Actions runs every night, we will get emailed when a dependency fails based on this unit test
 # functions used by import_fn()
 import_functions <- c(
   "anti_join" = "dplyr",
@@ -53,14 +53,23 @@ call_functions <- c(
   # skimr
   "inline_hist" = "skimr",
   "sfl" = "skimr",
-  # set_mo_source
+  # readxl
   "read_excel" = "readxl",
-  # ggplot_rsi
+  # ggplot2
+  "aes" = "ggplot2",
   "aes_string" = "ggplot2",
+  "arrow" = "ggplot2",
+  "autoplot" = "ggplot2",
   "element_blank" = "ggplot2",
   "element_line" = "ggplot2",
   "element_text" = "ggplot2",
+  "expand_limits" = "ggplot2",
   "facet_wrap" = "ggplot2",
+  "geom_errorbar" = "ggplot2",
+  "geom_path" = "ggplot2",
+  "geom_point" = "ggplot2",
+  "geom_ribbon" = "ggplot2",
+  "geom_segment" = "ggplot2",
   "geom_text" = "ggplot2",
   "ggplot" = "ggplot2",
   "labs" = "ggplot2",
@@ -70,31 +79,9 @@ call_functions <- c(
   "scale_y_continuous" = "ggplot2",
   "theme" = "ggplot2",
   "theme_minimal" = "ggplot2",
-  # ggplot_pca
-  "aes" = "ggplot2",
-  "arrow" = "ggplot2",
-  "element_blank" = "ggplot2",
-  "element_line" = "ggplot2",
-  "element_text" = "ggplot2",
-  "expand_limits" = "ggplot2",
-  "geom_path" = "ggplot2",
-  "geom_point" = "ggplot2",
-  "geom_segment" = "ggplot2",
-  "geom_text" = "ggplot2",
-  "ggplot" = "ggplot2",
-  "labs" = "ggplot2",
-  "theme" = "ggplot2",
-  "theme_minimal" = "ggplot2",
   "unit" = "ggplot2",
   "xlab" = "ggplot2",
-  "ylab" = "ggplot2",
-  # resistance_predict
-  "aes" = "ggplot2",
-  "geom_errorbar" = "ggplot2",
-  "geom_point" = "ggplot2",
-  "geom_ribbon" = "ggplot2",
-  "ggplot" = "ggplot2",
-  "labs" = "ggplot2"
+  "ylab" = "ggplot2"
 )
 
 import_functions <- c(import_functions, call_functions)

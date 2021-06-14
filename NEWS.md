@@ -1,8 +1,12 @@
-# `AMR` 1.7.1.9001
-## <small>Last updated:  5 June 2021</small>
+# `AMR` 1.7.1.9002
+## <small>Last updated: 14 June 2021</small>
 
 ### Changed
-* Added more antibiotic class selectors, such as `lincosamides()` and `lipoglycopeptides()`
+* Added more antibiotic class selectors: `aminopenicillins()`, `lincosamides()`, `lipoglycopeptides()`, `polymyxins()`, `quinolones()`, `streptogramins()` and `ureidopenicillins()`
+* Added `ggplot2::autoplot()` generic for classes `<mic>`, `<disk>`, `<rsi>` and `<resistance_predict>`
+* Fix to prevent introducing `NA`s for old MO codes when running `as.mo()` on them
+* Added more informative error messages when any of the `proportion_*()` and `count_*()` functions fail
+* Fix for using antibiotic selectors multiple times in one call (e.g., using in `dplyr::filter()` and immediately after in `dplyr::select()`)
 
 
 # `AMR` 1.7.1

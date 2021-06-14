@@ -167,6 +167,12 @@ if (require("dplyr")) {
               n1 = count_all(CIP),  # the actual total; sum of all three
               n2 = n_rsi(CIP),      # same - analogous to n_distinct
               total = n())          # NOT the number of tested isolates!
+              
+  # Number of available isolates for a whole antibiotic class
+  # (i.e., in this data set columns GEN, TOB, AMK, KAN)
+  example_isolates \%>\%
+    group_by(hospital_id) \%>\%
+    summarise(across(aminoglycosides(), n_rsi))
  
   # Count co-resistance between amoxicillin/clav acid and gentamicin,
   # so we can see that combination therapy does a lot more than mono therapy.

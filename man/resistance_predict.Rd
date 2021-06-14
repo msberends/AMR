@@ -4,8 +4,9 @@
 \alias{resistance_predict}
 \alias{rsi_predict}
 \alias{plot.resistance_predict}
-\alias{ggplot.resistance_predict}
 \alias{ggplot_rsi_predict}
+\alias{ggplot.resistance_predict}
+\alias{autoplot.resistance_predict}
 \title{Predict antimicrobial resistance}
 \usage{
 resistance_predict(
@@ -40,9 +41,16 @@ rsi_predict(
 
 \method{plot}{resistance_predict}(x, main = paste("Resistance Prediction of", x_name), ...)
 
+ggplot_rsi_predict(
+  x,
+  main = paste("Resistance Prediction of", x_name),
+  ribbon = TRUE,
+  ...
+)
+
 \method{ggplot}{resistance_predict}(x, main = paste("Resistance Prediction of", x_name), ribbon = TRUE, ...)
 
-ggplot_rsi_predict(
+\method{autoplot}{resistance_predict}(
   x,
   main = paste("Resistance Prediction of", x_name),
   ribbon = TRUE,

@@ -1664,16 +1664,25 @@ pillar_shaft.mo <- function(x, ...) {
   out[is.na(x)] <- font_na("  NA")
   out[x == "UNKNOWN"] <- font_na("  UNKNOWN")
   
-  if (!all(x[!is.na(x)] %in% MO_lookup$mo)) {
+  df <- tryCatch(get_current_data(arg_name = "x",
+                                  call = 0,
+                                  reuse_from_1st_call = FALSE),
+                 error = function(e) NULL)
+  if (!is.null(df)) {
+    mo_cols <- vapply(FUN.VALUE = logical(1), df, is.mo)
+  } else {
+    mo_cols <- NULL
+  }
+  
+  if (!all(x[!is.na(x)] %in% MO_lookup$mo) | 
+      (!is.null(df) && !all(unlist(df[, which(mo_cols), drop = FALSE]) %in% MO_lookup$mo))) {
     # markup old mo codes
     out[!x %in% MO_lookup$mo] <- font_italic(font_na(x[!x %in% MO_lookup$mo], 
                                                      collapse = NULL),
                                              collapse = NULL)
-    # throw a warning with the affected column name
-    mo <- tryCatch(search_type_in_df(get_current_data(arg_name = "x", call = 0), type = "mo", info = FALSE),
-                   error = function(e) NULL)
-    if (!is.null(mo)) {
-      col <- paste0("Column '", mo, "'")
+    # throw a warning with the affected column name(s)
+    if (!is.null(mo_cols)) {
+      col <- paste0("Column ", vector_or(colnames(df)[mo_cols], quotes = TRUE, sort = FALSE))
     } else {
       col <- "The data"
     }
@@ -1681,7 +1690,7 @@ pillar_shaft.mo <- function(x, ...) {
              "Please update your MO codes with `as.mo()`.",
              call = FALSE)
   }
-
+  
   # make it always fit exactly
   max_char <- max(nchar(x))
   if (is.na(max_char)) {
@@ -2039,12 +2048,16 @@ parse_and_convert <- function(x) {
         x <- as.data.frame(x, stringsAsFactors = FALSE)[[1]]
       }
     }
+    x_class <- class(x)
+    x <- as.character(x)
     x[is.null(x)] <- NA
     parsed <- iconv(x, to = "UTF-8")
     parsed[is.na(parsed) & !is.na(x)] <- iconv(x[is.na(parsed) & !is.na(x)], from = "Latin1", to = "ASCII//TRANSLIT")
     parsed <- gsub('"', "", parsed, fixed = TRUE)
     parsed <- gsub(" +", " ", parsed, perl = TRUE)
     parsed <- trimws(parsed)
+    class(parsed) <- x_class
+    parsed
   }, error = function(e) stop(e$message, call. = FALSE)) # this will also be thrown when running `as.mo(no_existing_object)`
   parsed
 }

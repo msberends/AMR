@@ -747,7 +747,9 @@ mo_validate <- function(x, property, language, ...) {
 find_mo_col <- function(fn) {
   # this function tries to find an mo column in the data the function was called in,
   # which is useful when functions are used within dplyr verbs
-  df <- get_current_data(arg_name = "x", call = -3) # will return an error if not found
+  df <- get_current_data(arg_name = "x", 
+                         call = -3,
+                         reuse_from_1st_call = FALSE) # will return an error if not found
   mo <- NULL
   try({
     mo <- suppressMessages(search_type_in_df(df, "mo"))

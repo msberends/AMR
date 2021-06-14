@@ -278,7 +278,7 @@ ab_selector <- function(function_name,
   }
   
   # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
-  vars_df <- get_current_data(arg_name = NA, call = -3, reuse_equal_call = FALSE)
+  vars_df <- get_current_data(arg_name = NA, call = -3, reuse_from_1st_call = FALSE)
   # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
   ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
   
