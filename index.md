@@ -31,9 +31,9 @@ example_isolates %>%
 #> ℹ Using column 'mo' as input for `mo_is_gram_negative()`
 #> ℹ Using column 'mo' as input for `mo_is_intrinsic_resistant()`
 #> ℹ Determining intrinsic resistance based on 'EUCAST Expert Rules' and 'EUCAST Intrinsic
-#>   Resistance and Unusual Phenotypes' v3.2 (2020)
+#>    Resistance and Unusual Phenotypes' v3.2 (2020)
 #> ℹ For `aminoglycosides()` using columns: 'AMK' (amikacin), 'GEN' (gentamicin), 'KAN'
-#>   (kanamycin) and 'TOB' (tobramycin)
+#>    (kanamycin) and 'TOB' (tobramycin)
 #> ℹ For `carbapenems()` using columns: 'IPM' (imipenem) and 'MEM' (meropenem)
 ```
 

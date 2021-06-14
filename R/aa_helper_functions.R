@@ -713,9 +713,9 @@ meet_criteria <- function(object,
   return(invisible())
 }
 
-get_current_data <- function(arg_name, call, reuse_equal_call = TRUE) {
+get_current_data <- function(arg_name, call, reuse_from_1st_call = TRUE) {
   # check if retrieved before, then get it from package environment to improve speed
-  if (reuse_equal_call == TRUE &&
+  if (reuse_from_1st_call == TRUE &&
       identical(unique_call_id(entire_session = FALSE), pkg_env$get_current_data.call)) {
     return(pkg_env$get_current_data.out)
   }
