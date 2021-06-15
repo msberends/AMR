@@ -2048,15 +2048,11 @@ parse_and_convert <- function(x) {
         x <- as.data.frame(x, stringsAsFactors = FALSE)[[1]]
       }
     }
-    x_class <- class(x)
-    x <- as.character(x)
-    x[is.null(x)] <- NA
-    parsed <- iconv(x, to = "UTF-8")
+    parsed <- iconv(as.character(x), to = "UTF-8")
     parsed[is.na(parsed) & !is.na(x)] <- iconv(x[is.na(parsed) & !is.na(x)], from = "Latin1", to = "ASCII//TRANSLIT")
     parsed <- gsub('"', "", parsed, fixed = TRUE)
     parsed <- gsub(" +", " ", parsed, perl = TRUE)
     parsed <- trimws(parsed)
-    class(parsed) <- x_class
     parsed
   }, error = function(e) stop(e$message, call. = FALSE)) # this will also be thrown when running `as.mo(no_existing_object)`
   parsed

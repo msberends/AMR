@@ -57,25 +57,33 @@ jobs:
           - {os: windows-latest, r: 'devel',   allowfail: true}
           - {os: ubuntu-20.04,   r: 'devel',   allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           
-          # these are the current release of R
-          - {os: macOS-latest,   r: 'release', allowfail: false}
-          - {os: windows-latest, r: 'release', allowfail: false}
-          - {os: ubuntu-20.04,   r: 'release', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
-          
-          # these are the previous release of R
-          - {os: macOS-latest,   r: 'oldrel',  allowfail: false}
-          - {os: windows-latest, r: 'oldrel',  allowfail: false}
-          - {os: ubuntu-20.04,   r: 'oldrel',  allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
-          
-          # test against all released versions of R >= 3.0, we support them all!
+          # test all systems against all released versions of R >= 3.0, we support them all!
+          - {os: macOS-latest,   r: '4.1',     allowfail: false}
+          - {os: windows-latest, r: '4.1',     allowfail: false}
           - {os: ubuntu-20.04,   r: '4.1',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: macOS-latest,   r: '4.0',     allowfail: false}
+          - {os: windows-latest, r: '4.0',     allowfail: false}
           - {os: ubuntu-20.04,   r: '4.0',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: macOS-latest,   r: '3.6',     allowfail: false}
+          - {os: windows-latest, r: '3.6',     allowfail: false}
           - {os: ubuntu-20.04,   r: '3.6',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: macOS-latest,   r: '3.5',     allowfail: false}
+          - {os: windows-latest, r: '3.5',     allowfail: false}
           - {os: ubuntu-20.04,   r: '3.5',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: macOS-latest,   r: '3.4',     allowfail: false}
+          - {os: windows-latest, r: '3.4',     allowfail: false}
           - {os: ubuntu-20.04,   r: '3.4',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: macOS-latest,   r: '3.3',     allowfail: false}
+          - {os: windows-latest, r: '3.3',     allowfail: false}
           - {os: ubuntu-20.04,   r: '3.3',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: macOS-latest,   r: '3.2',     allowfail: false}
+          - {os: windows-latest, r: '3.2',     allowfail: false}
           - {os: ubuntu-20.04,   r: '3.2',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: macOS-latest,   r: '3.1',     allowfail: false}
+          - {os: windows-latest, r: '3.1',     allowfail: false}
           - {os: ubuntu-20.04,   r: '3.1',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: macOS-latest,   r: '3.0',     allowfail: false}
+          - {os: windows-latest, r: '3.0',     allowfail: false}
           - {os: ubuntu-20.04,   r: '3.0',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
 
     env:
@@ -163,5 +171,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: artifacts-${{ matrix.config.os }}-r${{ matrix.config.r }}
+          name: artifacts-r-${{ matrix.config.r }}-${{ matrix.config.os }}
           path: AMR.Rcheck

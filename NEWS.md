@@ -1,5 +1,5 @@
-# `AMR` 1.7.1.9003
-## <small>Last updated: 14 June 2021</small>
+# `AMR` 1.7.1.9004
+## <small>Last updated: 15 June 2021</small>
 
 ### Changed
 * Added more antibiotic class selectors: `aminopenicillins()`, `lincosamides()`, `lipoglycopeptides()`, `polymyxins()`, `quinolones()`, `streptogramins()` and `ureidopenicillins()`
