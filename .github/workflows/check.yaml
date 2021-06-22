@@ -107,9 +107,9 @@ jobs:
           sudo apt install -y libssl-dev pandoc pandoc-citeproc libxml2-dev libicu-dev libcurl4-openssl-dev libpng-dev
 
       - name: Query dependencies
-        # this will change once a week, so it will cache dependency updates
+        # this will change every day (i.e. at scheduled night run of GitHub Action), so it will cache dependency updates
         run: |
-          writeLines(paste(format(Sys.Date(), "week %V %Y"), sprintf("R-%i.%i", getRversion()$major, getRversion()$minor)), ".github/week-R-version")
+          writeLines(paste0(format(Sys.Date(), "%Y%m%d"), sprintf("-R-%i.%i", getRversion()$major, getRversion()$minor)), ".github/daily-R-bundle")
         shell: Rscript {0}
         
       - name: Restore cached R packages
@@ -117,7 +117,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ matrix.config.os }}-${{ hashFiles('.github/week-R-version') }}-v4
+          key: ${{ matrix.config.os }}-${{ hashFiles('.github/daily-R-bundle') }}-v4
 
       - name: Unpack AMR and install R dependencies
         if: always()

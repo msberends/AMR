@@ -170,65 +170,73 @@ search_type_in_df <- function(x, type, info = TRUE) {
 
   # remove attributes from other packages
   x <- as.data.frame(x, stringsAsFactors = FALSE)
-  colnames(x) <- trimws(colnames(x))
+  colnames_formatted <- tolower(generalise_antibiotic_name(colnames(x)))
 
   # -- mo
   if (type == "mo") {
     if (any(vapply(FUN.VALUE = logical(1), x, is.mo))) {
-      found <- sort(colnames(x)[vapply(FUN.VALUE = logical(1), x, is.mo)])[1]
-    } else if ("mo" %in% colnames(x) &
-               suppressWarnings(
-                 all(x$mo %in% c(NA, microorganisms$mo)))) {
+      # take first <mo> column
+      found <- colnames(x)[vapply(FUN.VALUE = logical(1), x, is.mo)]
+    } else if ("mo" %in% colnames_formatted &
+               suppressWarnings(all(x$mo %in% c(NA, microorganisms$mo)))) {
       found <- "mo"
-    } else if (any(colnames(x) %like% "^(mo|microorganism|organism|bacteria|ba[ck]terie)s?$")) {
-      found <- sort(colnames(x)[colnames(x) %like% "^(mo|microorganism|organism|bacteria|ba[ck]terie)s?$"])[1]
-    } else if (any(colnames(x) %like% "^(microorganism|organism|bacteria|ba[ck]terie)")) {
-      found <- sort(colnames(x)[colnames(x) %like% "^(microorganism|organism|bacteria|ba[ck]terie)"])[1]
-    } else if (any(colnames(x) %like% "species")) {
-      found <- sort(colnames(x)[colnames(x) %like% "species"])[1]
+    } else if (any(colnames_formatted %like_case% "^(mo|microorganism|organism|bacteria|ba[ck]terie)s?$")) {
+      found <- sort(colnames(x)[colnames_formatted %like_case% "^(mo|microorganism|organism|bacteria|ba[ck]terie)s?$"])
+    } else if (any(colnames_formatted %like_case% "^(microorganism|organism|bacteria|ba[ck]terie)")) {
+      found <- sort(colnames(x)[colnames_formatted %like_case% "^(microorganism|organism|bacteria|ba[ck]terie)"])
+    } else if (any(colnames_formatted %like_case% "species")) {
+      found <- sort(colnames(x)[colnames_formatted %like_case% "species"])
     }
 
   }
   # -- key antibiotics
   if (type %in% c("keyantibiotics", "keyantimicrobials")) {
-    if (any(colnames(x) %like% "^key.*(ab|antibiotics|antimicrobials)")) {
-      found <- sort(colnames(x)[colnames(x) %like% "^key.*(ab|antibiotics|antimicrobials)"])[1]
+    if (any(colnames_formatted %like_case% "^key.*(ab|antibiotics|antimicrobials)")) {
+      found <- sort(colnames(x)[colnames_formatted %like_case% "^key.*(ab|antibiotics|antimicrobials)"])
     }
   }
   # -- date
   if (type == "date") {
-    if (any(colnames(x) %like% "^(specimen date|specimen_date|spec_date)")) {
+    if (any(colnames_formatted %like_case% "^(specimen date|specimen_date|spec_date)")) {
       # WHONET support
-      found <- sort(colnames(x)[colnames(x) %like% "^(specimen date|specimen_date|spec_date)"])[1]
+      found <- sort(colnames(x)[colnames_formatted %like_case% "^(specimen date|specimen_date|spec_date)"])
       if (!any(class(pm_pull(x, found)) %in% c("Date", "POSIXct"))) {
         stop(font_red(paste0("Found column '", font_bold(found), "' to be used as input for `col_", type,
                              "`, but this column contains no valid dates. Transform its values to valid dates first.")),
              call. = FALSE)
       }
+      
     } else if (any(vapply(FUN.VALUE = logical(1), x, function(x) inherits(x, c("Date", "POSIXct"))))) {
-      found <- sort(colnames(x)[vapply(FUN.VALUE = logical(1), x, function(x) inherits(x, c("Date", "POSIXct")))])[1]
+      # take first <Date> column
+      found <- colnames(x)[vapply(FUN.VALUE = logical(1), x, function(x) inherits(x, c("Date", "POSIXct")))]
     }
   }
   # -- patient id
   if (type == "patient_id") {
-    if (any(colnames(x) %like% "^(identification |patient|patid)")) {
-      found <- sort(colnames(x)[colnames(x) %like% "^(identification |patient|patid)"])[1]
+    crit1 <- colnames_formatted %like_case% "^(patient|patid)"
+    if (any(crit1)) {
+      found <- colnames(x)[crit1]
+    } else {
+      crit2 <- colnames_formatted %like_case% "(identification |patient|pat.*id)"
+      if (any(crit2)) {
+        found <- colnames(x)[crit2]
+      }
     }
   }
   # -- specimen
   if (type == "specimen") {
-    if (any(colnames(x) %like% "(specimen type|spec_type)")) {
-      found <- sort(colnames(x)[colnames(x) %like% "(specimen type|spec_type)"])[1]
-    } else if (any(colnames(x) %like% "^(specimen)")) {
-      found <- sort(colnames(x)[colnames(x) %like% "^(specimen)"])[1]
+    if (any(colnames_formatted %like_case% "(specimen type|spec_type)")) {
+      found <- sort(colnames(x)[colnames_formatted %like_case% "(specimen type|spec_type)"])
+    } else if (any(colnames_formatted %like_case% "^(specimen)")) {
+      found <- sort(colnames(x)[colnames_formatted %like_case% "^(specimen)"])
     }
   }
   # -- UTI (urinary tract infection)
   if (type == "uti") {
-    if (any(colnames(x) == "uti")) {
-      found <- colnames(x)[colnames(x) == "uti"][1]
-    } else if (any(colnames(x) %like% "(urine|urinary)")) {
-      found <- sort(colnames(x)[colnames(x) %like% "(urine|urinary)"])[1]
+    if (any(colnames_formatted == "uti")) {
+      found <- colnames(x)[colnames_formatted == "uti"]
+    } else if (any(colnames_formatted %like_case% "(urine|urinary)")) {
+      found <- sort(colnames(x)[colnames_formatted %like_case% "(urine|urinary)"])
     }
     if (!is.null(found)) {
       # this column should contain logicals
@@ -241,10 +249,12 @@ search_type_in_df <- function(x, type, info = TRUE) {
     }
   }
   
+  found <- found[1]
+  
   if (!is.null(found) & info == TRUE) {
     if (message_not_thrown_before(fn = paste0("search_", type))) {
       msg <- paste0("Using column '", font_bold(found), "' as input for `col_", type, "`.")
-      if (type %in% c("keyantibiotics", "specimen")) {
+      if (type %in% c("keyantibiotics", "keyantimicrobials", "specimen")) {
         msg <- paste(msg, "Use", font_bold(paste0("col_", type), "= FALSE"), "to prevent this.")
       }
       message_(msg)
@@ -696,7 +706,7 @@ meet_criteria <- function(object,
             ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1,
                    "be a finite number",
                    "all be finite numbers"),
-            " (i.e., not be infinite)",
+            " (i.e. not be infinite)",
             call = call_depth)
   }
   if (!is.null(contains_column_class)) {
@@ -713,13 +723,7 @@ meet_criteria <- function(object,
   return(invisible())
 }
 
-get_current_data <- function(arg_name, call, reuse_from_1st_call = TRUE) {
-  # check if retrieved before, then get it from package environment to improve speed
-  if (reuse_from_1st_call == TRUE &&
-      identical(unique_call_id(entire_session = FALSE), pkg_env$get_current_data.call)) {
-    return(pkg_env$get_current_data.out)
-  }
-  
+get_current_data <- function(arg_name, call) {
   # try dplyr::cur_data_all() first to support dplyr groups
   # only useful for e.g. dplyr::filter(), dplyr::mutate() and dplyr::summarise()
   # not useful (throws error) with e.g. dplyr::select() - but that will be caught later in this function
@@ -727,73 +731,32 @@ get_current_data <- function(arg_name, call, reuse_from_1st_call = TRUE) {
   if (!is.null(cur_data_all)) {
     out <- tryCatch(cur_data_all(), error = function(e) NULL)
     if (is.data.frame(out)) {
-      out <- structure(out, type = "dplyr_cur_data_all")
-      pkg_env$get_current_data.call <- unique_call_id(entire_session = FALSE)
-      pkg_env$get_current_data.out <- out
-      return(out)
-    }
-  }
-
-  if (getRversion() < "3.2") {
-    # R-3.0 and R-3.1 do not have an `x` element in the call stack, rendering this function useless
-    # R-3.2 was released in April 2015
-    if (is.na(arg_name)) {
-      # such as for carbapenems() etc.
-      warning_("this function requires R version 3.2 or later - you have ", R.version.string, call = call)
-      return(data.frame())
-    } else {
-      # mimic a default R error, e.g. for example_isolates[which(mo_name() %like% "^ent"), ] 
-      stop_("argument `", arg_name, "` is missing with no default", call = call)
+      return(structure(out, type = "dplyr_cur_data_all"))
     }
   }
   
-  # try a (base R) method, by going over the complete system call stack with sys.frames()
-  not_set <- TRUE
-  source <- "base_R"
-  frms <- lapply(sys.frames(), function(el) {
-    if (not_set == TRUE && ".Generic" %in% names(el)) {
-      if (tryCatch(".data" %in% names(el) && is.data.frame(el$`.data`), error = function(e) FALSE)) {
-        # - - - -
-        # dplyr
-        # - - - -
-        # an element `.data` will be in the system call stack when using dplyr::select()
-        # [but not when using dplyr::filter(), dplyr::mutate() or dplyr::summarise()]
-        not_set <<- FALSE
-        source <<- "dplyr_selector"
-        el$`.data`
-      } else if (tryCatch(any(c("x", "xx") %in% names(el)), error = function(e) FALSE)) {
-        # - - - -
-        # base R
-        # - - - -
-        # an element `x` will be in this environment for only cols, e.g. `example_isolates[, carbapenems()]`
-        # an element `xx` will be in this environment for rows + cols, e.g. `example_isolates[c(1:3), carbapenems()]`
-        if (tryCatch(is.data.frame(el$xx), error = function(e) FALSE)) {
-          not_set <<- FALSE
-          el$xx
-        } else if (tryCatch(is.data.frame(el$x))) {
-          not_set <<- FALSE
-          el$x
-        } else {
-          NULL
-        }
-      } else {
-        NULL
+  # try a manual (base R) method, by going over all underlying environments with sys.frames()
+  for (el in sys.frames()) {
+    if (!is.null(el$`.Generic`)) {
+      # don't check `".Generic" %in% names(el)`, because in R < 3.2, `names(el)` is always NULL
+      
+      if (!is.null(el$`.data`) && is.data.frame(el$`.data`)) {
+        # an element `.data` will be in the environment when using `dplyr::select()`
+        # (but not when using `dplyr::filter()`, `dplyr::mutate()` or `dplyr::summarise()`)
+        return(structure(el$`.data`, type = "dplyr_selector"))
+        
+      } else if (!is.null(el$xx) && is.data.frame(el$xx)) {
+        # an element `xx` will be in the environment for rows + cols, e.g. `example_isolates[c(1:3), carbapenems()]`
+        return(structure(el$xx, type = "base_R"))
+        
+      } else if (!is.null(el$x) && is.data.frame(el$x)) {
+        # an element `x` will be in the environment for only cols, e.g. `example_isolates[, carbapenems()]`
+        return(structure(el$x, type = "base_R"))
       }
-    } else {
-      NULL
     }
-  })
-  
-  # lookup the matched frame and return its value: a data.frame
-  vars_df <- tryCatch(frms[[which(!vapply(FUN.VALUE = logical(1), frms, is.null))]], error = function(e) NULL)
-  if (is.data.frame(vars_df)) {
-    out <- structure(vars_df, type = source)
-    pkg_env$get_current_data.call <- unique_call_id(entire_session = FALSE)
-    pkg_env$get_current_data.out <- out
-    return(out)
   }
   
-  # nothing worked, so:
+  # no data.frame found, so an error  must be returned:
   if (is.na(arg_name)) {
     if (isTRUE(is.numeric(call))) {
       fn <- as.character(sys.call(call + 1)[1])
@@ -982,8 +945,8 @@ font_grey_bg <- function(..., collapse = " ") {
     # similar to HTML #444444
     try_colour(..., before = "\033[48;5;238m", after = "\033[49m", collapse = collapse)  
   } else {
-    # similar to HTML #eeeeee
-    try_colour(..., before = "\033[48;5;254m", after = "\033[49m", collapse = collapse)
+    # similar to HTML #f0f0f0
+    try_colour(..., before = "\033[48;5;255m", after = "\033[49m", collapse = collapse)
   }
 }
 font_green_bg <- function(..., collapse = " ") {

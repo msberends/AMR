@@ -349,7 +349,7 @@ as.rsi.mic <- function(x,
   
   # for dplyr's across()
   cur_column_dplyr <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
-  if (!is.null(cur_column_dplyr) && tryCatch(is.data.frame(get_current_data("ab", call = 0, reuse_from_1st_call = FALSE)), error = function(e) FALSE)) {
+  if (!is.null(cur_column_dplyr) && tryCatch(is.data.frame(get_current_data("ab", call = 0)), error = function(e) FALSE)) {
     # try to get current column, which will only be available when in across()
     ab <- tryCatch(cur_column_dplyr(),
                    error = function(e) ab)
@@ -438,7 +438,7 @@ as.rsi.disk <- function(x,
   
   # for dplyr's across()
   cur_column_dplyr <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
-  if (!is.null(cur_column_dplyr) && tryCatch(is.data.frame(get_current_data("ab", call = 0, reuse_from_1st_call = FALSE)), error = function(e) FALSE)) {
+  if (!is.null(cur_column_dplyr) && tryCatch(is.data.frame(get_current_data("ab", call = 0)), error = function(e) FALSE)) {
     # try to get current column, which will only be available when in across()
     ab <- tryCatch(cur_column_dplyr(),
                    error = function(e) ab)
@@ -448,7 +448,7 @@ as.rsi.disk <- function(x,
   mo_var_found <- ""
   if (is.null(mo)) {
     tryCatch({
-      df <- get_current_data(arg_name = "mo", call = -3, reuse_from_1st_call = FALSE) # will return an error if not found
+      df <- get_current_data(arg_name = "mo", call = -3) # will return an error if not found
       mo <- NULL
       try({
         mo <- suppressMessages(search_type_in_df(df, "mo"))

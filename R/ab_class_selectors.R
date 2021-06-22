@@ -25,13 +25,12 @@
 
 #' Antibiotic Class Selectors
 #' 
-#' These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. \strong{\Sexpr{ifelse(getRversion() < "3.2", paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
+#' These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param ab_class an antimicrobial class, such as `"carbapenems"`. The columns `group`, `atc_group1` and `atc_group2` of the [antibiotics] data set will be searched (case-insensitive) for this value.
 #' @param only_rsi_columns a [logical] to indicate whether only columns of class `<rsi>` must be selected (defaults to `FALSE`), see [as.rsi()]
-#' @details \strong{\Sexpr{ifelse(getRversion() < "3.2", paste0("NOTE: THESE FUNCTIONS DO NOT WORK ON YOUR CURRENT R VERSION. These functions require R version 3.2 or later - you have ", R.version.string, "."), "")}}
-#' 
-#' These functions can be used in data set calls for selecting columns and filtering rows, see *Examples*. They support base R, but work more convenient in dplyr functions such as [`select()`][dplyr::select()], [`filter()`][dplyr::filter()] and [`summarise()`][dplyr::summarise()].
+#' @details
+#' These functions can be used in data set calls for selecting columns and filtering rows. They are heavily inspired by the [Tidyverse selection helpers](https://tidyselect.r-lib.org/reference/language.html), but also work in base \R and not only in `dplyr` verbs. Nonetheless, they are very convenient to use with `dplyr` functions such as [`select()`][dplyr::select()], [`filter()`][dplyr::filter()] and [`summarise()`][dplyr::summarise()], see *Examples*.
 #' 
 #' All columns in the data in which these functions are called will be searched for known antibiotic names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) in the [antibiotics] data set. This means that a selector such as [aminoglycosides()] will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc. Use the [ab_class()] function to filter/select on a manually defined antibiotic class.
 #' 
@@ -267,18 +266,9 @@ ab_selector <- function(function_name,
   meet_criteria(function_name, allow_class = "character", has_length = 1, allow_NULL = TRUE, .call_depth = 1)
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1, .call_depth = 1)
   meet_criteria(ab_class, allow_class = "character", has_length = 1, allow_NULL = TRUE, .call_depth = 1)
-  
-  if (getRversion() < "3.2") {
-    # get_current_data() does not work on R 3.0 and R 3.1.
-    # R 3.2 was released in April 2015.
-    warning_("antibiotic class selectors such as ", function_name, 
-             "() require R version 3.2 or later - you have ", R.version.string,
-             call = FALSE)
-    return(NULL)
-  }
-  
+
   # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
-  vars_df <- get_current_data(arg_name = NA, call = -3, reuse_from_1st_call = FALSE)
+  vars_df <- get_current_data(arg_name = NA, call = -3)
   # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
   ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
   
@@ -315,12 +305,15 @@ ab_selector <- function(function_name,
     } else {
       agents_formatted <- paste0("'", font_bold(agents, collapse = NULL), "'")
       agents_names <- ab_name(names(agents), tolower = TRUE, language = NULL)
-      need_name <- tolower(gsub("[^a-zA-Z]", "", agents)) != tolower(gsub("[^a-zA-Z]", "", agents_names))
-      agents_formatted[need_name] <- paste0(agents_formatted[need_name],
-                                            " (", agents_names[need_name], ")")
-      message_("For `", function_name, "(", ifelse(function_name == "ab_class", paste0("\"", ab_class, "\""), ""), ")` using ",
+      need_name <- generalise_antibiotic_name(agents) != generalise_antibiotic_name(agents_names)
+      agents_formatted[need_name] <- paste0(agents_formatted[need_name], " (", agents_names[need_name], ")")
+      message_("For `", function_name, "(",
+               ifelse(function_name == "ab_class", 
+                      paste0("\"", ab_class, "\""),
+                      ""),
+               ")` using ",
                ifelse(length(agents) == 1, "column: ", "columns: "),
-               vector_and(agents_formatted, quotes = FALSE))
+               vector_and(agents_formatted, quotes = FALSE, sort = FALSE))
     }
     remember_thrown_message(function_name)
   }

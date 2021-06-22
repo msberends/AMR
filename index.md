@@ -25,16 +25,12 @@ library(AMR)
 library(dplyr)
 
 example_isolates %>%
-  mutate(bacteria = mo_fullname(mo)) %>%
-  filter(mo_is_gram_negative(), mo_is_intrinsic_resistant(ab = "cefotax")) %>%
-  select(bacteria, aminoglycosides(), carbapenems())
-#> ℹ Using column 'mo' as input for `mo_is_gram_negative()`
-#> ℹ Using column 'mo' as input for `mo_is_intrinsic_resistant()`
-#> ℹ Determining intrinsic resistance based on 'EUCAST Expert Rules' and 'EUCAST Intrinsic
-#>    Resistance and Unusual Phenotypes' v3.2 (2020)
-#> ℹ For `aminoglycosides()` using columns: 'AMK' (amikacin), 'GEN' (gentamicin), 'KAN'
-#>    (kanamycin) and 'TOB' (tobramycin)
-#> ℹ For `carbapenems()` using columns: 'IPM' (imipenem) and 'MEM' (meropenem)
+  mutate(bacteria = mo_fullname()) %>%
+  filter(mo_is_gram_negative(),
+         mo_is_intrinsic_resistant(ab = "cefotax")) %>%
+  select(bacteria,
+         aminoglycosides(),
+         carbapenems())
 ```
 
 With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (`mo_is_gram_negative()` and `mo_is_intrinsic_resistant()`) and a column selection on two antibiotic groups (`aminoglycosides()` and `carbapenems()`), the reference data about [all microorganisms](./reference/microorganisms.html) and [all antibiotics](./reference/antibiotics.html) in the `AMR` package make sure you get what you meant:
@@ -114,9 +110,9 @@ It will be downloaded and installed automatically. For RStudio, click on the men
 
 #### Latest development version
 
-![R-code-check](https://github.com/msberends/AMR/workflows/R-code-check/badge.svg?branch=master)
-![[CodeFactor](https://www.codefactor.io/repository/github/msberends/amr/badge)](https://www.codefactor.io/repository/github/msberends/amr)
-![[Codecov](https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gh/msberends/AMR?branch=master)
+![R-code-check][https://github.com/msberends/AMR/workflows/R-code-check/badge.svg?branch=master](https://github.com/msberends/AMR/actions)
+![CodeFactor][https://www.codefactor.io/repository/github/msberends/amr/badge](https://www.codefactor.io/repository/github/msberends/amr)
+![Codecov][https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg](https://codecov.io/gh/msberends/AMR?branch=master)
 
 The latest and unpublished development version can be installed from GitHub in two ways:
 

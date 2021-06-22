@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9005</span>
       </span>
     </div>
 
@@ -217,16 +217,12 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 
 <span class="va">example_isolates</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>bacteria <span class="op">=</span> <span class="fu"><a href="reference/mo_property.html">mo_fullname</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="reference/mo_property.html">mo_is_gram_negative</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"cefotax"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">bacteria</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; ℹ Using column 'mo' as input for `mo_is_gram_negative()`</span>
-<span class="co">#&gt; ℹ Using column 'mo' as input for `mo_is_intrinsic_resistant()`</span>
-<span class="co">#&gt; ℹ Determining intrinsic resistance based on 'EUCAST Expert Rules' and 'EUCAST Intrinsic</span>
-<span class="co">#&gt;    Resistance and Unusual Phenotypes' v3.2 (2020)</span>
-<span class="co">#&gt; ℹ For `aminoglycosides()` using columns: 'AMK' (amikacin), 'GEN' (gentamicin), 'KAN'</span>
-<span class="co">#&gt;    (kanamycin) and 'TOB' (tobramycin)</span>
-<span class="co">#&gt; ℹ For `carbapenems()` using columns: 'IPM' (imipenem) and 'MEM' (meropenem)</span></code></pre></div>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>bacteria <span class="op">=</span> <span class="fu"><a href="reference/mo_property.html">mo_fullname</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="reference/mo_property.html">mo_is_gram_negative</a></span><span class="op">(</span><span class="op">)</span>,
+         <span class="fu"><a href="reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"cefotax"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">bacteria</span>,
+         <span class="fu"><a href="reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>,
+         <span class="fu"><a href="reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (<code><a href="reference/mo_property.html">mo_is_gram_negative()</a></code> and <code><a href="reference/mo_property.html">mo_is_intrinsic_resistant()</a></code>) and a column selection on two antibiotic groups (<code><a href="reference/antibiotic_class_selectors.html">aminoglycosides()</a></code> and <code><a href="reference/antibiotic_class_selectors.html">carbapenems()</a></code>), the reference data about <a href="./reference/microorganisms.html">all microorganisms</a> and <a href="./reference/antibiotics.html">all antibiotics</a> in the <code>AMR</code> package make sure you get what you meant:</p>
 <table class="table">
 <thead><tr class="header">
@@ -386,7 +382,7 @@
 <div id="latest-development-version" class="section level4">
 <h4 class="hasAnchor">
 <a href="#latest-development-version" class="anchor"></a>Latest development version</h4>
-<p><img src="https://github.com/msberends/AMR/workflows/R-code-check/badge.svg?branch=master" alt="R-code-check"><img src="https://www.codefactor.io/repository/github/msberends/amr" alt="CodeFactor"><img src="https://codecov.io/gh/msberends/AMR?branch=master" alt="Codecov"></p>
+<p>[R-code-check][<a href="https://github.com/msberends/AMR/workflows/R-code-check/badge.svg?branch=master" class="uri">https://github.com/msberends/AMR/workflows/R-code-check/badge.svg?branch=master</a>](<a href="https://github.com/msberends/AMR/actions" class="uri">https://github.com/msberends/AMR/actions</a>) [CodeFactor][<a href="https://www.codefactor.io/repository/github/msberends/amr/badge" class="uri">https://www.codefactor.io/repository/github/msberends/amr/badge</a>](<a href="https://www.codefactor.io/repository/github/msberends/amr" class="uri">https://www.codefactor.io/repository/github/msberends/amr</a>) [Codecov][<a href="https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg" class="uri">https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg</a>](<a href="https://codecov.io/gh/msberends/AMR?branch=master" class="uri">https://codecov.io/gh/msberends/AMR?branch=master</a>)</p>
 <p>The latest and unpublished development version can be installed from GitHub in two ways:</p>
 <ol>
 <li>

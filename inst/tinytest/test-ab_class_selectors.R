@@ -23,52 +23,48 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-if (getRversion() < "3.2") {
-  expect_warning(example_isolates[, aminoglycosides(), drop = FALSE])
-}
-if (getRversion() >= "3.2") {
-  # antibiotic class selectors require at least R-3.2
-  expect_true(ncol(example_isolates[, ab_class("antimyco"), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, aminoglycosides(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, aminopenicillins(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, betalactams(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, carbapenems(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, cephalosporins(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, cephalosporins_1st(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, cephalosporins_2nd(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, cephalosporins_3rd(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, cephalosporins_4th(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, cephalosporins_5th(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, fluoroquinolones(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, glycopeptides(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, lincosamides(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, lipoglycopeptides(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, macrolides(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, oxazolidinones(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, penicillins(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, polymyxins(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, streptogramins(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, quinolones(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, tetracyclines(), drop = FALSE]) < ncol(example_isolates))
-  expect_true(ncol(example_isolates[, ureidopenicillins(), drop = FALSE]) < ncol(example_isolates))
-  
-  # Examples:
-  
-  # select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB'
-  expect_equal(ncol(example_isolates[, c("mo", aminoglycosides())]), 5, tolerance = 0.5)
-  
-  # filter using any() or all()
-  expect_equal(nrow(example_isolates[any(carbapenems() == "R"), ]), 55, tolerance = 0.5)
-  expect_equal(nrow(subset(example_isolates, any(carbapenems() == "R"))), 55, tolerance = 0.5)
-  
-  # filter on any or all results in the carbapenem columns (i.e., IPM, MEM):
-  expect_equal(nrow(example_isolates[any(carbapenems()), ]), 962, tolerance = 0.5)
-  expect_equal(nrow(example_isolates[all(carbapenems()), ]), 756, tolerance = 0.5)
-  
-  # filter with multiple antibiotic selectors using c()
-  expect_equal(nrow(example_isolates[all(c(carbapenems(), aminoglycosides()) == "R"), ]), 26, tolerance = 0.5)
-  
-  # filter + select in one go: get penicillins in carbapenems-resistant strains
-  expect_equal(nrow(example_isolates[any(carbapenems() == "R"), penicillins()]), 55, tolerance = 0.5)
-  expect_equal(ncol(example_isolates[any(carbapenems() == "R"), penicillins()]), 7, tolerance = 0.5)
-}
+# antibiotic class selectors
+expect_true(ncol(example_isolates[, ab_class("antimyco"), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, aminoglycosides(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, aminopenicillins(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, betalactams(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, carbapenems(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, cephalosporins(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, cephalosporins_1st(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, cephalosporins_2nd(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, cephalosporins_3rd(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, cephalosporins_4th(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, cephalosporins_5th(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, fluoroquinolones(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, glycopeptides(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, lincosamides(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, lipoglycopeptides(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, macrolides(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, oxazolidinones(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, penicillins(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, polymyxins(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, streptogramins(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, quinolones(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, tetracyclines(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, ureidopenicillins(), drop = FALSE]) < ncol(example_isolates))
+
+# Examples:
+
+# select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB'
+expect_equal(ncol(example_isolates[, c("mo", aminoglycosides())]), 5, tolerance = 0.5)
+
+# filter using any() or all()
+expect_equal(nrow(example_isolates[any(carbapenems() == "R"), ]), 55, tolerance = 0.5)
+expect_equal(nrow(subset(example_isolates, any(carbapenems() == "R"))), 55, tolerance = 0.5)
+
+# filter on any or all results in the carbapenem columns (i.e., IPM, MEM):
+expect_equal(nrow(example_isolates[any(carbapenems()), ]), 962, tolerance = 0.5)
+expect_equal(nrow(example_isolates[all(carbapenems()), ]), 756, tolerance = 0.5)
+
+# filter with multiple antibiotic selectors using c()
+expect_equal(nrow(example_isolates[all(c(carbapenems(), aminoglycosides()) == "R"), ]), 26, tolerance = 0.5)
+
+# filter + select in one go: get penicillins in carbapenems-resistant strains
+expect_equal(nrow(example_isolates[any(carbapenems() == "R"), penicillins()]), 55, tolerance = 0.5)
+expect_equal(ncol(example_isolates[any(carbapenems() == "R"), penicillins()]), 7, tolerance = 0.5)
+

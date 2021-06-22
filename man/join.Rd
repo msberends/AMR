@@ -41,7 +41,7 @@ Join the data set \link{microorganisms} easily to an existing data set or to a \
 \details{
 \strong{Note:} As opposed to the \code{join()} functions of \code{dplyr}, \link{character} vectors are supported and at default existing columns will get a suffix \code{"2"} and the newly joined columns will not get a suffix.
 
-If the \code{dplyr} package is installed, their join functions will be used. Otherwise, the much slower \code{\link[=merge]{merge()}} and \code{\link[=interaction]{interaction()}} functions from base R will be used.
+If the \code{dplyr} package is installed, their join functions will be used. Otherwise, the much slower \code{\link[=merge]{merge()}} and \code{\link[=interaction]{interaction()}} functions from base \R will be used.
 }
 \section{Stable Lifecycle}{
 

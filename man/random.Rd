@@ -31,7 +31,7 @@ class \verb{<mic>} for \code{\link[=random_mic]{random_mic()}} (see \code{\link[
 These functions can be used for generating random MIC values and disk diffusion diameters, for AMR data analysis practice. By providing a microorganism and antimicrobial agent, the generated results will reflect reality as much as possible.
 }
 \details{
-The base R function \code{\link[=sample]{sample()}} is used for generating values.
+The base \R function \code{\link[=sample]{sample()}} is used for generating values.
 
 Generated values are based on the latest EUCAST guideline implemented in the \link{rsi_translation} data set. To create specific generated values per bug or drug, set the \code{mo} and/or \code{ab} argument.
 }

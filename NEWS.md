@@ -1,12 +1,17 @@
-# `AMR` 1.7.1.9004
-## <small>Last updated: 15 June 2021</small>
+# `AMR` 1.7.1.9005
+## <small>Last updated: 22 June 2021</small>
 
 ### Changed
-* Added more antibiotic class selectors: `aminopenicillins()`, `lincosamides()`, `lipoglycopeptides()`, `polymyxins()`, `quinolones()`, `streptogramins()` and `ureidopenicillins()`
+* Antibiotic class selectors (see `ab_class()`)
+  * They now finally also work in R-3.0 and R-3.1, supporting every version of R since 2013
+  * Added more selectors: `aminopenicillins()`, `lincosamides()`, `lipoglycopeptides()`, `polymyxins()`, `quinolones()`, `streptogramins()` and `ureidopenicillins()`
+  * Fix for using selectors multiple times in one call (e.g., using them in `dplyr::filter()` and immediately after in `dplyr::select()`)
 * Added `ggplot2::autoplot()` generic for classes `<mic>`, `<disk>`, `<rsi>` and `<resistance_predict>`
 * Fix to prevent introducing `NA`s for old MO codes when running `as.mo()` on them
 * Added more informative error messages when any of the `proportion_*()` and `count_*()` functions fail
-* Fix for using antibiotic selectors multiple times in one call (e.g., using in `dplyr::filter()` and immediately after in `dplyr::select()`)
+* When printing a tibble with any old MO code, a warning will be thrown that old codes should be updated using `as.mo()`
+* Improved automatic column selector when `col_*` arguments are left blank, e.g. in `first_isolate()`
+* The right input types for `random_mic()`, `random_disk()` and `random_rsi()` are now enforced
 
 
 # `AMR` 1.7.1

@@ -158,7 +158,7 @@
 The \code{ggplot} functions return a \code{\link[ggplot2:ggplot]{ggplot}} model that is extendible with any \code{ggplot2} function.
 }
 \description{
-Functions to plot classes \code{rsi}, \code{mic} and \code{disk}, with support for base R and \code{ggplot2}.
+Functions to plot classes \code{rsi}, \code{mic} and \code{disk}, with support for base \R and \code{ggplot2}.
 }
 \details{
 The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.

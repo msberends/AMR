@@ -170,7 +170,7 @@ mdro <- function(x = NULL,
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
     # is also fix for using a grouped df as input (a dot as first argument)
-    x <- tryCatch(get_current_data(arg_name = "x", call = -2, reuse_from_1st_call = FALSE), error = function(e) x)
+    x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
   }
   meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
   meet_criteria(guideline, allow_class = c("list", "character"), allow_NULL = TRUE)

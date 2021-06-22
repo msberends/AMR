@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9005</span>
       </span>
     </div>
 
@@ -457,11 +457,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
     <pre class="examples"><span class='co'># `example_isolates` is a data set available in the AMR package.</span>
 <span class='co'># See ?example_isolates.</span>
 
-<span class='va'>example_isolates</span><span class='op'>[</span><span class='fu'>first_isolate</span><span class='op'>(</span><span class='va'>example_isolates</span><span class='op'>)</span>, <span class='op'>]</span>
-<span class='co'># \donttest{</span>
-<span class='co'># faster way, only works in R 3.2 and later:</span>
 <span class='va'>example_isolates</span><span class='op'>[</span><span class='fu'>first_isolate</span><span class='op'>(</span><span class='op'>)</span>, <span class='op'>]</span>
-
+<span class='co'># \donttest{</span>
 <span class='co'># get all first Gram-negatives</span>
 <span class='va'>example_isolates</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'>first_isolate</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>&amp;</span> <span class='fu'><a href='mo_property.html'>mo_is_gram_negative</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>, <span class='op'>]</span>
 

@@ -131,11 +131,8 @@
 #' # `example_isolates` is a data set available in the AMR package.
 #' # See ?example_isolates.
 #' 
-#' example_isolates[first_isolate(example_isolates), ]
-#' \donttest{
-#' # faster way, only works in R 3.2 and later:
 #' example_isolates[first_isolate(), ]
-#' 
+#' \donttest{
 #' # get all first Gram-negatives
 #' example_isolates[which(first_isolate() & mo_is_gram_negative()), ]
 #'
@@ -207,7 +204,7 @@ first_isolate <- function(x = NULL,
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
     # is also fix for using a grouped df as input (a dot as first argument)
-    x <- tryCatch(get_current_data(arg_name = "x", call = -2, reuse_from_1st_call = FALSE), error = function(e) x)
+    x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
   }
   meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
   meet_criteria(col_date, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
@@ -618,7 +615,7 @@ filter_first_isolate <- function(x = NULL,
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
     # is also fix for using a grouped df as input (a dot as first argument)
-    x <- tryCatch(get_current_data(arg_name = "x", call = -2, reuse_from_1st_call = FALSE), error = function(e) x)
+    x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
   }
   meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
   meet_criteria(col_date, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))

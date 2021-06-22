@@ -32,7 +32,7 @@
 #' @param ab any [character] that can be coerced to a valid antimicrobial agent code with [as.ab()]
 #' @param prob_RSI a vector of length 3: the probabilities for R (1st value), S (2nd value) and I (3rd value)
 #' @param ... ignored, only in place to allow future extensions
-#' @details The base R function [sample()] is used for generating values.
+#' @details The base \R function [sample()] is used for generating values.
 #' 
 #' Generated values are based on the latest EUCAST guideline implemented in the [rsi_translation] data set. To create specific generated values per bug or drug, set the `mo` and/or `ab` argument.
 #' @return class `<mic>` for [random_mic()] (see [as.mic()]) and class `<disk>` for [random_disk()] (see [as.disk()])
@@ -56,18 +56,26 @@
 #' random_disk(100, "Streptococcus pneumoniae", "ampicillin") # range 12-27
 #' }
 random_mic <- function(size, mo = NULL, ab = NULL, ...) {
+  meet_criteria(size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+  meet_criteria(mo, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  meet_criteria(ab, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   random_exec("MIC", size = size, mo = mo, ab = ab)
 }
 
 #' @rdname random
 #' @export
 random_disk <- function(size, mo = NULL, ab = NULL, ...) {
+  meet_criteria(size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+  meet_criteria(mo, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  meet_criteria(ab, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   random_exec("DISK", size = size, mo = mo, ab = ab)
 }
 
 #' @rdname random
 #' @export
 random_rsi <- function(size, prob_RSI = c(0.33, 0.33, 0.33), ...) {
+  meet_criteria(size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+  meet_criteria(prob_RSI, allow_class = c("numeric", "integer"), has_length = 3)
   sample(as.rsi(c("R", "S", "I")), size = size, replace = TRUE, prob = prob_RSI)
 }
 

@@ -49,8 +49,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Antibiotic Class Selectors — antibiotic_class_selectors" />
-<meta property="og:description" content="These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. 
-" />
+<meta property="og:description" content="These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 
 
@@ -83,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9005</span>
       </span>
     </div>
 
@@ -240,8 +239,7 @@
     </div>
 
     <div class="ref-description">
-    <p>These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations. <strong>
-</strong></p>
+    <p>These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.</p>
     </div>
 
     <pre class="usage"><span class='fu'>ab_class</span><span class='op'>(</span><span class='va'>ab_class</span>, only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
@@ -305,9 +303,7 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><strong>
-</strong></p>
-<p>These functions can be used in data set calls for selecting columns and filtering rows, see <em>Examples</em>. They support base R, but work more convenient in dplyr functions such as <code><a href='https://dplyr.tidyverse.org/reference/select.html'>select()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>.</p>
+    <p>These functions can be used in data set calls for selecting columns and filtering rows. They are heavily inspired by the <a href='https://tidyselect.r-lib.org/reference/language.html'>Tidyverse selection helpers</a>, but also work in base <span style="R">R</span> and not only in <code>dplyr</code> verbs. Nonetheless, they are very convenient to use with <code>dplyr</code> functions such as <code><a href='https://dplyr.tidyverse.org/reference/select.html'>select()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>, see <em>Examples</em>.</p>
 <p>All columns in the data in which these functions are called will be searched for known antibiotic names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) in the <a href='antibiotics.html'>antibiotics</a> data set. This means that a selector such as <code>aminoglycosides()</code> will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc. Use the <code>ab_class()</code> function to filter/select on a manually defined antibiotic class.</p>
     <h2 class="hasAnchor" id="full-list-of-supported-agents"><a class="anchor" href="#full-list-of-supported-agents"></a>Full list of supported agents</h2>
 

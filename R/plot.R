@@ -25,7 +25,7 @@
 
 #' Plotting for Classes `rsi`, `mic` and `disk`
 #' 
-#' Functions to plot classes `rsi`, `mic` and `disk`, with support for base R and `ggplot2`.
+#' Functions to plot classes `rsi`, `mic` and `disk`, with support for base \R and `ggplot2`.
 #' @inheritSection lifecycle Stable Lifecycle
 #' @inheritSection AMR Read more on Our Website!
 #' @param x,data MIC values created with [as.mic()] or disk diffusion values created with [as.disk()]

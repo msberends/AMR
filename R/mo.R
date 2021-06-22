@@ -1664,9 +1664,7 @@ pillar_shaft.mo <- function(x, ...) {
   out[is.na(x)] <- font_na("  NA")
   out[x == "UNKNOWN"] <- font_na("  UNKNOWN")
   
-  df <- tryCatch(get_current_data(arg_name = "x",
-                                  call = 0,
-                                  reuse_from_1st_call = FALSE),
+  df <- tryCatch(get_current_data(arg_name = "x", call = 0),
                  error = function(e) NULL)
   if (!is.null(df)) {
     mo_cols <- vapply(FUN.VALUE = logical(1), df, is.mo)

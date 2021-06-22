@@ -181,11 +181,8 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 # `example_isolates` is a data set available in the AMR package.
 # See ?example_isolates.
 
-example_isolates[first_isolate(example_isolates), ]
-\donttest{
-# faster way, only works in R 3.2 and later:
 example_isolates[first_isolate(), ]
-
+\donttest{
 # get all first Gram-negatives
 example_isolates[which(first_isolate() & mo_is_gram_negative()), ]
 
