@@ -24,8 +24,8 @@
 # ==================================================================== #
 
 # some old R instances have trouble installing tinytest, so we ship it too
-install.packages("data-raw/tinytest_1.2.4.10.tar.gz", repos = "https://cran.rstudio.com/", type = "source")
-install.packages("data-raw/AMR_latest.tar.gz", repos = "https://cran.rstudio.com/", type = "source", dependencies = FALSE)
+install.packages("data-raw/tinytest_1.2.4.10.tar.gz")
+install.packages("data-raw/AMR_latest.tar.gz", dependencies = FALSE)
 
 pkg_suggests <- gsub("[^a-zA-Z0-9]+", "", unlist(strsplit(packageDescription("AMR", fields = "Suggests"), ", ?")))
 cat("Packages listed in Suggests:", paste(pkg_suggests, collapse = ", "), "\n")
@@ -36,7 +36,7 @@ if (length(to_install) == 0) {
 }
 for (i in seq_len(length(to_install))) {
   cat("Installing package", to_install[i], "\n")
-  tryCatch(install.packages(to_install[i], repos = "https://cran.rstudio.com/", dependencies = TRUE, quiet = TRUE),
+  tryCatch(install.packages(to_install[i], repos = "https://cran.rstudio.com/", dependencies = TRUE, quiet = FALSE),
            # message = function(m) invisible(),
            warning = function(w) message(w$message),
            error = function(e) message(e$message))

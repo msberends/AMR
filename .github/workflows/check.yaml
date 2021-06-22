@@ -79,11 +79,11 @@ jobs:
           - {os: macOS-latest,   r: '3.2',     allowfail: false}
           - {os: windows-latest, r: '3.2',     allowfail: false}
           - {os: ubuntu-20.04,   r: '3.2',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
-          - {os: macOS-latest,   r: '3.1',     allowfail: false}
-          - {os: windows-latest, r: '3.1',     allowfail: false}
+          # - {os: macOS-latest,   r: '3.1',     allowfail: false}
+          # - {os: windows-latest, r: '3.1',     allowfail: false}
           - {os: ubuntu-20.04,   r: '3.1',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
-          - {os: macOS-latest,   r: '3.0',     allowfail: false}
-          - {os: windows-latest, r: '3.0',     allowfail: false}
+          # - {os: macOS-latest,   r: '3.0',     allowfail: false}
+          # - {os: windows-latest, r: '3.0',     allowfail: false}
           - {os: ubuntu-20.04,   r: '3.0',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
 
     env:
