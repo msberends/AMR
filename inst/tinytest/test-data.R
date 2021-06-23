@@ -29,7 +29,9 @@ expect_true(AMR:::check_dataset_integrity()) # in misc.R
 expect_identical(nrow(microorganisms), length(unique(microorganisms$mo)))
 expect_identical(class(microorganisms$mo), c("mo", "character"))
 expect_identical(nrow(antibiotics), length(unique(antibiotics$ab)))
+expect_true(all(is.na(antibiotics$atc[duplicated(antibiotics$atc)])))
 expect_identical(class(antibiotics$ab), c("ab", "character"))
+
 
 # check cross table reference
 expect_true(all(microorganisms.codes$mo %in% microorganisms$mo))

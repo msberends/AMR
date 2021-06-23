@@ -647,6 +647,7 @@ antibiotics <- antibiotics %>%
 
 
 # update DDDs from WHOCC website
+# last time checked: 2021-06-23
 ddd_oral <- double(length = nrow(antibiotics))
 ddd_iv <- double(length = nrow(antibiotics))
 progress <- progress_ticker(nrow(antibiotics))
@@ -667,7 +668,7 @@ antibiotics$iv_ddd <- ddd_iv
 # set as data.frame again
 antibiotics <- as.data.frame(antibiotics, stringsAsFactors = FALSE)
 class(antibiotics$ab) <- c("ab", "character")
-antibiotics <- antibiotics %>% dplyr::arrange(name)
+antibiotics <- dplyr::arrange(antibiotics, name)
 
 # make all abbreviations and synonyms lower case, unique and alphabetically sorted ----
 for (i in 1:nrow(antibiotics)) {
@@ -683,5 +684,5 @@ for (i in 1:nrow(antibiotics)) {
 
 # REFER TO data-raw/loinc.R FOR ADDING LOINC CODES
 
-usethis::use_data(antibiotics, overwrite = TRUE, version = 2)
+usethis::use_data(antibiotics, overwrite = TRUE, version = 2, compress = "xz")
 rm(antibiotics)

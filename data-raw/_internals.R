@@ -124,18 +124,18 @@ CEPHALOSPORINS_3RD <- antibiotics %>% filter(group %like% "cephalosporin.*3") %>
 CEPHALOSPORINS_4TH <- antibiotics %>% filter(group %like% "cephalosporin.*4") %>% pull(ab)
 CEPHALOSPORINS_5TH <- antibiotics %>% filter(group %like% "cephalosporin.*5") %>% pull(ab)
 CEPHALOSPORINS_EXCEPT_CAZ <- CEPHALOSPORINS[CEPHALOSPORINS != "CAZ"]
-FLUOROQUINOLONES <- antibiotics %>% filter(atc_group2 %like% "fluoroquinolone") %>% pull(ab)
+FLUOROQUINOLONES <- antibiotics %>% filter(atc_group2 %like% "fluoroquinolone" | (group %like% "quinolone" & is.na(atc_group2))) %>% pull(ab)
 LIPOGLYCOPEPTIDES <- as.ab(c("DAL", "ORI", "TLV")) # dalba/orita/tela
 GLYCOPEPTIDES <- antibiotics %>% filter(group %like% "glycopeptide") %>% pull(ab)
 GLYCOPEPTIDES_EXCEPT_LIPO <- GLYCOPEPTIDES[!GLYCOPEPTIDES %in% LIPOGLYCOPEPTIDES]
-LINCOSAMIDES <- antibiotics %>% filter(atc_group2 %like% "lincosamide") %>% pull(ab) %>% c("PRL")
-MACROLIDES <- antibiotics %>% filter(atc_group2 %like% "macrolide") %>% pull(ab)
+LINCOSAMIDES <- antibiotics %>% filter(atc_group2 %like% "lincosamide" | (group %like% "lincosamide" & is.na(atc_group2))) %>% pull(ab)
+MACROLIDES <- antibiotics %>% filter(atc_group2 %like% "macrolide" | (group %like% "macrolide" & is.na(atc_group2))) %>% pull(ab)
 OXAZOLIDINONES <- antibiotics %>% filter(group %like% "oxazolidinone") %>% pull(ab)
 PENICILLINS <- antibiotics %>% filter(group %like% "penicillin") %>% pull(ab)
 POLYMYXINS <- antibiotics %>% filter(group %like% "polymyxin") %>% pull(ab)
 QUINOLONES <- antibiotics %>% filter(group %like% "quinolone") %>% pull(ab)
 STREPTOGRAMINS <- antibiotics %>% filter(atc_group2 %like% "streptogramin") %>% pull(ab)
-TETRACYCLINES <- antibiotics %>% filter(atc_group2 %like% "tetracycline") %>% pull(ab)
+TETRACYCLINES <- antibiotics %>% filter(group %like% "tetracycline") %>% pull(ab)
 TETRACYCLINES_EXCEPT_TGC <- TETRACYCLINES[TETRACYCLINES != "TGC"]
 UREIDOPENICILLINS <- as.ab(c("PIP", "TZP", "AZL", "MEZ"))
 BETALACTAMS <- c(PENICILLINS, CEPHALOSPORINS, CARBAPENEMS)
