@@ -30,5 +30,4 @@ if (AMR:::pkg_is_available("curl", also_load = FALSE) &&
   expect_true(length(atc_online_groups(ab_atc("AMX"))) >= 1)
   expect_equal(atc_online_ddd(ab_atc("AMX"), administration = "O"), 1.5)
   expect_equal(atc_online_ddd(ab_atc("AMX"), administration = "P"), 3)
-  expect_warning(atc_online_ddd(ab_atc("Novobiocin"), administration = "P"))
 }
