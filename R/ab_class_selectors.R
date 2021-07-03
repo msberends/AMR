@@ -299,7 +299,7 @@ ab_selector <- function(function_name,
   # get the columns with a group names in the chosen ab class
   agents <- ab_in_data[names(ab_in_data) %in% abx]
     
-  if (message_not_thrown_before(function_name)) {
+  if (message_not_thrown_before(paste0(function_name, ".", paste(pkg_env$get_column_abx.out, collapse = "|")))) {
     if (length(agents) == 0) {
       message_("No antimicrobial agents of class '", ab_group, "' found", examples, ".")
     } else {
@@ -315,7 +315,7 @@ ab_selector <- function(function_name,
                ifelse(length(agents) == 1, "column: ", "columns: "),
                vector_and(agents_formatted, quotes = FALSE, sort = FALSE))
     }
-    remember_thrown_message(function_name)
+    remember_thrown_message(paste0(function_name, ".", paste(pkg_env$get_column_abx.out, collapse = "|")))
   }
   
   if (!is.null(attributes(vars_df)$type) &&

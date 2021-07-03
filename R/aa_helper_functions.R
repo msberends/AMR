@@ -736,22 +736,22 @@ get_current_data <- function(arg_name, call) {
   }
   
   # try a manual (base R) method, by going over all underlying environments with sys.frames()
-  for (el in sys.frames()) {
-    if (!is.null(el$`.Generic`)) {
-      # don't check `".Generic" %in% names(el)`, because in R < 3.2, `names(el)` is always NULL
+  for (env in sys.frames()) {
+    if (!is.null(env$`.Generic`)) {
+      # don't check `".Generic" %in% names(env)`, because in R < 3.2, `names(env)` is always NULL
       
-      if (!is.null(el$`.data`) && is.data.frame(el$`.data`)) {
+      if (!is.null(env$`.data`) && is.data.frame(env$`.data`)) {
         # an element `.data` will be in the environment when using `dplyr::select()`
         # (but not when using `dplyr::filter()`, `dplyr::mutate()` or `dplyr::summarise()`)
-        return(structure(el$`.data`, type = "dplyr_selector"))
+        return(structure(env$`.data`, type = "dplyr_selector"))
         
-      } else if (!is.null(el$xx) && is.data.frame(el$xx)) {
+      } else if (!is.null(env$xx) && is.data.frame(env$xx)) {
         # an element `xx` will be in the environment for rows + cols, e.g. `example_isolates[c(1:3), carbapenems()]`
-        return(structure(el$xx, type = "base_R"))
+        return(structure(env$xx, type = "base_R"))
         
-      } else if (!is.null(el$x) && is.data.frame(el$x)) {
+      } else if (!is.null(env$x) && is.data.frame(env$x)) {
         # an element `x` will be in the environment for only cols, e.g. `example_isolates[, carbapenems()]`
-        return(structure(el$x, type = "base_R"))
+        return(structure(env$x, type = "base_R"))
       }
     }
   }
@@ -786,19 +786,19 @@ get_current_column <- function() {
     }
   }
   
-  # cur_column() doesn't always work (only allowed for conditions set by dplyr), but it's probably still possible:
-  frms <- lapply(sys.frames(), function(el) {
-    if ("i" %in% names(el)) {
-      if ("tibble_vars" %in% names(el)) {
+  # cur_column() doesn't always work (only allowed for certain conditions set by dplyr), but it's probably still possible:
+  frms <- lapply(sys.frames(), function(env) {
+    if (!is.null(env$i)) {
+      if (!is.null(env$tibble_vars)) {
         # for mutate_if()
-        el$tibble_vars[el$i]
+        env$tibble_vars[env$i]
       } else {
         # for mutate(across())
         df <- tryCatch(get_current_data(NA, 0), error = function(e) NULL)
         if (is.data.frame(df)) {
-          colnames(df)[el$i]
+          colnames(df)[env$i]
         } else {
-          el$i
+          env$i
         }
       }
     } else {
@@ -816,7 +816,7 @@ get_current_column <- function() {
 }
 
 is_null_or_grouped_tbl <- function(x) {
-  # attribute "grouped_df" might change at one point, so only set in one place; here.
+  # class "grouped_df" might change at one point, so only set in one place; here.
   is.null(x) || inherits(x, "grouped_df")
 }
 
@@ -825,7 +825,7 @@ unique_call_id <- function(entire_session = FALSE) {
     c(envir = "session",
       call = "session")
   } else {
-    # combination of environment ID (like "0x7fed4ee8c848")
+    # combination of environment ID (such as "0x7fed4ee8c848")
     # and highest system call
     call <- paste0(deparse(sys.calls()[[1]]), collapse = "")
     if (!interactive() || call %like% "run_test_dir|test_all|tinytest|test_package|testthat") {

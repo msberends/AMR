@@ -284,10 +284,26 @@ as.rsi.default <- function(x, ...) {
       }
     }
     
-    x <- as.character(unlist(x))
+    # trim leading and trailing spaces, new lines, etc.
+    x <- trimws2(as.character(unlist(x)))
     x.bak <- x
-    
     na_before <- length(x[is.na(x) | x == ""])
+    
+    # correct for translations
+    trans_R <- unlist(TRANSLATIONS[which(TRANSLATIONS$pattern == "Resistant"),
+                                   LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED %in% colnames(TRANSLATIONS)]])
+    trans_S <- unlist(TRANSLATIONS[which(TRANSLATIONS$pattern == "Susceptible"),
+                                   LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED %in% colnames(TRANSLATIONS)]])
+    trans_I <- unlist(TRANSLATIONS[which(TRANSLATIONS$pattern %in% c("Incr. exposure", "Intermediate")),
+                                   LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED %in% colnames(TRANSLATIONS)]])
+    x <- gsub(paste0(unique(trans_R[!is.na(trans_R)]), collapse = "|"), "R", x, ignore.case = TRUE)
+    x <- gsub(paste0(unique(trans_S[!is.na(trans_S)]), collapse = "|"), "S", x, ignore.case = TRUE)
+    x <- gsub(paste0(unique(trans_I[!is.na(trans_I)]), collapse = "|"), "I", x, ignore.case = TRUE)
+    # replace all English textual input
+    x <- gsub("res(is(tant)?)?", "R", x, ignore.case = TRUE)
+    x <- gsub("sus(cep(tible)?)?", "S", x, ignore.case = TRUE)
+    x <- gsub("int(er(mediate)?)?", "I", x, ignore.case = TRUE)
+    x <- gsub("inc(r(eased)?)? exp[a-z]*", "I", x, ignore.case = TRUE)
     # remove all spaces
     x <- gsub(" +", "", x)
     # remove all MIC-like values: numbers, operators and periods

@@ -97,16 +97,39 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE, only_r
 }
 
 get_column_abx <- function(x,
+                           ...,
                            soft_dependencies = NULL,
                            hard_dependencies = NULL,
                            verbose = FALSE,
                            info = TRUE,
                            only_rsi_columns = FALSE,
                            sort = TRUE,
-                           ...) {
+                           reuse_previous_result = TRUE) {
   
   # check if retrieved before, then get it from package environment
-  if (identical(unique_call_id(entire_session = FALSE), pkg_env$get_column_abx.call)) {
+  if (isTRUE(reuse_previous_result) && identical(unique_call_id(entire_session = FALSE), pkg_env$get_column_abx.call)) {
+    # so within the same call, within the same environment, we got here again.
+    # but we could've come from another function within the same call, so now only check the columns that changed
+    
+    # first remove the columns that are not existing anymore
+    previous <- pkg_env$get_column_abx.out
+    current <- previous[previous %in% colnames(x)]
+    
+    # then compare columns in current call with columns in original call
+    new_cols <- colnames(x)[!colnames(x) %in% pkg_env$get_column_abx.checked_cols]
+    if (length(new_cols) > 0) {
+      # these columns did not exist in the last call, so add them
+      new_cols_rsi <- get_column_abx(x[, new_cols, drop = FALSE], reuse_previous_result = FALSE, info = FALSE, sort = FALSE)
+      current <- c(current, new_cols_rsi)
+      # order according to data in current call
+      current <- current[match(colnames(x)[colnames(x) %in% current], current)]
+    }
+    
+    # update pkg environment to improve speed on next run
+    pkg_env$get_column_abx.out <- current
+    pkg_env$get_column_abx.checked_cols <- colnames(x)
+
+    # and return right values
     return(pkg_env$get_column_abx.out)
   }
   
@@ -123,6 +146,7 @@ get_column_abx <- function(x,
   }
   
   x <- as.data.frame(x, stringsAsFactors = FALSE)
+  x.bak <- x
   if (only_rsi_columns == TRUE) {
     x <- x[, which(is.rsi(x)), drop = FALSE]
   }
@@ -163,8 +187,8 @@ get_column_abx <- function(x,
                          abcode = suppressWarnings(as.ab(colnames(x), info = FALSE)),
                          stringsAsFactors = FALSE)
   df_trans <- df_trans[!is.na(df_trans$abcode), , drop = FALSE]
-  x <- as.character(df_trans$colnames)
-  names(x) <- df_trans$abcode
+  out <- as.character(df_trans$colnames)
+  names(out) <- df_trans$abcode
   
   # add from self-defined dots (...):
   # such as get_column_abx(example_isolates %>% rename(thisone = AMX), amox = "thisone")
@@ -177,33 +201,34 @@ get_column_abx <- function(x,
                immediate = TRUE)
     }
     # turn all NULLs to NAs
-    dots <- unlist(lapply(dots, function(x) if (is.null(x)) NA else x))
+    dots <- unlist(lapply(dots, function(dot) if (is.null(dot)) NA else dot))
     names(dots) <- newnames
     dots <- dots[!is.na(names(dots))]
     # merge, but overwrite automatically determined ones by 'dots'
-    x <- c(x[!x %in% dots & !names(x) %in% names(dots)], dots)
+    out <- c(out[!out %in% dots & !names(out) %in% names(dots)], dots)
     # delete NAs, this will make e.g. eucast_rules(... TMP = NULL) work to prevent TMP from being used
-    x <- x[!is.na(x)]
+    out <- out[!is.na(out)]
   }
   
-  if (length(x) == 0) {
+  if (length(out) == 0) {
     if (info == TRUE) {
       message_("No columns found.")
     }
     pkg_env$get_column_abx.call <- unique_call_id(entire_session = FALSE)
-    pkg_env$get_column_abx.out <- x
-    return(x)
+    pkg_env$get_column_abx.checked_cols <- colnames(x.bak)
+    pkg_env$get_column_abx.out <- out
+    return(out)
   }
   
   # sort on name
   if (sort == TRUE) {
-    x <- x[order(names(x), x)]
+    out <- out[order(names(out), out)]
   }
-  duplicates <- c(x[duplicated(x)], x[duplicated(names(x))]) 
+  duplicates <- c(out[duplicated(out)], out[duplicated(names(out))]) 
   duplicates <- duplicates[unique(names(duplicates))]
-  x <- c(x[!names(x) %in% names(duplicates)], duplicates)
+  out <- c(out[!names(out) %in% names(duplicates)], duplicates)
   if (sort == TRUE) {
-    x <- x[order(names(x), x)]
+    out <- out[order(names(out), out)]
   }
   
   # succeeded with auto-guessing
@@ -211,14 +236,14 @@ get_column_abx <- function(x,
     message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
   }
   
-  for (i in seq_len(length(x))) {
-    if (info == TRUE & verbose == TRUE & !names(x[i]) %in% names(duplicates)) {
-      message_("Using column '", font_bold(x[i]), "' as input for ", names(x)[i],
-               " (", ab_name(names(x)[i], tolower = TRUE, language = NULL), ").")
+  for (i in seq_len(length(out))) {
+    if (info == TRUE & verbose == TRUE & !names(out[i]) %in% names(duplicates)) {
+      message_("Using column '", font_bold(out[i]), "' as input for ", names(out)[i],
+               " (", ab_name(names(out)[i], tolower = TRUE, language = NULL), ").")
     }
-    if (info == TRUE & names(x[i]) %in% names(duplicates)) {
-      warning_(paste0("Using column '", font_bold(x[i]), "' as input for ", names(x)[i],
-                      " (", ab_name(names(x)[i], tolower = TRUE, language = NULL),
+    if (info == TRUE & names(out[i]) %in% names(duplicates)) {
+      warning_(paste0("Using column '", font_bold(out[i]), "' as input for ", names(out)[i],
+                      " (", ab_name(names(out)[i], tolower = TRUE, language = NULL),
                       "), although it was matched for multiple antibiotics or columns."),
                add_fn = font_red,
                call = FALSE, 
@@ -228,18 +253,18 @@ get_column_abx <- function(x,
   
   if (!is.null(hard_dependencies)) {
     hard_dependencies <- unique(hard_dependencies)
-    if (!all(hard_dependencies %in% names(x))) {
+    if (!all(hard_dependencies %in% names(out))) {
       # missing a hard dependency will return NA and consequently the data will not be analysed
-      missing <- hard_dependencies[!hard_dependencies %in% names(x)]
+      missing <- hard_dependencies[!hard_dependencies %in% names(out)]
       generate_warning_abs_missing(missing, any = FALSE)
       return(NA)
     }
   }
   if (!is.null(soft_dependencies)) {
     soft_dependencies <- unique(soft_dependencies)
-    if (info == TRUE & !all(soft_dependencies %in% names(x))) {
+    if (info == TRUE & !all(soft_dependencies %in% names(out))) {
       # missing a soft dependency may lower the reliability
-      missing <- soft_dependencies[!soft_dependencies %in% names(x)]
+      missing <- soft_dependencies[!soft_dependencies %in% names(out)]
       missing_msg <- vector_and(paste0(ab_name(missing, tolower = TRUE, language = NULL), 
                                        " (", font_bold(missing, collapse = NULL), ")"), 
                                 quotes = FALSE)
@@ -249,8 +274,9 @@ get_column_abx <- function(x,
   }
   
   pkg_env$get_column_abx.call <- unique_call_id(entire_session = FALSE)
-  pkg_env$get_column_abx.out <- x
-  x
+  pkg_env$get_column_abx.checked_cols <- colnames(x.bak)
+  pkg_env$get_column_abx.out <- out
+  out
 }
 
 generate_warning_abs_missing <- function(missing, any = FALSE) {

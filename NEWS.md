@@ -1,5 +1,5 @@
-# `AMR` 1.7.1.9008
-## <small>Last updated: 23 June 2021</small>
+# `AMR` 1.7.1.9009
+## <small>Last updated:  3 July 2021</small>
 
 ### Changed
 * Antibiotic class selectors (see `ab_class()`)
@@ -13,6 +13,8 @@
 * When printing a tibble with any old MO code, a warning will be thrown that old codes should be updated using `as.mo()`
 * Improved automatic column selector when `col_*` arguments are left blank, e.g. in `first_isolate()`
 * The right input types for `random_mic()`, `random_disk()` and `random_rsi()` are now enforced
+* `as.rsi()` can now correct for textual input (such as "Susceptible", "Resistant") in Dutch, English, French, German, Italian, Portuguese and Spanish
+* More informative warnings for all `count_*()`, `proportion_*()` functions (and `resistant()` and `susceptible()`) when they return NA because of too few test results. The warnings now include the official drug name and if used, the `dplyr` group name.
 
 
 # `AMR` 1.7.1

@@ -27,7 +27,12 @@ dots2vars <- function(...) {
   # this function is to give more informative output about 
   # variable names in count_* and proportion_* functions
   dots <- substitute(list(...))
-  vector_and(as.character(dots)[2:length(dots)], quotes = FALSE)
+  agents <- as.character(dots)[2:length(dots)]
+  agents_formatted <- paste0("'", font_bold(agents, collapse = NULL), "'")
+  agents_names <- ab_name(agents, tolower = TRUE, language = NULL)
+  need_name <- generalise_antibiotic_name(agents) != agents_names
+  agents_formatted[need_name] <- paste0(agents_formatted[need_name], " (", agents_names[need_name], ")")
+  vector_and(agents_formatted, quotes = FALSE)
 }
 
 rsi_calc <- function(...,
@@ -163,8 +168,30 @@ rsi_calc <- function(...,
   if (denominator < minimum) {
     if (data_vars != "") {
       data_vars <- paste(" for", data_vars)
+      # also add group name if used in dplyr::group_by()
+      cur_group <- import_fn("cur_group", "dplyr", error_on_fail = FALSE)
+      if (!is.null(cur_group)) {
+        group_df <- tryCatch(cur_group(), error = function(e) data.frame())
+        if (NCOL(group_df) > 0) {
+          # transform factors to characters
+          group <- vapply(FUN.VALUE = character(1), group_df, function(x) {
+            if (is.numeric(x)) {
+              format(x)
+            } else if (is.logical(x)) {
+              as.character(x)
+            } else {
+              paste0('"', x, '"')
+            }
+          })
+          data_vars <- paste0(data_vars, " in group: ", paste0(names(group), " = ", group, collapse = ", "))
+        }
+      }
     }
-    warning_("Introducing NA: only ", denominator, " results available", data_vars, " (`minimum` = ", minimum, ").", call = FALSE)
+    warning_("Introducing NA: ",
+             ifelse(denominator == 0, "no", paste("only", denominator)),
+             " results available",
+             data_vars,
+             " (`minimum` = ", minimum, ").", call = FALSE)
     fraction <- NA_real_
   } else {
     fraction <- numerator / denominator
