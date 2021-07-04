@@ -222,8 +222,11 @@ mo_shortname <- function(x, language = get_locale(), ...) {
   
   shortnames[is.na(x.mo)] <- NA_character_
   load_mo_failures_uncertainties_renamed(metadata)
-  translate_AMR(shortnames, language = language, only_unknown = FALSE, only_affect_mo_names = TRUE)
+  out <- translate_AMR(shortnames, language = language, only_unknown = FALSE, only_affect_mo_names = TRUE)
+  set_clean_class(out, new_class = c("taxonomic_name", "character"))
 }
+
+
 
 #' @rdname mo_property
 #' @export
@@ -723,20 +726,24 @@ mo_validate <- function(x, property, language, ...) {
   
   if (tryCatch(all(x[!is.na(x)] %in% MO_lookup$mo) & !has_Becker_or_Lancefield, error = function(e) FALSE)) {
     # special case for mo_* functions where class is already <mo>
-    return(MO_lookup[match(x, MO_lookup$mo), property, drop = TRUE])
-  }
-  
-  # try to catch an error when inputting an invalid argument
-  # so the 'call.' can be set to FALSE
-  tryCatch(x[1L] %in% MO_lookup[1, property, drop = TRUE],
-           error = function(e) stop(e$message, call. = FALSE))
+    x <- MO_lookup[match(x, MO_lookup$mo), property, drop = TRUE]
 
-  if (!all(x[!is.na(x)] %in% MO_lookup[, property, drop = TRUE]) | has_Becker_or_Lancefield) {
-    x <- exec_as.mo(x, property = property, language = language, ...)
+  } else {
+    # try to catch an error when inputting an invalid argument
+    # so the 'call.' can be set to FALSE
+    tryCatch(x[1L] %in% MO_lookup[1, property, drop = TRUE],
+             error = function(e) stop(e$message, call. = FALSE))
+    
+    if (!all(x[!is.na(x)] %in% MO_lookup[, property, drop = TRUE]) | has_Becker_or_Lancefield) {
+      x <- exec_as.mo(x, property = property, language = language, ...)
+    }
   }
   
   if (property == "mo") {
     return(set_clean_class(x, new_class = c("mo", "character")))
+  } else if (property %in% c("fullname", "genus", "family")) {
+    # shortname is considered in mo_shortname()
+    return(set_clean_class(x, new_class = c("taxonomic_name", "character")))
   } else if (property == "snomed") {
     return(as.double(eval(parse(text = x))))
   } else {
@@ -761,4 +768,88 @@ find_mo_col <- function(fn) {
   } else {
     stop_("argument `x` is missing and no column with info about microorganisms could be found.", call = -2)
   }
+}
+
+#' @method print taxonomic_name
+#' @export
+#' @noRd
+print.taxonomic_name <- function(x, ...) {
+  print(unclass(x), ...)
+}
+
+#' @method as.data.frame taxonomic_name
+#' @export
+#' @noRd
+as.data.frame.taxonomic_name <- function(x, ...) {
+  nm <- deparse1(substitute(x))
+  if (!"nm" %in% names(list(...))) {
+    as.data.frame.vector(x, ..., nm = nm)
+  } else {
+    as.data.frame.vector(x, ...)
+  }
+}
+
+# will be exported using s3_register() in R/zzz.R
+type_sum.taxonomic_name <- function(x, ...) {
+  "chr"
+}
+
+# will be exported using s3_register() in R/zzz.R
+pillar_shaft.taxonomic_name <- function(x, ...) {
+  out <- format(x)
+  hits <- tolower(x) %in% MO_lookup$fullname_lower | tolower(gsub("[^a-zA-Z ]", "", x)) %in% c(MO_lookup$g_species)
+  # grey out the kingdom (part until first "_")
+  out[hits] <- font_italic(x[hits], collapse = NULL)
+  out[is.na(x)] <- font_na(out[is.na(x)], collapse = NULL)
+  create_pillar_column(out, align = "left")
+}
+
+#' @method [ taxonomic_name
+#' @export
+#' @noRd
+"[.taxonomic_name" <- function(x, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
+}
+#' @method [[ taxonomic_name
+#' @export
+#' @noRd
+"[[.taxonomic_name" <- function(x, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
+}
+#' @method [<- taxonomic_name
+#' @export
+#' @noRd
+"[<-.taxonomic_name" <- function(i, j, ..., value) {
+  value <- set_clean_class(value, c("taxonomic_name", "character"))
+  y <- NextMethod()
+  attributes(y) <- attributes(i)
+  y
+}
+#' @method [[<- taxonomic_name
+#' @export
+#' @noRd
+"[[<-.taxonomic_name" <- function(i, j, ..., value) {
+  value <- set_clean_class(value, c("taxonomic_name", "character"))
+  y <- NextMethod()
+  attributes(y) <- attributes(i)
+  y
+}
+#' @method c taxonomic_name
+#' @export
+#' @noRd
+c.taxonomic_name <- function(...) {
+  set_clean_class(unlist(lapply(list(...), as.character)), c("taxonomic_name", "character"))
+}
+
+#' @method unique taxonomic_name
+#' @export
+#' @noRd
+unique.taxonomic_name <- function(x, incomparables = FALSE, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
 }

@@ -266,12 +266,13 @@ ab_selector <- function(function_name,
   meet_criteria(function_name, allow_class = "character", has_length = 1, allow_NULL = TRUE, .call_depth = 1)
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1, .call_depth = 1)
   meet_criteria(ab_class, allow_class = "character", has_length = 1, allow_NULL = TRUE, .call_depth = 1)
-
+  
   # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
+  # but it only takes a couple of milliseconds
   vars_df <- get_current_data(arg_name = NA, call = -3)
   # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
   ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
-  
+
   if (length(ab_in_data) == 0) {
     message_("No antimicrobial agents found in the data.")
     return(NULL)
@@ -312,7 +313,7 @@ ab_selector <- function(function_name,
                       paste0("\"", ab_class, "\""),
                       ""),
                ")` using ",
-               ifelse(length(agents) == 1, "column: ", "columns: "),
+               ifelse(length(agents) == 1, "column ", "columns "),
                vector_and(agents_formatted, quotes = FALSE, sort = FALSE))
     }
     remember_thrown_message(paste0(function_name, ".", paste(pkg_env$get_column_abx.out, collapse = "|")))

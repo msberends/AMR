@@ -27,12 +27,7 @@ dots2vars <- function(...) {
   # this function is to give more informative output about 
   # variable names in count_* and proportion_* functions
   dots <- substitute(list(...))
-  agents <- as.character(dots)[2:length(dots)]
-  agents_formatted <- paste0("'", font_bold(agents, collapse = NULL), "'")
-  agents_names <- ab_name(agents, tolower = TRUE, language = NULL)
-  need_name <- generalise_antibiotic_name(agents) != agents_names
-  agents_formatted[need_name] <- paste0(agents_formatted[need_name], " (", agents_names[need_name], ")")
-  vector_and(agents_formatted, quotes = FALSE)
+  as.character(dots)[2:length(dots)]
 }
 
 rsi_calc <- function(...,

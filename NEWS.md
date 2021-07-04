@@ -1,12 +1,12 @@
-# `AMR` 1.7.1.9009
-## <small>Last updated:  3 July 2021</small>
+# `AMR` 1.7.1.9010
+## <small>Last updated:  4 July 2021</small>
 
 ### Changed
 * Antibiotic class selectors (see `ab_class()`)
   * They now finally also work in R-3.0 and R-3.1, supporting every version of R since 2013
   * Added more selectors: `aminopenicillins()`, `lincosamides()`, `lipoglycopeptides()`, `polymyxins()`, `quinolones()`, `streptogramins()` and `ureidopenicillins()`
   * Fix for using selectors multiple times in one call (e.g., using them in `dplyr::filter()` and immediately after in `dplyr::select()`)
-* Fixed duplicate ATC codes in the `antibiotics` data set
+* Fix for duplicate ATC codes in the `antibiotics` data set
 * Added `ggplot2::autoplot()` generic for classes `<mic>`, `<disk>`, `<rsi>` and `<resistance_predict>`
 * Fix to prevent introducing `NA`s for old MO codes when running `as.mo()` on them
 * Added more informative error messages when any of the `proportion_*()` and `count_*()` functions fail
@@ -14,7 +14,8 @@
 * Improved automatic column selector when `col_*` arguments are left blank, e.g. in `first_isolate()`
 * The right input types for `random_mic()`, `random_disk()` and `random_rsi()` are now enforced
 * `as.rsi()` can now correct for textual input (such as "Susceptible", "Resistant") in Dutch, English, French, German, Italian, Portuguese and Spanish
-* More informative warnings for all `count_*()`, `proportion_*()` functions (and `resistant()` and `susceptible()`) when they return NA because of too few test results. The warnings now include the official drug name and if used, the `dplyr` group name.
+* When warnings are throws because of too few isolates in any `count_*()`, `proportion_*()` function (or `resistant()` or `susceptible()`), the `dplyr` group will be shown, if available
+* Taxonomic names now print in italic in tibbles, if created with `mo_name()`, `mo_fullname()`, `mo_shortname()`, `mo_genus()` or `mo_family()`
 
 
 # `AMR` 1.7.1
