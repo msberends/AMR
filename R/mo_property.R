@@ -48,11 +48,13 @@
 #' 
 #' Intrinsic resistance - [mo_is_intrinsic_resistant()] - will be determined based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(3.2)`. The [mo_is_intrinsic_resistant()] functions can be vectorised over arguments `x` (input for microorganisms) and over `ab` (input for antibiotics).
 #'
+#' The functions [mo_family()], [mo_genus()], [mo_name()], [mo_fullname()] and [mo_shortname()] are returned with an additional class `taxonomic_name`, which allows italic printing in [tibbles][tibble::tibble()].
+#' 
 #' All output [will be translated][translate] where possible.
 #'
 #' The function [mo_url()] will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
 #' 
-#' SNOMED codes - [mo_snomed()] - are from the `r SNOMED_VERSION$current_source`. See the [microorganisms] data set for more info.
+#' SNOMED codes - [mo_snomed()] - are from the `r SNOMED_VERSION$current_source`. See *Source* and the [microorganisms] data set for more info.
 #' @inheritSection mo_matching_score Matching Score for Microorganisms
 #' @inheritSection catalogue_of_life Catalogue of Life
 #' @inheritSection as.mo Source
@@ -63,9 +65,10 @@
 #' - A [list] in case of [mo_taxonomy()] and [mo_info()]
 #' - A named [character] in case of [mo_url()]
 #' - A [numeric] in case of [mo_snomed()]
+#' - A [character] with additional class `taxonomic_name` in case of [mo_family()], [mo_genus()], [mo_name()], [mo_fullname()] and [mo_shortname()]
 #' - A [character] in all other cases
 #' @export
-#' @seealso [microorganisms]
+#' @seealso Data set [microorganisms]
 #' @inheritSection AMR Reference Data Publicly Available
 #' @inheritSection AMR Read more on Our Website!
 #' @examples
@@ -783,15 +786,15 @@ print.taxonomic_name <- function(x, ...) {
 as.data.frame.taxonomic_name <- function(x, ...) {
   nm <- deparse1(substitute(x))
   if (!"nm" %in% names(list(...))) {
-    as.data.frame.vector(x, ..., nm = nm)
+    as.data.frame(unclass(x), ..., nm = nm)
   } else {
-    as.data.frame.vector(x, ...)
+    as.data.frame(unclass(x), ...)
   }
 }
 
 # will be exported using s3_register() in R/zzz.R
 type_sum.taxonomic_name <- function(x, ...) {
-  "chr"
+  "chr/taxon"
 }
 
 # will be exported using s3_register() in R/zzz.R

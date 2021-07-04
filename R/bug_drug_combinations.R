@@ -25,7 +25,7 @@
 
 #' Determine Bug-Drug Combinations
 #' 
-#' Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use [format()] on the result to prettify it to a publicable/printable format, see *Examples*.
+#' Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use [format()] on the result to prettify it to a publishable/printable format, see *Examples*.
 #' @inheritSection lifecycle Stable Lifecycle
 #' @inheritParams eucast_rules
 #' @param combine_IR a [logical] to indicate whether values R and I should be summed

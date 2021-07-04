@@ -35,18 +35,18 @@ example_isolates %>%
 
 With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (`mo_is_gram_negative()` and `mo_is_intrinsic_resistant()`) and a column selection on two antibiotic groups (`aminoglycosides()` and `carbapenems()`), the reference data about [all microorganisms](./reference/microorganisms.html) and [all antibiotics](./reference/antibiotics.html) in the `AMR` package make sure you get what you meant:
 
-|bacteria                       | AMK | GEN | KAN | TOB | IPM | MEM |
+|bacteria                       | GEN | TOB | AMK | KAN | IPM | MEM |
 |:------------------------------|:---:|:---:|:---:|:---:|:---:|:---:|
-|*Pseudomonas aeruginosa*       |     |  I  |  R  |  S  |  S  |     |
-|*Pseudomonas aeruginosa*       |     |  I  |  R  |  S  |  S  |     |
-|*Pseudomonas aeruginosa*       |     |  I  |  R  |  S  |  S  |     |
-|*Pseudomonas aeruginosa*       |  S  |  S  |  R  |  S  |     |  S  |
-|*Pseudomonas aeruginosa*       |  S  |  S  |  R  |  S  |  S  |  S  |
-|*Pseudomonas aeruginosa*       |  S  |  S  |  R  |  S  |  S  |  S  |
+|*Pseudomonas aeruginosa*       |  I  |  S  |     |  R  |  S  |     |
+|*Pseudomonas aeruginosa*       |  I  |  S  |     |  R  |  S  |     |
+|*Pseudomonas aeruginosa*       |  I  |  S  |     |  R  |  S  |     |
+|*Pseudomonas aeruginosa*       |  S  |  S  |  S  |  R  |     |  S  |
+|*Pseudomonas aeruginosa*       |  S  |  S  |  S  |  R  |  S  |  S  |
+|*Pseudomonas aeruginosa*       |  S  |  S  |  S  |  R  |  S  |  S  |
 |*Stenotrophomonas maltophilia* |  R  |  R  |  R  |  R  |  R  |  R  |
-|*Pseudomonas aeruginosa*       |  S  |  S  |  R  |  S  |     |  S  |
-|*Pseudomonas aeruginosa*       |  S  |  S  |  R  |  S  |     |  S  |
-|*Pseudomonas aeruginosa*       |  S  |  S  |  R  |  S  |  S  |  S  |
+|*Pseudomonas aeruginosa*       |  S  |  S  |  S  |  R  |     |  S  |
+|*Pseudomonas aeruginosa*       |  S  |  S  |  S  |  R  |     |  S  |
+|*Pseudomonas aeruginosa*       |  S  |  S  |  S  |  R  |  S  |  S  |
 
 A base R equivalent would be, giving the exact same results:
 

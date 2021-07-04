@@ -106,6 +106,7 @@ mo_property(x, property = "fullname", language = get_locale(), ...)
 \item A \link{list} in case of \code{\link[=mo_taxonomy]{mo_taxonomy()}} and \code{\link[=mo_info]{mo_info()}}
 \item A named \link{character} in case of \code{\link[=mo_url]{mo_url()}}
 \item A \link{numeric} in case of \code{\link[=mo_snomed]{mo_snomed()}}
+\item A \link{character} with additional class \code{taxonomic_name} in case of \code{\link[=mo_family]{mo_family()}}, \code{\link[=mo_genus]{mo_genus()}}, \code{\link[=mo_name]{mo_name()}}, \code{\link[=mo_fullname]{mo_fullname()}} and \code{\link[=mo_shortname]{mo_shortname()}}
 \item A \link{character} in all other cases
 }
 }
@@ -130,11 +131,13 @@ Determination of yeasts - \code{\link[=mo_is_yeast]{mo_is_yeast()}} - will be ba
 
 Intrinsic resistance - \code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}} - will be determined based on the \link{intrinsic_resistant} data set, which is based on \href{https://www.eucast.org/expert_rules_and_intrinsic_resistance/}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2} (2020). The \code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}} functions can be vectorised over arguments \code{x} (input for microorganisms) and over \code{ab} (input for antibiotics).
 
+The functions \code{\link[=mo_family]{mo_family()}}, \code{\link[=mo_genus]{mo_genus()}}, \code{\link[=mo_name]{mo_name()}}, \code{\link[=mo_fullname]{mo_fullname()}} and \code{\link[=mo_shortname]{mo_shortname()}} are returned with an additional class \code{taxonomic_name}, which allows italic printing in \link[tibble:tibble]{tibbles}.
+
 All output \link[=translate]{will be translated} where possible.
 
 The function \code{\link[=mo_url]{mo_url()}} will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
 
-SNOMED codes - \code{\link[=mo_snomed]{mo_snomed()}} - are from the US Edition of SNOMED CT from 1 September 2020. See the \link{microorganisms} data set for more info.
+SNOMED codes - \code{\link[=mo_snomed]{mo_snomed()}} - are from the US Edition of SNOMED CT from 1 September 2020. See \emph{Source} and the \link{microorganisms} data set for more info.
 }
 \section{Stable Lifecycle}{
 
@@ -299,5 +302,5 @@ mo_info("E. coli")
 }
 }
 \seealso{
-\link{microorganisms}
+Data set \link{microorganisms}
 }
