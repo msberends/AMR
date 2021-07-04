@@ -28,12 +28,23 @@ expect_equal(mo_kingdom("Escherichia coli"), mo_domain("Escherichia coli"))
 expect_equal(mo_phylum("Escherichia coli"), "Proteobacteria")
 expect_equal(mo_class("Escherichia coli"), "Gammaproteobacteria")
 expect_equal(mo_order("Escherichia coli"), "Enterobacterales")
-expect_equal(mo_family("Escherichia coli"), "Enterobacteriaceae")
-expect_equal(mo_genus("Escherichia coli"), "Escherichia")
+
+# S3 class for taxonomic names
+expect_inherits(mo_family("Escherichia coli"), "taxonomic_name")
+expect_equal(as.character(mo_family("Escherichia coli")), "Enterobacteriaceae")
+expect_equal(as.character(mo_fullname("Escherichia coli")), "Escherichia coli")
+expect_equal(as.character(mo_genus("Escherichia coli")), "Escherichia")
+expect_equal(as.character(mo_name("Escherichia coli")), "Escherichia coli")
+expect_equal(as.character(mo_shortname("Escherichia coli")), "E. coli")
+expect_equal(as.character(mo_shortname("Escherichia")), "Escherichia")
+expect_equal(as.character(mo_shortname("Staphylococcus aureus")), "S. aureus")
+expect_equal(as.character(mo_shortname("Staphylococcus aureus", Becker = TRUE)), "S. aureus")
+expect_equal(as.character(mo_shortname("Staphylococcus aureus", Becker = "all", language = "en")), "CoPS")
+expect_equal(as.character(mo_shortname("Streptococcus agalactiae")), "S. agalactiae")
+expect_equal(as.character(mo_shortname("Streptococcus agalactiae", Lancefield = TRUE)), "GBS")
+
 expect_equal(mo_species("Escherichia coli"), "coli")
 expect_equal(mo_subspecies("Escherichia coli"), "")
-expect_equal(mo_fullname("Escherichia coli"), "Escherichia coli")
-expect_equal(mo_name("Escherichia coli"), "Escherichia coli")
 expect_equal(mo_type("Escherichia coli", language = "en"), "Bacteria")
 expect_equal(mo_gramstain("Escherichia coli", language = "en"), "Gram-negative")
 expect_inherits(mo_taxonomy("Escherichia coli"), "list")
@@ -52,20 +63,12 @@ expect_equal(mo_ref("Escherichia coli"), "Castellani et al., 1919")
 expect_equal(mo_authors("Escherichia coli"), "Castellani et al.")
 expect_equal(mo_year("Escherichia coli"), 1919)
 
-expect_equal(mo_shortname("Escherichia coli"), "E. coli")
-expect_equal(mo_shortname("Escherichia"), "Escherichia")
-expect_equal(mo_shortname("Staphylococcus aureus"), "S. aureus")
-expect_equal(mo_shortname("Staphylococcus aureus", Becker = TRUE), "S. aureus")
-expect_equal(mo_shortname("Staphylococcus aureus", Becker = "all", language = "en"), "CoPS")
-expect_equal(mo_shortname("Streptococcus agalactiae"), "S. agalactiae")
-expect_equal(mo_shortname("Streptococcus agalactiae", Lancefield = TRUE), "GBS")
-
 expect_true(mo_url("Candida albicans") %like% "catalogueoflife.org")
 expect_true(mo_url("Escherichia coli") %like% "lpsn.dsmz.de")
 
 # test integrity
 MOs <- microorganisms
-expect_identical(MOs$fullname, mo_fullname(MOs$fullname, language = "en"))
+expect_identical(MOs$fullname, as.character(mo_fullname(MOs$fullname, language = "en")))
 
 # check languages
 expect_equal(mo_type("Escherichia coli", language = "de"), "Bakterien")
@@ -81,7 +84,7 @@ expect_stdout(print(mo_gramstain("Escherichia coli", language = "fr")))
 
 expect_error(mo_gramstain("Escherichia coli", language = "UNKNOWN"))
 dutch <- mo_name(microorganisms$fullname, language = "nl") # should be transformable to English again
-expect_identical(mo_name(dutch, language = NULL), microorganisms$fullname) # gigantic test - will run ALL names
+expect_identical(as.character(mo_name(dutch, language = NULL)), microorganisms$fullname) # gigantic test - will run ALL names
 
 # manual property function
 expect_error(mo_property("Escherichia coli", property = c("tsn", "fullname")))
@@ -117,7 +120,7 @@ expect_equal(mo_is_intrinsic_resistant(c("Escherichia coli", "Staphylococcus aur
                                        "vanco"),
              c(TRUE, FALSE, FALSE))
 # with reference data
-expect_equal(mo_name("test", reference_df = data.frame(col1 = "test", mo = "B_ESCHR_COLI")), 
+expect_equal(as.character(mo_name("test", reference_df = data.frame(col1 = "test", mo = "B_ESCHR_COLI"))), 
              "Escherichia coli")
 if (AMR:::pkg_is_available("dplyr")) {
   expect_equal(example_isolates %>% filter(mo_is_gram_negative()) %>% nrow(),
