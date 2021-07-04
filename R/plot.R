@@ -276,8 +276,10 @@ ggplot.mic <- function(data,
     names(vals) <- translate_AMR(names(vals), language = language)
     p <- p +
       ggplot2::geom_col(ggplot2::aes(x = mic, y = count, fill = cols)) + 
+      # limits = force is needed because of a ggplot2 >= 3.3.4 bug (#4511)
       ggplot2::scale_fill_manual(values = vals,
-                                 name = NULL)
+                                 name = NULL,
+                                 limits = force)
   } else {
     p <- p +
       ggplot2::geom_col(ggplot2::aes(x = mic, y = count))
@@ -500,8 +502,10 @@ ggplot.disk <- function(data,
     names(vals) <- translate_AMR(names(vals), language = language)
     p <- p +
       ggplot2::geom_col(ggplot2::aes(x = disk, y = count, fill = cols)) + 
+      # limits = force is needed because of a ggplot2 >= 3.3.4 bug (#4511)
       ggplot2::scale_fill_manual(values = vals,
-                                 name = NULL)
+                                 name = NULL,
+                                 limits = force)
   } else {
     p <- p +
       ggplot2::geom_col(ggplot2::aes(x = disk, y = count))
@@ -660,9 +664,11 @@ ggplot.rsi <- function(data,
   
   p +
     ggplot2::geom_col(ggplot2::aes(x = rsi, y = count, fill = rsi)) + 
+    # limits = force is needed because of a ggplot2 >= 3.3.4 bug (#4511)
     ggplot2::scale_fill_manual(values = c("R" = colours_RSI[1],
                                           "S" = colours_RSI[2],
-                                          "I" = colours_RSI[3])) +
+                                          "I" = colours_RSI[3]),
+                               limits = force) +
     ggplot2::labs(title = title, x = xlab, y = ylab) +
     ggplot2::theme(legend.position = "none")
 }

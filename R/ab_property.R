@@ -29,6 +29,7 @@
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param x any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
 #' @param tolower a [logical] to indicate whether the first [character] of every output should be transformed to a lower case [character]. This will lead to e.g. "polymyxin B" and not "polymyxin b".
+#' @param snake_case a [logical] to indicate whether the names should be returned in so-called [snake case](https://en.wikipedia.org/wiki/Snake_case): in lower case and all spaces/slashes replaced with an underscore (`_`). This is useful for column renaming.
 #' @param property one of the column names of one of the [antibiotics] data set
 #' @param language language of the returned text, defaults to system language (see [get_locale()]) and can also be set with `getOption("AMR_locale")`. Use `language = NULL` or `language = ""` to prevent translation.
 #' @param administration way of administration, either `"oral"` or `"iv"`
@@ -88,16 +89,20 @@
 #' ab_atc("cephtriaxone")
 #' ab_atc("cephthriaxone")
 #' ab_atc("seephthriaaksone")
-ab_name <- function(x, language = get_locale(), tolower = FALSE, ...) {
+ab_name <- function(x, language = get_locale(), tolower = FALSE, snake_case = FALSE, ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(tolower, allow_class = "logical", has_length = 1)
+  meet_criteria(snake_case, allow_class = "logical", has_length = 1)
   
   x <- translate_AMR(ab_validate(x = x, property = "name", ...), language = language, only_affect_ab_names = TRUE)
   if (tolower == TRUE) {
     # use perl to only transform the first character
     # as we want "polymyxin B", not "polymyxin b"
     x <- gsub("^([A-Z])", "\\L\\1", x, perl = TRUE)
+  }
+  if (snake_case == TRUE) {
+    x <- tolower(gsub("[^a-zA-Z0-9]+", "_", x))
   }
   x
 }

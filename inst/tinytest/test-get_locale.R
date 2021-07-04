@@ -23,12 +23,12 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-expect_identical(mo_genus("B_GRAMP", language = "pt"),
+expect_identical(as.character(mo_genus("B_GRAMP", language = "pt")),
                  "(Gram positivos desconhecidos)")
 
-expect_identical(mo_fullname("CoNS", "en"), "Coagulase-negative Staphylococcus (CoNS)")
-expect_identical(mo_fullname("CoNS", "de"), "Koagulase-negative Staphylococcus (KNS)")
-expect_identical(mo_fullname("CoNS", "nl"), "Coagulase-negatieve Staphylococcus (CNS)")
-expect_identical(mo_fullname("CoNS", "es"), "Staphylococcus coagulasa negativo (SCN)")
-expect_identical(mo_fullname("CoNS", "it"), "Staphylococcus negativo coagulasi (CoNS)")
-expect_identical(mo_fullname("CoNS", "pt"), "Staphylococcus coagulase negativo (CoNS)")
+expect_identical(as.character(mo_fullname("CoNS", "en")), "Coagulase-negative Staphylococcus (CoNS)")
+expect_identical(as.character(mo_fullname("CoNS", "de")), "Koagulase-negative Staphylococcus (KNS)")
+expect_identical(as.character(mo_fullname("CoNS", "nl")), "Coagulase-negatieve Staphylococcus (CNS)")
+expect_identical(as.character(mo_fullname("CoNS", "es")), "Staphylococcus coagulasa negativo (SCN)")
+expect_identical(as.character(mo_fullname("CoNS", "it")), "Staphylococcus negativo coagulasi (CoNS)")
+expect_identical(as.character(mo_fullname("CoNS", "pt")), "Staphylococcus coagulase negativo (CoNS)")

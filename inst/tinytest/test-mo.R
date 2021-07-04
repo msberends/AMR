@@ -240,8 +240,8 @@ x <- as.mo("S. aur")
 expect_stdout(print(mo_uncertainties()))
 
 # Salmonella (City) are all actually Salmonella enterica spp (City)
-expect_equal(suppressMessages(mo_name(c("Salmonella Goettingen", "Salmonella Typhimurium", "Salmonella Group A"))),
-             c("Salmonella enterica", "Salmonella enterica", "Salmonella"))
+expect_equal(suppressMessages(as.mo(c("Salmonella Goettingen", "Salmonella Typhimurium", "Salmonella Group A"))),
+             as.mo(c("Salmonella enterica", "Salmonella enterica", "Salmonella")))
 
 # no virusses
 expect_equal(as.character(as.mo("Virus")), NA_character_)

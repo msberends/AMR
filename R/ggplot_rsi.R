@@ -370,7 +370,6 @@ scale_rsi_colours <- function(...,
                               aesthetics = "fill") {
   stop_ifnot_installed("ggplot2")
   meet_criteria(aesthetics, allow_class = "character", is_in = c("alpha", "colour", "color", "fill", "linetype", "shape", "size"))
-  
   # behaviour until AMR pkg v1.5.0 and also when coming from ggplot_rsi()
   if ("colours" %in% names(list(...))) {
     original_cols <- c(S = "#3CAEA3",
@@ -379,7 +378,9 @@ scale_rsi_colours <- function(...,
                        IR = "#ED553B",
                        R = "#ED553B")
     colours <- replace(original_cols, names(list(...)$colours), list(...)$colours)
-    return(ggplot2::scale_fill_manual(values = colours))
+    # limits = force is needed in ggplot2 3.3.4 and 3.3.5, see here;
+    # https://github.com/tidyverse/ggplot2/issues/4511#issuecomment-866185530
+    return(ggplot2::scale_fill_manual(values = colours, limits = force))
   }
   if (identical(unlist(list(...)), FALSE)) {
     return(invisible())
@@ -411,7 +412,9 @@ scale_rsi_colours <- function(...,
   dots[dots == "I"] <- "#F6D55C"
   dots[dots == "R"] <- "#ED553B"
   cols <- replace(original_cols, names(dots), dots)
-  ggplot2::scale_discrete_manual(aesthetics = aesthetics, values = cols)
+  # limits = force is needed in ggplot2 3.3.4 and 3.3.5, see here;
+  # https://github.com/tidyverse/ggplot2/issues/4511#issuecomment-866185530
+  ggplot2::scale_discrete_manual(aesthetics = aesthetics, values = cols, limits = force)
 }
 
 #' @rdname ggplot_rsi

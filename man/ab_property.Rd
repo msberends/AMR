@@ -17,7 +17,7 @@
 \alias{ab_url}
 \title{Get Properties of an Antibiotic}
 \usage{
-ab_name(x, language = get_locale(), tolower = FALSE, ...)
+ab_name(x, language = get_locale(), tolower = FALSE, snake_case = FALSE, ...)
 
 ab_atc(x, ...)
 
@@ -49,6 +49,8 @@ ab_property(x, property = "name", language = get_locale(), ...)
 \item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
 \item{tolower}{a \link{logical} to indicate whether the first \link{character} of every output should be transformed to a lower case \link{character}. This will lead to e.g. "polymyxin B" and not "polymyxin b".}
+
+\item{snake_case}{a \link{logical} to indicate whether the names should be returned in so-called \href{https://en.wikipedia.org/wiki/Snake_case}{snake case}: in lower case and all spaces/slashes replaced with an underscore (\verb{_}). This is useful for column renaming.}
 
 \item{...}{other arguments passed on to \code{\link[=as.ab]{as.ab()}}}
 

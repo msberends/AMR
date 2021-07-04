@@ -1,4 +1,4 @@
-# `AMR` 1.7.1.9012
+# `AMR` 1.7.1.9013
 ## <small>Last updated:  4 July 2021</small>
 
 ### Changed
@@ -16,6 +16,8 @@
 * `as.rsi()` can now correct for textual input (such as "Susceptible", "Resistant") in Dutch, English, French, German, Italian, Portuguese and Spanish
 * When warnings are throws because of too few isolates in any `count_*()`, `proportion_*()` function (or `resistant()` or `susceptible()`), the `dplyr` group will be shown, if available
 * Taxonomic names now print in italic in tibbles, if created with `mo_name()`, `mo_fullname()`, `mo_shortname()`, `mo_genus()` or `mo_family()`
+* `ab_name()` gained argument `snake_case`, which is useful for column renaming
+* Fix for legends created with `scale_rsi_colours()` when using `ggplot2` v3.3.4 or higher (this is `ggplot2` bug #4511, soon to be fixed)
 
 
 # `AMR` 1.7.1

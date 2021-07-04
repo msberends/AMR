@@ -267,7 +267,7 @@ data_1st %>%
 
 ## Overview of different bug/drug combinations
 
-Using [Tidyverse selections](https://tidyselect.r-lib.org/reference/language.html), you can also select or filter columns based on the antibiotic class they are in:
+Using [tidyverse selections](https://tidyselect.r-lib.org/reference/language.html), you can also select or filter columns based on the antibiotic class they are in:
 
 ```{r bug_drg 2a, eval = FALSE}
 data_1st %>% 
@@ -373,7 +373,29 @@ data_1st %>%
   knitr::kable(align = "c", big.mark = ",")
 ```
 
-To make a transition to the next part, let's see how this difference could be plotted:
+Or if you are curious for the resistance within certain antibiotic classes, use a antibiotic class selector such as `penicillins()`, which automatically will include the columns `AMX` and `AMC` of our data:
+
+```{r, eval = FALSE}
+data_1st %>% 
+  # group by hospital
+  group_by(hospital) %>% 
+  #                / -> select all penicillins in the data for calculation
+  #                |              / -> use resistance() for all peni's per hospital
+  #                |              |           / -> print as percentages
+  summarise(across(penicillins(), resistance, as_percent = TRUE)) %>% 
+  # format the antibiotic column names, using so-called snake case,
+  # so 'Amoxicillin/clavulanic acid' becomes 'amoxicillin_clavulanic_acid'
+  rename_with(.fn = ab_name, .cols = penicillins(), snake_case = TRUE)
+```
+```{r, echo = FALSE, message = FALSE}
+data_1st %>% 
+  group_by(hospital) %>% 
+  summarise(across(penicillins(), resistance, as_percent = TRUE)) %>% 
+  rename_with(.fn = ab_name, .cols = penicillins(), snake_case = TRUE) %>% 
+  knitr::kable(align = "lrr")
+```
+
+To make a transition to the next part, let's see how differences in the previously calculated combination therapies could be plotted:
 
 ```{r plot 1}
 data_1st %>% 
@@ -456,7 +478,7 @@ data_1st %>%
 
 ### Plotting MIC and disk diffusion values
 
-The AMR package also extends the `plot()` and `ggplot()` functions for plotting minimum inhibitory concentrations (MIC, created with `as.mic()`) and disk diffusion diameters (created with `as.disk()`).
+The AMR package also extends the `plot()` and `ggplot2::autoplot()` functions for plotting minimum inhibitory concentrations (MIC, created with `as.mic()`) and disk diffusion diameters (created with `as.disk()`).
 
 With the `random_mic()` and `random_disk()` functions, we can generate sampled values for the new data types (S3 classes) `<mic>` and `<disk>`:
 
@@ -469,7 +491,7 @@ mic_values
 # base R:
 plot(mic_values)
 # ggplot2:
-ggplot(mic_values)
+autoplot(mic_values)
 ```
 
 But we could also be more specific, by generating MICs that are likely to be found in *E. coli* for ciprofloxacin:
@@ -478,7 +500,7 @@ But we could also be more specific, by generating MICs that are likely to be fou
 mic_values <- random_mic(size = 100, mo = "E. coli", ab = "cipro")
 ```
 
-For the `plot()` and `ggplot()` function, we can define the microorganism and an antimicrobial agent the same way. This will add the interpretation of those values according to a chosen guidelines (defaults to the latest EUCAST guideline).
+For the `plot()` and `autoplot()` function, we can define the microorganism and an antimicrobial agent the same way. This will add the interpretation of those values according to a chosen guidelines (defaults to the latest EUCAST guideline).
 
 Default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red:
 
@@ -486,7 +508,7 @@ Default colours are colour-blind friendly, while maintaining the convention that
 # base R:
 plot(mic_values, mo = "E. coli", ab = "cipro")
 # ggplot2:
-ggplot(mic_values, mo = "E. coli", ab = "cipro")
+autoplot(mic_values, mo = "E. coli", ab = "cipro")
 ```
 
 For disk diffusion values, there is not much of a difference in plotting:
@@ -504,7 +526,7 @@ plot(disk_values, mo = "E. coli", ab = "cipro")
 And when using the `ggplot2` package, but now choosing the latest implemented CLSI guideline (notice that the EUCAST-specific term "Incr. exposure" has changed to "Intermediate"):
 
 ```{r disk_plots_mo_ab, message = FALSE, warning = FALSE}
-ggplot(disk_values,
+autoplot(disk_values,
        mo = "E. coli",
        ab = "cipro",
        guideline = "CLSI")
