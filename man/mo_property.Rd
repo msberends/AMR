@@ -131,7 +131,7 @@ Determination of yeasts - \code{\link[=mo_is_yeast]{mo_is_yeast()}} - will be ba
 
 Intrinsic resistance - \code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}} - will be determined based on the \link{intrinsic_resistant} data set, which is based on \href{https://www.eucast.org/expert_rules_and_intrinsic_resistance/}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2} (2020). The \code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}} functions can be vectorised over arguments \code{x} (input for microorganisms) and over \code{ab} (input for antibiotics).
 
-The functions \code{\link[=mo_family]{mo_family()}}, \code{\link[=mo_genus]{mo_genus()}}, \code{\link[=mo_name]{mo_name()}}, \code{\link[=mo_fullname]{mo_fullname()}} and \code{\link[=mo_shortname]{mo_shortname()}} are returned with an additional class \code{taxonomic_name}, which allows italic printing in \link[tibble:tibble]{tibbles}.
+The functions \code{\link[=mo_family]{mo_family()}}, \code{\link[=mo_genus]{mo_genus()}}, \code{\link[=mo_name]{mo_name()}}, \code{\link[=mo_fullname]{mo_fullname()}} and \code{\link[=mo_shortname]{mo_shortname()}} are returned with an additional class \code{taxonomic_name}, which allows italic printing in \link[tibble:tibble]{tibbles} and markdown tables such as with \code{\link[knitr:kable]{knitr::kable()}}.
 
 All output \link[=translate]{will be translated} where possible.
 

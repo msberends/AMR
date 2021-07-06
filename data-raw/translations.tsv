@@ -18,17 +18,17 @@ unknown subspecies	TRUE	TRUE	FALSE	TRUE	unbekannte Unterart	onbekende ondersoort
 unknown rank	TRUE	TRUE	FALSE	TRUE	unbekannter Rang	onbekende rang	rango desconocido	grado sconosciuto	rang inconnu	classificação desconhecido
 CoNS	FALSE	TRUE	FALSE	TRUE	KNS	CNS	SCN			
 CoPS	FALSE	TRUE	FALSE	TRUE	KPS	CPS	SCP			
-Gram-negative	TRUE	TRUE	FALSE	FALSE	Gramnegativ	Gram-negatief	Gram negativo	Gram negativo	Gram négatif	Gram negativo
-Gram-positive	TRUE	TRUE	FALSE	FALSE	Grampositiv	Gram-positief	Gram positivo	Gram positivo	Gram positif	Gram positivo
-^Bacteria$	TRUE	TRUE	FALSE	FALSE	Bakterien	Bacteriën	Bacterias	Batteri	Bactéries	Bactérias
-^Fungi$	TRUE	TRUE	FALSE	FALSE	Pilze	Schimmels	Hongos	Funghi	Champignons	Fungos
-^Yeasts$	TRUE	TRUE	FALSE	FALSE	Hefen	Gisten	Levaduras	Lieviti	Levures	Leveduras
-^Protozoa$	TRUE	TRUE	FALSE	FALSE	Protozoen	Protozoën	Protozoarios	Protozoi	Protozoaires	Protozoários
-biogroup	TRUE	TRUE	FALSE	FALSE	Biogruppe	biogroep	biogrupo	biogruppo	biogroupe	biogrupo
-biotype	TRUE	TRUE	FALSE	FALSE	Biotyp		biotipo	biotipo		biótipo
-vegetative	TRUE	TRUE	FALSE	FALSE	vegetativ	vegetatief	vegetativo	vegetativo	végétatif	vegetativo
-([([ ]*?)group	TRUE	TRUE	FALSE	FALSE	\\1Gruppe	\\1groep	\\1grupo	\\1gruppo	\\1groupe	\\1grupo
-([([ ]*?)Group	TRUE	TRUE	FALSE	FALSE	\\1Gruppe	\\1Groep	\\1Grupo	\\1Gruppo	\\1Groupe	\\1Grupo
+Gram-negative	TRUE	TRUE	FALSE	TRUE	Gramnegativ	Gram-negatief	Gram negativo	Gram negativo	Gram négatif	Gram negativo
+Gram-positive	TRUE	TRUE	FALSE	TRUE	Grampositiv	Gram-positief	Gram positivo	Gram positivo	Gram positif	Gram positivo
+^Bacteria$	TRUE	TRUE	FALSE	TRUE	Bakterien	Bacteriën	Bacterias	Batteri	Bactéries	Bactérias
+^Fungi$	TRUE	TRUE	FALSE	TRUE	Pilze	Schimmels	Hongos	Funghi	Champignons	Fungos
+^Yeasts$	TRUE	TRUE	FALSE	TRUE	Hefen	Gisten	Levaduras	Lieviti	Levures	Leveduras
+^Protozoa$	TRUE	TRUE	FALSE	TRUE	Protozoen	Protozoën	Protozoarios	Protozoi	Protozoaires	Protozoários
+biogroup	TRUE	TRUE	FALSE	TRUE	Biogruppe	biogroep	biogrupo	biogruppo	biogroupe	biogrupo
+biotype	TRUE	TRUE	FALSE	TRUE	Biotyp		biotipo	biotipo		biótipo
+vegetative	TRUE	TRUE	FALSE	TRUE	vegetativ	vegetatief	vegetativo	vegetativo	végétatif	vegetativo
+([([ ]*?)group	TRUE	TRUE	FALSE	TRUE	\\1Gruppe	\\1groep	\\1grupo	\\1gruppo	\\1groupe	\\1grupo
+([([ ]*?)Group	TRUE	TRUE	FALSE	TRUE	\\1Gruppe	\\1Groep	\\1Grupo	\\1Gruppo	\\1Groupe	\\1Grupo
 no .*growth	TRUE	FALSE	FALSE	FALSE	keine? .*wachstum	geen .*groei	no .*crecimientonon	sem .*crescimento	pas .*croissance	sem .*crescimento
 no|not	TRUE	FALSE	FALSE	FALSE	keine?	geen|niet	no|sin	sem	non	sem
 Susceptible	TRUE	FALSE	FALSE	FALSE	Empfindlich	Gevoelig	Susceptible			

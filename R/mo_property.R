@@ -48,7 +48,7 @@
 #' 
 #' Intrinsic resistance - [mo_is_intrinsic_resistant()] - will be determined based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(3.2)`. The [mo_is_intrinsic_resistant()] functions can be vectorised over arguments `x` (input for microorganisms) and over `ab` (input for antibiotics).
 #'
-#' The functions [mo_family()], [mo_genus()], [mo_name()], [mo_fullname()] and [mo_shortname()] are returned with an additional class `taxonomic_name`, which allows italic printing in [tibbles][tibble::tibble()].
+#' The functions [mo_family()], [mo_genus()], [mo_name()], [mo_fullname()] and [mo_shortname()] are returned with an additional class `taxonomic_name`, which allows italic printing in [tibbles][tibble::tibble()] and markdown tables such as with [knitr::kable()].
 #' 
 #' All output [will be translated][translate] where possible.
 #'
@@ -786,9 +786,9 @@ print.taxonomic_name <- function(x, ...) {
 as.data.frame.taxonomic_name <- function(x, ...) {
   nm <- deparse1(substitute(x))
   if (!"nm" %in% names(list(...))) {
-    as.data.frame(unclass(x), ..., nm = nm)
+    as.data.frame.vector(x, ..., nm = nm)
   } else {
-    as.data.frame(unclass(x), ...)
+    as.data.frame.vector(x, ...)
   }
 }
 
@@ -801,10 +801,25 @@ type_sum.taxonomic_name <- function(x, ...) {
 pillar_shaft.taxonomic_name <- function(x, ...) {
   out <- format(x)
   hits <- tolower(x) %in% MO_lookup$fullname_lower | tolower(gsub("[^a-zA-Z ]", "", x)) %in% c(MO_lookup$g_species)
-  # grey out the kingdom (part until first "_")
   out[hits] <- font_italic(x[hits], collapse = NULL)
   out[is.na(x)] <- font_na(out[is.na(x)], collapse = NULL)
   create_pillar_column(out, align = "left")
+}
+
+#' @method format taxonomic_name
+#' @export
+#' @noRd
+format.taxonomic_name <- function(x, ...) {
+  # format only in case of markdown knitting
+  x <- unclass(x)
+  if (any(as.character(sys.calls()) %like% "(^|:| )kable\\(") ||
+      tryCatch(!is.null(knitr::opts_knit$get("out.format")), error = function(e) FALSE) ||
+      tryCatch(isTRUE(getOption('knitr.in.progress')), error = function(e) FALSE)) {
+    # perhaps this could be extended or better specified in the future?
+    hits <- tolower(x) %in% MO_lookup$fullname_lower | tolower(gsub("[^a-zA-Z ]", "", x)) %in% c(MO_lookup$g_species)
+    x[hits] <- paste0("*", x[hits], "*")
+  }
+  x
 }
 
 #' @method [ taxonomic_name
@@ -852,6 +867,15 @@ c.taxonomic_name <- function(...) {
 #' @export
 #' @noRd
 unique.taxonomic_name <- function(x, incomparables = FALSE, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
+}
+
+#' @method rep taxonomic_name
+#' @export
+#' @noRd
+rep.taxonomic_name <- function(x, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(x)
   y

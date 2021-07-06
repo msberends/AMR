@@ -113,7 +113,7 @@ bug_drug_combinations <- function(x,
         data.frame(S = m["S", ], I = m["I", ], R = m["R", ], stringsAsFactors = FALSE)
       })
       merged <- do.call(rbind, pivot)
-      out_group <- data.frame(mo = unique_mo[i],
+      out_group <- data.frame(mo = rep(unique_mo[i], NROW(merged)),
                               ab = rownames(merged),
                               S = merged$S,
                               I = merged$I,

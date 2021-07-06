@@ -320,6 +320,15 @@ unique.mic <- function(x, incomparables = FALSE, ...) {
   y
 }
 
+#' @method rep mic
+#' @export
+#' @noRd
+rep.mic <- function(x, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
+}
+
 #' @method sort mic
 #' @export
 #' @noRd
@@ -337,7 +346,7 @@ sort.mic <- function(x, decreasing = FALSE, ...) {
 #' @export
 #' @noRd
 hist.mic <- function(x, ...) {
-  warning_("Use `plot()` or `ggplot()` for optimal plotting of MIC values", call = FALSE)
+  warning_("Use `plot()` or ggplot2's `autoplot()` for optimal plotting of MIC values", call = FALSE)
   hist(log2(x))
 }
 

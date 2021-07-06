@@ -580,6 +580,15 @@ unique.ab <- function(x, incomparables = FALSE, ...) {
   y
 }
 
+#' @method rep ab
+#' @export
+#' @noRd
+rep.ab <- function(x, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
+}
+
 generalise_antibiotic_name <- function(x) {
   x <- toupper(x)
   # remove suffices

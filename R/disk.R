@@ -195,6 +195,15 @@ unique.disk <- function(x, incomparables = FALSE, ...) {
   y
 }
 
+#' @method rep disk
+#' @export
+#' @noRd
+rep.disk <- function(x, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
+}
+
 # will be exported using s3_register() in R/zzz.R
 get_skimmers.disk <- function(column) {
   skimr::sfl(

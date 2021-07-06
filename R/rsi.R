@@ -1054,6 +1054,15 @@ unique.rsi <- function(x, incomparables = FALSE, ...) {
   y
 }
 
+#' @method rep rsi
+#' @export
+#' @noRd
+rep.rsi <- function(x, ...) {
+  y <- NextMethod()
+  attributes(y) <- attributes(x)
+  y
+}
+
 check_reference_data <- function(reference_data) {
   if (!identical(reference_data, AMR::rsi_translation)) {
     class_rsi <- vapply(FUN.VALUE = character(1), rsi_translation, function(x) paste0("<", class(x), ">", collapse = " and "))
