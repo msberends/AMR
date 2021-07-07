@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9014</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9015</span>
       </span>
     </div>
 
@@ -335,7 +335,6 @@
 <li><p>A <a href='https://rdrr.io/r/base/list.html'>list</a> in case of <code>mo_taxonomy()</code> and <code>mo_info()</code></p></li>
 <li><p>A named <a href='https://rdrr.io/r/base/character.html'>character</a> in case of <code>mo_url()</code></p></li>
 <li><p>A <a href='https://rdrr.io/r/base/numeric.html'>numeric</a> in case of <code>mo_snomed()</code></p></li>
-<li><p>A <a href='https://rdrr.io/r/base/character.html'>character</a> with additional class <code>taxonomic_name</code> in case of <code>mo_family()</code>, <code>mo_genus()</code>, <code>mo_name()</code>, <code>mo_fullname()</code> and <code>mo_shortname()</code></p></li>
 <li><p>A <a href='https://rdrr.io/r/base/character.html'>character</a> in all other cases</p></li>
 </ul>
 
@@ -352,7 +351,6 @@
 <p>The Gram stain - <code>mo_gramstain()</code> - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, <a href='https://pubmed.ncbi.nlm.nih.gov/11837318'>PMID 11837318</a>), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value <code>NA</code>. Functions <code>mo_is_gram_negative()</code> and <code>mo_is_gram_positive()</code> always return <code>TRUE</code> or <code>FALSE</code> (except when the input is <code>NA</code> or the MO code is <code>UNKNOWN</code>), thus always return <code>FALSE</code> for species outside the taxonomic kingdom of Bacteria.</p>
 <p>Determination of yeasts - <code>mo_is_yeast()</code> - will be based on the taxonomic kingdom and class. <em>Budding yeasts</em> are fungi of the phylum Ascomycetes, class Saccharomycetes (also called Hemiascomycetes). <em>True yeasts</em> are aggregated into the underlying order Saccharomycetales. Thus, for all microorganisms that are fungi and member of the taxonomic class Saccharomycetes, the function will return <code>TRUE</code>. It returns <code>FALSE</code> otherwise (except when the input is <code>NA</code> or the MO code is <code>UNKNOWN</code>).</p>
 <p>Intrinsic resistance - <code>mo_is_intrinsic_resistant()</code> - will be determined based on the <a href='intrinsic_resistant.html'>intrinsic_resistant</a> data set, which is based on <a href='https://www.eucast.org/expert_rules_and_intrinsic_resistance/'>'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2</a> (2020). The <code>mo_is_intrinsic_resistant()</code> functions can be vectorised over arguments <code>x</code> (input for microorganisms) and over <code>ab</code> (input for antibiotics).</p>
-<p>The functions <code>mo_family()</code>, <code>mo_genus()</code>, <code>mo_name()</code>, <code>mo_fullname()</code> and <code>mo_shortname()</code> are returned with an additional class <code>taxonomic_name</code>, which allows italic printing in <a href='https://tibble.tidyverse.org/reference/tibble.html'>tibbles</a> and markdown tables such as with <code><a href='https://rdrr.io/pkg/knitr/man/kable.html'>knitr::kable()</a></code>.</p>
 <p>All output <a href='translate.html'>will be translated</a> where possible.</p>
 <p>The function <code>mo_url()</code> will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.</p>
 <p>SNOMED codes - <code>mo_snomed()</code> - are from the US Edition of SNOMED CT from 1 September 2020. See <em>Source</em> and the <a href='microorganisms.html'>microorganisms</a> data set for more info.</p>

@@ -25,7 +25,7 @@
 
 expect_identical(ab_name("AMX", language = NULL), "Amoxicillin")
 expect_identical(ab_name("AMX", language = NULL, snake_case = TRUE), "amoxicillin")
-expect_identical(as.character(ab_atc("AMX")), "J01CA04")
+expect_identical(ab_atc("AMX"), "J01CA04")
 expect_identical(ab_cid("AMX"), as.integer(33613))
 
 expect_inherits(ab_tradenames("AMX"), "character")

@@ -473,7 +473,7 @@ exec_as.mo <- function(x,
       langs <- LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED != "en"]
       for (l in langs) {
         for (i in seq_len(nrow(trns))) {
-          if (!is.na(trns[i, l, drop = TRUE])) {
+          if (!is.na(trns[i, l, drop = TRUE]) && trns[i, l, drop = TRUE] %unlike% "\\\\1") {
             x <- gsub(pattern = trns[i, l, drop = TRUE],
                       replacement = trns$pattern[i],
                       x = x,

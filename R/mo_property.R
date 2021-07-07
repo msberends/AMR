@@ -48,8 +48,6 @@
 #' 
 #' Intrinsic resistance - [mo_is_intrinsic_resistant()] - will be determined based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(3.2)`. The [mo_is_intrinsic_resistant()] functions can be vectorised over arguments `x` (input for microorganisms) and over `ab` (input for antibiotics).
 #'
-#' The functions [mo_family()], [mo_genus()], [mo_name()], [mo_fullname()] and [mo_shortname()] are returned with an additional class `taxonomic_name`, which allows italic printing in [tibbles][tibble::tibble()] and markdown tables such as with [knitr::kable()].
-#' 
 #' All output [will be translated][translate] where possible.
 #'
 #' The function [mo_url()] will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
@@ -65,7 +63,6 @@
 #' - A [list] in case of [mo_taxonomy()] and [mo_info()]
 #' - A named [character] in case of [mo_url()]
 #' - A [numeric] in case of [mo_snomed()]
-#' - A [character] with additional class `taxonomic_name` in case of [mo_family()], [mo_genus()], [mo_name()], [mo_fullname()] and [mo_shortname()]
 #' - A [character] in all other cases
 #' @export
 #' @seealso Data set [microorganisms]
@@ -225,8 +222,7 @@ mo_shortname <- function(x, language = get_locale(), ...) {
   
   shortnames[is.na(x.mo)] <- NA_character_
   load_mo_failures_uncertainties_renamed(metadata)
-  out <- translate_AMR(shortnames, language = language, only_unknown = FALSE, only_affect_mo_names = TRUE)
-  set_clean_class(out, new_class = c("taxonomic_name", "character"))
+  translate_AMR(shortnames, language = language, only_unknown = FALSE, only_affect_mo_names = TRUE)
 }
 
 
@@ -744,9 +740,6 @@ mo_validate <- function(x, property, language, ...) {
   
   if (property == "mo") {
     return(set_clean_class(x, new_class = c("mo", "character")))
-  } else if (property %in% c("fullname", "genus", "family")) {
-    # shortname is considered in mo_shortname()
-    return(set_clean_class(x, new_class = c("taxonomic_name", "character")))
   } else if (property == "snomed") {
     return(as.double(eval(parse(text = x))))
   } else {
@@ -771,112 +764,4 @@ find_mo_col <- function(fn) {
   } else {
     stop_("argument `x` is missing and no column with info about microorganisms could be found.", call = -2)
   }
-}
-
-#' @method print taxonomic_name
-#' @export
-#' @noRd
-print.taxonomic_name <- function(x, ...) {
-  print(unclass(x), ...)
-}
-
-#' @method as.data.frame taxonomic_name
-#' @export
-#' @noRd
-as.data.frame.taxonomic_name <- function(x, ...) {
-  nm <- deparse1(substitute(x))
-  if (!"nm" %in% names(list(...))) {
-    as.data.frame.vector(x, ..., nm = nm)
-  } else {
-    as.data.frame.vector(x, ...)
-  }
-}
-
-# will be exported using s3_register() in R/zzz.R
-type_sum.taxonomic_name <- function(x, ...) {
-  "chr/taxon"
-}
-
-# will be exported using s3_register() in R/zzz.R
-pillar_shaft.taxonomic_name <- function(x, ...) {
-  out <- format(x)
-  hits <- tolower(x) %in% MO_lookup$fullname_lower | tolower(gsub("[^a-zA-Z ]", "", x)) %in% c(MO_lookup$g_species)
-  out[hits] <- font_italic(x[hits], collapse = NULL)
-  out[is.na(x)] <- font_na(out[is.na(x)], collapse = NULL)
-  create_pillar_column(out, align = "left")
-}
-
-#' @method format taxonomic_name
-#' @export
-#' @noRd
-format.taxonomic_name <- function(x, ...) {
-  # format only in case of markdown knitting
-  x <- unclass(x)
-  if (any(as.character(sys.calls()) %like% "(^|:| )kable\\(") ||
-      tryCatch(!is.null(knitr::opts_knit$get("out.format")), error = function(e) FALSE) ||
-      tryCatch(isTRUE(getOption('knitr.in.progress')), error = function(e) FALSE)) {
-    # perhaps this could be extended or better specified in the future?
-    hits <- tolower(x) %in% MO_lookup$fullname_lower | tolower(gsub("[^a-zA-Z ]", "", x)) %in% c(MO_lookup$g_species)
-    x[hits] <- paste0("*", x[hits], "*")
-  }
-  x
-}
-
-#' @method [ taxonomic_name
-#' @export
-#' @noRd
-"[.taxonomic_name" <- function(x, ...) {
-  y <- NextMethod()
-  attributes(y) <- attributes(x)
-  y
-}
-#' @method [[ taxonomic_name
-#' @export
-#' @noRd
-"[[.taxonomic_name" <- function(x, ...) {
-  y <- NextMethod()
-  attributes(y) <- attributes(x)
-  y
-}
-#' @method [<- taxonomic_name
-#' @export
-#' @noRd
-"[<-.taxonomic_name" <- function(i, j, ..., value) {
-  value <- set_clean_class(value, c("taxonomic_name", "character"))
-  y <- NextMethod()
-  attributes(y) <- attributes(i)
-  y
-}
-#' @method [[<- taxonomic_name
-#' @export
-#' @noRd
-"[[<-.taxonomic_name" <- function(i, j, ..., value) {
-  value <- set_clean_class(value, c("taxonomic_name", "character"))
-  y <- NextMethod()
-  attributes(y) <- attributes(i)
-  y
-}
-#' @method c taxonomic_name
-#' @export
-#' @noRd
-c.taxonomic_name <- function(...) {
-  set_clean_class(unlist(lapply(list(...), as.character)), c("taxonomic_name", "character"))
-}
-
-#' @method unique taxonomic_name
-#' @export
-#' @noRd
-unique.taxonomic_name <- function(x, incomparables = FALSE, ...) {
-  y <- NextMethod()
-  attributes(y) <- attributes(x)
-  y
-}
-
-#' @method rep taxonomic_name
-#' @export
-#' @noRd
-rep.taxonomic_name <- function(x, ...) {
-  y <- NextMethod()
-  attributes(y) <- attributes(x)
-  y
 }

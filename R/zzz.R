@@ -48,13 +48,11 @@ if (utf8_supported && !is_latex) {
   s3_register("pillar::pillar_shaft", "rsi")
   s3_register("pillar::pillar_shaft", "mic")
   s3_register("pillar::pillar_shaft", "disk")
-  s3_register("pillar::pillar_shaft", "taxonomic_name")
   s3_register("tibble::type_sum", "ab")
   s3_register("tibble::type_sum", "mo")
   s3_register("tibble::type_sum", "rsi")
   s3_register("tibble::type_sum", "mic")
   s3_register("tibble::type_sum", "disk")
-  s3_register("tibble::type_sum", "taxonomic_name")
   # Support for frequency tables from the cleaner package
   s3_register("cleaner::freq", "mo")
   s3_register("cleaner::freq", "rsi")
