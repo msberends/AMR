@@ -292,7 +292,7 @@ ureidopenicillins <- function(only_rsi_columns = FALSE) {
 
 ab_selector <- function(function_name,
                         only_rsi_columns,
-                        only_treatable,
+                        only_treatable = FALSE,
                         ab_class = NULL) {
   # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
   # but it only takes a couple of milliseconds
