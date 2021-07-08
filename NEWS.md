@@ -1,11 +1,12 @@
-# `AMR` 1.7.1.9015
-## <small>Last updated:  7 July 2021</small>
+# `AMR` 1.7.1.9016
+## <small>Last updated:  8 July 2021</small>
 
 ### Changed
 * Antibiotic class selectors (see `ab_class()`)
-  * They now finally also work in R-3.0 and R-3.1, supporting every version of R since 2013
+  * They now also work in R-3.0 and R-3.1, supporting every version of R since 2013
   * Added more selectors: `aminopenicillins()`, `lincosamides()`, `lipoglycopeptides()`, `polymyxins()`, `quinolones()`, `streptogramins()` and `ureidopenicillins()`
   * Fix for using selectors multiple times in one call (e.g., using them in `dplyr::filter()` and immediately after in `dplyr::select()`)
+  * Added argument `only_treatable`, which defaults to `TRUE` and will exclude drugs that are only for laboratory tests and not for treating patients (such as imipenem/EDTA and gentamicin-high)
 * Fix for duplicate ATC codes in the `antibiotics` data set
 * Added `ggplot2::autoplot()` generic for classes `<mic>`, `<disk>`, `<rsi>` and `<resistance_predict>`
 * Fix to prevent introducing `NA`s for old MO codes when running `as.mo()` on them

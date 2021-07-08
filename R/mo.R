@@ -469,11 +469,11 @@ exec_as.mo <- function(x,
     x <- strip_whitespace(x, dyslexia_mode)
     # translate 'unknown' names back to English
     if (any(x %like% "unbekannt|onbekend|desconocid|sconosciut|iconnu|desconhecid", na.rm = TRUE)) {
-      trns <- subset(TRANSLATIONS, pattern %like% "unknown" | affect_mo_name == TRUE)
+      trns <- subset(TRANSLATIONS, pattern %like% "unknown")
       langs <- LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED != "en"]
       for (l in langs) {
         for (i in seq_len(nrow(trns))) {
-          if (!is.na(trns[i, l, drop = TRUE]) && trns[i, l, drop = TRUE] %unlike% "\\\\1") {
+          if (!is.na(trns[i, l, drop = TRUE])) {
             x <- gsub(pattern = trns[i, l, drop = TRUE],
                       replacement = trns$pattern[i],
                       x = x,

@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9014</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9016</span>
       </span>
     </div>
 
@@ -242,15 +242,15 @@
     <p>These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ab_class</span><span class='op'>(</span><span class='va'>ab_class</span>, only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>ab_class</span><span class='op'>(</span><span class='va'>ab_class</span>, only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, only_treatable <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='fu'>aminoglycosides</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>aminoglycosides</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, only_treatable <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='fu'>aminopenicillins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>betalactams</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>betalactams</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, only_treatable <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='fu'>carbapenems</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>carbapenems</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, only_treatable <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='fu'>cephalosporins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
@@ -278,7 +278,7 @@
 
 <span class='fu'>penicillins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>polymyxins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>polymyxins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, only_treatable <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='fu'>streptogramins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
@@ -298,6 +298,10 @@
     <tr>
       <th>only_rsi_columns</th>
       <td><p>a <a href='https://rdrr.io/r/base/logical.html'>logical</a> to indicate whether only columns of class <code>&lt;rsi&gt;</code> must be selected (defaults to <code>FALSE</code>), see <code><a href='as.rsi.html'>as.rsi()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>only_treatable</th>
+      <td><p>a <a href='https://rdrr.io/r/base/logical.html'>logical</a> to indicate whether agents that are only for laboratory tests should be excluded (defaults to <code>TRUE</code>), such as gentamicin-high (<code>GEH</code>) and imipenem/EDTA (<code>IPE</code>)</p></td>
     </tr>
     </table>
 

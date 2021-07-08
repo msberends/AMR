@@ -81,7 +81,7 @@ bug_drug_combinations <- function(x,
   unique_mo <- sort(unique(x[, col_mo, drop = TRUE]))
   
   # select only groups and antibiotics
-  if (inherits(x.bak, "grouped_df")) {
+  if (is_null_or_grouped_tbl(x.bak)) {
     data_has_groups <- TRUE
     groups <- setdiff(names(attributes(x.bak)$groups), ".rows")
     x <- x[, c(groups, col_mo, colnames(x)[vapply(FUN.VALUE = logical(1), x, is.rsi)]), drop = FALSE]

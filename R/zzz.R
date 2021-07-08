@@ -38,7 +38,7 @@ if (utf8_supported && !is_latex) {
   pkg_env$info_icon <- "i"
 }
 
-.onLoad <- function(libname, pkgname) {
+.onLoad <- function(...) {
   # Support for tibble headers (type_sum) and tibble columns content (pillar_shaft)
   # without the need to depend on other packages. This was suggested by the 
   # developers of the vctrs package: 
@@ -85,7 +85,6 @@ if (utf8_supported && !is_latex) {
   # for mo_is_intrinsic_resistant() - saves a lot of time when executed on this vector
   assign(x = "INTRINSIC_R", value = create_intr_resistance(), envir = asNamespace("AMR"))
 }
-
 
 # Helper functions --------------------------------------------------------
 

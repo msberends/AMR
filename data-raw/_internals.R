@@ -70,6 +70,8 @@ TRANSLATIONS <- utils::read.delim(file = "data-raw/translations.tsv",
 # for checking input in `language` argument in e.g. mo_*() and ab_*() functions
 LANGUAGES_SUPPORTED <- sort(c("en", colnames(TRANSLATIONS)[nchar(colnames(TRANSLATIONS)) == 2]))
 
+# EXAMPLE_ISOLATES <- readRDS("data-raw/example_isolates.rds")
+
 # vectors of CoNS and CoPS, improves speed in as.mo()
 create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
   # Determination of which staphylococcal species are CoNS/CoPS according to:
@@ -147,6 +149,7 @@ DEFINED_AB_GROUPS <- DEFINED_AB_GROUPS[!DEFINED_AB_GROUPS %in% globalenv_before_
 usethis::use_data(EUCAST_RULES_DF, 
                   TRANSLATIONS,
                   LANGUAGES_SUPPORTED,
+                  # EXAMPLE_ISOLATES,
                   MO_CONS,
                   MO_COPS,
                   AMINOGLYCOSIDES,

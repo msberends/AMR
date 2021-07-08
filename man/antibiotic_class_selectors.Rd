@@ -27,15 +27,15 @@
 \alias{ureidopenicillins}
 \title{Antibiotic Class Selectors}
 \usage{
-ab_class(ab_class, only_rsi_columns = FALSE)
+ab_class(ab_class, only_rsi_columns = FALSE, only_treatable = TRUE)
 
-aminoglycosides(only_rsi_columns = FALSE)
+aminoglycosides(only_rsi_columns = FALSE, only_treatable = TRUE)
 
 aminopenicillins(only_rsi_columns = FALSE)
 
-betalactams(only_rsi_columns = FALSE)
+betalactams(only_rsi_columns = FALSE, only_treatable = TRUE)
 
-carbapenems(only_rsi_columns = FALSE)
+carbapenems(only_rsi_columns = FALSE, only_treatable = TRUE)
 
 cephalosporins(only_rsi_columns = FALSE)
 
@@ -63,7 +63,7 @@ oxazolidinones(only_rsi_columns = FALSE)
 
 penicillins(only_rsi_columns = FALSE)
 
-polymyxins(only_rsi_columns = FALSE)
+polymyxins(only_rsi_columns = FALSE, only_treatable = TRUE)
 
 streptogramins(only_rsi_columns = FALSE)
 
@@ -77,6 +77,8 @@ ureidopenicillins(only_rsi_columns = FALSE)
 \item{ab_class}{an antimicrobial class, such as \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched (case-insensitive) for this value.}
 
 \item{only_rsi_columns}{a \link{logical} to indicate whether only columns of class \verb{<rsi>} must be selected (defaults to \code{FALSE}), see \code{\link[=as.rsi]{as.rsi()}}}
+
+\item{only_treatable}{a \link{logical} to indicate whether agents that are only for laboratory tests should be excluded (defaults to \code{TRUE}), such as gentamicin-high (\code{GEH}) and imipenem/EDTA (\code{IPE})}
 }
 \description{
 These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.

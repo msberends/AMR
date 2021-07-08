@@ -29,6 +29,7 @@
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param ab_class an antimicrobial class, such as `"carbapenems"`. The columns `group`, `atc_group1` and `atc_group2` of the [antibiotics] data set will be searched (case-insensitive) for this value.
 #' @param only_rsi_columns a [logical] to indicate whether only columns of class `<rsi>` must be selected (defaults to `FALSE`), see [as.rsi()]
+#' @param only_treatable a [logical] to indicate whether agents that are only for laboratory tests should be excluded (defaults to `TRUE`), such as gentamicin-high (`GEH`) and imipenem/EDTA (`IPE`)
 #' @details
 #' These functions can be used in data set calls for selecting columns and filtering rows. They are heavily inspired by the [Tidyverse selection helpers][tidyselect::language] such as [`everything()`][tidyselect::everything()], but also work in base \R and not only in `dplyr` verbs. Nonetheless, they are very convenient to use with `dplyr` functions such as [`select()`][dplyr::select()], [`filter()`][dplyr::filter()] and [`summarise()`][dplyr::summarise()], see *Examples*.
 #' 
@@ -123,17 +124,20 @@
 #' }
 #' }
 ab_class <- function(ab_class, 
-                     only_rsi_columns = FALSE) {
+                     only_rsi_columns = FALSE,
+                     only_treatable = TRUE) {
   meet_criteria(ab_class, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector(NULL, only_rsi_columns = only_rsi_columns, ab_class = ab_class)
+  meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
+  ab_selector(NULL, only_rsi_columns = only_rsi_columns, ab_class = ab_class, only_treatable = only_treatable)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-aminoglycosides <- function(only_rsi_columns = FALSE) {
+aminoglycosides <- function(only_rsi_columns = FALSE, only_treatable = TRUE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("aminoglycosides", only_rsi_columns = only_rsi_columns)
+  meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
+  ab_selector("aminoglycosides", only_rsi_columns = only_rsi_columns, only_treatable = only_treatable)
 }
 
 #' @rdname antibiotic_class_selectors
@@ -145,16 +149,18 @@ aminopenicillins <- function(only_rsi_columns = FALSE) {
 
 #' @rdname antibiotic_class_selectors
 #' @export
-betalactams <- function(only_rsi_columns = FALSE) {
+betalactams <- function(only_rsi_columns = FALSE, only_treatable = TRUE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("betalactams", only_rsi_columns = only_rsi_columns)
+  meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
+  ab_selector("betalactams", only_rsi_columns = only_rsi_columns, only_treatable = only_treatable)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-carbapenems <- function(only_rsi_columns = FALSE) {
+carbapenems <- function(only_rsi_columns = FALSE, only_treatable = TRUE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("carbapenems", only_rsi_columns = only_rsi_columns)
+  meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
+  ab_selector("carbapenems", only_rsi_columns = only_rsi_columns, only_treatable = only_treatable)
 }
 
 #' @rdname antibiotic_class_selectors
@@ -250,9 +256,10 @@ penicillins <- function(only_rsi_columns = FALSE) {
 
 #' @rdname antibiotic_class_selectors
 #' @export
-polymyxins <- function(only_rsi_columns = FALSE) {
+polymyxins <- function(only_rsi_columns = FALSE, only_treatable = TRUE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("polymyxins", only_rsi_columns = only_rsi_columns)
+  meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
+  ab_selector("polymyxins", only_rsi_columns = only_rsi_columns, only_treatable = only_treatable)
 }
 
 #' @rdname antibiotic_class_selectors
@@ -285,6 +292,7 @@ ureidopenicillins <- function(only_rsi_columns = FALSE) {
 
 ab_selector <- function(function_name,
                         only_rsi_columns,
+                        only_treatable,
                         ab_class = NULL) {
   # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
   # but it only takes a couple of milliseconds
@@ -292,6 +300,23 @@ ab_selector <- function(function_name,
   # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
   ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
 
+  # untreatable drugs
+  untreatable <- antibiotics[which(antibiotics$name %like% "-high|EDTA|polysorbate"), "ab", drop = TRUE]
+  if (only_treatable == TRUE & any(untreatable %in% names(ab_in_data))) {
+    if (message_not_thrown_before(paste0("ab_class.untreatable.", function_name), entire_session = TRUE)) {
+      warning_("Some agents in `", function_name, "()` were ignored since they cannot be used for treating patients: ",
+               vector_and(ab_name(names(ab_in_data)[names(ab_in_data) %in% untreatable],
+                                  language = NULL,
+                                  tolower = TRUE),
+                          quotes = FALSE,
+                          sort = TRUE), ". They can be included using `", function_name, "(only_treatable = FALSE)`. ",
+               "This warning will be shown once per session.",
+               call = FALSE)
+      remember_thrown_message(paste0("ab_class.untreatable.", function_name), entire_session = TRUE)
+    }
+    ab_in_data <- ab_in_data[!names(ab_in_data) %in% untreatable]
+  }
+  
   if (length(ab_in_data) == 0) {
     message_("No antimicrobial agents found in the data.")
     return(NULL)
