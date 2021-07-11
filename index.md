@@ -110,30 +110,33 @@ It will be downloaded and installed automatically. For RStudio, click on the men
 
 #### Latest development version
 
-![R-code-check][https://github.com/msberends/AMR/workflows/R-code-check/badge.svg?branch=master](https://github.com/msberends/AMR/actions)
-![CodeFactor][https://www.codefactor.io/repository/github/msberends/amr/badge](https://www.codefactor.io/repository/github/msberends/amr)
-![Codecov][https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg](https://codecov.io/gh/msberends/AMR?branch=master)
+[![R-code-check](https://github.com/msberends/AMR/workflows/R-code-check/badge.svg?branch=master)](https://codecov.io/gh/msberends/AMR?branch=master)
+[![CodeFactor](https://www.codefactor.io/repository/github/msberends/amr/badge)](https://www.codefactor.io/repository/github/msberends/amr)
+[![Codecov](https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gh/msberends/AMR?branch=master)
 
 The latest and unpublished development version can be installed from GitHub in two ways:
 
-1. Directly, using:
+1. Manually, using:
+
    ```r
    install.packages("remotes") # if you haven't already
    remotes::install_github("msberends/AMR")
    ```
    
-2. From the [rOpenSci R-universe platform](https://ropensci.org/r-universe/), by adding [our R-universe address](https://msberends.r-universe.dev) to your list of repositories ('repos'):
+2. Automatically, using the [rOpenSci R-universe platform](https://ropensci.org/r-universe/), by adding [our R-universe address](https://msberends.r-universe.dev) to your list of repositories ('repos'):
+
    ```r
    options(repos = c(getOption("repos"),
                      msberends = "https://msberends.r-universe.dev"))
    ```
+   
    After this, you can install and update this `AMR` package like any official release (e.g., using `install.packages("AMR")` or in RStudio via *Tools* > *Check for Package Updates...*).
 
 You can also download the latest build from our repository: <https://github.com/msberends/AMR/raw/master/data-raw/AMR_latest.tar.gz>
 
 ### Get started
 
-To find out how to conduct AMR data analysis, please [continue reading here to get started](./articles/AMR.html) or click the links in the 'How to' menu.
+To find out how to conduct AMR data analysis, please [continue reading here to get started](./articles/AMR.html) or click a link in the ['How to' menu](https://msberends.github.io/AMR/articles/).
 
 ### Short introduction
 

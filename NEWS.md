@@ -1,5 +1,5 @@
-# `AMR` 1.7.1.9017
-## <small>Last updated:  8 July 2021</small>
+# `AMR` 1.7.1.9018
+## <small>Last updated: 11 July 2021</small>
 
 ### Changed
 * Antibiotic class selectors (see `ab_class()`)
@@ -18,7 +18,8 @@
 * When warnings are throws because of too few isolates in any `count_*()`, `proportion_*()` function (or `resistant()` or `susceptible()`), the `dplyr` group will be shown, if available
 * Taxonomic names now print in italic in tibbles, if created with `mo_name()`, `mo_fullname()`, `mo_shortname()`, `mo_genus()` or `mo_family()`
 * `ab_name()` gained argument `snake_case`, which is useful for column renaming
-* Fix for legends created with `scale_rsi_colours()` when using `ggplot2` v3.3.4 or higher (this is `ggplot2` bug #4511, soon to be fixed)
+* Fix for legends created with `scale_rsi_colours()` when using `ggplot2` v3.3.4 or higher (this is bug ggplot2#4511, soon to be fixed)
+* Fix for minor translation errors
 
 
 # `AMR` 1.7.1
