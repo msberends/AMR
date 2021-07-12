@@ -34,7 +34,9 @@ expect_inherits(unique(x[1], x[9]), "rsi")
 pdf(NULL) # prevent Rplots.pdf being created
 expect_silent(barplot(as.rsi(c("S", "I", "R"))))
 expect_silent(plot(as.rsi(c("S", "I", "R"))))
-if (AMR:::pkg_is_available("ggplot2")) expect_inherits(ggplot(as.rsi(c("S", "I", "R"))), "gg")
+if (AMR:::pkg_is_available("ggplot2")) {
+  expect_inherits(autoplot(as.rsi(c("S", "I", "R"))), "gg")
+}
 expect_stdout(print(as.rsi(c("S", "I", "R"))))
 expect_equal(as.character(as.rsi(c(1:3))), c("S", "I", "R"))
 expect_equal(suppressWarnings(as.logical(as.rsi("INVALID VALUE"))), NA)

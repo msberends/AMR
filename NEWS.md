@@ -1,22 +1,21 @@
-# `AMR` 1.7.1.9019
+# `AMR` 1.7.1.9020
 ## <small>Last updated: 12 July 2021</small>
 
 ### Changed
+* Previously implemented `ggplot2::gggplot()` generics for classes `<mic>`, `<disk>`, `<rsi>` and `<resistance_predict>` did not follow the `ggplot2` logic, and were replaced with `autoplot()` generics.
 * Antibiotic class selectors (see `ab_class()`)
   * They now also work in R-3.0 and R-3.1, supporting every version of R since 2013
   * Added more selectors: `aminopenicillins()`, `lincosamides()`, `lipoglycopeptides()`, `polymyxins()`, `quinolones()`, `streptogramins()` and `ureidopenicillins()`
   * Fix for using selectors multiple times in one call (e.g., using them in `dplyr::filter()` and immediately after in `dplyr::select()`)
   * Added argument `only_treatable`, which defaults to `TRUE` and will exclude drugs that are only for laboratory tests and not for treating patients (such as imipenem/EDTA and gentamicin-high)
 * Fix for duplicate ATC codes in the `antibiotics` data set
-* Added `ggplot2::autoplot()` generic for classes `<mic>`, `<disk>`, `<rsi>` and `<resistance_predict>`
 * Fix to prevent introducing `NA`s for old MO codes when running `as.mo()` on them
 * Added more informative error messages when any of the `proportion_*()` and `count_*()` functions fail
 * When printing a tibble with any old MO code, a warning will be thrown that old codes should be updated using `as.mo()`
 * Improved automatic column selector when `col_*` arguments are left blank, e.g. in `first_isolate()`
 * The right input types for `random_mic()`, `random_disk()` and `random_rsi()` are now enforced
 * `as.rsi()` can now correct for textual input (such as "Susceptible", "Resistant") in Dutch, English, French, German, Italian, Portuguese and Spanish
-* When warnings are throws because of too few isolates in any `count_*()`, `proportion_*()` function (or `resistant()` or `susceptible()`), the `dplyr` group will be shown, if available
-* Taxonomic names now print in italic in tibbles, if created with `mo_name()`, `mo_fullname()`, `mo_shortname()`, `mo_genus()` or `mo_family()`
+* When warnings are thrown because of too few isolates in any `count_*()`, `proportion_*()` function (or `resistant()` or `susceptible()`), the `dplyr` group will be shown, if available
 * `ab_name()` gained argument `snake_case`, which is useful for column renaming
 * Fix for legends created with `scale_rsi_colours()` when using `ggplot2` v3.3.4 or higher (this is bug ggplot2#4511, soon to be fixed)
 * Fix for minor translation errors

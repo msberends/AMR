@@ -45,7 +45,7 @@ pdf(NULL) # prevent Rplots.pdf being created
 expect_silent(plot(x))
 if (AMR:::pkg_is_available("ggplot2")) {
   expect_silent(ggplot_rsi_predict(x))
-  expect_silent(ggplot(x))
+  expect_silent(autoplot(x))
   expect_error(ggplot_rsi_predict(example_isolates))
 }
 expect_stdout(rsi_predict(x = subset(example_isolates, mo == "B_ESCHR_COLI"),

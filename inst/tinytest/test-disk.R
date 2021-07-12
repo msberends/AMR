@@ -44,9 +44,9 @@ expect_silent(plot(as.disk(c(10, 20, 40))))
 expect_silent(plot(as.disk(c(10, 20, 40)), expand = FALSE))
 expect_silent(plot(as.disk(c(10, 20, 40)), mo = "esco", ab = "cipr"))
 if (AMR:::pkg_is_available("ggplot2")) {
-  expect_inherits(ggplot(as.disk(c(10, 20, 40))), "gg")
-  expect_inherits(ggplot(as.disk(c(10, 20, 40)), expand = FALSE), "gg")
-  expect_inherits(ggplot(as.disk(c(10, 20, 40)), mo = "esco", ab = "cipr"), "gg")
+  expect_inherits(autoplot(as.disk(c(10, 20, 40))), "gg")
+  expect_inherits(autoplot(as.disk(c(10, 20, 40)), expand = FALSE), "gg")
+  expect_inherits(autoplot(as.disk(c(10, 20, 40)), mo = "esco", ab = "cipr"), "gg")
 }
 expect_stdout(print(as.disk(12)))
 

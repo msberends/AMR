@@ -23,7 +23,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Predict antimicrobial resistance
+#' Predict Antimicrobial Resistance
 #'
 #' Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns `se_min` and `se_max`. See *Examples* for a real live example.
 #' @inheritSection lifecycle Stable Lifecycle
@@ -99,9 +99,9 @@
 #'                        info = FALSE,
 #'                        minimum = 15)
 #'                        
-#'   ggplot(data)
+#'   autoplot(data)
 #'
-#'   ggplot(as.data.frame(data),
+#'   ggplot(data,
 #'          aes(x = year)) +
 #'     geom_col(aes(y = value),
 #'              fill = "grey75") +
@@ -394,20 +394,22 @@ ggplot_rsi_predict <- function(x,
   p
 }
 
-#' @method ggplot resistance_predict
-#' @rdname resistance_predict
-# will be exported using s3_register() in R/zzz.R
-ggplot.resistance_predict <- function(x,
-                                      main = paste("Resistance Prediction of", x_name),
-                                      ribbon = TRUE,
-                                      ...) {
-  x_name <- paste0(ab_name(attributes(x)$ab), " (", attributes(x)$ab, ")")
-  meet_criteria(main, allow_class = "character", has_length = 1)
-  meet_criteria(ribbon, allow_class = "logical", has_length = 1)
-  ggplot_rsi_predict(x = x, main = main, ribbon = ribbon, ...)
-}
-
 #' @method autoplot resistance_predict
 #' @rdname resistance_predict
 # will be exported using s3_register() in R/zzz.R
-autoplot.resistance_predict <- ggplot.resistance_predict
+autoplot.resistance_predict <- function(object,
+                                        main = paste("Resistance Prediction of", x_name),
+                                        ribbon = TRUE,
+                                        ...) {
+  x_name <- paste0(ab_name(attributes(object)$ab), " (", attributes(object)$ab, ")")
+  meet_criteria(main, allow_class = "character", has_length = 1)
+  meet_criteria(ribbon, allow_class = "logical", has_length = 1)
+  ggplot_rsi_predict(x = object, main = main, ribbon = ribbon, ...)
+}
+
+#' @method fortify resistance_predict
+#' @noRd
+# will be exported using s3_register() in R/zzz.R
+fortify.resistance_predict <- function(model, data, ...) {
+  as.data.frame(model)
+}

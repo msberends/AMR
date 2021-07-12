@@ -26,15 +26,14 @@
 #' Plotting for Classes `rsi`, `mic` and `disk`
 #' 
 #' Functions to plot classes `rsi`, `mic` and `disk`, with support for base \R and `ggplot2`.
-#' @inheritSection lifecycle Stable Lifecycle
+#' @inheritSection lifecycle Maturing Lifecycle
 #' @inheritSection AMR Read more on Our Website!
-#' @param x,data MIC values created with [as.mic()] or disk diffusion values created with [as.disk()]
-#' @param mapping aesthetic mappings to use for [`ggplot()`][ggplot2::ggplot()]
-#' @param main,title title of the plot
-#' @param xlab,ylab axis title
+#' @param x,object values created with [as.mic()], [as.disk()] or [as.rsi()]
 #' @param mo any (vector of) text that can be coerced to a valid microorganism code with [as.mo()]
 #' @param ab any (vector of) text that can be coerced to a valid antimicrobial code with [as.ab()]
 #' @param guideline interpretation guideline to use, defaults to the latest included EUCAST guideline, see *Details*
+#' @param main,title title of the plot
+#' @param xlab,ylab axis title
 #' @param colours_RSI colours to use for filling in the bars, must be a vector of three values (in the order R, S and I). The default colours are colour-blind friendly.
 #' @param language language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant', defaults to system language (see [get_locale()]) and can be overwritten by setting the option `AMR_locale`, e.g. `options(AMR_locale = "de")`, see [translate]. Use `language = NULL` or `language = ""` to prevent translation.
 #' @param expand a [logical] to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.
@@ -46,7 +45,7 @@
 #' Simply using `"CLSI"` or `"EUCAST"` as input will automatically select the latest version of that guideline.
 #' @name plot
 #' @rdname plot
-#' @return The `ggplot` functions return a [`ggplot`][ggplot2::ggplot()] model that is extendible with any `ggplot2` function.
+#' @return The `autoplot()` functions return a [`ggplot`][ggplot2::ggplot()] model that is extendible with any `ggplot2` function.
 #' @param ... arguments passed on to [as.rsi()]
 #' @examples 
 #' some_mic_values <- random_mic(size = 100)
@@ -63,9 +62,9 @@
 #' 
 #' \donttest{
 #' if (require("ggplot2")) {
-#'   ggplot(some_mic_values)
-#'   ggplot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
-#'   ggplot(some_rsi_values)
+#'   autoplot(some_mic_values)
+#'   autoplot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
+#'   autoplot(some_rsi_values)
 #' }
 #' }
 NULL
@@ -75,22 +74,22 @@ NULL
 #' @export
 #' @rdname plot
 plot.mic <- function(x,
-                     main = paste("MIC values of", deparse(substitute(x))),
-                     ylab = "Frequency",
-                     xlab = "Minimum Inhibitory Concentration (mg/L)",
                      mo = NULL,
                      ab = NULL,
                      guideline = "EUCAST",
+                     main = paste("MIC values of", deparse(substitute(x))),
+                     ylab = "Frequency",
+                     xlab = "Minimum Inhibitory Concentration (mg/L)",
                      colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
                      language = get_locale(),
                      expand = TRUE,
                      ...) {
-  meet_criteria(main, allow_class = "character", has_length = 1, allow_NULL = TRUE)
-  meet_criteria(ylab, allow_class = "character", has_length = 1)
-  meet_criteria(xlab, allow_class = "character", has_length = 1)
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
+  meet_criteria(main, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  meet_criteria(ylab, allow_class = "character", has_length = 1)
+  meet_criteria(xlab, allow_class = "character", has_length = 1)
   meet_criteria(colours_RSI, allow_class = "character", has_length = c(1, 3))
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
@@ -161,12 +160,12 @@ plot.mic <- function(x,
 #' @export
 #' @noRd
 barplot.mic <- function(height,
-                        main = paste("MIC values of", deparse(substitute(height))),
-                        ylab = "Frequency",
-                        xlab = "Minimum Inhibitory Concentration (mg/L)",
                         mo = NULL,
                         ab = NULL,
                         guideline = "EUCAST",
+                        main = paste("MIC values of", deparse(substitute(height))),
+                        ylab = "Frequency",
+                        xlab = "Minimum Inhibitory Concentration (mg/L)",
                         colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
                         language = get_locale(),
                         expand = TRUE,
@@ -202,28 +201,27 @@ barplot.mic <- function(height,
        ...)
 }
 
-#' @method ggplot mic
+#' @method autplot mic
 #' @rdname plot
 # will be exported using s3_register() in R/zzz.R
-ggplot.mic <- function(data,
-                       mapping = NULL,
-                       title = paste("MIC values of", deparse(substitute(data))),
-                       ylab = "Frequency",
-                       xlab = "Minimum Inhibitory Concentration (mg/L)",
-                       mo = NULL,
-                       ab = NULL,
-                       guideline = "EUCAST",
-                       colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
-                       language = get_locale(),
-                       expand = TRUE,
-                       ...) {
+autoplot.mic <- function(object,
+                         mo = NULL,
+                         ab = NULL,
+                         guideline = "EUCAST",
+                         title = paste("MIC values of", deparse(substitute(object))),
+                         ylab = "Frequency",
+                         xlab = "Minimum Inhibitory Concentration (mg/L)",
+                         colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
+                         language = get_locale(),
+                         expand = TRUE,
+                         ...) {
   stop_ifnot_installed("ggplot2")
-  meet_criteria(title, allow_class = "character", allow_NULL = TRUE)
-  meet_criteria(ylab, allow_class = "character", has_length = 1)
-  meet_criteria(xlab, allow_class = "character", has_length = 1)
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
+  meet_criteria(title, allow_class = "character", allow_NULL = TRUE)
+  meet_criteria(ylab, allow_class = "character", has_length = 1)
+  meet_criteria(xlab, allow_class = "character", has_length = 1)
   meet_criteria(colours_RSI, allow_class = "character", has_length = c(1, 3))
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
@@ -243,7 +241,7 @@ ggplot.mic <- function(data,
     title <- gsub(" +", " ", paste0(title, collapse = " "))
   }
   
-  x <- plot_prepare_table(data, expand = expand)
+  x <- plot_prepare_table(object, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(x = x, 
                                               mo = mo, 
                                               ab = ab,
@@ -262,11 +260,7 @@ ggplot.mic <- function(data,
                     levels = translate_AMR(c("Susceptible", plot_name_of_I(cols_sub$guideline), "Resistant"),
                                            language = language),
                     ordered = TRUE)
-  if (!is.null(mapping)) {
-    p <- ggplot2::ggplot(df, mapping = mapping)
-  } else {
-    p <- ggplot2::ggplot(df)
-  }
+  p <- ggplot2::ggplot(df)
   
   if (any(colours_RSI %in% cols_sub$cols)) {
     vals <- c("Resistant" = colours_RSI[1],
@@ -289,10 +283,6 @@ ggplot.mic <- function(data,
     ggplot2::labs(title = title, x = xlab, y = ylab, subtitle = cols_sub$sub)
 }
 
-#' @method autoplot mic
-#' @rdname plot
-# will be exported using s3_register() in R/zzz.R
-autoplot.mic <- ggplot.mic
 
 #' @method plot disk
 #' @export
@@ -427,21 +417,20 @@ barplot.disk <- function(height,
        ...)
 }
 
-#' @method ggplot disk
+#' @method autoplot disk
 #' @rdname plot
 # will be exported using s3_register() in R/zzz.R
-ggplot.disk <- function(data,
-                        mapping = NULL,
-                        title = paste("Disk zones of", deparse(substitute(data))),
-                        ylab = "Frequency",
-                        xlab = "Disk diffusion diameter (mm)",
-                        mo = NULL,
-                        ab = NULL,
-                        guideline = "EUCAST",
-                        colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
-                        language = get_locale(),
-                        expand = TRUE,
-                        ...) {
+autoplot.disk <- function(object,
+                          mo = NULL,
+                          ab = NULL,
+                          title = paste("Disk zones of", deparse(substitute(object))),
+                          ylab = "Frequency",
+                          xlab = "Disk diffusion diameter (mm)",
+                          guideline = "EUCAST",
+                          colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
+                          language = get_locale(),
+                          expand = TRUE,
+                          ...) {
   stop_ifnot_installed("ggplot2")
   meet_criteria(title, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(ylab, allow_class = "character", has_length = 1)
@@ -468,7 +457,7 @@ ggplot.disk <- function(data,
     title <- gsub(" +", " ", paste0(title, collapse = " "))
   }
   
-  x <- plot_prepare_table(data, expand = expand)
+  x <- plot_prepare_table(object, expand = expand)
   cols_sub <- plot_colours_subtitle_guideline(x = x,
                                               mo = mo,
                                               ab = ab,
@@ -488,11 +477,7 @@ ggplot.disk <- function(data,
                     levels = translate_AMR(c("Susceptible", plot_name_of_I(cols_sub$guideline), "Resistant"),
                                            language = language),
                     ordered = TRUE)
-  if (!is.null(mapping)) {
-    p <- ggplot2::ggplot(df, mapping = mapping)
-  } else {
-    p <- ggplot2::ggplot(df)
-  }
+  p <- ggplot2::ggplot(df)
   
   if (any(colours_RSI %in% cols_sub$cols)) {
     vals <- c("Resistant" = colours_RSI[1],
@@ -514,11 +499,6 @@ ggplot.disk <- function(data,
   p +
     ggplot2::labs(title = title, x = xlab, y = ylab, subtitle = cols_sub$sub)
 }
-
-#' @method autoplot disk
-#' @rdname plot
-# will be exported using s3_register() in R/zzz.R
-autoplot.disk <- ggplot.disk
 
 #' @method plot rsi
 #' @export
@@ -618,17 +598,16 @@ barplot.rsi <- function(height,
   axis(2, seq(0, max(x)))
 }
 
-#' @method ggplot rsi
+#' @method autoplot rsi
 #' @rdname plot
 # will be exported using s3_register() in R/zzz.R
-ggplot.rsi <- function(data,
-                       mapping = NULL,
-                       title = paste("Resistance Overview of", deparse(substitute(data))),
-                       xlab = "Antimicrobial Interpretation",
-                       ylab = "Frequency",
-                       colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
-                       language = get_locale(),
-                       ...) {
+autoplot.rsi <- function(object,
+                         title = paste("Resistance Overview of", deparse(substitute(object))),
+                         xlab = "Antimicrobial Interpretation",
+                         ylab = "Frequency",
+                         colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
+                         language = get_locale(),
+                         ...) {
   stop_ifnot_installed("ggplot2")
   meet_criteria(title, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(ylab, allow_class = "character", has_length = 1)
@@ -654,15 +633,9 @@ ggplot.rsi <- function(data,
     colours_RSI <- rep(colours_RSI, 3)
   }
   
-  df <- as.data.frame(table(data), stringsAsFactors = TRUE)
+  df <- as.data.frame(table(object), stringsAsFactors = TRUE)
   colnames(df) <- c("rsi", "count")
-  if (!is.null(mapping)) {
-    p <- ggplot2::ggplot(df, mapping = mapping)
-  } else {
-    p <- ggplot2::ggplot(df)
-  }
-  
-  p +
+  ggplot2::ggplot(df) +
     ggplot2::geom_col(ggplot2::aes(x = rsi, y = count, fill = rsi)) + 
     # limits = force is needed because of a ggplot2 >= 3.3.4 bug (#4511)
     ggplot2::scale_fill_manual(values = c("R" = colours_RSI[1],
@@ -672,11 +645,6 @@ ggplot.rsi <- function(data,
     ggplot2::labs(title = title, x = xlab, y = ylab) +
     ggplot2::theme(legend.position = "none")
 }
-
-#' @method autoplot rsi
-#' @rdname plot
-# will be exported using s3_register() in R/zzz.R
-autoplot.rsi <- ggplot.rsi
 
 plot_prepare_table <- function(x, expand) {
   x <- x[!is.na(x)]

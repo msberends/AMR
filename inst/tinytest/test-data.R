@@ -52,6 +52,7 @@ expect_identical(as.ab(antibiotics$name), antibiotics$ab)
 datasets <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item"]
 for (i in seq_len(length(datasets))) {
   dataset <- get(datasets[i], envir = asNamespace("AMR"))
+  expect_identical(class(dataset), "data.frame")
   expect_identical(AMR:::dataset_UTF8_to_ASCII(dataset), dataset, info = datasets[i])
 }
 

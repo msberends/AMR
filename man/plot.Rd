@@ -3,54 +3,35 @@
 \name{plot}
 \alias{plot}
 \alias{plot.mic}
-\alias{ggplot.mic}
 \alias{autoplot.mic}
 \alias{plot.disk}
-\alias{ggplot.disk}
 \alias{autoplot.disk}
 \alias{plot.rsi}
-\alias{ggplot.rsi}
 \alias{autoplot.rsi}
 \title{Plotting for Classes \code{rsi}, \code{mic} and \code{disk}}
 \usage{
 \method{plot}{mic}(
   x,
+  mo = NULL,
+  ab = NULL,
+  guideline = "EUCAST",
   main = paste("MIC values of", deparse(substitute(x))),
   ylab = "Frequency",
   xlab = "Minimum Inhibitory Concentration (mg/L)",
-  mo = NULL,
-  ab = NULL,
-  guideline = "EUCAST",
   colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
   language = get_locale(),
   expand = TRUE,
   ...
 )
 
-\method{ggplot}{mic}(
-  data,
-  mapping = NULL,
-  title = paste("MIC values of", deparse(substitute(data))),
-  ylab = "Frequency",
-  xlab = "Minimum Inhibitory Concentration (mg/L)",
+\method{autplot}{mic}(
+  object,
   mo = NULL,
   ab = NULL,
   guideline = "EUCAST",
-  colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
-  language = get_locale(),
-  expand = TRUE,
-  ...
-)
-
-\method{autoplot}{mic}(
-  data,
-  mapping = NULL,
-  title = paste("MIC values of", deparse(substitute(data))),
+  title = paste("MIC values of", deparse(substitute(object))),
   ylab = "Frequency",
   xlab = "Minimum Inhibitory Concentration (mg/L)",
-  mo = NULL,
-  ab = NULL,
-  guideline = "EUCAST",
   colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
   language = get_locale(),
   expand = TRUE,
@@ -71,29 +52,13 @@
   ...
 )
 
-\method{ggplot}{disk}(
-  data,
-  mapping = NULL,
-  title = paste("Disk zones of", deparse(substitute(data))),
-  ylab = "Frequency",
-  xlab = "Disk diffusion diameter (mm)",
-  mo = NULL,
-  ab = NULL,
-  guideline = "EUCAST",
-  colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
-  language = get_locale(),
-  expand = TRUE,
-  ...
-)
-
 \method{autoplot}{disk}(
-  data,
-  mapping = NULL,
-  title = paste("Disk zones of", deparse(substitute(data))),
-  ylab = "Frequency",
-  xlab = "Disk diffusion diameter (mm)",
+  object,
   mo = NULL,
   ab = NULL,
+  title = paste("Disk zones of", deparse(substitute(object))),
+  ylab = "Frequency",
+  xlab = "Disk diffusion diameter (mm)",
   guideline = "EUCAST",
   colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
   language = get_locale(),
@@ -109,21 +74,9 @@
   ...
 )
 
-\method{ggplot}{rsi}(
-  data,
-  mapping = NULL,
-  title = paste("Resistance Overview of", deparse(substitute(data))),
-  xlab = "Antimicrobial Interpretation",
-  ylab = "Frequency",
-  colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
-  language = get_locale(),
-  ...
-)
-
 \method{autoplot}{rsi}(
-  data,
-  mapping = NULL,
-  title = paste("Resistance Overview of", deparse(substitute(data))),
+  object,
+  title = paste("Resistance Overview of", deparse(substitute(object))),
   xlab = "Antimicrobial Interpretation",
   ylab = "Frequency",
   colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
@@ -132,17 +85,17 @@
 )
 }
 \arguments{
-\item{x, data}{MIC values created with \code{\link[=as.mic]{as.mic()}} or disk diffusion values created with \code{\link[=as.disk]{as.disk()}}}
-
-\item{main, title}{title of the plot}
-
-\item{xlab, ylab}{axis title}
+\item{x, object}{values created with \code{\link[=as.mic]{as.mic()}}, \code{\link[=as.disk]{as.disk()}} or \code{\link[=as.rsi]{as.rsi()}}}
 
 \item{mo}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
 
 \item{ab}{any (vector of) text that can be coerced to a valid antimicrobial code with \code{\link[=as.ab]{as.ab()}}}
 
 \item{guideline}{interpretation guideline to use, defaults to the latest included EUCAST guideline, see \emph{Details}}
+
+\item{main, title}{title of the plot}
+
+\item{xlab, ylab}{axis title}
 
 \item{colours_RSI}{colours to use for filling in the bars, must be a vector of three values (in the order R, S and I). The default colours are colour-blind friendly.}
 
@@ -151,11 +104,9 @@
 \item{expand}{a \link{logical} to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.}
 
 \item{...}{arguments passed on to \code{\link[=as.rsi]{as.rsi()}}}
-
-\item{mapping}{aesthetic mappings to use for \code{\link[ggplot2:ggplot]{ggplot()}}}
 }
 \value{
-The \code{ggplot} functions return a \code{\link[ggplot2:ggplot]{ggplot}} model that is extendible with any \code{ggplot2} function.
+The \code{autoplot()} functions return a \code{\link[ggplot2:ggplot]{ggplot}} model that is extendible with any \code{ggplot2} function.
 }
 \description{
 Functions to plot classes \code{rsi}, \code{mic} and \code{disk}, with support for base \R and \code{ggplot2}.
@@ -167,12 +118,10 @@ For interpreting MIC values as well as disk diffusion diameters, supported guide
 
 Simply using \code{"CLSI"} or \code{"EUCAST"} as input will automatically select the latest version of that guideline.
 }
-\section{Stable Lifecycle}{
+\section{Maturing Lifecycle}{
 
-\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
-
-If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
+\if{html}{\figure{lifecycle_maturing.svg}{options: style=margin-bottom:5px} \cr}
+The \link[=lifecycle]{lifecycle} of this function is \strong{maturing}. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome \href{https://github.com/msberends/AMR/issues}{to suggest changes at our repository} or \link[=AMR]{write us an email (see section 'Contact Us')}.
 }
 
 \section{Read more on Our Website!}{
@@ -195,9 +144,9 @@ plot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
 
 \donttest{
 if (require("ggplot2")) {
-  ggplot(some_mic_values)
-  ggplot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
-  ggplot(some_rsi_values)
+  autoplot(some_mic_values)
+  autoplot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
+  autoplot(some_rsi_values)
 }
 }
 }

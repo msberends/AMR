@@ -5,9 +5,8 @@
 \alias{rsi_predict}
 \alias{plot.resistance_predict}
 \alias{ggplot_rsi_predict}
-\alias{ggplot.resistance_predict}
 \alias{autoplot.resistance_predict}
-\title{Predict antimicrobial resistance}
+\title{Predict Antimicrobial Resistance}
 \usage{
 resistance_predict(
   x,
@@ -48,10 +47,8 @@ ggplot_rsi_predict(
   ...
 )
 
-\method{ggplot}{resistance_predict}(x, main = paste("Resistance Prediction of", x_name), ribbon = TRUE, ...)
-
 \method{autoplot}{resistance_predict}(
-  x,
+  object,
   main = paste("Resistance Prediction of", x_name),
   ribbon = TRUE,
   ...
@@ -174,9 +171,9 @@ if (require("dplyr") & require("ggplot2")) {
                        info = FALSE,
                        minimum = 15)
                        
-  ggplot(data)
+  autoplot(data)
 
-  ggplot(as.data.frame(data),
+  ggplot(data,
          aes(x = year)) +
     geom_col(aes(y = value),
              fill = "grey75") +
