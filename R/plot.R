@@ -684,6 +684,7 @@ plot_prepare_table <- function(x, expand) {
   if (is.mic(x)) {
     if (expand == TRUE) {
       # expand range for MIC by adding factors of 2 from lowest to highest so all MICs in between also print
+      valid_lvls <- levels(x)
       extra_range <- max(x) / 2
       while (min(extra_range) / 2 > min(x)) {
         extra_range <- c(min(extra_range) / 2, extra_range)
@@ -692,7 +693,7 @@ plot_prepare_table <- function(x, expand) {
       extra_range <- rep(0, length(extra_range))
       names(extra_range) <- nms
       x <- table(droplevels(x, as.mic = FALSE))
-      extra_range <- extra_range[!names(extra_range) %in% names(x)]
+      extra_range <- extra_range[!names(extra_range) %in% names(x) & names(extra_range) %in% valid_lvls]
       x <- as.table(c(x, extra_range))
     } else {
       x <- table(droplevels(x, as.mic = FALSE))

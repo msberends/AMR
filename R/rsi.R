@@ -411,13 +411,18 @@ as.rsi.mic <- function(x,
     uti <- rep(uti, length(x))
   }
   
-  message_("=> Interpreting MIC values of ", ifelse(isTRUE(list(...)$is_data.frame), "column ", ""), "'", font_bold(ab), "' (",
-           ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
-           ab_name(ab_coerced, tolower = TRUE), ")", mo_var_found, 
+  agent_formatted <- paste0("'", font_bold(ab), "'")
+  agent_name <- ab_name(ab_coerced, tolower = TRUE, language = NULL)
+  if (generalise_antibiotic_name(ab) != generalise_antibiotic_name(agent_name)) {
+    agent_formatted <- paste0(agent_formatted, " (", ab_coerced, ", ", agent_name, ")")
+  }
+  message_("=> Interpreting MIC values of ", ifelse(isTRUE(list(...)$is_data.frame), "column ", ""),
+           agent_formatted,
+           mo_var_found, 
            " according to ", ifelse(identical(reference_data, AMR::rsi_translation),
                                     font_bold(guideline_coerced),
                                     "manually defined 'reference_data'"),
-           " ... ",
+           "... ",
            appendLF = FALSE,
            as_note = FALSE)
   
@@ -500,13 +505,18 @@ as.rsi.disk <- function(x,
     uti <- rep(uti, length(x))
   }
   
-  message_("=> Interpreting disk zones of ", ifelse(isTRUE(list(...)$is_data.frame), "column ", ""), "'", font_bold(ab), "' (",
-           ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
-           ab_name(ab_coerced, tolower = TRUE), ")", mo_var_found, 
+  agent_formatted <- paste0("'", font_bold(ab), "'")
+  agent_name <- ab_name(ab_coerced, tolower = TRUE, language = NULL)
+  if (generalise_antibiotic_name(ab) != generalise_antibiotic_name(agent_name)) {
+    agent_formatted <- paste0(agent_formatted, " (", ab_coerced, ", ", agent_name, ")")
+  }
+  message_("=> Interpreting disk zones of ", ifelse(isTRUE(list(...)$is_data.frame), "column ", ""),
+           agent_formatted,
+           mo_var_found, 
            " according to ", ifelse(identical(reference_data, AMR::rsi_translation),
                                     font_bold(guideline_coerced),
                                     "manually defined 'reference_data'"),
-           " ... ",
+           "... ",
            appendLF = FALSE,
            as_note = FALSE)
   

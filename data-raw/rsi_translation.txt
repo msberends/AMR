@@ -754,6 +754,8 @@
 "EUCAST 2021"	"MIC"		"Staphylococcus saccharolyticus"	"Imipenem/relebactam"	"Anaerobes, Grampositive"		2	2	FALSE
 "EUCAST 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Imipenem/relebactam"	"Viridans group streptococci"		2	2	FALSE
 "EUCAST 2021"	"MIC"		"(unknown name)"	"Imipenem/relebactam"	"PK PD breakpoints"		2	2	FALSE
+"EUCAST 2021"	"DISK"		"Morganellaceae"	"Imipenem"	"Enterobacterales"	"10ug"	50	19	FALSE
+"EUCAST 2021"	"MIC"		"Morganellaceae"	"Imipenem"	"Enterobacterales"		0.001	4	FALSE
 "EUCAST 2021"	"DISK"		"Enterobacterales"	"Imipenem"	"Enterobacterales"	"10ug"	22	19	FALSE
 "EUCAST 2021"	"MIC"		"Enterobacterales"	"Imipenem"	"Enterobacterales"		2	4	FALSE
 "EUCAST 2021"	"DISK"		"Acinetobacter"	"Imipenem"	"Acinetobacter"	"10ug"	24	21	FALSE
@@ -2542,6 +2544,8 @@
 "EUCAST 2020"	"MIC"		"Staphylococcus saccharolyticus"	"Imipenem/relebactam"	"Anaerobes, Grampositive"		2	2	FALSE
 "EUCAST 2020"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Imipenem/relebactam"	"Viridans group streptococci"		2	2	FALSE
 "EUCAST 2020"	"MIC"		"(unknown name)"	"Imipenem/relebactam"	"PK PD breakpoints"		2	2	FALSE
+"EUCAST 2020"	"DISK"		"Morganellaceae"	"Imipenem"	"Enterobacterales"	"10ug"	50	19	FALSE
+"EUCAST 2020"	"MIC"		"Morganellaceae"	"Imipenem"	"Enterobacterales"		0.001	4	FALSE
 "EUCAST 2020"	"DISK"		"Enterobacterales"	"Imipenem"	"Enterobacterales"	"10ug"	22	17	FALSE
 "EUCAST 2020"	"MIC"		"Enterobacterales"	"Imipenem"	"Enterobacterales"		2	4	FALSE
 "EUCAST 2020"	"DISK"		"Acinetobacter"	"Imipenem"	"Acinetobacter"	"10ug"	24	21	FALSE

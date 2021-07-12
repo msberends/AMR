@@ -400,6 +400,9 @@ word_wrap <- function(...,
   # format backticks
   msg <- gsub("(`.+?`)", font_grey_bg("\\1"), msg)
   
+  # clean introduced whitespace between fullstops
+  msg <- gsub("[.] +[.]", "..", msg)
+  
   msg
 }
 

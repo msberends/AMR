@@ -5,7 +5,7 @@
 \alias{rsi_translation}
 \title{Data Set for R/SI Interpretation}
 \format{
-A \link{data.frame} with 21,996 observations and 10 variables:
+A \link{data.frame} with 22,000 observations and 10 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
 \item \code{method}\cr Either "DISK" or "MIC"

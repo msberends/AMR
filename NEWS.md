@@ -1,5 +1,5 @@
-# `AMR` 1.7.1.9018
-## <small>Last updated: 11 July 2021</small>
+# `AMR` 1.7.1.9019
+## <small>Last updated: 12 July 2021</small>
 
 ### Changed
 * Antibiotic class selectors (see `ab_class()`)
@@ -20,6 +20,7 @@
 * `ab_name()` gained argument `snake_case`, which is useful for column renaming
 * Fix for legends created with `scale_rsi_colours()` when using `ggplot2` v3.3.4 or higher (this is bug ggplot2#4511, soon to be fixed)
 * Fix for minor translation errors
+* Fix for the MIC interpretation of *Morganellaceae* (such as *Morganella* and *Proteus*) when using the EUCAST 2021 guideline
 
 
 # `AMR` 1.7.1

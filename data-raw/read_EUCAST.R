@@ -118,7 +118,7 @@ read_EUCAST <- function(sheet, file, guideline_name) {
                                       seq(from = 41, to = 49, by = 1),
                                       seq(from = 81, to = 89, by = 1))
   has_superscript <- function(x) {
-    # because due to floating point error 0.1252 is not in: 
+    # because due to floating point error, 0.1252 is not in: 
     # seq(from = 0.1251, to = 0.1259, by = 0.0001)
     sapply(x, function(x) any(near(x, MICs_with_trailing_superscript)))
   }
@@ -242,3 +242,21 @@ for (i in 2:length(sheets_to_analyse)) {
                                          guideline_name = guideline_name))
     , error = function(e) message(e$message))
 }
+
+# 2021-07-12 fix for Morganellaceae (check other lines too next time)
+morg <- rsi_translation %>%
+  as_tibble() %>%
+  filter(ab == "IPM",
+         guideline == "EUCAST 2021",
+         mo == as.mo("Enterobacterales")) %>% 
+  mutate(mo = as.mo("Morganellaceae"))
+morg[which(morg$method == "MIC"), "breakpoint_S"] <- 0.001
+morg[which(morg$method == "MIC"), "breakpoint_R"] <- 4
+morg[which(morg$method == "DISK"), "breakpoint_S"] <- 50
+morg[which(morg$method == "DISK"), "breakpoint_R"] <- 19
+
+rsi_translation <- rsi_translation %>%
+  bind_rows(morg) %>%
+  bind_rows(morg %>%
+              mutate(guideline = "EUCAST 2020")) %>%
+  arrange(desc(guideline), ab, mo, method)

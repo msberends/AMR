@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9018</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9019</span>
       </span>
     </div>
 
@@ -236,12 +236,12 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1719018" class="section level1">
-<h1 class="page-header" data-toc-text="1.7.1.9018">
-<a href="#amr-1719018" class="anchor"></a><small> Unreleased </small><code>AMR</code> 1.7.1.9018</h1>
-<div id="last-updated-11-july-2021" class="section level2">
+    <div id="amr-1719019" class="section level1">
+<h1 class="page-header" data-toc-text="1.7.1.9019">
+<a href="#amr-1719019" class="anchor"></a><small> Unreleased </small><code>AMR</code> 1.7.1.9019</h1>
+<div id="last-updated-12-july-2021" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-11-july-2021" class="anchor"></a><small>Last updated: 11 July 2021</small>
+<a href="#last-updated-12-july-2021" class="anchor"></a><small>Last updated: 12 July 2021</small>
 </h2>
 <div id="changed" class="section level3">
 <h3 class="hasAnchor">
@@ -275,6 +275,7 @@
 <code><a href="../reference/ab_property.html">ab_name()</a></code> gained argument <code>snake_case</code>, which is useful for column renaming</li>
 <li>Fix for legends created with <code><a href="../reference/ggplot_rsi.html">scale_rsi_colours()</a></code> when using <code>ggplot2</code> v3.3.4 or higher (this is bug ggplot2<a href='https://github.com/msberends/AMR/issues/4511'>#4511</a>, soon to be fixed)</li>
 <li>Fix for minor translation errors</li>
+<li>Fix for the MIC interpretation of <em>Morganellaceae</em> (such as <em>Morganella</em> and <em>Proteus</em>) when using the EUCAST 2021 guideline</li>
 </ul>
 </div>
 </div>
@@ -503,7 +504,7 @@
 <code><a href="../reference/as.rsi.html">is.rsi.eligible()</a></code> now detects if the column name resembles an antibiotic name or code and now returns <code>TRUE</code> immediately if the input contains any of the values “R”, “S” or “I”. This drastically improves speed, also for a lot of other functions that rely on automatic determination of antibiotic columns.</li>
 <li>Functions <code><a href="../reference/get_episode.html">get_episode()</a></code> and <code><a href="../reference/get_episode.html">is_new_episode()</a></code> now support less than a day as value for argument <code>episode_days</code> (e.g., to include one patient/test per hour)</li>
 <li>Argument <code>ampc_cephalosporin_resistance</code> in <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> now also applies to value “I” (not only “S”)</li>
-<li>Functions <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> on a Principal Components Analysis object (<code><a href="../reference/pca.html">pca()</a></code>) now print additional group info if the original data was grouped using <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code>
+<li>Functions <code><a href="https://docs.ropensci.org/skimr/reference/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> on a Principal Components Analysis object (<code><a href="../reference/pca.html">pca()</a></code>) now print additional group info if the original data was grouped using <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code>
 </li>
 <li>Improved speed and reliability of <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>. As this also internally improves the reliability of <code><a href="../reference/first_isolate.html">first_isolate()</a></code> and <code><a href="../reference/mdro.html">mdro()</a></code>, this might have a slight impact on the results of those functions.</li>
 <li>Fix for <code><a href="../reference/mo_property.html">mo_name()</a></code> when used in other languages than English</li>
