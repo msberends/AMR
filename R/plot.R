@@ -201,7 +201,7 @@ barplot.mic <- function(height,
        ...)
 }
 
-#' @method autplot mic
+#' @method autoplot mic
 #' @rdname plot
 # will be exported using s3_register() in R/zzz.R
 autoplot.mic <- function(object,

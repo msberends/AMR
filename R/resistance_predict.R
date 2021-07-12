@@ -27,6 +27,7 @@
 #'
 #' Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns `se_min` and `se_max`. See *Examples* for a real live example.
 #' @inheritSection lifecycle Stable Lifecycle
+#' @param object model data to be plotted
 #' @param col_ab column name of `x` containing antimicrobial interpretations (`"R"`, `"I"` and `"S"`)
 #' @param col_date column name of the date, will be used to calculate years if this column doesn't consist of years already, defaults to the first column of with a date class
 #' @param year_min lowest year to use in the prediction model, dafaults to the lowest year in `col_date`

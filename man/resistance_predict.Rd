@@ -82,6 +82,8 @@ ggplot_rsi_predict(
 \item{main}{title of the plot}
 
 \item{ribbon}{a \link{logical} to indicate whether a ribbon should be shown (default) or error bars}
+
+\item{object}{model data to be plotted}
 }
 \value{
 A \link{data.frame} with extra class \code{\link{resistance_predict}} with columns:

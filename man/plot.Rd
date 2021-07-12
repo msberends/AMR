@@ -24,7 +24,7 @@
   ...
 )
 
-\method{autplot}{mic}(
+\method{autoplot}{mic}(
   object,
   mo = NULL,
   ab = NULL,
