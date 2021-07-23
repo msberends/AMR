@@ -149,7 +149,6 @@ count_R <- function(..., only_all_tested = FALSE) {
 count_IR <- function(..., only_all_tested = FALSE) {
   if (message_not_thrown_before("count_IR", entire_session = TRUE)) {
     message_("Using `count_IR()` is discouraged; use `count_resistant()` instead to not consider \"I\" being resistant. This note will be shown once for this session.", as_note = FALSE)
-    remember_thrown_message("count_IR")
   }
   tryCatch(
     rsi_calc(...,
@@ -186,7 +185,6 @@ count_SI <- function(..., only_all_tested = FALSE) {
 count_S <- function(..., only_all_tested = FALSE) {
   if (message_not_thrown_before("count_S", entire_session = TRUE)) {
     message_("Using `count_S()` is discouraged; use `count_susceptible()` instead to also consider \"I\" being susceptible. This note will be shown once for this session.", as_note = FALSE)
-    remember_thrown_message("count_S")
   }
   tryCatch(
     rsi_calc(...,

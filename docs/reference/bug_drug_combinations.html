@@ -55,6 +55,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -66,9 +68,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -82,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9014</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9022</span>
       </span>
     </div>
 
@@ -242,7 +250,7 @@
     <p>Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use <code><a href='https://rdrr.io/r/base/format.html'>format()</a></code> on the result to prettify it to a publishable/printable format, see <em>Examples</em>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bug_drug_combinations</span><span class='op'>(</span><span class='va'>x</span>, col_mo <span class='op'>=</span> <span class='cn'>NULL</span>, FUN <span class='op'>=</span> <span class='va'>mo_shortname</span>, <span class='va'>...</span><span class='op'>)</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>bug_drug_combinations</span><span class='op'>(</span><span class='va'>x</span>, col_mo <span class='op'>=</span> <span class='cn'>NULL</span>, FUN <span class='op'>=</span> <span class='va'>mo_shortname</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for bug_drug_combinations</span>
 <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span>
@@ -257,7 +265,7 @@
   decimal.mark <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"OutDec"</span><span class='op'>)</span>,
   big.mark <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>decimal.mark</span> <span class='op'>==</span> <span class='st'>","</span>, <span class='st'>"."</span>, <span class='st'>","</span><span class='op'>)</span>,
   <span class='va'>...</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -342,7 +350,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <p>On our website <a href='https://msberends.github.io/AMR/'>https://msberends.github.io/AMR/</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR data analysis, the <a href='https://msberends.github.io/AMR/reference/'>complete documentation of all functions</a> and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># \donttest{</span>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='co'># \donttest{</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>bug_drug_combinations</span><span class='op'>(</span><span class='va'>example_isolates</span><span class='op'>)</span>
 <span class='va'>x</span>
 <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='va'>x</span>, translate_ab <span class='op'>=</span> <span class='st'>"name (atc)"</span><span class='op'>)</span>
@@ -356,7 +364,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
                                                <span class='st'>"E. coli"</span>,
                                                <span class='st'>"Others"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># }</span>
-</pre>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -368,11 +376,11 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alexander W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.j.albers/'>Casper J. Albers</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
+  <p><p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/" class="external-link">Matthijs S. Berends</a>, <a href="https://www.rug.nl/staff/c.f.luz/" class="external-link">Christian F. Luz</a>, <a href="https://www.rug.nl/staff/a.w.friedrich/" class="external-link">Alexander W. Friedrich</a>, <a href="https://www.rug.nl/staff/b.sinha/" class="external-link">Bhanu N. M. Sinha</a>, <a href="https://www.rug.nl/staff/c.j.albers/" class="external-link">Casper J. Albers</a>, <a href="https://www.rug.nl/staff/c.glasner/" class="external-link">Corinna Glasner</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -380,6 +388,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
   
 
+
+  
 
   </body>
 </html>

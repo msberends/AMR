@@ -1072,7 +1072,6 @@ eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 11.0)
     message_("Dosages for antimicrobial drugs, as meant for ",
              format_eucast_version_nr(version_breakpoints, markdown = FALSE), ". ",
              font_red("This note will be shown once per session."))
-    remember_thrown_message(paste0("eucast_dosage_v", gsub("[^0-9]", "", version_breakpoints)), entire_session = TRUE)
   }
   
   ab <- as.ab(ab)

@@ -265,7 +265,7 @@ autoplot.mic <- function(object,
   if (any(colours_RSI %in% cols_sub$cols)) {
     vals <- c("Resistant" = colours_RSI[1],
               "Susceptible" = colours_RSI[2],
-              "Incr. exposure" = colours_RSI[3],
+              "Susceptible, incr. exp." = colours_RSI[3],
               "Intermediate" = colours_RSI[3])
     names(vals) <- translate_AMR(names(vals), language = language)
     p <- p +
@@ -482,7 +482,7 @@ autoplot.disk <- function(object,
   if (any(colours_RSI %in% cols_sub$cols)) {
     vals <- c("Resistant" = colours_RSI[1],
               "Susceptible" = colours_RSI[2],
-              "Incr. exposure" = colours_RSI[3],
+              "Susceptible, incr. exp." = colours_RSI[3],
               "Intermediate" = colours_RSI[3])
     names(vals) <- translate_AMR(names(vals), language = language)
     p <- p +
@@ -686,7 +686,7 @@ plot_prepare_table <- function(x, expand) {
 plot_name_of_I <- function(guideline) {
   if (guideline %unlike% "CLSI" && as.double(gsub("[^0-9]+", "", guideline)) >= 2019) {
     # interpretation since 2019
-    "Incr. exposure"
+    "Susceptible, incr. exp."
   } else {
     # interpretation until 2019
     "Intermediate"

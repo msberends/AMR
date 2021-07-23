@@ -106,6 +106,7 @@ head -3 DESCRIPTION
 echo
 echo "• First 2 lines of NEWS.md:"
 head -2 NEWS.md
+
 echo
 echo "R library location:" $(Rscript -e "cat(.libPaths()[1])")
 echo "•••••••••••••••••••••••••••••••••"
@@ -114,11 +115,13 @@ echo "••••••••••••••••••••••••�
 Rscript -e "devtools::load_all(quiet = TRUE)"
 echo "• Documenting..."
 Rscript -e "suppressMessages(devtools::document())"
+
 echo
 echo "••••••••••••••••••••••••••"
 echo "• Updating internal data •"
 echo "••••••••••••••••••••••••••"
 Rscript -e "source('data-raw/_internals.R')"
+
 echo
 echo "••••••••••••••••••••"
 echo "• Building package •"
@@ -127,25 +130,54 @@ echo "• Building 'data-raw/AMR_latest.tar.gz'..."
 Rscript -e "x <- devtools::build(path = 'data-raw', vignettes = FALSE, manual = FALSE, binary = FALSE, quiet = TRUE)"
 rm data-raw/AMR_latest.tar.gz
 mv data-raw/AMR_*.tar.gz data-raw/AMR_latest.tar.gz
-echo "• Installing..."
-Rscript -e "devtools::install(quiet = TRUE, dependencies = FALSE)"
+
+# echo "• Installing..."
+# Rscript -e "devtools::install(quiet = TRUE, dependencies = FALSE)"
+
 echo
 echo "•••••••••••••••••"
 echo "• Building site •"
 echo "•••••••••••••••••"
-Rscript -e "suppressMessages(pkgdown::build_site(lazy = $lazy, examples = FALSE, install = FALSE))"
+if $lazy == "FALSE"; then
+  Rscript -e "devtools::install(quiet = TRUE, dependencies = FALSE)"
+  Rscript -e "suppressMessages(pkgdown::build_site(lazy = FALSE, examples = FALSE, install = FALSE))"
+else
+  if ! git diff --quiet man; then
+    # documentation has changed
+    Rscript -e "pkgdown::build_reference(lazy = $lazy, examples = FALSE)"
+  fi
+  if ! git diff --quiet index.md; then
+    # home page has changed
+    Rscript -e "pkgdown::build_home()"
+  fi
+  if ! git diff --quiet NEWS.md; then
+    # news has changed
+    Rscript -e "pkgdown::build_home()"
+  fi
+  if ! git diff --quiet pkgdown; then
+    # something has changed in pkgdown files
+    Rscript -e "suppressMessages(pkgdown::build_site(lazy = $lazy, examples = FALSE, install = TRUE))"
+  fi
+  if ! git diff --quiet vignettes; then
+    # a vignette has changed
+    Rscript -e "devtools::install(quiet = TRUE, dependencies = FALSE)"
+    Rscript -e "pkgdown::build_articles(lazy = $lazy)"
+  fi
+fi
 # always rebuild datasets vignette 
 Rscript -e "pkgdown::build_article('datasets', lazy = FALSE, quiet = TRUE)"
 # add the survey page
 Rscript -e "source('data-raw/create_survey_page.R')"
+
 echo
 echo "•••••••••••••••••••••••••"
 echo "• List of changed files •"
 echo "•••••••••••••••••••••••••"
 git add .
 git status --short
+
 echo
-read -p "Uploading version ${new_version}. Continue (Y/n)? " choice
+read -p "Uploading v${new_version} '$1'. Continue (Y/n)? " choice
 case "$choice" in
   n|N ) exit 1;;
   * ) ;;

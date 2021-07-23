@@ -27,7 +27,7 @@
 #'
 #' These functions can be used for generating random MIC values and disk diffusion diameters, for AMR data analysis practice. By providing a microorganism and antimicrobial agent, the generated results will reflect reality as much as possible.
 #' @inheritSection lifecycle Stable Lifecycle 
-#' @param size desired size of the returned vector
+#' @param size desired size of the returned vector. If used in a [data.frame] call or `dplyr` verb, will get the current (group) size if left blank.
 #' @param mo any [character] that can be coerced to a valid microorganism code with [as.mo()]
 #' @param ab any [character] that can be coerced to a valid antimicrobial agent code with [as.ab()]
 #' @param prob_RSI a vector of length 3: the probabilities for R (1st value), S (2nd value) and I (3rd value)
@@ -55,27 +55,36 @@
 #' random_disk(100, "Klebsiella pneumoniae", "ampicillin")    # range 11-17
 #' random_disk(100, "Streptococcus pneumoniae", "ampicillin") # range 12-27
 #' }
-random_mic <- function(size, mo = NULL, ab = NULL, ...) {
-  meet_criteria(size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+random_mic <- function(size = NULL, mo = NULL, ab = NULL, ...) {
+  meet_criteria(size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE, allow_NULL = TRUE)
   meet_criteria(mo, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(ab, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  if (is.null(size)) {
+    size <- NROW(get_current_data(arg_name = "size", call = -3))
+  }
   random_exec("MIC", size = size, mo = mo, ab = ab)
 }
 
 #' @rdname random
 #' @export
-random_disk <- function(size, mo = NULL, ab = NULL, ...) {
-  meet_criteria(size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+random_disk <- function(size = NULL, mo = NULL, ab = NULL, ...) {
+  meet_criteria(size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE, allow_NULL = TRUE)
   meet_criteria(mo, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(ab, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  if (is.null(size)) {
+    size <- NROW(get_current_data(arg_name = "size", call = -3))
+  }
   random_exec("DISK", size = size, mo = mo, ab = ab)
 }
 
 #' @rdname random
 #' @export
-random_rsi <- function(size, prob_RSI = c(0.33, 0.33, 0.33), ...) {
-  meet_criteria(size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
+random_rsi <- function(size = NULL, prob_RSI = c(0.33, 0.33, 0.33), ...) {
+  meet_criteria(size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE, allow_NULL = TRUE)
   meet_criteria(prob_RSI, allow_class = c("numeric", "integer"), has_length = 3)
+  if (is.null(size)) {
+    size <- NROW(get_current_data(arg_name = "size", call = -3))
+  }
   sample(as.rsi(c("R", "S", "I")), size = size, replace = TRUE, prob = prob_RSI)
 }
 
@@ -111,23 +120,22 @@ random_exec <- function(type, size, mo = NULL, ab = NULL) {
       warning_("No rows found that match ab '", ab, "', ignoring argument `ab`", call = FALSE)
     }
   }
-  
+ 
   if (type == "MIC") {
-    # all valid MIC levels
-    valid_range <- as.mic(levels(as.mic(1)))
-    set_range_max <- max(df$breakpoint_R)
-    if (log(set_range_max, 2) %% 1 == 0) {
-      # return powers of 2
-      valid_range <- unique(as.double(valid_range))
-      # add 1-3 higher MIC levels to set_range_max
-      set_range_max <- 2 ^ (log(set_range_max, 2) + sample(c(1:3), 1))
-      set_range <- as.mic(valid_range[log(valid_range, 2) %% 1 == 0 & valid_range <= set_range_max])
-    } else {
-      # no power of 2, return factors of 2 to left and right side
-      valid_mics <- suppressWarnings(as.mic(set_range_max / (2 ^ c(-3:3))))
-      set_range <- valid_mics[!is.na(valid_mics)]
+    # set range
+    mic_range <- c(0.001, 0.002, 0.005, 0.010, 0.025, 0.0625, 0.125, 0.250, 0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256)
+
+    # get highest/lowest +/- random 1 to 3 higher factors of two
+    max_range <- mic_range[min(length(mic_range),
+                               which(mic_range == max(df$breakpoint_R)) + sample(c(1:3), 1))]
+    min_range <- mic_range[max(1,
+                               which(mic_range == min(df$breakpoint_S)) - sample(c(1:3), 1))]
+
+    mic_range_new <- mic_range[mic_range <= max_range & mic_range >= min_range]
+    if (length(mic_range_new) == 0) {
+      mic_range_new <- mic_range
     }
-    out <- as.mic(sample(set_range, size = size, replace = TRUE))
+    out <- as.mic(sample(mic_range_new, size = size, replace = TRUE))
     # 50% chance that lowest will get <= and highest will get >=
     if (stats::runif(1) > 0.5) {
       out[out == min(out)] <- paste0("<=", out[out == min(out)])

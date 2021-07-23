@@ -42,11 +42,11 @@ italicise_taxonomy("An overview of S. aureus isolates")
 cat(italicise_taxonomy("An overview of S. aureus isolates", type = "ansi"))
 
 # since ggplot2 supports no markdown (yet), use
-# italicise_taxonomy() and the `ggtext` pkg for titles:
+# italicise_taxonomy() and the `ggtext` package for titles:
 \donttest{
 if (require("ggplot2") && require("ggtext")) {
-  ggplot(example_isolates$AMC,
-         title = italicise_taxonomy("Amoxi/clav in E. coli")) +
+  autoplot(example_isolates$AMC,
+           title = italicise_taxonomy("Amoxi/clav in E. coli")) +
     theme(plot.title = ggtext::element_markdown())
 }
 }

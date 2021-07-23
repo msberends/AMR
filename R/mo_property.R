@@ -481,7 +481,6 @@ mo_is_intrinsic_resistant <- function(x, ab, language = get_locale(), ...) {
     message_("Determining intrinsic resistance based on ",
              format_eucast_version_nr(3.2, markdown = FALSE), ". ",
              font_red("This note will be shown once per session."))
-    remember_thrown_message("intrinsic_resistant_version", entire_session = TRUE)
   }
   
   # runs against internal vector: INTRINSIC_R (see zzz.R)
@@ -758,7 +757,6 @@ find_mo_col <- function(fn) {
   if (!is.null(df) && !is.null(mo) && is.data.frame(df)) {
     if (message_not_thrown_before(fn = fn)) {
       message_("Using column '", font_bold(mo), "' as input for `", fn, "()`")
-      remember_thrown_message(fn = fn)
     }
     return(df[, mo, drop = TRUE])
   } else {

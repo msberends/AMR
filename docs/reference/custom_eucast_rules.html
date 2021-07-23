@@ -55,6 +55,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -66,9 +68,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -82,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9022</span>
       </span>
     </div>
 
@@ -242,7 +250,7 @@
     <p>Define custom EUCAST rules for your organisation or specific analysis and use the output of this function in <code><a href='eucast_rules.html'>eucast_rules()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>custom_eucast_rules</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>custom_eucast_rules</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -263,14 +271,14 @@
 
     
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Basics</h3>
+<h3 class='hasAnchor' id='basics'><a class='anchor' aria-hidden='true' href='#basics'></a>Basics</h3>
 
 
-<p>If you are familiar with the <code><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when()</a></code> function of the <code>dplyr</code> package, you will recognise the input method to set your own rules. Rules must be set using what <span style="R">R</span> considers to be the 'formula notation'. The rule itself is written <em>before</em> the tilde (<code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>) and the consequence of the rule is written <em>after</em> the tilde:</p><pre><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>custom_eucast_rules</span><span class='op'>(</span><span class='va'>TZP</span> <span class='op'>==</span> <span class='st'>"S"</span> <span class='op'>~</span> <span class='va'>aminopenicillins</span> <span class='op'>==</span> <span class='st'>"S"</span>,
+<p>If you are familiar with the <code><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when()</a></code> function of the <code>dplyr</code> package, you will recognise the input method to set your own rules. Rules must be set using what <span style="R">R</span> considers to be the 'formula notation'. The rule itself is written <em>before</em> the tilde (<code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>) and the consequence of the rule is written <em>after</em> the tilde:</p><pre class='sourceCode r'><code><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>custom_eucast_rules</span><span class='op'>(</span><span class='va'>TZP</span> <span class='op'>==</span> <span class='st'>"S"</span> <span class='op'>~</span> <span class='va'>aminopenicillins</span> <span class='op'>==</span> <span class='st'>"S"</span>,
                          <span class='va'>TZP</span> <span class='op'>==</span> <span class='st'>"R"</span> <span class='op'>~</span> <span class='va'>aminopenicillins</span> <span class='op'>==</span> <span class='st'>"R"</span><span class='op'>)</span>
-</pre>
+</code></pre>
 
-<p>These are two custom EUCAST rules: if TZP (piperacillin/tazobactam) is "S", all aminopenicillins (ampicillin and amoxicillin) must be made "S", and if TZP is "R", aminopenicillins must be made "R". These rules can also be printed to the console, so it is immediately clear how they work:</p><pre><span class='va'>x</span>
+<p>These are two custom EUCAST rules: if TZP (piperacillin/tazobactam) is "S", all aminopenicillins (ampicillin and amoxicillin) must be made "S", and if TZP is "R", aminopenicillins must be made "R". These rules can also be printed to the console, so it is immediately clear how they work:</p><pre class='sourceCode r'><code><span class='va'>x</span>
 <span class='co'>#&gt; A set of custom EUCAST rules:</span>
 <span class='co'>#&gt; </span>
 <span class='co'>#&gt;   1. If TZP is S then set to S:</span>
@@ -278,9 +286,9 @@
 <span class='co'>#&gt; </span>
 <span class='co'>#&gt;   2. If TZP is R then set to R:</span>
 <span class='co'>#&gt;      amoxicillin (AMX), ampicillin (AMP)</span>
-</pre>
+</code></pre>
 
-<p>The rules (the part <em>before</em> the tilde, in above example <code>TZP == "S"</code> and <code>TZP == "R"</code>) must be evaluable in your data set: it should be able to run as a filter in your data set without errors. This means for the above example that the column <code>TZP</code> must exist. We will create a sample data set and test the rules set:</p><pre><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>mo <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"E. coli"</span>, <span class='st'>"K. pneumoniae"</span><span class='op'>)</span>,
+<p>The rules (the part <em>before</em> the tilde, in above example <code>TZP == "S"</code> and <code>TZP == "R"</code>) must be evaluable in your data set: it should be able to run as a filter in your data set without errors. This means for the above example that the column <code>TZP</code> must exist. We will create a sample data set and test the rules set:</p><pre class='sourceCode r'><code><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>mo <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"E. coli"</span>, <span class='st'>"K. pneumoniae"</span><span class='op'>)</span>,
                  TZP <span class='op'>=</span> <span class='st'>"R"</span>,
                  amox <span class='op'>=</span> <span class='st'>""</span>,
                  AMP <span class='op'>=</span> <span class='st'>""</span><span class='op'>)</span>
@@ -293,23 +301,23 @@
 <span class='co'>#&gt;              mo TZP amox AMP</span>
 <span class='co'>#&gt; 1       E. coli   R    R   R     </span>
 <span class='co'>#&gt; 2 K. pneumoniae   R    R   R  </span>
-</pre>
+</code></pre>
 
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Using taxonomic properties in rules</h3>
+<h3 class='hasAnchor' id='using-taxonomic-properties-in-rules'><a class='anchor' aria-hidden='true' href='#using-taxonomic-properties-in-rules'></a>Using taxonomic properties in rules</h3>
 
 
-<p>There is one exception in variables used for the rules: all column names of the <a href='microorganisms.html'>microorganisms</a> data set can also be used, but do not have to exist in the data set. These column names are: <code>mo</code>, <code>fullname</code>, <code>kingdom</code>, <code>phylum</code>, <code>class</code>, <code>order</code>, <code>family</code>, <code>genus</code>, <code>species</code>, <code>subspecies</code>, <code>rank</code>, <code>ref</code>, <code>species_id</code>, <code>source</code>, <code>prevalence</code> and <code>snomed</code>. Thus, this next example will work as well, despite the fact that the <code>df</code> data set does not contain a column <code>genus</code>:</p><pre><span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'>custom_eucast_rules</span><span class='op'>(</span><span class='va'>TZP</span> <span class='op'>==</span> <span class='st'>"S"</span> <span class='op'>&amp;</span> <span class='va'>genus</span> <span class='op'>==</span> <span class='st'>"Klebsiella"</span> <span class='op'>~</span> <span class='va'>aminopenicillins</span> <span class='op'>==</span> <span class='st'>"S"</span>,
+<p>There is one exception in variables used for the rules: all column names of the <a href='microorganisms.html'>microorganisms</a> data set can also be used, but do not have to exist in the data set. These column names are: <code>mo</code>, <code>fullname</code>, <code>kingdom</code>, <code>phylum</code>, <code>class</code>, <code>order</code>, <code>family</code>, <code>genus</code>, <code>species</code>, <code>subspecies</code>, <code>rank</code>, <code>ref</code>, <code>species_id</code>, <code>source</code>, <code>prevalence</code> and <code>snomed</code>. Thus, this next example will work as well, despite the fact that the <code>df</code> data set does not contain a column <code>genus</code>:</p><pre class='sourceCode r'><code><span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'>custom_eucast_rules</span><span class='op'>(</span><span class='va'>TZP</span> <span class='op'>==</span> <span class='st'>"S"</span> <span class='op'>&amp;</span> <span class='va'>genus</span> <span class='op'>==</span> <span class='st'>"Klebsiella"</span> <span class='op'>~</span> <span class='va'>aminopenicillins</span> <span class='op'>==</span> <span class='st'>"S"</span>,
                          <span class='va'>TZP</span> <span class='op'>==</span> <span class='st'>"R"</span> <span class='op'>&amp;</span> <span class='va'>genus</span> <span class='op'>==</span> <span class='st'>"Klebsiella"</span> <span class='op'>~</span> <span class='va'>aminopenicillins</span> <span class='op'>==</span> <span class='st'>"R"</span><span class='op'>)</span>
 
 <span class='fu'><a href='eucast_rules.html'>eucast_rules</a></span><span class='op'>(</span><span class='va'>df</span>, rules <span class='op'>=</span> <span class='st'>"custom"</span>, custom_rules <span class='op'>=</span> <span class='va'>y</span><span class='op'>)</span>
 <span class='co'>#&gt;              mo TZP amox AMP</span>
 <span class='co'>#&gt; 1       E. coli   R         </span>
 <span class='co'>#&gt; 2 K. pneumoniae   R    R   R</span>
-</pre>
+</code></pre>
 
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage of antibiotic group names</h3>
+<h3 class='hasAnchor' id='usage-of-antibiotic-group-names'><a class='anchor' aria-hidden='true' href='#usage-of-antibiotic-group-names'></a>Usage of antibiotic group names</h3>
 
 
 <p>It is possible to define antibiotic groups instead of single antibiotics for the rule consequence, the part <em>after</em> the tilde. In above examples, the antibiotic group <code>aminopenicillins</code> is used to include ampicillin and amoxicillin. The following groups are allowed (case-insensitive). Within parentheses are the antibiotic agents that will be matched when running the rule.</p><ul>
@@ -354,7 +362,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 <p>On our website <a href='https://msberends.github.io/AMR/'>https://msberends.github.io/AMR/</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR data analysis, the <a href='https://msberends.github.io/AMR/reference/'>complete documentation of all functions</a> and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>custom_eucast_rules</span><span class='op'>(</span><span class='va'>AMC</span> <span class='op'>==</span> <span class='st'>"R"</span> <span class='op'>&amp;</span> <span class='va'>genus</span> <span class='op'>==</span> <span class='st'>"Klebsiella"</span> <span class='op'>~</span> <span class='va'>aminopenicillins</span> <span class='op'>==</span> <span class='st'>"R"</span>,
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>custom_eucast_rules</span><span class='op'>(</span><span class='va'>AMC</span> <span class='op'>==</span> <span class='st'>"R"</span> <span class='op'>&amp;</span> <span class='va'>genus</span> <span class='op'>==</span> <span class='st'>"Klebsiella"</span> <span class='op'>~</span> <span class='va'>aminopenicillins</span> <span class='op'>==</span> <span class='st'>"R"</span>,
                          <span class='va'>AMC</span> <span class='op'>==</span> <span class='st'>"I"</span> <span class='op'>&amp;</span> <span class='va'>genus</span> <span class='op'>==</span> <span class='st'>"Klebsiella"</span> <span class='op'>~</span> <span class='va'>aminopenicillins</span> <span class='op'>==</span> <span class='st'>"I"</span><span class='op'>)</span>
 <span class='fu'><a href='eucast_rules.html'>eucast_rules</a></span><span class='op'>(</span><span class='va'>example_isolates</span>,
              rules <span class='op'>=</span> <span class='st'>"custom"</span>,
@@ -365,7 +373,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 <span class='va'>x2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>x</span>,
         <span class='fu'>custom_eucast_rules</span><span class='op'>(</span><span class='va'>TZP</span> <span class='op'>==</span> <span class='st'>"R"</span> <span class='op'>~</span> <span class='va'>carbapenems</span> <span class='op'>==</span> <span class='st'>"R"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>x2</span>
-</pre>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -377,11 +385,11 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alexander W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.j.albers/'>Casper J. Albers</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
+  <p><p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/" class="external-link">Matthijs S. Berends</a>, <a href="https://www.rug.nl/staff/c.f.luz/" class="external-link">Christian F. Luz</a>, <a href="https://www.rug.nl/staff/a.w.friedrich/" class="external-link">Alexander W. Friedrich</a>, <a href="https://www.rug.nl/staff/b.sinha/" class="external-link">Bhanu N. M. Sinha</a>, <a href="https://www.rug.nl/staff/c.j.albers/" class="external-link">Casper J. Albers</a>, <a href="https://www.rug.nl/staff/c.glasner/" class="external-link">Corinna Glasner</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -389,6 +397,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 
   
 
+
+  
 
   </body>
 </html>

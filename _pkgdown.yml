@@ -32,6 +32,7 @@ development:
 
 news:
   one_page: true
+  cran_dates: true
 
 navbar:
   title: "AMR (for R)"

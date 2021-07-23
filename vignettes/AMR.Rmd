@@ -523,7 +523,7 @@ disk_values
 plot(disk_values, mo = "E. coli", ab = "cipro")
 ```
 
-And when using the `ggplot2` package, but now choosing the latest implemented CLSI guideline (notice that the EUCAST-specific term "Incr. exposure" has changed to "Intermediate"):
+And when using the `ggplot2` package, but now choosing the latest implemented CLSI guideline (notice that the EUCAST-specific term "Susceptible, incr. exp." has changed to "Intermediate"):
 
 ```{r disk_plots_mo_ab, message = FALSE, warning = FALSE}
 autoplot(disk_values,

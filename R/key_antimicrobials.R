@@ -177,7 +177,6 @@ key_antimicrobials <- function(x = NULL,
                       paste0("Only using ", values_new_length, " out of ", values_old_length, " defined columns ")),
                "as key antimicrobials for ", name, "s. See ?key_antimicrobials.",
                call = FALSE)
-      remember_thrown_message(paste0("key_antimicrobials.", name))
     }
     
     generate_antimcrobials_string(x[which(filter), c(universal, values), drop = FALSE])

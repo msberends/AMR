@@ -27,6 +27,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -39,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9022</span>
       </span>
     </div>
 
@@ -47,14 +49,14 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
     Home
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-question-circle"></span>
+    <span class="fa fa-question-circle"></span>
      
     How to
      
@@ -63,77 +65,77 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../articles/AMR.html">
-        <span class="fas fa-directions"></span>
+        <span class="fa fa-directions"></span>
          
         Conduct AMR analysis
       </a>
     </li>
     <li>
       <a href="../articles/resistance_predict.html">
-        <span class="fas fa-dice"></span>
+        <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
       </a>
     </li>
     <li>
       <a href="../articles/datasets.html">
-        <span class="fas fa-database"></span>
+        <span class="fa fa-database"></span>
          
         Data sets for download / own use
       </a>
     </li>
     <li>
       <a href="../articles/PCA.html">
-        <span class="fas fa-compress"></span>
+        <span class="fa fa-compress"></span>
          
         Conduct principal component analysis for AMR
       </a>
     </li>
     <li>
       <a href="../articles/MDR.html">
-        <span class="fas fa-skull-crossbones"></span>
+        <span class="fa fa-skull-crossbones"></span>
          
         Determine multi-drug resistance (MDR)
       </a>
     </li>
     <li>
       <a href="../articles/WHONET.html">
-        <span class="fas fa-globe-americas"></span>
+        <span class="fa fa-globe-americas"></span>
          
         Work with WHONET data
       </a>
     </li>
     <li>
       <a href="../articles/SPSS.html">
-        <span class="fas fa-file-upload"></span>
+        <span class="fa fa-file-upload"></span>
          
         Import data from SPSS/SAS/Stata
       </a>
     </li>
     <li>
       <a href="../articles/EUCAST.html">
-        <span class="fas fa-exchange-alt"></span>
+        <span class="fa fa-exchange-alt"></span>
          
         Apply EUCAST rules
       </a>
     </li>
     <li>
       <a href="../reference/mo_property.html">
-        <span class="fas fa-bug"></span>
+        <span class="fa fa-bug"></span>
          
         Get properties of a microorganism
       </a>
     </li>
     <li>
       <a href="../reference/ab_property.html">
-        <span class="fas fa-capsules"></span>
+        <span class="fa fa-capsules"></span>
          
         Get properties of an antibiotic
       </a>
     </li>
     <li>
       <a href="../articles/benchmarks.html">
-        <span class="fas fa-shipping-fast"></span>
+        <span class="fa fa-shipping-fast"></span>
          
         Other: benchmarks
       </a>
@@ -142,14 +144,14 @@
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fas fa-book-open"></span>
+    <span class="fa fa-book-open"></span>
      
     Manual
   </a>
 </li>
 <li>
   <a href="../authors.html">
-    <span class="fas fa-users"></span>
+    <span class="fa fa-users"></span>
      
     Authors
   </a>
@@ -164,7 +166,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/msberends/AMR">
+  <a href="https://github.com/msberends/AMR" class="external-link">
     <span class="fab fa-github"></span>
      
     Source Code
@@ -172,7 +174,7 @@
 </li>
 <li>
   <a href="../survey.html">
-    <span class="fas fa-clipboard-list"></span>
+    <span class="fa fa-clipboard-list"></span>
      
     Survey
   </a>
@@ -187,15 +189,15 @@
 
       
 
-      </header><script src="SPSS_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><script src="SPSS_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>How to import data from SPSS / SAS / Stata</h1>
-                        <h4 class="author">Matthijs S. Berends</h4>
+                        <h4 data-toc-skip class="author">Matthijs S. Berends</h4>
             
-            <h4 class="date">03 June 2021</h4>
+            <h4 data-toc-skip class="date">23 July 2021</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/master/vignettes/SPSS.Rmd"><code>vignettes/SPSS.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/master/vignettes/SPSS.Rmd" class="external-link"><code>vignettes/SPSS.Rmd</code></a></small>
       <div class="hidden name"><code>SPSS.Rmd</code></div>
 
     </div>
@@ -204,17 +206,17 @@
     
 <div id="spss-sas-stata" class="section level2">
 <h2 class="hasAnchor">
-<a href="#spss-sas-stata" class="anchor"></a>SPSS / SAS / Stata</h2>
+<a href="#spss-sas-stata" class="anchor" aria-hidden="true"></a>SPSS / SAS / Stata</h2>
 <p>SPSS (Statistical Package for the Social Sciences) is probably the most well-known software package for statistical analysis. SPSS is easier to learn than R, because in SPSS you only have to click a menu to run parts of your analysis. Because of its user-friendliness, it is taught at universities and particularly useful for students who are new to statistics. From my experience, I would guess that pretty much all (bio)medical students know it at the time they graduate. SAS and Stata are comparable statistical packages popular in big industries.</p>
 </div>
 <div id="compared-to-r" class="section level2">
 <h2 class="hasAnchor">
-<a href="#compared-to-r" class="anchor"></a>Compared to R</h2>
+<a href="#compared-to-r" class="anchor" aria-hidden="true"></a>Compared to R</h2>
 <p>As said, SPSS is easier to learn than R. But SPSS, SAS and Stata come with major downsides when comparing it with R:</p>
 <ul>
 <li>
 <p><strong>R is highly modular.</strong></p>
-<p>The <a href="https://cran.r-project.org/">official R network (CRAN)</a> features more than 16,000 packages at the time of writing, our <code>AMR</code> package being one of them. All these packages were peer-reviewed before publication. Aside from this official channel, there are also developers who choose not to submit to CRAN, but rather keep it on their own public repository, like GitHub. So there may even be a lot more than 14,000 packages out there.</p>
+<p>The <a href="https://cran.r-project.org/" class="external-link">official R network (CRAN)</a> features more than 16,000 packages at the time of writing, our <code>AMR</code> package being one of them. All these packages were peer-reviewed before publication. Aside from this official channel, there are also developers who choose not to submit to CRAN, but rather keep it on their own public repository, like GitHub. So there may even be a lot more than 14,000 packages out there.</p>
 <p>Bottom line is, you can really extend it yourself or ask somebody to do this for you. Take for example our <code>AMR</code> package. Among other things, it adds reliable reference data to R to help you with the data cleaning and analysis. SPSS, SAS and Stata will never know what a valid MIC value is or what the Gram stain of <em>E. coli</em> is. Or that all species of <em>Klebiella</em> are resistant to amoxicillin and that Floxapen<sup>®</sup> is a trade name of flucloxacillin. These facts and properties are often needed to clean existing data, which would be very inconvenient in a software package without reliable reference data. See below for a demonstration.</p>
 </li>
 <li>
@@ -223,27 +225,27 @@
 </li>
 <li>
 <p><strong>R can be easily automated.</strong></p>
-<p>Over the last years, <a href="https://rmarkdown.rstudio.com/">R Markdown</a> has really made an interesting development. With R Markdown, you can very easily produce reports, whether the format has to be Word, PowerPoint, a website, a PDF document or just the raw data to Excel. It even allows the use of a reference file containing the layout style (e.g. fonts and colours) of your organisation. I use this a lot to generate weekly and monthly reports automatically. Just write the code once and enjoy the automatically updated reports at any interval you like.</p>
-<p>For an even more professional environment, you could create <a href="https://shiny.rstudio.com/">Shiny apps</a>: live manipulation of data using a custom made website. The webdesign knowledge needed (JavaScript, CSS, HTML) is almost <em>zero</em>.</p>
+<p>Over the last years, <a href="https://rmarkdown.rstudio.com/" class="external-link">R Markdown</a> has really made an interesting development. With R Markdown, you can very easily produce reports, whether the format has to be Word, PowerPoint, a website, a PDF document or just the raw data to Excel. It even allows the use of a reference file containing the layout style (e.g. fonts and colours) of your organisation. I use this a lot to generate weekly and monthly reports automatically. Just write the code once and enjoy the automatically updated reports at any interval you like.</p>
+<p>For an even more professional environment, you could create <a href="https://shiny.rstudio.com/" class="external-link">Shiny apps</a>: live manipulation of data using a custom made website. The webdesign knowledge needed (JavaScript, CSS, HTML) is almost <em>zero</em>.</p>
 </li>
 <li>
 <p><strong>R has a huge community.</strong></p>
-<p>Many R users just ask questions on websites like <a href="https://stackoverflow.com">StackOverflow.com</a>, the largest online community for programmers. At the time of writing, <a href="https://stackoverflow.com/questions/tagged/r?sort=votes">404,559 R-related questions</a> have already been asked on this platform (that covers questions and answers for any programming language). In my own experience, most questions are answered within a couple of minutes.</p>
+<p>Many R users just ask questions on websites like <a href="https://stackoverflow.com" class="external-link">StackOverflow.com</a>, the largest online community for programmers. At the time of writing, <a href="https://stackoverflow.com/questions/tagged/r?sort=votes" class="external-link">411,199 R-related questions</a> have already been asked on this platform (that covers questions and answers for any programming language). In my own experience, most questions are answered within a couple of minutes.</p>
 </li>
 <li>
 <p><strong>R understands any data type, including SPSS/SAS/Stata.</strong></p>
-<p>And that’s not vice versa I’m afraid. You can import data from any source into R. For example from SPSS, SAS and Stata (<a href="https://haven.tidyverse.org/">link</a>), from Minitab, Epi Info and EpiData (<a href="https://cran.r-project.org/package=foreign">link</a>), from Excel (<a href="https://readxl.tidyverse.org/">link</a>), from flat files like CSV, TXT or TSV (<a href="https://readr.tidyverse.org/">link</a>), or directly from databases and datawarehouses from anywhere on the world (<a href="https://dbplyr.tidyverse.org/">link</a>). You can even scrape websites to download tables that are live on the internet (<a href="https://github.com/hadley/rvest">link</a>) or get the results of an API call and transform it into data in only one command (<a href="https://github.com/Rdatatable/data.table/wiki/Convenience-features-of-fread">link</a>).</p>
+<p>And that’s not vice versa I’m afraid. You can import data from any source into R. For example from SPSS, SAS and Stata (<a href="https://haven.tidyverse.org/" class="external-link">link</a>), from Minitab, Epi Info and EpiData (<a href="https://cran.r-project.org/package=foreign" class="external-link">link</a>), from Excel (<a href="https://readxl.tidyverse.org/" class="external-link">link</a>), from flat files like CSV, TXT or TSV (<a href="https://readr.tidyverse.org/" class="external-link">link</a>), or directly from databases and datawarehouses from anywhere on the world (<a href="https://dbplyr.tidyverse.org/" class="external-link">link</a>). You can even scrape websites to download tables that are live on the internet (<a href="https://github.com/hadley/rvest" class="external-link">link</a>) or get the results of an API call and transform it into data in only one command (<a href="https://github.com/Rdatatable/data.table/wiki/Convenience-features-of-fread" class="external-link">link</a>).</p>
 <p>And the best part - you can export from R to most data formats as well. So you can import an SPSS file, do your analysis neatly in R and export the resulting tables to Excel files for sharing.</p>
 </li>
 <li>
 <p><strong>R is completely free and open-source.</strong></p>
-<p>No strings attached. It was created and is being maintained by volunteers who believe that (data) science should be open and publicly available to everybody. SPSS, SAS and Stata are quite expensive. IBM SPSS Staticstics only comes with subscriptions nowadays, varying <a href="https://www.ibm.com/products/spss-statistics/pricing">between USD 1,300 and USD 8,500</a> per user <em>per year</em>. SAS Analytics Pro costs <a href="https://www.sas.com/store/products-solutions/sas-analytics-pro/prodPERSANL.html">around USD 10,000</a> per computer. Stata also has a business model with subscription fees, varying <a href="https://www.stata.com/order/new/bus/single-user-licenses/dl/">between USD 600 and USD 2,800</a> per computer per year, but lower prices come with a limitation of the number of variables you can work with. And still they do not offer the above benefits of R.</p>
+<p>No strings attached. It was created and is being maintained by volunteers who believe that (data) science should be open and publicly available to everybody. SPSS, SAS and Stata are quite expensive. IBM SPSS Staticstics only comes with subscriptions nowadays, varying <a href="https://www.ibm.com/products/spss-statistics/pricing" class="external-link">between USD 1,300 and USD 8,500</a> per user <em>per year</em>. SAS Analytics Pro costs <a href="https://www.sas.com/store/products-solutions/sas-analytics-pro/prodPERSANL.html" class="external-link">around USD 10,000</a> per computer. Stata also has a business model with subscription fees, varying <a href="https://www.stata.com/order/new/bus/single-user-licenses/dl/" class="external-link">between USD 600 and USD 2,800</a> per computer per year, but lower prices come with a limitation of the number of variables you can work with. And still they do not offer the above benefits of R.</p>
 <p>If you are working at a midsized or small company, you can save it tens of thousands of dollars by using R instead of e.g. SPSS - gaining even more functions and flexibility. And all R enthousiasts can do as much PR as they want (like I do here), because nobody is officially associated with or affiliated by R. It is really free.</p>
 </li>
 <li>
 <p><strong>R is (nowadays) the preferred analysis software in academic papers.</strong></p>
-<p>At present, R is among the world most powerful statistical languages, and it is generally very popular in science (Bollmann <em>et al.</em>, 2017). For all the above reasons, the number of references to R as an analysis method in academic papers <a href="https://r4stats.com/2014/08/20/r-passes-spss-in-scholarly-use-stata-growing-rapidly/">is rising continuously</a> and has even surpassed SPSS for academic use (Muenchen, 2014).</p>
-<p>I believe that the thing with SPSS is, that it has always had a great user interface which is very easy to learn and use. Back when they developed it, they had very little competition, let alone from R. R didn’t even had a professional user interface until the last decade (called RStudio, see below). How people used R between the nineties and 2010 is almost completely incomparable to how R is being used now. The language itself <a href="https://www.tidyverse.org/packages/">has been restyled completely</a> by volunteers who are dedicated professionals in the field of data science. SPSS was great when there was nothing else that could compete. But now in 2021, I don’t see any reason why SPSS would be of any better use than R.</p>
+<p>At present, R is among the world most powerful statistical languages, and it is generally very popular in science (Bollmann <em>et al.</em>, 2017). For all the above reasons, the number of references to R as an analysis method in academic papers <a href="https://r4stats.com/2014/08/20/r-passes-spss-in-scholarly-use-stata-growing-rapidly/" class="external-link">is rising continuously</a> and has even surpassed SPSS for academic use (Muenchen, 2014).</p>
+<p>I believe that the thing with SPSS is, that it has always had a great user interface which is very easy to learn and use. Back when they developed it, they had very little competition, let alone from R. R didn’t even had a professional user interface until the last decade (called RStudio, see below). How people used R between the nineties and 2010 is almost completely incomparable to how R is being used now. The language itself <a href="https://www.tidyverse.org/packages/" class="external-link">has been restyled completely</a> by volunteers who are dedicated professionals in the field of data science. SPSS was great when there was nothing else that could compete. But now in 2021, I don’t see any reason why SPSS would be of any better use than R.</p>
 </li>
 </ul>
 <p>To demonstrate the first point:</p>
@@ -261,7 +263,7 @@
 <span class="co"># [1] "Gram-negative"</span>
 
 <span class="co"># Klebsiella is intrinsic resistant to amoxicillin, according to EUCAST:</span>
-<span class="va">klebsiella_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>mo <span class="op">=</span> <span class="st">"klebsiella"</span>, 
+<span class="va">klebsiella_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mo <span class="op">=</span> <span class="st">"klebsiella"</span>, 
                               amox <span class="op">=</span> <span class="st">"S"</span>,
                               stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">klebsiella_test</span> <span class="co"># (our original data)</span>
@@ -283,17 +285,17 @@
 </div>
 <div id="import-data-from-spsssasstata" class="section level2">
 <h2 class="hasAnchor">
-<a href="#import-data-from-spsssasstata" class="anchor"></a>Import data from SPSS/SAS/Stata</h2>
+<a href="#import-data-from-spsssasstata" class="anchor" aria-hidden="true"></a>Import data from SPSS/SAS/Stata</h2>
 <div id="rstudio" class="section level3">
 <h3 class="hasAnchor">
-<a href="#rstudio" class="anchor"></a>RStudio</h3>
-<p>To work with R, probably the best option is to use <a href="https://www.rstudio.com/products/rstudio/">RStudio</a>. It is an open-source and free desktop environment which not only allows you to run R code, but also supports project management, version management, package management and convenient import menus to work with other data sources. You can also install <a href="https://www.rstudio.com/products/rstudio/">RStudio Server</a> on a private or corporate server, which brings nothing less than the complete RStudio software to you as a website (at home or at work).</p>
+<a href="#rstudio" class="anchor" aria-hidden="true"></a>RStudio</h3>
+<p>To work with R, probably the best option is to use <a href="https://www.rstudio.com/products/rstudio/" class="external-link">RStudio</a>. It is an open-source and free desktop environment which not only allows you to run R code, but also supports project management, version management, package management and convenient import menus to work with other data sources. You can also install <a href="https://www.rstudio.com/products/rstudio/" class="external-link">RStudio Server</a> on a private or corporate server, which brings nothing less than the complete RStudio software to you as a website (at home or at work).</p>
 <p>To import a data file, just click <em>Import Dataset</em> in the Environment tab:</p>
 <p><img src="https://github.com/msberends/AMR/raw/master/docs/import1.png"></p>
 <p>If additional packages are needed, RStudio will ask you if they should be installed on beforehand.</p>
 <p>In the the window that opens, you can define all options (parameters) that should be used for import and you’re ready to go:</p>
 <p><img src="https://github.com/msberends/AMR/raw/master/docs/import2.png"></p>
-<p>If you want named variables to be imported as factors so it resembles SPSS more, use <code><a href="https://haven.tidyverse.org/reference/as_factor.html">as_factor()</a></code>.</p>
+<p>If you want named variables to be imported as factors so it resembles SPSS more, use <code><a href="https://haven.tidyverse.org/reference/as_factor.html" class="external-link">as_factor()</a></code>.</p>
 <p>The difference is this:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">SPSS_data</span>
@@ -330,70 +332,70 @@
 </div>
 <div id="base-r" class="section level3">
 <h3 class="hasAnchor">
-<a href="#base-r" class="anchor"></a>Base R</h3>
-<p>To import data from SPSS, SAS or Stata, you can use the <a href="https://haven.tidyverse.org/">great <code>haven</code> package</a> yourself:</p>
+<a href="#base-r" class="anchor" aria-hidden="true"></a>Base R</h3>
+<p>To import data from SPSS, SAS or Stata, you can use the <a href="https://haven.tidyverse.org/" class="external-link">great <code>haven</code> package</a> yourself:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download and install the latest version:</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"haven"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"haven"</span><span class="op">)</span>
 <span class="co"># load the package you just installed:</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://haven.tidyverse.org">haven</a></span><span class="op">)</span> </code></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://haven.tidyverse.org" class="external-link">haven</a></span><span class="op">)</span> </code></pre></div>
 <p>You can now import files as follows:</p>
 <div id="spss" class="section level4">
 <h4 class="hasAnchor">
-<a href="#spss" class="anchor"></a>SPSS</h4>
+<a href="#spss" class="anchor" aria-hidden="true"></a>SPSS</h4>
 <p>To read files from SPSS into R:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># read any SPSS file based on file extension (best way):</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html">read_spss</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"path/to/file"</span><span class="op">)</span>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html" class="external-link">read_spss</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"path/to/file"</span><span class="op">)</span>
 
 <span class="co"># read .sav or .zsav file:</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html">read_sav</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"path/to/file"</span><span class="op">)</span>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html" class="external-link">read_sav</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"path/to/file"</span><span class="op">)</span>
 
 <span class="co"># read .por file:</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html">read_por</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"path/to/file"</span><span class="op">)</span></code></pre></div>
-<p>Do not forget about <code><a href="https://haven.tidyverse.org/reference/as_factor.html">as_factor()</a></code>, as mentioned above.</p>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html" class="external-link">read_por</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"path/to/file"</span><span class="op">)</span></code></pre></div>
+<p>Do not forget about <code><a href="https://haven.tidyverse.org/reference/as_factor.html" class="external-link">as_factor()</a></code>, as mentioned above.</p>
 <p>To export your R objects to the SPSS file format:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># save as .sav file:</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html">write_sav</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">yourdata</span>, path <span class="op">=</span> <span class="st">"path/to/file"</span><span class="op">)</span>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html" class="external-link">write_sav</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">yourdata</span>, path <span class="op">=</span> <span class="st">"path/to/file"</span><span class="op">)</span>
 
 <span class="co"># save as compressed .zsav file:</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html">write_sav</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">yourdata</span>, path <span class="op">=</span> <span class="st">"path/to/file"</span>, compress <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html" class="external-link">write_sav</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">yourdata</span>, path <span class="op">=</span> <span class="st">"path/to/file"</span>, compress <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="sas" class="section level4">
 <h4 class="hasAnchor">
-<a href="#sas" class="anchor"></a>SAS</h4>
+<a href="#sas" class="anchor" aria-hidden="true"></a>SAS</h4>
 <p>To read files from SAS into R:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># read .sas7bdat + .sas7bcat files:</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_sas.html">read_sas</a></span><span class="op">(</span>data_file <span class="op">=</span> <span class="st">"path/to/file"</span>, catalog_file <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_sas.html" class="external-link">read_sas</a></span><span class="op">(</span>data_file <span class="op">=</span> <span class="st">"path/to/file"</span>, catalog_file <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
 
 <span class="co"># read SAS transport files (version 5 and version 8):</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_xpt.html">read_xpt</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"path/to/file"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_xpt.html" class="external-link">read_xpt</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"path/to/file"</span><span class="op">)</span></code></pre></div>
 <p>To export your R objects to the SAS file format:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># save as regular SAS file:</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_sas.html">write_sas</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">yourdata</span>, path <span class="op">=</span> <span class="st">"path/to/file"</span><span class="op">)</span>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_sas.html" class="external-link">write_sas</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">yourdata</span>, path <span class="op">=</span> <span class="st">"path/to/file"</span><span class="op">)</span>
 
 <span class="co"># the SAS transport format is an open format </span>
 <span class="co"># (required for submission of the data to the FDA)</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_xpt.html">write_xpt</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">yourdata</span>, path <span class="op">=</span> <span class="st">"path/to/file"</span>, version <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_xpt.html" class="external-link">write_xpt</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">yourdata</span>, path <span class="op">=</span> <span class="st">"path/to/file"</span>, version <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="stata" class="section level4">
 <h4 class="hasAnchor">
-<a href="#stata" class="anchor"></a>Stata</h4>
+<a href="#stata" class="anchor" aria-hidden="true"></a>Stata</h4>
 <p>To read files from Stata into R:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># read .dta file:</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_stata</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"/path/to/file"</span><span class="op">)</span>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html" class="external-link">read_stata</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"/path/to/file"</span><span class="op">)</span>
 
 <span class="co"># works exactly the same:</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"/path/to/file"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html" class="external-link">read_dta</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"/path/to/file"</span><span class="op">)</span></code></pre></div>
 <p>To export your R objects to the Stata file format:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># save as .dta file, Stata version 14:</span>
 <span class="co"># (supports Stata v8 until v15 at the time of writing)</span>
-<span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">write_dta</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">yourdata</span>, path <span class="op">=</span> <span class="st">"/path/to/file"</span>, version <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html" class="external-link">write_dta</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">yourdata</span>, path <span class="op">=</span> <span class="st">"/path/to/file"</span>, version <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 </div>
@@ -410,11 +412,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/">Matthijs S. Berends</a>, <a href="https://www.rug.nl/staff/c.f.luz/">Christian F. Luz</a>, <a href="https://www.rug.nl/staff/a.w.friedrich/">Alexander W. Friedrich</a>, <a href="https://www.rug.nl/staff/b.sinha/">Bhanu N. M. Sinha</a>, <a href="https://www.rug.nl/staff/c.j.albers/">Casper J. Albers</a>, <a href="https://www.rug.nl/staff/c.glasner/">Corinna Glasner</a>.</p>
+  <p></p>
+<p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/" class="external-link external-link">Matthijs S. Berends</a>, <a href="https://www.rug.nl/staff/c.f.luz/" class="external-link external-link">Christian F. Luz</a>, <a href="https://www.rug.nl/staff/a.w.friedrich/" class="external-link external-link">Alexander W. Friedrich</a>, <a href="https://www.rug.nl/staff/b.sinha/" class="external-link external-link">Bhanu N. M. Sinha</a>, <a href="https://www.rug.nl/staff/c.j.albers/" class="external-link external-link">Casper J. Albers</a>, <a href="https://www.rug.nl/staff/c.glasner/" class="external-link external-link">Corinna Glasner</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>
@@ -422,6 +426,8 @@
 
   
 
+
+  
 
   </body>
 </html>

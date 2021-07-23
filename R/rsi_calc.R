@@ -152,7 +152,6 @@ rsi_calc <- function(...,
                "  your_data %>% mutate_if(is.rsi.eligible, as.rsi)\n",
                "  your_data %>% mutate(across(where(is.rsi.eligible), as.rsi))",
                call = FALSE)
-      remember_thrown_message("rsi_calc")
     }
   }
   

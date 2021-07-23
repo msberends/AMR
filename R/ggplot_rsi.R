@@ -389,10 +389,11 @@ scale_rsi_colours <- function(...,
   names_susceptible <- c("S", "SI", "IS", "S+I", "I+S", "susceptible", "Susceptible",
                          unique(TRANSLATIONS[which(TRANSLATIONS$pattern == "Susceptible"),
                                                   "replacement", drop = TRUE]))
-  names_incr_exposure <- c("I", "intermediate", "increased exposure", "incr. exposure", "Increased exposure", "Incr. exposure",
+  names_incr_exposure <- c("I", "intermediate", "increased exposure", "incr. exposure",
+                           "Increased exposure", "Incr. exposure", "Susceptible, incr. exp.",
                            unique(TRANSLATIONS[which(TRANSLATIONS$pattern == "Intermediate"),
                                                     "replacement", drop = TRUE]),
-                           unique(TRANSLATIONS[which(TRANSLATIONS$pattern == "Incr. exposure"),
+                           unique(TRANSLATIONS[which(TRANSLATIONS$pattern == "Susceptible, incr. exp."),
                                                     "replacement", drop = TRUE]))
   names_resistant <- c("R", "IR", "RI", "R+I", "I+R", "resistant", "Resistant",
                        unique(TRANSLATIONS[which(TRANSLATIONS$pattern == "Resistant"), 

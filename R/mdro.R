@@ -187,13 +187,9 @@ mdro <- function(x = NULL,
   check_dataset_integrity()
   
   info.bak <- info
-  if (message_not_thrown_before("mdro")) {
-    remember_thrown_message("mdro")
-  } else {
-    # don't thrown info's more than once per call
-    info <- FALSE
-  }
-  
+  # don't thrown info's more than once per call
+  info <- message_not_thrown_before("mdro")
+
   if (interactive() & verbose == TRUE & info == TRUE) {
     txt <- paste0("WARNING: In Verbose mode, the mdro() function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.",
                   "\n\nThis may overwrite your existing data if you use e.g.:",
@@ -1416,7 +1412,6 @@ mdro <- function(x = NULL,
       if (message_not_thrown_before("mdro.availability")) {
         warning_("NA introduced for isolates where the available percentage of antimicrobial classes was below ",
                  percentage(pct_required_classes), " (set with `pct_required_classes`)", call = FALSE)
-        remember_thrown_message("mdro.availability")
       }
       # set these -1s to NA
       x[which(x$MDRO == -1), "MDRO"] <- NA_integer_

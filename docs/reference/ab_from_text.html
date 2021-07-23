@@ -55,6 +55,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -66,9 +68,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -82,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9022</span>
       </span>
     </div>
 
@@ -90,14 +98,14 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
     Home
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-question-circle"></span>
+    <span class="fa fa-question-circle"></span>
      
     How to
      
@@ -106,77 +114,77 @@
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/AMR.html">
-        <span class="fas fa-directions"></span>
+        <span class="fa fa-directions"></span>
          
         Conduct AMR analysis
       </a>
     </li>
     <li>
       <a href="../articles/resistance_predict.html">
-        <span class="fas fa-dice"></span>
+        <span class="fa fa-dice"></span>
          
         Predict antimicrobial resistance
       </a>
     </li>
     <li>
       <a href="../articles/datasets.html">
-        <span class="fas fa-database"></span>
+        <span class="fa fa-database"></span>
          
         Data sets for download / own use
       </a>
     </li>
     <li>
       <a href="../articles/PCA.html">
-        <span class="fas fa-compress"></span>
+        <span class="fa fa-compress"></span>
          
         Conduct principal component analysis for AMR
       </a>
     </li>
     <li>
       <a href="../articles/MDR.html">
-        <span class="fas fa-skull-crossbones"></span>
+        <span class="fa fa-skull-crossbones"></span>
          
         Determine multi-drug resistance (MDR)
       </a>
     </li>
     <li>
       <a href="../articles/WHONET.html">
-        <span class="fas fa-globe-americas"></span>
+        <span class="fa fa-globe-americas"></span>
          
         Work with WHONET data
       </a>
     </li>
     <li>
       <a href="../articles/SPSS.html">
-        <span class="fas fa-file-upload"></span>
+        <span class="fa fa-file-upload"></span>
          
         Import data from SPSS/SAS/Stata
       </a>
     </li>
     <li>
       <a href="../articles/EUCAST.html">
-        <span class="fas fa-exchange-alt"></span>
+        <span class="fa fa-exchange-alt"></span>
          
         Apply EUCAST rules
       </a>
     </li>
     <li>
       <a href="../reference/mo_property.html">
-        <span class="fas fa-bug"></span>
+        <span class="fa fa-bug"></span>
          
         Get properties of a microorganism
       </a>
     </li>
     <li>
       <a href="../reference/ab_property.html">
-        <span class="fas fa-capsules"></span>
+        <span class="fa fa-capsules"></span>
          
         Get properties of an antibiotic
       </a>
     </li>
     <li>
       <a href="../articles/benchmarks.html">
-        <span class="fas fa-shipping-fast"></span>
+        <span class="fa fa-shipping-fast"></span>
          
         Other: benchmarks
       </a>
@@ -185,14 +193,14 @@
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fas fa-book-open"></span>
+    <span class="fa fa-book-open"></span>
      
     Manual
   </a>
 </li>
 <li>
   <a href="../authors.html">
-    <span class="fas fa-users"></span>
+    <span class="fa fa-users"></span>
      
     Authors
   </a>
@@ -215,7 +223,7 @@
 </li>
 <li>
   <a href="../survey.html">
-    <span class="fas fa-clipboard-list"></span>
+    <span class="fa fa-clipboard-list"></span>
      
     Survey
   </a>
@@ -242,7 +250,7 @@
     <p>Use this function on e.g. clinical texts from health care records. It returns a <a href='https://rdrr.io/r/base/list.html'>list</a> with all antimicrobial drugs, doses and forms of administration found in the texts.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ab_from_text</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>ab_from_text</span><span class='op'>(</span>
   <span class='va'>text</span>,
   type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"drug"</span>, <span class='st'>"dose"</span>, <span class='st'>"administration"</span><span class='op'>)</span>,
   collapse <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -250,7 +258,7 @@
   thorough_search <span class='op'>=</span> <span class='cn'>NULL</span>,
   info <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span>,
   <span class='va'>...</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -290,14 +298,26 @@
     <p>A <a href='https://rdrr.io/r/base/list.html'>list</a>, or a  <a href='https://rdrr.io/r/base/character.html'>character</a> if <code>collapse</code> is not <code>NULL</code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is also internally used by <code><a href='as.ab.html'>as.ab()</a></code>, although it then only searches for the first drug name and will throw a note if more drug names could have been returned. Note: the <code><a href='as.ab.html'>as.ab()</a></code> function may use very long regular expression to match brand names of antimicrobial agents. This may fail on some systems.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Argument <code>type</code></h3>
+    <p>This function is also internally used by <code><a href='as.ab.html'>as.ab()</a></code>, although it then only searches for the first drug name and will throw a note if more drug names could have been returned. Note: the <code><a href='as.ab.html'>as.ab()</a></code> function may use very long regular expression to match brand names of antimicrobial agents. This may fail on some systems.</p><h3 class='hasAnchor' id='argument-'><a class='anchor' aria-hidden='true' href='#argument-'></a>Argument <code>type</code></h3>
+
+
+<p>At default, the function will search for antimicrobial drug names. All text elements will be searched for official names, ATC codes and brand names. As it uses <code><a href='as.ab.html'>as.ab()</a></code> internally, it will correct for misspelling.</p>
+<p>With <code>type = "dose"</code> (or similar, like "dosing", "doses"), all text elements will be searched for <a href='https://rdrr.io/r/base/numeric.html'>numeric</a> values that are higher than 100 and do not resemble years. The output will be <a href='https://rdrr.io/r/base/numeric.html'>numeric</a>. It supports any unit (g, mg, IE, etc.) and multiple values in one clinical text, see <em>Examples</em>.</p>
+<p>With <code>type = "administration"</code> (or abbreviations, like "admin", "adm"), all text elements will be searched for a form of drug administration. It supports the following forms (including common abbreviations): buccal, implant, inhalation, instillation, intravenous, nasal, oral, parenteral, rectal, sublingual, transdermal and vaginal. Abbreviations for oral (such as 'po', 'per os') will become "oral", all values for intravenous (such as 'iv', 'intraven') will become "iv". It supports multiple values in one clinical text, see <em>Examples</em>.</p><h3 class='hasAnchor' id='list-type-'><a class='anchor' aria-hidden='true' href='#list-type-'></a>Argument <code>type</code></h3>
 
 
 <p>At default, the function will search for antimicrobial drug names. All text elements will be searched for official names, ATC codes and brand names. As it uses <code><a href='as.ab.html'>as.ab()</a></code> internally, it will correct for misspelling.</p>
 <p>With <code>type = "dose"</code> (or similar, like "dosing", "doses"), all text elements will be searched for <a href='https://rdrr.io/r/base/numeric.html'>numeric</a> values that are higher than 100 and do not resemble years. The output will be <a href='https://rdrr.io/r/base/numeric.html'>numeric</a>. It supports any unit (g, mg, IE, etc.) and multiple values in one clinical text, see <em>Examples</em>.</p>
 <p>With <code>type = "administration"</code> (or abbreviations, like "admin", "adm"), all text elements will be searched for a form of drug administration. It supports the following forms (including common abbreviations): buccal, implant, inhalation, instillation, intravenous, nasal, oral, parenteral, rectal, sublingual, transdermal and vaginal. Abbreviations for oral (such as 'po', 'per os') will become "oral", all values for intravenous (such as 'iv', 'intraven') will become "iv". It supports multiple values in one clinical text, see <em>Examples</em>.</p>
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Argument <code>collapse</code></h3>
+<h3 class='hasAnchor' id='argument-'><a class='anchor' aria-hidden='true' href='#argument-'></a>Argument <code>collapse</code></h3>
+
+
+<p>Without using <code>collapse</code>, this function will return a <a href='https://rdrr.io/r/base/list.html'>list</a>. This can be convenient to use e.g. inside a <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code>):<br />
+<code>df %&gt;% mutate(abx = ab_from_text(clinical_text))</code></p>
+<p>The returned AB codes can be transformed to official names, groups, etc. with all <code><a href='ab_property.html'>ab_*</a></code> functions such as <code><a href='ab_property.html'>ab_name()</a></code> and <code><a href='ab_property.html'>ab_group()</a></code>, or by using the <code>translate_ab</code> argument.</p>
+<p>With using <code>collapse</code>, this function will return a <a href='https://rdrr.io/r/base/character.html'>character</a>:<br />
+<code>df %&gt;% mutate(abx = ab_from_text(clinical_text, collapse = "|"))</code></p><h3 class='hasAnchor' id='list-collapse-'><a class='anchor' aria-hidden='true' href='#list-collapse-'></a>Argument <code>collapse</code></h3>
 
 
 <p>Without using <code>collapse</code>, this function will return a <a href='https://rdrr.io/r/base/list.html'>list</a>. This can be convenient to use e.g. inside a <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code>):<br />
@@ -320,7 +340,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <p>On our website <a href='https://msberends.github.io/AMR/'>https://msberends.github.io/AMR/</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR data analysis, the <a href='https://msberends.github.io/AMR/reference/'>complete documentation of all functions</a> and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># mind the bad spelling of amoxicillin in this line, </span>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='co'># mind the bad spelling of amoxicillin in this line, </span>
 <span class='co'># straight from a true health care record:</span>
 <span class='fu'>ab_from_text</span><span class='op'>(</span><span class='st'>"28/03/2020 regular amoxicilliin 500mg po tds"</span><span class='op'>)</span>
 
@@ -353,7 +373,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
 <span class='op'>}</span>
 <span class='co'># }</span>
-</pre>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -365,11 +385,11 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, <a href='https://www.rug.nl/staff/c.f.luz/'>Christian F. Luz</a>, <a href='https://www.rug.nl/staff/a.w.friedrich/'>Alexander W. Friedrich</a>, <a href='https://www.rug.nl/staff/b.sinha/'>Bhanu N. M. Sinha</a>, <a href='https://www.rug.nl/staff/c.j.albers/'>Casper J. Albers</a>, <a href='https://www.rug.nl/staff/c.glasner/'>Corinna Glasner</a>.</p>
+  <p><p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/" class="external-link">Matthijs S. Berends</a>, <a href="https://www.rug.nl/staff/c.f.luz/" class="external-link">Christian F. Luz</a>, <a href="https://www.rug.nl/staff/a.w.friedrich/" class="external-link">Alexander W. Friedrich</a>, <a href="https://www.rug.nl/staff/b.sinha/" class="external-link">Bhanu N. M. Sinha</a>, <a href="https://www.rug.nl/staff/c.j.albers/" class="external-link">Casper J. Albers</a>, <a href="https://www.rug.nl/staff/c.glasner/" class="external-link">Corinna Glasner</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -377,6 +397,8 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
   
 
+
+  
 
   </body>
 </html>

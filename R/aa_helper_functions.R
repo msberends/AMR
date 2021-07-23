@@ -135,7 +135,6 @@ check_dataset_integrity <- function() {
                " the AMR package from working correctly: ",
                vector_and(overwritten, quotes = "'"),
                ".\nPlease rename your object", plural[3], ".", call = FALSE)
-      remember_thrown_message("dataset_overwritten")
     }
   }
   # check if other packages did not overwrite our data sets
@@ -258,7 +257,6 @@ search_type_in_df <- function(x, type, info = TRUE) {
         msg <- paste(msg, "Use", font_bold(paste0("col_", type), "= FALSE"), "to prevent this.")
       }
       message_(msg)
-      remember_thrown_message(fn = paste0("search_", type))
     }
   }
   found
@@ -771,10 +769,11 @@ get_current_data <- function(arg_name, call) {
     } else {
       examples <- ""
     }
-    stop_("this function must be used inside valid dplyr selection verbs or inside a data.frame call",
+    stop_("this function must be used inside a `dplyr` verb or `data.frame` call",
           examples,
           call = call)
   } else {
+    # mimic a base R error that the argument is missing
     stop_("argument `", arg_name, "` is missing with no default", call = call)
   }
 }
@@ -840,16 +839,18 @@ unique_call_id <- function(entire_session = FALSE) {
   }
 }
 
-remember_thrown_message <- function(fn, entire_session = FALSE) {
+message_not_thrown_before <- function(fn, entire_session = FALSE) {
   # this is to prevent that messages/notes will be printed for every dplyr group
   # e.g. this would show a msg 4 times: example_isolates %>% group_by(hospital_id) %>% filter(mo_is_gram_negative())
-  assign(x = paste0("thrown_msg.", fn),
-         value = unique_call_id(entire_session = entire_session),
-         envir = pkg_env)
-}
-
-message_not_thrown_before <- function(fn, entire_session = FALSE) {
-  is.null(pkg_env[[paste0("thrown_msg.", fn)]]) || !identical(pkg_env[[paste0("thrown_msg.", fn)]], unique_call_id(entire_session))
+  test_out <- is.null(pkg_env[[paste0("thrown_msg.", fn)]]) || !identical(pkg_env[[paste0("thrown_msg.", fn)]],
+                                                                          unique_call_id(entire_session = entire_session))
+  if (isTRUE(test_out)) {
+    # message was not thrown before - remember this so on the next run it will return FALSE:
+    assign(x = paste0("thrown_msg.", fn),
+           value = unique_call_id(entire_session = entire_session),
+           envir = pkg_env)
+  }
+  test_out
 }
 
 has_colour <- function() {

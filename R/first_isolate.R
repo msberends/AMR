@@ -264,7 +264,6 @@ first_isolate <- function(x = NULL,
                            "")),
              as_note = FALSE,
              add_fn = font_black)
-    remember_thrown_message("first_isolate.method")
   }
   
   # try to find columns based on type
@@ -364,7 +363,6 @@ first_isolate <- function(x = NULL,
     message_("Excluding test codes: ", toString(paste0("'", testcodes_exclude, "'")),
              add_fn = font_black,
              as_note = FALSE)
-    remember_thrown_message("first_isolate.excludingtestcodes")
   }
   
   if (is.null(col_specimen)) {
@@ -378,7 +376,6 @@ first_isolate <- function(x = NULL,
       message_("Excluding other than specimen group '", specimen_group, "'",
                add_fn = font_black,
                as_note = FALSE)
-      remember_thrown_message("first_isolate.excludingspecimen")
     }
   }
   if (!is.null(col_keyantimicrobials)) {
@@ -474,7 +471,6 @@ first_isolate <- function(x = NULL,
                  add_fn = font_black,
                  as_note = FALSE)
       }
-      remember_thrown_message("first_isolate.type")
     }
     type_param <- type
     

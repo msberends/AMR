@@ -33,7 +33,7 @@
 #' @details
 #' These functions can be used in data set calls for selecting columns and filtering rows. They are heavily inspired by the [Tidyverse selection helpers][tidyselect::language] such as [`everything()`][tidyselect::everything()], but also work in base \R and not only in `dplyr` verbs. Nonetheless, they are very convenient to use with `dplyr` functions such as [`select()`][dplyr::select()], [`filter()`][dplyr::filter()] and [`summarise()`][dplyr::summarise()], see *Examples*.
 #' 
-#' All columns in the data in which these functions are called will be searched for known antibiotic names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) in the [antibiotics] data set. This means that a selector such as [aminoglycosides()] will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc. Use the [ab_class()] function to filter/select on a manually defined antibiotic class.
+#' All columns in the data in which these functions are called will be searched for known antibiotic names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the [antibiotics] data set. This means that a selector such as [aminoglycosides()] will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc. Use the [ab_class()] function to filter/select on a manually defined antibiotic class.
 #' 
 #' @section Full list of supported agents:
 #' 
@@ -312,7 +312,6 @@ ab_selector <- function(function_name,
                           sort = TRUE), ". They can be included using `", function_name, "(only_treatable = FALSE)`. ",
                "This warning will be shown once per session.",
                call = FALSE)
-      remember_thrown_message(paste0("ab_class.untreatable.", function_name), entire_session = TRUE)
     }
     ab_in_data <- ab_in_data[!names(ab_in_data) %in% untreatable]
   }
@@ -343,8 +342,8 @@ ab_selector <- function(function_name,
 
   # get the columns with a group names in the chosen ab class
   agents <- ab_in_data[names(ab_in_data) %in% abx]
-    
-  if (message_not_thrown_before(paste0(function_name, ".", paste(pkg_env$get_column_abx.out, collapse = "|")))) {
+  
+  if (message_not_thrown_before(paste0(function_name, ".", paste(sort(agents), collapse = "|")))) {
     if (length(agents) == 0) {
       message_("No antimicrobial agents of class '", ab_group, "' found", examples, ".")
     } else {
@@ -360,21 +359,10 @@ ab_selector <- function(function_name,
                ifelse(length(agents) == 1, "column ", "columns "),
                vector_and(agents_formatted, quotes = FALSE, sort = FALSE))
     }
-    remember_thrown_message(paste0(function_name, ".", paste(pkg_env$get_column_abx.out, collapse = "|")))
   }
   
-  if (!is.null(attributes(vars_df)$type) &&
-      attributes(vars_df)$type %in% c("dplyr_cur_data_all", "base_R") &&
-      !any(as.character(sys.calls()) %like% paste0("(across|if_any|if_all)\\((c\\()?[a-z(), ]*", function_name))) {
-    structure(unname(agents),
-              class = c("ab_selector", "character"))
-  } else {
-    # don't return with "ab_selector" class if method is a dplyr selector,
-    # dplyr::select() will complain:
-    # > Subscript has the wrong type `ab_selector`.
-    # > It must be numeric or character.
-    unname(agents)
-  }
+  structure(unname(agents),
+            class = c("ab_selector", "character"))
 }
 
 #' @method c ab_selector
@@ -412,7 +400,6 @@ all_any_ab_selector <- function(type, ..., na.rm = TRUE) {
 #' @export
 #' @noRd
 all.ab_selector <- function(..., na.rm = FALSE) {
-  # this is all() for 
   all_any_ab_selector("all", ..., na.rm = na.rm)
 }
 
@@ -458,7 +445,6 @@ any.ab_selector_any_all <- function(..., na.rm = FALSE) {
 `==.ab_selector` <- function(e1, e2) {
   calls <- as.character(match.call())
   fn_name <- calls[2]
-  # keep only the ... in c(...)
   fn_name <- gsub("^(c\\()(.*)(\\))$", "\\2", fn_name)
   if (is_any(fn_name)) {
     type <- "any"
@@ -481,7 +467,6 @@ any.ab_selector_any_all <- function(..., na.rm = FALSE) {
 `!=.ab_selector` <- function(e1, e2) {
   calls <- as.character(match.call())
   fn_name <- calls[2]
-  # keep only the ... in c(...)
   fn_name <- gsub("^(c\\()(.*)(\\))$", "\\2", fn_name)
   if (is_any(fn_name)) {
     type <- "any"

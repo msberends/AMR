@@ -84,7 +84,17 @@ call_functions <- c(
   "ylab" = "ggplot2"
 )
 
-import_functions <- c(import_functions, call_functions)
+extended_functions <- c(
+  "freq" = "cleaner",
+  "autoplot" = "ggplot2",
+  "pillar_shaft" = "pillar",
+  "get_skimmers" = "skimr",
+  "type_sum" = "tibble",
+  "vec_cast" = "vctrs",
+  "vec_ptype2" = "vctrs"
+)
+
+import_functions <- c(import_functions, call_functions, extended_functions)
 for (i in seq_len(length(import_functions))) {
   fn <- names(import_functions)[i]
   pkg <- unname(import_functions[i])

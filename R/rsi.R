@@ -294,16 +294,15 @@ as.rsi.default <- function(x, ...) {
                                    LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED %in% colnames(TRANSLATIONS)]])
     trans_S <- unlist(TRANSLATIONS[which(TRANSLATIONS$pattern == "Susceptible"),
                                    LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED %in% colnames(TRANSLATIONS)]])
-    trans_I <- unlist(TRANSLATIONS[which(TRANSLATIONS$pattern %in% c("Incr. exposure", "Intermediate")),
+    trans_I <- unlist(TRANSLATIONS[which(TRANSLATIONS$pattern %in% c("Incr. exposure", "Susceptible, incr. exp.", "Intermediate")),
                                    LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED %in% colnames(TRANSLATIONS)]])
     x <- gsub(paste0(unique(trans_R[!is.na(trans_R)]), collapse = "|"), "R", x, ignore.case = TRUE)
     x <- gsub(paste0(unique(trans_S[!is.na(trans_S)]), collapse = "|"), "S", x, ignore.case = TRUE)
     x <- gsub(paste0(unique(trans_I[!is.na(trans_I)]), collapse = "|"), "I", x, ignore.case = TRUE)
     # replace all English textual input
-    x <- gsub("res(is(tant)?)?", "R", x, ignore.case = TRUE)
-    x <- gsub("sus(cep(tible)?)?", "S", x, ignore.case = TRUE)
-    x <- gsub("int(er(mediate)?)?", "I", x, ignore.case = TRUE)
-    x <- gsub("inc(r(eased)?)? exp[a-z]*", "I", x, ignore.case = TRUE)
+    x[x %like% "([^a-z]|^)res(is(tant)?)?"] <- "R"
+    x[x %like% "([^a-z]|^)sus(cep(tible)?)?"] <- "S"
+    x[x %like% "([^a-z]|^)int(er(mediate)?)?|incr.*exp"] <- "I"
     # remove all spaces
     x <- gsub(" +", "", x)
     # remove all MIC-like values: numbers, operators and periods
@@ -776,7 +775,6 @@ exec_as.rsi <- function(method,
   if (guideline_coerced != guideline) {
     if (message_not_thrown_before("as.rsi")) {
       message_("Using guideline ", font_bold(guideline_coerced), " as input for `guideline`.")
-      remember_thrown_message("as.rsi")
     }
   }
   
@@ -815,7 +813,6 @@ exec_as.rsi <- function(method,
       if (guideline_coerced %unlike% "EUCAST") {
         if (message_not_thrown_before("as.rsi2")) {
           warning_("Using 'add_intrinsic_resistance' is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.", call = FALSE)
-          remember_thrown_message("as.rsi2")
         }
       } else {
         new_rsi[i] <- "R"
@@ -880,7 +877,6 @@ exec_as.rsi <- function(method,
     message_("WARNING.", add_fn = list(font_yellow, font_bold), as_note = FALSE)
     if (message_not_thrown_before("as.rsi3")) {
       warning_("Found intrinsic resistance in some bug/drug combinations, although it was not applied.\nUse `as.rsi(..., add_intrinsic_resistance = TRUE)` to apply it.", call = FALSE)
-      remember_thrown_message("as.rsi3")
     }
     warned <- TRUE
   }

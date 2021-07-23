@@ -7,14 +7,14 @@
 \alias{random_rsi}
 \title{Random MIC Values/Disk Zones/RSI Generation}
 \usage{
-random_mic(size, mo = NULL, ab = NULL, ...)
+random_mic(size = NULL, mo = NULL, ab = NULL, ...)
 
-random_disk(size, mo = NULL, ab = NULL, ...)
+random_disk(size = NULL, mo = NULL, ab = NULL, ...)
 
-random_rsi(size, prob_RSI = c(0.33, 0.33, 0.33), ...)
+random_rsi(size = NULL, prob_RSI = c(0.33, 0.33, 0.33), ...)
 }
 \arguments{
-\item{size}{desired size of the returned vector}
+\item{size}{desired size of the returned vector. If used in a \link{data.frame} call or \code{dplyr} verb, will get the current (group) size if left blank.}
 
 \item{mo}{any \link{character} that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
 

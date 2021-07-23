@@ -56,15 +56,29 @@ if (utf8_supported && !is_latex) {
   # Support for frequency tables from the cleaner package
   s3_register("cleaner::freq", "mo")
   s3_register("cleaner::freq", "rsi")
-  # Support from skim() from the skimr package
+  # Support for skim() from the skimr package
   s3_register("skimr::get_skimmers", "mo")
   s3_register("skimr::get_skimmers", "rsi")
   s3_register("skimr::get_skimmers", "mic")
   s3_register("skimr::get_skimmers", "disk")
+  # Support for autoplot() from the ggplot2 package
   s3_register("ggplot2::autoplot", "rsi")
   s3_register("ggplot2::autoplot", "mic")
   s3_register("ggplot2::autoplot", "disk")
   s3_register("ggplot2::autoplot", "resistance_predict")
+  # Support vctrs package for use in e.g. dplyr verbs
+  s3_register("vctrs::vec_ptype2", "ab.character")
+  s3_register("vctrs::vec_ptype2", "character.ab")
+  s3_register("vctrs::vec_cast", "character.ab")
+  s3_register("vctrs::vec_ptype2", "mo.character")
+  s3_register("vctrs::vec_ptype2", "character.mo")
+  s3_register("vctrs::vec_cast", "character.mo")
+  s3_register("vctrs::vec_ptype2", "ab_selector.character")
+  s3_register("vctrs::vec_ptype2", "character.ab_selector")
+  s3_register("vctrs::vec_cast", "character.ab_selector")
+  s3_register("vctrs::vec_ptype2", "disk.integer")
+  s3_register("vctrs::vec_ptype2", "integer.disk")
+  s3_register("vctrs::vec_cast", "integer.disk")
   
   # if mo source exists, fire it up (see mo_source())
   try({
@@ -75,6 +89,7 @@ if (utf8_supported && !is_latex) {
   
   
   # reference data - they have additional columns compared to `antibiotics` and `microorganisms` to improve speed
+  # they can't be part of R/sysdata.rda since CRAN thinks it would make the package too large (+3 MB)
   assign(x = "AB_lookup", value = create_AB_lookup(), envir = asNamespace("AMR"))
   assign(x = "MO_lookup", value = create_MO_lookup(), envir = asNamespace("AMR"))
   assign(x = "MO.old_lookup", value = create_MO.old_lookup(), envir = asNamespace("AMR"))

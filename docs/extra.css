@@ -76,6 +76,10 @@ li a[href="#read-more-on-our-website-"] {
   display: none !important;
 }
 
+code {
+  color: black;
+  background-color: #f4f4f4;
+}
 /* make colour darker and better readable for links */
 code a, code a:hover, code a:focus,
 pre a, pre a:hover, pre a:focus,
@@ -92,6 +96,7 @@ a pre[href], a pre[href]:hover, a pre[href]:focus {
   /* adjusted colour for all real links; having href attribute */
   color: #128f76;
 }
+
 .ot, .dv, .fl, .cn {
   /* numbers and TRUE/FALSE */
   color: slategray;

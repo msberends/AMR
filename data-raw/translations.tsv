@@ -32,8 +32,10 @@ vegetative	TRUE	TRUE	FALSE	FALSE	vegetativ	vegetatief	vegetativo	vegetativo	vég
 ([([ ]*?)Group	TRUE	TRUE	FALSE	FALSE	\\1Gruppe	\\1Groep	\\1Grupo	\\1Gruppo	\\1Groupe	\\1Grupo
 no .*growth	TRUE	FALSE	FALSE	FALSE	keine? .*wachstum	geen .*groei	no .*crecimientonon	sem .*crescimento	pas .*croissance	sem .*crescimento
 no|not	TRUE	FALSE	FALSE	FALSE	keine?	geen|niet	no|sin	sem	non	sem
-Susceptible	TRUE	FALSE	FALSE	FALSE	Empfindlich	Gevoelig	Susceptible			
 Intermediate	TRUE	FALSE	FALSE	FALSE	Mittlere	Intermediair	Intermedio			
+Susceptible, incr. exp.	FALSE	TRUE	FALSE	FALSE	Empfindlich, erh Belastung	Gevoelig, hoge dosis				
+susceptible, incr. exp.	FALSE	TRUE	FALSE	FALSE	empfindlich, erh Belastung	gevoelig, hoge dosis				
+Susceptible	TRUE	FALSE	FALSE	FALSE	Empfindlich	Gevoelig	Susceptible			
 Incr. exposure	TRUE	FALSE	FALSE	FALSE	Empfindlich, erh Belastung	'Incr. exposure'	'Incr. exposure'			
 Resistant	TRUE	FALSE	FALSE	FALSE	Resistent	Resistent	Resistente			
 antibiotic	TRUE	TRUE	FALSE	FALSE	Antibiotikum	antibioticum	antibiótico			

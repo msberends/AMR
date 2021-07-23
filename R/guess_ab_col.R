@@ -121,7 +121,7 @@ get_column_abx <- function(x,
       # these columns did not exist in the last call, so add them
       new_cols_rsi <- get_column_abx(x[, new_cols, drop = FALSE], reuse_previous_result = FALSE, info = FALSE, sort = FALSE)
       current <- c(current, new_cols_rsi)
-      # order according to data in current call
+      # order according to columns in current call
       current <- current[match(colnames(x)[colnames(x) %in% current], current)]
     }
     

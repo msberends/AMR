@@ -47,16 +47,19 @@ $(document).ready(function() {
   $(".template-reference-topic h2#value").text("Returned value");
   
   // replace \donttest and \dontrun texts in Examples
-  if ($("pre.examples").length > 0) {
-    $("pre.examples").html($("pre.examples").html().replaceAll("# \\donttest{", ""));
-    $("pre.examples").html($("pre.examples").html().replaceAll("# \\dontrun{", ""));
-    $("pre.examples").html($("pre.examples").html().replaceAll("# }", ""));
+  if ($(".ref-examples pre").length > 0) {
+    $(".ref-examples pre").html($(".ref-examples pre").html().replaceAll("# \\donttest{", ""));
+    $(".ref-examples pre").html($(".ref-examples pre").html().replaceAll("# \\dontrun{", ""));
+    $(".ref-examples pre").html($(".ref-examples pre").html().replaceAll("# }", ""));
   }
   
   // remove leading newline in code examples on changelog
   if ($("body .template-news").length > 0) {
     $("body .template-news").html($("body .template-news").html().replaceAll('sourceCode R">\n<span', 'sourceCode R"><span'));
   }
+  // change H1  header on dev version on changelog, since pkgdown uses the version number from the installed version
+  // (rather then using the DESCRIPTION file)
+  $("h1[id^=unreleased]").text("Current development version");
   
   // PR for 'R for Data Science' on How To pages
   if ($(".template-article").length > 0) {

@@ -23,13 +23,13 @@ With the function `mdro()`, you can determine which micro-organisms are multi-dr
 
 ### Type of input
 
-The `mdro()` function takes a data set as input, such as a regular `data.frame`. It tries to automatically determine the right columns for info about your isolates, like the name of the species and all columns with results of antimicrobial agents. See the help page for more info about how to set the right settings for your data with the command `?mdro`. 
+The `mdro()` function takes a data set as input, such as a regular `data.frame`. It tries to automatically determine the right columns for info about your isolates, such as the name of the species and all columns with results of antimicrobial agents. See the help page for more info about how to set the right settings for your data with the command `?mdro`. 
 
 For WHONET data (and most other data), all settings are automatically set correctly.
 
 ### Guidelines
 
-The function support multiple guidelines. You can select a guideline with the `guideline` parameter. Currently supported guidelines are (case-insensitive):
+The `mdro()` function support multiple guidelines. You can select a guideline with the `guideline` parameter. Currently supported guidelines are (case-insensitive):
 
 * `guideline = "CMI2012"` (default)
   
@@ -49,7 +49,7 @@ The function support multiple guidelines. You can select a guideline with the `g
 
 * `guideline = "MRGN"`
   
-  The German national guideline - Mueller et al. (2015) Antimicrobial Resistance and Infection Control 4:7. DOI: 10.1186/s13756-015-0047-6
+  The German national guideline - Mueller *et al.* (2015) Antimicrobial Resistance and Infection Control 4:7. DOI: 10.1186/s13756-015-0047-6
 
 * `guideline = "BRMO"`
   
@@ -61,14 +61,14 @@ Please suggest your own (country-specific) guidelines by letting us know: <https
 
 You can also use your own custom guideline. Custom guidelines can be set with the `custom_mdro_guideline()` function. This is of great importance if you have custom rules to determine MDROs in your hospital, e.g., rules that are dependent on ward, state of contact isolation or other variables in your data.
 
-If you are familiar with `case_when()` of the `dplyr` package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation':
+If you are familiar with `case_when()` of the `dplyr` package, you will recognise the input method to set your own rules. Rules must be set using what R considers to be the 'formula notation':
 
 ```{r}
 custom <- custom_mdro_guideline(CIP == "R" & age > 60 ~ "Elderly Type A",
                                 ERY == "R" & age > 60 ~ "Elderly Type B")
 ```
 
-If a row/an isolate matches the first rule, the value after the first `~` (in this case *'Elderly Type A'*) will be set as MDRO value. Otherwise, the second rule will be tried and so on. The number of rules is unlimited. 
+If a row/an isolate matches the first rule, the value after the first `~` (in this case *'Elderly Type A'*) will be set as MDRO value. Otherwise, the second rule will be tried and so on. The maximum number of rules is unlimited. 
 
 You can print the rules set in the console for an overview. Colours will help reading it if your console supports colours.
 
@@ -76,7 +76,7 @@ You can print the rules set in the console for an overview. Colours will help re
 custom
 ```
 
-The outcome of the function can be used for the `guideline` argument in the [mdro()] function:
+The outcome of the function can be used for the `guideline` argument in the `mdro()` function:
 
 ```{r}
 x <- mdro(example_isolates, guideline = custom)
@@ -87,9 +87,9 @@ The rules set (the `custom` object in this case) could be exported to a shared f
   
 ### Examples
 
-The `mdro()` function always returns an ordered `factor`. For example, the output of the default guideline by Magiorakos *et al.* returns a `factor` with levels 'Negative', 'MDR', 'XDR' or 'PDR' in that order.
+The `mdro()` function always returns an ordered `factor` for predefined guidelines. For example, the output of the default guideline by Magiorakos *et al.* returns a `factor` with levels 'Negative', 'MDR', 'XDR' or 'PDR' in that order.
 
-The next example uses the `example_isolates` data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR data analysis. If we test the MDR/XDR/PDR guideline on this data set, we get:
+The next example uses the `example_isolates` data set. This is a data set included with this package and contains full antibiograms of 2,000 microbial isolates. It reflects reality and can be used to practise AMR data analysis. If we test the MDR/XDR/PDR guideline on this data set, we get:
 
 ```{r, message = FALSE}
 library(dplyr)   # to support pipes: %>%
@@ -120,7 +120,7 @@ my_TB_data <- data.frame(rifampicin = random_rsi(5000),
                          kanamycin = random_rsi(5000))
 ```
 
-Because all column names are automatically verified for valid drug names or codes, this would have worked exactly the same:
+Because all column names are automatically verified for valid drug names or codes, this would have worked exactly the same way:
 
 ```{r, eval = FALSE}
 my_TB_data <- data.frame(RIF = random_rsi(5000),
