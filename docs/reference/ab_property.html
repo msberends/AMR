@@ -51,6 +51,9 @@
 <meta property="og:title" content="Get Properties of an Antibiotic — ab_property" />
 <meta property="og:description" content="Use these functions to return a specific property of an antibiotic from the antibiotics data set. All input values will be evaluated internally with as.ab()." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@msberends" />
+<meta name="twitter:site" content="@univgroningen" />
 
 
 
@@ -90,7 +93,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9022</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9023</span>
       </span>
     </div>
 
@@ -250,7 +253,14 @@
     <p>Use these functions to return a specific property of an antibiotic from the <a href='antibiotics.html'>antibiotics</a> data set. All input values will be evaluated internally with <code><a href='as.ab.html'>as.ab()</a></code>.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>ab_name</span><span class='op'>(</span><span class='va'>x</span>, language <span class='op'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span><span class='op'>(</span><span class='op'>)</span>, tolower <span class='op'>=</span> <span class='cn'>FALSE</span>, snake_case <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>ab_name</span><span class='op'>(</span><span class='va'>x</span>, language <span class='op'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span><span class='op'>(</span><span class='op'>)</span>, tolower <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>set_ab_names</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  property <span class='op'>=</span> <span class='st'>"name"</span>,
+  language <span class='op'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span><span class='op'>(</span><span class='op'>)</span>,
+  snake_case <span class='op'>=</span> <span class='va'>property</span> <span class='op'>==</span> <span class='st'>"name"</span>
+<span class='op'>)</span>
 
 <span class='fu'>ab_atc</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
@@ -268,7 +278,9 @@
 
 <span class='fu'>ab_loinc</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>ab_ddd</span><span class='op'>(</span><span class='va'>x</span>, administration <span class='op'>=</span> <span class='st'>"oral"</span>, units <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>ab_ddd</span><span class='op'>(</span><span class='va'>x</span>, administration <span class='op'>=</span> <span class='st'>"oral"</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>ab_ddd_units</span><span class='op'>(</span><span class='va'>x</span>, administration <span class='op'>=</span> <span class='st'>"oral"</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>ab_info</span><span class='op'>(</span><span class='va'>x</span>, language <span class='op'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
@@ -292,28 +304,28 @@
       <td><p>a <a href='https://rdrr.io/r/base/logical.html'>logical</a> to indicate whether the first <a href='https://rdrr.io/r/base/character.html'>character</a> of every output should be transformed to a lower case <a href='https://rdrr.io/r/base/character.html'>character</a>. This will lead to e.g. "polymyxin B" and not "polymyxin b".</p></td>
     </tr>
     <tr>
-      <th>snake_case</th>
-      <td><p>a <a href='https://rdrr.io/r/base/logical.html'>logical</a> to indicate whether the names should be returned in so-called <a href='https://en.wikipedia.org/wiki/Snake_case'>snake case</a>: in lower case and all spaces/slashes replaced with an underscore (<code>_</code>). This is useful for column renaming.</p></td>
-    </tr>
-    <tr>
       <th>...</th>
       <td><p>other arguments passed on to <code><a href='as.ab.html'>as.ab()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>data</th>
+      <td><p>a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> of which the columns need to be renamed</p></td>
+    </tr>
+    <tr>
+      <th>property</th>
+      <td><p>one of the column names of one of the <a href='antibiotics.html'>antibiotics</a> data set: <code>vector_or(colnames(antibiotics), sort = FALSE)</code>.</p></td>
+    </tr>
+    <tr>
+      <th>snake_case</th>
+      <td><p>a <a href='https://rdrr.io/r/base/logical.html'>logical</a> to indicate whether the names should be in so-called <a href='https://en.wikipedia.org/wiki/Snake_case'>snake case</a>: in lower case and all spaces/slashes replaced with an underscore (<code>_</code>)</p></td>
     </tr>
     <tr>
       <th>administration</th>
       <td><p>way of administration, either <code>"oral"</code> or <code>"iv"</code></p></td>
     </tr>
     <tr>
-      <th>units</th>
-      <td><p>a <a href='https://rdrr.io/r/base/logical.html'>logical</a> to indicate whether the units instead of the DDDs itself must be returned, see <em>Examples</em></p></td>
-    </tr>
-    <tr>
       <th>open</th>
       <td><p>browse the URL using <code><a href='https://rdrr.io/r/utils/browseURL.html'>utils::browseURL()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>property</th>
-      <td><p>one of the column names of one of the <a href='antibiotics.html'>antibiotics</a> data set</p></td>
     </tr>
     </table>
 
@@ -322,8 +334,9 @@
     
 <ul>
 <li><p>An <a href='https://rdrr.io/r/base/integer.html'>integer</a> in case of <code>ab_cid()</code></p></li>
-<li><p>A named <a href='https://rdrr.io/r/base/list.html'>list</a> in case of <code>ab_info()</code> and multiple <code>ab_synonyms()</code>/<code>ab_tradenames()</code></p></li>
+<li><p>A named <a href='https://rdrr.io/r/base/list.html'>list</a> in case of <code>ab_info()</code> and multiple <code>ab_atc()</code>/<code>ab_synonyms()</code>/<code>ab_tradenames()</code></p></li>
 <li><p>A <a href='https://rdrr.io/r/base/double.html'>double</a> in case of <code>ab_ddd()</code></p></li>
+<li><p>A <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> in case of <code>set_ab_names()</code></p></li>
 <li><p>A <a href='https://rdrr.io/r/base/character.html'>character</a> in all other cases</p></li>
 </ul>
 
@@ -331,6 +344,7 @@
 
     <p>All output <a href='translate.html'>will be translated</a> where possible.</p>
 <p>The function <code>ab_url()</code> will return the direct URL to the official WHO website. A warning will be returned if the required ATC code is not available.</p>
+<p>The function <code>set_ab_names()</code> is a special column renaming function for <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>s. It renames columns names that resemble antimicrobial drugs. It always makes sure that the new column names are unique. If <code>property = "atc"</code> is set, preference is given to ATC codes from the J-group.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable Lifecycle</h2>
 
     
@@ -377,10 +391,10 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
         tolower <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>       <span class='co'># "amoxicillin/clavulanic acid" "polymyxin B"</span>
 
 <span class='co'># defined daily doses (DDD)</span>
-<span class='fu'>ab_ddd</span><span class='op'>(</span><span class='st'>"AMX"</span>, <span class='st'>"oral"</span><span class='op'>)</span>               <span class='co'>#  1</span>
-<span class='fu'>ab_ddd</span><span class='op'>(</span><span class='st'>"AMX"</span>, <span class='st'>"oral"</span>, units <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='co'># "g"</span>
-<span class='fu'>ab_ddd</span><span class='op'>(</span><span class='st'>"AMX"</span>, <span class='st'>"iv"</span><span class='op'>)</span>                 <span class='co'>#  1</span>
-<span class='fu'>ab_ddd</span><span class='op'>(</span><span class='st'>"AMX"</span>, <span class='st'>"iv"</span>, units <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>   <span class='co'># "g"</span>
+<span class='fu'>ab_ddd</span><span class='op'>(</span><span class='st'>"AMX"</span>, <span class='st'>"oral"</span><span class='op'>)</span>       <span class='co'>#  1.5</span>
+<span class='fu'>ab_ddd_units</span><span class='op'>(</span><span class='st'>"AMX"</span>, <span class='st'>"oral"</span><span class='op'>)</span> <span class='co'># "g"</span>
+<span class='fu'>ab_ddd</span><span class='op'>(</span><span class='st'>"AMX"</span>, <span class='st'>"iv"</span><span class='op'>)</span>         <span class='co'>#  3</span>
+<span class='fu'>ab_ddd_units</span><span class='op'>(</span><span class='st'>"AMX"</span>, <span class='st'>"iv"</span><span class='op'>)</span>   <span class='co'># "g"</span>
 
 <span class='fu'>ab_info</span><span class='op'>(</span><span class='st'>"AMX"</span><span class='op'>)</span>       <span class='co'># all properties as a list</span>
 
@@ -397,6 +411,19 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <span class='fu'>ab_atc</span><span class='op'>(</span><span class='st'>"cephtriaxone"</span><span class='op'>)</span>
 <span class='fu'>ab_atc</span><span class='op'>(</span><span class='st'>"cephthriaxone"</span><span class='op'>)</span>
 <span class='fu'>ab_atc</span><span class='op'>(</span><span class='st'>"seephthriaaksone"</span><span class='op'>)</span>
+
+<span class='co'># use set_ab_names() for renaming columns</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>example_isolates</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='fu'>set_ab_names</span><span class='op'>(</span><span class='va'>example_isolates</span><span class='op'>)</span><span class='op'>)</span>
+<span class='co'># \donttest{</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://dplyr.tidyverse.org'>"dplyr"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>set_ab_names</span><span class='op'>(</span><span class='op'>)</span>
+  <span class='co'># set_ab_names() works with any AB property:</span>
+  <span class='va'>example_isolates</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>set_ab_names</span><span class='op'>(</span><span class='st'>"atc"</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='co'># }</span>
 </code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -89,7 +89,7 @@
 #'   A microorganism is categorised as *Resistant* when there is a high likelihood of therapeutic failure even when there is increased exposure. Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
 #' - **S = Susceptible**\cr
 #'   A microorganism is categorised as *Susceptible, standard dosing regimen*, when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.
-#' - **I = Increased exposure, but still susceptible**\cr
+#' - **I = Susceptible, Increased exposure**\cr
 #'   A microorganism is categorised as *Susceptible, Increased exposure* when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.
 #'
 #' This AMR package honours this (new) insight. Use [susceptibility()] (equal to [proportion_SI()]) to determine antimicrobial susceptibility and [count_susceptible()] (equal to [count_SI()]) to count susceptible isolates.
@@ -649,9 +649,8 @@ as.rsi.data.frame <- function(x,
     if (is.null(col_mo.bak)) {
       col_mo <- search_type_in_df(x = x, type = "mo")
     }
+    x_mo <- as.mo(x[, col_mo, drop = TRUE])
   }
-
-  x_mo <- as.mo(x %pm>% pm_pull(col_mo))
 
   for (i in seq_len(length(ab_cols))) {
     if (types[i] == "mic") {
@@ -683,11 +682,11 @@ as.rsi.data.frame <- function(x,
       show_message <- FALSE
       ab <- ab_cols[i]
       ab_coerced <- suppressWarnings(as.ab(ab))
-      if (!all(x[, ab_cols[i], drop = TRUE] %in% c("R", "S", "I"), na.rm = TRUE)) {
+      if (!all(x[, ab_cols[i], drop = TRUE] %in% c("R", "S", "I", NA), na.rm = TRUE)) {
         show_message <- TRUE
         # only print message if values are not already clean
         message_("=> Cleaning values in column '", font_bold(ab), "' (",
-                 ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
+                 ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
                  ab_name(ab_coerced, tolower = TRUE), ")... ",
                  appendLF = FALSE,
                  as_note = FALSE)
@@ -695,7 +694,7 @@ as.rsi.data.frame <- function(x,
         show_message <- TRUE
         # only print message if class not already set
         message_("=> Assigning class <rsi> to already clean column '", font_bold(ab), "' (",
-                 ifelse(ab_coerced != ab, paste0(ab_coerced, ", "), ""),
+                 ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
                  ab_name(ab_coerced, tolower = TRUE), ")... ",
                  appendLF = FALSE,
                  as_note = FALSE)

@@ -42,9 +42,10 @@ expect_identical(ab_name(21319, language = NULL), "Flucloxacillin")
 expect_identical(ab_name("J01CF05", language = NULL), "Flucloxacillin")
 
 expect_identical(ab_ddd("AMX", "oral"), 1.5)
-expect_identical(ab_ddd("AMX", "oral", units = TRUE), "g")
+expect_warning(ab_ddd("AMX", "oral", units = TRUE)) # old behaviour
+expect_identical(ab_ddd_units("AMX", "iv"), "g")
 expect_identical(ab_ddd("AMX", "iv"), 3)
-expect_identical(ab_ddd("AMX", "iv", units = TRUE), "g")
+expect_identical(ab_ddd_units("AMX", "iv"), "g")
 
 expect_identical(ab_name(x = c("AMC", "PLB"), language = NULL), c("Amoxicillin/clavulanic acid", "Polymyxin B"))
 expect_identical(ab_name(x = c("AMC", "PLB"), tolower = TRUE, language = NULL),
@@ -62,3 +63,8 @@ expect_equal(ab_loinc("ampicillin"),
 
 expect_true(ab_url("AMX") %like% "whocc.no")
 expect_warning(ab_url("ASP"))
+
+expect_identical(colnames(set_ab_names(example_isolates[, 20:25])),
+                 c("cefoxitin", "cefotaxime", "ceftazidime", "ceftriaxone", "gentamicin", "tobramycin"))
+expect_identical(colnames(set_ab_names(example_isolates[, 20:25], "atc")),
+                 c("J01DC01", "J01DD01", "J01DD02", "J01DD04", "J01GB03", "J01GB01"))

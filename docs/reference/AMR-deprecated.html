@@ -51,6 +51,9 @@
 <meta property="og:title" content="Deprecated Functions — AMR-deprecated" />
 <meta property="og:description" content="These functions are so-called 'Deprecated'. They will be removed in a future release. Using the functions will give a warning with the name of the function it has been replaced by (if there is one)." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@msberends" />
+<meta name="twitter:site" content="@univgroningen" />
 
 
 
@@ -90,7 +93,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9022</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9023</span>
       </span>
     </div>
 
@@ -250,180 +253,7 @@
     <p>These functions are so-called '<a href='https://rdrr.io/r/base/Deprecated.html'>Deprecated</a>'. <strong>They will be removed in a future release.</strong> Using the functions will give a warning with the name of the function it has been replaced by (if there is one).</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>p_symbol</span><span class='op'>(</span><span class='va'>p</span>, emptychar <span class='op'>=</span> <span class='st'>" "</span><span class='op'>)</span>
-
-<span class='fu'>filter_first_weighted_isolate</span><span class='op'>(</span>
-  x <span class='op'>=</span> <span class='cn'>NULL</span>,
-  col_date <span class='op'>=</span> <span class='cn'>NULL</span>,
-  col_patient_id <span class='op'>=</span> <span class='cn'>NULL</span>,
-  col_mo <span class='op'>=</span> <span class='cn'>NULL</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>key_antibiotics</span><span class='op'>(</span>
-  x <span class='op'>=</span> <span class='cn'>NULL</span>,
-  col_mo <span class='op'>=</span> <span class='cn'>NULL</span>,
-  universal_1 <span class='op'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"amoxicillin"</span><span class='op'>)</span>,
-  universal_2 <span class='op'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"amoxicillin/clavulanic acid"</span><span class='op'>)</span>,
-  universal_3 <span class='op'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"cefuroxime"</span><span class='op'>)</span>,
-  universal_4 <span class='op'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"piperacillin/tazobactam"</span><span class='op'>)</span>,
-  universal_5 <span class='op'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"ciprofloxacin"</span><span class='op'>)</span>,
-  universal_6 <span class='op'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"trimethoprim/sulfamethoxazole"</span><span class='op'>)</span>,
-  GramPos_1 <span class='op'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"vancomycin"</span><span class='op'>)</span>,
-  GramPos_2 <span class='op'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"teicoplanin"</span><span class='op'>)</span>,
-  GramPos_3 <span class='op'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"tetracycline"</span><span class='op'>)</span>,
-  GramPos_4 <span class='op'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"erythromycin"</span><span class='op'>)</span>,
-  GramPos_5 <span class='op'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"oxacillin"</span><span class='op'>)</span>,
-  GramPos_6 <span class='op'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"rifampin"</span><span class='op'>)</span>,
-  GramNeg_1 <span class='op'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"gentamicin"</span><span class='op'>)</span>,
-  GramNeg_2 <span class='op'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"tobramycin"</span><span class='op'>)</span>,
-  GramNeg_3 <span class='op'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"colistin"</span><span class='op'>)</span>,
-  GramNeg_4 <span class='op'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"cefotaxime"</span><span class='op'>)</span>,
-  GramNeg_5 <span class='op'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"ceftazidime"</span><span class='op'>)</span>,
-  GramNeg_6 <span class='op'>=</span> <span class='fu'><a href='guess_ab_col.html'>guess_ab_col</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"meropenem"</span><span class='op'>)</span>,
-  warnings <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>key_antibiotics_equal</span><span class='op'>(</span>
-  <span class='va'>y</span>,
-  <span class='va'>z</span>,
-  type <span class='op'>=</span> <span class='st'>"keyantimicrobials"</span>,
-  ignore_I <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  points_threshold <span class='op'>=</span> <span class='fl'>2</span>,
-  info <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  na.rm <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>filter_ab_class</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  <span class='va'>ab_class</span>,
-  result <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scope <span class='op'>=</span> <span class='st'>"any"</span>,
-  only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>filter_aminoglycosides</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  result <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scope <span class='op'>=</span> <span class='st'>"any"</span>,
-  only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>filter_betalactams</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  result <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scope <span class='op'>=</span> <span class='st'>"any"</span>,
-  only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>filter_carbapenems</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  result <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scope <span class='op'>=</span> <span class='st'>"any"</span>,
-  only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>filter_cephalosporins</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  result <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scope <span class='op'>=</span> <span class='st'>"any"</span>,
-  only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>filter_1st_cephalosporins</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  result <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scope <span class='op'>=</span> <span class='st'>"any"</span>,
-  only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>filter_2nd_cephalosporins</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  result <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scope <span class='op'>=</span> <span class='st'>"any"</span>,
-  only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>filter_3rd_cephalosporins</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  result <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scope <span class='op'>=</span> <span class='st'>"any"</span>,
-  only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>filter_4th_cephalosporins</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  result <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scope <span class='op'>=</span> <span class='st'>"any"</span>,
-  only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>filter_5th_cephalosporins</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  result <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scope <span class='op'>=</span> <span class='st'>"any"</span>,
-  only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>filter_fluoroquinolones</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  result <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scope <span class='op'>=</span> <span class='st'>"any"</span>,
-  only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>filter_glycopeptides</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  result <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scope <span class='op'>=</span> <span class='st'>"any"</span>,
-  only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>filter_macrolides</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  result <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scope <span class='op'>=</span> <span class='st'>"any"</span>,
-  only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>filter_oxazolidinones</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  result <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scope <span class='op'>=</span> <span class='st'>"any"</span>,
-  only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>filter_penicillins</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  result <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scope <span class='op'>=</span> <span class='st'>"any"</span>,
-  only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>filter_tetracyclines</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  result <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scope <span class='op'>=</span> <span class='st'>"any"</span>,
-  only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>p_symbol</span><span class='op'>(</span><span class='va'>p</span>, emptychar <span class='op'>=</span> <span class='st'>" "</span><span class='op'>)</span></code></pre></div>
 
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>

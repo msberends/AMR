@@ -30,7 +30,7 @@
 #' @param size desired size of the returned vector. If used in a [data.frame] call or `dplyr` verb, will get the current (group) size if left blank.
 #' @param mo any [character] that can be coerced to a valid microorganism code with [as.mo()]
 #' @param ab any [character] that can be coerced to a valid antimicrobial agent code with [as.ab()]
-#' @param prob_RSI a vector of length 3: the probabilities for R (1st value), S (2nd value) and I (3rd value)
+#' @param prob_RSI a vector of length 3: the probabilities for "R" (1st value), "S" (2nd value) and "I" (3rd value)
 #' @param ... ignored, only in place to allow future extensions
 #' @details The base \R function [sample()] is used for generating values.
 #' 

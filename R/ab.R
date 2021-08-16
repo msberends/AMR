@@ -33,7 +33,7 @@
 #' @param ... arguments passed on to internal functions
 #' @rdname as.ab
 #' @inheritSection WHOCC WHOCC
-#' @details All entries in the [antibiotics] data set have three different identifiers: a human readable EARS-Net code (column `ab`, used by ECDC and WHONET), an ATC code (column `atc`, used by WHO), and a CID code (column `cid`, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem.
+#' @details All entries in the [antibiotics] data set have three different identifiers: a human readable EARS-Net code (column `ab`, used by ECDC and WHONET), an ATC code (column `atc`, used by WHO), and a CID code (column `cid`, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem. Not that some drugs contain multiple ATC codes.
 #' 
 #' All these properties will be searched for the user input. The [as.ab()] can correct for different forms of misspelling:
 #' 
@@ -101,6 +101,11 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   if (is.ab(x)) {
     return(x)
   }
+  if (all(x %in% c(AB_lookup$ab, NA))) {
+    # all valid AB codes, but not yet right class
+    return(set_clean_class(x,
+                           new_class = c("ab", "character")))
+  }
   
   initial_search <- is.null(list(...)$initial_search)
   already_regex <- isTRUE(list(...)$already_regex)
@@ -109,24 +114,6 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   x_bak <- x
   x <- toupper(x)
   x_nonNA <- x[!is.na(x)]
-  
-  if (all(x_nonNA %in% antibiotics$ab, na.rm = TRUE)) {
-    # all valid AB codes, but not yet right class
-    return(set_clean_class(x,
-                           new_class = c("ab", "character")))
-  }
-  if (all(x_nonNA %in% toupper(antibiotics$name), na.rm = TRUE)) {
-    # all valid AB names
-    out <- antibiotics$ab[match(x, toupper(antibiotics$name))]
-    out[is.na(x)] <- NA_character_
-    return(out)
-  }
-  if (all(x_nonNA %in% antibiotics$atc, na.rm = TRUE)) {
-    # all valid ATC codes
-    out <- antibiotics$ab[match(x, antibiotics$atc)]
-    out[is.na(x)] <- NA_character_
-    return(out)
-  }
   
   # remove diacritics
   x <- iconv(x, from = "UTF-8", to = "ASCII//TRANSLIT")
@@ -155,13 +142,29 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     found[1L]
   }
   
-  if (initial_search == TRUE) {
-    progress <- progress_ticker(n = length(x), n_min = 25, print = info) # start if n >= 25
+  # Fill in names, AB codes, CID codes and ATC codes directly (`x` is already clean and uppercase)
+  known_names <- x %in% AB_lookup$generalised_name
+  x_new[known_names] <- AB_lookup$ab[match(x[known_names], AB_lookup$generalised_name)]
+  known_codes_ab <- x %in% AB_lookup$ab
+  known_codes_atc <- vapply(FUN.VALUE = logical(1), x, function(x_) x_ %in% unlist(AB_lookup$atc), USE.NAMES = FALSE)
+  known_codes_cid <- x %in% AB_lookup$cid
+  x_new[known_codes_ab] <- AB_lookup$ab[match(x[known_codes_ab], AB_lookup$ab)]
+  x_new[known_codes_atc] <- AB_lookup$ab[vapply(FUN.VALUE = integer(1),
+                                                x[known_codes_atc],
+                                                function(x_) which(vapply(FUN.VALUE = logical(1),
+                                                                          AB_lookup$atc,
+                                                                          function(atc) x_ %in% atc)),
+                                                USE.NAMES = FALSE)]
+  x_new[known_codes_cid] <- AB_lookup$ab[match(x[known_codes_cid], AB_lookup$cid)]
+  already_known <- known_names | known_codes_ab | known_codes_atc | known_codes_cid
+  
+  if (initial_search == TRUE & sum(already_known) < length(x)) {
+    progress <- progress_ticker(n = sum(!already_known), n_min = 25, print = info) # start if n >= 25
     on.exit(close(progress))
   }
   
-  for (i in seq_len(length(x))) {
-
+  for (i in which(!already_known)) {
+    
     if (initial_search == TRUE) {
       progress$tick()
     }
@@ -186,34 +189,6 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     # old code for phenoxymethylpenicillin (Peni V)
     if (x[i] == "PNV") {
       x_new[i] <- "PHN"
-      next
-    }
-    
-    # exact name
-    found <- antibiotics[which(AB_lookup$generalised_name == x[i]), ]$ab
-    if (length(found) > 0) {
-      x_new[i] <- found[1L]
-      next
-    }
-    
-    # exact AB code
-    found <- antibiotics[which(antibiotics$ab == x[i]), ]$ab
-    if (length(found) > 0) {
-      x_new[i] <- note_if_more_than_one_found(found, i, from_text)
-      next
-    }
-    
-    # exact ATC code
-    found <- antibiotics[which(antibiotics$atc == x[i]), ]$ab
-    if (length(found) > 0) {
-      x_new[i] <- note_if_more_than_one_found(found, i, from_text)
-      next
-    }
-    
-    # exact CID code
-    found <- antibiotics[which(antibiotics$cid == x[i]), ]$ab
-    if (length(found) > 0) {
-      x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
     
@@ -296,7 +271,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
-    
+
     # INITIAL SEARCH - More uncertain results ----
 
     if (initial_search == TRUE && fast_mode == FALSE) {
@@ -461,7 +436,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
   }
   
-  if (initial_search == TRUE) {
+  if (initial_search == TRUE & sum(already_known) < length(x)) {
     close(progress)
   }
   
@@ -479,11 +454,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
              vector_and(x_unknown), ".",
              call = FALSE)
   }
-  
-  x_result <- data.frame(x = x_bak_clean, stringsAsFactors = FALSE) %pm>%
-    pm_left_join(data.frame(x = x, x_new = x_new, stringsAsFactors = FALSE), by = "x") %pm>%
-    pm_pull(x_new)
-  
+
+  x_result <- x_new[match(x_bak_clean, x)]
   if (length(x_result) == 0) {
     x_result <- NA_character_
   }

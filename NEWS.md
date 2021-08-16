@@ -1,13 +1,30 @@
-# `AMR` 1.7.1.9022
-## <small>Last updated: 23 July 2021</small>
+# `AMR` 1.7.1.9023
+## <small>Last updated: 16 August 2021</small>
+
+### Breaking changes
+* Removed all `filter_*()` functions (except for `filter_first_isolate()`), which were all deprecated in a previous package version
+* Removed the `key_antibiotics()` and `key_antibiotics_equal()` functions, which were deprecated and superseded by `key_antimicrobials()` and `antimicrobials_equal()`
+* Removed all previously implemented `ggplot2::ggplot()` generics for classes `<mic>`, `<disk>`, `<rsi>` and `<resistance_predict>` as they did not follow the `ggplot2` logic. They were replaced with `ggplot2::autoplot()` generics.
+
+### New
+* Function `set_ab_names()` to rename data set columns that resemble antimicrobial drugs. This allows for quickly renaming columns to official names, ATC codes, etc.
 
 ### Changed
-* Previously implemented `ggplot2::ggplot()` generics for classes `<mic>`, `<disk>`, `<rsi>` and `<resistance_predict>` did not follow the `ggplot2` logic, and were replaced with `autoplot()` generics.
-* Antibiotic class selectors (see `ab_class()`)
+* The `antibiotics` data set now contains **all ATC codes** that are available through the [WHOCC website](https://www.whocc.no), regardless of drugs being present in more than one ATC group. This means that:
+  * Some drugs now contain multiple ATC codes (e.g., metronidazole contains 5)
+  * `antibiotics$atc` is now a `list` instead of a `character`, and this `atc` column was moved to the 5th position of the `antibiotics` data set
+  * `ab_atc()` does not always return a character vector with length 1, and returns a `list` if the input is larger than length 1
+* Antibiotic selectors
   * They now also work in R-3.0 and R-3.1, supporting every version of R since 2013
-  * Added more selectors: `aminopenicillins()`, `lincosamides()`, `lipoglycopeptides()`, `polymyxins()`, `quinolones()`, `streptogramins()` and `ureidopenicillins()`
+  * Added more selectors for antibiotic classes: `aminopenicillins()`, `antifungals()`, `antimycobacterials()`, `lincosamides()`, `lipoglycopeptides()`, `polymyxins()`, `quinolones()`, `streptogramins()`, `trimethoprims()` and `ureidopenicillins()`
+  * Added specific selectors for certain types for treatment: `administrable_per_os()` and `administrable_iv()`, which are based on available Defined Daily Doses (DDDs), as defined by the WHOCC. These are ideal for e.g. analysing pathogens in primary care where IV treatment is not an option. They can be combined with other AB selectors, e.g. to select penicillins that are only administrable per os (i.e., orally):
+  ```r
+  example_isolates[, penicillins() & administrable_per_os()]          # base R
+  example_isolates %>% select(penicillins() & administrable_per_os()) # dplyr
+  ```
   * Fix for using selectors multiple times in one call (e.g., using them in `dplyr::filter()` and immediately after in `dplyr::select()`)
   * Added argument `only_treatable`, which defaults to `TRUE` and will exclude drugs that are only for laboratory tests and not for treating patients (such as imipenem/EDTA and gentamicin-high)
+* Fixed the Gram stain (`mo_gramstain()`) determination of the class Negativicutes within the phylum of Firmicutes - they were considered Gram-positives because of their phylum but are actually Gram-negative. This impacts 137 taxonomic species, genera and families, such as *Negativicoccus* and *Veillonella*.
 * Fix for duplicate ATC codes in the `antibiotics` data set
 * Fix to prevent introducing `NA`s for old MO codes when running `as.mo()` on them
 * Added more informative error messages when any of the `proportion_*()` and `count_*()` functions fail
@@ -16,12 +33,13 @@
 * The right input types for `random_mic()`, `random_disk()` and `random_rsi()` are now enforced
 * `as.rsi()` can now correct for textual input (such as "Susceptible", "Resistant") in Dutch, English, French, German, Italian, Portuguese and Spanish
 * When warnings are thrown because of too few isolates in any `count_*()`, `proportion_*()` function (or `resistant()` or `susceptible()`), the `dplyr` group will be shown, if available
-* `ab_name()` gained argument `snake_case`, which is useful for column renaming
 * Fix for legends created with `scale_rsi_colours()` when using `ggplot2` v3.3.4 or higher (this is ggplot2 bug 4511, soon to be fixed)
 * Fix for minor translation errors
 * Fix for the MIC interpretation of *Morganellaceae* (such as *Morganella* and *Proteus*) when using the EUCAST 2021 guideline
 * Improved algorithm for generating random MICs with `random_mic()`
 * Improved plot legends for MICs and disk diffusion values
+* Improved speed of `as.ab()` and all `ab_*()` functions
+
 
 # AMR 1.7.1
 

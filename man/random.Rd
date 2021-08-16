@@ -22,7 +22,7 @@ random_rsi(size = NULL, prob_RSI = c(0.33, 0.33, 0.33), ...)
 
 \item{...}{ignored, only in place to allow future extensions}
 
-\item{prob_RSI}{a vector of length 3: the probabilities for R (1st value), S (2nd value) and I (3rd value)}
+\item{prob_RSI}{a vector of length 3: the probabilities for "R" (1st value), "S" (2nd value) and "I" (3rd value)}
 }
 \value{
 class \verb{<mic>} for \code{\link[=random_mic]{random_mic()}} (see \code{\link[=as.mic]{as.mic()}}) and class \verb{<disk>} for \code{\link[=random_disk]{random_disk()}} (see \code{\link[=as.disk]{as.disk()}})

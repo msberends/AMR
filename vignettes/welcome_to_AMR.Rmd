@@ -1,5 +1,5 @@
 ---
-title: "Welcome to the AMR package"
+title: "Welcome to the `AMR` package"
 output: 
   rmarkdown::html_vignette:
     toc: true
@@ -22,19 +22,15 @@ knitr::opts_chunk$set(
 )
 ```
 
-**READ ALL VIGNETTES [ON OUR WEBSITE](https://msberends.github.io/AMR/articles/).**
+Note: to keep the package as small as possible, we only included this vignette. You can read more vignettes on our website about how to conduct AMR data analysis, determine MDRO's, find explanation of EUCAST rules, and much more: <https://msberends.github.io/AMR/articles/>.
 
-# Welcome to the AMR package
+----
 
 `AMR` is a free, open-source and independent R package to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible antimicrobial resistance data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.
 
-After installing this package, R knows **~70,000 distinct microbial species** and all **~550 antibiotic, antimycotic and antiviral drugs** by name and code (including ATC, EARS-NET, LOINC and SNOMED CT), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data.
+After installing this package, R knows `r AMR:::format_included_data_number(AMR::microorganisms)` distinct microbial species and all `r AMR:::format_included_data_number(rbind(AMR::antibiotics[, "atc", drop = FALSE], AMR::antivirals[, "atc", drop = FALSE]))` antibiotic, antimycotic and antiviral drugs by name and code (including ATC, EARS-NET, LOINC and SNOMED CT), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data.
 
-This package is fully independent of any other R package and works on Windows, macOS and Linux with all versions of R since R-3.0.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the University of Groningen, in collaboration with non-profit organisations Certe Medical Diagnostics and Advice and University Medical Center Groningen. This R package is actively maintained (see Changelog) and is free software (see Copyright).
-
-Since its first public release in early 2018, this package has been downloaded from more than 100 countries.
-
-## Usage examples
+This package is fully independent of any other R package and works on Windows, macOS and Linux with all versions of R since R-3.0.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. Since its first public release in early 2018, this package has been downloaded from more than 160 countries.
 
 This package can be used for:
 
@@ -54,3 +50,7 @@ This package can be used for:
   * Getting LOINC codes of an antibiotic, or getting properties of an antibiotic based on a LOINC code
   * Machine reading the EUCAST and CLSI guidelines from 2011-2020 to translate MIC values and disk diffusion diameters to R/SI
   * Principal component analysis for AMR
+  
+All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this `AMR` package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find [all download links on our website](https://msberends.github.io/AMR/articles/datasets.html), which is automatically updated with every code change.
+
+The package was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the University of Groningen, in collaboration with non-profit organisations Certe Medical Diagnostics and Advice and University Medical Center Groningen. This R package is actively maintained (see [Changelog](https://msberends.github.io/AMR/news/index.html)) and is free software (see [Copyright](https://msberends.github.io/AMR/#copyright)).

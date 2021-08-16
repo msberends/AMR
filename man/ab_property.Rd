@@ -3,8 +3,9 @@
 \name{ab_property}
 \alias{ab_property}
 \alias{ab_name}
-\alias{ab_atc}
+\alias{set_ab_names}
 \alias{ATC}
+\alias{ab_atc}
 \alias{ab_cid}
 \alias{ab_synonyms}
 \alias{ab_tradenames}
@@ -13,11 +14,19 @@
 \alias{ab_atc_group2}
 \alias{ab_loinc}
 \alias{ab_ddd}
+\alias{ab_ddd_units}
 \alias{ab_info}
 \alias{ab_url}
 \title{Get Properties of an Antibiotic}
 \usage{
-ab_name(x, language = get_locale(), tolower = FALSE, snake_case = FALSE, ...)
+ab_name(x, language = get_locale(), tolower = FALSE, ...)
+
+set_ab_names(
+  data,
+  property = "name",
+  language = get_locale(),
+  snake_case = property == "name"
+)
 
 ab_atc(x, ...)
 
@@ -35,7 +44,9 @@ ab_atc_group2(x, language = get_locale(), ...)
 
 ab_loinc(x, ...)
 
-ab_ddd(x, administration = "oral", units = FALSE, ...)
+ab_ddd(x, administration = "oral", ...)
+
+ab_ddd_units(x, administration = "oral", ...)
 
 ab_info(x, language = get_locale(), ...)
 
@@ -50,23 +61,24 @@ ab_property(x, property = "name", language = get_locale(), ...)
 
 \item{tolower}{a \link{logical} to indicate whether the first \link{character} of every output should be transformed to a lower case \link{character}. This will lead to e.g. "polymyxin B" and not "polymyxin b".}
 
-\item{snake_case}{a \link{logical} to indicate whether the names should be returned in so-called \href{https://en.wikipedia.org/wiki/Snake_case}{snake case}: in lower case and all spaces/slashes replaced with an underscore (\verb{_}). This is useful for column renaming.}
-
 \item{...}{other arguments passed on to \code{\link[=as.ab]{as.ab()}}}
+
+\item{data}{a \link{data.frame} of which the columns need to be renamed}
+
+\item{property}{one of the column names of one of the \link{antibiotics} data set: \code{vector_or(colnames(antibiotics), sort = FALSE)}.}
+
+\item{snake_case}{a \link{logical} to indicate whether the names should be in so-called \href{https://en.wikipedia.org/wiki/Snake_case}{snake case}: in lower case and all spaces/slashes replaced with an underscore (\verb{_})}
 
 \item{administration}{way of administration, either \code{"oral"} or \code{"iv"}}
 
-\item{units}{a \link{logical} to indicate whether the units instead of the DDDs itself must be returned, see \emph{Examples}}
-
 \item{open}{browse the URL using \code{\link[utils:browseURL]{utils::browseURL()}}}
-
-\item{property}{one of the column names of one of the \link{antibiotics} data set}
 }
 \value{
 \itemize{
 \item An \link{integer} in case of \code{\link[=ab_cid]{ab_cid()}}
-\item A named \link{list} in case of \code{\link[=ab_info]{ab_info()}} and multiple \code{\link[=ab_synonyms]{ab_synonyms()}}/\code{\link[=ab_tradenames]{ab_tradenames()}}
+\item A named \link{list} in case of \code{\link[=ab_info]{ab_info()}} and multiple \code{\link[=ab_atc]{ab_atc()}}/\code{\link[=ab_synonyms]{ab_synonyms()}}/\code{\link[=ab_tradenames]{ab_tradenames()}}
 \item A \link{double} in case of \code{\link[=ab_ddd]{ab_ddd()}}
+\item A \link{data.frame} in case of \code{\link[=set_ab_names]{set_ab_names()}}
 \item A \link{character} in all other cases
 }
 }
@@ -77,6 +89,8 @@ Use these functions to return a specific property of an antibiotic from the \lin
 All output \link[=translate]{will be translated} where possible.
 
 The function \code{\link[=ab_url]{ab_url()}} will return the direct URL to the official WHO website. A warning will be returned if the required ATC code is not available.
+
+The function \code{\link[=set_ab_names]{set_ab_names()}} is a special column renaming function for \link{data.frame}s. It renames columns names that resemble antimicrobial drugs. It always makes sure that the new column names are unique. If \code{property = "atc"} is set, preference is given to ATC codes from the J-group.
 }
 \section{Stable Lifecycle}{
 
@@ -123,10 +137,10 @@ ab_name(x = c("AMC", "PLB"),
         tolower = TRUE)       # "amoxicillin/clavulanic acid" "polymyxin B"
 
 # defined daily doses (DDD)
-ab_ddd("AMX", "oral")               #  1
-ab_ddd("AMX", "oral", units = TRUE) # "g"
-ab_ddd("AMX", "iv")                 #  1
-ab_ddd("AMX", "iv", units = TRUE)   # "g"
+ab_ddd("AMX", "oral")       #  1.5
+ab_ddd_units("AMX", "oral") # "g"
+ab_ddd("AMX", "iv")         #  3
+ab_ddd_units("AMX", "iv")   # "g"
 
 ab_info("AMX")       # all properties as a list
 
@@ -143,6 +157,19 @@ ab_atc("ceftriaxon")
 ab_atc("cephtriaxone")
 ab_atc("cephthriaxone")
 ab_atc("seephthriaaksone")
+
+# use set_ab_names() for renaming columns
+colnames(example_isolates)
+colnames(set_ab_names(example_isolates))
+\donttest{
+if (require("dplyr")) {
+  example_isolates \%>\%
+    set_ab_names()
+  # set_ab_names() works with any AB property:
+  example_isolates \%>\%
+    set_ab_names("atc")
+}
+}
 }
 \seealso{
 \link{antibiotics}

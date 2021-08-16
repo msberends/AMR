@@ -215,8 +215,11 @@ authors:
     href: https://www.rug.nl/staff/c.glasner/
 
 template:
-  # this requires the 'preferably' package, https://github.com/amirmasoudabdol/preferably/
-  # package: preferably
+  opengraph:
+    twitter:
+      creator: "@msberends"
+      site: "@univgroningen"
+      card: summary_large_image
   assets: "pkgdown/logos" # use logos in this folder
   params:
     noindex: false

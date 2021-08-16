@@ -29,23 +29,26 @@
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param x any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
 #' @param tolower a [logical] to indicate whether the first [character] of every output should be transformed to a lower case [character]. This will lead to e.g. "polymyxin B" and not "polymyxin b".
-#' @param snake_case a [logical] to indicate whether the names should be returned in so-called [snake case](https://en.wikipedia.org/wiki/Snake_case): in lower case and all spaces/slashes replaced with an underscore (`_`). This is useful for column renaming.
-#' @param property one of the column names of one of the [antibiotics] data set
+#' @param property one of the column names of one of the [antibiotics] data set: `vector_or(colnames(antibiotics), sort = FALSE)`.
 #' @param language language of the returned text, defaults to system language (see [get_locale()]) and can also be set with `getOption("AMR_locale")`. Use `language = NULL` or `language = ""` to prevent translation.
 #' @param administration way of administration, either `"oral"` or `"iv"`
-#' @param units a [logical] to indicate whether the units instead of the DDDs itself must be returned, see *Examples*
 #' @param open browse the URL using [utils::browseURL()]
 #' @param ... other arguments passed on to [as.ab()]
+#' @param data a [data.frame] of which the columns need to be renamed
+#' @param snake_case a [logical] to indicate whether the names should be in so-called [snake case](https://en.wikipedia.org/wiki/Snake_case): in lower case and all spaces/slashes replaced with an underscore (`_`)
 #' @details All output [will be translated][translate] where possible.
 #' 
 #' The function [ab_url()] will return the direct URL to the official WHO website. A warning will be returned if the required ATC code is not available.
+#' 
+#' The function [set_ab_names()] is a special column renaming function for [data.frame]s. It renames columns names that resemble antimicrobial drugs. It always makes sure that the new column names are unique. If `property = "atc"` is set, preference is given to ATC codes from the J-group.
 #' @inheritSection as.ab Source
 #' @rdname ab_property
 #' @name ab_property
 #' @return 
 #' - An [integer] in case of [ab_cid()]
-#' - A named [list] in case of [ab_info()] and multiple [ab_synonyms()]/[ab_tradenames()]
+#' - A named [list] in case of [ab_info()] and multiple [ab_atc()]/[ab_synonyms()]/[ab_tradenames()]
 #' - A [double] in case of [ab_ddd()]
+#' - A [data.frame] in case of [set_ab_names()]
 #' - A [character] in all other cases
 #' @export
 #' @seealso [antibiotics]
@@ -69,10 +72,10 @@
 #'         tolower = TRUE)       # "amoxicillin/clavulanic acid" "polymyxin B"
 #'
 #' # defined daily doses (DDD)
-#' ab_ddd("AMX", "oral")               #  1
-#' ab_ddd("AMX", "oral", units = TRUE) # "g"
-#' ab_ddd("AMX", "iv")                 #  1
-#' ab_ddd("AMX", "iv", units = TRUE)   # "g"
+#' ab_ddd("AMX", "oral")       #  1.5
+#' ab_ddd_units("AMX", "oral") # "g"
+#' ab_ddd("AMX", "iv")         #  3
+#' ab_ddd_units("AMX", "iv")   # "g"
 #'
 #' ab_info("AMX")       # all properties as a list
 #'
@@ -89,11 +92,23 @@
 #' ab_atc("cephtriaxone")
 #' ab_atc("cephthriaxone")
 #' ab_atc("seephthriaaksone")
-ab_name <- function(x, language = get_locale(), tolower = FALSE, snake_case = FALSE, ...) {
+#' 
+#' # use set_ab_names() for renaming columns
+#' colnames(example_isolates)
+#' colnames(set_ab_names(example_isolates))
+#' \donttest{
+#' if (require("dplyr")) {
+#'   example_isolates %>%
+#'     set_ab_names()
+#'   # set_ab_names() works with any AB property:
+#'   example_isolates %>%
+#'     set_ab_names("atc")
+#' }
+#' }
+ab_name <- function(x, language = get_locale(), tolower = FALSE, ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(tolower, allow_class = "logical", has_length = 1)
-  meet_criteria(snake_case, allow_class = "logical", has_length = 1)
   
   x <- translate_AMR(ab_validate(x = x, property = "name", ...), language = language, only_affect_ab_names = TRUE)
   if (tolower == TRUE) {
@@ -101,10 +116,69 @@ ab_name <- function(x, language = get_locale(), tolower = FALSE, snake_case = FA
     # as we want "polymyxin B", not "polymyxin b"
     x <- gsub("^([A-Z])", "\\L\\1", x, perl = TRUE)
   }
+  x
+}
+
+#' @rdname ab_property
+#' @aliases ATC
+#' @export
+set_ab_names <- function(data, property = "name", language = get_locale(), snake_case = property == "name") {
+  meet_criteria(data, allow_class = "data.frame")
+  meet_criteria(property, is_in = colnames(antibiotics), has_length = 1, ignore.case = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(snake_case, allow_class = "logical", has_length = 1)
+  
+  x_deparsed <- deparse(substitute(data))
+  if (length(x_deparsed) > 1 || any(x_deparsed %unlike% "[a-z]+")) {
+    x_deparsed <- "your_data"
+  }
+  
+  property <- tolower(property)
+  
+  columns <- get_column_abx(data, info = FALSE, only_rsi_columns = FALSE, sort = FALSE)
+  if (length(columns) == 0) {
+    message_("No columns with antibiotic results found for `set_ab_names()`, leaving names unchanged.")
+    return(data)
+  }
+  x <- vapply(FUN.VALUE = character(1),
+              ab_property(columns, property = property, language = language),
+              function(x) {
+                if (property == "atc") {
+                  # try to get the J-group
+                  if (any(x %like% "^J")) {
+                    x[x %like% "^J"][1L]
+                  } else {
+                    as.character(x[1L])
+                  }
+                } else {
+                  as.character(x[1L])
+                }
+              })
+  if (any(x %in% c("", NA))) {
+    warning_("No ", property, " found for column(s): ", vector_and(columns[x %in% c("", NA)], sort = FALSE), call = FALSE)
+    x[x %in% c("", NA)] <- columns[x %in% c("", NA)]
+  }
+    
   if (snake_case == TRUE) {
     x <- tolower(gsub("[^a-zA-Z0-9]+", "_", x))
   }
-  x
+  
+  if (any(duplicated(x))) {
+    # very hacky way of adding the index to each duplicate
+    # so      "Amoxicillin", "Amoxicillin",   "Amoxicillin"
+    # will be "Amoxicillin", "Amoxicillin_2", "Amoxicillin_3"
+    invisible(lapply(unique(x),
+                     function(u) {
+                       dups <- which(x == u)
+                       if (length(dups) > 1) {
+                         # there are duplicates
+                         dup_add_int <- dups[2:length(dups)]
+                         x[dup_add_int] <<- paste0(x[dup_add_int], "_", c(2:length(dups)))
+                       }
+                     }))
+  }
+  colnames(data)[colnames(data) %in% columns] <- x
+  data
 }
 
 #' @rdname ab_property
@@ -112,7 +186,13 @@ ab_name <- function(x, language = get_locale(), tolower = FALSE, snake_case = FA
 #' @export
 ab_atc <- function(x, ...) {
   meet_criteria(x, allow_NA = TRUE)
-  ab_validate(x = x, property = "atc", ...)
+  atcs <- ab_validate(x = x, property = "atc", ...)
+  names(atcs) <- x
+  if (length(atcs) == 1) {
+    unname(unlist(atcs))
+  } else {
+    atcs
+  }
 }
 
 #' @rdname ab_property
@@ -181,18 +261,47 @@ ab_loinc <- function(x, ...) {
 
 #' @rdname ab_property
 #' @export
-ab_ddd <- function(x, administration = "oral", units = FALSE, ...) {
+ab_ddd <- function(x, administration = "oral", ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(administration, is_in = c("oral", "iv"), has_length = 1)
-  meet_criteria(units, allow_class = "logical", has_length = 1)
-
+  
+  x <- as.ab(x, ...)
+  if (any(ab_name(x, language = NULL) %like% "/")) {
+    warning_("DDDs of combined products are available for different dose combinations and not (yet) part of the AMR package. ",
+             "Please refer to the WHOCC website:\n",
+             "www.whocc.no/ddd/list_of_ddds_combined_products/", call = FALSE)
+  }
+  
   ddd_prop <- administration
-  if (units == TRUE) {
+  # old behaviour
+  units <- list(...)$units
+  if (!is.null(units) && isTRUE(units)) {
+    if (message_not_thrown_before("ab_ddd", entire_session = TRUE)) {
+      warning_("Using `ab_ddd(..., units = TRUE)` is deprecated, use `ab_ddd_units()` instead. ",
+               "This warning will be shown once per session.", call = FALSE)
+    }
     ddd_prop <- paste0(ddd_prop, "_units")
   } else {
     ddd_prop <- paste0(ddd_prop, "_ddd")
   }
-  ab_validate(x = x, property = ddd_prop, ...)
+  ab_validate(x = x, property = ddd_prop)
+}
+
+#' @rdname ab_property
+#' @export
+ab_ddd_units <- function(x, administration = "oral", ...) {
+  meet_criteria(x, allow_NA = TRUE)
+  meet_criteria(administration, is_in = c("oral", "iv"), has_length = 1)
+  
+  x <- as.ab(x, ...)
+  if (any(ab_name(x, language = NULL) %like% "/")) {
+    warning_("DDDs of combined products are available for different dose combinations and not (yet) part of the AMR package. ",
+             "Please refer to the WHOCC website:\n",
+             "www.whocc.no/ddd/list_of_ddds_combined_products/", call = FALSE)
+  }
+  
+  ddd_prop <- paste0(administration, "_units")
+  ab_validate(x = x, property = ddd_prop)
 }
 
 #' @rdname ab_property
@@ -210,10 +319,10 @@ ab_info <- function(x, language = get_locale(), ...) {
              atc_group1 = ab_atc_group1(x, language = language),
              atc_group2 = ab_atc_group2(x, language = language),
              tradenames = ab_tradenames(x),
-             ddd = list(oral = list(amount = ab_ddd(x, administration = "oral", units = FALSE),
-                                    units = ab_ddd(x, administration = "oral", units = TRUE)),
-                        iv = list(amount = ab_ddd(x, administration = "iv", units = FALSE),
-                                  units = ab_ddd(x, administration = "iv", units = TRUE))))
+             ddd = list(oral = list(amount = ab_ddd(x, administration = "oral"),
+                                    units = ab_ddd_units(x, administration = "oral")),
+                        iv = list(amount = ab_ddd(x, administration = "iv"),
+                                  units = ab_ddd_units(x, administration = "iv"))))
 }
 
 
@@ -257,16 +366,22 @@ ab_validate <- function(x, property, ...) {
   
   check_dataset_integrity()
   
-  # try to catch an error when inputting an invalid argument
-  # so the 'call.' can be set to FALSE
-  tryCatch(x[1L] %in% antibiotics[1, property],
-           error = function(e) stop(e$message, call. = FALSE))
-  x_bak <- x
-  if (!all(x %in% antibiotics[, property])) {
-    x <- data.frame(ab = as.ab(x, ...), stringsAsFactors = FALSE) %pm>%
-      pm_left_join(antibiotics, by = "ab") %pm>%
-      pm_pull(property)
+  if (tryCatch(all(x[!is.na(x)] %in% AB_lookup$ab), error = function(e) FALSE)) {
+    # special case for ab_* functions where class is already <ab>
+    x <- AB_lookup[match(x, AB_lookup$ab), property, drop = TRUE]
+    
+  } else {
+    # try to catch an error when inputting an invalid argument
+    # so the 'call.' can be set to FALSE
+    tryCatch(x[1L] %in% antibiotics[1, property],
+             error = function(e) stop(e$message, call. = FALSE))
+
+    if (!all(x %in% AB_lookup[, property])) {
+      x <- as.ab(x, ...)
+      x <- AB_lookup[match(x, AB_lookup$ab), property, drop = TRUE]
+    }
   }
+  
   if (property == "ab") {
     return(set_clean_class(x, new_class = c("ab", "character")))
   } else if (property == "cid") {
@@ -274,7 +389,7 @@ ab_validate <- function(x, property, ...) {
   } else if (property %like% "ddd") {
     return(as.double(x))
   } else {
-    x[is.na(x) & !is.na(x_bak)] <- NA
+    x[is.na(x)] <- NA
     return(x)
   }
 }

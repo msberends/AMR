@@ -26,7 +26,7 @@ A \link{character} \link{vector} with additional class \code{\link{ab}}
 Use this function to determine the antibiotic code of one or more antibiotics. The data set \link{antibiotics} will be searched for abbreviations, official names and synonyms (brand names).
 }
 \details{
-All entries in the \link{antibiotics} data set have three different identifiers: a human readable EARS-Net code (column \code{ab}, used by ECDC and WHONET), an ATC code (column \code{atc}, used by WHO), and a CID code (column \code{cid}, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem.
+All entries in the \link{antibiotics} data set have three different identifiers: a human readable EARS-Net code (column \code{ab}, used by ECDC and WHONET), an ATC code (column \code{atc}, used by WHO), and a CID code (column \code{cid}, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem. Not that some drugs contain multiple ATC codes.
 
 All these properties will be searched for the user input. The \code{\link[=as.ab]{as.ab()}} can correct for different forms of misspelling:
 \itemize{

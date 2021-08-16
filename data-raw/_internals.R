@@ -116,32 +116,35 @@ MO_COPS <- create_species_cons_cops("CoPS")
 # antibiotic groups
 # (these will also be used for eucast_rules() and understanding data-raw/eucast_rules.tsv)
 globalenv_before_ab <- c(ls(envir = globalenv()), "globalenv_before_ab")
-AMINOGLYCOSIDES <- antibiotics %>% filter(group %like% "aminoglycoside") %>% pull(ab)
-AMINOPENICILLINS <- as.ab(c("AMP", "AMX"))
-CARBAPENEMS <- antibiotics %>% filter(group %like% "carbapenem") %>% pull(ab)
-CEPHALOSPORINS <- antibiotics %>% filter(group %like% "cephalosporin") %>% pull(ab)
-CEPHALOSPORINS_1ST <- antibiotics %>% filter(group %like% "cephalosporin.*1") %>% pull(ab)
-CEPHALOSPORINS_2ND <- antibiotics %>% filter(group %like% "cephalosporin.*2") %>% pull(ab)
-CEPHALOSPORINS_3RD <- antibiotics %>% filter(group %like% "cephalosporin.*3") %>% pull(ab)
-CEPHALOSPORINS_4TH <- antibiotics %>% filter(group %like% "cephalosporin.*4") %>% pull(ab)
-CEPHALOSPORINS_5TH <- antibiotics %>% filter(group %like% "cephalosporin.*5") %>% pull(ab)
-CEPHALOSPORINS_EXCEPT_CAZ <- CEPHALOSPORINS[CEPHALOSPORINS != "CAZ"]
-FLUOROQUINOLONES <- antibiotics %>% filter(atc_group2 %like% "fluoroquinolone" | (group %like% "quinolone" & is.na(atc_group2))) %>% pull(ab)
-LIPOGLYCOPEPTIDES <- as.ab(c("DAL", "ORI", "TLV")) # dalba/orita/tela
-GLYCOPEPTIDES <- antibiotics %>% filter(group %like% "glycopeptide") %>% pull(ab)
-GLYCOPEPTIDES_EXCEPT_LIPO <- GLYCOPEPTIDES[!GLYCOPEPTIDES %in% LIPOGLYCOPEPTIDES]
-LINCOSAMIDES <- antibiotics %>% filter(atc_group2 %like% "lincosamide" | (group %like% "lincosamide" & is.na(atc_group2))) %>% pull(ab)
-MACROLIDES <- antibiotics %>% filter(atc_group2 %like% "macrolide" | (group %like% "macrolide" & is.na(atc_group2))) %>% pull(ab)
-OXAZOLIDINONES <- antibiotics %>% filter(group %like% "oxazolidinone") %>% pull(ab)
-PENICILLINS <- antibiotics %>% filter(group %like% "penicillin") %>% pull(ab)
-POLYMYXINS <- antibiotics %>% filter(group %like% "polymyxin") %>% pull(ab)
-QUINOLONES <- antibiotics %>% filter(group %like% "quinolone") %>% pull(ab)
-STREPTOGRAMINS <- antibiotics %>% filter(atc_group2 %like% "streptogramin") %>% pull(ab)
-TETRACYCLINES <- antibiotics %>% filter(group %like% "tetracycline") %>% pull(ab)
-TETRACYCLINES_EXCEPT_TGC <- TETRACYCLINES[TETRACYCLINES != "TGC"]
-UREIDOPENICILLINS <- as.ab(c("PIP", "TZP", "AZL", "MEZ"))
-BETALACTAMS <- c(PENICILLINS, CEPHALOSPORINS, CARBAPENEMS)
-
+AB_AMINOGLYCOSIDES <- antibiotics %>% filter(group %like% "aminoglycoside") %>% pull(ab)
+AB_AMINOPENICILLINS <- as.ab(c("AMP", "AMX"))
+AB_ANTIFUNGALS <- AB_lookup %>% filter(group %like% "antifungal") %>% pull(ab)
+AB_ANTIMYCOBACTERIALS <- AB_lookup %>% filter(group %like% "antimycobacterial") %>% pull(ab)
+AB_CARBAPENEMS <- antibiotics %>% filter(group %like% "carbapenem") %>% pull(ab)
+AB_CEPHALOSPORINS <- antibiotics %>% filter(group %like% "cephalosporin") %>% pull(ab)
+AB_CEPHALOSPORINS_1ST <- antibiotics %>% filter(group %like% "cephalosporin.*1") %>% pull(ab)
+AB_CEPHALOSPORINS_2ND <- antibiotics %>% filter(group %like% "cephalosporin.*2") %>% pull(ab)
+AB_CEPHALOSPORINS_3RD <- antibiotics %>% filter(group %like% "cephalosporin.*3") %>% pull(ab)
+AB_CEPHALOSPORINS_4TH <- antibiotics %>% filter(group %like% "cephalosporin.*4") %>% pull(ab)
+AB_CEPHALOSPORINS_5TH <- antibiotics %>% filter(group %like% "cephalosporin.*5") %>% pull(ab)
+AB_CEPHALOSPORINS_EXCEPT_CAZ <- AB_CEPHALOSPORINS[AB_CEPHALOSPORINS != "CAZ"]
+AB_FLUOROQUINOLONES <- antibiotics %>% filter(atc_group2 %like% "fluoroquinolone" | (group %like% "quinolone" & is.na(atc_group2))) %>% pull(ab)
+AB_GLYCOPEPTIDES <- antibiotics %>% filter(group %like% "glycopeptide") %>% pull(ab)
+AB_LIPOGLYCOPEPTIDES <- as.ab(c("DAL", "ORI", "TLV")) # dalba/orita/tela
+AB_GLYCOPEPTIDES_EXCEPT_LIPO <- AB_GLYCOPEPTIDES[!AB_GLYCOPEPTIDES %in% AB_LIPOGLYCOPEPTIDES]
+AB_LINCOSAMIDES <- antibiotics %>% filter(atc_group2 %like% "lincosamide" | (group %like% "lincosamide" & is.na(atc_group2))) %>% pull(ab)
+AB_MACROLIDES <- antibiotics %>% filter(atc_group2 %like% "macrolide" | (group %like% "macrolide" & is.na(atc_group2))) %>% pull(ab)
+AB_OXAZOLIDINONES <- antibiotics %>% filter(group %like% "oxazolidinone") %>% pull(ab)
+AB_PENICILLINS <- antibiotics %>% filter(group %like% "penicillin") %>% pull(ab)
+AB_POLYMYXINS <- antibiotics %>% filter(group %like% "polymyxin") %>% pull(ab)
+AB_QUINOLONES <- antibiotics %>% filter(group %like% "quinolone") %>% pull(ab)
+AB_STREPTOGRAMINS <- antibiotics %>% filter(atc_group2 %like% "streptogramin") %>% pull(ab)
+AB_TETRACYCLINES <- antibiotics %>% filter(group %like% "tetracycline") %>% pull(ab)
+AB_TETRACYCLINES_EXCEPT_TGC <- AB_TETRACYCLINES[AB_TETRACYCLINES != "TGC"]
+AB_TRIMETHOPRIMS <- antibiotics %>% filter(group %like% "trimethoprim") %>% pull(ab)
+AB_UREIDOPENICILLINS <- as.ab(c("PIP", "TZP", "AZL", "MEZ"))
+AB_BETALACTAMS <- c(AB_PENICILLINS, AB_CEPHALOSPORINS, AB_CARBAPENEMS)
+# this will be used for documentation:
 DEFINED_AB_GROUPS <- ls(envir = globalenv())
 DEFINED_AB_GROUPS <- DEFINED_AB_GROUPS[!DEFINED_AB_GROUPS %in% globalenv_before_ab]
 
@@ -152,31 +155,34 @@ usethis::use_data(EUCAST_RULES_DF,
                   # EXAMPLE_ISOLATES,
                   MO_CONS,
                   MO_COPS,
-                  AMINOGLYCOSIDES,
-                  AMINOPENICILLINS,
-                  CARBAPENEMS,
-                  CEPHALOSPORINS,
-                  CEPHALOSPORINS_1ST,
-                  CEPHALOSPORINS_2ND,
-                  CEPHALOSPORINS_3RD,
-                  CEPHALOSPORINS_4TH,
-                  CEPHALOSPORINS_5TH,
-                  CEPHALOSPORINS_EXCEPT_CAZ,
-                  FLUOROQUINOLONES,
-                  LIPOGLYCOPEPTIDES,
-                  GLYCOPEPTIDES,
-                  GLYCOPEPTIDES_EXCEPT_LIPO,
-                  LINCOSAMIDES,
-                  MACROLIDES,
-                  OXAZOLIDINONES,
-                  PENICILLINS,
-                  POLYMYXINS,
-                  QUINOLONES,
-                  STREPTOGRAMINS,
-                  TETRACYCLINES,
-                  TETRACYCLINES_EXCEPT_TGC,
-                  UREIDOPENICILLINS,
-                  BETALACTAMS,
+                  AB_AMINOGLYCOSIDES,
+                  AB_AMINOPENICILLINS,
+                  AB_ANTIFUNGALS,
+                  AB_ANTIMYCOBACTERIALS,
+                  AB_CARBAPENEMS,
+                  AB_CEPHALOSPORINS,
+                  AB_CEPHALOSPORINS_1ST,
+                  AB_CEPHALOSPORINS_2ND,
+                  AB_CEPHALOSPORINS_3RD,
+                  AB_CEPHALOSPORINS_4TH,
+                  AB_CEPHALOSPORINS_5TH,
+                  AB_CEPHALOSPORINS_EXCEPT_CAZ,
+                  AB_FLUOROQUINOLONES,
+                  AB_LIPOGLYCOPEPTIDES,
+                  AB_GLYCOPEPTIDES,
+                  AB_GLYCOPEPTIDES_EXCEPT_LIPO,
+                  AB_LINCOSAMIDES,
+                  AB_MACROLIDES,
+                  AB_OXAZOLIDINONES,
+                  AB_PENICILLINS,
+                  AB_POLYMYXINS,
+                  AB_QUINOLONES,
+                  AB_STREPTOGRAMINS,
+                  AB_TETRACYCLINES,
+                  AB_TETRACYCLINES_EXCEPT_TGC,
+                  AB_TRIMETHOPRIMS,
+                  AB_UREIDOPENICILLINS,
+                  AB_BETALACTAMS,
                   DEFINED_AB_GROUPS,
                   internal = TRUE,
                   overwrite = TRUE,

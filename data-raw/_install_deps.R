@@ -27,10 +27,26 @@
 install.packages("data-raw/tinytest_1.2.4.10.tar.gz")
 install.packages("data-raw/AMR_latest.tar.gz", dependencies = FALSE)
 
-pkg_suggests <- gsub("[^a-zA-Z0-9]+", "", unlist(strsplit(packageDescription("AMR", fields = "Suggests"), ", ?")))
-cat("Packages listed in Suggests:", paste(pkg_suggests, collapse = ", "), "\n")
+pkg_to_install <- c("cleaner", 
+                    "curl", 
+                    "dplyr", 
+                    "ggplot2", 
+                    "ggtext", 
+                    "knitr", 
+                    "microbenchmark", 
+                    "pillar", 
+                    "readxl", 
+                    "rmarkdown", 
+                    "rstudioapi", 
+                    "rvest", 
+                    "skimr", 
+                    "tidyr", 
+                    "tinytest", 
+                    "vctrs", 
+                    "xml2" )
+cat("Packages to install:", paste(pkg_to_install, collapse = ", "), "\n")
 
-to_install <- pkg_suggests[!pkg_suggests %in% rownames(utils::installed.packages())]
+to_install <- pkg_to_install[!pkg_to_install %in% rownames(utils::installed.packages())]
 if (length(to_install) == 0) {
   message("\nNothing to install\n")
 }
@@ -43,7 +59,7 @@ for (i in seq_len(length(to_install))) {
 }
 
 to_update <- as.data.frame(utils::old.packages(repos = "https://cran.rstudio.com/"), stringsAsFactors = FALSE)
-to_update <- to_update[which(to_update$Package %in% pkg_suggests), "Package", drop = TRUE]
+to_update <- to_update[which(to_update$Package %in% pkg_to_install), "Package", drop = TRUE]
 if (length(to_update) == 0) {
   message("\nNothing to update\n")
 }

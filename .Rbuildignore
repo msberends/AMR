@@ -23,8 +23,11 @@
 ^data-raw$
 ^\.lintr$
 ^tests/testthat/_snaps$
+^vignettes/AMR.Rmd$
 ^vignettes/benchmarks.Rmd$
+^vignettes/datasets.Rmd$
 ^vignettes/EUCAST.Rmd$
+^vignettes/MDR.Rmd$
 ^vignettes/PCA.Rmd$
 ^vignettes/resistance_predict.Rmd$
 ^vignettes/SPSS.Rmd$

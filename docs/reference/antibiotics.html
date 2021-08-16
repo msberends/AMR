@@ -49,8 +49,11 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Data Sets with 558 Antimicrobials — antibiotics" />
-<meta property="og:description" content="Two data sets containing all antibiotics/antimycotics and antivirals. Use as.ab() or one of the ab_* functions to retrieve values from the antibiotics data set. Three identifiers are included in this data set: an antibiotic ID (ab, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (atc) as defined by the WHO, and a Compound ID (cid) as found in PubChem. Other properties in this data set are derived from one or more of these codes." />
+<meta property="og:description" content="Two data sets containing all antibiotics/antimycotics and antivirals. Use as.ab() or one of the ab_* functions to retrieve values from the antibiotics data set. Three identifiers are included in this data set: an antibiotic ID (ab, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (atc) as defined by the WHO, and a Compound ID (cid) as found in PubChem. Other properties in this data set are derived from one or more of these codes. Note that some drugs have multiple ATC codes." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@msberends" />
+<meta name="twitter:site" content="@univgroningen" />
 
 
 
@@ -90,7 +93,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9022</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9023</span>
       </span>
     </div>
 
@@ -247,7 +250,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Two data sets containing all antibiotics/antimycotics and antivirals. Use <code><a href='as.ab.html'>as.ab()</a></code> or one of the <code><a href='ab_property.html'>ab_*</a></code> functions to retrieve values from the antibiotics data set. Three identifiers are included in this data set: an antibiotic ID (<code>ab</code>, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (<code>atc</code>) as defined by the WHO, and a Compound ID (<code>cid</code>) as found in PubChem. Other properties in this data set are derived from one or more of these codes.</p>
+    <p>Two data sets containing all antibiotics/antimycotics and antivirals. Use <code><a href='as.ab.html'>as.ab()</a></code> or one of the <code><a href='ab_property.html'>ab_*</a></code> functions to retrieve values from the antibiotics data set. Three identifiers are included in this data set: an antibiotic ID (<code>ab</code>, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (<code>atc</code>) as defined by the WHO, and a Compound ID (<code>cid</code>) as found in PubChem. Other properties in this data set are derived from one or more of these codes. Note that some drugs have multiple ATC codes.</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='va'>antibiotics</span>
@@ -262,10 +265,10 @@
 
 <ul>
 <li><p><code>ab</code><br /> Antibiotic ID as used in this package (such as <code>AMC</code>), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available</p></li>
-<li><p><code>atc</code><br /> ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC, like <code>J01CR02</code></p></li>
 <li><p><code>cid</code><br /> Compound ID as found in PubChem</p></li>
 <li><p><code>name</code><br /> Official name as used by WHONET/EARS-Net or the WHO</p></li>
 <li><p><code>group</code><br /> A short and concise group name, based on WHONET and WHOCC definitions</p></li>
+<li><p><code>atc</code><br /> ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC, like <code>J01CR02</code></p></li>
 <li><p><code>atc_group1</code><br /> Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like <code>"Macrolides, lincosamides and streptogramins"</code></p></li>
 <li><p><code>atc_group2</code><br /> Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like <code>"Macrolides"</code></p></li>
 <li><p><code>abbr</code><br /> List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)</p></li>
@@ -280,10 +283,10 @@
 
 <ul>
 <li><p><code>ab</code><br /> Antibiotic ID as used in this package (such as <code>AMC</code>), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available</p></li>
-<li><p><code>atc</code><br /> ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC, like <code>J01CR02</code></p></li>
 <li><p><code>cid</code><br /> Compound ID as found in PubChem</p></li>
 <li><p><code>name</code><br /> Official name as used by WHONET/EARS-Net or the WHO</p></li>
 <li><p><code>group</code><br /> A short and concise group name, based on WHONET and WHOCC definitions</p></li>
+<li><p><code>atc</code><br /> ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC, like <code>J01CR02</code></p></li>
 <li><p><code>atc_group1</code><br /> Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like <code>"Macrolides, lincosamides and streptogramins"</code></p></li>
 <li><p><code>atc_group2</code><br /> Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like <code>"Macrolides"</code></p></li>
 <li><p><code>abbr</code><br /> List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)</p></li>
@@ -298,10 +301,10 @@
 
 <ul>
 <li><p><code>ab</code><br /> Antibiotic ID as used in this package (such as <code>AMC</code>), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available</p></li>
-<li><p><code>atc</code><br /> ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC, like <code>J01CR02</code></p></li>
 <li><p><code>cid</code><br /> Compound ID as found in PubChem</p></li>
 <li><p><code>name</code><br /> Official name as used by WHONET/EARS-Net or the WHO</p></li>
 <li><p><code>group</code><br /> A short and concise group name, based on WHONET and WHOCC definitions</p></li>
+<li><p><code>atc</code><br /> ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC, like <code>J01CR02</code></p></li>
 <li><p><code>atc_group1</code><br /> Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like <code>"Macrolides, lincosamides and streptogramins"</code></p></li>
 <li><p><code>atc_group2</code><br /> Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like <code>"Macrolides"</code></p></li>
 <li><p><code>abbr</code><br /> List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)</p></li>
@@ -316,10 +319,10 @@
 
 <ul>
 <li><p><code>ab</code><br /> Antibiotic ID as used in this package (such as <code>AMC</code>), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available</p></li>
-<li><p><code>atc</code><br /> ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC, like <code>J01CR02</code></p></li>
 <li><p><code>cid</code><br /> Compound ID as found in PubChem</p></li>
 <li><p><code>name</code><br /> Official name as used by WHONET/EARS-Net or the WHO</p></li>
 <li><p><code>group</code><br /> A short and concise group name, based on WHONET and WHOCC definitions</p></li>
+<li><p><code>atc</code><br /> ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC, like <code>J01CR02</code></p></li>
 <li><p><code>atc_group1</code><br /> Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like <code>"Macrolides, lincosamides and streptogramins"</code></p></li>
 <li><p><code>atc_group2</code><br /> Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like <code>"Macrolides"</code></p></li>
 <li><p><code>abbr</code><br /> List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)</p></li>
@@ -334,10 +337,10 @@
 
 <ul>
 <li><p><code>ab</code><br /> Antibiotic ID as used in this package (such as <code>AMC</code>), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available</p></li>
-<li><p><code>atc</code><br /> ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC, like <code>J01CR02</code></p></li>
 <li><p><code>cid</code><br /> Compound ID as found in PubChem</p></li>
 <li><p><code>name</code><br /> Official name as used by WHONET/EARS-Net or the WHO</p></li>
 <li><p><code>group</code><br /> A short and concise group name, based on WHONET and WHOCC definitions</p></li>
+<li><p><code>atc</code><br /> ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC, like <code>J01CR02</code></p></li>
 <li><p><code>atc_group1</code><br /> Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like <code>"Macrolides, lincosamides and streptogramins"</code></p></li>
 <li><p><code>atc_group2</code><br /> Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like <code>"Macrolides"</code></p></li>
 <li><p><code>abbr</code><br /> List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)</p></li>
@@ -353,7 +356,7 @@
 <h3 class='hasAnchor' id='for-the-'><a class='anchor' aria-hidden='true' href='#for-the-'></a>For the antivirals data set: a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with 102 observations and 9 variables:</h3>
 
 <ul>
-<li><p><code>atc</code><br /> ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC</p></li>
+<li><p><code>atc</code><br /> ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC</p></li>
 <li><p><code>cid</code><br /> Compound ID as found in PubChem</p></li>
 <li><p><code>name</code><br /> Official name as used by WHONET/EARS-Net or the WHO</p></li>
 <li><p><code>atc_group</code><br /> Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC</p></li>
@@ -366,7 +369,7 @@
 <h3 class='hasAnchor' id='list-antivirals-'><a class='anchor' aria-hidden='true' href='#list-antivirals-'></a>For the antivirals data set: a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with 102 observations and 9 variables:</h3>
 
 <ul>
-<li><p><code>atc</code><br /> ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC</p></li>
+<li><p><code>atc</code><br /> ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC</p></li>
 <li><p><code>cid</code><br /> Compound ID as found in PubChem</p></li>
 <li><p><code>name</code><br /> Official name as used by WHONET/EARS-Net or the WHO</p></li>
 <li><p><code>atc_group</code><br /> Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC</p></li>
@@ -379,7 +382,7 @@
 <h3 class='hasAnchor' id='-data-set-a-'><a class='anchor' aria-hidden='true' href='#-data-set-a-'></a>For the antivirals data set: a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with 102 observations and 9 variables:</h3>
 
 <ul>
-<li><p><code>atc</code><br /> ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC</p></li>
+<li><p><code>atc</code><br /> ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC</p></li>
 <li><p><code>cid</code><br /> Compound ID as found in PubChem</p></li>
 <li><p><code>name</code><br /> Official name as used by WHONET/EARS-Net or the WHO</p></li>
 <li><p><code>atc_group</code><br /> Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC</p></li>
@@ -392,7 +395,7 @@
 <h3 class='hasAnchor' id='list-data-frame-'><a class='anchor' aria-hidden='true' href='#list-data-frame-'></a>For the antivirals data set: a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with 102 observations and 9 variables:</h3>
 
 <ul>
-<li><p><code>atc</code><br /> ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC</p></li>
+<li><p><code>atc</code><br /> ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC</p></li>
 <li><p><code>cid</code><br /> Compound ID as found in PubChem</p></li>
 <li><p><code>name</code><br /> Official name as used by WHONET/EARS-Net or the WHO</p></li>
 <li><p><code>atc_group</code><br /> Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC</p></li>
@@ -405,7 +408,7 @@
 <h3 class='hasAnchor' id='-with-observations-and-variables-'><a class='anchor' aria-hidden='true' href='#-with-observations-and-variables-'></a>For the antivirals data set: a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with 102 observations and 9 variables:</h3>
 
 <ul>
-<li><p><code>atc</code><br /> ATC code (Anatomical Therapeutic Chemical) as defined by the WHOCC</p></li>
+<li><p><code>atc</code><br /> ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC</p></li>
 <li><p><code>cid</code><br /> Compound ID as found in PubChem</p></li>
 <li><p><code>name</code><br /> Official name as used by WHONET/EARS-Net or the WHO</p></li>
 <li><p><code>atc_group</code><br /> Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC</p></li>

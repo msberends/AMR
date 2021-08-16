@@ -320,9 +320,9 @@ eucast_rules <- function(x,
     x <- trimws(unique(toupper(unlist(strsplit(x, ",")))))
     x_new <- character()
     for (val in x) {
-      if (val %in% ls(envir = asNamespace("AMR"))) {
-        # antibiotic group names, as defined in data-raw/_internals.R, such as `CARBAPENEMS`
-        val <- eval(parse(text = val), envir = asNamespace("AMR"))
+      if (paste0("AB_", val) %in% ls(envir = asNamespace("AMR"))) {
+        # antibiotic group names, as defined in data-raw/_internals.R, such as `AB_CARBAPENEMS`
+        val <- eval(parse(text = paste0("AB_", val)), envir = asNamespace("AMR"))
       } else if (val %in% AB_lookup$ab) {
         # separate drugs, such as `AMX`
         val <- as.ab(val)

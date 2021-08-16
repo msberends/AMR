@@ -23,23 +23,31 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Antibiotic Class Selectors
+#' Antibiotic Selectors
 #' 
-#' These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class, without the need to define the columns or antibiotic abbreviations.
+#' These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class or group, without the need to define the columns or antibiotic abbreviations. In short, if you have a column name that resembles an antimicrobial agent, it will be picked up by any of these functions that matches its pharmaceutical class: "cefazolin", "CZO" and "J01DB04" will all be picked up by [cephalosporins()].
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param ab_class an antimicrobial class, such as `"carbapenems"`. The columns `group`, `atc_group1` and `atc_group2` of the [antibiotics] data set will be searched (case-insensitive) for this value.
+#' @param filter an [expression] to be evaluated in the [antibiotics] data set, such as `name %like% "trim"`
 #' @param only_rsi_columns a [logical] to indicate whether only columns of class `<rsi>` must be selected (defaults to `FALSE`), see [as.rsi()]
 #' @param only_treatable a [logical] to indicate whether agents that are only for laboratory tests should be excluded (defaults to `TRUE`), such as gentamicin-high (`GEH`) and imipenem/EDTA (`IPE`)
 #' @details
 #' These functions can be used in data set calls for selecting columns and filtering rows. They are heavily inspired by the [Tidyverse selection helpers][tidyselect::language] such as [`everything()`][tidyselect::everything()], but also work in base \R and not only in `dplyr` verbs. Nonetheless, they are very convenient to use with `dplyr` functions such as [`select()`][dplyr::select()], [`filter()`][dplyr::filter()] and [`summarise()`][dplyr::summarise()], see *Examples*.
 #' 
-#' All columns in the data in which these functions are called will be searched for known antibiotic names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the [antibiotics] data set. This means that a selector such as [aminoglycosides()] will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc. Use the [ab_class()] function to filter/select on a manually defined antibiotic class.
+#' All columns in the data in which these functions are called will be searched for known antibiotic names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the [antibiotics] data set. This means that a selector such as [aminoglycosides()] will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc. 
 #' 
-#' @section Full list of supported agents:
+#' The [ab_class()] function can be used to filter/select on a manually defined antibiotic class. It searches for results in the [antibiotics] data set within the columns `name`, `atc_group1` and `atc_group2`.
 #' 
-#' `r paste0("* ", sapply(c("AMINOGLYCOSIDES", "AMINOPENICILLINS", "BETALACTAMS", "CARBAPENEMS", "CEPHALOSPORINS", "CEPHALOSPORINS_1ST", "CEPHALOSPORINS_2ND", "CEPHALOSPORINS_3RD", "CEPHALOSPORINS_4TH", "CEPHALOSPORINS_5TH", "FLUOROQUINOLONES", "GLYCOPEPTIDES", "LINCOSAMIDES", "LIPOGLYCOPEPTIDES", "MACROLIDES", "OXAZOLIDINONES", "PENICILLINS", "POLYMYXINS", "STREPTOGRAMINS", "QUINOLONES", "TETRACYCLINES", "UREIDOPENICILLINS"), function(x) paste0("``", tolower(x), "()`` can select ", vector_and(paste0(ab_name(eval(parse(text = x), envir = asNamespace("AMR")), language = NULL, tolower = TRUE), " (", eval(parse(text = x), envir = asNamespace("AMR")), ")"), quotes = FALSE))), "\n", collapse = "")`
+#' The [ab_selector()] function can be used to internally filter the [antibiotics] data set on any results, see *Examples*. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.
+#' 
+#' The [administrable_per_os()] and [administrable_iv()] functions also rely on the [antibiotics] data set - antibiotic columns will be matched where a DDD (defined daily dose) for resp. oral and IV treatment is available in the [antibiotics] data set.
+#' 
+#' @section Full list of supported (antibiotic) classes:
+#' 
+#' `r paste0(" * ", na.omit(sapply(DEFINED_AB_GROUPS, function(ab) ifelse(tolower(gsub("^AB_", "", ab)) %in% ls(envir = asNamespace("AMR")), paste0("[", tolower(gsub("^AB_", "", ab)), "()] can select: \\cr ", vector_and(paste0(ab_name(eval(parse(text = ab), envir = asNamespace("AMR")), language = NULL, tolower = TRUE), " (", eval(parse(text = ab), envir = asNamespace("AMR")), ")"), quotes = FALSE, sort = TRUE)), character(0)), USE.NAMES = FALSE)), "\n", collapse = "")`
 #' @rdname antibiotic_class_selectors
 #' @name antibiotic_class_selectors
+#' @return (internally) a [character] vector of column names, with additional class `"ab_selector"`
 #' @export
 #' @inheritSection AMR Reference Data Publicly Available
 #' @inheritSection AMR Read more on Our Website!
@@ -55,6 +63,9 @@
 #' # select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB'
 #' example_isolates[, c("mo", aminoglycosides())]
 #' 
+#' # select only antibiotic columns with DDDs for oral treatment
+#' example_isolates[, administrable_per_os()]
+#' 
 #' # filter using any() or all()
 #' example_isolates[any(carbapenems() == "R"), ]
 #' subset(example_isolates, any(carbapenems() == "R"))
@@ -69,6 +80,13 @@
 #' # filter + select in one go: get penicillins in carbapenems-resistant strains
 #' example_isolates[any(carbapenems() == "R"), penicillins()]
 #' 
+#' # You can combine selectors with '&' to be more specific. For example,
+#' # penicillins() would select benzylpenicillin ('peni G') and
+#' # administrable_per_os() would select erythromycin. Yet, when combined these
+#' # drugs are both omitted since benzylpenicillin is not administrable per os
+#' # and erythromycin is not a penicillin:
+#' example_isolates[, penicillins() & administrable_per_os()]
+#' 
 #' 
 #' # dplyr -------------------------------------------------------------------
 #' \donttest{
@@ -78,6 +96,16 @@
 #'   example_isolates %>%
 #'     group_by(hospital_id) %>% 
 #'     summarise(across(aminoglycosides(), resistance))
+#'     
+#'   # You can combine selectors with '&' to be more specific:
+#'   example_isolates %>%
+#'     select(penicillins() & administrable_per_os())
+#'     
+#'   # get susceptibility for antibiotics whose name contains "trim":
+#'   example_isolates %>%
+#'     filter(first_isolate()) %>% 
+#'     group_by(hospital_id) %>% 
+#'     summarise(across(ab_selector(name %like% "trim"), susceptibility))
 #' 
 #'   # this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
 #'   example_isolates %>% 
@@ -129,22 +157,146 @@ ab_class <- function(ab_class,
   meet_criteria(ab_class, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
-  ab_selector(NULL, only_rsi_columns = only_rsi_columns, ab_class = ab_class, only_treatable = only_treatable)
+  ab_select_exec(NULL, only_rsi_columns = only_rsi_columns, ab_class = ab_class, only_treatable = only_treatable)
 }
+
+#' @rdname antibiotic_class_selectors
+#' @export
+ab_selector <- function(filter, 
+                        only_rsi_columns = FALSE,
+                        only_treatable = TRUE) {
+  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
+  
+  # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
+  # but it only takes a couple of milliseconds
+  vars_df <- get_current_data(arg_name = NA, call = -2)
+  # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
+  ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
+  call <- substitute(filter)
+  agents <- tryCatch(AMR::antibiotics[which(eval(call, envir = AMR::antibiotics)), "ab", drop = TRUE],
+                     error = function(e) stop_(e$message, call = -5))
+  agents <- ab_in_data[ab_in_data %in% agents]
+  message_agent_names(function_name = "ab_selector", 
+                      agents = agents,
+                      ab_group = NULL,
+                      examples = "",
+                      call = call)
+  structure(unname(agents),
+            class = c("ab_selector", "character"))
+}
+
+#' @rdname antibiotic_class_selectors
+#' @export
+administrable_per_os <- function(only_rsi_columns = FALSE) {
+  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
+  # but it only takes a couple of milliseconds
+  vars_df <- get_current_data(arg_name = NA, call = -2)
+  # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
+  ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
+  agents_all <- antibiotics[which(!is.na(antibiotics$oral_ddd)), "ab", drop = TRUE]
+  agents <- antibiotics[which(antibiotics$ab %in% ab_in_data & !is.na(antibiotics$oral_ddd)), "ab", drop = TRUE]
+  agents <- ab_in_data[ab_in_data %in% agents]
+  message_agent_names(function_name = "administrable_per_os", 
+                      agents = agents,
+                      ab_group = "administrable_per_os",
+                      examples = paste0(" (such as ", 
+                                        vector_or(ab_name(sample(agents_all,
+                                                                 size = min(5, length(agents_all)),
+                                                                 replace = FALSE),
+                                                          tolower = TRUE,
+                                                          language = NULL),
+                                                  quotes = FALSE), 
+                                        ")"))
+  structure(unname(agents),
+            class = c("ab_selector", "character"))
+}
+
+#' @rdname antibiotic_class_selectors
+#' @export
+administrable_iv <- function(only_rsi_columns = FALSE) {
+  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
+  # but it only takes a couple of milliseconds
+  vars_df <- get_current_data(arg_name = NA, call = -2)
+  # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
+  ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
+  agents_all <- antibiotics[which(!is.na(antibiotics$iv_ddd)), "ab", drop = TRUE]
+  agents <- antibiotics[which(antibiotics$ab %in% ab_in_data & !is.na(antibiotics$iv_ddd)), "ab", drop = TRUE]
+  agents <- ab_in_data[ab_in_data %in% agents]
+  message_agent_names(function_name = "administrable_iv", 
+                      agents = agents,
+                      ab_group = "administrable_iv",
+                      examples = "")
+  structure(unname(agents),
+            class = c("ab_selector", "character"))
+}
+
+# nolint start
+# #' @rdname antibiotic_class_selectors
+# #' @export
+# not_intrinsic_resistant <- function(mo, ..., only_rsi_columns = FALSE) {
+#   meet_criteria(mo, allow_class = c("mo", "data.frame", "list", "character", "numeric", "integer", "factor"), has_length = 1, allow_NA = FALSE)
+#   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+# 
+#   x <- as.mo(mo, ...)
+#   wont_work <- intrinsic_resistant[which(intrinsic_resistant$microorganism == mo_name(x, language = NULL)),
+#                                    "antibiotic",
+#                                    drop = TRUE]
+# 
+#   # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
+#   # but it only takes a couple of milliseconds
+#   vars_df <- get_current_data(arg_name = NA, call = -2)
+#   # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
+#   ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
+# 
+#   agents <- ab_in_data[!names(ab_in_data) %in% as.character(as.ab(wont_work))]
+# 
+#   # show used version number once per session (pkg_env will reload every session)
+#   if (message_not_thrown_before("intrinsic_resistant_version.ab", entire_session = TRUE)) {
+#     message_("Determining intrinsic resistance based on ",
+#              format_eucast_version_nr(3.2, markdown = FALSE), ". ",
+#              font_red("This note will be shown once per session."))
+#   }
+# 
+#   message_agent_names(function_name = "not_intrinsic_resistant", 
+#                       agents = ab_in_data,
+#                       ab_group = NULL,
+#                       examples = "",
+#                       call = mo_name(x, language = NULL))
+# 
+#   agents
+# }
+# nolint end
 
 #' @rdname antibiotic_class_selectors
 #' @export
 aminoglycosides <- function(only_rsi_columns = FALSE, only_treatable = TRUE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
-  ab_selector("aminoglycosides", only_rsi_columns = only_rsi_columns, only_treatable = only_treatable)
+  ab_select_exec("aminoglycosides", only_rsi_columns = only_rsi_columns, only_treatable = only_treatable)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
 aminopenicillins <- function(only_rsi_columns = FALSE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("aminopenicillins", only_rsi_columns = only_rsi_columns)
+  ab_select_exec("aminopenicillins", only_rsi_columns = only_rsi_columns)
+}
+
+#' @rdname antibiotic_class_selectors
+#' @export
+antifungals <- function(only_rsi_columns = FALSE) {
+  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  ab_select_exec("antifungals", only_rsi_columns = only_rsi_columns, only_treatable = only_treatable)
+}
+
+#' @rdname antibiotic_class_selectors
+#' @export
+antimycobacterials <- function(only_rsi_columns = FALSE) {
+  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  ab_select_exec("antimycobacterials", only_rsi_columns = only_rsi_columns, only_treatable = only_treatable)
 }
 
 #' @rdname antibiotic_class_selectors
@@ -152,7 +304,7 @@ aminopenicillins <- function(only_rsi_columns = FALSE) {
 betalactams <- function(only_rsi_columns = FALSE, only_treatable = TRUE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
-  ab_selector("betalactams", only_rsi_columns = only_rsi_columns, only_treatable = only_treatable)
+  ab_select_exec("betalactams", only_rsi_columns = only_rsi_columns, only_treatable = only_treatable)
 }
 
 #' @rdname antibiotic_class_selectors
@@ -160,98 +312,98 @@ betalactams <- function(only_rsi_columns = FALSE, only_treatable = TRUE) {
 carbapenems <- function(only_rsi_columns = FALSE, only_treatable = TRUE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
-  ab_selector("carbapenems", only_rsi_columns = only_rsi_columns, only_treatable = only_treatable)
+  ab_select_exec("carbapenems", only_rsi_columns = only_rsi_columns, only_treatable = only_treatable)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
 cephalosporins <- function(only_rsi_columns = FALSE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("cephalosporins", only_rsi_columns = only_rsi_columns)
+  ab_select_exec("cephalosporins", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
 cephalosporins_1st <- function(only_rsi_columns = FALSE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("cephalosporins_1st", only_rsi_columns = only_rsi_columns)
+  ab_select_exec("cephalosporins_1st", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
 cephalosporins_2nd <- function(only_rsi_columns = FALSE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("cephalosporins_2nd", only_rsi_columns = only_rsi_columns)
+  ab_select_exec("cephalosporins_2nd", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
 cephalosporins_3rd <- function(only_rsi_columns = FALSE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("cephalosporins_3rd", only_rsi_columns = only_rsi_columns)
+  ab_select_exec("cephalosporins_3rd", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
 cephalosporins_4th <- function(only_rsi_columns = FALSE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("cephalosporins_4th", only_rsi_columns = only_rsi_columns)
+  ab_select_exec("cephalosporins_4th", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
 cephalosporins_5th <- function(only_rsi_columns = FALSE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("cephalosporins_5th", only_rsi_columns = only_rsi_columns)
+  ab_select_exec("cephalosporins_5th", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
 fluoroquinolones <- function(only_rsi_columns = FALSE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("fluoroquinolones", only_rsi_columns = only_rsi_columns)
+  ab_select_exec("fluoroquinolones", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
 glycopeptides <- function(only_rsi_columns = FALSE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("glycopeptides", only_rsi_columns = only_rsi_columns)
+  ab_select_exec("glycopeptides", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
 lincosamides <- function(only_rsi_columns = FALSE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("lincosamides", only_rsi_columns = only_rsi_columns)
+  ab_select_exec("lincosamides", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
 lipoglycopeptides <- function(only_rsi_columns = FALSE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("lipoglycopeptides", only_rsi_columns = only_rsi_columns)
+  ab_select_exec("lipoglycopeptides", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
 macrolides <- function(only_rsi_columns = FALSE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("macrolides", only_rsi_columns = only_rsi_columns)
+  ab_select_exec("macrolides", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
 oxazolidinones <- function(only_rsi_columns = FALSE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("oxazolidinones", only_rsi_columns = only_rsi_columns)
+  ab_select_exec("oxazolidinones", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
 penicillins <- function(only_rsi_columns = FALSE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("penicillins", only_rsi_columns = only_rsi_columns)
+  ab_select_exec("penicillins", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
@@ -259,47 +411,54 @@ penicillins <- function(only_rsi_columns = FALSE) {
 polymyxins <- function(only_rsi_columns = FALSE, only_treatable = TRUE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
-  ab_selector("polymyxins", only_rsi_columns = only_rsi_columns, only_treatable = only_treatable)
+  ab_select_exec("polymyxins", only_rsi_columns = only_rsi_columns, only_treatable = only_treatable)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
 streptogramins <- function(only_rsi_columns = FALSE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("streptogramins", only_rsi_columns = only_rsi_columns)
+  ab_select_exec("streptogramins", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
 quinolones <- function(only_rsi_columns = FALSE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("quinolones", only_rsi_columns = only_rsi_columns)
+  ab_select_exec("quinolones", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
 tetracyclines <- function(only_rsi_columns = FALSE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("tetracyclines", only_rsi_columns = only_rsi_columns)
+  ab_select_exec("tetracyclines", only_rsi_columns = only_rsi_columns)
+}
+
+#' @rdname antibiotic_class_selectors
+#' @export
+trimethoprims <- function(only_rsi_columns = FALSE) {
+  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  ab_select_exec("trimethoprims", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
 ureidopenicillins <- function(only_rsi_columns = FALSE) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_selector("ureidopenicillins", only_rsi_columns = only_rsi_columns)
+  ab_select_exec("ureidopenicillins", only_rsi_columns = only_rsi_columns)
 }
 
-ab_selector <- function(function_name,
-                        only_rsi_columns,
-                        only_treatable = FALSE,
-                        ab_class = NULL) {
+ab_select_exec <- function(function_name,
+                           only_rsi_columns = FALSE,
+                           only_treatable = FALSE,
+                           ab_class = NULL) {
   # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
   # but it only takes a couple of milliseconds
   vars_df <- get_current_data(arg_name = NA, call = -3)
   # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
   ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
-
+  
   # untreatable drugs
   untreatable <- antibiotics[which(antibiotics$name %like% "-high|EDTA|polysorbate"), "ab", drop = TRUE]
   if (only_treatable == TRUE & any(untreatable %in% names(ab_in_data))) {
@@ -323,7 +482,8 @@ ab_selector <- function(function_name,
   
   if (is.null(ab_class)) {
     # their upper case equivalent are vectors with class <ab>, created in data-raw/_internals.R
-    abx <- get(toupper(function_name), envir = asNamespace("AMR"))  
+    # carbapenems() gets its codes from AMR:::AB_CARBAPENEMS
+    abx <- get(paste0("AB_", toupper(function_name)), envir = asNamespace("AMR"))  
     ab_group <- function_name
     examples <- paste0(" (such as ", vector_or(ab_name(sample(abx, size = min(2, length(abx)), replace = FALSE),
                                                        tolower = TRUE,
@@ -339,27 +499,14 @@ ab_selector <- function(function_name,
     function_name <- "ab_class"
     examples <- paste0(" (such as ", find_ab_names(ab_class, 2), ")")
   }
-
+  
   # get the columns with a group names in the chosen ab class
   agents <- ab_in_data[names(ab_in_data) %in% abx]
   
-  if (message_not_thrown_before(paste0(function_name, ".", paste(sort(agents), collapse = "|")))) {
-    if (length(agents) == 0) {
-      message_("No antimicrobial agents of class '", ab_group, "' found", examples, ".")
-    } else {
-      agents_formatted <- paste0("'", font_bold(agents, collapse = NULL), "'")
-      agents_names <- ab_name(names(agents), tolower = TRUE, language = NULL)
-      need_name <- generalise_antibiotic_name(agents) != generalise_antibiotic_name(agents_names)
-      agents_formatted[need_name] <- paste0(agents_formatted[need_name], " (", agents_names[need_name], ")")
-      message_("For `", function_name, "(",
-               ifelse(function_name == "ab_class", 
-                      paste0("\"", ab_class, "\""),
-                      ""),
-               ")` using ",
-               ifelse(length(agents) == 1, "column ", "columns "),
-               vector_and(agents_formatted, quotes = FALSE, sort = FALSE))
-    }
-  }
+  message_agent_names(function_name = function_name, 
+                      agents = agents,
+                      ab_group = ab_group,
+                      examples = examples)
   
   structure(unname(agents),
             class = c("ab_selector", "character"))
@@ -486,6 +633,25 @@ any.ab_selector_any_all <- function(..., na.rm = FALSE) {
             class = c("ab_selector_any_all", "logical"))
 }
 
+#' @method & ab_selector
+#' @export
+#' @noRd
+`&.ab_selector` <- function(e1, e2) {
+  # this is only required for base R, since tidyselect has already implemented this
+  # e.g., for: example_isolates[, penicillins() & administrable_per_os()]
+  structure(intersect(unclass(e1), unclass(e2)),
+            class = c("ab_selector", "character"))
+}
+#' @method | ab_selector
+#' @export
+#' @noRd
+`|.ab_selector` <- function(e1, e2) {
+  # this is only required for base R, since tidyselect has already implemented this
+  # e.g., for: example_isolates[, penicillins() | administrable_per_os()]
+  structure(union(unclass(e1), unclass(e2)),
+            class = c("ab_selector", "character"))
+}
+
 is_any <- function(el1) {
   syscall <- paste0(trimws(deparse(sys.calls()[[1]])), collapse = " ")
   el1 <- gsub("(.*),.*", "\\1", el1)
@@ -496,7 +662,6 @@ is_all <- function(el1) {
   el1 <- gsub("(.*),.*", "\\1", el1)
   syscall %like% paste0("[^_a-zA-Z0-9]all\\(", "(c\\()?", el1)
 }
-
 
 find_ab_group <- function(ab_class) {
   ab_class <- gsub("[^a-zA-Z0-9]", ".*", ab_class)
@@ -533,4 +698,34 @@ find_ab_names <- function(ab_group, n = 3) {
                     tolower = TRUE,
                     language = NULL),
             quotes = FALSE)
+}
+
+message_agent_names <- function(function_name, agents, ab_group = NULL, examples = "", call = NULL) {
+  if (message_not_thrown_before(paste0(function_name, ".", paste(sort(agents), collapse = "|")))) {
+    if (length(agents) == 0) {
+      if (is.null(ab_group)) {
+        message_("For `", function_name, "()` no antimicrobial agents found", examples, ".")
+      } else if (ab_group == "administrable_per_os") {
+        message_("No orally administrable agents found", examples, ".")
+      } else if (ab_group == "administrable_iv") {
+        message_("No IV administrable agents found", examples, ".")
+      } else {
+        message_("No antimicrobial agents of class '", ab_group, "' found", examples, ".")
+      }
+    } else {
+      agents_formatted <- paste0("'", font_bold(agents, collapse = NULL), "'")
+      agents_names <- ab_name(names(agents), tolower = TRUE, language = NULL)
+      need_name <- generalise_antibiotic_name(agents) != generalise_antibiotic_name(agents_names)
+      agents_formatted[need_name] <- paste0(agents_formatted[need_name], " (", agents_names[need_name], ")")
+      message_("For `", function_name, "(",
+               ifelse(function_name == "ab_class", 
+                      paste0("\"", ab_class, "\""),
+                      ifelse(!is.null(call),
+                             paste0(deparse(call), collapse = " "),
+                             "")),
+               ")` using ",
+               ifelse(length(agents) == 1, "column ", "columns "),
+               vector_and(agents_formatted, quotes = FALSE, sort = FALSE))
+    }
+  }
 }

@@ -46,12 +46,16 @@ expect_true(ncol(example_isolates[, polymyxins(), drop = FALSE]) < ncol(example_
 expect_true(ncol(example_isolates[, streptogramins(), drop = FALSE]) < ncol(example_isolates))
 expect_true(ncol(example_isolates[, quinolones(), drop = FALSE]) < ncol(example_isolates))
 expect_true(ncol(example_isolates[, tetracyclines(), drop = FALSE]) < ncol(example_isolates))
+expect_true(ncol(example_isolates[, trimethoprims(), drop = FALSE]) < ncol(example_isolates))
 expect_true(ncol(example_isolates[, ureidopenicillins(), drop = FALSE]) < ncol(example_isolates))
 
 # Examples:
 
 # select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB'
 expect_equal(ncol(example_isolates[, c("mo", aminoglycosides())]), 5, tolerance = 0.5)
+
+expect_equal(ncol(example_isolates[, c(administerable_per_os() & penicillins())]), 5, tolerance = 0.5)
+expect_equal(ncol(example_isolates[, c(administerable_iv() & penicillins())]), 7, tolerance = 0.5)
 
 # filter using any() or all()
 expect_equal(nrow(example_isolates[any(carbapenems() == "R"), ]), 55, tolerance = 0.5)

@@ -492,7 +492,7 @@ exec_as.mo <- function(x,
     x_backup[x %like_case% "^(fungus|fungi)$"] <- "(unknown fungus)" # will otherwise become the kingdom
     x_backup[x_backup_untouched == "Fungi"] <- "Fungi" # is literally the kingdom
     
-    # Fill in fullnames and MO codes at once
+    # Fill in fullnames and MO codes directly
     known_names <- tolower(x_backup) %in% MO_lookup$fullname_lower
     x[known_names] <- MO_lookup[match(tolower(x_backup)[known_names], MO_lookup$fullname_lower), property, drop = TRUE]
     known_codes <- toupper(x_backup) %in% MO_lookup$mo
@@ -1551,16 +1551,7 @@ exec_as.mo <- function(x,
                                             & !identical(x_input, "")
                                             & !identical(x_input, "xxx")])
 
-  # left join the found results to the original input values (x_input)
-  df_found <- data.frame(input = as.character(x_input_unique_nonempty),
-                         found = as.character(x),
-                         stringsAsFactors = FALSE)
-  df_input <- data.frame(input = as.character(x_input),
-                         stringsAsFactors = FALSE)
-
-  # super fast using match() which is a lot faster than merge()
-  x <- df_found$found[match(df_input$input, df_found$input)]
-
+  x <- x[match(x_input, x_input_unique_nonempty)]
   if (property == "mo") {
     x <- set_clean_class(x, new_class = c("mo", "character"))
   }
@@ -1887,36 +1878,30 @@ print.mo_uncertainties <- function(x, ...) {
   if (NROW(x) == 0) {
     return(NULL)
   }
-  message_("Matching scores are based on human pathogenic prevalence and the resemblance between the input and the full taxonomic name. See `?mo_matching_score`.", as_note = FALSE)
-
-  msg <- ""
+  cat(word_wrap("Matching scores", ifelse(has_colour(), " (in blue)", ""), " are based on human pathogenic prevalence and the resemblance between the input and the full taxonomic name. See `?mo_matching_score`.\n\n", add_fn = font_blue))
+  
+  txt <- ""
   for (i in seq_len(nrow(x))) {
     if (x[i, ]$candidates != "") {
       candidates <- unlist(strsplit(x[i, ]$candidates, ", ", fixed = TRUE))
       scores <- mo_matching_score(x = x[i, ]$input, n = candidates)
-      # sort on descending scores
-      candidates <- candidates[order(1 - scores)]
-      scores_formatted <- trimws(formatC(round(scores, 3), format = "f", digits = 3))
       n_candidates <- length(candidates)
-      candidates <- vector_and(paste0(candidates, " (", scores_formatted[order(1 - scores)], ")"),
-                               quotes = FALSE, 
-                               sort = FALSE)
-      # align with input after arrow
-      candidates <- paste0("\n",
-                           strwrap(paste0("Also matched",
-                                          ifelse(n_candidates >= 25, " (max 25)", ""), ": ",
-                                          candidates), # this is already max 25 due to format_uncertainty_as_df()
-                                   indent = nchar(x[i, ]$input) + 6,
-                                   exdent = nchar(x[i, ]$input) + 6,
-                                   width = 0.98 * getOption("width")),
-                           collapse = "")
-      # after strwrap, make taxonomic names italic
-      candidates <- gsub("([A-Za-z]+)", font_italic("\\1"), candidates, perl = TRUE)
-      candidates <- gsub(font_italic("and"), "and", candidates, fixed = TRUE)
-      candidates <- gsub(paste(font_italic(c("Also", "matched"), collapse = NULL), collapse = " "),
-                         "Also matched",
-                         candidates, fixed = TRUE)
-      candidates <- gsub(font_italic("max"), "max", candidates, fixed = TRUE)
+      
+      candidates_formatted <- font_italic(candidates, collapse = NULL)
+      scores_formatted <- trimws(formatC(round(scores, 3), format = "f", digits = 3))
+      
+      # sort on descending scores
+      candidates_formatted <- candidates_formatted[order(1 - scores)]
+      scores_formatted <- scores_formatted[order(1 - scores)]
+      
+      candidates <- word_wrap(paste0("Also matched: ",
+                                     vector_and(paste0(candidates_formatted,
+                                                       font_blue(paste0(" (", scores_formatted, ")"), collapse = NULL)), 
+                                                quotes = FALSE, sort = FALSE),
+                                     ifelse(n_candidates > 25,
+                                            paste0(" [showing first 25 of ", n_candidates, "]"),
+                                            "")), 
+                              extra_indent = nchar("Also matched: "))
     } else {
       candidates <- ""
     }
@@ -1924,23 +1909,24 @@ print.mo_uncertainties <- function(x, ...) {
                                                     n = x[i, ]$fullname),
                                   3),
                             format = "f", digits = 3))
-    msg <- paste(msg,
+    txt <- paste(txt,
                  paste0(
                    strwrap(
-                     paste0('"', x[i, ]$input, '" -> ',
+                     paste0(font_red('"', x[i, ]$input, '"', collapse = ""),
+                            " -> ",
                             paste0(font_bold(font_italic(x[i, ]$fullname)),
                                    ifelse(!is.na(x[i, ]$renamed_to), paste(", renamed to", font_italic(x[i, ]$renamed_to)), ""),
                                    " (", x[i, ]$mo,
-                                   ", matching score = ", score,
+                                   ", ", font_blue(score),
                                    ") ")),
                      width = 0.98 * getOption("width"),
                      exdent = nchar(x[i, ]$input) + 6),
                    collapse = "\n"),
                  candidates,
                  sep = "\n")
-    msg <- paste0(gsub("\n\n", "\n", msg), "\n\n")
+    txt <- paste0(gsub("\n\n", "\n", txt), "\n\n")
   }
-  cat(msg)
+  cat(txt)
 }
 
 #' @rdname as.mo

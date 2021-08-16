@@ -646,7 +646,59 @@ antibiotics <- antibiotics %>%
                      oral_ddd = NA_real_))
 
 
-# update DDDs from WHOCC website
+
+# update ATC codes from WHOCC website -------------------------------------
+
+# last time checked: 2021-08-16
+
+updated_atc <- as.list(antibiotics$atc)
+
+get_atcs <- function(ab_name, url = "https://www.whocc.no/atc_ddd_index/") {
+  
+  ab_name <- gsub("/", " and ", tolower(ab_name), fixed = TRUE)
+  
+  # we will do a search on their website, which means:
+  
+  # go to the url
+  atc_tbl <- read_html(url) %>% 
+    # get all forms
+    html_form() %>%
+    # get the second form (the first form is a global website form)
+    .[[2]] %>% 
+    # set the name input box to our search parameter
+    html_form_set(name = ab_name) %>% 
+    # hit Submit
+    html_form_submit() %>% 
+    # read the resulting page
+    read_html() %>% 
+    # retrieve the table on it
+    html_node("table") %>% 
+    # transform it to an R data set
+    html_table(header = FALSE)
+  # and get the ATCs (first column) of only exact hits
+  unique(as.character(atc_tbl[which(tolower(atc_tbl[, 2, drop = TRUE]) == ab_name), 1, drop = TRUE]))
+}
+
+# this takes around 4 minutes (some are skipped and go faster)
+for (i in seq_len(nrow(antibiotics))) {
+  message(percentage(i / nrow(antibiotics), digits = 1), 
+          " - Downloading ", antibiotics$name[i],
+          appendLF = FALSE)
+  atcs <- get_atcs(antibiotics$name[i])
+  if (length(atcs) > 0) {
+    updated_atc[[i]] <- atcs
+    message(" (", length(atcs), " results)")
+    # let the WHO server rest for a second - they might have a limitation on the queries per second
+    Sys.sleep(1)
+  } else {
+    message(" (skipping)")
+  }
+}
+
+antibiotics$atc <- updated_atc
+
+# update DDDs from WHOCC website ------------------------------------------
+
 # last time checked: 2021-06-23
 ddd_oral <- double(length = nrow(antibiotics))
 ddd_iv <- double(length = nrow(antibiotics))

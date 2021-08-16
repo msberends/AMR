@@ -89,9 +89,9 @@
 #' 
 #' ### Usage of antibiotic group names
 #' 
-#' It is possible to define antibiotic groups instead of single antibiotics for the rule consequence, the part *after* the tilde. In above examples, the antibiotic group `aminopenicillins` is used to include ampicillin and amoxicillin. The following groups are allowed (case-insensitive). Within parentheses are the antibiotic agents that will be matched when running the rule.
+#' It is possible to define antibiotic groups instead of single antibiotics for the rule consequence, the part *after* the tilde. In above examples, the antibiotic group `aminopenicillins` is used to include ampicillin and amoxicillin. The following groups are allowed (case-insensitive). Within parentheses are the agents that will be matched when running the rule.
 #' 
-#' `r paste0("  * ", sapply(DEFINED_AB_GROUPS, function(x) paste0("``", tolower(x), "``\\cr(", paste0(sort(ab_name(eval(parse(text = x), envir = asNamespace("AMR")), language = NULL, tolower = TRUE)), collapse = ", "), ")"), USE.NAMES = FALSE), "\n", collapse = "")`
+#' `r paste0("  * ", sapply(DEFINED_AB_GROUPS, function(x) paste0("``", tolower(gsub("^AB_", "", x)), "``\\cr(", vector_and(ab_name(eval(parse(text = x), envir = asNamespace("AMR")), language = NULL, tolower = TRUE), quotes = FALSE), ")"), USE.NAMES = FALSE), "\n", collapse = "")`
 #' @returns A [list] containing the custom rules
 #' @inheritSection AMR Read more on Our Website!
 #' @export
@@ -140,12 +140,12 @@ custom_eucast_rules <- function(...) {
     stop_ifnot(deparse(result) %like% "==", 
                "the result of rule ", i, " (the part after the `~`) must contain `==`, such as in `... ~ ampicillin == \"R\"`, see `?custom_eucast_rules`")
     result_group <- as.character(result)[[2]]
-    if (paste0(toupper(result_group), "S") %in% DEFINED_AB_GROUPS) {
+    if (paste0("AB_", toupper(result_group), "S") %in% DEFINED_AB_GROUPS) {
       # support for e.g. 'aminopenicillin' if user meant 'aminopenicillins'
       result_group <- paste0(result_group, "s")
     }
-    if (toupper(result_group) %in% DEFINED_AB_GROUPS) {
-      result_group <- eval(parse(text = toupper(result_group)), envir = asNamespace("AMR"))
+    if (paste0("AB_", toupper(result_group)) %in% DEFINED_AB_GROUPS) {
+      result_group <- eval(parse(text = paste0("AB_", toupper(result_group))), envir = asNamespace("AMR"))
     } else {
       result_group <- tryCatch(
         suppressWarnings(as.ab(result_group,
@@ -157,7 +157,7 @@ custom_eucast_rules <- function(...) {
     stop_if(any(is.na(result_group)),
             "this result of rule ", i, " could not be translated to a single antimicrobial agent/group: \"", 
             as.character(result)[[2]], "\".\n\nThe input can be a name or code of an antimicrobial agent, or be one of: ", 
-            vector_or(tolower(DEFINED_AB_GROUPS), quotes = FALSE), ".")
+            vector_or(tolower(gsub("AB_", "", DEFINED_AB_GROUPS)), quotes = FALSE), ".")
     result_value <- as.character(result)[[3]]
     result_value[result_value == "NA"] <- NA
     stop_ifnot(result_value %in% c("R", "S", "I", NA),

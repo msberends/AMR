@@ -210,8 +210,7 @@ if (require("ggplot2") & require("dplyr")) {
            mo == as.mo("E. coli")) \%>\%
     # age_groups() is also a function in this AMR package:
     group_by(age_group = age_groups(age)) \%>\%
-    select(age_group,
-           CIP) \%>\%
+    select(age_group, CIP) \%>\%
     ggplot_rsi(x = "age_group")
   
   # a shorter version which also adjusts data label colours:
@@ -222,6 +221,8 @@ if (require("ggplot2") & require("dplyr")) {
 
   # it also supports groups (don't forget to use the group var on `x` or `facet`):
   example_isolates \%>\%
+    filter(mo_is_gram_negative()) \%>\% 
+    # select only UTI-specific drugs
     select(hospital_id, AMX, NIT, FOS, TMP, CIP) \%>\%
     group_by(hospital_id) \%>\%
     ggplot_rsi(x = "hospital_id",

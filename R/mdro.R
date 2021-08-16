@@ -248,7 +248,7 @@ mdro <- function(x = NULL,
     if (info == TRUE) {
       txt <- paste0("Determining MDROs based on custom rules",
                     ifelse(isTRUE(attributes(guideline)$as_factor),
-                           paste0(", resulting in [factor] levels: ", paste0(attributes(guideline)$values, collapse = " < ")),
+                           paste0(", resulting in factor levels: ", paste0(attributes(guideline)$values, collapse = " < ")),
                            ""),
                     ".")
       txt <- word_wrap(txt)

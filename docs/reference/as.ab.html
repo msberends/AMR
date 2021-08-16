@@ -51,6 +51,9 @@
 <meta property="og:title" content="Transform Input to an Antibiotic ID — as.ab" />
 <meta property="og:description" content="Use this function to determine the antibiotic code of one or more antibiotics. The data set antibiotics will be searched for abbreviations, official names and synonyms (brand names)." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@msberends" />
+<meta name="twitter:site" content="@univgroningen" />
 
 
 
@@ -90,7 +93,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9022</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9023</span>
       </span>
     </div>
 
@@ -280,7 +283,7 @@
     <p>A <a href='https://rdrr.io/r/base/character.html'>character</a> <a href='https://rdrr.io/r/base/vector.html'>vector</a> with additional class <code>ab</code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>All entries in the <a href='antibiotics.html'>antibiotics</a> data set have three different identifiers: a human readable EARS-Net code (column <code>ab</code>, used by ECDC and WHONET), an ATC code (column <code>atc</code>, used by WHO), and a CID code (column <code>cid</code>, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem.</p>
+    <p>All entries in the <a href='antibiotics.html'>antibiotics</a> data set have three different identifiers: a human readable EARS-Net code (column <code>ab</code>, used by ECDC and WHONET), an ATC code (column <code>atc</code>, used by WHO), and a CID code (column <code>cid</code>, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem. Not that some drugs contain multiple ATC codes.</p>
 <p>All these properties will be searched for the user input. The <code>as.ab()</code> can correct for different forms of misspelling:</p><ul>
 <li><p>Wrong spelling of drug names (such as "tobramicin" or "gentamycin"), which corrects for most audible similarities such as f/ph, x/ks, c/z/s, t/th, etc.</p></li>
 <li><p>Too few or too many vowels or consonants</p></li>

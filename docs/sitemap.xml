@@ -127,9 +127,6 @@
     <loc>https://msberends.github.io/AMR/reference/example_isolates_unclean.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/filter_ab_class.html</loc>
-  </url>
-  <url>
     <loc>https://msberends.github.io/AMR/reference/first_isolate.html</loc>
   </url>
   <url>
@@ -152,12 +149,6 @@
   </url>
   <url>
     <loc>https://msberends.github.io/AMR/reference/intrinsic_resistant.html</loc>
-  </url>
-  <url>
-    <loc>https://msberends.github.io/AMR/reference/is_new_episode.html</loc>
-  </url>
-  <url>
-    <loc>https://msberends.github.io/AMR/reference/isolate_identifier.html</loc>
   </url>
   <url>
     <loc>https://msberends.github.io/AMR/reference/italicise_taxonomy.html</loc>
@@ -199,9 +190,6 @@
     <loc>https://msberends.github.io/AMR/reference/mo_source.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/p_symbol.html</loc>
-  </url>
-  <url>
     <loc>https://msberends.github.io/AMR/reference/pca.html</loc>
   </url>
   <url>
@@ -224,8 +212,5 @@
   </url>
   <url>
     <loc>https://msberends.github.io/AMR/reference/translate.html</loc>
-  </url>
-  <url>
-    <loc>https://msberends.github.io/AMR/survey.html</loc>
   </url>
 </urlset>

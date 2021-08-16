@@ -544,7 +544,7 @@ create_eucast_ab_documentation <- function() {
   out
 }
 
-vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, last_sep = " or ") {
+vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_captital = FALSE, last_sep = " or ") {
   # makes unique and sorts, and this also removed NAs
   v <- unique(v)
   if (isTRUE(sort)) {
@@ -560,6 +560,9 @@ vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, last_sep =
   } else {
     quotes <- quotes[1L]
   }
+  if (isTRUE(initial_captital)) {
+    v[1] <- gsub("^([a-z])", "\\U\\1", v[1], perl = TRUE)
+  }
   if (length(v) == 1) {
     return(paste0(quotes, v, quotes))
   }
@@ -572,8 +575,9 @@ vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, last_sep =
          last_sep, paste0(quotes, v[length(v)], quotes))
 }
 
-vector_and <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE) {
-  vector_or(v = v, quotes = quotes, reverse = reverse, sort = sort, last_sep = " and ")
+vector_and <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_captital = FALSE) {
+  vector_or(v = v, quotes = quotes, reverse = reverse, sort = sort,
+            initial_captital = initial_captital, last_sep = " and ")
 }
 
 format_class <- function(class, plural = FALSE) {
@@ -840,17 +844,17 @@ unique_call_id <- function(entire_session = FALSE) {
 }
 
 message_not_thrown_before <- function(fn, entire_session = FALSE) {
-  # this is to prevent that messages/notes will be printed for every dplyr group
+  # this is to prevent that messages/notes will be printed for every dplyr group or more than once per session
   # e.g. this would show a msg 4 times: example_isolates %>% group_by(hospital_id) %>% filter(mo_is_gram_negative())
-  test_out <- is.null(pkg_env[[paste0("thrown_msg.", fn)]]) || !identical(pkg_env[[paste0("thrown_msg.", fn)]],
-                                                                          unique_call_id(entire_session = entire_session))
-  if (isTRUE(test_out)) {
+  not_thrown_before <- is.null(pkg_env[[paste0("thrown_msg.", fn)]]) || !identical(pkg_env[[paste0("thrown_msg.", fn)]],
+                                                                                   unique_call_id(entire_session = entire_session))
+  if (isTRUE(not_thrown_before)) {
     # message was not thrown before - remember this so on the next run it will return FALSE:
     assign(x = paste0("thrown_msg.", fn),
            value = unique_call_id(entire_session = entire_session),
            envir = pkg_env)
   }
-  test_out
+  not_thrown_before
 }
 
 has_colour <- function() {

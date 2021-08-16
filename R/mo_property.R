@@ -42,7 +42,7 @@
 #'
 #' Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions [mo_kingdom()] and [mo_domain()] return the exact same results.
 #'
-#' The Gram stain - [mo_gramstain()] - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318)), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive - all other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`. Functions [mo_is_gram_negative()] and [mo_is_gram_positive()] always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
+#' The Gram stain - [mo_gramstain()] - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318)), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive, except for members of the class Negativicutes which are Gram-negative. Members of other bacterial phyla are all considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`. Functions [mo_is_gram_negative()] and [mo_is_gram_positive()] always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
 #' 
 #' Determination of yeasts - [mo_is_yeast()] - will be based on the taxonomic kingdom and class. *Budding yeasts* are fungi of the phylum Ascomycetes, class Saccharomycetes (also called Hemiascomycetes). *True yeasts* are aggregated into the underlying order Saccharomycetales. Thus, for all microorganisms that are fungi and member of the taxonomic class Saccharomycetes, the function will return `TRUE`. It returns `FALSE` otherwise (except when the input is `NA` or the MO code is `UNKNOWN`).
 #' 
@@ -364,25 +364,18 @@ mo_gramstain <- function(x, language = get_locale(), ...) {
   x.mo <- as.mo(x, language = language, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
   
-  x.phylum <- mo_phylum(x.mo)
-  # DETERMINE GRAM STAIN FOR BACTERIA
-  # Source: https://itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=956097
-  # It says this:
-  # Kingdom Bacteria (Cavalier-Smith, 2002)
-  #    Subkingdom Posibacteria (Cavalier-Smith, 2002)
-  #   Direct Children:
-  #       Phylum  Actinobacteria (Cavalier-Smith, 2002)
-  #       Phylum  Chloroflexi (Garrity and Holt, 2002)
-  #       Phylum  Firmicutes (corrig. Gibbons and Murray, 1978)
-  #       Phylum  Tenericutes (Murray, 1984)
-  x <- NA_character_
+  x <- rep(NA_character_, length(x))
   # make all bacteria Gram negative
   x[mo_kingdom(x.mo) == "Bacteria"] <- "Gram-negative"
-  # overwrite these phyla with Gram positive
-  x[x.phylum %in% c("Actinobacteria",
-                    "Chloroflexi",
-                    "Firmicutes",
-                    "Tenericutes")
+  # overwrite these 4 phyla with Gram-positives
+  # Source: https://itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=956097 (Cavalier-Smith, 2002)
+  x[(mo_phylum(x.mo) %in% c("Actinobacteria",
+                            "Chloroflexi",
+                            "Firmicutes",
+                            "Tenericutes") &
+       # but class Negativicutes (of phylum Firmicutes) are Gram-negative!
+       mo_class(x.mo) != "Negativicutes")
+    # and of course our own ID for Gram-positives
     | x.mo == "B_GRAMP"] <- "Gram-positive"
   
   load_mo_failures_uncertainties_renamed(metadata)
@@ -477,7 +470,7 @@ mo_is_intrinsic_resistant <- function(x, ab, language = get_locale(), ...) {
   }
   
   # show used version number once per session (pkg_env will reload every session)
-  if (message_not_thrown_before("intrinsic_resistant_version", entire_session = TRUE)) {
+  if (message_not_thrown_before("intrinsic_resistant_version.mo", entire_session = TRUE)) {
     message_("Determining intrinsic resistance based on ",
              format_eucast_version_nr(3.2, markdown = FALSE), ". ",
              font_red("This note will be shown once per session."))

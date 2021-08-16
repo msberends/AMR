@@ -89,12 +89,17 @@ if (utf8_supported && !is_latex) {
   
   
   # reference data - they have additional columns compared to `antibiotics` and `microorganisms` to improve speed
-  # they can't be part of R/sysdata.rda since CRAN thinks it would make the package too large (+3 MB)
+  # they cannott be part of R/sysdata.rda since CRAN thinks it would make the package too large (+3 MB)
   assign(x = "AB_lookup", value = create_AB_lookup(), envir = asNamespace("AMR"))
   assign(x = "MO_lookup", value = create_MO_lookup(), envir = asNamespace("AMR"))
   assign(x = "MO.old_lookup", value = create_MO.old_lookup(), envir = asNamespace("AMR"))
   # for mo_is_intrinsic_resistant() - saves a lot of time when executed on this vector
   assign(x = "INTRINSIC_R", value = create_intr_resistance(), envir = asNamespace("AMR"))
+  
+  # for building the website, only print first 5 rows of a data set
+  # if (Sys.getenv("IN_PKGDOWN") != "" && !interactive()) {
+  #   ...
+  # }
 }
 
 # Helper functions --------------------------------------------------------

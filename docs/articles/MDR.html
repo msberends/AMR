@@ -21,6 +21,9 @@
 <script src="../extra.js"></script><meta property="og:title" content="How to determine multi-drug resistance (MDR)">
 <meta property="og:description" content="AMR">
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@msberends">
+<meta name="twitter:site" content="@univgroningen">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -41,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9022</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9023</span>
       </span>
     </div>
 
@@ -262,7 +265,7 @@
 <p>The outcome of the function can be used for the <code>guideline</code> argument in the <code><a href="../reference/mdro.html">mdro()</a></code> function:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mdro.html">mdro</a></span><span class="op">(</span><span class="va">example_isolates</span>, guideline <span class="op">=</span> <span class="va">custom</span><span class="op">)</span>
-<span class="co"># Determining MDROs based on custom rules, resulting in [factor] levels:</span>
+<span class="co"># Determining MDROs based on custom rules, resulting in factor levels:</span>
 <span class="co"># Negative &lt; Elderly Type A &lt; Elderly Type B.</span>
 <span class="co"># - Custom MDRO rule 1: `CIP == "R" &amp; age &gt; 60` (198 rows matched)</span>
 <span class="co"># - Custom MDRO rule 2: `ERY == "R" &amp; age &gt; 60` (732 rows matched)</span>
@@ -361,17 +364,17 @@ Unique: 2</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">my_TB_data</span><span class="op">)</span>
 <span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span>
-<span class="co"># 1          I         S            S          R            I            S</span>
-<span class="co"># 2          R         R            R          R            S            R</span>
-<span class="co"># 3          R         R            R          I            S            S</span>
-<span class="co"># 4          R         S            I          R            R            R</span>
-<span class="co"># 5          R         S            S          S            I            R</span>
-<span class="co"># 6          S         I            S          S            S            I</span>
+<span class="co"># 1          R         S            I          S            R            R</span>
+<span class="co"># 2          I         R            S          S            S            I</span>
+<span class="co"># 3          S         I            I          S            S            I</span>
+<span class="co"># 4          S         I            I          R            S            S</span>
+<span class="co"># 5          S         I            S          S            R            I</span>
+<span class="co"># 6          S         R            S          I            S            I</span>
 <span class="co">#   kanamycin</span>
-<span class="co"># 1         S</span>
-<span class="co"># 2         S</span>
+<span class="co"># 1         I</span>
+<span class="co"># 2         R</span>
 <span class="co"># 3         I</span>
-<span class="co"># 4         S</span>
+<span class="co"># 4         I</span>
 <span class="co"># 5         I</span>
 <span class="co"># 6         I</span></code></pre></div>
 <p>We can now add the interpretation of MDR-TB to our data set. You can use:</p>
@@ -416,40 +419,40 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistant</td>
-<td align="right">3175</td>
-<td align="right">63.50%</td>
-<td align="right">3175</td>
-<td align="right">63.50%</td>
+<td align="right">3169</td>
+<td align="right">63.38%</td>
+<td align="right">3169</td>
+<td align="right">63.38%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">1014</td>
-<td align="right">20.28%</td>
-<td align="right">4189</td>
-<td align="right">83.78%</td>
+<td align="right">1049</td>
+<td align="right">20.98%</td>
+<td align="right">4218</td>
+<td align="right">84.36%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multi-drug-resistant</td>
-<td align="right">445</td>
-<td align="right">8.90%</td>
-<td align="right">4634</td>
-<td align="right">92.68%</td>
+<td align="right">458</td>
+<td align="right">9.16%</td>
+<td align="right">4676</td>
+<td align="right">93.52%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistant</td>
-<td align="right">272</td>
-<td align="right">5.44%</td>
-<td align="right">4906</td>
-<td align="right">98.12%</td>
+<td align="right">240</td>
+<td align="right">4.80%</td>
+<td align="right">4916</td>
+<td align="right">98.32%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensively drug-resistant</td>
-<td align="right">94</td>
-<td align="right">1.88%</td>
+<td align="right">84</td>
+<td align="right">1.68%</td>
 <td align="right">5000</td>
 <td align="right">100.00%</td>
 </tr>

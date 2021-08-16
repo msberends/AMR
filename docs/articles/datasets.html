@@ -21,6 +21,9 @@
 <script src="../extra.js"></script><meta property="og:title" content="Data sets for download / own use">
 <meta property="og:description" content="AMR">
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@msberends">
+<meta name="twitter:site" content="@univgroningen">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -41,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9022</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9023</span>
       </span>
     </div>
 
@@ -194,7 +197,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Data sets for download / own use</h1>
             
-            <h4 data-toc-skip class="date">23 July 2021</h4>
+            <h4 data-toc-skip class="date">16 August 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/master/vignettes/datasets.Rmd" class="external-link"><code>vignettes/datasets.Rmd</code></a></small>
       <div class="hidden name"><code>datasets.Rmd</code></div>
@@ -497,9 +500,9 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <div id="antibiotic-agents" class="section level2">
 <h2 class="hasAnchor">
 <a href="#antibiotic-agents" class="anchor" aria-hidden="true"></a>Antibiotic agents</h2>
-<p>A data set with 456 rows and 14 columns, containing the following column names:<br><em>ab</em>, <em>atc</em>, <em>cid</em>, <em>name</em>, <em>group</em>, <em>atc_group1</em>, <em>atc_group2</em>, <em>abbreviations</em>, <em>synonyms</em>, <em>oral_ddd</em>, <em>oral_units</em>, <em>iv_ddd</em>, <em>iv_units</em> and <em>loinc</em>.</p>
+<p>A data set with 456 rows and 14 columns, containing the following column names:<br><em>ab</em>, <em>cid</em>, <em>name</em>, <em>group</em>, <em>atc</em>, <em>atc_group1</em>, <em>atc_group2</em>, <em>abbreviations</em>, <em>synonyms</em>, <em>oral_ddd</em>, <em>oral_units</em>, <em>iv_ddd</em>, <em>iv_units</em> and <em>loinc</em>.</p>
 <p>This data set is in R available as <code>antibiotics</code>, after you load the <code>AMR</code> package.</p>
-<p>It was last updated on 23 June 2021 13:07:57 UTC. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/antibiotics.html">here</a>.</p>
+<p>It was last updated on 16 August 2021 13:16:15 UTC. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/antibiotics.html">here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/master/data-raw/../data-raw/antibiotics.rds" class="external-link">R file</a> (32 kB)<br>
@@ -532,25 +535,25 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <colgroup>
 <col width="1%">
 <col width="2%">
-<col width="3%">
 <col width="8%">
 <col width="7%">
+<col width="7%">
 <col width="13%">
-<col width="18%">
+<col width="17%">
 <col width="6%">
-<col width="14%">
-<col width="3%">
-<col width="3%">
+<col width="13%">
 <col width="2%">
 <col width="3%">
+<col width="2%">
+<col width="2%">
 <col width="9%">
 </colgroup>
 <thead><tr class="header">
 <th align="center">ab</th>
-<th align="center">atc</th>
 <th align="center">cid</th>
 <th align="center">name</th>
 <th align="center">group</th>
+<th align="center">atc</th>
 <th align="center">atc_group1</th>
 <th align="center">atc_group2</th>
 <th align="center">abbreviations</th>
@@ -564,10 +567,10 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <tbody>
 <tr class="odd">
 <td align="center">AMK</td>
-<td align="center">J01GB06</td>
 <td align="center">37768</td>
 <td align="center">Amikacin</td>
 <td align="center">Aminoglycosides</td>
+<td align="center">D06AX12, J01GB06, S01AA21</td>
 <td align="center">Aminoglycoside antibacterials</td>
 <td align="center">Other aminoglycosides</td>
 <td align="center">ak, ami, amik, …</td>
@@ -580,10 +583,10 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 </tr>
 <tr class="even">
 <td align="center">AMX</td>
-<td align="center">J01CA04</td>
 <td align="center">33613</td>
 <td align="center">Amoxicillin</td>
 <td align="center">Beta-lactams/penicillins</td>
+<td align="center">J01CA04</td>
 <td align="center">Beta-lactam antibacterials, penicillins</td>
 <td align="center">Penicillins with extended spectrum</td>
 <td align="center">ac, amox, amx</td>
@@ -596,10 +599,10 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 </tr>
 <tr class="odd">
 <td align="center">AMC</td>
-<td align="center">J01CR02</td>
 <td align="center">23665637</td>
 <td align="center">Amoxicillin/clavulanic acid</td>
 <td align="center">Beta-lactams/penicillins</td>
+<td align="center">J01CR02</td>
 <td align="center">Beta-lactam antibacterials, penicillins</td>
 <td align="center">Combinations of penicillins, incl. beta-lactamase inhibitors</td>
 <td align="center">a/c, amcl, aml, …</td>
@@ -612,10 +615,10 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 </tr>
 <tr class="even">
 <td align="center">AMP</td>
-<td align="center">J01CA01</td>
 <td align="center">6249</td>
 <td align="center">Ampicillin</td>
 <td align="center">Beta-lactams/penicillins</td>
+<td align="center">J01CA01, S01AA19</td>
 <td align="center">Beta-lactam antibacterials, penicillins</td>
 <td align="center">Penicillins with extended spectrum</td>
 <td align="center">am, amp, ampi</td>
@@ -628,10 +631,10 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 </tr>
 <tr class="odd">
 <td align="center">AZM</td>
-<td align="center">J01FA10</td>
 <td align="center">447043</td>
 <td align="center">Azithromycin</td>
 <td align="center">Macrolides/lincosamides</td>
+<td align="center">J01FA10, S01AA26</td>
 <td align="center">Macrolides, lincosamides and streptogramins</td>
 <td align="center">Macrolides</td>
 <td align="center">az, azi, azit, …</td>
@@ -644,10 +647,10 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 </tr>
 <tr class="even">
 <td align="center">PEN</td>
-<td align="center">J01CE01</td>
 <td align="center">5904</td>
 <td align="center">Benzylpenicillin</td>
 <td align="center">Beta-lactams/penicillins</td>
+<td align="center">J01CE01, S01AA14</td>
 <td align="center">Combinations of antibacterials</td>
 <td align="center">Combinations of antibacterials</td>
 <td align="center">bepe, pen, peni, …</td>

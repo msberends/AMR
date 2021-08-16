@@ -134,7 +134,7 @@ In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST)
 A microorganism is categorised as \emph{Resistant} when there is a high likelihood of therapeutic failure even when there is increased exposure. Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
 \item \strong{S = Susceptible}\cr
 A microorganism is categorised as \emph{Susceptible, standard dosing regimen}, when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.
-\item \strong{I = Increased exposure, but still susceptible}\cr
+\item \strong{I = Susceptible, Increased exposure}\cr
 A microorganism is categorised as \emph{Susceptible, Increased exposure} when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.
 }
 
