@@ -36,6 +36,7 @@
 #' @param ... other arguments passed on to [as.ab()]
 #' @param data a [data.frame] of which the columns need to be renamed
 #' @param snake_case a [logical] to indicate whether the names should be in so-called [snake case](https://en.wikipedia.org/wiki/Snake_case): in lower case and all spaces/slashes replaced with an underscore (`_`)
+#' @param only_first a [logical] to indicate whether only the first ATC code must be returned, with giving preference to J0-codes (i.e., the antimicrobial drug group)
 #' @details All output [will be translated][translate] where possible.
 #' 
 #' The function [ab_url()] will return the direct URL to the official WHO website. A warning will be returned if the required ATC code is not available.
@@ -57,7 +58,7 @@
 #' @examples
 #' # all properties:
 #' ab_name("AMX")       # "Amoxicillin"
-#' ab_atc("AMX")        # J01CA04 (ATC code from the WHO)
+#' ab_atc("AMX")        # "J01CA04" (ATC code from the WHO)
 #' ab_cid("AMX")        # 33613 (Compound ID from PubChem)
 #' ab_synonyms("AMX")   # a list with brand names of amoxicillin
 #' ab_tradenames("AMX") # same
@@ -182,20 +183,6 @@ set_ab_names <- function(data, property = "name", language = get_locale(), snake
 }
 
 #' @rdname ab_property
-#' @aliases ATC
-#' @export
-ab_atc <- function(x, ...) {
-  meet_criteria(x, allow_NA = TRUE)
-  atcs <- ab_validate(x = x, property = "atc", ...)
-  names(atcs) <- x
-  if (length(atcs) == 1) {
-    unname(unlist(atcs))
-  } else {
-    atcs
-  }
-}
-
-#' @rdname ab_property
 #' @export
 ab_cid <- function(x, ...) {
   meet_criteria(x, allow_NA = TRUE)
@@ -228,6 +215,36 @@ ab_group <- function(x, language = get_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   translate_AMR(ab_validate(x = x, property = "group", ...), language = language, only_affect_ab_names = TRUE)
+}
+
+#' @rdname ab_property
+#' @aliases ATC
+#' @export
+ab_atc <- function(x, only_first = FALSE, ...) {
+  meet_criteria(x, allow_NA = TRUE)
+  meet_criteria(only_first, allow_class = "logical", has_length = 1)
+  
+  atcs <- ab_validate(x = x, property = "atc", ...)
+  
+  if (only_first == TRUE) {
+    atcs <- vapply(FUN.VALUE = character(1),
+                   # get only the first ATC code
+                   atcs,
+                   function(x) {
+                     # try to get the J-group
+                     if (any(x %like% "^J")) {
+                       x[x %like% "^J"][1L]
+                     } else {
+                       as.character(x[1L])
+                     }
+                   })
+  } else if (length(atcs) == 1) {
+    atcs <- unname(unlist(atcs))
+  } else {
+    names(atcs) <- x
+  }
+  
+  atcs
 }
 
 #' @rdname ab_property
@@ -332,12 +349,13 @@ ab_url <- function(x, open = FALSE, ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(open, allow_class = "logical", has_length = 1)
   
-  ab <- as.ab(x = x, ... = ...)
-  u <- paste0("https://www.whocc.no/atc_ddd_index/?code=", ab_atc(ab), "&showdescription=no")
-  u[is.na(ab_atc(ab))] <- NA_character_
+  ab <- as.ab(x = x, ...)
+  atcs <- ab_atc(ab, only_first = TRUE)
+  u <- paste0("https://www.whocc.no/atc_ddd_index/?code=", atcs, "&showdescription=no")
+  u[is.na(atcs)] <- NA_character_
   names(u) <- ab_name(ab)
   
-  NAs <- ab_name(ab, tolower = TRUE, language = NULL)[!is.na(ab) & is.na(ab_atc(ab))]
+  NAs <- ab_name(ab, tolower = TRUE, language = NULL)[!is.na(ab) & is.na(atcs)]
   if (length(NAs) > 0) {
     warning_("No ATC code available for ", vector_and(NAs, quotes = FALSE), ".")
   }

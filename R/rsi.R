@@ -936,7 +936,7 @@ freq.rsi <- function(x, ...) {
   if (!is.na(ab)) {
     cleaner::freq.default(x = x, ...,
                           .add_header = list(
-                            Drug = paste0(ab_name(ab, language = NULL), " (", ab, ", ", ab_atc(ab), ")"),
+                            Drug = paste0(ab_name(ab, language = NULL), " (", ab, ", ", paste(ab_atc(ab), collapse = "/"), ")"),
                             `Drug group` = ab_group(ab, language = NULL),
                             `%SI` = percentage(susceptibility(x, minimum = 0, as_percent = FALSE),
                                                digits = digits)))

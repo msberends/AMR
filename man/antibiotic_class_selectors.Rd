@@ -33,63 +33,63 @@
 \alias{ureidopenicillins}
 \title{Antibiotic Selectors}
 \usage{
-ab_class(ab_class, only_rsi_columns = FALSE, only_treatable = TRUE)
+ab_class(ab_class, only_rsi_columns = FALSE, only_treatable = TRUE, ...)
 
-ab_selector(filter, only_rsi_columns = FALSE, only_treatable = TRUE)
+ab_selector(filter, only_rsi_columns = FALSE, only_treatable = TRUE, ...)
 
-administrable_per_os(only_rsi_columns = FALSE)
+administrable_per_os(only_rsi_columns = FALSE, ...)
 
-administrable_iv(only_rsi_columns = FALSE)
+administrable_iv(only_rsi_columns = FALSE, ...)
 
-aminoglycosides(only_rsi_columns = FALSE, only_treatable = TRUE)
+aminoglycosides(only_rsi_columns = FALSE, only_treatable = TRUE, ...)
 
-aminopenicillins(only_rsi_columns = FALSE)
+aminopenicillins(only_rsi_columns = FALSE, ...)
 
-antifungals(only_rsi_columns = FALSE)
+antifungals(only_rsi_columns = FALSE, ...)
 
-antimycobacterials(only_rsi_columns = FALSE)
+antimycobacterials(only_rsi_columns = FALSE, ...)
 
-betalactams(only_rsi_columns = FALSE, only_treatable = TRUE)
+betalactams(only_rsi_columns = FALSE, only_treatable = TRUE, ...)
 
-carbapenems(only_rsi_columns = FALSE, only_treatable = TRUE)
+carbapenems(only_rsi_columns = FALSE, only_treatable = TRUE, ...)
 
-cephalosporins(only_rsi_columns = FALSE)
+cephalosporins(only_rsi_columns = FALSE, ...)
 
-cephalosporins_1st(only_rsi_columns = FALSE)
+cephalosporins_1st(only_rsi_columns = FALSE, ...)
 
-cephalosporins_2nd(only_rsi_columns = FALSE)
+cephalosporins_2nd(only_rsi_columns = FALSE, ...)
 
-cephalosporins_3rd(only_rsi_columns = FALSE)
+cephalosporins_3rd(only_rsi_columns = FALSE, ...)
 
-cephalosporins_4th(only_rsi_columns = FALSE)
+cephalosporins_4th(only_rsi_columns = FALSE, ...)
 
-cephalosporins_5th(only_rsi_columns = FALSE)
+cephalosporins_5th(only_rsi_columns = FALSE, ...)
 
-fluoroquinolones(only_rsi_columns = FALSE)
+fluoroquinolones(only_rsi_columns = FALSE, ...)
 
-glycopeptides(only_rsi_columns = FALSE)
+glycopeptides(only_rsi_columns = FALSE, ...)
 
-lincosamides(only_rsi_columns = FALSE)
+lincosamides(only_rsi_columns = FALSE, ...)
 
-lipoglycopeptides(only_rsi_columns = FALSE)
+lipoglycopeptides(only_rsi_columns = FALSE, ...)
 
-macrolides(only_rsi_columns = FALSE)
+macrolides(only_rsi_columns = FALSE, ...)
 
-oxazolidinones(only_rsi_columns = FALSE)
+oxazolidinones(only_rsi_columns = FALSE, ...)
 
-penicillins(only_rsi_columns = FALSE)
+penicillins(only_rsi_columns = FALSE, ...)
 
-polymyxins(only_rsi_columns = FALSE, only_treatable = TRUE)
+polymyxins(only_rsi_columns = FALSE, only_treatable = TRUE, ...)
 
-streptogramins(only_rsi_columns = FALSE)
+streptogramins(only_rsi_columns = FALSE, ...)
 
-quinolones(only_rsi_columns = FALSE)
+quinolones(only_rsi_columns = FALSE, ...)
 
-tetracyclines(only_rsi_columns = FALSE)
+tetracyclines(only_rsi_columns = FALSE, ...)
 
-trimethoprims(only_rsi_columns = FALSE)
+trimethoprims(only_rsi_columns = FALSE, ...)
 
-ureidopenicillins(only_rsi_columns = FALSE)
+ureidopenicillins(only_rsi_columns = FALSE, ...)
 }
 \arguments{
 \item{ab_class}{an antimicrobial class, such as \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched (case-insensitive) for this value.}
@@ -97,6 +97,8 @@ ureidopenicillins(only_rsi_columns = FALSE)
 \item{only_rsi_columns}{a \link{logical} to indicate whether only columns of class \verb{<rsi>} must be selected (defaults to \code{FALSE}), see \code{\link[=as.rsi]{as.rsi()}}}
 
 \item{only_treatable}{a \link{logical} to indicate whether agents that are only for laboratory tests should be excluded (defaults to \code{TRUE}), such as gentamicin-high (\code{GEH}) and imipenem/EDTA (\code{IPE})}
+
+\item{...}{ignored, only in place to allow future extensions}
 
 \item{filter}{an \link{expression} to be evaluated in the \link{antibiotics} data set, such as \code{name \%like\% "trim"}}
 }

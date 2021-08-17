@@ -97,8 +97,8 @@ atc_online_property <- function(atc_code,
   
   check_dataset_integrity()
   
-  if (!all(atc_code %in% antibiotics)) {
-    atc_code <- as.character(ab_atc(atc_code))
+  if (!all(atc_code %in% unlist(antibiotics$atc))) {
+    atc_code <- as.character(ab_atc(atc_code, only_first = TRUE))
   }
   
   if (!has_internet()) {

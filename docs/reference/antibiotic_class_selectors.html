@@ -93,7 +93,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9023</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9024</span>
       </span>
     </div>
 
@@ -253,63 +253,63 @@
     <p>These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class or group, without the need to define the columns or antibiotic abbreviations. In short, if you have a column name that resembles an antimicrobial agent, it will be picked up by any of these functions that matches its pharmaceutical class: "cefazolin", "CZO" and "J01DB04" will all be picked up by <code>cephalosporins()</code>.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>ab_class</span><span class='op'>(</span><span class='va'>ab_class</span>, only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, only_treatable <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>ab_class</span><span class='op'>(</span><span class='va'>ab_class</span>, only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, only_treatable <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>ab_selector</span><span class='op'>(</span><span class='va'>filter</span>, only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, only_treatable <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'>ab_selector</span><span class='op'>(</span><span class='va'>filter</span>, only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, only_treatable <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>administrable_per_os</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>administrable_per_os</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>administrable_iv</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>administrable_iv</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>aminoglycosides</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, only_treatable <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'>aminoglycosides</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, only_treatable <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>aminopenicillins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>aminopenicillins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>antifungals</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>antifungals</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>antimycobacterials</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>antimycobacterials</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>betalactams</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, only_treatable <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'>betalactams</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, only_treatable <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>carbapenems</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, only_treatable <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'>carbapenems</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, only_treatable <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>cephalosporins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>cephalosporins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>cephalosporins_1st</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>cephalosporins_1st</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>cephalosporins_2nd</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>cephalosporins_2nd</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>cephalosporins_3rd</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>cephalosporins_3rd</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>cephalosporins_4th</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>cephalosporins_4th</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>cephalosporins_5th</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>cephalosporins_5th</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>fluoroquinolones</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>fluoroquinolones</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>glycopeptides</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>glycopeptides</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>lincosamides</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>lincosamides</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>lipoglycopeptides</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>lipoglycopeptides</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>macrolides</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>macrolides</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>oxazolidinones</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>oxazolidinones</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>penicillins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>penicillins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>polymyxins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, only_treatable <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'>polymyxins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, only_treatable <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>streptogramins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>streptogramins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>quinolones</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>quinolones</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>tetracyclines</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>tetracyclines</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>trimethoprims</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>trimethoprims</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>ureidopenicillins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></code></pre></div>
+<span class='fu'>ureidopenicillins</span><span class='op'>(</span>only_rsi_columns <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -325,6 +325,10 @@
     <tr>
       <th>only_treatable</th>
       <td><p>a <a href='https://rdrr.io/r/base/logical.html'>logical</a> to indicate whether agents that are only for laboratory tests should be excluded (defaults to <code>TRUE</code>), such as gentamicin-high (<code>GEH</code>) and imipenem/EDTA (<code>IPE</code>)</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>ignored, only in place to allow future extensions</p></td>
     </tr>
     <tr>
       <th>filter</th>

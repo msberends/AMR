@@ -520,9 +520,9 @@ create_eucast_ab_documentation <- function() {
   x <- trimws(unique(toupper(unlist(strsplit(EUCAST_RULES_DF$then_change_these_antibiotics, ",")))))
   ab <- character()
   for (val in x) {
-    if (val %in% ls(envir = asNamespace("AMR"))) {
+    if (paste0("AB_", val) %in% ls(envir = asNamespace("AMR"))) {
       # antibiotic group names, as defined in data-raw/_internals.R, such as `CARBAPENEMS`
-      val <- eval(parse(text = val), envir = asNamespace("AMR"))
+      val <- eval(parse(text = paste0("AB_", val)), envir = asNamespace("AMR"))
     } else if (val %in% AB_lookup$ab) {
       # separate drugs, such as `AMX`
       val <- as.ab(val)
@@ -532,7 +532,7 @@ create_eucast_ab_documentation <- function() {
     ab <- c(ab, val)
   }
   ab <- unique(ab)
-  atcs <- ab_atc(ab)
+  atcs <- ab_atc(ab, only_first = TRUE)
   # only keep ABx with an ATC code:
   ab <- ab[!is.na(atcs)]
   ab_names <- ab_name(ab, language = NULL, tolower = TRUE)
@@ -949,7 +949,7 @@ font_grey <- function(..., collapse = " ") {
   try_colour(..., before = "\033[38;5;249m", after = "\033[39m", collapse = collapse)
 }
 font_grey_bg <- function(..., collapse = " ") {
-  if (tryCatch(rstudioapi::getThemeInfo()$dark == TRUE, error = function(e) FALSE)) {
+  if (tryCatch(import_fn("getThemeInfo", "rstudioapi", error_on_fail = FALSE)()$dark, error = function(e) FALSE)) {
     # similar to HTML #444444
     try_colour(..., before = "\033[48;5;238m", after = "\033[49m", collapse = collapse)  
   } else {

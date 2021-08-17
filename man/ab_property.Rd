@@ -5,11 +5,11 @@
 \alias{ab_name}
 \alias{set_ab_names}
 \alias{ATC}
-\alias{ab_atc}
 \alias{ab_cid}
 \alias{ab_synonyms}
 \alias{ab_tradenames}
 \alias{ab_group}
+\alias{ab_atc}
 \alias{ab_atc_group1}
 \alias{ab_atc_group2}
 \alias{ab_loinc}
@@ -28,8 +28,6 @@ set_ab_names(
   snake_case = property == "name"
 )
 
-ab_atc(x, ...)
-
 ab_cid(x, ...)
 
 ab_synonyms(x, ...)
@@ -37,6 +35,8 @@ ab_synonyms(x, ...)
 ab_tradenames(x, ...)
 
 ab_group(x, language = get_locale(), ...)
+
+ab_atc(x, only_first = FALSE, ...)
 
 ab_atc_group1(x, language = get_locale(), ...)
 
@@ -68,6 +68,8 @@ ab_property(x, property = "name", language = get_locale(), ...)
 \item{property}{one of the column names of one of the \link{antibiotics} data set: \code{vector_or(colnames(antibiotics), sort = FALSE)}.}
 
 \item{snake_case}{a \link{logical} to indicate whether the names should be in so-called \href{https://en.wikipedia.org/wiki/Snake_case}{snake case}: in lower case and all spaces/slashes replaced with an underscore (\verb{_})}
+
+\item{only_first}{a \link{logical} to indicate whether only the first ATC code must be returned, with giving preference to J0-codes (i.e., the antimicrobial drug group)}
 
 \item{administration}{way of administration, either \code{"oral"} or \code{"iv"}}
 
@@ -122,7 +124,7 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 \examples{
 # all properties:
 ab_name("AMX")       # "Amoxicillin"
-ab_atc("AMX")        # J01CA04 (ATC code from the WHO)
+ab_atc("AMX")        # "J01CA04" (ATC code from the WHO)
 ab_cid("AMX")        # 33613 (Compound ID from PubChem)
 ab_synonyms("AMX")   # a list with brand names of amoxicillin
 ab_tradenames("AMX") # same

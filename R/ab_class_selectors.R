@@ -31,6 +31,7 @@
 #' @param filter an [expression] to be evaluated in the [antibiotics] data set, such as `name %like% "trim"`
 #' @param only_rsi_columns a [logical] to indicate whether only columns of class `<rsi>` must be selected (defaults to `FALSE`), see [as.rsi()]
 #' @param only_treatable a [logical] to indicate whether agents that are only for laboratory tests should be excluded (defaults to `TRUE`), such as gentamicin-high (`GEH`) and imipenem/EDTA (`IPE`)
+#' @param ... ignored, only in place to allow future extensions
 #' @details
 #' These functions can be used in data set calls for selecting columns and filtering rows. They are heavily inspired by the [Tidyverse selection helpers][tidyselect::language] such as [`everything()`][tidyselect::everything()], but also work in base \R and not only in `dplyr` verbs. Nonetheless, they are very convenient to use with `dplyr` functions such as [`select()`][dplyr::select()], [`filter()`][dplyr::filter()] and [`summarise()`][dplyr::summarise()], see *Examples*.
 #' 
@@ -153,7 +154,8 @@
 #' }
 ab_class <- function(ab_class, 
                      only_rsi_columns = FALSE,
-                     only_treatable = TRUE) {
+                     only_treatable = TRUE,
+                     ...) {
   meet_criteria(ab_class, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
@@ -164,7 +166,8 @@ ab_class <- function(ab_class,
 #' @export
 ab_selector <- function(filter, 
                         only_rsi_columns = FALSE,
-                        only_treatable = TRUE) {
+                        only_treatable = TRUE,
+                        ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
   
@@ -188,7 +191,7 @@ ab_selector <- function(filter,
 
 #' @rdname antibiotic_class_selectors
 #' @export
-administrable_per_os <- function(only_rsi_columns = FALSE) {
+administrable_per_os <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
   # but it only takes a couple of milliseconds
@@ -215,7 +218,7 @@ administrable_per_os <- function(only_rsi_columns = FALSE) {
 
 #' @rdname antibiotic_class_selectors
 #' @export
-administrable_iv <- function(only_rsi_columns = FALSE) {
+administrable_iv <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
   # but it only takes a couple of milliseconds
@@ -236,7 +239,7 @@ administrable_iv <- function(only_rsi_columns = FALSE) {
 # nolint start
 # #' @rdname antibiotic_class_selectors
 # #' @export
-# not_intrinsic_resistant <- function(mo, ..., only_rsi_columns = FALSE) {
+# not_intrinsic_resistant <- function(mo, ..., only_rsi_columns = FALSE, ...) {
 #   meet_criteria(mo, allow_class = c("mo", "data.frame", "list", "character", "numeric", "integer", "factor"), has_length = 1, allow_NA = FALSE)
 #   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
 # 
@@ -272,7 +275,7 @@ administrable_iv <- function(only_rsi_columns = FALSE) {
 
 #' @rdname antibiotic_class_selectors
 #' @export
-aminoglycosides <- function(only_rsi_columns = FALSE, only_treatable = TRUE) {
+aminoglycosides <- function(only_rsi_columns = FALSE, only_treatable = TRUE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
   ab_select_exec("aminoglycosides", only_rsi_columns = only_rsi_columns, only_treatable = only_treatable)
@@ -280,28 +283,28 @@ aminoglycosides <- function(only_rsi_columns = FALSE, only_treatable = TRUE) {
 
 #' @rdname antibiotic_class_selectors
 #' @export
-aminopenicillins <- function(only_rsi_columns = FALSE) {
+aminopenicillins <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   ab_select_exec("aminopenicillins", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-antifungals <- function(only_rsi_columns = FALSE) {
+antifungals <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_select_exec("antifungals", only_rsi_columns = only_rsi_columns, only_treatable = only_treatable)
+  ab_select_exec("antifungals", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-antimycobacterials <- function(only_rsi_columns = FALSE) {
+antimycobacterials <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  ab_select_exec("antimycobacterials", only_rsi_columns = only_rsi_columns, only_treatable = only_treatable)
+  ab_select_exec("antimycobacterials", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-betalactams <- function(only_rsi_columns = FALSE, only_treatable = TRUE) {
+betalactams <- function(only_rsi_columns = FALSE, only_treatable = TRUE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
   ab_select_exec("betalactams", only_rsi_columns = only_rsi_columns, only_treatable = only_treatable)
@@ -309,7 +312,7 @@ betalactams <- function(only_rsi_columns = FALSE, only_treatable = TRUE) {
 
 #' @rdname antibiotic_class_selectors
 #' @export
-carbapenems <- function(only_rsi_columns = FALSE, only_treatable = TRUE) {
+carbapenems <- function(only_rsi_columns = FALSE, only_treatable = TRUE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
   ab_select_exec("carbapenems", only_rsi_columns = only_rsi_columns, only_treatable = only_treatable)
@@ -317,98 +320,98 @@ carbapenems <- function(only_rsi_columns = FALSE, only_treatable = TRUE) {
 
 #' @rdname antibiotic_class_selectors
 #' @export
-cephalosporins <- function(only_rsi_columns = FALSE) {
+cephalosporins <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   ab_select_exec("cephalosporins", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-cephalosporins_1st <- function(only_rsi_columns = FALSE) {
+cephalosporins_1st <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   ab_select_exec("cephalosporins_1st", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-cephalosporins_2nd <- function(only_rsi_columns = FALSE) {
+cephalosporins_2nd <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   ab_select_exec("cephalosporins_2nd", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-cephalosporins_3rd <- function(only_rsi_columns = FALSE) {
+cephalosporins_3rd <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   ab_select_exec("cephalosporins_3rd", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-cephalosporins_4th <- function(only_rsi_columns = FALSE) {
+cephalosporins_4th <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   ab_select_exec("cephalosporins_4th", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-cephalosporins_5th <- function(only_rsi_columns = FALSE) {
+cephalosporins_5th <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   ab_select_exec("cephalosporins_5th", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-fluoroquinolones <- function(only_rsi_columns = FALSE) {
+fluoroquinolones <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   ab_select_exec("fluoroquinolones", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-glycopeptides <- function(only_rsi_columns = FALSE) {
+glycopeptides <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   ab_select_exec("glycopeptides", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-lincosamides <- function(only_rsi_columns = FALSE) {
+lincosamides <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   ab_select_exec("lincosamides", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-lipoglycopeptides <- function(only_rsi_columns = FALSE) {
+lipoglycopeptides <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   ab_select_exec("lipoglycopeptides", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-macrolides <- function(only_rsi_columns = FALSE) {
+macrolides <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   ab_select_exec("macrolides", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-oxazolidinones <- function(only_rsi_columns = FALSE) {
+oxazolidinones <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   ab_select_exec("oxazolidinones", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-penicillins <- function(only_rsi_columns = FALSE) {
+penicillins <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   ab_select_exec("penicillins", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-polymyxins <- function(only_rsi_columns = FALSE, only_treatable = TRUE) {
+polymyxins <- function(only_rsi_columns = FALSE, only_treatable = TRUE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
   ab_select_exec("polymyxins", only_rsi_columns = only_rsi_columns, only_treatable = only_treatable)
@@ -416,35 +419,35 @@ polymyxins <- function(only_rsi_columns = FALSE, only_treatable = TRUE) {
 
 #' @rdname antibiotic_class_selectors
 #' @export
-streptogramins <- function(only_rsi_columns = FALSE) {
+streptogramins <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   ab_select_exec("streptogramins", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-quinolones <- function(only_rsi_columns = FALSE) {
+quinolones <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   ab_select_exec("quinolones", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-tetracyclines <- function(only_rsi_columns = FALSE) {
+tetracyclines <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   ab_select_exec("tetracyclines", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-trimethoprims <- function(only_rsi_columns = FALSE) {
+trimethoprims <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   ab_select_exec("trimethoprims", only_rsi_columns = only_rsi_columns)
 }
 
 #' @rdname antibiotic_class_selectors
 #' @export
-ureidopenicillins <- function(only_rsi_columns = FALSE) {
+ureidopenicillins <- function(only_rsi_columns = FALSE, ...) {
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   ab_select_exec("ureidopenicillins", only_rsi_columns = only_rsi_columns)
 }

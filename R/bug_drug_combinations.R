@@ -218,7 +218,7 @@ format.bug_drug_combinations <- function(x,
       ab_txt[i] <- gsub("group", ab_group(ab[i], language = language), ab_txt[i])
       ab_txt[i] <- gsub("atc_group1", ab_atc_group1(ab[i], language = language), ab_txt[i])
       ab_txt[i] <- gsub("atc_group2", ab_atc_group2(ab[i], language = language), ab_txt[i])
-      ab_txt[i] <- gsub("atc", ab_atc(ab[i]), ab_txt[i])
+      ab_txt[i] <- gsub("atc", ab_atc(ab[i], only_first = TRUE), ab_txt[i])
       ab_txt[i] <- gsub("name", ab_name(ab[i], language = language), ab_txt[i])
       ab_txt[i]
     }
