@@ -1,8 +1,8 @@
-# `AMR` 1.7.1.9024
-## <small>Last updated: 17 August 2021</small>
+# `AMR` 1.7.1.9025
+## <small>Last updated: 18 August 2021</small>
 
 ### Breaking changes
-* Removed all `filter_*()` functions (except for `filter_first_isolate()`), which were all deprecated in a previous package version
+* Removed `p_symbol()` and all `filter_*()` functions (except for `filter_first_isolate()`), which were all deprecated in a previous package version
 * Removed the `key_antibiotics()` and `key_antibiotics_equal()` functions, which were deprecated and superseded by `key_antimicrobials()` and `antimicrobials_equal()`
 * Removed all previously implemented `ggplot2::ggplot()` generics for classes `<mic>`, `<disk>`, `<rsi>` and `<resistance_predict>` as they did not follow the `ggplot2` logic. They were replaced with `ggplot2::autoplot()` generics.
 
@@ -18,10 +18,10 @@
   * They now also work in R-3.0 and R-3.1, supporting every version of R since 2013
   * Added more selectors for antibiotic classes: `aminopenicillins()`, `antifungals()`, `antimycobacterials()`, `lincosamides()`, `lipoglycopeptides()`, `polymyxins()`, `quinolones()`, `streptogramins()`, `trimethoprims()` and `ureidopenicillins()`
   * Added specific selectors for certain types for treatment: `administrable_per_os()` and `administrable_iv()`, which are based on available Defined Daily Doses (DDDs), as defined by the WHOCC. These are ideal for e.g. analysing pathogens in primary care where IV treatment is not an option. They can be combined with other AB selectors, e.g. to select penicillins that are only administrable per os (i.e., orally):
-  ```r
-  example_isolates[, penicillins() & administrable_per_os()]          # base R
-  example_isolates %>% select(penicillins() & administrable_per_os()) # dplyr
-  ```
+    ```r
+    example_isolates[, penicillins() & administrable_per_os()]          # base R
+    example_isolates %>% select(penicillins() & administrable_per_os()) # dplyr
+    ```
   * Fix for using selectors multiple times in one call (e.g., using them in `dplyr::filter()` and immediately after in `dplyr::select()`)
   * Added argument `only_treatable`, which defaults to `TRUE` and will exclude drugs that are only for laboratory tests and not for treating patients (such as imipenem/EDTA and gentamicin-high)
 * Fixed the Gram stain (`mo_gramstain()`) determination of the class Negativicutes within the phylum of Firmicutes - they were considered Gram-positives because of their phylum but are actually Gram-negative. This impacts 137 taxonomic species, genera and families, such as *Negativicoccus* and *Veillonella*.

@@ -89,32 +89,11 @@ navbar:
     - text: "Source Code"
       icon: "fab fa-github"
       href: "https://github.com/msberends/AMR"
-    - text: "Survey"
-      icon: "fa-clipboard-list"
-      href: "survey.html"
+    # - text: "Survey"
+    #   icon: "fa-clipboard-list"
+    #   href: "survey.html"
 
 reference:
-  - title: "Background information on included data"
-    desc: >
-      Some pages about our package and its external sources. Be sure to read our [How To's](./../articles/index.html)
-      for more information about how to work with functions in this package.
-    contents:
-    - "`AMR`"
-    - "`example_isolates`"
-    - "`microorganisms`"
-    - "`microorganisms.codes`"
-    - "`microorganisms.old`"
-    - "`antibiotics`"
-    - "`intrinsic_resistant`"
-    - "`dosage`"
-    - "`catalogue_of_life`"
-    - "`catalogue_of_life_version`"
-    - "`WHOCC`"
-    - "`lifecycle`"
-    - "`example_isolates_unclean`"
-    - "`rsi_translation`"
-    - "`WHONET`"
-    
   - title: "Preparing data: microorganisms"
     desc: >
       These functions are meant to get taxonomically valid properties of microorganisms from any input.
@@ -165,6 +144,27 @@ reference:
     - "`antibiotic_class_selectors`"
     - "`resistance_predict`"
     - "`guess_ab_col`"
+
+  - title: "Background information on included data"
+    desc: >
+      Some pages about our package and its external sources. Be sure to read our [How To's](./../articles/index.html)
+      for more information about how to work with functions in this package.
+    contents:
+    - "`AMR`"
+    - "`example_isolates`"
+    - "`microorganisms`"
+    - "`microorganisms.codes`"
+    - "`microorganisms.old`"
+    - "`antibiotics`"
+    - "`intrinsic_resistant`"
+    - "`dosage`"
+    - "`catalogue_of_life`"
+    - "`catalogue_of_life_version`"
+    - "`WHOCC`"
+    - "`lifecycle`"
+    - "`example_isolates_unclean`"
+    - "`rsi_translation`"
+    - "`WHONET`"
     
   - title: "Other: miscellaneous functions"
     desc: >
@@ -215,6 +215,7 @@ authors:
     href: https://www.rug.nl/staff/c.glasner/
 
 template:
+  bootstrap: 3
   opengraph:
     twitter:
       creator: "@msberends"

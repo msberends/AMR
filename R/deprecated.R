@@ -26,23 +26,9 @@
 #' Deprecated Functions
 #'
 #' These functions are so-called '[Deprecated]'. **They will be removed in a future release.** Using the functions will give a warning with the name of the function it has been replaced by (if there is one).
-#' @details All antibiotic class selectors (such as [carbapenems()], [aminoglycosides()]) can now be used for filtering as well, making all their accompanying `filter_*()` functions redundant (such as [filter_carbapenems()], [filter_aminoglycosides()]).
 #' @inheritSection lifecycle Retired Lifecycle
 #' @inheritSection AMR Read more on Our Website!
 #' @keywords internal
 #' @name AMR-deprecated
-#' @export
-p_symbol <- function(p, emptychar = " ") {
-  .Deprecated(package = "AMR", new = "cleaner::p_symbol")
-  
-  p <- as.double(p)
-  s <- rep(NA_character_, length(p))
-  
-  s[p <= 1] <- emptychar
-  s[p <= 0.100] <- "."
-  s[p <= 0.050] <- "*"
-  s[p <= 0.010] <- "**"
-  s[p <= 0.001] <- "***"
-  
-  s
-}
+# @export
+NULL

@@ -2,16 +2,9 @@
 % Please edit documentation in R/deprecated.R
 \name{AMR-deprecated}
 \alias{AMR-deprecated}
-\alias{p_symbol}
 \title{Deprecated Functions}
-\usage{
-p_symbol(p, emptychar = " ")
-}
 \description{
 These functions are so-called '\link{Deprecated}'. \strong{They will be removed in a future release.} Using the functions will give a warning with the name of the function it has been replaced by (if there is one).
-}
-\details{
-All antibiotic class selectors (such as \code{\link[=carbapenems]{carbapenems()}}, \code{\link[=aminoglycosides]{aminoglycosides()}}) can now be used for filtering as well, making all their accompanying \verb{filter_*()} functions redundant (such as \code{\link[=filter_carbapenems]{filter_carbapenems()}}, \code{\link[=filter_aminoglycosides]{filter_aminoglycosides()}}).
 }
 \section{Retired Lifecycle}{
 

@@ -138,7 +138,7 @@ echo
 echo "•••••••••••••••••"
 echo "• Building site •"
 echo "•••••••••••••••••"
-if $lazy == "FALSE"; then
+if [ $lazy == "FALSE" ]; then
   Rscript -e "devtools::install(quiet = TRUE, dependencies = FALSE)"
   Rscript -e "suppressMessages(pkgdown::build_site(lazy = FALSE, examples = FALSE, install = FALSE))"
 else
@@ -152,7 +152,7 @@ else
   fi
   if ! git diff --quiet NEWS.md; then
     # news has changed
-    Rscript -e "pkgdown::build_home()"
+    Rscript -e "pkgdown::build_news()"
   fi
   if ! git diff --quiet pkgdown; then
     # something has changed in pkgdown files
