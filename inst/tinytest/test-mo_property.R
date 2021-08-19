@@ -121,9 +121,9 @@ expect_equal(mo_name("test", reference_df = data.frame(col1 = "test", mo = "B_ES
              "Escherichia coli")
 if (AMR:::pkg_is_available("dplyr")) {
   expect_equal(example_isolates %>% filter(mo_is_gram_negative()) %>% nrow(),
-               730)
+               730, tolerance = 0.5)
   expect_equal(example_isolates %>% filter(mo_is_gram_positive()) %>% nrow(),
-               1238)
+               1238, tolerance = 0.5)
   expect_equal(example_isolates %>% filter(mo_is_intrinsic_resistant(ab = "Vancomycin")) %>% nrow(),
-               710)
+               710, tolerance = 0.5)
 }
