@@ -92,7 +92,7 @@ trimethoprims(only_rsi_columns = FALSE, ...)
 ureidopenicillins(only_rsi_columns = FALSE, ...)
 }
 \arguments{
-\item{ab_class}{an antimicrobial class, such as \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched (case-insensitive) for this value.}
+\item{ab_class}{an antimicrobial class or a part of it, such as \code{"carba"} and \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched (case-insensitive) for this value.}
 
 \item{only_rsi_columns}{a \link{logical} to indicate whether only columns of class \verb{<rsi>} must be selected (defaults to \code{FALSE}), see \code{\link[=as.rsi]{as.rsi()}}}
 
@@ -113,7 +113,7 @@ These functions can be used in data set calls for selecting columns and filterin
 
 All columns in the data in which these functions are called will be searched for known antibiotic names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the \link{antibiotics} data set. This means that a selector such as \code{\link[=aminoglycosides]{aminoglycosides()}} will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.
 
-The \code{\link[=ab_class]{ab_class()}} function can be used to filter/select on a manually defined antibiotic class. It searches for results in the \link{antibiotics} data set within the columns \code{name}, \code{atc_group1} and \code{atc_group2}.
+The \code{\link[=ab_class]{ab_class()}} function can be used to filter/select on a manually defined antibiotic class. It searches for results in the \link{antibiotics} data set within the columns \code{group}, \code{atc_group1} and \code{atc_group2}.
 
 The \code{\link[=ab_selector]{ab_selector()}} function can be used to internally filter the \link{antibiotics} data set on any results, see \emph{Examples}. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.
 
@@ -204,6 +204,10 @@ example_isolates[any(carbapenems() == "R"), penicillins()]
 # and erythromycin is not a penicillin:
 example_isolates[, penicillins() & administrable_per_os()]
 
+# ab_selector() applies a filter in the `antibiotics` data set and is thus very
+# flexible. For instance, to select antibiotic columns with an oral DDD of at
+# least 1 gram:
+example_isolates[, ab_selector(oral_ddd > 1 & oral_units == "g")]
 
 # dplyr -------------------------------------------------------------------
 \donttest{

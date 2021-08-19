@@ -283,12 +283,6 @@ ab_ddd <- function(x, administration = "oral", ...) {
   meet_criteria(administration, is_in = c("oral", "iv"), has_length = 1)
   
   x <- as.ab(x, ...)
-  if (any(ab_name(x, language = NULL) %like% "/")) {
-    warning_("DDDs of combined products are available for different dose combinations and not (yet) part of the AMR package. ",
-             "Please refer to the WHOCC website:\n",
-             "www.whocc.no/ddd/list_of_ddds_combined_products/", call = FALSE)
-  }
-  
   ddd_prop <- administration
   # old behaviour
   units <- list(...)$units
@@ -301,7 +295,14 @@ ab_ddd <- function(x, administration = "oral", ...) {
   } else {
     ddd_prop <- paste0(ddd_prop, "_ddd")
   }
-  ab_validate(x = x, property = ddd_prop)
+  out <- ab_validate(x = x, property = ddd_prop)
+  
+  if (any(ab_name(x, language = NULL) %like% "/" & is.na(out)) ) {
+    warning_("DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package. ",
+             "Please refer to the WHOCC website:\n",
+             "www.whocc.no/ddd/list_of_ddds_combined_products/", call = FALSE)
+  }
+  out
 }
 
 #' @rdname ab_property

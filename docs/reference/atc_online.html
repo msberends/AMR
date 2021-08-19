@@ -49,7 +49,7 @@
   <script src="../extra.js"></script>
 
 <meta property="og:title" content="Get ATC Properties from WHOCC Website — atc_online_property" />
-<meta property="og:description" content="Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic), such as the name, defined daily dose (DDD) or standard unit." />
+<meta property="og:description" content="Gets data from the WHOCC website to determine properties of an Anatomical Therapeutic Chemical (ATC) (e.g. an antibiotic), such as the name, defined daily dose (DDD) or standard unit." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@msberends" />
@@ -93,7 +93,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9024</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9026</span>
       </span>
     </div>
 
@@ -224,13 +224,6 @@
     Source Code
   </a>
 </li>
-<li>
-  <a href="../survey.html">
-    <span class="fa fa-clipboard-list"></span>
-     
-    Survey
-  </a>
-</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -250,7 +243,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic), such as the name, defined daily dose (DDD) or standard unit.</p>
+    <p>Gets data from the WHOCC website to determine properties of an Anatomical Therapeutic Chemical (ATC) (e.g. an antibiotic), such as the name, defined daily dose (DDD) or standard unit.</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>atc_online_property</span><span class='op'>(</span>
@@ -263,14 +256,16 @@
 
 <span class='fu'>atc_online_groups</span><span class='op'>(</span><span class='va'>atc_code</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>atc_online_ddd</span><span class='op'>(</span><span class='va'>atc_code</span>, <span class='va'>...</span><span class='op'>)</span></code></pre></div>
+<span class='fu'>atc_online_ddd</span><span class='op'>(</span><span class='va'>atc_code</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>atc_online_ddd_units</span><span class='op'>(</span><span class='va'>atc_code</span>, <span class='va'>...</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>atc_code</th>
-      <td><p>a <a href='https://rdrr.io/r/base/character.html'>character</a> or <a href='https://rdrr.io/r/base/character.html'>character</a> vector with ATC code(s) of antibiotic(s)</p></td>
+      <td><p>a <a href='https://rdrr.io/r/base/character.html'>character</a> (vector) with ATC code(s) of antibiotics, will be coerced with <code><a href='as.ab.html'>as.ab()</a></code> and <code><a href='ab_property.html'>ab_atc()</a></code> internally if not a valid ATC code</p></td>
     </tr>
     <tr>
       <th>property</th>
@@ -342,6 +337,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"curl"</span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"rvest"</span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"xml2"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span> 
   <span class='co'># oral DDD (Defined Daily Dose) of amoxicillin</span>
   <span class='fu'>atc_online_property</span><span class='op'>(</span><span class='st'>"J01CA04"</span>, <span class='st'>"DDD"</span>, <span class='st'>"O"</span><span class='op'>)</span>
+  <span class='fu'>atc_online_ddd</span><span class='op'>(</span><span class='fu'><a href='ab_property.html'>ab_atc</a></span><span class='op'>(</span><span class='st'>"amox"</span><span class='op'>)</span><span class='op'>)</span>
 
   <span class='co'># parenteral DDD (Defined Daily Dose) of amoxicillin</span>
   <span class='fu'>atc_online_property</span><span class='op'>(</span><span class='st'>"J01CA04"</span>, <span class='st'>"DDD"</span>, <span class='st'>"P"</span><span class='op'>)</span>

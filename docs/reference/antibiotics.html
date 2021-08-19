@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Data Sets with 558 Antimicrobials — antibiotics • AMR (for R)</title>
+<title>Data Sets with 558 Antimicrobial Drugs — antibiotics • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,7 +48,7 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Data Sets with 558 Antimicrobials — antibiotics" />
+<meta property="og:title" content="Data Sets with 558 Antimicrobial Drugs — antibiotics" />
 <meta property="og:description" content="Two data sets containing all antibiotics/antimycotics and antivirals. Use as.ab() or one of the ab_* functions to retrieve values from the antibiotics data set. Three identifiers are included in this data set: an antibiotic ID (ab, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (atc) as defined by the WHO, and a Compound ID (cid) as found in PubChem. Other properties in this data set are derived from one or more of these codes. Note that some drugs have multiple ATC codes." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -93,7 +93,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9024</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9026</span>
       </span>
     </div>
 
@@ -224,13 +224,6 @@
     Source Code
   </a>
 </li>
-<li>
-  <a href="../survey.html">
-    <span class="fa fa-clipboard-list"></span>
-     
-    Survey
-  </a>
-</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -244,7 +237,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Data Sets with 558 Antimicrobials</h1>
+    <h1>Data Sets with 558 Antimicrobial Drugs</h1>
     <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/data.R'><code>R/data.R</code></a></small>
     <div class="hidden name"><code>antibiotics.Rd</code></div>
     </div>
@@ -273,9 +266,9 @@
 <li><p><code>atc_group2</code><br /> Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like <code>"Macrolides"</code></p></li>
 <li><p><code>abbr</code><br /> List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)</p></li>
 <li><p><code>synonyms</code><br /> Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID</p></li>
-<li><p><code>oral_ddd</code><br /> Defined Daily Dose (DDD), oral treatment</p></li>
+<li><p><code>oral_ddd</code><br /> Defined Daily Dose (DDD), oral treatment, currently available for 170 drugs</p></li>
 <li><p><code>oral_units</code><br /> Units of <code>oral_ddd</code></p></li>
-<li><p><code>iv_ddd</code><br /> Defined Daily Dose (DDD), parenteral treatment</p></li>
+<li><p><code>iv_ddd</code><br /> Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for 145 drugs</p></li>
 <li><p><code>iv_units</code><br /> Units of <code>iv_ddd</code></p></li>
 <li><p><code>loinc</code><br /> All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial agent. Use <code><a href='ab_property.html'>ab_loinc()</a></code> to retrieve them quickly, see <code><a href='ab_property.html'>ab_property()</a></code>.</p></li>
 </ul>
@@ -291,9 +284,9 @@
 <li><p><code>atc_group2</code><br /> Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like <code>"Macrolides"</code></p></li>
 <li><p><code>abbr</code><br /> List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)</p></li>
 <li><p><code>synonyms</code><br /> Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID</p></li>
-<li><p><code>oral_ddd</code><br /> Defined Daily Dose (DDD), oral treatment</p></li>
+<li><p><code>oral_ddd</code><br /> Defined Daily Dose (DDD), oral treatment, currently available for 170 drugs</p></li>
 <li><p><code>oral_units</code><br /> Units of <code>oral_ddd</code></p></li>
-<li><p><code>iv_ddd</code><br /> Defined Daily Dose (DDD), parenteral treatment</p></li>
+<li><p><code>iv_ddd</code><br /> Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for 145 drugs</p></li>
 <li><p><code>iv_units</code><br /> Units of <code>iv_ddd</code></p></li>
 <li><p><code>loinc</code><br /> All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial agent. Use <code><a href='ab_property.html'>ab_loinc()</a></code> to retrieve them quickly, see <code><a href='ab_property.html'>ab_property()</a></code>.</p></li>
 </ul>
@@ -309,9 +302,9 @@
 <li><p><code>atc_group2</code><br /> Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like <code>"Macrolides"</code></p></li>
 <li><p><code>abbr</code><br /> List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)</p></li>
 <li><p><code>synonyms</code><br /> Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID</p></li>
-<li><p><code>oral_ddd</code><br /> Defined Daily Dose (DDD), oral treatment</p></li>
+<li><p><code>oral_ddd</code><br /> Defined Daily Dose (DDD), oral treatment, currently available for 170 drugs</p></li>
 <li><p><code>oral_units</code><br /> Units of <code>oral_ddd</code></p></li>
-<li><p><code>iv_ddd</code><br /> Defined Daily Dose (DDD), parenteral treatment</p></li>
+<li><p><code>iv_ddd</code><br /> Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for 145 drugs</p></li>
 <li><p><code>iv_units</code><br /> Units of <code>iv_ddd</code></p></li>
 <li><p><code>loinc</code><br /> All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial agent. Use <code><a href='ab_property.html'>ab_loinc()</a></code> to retrieve them quickly, see <code><a href='ab_property.html'>ab_property()</a></code>.</p></li>
 </ul>
@@ -327,9 +320,9 @@
 <li><p><code>atc_group2</code><br /> Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like <code>"Macrolides"</code></p></li>
 <li><p><code>abbr</code><br /> List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)</p></li>
 <li><p><code>synonyms</code><br /> Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID</p></li>
-<li><p><code>oral_ddd</code><br /> Defined Daily Dose (DDD), oral treatment</p></li>
+<li><p><code>oral_ddd</code><br /> Defined Daily Dose (DDD), oral treatment, currently available for 170 drugs</p></li>
 <li><p><code>oral_units</code><br /> Units of <code>oral_ddd</code></p></li>
-<li><p><code>iv_ddd</code><br /> Defined Daily Dose (DDD), parenteral treatment</p></li>
+<li><p><code>iv_ddd</code><br /> Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for 145 drugs</p></li>
 <li><p><code>iv_units</code><br /> Units of <code>iv_ddd</code></p></li>
 <li><p><code>loinc</code><br /> All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial agent. Use <code><a href='ab_property.html'>ab_loinc()</a></code> to retrieve them quickly, see <code><a href='ab_property.html'>ab_property()</a></code>.</p></li>
 </ul>
@@ -345,9 +338,9 @@
 <li><p><code>atc_group2</code><br /> Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like <code>"Macrolides"</code></p></li>
 <li><p><code>abbr</code><br /> List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)</p></li>
 <li><p><code>synonyms</code><br /> Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID</p></li>
-<li><p><code>oral_ddd</code><br /> Defined Daily Dose (DDD), oral treatment</p></li>
+<li><p><code>oral_ddd</code><br /> Defined Daily Dose (DDD), oral treatment, currently available for 170 drugs</p></li>
 <li><p><code>oral_units</code><br /> Units of <code>oral_ddd</code></p></li>
-<li><p><code>iv_ddd</code><br /> Defined Daily Dose (DDD), parenteral treatment</p></li>
+<li><p><code>iv_ddd</code><br /> Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for 145 drugs</p></li>
 <li><p><code>iv_units</code><br /> Units of <code>iv_ddd</code></p></li>
 <li><p><code>loinc</code><br /> All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial agent. Use <code><a href='ab_property.html'>ab_loinc()</a></code> to retrieve them quickly, see <code><a href='ab_property.html'>ab_property()</a></code>.</p></li>
 </ul>
@@ -429,7 +422,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Properties that are based on an ATC code are only available when an ATC is available. These properties are: <code>atc_group1</code>, <code>atc_group2</code>, <code>oral_ddd</code>, <code>oral_units</code>, <code>iv_ddd</code> and <code>iv_units</code>.</p>
-<p>Synonyms (i.e. trade names) are derived from the Compound ID (<code>cid</code>) and consequently only available where a CID is available.</p><h3 class='hasAnchor' id='direct-download'><a class='anchor' aria-hidden='true' href='#direct-download'></a>Direct download</h3>
+<p>Synonyms (i.e. trade names) were derived from the Compound ID (<code>cid</code>) and consequently only available where a CID is available.</p><h3 class='hasAnchor' id='direct-download'><a class='anchor' aria-hidden='true' href='#direct-download'></a>Direct download</h3>
 
 
 <p>These data sets are available as 'flat files' for use even without <span style="R">R</span> - you can find the files here:</p><ul>

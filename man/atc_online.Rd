@@ -4,6 +4,7 @@
 \alias{atc_online_property}
 \alias{atc_online_groups}
 \alias{atc_online_ddd}
+\alias{atc_online_ddd_units}
 \title{Get ATC Properties from WHOCC Website}
 \source{
 \url{https://www.whocc.no/atc_ddd_alterations__cumulative/ddd_alterations/abbrevations/}
@@ -20,9 +21,11 @@ atc_online_property(
 atc_online_groups(atc_code, ...)
 
 atc_online_ddd(atc_code, ...)
+
+atc_online_ddd_units(atc_code, ...)
 }
 \arguments{
-\item{atc_code}{a \link{character} or \link{character} vector with ATC code(s) of antibiotic(s)}
+\item{atc_code}{a \link{character} (vector) with ATC code(s) of antibiotics, will be coerced with \code{\link[=as.ab]{as.ab()}} and \code{\link[=ab_atc]{ab_atc()}} internally if not a valid ATC code}
 
 \item{property}{property of an ATC code. Valid values are \code{"ATC"}, \code{"Name"}, \code{"DDD"}, \code{"U"} (\code{"unit"}), \code{"Adm.R"}, \code{"Note"} and \code{groups}. For this last option, all hierarchical groups of an ATC code will be returned, see \emph{Examples}.}
 
@@ -35,7 +38,7 @@ atc_online_ddd(atc_code, ...)
 \item{...}{arguments to pass on to \code{atc_property}}
 }
 \description{
-Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic), such as the name, defined daily dose (DDD) or standard unit.
+Gets data from the WHOCC website to determine properties of an Anatomical Therapeutic Chemical (ATC) (e.g. an antibiotic), such as the name, defined daily dose (DDD) or standard unit.
 }
 \details{
 Options for argument \code{administration}:
@@ -84,6 +87,7 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 if (requireNamespace("curl") && requireNamespace("rvest") && requireNamespace("xml2")) { 
   # oral DDD (Defined Daily Dose) of amoxicillin
   atc_online_property("J01CA04", "DDD", "O")
+  atc_online_ddd(ab_atc("amox"))
 
   # parenteral DDD (Defined Daily Dose) of amoxicillin
   atc_online_property("J01CA04", "DDD", "P")

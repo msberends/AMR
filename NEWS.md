@@ -1,5 +1,5 @@
-# `AMR` 1.7.1.9025
-## <small>Last updated: 18 August 2021</small>
+# `AMR` 1.7.1.9026
+## <small>Last updated: 19 August 2021</small>
 
 ### Breaking changes
 * Removed `p_symbol()` and all `filter_*()` functions (except for `filter_first_isolate()`), which were all deprecated in a previous package version
@@ -14,6 +14,7 @@
   * Some drugs now contain multiple ATC codes (e.g., metronidazole contains 5)
   * `antibiotics$atc` is now a `list` instead of a `character`, and this `atc` column was moved to the 5th position of the `antibiotics` data set
   * `ab_atc()` does not always return a character vector with length 1, and returns a `list` if the input is larger than length 1
+  * Some DDDs (daily defined doses) were added or updated according to newly included ATC codes
 * Antibiotic selectors
   * They now also work in R-3.0 and R-3.1, supporting every version of R since 2013
   * Added more selectors for antibiotic classes: `aminopenicillins()`, `antifungals()`, `antimycobacterials()`, `lincosamides()`, `lipoglycopeptides()`, `polymyxins()`, `quinolones()`, `streptogramins()`, `trimethoprims()` and `ureidopenicillins()`
@@ -21,6 +22,11 @@
     ```r
     example_isolates[, penicillins() & administrable_per_os()]          # base R
     example_isolates %>% select(penicillins() & administrable_per_os()) # dplyr
+    ```
+  * Added the selector `ab_selector()`, which accepts a filter to be used internally on the `antibiotics` data set, yielding great flexibility on drug properties, such as selecting antibiotic columns with an oral DDD of at least 1 gram:
+    ```r
+    example_isolates[, ab_selector(oral_ddd > 1 & oral_units == "g")]          # base R
+    example_isolates %>% select(ab_selector(oral_ddd > 1 & oral_units == "g")) # dplyr
     ```
   * Fix for using selectors multiple times in one call (e.g., using them in `dplyr::filter()` and immediately after in `dplyr::select()`)
   * Added argument `only_treatable`, which defaults to `TRUE` and will exclude drugs that are only for laboratory tests and not for treating patients (such as imipenem/EDTA and gentamicin-high)

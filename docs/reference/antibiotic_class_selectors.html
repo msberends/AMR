@@ -93,7 +93,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9024</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9026</span>
       </span>
     </div>
 
@@ -224,13 +224,6 @@
     Source Code
   </a>
 </li>
-<li>
-  <a href="../survey.html">
-    <span class="fa fa-clipboard-list"></span>
-     
-    Survey
-  </a>
-</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -316,7 +309,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>ab_class</th>
-      <td><p>an antimicrobial class, such as <code>"carbapenems"</code>. The columns <code>group</code>, <code>atc_group1</code> and <code>atc_group2</code> of the <a href='antibiotics.html'>antibiotics</a> data set will be searched (case-insensitive) for this value.</p></td>
+      <td><p>an antimicrobial class or a part of it, such as <code>"carba"</code> and <code>"carbapenems"</code>. The columns <code>group</code>, <code>atc_group1</code> and <code>atc_group2</code> of the <a href='antibiotics.html'>antibiotics</a> data set will be searched (case-insensitive) for this value.</p></td>
     </tr>
     <tr>
       <th>only_rsi_columns</th>
@@ -343,7 +336,7 @@
 
     <p>These functions can be used in data set calls for selecting columns and filtering rows. They are heavily inspired by the <a href='https://tidyselect.r-lib.org/reference/language.html'>Tidyverse selection helpers</a> such as <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code>, but also work in base <span style="R">R</span> and not only in <code>dplyr</code> verbs. Nonetheless, they are very convenient to use with <code>dplyr</code> functions such as <code><a href='https://dplyr.tidyverse.org/reference/select.html'>select()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>, see <em>Examples</em>.</p>
 <p>All columns in the data in which these functions are called will be searched for known antibiotic names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the <a href='antibiotics.html'>antibiotics</a> data set. This means that a selector such as <code>aminoglycosides()</code> will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc.</p>
-<p>The <code>ab_class()</code> function can be used to filter/select on a manually defined antibiotic class. It searches for results in the <a href='antibiotics.html'>antibiotics</a> data set within the columns <code>name</code>, <code>atc_group1</code> and <code>atc_group2</code>.</p>
+<p>The <code>ab_class()</code> function can be used to filter/select on a manually defined antibiotic class. It searches for results in the <a href='antibiotics.html'>antibiotics</a> data set within the columns <code>group</code>, <code>atc_group1</code> and <code>atc_group2</code>.</p>
 <p>The <code>ab_selector()</code> function can be used to internally filter the <a href='antibiotics.html'>antibiotics</a> data set on any results, see <em>Examples</em>. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.</p>
 <p>The <code>administrable_per_os()</code> and <code>administrable_iv()</code> functions also rely on the <a href='antibiotics.html'>antibiotics</a> data set - antibiotic columns will be matched where a DDD (defined daily dose) for resp. oral and IV treatment is available in the <a href='antibiotics.html'>antibiotics</a> data set.</p>
     <h2 class="hasAnchor" id="full-list-of-supported-antibiotic-classes"><a class="anchor" href="#full-list-of-supported-antibiotic-classes"></a>Full list of supported (antibiotic) classes</h2>
@@ -432,6 +425,10 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <span class='co'># and erythromycin is not a penicillin:</span>
 <span class='va'>example_isolates</span><span class='op'>[</span>, <span class='fu'>penicillins</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>&amp;</span> <span class='fu'>administrable_per_os</span><span class='op'>(</span><span class='op'>)</span><span class='op'>]</span>
 
+<span class='co'># ab_selector() applies a filter in the `antibiotics` data set and is thus very</span>
+<span class='co'># flexible. For instance, to select antibiotic columns with an oral DDD of at</span>
+<span class='co'># least 1 gram:</span>
+<span class='va'>example_isolates</span><span class='op'>[</span>, <span class='fu'>ab_selector</span><span class='op'>(</span><span class='va'>oral_ddd</span> <span class='op'>&gt;</span> <span class='fl'>1</span> <span class='op'>&amp;</span> <span class='va'>oral_units</span> <span class='op'>==</span> <span class='st'>"g"</span><span class='op'>)</span><span class='op'>]</span>
 
 <span class='co'># dplyr -------------------------------------------------------------------</span>
 <span class='co'># \donttest{</span>

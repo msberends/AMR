@@ -23,7 +23,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Data Sets with `r format(nrow(antibiotics) + nrow(antivirals), big.mark = ",")` Antimicrobials
+#' Data Sets with `r format(nrow(antibiotics) + nrow(antivirals), big.mark = ",")` Antimicrobial Drugs
 #'
 #' Two data sets containing all antibiotics/antimycotics and antivirals. Use [as.ab()] or one of the [`ab_*`][ab_property()] functions to retrieve values from the [antibiotics] data set. Three identifiers are included in this data set: an antibiotic ID (`ab`, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (`atc`) as defined by the WHO, and a Compound ID (`cid`) as found in PubChem. Other properties in this data set are derived from one or more of these codes. Note that some drugs have multiple ATC codes.
 #' @format
@@ -37,9 +37,9 @@
 #' - `atc_group2`\cr Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like `"Macrolides"`
 #' - `abbr`\cr List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)
 #' - `synonyms`\cr Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID
-#' - `oral_ddd`\cr Defined Daily Dose (DDD), oral treatment
+#' - `oral_ddd`\cr Defined Daily Dose (DDD), oral treatment, currently available for `r sum(!is.na(antibiotics$oral_ddd))` drugs
 #' - `oral_units`\cr Units of `oral_ddd`
-#' - `iv_ddd`\cr Defined Daily Dose (DDD), parenteral treatment
+#' - `iv_ddd`\cr Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for `r sum(!is.na(antibiotics$iv_ddd))` drugs
 #' - `iv_units`\cr Units of `iv_ddd`
 #' - `loinc`\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial agent. Use [ab_loinc()] to retrieve them quickly, see [ab_property()].
 #' 
@@ -55,7 +55,7 @@
 #' - `iv_units`\cr Units of `iv_ddd`
 #' @details Properties that are based on an ATC code are only available when an ATC is available. These properties are: `atc_group1`, `atc_group2`, `oral_ddd`, `oral_units`, `iv_ddd` and `iv_units`.
 #'
-#' Synonyms (i.e. trade names) are derived from the Compound ID (`cid`) and consequently only available where a CID is available.
+#' Synonyms (i.e. trade names) were derived from the Compound ID (`cid`) and consequently only available where a CID is available.
 #' 
 #' ## Direct download
 #' These data sets are available as 'flat files' for use even without \R - you can find the files here:

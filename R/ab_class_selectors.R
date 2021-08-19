@@ -27,7 +27,7 @@
 #' 
 #' These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class or group, without the need to define the columns or antibiotic abbreviations. In short, if you have a column name that resembles an antimicrobial agent, it will be picked up by any of these functions that matches its pharmaceutical class: "cefazolin", "CZO" and "J01DB04" will all be picked up by [cephalosporins()].
 #' @inheritSection lifecycle Stable Lifecycle
-#' @param ab_class an antimicrobial class, such as `"carbapenems"`. The columns `group`, `atc_group1` and `atc_group2` of the [antibiotics] data set will be searched (case-insensitive) for this value.
+#' @param ab_class an antimicrobial class or a part of it, such as `"carba"` and `"carbapenems"`. The columns `group`, `atc_group1` and `atc_group2` of the [antibiotics] data set will be searched (case-insensitive) for this value.
 #' @param filter an [expression] to be evaluated in the [antibiotics] data set, such as `name %like% "trim"`
 #' @param only_rsi_columns a [logical] to indicate whether only columns of class `<rsi>` must be selected (defaults to `FALSE`), see [as.rsi()]
 #' @param only_treatable a [logical] to indicate whether agents that are only for laboratory tests should be excluded (defaults to `TRUE`), such as gentamicin-high (`GEH`) and imipenem/EDTA (`IPE`)
@@ -37,7 +37,7 @@
 #' 
 #' All columns in the data in which these functions are called will be searched for known antibiotic names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the [antibiotics] data set. This means that a selector such as [aminoglycosides()] will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc. 
 #' 
-#' The [ab_class()] function can be used to filter/select on a manually defined antibiotic class. It searches for results in the [antibiotics] data set within the columns `name`, `atc_group1` and `atc_group2`.
+#' The [ab_class()] function can be used to filter/select on a manually defined antibiotic class. It searches for results in the [antibiotics] data set within the columns `group`, `atc_group1` and `atc_group2`.
 #' 
 #' The [ab_selector()] function can be used to internally filter the [antibiotics] data set on any results, see *Examples*. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.
 #' 
@@ -88,6 +88,10 @@
 #' # and erythromycin is not a penicillin:
 #' example_isolates[, penicillins() & administrable_per_os()]
 #' 
+#' # ab_selector() applies a filter in the `antibiotics` data set and is thus very
+#' # flexible. For instance, to select antibiotic columns with an oral DDD of at
+#' # least 1 gram:
+#' example_isolates[, ab_selector(oral_ddd > 1 & oral_units == "g")]
 #' 
 #' # dplyr -------------------------------------------------------------------
 #' \donttest{
@@ -159,7 +163,7 @@ ab_class <- function(ab_class,
   meet_criteria(ab_class, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   meet_criteria(only_treatable, allow_class = "logical", has_length = 1)
-  ab_select_exec(NULL, only_rsi_columns = only_rsi_columns, ab_class = ab_class, only_treatable = only_treatable)
+  ab_select_exec(NULL, only_rsi_columns = only_rsi_columns, ab_class_args = ab_class, only_treatable = only_treatable)
 }
 
 #' @rdname antibiotic_class_selectors
@@ -455,7 +459,7 @@ ureidopenicillins <- function(only_rsi_columns = FALSE, ...) {
 ab_select_exec <- function(function_name,
                            only_rsi_columns = FALSE,
                            only_treatable = FALSE,
-                           ab_class = NULL) {
+                           ab_class_args = NULL) {
   # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
   # but it only takes a couple of milliseconds
   vars_df <- get_current_data(arg_name = NA, call = -3)
@@ -483,7 +487,7 @@ ab_select_exec <- function(function_name,
     return(NULL)
   }
   
-  if (is.null(ab_class)) {
+  if (is.null(ab_class_args)) {
     # their upper case equivalent are vectors with class <ab>, created in data-raw/_internals.R
     # carbapenems() gets its codes from AMR:::AB_CARBAPENEMS
     abx <- get(paste0("AB_", toupper(function_name)), envir = asNamespace("AMR"))  
@@ -495,12 +499,12 @@ ab_select_exec <- function(function_name,
   } else {
     # this for the 'manual' ab_class() function
     abx <- subset(AB_lookup,
-                  group %like% ab_class |
-                    atc_group1 %like% ab_class |
-                    atc_group2 %like% ab_class)$ab
-    ab_group <- find_ab_group(ab_class)
+                  group %like% ab_class_args |
+                    atc_group1 %like% ab_class_args |
+                    atc_group2 %like% ab_class_args)$ab
+    ab_group <- find_ab_group(ab_class_args)
     function_name <- "ab_class"
-    examples <- paste0(" (such as ", find_ab_names(ab_class, 2), ")")
+    examples <- paste0(" (such as ", find_ab_names(ab_class_args, 2), ")")
   }
   
   # get the columns with a group names in the chosen ab class
@@ -509,7 +513,8 @@ ab_select_exec <- function(function_name,
   message_agent_names(function_name = function_name, 
                       agents = agents,
                       ab_group = ab_group,
-                      examples = examples)
+                      examples = examples,
+                      ab_class_args = ab_class_args)
   
   structure(unname(agents),
             class = c("ab_selector", "character"))
@@ -666,12 +671,12 @@ is_all <- function(el1) {
   syscall %like% paste0("[^_a-zA-Z0-9]all\\(", "(c\\()?", el1)
 }
 
-find_ab_group <- function(ab_class) {
-  ab_class <- gsub("[^a-zA-Z0-9]", ".*", ab_class)
+find_ab_group <- function(ab_class_args) {
+  ab_class_args <- gsub("[^a-zA-Z0-9]", ".*", ab_class_args)
   AB_lookup %pm>%
-    subset(group %like% ab_class | 
-             atc_group1 %like% ab_class | 
-             atc_group2 %like% ab_class) %pm>%
+    subset(group %like% ab_class_args | 
+             atc_group1 %like% ab_class_args | 
+             atc_group2 %like% ab_class_args) %pm>%
     pm_pull(group) %pm>%
     unique() %pm>%
     tolower() %pm>%
@@ -703,7 +708,7 @@ find_ab_names <- function(ab_group, n = 3) {
             quotes = FALSE)
 }
 
-message_agent_names <- function(function_name, agents, ab_group = NULL, examples = "", call = NULL) {
+message_agent_names <- function(function_name, agents, ab_group = NULL, examples = "", ab_class_args = NULL, call = NULL) {
   if (message_not_thrown_before(paste0(function_name, ".", paste(sort(agents), collapse = "|")))) {
     if (length(agents) == 0) {
       if (is.null(ab_group)) {
@@ -722,7 +727,7 @@ message_agent_names <- function(function_name, agents, ab_group = NULL, examples
       agents_formatted[need_name] <- paste0(agents_formatted[need_name], " (", agents_names[need_name], ")")
       message_("For `", function_name, "(",
                ifelse(function_name == "ab_class", 
-                      paste0("\"", ab_class, "\""),
+                      paste0("\"", ab_class_args, "\""),
                       ifelse(!is.null(call),
                              paste0(deparse(call), collapse = " "),
                              "")),

@@ -25,9 +25,9 @@
 
 #' Get ATC Properties from WHOCC Website
 #'
-#' Gets data from the WHO to determine properties of an ATC (e.g. an antibiotic), such as the name, defined daily dose (DDD) or standard unit.
+#' Gets data from the WHOCC website to determine properties of an Anatomical Therapeutic Chemical (ATC) (e.g. an antibiotic), such as the name, defined daily dose (DDD) or standard unit.
 #' @inheritSection lifecycle Stable Lifecycle
-#' @param atc_code a [character] or [character] vector with ATC code(s) of antibiotic(s)
+#' @param atc_code a [character] (vector) with ATC code(s) of antibiotics, will be coerced with [as.ab()] and [ab_atc()] internally if not a valid ATC code
 #' @param property property of an ATC code. Valid values are `"ATC"`, `"Name"`, `"DDD"`, `"U"` (`"unit"`), `"Adm.R"`, `"Note"` and `groups`. For this last option, all hierarchical groups of an ATC code will be returned, see *Examples*.
 #' @param administration type of administration when using `property = "Adm.R"`, see *Details*
 #' @param url url of website of the WHOCC. The sign `%s` can be used as a placeholder for ATC codes.
@@ -68,6 +68,7 @@
 #' if (requireNamespace("curl") && requireNamespace("rvest") && requireNamespace("xml2")) { 
 #'   # oral DDD (Defined Daily Dose) of amoxicillin
 #'   atc_online_property("J01CA04", "DDD", "O")
+#'   atc_online_ddd(ab_atc("amox"))
 #' 
 #'   # parenteral DDD (Defined Daily Dose) of amoxicillin
 #'   atc_online_property("J01CA04", "DDD", "P")
@@ -81,7 +82,7 @@ atc_online_property <- function(atc_code,
                                 url = "https://www.whocc.no/atc_ddd_index/?code=%s&showdescription=no",
                                 url_vet = "https://www.whocc.no/atcvet/atcvet_index/?code=%s&showdescription=no") {
   meet_criteria(atc_code, allow_class = "character")
-  meet_criteria(property, allow_class = "character", has_length = 1, is_in = c("ATC", "Name", "DDD", "U", "Adm.R", "Note", "groups"), ignore.case = TRUE)
+  meet_criteria(property, allow_class = "character", has_length = 1, is_in = c("ATC", "Name", "DDD", "U", "unit", "Adm.R", "Note", "groups"), ignore.case = TRUE)
   meet_criteria(administration, allow_class = "character", has_length = 1)
   meet_criteria(url, allow_class = "character", has_length = 1, looks_like = "https?://")
   meet_criteria(url_vet, allow_class = "character", has_length = 1, looks_like = "https?://")
@@ -108,12 +109,11 @@ atc_online_property <- function(atc_code,
     return(rep(NA, length(atc_code)))
   }
   
-  # also allow unit as property
-  if (property %like% "unit") {
-    property <- "U"
-  }
-  
   property <- tolower(property)
+  # also allow unit as property
+  if (property == "unit") {
+    property <- "u"
+  }
   if (property == "ddd") {
     returnvalue <- rep(NA_real_, length(atc_code))
   } else if (property == "groups") {
@@ -205,4 +205,11 @@ atc_online_groups <- function(atc_code, ...) {
 atc_online_ddd <- function(atc_code, ...) {
   meet_criteria(atc_code, allow_class = "character")
   atc_online_property(atc_code = atc_code, property = "ddd", ...)
+}
+
+#' @rdname atc_online
+#' @export
+atc_online_ddd_units <- function(atc_code, ...) {
+  meet_criteria(atc_code, allow_class = "character")
+  atc_online_property(atc_code = atc_code, property = "unit", ...)
 }

@@ -4,7 +4,7 @@
 \name{antibiotics}
 \alias{antibiotics}
 \alias{antivirals}
-\title{Data Sets with 558 Antimicrobials}
+\title{Data Sets with 558 Antimicrobial Drugs}
 \format{
 \subsection{For the \link{antibiotics} data set: a \link{data.frame} with 456 observations and 14 variables:}{
 \itemize{
@@ -17,9 +17,9 @@
 \item \code{atc_group2}\cr Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like \code{"Macrolides"}
 \item \code{abbr}\cr List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)
 \item \code{synonyms}\cr Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID
-\item \code{oral_ddd}\cr Defined Daily Dose (DDD), oral treatment
+\item \code{oral_ddd}\cr Defined Daily Dose (DDD), oral treatment, currently available for 170 drugs
 \item \code{oral_units}\cr Units of \code{oral_ddd}
-\item \code{iv_ddd}\cr Defined Daily Dose (DDD), parenteral treatment
+\item \code{iv_ddd}\cr Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for 145 drugs
 \item \code{iv_units}\cr Units of \code{iv_ddd}
 \item \code{loinc}\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial agent. Use \code{\link[=ab_loinc]{ab_loinc()}} to retrieve them quickly, see \code{\link[=ab_property]{ab_property()}}.
 }
@@ -59,7 +59,7 @@ Two data sets containing all antibiotics/antimycotics and antivirals. Use \code{
 \details{
 Properties that are based on an ATC code are only available when an ATC is available. These properties are: \code{atc_group1}, \code{atc_group2}, \code{oral_ddd}, \code{oral_units}, \code{iv_ddd} and \code{iv_units}.
 
-Synonyms (i.e. trade names) are derived from the Compound ID (\code{cid}) and consequently only available where a CID is available.
+Synonyms (i.e. trade names) were derived from the Compound ID (\code{cid}) and consequently only available where a CID is available.
 \subsection{Direct download}{
 
 These data sets are available as 'flat files' for use even without \R - you can find the files here:

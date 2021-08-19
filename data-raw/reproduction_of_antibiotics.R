@@ -699,23 +699,46 @@ antibiotics$atc <- updated_atc
 
 # update DDDs from WHOCC website ------------------------------------------
 
-# last time checked: 2021-06-23
-ddd_oral <- double(length = nrow(antibiotics))
-ddd_iv <- double(length = nrow(antibiotics))
+# last time checked: 2021-08-19
+ddd_oral <- rep(NA_real_, nrow(antibiotics))
+ddd_oral_units <- rep(NA_character_, nrow(antibiotics))
+ddd_iv <- rep(NA_real_, nrow(antibiotics))
+ddd_iv_units <- rep(NA_character_, nrow(antibiotics))
 progress <- progress_ticker(nrow(antibiotics))
 for (i in seq_len(nrow(antibiotics))) {
   on.exit(close(progress))
   progress$tick()
-  if (!is.na(antibiotics$atc[i])) {
-    ddd_oral[i] <- atc_online_ddd(antibiotics$atc[i], administration = "O")
-    ddd_iv[i] <- atc_online_ddd(antibiotics$atc[i], administration = "P") # parenteral
-    Sys.sleep(1)
+  atcs <- antibiotics$atc[[i]]
+  if (!all(is.na(atcs))) {
+    for (j in seq_len(length(atcs))) {
+      # oral
+      if (is.na(ddd_oral[i])) {
+        ddd_oral[i] <- atc_online_ddd(atcs[j], administration = "O")
+        if (!is.na(ddd_oral[i])) {
+          ddd_oral_units[i] <- atc_online_ddd_units(atcs[j], administration = "O")
+        }
+      }
+      # parenteral
+      if (is.na(ddd_iv[i])) {
+        ddd_iv[i] <- atc_online_ddd(atcs[j], administration = "P")
+        if (!is.na(ddd_iv[i])) {
+          ddd_iv_units[i] <- atc_online_ddd_units(atcs[j], administration = "P")
+        }
+      }
+    }
+  }
+  if (!is.na(ddd_oral[i]) | !is.na(ddd_iv[i])) {
+    # let the WHO server rest for 0.25 second - they might have a limitation on the queries per second
+    Sys.sleep(0.25)
   }
 }
-ddd_oral[ddd_oral == 0] <- NA_real_
-ddd_iv[ddd_iv == 0] <- NA_real_
+
 antibiotics$oral_ddd <- ddd_oral
+antibiotics$oral_units <- ddd_oral_units
 antibiotics$iv_ddd <- ddd_iv
+antibiotics$iv_units <- ddd_iv_units
+
+# Wrap up -----------------------------------------------------------------
 
 # set as data.frame again
 antibiotics <- as.data.frame(antibiotics, stringsAsFactors = FALSE)
