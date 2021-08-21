@@ -39,7 +39,11 @@ if (length(to_install) == 0) {
 }
 for (i in seq_len(length(to_install))) {
   cat("Installing package", to_install[i], "\n")
-  tryCatch(install.packages(to_install[i], repos = "https://cran.rstudio.com/", dependencies = c("Depends", "Imports"), quiet = FALSE),
+  tryCatch(install.packages(to_install[i],
+                            type = ifelse(.Platform$OS.type == "unix", "source", "binary"),
+                            repos = "https://cran.rstudio.com/",
+                            dependencies = c("Depends", "Imports"),
+                            quiet = FALSE),
            # message = function(m) invisible(),
            warning = function(w) message(w$message),
            error = function(e) message(e$message))
@@ -51,9 +55,10 @@ if (length(to_update) == 0) {
   message("\nNothing to update\n")
 }
 for (i in seq_len(length(to_update))) {
-  cat("Updating package", to_update[i], "\n")
+  cat("Updating package '", to_update[i], "' v", as.character(packageVersion(to_update[i])), "\n", sep = "")
   tryCatch(update.packages(to_update[i], repos = "https://cran.rstudio.com/", ask = FALSE),
            # message = function(m) invisible(),
            warning = function(w) message(w$message),
            error = function(e) message(e$message))
+  cat("Updated to '", to_update[i], "' v", as.character(packageVersion(to_update[i])), "\n", sep = "")
 }
