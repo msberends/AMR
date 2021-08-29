@@ -171,5 +171,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: artifacts-r-${{ matrix.config.r }}-${{ matrix.config.os }}
+          name: ${{ matrix.config.os }}-r-${{ matrix.config.r }}-artifacts
           path: AMR.Rcheck

@@ -1,5 +1,5 @@
-# `AMR` 1.7.1.9029
-## <small>Last updated: 21 August 2021</small>
+# `AMR` 1.7.1.9030
+## <small>Last updated: 29 August 2021</small>
 
 ### Breaking changes
 * Removed `p_symbol()` and all `filter_*()` functions (except for `filter_first_isolate()`), which were all deprecated in a previous package version
@@ -12,11 +12,12 @@
 ### Changed
 * The `antibiotics` data set now contains **all ATC codes** that are available through the [WHOCC website](https://www.whocc.no), regardless of drugs being present in more than one ATC group. This means that:
   * Some drugs now contain multiple ATC codes (e.g., metronidazole contains 5)
-  * `antibiotics$atc` is now a `list` instead of a `character`, and this `atc` column was moved to the 5th position of the `antibiotics` data set
-  * `ab_atc()` does not always return a character vector with length 1, and returns a `list` if the input is larger than length 1
+  * `antibiotics$atc` is now a `list` containing `character` vectors, and this `atc` column was moved to the 5th position of the `antibiotics` data set
+  * `ab_atc()` does not always return a character vector of length 1, and returns a `list` if the input is larger than length 1
+  * `ab_info()` has a slightly different output
   * Some DDDs (daily defined doses) were added or updated according to newly included ATC codes
 * Antibiotic selectors
-  * They now also work in R-3.0 and R-3.1, supporting every version of R since 2013
+  * They now also work in R-3.0 and R-3.1, supporting every version of R since 2013 like the rest of the package
   * Added more selectors for antibiotic classes: `aminopenicillins()`, `antifungals()`, `antimycobacterials()`, `lincosamides()`, `lipoglycopeptides()`, `polymyxins()`, `quinolones()`, `streptogramins()`, `trimethoprims()` and `ureidopenicillins()`
   * Added specific selectors for certain types for treatment: `administrable_per_os()` and `administrable_iv()`, which are based on available Defined Daily Doses (DDDs), as defined by the WHOCC. These are ideal for e.g. analysing pathogens in primary care where IV treatment is not an option. They can be combined with other AB selectors, e.g. to select penicillins that are only administrable per os (i.e., orally):
     ```r
@@ -30,8 +31,7 @@
     ```
   * Fix for using selectors multiple times in one call (e.g., using them in `dplyr::filter()` and immediately after in `dplyr::select()`)
   * Added argument `only_treatable`, which defaults to `TRUE` and will exclude drugs that are only for laboratory tests and not for treating patients (such as imipenem/EDTA and gentamicin-high)
-* Fixed the Gram stain (`mo_gramstain()`) determination of the class Negativicutes within the phylum of Firmicutes - they were considered Gram-positives because of their phylum but are actually Gram-negative. This impacts 137 taxonomic species, genera and families, such as *Negativicoccus* and *Veillonella*.
-* Fix for duplicate ATC codes in the `antibiotics` data set
+* Fixed the Gram stain (`mo_gramstain()`) determination of the taxonomic class Negativicutes within the phylum of Firmicutes - they were considered Gram-positives because of their phylum but are actually Gram-negative. This impacts 137 taxonomic species, genera and families, such as *Negativicoccus* and *Veillonella*.
 * Fix to prevent introducing `NA`s for old MO codes when running `as.mo()` on them
 * Added more informative error messages when any of the `proportion_*()` and `count_*()` functions fail
 * When printing a tibble with any old MO code, a warning will be thrown that old codes should be updated using `as.mo()`

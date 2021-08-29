@@ -92,7 +92,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9029</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9030</span>
       </span>
     </div>
 
@@ -240,17 +240,17 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1719029" class="section level1">
-<h1 class="page-header" data-toc-text="1.7.1.9029">
-<a href="#amr-1719029" class="anchor" aria-hidden="true"></a><small> Unreleased </small><code>AMR</code> 1.7.1.9029</h1>
-<div id="last-updated-21-august-2021" class="section level2">
+    <div id="amr-1719030" class="section level1">
+<h1 class="page-header" data-toc-text="1.7.1.9030">
+<a href="#amr-1719030" class="anchor" aria-hidden="true"></a><small> Unreleased </small><code>AMR</code> 1.7.1.9030</h1>
+<div id="last-updated-29-august-2021" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-21-august-2021" class="anchor" aria-hidden="true"></a><small>Last updated: 21 August 2021</small>
+<a href="#last-updated-29-august-2021" class="anchor" aria-hidden="true"></a><small>Last updated: 29 August 2021</small>
 </h2>
 <div id="breaking-changes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#breaking-changes" class="anchor" aria-hidden="true"></a>Breaking changes</h3>
-<ul><li>Removed <code><a href="https://msberends.github.io/AMR/reference/AMR-deprecated.html">p_symbol()</a></code> and all <code>filter_*()</code> functions (except for <code><a href="../reference/first_isolate.html">filter_first_isolate()</a></code>), which were all deprecated in a previous package version</li>
+<ul><li>Removed <code>p_symbol()</code> and all <code>filter_*()</code> functions (except for <code><a href="../reference/first_isolate.html">filter_first_isolate()</a></code>), which were all deprecated in a previous package version</li>
 <li>Removed the <code>key_antibiotics()</code> and <code>key_antibiotics_equal()</code> functions, which were deprecated and superseded by <code><a href="../reference/key_antimicrobials.html">key_antimicrobials()</a></code> and <code><a href="../reference/key_antimicrobials.html">antimicrobials_equal()</a></code>
 </li>
 <li>Removed all previously implemented <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> generics for classes <code>&lt;mic&gt;</code>, <code>&lt;disk&gt;</code>, <code>&lt;rsi&gt;</code> and <code>&lt;resistance_predict&gt;</code> as they did not follow the <code>ggplot2</code> logic. They were replaced with <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">ggplot2::autoplot()</a></code> generics.</li>
@@ -266,13 +266,15 @@
 <ul><li>The <code>antibiotics</code> data set now contains <strong>all ATC codes</strong> that are available through the <a href="https://www.whocc.no" class="external-link">WHOCC website</a>, regardless of drugs being present in more than one ATC group. This means that:
 <ul><li>Some drugs now contain multiple ATC codes (e.g., metronidazole contains 5)</li>
 <li>
-<code>antibiotics$atc</code> is now a <code>list</code> instead of a <code>character</code>, and this <code>atc</code> column was moved to the 5th position of the <code>antibiotics</code> data set</li>
+<code>antibiotics$atc</code> is now a <code>list</code> containing <code>character</code> vectors, and this <code>atc</code> column was moved to the 5th position of the <code>antibiotics</code> data set</li>
 <li>
-<code><a href="../reference/ab_property.html">ab_atc()</a></code> does not always return a character vector with length 1, and returns a <code>list</code> if the input is larger than length 1</li>
+<code><a href="../reference/ab_property.html">ab_atc()</a></code> does not always return a character vector of length 1, and returns a <code>list</code> if the input is larger than length 1</li>
+<li>
+<code><a href="../reference/ab_property.html">ab_info()</a></code> has a slightly different output</li>
 <li>Some DDDs (daily defined doses) were added or updated according to newly included ATC codes</li>
 </ul></li>
 <li>Antibiotic selectors
-<ul><li><p>They now also work in R-3.0 and R-3.1, supporting every version of R since 2013</p></li>
+<ul><li><p>They now also work in R-3.0 and R-3.1, supporting every version of R since 2013 like the rest of the package</p></li>
 <li><p>Added more selectors for antibiotic classes: <code><a href="../reference/antibiotic_class_selectors.html">aminopenicillins()</a></code>, <code><a href="../reference/antibiotic_class_selectors.html">antifungals()</a></code>, <code><a href="../reference/antibiotic_class_selectors.html">antimycobacterials()</a></code>, <code><a href="../reference/antibiotic_class_selectors.html">lincosamides()</a></code>, <code><a href="../reference/antibiotic_class_selectors.html">lipoglycopeptides()</a></code>, <code><a href="../reference/antibiotic_class_selectors.html">polymyxins()</a></code>, <code><a href="../reference/antibiotic_class_selectors.html">quinolones()</a></code>, <code><a href="../reference/antibiotic_class_selectors.html">streptogramins()</a></code>, <code><a href="../reference/antibiotic_class_selectors.html">trimethoprims()</a></code> and <code><a href="../reference/antibiotic_class_selectors.html">ureidopenicillins()</a></code></p></li>
 <li>
 <p>Added specific selectors for certain types for treatment: <code><a href="../reference/antibiotic_class_selectors.html">administrable_per_os()</a></code> and <code><a href="../reference/antibiotic_class_selectors.html">administrable_iv()</a></code>, which are based on available Defined Daily Doses (DDDs), as defined by the WHOCC. These are ideal for e.g. analysing pathogens in primary care where IV treatment is not an option. They can be combined with other AB selectors, e.g. to select penicillins that are only administrable per os (i.e., orally):</p>
@@ -291,8 +293,7 @@
 <li><p>Fix for using selectors multiple times in one call (e.g., using them in <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter()</a></code> and immediately after in <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code>)</p></li>
 <li><p>Added argument <code>only_treatable</code>, which defaults to <code>TRUE</code> and will exclude drugs that are only for laboratory tests and not for treating patients (such as imipenem/EDTA and gentamicin-high)</p></li>
 </ul></li>
-<li>Fixed the Gram stain (<code><a href="../reference/mo_property.html">mo_gramstain()</a></code>) determination of the class Negativicutes within the phylum of Firmicutes - they were considered Gram-positives because of their phylum but are actually Gram-negative. This impacts 137 taxonomic species, genera and families, such as <em>Negativicoccus</em> and <em>Veillonella</em>.</li>
-<li>Fix for duplicate ATC codes in the <code>antibiotics</code> data set</li>
+<li>Fixed the Gram stain (<code><a href="../reference/mo_property.html">mo_gramstain()</a></code>) determination of the taxonomic class Negativicutes within the phylum of Firmicutes - they were considered Gram-positives because of their phylum but are actually Gram-negative. This impacts 137 taxonomic species, genera and families, such as <em>Negativicoccus</em> and <em>Veillonella</em>.</li>
 <li>Fix to prevent introducing <code>NA</code>s for old MO codes when running <code><a href="../reference/as.mo.html">as.mo()</a></code> on them</li>
 <li>Added more informative error messages when any of the <code>proportion_*()</code> and <code>count_*()</code> functions fail</li>
 <li>When printing a tibble with any old MO code, a warning will be thrown that old codes should be updated using <code><a href="../reference/as.mo.html">as.mo()</a></code>
@@ -608,7 +609,7 @@
 </li>
 <li><p>For all function arguments in the code, it is now defined what the exact type of user input should be (inspired by the <a href="https://github.com/moodymudskipper/typed" class="external-link"><code>typed</code></a> package). If the user input for a certain function does not meet the requirements for a specific argument (such as the class or length), an informative error will be thrown. This makes the package more robust and the use of it more reproducible and reliable. In total, more than 420 arguments were defined.</p></li>
 <li><p>Fix for <code><a href="../reference/mo_source.html">set_mo_source()</a></code>, that previously would not remember the file location of the original file</p></li>
-<li><p>Deprecated function <code><a href="https://msberends.github.io/AMR/reference/AMR-deprecated.html">p_symbol()</a></code> that not really fits the scope of this package. It will be removed in a future version. See <a href="https://github.com/msberends/AMR/blob/v1.4.0/R/p_symbol.R" class="external-link">here</a> for the source code to preserve it.</p></li>
+<li><p>Deprecated function <code>p_symbol()</code> that not really fits the scope of this package. It will be removed in a future version. See <a href="https://github.com/msberends/AMR/blob/v1.4.0/R/p_symbol.R" class="external-link">here</a> for the source code to preserve it.</p></li>
 <li><p>Updated coagulase-negative staphylococci determination with Becker <em>et al.</em> 2020 (PMID 32056452), meaning that the species <em>S. argensis</em>, <em>S. caeli</em>, <em>S. debuckii</em>, <em>S. edaphicus</em> and <em>S. pseudoxylosus</em> are now all considered CoNS</p></li>
 <li><p>Fix for using argument <code>reference_df</code> in <code><a href="../reference/as.mo.html">as.mo()</a></code> and <code>mo_*()</code> functions that contain old microbial codes (from previous package versions)</p></li>
 <li><p>Fixed a bug where <code><a href="../reference/as.mo.html">mo_uncertainties()</a></code> would not return the results based on the MO matching score</p></li>
@@ -841,7 +842,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <div id="other-5" class="section level3">
 <h3 class="hasAnchor">
 <a href="#other-5" class="anchor" aria-hidden="true"></a>Other</h3>
-<ul><li>Removed previously deprecated function <code>p.symbol()</code> - it was replaced with <code><a href="https://msberends.github.io/AMR/reference/AMR-deprecated.html">p_symbol()</a></code>
+<ul><li>Removed previously deprecated function <code>p.symbol()</code> - it was replaced with <code>p_symbol()</code>
 </li>
 <li>Removed function <code>read.4d()</code>, that was only useful for reading data from an old test database.</li>
 </ul></div>
@@ -1195,7 +1196,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li>Improved <code>filter_ab_class()</code> to be more reliable and to support 5th generation cephalosporins</li>
 <li>Function <code><a href="../reference/availability.html">availability()</a></code> now uses <code>portion_R()</code> instead of <code>portion_IR()</code>, to comply with EUCAST insights</li>
 <li>Functions <code><a href="../reference/age.html">age()</a></code> and <code><a href="../reference/age_groups.html">age_groups()</a></code> now have a <code>na.rm</code> argument to remove empty values</li>
-<li>Renamed function <code>p.symbol()</code> to <code><a href="https://msberends.github.io/AMR/reference/AMR-deprecated.html">p_symbol()</a></code> (the former is now deprecated and will be removed in a future version)</li>
+<li>Renamed function <code>p.symbol()</code> to <code>p_symbol()</code> (the former is now deprecated and will be removed in a future version)</li>
 <li>Using negative values for <code>x</code> in <code><a href="../reference/age_groups.html">age_groups()</a></code> will now introduce <code>NA</code>s and not return an error anymore</li>
 <li>Fix for determining the system’s language</li>
 <li>Fix for <code>key_antibiotics()</code> on foreign systems</li>

@@ -288,7 +288,7 @@ ab_ddd <- function(x, administration = "oral", ...) {
   units <- list(...)$units
   if (!is.null(units) && isTRUE(units)) {
     if (message_not_thrown_before("ab_ddd", entire_session = TRUE)) {
-      warning_("Using `ab_ddd(..., units = TRUE)` is deprecated, use `ab_ddd_units()` instead. ",
+      warning_("Using `ab_ddd(..., units = TRUE)` is deprecated, use `ab_ddd_units()` to retrieve units instead. ",
                "This warning will be shown once per session.", call = FALSE)
     }
     ddd_prop <- paste0(ddd_prop, "_units")
@@ -297,7 +297,7 @@ ab_ddd <- function(x, administration = "oral", ...) {
   }
   out <- ab_validate(x = x, property = ddd_prop)
   
-  if (any(ab_name(x, language = NULL) %like% "/" & is.na(out)) ) {
+  if (any(ab_name(x, language = NULL) %like% "/" & is.na(out))) {
     warning_("DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package. ",
              "Please refer to the WHOCC website:\n",
              "www.whocc.no/ddd/list_of_ddds_combined_products/", call = FALSE)
@@ -330,17 +330,18 @@ ab_info <- function(x, language = get_locale(), ...) {
   
   x <- as.ab(x, ...)
   list(ab = as.character(x),
-             atc = ab_atc(x),
-             cid = ab_cid(x),
-             name = ab_name(x, language = language),
-             group = ab_group(x, language = language),
-             atc_group1 = ab_atc_group1(x, language = language),
-             atc_group2 = ab_atc_group2(x, language = language),
-             tradenames = ab_tradenames(x),
-             ddd = list(oral = list(amount = ab_ddd(x, administration = "oral"),
-                                    units = ab_ddd_units(x, administration = "oral")),
-                        iv = list(amount = ab_ddd(x, administration = "iv"),
-                                  units = ab_ddd_units(x, administration = "iv"))))
+       cid = ab_cid(x),
+       name = ab_name(x, language = language),
+       group = ab_group(x, language = language),
+       atc = ab_atc(x),
+       atc_group1 = ab_atc_group1(x, language = language),
+       atc_group2 = ab_atc_group2(x, language = language),
+       tradenames = ab_tradenames(x),
+       loinc = ab_loinc(x),
+       ddd = list(oral = list(amount = ab_ddd(x, administration = "oral"),
+                              units = ab_ddd_units(x, administration = "oral")),
+                  iv = list(amount = ab_ddd(x, administration = "iv"),
+                            units = ab_ddd_units(x, administration = "iv"))))
 }
 
 

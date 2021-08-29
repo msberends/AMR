@@ -98,6 +98,7 @@ $(document).ready(function() {
       x = x.replace(/Author, maintainer/g, "Main developer");
       x = x.replace(/Author, contributor/g, "Main contributor");
       x = x.replace(/Author, thesis advisor/g, "Doctoral advisor");
+      x = x.replace("Matthijs", "Dr. Matthijs");
       x = x.replace("Alex", "Prof. Dr. Alex");
       x = x.replace("Bhanu", "Prof. Dr. Bhanu");
       x = x.replace("Casper", "Prof. Dr. Casper");

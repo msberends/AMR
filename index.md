@@ -1,8 +1,9 @@
 # `AMR` (for R) <img src="./logo.png" align="right" height="120px" />
 
-### What is `AMR` (for R)?
+> This package formed the basis of two PhD theses, of which the first was published and defended on 25 August 2021.
+> Click here to read it: [DOI 10.33612/diss.177417131](https://doi.org/10.33612/diss.177417131).
 
-*(To find out how to conduct AMR data analysis, please [continue reading here to get started](./articles/AMR.html).)*
+### What is `AMR` (for R)?
 
 `AMR` is a free, open-source and independent [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.
 
