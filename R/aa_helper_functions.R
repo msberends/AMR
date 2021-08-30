@@ -298,7 +298,7 @@ stop_ifnot_installed <- function(package) {
 
 pkg_is_available <- function(pkg, also_load = TRUE) {
   if (also_load == TRUE) {
-    out <- suppressWarnings(require(pkg, character.only = TRUE, warn.conflicts = FALSE, quietly = TRUE))
+    out <- suppressWarnings(require(pkg, character.only = TRUE, warn.conflicts = FALSE))
   } else {
     out <- requireNamespace(pkg, quietly = TRUE)
   }
@@ -728,11 +728,14 @@ meet_criteria <- function(object,
   return(invisible())
 }
 
-get_current_data <- function(arg_name, call) {
+get_current_data <- function(arg_name, call, requires_cur_data = FALSE) {
   # try dplyr::cur_data_all() first to support dplyr groups
   # only useful for e.g. dplyr::filter(), dplyr::mutate() and dplyr::summarise()
   # not useful (throws error) with e.g. dplyr::select() - but that will be caught later in this function
   cur_data_all <- import_fn("cur_data_all", "dplyr", error_on_fail = FALSE)
+  if (isTRUE(requires_cur_data)) {
+    print(cur_data_all())
+  }
   if (!is.null(cur_data_all)) {
     out <- tryCatch(cur_data_all(), error = function(e) NULL)
     if (is.data.frame(out)) {

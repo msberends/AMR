@@ -29,11 +29,12 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
   .libPaths(c(Sys.getenv("R_LIBS_USER_GH_ACTIONS"), .libPaths()))
   if (AMR:::pkg_is_available("tinytest")) {
     library(AMR)
-    out <- test_package("AMR", 
+    out <- test_package("AMR",
                         testdir = ifelse(AMR:::dir.exists("inst/tinytest"),
                                          "inst/tinytest",
                                          "tinytest"),
                         verbose = 99,
+                        pattern = "first.*\\.[rR]$",
                         color = FALSE)
     cat("SUMMARY:\n")
     print(summary(out))

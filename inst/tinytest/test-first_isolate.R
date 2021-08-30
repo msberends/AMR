@@ -133,8 +133,8 @@ if (AMR:::pkg_is_available("dplyr")) {
                    first_isolate(info = TRUE))
   
   # groups
-  x <- example_isolates %>% group_by(ward_icu) %>% mutate(first = first_isolate())
-  y <- example_isolates %>% group_by(ward_icu) %>% mutate(first = first_isolate(.))
+  x <- example_isolates %>% group_by(ward_icu) %>% mutate(first = first_isolate(require_cur_data = TRUE))
+  y <- example_isolates %>% group_by(ward_icu) %>% mutate(first = first_isolate(., require_cur_data = TRUE))
   expect_identical(x, y)
   
 }
