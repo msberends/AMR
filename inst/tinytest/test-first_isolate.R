@@ -117,12 +117,14 @@ if (AMR:::pkg_is_available("dplyr")) {
                      first_isolate(col_date = "date",
                                    col_mo = "mo",
                                    col_patient_id = "patient_id",
-                                   info = FALSE),
+                                   info = FALSE,
+                                   require_cur_data = TRUE),
                    example_isolates %>%
                      first_isolate(col_date = "date",
                                    col_mo = "mo",
                                    col_patient_id = "patient_id",
-                                   info = FALSE))
+                                   info = FALSE,
+                                   require_cur_data = TRUE))
   
   # support for WHONET
   expect_message(example_isolates %>%
