@@ -736,6 +736,7 @@ get_current_data <- function(arg_name, call) {
   if (!is.null(cur_data_all)) {
     out <- tryCatch(cur_data_all(), error = function(e) NULL)
     if (is.data.frame(out)) {
+      messsage("==> RETURNING cur_data_all()")
       return(structure(out, type = "dplyr_cur_data_all"))
     }
   }
@@ -748,14 +749,17 @@ get_current_data <- function(arg_name, call) {
       if (!is.null(env$`.data`) && is.data.frame(env$`.data`)) {
         # an element `.data` will be in the environment when using `dplyr::select()`
         # (but not when using `dplyr::filter()`, `dplyr::mutate()` or `dplyr::summarise()`)
+        messsage("==> RETURNING dplyr_selector")
         return(structure(env$`.data`, type = "dplyr_selector"))
         
       } else if (!is.null(env$xx) && is.data.frame(env$xx)) {
         # an element `xx` will be in the environment for rows + cols, e.g. `example_isolates[c(1:3), carbapenems()]`
+        messsage("==> RETURNING base_R 1")
         return(structure(env$xx, type = "base_R"))
         
       } else if (!is.null(env$x) && is.data.frame(env$x)) {
         # an element `x` will be in the environment for only cols, e.g. `example_isolates[, carbapenems()]`
+        messsage("==> RETURNING base_R 2")
         return(structure(env$x, type = "base_R"))
       }
     }

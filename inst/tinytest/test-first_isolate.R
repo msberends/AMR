@@ -133,9 +133,7 @@ if (AMR:::pkg_is_available("dplyr")) {
                    first_isolate(info = TRUE))
   
   # groups
-  message("get to first isolates L136")
   x <- example_isolates %>% group_by(ward_icu) %>% mutate(first = first_isolate())
-  message("get to first isolates L138")
   y <- example_isolates %>% group_by(ward_icu) %>% mutate(first = first_isolate(.))
   expect_identical(x, y)
   

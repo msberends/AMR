@@ -179,7 +179,7 @@ get_column_abx <- function(x,
                         } else {
                           return(NA_character_)
                         }
-                      })
+                      }, USE.NAMES = FALSE)
   
   x_columns <- x_columns[!is.na(x_columns)]
   x <- x[, x_columns, drop = FALSE] # without drop = FALSE, x will become a vector when x_columns is length 1
@@ -192,13 +192,27 @@ get_column_abx <- function(x,
   
   # add from self-defined dots (...):
   # such as get_column_abx(example_isolates %>% rename(thisone = AMX), amox = "thisone")
+  all_okay <- TRUE
   dots <- list(...)
   if (length(dots) > 0) {
     newnames <- suppressWarnings(as.ab(names(dots), info = FALSE))
     if (any(is.na(newnames))) {
-      warning_("Invalid antibiotic reference(s): ", toString(names(dots)[is.na(newnames)]),
+      if (info == TRUE) {
+        message_(" WARNING", add_fn = list(font_yellow, font_bold), as_note = FALSE)
+      }
+      warning_("Invalid antibiotic reference(s): ", vector_and(names(dots)[is.na(newnames)], quotes = FALSE),
                call = FALSE,
                immediate = TRUE)
+      all_okay <- FALSE
+    }
+    unexisting_cols <- which(!vapply(FUN.VALUE = logical(1), dots, function(col) all(col %in% x_columns)))
+    if (length(unexisting_cols) > 0) {
+      if (info == TRUE) {
+        message_(" ERROR", add_fn = list(font_red, font_bold), as_note = FALSE)
+      }
+      stop_("Column(s) not found: ", vector_and(unlist(dots[[unexisting_cols]]), quotes = FALSE),
+            call = FALSE)
+      all_okay <- FALSE
     }
     # turn all NULLs to NAs
     dots <- unlist(lapply(dots, function(dot) if (is.null(dot)) NA else dot))
@@ -211,7 +225,7 @@ get_column_abx <- function(x,
   }
   
   if (length(out) == 0) {
-    if (info == TRUE) {
+    if (info == TRUE & all_okay == TRUE) {
       message_("No columns found.")
     }
     pkg_env$get_column_abx.call <- unique_call_id(entire_session = FALSE)
@@ -232,7 +246,7 @@ get_column_abx <- function(x,
   }
   
   # succeeded with auto-guessing
-  if (info == TRUE) {
+  if (info == TRUE & all_okay == TRUE) {
     message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
   }
   

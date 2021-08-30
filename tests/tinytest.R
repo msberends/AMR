@@ -33,9 +33,13 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
                         testdir = ifelse(AMR:::dir.exists("inst/tinytest"),
                                          "inst/tinytest",
                                          "tinytest"),
-                        verbose = FALSE)
-    cat(attributes(out)$duration, "\n")
+                        verbose = 99,
+                        color = FALSE)
+    cat("SUMMARY:\n")
     print(summary(out))
+    cat("WARNINGS:\n")
     print(warnings())
+    cat(attributes(out)$duration, "\n")
+    
   }
 }

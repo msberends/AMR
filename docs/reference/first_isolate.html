@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Determine First (Weighted) Isolates — first_isolate • AMR (for R)</title>
+<title>Determine First Isolates — first_isolate • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,9 +48,9 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Determine First (Weighted) Isolates — first_isolate" />
-<meta property="og:description" content="Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. These functions support all four methods as summarised by Hindler et al. in 2007 (doi: 10.1086/511864
-). To determine patient episodes not necessarily based on microorganisms, use is_new_episode() that also supports grouping with the dplyr package." />
+<meta property="og:title" content="Determine First Isolates — first_isolate" />
+<meta property="og:description" content="Determine first isolates of all microorganisms of every patient per episode and (if needed) per specimen type. These functions support all four methods as summarised by Hindler et al. in 2007 (doi: 10.1086/511864
+). To determine patient episodes not necessarily based on microorganisms, use is_new_episode() that also supports grouping with the dplyr package ." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@msberends" />
@@ -94,7 +94,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9030</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9031</span>
       </span>
     </div>
 
@@ -238,14 +238,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Determine First (Weighted) Isolates</h1>
+    <h1>Determine First Isolates</h1>
     <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/first_isolate.R'><code>R/first_isolate.R</code></a></small>
     <div class="hidden name"><code>first_isolate.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. These functions support all four methods as summarised by Hindler <em>et al.</em> in 2007 (doi: <a href='https://doi.org/10.1086/511864'>10.1086/511864</a>
-). To determine patient episodes not necessarily based on microorganisms, use <code><a href='get_episode.html'>is_new_episode()</a></code> that also supports grouping with the <code>dplyr</code> package.</p>
+    <p>Determine first isolates of all microorganisms of every patient per episode and (if needed) per specimen type. These functions support all four methods as summarised by Hindler <em>et al.</em> in 2007 (doi: <a href='https://doi.org/10.1086/511864'>10.1086/511864</a>
+). To determine patient episodes not necessarily based on microorganisms, use <code><a href='get_episode.html'>is_new_episode()</a></code> that also supports <a href='https://dplyr.tidyverse.org/reference/group_by.html'>grouping with the <code>dplyr</code> package</a> .</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>first_isolate</span><span class='op'>(</span>
@@ -314,7 +314,7 @@
     </tr>
     <tr>
       <th>col_keyantimicrobials</th>
-      <td><p>(only useful when <code>method = "phenotype-based"</code>) column name of the key antimicrobials to determine first (weighted) isolates, see <code><a href='key_antimicrobials.html'>key_antimicrobials()</a></code>. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' or 'antimicrobials' (case insensitive). Use <code>col_keyantimicrobials = FALSE</code> to prevent this. Can also be the output of <code><a href='key_antimicrobials.html'>key_antimicrobials()</a></code>.</p></td>
+      <td><p>(only useful when <code>method = "phenotype-based"</code>) column name of the key antimicrobials to determine first isolates, see <code><a href='key_antimicrobials.html'>key_antimicrobials()</a></code>. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' or 'antimicrobials' (case insensitive). Use <code>col_keyantimicrobials = FALSE</code> to prevent this. Can also be the output of <code><a href='key_antimicrobials.html'>key_antimicrobials()</a></code>.</p></td>
     </tr>
     <tr>
       <th>episode_days</th>
@@ -429,8 +429,8 @@
 
 
 <p>This is a more reliable method, since it also <em>weighs</em> the antibiogram (antimicrobial test results) yielding so-called 'first weighted isolates'. There are two different methods to weigh the antibiogram:</p><ol>
-<li><p>Using <code>type = "points"</code> and argument <code>points_threshold</code></p>
-<p>This method weighs <em>all</em> antimicrobial agents available in the data set. Any difference from I to S or R (or vice versa) counts as 0.5 points, a difference from S to R (or vice versa) counts as 1 point. When the sum of points exceeds <code>points_threshold</code>, which defaults to <code>2</code>, an isolate will be selected as a first weighted isolate.</p>
+<li><p>Using <code>type = "points"</code> and argument <code>points_threshold</code> (default)</p>
+<p>This method weighs <em>all</em> antimicrobial agents available in the data set. Any difference from I to S or R (or vice versa) counts as <code>0.5</code> points, a difference from S to R (or vice versa) counts as <code>1</code> point. When the sum of points exceeds <code>points_threshold</code>, which defaults to <code>2</code>, an isolate will be selected as a first weighted isolate.</p>
 <p>All antimicrobials are internally selected using the <code><a href='key_antimicrobials.html'>all_antimicrobials()</a></code> function. The output of this function does not need to be passed to the <code>first_isolate()</code> function.</p></li>
 <li><p>Using <code>type = "keyantimicrobials"</code> and argument <code>ignore_I</code></p>
 <p>This method only weighs specific antimicrobial agents, called <em>key antimicrobials</em>. Any difference from S to R (or vice versa) in these key antimicrobials will select an isolate as a first weighted isolate. With <code>ignore_I = FALSE</code>, also differences from I to S or R (or vice versa) will lead to this.</p>

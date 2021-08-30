@@ -3,7 +3,7 @@
 \name{first_isolate}
 \alias{first_isolate}
 \alias{filter_first_isolate}
-\title{Determine First (Weighted) Isolates}
+\title{Determine First Isolates}
 \source{
 Methodology of this function is strictly based on:
 \itemize{
@@ -60,7 +60,7 @@ filter_first_isolate(
 
 \item{col_icu}{column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU)}
 
-\item{col_keyantimicrobials}{(only useful when \code{method = "phenotype-based"}) column name of the key antimicrobials to determine first (weighted) isolates, see \code{\link[=key_antimicrobials]{key_antimicrobials()}}. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' or 'antimicrobials' (case insensitive). Use \code{col_keyantimicrobials = FALSE} to prevent this. Can also be the output of \code{\link[=key_antimicrobials]{key_antimicrobials()}}.}
+\item{col_keyantimicrobials}{(only useful when \code{method = "phenotype-based"}) column name of the key antimicrobials to determine first isolates, see \code{\link[=key_antimicrobials]{key_antimicrobials()}}. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' or 'antimicrobials' (case insensitive). Use \code{col_keyantimicrobials = FALSE} to prevent this. Can also be the output of \code{\link[=key_antimicrobials]{key_antimicrobials()}}.}
 
 \item{episode_days}{episode in days after which a genus/species combination will be determined as 'first isolate' again. The default of 365 days is based on the guideline by CLSI, see \emph{Source}.}
 
@@ -90,7 +90,7 @@ filter_first_isolate(
 A \code{\link{logical}} vector
 }
 \description{
-Determine first (weighted) isolates of all microorganisms of every patient per episode and (if needed) per specimen type. These functions support all four methods as summarised by Hindler \emph{et al.} in 2007 (\doi{10.1086/511864}). To determine patient episodes not necessarily based on microorganisms, use \code{\link[=is_new_episode]{is_new_episode()}} that also supports grouping with the \code{dplyr} package.
+Determine first isolates of all microorganisms of every patient per episode and (if needed) per specimen type. These functions support all four methods as summarised by Hindler \emph{et al.} in 2007 (\doi{10.1086/511864}). To determine patient episodes not necessarily based on microorganisms, use \code{\link[=is_new_episode]{is_new_episode()}} that also supports \link[dplyr:group_by]{grouping with the \code{dplyr} package} .
 }
 \details{
 To conduct epidemiological analyses on antimicrobial resistance data, only so-called first isolates should be included to prevent overestimation and underestimation of antimicrobial resistance. Different methods can be used to do so, see below.
@@ -147,9 +147,9 @@ This is the most common method to correct for duplicate isolates. Patients are c
 
 This is a more reliable method, since it also \emph{weighs} the antibiogram (antimicrobial test results) yielding so-called 'first weighted isolates'. There are two different methods to weigh the antibiogram:
 \enumerate{
-\item Using \code{type = "points"} and argument \code{points_threshold}
+\item Using \code{type = "points"} and argument \code{points_threshold} (default)
 
-This method weighs \emph{all} antimicrobial agents available in the data set. Any difference from I to S or R (or vice versa) counts as 0.5 points, a difference from S to R (or vice versa) counts as 1 point. When the sum of points exceeds \code{points_threshold}, which defaults to \code{2}, an isolate will be selected as a first weighted isolate.
+This method weighs \emph{all} antimicrobial agents available in the data set. Any difference from I to S or R (or vice versa) counts as \code{0.5} points, a difference from S to R (or vice versa) counts as \code{1} point. When the sum of points exceeds \code{points_threshold}, which defaults to \code{2}, an isolate will be selected as a first weighted isolate.
 
 All antimicrobials are internally selected using the \code{\link[=all_antimicrobials]{all_antimicrobials()}} function. The output of this function does not need to be passed to the \code{\link[=first_isolate]{first_isolate()}} function.
 \item Using \code{type = "keyantimicrobials"} and argument \code{ignore_I}
