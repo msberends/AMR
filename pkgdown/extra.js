@@ -99,9 +99,9 @@ $(document).ready(function() {
       x = x.replace(/Author, contributor/g, "Main contributor");
       x = x.replace(/Author, thesis advisor/g, "Doctoral advisor");
       x = x.replace("Matthijs", "Dr. Matthijs");
-      x = x.replace("Alex", "Prof. Dr. Alex");
-      x = x.replace("Bhanu", "Prof. Dr. Bhanu");
-      x = x.replace("Casper", "Prof. Dr. Casper");
+      x = x.replace("Alex", "Prof. Alex");
+      x = x.replace("Bhanu", "Prof. Bhanu");
+      x = x.replace("Casper", "Prof. Casper");
       x = x.replace("Corinna", "Dr. Corinna");
       // others
       x = x.replace("Bart", "Dr. Bart");
