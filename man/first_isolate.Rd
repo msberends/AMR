@@ -90,7 +90,7 @@ filter_first_isolate(
 A \code{\link{logical}} vector
 }
 \description{
-Determine first isolates of all microorganisms of every patient per episode and (if needed) per specimen type. These functions support all four methods as summarised by Hindler \emph{et al.} in 2007 (\doi{10.1086/511864}). To determine patient episodes not necessarily based on microorganisms, use \code{\link[=is_new_episode]{is_new_episode()}} that also supports \link[dplyr:group_by]{grouping with the \code{dplyr} package} .
+Determine first isolates of all microorganisms of every patient per episode and (if needed) per specimen type. These functions support all four methods as summarised by Hindler \emph{et al.} in 2007 (\doi{10.1086/511864}). To determine patient episodes not necessarily based on microorganisms, use \code{\link[=is_new_episode]{is_new_episode()}} that also supports grouping with the \code{dplyr} package.
 }
 \details{
 To conduct epidemiological analyses on antimicrobial resistance data, only so-called first isolates should be included to prevent overestimation and underestimation of antimicrobial resistance. Different methods can be used to do so, see below.

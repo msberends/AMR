@@ -25,7 +25,7 @@
 
 #' Determine First Isolates
 #'
-#' Determine first isolates of all microorganisms of every patient per episode and (if needed) per specimen type. These functions support all four methods as summarised by Hindler *et al.* in 2007 (\doi{10.1086/511864}). To determine patient episodes not necessarily based on microorganisms, use [is_new_episode()] that also supports [grouping with the `dplyr` package][dplyr::group_by()] .
+#' Determine first isolates of all microorganisms of every patient per episode and (if needed) per specimen type. These functions support all four methods as summarised by Hindler *et al.* in 2007 (\doi{10.1086/511864}). To determine patient episodes not necessarily based on microorganisms, use [is_new_episode()] that also supports grouping with the `dplyr` package.
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param x a [data.frame] containing isolates. Can be left blank for automatic determination, see *Examples*.
 #' @param col_date column name of the result date (or date that is was received on the lab), defaults to the first column with a date class

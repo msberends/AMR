@@ -1,7 +1,6 @@
 # `AMR` (for R) <img src="./logo.png" align="right" height="120px" />
 
-> This package formed the basis of two PhD theses, of which the first was published and defended on 25 August 2021.
-> Click here to read it: [DOI 10.33612/diss.177417131](https://doi.org/10.33612/diss.177417131).
+> This package formed the basis of two PhD theses, of which the first was published and defended on 25 August 2021. Click here to read it: [DOI 10.33612/diss.177417131](https://doi.org/10.33612/diss.177417131).
 
 ### What is `AMR` (for R)?
 

@@ -1,4 +1,4 @@
-citHeader("To cite our AMR package in publications, please use (for now):")
+citHeader("To cite our AMR package in publications, please use below preprint. This preprint was accepted for publication in the Journal of Statistical Software, but we are awaiting the actual publication. Many thanks for using our open-source method to work with microbial and antimicrobial data!")
 
 citEntry(
   entry        = "Article",
@@ -10,7 +10,16 @@ citEntry(
   year         = 2021,
   url          = "https://www.biorxiv.org/content/10.1101/810622v4",
   textVersion  = "Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C (2021). AMR - An R Package for Working with
-Antimicrobial Resistance Data. Journal of Statistical Software (accepted for publication), https://www.biorxiv.org/content/10.1101/810622v4"
-)
+Antimicrobial Resistance Data. Journal of Statistical Software (accepted for publication), https://www.biorxiv.org/content/10.1101/810622v4.")
 
-citFooter("This preprint was accepted for publication in the Journal of Statistical Software, but we are awaiting the actual publication. Many thanks for using our open-source method to work with microbial and antimicrobial data!")
+citEntry(
+  entry        = "PhdThesis",
+  title        = "A New Instrument for Microbial Epidemiology: Empowering Antimicrobial Resistance Data Analysis",
+  author       = "M S Berends",
+  publisher    = "University of Groningen",
+  school       = "University of Groningen",
+  doi          = "10.33612/diss.177417131",
+  pages        = 288,
+  year         = 2021,
+  textVersion = "Berends, MS (2021). A New Instrument for Microbial Epidemiology: Empowering Antimicrobial Resistance Data Analysis (PhD thesis). University of Groningen, doi: 10.33612/diss.177417131."
+)

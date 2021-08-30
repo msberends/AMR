@@ -24,13 +24,13 @@
 # ==================================================================== #
 
 # some old R instances have trouble installing tinytest, so we ship it too
-install.packages("data-raw/tinytest_1.2.4.10.tar.gz", dependencies = c("Depends", "Imports"))
+install.packages("data-raw/tinytest_1.3.1.tar.gz", dependencies = c("Depends", "Imports"))
 install.packages("data-raw/AMR_latest.tar.gz", dependencies = FALSE)
 
 pkg_suggests <- gsub("[^a-zA-Z0-9]+", "",
                      unlist(strsplit(unlist(packageDescription("AMR",
                                                                fields = c("Suggests", "Enhances"))),
-                                     ", ?")))
+                                     split = ", ?")))
 cat("Packages listed in Suggests/Enhances:", paste(pkg_suggests, collapse = ", "), "\n")
 
 to_install <- pkg_suggests[!pkg_suggests %in% rownames(utils::installed.packages())]
