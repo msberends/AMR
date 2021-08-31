@@ -40,7 +40,7 @@ if (length(to_install) == 0) {
 for (i in seq_len(length(to_install))) {
   cat("Installing package", to_install[i], "\n")
   tryCatch(install.packages(to_install[i],
-                            type = ifelse(.Platform$OS.type == "unix", "source", "binary"),
+                            # type = ifelse(.Platform$OS.type == "unix", "source", "binary"),
                             repos = "https://cran.rstudio.com/",
                             dependencies = c("Depends", "Imports"),
                             quiet = FALSE),

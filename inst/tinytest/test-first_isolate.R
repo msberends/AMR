@@ -117,14 +117,12 @@ if (AMR:::pkg_is_available("dplyr")) {
                      first_isolate(col_date = "date",
                                    col_mo = "mo",
                                    col_patient_id = "patient_id",
-                                   info = FALSE,
-                                   require_cur_data = TRUE),
+                                   info = FALSE),
                    example_isolates %>%
                      first_isolate(col_date = "date",
                                    col_mo = "mo",
                                    col_patient_id = "patient_id",
-                                   info = FALSE,
-                                   require_cur_data = TRUE))
+                                   info = FALSE))
   
   # support for WHONET
   expect_message(example_isolates %>%
@@ -135,8 +133,8 @@ if (AMR:::pkg_is_available("dplyr")) {
                    first_isolate(info = TRUE))
   
   # groups
-  x <- example_isolates %>% group_by(ward_icu) %>% mutate(first = first_isolate(require_cur_data = TRUE))
-  y <- example_isolates %>% group_by(ward_icu) %>% mutate(first = first_isolate(., require_cur_data = TRUE))
+  x <- example_isolates %>% group_by(ward_icu) %>% mutate(first = first_isolate())
+  y <- example_isolates %>% group_by(ward_icu) %>% mutate(first = first_isolate(.))
   expect_identical(x, y)
   
 }
