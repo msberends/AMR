@@ -34,13 +34,11 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
                                          "inst/tinytest",
                                          "tinytest"),
                         verbose = 99,
-                        pattern = "first.*\\.[rR]$",
                         color = FALSE)
     cat("SUMMARY:\n")
     print(summary(out))
     cat("WARNINGS:\n")
     print(warnings())
     cat(attributes(out)$duration, "\n")
-    
   }
 }

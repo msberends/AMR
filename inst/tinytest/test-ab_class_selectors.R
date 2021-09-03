@@ -56,6 +56,7 @@ expect_equal(ncol(example_isolates[, c("mo", aminoglycosides())]), 5, tolerance 
 
 expect_equal(ncol(example_isolates[, c(administrable_per_os() & penicillins())]), 5, tolerance = 0.5)
 expect_equal(ncol(example_isolates[, c(administrable_iv() & penicillins())]), 7, tolerance = 0.5)
+expect_equal(ncol(example_isolates[, c(administrable_iv() | penicillins())]), 37, tolerance = 0.5)
 
 # filter using any() or all()
 expect_equal(nrow(example_isolates[any(carbapenems() == "R"), ]), 55, tolerance = 0.5)
