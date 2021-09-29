@@ -3,13 +3,12 @@
 \name{ab_property}
 \alias{ab_property}
 \alias{ab_name}
-\alias{set_ab_names}
-\alias{ATC}
 \alias{ab_cid}
 \alias{ab_synonyms}
 \alias{ab_tradenames}
 \alias{ab_group}
 \alias{ab_atc}
+\alias{ATC}
 \alias{ab_atc_group1}
 \alias{ab_atc_group2}
 \alias{ab_loinc}
@@ -17,16 +16,10 @@
 \alias{ab_ddd_units}
 \alias{ab_info}
 \alias{ab_url}
+\alias{set_ab_names}
 \title{Get Properties of an Antibiotic}
 \usage{
 ab_name(x, language = get_locale(), tolower = FALSE, ...)
-
-set_ab_names(
-  data,
-  property = "name",
-  language = get_locale(),
-  snake_case = property == "name"
-)
 
 ab_cid(x, ...)
 
@@ -53,6 +46,13 @@ ab_info(x, language = get_locale(), ...)
 ab_url(x, open = FALSE, ...)
 
 ab_property(x, property = "name", language = get_locale(), ...)
+
+set_ab_names(
+  data,
+  property = "name",
+  language = get_locale(),
+  snake_case = NULL
+)
 }
 \arguments{
 \item{x}{any (vector of) text that can be coerced to a valid antibiotic code with \code{\link[=as.ab]{as.ab()}}}
@@ -63,17 +63,17 @@ ab_property(x, property = "name", language = get_locale(), ...)
 
 \item{...}{other arguments passed on to \code{\link[=as.ab]{as.ab()}}}
 
-\item{data}{a \link{data.frame} of which the columns need to be renamed}
-
-\item{property}{one of the column names of one of the \link{antibiotics} data set: \code{vector_or(colnames(antibiotics), sort = FALSE)}.}
-
-\item{snake_case}{a \link{logical} to indicate whether the names should be in so-called \href{https://en.wikipedia.org/wiki/Snake_case}{snake case}: in lower case and all spaces/slashes replaced with an underscore (\verb{_})}
-
 \item{only_first}{a \link{logical} to indicate whether only the first ATC code must be returned, with giving preference to J0-codes (i.e., the antimicrobial drug group)}
 
 \item{administration}{way of administration, either \code{"oral"} or \code{"iv"}}
 
 \item{open}{browse the URL using \code{\link[utils:browseURL]{utils::browseURL()}}}
+
+\item{property}{one of the column names of one of the \link{antibiotics} data set: \code{vector_or(colnames(antibiotics), sort = FALSE)}.}
+
+\item{data}{a \link{data.frame} of which the columns need to be renamed, or a \link{character} vector of column names}
+
+\item{snake_case}{a \link{logical} to indicate whether the names should be in so-called \href{https://en.wikipedia.org/wiki/Snake_case}{snake case}: in lower case and all spaces/slashes replaced with an underscore (\verb{_})}
 }
 \value{
 \itemize{
@@ -167,6 +167,11 @@ colnames(set_ab_names(example_isolates))
 if (require("dplyr")) {
   example_isolates \%>\%
     set_ab_names()
+    
+  # this does the same:
+  example_isolates \%>\%
+    rename_with(set_ab_names)
+  
   # set_ab_names() works with any AB property:
   example_isolates \%>\%
     set_ab_names("atc")

@@ -13,7 +13,7 @@ For language-dependent output of AMR functions, like \code{\link[=mo_name]{mo_na
 \details{
 Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: \url{https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv}. This file will be read by all functions where a translated output can be desired, like all \code{\link[=mo_property]{mo_*}} functions (such as \code{\link[=mo_name]{mo_name()}}, \code{\link[=mo_gramstain]{mo_gramstain()}}, \code{\link[=mo_type]{mo_type()}}, etc.) and \code{\link[=ab_property]{ab_*}} functions (such as \code{\link[=ab_name]{ab_name()}}, \code{\link[=ab_group]{ab_group()}}, etc.).
 
-Currently supported languages are: Dutch, English, French, German, Italian, Portuguese and Spanish. Please note that currently not all these languages have translations available for all antimicrobial agents and colloquial microorganism names.
+Currently supported languages are: Danish, Dutch, English, French, German, Italian, Portuguese and Spanish. All these languages have translations available for all antimicrobial agents and colloquial microorganism names.
 
 Please suggest your own translations \href{https://github.com/msberends/AMR/issues/new?title=Translations}{by creating a new issue on our repository}.
 \subsection{Changing the Default Language}{
@@ -49,17 +49,17 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 mo_name("CoNS", language = "en")
 #> "Coagulase-negative Staphylococcus (CoNS)"
 
-# German
-mo_name("CoNS", language = "de")
-#> "Koagulase-negative Staphylococcus (KNS)"
+# Danish
+mo_name("CoNS", language = "nl")
+#> "Koagulase-negative stafylokokker (CoNS)"
 
 # Dutch
 mo_name("CoNS", language = "nl")
 #> "Coagulase-negatieve Staphylococcus (CNS)"
 
-# Spanish
-mo_name("CoNS", language = "es")
-#> "Staphylococcus coagulasa negativo (SCN)"
+# German
+mo_name("CoNS", language = "de")
+#> "Koagulase-negative Staphylococcus (KNS)"
 
 # Italian
 mo_name("CoNS", language = "it")
@@ -68,4 +68,8 @@ mo_name("CoNS", language = "it")
 # Portuguese
 mo_name("CoNS", language = "pt")
 #> "Staphylococcus coagulase negativo (CoNS)"
+
+# Spanish
+mo_name("CoNS", language = "es")
+#> "Staphylococcus coagulasa negativo (SCN)"
 }

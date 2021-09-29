@@ -24,14 +24,19 @@
 # ==================================================================== #
 
 # some old R instances have trouble installing tinytest, so we ship it too
-install.packages("data-raw/tinytest_1.3.1.tar.gz", dependencies = c("Depends", "Imports"))
+install.packages("data-raw/tinytest_1.3.1.tar.gz", dependencies = c("Depends", "Imports", "LinkingTo"))
 install.packages("data-raw/AMR_latest.tar.gz", dependencies = FALSE)
 
 pkg_suggests <- gsub("[^a-zA-Z0-9]+", "",
                      unlist(strsplit(unlist(packageDescription("AMR",
-                                                               fields = c("Suggests", "Enhances"))),
+                                                               fields = c("Suggests", "Enhances", "LinkingTo"))),
                                      split = ", ?")))
 cat("Packages listed in Suggests/Enhances:", paste(pkg_suggests, collapse = ", "), "\n")
+
+if (.Platform$OS.type != "unix") {
+  # no compiling on Windows here
+  options(install.packages.compile.from.source = FALSE)
+}
 
 to_install <- pkg_suggests[!pkg_suggests %in% rownames(utils::installed.packages())]
 if (length(to_install) == 0) {
@@ -40,9 +45,9 @@ if (length(to_install) == 0) {
 for (i in seq_len(length(to_install))) {
   cat("Installing package", to_install[i], "\n")
   tryCatch(install.packages(to_install[i],
-                            # type = ifelse(.Platform$OS.type == "unix", "source", "binary"),
+                            type = "source",
                             repos = "https://cran.rstudio.com/",
-                            dependencies = c("Depends", "Imports"),
+                            dependencies = c("Depends", "Imports", "LinkingTo"),
                             quiet = FALSE),
            # message = function(m) invisible(),
            warning = function(w) message(w$message),

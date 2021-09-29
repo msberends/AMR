@@ -1,5 +1,5 @@
-# `AMR` 1.7.1.9039
-## <small>Last updated:  3 September 2021</small>
+# `AMR` 1.7.1.9040
+## <small>Last updated: 29 September 2021</small>
 
 ### Breaking changes
 * Removed `p_symbol()` and all `filter_*()` functions (except for `filter_first_isolate()`), which were all deprecated in a previous package version
@@ -8,6 +8,7 @@
 
 ### New
 * Function `set_ab_names()` to rename data set columns that resemble antimicrobial drugs. This allows for quickly renaming columns to official names, ATC codes, etc.
+* Support for Danish, and also added missing translations of all antimicrobial drugs in Italian, French and Portuguese
 
 ### Changed
 * The `antibiotics` data set now contains **all ATC codes** that are available through the [WHOCC website](https://www.whocc.no), regardless of drugs being present in more than one ATC group. This means that:

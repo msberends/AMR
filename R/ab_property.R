@@ -34,7 +34,7 @@
 #' @param administration way of administration, either `"oral"` or `"iv"`
 #' @param open browse the URL using [utils::browseURL()]
 #' @param ... other arguments passed on to [as.ab()]
-#' @param data a [data.frame] of which the columns need to be renamed
+#' @param data a [data.frame] of which the columns need to be renamed, or a [character] vector of column names
 #' @param snake_case a [logical] to indicate whether the names should be in so-called [snake case](https://en.wikipedia.org/wiki/Snake_case): in lower case and all spaces/slashes replaced with an underscore (`_`)
 #' @param only_first a [logical] to indicate whether only the first ATC code must be returned, with giving preference to J0-codes (i.e., the antimicrobial drug group)
 #' @details All output [will be translated][translate] where possible.
@@ -101,6 +101,11 @@
 #' if (require("dplyr")) {
 #'   example_isolates %>%
 #'     set_ab_names()
+#'     
+#'   # this does the same:
+#'   example_isolates %>%
+#'     rename_with(set_ab_names)
+#'   
 #'   # set_ab_names() works with any AB property:
 #'   example_isolates %>%
 #'     set_ab_names("atc")
@@ -118,68 +123,6 @@ ab_name <- function(x, language = get_locale(), tolower = FALSE, ...) {
     x <- gsub("^([A-Z])", "\\L\\1", x, perl = TRUE)
   }
   x
-}
-
-#' @rdname ab_property
-#' @aliases ATC
-#' @export
-set_ab_names <- function(data, property = "name", language = get_locale(), snake_case = property == "name") {
-  meet_criteria(data, allow_class = "data.frame")
-  meet_criteria(property, is_in = colnames(antibiotics), has_length = 1, ignore.case = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
-  meet_criteria(snake_case, allow_class = "logical", has_length = 1)
-  
-  x_deparsed <- deparse(substitute(data))
-  if (length(x_deparsed) > 1 || any(x_deparsed %unlike% "[a-z]+")) {
-    x_deparsed <- "your_data"
-  }
-  
-  property <- tolower(property)
-  
-  columns <- get_column_abx(data, info = FALSE, only_rsi_columns = FALSE, sort = FALSE)
-  if (length(columns) == 0) {
-    message_("No columns with antibiotic results found for `set_ab_names()`, leaving names unchanged.")
-    return(data)
-  }
-  x <- vapply(FUN.VALUE = character(1),
-              ab_property(columns, property = property, language = language),
-              function(x) {
-                if (property == "atc") {
-                  # try to get the J-group
-                  if (any(x %like% "^J")) {
-                    x[x %like% "^J"][1L]
-                  } else {
-                    as.character(x[1L])
-                  }
-                } else {
-                  as.character(x[1L])
-                }
-              })
-  if (any(x %in% c("", NA))) {
-    warning_("No ", property, " found for column(s): ", vector_and(columns[x %in% c("", NA)], sort = FALSE), call = FALSE)
-    x[x %in% c("", NA)] <- columns[x %in% c("", NA)]
-  }
-    
-  if (snake_case == TRUE) {
-    x <- tolower(gsub("[^a-zA-Z0-9]+", "_", x))
-  }
-  
-  if (any(duplicated(x))) {
-    # very hacky way of adding the index to each duplicate
-    # so      "Amoxicillin", "Amoxicillin",   "Amoxicillin"
-    # will be "Amoxicillin", "Amoxicillin_2", "Amoxicillin_3"
-    invisible(lapply(unique(x),
-                     function(u) {
-                       dups <- which(x == u)
-                       if (length(dups) > 1) {
-                         # there are duplicates
-                         dup_add_int <- dups[2:length(dups)]
-                         x[dup_add_int] <<- paste0(x[dup_add_int], "_", c(2:length(dups)))
-                       }
-                     }))
-  }
-  colnames(data)[colnames(data) %in% columns] <- x
-  data
 }
 
 #' @rdname ab_property
@@ -380,6 +323,83 @@ ab_property <- function(x, property = "name", language = get_locale(), ...) {
   meet_criteria(property, is_in = colnames(antibiotics), has_length = 1)
   meet_criteria(language, is_in = c(LANGUAGES_SUPPORTED, ""), has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
   translate_AMR(ab_validate(x = x, property = property, ...), language = language)
+}
+
+#' @rdname ab_property
+#' @aliases ATC
+#' @export
+set_ab_names <- function(data, property = "name", language = get_locale(), snake_case = NULL) {
+  meet_criteria(data, allow_class = c("data.frame", "character"))
+  meet_criteria(property, is_in = colnames(antibiotics), has_length = 1, ignore.case = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(snake_case, allow_class = "logical", has_length = 1, allow_NULL = TRUE)
+  
+  x_deparsed <- deparse(substitute(data))
+  if (length(x_deparsed) > 1 || any(x_deparsed %unlike% "[a-z]+")) {
+    x_deparsed <- "your_data"
+  }
+  
+  property <- tolower(property)
+  if (is.null(snake_case)) {
+    snake_case <- property == "name"
+  }
+  
+  if (is.data.frame(data)) {
+    vars <- get_column_abx(data, info = FALSE, only_rsi_columns = FALSE, sort = FALSE)
+    if (length(vars) == 0) {
+      message_("No columns with antibiotic results found for `set_ab_names()`, leaving names unchanged.")
+      return(data)
+    }
+  } else {
+    # quickly get antibiotic codes
+    vars_ab <- as.ab(data, fast_mode = TRUE)
+    vars <- data[!is.na(vars_ab)]
+  }
+  x <- vapply(FUN.VALUE = character(1),
+              ab_property(vars, property = property, language = language),
+              function(x) {
+                if (property == "atc") {
+                  # try to get the J-group
+                  if (any(x %like% "^J")) {
+                    x[x %like% "^J"][1L]
+                  } else {
+                    as.character(x[1L])
+                  }
+                } else {
+                  as.character(x[1L])
+                }
+              },
+              USE.NAMES = FALSE)
+  if (any(x %in% c("", NA))) {
+    warning_("No ", property, " found for column(s): ", vector_and(vars[x %in% c("", NA)], sort = FALSE), call = FALSE)
+    x[x %in% c("", NA)] <- vars[x %in% c("", NA)]
+  }
+  
+  if (snake_case == TRUE) {
+    x <- tolower(gsub("[^a-zA-Z0-9]+", "_", x))
+  }
+  
+  if (any(duplicated(x))) {
+    # very hacky way of adding the index to each duplicate
+    # so      "Amoxicillin", "Amoxicillin",   "Amoxicillin"
+    # will be "Amoxicillin", "Amoxicillin_2", "Amoxicillin_3"
+    invisible(lapply(unique(x),
+                     function(u) {
+                       dups <- which(x == u)
+                       if (length(dups) > 1) {
+                         # there are duplicates
+                         dup_add_int <- dups[2:length(dups)]
+                         x[dup_add_int] <<- paste0(x[dup_add_int], "_", c(2:length(dups)))
+                       }
+                     }))
+  }
+  if (is.data.frame(data)) {
+    colnames(data)[colnames(data) %in% vars] <- x
+    data
+  } else {
+    data[which(!is.na(vars_ab))] <- x
+    data
+  }
 }
 
 ab_validate <- function(x, property, ...) {

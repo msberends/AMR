@@ -93,7 +93,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9030</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9040</span>
       </span>
     </div>
 
@@ -252,7 +252,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: <a href='https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv'>https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv</a>. This file will be read by all functions where a translated output can be desired, like all <code><a href='mo_property.html'>mo_*</a></code> functions (such as <code><a href='mo_property.html'>mo_name()</a></code>, <code><a href='mo_property.html'>mo_gramstain()</a></code>, <code><a href='mo_property.html'>mo_type()</a></code>, etc.) and <code><a href='ab_property.html'>ab_*</a></code> functions (such as <code><a href='ab_property.html'>ab_name()</a></code>, <code><a href='ab_property.html'>ab_group()</a></code>, etc.).</p>
-<p>Currently supported languages are: Dutch, English, French, German, Italian, Portuguese and Spanish. Please note that currently not all these languages have translations available for all antimicrobial agents and colloquial microorganism names.</p>
+<p>Currently supported languages are: Danish, Dutch, English, French, German, Italian, Portuguese and Spanish. All these languages have translations available for all antimicrobial agents and colloquial microorganism names.</p>
 <p>Please suggest your own translations <a href='https://github.com/msberends/AMR/issues/new?title=Translations'>by creating a new issue on our repository</a>.</p><h3 class='hasAnchor' id='changing-the-default-language'><a class='anchor' aria-hidden='true' href='#changing-the-default-language'></a>Changing the Default Language</h3>
 
 
@@ -285,17 +285,17 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <span class='fu'><a href='mo_property.html'>mo_name</a></span><span class='op'>(</span><span class='st'>"CoNS"</span>, language <span class='op'>=</span> <span class='st'>"en"</span><span class='op'>)</span>
 <span class='co'>#&gt; "Coagulase-negative Staphylococcus (CoNS)"</span>
 
-<span class='co'># German</span>
-<span class='fu'><a href='mo_property.html'>mo_name</a></span><span class='op'>(</span><span class='st'>"CoNS"</span>, language <span class='op'>=</span> <span class='st'>"de"</span><span class='op'>)</span>
-<span class='co'>#&gt; "Koagulase-negative Staphylococcus (KNS)"</span>
+<span class='co'># Danish</span>
+<span class='fu'><a href='mo_property.html'>mo_name</a></span><span class='op'>(</span><span class='st'>"CoNS"</span>, language <span class='op'>=</span> <span class='st'>"nl"</span><span class='op'>)</span>
+<span class='co'>#&gt; "Koagulase-negative stafylokokker (CoNS)"</span>
 
 <span class='co'># Dutch</span>
 <span class='fu'><a href='mo_property.html'>mo_name</a></span><span class='op'>(</span><span class='st'>"CoNS"</span>, language <span class='op'>=</span> <span class='st'>"nl"</span><span class='op'>)</span>
 <span class='co'>#&gt; "Coagulase-negatieve Staphylococcus (CNS)"</span>
 
-<span class='co'># Spanish</span>
-<span class='fu'><a href='mo_property.html'>mo_name</a></span><span class='op'>(</span><span class='st'>"CoNS"</span>, language <span class='op'>=</span> <span class='st'>"es"</span><span class='op'>)</span>
-<span class='co'>#&gt; "Staphylococcus coagulasa negativo (SCN)"</span>
+<span class='co'># German</span>
+<span class='fu'><a href='mo_property.html'>mo_name</a></span><span class='op'>(</span><span class='st'>"CoNS"</span>, language <span class='op'>=</span> <span class='st'>"de"</span><span class='op'>)</span>
+<span class='co'>#&gt; "Koagulase-negative Staphylococcus (KNS)"</span>
 
 <span class='co'># Italian</span>
 <span class='fu'><a href='mo_property.html'>mo_name</a></span><span class='op'>(</span><span class='st'>"CoNS"</span>, language <span class='op'>=</span> <span class='st'>"it"</span><span class='op'>)</span>
@@ -304,6 +304,10 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 <span class='co'># Portuguese</span>
 <span class='fu'><a href='mo_property.html'>mo_name</a></span><span class='op'>(</span><span class='st'>"CoNS"</span>, language <span class='op'>=</span> <span class='st'>"pt"</span><span class='op'>)</span>
 <span class='co'>#&gt; "Staphylococcus coagulase negativo (CoNS)"</span>
+
+<span class='co'># Spanish</span>
+<span class='fu'><a href='mo_property.html'>mo_name</a></span><span class='op'>(</span><span class='st'>"CoNS"</span>, language <span class='op'>=</span> <span class='st'>"es"</span><span class='op'>)</span>
+<span class='co'>#&gt; "Staphylococcus coagulasa negativo (SCN)"</span>
 </code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -316,7 +320,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/" class="external-link">Matthijs S. Berends</a>, <a href="https://www.rug.nl/staff/c.f.luz/" class="external-link">Christian F. Luz</a>, <a href="https://www.rug.nl/staff/a.w.friedrich/" class="external-link">Alexander W. Friedrich</a>, <a href="https://www.rug.nl/staff/b.sinha/" class="external-link">Bhanu N. M. Sinha</a>, <a href="https://www.rug.nl/staff/c.j.albers/" class="external-link">Casper J. Albers</a>, <a href="https://www.rug.nl/staff/c.glasner/" class="external-link">Corinna Glasner</a>.</p></p>
+  <p><p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/" class="external-link">Matthijs S. Berends</a>, Christian F. Luz.</p></p>
 </div>
 
 <div class="pkgdown">

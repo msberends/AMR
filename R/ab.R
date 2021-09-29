@@ -118,7 +118,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   # remove diacritics
   x <- iconv(x, from = "UTF-8", to = "ASCII//TRANSLIT")
   x <- gsub('"', "", x, fixed = TRUE)
-  x <- gsub("(specimen|specimen date|specimen_date|spec_date|^dates?$)", "", x, ignore.case = TRUE, perl = TRUE)
+  x <- gsub("(specimen|specimen date|specimen_date|spec_date|gender|^dates?$)", "", x, ignore.case = TRUE, perl = TRUE)
   x_bak_clean <- x
   if (already_regex == FALSE) {
     x_bak_clean <- generalise_antibiotic_name(x_bak_clean)
@@ -443,7 +443,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   # take failed ATC codes apart from rest
   x_unknown_ATCs <- x_unknown[x_unknown %like% "[A-Z][0-9][0-9][A-Z][A-Z][0-9][0-9]"]
   x_unknown <- x_unknown[!x_unknown %in% x_unknown_ATCs]
-  if (length(x_unknown_ATCs) > 0) {
+  if (length(x_unknown_ATCs) > 0 & fast_mode == FALSE) {
     warning_("These ATC codes are not (yet) in the antibiotics data set: ",
              vector_and(x_unknown_ATCs), ".",
              call = FALSE)

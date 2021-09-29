@@ -29,7 +29,7 @@
 #' @inheritSection lifecycle Stable Lifecycle
 #' @details Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: <https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv>. This file will be read by all functions where a translated output can be desired, like all [`mo_*`][mo_property()] functions (such as [mo_name()], [mo_gramstain()], [mo_type()], etc.) and [`ab_*`][ab_property()] functions (such as [ab_name()], [ab_group()], etc.). 
 #'
-#' Currently supported languages are: `r vector_and(gsub(";.*", "", ISOcodes::ISO_639_2[which(ISOcodes::ISO_639_2$Alpha_2 %in% LANGUAGES_SUPPORTED), "Name"]), quotes = FALSE)`. Please note that currently not all these languages have translations available for all antimicrobial agents and colloquial microorganism names. 
+#' Currently supported languages are: `r vector_and(gsub(";.*", "", ISOcodes::ISO_639_2[which(ISOcodes::ISO_639_2$Alpha_2 %in% LANGUAGES_SUPPORTED), "Name"]), quotes = FALSE)`. All these languages have translations available for all antimicrobial agents and colloquial microorganism names.
 #'
 #' Please suggest your own translations [by creating a new issue on our repository](https://github.com/msberends/AMR/issues/new?title=Translations).
 #'
@@ -53,17 +53,17 @@
 #' mo_name("CoNS", language = "en")
 #' #> "Coagulase-negative Staphylococcus (CoNS)"
 #'
-#' # German
-#' mo_name("CoNS", language = "de")
-#' #> "Koagulase-negative Staphylococcus (KNS)"
-#'
+#' # Danish
+#' mo_name("CoNS", language = "nl")
+#' #> "Koagulase-negative stafylokokker (CoNS)"
+#' 
 #' # Dutch
 #' mo_name("CoNS", language = "nl")
 #' #> "Coagulase-negatieve Staphylococcus (CNS)"
 #'
-#' # Spanish
-#' mo_name("CoNS", language = "es")
-#' #> "Staphylococcus coagulasa negativo (SCN)"
+#' # German
+#' mo_name("CoNS", language = "de")
+#' #> "Koagulase-negative Staphylococcus (KNS)"
 #'
 #' # Italian
 #' mo_name("CoNS", language = "it")
@@ -72,6 +72,10 @@
 #' # Portuguese
 #' mo_name("CoNS", language = "pt")
 #' #> "Staphylococcus coagulase negativo (CoNS)"
+#'
+#' # Spanish
+#' mo_name("CoNS", language = "es")
+#' #> "Staphylococcus coagulasa negativo (SCN)"
 get_locale <- function() {
   # AMR versions 1.3.0 and prior used the environmental variable:
   if (!identical("", Sys.getenv("AMR_locale"))) {
@@ -108,6 +112,8 @@ coerce_language_setting <- function(lang) {
     "de"
   } else if (grepl("^(Dutch|Nederlands|nl_|NL_)", lang, ignore.case = FALSE, perl = TRUE)) {
     "nl"
+  } else if (grepl("^(Danish|Dansk|da_|DA_)", lang, ignore.case = FALSE, perl = TRUE)) {
+    "da"
   } else if (grepl("^(Spanish|Espa.+ol|es_|ES_)", lang, ignore.case = FALSE, perl = TRUE)) {
     "es"
   } else if (grepl("^(Italian|Italiano|it_|IT_)", lang, ignore.case = FALSE, perl = TRUE)) {
