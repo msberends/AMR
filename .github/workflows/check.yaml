@@ -84,13 +84,11 @@ jobs:
       R_REPOSITORIES: "https://cran.rstudio.com"
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
-      R_CHECK_CRAN_INCOMING_: false
-      R_CHECK_FORCE_SUGGESTS_: false
-      R_CHECK_DEPENDS_ONLY_: true
-      R_CHECK_LENGTH_1_CONDITION_: verbose
-      R_CHECK_LENGTH_1_LOGIC2_: verbose
-      # during 'R CMD check', R_LIBS_USER will be overwritten, so:
-      R_LIBS_USER_GH_ACTIONS: ${{ env.R_LIBS_USER }}
+      R_CHECK_CRAN_INCOMING: false
+      R_CHECK_FORCE_SUGGESTS: false
+      R_CHECK_DEPENDS_ONLY: true
+      R_CHECK_LENGTH_1_CONDITION: verbose
+      R_CHECK_LENGTH_1_LOGIC2: verbose
       R_RUN_TINYTEST: true
 
     steps:
@@ -117,6 +115,10 @@ jobs:
         shell: Rscript {0}
 
       - uses: r-lib/actions/check-r-package@v1
+        env:
+          # during 'R CMD check', R_LIBS_USER will be overwritten, so:
+          R_LIBS_USER_GH_ACTIONS: ${{ env.R_LIBS_USER }}
+      
 
       - name: Show unit tests output
         if: always()
