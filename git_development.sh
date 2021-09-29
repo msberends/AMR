@@ -24,26 +24,26 @@
 # ==================================================================== #
 
 ########################################################################
-# `git_premaster.sh` takes 3 parameters:                               #
+# `git_development.sh` takes 3 parameters:                             #
 #   1. Commit message (character) [mandatory]                          #
 #   2. Lazy website generation (logical), with TRUE only changed       #
 #      files will be processed [defaults to TRUE]                      #
 #   3. Version number to be used in DESCRIPTION and NEWS.md            #
 #      [defaults to current tag and last commit number + 9000]         #
 #                                                                      #
-# To push new commits to the premaster branch, run:                    #
-# bash git_premaster.sh "commit message"                               #
+# To push new commits to the development branch, run:                  #
+# bash git_development.sh "commit message"                             #
 # This creates auto version numbering in DESCRIPTION and NEWS.md.      #
 #                                                                      #
-# After successful test checks, merge it to the master branch with:    #
+# After successful test checks, merge it to the main branch with:      #
 # bash git_merge.sh                                                    #
 #                                                                      #
 # To prerelease a new version number, run:                             #
-# bash git_premaster.sh "v1.x.x" FALSE "1.x.x"                         #
+# bash git_development.sh "v1.x.x" FALSE "1.x.x"                       #
 #                                                                      #
 # To only update the website, run:                                     #
 # bash git_siteonly.sh                                                 #
-# (which is short for 'bash git_premaster.sh "website update" FALSE')  #
+# (which is short for 'bash git_development.sh "website update" FALSE')#
 ########################################################################
 
 if [ -z "$1" ]; then
@@ -56,8 +56,8 @@ else
   lazy=$2
 fi
 
-# be sure to be on premaster branch
-git checkout premaster --quiet
+# be sure to be on development branch
+git checkout development --quiet
 
 echo "••••••••••••••••••••••••••••••••••••••••••••"
 echo "• Updating package date and version number •"
@@ -127,7 +127,7 @@ echo "••••••••••••••••••••"
 echo "• Building package •"
 echo "••••••••••••••••••••"
 echo "• Building 'data-raw/AMR_latest.tar.gz'..."
-Rscript -e "x <- devtools::build(path = 'data-raw', vignettes = FALSE, manual = FALSE, binary = FALSE, quiet = TRUE)"
+Rscript -e "x <- devtools::build(path = 'data-raw', vignettes = TRUE, manual = TRUE, binary = FALSE, quiet = TRUE)"
 rm data-raw/AMR_latest.tar.gz
 mv data-raw/AMR_*.tar.gz data-raw/AMR_latest.tar.gz
 
@@ -193,7 +193,7 @@ git add .
 git commit -a -m "(v${new_version}) $1" --quiet
 git push --quiet
 echo "Comparison:"
-echo "https://github.com/msberends/AMR/compare/master...premaster?view=inline"
+echo "https://github.com/msberends/AMR/compare/main...development?view=inline"
 
 echo
 echo "•••••••••"

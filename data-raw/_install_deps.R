@@ -31,7 +31,10 @@ pkg_suggests <- gsub("[^a-zA-Z0-9]+", "",
                      unlist(strsplit(unlist(packageDescription("AMR",
                                                                fields = c("Suggests", "Enhances", "LinkingTo"))),
                                      split = ", ?")))
+pkg_suggests <- unname(pkg_suggests[!is.na(pkg_suggests)])
+cat("################################################\n")
 cat("Packages listed in Suggests/Enhances:", paste(pkg_suggests, collapse = ", "), "\n")
+cat("################################################\n")
 
 if (.Platform$OS.type != "unix") {
   # no compiling on Windows here
@@ -52,6 +55,16 @@ for (i in seq_len(length(to_install))) {
            # message = function(m) invisible(),
            warning = function(w) message(w$message),
            error = function(e) message(e$message))
+  if (.Platform$OS.type != "unix" && !to_install[i] %in% rownames(utils::installed.packages())) {
+    tryCatch(install.packages(to_install[i],
+                              type = "binary",
+                              repos = "https://cran.rstudio.com/",
+                              dependencies = c("Depends", "Imports", "LinkingTo"),
+                              quiet = FALSE),
+             # message = function(m) invisible(),
+             warning = function(w) message(w$message),
+             error = function(e) message(e$message))
+  }
 }
 
 to_update <- as.data.frame(utils::old.packages(repos = "https://cran.rstudio.com/"), stringsAsFactors = FALSE)

@@ -24,35 +24,35 @@
 # ==================================================================== #
 
 ########################################################################
-# `git_premaster.sh` takes 3 parameters:                               #
+# `git_development.sh` takes 3 parameters:                             #
 #   1. Commit message (character) [mandatory]                          #
 #   2. Lazy website generation (logical), with TRUE only changed       #
 #      files will be processed [defaults to TRUE]                      #
 #   3. Version number to be used in DESCRIPTION and NEWS.md            #
 #      [defaults to current tag and last commit number + 9000]         #
 #                                                                      #
-# To push new commits to the premaster branch, run:                    #
-# bash git_premaster.sh "commit message"                               #
+# To push new commits to the development branch, run:                  #
+# bash git_development.sh "commit message"                             #
 # This creates auto version numbering in DESCRIPTION and NEWS.md.      #
 #                                                                      #
-# After successful test checks, merge it to the master branch with:    #
+# After successful test checks, merge it to the main branch with:      #
 # bash git_merge.sh                                                    #
 #                                                                      #
 # To prerelease a new version number, run:                             #
-# bash git_premaster.sh "v1.x.x" FALSE "1.x.x"                         #
+# bash git_development.sh "v1.x.x" FALSE "1.x.x"                       #
 #                                                                      #
 # To only update the website, run:                                     #
 # bash git_siteonly.sh                                                 #
-# (which is short for 'bash git_premaster.sh "website update" FALSE')  #
+# (which is short for 'bash git_development.sh "website update" FALSE')#
 ########################################################################
 
-bash git_premaster.sh "website update" FALSE
+bash git_development.sh "website update" FALSE
 
 echo
-echo "••••••••••••••••••••••••••••••"
-echo "• Uploading to master branch •"
-echo "••••••••••••••••••••••••••••••"
-git checkout master
-git merge premaster
+echo "••••••••••••••••••••••••••••"
+echo "• Uploading to main branch •"
+echo "••••••••••••••••••••••••••••"
+git checkout main
+git merge development
 git push --quiet
-git checkout premaster
+git checkout development
