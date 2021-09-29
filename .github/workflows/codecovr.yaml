@@ -26,11 +26,11 @@
 on:
   push:
     branches:
-      - premaster
-      - master
+      - development
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 name: code-coverage
 

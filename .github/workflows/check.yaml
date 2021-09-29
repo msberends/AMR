@@ -84,13 +84,7 @@ jobs:
       R_REPOSITORIES: "https://cran.rstudio.com"
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
-      R_CHECK_CRAN_INCOMING: false
-      R_CHECK_FORCE_SUGGESTS: false
-      R_CHECK_DEPENDS_ONLY: true
-      R_CHECK_LENGTH_1_CONDITION: verbose
-      R_CHECK_LENGTH_1_LOGIC2: verbose
-      R_RUN_TINYTEST: true
-
+      
     steps:
       - uses: actions/checkout@v2
 
@@ -101,11 +95,18 @@ jobs:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
-
-      - uses: r-lib/actions/setup-r-dependencies@v1
-        with:
-          extra-packages: rcmdcheck
           
+      - name: show file list
+        run: ls -lh
+        shell: bash
+        
+      - name: Install dependencies
+        if: always()
+        run: |
+          install.packages("remotes")
+          remotes::install_local("data-raw/AMR_latest.tar.gz", dependencies = TRUE)
+       shell: Rscript {0}
+       
       - name: Show session info
         if: always()
         run: |
@@ -116,10 +117,15 @@ jobs:
 
       - uses: r-lib/actions/check-r-package@v1
         env:
+          _R_CHECK_CRAN_INCOMING_: false
+          _R_CHECK_FORCE_SUGGESTS_: false
+          _R_CHECK_DEPENDS_ONLY_: true
+          _R_CHECK_LENGTH_1_CONDITION_: verbose
+          _R_CHECK_LENGTH_1_LOGIC2_: verbose
+          R_RUN_TINYTEST: true
           # during 'R CMD check', R_LIBS_USER will be overwritten, so:
           R_LIBS_USER_GH_ACTIONS: ${{ env.R_LIBS_USER }}
       
-
       - name: Show unit tests output
         if: always()
         run: find check -name 'tinytest.Rout*' -exec cat '{}' \; || true
