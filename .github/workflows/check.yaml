@@ -105,7 +105,7 @@ jobs:
         run: |
           install.packages("remotes")
           remotes::install_local("data-raw/AMR_latest.tar.gz", dependencies = TRUE)
-       shell: Rscript {0}
+        shell: Rscript {0}
        
       - name: Show session info
         if: always()
