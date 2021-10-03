@@ -77,36 +77,40 @@ jobs:
           - {os: windows-latest, r: '3.4',     allowfail: false}
           - {os: windows-latest, r: '3.3',     allowfail: false}
           - {os: windows-latest, r: '3.2',     allowfail: false}
-
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       RSPM: ${{ matrix.config.rspm }}
       R_REPOSITORIES: "https://cran.rstudio.com"
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      R_KEEP_PKG_SOURCE: yes
-      
+    
     steps:
       - uses: actions/checkout@v2
-
-      - uses: r-lib/actions/setup-pandoc@v1
 
       - uses: r-lib/actions/setup-r@v1
         with:
           r-version: ${{ matrix.config.r }}
-          http-user-agent: ${{ matrix.config.http-user-agent }}
-          use-public-rspm: true
-          
-      - name: show file list
-        run: ls -lh
-        shell: bash
-        
-      - name: Install dependencies
+
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        # update the below with sysreqs::sysreqs("DESCRIPTION") and check the "DEB" entries (for Ubuntu).
+        # we don't want to depend on the sysreqs pkg here, as it requires quite a recent R version
+        # as of May 2021: https://sysreqs.r-hub.io/pkg/AMR,R,cleaner,curl,dplyr,ggplot2,ggtext,knitr,microbenchmark,pillar,readxl,rmarkdown,rstudioapi,rvest,skimr,tidyr,tinytest,xml2,backports,crayon,rlang,vctrs,evaluate,highr,markdown,stringr,yaml,xfun,cli,ellipsis,fansi,lifecycle,utf8,glue,mime,magrittr,stringi,generics,R6,tibble,tidyselect,pkgconfig,purrr,digest,gtable,isoband,MASS,mgcv,scales,withr,nlme,Matrix,farver,labeling,munsell,RColorBrewer,viridisLite,lattice,colorspace,gridtext,Rcpp,RCurl,png,jpeg,bitops,cellranger,progress,rematch,hms,prettyunits,htmltools,jsonlite,tinytex,base64enc,httr,selectr,openssl,askpass,sys,repr,cpp11
+        run: |
+          sudo apt install -y libssl-dev pandoc pandoc-citeproc libxml2-dev libicu-dev libcurl4-openssl-dev libpng-dev
+      - name: Restore cached R packages
+        # this step will add the step 'Post Restore cached R packages' on a succesful run
+        if: runner.os != 'Windows'
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ matrix.config.os }}-r-${{ matrix.config.r }}-v4
+
+      - name: Unpack AMR and install R dependencies
         if: always()
         run: |
-          install.packages("remotes", repos = c("https://cloud.r-project.org", "https://cran.rstudio.com"))
-          remotes::install_local("data-raw/AMR_latest.tar.gz", dependencies = TRUE)
-        shell: Rscript {0}
-       
+          tar -xf data-raw/AMR_latest.tar.gz
+          Rscript -e "source('data-raw/_install_deps.R')"
+        shell: bash
+        
       - name: Show session info
         if: always()
         run: |
@@ -114,26 +118,43 @@ jobs:
           utils::sessionInfo()
           as.data.frame(utils::installed.packages())[, "Version", drop = FALSE]
         shell: Rscript {0}
-
-      - uses: r-lib/actions/check-r-package@v1
+        
+      # # - name: Only keep vignettes on release version
+      # - name: Remove vignettes
+      #   # if: matrix.config.r != 'release'
+      #   if: always()
+      #   # writing to DESCRIPTION2 and then moving to DESCRIPTION is required for R < 3.3 as writeLines() cannot overwrite
+      #   run: |
+      #     rm -rf AMR/vignettes
+      #     Rscript -e "writeLines(readLines('AMR/DESCRIPTION')[!grepl('VignetteBuilder', readLines('AMR/DESCRIPTION'))], 'AMR/DESCRIPTION2')"
+      #     rm AMR/DESCRIPTION
+      #     mv AMR/DESCRIPTION2 AMR/DESCRIPTION
+      #   shell: bash
+        
+      - name: Run R CMD check
+        if: always()
         env:
           _R_CHECK_CRAN_INCOMING_: false
           _R_CHECK_FORCE_SUGGESTS_: false
           _R_CHECK_DEPENDS_ONLY_: true
           _R_CHECK_LENGTH_1_CONDITION_: verbose
           _R_CHECK_LENGTH_1_LOGIC2_: verbose
-          R_RUN_TINYTEST: true
           # during 'R CMD check', R_LIBS_USER will be overwritten, so:
           R_LIBS_USER_GH_ACTIONS: ${{ env.R_LIBS_USER }}
-      
-      - name: Show unit tests output
-        if: always()
-        run: find check -name 'tinytest.Rout*' -exec cat '{}' \; || true
+          R_RUN_TINYTEST: true
+        run: |
+          R CMD check --no-manual --run-donttest --run-dontrun AMR
         shell: bash
 
-      - name: Upload check results
+      - name: Show unit tests output
         if: always()
-        uses: actions/upload-artifact@main
+        run: |
+          find . -name 'tinytest.Rout*' -exec cat '{}' \; || true
+        shell: bash
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.config.os }}-r-${{ matrix.config.r }}-artifacts
-          path: check
+          name: artifacts-${{ matrix.config.os }}-r${{ matrix.config.r }}
+          path: AMR.Rcheck
