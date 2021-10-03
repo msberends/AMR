@@ -119,17 +119,15 @@ jobs:
           as.data.frame(utils::installed.packages())[, "Version", drop = FALSE]
         shell: Rscript {0}
         
-      # # - name: Only keep vignettes on release version
-      # - name: Remove vignettes
-      #   # if: matrix.config.r != 'release'
-      #   if: always()
-      #   # writing to DESCRIPTION2 and then moving to DESCRIPTION is required for R < 3.3 as writeLines() cannot overwrite
-      #   run: |
-      #     rm -rf AMR/vignettes
-      #     Rscript -e "writeLines(readLines('AMR/DESCRIPTION')[!grepl('VignetteBuilder', readLines('AMR/DESCRIPTION'))], 'AMR/DESCRIPTION2')"
-      #     rm AMR/DESCRIPTION
-      #     mv AMR/DESCRIPTION2 AMR/DESCRIPTION
-      #   shell: bash
+      - name: Remove vignettes on R without knitr support
+        if: matrix.config.r == '3.0' || matrix.config.r == '3.1' || matrix.config.r == '3.2'
+        # writing to DESCRIPTION2 and then moving to DESCRIPTION is required for R < 3.3 as writeLines() cannot overwrite
+        run: |
+          rm -rf AMR/vignettes
+          Rscript -e "writeLines(readLines('AMR/DESCRIPTION')[!grepl('VignetteBuilder', readLines('AMR/DESCRIPTION'))], 'AMR/DESCRIPTION2')"
+          rm AMR/DESCRIPTION
+          mv AMR/DESCRIPTION2 AMR/DESCRIPTION
+        shell: bash
         
       - name: Run R CMD check
         if: always()
