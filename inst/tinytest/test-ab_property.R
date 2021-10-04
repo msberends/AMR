@@ -69,7 +69,7 @@ expect_identical(colnames(set_ab_names(example_isolates[, 20:25], language = "nl
                  c("Cefoxitine", "Cefotaxim", "Ceftazidim", "Ceftriaxon", "Gentamicine", "Tobramycine"))
 expect_identical(colnames(set_ab_names(example_isolates[, 20:25], "atc")),
                  c("J01DC01", "J01DD01", "J01DD02", "J01DD04", "J01GB03", "J01GB01"))
-if (AMR:::pkg_is_available("dplyr")) {
+if (AMR:::pkg_is_available("dplyr") && packageVersion("dplyr") >= "1.0.0") {
   expect_identical(example_isolates %>% set_ab_names(),
                    example_isolates %>% rename_with(set_ab_names))
 }
