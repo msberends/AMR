@@ -25,7 +25,7 @@
 
 codecov:
   require_ci_to_pass: no # allow fail
-  branch: master
+  branch: main
 
 comment: no
 

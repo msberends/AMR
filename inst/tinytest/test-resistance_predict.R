@@ -23,7 +23,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-if (AMR:::pkg_is_available("dplyr")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_stdout(AMX_R <- example_isolates %>%
                   filter(mo == "B_ESCHR_COLI") %>%
                   rsi_predict(col_ab = "AMX",

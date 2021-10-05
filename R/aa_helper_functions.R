@@ -296,11 +296,14 @@ stop_ifnot_installed <- function(package) {
   return(invisible())
 }
 
-pkg_is_available <- function(pkg, also_load = TRUE) {
+pkg_is_available <- function(pkg, also_load = TRUE, min_version = NULL) {
   if (also_load == TRUE) {
     out <- suppressWarnings(require(pkg, character.only = TRUE, warn.conflicts = FALSE))
   } else {
     out <- requireNamespace(pkg, quietly = TRUE)
+  }
+  if (!is.null(min_version)) {
+    out <- out && packageVersion(pkg) >= min_version
   }
   isTRUE(out)
 }

@@ -143,7 +143,7 @@ expect_identical(as.character(as.mo("S. sanguinis",   Lancefield = TRUE)),  "B_S
 expect_identical(as.character(as.mo("S. salivarius",  Lancefield = FALSE)), "B_STRPT_SLVR")
 expect_identical(as.character(as.mo("S. salivarius",  Lancefield = TRUE)),  "B_STRPT_GRPK") # group K
 
-if (AMR:::pkg_is_available("dplyr")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   # select with one column
   expect_identical(
     example_isolates[1:10, ] %>%
@@ -272,7 +272,7 @@ expect_equal(as.character(as.mo(c("meningococ", "gonococ", "pneumococ"))),
 expect_equal(suppressWarnings(as.character(as.mo(c("yeasts", "fungi")))), 
              c("F_YEAST", "F_FUNGUS"))
 
-if (AMR:::pkg_is_available("dplyr")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   # print tibble
   expect_stdout(print(tibble(mo = as.mo("B_ESCHR_COLI"))))
 }

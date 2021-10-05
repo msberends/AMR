@@ -47,7 +47,7 @@ if (AMR:::pkg_is_available("ggplot2")) {
   ggplot_pca(pca_model, arrows_textangled = FALSE)
 }
 
-if (AMR:::pkg_is_available("dplyr")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   resistance_data <- example_isolates %>% 
     group_by(order = mo_order(mo),
              genus = mo_genus(mo)) %>%

@@ -72,7 +72,7 @@ b <- data.frame(mo = c("Staphylococcus aureus",
 expect_equal(suppressWarnings(eucast_rules(a, "mo", info = FALSE)), b)
 
 # piperacillin must be R in Enterobacteriaceae when tica is R
-if (AMR:::pkg_is_available("dplyr")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_equal(suppressWarnings(
     example_isolates %>%
       filter(mo_family(mo) == "Enterobacteriaceae") %>%
@@ -110,7 +110,7 @@ expect_equal(
   "S")
 
 # also test norf
-if (AMR:::pkg_is_available("dplyr")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_stdout(suppressWarnings(eucast_rules(example_isolates %>% mutate(NOR = "S", NAL = "S"), info = TRUE)))
 }
 

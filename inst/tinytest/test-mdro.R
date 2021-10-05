@@ -232,7 +232,7 @@ expect_warning(mdro(example_isolates,
                     info = FALSE))
 
 # print groups
-if (AMR:::pkg_is_available("dplyr")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_stdout(x <- mdro(example_isolates %>% group_by(hospital_id), info = TRUE))
   expect_stdout(x <- mdro(example_isolates %>% group_by(hospital_id), guideline = custom, info = TRUE))
 }

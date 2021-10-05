@@ -51,7 +51,7 @@ expect_identical(as.logical(lapply(example_isolates, is.rsi.eligible)),
 expect_error(as.rsi.mic(as.mic(16)))
 expect_error(as.rsi.disk(as.disk(16)))
 expect_error(get_guideline("this one does not exist"))
-if (AMR:::pkg_is_available("dplyr")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   # 40 rsi columns
   expect_equal(example_isolates %>%
                  mutate_at(vars(PEN:RIF), as.character) %>%
@@ -66,7 +66,7 @@ if (AMR:::pkg_is_available("dplyr")) {
 if (AMR:::pkg_is_available("skimr")) {
   expect_inherits(skim(example_isolates),
                   "data.frame")
-  if (AMR:::pkg_is_available("dplyr")) {
+  if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
     expect_inherits(example_isolates %>%
                       mutate(m = as.mic(2),
                              d = as.disk(20)) %>% 
@@ -96,7 +96,7 @@ expect_equal(as.rsi(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020
              as.rsi("S"))
 expect_equal(as.rsi(as.mic(32), "E. coli", "ampicillin", guideline = "EUCAST 2020"),
              as.rsi("R"))
-if (AMR:::pkg_is_available("dplyr")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_true(suppressWarnings(example_isolates %>%
                                  mutate(amox_mic = as.mic(2)) %>%
                                  select(mo, amox_mic) %>%
@@ -123,7 +123,7 @@ expect_equal(as.character(
          ab = "ERY",
          guideline = "CLSI")),
   "R")
-if (AMR:::pkg_is_available("dplyr")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_true(example_isolates %>%
                 mutate(amox_disk = as.disk(15)) %>%
                 select(mo, amox_disk) %>%

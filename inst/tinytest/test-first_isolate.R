@@ -110,7 +110,7 @@ expect_error(first_isolate(example_isolates,
                            col_date = "non-existing col",
                            col_mo = "mo"))
 
-if (AMR:::pkg_is_available("dplyr")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   # if mo is not an mo class, result should be the same
   expect_identical(example_isolates %>%
                      mutate(mo = as.character(mo)) %>%

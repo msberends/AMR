@@ -42,12 +42,12 @@ expect_warning(AMR:::generate_warning_abs_missing(c("AMP", "AMX"), any = TRUE))
 expect_warning(AMR:::get_column_abx(example_isolates, hard_dependencies = "FUS"))
 expect_message(AMR:::get_column_abx(example_isolates, soft_dependencies = "FUS"))
 
-if (AMR:::pkg_is_available("dplyr")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_warning(AMR:::get_column_abx(rename(example_isolates, thisone = AMX), amox = "thisone", tmp = "thisone", verbose = TRUE))
   expect_warning(AMR:::get_column_abx(rename(example_isolates, thisone = AMX), amox = "thisone", tmp = "thisone", verbose = FALSE))
 }
 
 # we rely on "grouped_tbl" being a class of grouped tibbles, so implement a test that checks for this:
-if (AMR:::pkg_is_available("dplyr")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_true(AMR:::is_null_or_grouped_tbl(example_isolates %>% group_by(hospital_id)))
 }

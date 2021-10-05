@@ -372,7 +372,7 @@ exec_as.mo <- function(x,
   # Laboratory systems: remove (translated) entries like "no growth", etc.
   x[trimws2(x) %like% translate_AMR("no .*growth", language = language)] <- NA_character_
   x[trimws2(x) %like% paste0("^(", translate_AMR("no|not", language = language), ") [a-z]+")] <- "UNKNOWN"
-
+  
   if (initial_search == TRUE) {
     # keep track of time - give some hints to improve speed if it takes a long time
     start_time <- Sys.time()
@@ -495,9 +495,13 @@ exec_as.mo <- function(x,
     # Fill in fullnames and MO codes directly
     known_names <- tolower(x_backup) %in% MO_lookup$fullname_lower
     x[known_names] <- MO_lookup[match(tolower(x_backup)[known_names], MO_lookup$fullname_lower), property, drop = TRUE]
-    known_codes <- toupper(x_backup) %in% MO_lookup$mo
-    x[known_codes] <- MO_lookup[match(toupper(x_backup)[known_codes], MO_lookup$mo), property, drop = TRUE]
-    already_known <- known_names | known_codes
+    known_codes_mo <- toupper(x_backup) %in% MO_lookup$mo
+    x[known_codes_mo] <- MO_lookup[match(toupper(x_backup)[known_codes_mo], MO_lookup$mo), property, drop = TRUE]
+    known_codes_lis <- toupper(x_backup) %in% microorganisms.codes$code
+    x[known_codes_lis] <- MO_lookup[match(microorganisms.codes[match(toupper(x_backup)[known_codes_lis],
+                                                                     microorganisms.codes$code), "mo", drop = TRUE],
+                                          MO_lookup$mo), property, drop = TRUE]
+    already_known <- known_names | known_codes_mo | known_codes_lis
 
     # now only continue where the right taxonomic output is not already known
     if (any(!already_known)) {

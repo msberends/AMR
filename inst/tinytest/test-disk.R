@@ -50,6 +50,6 @@ if (AMR:::pkg_is_available("ggplot2")) {
 }
 expect_stdout(print(as.disk(12)))
 
-if (AMR:::pkg_is_available("dplyr")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_stdout(print(tibble(d = as.disk(12))))
 }

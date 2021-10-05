@@ -58,7 +58,7 @@ expect_stdout(print(as.mic(c(1, 2, 4, 8))))
 
 expect_inherits(summary(as.mic(c(2, 8))), c("summaryDefault", "table"))
 
-if (AMR:::pkg_is_available("dplyr")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_stdout(print(tibble(m = as.mic(2:4))))
 }
 

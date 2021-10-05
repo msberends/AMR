@@ -28,7 +28,7 @@ expect_inherits(b, "bug_drug_combinations")
 expect_stdout(suppressMessages(print(b)))
 expect_true(is.data.frame(format(b)))
 expect_true(is.data.frame(format(b, combine_IR = TRUE, add_ab_group = FALSE)))
-if (AMR:::pkg_is_available("dplyr")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_true(example_isolates %>% 
                 group_by(hospital_id) %>% 
                 bug_drug_combinations(FUN = mo_gramstain) %>% 

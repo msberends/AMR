@@ -88,6 +88,8 @@ jobs:
       - uses: r-lib/actions/setup-r@v1
         with:
           r-version: ${{ matrix.config.r }}
+      
+      - uses: r-lib/actions/setup-pandoc@v1
 
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
@@ -95,7 +97,7 @@ jobs:
         # we don't want to depend on the sysreqs pkg here, as it requires quite a recent R version
         # as of May 2021: https://sysreqs.r-hub.io/pkg/AMR,R,cleaner,curl,dplyr,ggplot2,ggtext,knitr,microbenchmark,pillar,readxl,rmarkdown,rstudioapi,rvest,skimr,tidyr,tinytest,xml2,backports,crayon,rlang,vctrs,evaluate,highr,markdown,stringr,yaml,xfun,cli,ellipsis,fansi,lifecycle,utf8,glue,mime,magrittr,stringi,generics,R6,tibble,tidyselect,pkgconfig,purrr,digest,gtable,isoband,MASS,mgcv,scales,withr,nlme,Matrix,farver,labeling,munsell,RColorBrewer,viridisLite,lattice,colorspace,gridtext,Rcpp,RCurl,png,jpeg,bitops,cellranger,progress,rematch,hms,prettyunits,htmltools,jsonlite,tinytex,base64enc,httr,selectr,openssl,askpass,sys,repr,cpp11
         run: |
-          sudo apt install -y libssl-dev pandoc pandoc-citeproc libxml2-dev libicu-dev libcurl4-openssl-dev libpng-dev
+          sudo apt install -y libssl-dev libxml2-dev libicu-dev libcurl4-openssl-dev libpng-dev
       - name: Restore cached R packages
         # this step will add the step 'Post Restore cached R packages' on a succesful run
         if: runner.os != 'Windows'

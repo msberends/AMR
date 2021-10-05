@@ -51,7 +51,7 @@ expect_error(count_susceptible("test", as_percent = "test"))
 expect_error(count_df(c("A", "B", "C")))
 expect_error(count_df(example_isolates[, "date"]))
 
-if (AMR:::pkg_is_available("dplyr")) {
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_equal(example_isolates %>% count_susceptible(AMC), 1433)
   expect_equal(example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = TRUE), 1687)
   expect_equal(example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = FALSE), 1764)

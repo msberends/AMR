@@ -65,6 +65,9 @@ expect_equal(nrow(subset(example_isolates, any(carbapenems() == "R"))), 55, tole
 # filter on any or all results in the carbapenem columns (i.e., IPM, MEM):
 expect_equal(nrow(example_isolates[any(carbapenems()), ]), 962, tolerance = 0.5)
 expect_equal(nrow(example_isolates[all(carbapenems()), ]), 756, tolerance = 0.5)
+expect_equal(nrow(example_isolates[any(carbapenems() == "R"), ]), 55, tolerance = 0.5)
+expect_equal(nrow(example_isolates[any(carbapenems() != "R"), ]), 910, tolerance = 0.5)
+expect_equal(nrow(example_isolates[carbapenems() != "R", ]), 704, tolerance = 0.5)
 
 # filter with multiple antibiotic selectors using c()
 expect_equal(nrow(example_isolates[all(c(carbapenems(), aminoglycosides()) == "R"), ]), 26, tolerance = 0.5)
@@ -73,3 +76,9 @@ expect_equal(nrow(example_isolates[all(c(carbapenems(), aminoglycosides()) == "R
 expect_equal(nrow(example_isolates[any(carbapenems() == "R"), penicillins()]), 55, tolerance = 0.5)
 expect_equal(ncol(example_isolates[any(carbapenems() == "R"), penicillins()]), 7, tolerance = 0.5)
 
+if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
+  expect_equal(example_isolates %>% select(administrable_per_os() & penicillins()) %>% ncol(), 5, tolerance = 0.5)
+  expect_equal(example_isolates %>% select(administrable_iv() & penicillins()) %>% ncol(), 7, tolerance = 0.5)
+  expect_equal(example_isolates %>% select(administrable_iv() | penicillins()) %>% ncol(), 37, tolerance = 0.5)
+  expect_warning(example_isolates %>% select(GEH = GEN) %>% select(aminoglycosides(only_treatable = TRUE)))
+}
