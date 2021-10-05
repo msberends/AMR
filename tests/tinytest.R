@@ -37,8 +37,5 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
                         color = FALSE)
     cat("SUMMARY:\n")
     print(summary(out))
-    cat("WARNINGS:\n")
-    print(warnings())
-    cat(attributes(out)$duration, "\n")
   }
 }

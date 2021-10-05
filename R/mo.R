@@ -803,7 +803,7 @@ exec_as.mo <- function(x,
                                             perl = TRUE)), uncertainty = -1)
           next
         }
-        if (x_backup_without_spp[i] %like_case% "haemoly.*strep") {
+        if (x_backup_without_spp[i] %like_case% "ha?emoly.*strep") {
           # Haemolytic streptococci in different languages
           x[i] <- lookup(mo == "B_STRPT_HAEM", uncertainty = -1)
           next

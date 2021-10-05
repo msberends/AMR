@@ -138,15 +138,21 @@ atc_online_property <- function(atc_code,
     atc_url <- sub("%s", atc_code[i], atc_url, fixed = TRUE)
     
     if (property == "groups") {
-      tbl <- read_html(atc_url) %pm>%
-        html_node("#content") %pm>%
-        html_children() %pm>%
-        html_node("a")
+      out <- tryCatch(
+        read_html(atc_url) %pm>%
+          html_node("#content") %pm>%
+          html_children() %pm>%
+          html_node("a"), 
+        error = function(e) NULL)
+      if (is.null(out)) {
+        message_("Connection to ", atc_url, " failed.")
+        return(rep(NA, length(atc_code)))
+      }
       
       # get URLS of items
-      hrefs <- tbl %pm>% html_attr("href")
+      hrefs <- out %pm>% html_attr("href")
       # get text of items
-      texts <- tbl %pm>% html_text()
+      texts <- out %pm>% html_text()
       # select only text items where URL like "code="
       texts <- texts[grepl("?code=", tolower(hrefs), fixed = TRUE)]
       # last one is antibiotics, skip it
@@ -154,15 +160,21 @@ atc_online_property <- function(atc_code,
       returnvalue <- c(list(texts), returnvalue)
       
     } else {
-      tbl <- read_html(atc_url) %pm>%
-        html_nodes("table") %pm>%
-        html_table(header = TRUE) %pm>%
-        as.data.frame(stringsAsFactors = FALSE)
+      out <- tryCatch(
+        read_html(atc_url) %pm>%
+          html_nodes("table") %pm>%
+          html_table(header = TRUE) %pm>%
+          as.data.frame(stringsAsFactors = FALSE), 
+        error = function(e) NULL)
+      if (is.null(out)) {
+        message_("Connection to ", atc_url, " failed.")
+        return(rep(NA, length(atc_code)))
+      }
       
       # case insensitive column names
-      colnames(tbl) <- gsub("^atc.*", "atc", tolower(colnames(tbl)))
+      colnames(out) <- gsub("^atc.*", "atc", tolower(colnames(out)))
       
-      if (length(tbl) == 0) {
+      if (length(out) == 0) {
         warning_("ATC not found: ", atc_code[i], ". Please check ", atc_url, ".", call = FALSE)
         returnvalue[i] <- NA
         next
@@ -170,15 +182,15 @@ atc_online_property <- function(atc_code,
       
       if (property %in% c("atc", "name")) {
         # ATC and name are only in first row
-        returnvalue[i] <- tbl[1, property]
+        returnvalue[i] <- out[1, property]
       } else {
-        if (!"adm.r" %in% colnames(tbl) | is.na(tbl[1, "adm.r"])) {
+        if (!"adm.r" %in% colnames(out) | is.na(out[1, "adm.r"])) {
           returnvalue[i] <- NA
           next
         } else {
-          for (j in seq_len(nrow(tbl))) {
-            if (tbl[j, "adm.r"] == administration) {
-              returnvalue[i] <- tbl[j, property]
+          for (j in seq_len(nrow(out))) {
+            if (out[j, "adm.r"] == administration) {
+              returnvalue[i] <- out[j, property]
             }
           }
         }

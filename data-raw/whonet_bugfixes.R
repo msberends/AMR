@@ -7,5 +7,5 @@ microorganisms.codes[which(microorganisms.codes$code == "ENT"), "mo"] <- as.mo("
 microorganisms.codes[which(microorganisms.codes$code == "STR"), "mo"] <- as.mo("streptococcus")
 microorganisms.codes[which(microorganisms.codes$code == "CDF"), "mo"] <- as.mo("clostridium difficile")
 microorganisms.codes[which(microorganisms.codes$code == "HA-"), "mo"] <- as.mo("haemophilus influenzae")
-usethis::use_data(microorganisms.codes, overwrite = TRUE)
+usethis::use_data(microorganisms.codes, overwrite = TRUE, version = 2)
 rm(microorganisms.codes)
