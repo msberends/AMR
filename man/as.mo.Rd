@@ -131,7 +131,7 @@ The intelligent rules consider the prevalence of microorganisms in humans groupe
 \item Becker K \emph{et al.} \strong{Emergence of coagulase-negative staphylococci} 2020. Expert Rev Anti Infect Ther. 18(4):349-366; \doi{10.1080/14787210.2020.1730813}
 \item Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571–95; \doi{10.1084/jem.57.4.571}
 \item Catalogue of Life: 2019 Annual Checklist, \url{http://www.catalogueoflife.org}
-\item List of Prokaryotic names with Standing in Nomenclature (March 2021), \doi{10.1099/ijsem.0.004332}
+\item List of Prokaryotic names with Standing in Nomenclature (5 October 2021), \doi{10.1099/ijsem.0.004332}
 \item US Edition of SNOMED CT from 1 September 2020, retrieved from the Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS), OID 2.16.840.1.114222.4.11.1009, version 12; url: \url{https://phinvads.cdc.gov/vads/ViewValueSet.action?oid=2.16.840.1.114222.4.11.1009}
 }
 }
@@ -170,7 +170,7 @@ All matches are sorted descending on their matching score and for all user input
 \section{Catalogue of Life}{
 
 \if{html}{\figure{logo_col.png}{options: height=40px style=margin-bottom:5px} \cr}
-This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, \url{http://www.catalogueoflife.org}). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, \href{https://lpsn.dsmz.de}{lpsn.dsmz.de}). This supplementation is needed until the \href{https://github.com/CatalogueOfLife/general}{CoL+ project} is finished, which we await.
+This package contains the complete taxonomic tree of almost all microorganisms (~71,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, \url{http://www.catalogueoflife.org}). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, \href{https://lpsn.dsmz.de}{lpsn.dsmz.de}). This supplementation is needed until the \href{https://github.com/CatalogueOfLife/general}{CoL+ project} is finished, which we await.
 
 \link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which versions of the CoL and LPSN were included in this package with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}.
 }

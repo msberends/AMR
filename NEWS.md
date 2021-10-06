@@ -1,5 +1,5 @@
-# `AMR` 1.7.1.9050
-## <small>Last updated:  5 October 2021</small>
+# `AMR` 1.7.1.9051
+## <small>Last updated:  6 October 2021</small>
 
 ### Breaking changes
 * Removed `p_symbol()` and all `filter_*()` functions (except for `filter_first_isolate()`), which were all deprecated in a previous package version
@@ -11,6 +11,7 @@
 * Support for Danish, and also added missing translations of all antimicrobial drugs in Italian, French and Portuguese
 
 ### Changed
+* Updated the bacterial taxonomy to 5 October 2021 (according to [LPSN](https://lpsn.dsmz.de)), including all 11 new staphylococcal species named since 1 January last year
 * The `antibiotics` data set now contains **all ATC codes** that are available through the [WHOCC website](https://www.whocc.no), regardless of drugs being present in more than one ATC group. This means that:
   * Some drugs now contain multiple ATC codes (e.g., metronidazole contains 5)
   * `antibiotics$atc` is now a `list` containing `character` vectors, and this `atc` column was moved to the 5th position of the `antibiotics` data set
@@ -500,7 +501,7 @@ This software is now out of beta and considered stable. Nonetheless, this packag
 
 ### New
 * Support for the newest [EUCAST Clinical Breakpoint Tables v.10.0](https://www.eucast.org/clinical_breakpoints/), valid from 1 January 2020. This affects translation of MIC and disk zones using `as.rsi()` and inferred resistance and susceptibility using `eucast_rules()`.
-* The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2020 to translate MIC and disk diffusion values to R/SI: <https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt>. This **allows for machine reading these guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file used to process the EUCAST Clinical Breakpoints Excel file [can be found here](https://github.com/msberends/AMR/blob/master/data-raw/read_EUCAST.R).
+* The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2020 to translate MIC and disk diffusion values to R/SI: <https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt>. This **allows for machine reading these guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file used to process the EUCAST Clinical Breakpoints Excel file [can be found here](https://github.com/msberends/AMR/blob/main/data-raw/read_EUCAST.R).
 * Support for LOINC and SNOMED codes
   * Support for LOINC codes in the `antibiotics` data set. Use `ab_loinc()` to retrieve LOINC codes, or use a LOINC code for input in any `ab_*` function:
     ```r
@@ -817,7 +818,7 @@ This software is now out of beta and considered stable. Nonetheless, this packag
   * All references to antibiotics in our package now use EARS-Net codes, like `AMX` for amoxicillin
   * Functions `atc_certe`, `ab_umcg` and `atc_trivial_nl` have been removed
   * All `atc_*` functions are superseded by `ab_*` functions
-  * All output will be translated by using an included translation file which [can be viewed here](https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv)
+  * All output will be translated by using an included translation file which [can be viewed here](https://github.com/msberends/AMR/blob/main/data-raw/translations.tsv)
 * Improvements to plotting AMR results with `ggplot_rsi()`:
   * New argument `colours` to set the bar colours
   * New arguments `title`, `subtitle`, `caption`, `x.title` and `y.title` to set titles and axis descriptions
@@ -841,7 +842,7 @@ This software is now out of beta and considered stable. Nonetheless, this packag
       freq(age) %>%
       boxplot()
     ```
-* Removed all hardcoded EUCAST rules and replaced them with a new reference file which [can be viewed here](https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv)
+* Removed all hardcoded EUCAST rules and replaced them with a new reference file which [can be viewed here](https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv)
 * Added ceftazidim intrinsic resistance to *Streptococci*
 * Changed default settings for `age_groups()`, to let groups of fives and tens end with 100+ instead of 120+
 * Fix for `freq()` for when all values are `NA`
@@ -1352,7 +1353,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 * Added [ORCID](https://orcid.org) of authors to DESCRIPTION file
 * Added unit testing with the `testthat` package
 * Added build tests for Linux and macOS using Travis CI (https://travis-ci.org/msberends/AMR)
-* Added line coverage checking using CodeCov (https://codecov.io/gh/msberends/AMR/tree/master/R)
+* Added line coverage checking using CodeCov (https://codecov.io/gh/msberends/AMR/tree/main/R)
 
 # AMR 0.1.1
 

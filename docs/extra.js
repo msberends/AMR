@@ -76,7 +76,7 @@ $(document).ready(function() {
     '  </div>' +
     '  <div class="img">' +
     '    <a target="_blank" href="https://r4ds.had.co.nz/">' +
-    '      <img src="https://github.com/msberends/AMR/raw/master/docs/cover_r4ds.png">' +
+    '      <img src="https://github.com/msberends/AMR/raw/main/docs/cover_r4ds.png">' +
     '    </a>' +
     '  </div>' +
     '</div>');
@@ -86,7 +86,7 @@ $(document).ready(function() {
   $('footer').html(
     '<div>' +
       '<p><code>AMR</code> (for R). Developed at the <a href="https://www.rug.nl">University of Groningen</a> in collaboration with non-profit organisations <a href="https://www.certe.nl">Certe Medical Diagnostics and Advice Foundation</a> and <a href="https://www.umcg.nl">University Medical Center Groningen</a>.</p>' +
-            '<a href="https://www.rug.nl"><img src="https://github.com/msberends/AMR/raw/master/docs/logo_rug.png" class="footer_logo"></a>' + 
+            '<a href="https://www.rug.nl"><img src="https://github.com/msberends/AMR/raw/main/docs/logo_rug.png" class="footer_logo"></a>' + 
     '</div>');
   // all links should open in new tab/window
   $('footer').html($('footer').html().replace(/href/g, 'target="_blank" href'));
@@ -99,9 +99,9 @@ $(document).ready(function() {
       x = x.replace(/Author, contributor/g, "Main contributor");
       x = x.replace(/Author, thesis advisor/g, "Doctoral advisor");
       x = x.replace("Matthijs", "Dr. Matthijs");
-      x = x.replace("Alex", "Prof. Dr. Alex");
-      x = x.replace("Bhanu", "Prof. Dr. Bhanu");
-      x = x.replace("Casper", "Prof. Dr. Casper");
+      x = x.replace("Alex", "Prof. Alex");
+      x = x.replace("Bhanu", "Prof. Bhanu");
+      x = x.replace("Casper", "Prof. Casper");
       x = x.replace("Corinna", "Dr. Corinna");
       // others
       x = x.replace("Bart", "Dr. Bart");

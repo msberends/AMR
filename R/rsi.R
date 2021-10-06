@@ -75,7 +75,7 @@
 #' 
 #' ## Machine-Readable Interpretation Guidelines
 #' 
-#' The repository of this package [contains a machine-readable version](https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt) of all guidelines. This is a CSV file consisting of `r format(nrow(AMR::rsi_translation), big.mark = ",")` rows and `r ncol(AMR::rsi_translation)` columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. **This allows for easy implementation of these rules in laboratory information systems (LIS)**. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
+#' The repository of this package [contains a machine-readable version](https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt) of all guidelines. This is a CSV file consisting of `r format(nrow(AMR::rsi_translation), big.mark = ",")` rows and `r ncol(AMR::rsi_translation)` columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. **This allows for easy implementation of these rules in laboratory information systems (LIS)**. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
 #'
 #' ## Other
 #' 

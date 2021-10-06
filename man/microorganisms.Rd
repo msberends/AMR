@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data Set with 70,026 Microorganisms}
+\title{Data Set with 70,760 Microorganisms}
 \format{
-A \link{data.frame} with 70,026 observations and 16 variables:
+A \link{data.frame} with 70,760 observations and 16 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}
@@ -24,7 +24,7 @@ Catalogue of Life: 2019 Annual Checklist as currently implemented in this \code{
 \item Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org}
 }
 
-List of Prokaryotic names with Standing in Nomenclature (March 2021) as currently implemented in this \code{AMR} package:
+List of Prokaryotic names with Standing in Nomenclature (5 October 2021) as currently implemented in this \code{AMR} package:
 \itemize{
 \item Parte, A.C., Sarda Carbasse, J., Meier-Kolthoff, J.P., Reimer, L.C. and Goker, M. (2020). List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ. International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \doi{10.1099/ijsem.0.004332}
 \item Parte, A.C. (2018). LPSN — List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; \doi{10.1099/ijsem.0.002786}
@@ -41,7 +41,7 @@ US Edition of SNOMED CT from 1 September 2020 as currently implemented in this \
 microorganisms
 }
 \description{
-A data set containing the microbial taxonomy, last updated in March 2021, of six kingdoms from the Catalogue of Life (CoL) and the List of Prokaryotic names with Standing in Nomenclature (LPSN). MO codes can be looked up using \code{\link[=as.mo]{as.mo()}}.
+A data set containing the full microbial taxonomy (\strong{last updated: 5 October 2021}) of six kingdoms from the Catalogue of Life (CoL) and the List of Prokaryotic names with Standing in Nomenclature (LPSN). MO codes can be looked up using \code{\link[=as.mo]{as.mo()}}.
 }
 \details{
 Please note that entries are only based on the Catalogue of Life and the LPSN (see below). Since these sources incorporate entries based on (recent) publications in the International Journal of Systematic and Evolutionary Microbiology (IJSEM), it can happen that the year of publication is sometimes later than one might expect.
@@ -53,9 +53,10 @@ For convenience, some entries were added manually:
 \itemize{
 \item 11 entries of \emph{Streptococcus} (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)
 \item 2 entries of \emph{Staphylococcus} (coagulase-negative (CoNS) and coagulase-positive (CoPS))
-\item 3 entries of \emph{Trichomonas} (\emph{Trichomonas vaginalis}, and its family and genus)
-\item 1 entry of \emph{Candida} (\emph{Candida krusei}), that is not (yet) in the Catalogue of Life
-\item 1 entry of \emph{Blastocystis} (\emph{Blastocystis hominis}), although it officially does not exist (Noel \emph{et al.} 2005, PMID 15634993)
+\item 3 entries of \emph{Trichomonas} (\emph{T. vaginalis}, and its family and genus)
+\item 1 entry of \emph{Candida} (\emph{C.  krusei}), that is not (yet) in the Catalogue of Life
+\item 1 entry of \emph{Blastocystis} (\emph{B.  hominis}), although it officially does not exist (Noel \emph{et al.} 2005, PMID 15634993)
+\item 1 entry of \emph{Moraxella} (\emph{M. catarrhalis}), which was formally named \emph{Branhamella catarrhalis} (Catlin, 1970) though this change was never accepted within the field of clinical microbiology
 \item 5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)
 \item 6 families under the Enterobacterales order, according to Adeolu \emph{et al.} (2016, PMID 27620848), that are not (yet) in the Catalogue of Life
 }
@@ -65,12 +66,12 @@ For convenience, some entries were added manually:
 
 This data set is available as 'flat file' for use even without \R - you can find the file here:
 \itemize{
-\item \url{https://github.com/msberends/AMR/raw/master/data-raw/microorganisms.txt}
+\item \url{https://github.com/msberends/AMR/raw/main/data-raw/microorganisms.txt}
 }
 
 The file in \R format (with preserved data structure) can be found here:
 \itemize{
-\item \url{https://github.com/msberends/AMR/raw/master/data/microorganisms.rda}
+\item \url{https://github.com/msberends/AMR/raw/main/data/microorganisms.rda}
 }
 }
 }
@@ -84,7 +85,7 @@ As of February 2020, the regularly augmented LPSN database at DSMZ is the basis 
 \section{Catalogue of Life}{
 
 \if{html}{\figure{logo_col.png}{options: height=40px style=margin-bottom:5px} \cr}
-This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, \url{http://www.catalogueoflife.org}). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, \href{https://lpsn.dsmz.de}{lpsn.dsmz.de}). This supplementation is needed until the \href{https://github.com/CatalogueOfLife/general}{CoL+ project} is finished, which we await.
+This package contains the complete taxonomic tree of almost all microorganisms (~71,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, \url{http://www.catalogueoflife.org}). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, \href{https://lpsn.dsmz.de}{lpsn.dsmz.de}). This supplementation is needed until the \href{https://github.com/CatalogueOfLife/general}{CoL+ project} is finished, which we await.
 
 \link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which versions of the CoL and LPSN were included in this package with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}.
 }

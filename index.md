@@ -6,7 +6,7 @@
 
 `AMR` is a free, open-source and independent [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.
 
-After installing this package, R knows [**~70,000 distinct microbial species**](./reference/microorganisms.html) and all [**~550 antibiotic, antimycotic and antiviral drugs**](./reference/antibiotics.html) by name and code (including ATC, EARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data. Antimicrobial names and group names are available in Danish, Dutch, English, French, German, Italian, Portuguese and Spanish.
+After installing this package, R knows [**~71,000 distinct microbial species**](./reference/microorganisms.html) and all [**~560 antibiotic, antimycotic and antiviral drugs**](./reference/antibiotics.html) by name and code (including ATC, EARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data. Antimicrobial names and group names are available in Danish, Dutch, English, French, German, Italian, Portuguese and Spanish.
 
 This package is [fully independent of any other R package](https://en.wikipedia.org/wiki/Dependency_hell) and works on Windows, macOS and Linux with all versions of R since R-3.0.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl), in collaboration with non-profit organisations [Certe Medical Diagnostics and Advice Foundation](https://www.certe.nl) and [University Medical Center Groningen](https://www.umcg.nl). This R package is [actively maintained](./news) and is free software (see [Copyright](#copyright)).
 
@@ -110,9 +110,9 @@ It will be downloaded and installed automatically. For RStudio, click on the men
 
 #### Latest development version
 
-[![R-code-check](https://github.com/msberends/AMR/workflows/R-code-check/badge.svg?branch=master)](https://codecov.io/gh/msberends/AMR?branch=master)
+[![R-code-check](https://github.com/msberends/AMR/workflows/R-code-check/badge.svg?branch=main)](https://codecov.io/gh/msberends/AMR?branch=main)
 [![CodeFactor](https://www.codefactor.io/repository/github/msberends/amr/badge)](https://www.codefactor.io/repository/github/msberends/amr)
-[![Codecov](https://codecov.io/gh/msberends/AMR/branch/master/graph/badge.svg)](https://codecov.io/gh/msberends/AMR?branch=master)
+[![Codecov](https://codecov.io/gh/msberends/AMR/branch/main/graph/badge.svg)](https://codecov.io/gh/msberends/AMR?branch=main)
 
 The latest and unpublished development version can be installed from GitHub in two ways:
 
@@ -132,7 +132,7 @@ The latest and unpublished development version can be installed from GitHub in t
    
    After this, you can install and update this `AMR` package like any official release (e.g., using `install.packages("AMR")` or in RStudio via *Tools* > *Check for Package Updates...*).
 
-You can also download the latest build from our repository: <https://github.com/msberends/AMR/raw/master/data-raw/AMR_latest.tar.gz>
+You can also download the latest build from our repository: <https://github.com/msberends/AMR/raw/main/data-raw/AMR_latest.tar.gz>
 
 ### Get started
 

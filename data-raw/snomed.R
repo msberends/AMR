@@ -40,6 +40,7 @@ vctr <- unique(unlist(strsplit(c(microorganisms$fullname, microorganisms.old$ful
 vctr <- tolower(vctr[vctr %like% "^[a-z]+$"])
 
 # remove all parts of the name that are no valid values in genera, species or subspecies
+# this takes ~20 seconds
 snomed <- snomed %>% 
   mutate(fullname = vapply(FUN.VALUE = character(1),
                            # split on space and/or comma
@@ -53,6 +54,8 @@ snomed_keep <- snomed %>%
   group_by(fullname_lower = fullname) %>% 
   summarise(snomed = list(snomed))
 
+message(nrow(snomed_keep), " MO's will get a SNOMED code.")
+
 # save to microorganisms data set
 microorganisms <- microorganisms %>%
   # remove old snomed
@@ -64,6 +67,8 @@ microorganisms <- microorganisms %>%
   # remove dummy var
   select(-fullname_lower) %>% 
   AMR:::dataset_UTF8_to_ASCII()
-usethis::use_data(microorganisms, overwrite = TRUE, compress = "xz")
 
 # don't forget to update the version number in SNOMED_VERSION in ./R/globals.R!
+
+# usethis::use_data(microorganisms, overwrite = TRUE, version = 2, compress = "xz")
+

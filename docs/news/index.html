@@ -92,7 +92,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9050</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9051</span>
       </span>
     </div>
 
@@ -240,12 +240,12 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1719050" class="section level1">
-<h1 class="page-header" data-toc-text="1.7.1.9050">
-<a href="#amr-1719050" class="anchor" aria-hidden="true"></a><small> Unreleased </small><code>AMR</code> 1.7.1.9050</h1>
-<div id="last-updated-5-october-2021" class="section level2">
+    <div id="amr-1719051" class="section level1">
+<h1 class="page-header" data-toc-text="1.7.1.9051">
+<a href="#amr-1719051" class="anchor" aria-hidden="true"></a><small> Unreleased </small><code>AMR</code> 1.7.1.9051</h1>
+<div id="last-updated-6-october-2021" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-5-october-2021" class="anchor" aria-hidden="true"></a><small>Last updated: 5 October 2021</small>
+<a href="#last-updated-6-october-2021" class="anchor" aria-hidden="true"></a><small>Last updated: 6 October 2021</small>
 </h2>
 <div id="breaking-changes" class="section level3">
 <h3 class="hasAnchor">
@@ -264,7 +264,8 @@
 <div id="changed" class="section level3">
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor" aria-hidden="true"></a>Changed</h3>
-<ul><li>The <code>antibiotics</code> data set now contains <strong>all ATC codes</strong> that are available through the <a href="https://www.whocc.no" class="external-link">WHOCC website</a>, regardless of drugs being present in more than one ATC group. This means that:
+<ul><li>Updated the bacterial taxonomy to 5 October 2021 (according to <a href="https://lpsn.dsmz.de" class="external-link">LPSN</a>), including all 11 new staphylococcal species named since 1 January last year</li>
+<li>The <code>antibiotics</code> data set now contains <strong>all ATC codes</strong> that are available through the <a href="https://www.whocc.no" class="external-link">WHOCC website</a>, regardless of drugs being present in more than one ATC group. This means that:
 <ul><li>Some drugs now contain multiple ATC codes (e.g., metronidazole contains 5)</li>
 <li>
 <code>antibiotics$atc</code> is now a <code>list</code> containing <code>character</code> vectors, and this <code>atc</code> column was moved to the 5th position of the <code>antibiotics</code> data set</li>
@@ -911,7 +912,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <h3 class="hasAnchor">
 <a href="#new-7" class="anchor" aria-hidden="true"></a>New</h3>
 <ul><li>Support for the newest <a href="https://www.eucast.org/clinical_breakpoints/" class="external-link">EUCAST Clinical Breakpoint Tables v.10.0</a>, valid from 1 January 2020. This affects translation of MIC and disk zones using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> and inferred resistance and susceptibility using <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>.</li>
-<li>The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2020 to translate MIC and disk diffusion values to R/SI: <a href="https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt" class="external-link uri">https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt</a>. This <strong>allows for machine reading these guidelines</strong>, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file used to process the EUCAST Clinical Breakpoints Excel file <a href="https://github.com/msberends/AMR/blob/master/data-raw/read_EUCAST.R" class="external-link">can be found here</a>.</li>
+<li>The repository of this package now contains a clean version of the EUCAST and CLSI guidelines from 2011-2020 to translate MIC and disk diffusion values to R/SI: <a href="https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt" class="external-link uri">https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt</a>. This <strong>allows for machine reading these guidelines</strong>, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. This file used to process the EUCAST Clinical Breakpoints Excel file <a href="https://github.com/msberends/AMR/blob/main/data-raw/read_EUCAST.R" class="external-link">can be found here</a>.</li>
 <li>Support for LOINC and SNOMED codes
 <ul><li>
 <p>Support for LOINC codes in the <code>antibiotics</code> data set. Use <code><a href="../reference/ab_property.html">ab_loinc()</a></code> to retrieve LOINC codes, or use a LOINC code for input in any <code>ab_*</code> function:</p>
@@ -1315,7 +1316,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li>All references to antibiotics in our package now use EARS-Net codes, like <code>AMX</code> for amoxicillin</li>
 <li>Functions <code>atc_certe</code>, <code>ab_umcg</code> and <code>atc_trivial_nl</code> have been removed</li>
 <li>All <code>atc_*</code> functions are superseded by <code>ab_*</code> functions</li>
-<li>All output will be translated by using an included translation file which <a href="https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv" class="external-link">can be viewed here</a>
+<li>All output will be translated by using an included translation file which <a href="https://github.com/msberends/AMR/blob/main/data-raw/translations.tsv" class="external-link">can be viewed here</a>
 </li>
 </ul></li>
 <li>Improvements to plotting AMR results with <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code>:
@@ -1347,7 +1348,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
   <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </li>
 </ul></li>
-<li>Removed all hardcoded EUCAST rules and replaced them with a new reference file which <a href="https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv" class="external-link">can be viewed here</a>
+<li>Removed all hardcoded EUCAST rules and replaced them with a new reference file which <a href="https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv" class="external-link">can be viewed here</a>
 </li>
 <li>Added ceftazidim intrinsic resistance to <em>Streptococci</em>
 </li>
@@ -2014,7 +2015,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <li>Added <a href="https://orcid.org" class="external-link">ORCID</a> of authors to DESCRIPTION file</li>
 <li>Added unit testing with the <code>testthat</code> package</li>
 <li>Added build tests for Linux and macOS using Travis CI (<a href="https://travis-ci.org/msberends/AMR" class="external-link uri">https://travis-ci.org/msberends/AMR</a>)</li>
-<li>Added line coverage checking using CodeCov (<a href="https://codecov.io/gh/msberends/AMR/tree/master/R" class="external-link uri">https://codecov.io/gh/msberends/AMR/tree/master/R</a>)</li>
+<li>Added line coverage checking using CodeCov (<a href="https://codecov.io/gh/msberends/AMR/tree/main/R" class="external-link uri">https://codecov.io/gh/msberends/AMR/tree/main/R</a>)</li>
 </ul></div>
 </div>
     <div id="amr-011" class="section level1">

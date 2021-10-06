@@ -99,13 +99,13 @@ To work with R, probably the best option is to use [RStudio](https://www.rstudio
 
 To import a data file, just click *Import Dataset* in the Environment tab:
     
-![](https://github.com/msberends/AMR/raw/master/docs/import1.png)
+![](https://github.com/msberends/AMR/raw/main/docs/import1.png)
 
 If additional packages are needed, RStudio will ask you if they should be installed on beforehand.
 
 In the the window that opens, you can define all options (parameters) that should be used for import and you're ready to go:
 
-![](https://github.com/msberends/AMR/raw/master/docs/import2.png)
+![](https://github.com/msberends/AMR/raw/main/docs/import2.png)
 
 If you want named variables to be imported as factors so it resembles SPSS more, use `as_factor()`.
 

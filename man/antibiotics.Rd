@@ -64,14 +64,14 @@ Synonyms (i.e. trade names) were derived from the Compound ID (\code{cid}) and c
 
 These data sets are available as 'flat files' for use even without \R - you can find the files here:
 \itemize{
-\item \url{https://github.com/msberends/AMR/raw/master/data-raw/antibiotics.txt}
-\item \url{https://github.com/msberends/AMR/raw/master/data-raw/antivirals.txt}
+\item \url{https://github.com/msberends/AMR/raw/main/data-raw/antibiotics.txt}
+\item \url{https://github.com/msberends/AMR/raw/main/data-raw/antivirals.txt}
 }
 
 Files in \R format (with preserved data structure) can be found here:
 \itemize{
-\item \url{https://github.com/msberends/AMR/raw/master/data/antibiotics.rda}
-\item \url{https://github.com/msberends/AMR/raw/master/data/antivirals.rda}
+\item \url{https://github.com/msberends/AMR/raw/main/data/antibiotics.rda}
+\item \url{https://github.com/msberends/AMR/raw/main/data/antivirals.rda}
 }
 }
 }

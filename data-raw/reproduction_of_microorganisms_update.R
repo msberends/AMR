@@ -23,8 +23,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-# Register at List of Prokaryotic names with Standing in Nomenclature (LPSN)
-# then got to https://lpsn.dsmz.de/downloads and download the latest CSV file.
+# Go to https://lpsn.dsmz.de/downloads (register first) and download the latest CSV file.
 
 library(tidyverse)
 library(AMR)
@@ -178,8 +177,7 @@ genera_without_mo_code <- updated_microorganisms %>%
   pull(genus) %>% 
   unique()
 
-genera_without_mo_code_abbr <- genera_without_mo_code %>% 
-  abbreviate_mo(5, prefix = "B_")
+genera_without_mo_code_abbr <- genera_without_mo_code %>% abbreviate_mo(5, prefix = "B_")
 genera_without_mo_code_abbr[genera_without_mo_code_abbr %in% microorganisms$mo] <- abbreviate_mo(genera_without_mo_code[genera_without_mo_code_abbr %in% microorganisms$mo], 6, prefix = "B_")
 genera_without_mo_code_abbr[genera_without_mo_code_abbr %in% microorganisms$mo] <- abbreviate_mo(genera_without_mo_code[genera_without_mo_code_abbr %in% microorganisms$mo], 7, prefix = "B_")
 # all unique??
@@ -377,41 +375,6 @@ MOs.old <- microorganisms.old %>%
   # clean up
   df_remove_nonASCII()
 
-# Keep old codes for translation ------------------------------------------
-
-# add removed microbial IDs to the internal translation table so old package versions keep working
-# MOs.translation <- microorganisms %>% 
-#   filter(!mo %in% MOs$mo) %>%
-#   select(mo, fullname) %>%
-#   left_join(new_synonyms) %>% 
-#   left_join(MOs %>% transmute(fullname_new = fullname, mo2 = as.character(mo))) %>% 
-#   select(mo_old = mo, mo_new = mo2) %>% 
-#   distinct()
-# MOs.translation <- AMR:::microorganisms.translation %>% 
-#   left_join(MOs.translation %>% select(mo_new_update = mo_new, mo_new = mo_old)) %>% 
-#   mutate(mo_new = as.character(ifelse(!is.na(mo_new_update), mo_new_update, mo_new))) %>% 
-#   select(-mo_new_update) %>% 
-#   bind_rows(
-#     # old IDs used in microorganisms.codes must put in here as well
-#     microorganisms.codes %>%
-#       filter(!mo %in% MOs$mo) %>%
-#       transmute(mo_old = mo, fullname = mo_name(mo)) %>%
-#       left_join(MOs.old %>%
-#                   select(fullname, fullname_new)) %>%
-#       left_join(MOs %>%
-#                   select(mo_new = mo, fullname_new = fullname)) %>%
-#       transmute(mo_old = as.character(mo_old), mo_new)) %>% 
-#   arrange(mo_old) %>% 
-#   filter(mo_old != mo_new,
-#          !mo_old %in% MOs$mo) %>%
-#   left_join(., ., 
-#             by = c("mo_new" = "mo_old"), 
-#             suffix = c("", ".2")) %>%
-#   mutate(mo_new = ifelse(!is.na(mo_new.2), mo_new.2, mo_new)) %>% 
-#   distinct(mo_old, mo_new) %>% 
-#   # clean up
-#   df_remove_nonASCII()
-
 message("microorganisms new:     ", sum(!MOs$fullname %in% c(microorganisms$fullname, MOs.old$fullname)))
 message("microorganisms renamed: ", sum(!MOs.old$fullname %in% microorganisms.old$fullname))
 
@@ -420,33 +383,49 @@ message("microorganisms renamed: ", sum(!MOs.old$fullname %in% microorganisms.ol
 
 # class <mo>
 class(MOs$mo) <- c("mo", "character")
-class(MOs.translation$mo_new) <- c("mo", "character")
 
 microorganisms <- MOs
 microorganisms.old <- MOs.old
-# microorganisms.translation <- MOs.translation
+
+# --- Moraxella catarrhalis was named Branhamella catarrhalis (Catlin, 1970), but this is unaccepted in clinical microbiology
+# we keep them both
+microorganisms <- microorganisms %>%
+  bind_rows(microorganisms %>%
+              filter(fullname == "Branhamella catarrhalis") %>%
+              mutate(mo = "B_MRXLL_CTRR",
+                     fullname = "Moraxella catarrhalis",
+                     genus = "Moraxella",
+                     ref = "Henriksen et al., 1968",
+                     species_id = "a374f6f0868e05f9c0f5077b60ee0a6c",
+                     snomed = as.list(24226003))) %>% 
+  arrange(fullname) %>% 
+  df_remove_nonASCII()
+microorganisms.old <- microorganisms.old %>% 
+  filter(fullname != "Moraxella catarrhalis")
+# ---
+
+# (this would be a great moment to run data-raw/snomed.R as well)
 
 # on the server, do:
 usethis::use_data(microorganisms, overwrite = TRUE, version = 2, compress = "xz")
-usethis::use_data(microorganisms.old, overwrite = TRUE, version = 2)
-# saveRDS(microorganisms.translation, file = "data-raw/microorganisms.translation.rds", version = 2)
+usethis::use_data(microorganisms.old, overwrite = TRUE, version = 2, compress = "xz")
 rm(microorganisms)
 rm(microorganisms.old)
-rm(microorganisms.translation)
-# to save microorganisms.translation internally to the package
-devtools::load_all(".")
-source("data-raw/_internals.R")
+
+# DON'T FORGET TO UPDATE R/globals.R!
 
 # load new data sets
 devtools::load_all(".")
 
 # reset previously changed mo codes
 rsi_translation$mo <- as.mo(rsi_translation$mo, language = NULL)
-usethis::use_data(rsi_translation, overwrite = TRUE, version = 2)
+usethis::use_data(rsi_translation, overwrite = TRUE, version = 2, compress = "xz")
 rm(rsi_translation)
 
 microorganisms.codes$mo <- as.mo(microorganisms.codes$mo, language = NULL)
-usethis::use_data(microorganisms.codes, overwrite = TRUE, version = 2)
+# new NAs introduced?
+any(is.na(microorganisms.codes$mo))
+usethis::use_data(microorganisms.codes, overwrite = TRUE, version = 2, compress = "xz")
 rm(microorganisms.codes)
 
 example_isolates$mo <- as.mo(example_isolates$mo, language = NULL)

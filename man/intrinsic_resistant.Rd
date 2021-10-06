@@ -18,7 +18,7 @@ intrinsic_resistant
 Data set containing defined intrinsic resistance by EUCAST of all bug-drug combinations.
 }
 \details{
-The repository of this \code{AMR} package contains a file comprising this exact data set: \url{https://github.com/msberends/AMR/blob/master/data-raw/intrinsic_resistant.txt}. This file \strong{allows for machine reading EUCAST guidelines about intrinsic resistance}, which is almost impossible with the Excel and PDF files distributed by EUCAST. The file is updated automatically.
+The repository of this \code{AMR} package contains a file comprising this exact data set: \url{https://github.com/msberends/AMR/blob/main/data-raw/intrinsic_resistant.txt}. This file \strong{allows for machine reading EUCAST guidelines about intrinsic resistance}, which is almost impossible with the Excel and PDF files distributed by EUCAST. The file is updated automatically.
 
 This data set is based on \href{https://www.eucast.org/expert_rules_and_intrinsic_resistance/}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2} (2020).
 }

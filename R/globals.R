@@ -54,7 +54,7 @@ CATALOGUE_OF_LIFE <- list(
   version = "Catalogue of Life: {year} Annual Checklist",
   url_CoL = "http://www.catalogueoflife.org/col/",
   url_LPSN = "https://lpsn.dsmz.de",
-  yearmonth_LPSN = "March 2021"
+  yearmonth_LPSN = "5 October 2021"
 )
 
 globalVariables(c(".rowid",

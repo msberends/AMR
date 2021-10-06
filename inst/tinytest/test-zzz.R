@@ -99,7 +99,9 @@ for (i in seq_len(length(import_functions))) {
   fn <- names(import_functions)[i]
   pkg <- unname(import_functions[i])
   # function should exist in foreign pkg namespace
-  if (AMR:::pkg_is_available(pkg, also_load = FALSE)) {
+  if (AMR:::pkg_is_available(pkg,
+                             also_load = FALSE,
+                             min_version = if (pkg == "dplyr") "1.0.0" else NULL)) {
     tst <- !is.null(AMR:::import_fn(name = fn, pkg = pkg, error_on_fail = FALSE))
     expect_true(tst,
                 info = ifelse(tst,

@@ -95,7 +95,9 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
                                            "pulvereri", "rostri", "saccharolyticus", "saprophyticus",
                                            "sciuri", "simulans", "stepanovicii", "succinus",
                                            "ureilyticus",
-                                           "vitulinus", "vitulus", "warneri", "xylosus")
+                                           "vitulinus", "vitulus", "warneri", "xylosus",
+                                           "caledonicus", "canis",
+                                           "durrellii", "lloydii")
                    | (MO_staph$species == "schleiferi" & MO_staph$subspecies %in% c("schleiferi", ""))),
              "mo", drop = TRUE]
   } else if (type == "CoPS") {
@@ -105,7 +107,8 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
                                            "delphini", "lutrae",
                                            "hyicus", "intermedius",
                                            "pseudintermedius", "pseudointermedius",
-                                           "schweitzeri", "simiae")
+                                           "schweitzeri", "simiae",
+                                           "roterodami")
                    | (MO_staph$species == "schleiferi" & MO_staph$subspecies == "coagulans")),
              "mo", drop = TRUE]
   }

@@ -201,7 +201,8 @@ as.mo <- function(x,
                & isFALSE(Becker)
                & isFALSE(Lancefield), error = function(e) FALSE)) {
     # to improve speed, special case for taxonomically correct full names (case-insensitive)
-    return(MO_lookup[match(gsub(".*(unknown ).*", "unknown name", tolower(x), perl = TRUE), MO_lookup$fullname_lower), "mo", drop = TRUE])
+    return(set_clean_class(MO_lookup[match(gsub(".*(unknown ).*", "unknown name", tolower(x), perl = TRUE), MO_lookup$fullname_lower), "mo", drop = TRUE],
+                           new_class = c("mo", "character")))
   }
 
   if (!is.null(reference_df)
@@ -233,7 +234,7 @@ as.mo <- function(x,
                      info = info,
                      ...)
   }
-
+  
   set_clean_class(y,
                   new_class = c("mo", "character"))
 }
@@ -1499,20 +1500,23 @@ exec_as.mo <- function(x,
     # - Becker et al. 2014, PMID 25278577
     # - Becker et al. 2019, PMID 30872103
     # - Becker et al. 2020, PMID 32056452
-    post_Becker <- character(0) # 2020-10-20 currently all are mentioned in above papers (otherwise uncomment the section below)
+    post_Becker <- c("caledonicus", "canis", "durrellii", "lloydii", "roterodami")
     
     # nolint start
-    # if (any(x %in% MO_lookup[which(MO_lookup$species %in% post_Becker), property])) {
-    #   warning_("Becker ", font_italic("et al."), " (2014, 2019) does not contain these species named after their publication: ",
-    #            font_italic(paste("S.",
-    #                              sort(mo_species(unique(x[x %in% MO_lookup[which(MO_lookup$species %in% post_Becker), property]]))),
-    #                              collapse = ", ")),
-    #            ".",
-    #            call = FALSE,
-    #            immediate = TRUE)
-    # }
+    # comment below code if all staphylococcal species are categorised as CoNS/CoPS
+    if (any(x %in% MO_lookup[which(MO_lookup$species %in% post_Becker), property])) {
+      if (message_not_thrown_before("as.mo_becker")) {
+        warning_("Becker ", font_italic("et al."), " (2014, 2019, 2020) does not contain these species named after their publication: ",
+                 font_italic(paste("S.",
+                                   sort(mo_species(unique(x[x %in% MO_lookup[which(MO_lookup$species %in% post_Becker), property]]))),
+                                   collapse = ", ")),
+                 ". Categorisation to CoNS/CoPS was taken from the original scientific publication(s).",
+                 call = FALSE,
+                 immediate = TRUE)
+      }
+    }
     # nolint end
-
+    
     # 'MO_CONS' and 'MO_COPS' are <mo> vectors created in R/zzz.R
     CoNS <- MO_lookup[which(MO_lookup$mo %in% MO_CONS), property, drop = TRUE]
     x[x %in% CoNS] <- lookup(mo == "B_STPHY_CONS", uncertainty = -1)
@@ -1916,7 +1920,7 @@ print.mo_uncertainties <- function(x, ...) {
     txt <- paste(txt,
                  paste0(
                    strwrap(
-                     paste0(font_red('"', x[i, ]$input, '"', collapse = ""),
+                     paste0('"', x[i, ]$input, '"',
                             " -> ",
                             paste0(font_bold(font_italic(x[i, ]$fullname)),
                                    ifelse(!is.na(x[i, ]$renamed_to), paste(", renamed to", font_italic(x[i, ]$renamed_to)), ""),
@@ -2047,6 +2051,8 @@ parse_and_convert <- function(x) {
 }
 
 replace_old_mo_codes <- function(x, property) {
+  # this function transform old MO codes to current codes, such as:
+  # B_ESCH_COL (AMR v0.5.0) -> B_ESCHR_COLI
   ind <- x %like_case% "^[A-Z]_[A-Z_]+$" & !x %in% MO_lookup$mo
   if (any(ind)) {
     # get the ones that match
@@ -2066,6 +2072,12 @@ replace_old_mo_codes <- function(x, property) {
                                                                MO_lookup$fullname_lower %like_case% name]
                                      if (length(results) > 1) {
                                        all_direct_matches <<- FALSE
+                                     } else if (length(results) == 0) {
+                                       # not found, so now search in old taxonomic names
+                                       results <- MO.old_lookup$fullname_new[MO.old_lookup$fullname_lower %like% name]
+                                       if (length(results) > 0) {
+                                         results <- MO_lookup$mo[match(results, MO_lookup$fullname)]
+                                       }
                                      }
                                      results[1L]
                                    }), use.names = FALSE)
@@ -2073,6 +2085,8 @@ replace_old_mo_codes <- function(x, property) {
     # assign on places where a match was found
     x[ind] <- solved
     n_matched <- length(affected[!is.na(affected)])
+    n_solved <- length(affected[!is.na(solved)])
+    n_unsolved <- length(affected[is.na(solved)])
     n_unique <- length(affected_unique[!is.na(affected_unique)])
     if (n_unique < n_matched) {
       n_unique <- paste0(n_unique, " unique, ")
@@ -2086,12 +2100,17 @@ replace_old_mo_codes <- function(x, property) {
                       "Please update your MO codes with `as.mo()` to increase speed."),
                call = FALSE)
     } else {
-      warning_(paste0(n_matched, " old MO code", ifelse(n_matched == 1, "", "s"), 
-                      " (", n_unique, "from a previous AMR package version) ", 
-                      ifelse(n_matched == 1, "was", "were"), 
+      warning_(paste0("The input contained ", n_matched,
+                      " old MO code", ifelse(n_matched == 1, "", "s"),
+                      " (", n_unique, "from a previous AMR package version). ",
+                      n_solved, " old MO code", ifelse(n_solved == 1, "", "s"), 
+                      ifelse(n_solved == 1, " was", " were"), 
                       ifelse(all_direct_matches, " updated ", font_bold(" guessed ")),
-                      "to ", ifelse(n_matched == 1, "a ", ""), 
-                      "currently used MO code", ifelse(n_matched == 1, "", "s"), "."),
+                      "to ", ifelse(n_solved == 1, "a ", ""), 
+                      "currently used MO code", ifelse(n_solved == 1, "", "s"),
+                      ifelse(n_unsolved > 0,
+                             paste0(" and ", n_unsolved, " old MO code", ifelse(n_unsolved == 1, "", "s"), " could not be updated."),
+                             ".")),
                call = FALSE)
     }
   }

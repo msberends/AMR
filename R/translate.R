@@ -27,7 +27,7 @@
 #'
 #' For language-dependent output of AMR functions, like [mo_name()], [mo_gramstain()], [mo_type()] and [ab_name()].
 #' @inheritSection lifecycle Stable Lifecycle
-#' @details Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: <https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv>. This file will be read by all functions where a translated output can be desired, like all [`mo_*`][mo_property()] functions (such as [mo_name()], [mo_gramstain()], [mo_type()], etc.) and [`ab_*`][ab_property()] functions (such as [ab_name()], [ab_group()], etc.). 
+#' @details Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: <https://github.com/msberends/AMR/blob/main/data-raw/translations.tsv>. This file will be read by all functions where a translated output can be desired, like all [`mo_*`][mo_property()] functions (such as [mo_name()], [mo_gramstain()], [mo_type()], etc.) and [`ab_*`][ab_property()] functions (such as [ab_name()], [ab_group()], etc.). 
 #'
 #' Currently supported languages are: `r vector_and(gsub(";.*", "", ISOcodes::ISO_639_2[which(ISOcodes::ISO_639_2$Alpha_2 %in% LANGUAGES_SUPPORTED), "Name"]), quotes = FALSE)`. All these languages have translations available for all antimicrobial agents and colloquial microorganism names.
 #'

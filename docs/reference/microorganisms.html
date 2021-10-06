@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Data Set with 70,026 Microorganisms — microorganisms • AMR (for R)</title>
+<title>Data Set with 70,760 Microorganisms — microorganisms • AMR (for R)</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   <script src="../extra.js"></script>
 
-<meta property="og:title" content="Data Set with 70,026 Microorganisms — microorganisms" />
-<meta property="og:description" content="A data set containing the microbial taxonomy, last updated in March 2021, of six kingdoms from the Catalogue of Life (CoL) and the List of Prokaryotic names with Standing in Nomenclature (LPSN). MO codes can be looked up using as.mo()." />
+<meta property="og:title" content="Data Set with 70,760 Microorganisms — microorganisms" />
+<meta property="og:description" content="A data set containing the full microbial taxonomy (last updated: 5 October 2021) of six kingdoms from the Catalogue of Life (CoL) and the List of Prokaryotic names with Standing in Nomenclature (LPSN). MO codes can be looked up using as.mo()." />
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@msberends" />
@@ -93,7 +93,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9030</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9051</span>
       </span>
     </div>
 
@@ -237,13 +237,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Data Set with 70,026 Microorganisms</h1>
+    <h1>Data Set with 70,760 Microorganisms</h1>
     <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/data.R'><code>R/data.R</code></a></small>
     <div class="hidden name"><code>microorganisms.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A data set containing the microbial taxonomy, last updated in March 2021, of six kingdoms from the Catalogue of Life (CoL) and the List of Prokaryotic names with Standing in Nomenclature (LPSN). MO codes can be looked up using <code><a href='as.mo.html'>as.mo()</a></code>.</p>
+    <p>A data set containing the full microbial taxonomy (<strong>last updated: 5 October 2021</strong>) of six kingdoms from the Catalogue of Life (CoL) and the List of Prokaryotic names with Standing in Nomenclature (LPSN). MO codes can be looked up using <code><a href='as.mo.html'>as.mo()</a></code>.</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='va'>microorganisms</span></code></pre></div>
@@ -251,7 +251,7 @@
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with 70,026 observations and 16 variables:</p><ul>
+    <p>A <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with 70,760 observations and 16 variables:</p><ul>
 <li><p><code>mo</code><br /> ID of microorganism as used by this package</p></li>
 <li><p><code>fullname</code><br /> Full name, like <code>"Escherichia coli"</code></p></li>
 <li><p><code>kingdom</code>, <code>phylum</code>, <code>class</code>, <code>order</code>, <code>family</code>, <code>genus</code>, <code>species</code>, <code>subspecies</code><br /> Taxonomic rank of the microorganism</p></li>
@@ -269,7 +269,7 @@
 <li><p>Annual Checklist (public online taxonomic database), <a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a></p></li>
 </ul>
 
-<p>List of Prokaryotic names with Standing in Nomenclature (March 2021) as currently implemented in this <code>AMR</code> package:</p><ul>
+<p>List of Prokaryotic names with Standing in Nomenclature (5 October 2021) as currently implemented in this <code>AMR</code> package:</p><ul>
 <li><p>Parte, A.C., Sarda Carbasse, J., Meier-Kolthoff, J.P., Reimer, L.C. and Goker, M. (2020). List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ. International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; doi: <a href='https://doi.org/10.1099/ijsem.0.004332'>10.1099/ijsem.0.004332</a></p></li>
 <li><p>Parte, A.C. (2018). LPSN — List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; doi: <a href='https://doi.org/10.1099/ijsem.0.002786'>10.1099/ijsem.0.002786</a></p></li>
 <li><p>Parte, A.C. (2014). LPSN — List of Prokaryotic names with Standing in Nomenclature. Nucleic Acids Research, 42, Issue D1, D613–D616; doi: <a href='https://doi.org/10.1093/nar/gkt1111'>10.1093/nar/gkt1111</a></p></li>
@@ -291,9 +291,10 @@
 <p>For convenience, some entries were added manually:</p><ul>
 <li><p>11 entries of <em>Streptococcus</em> (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)</p></li>
 <li><p>2 entries of <em>Staphylococcus</em> (coagulase-negative (CoNS) and coagulase-positive (CoPS))</p></li>
-<li><p>3 entries of <em>Trichomonas</em> (<em>Trichomonas vaginalis</em>, and its family and genus)</p></li>
-<li><p>1 entry of <em>Candida</em> (<em>Candida krusei</em>), that is not (yet) in the Catalogue of Life</p></li>
-<li><p>1 entry of <em>Blastocystis</em> (<em>Blastocystis hominis</em>), although it officially does not exist (Noel <em>et al.</em> 2005, PMID 15634993)</p></li>
+<li><p>3 entries of <em>Trichomonas</em> (<em>T. vaginalis</em>, and its family and genus)</p></li>
+<li><p>1 entry of <em>Candida</em> (<em>C.  krusei</em>), that is not (yet) in the Catalogue of Life</p></li>
+<li><p>1 entry of <em>Blastocystis</em> (<em>B.  hominis</em>), although it officially does not exist (Noel <em>et al.</em> 2005, PMID 15634993)</p></li>
+<li><p>1 entry of <em>Moraxella</em> (<em>M. catarrhalis</em>), which was formally named <em>Branhamella catarrhalis</em> (Catlin, 1970) though this change was never accepted within the field of clinical microbiology</p></li>
 <li><p>5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)</p></li>
 <li><p>6 families under the Enterobacterales order, according to Adeolu <em>et al.</em> (2016, PMID 27620848), that are not (yet) in the Catalogue of Life</p></li>
 </ul>
@@ -303,11 +304,11 @@
 
 
 <p>This data set is available as 'flat file' for use even without <span style="R">R</span> - you can find the file here:</p><ul>
-<li><p><a href='https://github.com/msberends/AMR/raw/master/data-raw/microorganisms.txt'>https://github.com/msberends/AMR/raw/master/data-raw/microorganisms.txt</a></p></li>
+<li><p><a href='https://github.com/msberends/AMR/raw/main/data-raw/microorganisms.txt'>https://github.com/msberends/AMR/raw/main/data-raw/microorganisms.txt</a></p></li>
 </ul>
 
 <p>The file in <span style="R">R</span> format (with preserved data structure) can be found here:</p><ul>
-<li><p><a href='https://github.com/msberends/AMR/raw/master/data/microorganisms.rda'>https://github.com/msberends/AMR/raw/master/data/microorganisms.rda</a></p></li>
+<li><p><a href='https://github.com/msberends/AMR/raw/main/data/microorganisms.rda'>https://github.com/msberends/AMR/raw/main/data/microorganisms.rda</a></p></li>
 </ul>
 
 
@@ -322,7 +323,7 @@
     
 
 <p><img src='figures/logo_col.png' height=40px style=margin-bottom:5px /> <br />
-This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, <a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, <a href='https://lpsn.dsmz.de'>lpsn.dsmz.de</a>). This supplementation is needed until the <a href='https://github.com/CatalogueOfLife/general'>CoL+ project</a> is finished, which we await.</p>
+This package contains the complete taxonomic tree of almost all microorganisms (~71,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, <a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, <a href='https://lpsn.dsmz.de'>lpsn.dsmz.de</a>). This supplementation is needed until the <a href='https://github.com/CatalogueOfLife/general'>CoL+ project</a> is finished, which we await.</p>
 <p><a href='catalogue_of_life.html'>Click here</a> for more information about the included taxa. Check which versions of the CoL and LPSN were included in this package with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version()</a></code>.</p>
     <h2 class="hasAnchor" id="reference-data-publicly-available"><a class="anchor" href="#reference-data-publicly-available"></a>Reference Data Publicly Available</h2>
 
@@ -349,7 +350,7 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/" class="external-link">Matthijs S. Berends</a>, <a href="https://www.rug.nl/staff/c.f.luz/" class="external-link">Christian F. Luz</a>, <a href="https://www.rug.nl/staff/a.w.friedrich/" class="external-link">Alexander W. Friedrich</a>, <a href="https://www.rug.nl/staff/b.sinha/" class="external-link">Bhanu N. M. Sinha</a>, <a href="https://www.rug.nl/staff/c.j.albers/" class="external-link">Casper J. Albers</a>, <a href="https://www.rug.nl/staff/c.glasner/" class="external-link">Corinna Glasner</a>.</p></p>
+  <p><p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/" class="external-link">Matthijs S. Berends</a>, Christian F. Luz.</p></p>
 </div>
 
 <div class="pkgdown">

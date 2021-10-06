@@ -207,7 +207,7 @@ expect_equal(suppressWarnings(as.character(as.mo("staaur extratest", allow_uncer
 expect_message(as.mo("e coli extra_text", allow_uncertain = TRUE))
 expect_equal(suppressMessages(as.character(as.mo("unexisting aureus", allow_uncertain = 3))), "B_STPHY_AURS")
 expect_equal(suppressMessages(as.character(as.mo("unexisting staphy", allow_uncertain = 3))), "B_STPHY_COPS")
-expect_equal(suppressMessages(as.character(as.mo(c("s aur THISISATEST", "Staphylococcus aureus unexisting"), allow_uncertain = 3))), c("B_STPHY_AURS_ANRB", "B_STPHY_AURS_ANRB"))
+expect_equal(suppressMessages(as.character(as.mo(c("s aure THISISATEST", "Staphylococcus aureus unexisting"), allow_uncertain = 3))), c("B_STPHY_AURS_AURS", "B_STPHY_AURS_AURS"))
 
 # predefined reference_df
 expect_equal(as.character(as.mo("TestingOwnID",

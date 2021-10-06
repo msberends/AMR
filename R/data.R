@@ -60,13 +60,13 @@
 #' ## Direct download
 #' These data sets are available as 'flat files' for use even without \R - you can find the files here:
 #' 
-#' * <https://github.com/msberends/AMR/raw/master/data-raw/antibiotics.txt>
-#' * <https://github.com/msberends/AMR/raw/master/data-raw/antivirals.txt>
+#' * <https://github.com/msberends/AMR/raw/main/data-raw/antibiotics.txt>
+#' * <https://github.com/msberends/AMR/raw/main/data-raw/antivirals.txt>
 #' 
 #' Files in \R format (with preserved data structure) can be found here:
 #' 
-#' * <https://github.com/msberends/AMR/raw/master/data/antibiotics.rda>
-#' * <https://github.com/msberends/AMR/raw/master/data/antivirals.rda>
+#' * <https://github.com/msberends/AMR/raw/main/data/antibiotics.rda>
+#' * <https://github.com/msberends/AMR/raw/main/data/antivirals.rda>
 #' @source World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): <https://www.whocc.no/atc_ddd_index/>
 #'
 #' WHONET 2019 software: <http://www.whonet.org/software.html>
@@ -83,7 +83,7 @@
 
 #' Data Set with `r format(nrow(microorganisms), big.mark = ",")` Microorganisms
 #'
-#' A data set containing the microbial taxonomy, last updated in `r CATALOGUE_OF_LIFE$yearmonth_LPSN`, of six kingdoms from the Catalogue of Life (CoL) and the List of Prokaryotic names with Standing in Nomenclature (LPSN). MO codes can be looked up using [as.mo()].
+#' A data set containing the full microbial taxonomy (**last updated: `r CATALOGUE_OF_LIFE$yearmonth_LPSN`**) of `r nr2char(length(unique(microorganisms$kingdom[!microorganisms$kingdom %like% "unknown"])))` kingdoms from the Catalogue of Life (CoL) and the List of Prokaryotic names with Standing in Nomenclature (LPSN). MO codes can be looked up using [as.mo()].
 #' @inheritSection catalogue_of_life Catalogue of Life
 #' @format A [data.frame] with `r format(nrow(microorganisms), big.mark = ",")` observations and `r ncol(microorganisms)` variables:
 #' - `mo`\cr ID of microorganism as used by this package
@@ -105,20 +105,21 @@
 #' 
 #' - 11 entries of *Streptococcus* (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)
 #' - 2 entries of *Staphylococcus* (coagulase-negative (CoNS) and coagulase-positive (CoPS))
-#' - 3 entries of *Trichomonas* (*Trichomonas vaginalis*, and its family and genus)
-#' - 1 entry of *Candida* (*Candida krusei*), that is not (yet) in the Catalogue of Life
-#' - 1 entry of *Blastocystis* (*Blastocystis hominis*), although it officially does not exist (Noel *et al.* 2005, PMID 15634993)
+#' - 3 entries of *Trichomonas* (*T. vaginalis*, and its family and genus)
+#' - 1 entry of *Candida* (*C.  krusei*), that is not (yet) in the Catalogue of Life
+#' - 1 entry of *Blastocystis* (*B.  hominis*), although it officially does not exist (Noel *et al.* 2005, PMID 15634993)
+#' - 1 entry of *Moraxella* (*M. catarrhalis*), which was formally named *Branhamella catarrhalis* (Catlin, 1970) though this change was never accepted within the field of clinical microbiology
 #' - 5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)
 #' - 6 families under the Enterobacterales order, according to Adeolu *et al.* (2016, PMID 27620848), that are not (yet) in the Catalogue of Life
 #' 
 #' ## Direct download
 #' This data set is available as 'flat file' for use even without \R - you can find the file here:
 #' 
-#' * <https://github.com/msberends/AMR/raw/master/data-raw/microorganisms.txt>
+#' * <https://github.com/msberends/AMR/raw/main/data-raw/microorganisms.txt>
 #' 
 #' The file in \R format (with preserved data structure) can be found here:
 #' 
-#' * <https://github.com/msberends/AMR/raw/master/data/microorganisms.rda>
+#' * <https://github.com/msberends/AMR/raw/main/data/microorganisms.rda>
 #' @section About the Records from LPSN (see *Source*):
 #' The List of Prokaryotic names with Standing in Nomenclature (LPSN) provides comprehensive information on the nomenclature of prokaryotes. LPSN is a free to use service founded by Jean P. Euzeby in 1997 and later on maintained by Aidan C. Parte.
 #' 
@@ -251,7 +252,7 @@
 #' - `breakpoint_S`\cr Lowest MIC value or highest number of millimetres that leads to "S"
 #' - `breakpoint_R`\cr Highest MIC value or lowest number of millimetres that leads to "R"
 #' - `uti`\cr A [logical] value (`TRUE`/`FALSE`) to indicate whether the rule applies to a urinary tract infection (UTI)
-#' @details The repository of this `AMR` package contains a file comprising this exact data set: <https://github.com/msberends/AMR/blob/master/data-raw/rsi_translation.txt>. This file **allows for machine reading EUCAST and CLSI guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. The file is updated automatically.
+#' @details The repository of this `AMR` package contains a file comprising this exact data set: <https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt>. This file **allows for machine reading EUCAST and CLSI guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. The file is updated automatically.
 #' @inheritSection AMR Reference Data Publicly Available
 #' @inheritSection AMR Read more on Our Website!
 #' @seealso [intrinsic_resistant]
@@ -263,7 +264,7 @@
 #' @format A [data.frame] with `r format(nrow(intrinsic_resistant), big.mark = ",")` observations and `r ncol(intrinsic_resistant)` variables:
 #' - `microorganism`\cr Name of the microorganism
 #' - `antibiotic`\cr Name of the antibiotic drug
-#' @details The repository of this `AMR` package contains a file comprising this exact data set: <https://github.com/msberends/AMR/blob/master/data-raw/intrinsic_resistant.txt>. This file **allows for machine reading EUCAST guidelines about intrinsic resistance**, which is almost impossible with the Excel and PDF files distributed by EUCAST. The file is updated automatically.
+#' @details The repository of this `AMR` package contains a file comprising this exact data set: <https://github.com/msberends/AMR/blob/main/data-raw/intrinsic_resistant.txt>. This file **allows for machine reading EUCAST guidelines about intrinsic resistance**, which is almost impossible with the Excel and PDF files distributed by EUCAST. The file is updated automatically.
 #' 
 #' This data set is based on `r format_eucast_version_nr(3.2)`.
 #' @inheritSection AMR Reference Data Publicly Available

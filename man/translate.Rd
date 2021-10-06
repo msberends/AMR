@@ -11,7 +11,7 @@ get_locale()
 For language-dependent output of AMR functions, like \code{\link[=mo_name]{mo_name()}}, \code{\link[=mo_gramstain]{mo_gramstain()}}, \code{\link[=mo_type]{mo_type()}} and \code{\link[=ab_name]{ab_name()}}.
 }
 \details{
-Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: \url{https://github.com/msberends/AMR/blob/master/data-raw/translations.tsv}. This file will be read by all functions where a translated output can be desired, like all \code{\link[=mo_property]{mo_*}} functions (such as \code{\link[=mo_name]{mo_name()}}, \code{\link[=mo_gramstain]{mo_gramstain()}}, \code{\link[=mo_type]{mo_type()}}, etc.) and \code{\link[=ab_property]{ab_*}} functions (such as \code{\link[=ab_name]{ab_name()}}, \code{\link[=ab_group]{ab_group()}}, etc.).
+Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: \url{https://github.com/msberends/AMR/blob/main/data-raw/translations.tsv}. This file will be read by all functions where a translated output can be desired, like all \code{\link[=mo_property]{mo_*}} functions (such as \code{\link[=mo_name]{mo_name()}}, \code{\link[=mo_gramstain]{mo_gramstain()}}, \code{\link[=mo_type]{mo_type()}}, etc.) and \code{\link[=ab_property]{ab_*}} functions (such as \code{\link[=ab_name]{ab_name()}}, \code{\link[=ab_group]{ab_group()}}, etc.).
 
 Currently supported languages are: Danish, Dutch, English, French, German, Italian, Portuguese and Spanish. All these languages have translations available for all antimicrobial agents and colloquial microorganism names.
 

@@ -4,12 +4,12 @@
 \alias{catalogue_of_life}
 \title{The Catalogue of Life}
 \description{
-This package contains the complete taxonomic tree of almost all microorganisms from the authoritative and comprehensive Catalogue of Life.
+This package contains the complete taxonomic tree (last updated: 5 October 2021) of almost all microorganisms from the authoritative and comprehensive Catalogue of Life (CoL), supplemented with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN).
 }
 \section{Catalogue of Life}{
 
 \if{html}{\figure{logo_col.png}{options: height=40px style=margin-bottom:5px} \cr}
-This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, \url{http://www.catalogueoflife.org}). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, \href{https://lpsn.dsmz.de}{lpsn.dsmz.de}). This supplementation is needed until the \href{https://github.com/CatalogueOfLife/general}{CoL+ project} is finished, which we await.
+This package contains the complete taxonomic tree of almost all microorganisms (~71,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, \url{http://www.catalogueoflife.org}). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, \href{https://lpsn.dsmz.de}{lpsn.dsmz.de}). This supplementation is needed until the \href{https://github.com/CatalogueOfLife/general}{CoL+ project} is finished, which we await.
 
 \link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which versions of the CoL and LPSN were included in this package with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}.
 }
@@ -28,7 +28,7 @@ Included are:
 
 The Catalogue of Life (\url{http://www.catalogueoflife.org}) is the most comprehensive and authoritative global index of species currently available. It holds essential information on the names, relationships and distributions of over 1.9 million species. The Catalogue of Life is used to support the major biodiversity and conservation information services such as the Global Biodiversity Information Facility (GBIF), Encyclopedia of Life (EoL) and the International Union for Conservation of Nature Red List. It is recognised by the Convention on Biological Diversity as a significant component of the Global Taxonomy Initiative and a contribution to Target 1 of the Global Strategy for Plant Conservation.
 
-The syntax used to transform the original data to a cleansed \R format, can be found here: \url{https://github.com/msberends/AMR/blob/master/data-raw/reproduction_of_microorganisms.R}.
+The syntax used to transform the original data to a cleansed \R format, can be found here: \url{https://github.com/msberends/AMR/blob/main/data-raw/reproduction_of_microorganisms.R}.
 }
 
 \section{Read more on Our Website!}{

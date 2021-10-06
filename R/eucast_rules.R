@@ -66,7 +66,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' **Note:** This function does not translate MIC values to RSI values. Use [as.rsi()] for that. \cr
 #' **Note:** When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance. \cr
 #'
-#' The file containing all EUCAST rules is located here: <https://github.com/msberends/AMR/blob/master/data-raw/eucast_rules.tsv>.  **Note:** Old taxonomic names are replaced with the current taxonomy where applicable. For example, *Ochrobactrum anthropi* was renamed to *Brucella anthropi* in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The file used as input for this `AMR` package contains the taxonomy updated until [`r CATALOGUE_OF_LIFE$yearmonth_LPSN`][catalogue_of_life()].
+#' The file containing all EUCAST rules is located here: <https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv>.  **Note:** Old taxonomic names are replaced with the current taxonomy where applicable. For example, *Ochrobactrum anthropi* was renamed to *Brucella anthropi* in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The file used as input for this `AMR` package contains the taxonomy updated until [`r CATALOGUE_OF_LIFE$yearmonth_LPSN`][catalogue_of_life()].
 #' 
 #' ## Custom Rules
 #' 
