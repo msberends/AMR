@@ -303,7 +303,7 @@ pkg_is_available <- function(pkg, also_load = TRUE, min_version = NULL) {
     out <- requireNamespace(pkg, quietly = TRUE)
   }
   if (!is.null(min_version)) {
-    out <- out && packageVersion(pkg) >= min_version
+    out <- out && utils::packageVersion(pkg) >= min_version
   }
   isTRUE(out)
 }
