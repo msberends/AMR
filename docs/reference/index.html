@@ -57,8 +57,6 @@
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -70,15 +68,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-index">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -92,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9051</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9053</span>
       </span>
     </div>
 
@@ -319,7 +311,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-preparing-data-antimicrobial-resistance" class="hasAnchor"><a href="#section-preparing-data-antimicrobial-resistance" class="anchor"></a>Preparing data: antimicrobial resistance</h2>
-          <p class="section-desc"><p>With <code><a href="../reference/as.mic.html">as.mic()</a></code> and <code><a href="../reference/as.disk.html">as.disk()</a></code> you can transform your raw input to valid MIC or disk diffusion values. Use <code><a href="../reference/as.rsi.html">as.rsi()</a></code> for cleaning raw data to let it only contain “R”, “I” and “S”, or to interpret MIC or disk diffusion values as R/SI based on the lastest EUCAST and CLSI guidelines. Afterwards, you can extend antibiotic interpretations by applying <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/" class="external-link">EUCAST rules</a> with <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>.</p></p>
+          <p class="section-desc"><p>With <code><a href="../reference/as.mic.html">as.mic()</a></code> and <code><a href="../reference/as.disk.html">as.disk()</a></code> you can transform your raw input to valid MIC or disk diffusion values. Use <code><a href="../reference/as.rsi.html">as.rsi()</a></code> for cleaning raw data to let it only contain “R”, “I” and “S”, or to interpret MIC or disk diffusion values as R/SI based on the lastest EUCAST and CLSI guidelines. Afterwards, you can extend antibiotic interpretations by applying <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/">EUCAST rules</a> with <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>.</p></p>
         </th>
       </tr>
       
@@ -409,7 +401,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="plot.html">plot(<i>&lt;mic&gt;</i>)</a></code> <code><a href="plot.html">autoplot(<i>&lt;mic&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;disk&gt;</i>)</a></code> <code><a href="plot.html">autoplot(<i>&lt;disk&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;rsi&gt;</i>)</a></code> <code><a href="plot.html">autoplot(<i>&lt;rsi&gt;</i>)</a></code> </p>
+          <p><code><a href="plot.html">plot(<i>&lt;mic&gt;</i>)</a></code> <code><a href="plot.html">autoplot(<i>&lt;mic&gt;</i>)</a></code> <code><a href="plot.html">fortify(<i>&lt;mic&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;disk&gt;</i>)</a></code> <code><a href="plot.html">autoplot(<i>&lt;disk&gt;</i>)</a></code> <code><a href="plot.html">fortify(<i>&lt;disk&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;rsi&gt;</i>)</a></code> <code><a href="plot.html">autoplot(<i>&lt;rsi&gt;</i>)</a></code> <code><a href="plot.html">fortify(<i>&lt;rsi&gt;</i>)</a></code> </p>
         </td>
         <td><p>Plotting for Classes <code>rsi</code>, <code>mic</code> and <code>disk</code></p></td>
       </tr><tr>
@@ -689,11 +681,11 @@
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/" class="external-link">Matthijs S. Berends</a>, Christian F. Luz.</p></p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, Dennis Souverein, Erwin E. A. Hassing, Christian F. Luz.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -701,8 +693,6 @@
 
   
 
-
-  
 
   </body>
 </html>

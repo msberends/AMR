@@ -28,7 +28,7 @@
 #' Functions to plot classes `rsi`, `mic` and `disk`, with support for base \R and `ggplot2`.
 #' @inheritSection lifecycle Maturing Lifecycle
 #' @inheritSection AMR Read more on Our Website!
-#' @param x,object values created with [as.mic()], [as.disk()] or [as.rsi()]
+#' @param x,object values created with [as.mic()], [as.disk()] or [as.rsi()] (or their `random_*` variants, such as [random_mic()])
 #' @param mo any (vector of) text that can be coerced to a valid microorganism code with [as.mo()]
 #' @param ab any (vector of) text that can be coerced to a valid antimicrobial code with [as.ab()]
 #' @param guideline interpretation guideline to use, defaults to the latest included EUCAST guideline, see *Details*
@@ -46,7 +46,9 @@
 #' @name plot
 #' @rdname plot
 #' @return The `autoplot()` functions return a [`ggplot`][ggplot2::ggplot()] model that is extendible with any `ggplot2` function.
-#' @param ... arguments passed on to [as.rsi()]
+#' 
+#' The `fortify()` functions return a [data.frame] as an extension for usage in the [ggplot2::ggplot()] function.
+#' @param ... arguments passed on to methods
 #' @examples 
 #' some_mic_values <- random_mic(size = 100)
 #' some_disk_values <- random_disk(size = 100, mo = "Escherichia coli", ab = "cipro")
@@ -283,6 +285,13 @@ autoplot.mic <- function(object,
     ggplot2::labs(title = title, x = xlab, y = ylab, subtitle = cols_sub$sub)
 }
 
+#' @method fortify mic
+#' @rdname plot
+# will be exported using s3_register() in R/zzz.R
+fortify.mic <- function(object, ...) {
+  stats::setNames(as.data.frame(plot_prepare_table(object, expand = FALSE)),
+                  c("x", "y"))
+}
 
 #' @method plot disk
 #' @export
@@ -500,6 +509,14 @@ autoplot.disk <- function(object,
     ggplot2::labs(title = title, x = xlab, y = ylab, subtitle = cols_sub$sub)
 }
 
+#' @method fortify disk
+#' @rdname plot
+# will be exported using s3_register() in R/zzz.R
+fortify.disk <- function(object, ...) {
+  stats::setNames(as.data.frame(plot_prepare_table(object, expand = FALSE)),
+                  c("x", "y"))
+}
+
 #' @method plot rsi
 #' @export
 #' @importFrom graphics plot text axis
@@ -644,6 +661,14 @@ autoplot.rsi <- function(object,
                                limits = force) +
     ggplot2::labs(title = title, x = xlab, y = ylab) +
     ggplot2::theme(legend.position = "none")
+}
+
+#' @method fortify rsi
+#' @rdname plot
+# will be exported using s3_register() in R/zzz.R
+fortify.rsi <- function(object, ...) {
+  stats::setNames(as.data.frame(table(object)),
+                  c("x", "y"))
 }
 
 plot_prepare_table <- function(x, expand) {

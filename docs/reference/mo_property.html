@@ -58,8 +58,6 @@
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -71,15 +69,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -93,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9040</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9053</span>
       </span>
     </div>
 
@@ -238,7 +230,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Get Properties of a Microorganism</h1>
-    <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/main/R/mo_property.R'><code>R/mo_property.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/mo_property.R'><code>R/mo_property.R</code></a></small>
     <div class="hidden name"><code>mo_property.Rd</code></div>
     </div>
 
@@ -246,7 +238,7 @@
     <p>Use these functions to return a specific property of a microorganism based on the latest accepted taxonomy. All input values will be evaluated internally with <code><a href='as.mo.html'>as.mo()</a></code>, which makes it possible to use microbial abbreviations, codes and names as input. See <em>Examples</em>.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>mo_name</span><span class='op'>(</span><span class='va'>x</span>, language <span class='op'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>mo_name</span><span class='op'>(</span><span class='va'>x</span>, language <span class='op'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>mo_fullname</span><span class='op'>(</span><span class='va'>x</span>, language <span class='op'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
@@ -300,7 +292,7 @@
 
 <span class='fu'>mo_url</span><span class='op'>(</span><span class='va'>x</span>, open <span class='op'>=</span> <span class='cn'>FALSE</span>, language <span class='op'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>mo_property</span><span class='op'>(</span><span class='va'>x</span>, property <span class='op'>=</span> <span class='st'>"fullname"</span>, language <span class='op'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></code></pre></div>
+<span class='fu'>mo_property</span><span class='op'>(</span><span class='va'>x</span>, property <span class='op'>=</span> <span class='st'>"fullname"</span>, language <span class='op'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -388,7 +380,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
     
 
 <p><img src='figures/logo_col.png' height=40px style=margin-bottom:5px /> <br />
-This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, <a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, <a href='https://lpsn.dsmz.de'>lpsn.dsmz.de</a>). This supplementation is needed until the <a href='https://github.com/CatalogueOfLife/general'>CoL+ project</a> is finished, which we await.</p>
+This package contains the complete taxonomic tree of almost all microorganisms (~71,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, <a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, <a href='https://lpsn.dsmz.de'>lpsn.dsmz.de</a>). This supplementation is needed until the <a href='https://github.com/CatalogueOfLife/general'>CoL+ project</a> is finished, which we await.</p>
 <p><a href='catalogue_of_life.html'>Click here</a> for more information about the included taxa. Check which versions of the CoL and LPSN were included in this package with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version()</a></code>.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
@@ -400,7 +392,7 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 <li><p>Becker K <em>et al.</em> <strong>Emergence of coagulase-negative staphylococci</strong> 2020. Expert Rev Anti Infect Ther. 18(4):349-366; doi: <a href='https://doi.org/10.1080/14787210.2020.1730813'>10.1080/14787210.2020.1730813</a></p></li>
 <li><p>Lancefield RC <strong>A serological differentiation of human and other groups of hemolytic streptococci</strong>. 1933. J Exp Med. 57(4): 571–95; doi: <a href='https://doi.org/10.1084/jem.57.4.571'>10.1084/jem.57.4.571</a></p></li>
 <li><p>Catalogue of Life: 2019 Annual Checklist, <a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a></p></li>
-<li><p>List of Prokaryotic names with Standing in Nomenclature (March 2021), doi: <a href='https://doi.org/10.1099/ijsem.0.004332'>10.1099/ijsem.0.004332</a></p></li>
+<li><p>List of Prokaryotic names with Standing in Nomenclature (5 October 2021), doi: <a href='https://doi.org/10.1099/ijsem.0.004332'>10.1099/ijsem.0.004332</a></p></li>
 <li><p>US Edition of SNOMED CT from 1 September 2020, retrieved from the Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS), OID 2.16.840.1.114222.4.11.1009, version 12; url: <a href='https://phinvads.cdc.gov/vads/ViewValueSet.action?oid=2.16.840.1.114222.4.11.1009'>https://phinvads.cdc.gov/vads/ViewValueSet.action?oid=2.16.840.1.114222.4.11.1009</a></p></li>
 </ol>
 
@@ -419,7 +411,7 @@ This package contains the complete taxonomic tree of almost all microorganisms (
     <div class='dont-index'><p>Data set <a href='microorganisms.html'>microorganisms</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='co'># taxonomic tree -----------------------------------------------------------</span>
+    <pre class="examples"><span class='co'># taxonomic tree -----------------------------------------------------------</span>
 <span class='fu'>mo_kingdom</span><span class='op'>(</span><span class='st'>"E. coli"</span><span class='op'>)</span>         <span class='co'># "Bacteria"</span>
 <span class='fu'>mo_phylum</span><span class='op'>(</span><span class='st'>"E. coli"</span><span class='op'>)</span>          <span class='co'># "Proteobacteria"</span>
 <span class='fu'>mo_class</span><span class='op'>(</span><span class='st'>"E. coli"</span><span class='op'>)</span>           <span class='co'># "Gammaproteobacteria"</span>
@@ -519,7 +511,7 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 <span class='fu'>mo_info</span><span class='op'>(</span><span class='st'>"E. coli"</span><span class='op'>)</span>
 <span class='co'># }</span>
 <span class='co'># }</span>
-</code></pre></div>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -531,11 +523,11 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/" class="external-link">Matthijs S. Berends</a>, Christian F. Luz.</p></p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, Dennis Souverein, Erwin E. A. Hassing, Christian F. Luz.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -543,8 +535,6 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 
   
 
-
-  
 
   </body>
 </html>

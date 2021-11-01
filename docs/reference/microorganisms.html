@@ -58,8 +58,6 @@
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -71,15 +69,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -93,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9051</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9053</span>
       </span>
     </div>
 
@@ -246,7 +238,7 @@
     <p>A data set containing the full microbial taxonomy (<strong>last updated: 5 October 2021</strong>) of six kingdoms from the Catalogue of Life (CoL) and the List of Prokaryotic names with Standing in Nomenclature (LPSN). MO codes can be looked up using <code><a href='as.mo.html'>as.mo()</a></code>.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='va'>microorganisms</span></code></pre></div>
+    <pre class="usage"><span class='va'>microorganisms</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -285,7 +277,7 @@
     <p>Please note that entries are only based on the Catalogue of Life and the LPSN (see below). Since these sources incorporate entries based on (recent) publications in the International Journal of Systematic and Evolutionary Microbiology (IJSEM), it can happen that the year of publication is sometimes later than one might expect.</p>
 <p>For example, <em>Staphylococcus pettenkoferi</em> was described for the first time in Diagnostic Microbiology and Infectious Disease in 2002 (doi: <a href='https://doi.org/10.1016/s0732-8893(02)00399-1'>10.1016/s0732-8893(02)00399-1</a>
 ), but it was not before 2007 that a publication in IJSEM followed (doi: <a href='https://doi.org/10.1099/ijs.0.64381-0'>10.1099/ijs.0.64381-0</a>
-). Consequently, the <code>AMR</code> package returns 2007 for <code><a href='mo_property.html'>mo_year("S. pettenkoferi")</a></code>.</p><h3 class='hasAnchor' id='manual-additions'><a class='anchor' aria-hidden='true' href='#manual-additions'></a>Manual additions</h3>
+). Consequently, the <code>AMR</code> package returns 2007 for <code><a href='mo_property.html'>mo_year("S. pettenkoferi")</a></code>.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Manual additions</h3>
 
 
 <p>For convenience, some entries were added manually:</p><ul>
@@ -300,7 +292,7 @@
 </ul>
 
 
-<h3 class='hasAnchor' id='direct-download'><a class='anchor' aria-hidden='true' href='#direct-download'></a>Direct download</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Direct download</h3>
 
 
 <p>This data set is available as 'flat file' for use even without <span style="R">R</span> - you can find the file here:</p><ul>
@@ -350,11 +342,11 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/" class="external-link">Matthijs S. Berends</a>, Christian F. Luz.</p></p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, Dennis Souverein, Erwin E. A. Hassing, Christian F. Luz.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -362,8 +354,6 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 
   
 
-
-  
 
   </body>
 </html>

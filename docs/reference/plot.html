@@ -58,8 +58,6 @@
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -71,15 +69,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -93,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9030</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9053</span>
       </span>
     </div>
 
@@ -238,7 +230,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plotting for Classes <code>rsi</code>, <code>mic</code> and <code>disk</code></h1>
-    <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/main/R/plot.R'><code>R/plot.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/plot.R'><code>R/plot.R</code></a></small>
     <div class="hidden name"><code>plot.Rd</code></div>
     </div>
 
@@ -246,7 +238,7 @@
     <p>Functions to plot classes <code>rsi</code>, <code>mic</code> and <code>disk</code>, with support for base <span style="R">R</span> and <code>ggplot2</code>.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='co'># S3 method for mic</span>
+    <pre class="usage"><span class='co'># S3 method for mic</span>
 <span class='fu'>plot</span><span class='op'>(</span>
   <span class='va'>x</span>,
   mo <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -262,7 +254,7 @@
 <span class='op'>)</span>
 
 <span class='co'># S3 method for mic</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span>
+<span class='fu'>autoplot</span><span class='op'>(</span>
   <span class='va'>object</span>,
   mo <span class='op'>=</span> <span class='cn'>NULL</span>,
   ab <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -275,6 +267,9 @@
   expand <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
+
+<span class='co'># S3 method for mic</span>
+<span class='fu'>fortify</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for disk</span>
 <span class='fu'>plot</span><span class='op'>(</span>
@@ -292,7 +287,7 @@
 <span class='op'>)</span>
 
 <span class='co'># S3 method for disk</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span>
+<span class='fu'>autoplot</span><span class='op'>(</span>
   <span class='va'>object</span>,
   mo <span class='op'>=</span> <span class='cn'>NULL</span>,
   ab <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -306,6 +301,9 @@
   <span class='va'>...</span>
 <span class='op'>)</span>
 
+<span class='co'># S3 method for disk</span>
+<span class='fu'>fortify</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
+
 <span class='co'># S3 method for rsi</span>
 <span class='fu'>plot</span><span class='op'>(</span>
   <span class='va'>x</span>,
@@ -316,7 +314,7 @@
 <span class='op'>)</span>
 
 <span class='co'># S3 method for rsi</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span>
+<span class='fu'>autoplot</span><span class='op'>(</span>
   <span class='va'>object</span>,
   title <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"Resistance Overview of"</span>, <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
   xlab <span class='op'>=</span> <span class='st'>"Antimicrobial Interpretation"</span>,
@@ -324,14 +322,17 @@
   colours_RSI <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#ED553B"</span>, <span class='st'>"#3CAEA3"</span>, <span class='st'>"#F6D55C"</span><span class='op'>)</span>,
   language <span class='op'>=</span> <span class='fu'><a href='translate.html'>get_locale</a></span><span class='op'>(</span><span class='op'>)</span>,
   <span class='va'>...</span>
-<span class='op'>)</span></code></pre></div>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for rsi</span>
+<span class='fu'>fortify</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x, object</th>
-      <td><p>values created with <code><a href='as.mic.html'>as.mic()</a></code>, <code><a href='as.disk.html'>as.disk()</a></code> or <code><a href='as.rsi.html'>as.rsi()</a></code></p></td>
+      <td><p>values created with <code><a href='as.mic.html'>as.mic()</a></code>, <code><a href='as.disk.html'>as.disk()</a></code> or <code><a href='as.rsi.html'>as.rsi()</a></code> (or their <code>random_*</code> variants, such as <code><a href='random.html'>random_mic()</a></code>)</p></td>
     </tr>
     <tr>
       <th>mo</th>
@@ -367,13 +368,14 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>arguments passed on to <code><a href='as.rsi.html'>as.rsi()</a></code></p></td>
+      <td><p>arguments passed on to methods</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The <code><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot()</a></code> functions return a <code><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></code> model that is extendible with any <code>ggplot2</code> function.</p>
+<p>The <code><a href='https://ggplot2.tidyverse.org/reference/fortify.html'>fortify()</a></code> functions return a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> as an extension for usage in the <code><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot2::ggplot()</a></code> function.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.</p>
@@ -392,7 +394,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 <p>On our website <a href='https://msberends.github.io/AMR/'>https://msberends.github.io/AMR/</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR data analysis, the <a href='https://msberends.github.io/AMR/reference/'>complete documentation of all functions</a> and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='va'>some_mic_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>random_mic</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
+    <pre class="examples"><span class='va'>some_mic_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>random_mic</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
 <span class='va'>some_disk_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>random_disk</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>100</span>, mo <span class='op'>=</span> <span class='st'>"Escherichia coli"</span>, ab <span class='op'>=</span> <span class='st'>"cipro"</span><span class='op'>)</span>
 <span class='va'>some_rsi_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='random.html'>random_rsi</a></span><span class='op'>(</span><span class='fl'>50</span>, prob_RSI <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.30</span>, <span class='fl'>0.55</span>, <span class='fl'>0.05</span><span class='op'>)</span><span class='op'>)</span>
 
@@ -411,7 +413,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>some_rsi_values</span><span class='op'>)</span>
 <span class='op'>}</span>
 <span class='co'># }</span>
-</code></pre></div>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -423,11 +425,11 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/" class="external-link">Matthijs S. Berends</a>, <a href="https://www.rug.nl/staff/c.f.luz/" class="external-link">Christian F. Luz</a>, <a href="https://www.rug.nl/staff/a.w.friedrich/" class="external-link">Alexander W. Friedrich</a>, <a href="https://www.rug.nl/staff/b.sinha/" class="external-link">Bhanu N. M. Sinha</a>, <a href="https://www.rug.nl/staff/c.j.albers/" class="external-link">Casper J. Albers</a>, <a href="https://www.rug.nl/staff/c.glasner/" class="external-link">Corinna Glasner</a>.</p></p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, Dennis Souverein, Erwin E. A. Hassing, Christian F. Luz.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -435,8 +437,6 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 
   
 
-
-  
 
   </body>
 </html>

@@ -4,10 +4,13 @@
 \alias{plot}
 \alias{plot.mic}
 \alias{autoplot.mic}
+\alias{fortify.mic}
 \alias{plot.disk}
 \alias{autoplot.disk}
+\alias{fortify.disk}
 \alias{plot.rsi}
 \alias{autoplot.rsi}
+\alias{fortify.rsi}
 \title{Plotting for Classes \code{rsi}, \code{mic} and \code{disk}}
 \usage{
 \method{plot}{mic}(
@@ -38,6 +41,8 @@
   ...
 )
 
+\method{fortify}{mic}(object, ...)
+
 \method{plot}{disk}(
   x,
   main = paste("Disk zones of", deparse(substitute(x))),
@@ -66,6 +71,8 @@
   ...
 )
 
+\method{fortify}{disk}(object, ...)
+
 \method{plot}{rsi}(
   x,
   ylab = "Percentage",
@@ -83,9 +90,11 @@
   language = get_locale(),
   ...
 )
+
+\method{fortify}{rsi}(object, ...)
 }
 \arguments{
-\item{x, object}{values created with \code{\link[=as.mic]{as.mic()}}, \code{\link[=as.disk]{as.disk()}} or \code{\link[=as.rsi]{as.rsi()}}}
+\item{x, object}{values created with \code{\link[=as.mic]{as.mic()}}, \code{\link[=as.disk]{as.disk()}} or \code{\link[=as.rsi]{as.rsi()}} (or their \verb{random_*} variants, such as \code{\link[=random_mic]{random_mic()}})}
 
 \item{mo}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
 
@@ -103,10 +112,12 @@
 
 \item{expand}{a \link{logical} to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.}
 
-\item{...}{arguments passed on to \code{\link[=as.rsi]{as.rsi()}}}
+\item{...}{arguments passed on to methods}
 }
 \value{
 The \code{autoplot()} functions return a \code{\link[ggplot2:ggplot]{ggplot}} model that is extendible with any \code{ggplot2} function.
+
+The \code{fortify()} functions return a \link{data.frame} as an extension for usage in the \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} function.
 }
 \description{
 Functions to plot classes \code{rsi}, \code{mic} and \code{disk}, with support for base \R and \code{ggplot2}.

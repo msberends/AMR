@@ -53,15 +53,68 @@ pm_left_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
   merged
 }
 
-quick_case_when <- function(...) {
-  vectors <- list(...)
-  split <- lapply(vectors, function(x) unlist(strsplit(paste(deparse(x), collapse = ""), "~", fixed = TRUE)))
-  for (i in seq_len(length(vectors))) {
-    if (eval(parse(text = split[[i]][1]), envir = parent.frame())) {
-      return(eval(parse(text = split[[i]][2]), envir = parent.frame()))
+# copied and slightly rewritten from poorman under same license (2021-10-15)
+quick_case_when <- function (...) {
+  fs <- list(...)
+  lapply(fs, function(x) if (class(x) != "formula") 
+    stop("`case_when()` requires formula inputs."))
+  n <- length(fs)
+  if (n == 0L) 
+    stop("No cases provided.")
+  
+  validate_case_when_length <- function (query, value, fs) {
+    lhs_lengths <- lengths(query)
+    rhs_lengths <- lengths(value)
+    all_lengths <- unique(c(lhs_lengths, rhs_lengths))
+    if (length(all_lengths) <= 1L) 
+      return(all_lengths[[1L]])
+    non_atomic_lengths <- all_lengths[all_lengths != 1L]
+    len <- non_atomic_lengths[[1L]]
+    if (length(non_atomic_lengths) == 1L) 
+      return(len)
+    inconsistent_lengths <- non_atomic_lengths[-1L]
+    lhs_problems <- lhs_lengths %in% inconsistent_lengths
+    rhs_problems <- rhs_lengths %in% inconsistent_lengths
+    problems <- lhs_problems | rhs_problems
+    if (any(problems)) {
+      stop("The following formulas must be length ", len, " or 1, not ", 
+           paste(inconsistent_lengths, collapse = ", "), ".\n    ", 
+           paste(fs[problems], collapse = "\n    "),
+           call. = FALSE)
     }
   }
-  return(NA)
+  
+  replace_with <- function (x, i, val, arg_name) {
+    if (is.null(val)) 
+      return(x)
+    i[is.na(i)] <- FALSE
+    if (length(val) == 1L) {
+      x[i] <- val
+    }
+    else {
+      x[i] <- val[i]
+    }
+    x
+  }
+  
+  query <- vector("list", n)
+  value <- vector("list", n)
+  default_env <- parent.frame()
+  for (i in seq_len(n)) {
+    query[[i]] <- eval(fs[[i]][[2]], envir = default_env)
+    value[[i]] <- eval(fs[[i]][[3]], envir = default_env)
+    if (!is.logical(query[[i]])) 
+      stop(fs[[i]][[2]], " does not return a `logical` vector.")
+  }
+  m <- validate_case_when_length(query, value, fs)
+  out <- value[[1]][rep(NA_integer_, m)]
+  replaced <- rep(FALSE, m)
+  for (i in seq_len(n)) {
+    out <- replace_with(out, query[[i]] & !replaced, value[[i]], 
+                        NULL)
+    replaced <- replaced | (query[[i]] & !is.na(query[[i]]))
+  }
+  out
 }
 
 # No export, no Rd

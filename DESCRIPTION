@@ -1,6 +1,6 @@
 Package: AMR
-Version: 1.7.1.9052
-Date: 2021-10-06
+Version: 1.7.1.9053
+Date: 2021-11-01
 Title: Antimicrobial Resistance Data Analysis
 Description: Functions to simplify and standardise antimicrobial resistance (AMR)
     data analysis and to work with microbial and antimicrobial properties by
@@ -12,32 +12,32 @@ Authors@R: c(
          email = "m.s.berends@umcg.nl",
          role = c("aut", "cre"), 
          comment = c(ORCID = "0000-0001-7620-1800")),
+  person(given = "Dennis",
+         family = "Souverein", 
+         role = c("aut", "ctb"),
+         comment = c(ORCID = "0000-0003-0455-0336")),
+  person(given = c("Erwin", "E.", "A."),
+         family = "Hassing", 
+         role = c("aut", "ctb")),
   person(given = c("Christian", "F."),
          family = "Luz", 
          role = c("aut", "ctb"),
          comment = c(ORCID = "0000-0001-5809-5995")),
-  person(given = c("Alexander", "W."),
-         family = "Friedrich", 
-         role = "ths",
-         comment = c(ORCID = "0000-0003-4881-038X")),
-  person(given = c("Bhanu", "N.", "M."),
-         family = "Sinha", 
-         role = "ths",
-         comment = c(ORCID = "0000-0003-1634-0010")),
   person(given = c("Casper", "J."),
          family = "Albers", 
          role = "ths",
          comment = c(ORCID = "0000-0002-9213-6743")),
+  person(given = c("Judith", "M."),
+         family = "Fonville", 
+         role = "ctb"),
+  person(given = c("Alexander", "W."),
+         family = "Friedrich", 
+         role = "ths",
+         comment = c(ORCID = "0000-0003-4881-038X")),
   person(given = "Corinna",
          family = "Glasner", 
          role = "ths",
          comment = c(ORCID = "0000-0003-1241-1328")),
-  person(given = c("Judith", "M."),
-         family = "Fonville", 
-         role = "ctb"),
-  person(given = c("Erwin", "E.", "A."),
-         family = "Hassing", 
-         role = "ctb"),
   person(given = c("Eric", "H.", "L.", "C.", "M."),
          family = "Hazenberg", 
          role = "ctb"),
@@ -59,10 +59,10 @@ Authors@R: c(
   person(given = c("Rogier", "P."),
          family = "Schade", 
          role = "ctb"),
-  person(given = "Dennis",
-         family = "Souverein", 
-         role = "ctb",
-         comment = c(ORCID = "0000-0003-0455-0336")),
+  person(given = c("Bhanu", "N.", "M."),
+         family = "Sinha", 
+         role = "ths",
+         comment = c(ORCID = "0000-0003-1634-0010")),
   person(given = "Anthony", 
          family = "Underwood", 
          role = "ctb",
@@ -83,7 +83,7 @@ Suggests:
   tinytest,
   xml2
 VignetteBuilder: knitr,rmarkdown
-URL: https://github.com/msberends/AMR, https://msberends.github.io/AMR
+URL: https://msberends.github.io/AMR, https://github.com/msberends/AMR
 BugReports: https://github.com/msberends/AMR/issues
 License: GPL-2 | file LICENSE
 Encoding: UTF-8

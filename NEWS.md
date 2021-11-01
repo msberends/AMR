@@ -1,5 +1,5 @@
-# `AMR` 1.7.1.9052
-## <small>Last updated:  6 October 2021</small>
+# `AMR` 1.7.1.9053
+## <small>Last updated:  1 November 2021</small>
 
 ### Breaking changes
 * Removed `p_symbol()` and all `filter_*()` functions (except for `filter_first_isolate()`), which were all deprecated in a previous package version
@@ -39,7 +39,7 @@
 * When printing a tibble with any old MO code, a warning will be thrown that old codes should be updated using `as.mo()`
 * Improved automatic column selector when `col_*` arguments are left blank, e.g. in `first_isolate()`
 * The right input types for `random_mic()`, `random_disk()` and `random_rsi()` are now enforced
-* `as.rsi()` can now correct for textual input (such as "Susceptible", "Resistant") in Dutch, English, French, German, Italian, Portuguese and Spanish
+* `as.rsi()` can now correct for textual input (such as "Susceptible", "Resistant") in Danish, Dutch, English, French, German, Italian, Portuguese and Spanish
 * When warnings are thrown because of too few isolates in any `count_*()`, `proportion_*()` function (or `resistant()` or `susceptible()`), the `dplyr` group will be shown, if available
 * Fix for legends created with `scale_rsi_colours()` when using `ggplot2` v3.3.4 or higher (this is ggplot2 bug 4511, soon to be fixed)
 * Fix for minor translation errors
@@ -47,6 +47,10 @@
 * Improved algorithm for generating random MICs with `random_mic()`
 * Improved plot legends for MICs and disk diffusion values
 * Improved speed of `as.ab()` and all `ab_*()` functions
+* Added `fortify()` extensions for plotting methods
+
+### Other
+* This package is now being maintained by two epidemiologists and a data scientist from two different non-profit healthcare organisations. All functions in this package are now all considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated yearly from now on.
 
 
 # AMR 1.7.1

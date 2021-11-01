@@ -58,8 +58,6 @@
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -71,15 +69,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -93,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9030</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9053</span>
       </span>
     </div>
 
@@ -238,7 +230,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Data Set with Previously Accepted Taxonomic Names</h1>
-    <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/main/R/data.R'><code>R/data.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/data.R'><code>R/data.R</code></a></small>
     <div class="hidden name"><code>microorganisms.old.Rd</code></div>
     </div>
 
@@ -246,12 +238,12 @@
     <p>A data set containing old (previously valid or accepted) taxonomic names according to the Catalogue of Life. This data set is used internally by <code><a href='as.mo.html'>as.mo()</a></code>.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='va'>microorganisms.old</span></code></pre></div>
+    <pre class="usage"><span class='va'>microorganisms.old</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with 14,100 observations and 4 variables:</p><ul>
+    <p>A <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> with 14,338 observations and 4 variables:</p><ul>
 <li><p><code>fullname</code><br /> Old full taxonomic name of the microorganism</p></li>
 <li><p><code>fullname_new</code><br /> New full taxonomic name of the microorganism</p></li>
 <li><p><code>ref</code><br /> Author(s) and year of concerning scientific publication</p></li>
@@ -267,7 +259,7 @@
     
 
 <p><img src='figures/logo_col.png' height=40px style=margin-bottom:5px /> <br />
-This package contains the complete taxonomic tree of almost all microorganisms (~70,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, <a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, <a href='https://lpsn.dsmz.de'>lpsn.dsmz.de</a>). This supplementation is needed until the <a href='https://github.com/CatalogueOfLife/general'>CoL+ project</a> is finished, which we await.</p>
+This package contains the complete taxonomic tree of almost all microorganisms (~71,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, <a href='http://www.catalogueoflife.org'>http://www.catalogueoflife.org</a>). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, <a href='https://lpsn.dsmz.de'>lpsn.dsmz.de</a>). This supplementation is needed until the <a href='https://github.com/CatalogueOfLife/general'>CoL+ project</a> is finished, which we await.</p>
 <p><a href='catalogue_of_life.html'>Click here</a> for more information about the included taxa. Check which versions of the CoL and LPSN were included in this package with <code><a href='catalogue_of_life_version.html'>catalogue_of_life_version()</a></code>.</p>
     <h2 class="hasAnchor" id="reference-data-publicly-available"><a class="anchor" href="#reference-data-publicly-available"></a>Reference Data Publicly Available</h2>
 
@@ -294,11 +286,11 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/" class="external-link">Matthijs S. Berends</a>, <a href="https://www.rug.nl/staff/c.f.luz/" class="external-link">Christian F. Luz</a>, <a href="https://www.rug.nl/staff/a.w.friedrich/" class="external-link">Alexander W. Friedrich</a>, <a href="https://www.rug.nl/staff/b.sinha/" class="external-link">Bhanu N. M. Sinha</a>, <a href="https://www.rug.nl/staff/c.j.albers/" class="external-link">Casper J. Albers</a>, <a href="https://www.rug.nl/staff/c.glasner/" class="external-link">Corinna Glasner</a>.</p></p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, Dennis Souverein, Erwin E. A. Hassing, Christian F. Luz.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -306,8 +298,6 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 
   
 
-
-  
 
   </body>
 </html>
