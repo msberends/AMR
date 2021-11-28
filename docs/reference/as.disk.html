@@ -58,8 +58,6 @@
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -71,15 +69,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -93,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9030</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9054</span>
       </span>
     </div>
 
@@ -238,7 +230,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Transform Input to Disk Diffusion Diameters</h1>
-    <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/main/R/disk.R'><code>R/disk.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/disk.R'><code>R/disk.R</code></a></small>
     <div class="hidden name"><code>as.disk.Rd</code></div>
     </div>
 
@@ -246,9 +238,11 @@
     <p>This transforms a vector to a new class <code>disk</code>, which is a disk diffusion growth zone size (around an antibiotic disk) in millimetres between 6 and 50.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>as.disk</span><span class='op'>(</span><span class='va'>x</span>, na.rm <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>as.disk</span><span class='op'>(</span><span class='va'>x</span>, na.rm <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>is.disk</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></code></pre></div>
+<span class='va'>NA_disk_</span>
+
+<span class='fu'>is.disk</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -263,12 +257,16 @@
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>disk</code> (inherits from <code>integer</code>) of length 1.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An <a href='https://rdrr.io/r/base/integer.html'>integer</a> with additional class <code>disk</code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Interpret disk values as RSI values with <code><a href='as.rsi.html'>as.rsi()</a></code>. It supports guidelines from EUCAST and CLSI.</p>
+<p><code>NA_disk_</code> is a missing value of the new <code>&lt;disk&gt;</code> class.</p>
     <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable Lifecycle</h2>
 
     
@@ -286,7 +284,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
     <div class='dont-index'><p><code><a href='as.rsi.html'>as.rsi()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='co'># \donttest{</span>
+    <pre class="examples"><span class='co'># \donttest{</span>
 <span class='co'># transform existing disk zones to the `disk` class</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>microorganism <span class='op'>=</span> <span class='st'>"E. coli"</span>,
                  AMP <span class='op'>=</span> <span class='fl'>20</span>,
@@ -305,7 +303,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
        
 <span class='fu'><a href='as.rsi.html'>as.rsi</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
 <span class='co'># }</span>
-</code></pre></div>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -317,11 +315,11 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/" class="external-link">Matthijs S. Berends</a>, <a href="https://www.rug.nl/staff/c.f.luz/" class="external-link">Christian F. Luz</a>, <a href="https://www.rug.nl/staff/a.w.friedrich/" class="external-link">Alexander W. Friedrich</a>, <a href="https://www.rug.nl/staff/b.sinha/" class="external-link">Bhanu N. M. Sinha</a>, <a href="https://www.rug.nl/staff/c.j.albers/" class="external-link">Casper J. Albers</a>, <a href="https://www.rug.nl/staff/c.glasner/" class="external-link">Corinna Glasner</a>.</p></p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, Christian F. Luz, Dennis Souverein, Erwin E. A. Hassing.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -329,8 +327,6 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
   
 
-
-  
 
   </body>
 </html>

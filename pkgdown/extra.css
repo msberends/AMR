@@ -104,10 +104,7 @@ a pre[href], a pre[href]:hover, a pre[href]:focus {
 
 /* syntax font */
 pre, code {
-  font-family: 'Courier New', monospace;
-  font-size: 100% !important;
-  font-weight: bold;
-  /*background-color: #f4f4f4*/;
+  font-size: 95% !important;
 }
 pre code {
   word-wrap: normal !important;

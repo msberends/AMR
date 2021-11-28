@@ -23,6 +23,10 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
+# ====================================================== #
+# || Change the EUCAST version numbers in R/globals.R || #
+# ====================================================== #
+
 format_eucast_version_nr <- function(version, markdown = TRUE) {
   # for documentation - adds title, version number, year and url in markdown language
   lst <- c(EUCAST_VERSION_BREAKPOINTS, EUCAST_VERSION_EXPERT_RULES)
@@ -105,6 +109,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #'   Leclercq et al. **EUCAST expert rules in antimicrobial susceptibility testing.** *Clin Microbiol Infect.* 2013;19(2):141-60; \doi{https://doi.org/10.1111/j.1469-0691.2011.03703.x}
 #' - EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes Tables. Version 3.1, 2016. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf)
 #' - EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.2, 2020. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf)
+#' - EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.3, 2021. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2021/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.3_20211018.pdf)
 #' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 9.0, 2019. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx)
 #' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 10.0, 2020. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_10.0_Breakpoint_Tables.xlsx)
 #' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 11.0, 2021. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_11.0_Breakpoint_Tables.xlsx)
@@ -159,7 +164,7 @@ eucast_rules <- function(x,
                          rules = getOption("AMR_eucastrules", default = c("breakpoints", "expert")),
                          verbose = FALSE,
                          version_breakpoints = 11.0,
-                         version_expertrules = 3.2,
+                         version_expertrules = 3.3,
                          ampc_cephalosporin_resistance = NA,
                          only_rsi_columns = FALSE,
                          custom_rules = NULL,
@@ -316,25 +321,6 @@ eucast_rules <- function(x,
   }
   
   # Some helper functions ---------------------------------------------------
-  get_antibiotic_columns <- function(x, cols_ab) {
-    x <- trimws(unique(toupper(unlist(strsplit(x, ",")))))
-    x_new <- character()
-    for (val in x) {
-      if (paste0("AB_", val) %in% ls(envir = asNamespace("AMR"))) {
-        # antibiotic group names, as defined in data-raw/_internals.R, such as `AB_CARBAPENEMS`
-        val <- eval(parse(text = paste0("AB_", val)), envir = asNamespace("AMR"))
-      } else if (val %in% AB_lookup$ab) {
-        # separate drugs, such as `AMX`
-        val <- as.ab(val)
-      } else {
-        stop_("unknown antimicrobial agent (group) in EUCAST rules file: ", val, call = FALSE)
-      }
-      x_new <- c(x_new, val)
-    }
-    x_new <- unique(x_new)
-    out <- cols_ab[match(x_new, names(cols_ab))]
-    out[!is.na(out)]
-  }
   get_antibiotic_names <- function(x) {
     x <- x %pm>%
       strsplit(",") %pm>%
@@ -580,6 +566,7 @@ eucast_rules <- function(x,
                                 (reference.rule_group %like% "expert" & reference.version == version_expertrules))
   }
   # filter out AmpC de-repressed cephalosporin-resistant mutants ----
+  # no need to filter on version number here - the rules contain these version number, so are inherently filtered
   # cefotaxime, ceftriaxone, ceftazidime
   if (is.null(ampc_cephalosporin_resistance) || isFALSE(ampc_cephalosporin_resistance)) {
     eucast_rules_df <- subset(eucast_rules_df,
@@ -720,7 +707,7 @@ eucast_rules <- function(x,
       rows <- tryCatch(which(x[, if_mo_property, drop = TRUE] %like% mo_value),
                        error = function(e) integer(0))
     } else {
-      source_antibiotics <- get_antibiotic_columns(source_antibiotics, cols_ab)
+      source_antibiotics <- get_ab_from_namespace(source_antibiotics, cols_ab)
       if (length(source_value) == 1 & length(source_antibiotics) > 1) {
         source_value <- rep(source_value, length(source_antibiotics))
       }
@@ -748,7 +735,7 @@ eucast_rules <- function(x,
       }
     }
     
-    cols <- get_antibiotic_columns(target_antibiotics, cols_ab)
+    cols <- get_ab_from_namespace(target_antibiotics, cols_ab)
     
     # Apply rule on data ------------------------------------------------------
     # this will return the unique number of changes

@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9053</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9054</span>
       </span>
     </div>
 
@@ -240,6 +240,8 @@
 
     <pre class="usage"><span class='fu'>as.rsi</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
+<span class='va'>NA_rsi_</span>
+
 <span class='fu'>is.rsi</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
 <span class='fu'>is.rsi.eligible</span><span class='op'>(</span><span class='va'>x</span>, threshold <span class='op'>=</span> <span class='fl'>0.05</span><span class='op'>)</span>
@@ -330,6 +332,9 @@
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>rsi</code> (inherits from <code>ordered</code>, <code>factor</code>) of length 1.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Ordered <a href='https://rdrr.io/r/base/factor.html'>factor</a> with new class <code>&lt;rsi&gt;</code></p>
@@ -378,6 +383,7 @@
 <p>The function <code>is.rsi()</code> detects if the input contains class <code>&lt;rsi&gt;</code>. If the input is a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>, it iterates over all columns and returns a <a href='https://rdrr.io/r/base/logical.html'>logical</a> vector.</p>
 <p>The function <code>is.rsi.eligible()</code> returns <code>TRUE</code> when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and <code>FALSE</code> otherwise. The threshold of 5% can be set with the <code>threshold</code> argument. If the input is a <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>, it iterates over all columns and returns a <a href='https://rdrr.io/r/base/logical.html'>logical</a> vector.</p>
 
+<p><code>NA_rsi_</code> is a missing value of the new <code>&lt;rsi&gt;</code> class.</p>
     <h2 class="hasAnchor" id="interpretation-of-r-and-s-i"><a class="anchor" href="#interpretation-of-r-and-s-i"></a>Interpretation of R and S/I</h2>
 
     
@@ -509,7 +515,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</s
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, Dennis Souverein, Erwin E. A. Hassing, Christian F. Luz.</p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, Christian F. Luz, Dennis Souverein, Erwin E. A. Hassing.</p>
 </div>
 
 <div class="pkgdown">

@@ -8,9 +8,10 @@ citEntry(
   journal      = "Journal of Statistical Software",
   pages        = "Accepted for publication",
   year         = 2021,
-  url          = "https://www.biorxiv.org/content/10.1101/810622v4",
+  url          = "https://www.biorxiv.org/content/10.1101/810622",
   textVersion  = "Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C (2021). AMR - An R Package for Working with
-Antimicrobial Resistance Data. Journal of Statistical Software (accepted for publication), https://www.biorxiv.org/content/10.1101/810622v4.")
+Antimicrobial Resistance Data. Journal of Statistical Software (accepted for publication), https://www.biorxiv.org/content/10.1101/810622, doi: 10.1101/810622."
+)
 
 citEntry(
   entry        = "PhdThesis",
@@ -19,7 +20,19 @@ citEntry(
   publisher    = "University of Groningen",
   school       = "University of Groningen",
   doi          = "10.33612/diss.177417131",
-  pages        = 288,
+  pages        = 287,
   year         = 2021,
   textVersion = "Berends, MS (2021). A New Instrument for Microbial Epidemiology: Empowering Antimicrobial Resistance Data Analysis (PhD thesis). University of Groningen, doi: 10.33612/diss.177417131."
+)
+
+citEntry(
+  entry        = "PhdThesis",
+  title        = "Data Science for Infection Management & Antimicrobial Stewardship",
+  author       = "C F Luz",
+  publisher    = "University of Groningen",
+  school       = "University of Groningen",
+  doi          = "10.33612/diss.192486375",
+  pages        = 326,
+  year         = 2021,
+  textVersion = "Luz, CF (2021). Data Science for Infection Management & Antimicrobial Stewardship (PhD thesis). University of Groningen, doi: 10.33612/diss.192486375."
 )

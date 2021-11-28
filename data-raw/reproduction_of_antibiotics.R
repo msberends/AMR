@@ -546,8 +546,8 @@ antibiotics[which(antibiotics$ab == "FEP"), "abbreviations"][[1]] <- list(c(anti
 antibiotics[which(antibiotics$ab == "CTC"), "abbreviations"][[1]] <- list(c("xctl"))
 antibiotics[which(antibiotics$ab == "CTX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CTX"), "abbreviations"][[1]], "xct"))
 # High level Gentamcin and Streptomycin
-antibiotics[which(antibiotics$ab == "GEH"), "abbreviations"][[1]] <- list(c("gehl", "gentamicin high", "genta high"))
-antibiotics[which(antibiotics$ab == "STH"), "abbreviations"][[1]] <- list(c("sthl", "streptomycin high", "strepto high"))
+antibiotics[which(antibiotics$ab == "GEH"), "abbreviations"][[1]] <- list(c("gehl", "gentamicin high", "genta high", "gehi"))
+antibiotics[which(antibiotics$ab == "STH"), "abbreviations"][[1]] <- list(c("sthl", "streptomycin high", "strepto high", "sthi"))
 # add imi and "imipenem/cilastatine" to imipenem
 antibiotics[which(antibiotics$ab == "IPM"), "abbreviations"][[1]] <- list(c("imip", "imi", "imp"))
 antibiotics[which(antibiotics$ab == "IPM"), "synonyms"][[1]] <- list(sort(c(antibiotics[which(antibiotics$ab == "IPM"), "synonyms"][[1]], "imipenem/cilastatin")))

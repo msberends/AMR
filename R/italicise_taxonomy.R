@@ -26,7 +26,7 @@
 #' Italicise Taxonomic Families, Genera, Species, Subspecies
 #' 
 #' According to the binomial nomenclature, the lowest four taxonomic levels (family, genus, species, subspecies) should be printed in italic. This function finds taxonomic names within strings and makes them italic.
-#' @inheritSection lifecycle Maturing Lifecycle
+#' @inheritSection lifecycle Stable Lifecycle
 #' @param string a [character] (vector)
 #' @param type type of conversion of the taxonomic names, either "markdown" or "ansi", see *Details*
 #' @details 

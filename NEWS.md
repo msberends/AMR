@@ -1,5 +1,5 @@
-# `AMR` 1.7.1.9053
-## <small>Last updated:  1 November 2021</small>
+# `AMR` 1.7.1.9054
+## <small>Last updated: 28 November 2021</small>
 
 ### Breaking changes
 * Removed `p_symbol()` and all `filter_*()` functions (except for `filter_first_isolate()`), which were all deprecated in a previous package version
@@ -7,6 +7,7 @@
 * Removed all previously implemented `ggplot2::ggplot()` generics for classes `<mic>`, `<disk>`, `<rsi>` and `<resistance_predict>` as they did not follow the `ggplot2` logic. They were replaced with `ggplot2::autoplot()` generics.
 
 ### New
+* Support for EUCAST Intrinsic Resistance and Unusual Phenotypes v3.3 (October 2021), effective in the `eucast_rules()` function. This is now the default guideline (all other guidelines are still available).
 * Function `set_ab_names()` to rename data set columns that resemble antimicrobial drugs. This allows for quickly renaming columns to official names, ATC codes, etc.
 * Support for Danish, and also added missing translations of all antimicrobial drugs in Italian, French and Portuguese
 
@@ -34,12 +35,14 @@
   * Fix for using selectors multiple times in one call (e.g., using them in `dplyr::filter()` and immediately after in `dplyr::select()`)
   * Added argument `only_treatable`, which defaults to `TRUE` and will exclude drugs that are only for laboratory tests and not for treating patients (such as imipenem/EDTA and gentamicin-high)
 * Fixed the Gram stain (`mo_gramstain()`) determination of the taxonomic class Negativicutes within the phylum of Firmicutes - they were considered Gram-positives because of their phylum but are actually Gram-negative. This impacts 137 taxonomic species, genera and families, such as *Negativicoccus* and *Veillonella*.
+* Dramatic speed improvement for `first_isolate()`
 * Fix to prevent introducing `NA`s for old MO codes when running `as.mo()` on them
 * Added more informative error messages when any of the `proportion_*()` and `count_*()` functions fail
 * When printing a tibble with any old MO code, a warning will be thrown that old codes should be updated using `as.mo()`
 * Improved automatic column selector when `col_*` arguments are left blank, e.g. in `first_isolate()`
 * The right input types for `random_mic()`, `random_disk()` and `random_rsi()` are now enforced
-* `as.rsi()` can now correct for textual input (such as "Susceptible", "Resistant") in Danish, Dutch, English, French, German, Italian, Portuguese and Spanish
+* `as.rsi()` has an improved algorithm and can now also correct for textual input (such as "Susceptible", "Resistant") in Danish, Dutch, English, French, German, Italian, Portuguese and Spanish
+* `as.mic()` has an improved algorithm
 * When warnings are thrown because of too few isolates in any `count_*()`, `proportion_*()` function (or `resistant()` or `susceptible()`), the `dplyr` group will be shown, if available
 * Fix for legends created with `scale_rsi_colours()` when using `ggplot2` v3.3.4 or higher (this is ggplot2 bug 4511, soon to be fixed)
 * Fix for minor translation errors
@@ -48,9 +51,12 @@
 * Improved plot legends for MICs and disk diffusion values
 * Improved speed of `as.ab()` and all `ab_*()` functions
 * Added `fortify()` extensions for plotting methods
+* `NA` values of the classes `<mic>`, `<disk>` and `<rsi>` are now exported objects of this package, e.g. `NA_mic_` is an `NA` of class `mic` (just like the base R `NA_character_` is an `NA` of class `character`)
+* The `proportion_df()`, `count_df()` and `rsi_df()` functions now return with the additional S3 class 'rsi_df' so they can be extended by other packages
+* The `mdro()` function now returns `NA` for all rows that have no test results
 
 ### Other
-* This package is now being maintained by two epidemiologists and a data scientist from two different non-profit healthcare organisations. All functions in this package are now all considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated yearly from now on.
+* This package is now being maintained by two epidemiologists and a data scientist from two different non-profit healthcare organisations. All functions in this package are now all considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months from now on.
 
 
 # AMR 1.7.1

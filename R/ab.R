@@ -119,6 +119,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   x <- iconv(x, from = "UTF-8", to = "ASCII//TRANSLIT")
   x <- gsub('"', "", x, fixed = TRUE)
   x <- gsub("(specimen|specimen date|specimen_date|spec_date|gender|^dates?$)", "", x, ignore.case = TRUE, perl = TRUE)
+  # penicillin is a special case: we call it so, but then mean benzylpenicillin
+  x[x %like_case% "^PENICILLIN" & x %unlike_case% "[ /+-]"] <- "benzylpenicillin"
   x_bak_clean <- x
   if (already_regex == FALSE) {
     x_bak_clean <- generalise_antibiotic_name(x_bak_clean)
@@ -227,6 +229,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     }
     x_spelling <- x[i]
     if (already_regex == FALSE) {
+      
       x_spelling <- gsub("[IY]+", "[IY]+", x_spelling, perl = TRUE)
       x_spelling <- gsub("(C|K|Q|QU|S|Z|X|KS)+", "(C|K|Q|QU|S|Z|X|KS)+", x_spelling, perl = TRUE)
       x_spelling <- gsub("(PH|F|V)+", "(PH|F|V)+", x_spelling, perl = TRUE)

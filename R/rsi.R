@@ -189,6 +189,12 @@ as.rsi <- function(x, ...) {
 }
 
 #' @rdname as.rsi
+#' @details `NA_rsi_` is a missing value of the new `<rsi>` class.
+#' @export
+NA_rsi_ <- set_clean_class(factor(NA, levels = c("S", "I", "R"), ordered = TRUE),
+                           new_class =  c("rsi", "ordered", "factor"))
+
+#' @rdname as.rsi
 #' @export
 is.rsi <- function(x) {
   if (inherits(x, "data.frame")) {
@@ -257,12 +263,12 @@ as.rsi.default <- function(x, ...) {
     return(x)
   }
   
-  if (inherits(x, c("integer", "numeric", "double")) && all(x %in% c(1:3, NA))) {
-    x.bak <- x
-    x <- as.character(x) # this is needed to prevent the vctrs pkg from throwing an error
-    
+  x.bak <- x
+  x <- as.character(x) # this is needed to prevent the vctrs pkg from throwing an error
+  
+  if (inherits(x.bak, c("integer", "numeric", "double")) && all(x %in% c(1:3, NA))) {
     # support haven package for importing e.g., from SPSS - it adds the 'labels' attribute
-    lbls <- attributes(x)$labels
+    lbls <- attributes(x.bak)$labels
     if (!is.null(lbls) && all(c("R", "S", "I") %in% names(lbls)) && all(c(1:3) %in% lbls)) {
       x[x.bak == 1] <- names(lbls[lbls == 1])
       x[x.bak == 2] <- names(lbls[lbls == 2])
@@ -278,9 +284,9 @@ as.rsi.default <- function(x, ...) {
     if (all(x %unlike% "(R|S|I)", na.rm = TRUE)) {
       # check if they are actually MICs or disks
       if (all_valid_mics(x)) {
-        warning_("The input seems to be MIC values. Transform them with `as.mic()` before running `as.rsi()` to interpret them.")
+        warning_("The input seems to contain MIC values. You can transform them with `as.mic()` before running `as.rsi()` to interpret them.", call = FALSE)
       } else if (all_valid_disks(x)) {
-        warning_("The input seems to be disk diffusion values. Transform them with `as.disk()` before running `as.rsi()` to interpret them.")
+        warning_("The input seems to contain disk diffusion values. You can transform them with `as.disk()` before running `as.rsi()` to interpret them.", call = FALSE)
       }
     }
     
@@ -303,26 +309,17 @@ as.rsi.default <- function(x, ...) {
     x[x %like% "([^a-z]|^)res(is(tant)?)?"] <- "R"
     x[x %like% "([^a-z]|^)sus(cep(tible)?)?"] <- "S"
     x[x %like% "([^a-z]|^)int(er(mediate)?)?|incr.*exp"] <- "I"
-    # remove all spaces
-    x <- gsub(" +", "", x)
-    # remove all MIC-like values: numbers, operators and periods
-    x <- gsub("[0-9.,;:<=>]+", "", x)
-    # remove everything between brackets, and 'high' and 'low'
-    x <- gsub("([(].*[)])", "", x)
-    x <- gsub("(high|low)", "", x, ignore.case = TRUE)
+    # remove other invalid characters
+    x <- gsub("[^rsiRSIHi]+", "", x, perl = TRUE)
     # some labs now report "H" instead of "I" to not interfere with EUCAST prior to 2019
     x <- gsub("H", "I", x, ignore.case = TRUE)
-    # disallow more than 3 characters
-    x[nchar(x) > 3] <- NA
     # set to capitals
     x <- toupper(x)
-    # remove all invalid characters
-    x <- gsub("[^RSI]+", "", x)
     # in cases of "S;S" keep S, but in case of "S;I" make it NA
     x <- gsub("^S+$", "S", x)
     x <- gsub("^I+$", "I", x)
     x <- gsub("^R+$", "R", x)
-    x[!x %in% c("S", "I", "R")] <- NA
+    x[!x %in% c("S", "I", "R")] <- NA_character_
     na_after <- length(x[is.na(x) | x == ""])
     
     if (!isFALSE(list(...)$warn)) { # so as.rsi(..., warn = FALSE) will never throw a warning

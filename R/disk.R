@@ -120,6 +120,12 @@ all_valid_disks <- function(x) {
 }
 
 #' @rdname as.disk
+#' @details `NA_disk_` is a missing value of the new `<disk>` class.
+#' @export
+NA_disk_ <- set_clean_class(as.integer(NA_real_),
+                            new_class = c("disk", "integer"))
+
+#' @rdname as.disk
 #' @export
 is.disk <- function(x) {
   inherits(x, "disk")

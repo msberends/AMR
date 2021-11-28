@@ -1,20 +1,20 @@
 # `AMR` (for R) <img src="./logo.png" align="right" height="120px" />
 
-> This package formed the basis of two PhD theses, of which the first was published and defended on 25 August 2021. Click here to read it: [DOI 10.33612/diss.177417131](https://doi.org/10.33612/diss.177417131).
+> Update: The latest EUCAST guideline for intrinsic resistance (v3.3, October 2021) is now supported, and our taxonomy tables has been updated as well (5 October 2021).
 
 ### What is `AMR` (for R)?
 
-`AMR` is a free, open-source and independent [R package](https://www.r-project.org) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.
+`AMR` is a free, open-source and independent [R package](https://www.r-project.org) (see [Copyright](#copyright)) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.
 
 After installing this package, R knows [**~71,000 distinct microbial species**](./reference/microorganisms.html) and all [**~560 antibiotic, antimycotic and antiviral drugs**](./reference/antibiotics.html) by name and code (including ATC, EARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data. Antimicrobial names and group names are available in Danish, Dutch, English, French, German, Italian, Portuguese and Spanish.
 
-This package is [fully independent of any other R package](https://en.wikipedia.org/wiki/Dependency_hell) and works on Windows, macOS and Linux with all versions of R since R-3.0.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl), in collaboration with non-profit organisations [Certe Medical Diagnostics and Advice Foundation](https://www.certe.nl) and [University Medical Center Groningen](https://www.umcg.nl). This R package is [actively maintained](./news) and is free software (see [Copyright](#copyright)).
+This package is [fully independent of any other R package](https://en.wikipedia.org/wiki/Dependency_hell) and works on Windows, macOS and Linux with all versions of R since R-3.0.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl), in collaboration with non-profit organisations [Certe Medical Diagnostics and Advice Foundation](https://www.certe.nl) and [University Medical Center Groningen](https://www.umcg.nl). This R package formed the basis of two PhD theses ([DOI 10.33612/diss.177417131](https://doi.org/10.33612/diss.177417131) and [DOI 10.33612/diss.177417131](https://doi.org/10.33612/diss.192486375)) but is [actively and durably maintained](./news) by two public healthcare organisations in the Netherlands.
 
 <div class="main-content" style="display: inline-block;">
   <p>
     <a href="./countries_large.png" target="_blank"><img src="./countries.png" class="countries_map"></a>
-    <strong>Used in 162 countries</strong><br>
-    Since its first public release in early 2018, this package has been downloaded from 162 countries. Click the map to enlarge and to see the country names.</p>
+    <strong>Used in 175 countries</strong><br>
+    Since its first public release in early 2018, this R package has been used in almost all countries in the world. Click the map to enlarge and to see the country names.</p>
 </div>
 
 ##### With `AMR` (for R), there's always a knowledgeable microbiologist by your side!

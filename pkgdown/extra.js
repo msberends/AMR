@@ -95,10 +95,12 @@ $(document).ready(function() {
   function doct_tit(x) {
     if (typeof(x) != "undefined") {
       // authors
-      x = x.replace(/Author, maintainer/g, "Main developer");
-      x = x.replace(/Author, contributor/g, "Main contributor");
+      x = x.replace(/Author, maintainer/g, "Maintainer");
+      x = x.replace(/Author, contributor/g, "Maintainer");
       x = x.replace(/Author, thesis advisor/g, "Doctoral advisor");
+      x = x.replace(/Thesis advisor/g, "Doctoral advisor");
       x = x.replace("Matthijs", "Dr. Matthijs");
+      x = x.replace("Christian", "Dr. Christian");
       x = x.replace("Alex", "Prof. Alex");
       x = x.replace("Bhanu", "Prof. Bhanu");
       x = x.replace("Casper", "Prof. Casper");

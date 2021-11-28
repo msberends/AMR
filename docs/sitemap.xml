@@ -1,219 +1,198 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://msberends.github.io/AMR/404.html</loc>
+    <loc>https://msberends.github.io/AMR//index.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/LICENSE-text.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/AMR-deprecated.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/articles/AMR.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/AMR.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/articles/EUCAST.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/WHOCC.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/articles/MDR.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/WHONET.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/articles/PCA.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/ab_from_text.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/articles/SPSS.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/ab_property.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/articles/WHONET.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/age.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/articles/benchmarks.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/age_groups.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/articles/datasets.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/antibiotic_class_selectors.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/articles/index.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/antibiotics.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/articles/resistance_predict.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/as.ab.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/articles/welcome_to_AMR.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/as.disk.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/authors.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/as.mic.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/index.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/as.mo.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/news/index.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/as.rsi.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/AMR-deprecated.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/atc_online.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/AMR.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/availability.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/WHOCC.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/bug_drug_combinations.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/WHONET.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/catalogue_of_life.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/ab_from_text.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/catalogue_of_life_version.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/ab_property.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/count.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/age.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/custom_eucast_rules.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/age_groups.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/dosage.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/antibiotic_class_selectors.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/eucast_rules.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/antibiotics.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/example_isolates.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/as.ab.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/example_isolates_unclean.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/as.disk.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/first_isolate.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/as.mic.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/g.test.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/as.mo.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/get_episode.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/as.rsi.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/ggplot_pca.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/atc_online.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/ggplot_rsi.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/availability.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/guess_ab_col.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/bug_drug_combinations.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/intrinsic_resistant.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/catalogue_of_life.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/italicise_taxonomy.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/catalogue_of_life_version.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/join.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/count.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/key_antimicrobials.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/custom_eucast_rules.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/kurtosis.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/dosage.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/lifecycle.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/eucast_rules.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/like.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/example_isolates.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/mdro.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/example_isolates_unclean.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/microorganisms.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/first_isolate.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/microorganisms.codes.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/g.test.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/microorganisms.old.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/get_episode.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/mo_matching_score.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/ggplot_pca.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/mo_property.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/ggplot_rsi.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/mo_source.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/guess_ab_col.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/pca.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/index.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/plot.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/intrinsic_resistant.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/proportion.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/italicise_taxonomy.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/random.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/join.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/resistance_predict.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/key_antimicrobials.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/rsi_translation.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/kurtosis.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/skewness.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/lifecycle.html</loc>
+    <loc>https://msberends.github.io/AMR//reference/translate.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/like.html</loc>
+    <loc>https://msberends.github.io/AMR//articles/AMR.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/mdro.html</loc>
+    <loc>https://msberends.github.io/AMR//articles/EUCAST.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/microorganisms.codes.html</loc>
+    <loc>https://msberends.github.io/AMR//articles/MDR.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/microorganisms.html</loc>
+    <loc>https://msberends.github.io/AMR//articles/PCA.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/microorganisms.old.html</loc>
+    <loc>https://msberends.github.io/AMR//articles/SPSS.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/mo_matching_score.html</loc>
+    <loc>https://msberends.github.io/AMR//articles/WHONET.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/mo_property.html</loc>
+    <loc>https://msberends.github.io/AMR//articles/benchmarks.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/mo_source.html</loc>
+    <loc>https://msberends.github.io/AMR//articles/datasets.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/pca.html</loc>
+    <loc>https://msberends.github.io/AMR//articles/resistance_predict.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/plot.html</loc>
-  </url>
-  <url>
-    <loc>https://msberends.github.io/AMR/reference/proportion.html</loc>
-  </url>
-  <url>
-    <loc>https://msberends.github.io/AMR/reference/random.html</loc>
-  </url>
-  <url>
-    <loc>https://msberends.github.io/AMR/reference/resistance_predict.html</loc>
-  </url>
-  <url>
-    <loc>https://msberends.github.io/AMR/reference/rsi_translation.html</loc>
-  </url>
-  <url>
-    <loc>https://msberends.github.io/AMR/reference/skewness.html</loc>
-  </url>
-  <url>
-    <loc>https://msberends.github.io/AMR/reference/translate.html</loc>
-  </url>
-  <url>
-    <loc>https://msberends.github.io/AMR/survey.html</loc>
+    <loc>https://msberends.github.io/AMR//articles/welcome_to_AMR.html</loc>
   </url>
 </urlset>

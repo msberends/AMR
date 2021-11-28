@@ -536,6 +536,13 @@ mdro <- function(x = NULL,
                               only_rsi_columns = only_rsi_columns,
                               ...)
   }
+  if (!"AMP" %in% names(cols_ab) & "AMX" %in% names(cols_ab)) {
+    # ampicillin column is missing, but amoxicillin is available
+    if (info == TRUE) {
+      message_("Using column '", cols_ab[names(cols_ab) == "AMX"], "' as input for ampicillin since many EUCAST rules depend on it.")
+    }
+    cols_ab <- c(cols_ab, c(AMP = unname(cols_ab[names(cols_ab) == "AMX"])))
+  }
 
   # nolint start
   AMC <- cols_ab["AMC"]
@@ -738,7 +745,8 @@ mdro <- function(x = NULL,
       x[rows, "columns_nonsusceptible"] <<- vapply(FUN.VALUE = character(1),
                                                    rows, 
                                                    function(row, group_vct = cols) {
-                                                     cols_nonsus <- vapply(FUN.VALUE = logical(1), x[row, group_vct, drop = FALSE], 
+                                                     cols_nonsus <- vapply(FUN.VALUE = logical(1),
+                                                                           x[row, group_vct, drop = FALSE], 
                                                                            function(y) y %in% search_result)
                                                      paste(sort(c(unlist(strsplit(x[row, "columns_nonsusceptible", drop = TRUE], ", ")),
                                                                   names(cols_nonsus)[cols_nonsus])), 
@@ -752,17 +760,20 @@ mdro <- function(x = NULL,
       }
       x_transposed <- as.list(as.data.frame(t(x[, cols, drop = FALSE]),
                                             stringsAsFactors = FALSE))
-      row_filter <- vapply(FUN.VALUE = logical(1), x_transposed, function(y) search_function(y %in% search_result, na.rm = TRUE))
-      row_filter <- x[which(row_filter), "row_number", drop = TRUE]
-      rows <- rows[rows %in% row_filter]
-      x[rows, "MDRO"] <<- to
-      x[rows, "reason"] <<- paste0(any_all, 
-                                   " of the required antibiotics ",
-                                   ifelse(any_all == "any", "is", "are"),
-                                   " R",
-                                   ifelse(!isTRUE(combine_SI), " or I", ""))
+      rows_affected <- vapply(FUN.VALUE = logical(1),
+                              x_transposed,
+                              function(y) search_function(y %in% search_result, na.rm = TRUE))
+      rows_affected <- x[which(rows_affected), "row_number", drop = TRUE]
+      rows_to_change <- rows[rows %in% rows_affected]
+      x[rows_to_change, "MDRO"] <<- to
+      x[rows_to_change, "reason"] <<- paste0(any_all, 
+                                             " of the required antibiotics ",
+                                             ifelse(any_all == "any", "is", "are"),
+                                             " R",
+                                             ifelse(!isTRUE(combine_SI), " or I", ""))
     }
   }
+  
   trans_tbl2 <- function(txt, rows, lst) {
     if (info == TRUE) {
       message_(txt, "...", appendLF = FALSE, as_note = FALSE)
@@ -1382,16 +1393,6 @@ mdro <- function(x = NULL,
     x$reason <- "PDR/MDR/XDR criteria were met"
   }
   
-  if (info.bak == TRUE) {
-    cat(group_msg)
-    if (sum(!is.na(x$MDRO)) == 0) {
-      cat(font_bold(paste0("=> Found 0 MDROs since no isolates are covered by the guideline")))
-    } else {
-      cat(font_bold(paste0("=> Found ", sum(x$MDRO %in% c(2:5), na.rm = TRUE), " ", guideline$type, " out of ", sum(!is.na(x$MDRO)), 
-                           " isolates (", trimws(percentage(sum(x$MDRO %in% c(2:5), na.rm = TRUE) / sum(!is.na(x$MDRO)))), ")\n")))
-    }
-  }
-  
   # some more info on negative results
   if (verbose == TRUE) {
     if (guideline$code == "cmi2012") {
@@ -1404,6 +1405,31 @@ mdro <- function(x = NULL,
     } else {
       x[which(x$MDRO == 1), "reason"] <- "too few antibiotics are R"
     }
+  }
+  
+  if (info.bak == TRUE) {
+    cat(group_msg)
+    if (sum(!is.na(x$MDRO)) == 0) {
+      cat(font_bold(paste0("=> Found 0 MDROs since no isolates are covered by the guideline")))
+    } else {
+      cat(font_bold(paste0("=> Found ", sum(x$MDRO %in% c(2:5), na.rm = TRUE), " ", guideline$type, " out of ", sum(!is.na(x$MDRO)), 
+                           " isolates (", trimws(percentage(sum(x$MDRO %in% c(2:5), na.rm = TRUE) / sum(!is.na(x$MDRO)))), ")")))
+    }
+  }
+  
+  # Fill in blanks ----
+  # for rows that have no results
+  x_transposed <- as.list(as.data.frame(t(x[, cols_ab, drop = FALSE]),
+                                        stringsAsFactors = FALSE))
+  rows_empty <- which(vapply(FUN.VALUE = logical(1),
+                             x_transposed,
+                             function(y) all(is.na(y))))
+  if (length(rows_empty) > 0) {
+    cat(font_italic(paste0(" (", length(rows_empty), " isolates had no test results)\n")))
+    x[rows_empty, "MDRO"] <- NA
+    x[rows_empty, "reason"] <- "none of the antibiotics have test results"
+  } else {
+    cat("\n")
   }
   
   # Results ----

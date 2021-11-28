@@ -250,16 +250,16 @@ generate_antimcrobials_string <- function(df) {
   if (NROW(df) == 0) {
     return(character(0))
   }
-  out <- tryCatch(
+  tryCatch({
     do.call(paste0,
             lapply(as.list(df),
                    function(x) {
                      x <- toupper(as.character(x))
                      x[!x %in% c("R", "S", "I")] <- "."
                      paste(x)
-                   })),
-    error = function(e) rep(strrep(".", NCOL(df)), NROW(df)))
-  out
+                   }))
+  },
+  error = function(e) rep(strrep(".", NCOL(df)), NROW(df)))
 }
 
 #' @rdname key_antimicrobials
@@ -279,10 +279,20 @@ antimicrobials_equal <- function(y,
   stop_ifnot(length(y) == length(z), "length of `y` and `z` must be equal")
 
   key2rsi <- function(val) {
-    as.double(as.rsi(gsub(".", NA_character_, unlist(strsplit(val, "")), fixed = TRUE)))
+    val <- strsplit(val, "")[[1L]]
+    val.int <- rep(NA_real_, length(val))
+    val.int[val == "S"] <- 1
+    val.int[val == "I"] <- 2
+    val.int[val == "R"] <- 3
+    val.int
   }
-  y <- lapply(y, key2rsi)
-  z <- lapply(z, key2rsi)
+  # only run on uniques
+  uniq <- unique(c(y, z))
+  uniq_list <- lapply(uniq, key2rsi)
+  names(uniq_list) <- uniq
+  
+  y <- uniq_list[match(y, names(uniq_list))]
+  z <- uniq_list[match(z, names(uniq_list))]
   
   determine_equality <- function(a, b, type, points_threshold, ignore_I) {
     if (length(a) != length(b)) {

@@ -293,6 +293,28 @@ get_column_abx <- function(x,
   out
 }
 
+get_ab_from_namespace <- function(x, cols_ab) {
+  # cols_ab comes from get_column_abx()
+  
+  x <- trimws(unique(toupper(unlist(strsplit(x, ",")))))
+  x_new <- character()
+  for (val in x) {
+    if (paste0("AB_", val) %in% ls(envir = asNamespace("AMR"))) {
+      # antibiotic group names, as defined in data-raw/_internals.R, such as `AB_CARBAPENEMS`
+      val <- eval(parse(text = paste0("AB_", val)), envir = asNamespace("AMR"))
+    } else if (val %in% AB_lookup$ab) {
+      # separate drugs, such as `AMX`
+      val <- as.ab(val)
+    } else {
+      stop_("unknown antimicrobial agent (group): ", val, call = FALSE)
+    }
+    x_new <- c(x_new, val)
+  }
+  x_new <- unique(x_new)
+  out <- cols_ab[match(x_new, names(cols_ab))]
+  out[!is.na(out)]
+}
+
 generate_warning_abs_missing <- function(missing, any = FALSE) {
   missing <- paste0(missing, " (", ab_name(missing, tolower = TRUE, language = NULL), ")")
   if (any == TRUE) {

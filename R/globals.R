@@ -40,6 +40,10 @@ EUCAST_VERSION_EXPERT_RULES <- list("3.1" = list(version_txt = "v3.1",
                                     "3.2" = list(version_txt = "v3.2",
                                                  year = 2020, 
                                                  title = "'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes'",
+                                                 url = "https://www.eucast.org/expert_rules_and_intrinsic_resistance/"),
+                                    "3.3" = list(version_txt = "v3.3",
+                                                 year = 2021, 
+                                                 title = "'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes'",
                                                  url = "https://www.eucast.org/expert_rules_and_intrinsic_resistance/"))
 
 SNOMED_VERSION <- list(title = "Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS)",

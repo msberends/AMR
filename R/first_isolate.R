@@ -238,7 +238,7 @@ first_isolate <- function(x = NULL,
   meet_criteria(testcodes_exclude, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(icu_exclude, allow_class = "logical", has_length = 1)
   meet_criteria(specimen_group, allow_class = "character", has_length = 1, allow_NULL = TRUE)
-  meet_criteria(type, allow_class = "character", has_length = 1)
+  meet_criteria(type, allow_class = "character", has_length = 1, is_in = c("points", "keyantimicrobials"))
   meet_criteria(ignore_I, allow_class = "logical", has_length = 1)
   meet_criteria(points_threshold, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(info, allow_class = "logical", has_length = 1)
@@ -250,7 +250,8 @@ first_isolate <- function(x = NULL,
   
   any_col_contains_rsi <- any(vapply(FUN.VALUE = logical(1), 
                                      X = x, 
-                                     FUN = function(x) any(as.character(x) %in% c("R", "S", "I"), na.rm = TRUE),
+                                     # check only first 10,000 rows
+                                     FUN = function(x) any(as.character(x[1:10000]) %in% c("R", "S", "I"), na.rm = TRUE),
                                      USE.NAMES = FALSE))
   if (method == "phenotype-based" & !any_col_contains_rsi) {
     method <- "episode-based"
@@ -443,17 +444,6 @@ first_isolate <- function(x = NULL,
                                !is.na(x$newvar_mo)), , drop = FALSE])
   
   # Analysis of first isolate ----
-  x$other_pat_or_mo <- ifelse(x$newvar_patient_id == pm_lag(x$newvar_patient_id) &
-                                x$newvar_genus_species == pm_lag(x$newvar_genus_species),
-                              FALSE,
-                              TRUE)
-  x$episode_group <- paste(x$newvar_patient_id, x$newvar_genus_species)
-  x$more_than_episode_ago <- unlist(lapply(split(x$newvar_date,
-                                                 x$episode_group), 
-                                           is_new_episode,
-                                           episode_days = episode_days),
-                                    use.names = FALSE)
-  
   if (!is.null(col_keyantimicrobials)) {
     if (info == TRUE & message_not_thrown_before("first_isolate.type")) {
       if (type == "keyantimicrobials") {
@@ -470,23 +460,38 @@ first_isolate <- function(x = NULL,
                  as_note = FALSE)
       }
     }
-    type_param <- type
-    
+  }
+  
+  x$other_pat_or_mo <- ifelse(x$newvar_patient_id == pm_lag(x$newvar_patient_id) &
+                                x$newvar_genus_species == pm_lag(x$newvar_genus_species),
+                              FALSE,
+                              TRUE)
+  
+  x$episode_group <- paste(x$newvar_patient_id, x$newvar_genus_species)
+  x$more_than_episode_ago <- unlist(lapply(split(x$newvar_date,
+                                                 x$episode_group),
+                                           exec_episode, # this will skip meet_criteria() in is_new_episode(), saving time
+                                           type = "logical",
+                                           episode_days = episode_days),
+                                    use.names = FALSE)
+  
+  if (!is.null(col_keyantimicrobials)) {
+    # with key antibiotics
     x$other_key_ab <- !antimicrobials_equal(y = x$newvar_key_ab,
                                             z = pm_lag(x$newvar_key_ab),
-                                            type = type_param,
+                                            type = type,
                                             ignore_I = ignore_I,
                                             points_threshold = points_threshold)
-    # with key antibiotics
     x$newvar_first_isolate <- pm_if_else(x$newvar_row_index_sorted >= row.start &
                                            x$newvar_row_index_sorted <= row.end &
                                            x$newvar_genus_species != "" & 
                                            (x$other_pat_or_mo | x$more_than_episode_ago | x$other_key_ab),
                                          TRUE,
                                          FALSE)
-    
   } else {
     # no key antibiotics
+    x1 <<- x$other_pat_or_mo
+    x2 <<- x$more_than_episode_ago
     x$newvar_first_isolate <- pm_if_else(x$newvar_row_index_sorted >= row.start &
                                            x$newvar_row_index_sorted <= row.end &
                                            x$newvar_genus_species != "" & 
@@ -566,7 +571,7 @@ first_isolate <- function(x = NULL,
   }
   
   # arrange back according to original sorting again
-  x <- x[order(x$newvar_row_index), ]
+  x <- x[order(x$newvar_row_index), , drop = FALSE]
   rownames(x) <- NULL
   
   if (info == TRUE) {

@@ -11,6 +11,7 @@
 Leclercq et al. \strong{EUCAST expert rules in antimicrobial susceptibility testing.} \emph{Clin Microbiol Infect.} 2013;19(2):141-60; \doi{https://doi.org/10.1111/j.1469-0691.2011.03703.x}
 \item EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes Tables. Version 3.1, 2016. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}{(link)}
 \item EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.2, 2020. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf}{(link)}
+\item EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.3, 2021. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2021/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.3_20211018.pdf}{(link)}
 \item EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 9.0, 2019. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx}{(link)}
 \item EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 10.0, 2020. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_10.0_Breakpoint_Tables.xlsx}{(link)}
 \item EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 11.0, 2021. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_11.0_Breakpoint_Tables.xlsx}{(link)}
@@ -24,7 +25,7 @@ eucast_rules(
   rules = getOption("AMR_eucastrules", default = c("breakpoints", "expert")),
   verbose = FALSE,
   version_breakpoints = 11,
-  version_expertrules = 3.2,
+  version_expertrules = 3.3,
   ampc_cephalosporin_resistance = NA,
   only_rsi_columns = FALSE,
   custom_rules = NULL,
@@ -46,7 +47,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 11)
 
 \item{version_breakpoints}{the version number to use for the EUCAST Clinical Breakpoints guideline. Can be either "11.0" or "10.0".}
 
-\item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either "3.2" or "3.1".}
+\item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either "3.3", "3.2" or "3.1".}
 
 \item{ampc_cephalosporin_resistance}{a \link{character} value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants, defaults to \code{NA}. Currently only works when \code{version_expertrules} is \code{3.2}; '\emph{EUCAST Expert Rules v3.2 on Enterobacterales}' states that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three agents. A value of \code{NA} (the default) for this argument will remove results for these three agents, while e.g. a value of \code{"R"} will make the results for these agents resistant. Use \code{NULL} or \code{FALSE} to not alter results for these three agents of AmpC de-repressed cephalosporin-resistant mutants. Using \code{TRUE} is equal to using \code{"R"}. \cr For \emph{EUCAST Expert Rules} v3.2, this rule applies to: \emph{Citrobacter braakii}, \emph{Citrobacter freundii}, \emph{Citrobacter gillenii}, \emph{Citrobacter murliniae}, \emph{Citrobacter rodenticum}, \emph{Citrobacter sedlakii}, \emph{Citrobacter werkmanii}, \emph{Citrobacter youngae}, \emph{Enterobacter}, \emph{Hafnia alvei}, \emph{Klebsiella aerogenes}, \emph{Morganella morganii}, \emph{Providencia} and \emph{Serratia}.}
 

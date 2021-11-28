@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9053</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9054</span>
       </span>
     </div>
 
@@ -232,12 +232,12 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1719053" class="section level1">
-<h1 class="page-header" data-toc-text="1.7.1.9053">
-<a href="#amr-1719053" class="anchor"></a><small> Unreleased </small><code>AMR</code> 1.7.1.9053</h1>
-<div id="last-updated-1-november-2021" class="section level2">
+    <div id="amr-1719054" class="section level1">
+<h1 class="page-header" data-toc-text="1.7.1.9054">
+<a href="#amr-1719054" class="anchor"></a><small> Unreleased </small><code>AMR</code> 1.7.1.9054</h1>
+<div id="last-updated-28-november-2021" class="section level2">
 <h2 class="hasAnchor">
-<a href="#last-updated-1-november-2021" class="anchor"></a><small>Last updated: 1 November 2021</small>
+<a href="#last-updated-28-november-2021" class="anchor"></a><small>Last updated: 28 November 2021</small>
 </h2>
 <div id="breaking-changes" class="section level3">
 <h3 class="hasAnchor">
@@ -253,6 +253,7 @@
 <h3 class="hasAnchor">
 <a href="#new" class="anchor"></a>New</h3>
 <ul>
+<li>Support for EUCAST Intrinsic Resistance and Unusual Phenotypes v3.3 (October 2021), effective in the <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function. This is now the default guideline (all other guidelines are still available).</li>
 <li>Function <code><a href="../reference/ab_property.html">set_ab_names()</a></code> to rename data set columns that resemble antimicrobial drugs. This allows for quickly renaming columns to official names, ATC codes, etc.</li>
 <li>Support for Danish, and also added missing translations of all antimicrobial drugs in Italian, French and Portuguese</li>
 </ul>
@@ -297,6 +298,8 @@
 </ul>
 </li>
 <li>Fixed the Gram stain (<code><a href="../reference/mo_property.html">mo_gramstain()</a></code>) determination of the taxonomic class Negativicutes within the phylum of Firmicutes - they were considered Gram-positives because of their phylum but are actually Gram-negative. This impacts 137 taxonomic species, genera and families, such as <em>Negativicoccus</em> and <em>Veillonella</em>.</li>
+<li>Dramatic speed improvement for <code><a href="../reference/first_isolate.html">first_isolate()</a></code>
+</li>
 <li>Fix to prevent introducing <code>NA</code>s for old MO codes when running <code><a href="../reference/as.mo.html">as.mo()</a></code> on them</li>
 <li>Added more informative error messages when any of the <code>proportion_*()</code> and <code>count_*()</code> functions fail</li>
 <li>When printing a tibble with any old MO code, a warning will be thrown that old codes should be updated using <code><a href="../reference/as.mo.html">as.mo()</a></code>
@@ -305,7 +308,9 @@
 </li>
 <li>The right input types for <code><a href="../reference/random.html">random_mic()</a></code>, <code><a href="../reference/random.html">random_disk()</a></code> and <code><a href="../reference/random.html">random_rsi()</a></code> are now enforced</li>
 <li>
-<code><a href="../reference/as.rsi.html">as.rsi()</a></code> can now correct for textual input (such as “Susceptible”, “Resistant”) in Danish, Dutch, English, French, German, Italian, Portuguese and Spanish</li>
+<code><a href="../reference/as.rsi.html">as.rsi()</a></code> has an improved algorithm and can now also correct for textual input (such as “Susceptible”, “Resistant”) in Danish, Dutch, English, French, German, Italian, Portuguese and Spanish</li>
+<li>
+<code><a href="../reference/as.mic.html">as.mic()</a></code> has an improved algorithm</li>
 <li>When warnings are thrown because of too few isolates in any <code>count_*()</code>, <code>proportion_*()</code> function (or <code>resistant()</code> or <code>susceptible()</code>), the <code>dplyr</code> group will be shown, if available</li>
 <li>Fix for legends created with <code><a href="../reference/ggplot_rsi.html">scale_rsi_colours()</a></code> when using <code>ggplot2</code> v3.3.4 or higher (this is ggplot2 bug 4511, soon to be fixed)</li>
 <li>Fix for minor translation errors</li>
@@ -315,13 +320,17 @@
 <li>Improved plot legends for MICs and disk diffusion values</li>
 <li>Improved speed of <code><a href="../reference/as.ab.html">as.ab()</a></code> and all <code>ab_*()</code> functions</li>
 <li>Added <code>fortify()</code> extensions for plotting methods</li>
+<li>
+<code>NA</code> values of the classes <code>&lt;mic&gt;</code>, <code>&lt;disk&gt;</code> and <code>&lt;rsi&gt;</code> are now exported objects of this package, e.g. <code>NA_mic_</code> is an <code>NA</code> of class <code>mic</code> (just like the base R <code>NA_character_</code> is an <code>NA</code> of class <code>character</code>)</li>
+<li>The <code><a href="../reference/proportion.html">proportion_df()</a></code>, <code><a href="../reference/count.html">count_df()</a></code> and <code><a href="../reference/proportion.html">rsi_df()</a></code> functions now return with the additional S3 class ‘rsi_df’ so they can be extended by other packages</li>
+<li>The <code><a href="../reference/mdro.html">mdro()</a></code> function now returns <code>NA</code> for all rows that have no test results</li>
 </ul>
 </div>
 <div id="other" class="section level3">
 <h3 class="hasAnchor">
 <a href="#other" class="anchor"></a>Other</h3>
 <ul>
-<li>This package is now being maintained by two epidemiologists and a data scientist from two different non-profit healthcare organisations. All functions in this package are now all considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated yearly from now on.</li>
+<li>This package is now being maintained by two epidemiologists and a data scientist from two different non-profit healthcare organisations. All functions in this package are now all considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months from now on.</li>
 </ul>
 </div>
 </div>
@@ -2312,7 +2321,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, Dennis Souverein, Erwin E. A. Hassing, Christian F. Luz.</p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, Christian F. Luz, Dennis Souverein, Erwin E. A. Hassing.</p>
 </div>
 
 <div class="pkgdown">

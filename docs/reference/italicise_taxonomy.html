@@ -58,8 +58,6 @@
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -71,15 +69,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -93,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9040</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9054</span>
       </span>
     </div>
 
@@ -238,7 +230,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Italicise Taxonomic Families, Genera, Species, Subspecies</h1>
-    <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/main/R/italicise_taxonomy.R'><code>R/italicise_taxonomy.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/msberends/AMR/blob/master/R/italicise_taxonomy.R'><code>R/italicise_taxonomy.R</code></a></small>
     <div class="hidden name"><code>italicise_taxonomy.Rd</code></div>
     </div>
 
@@ -246,9 +238,9 @@
     <p>According to the binomial nomenclature, the lowest four taxonomic levels (family, genus, species, subspecies) should be printed in italic. This function finds taxonomic names within strings and makes them italic.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>italicise_taxonomy</span><span class='op'>(</span><span class='va'>string</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"markdown"</span>, <span class='st'>"ansi"</span><span class='op'>)</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>italicise_taxonomy</span><span class='op'>(</span><span class='va'>string</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"markdown"</span>, <span class='st'>"ansi"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>italicize_taxonomy</span><span class='op'>(</span><span class='va'>string</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"markdown"</span>, <span class='st'>"ansi"</span><span class='op'>)</span><span class='op'>)</span></code></pre></div>
+<span class='fu'>italicize_taxonomy</span><span class='op'>(</span><span class='va'>string</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"markdown"</span>, <span class='st'>"ansi"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -268,12 +260,13 @@
     <p>This function finds the taxonomic names and makes them italic based on the <a href='microorganisms.html'>microorganisms</a> data set.</p>
 <p>The taxonomic names can be italicised using markdown (the default) by adding <code><a href='https://rdrr.io/r/base/Arithmetic.html'>*</a></code> before and after the taxonomic names, or using ANSI colours by adding <code>\033[3m</code> before and <code>\033[23m</code> after the taxonomic names. If multiple ANSI colours are not available, no conversion will occur.</p>
 <p>This function also supports abbreviation of the genus if it is followed by a species, such as "E. coli" and "K. pneumoniae ozaenae".</p>
-    <h2 class="hasAnchor" id="maturing-lifecycle"><a class="anchor" href="#maturing-lifecycle"></a>Maturing Lifecycle</h2>
+    <h2 class="hasAnchor" id="stable-lifecycle"><a class="anchor" href="#stable-lifecycle"></a>Stable Lifecycle</h2>
 
     
 
-<p><img src='figures/lifecycle_maturing.svg' style=margin-bottom:5px /> <br />
-The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing</strong>. The unlying code of a maturing function has been roughed out, but finer details might still change. Since this function needs wider usage and more extensive testing, you are very welcome <a href='https://github.com/msberends/AMR/issues'>to suggest changes at our repository</a> or <a href='AMR.html'>write us an email (see section 'Contact Us')</a>.</p>
+<p><img src='figures/lifecycle_stable.svg' style=margin-bottom:5px /> <br />
+The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>stable</strong>. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.</p>
+<p>If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
     <h2 class="hasAnchor" id="read-more-on-our-website-"><a class="anchor" href="#read-more-on-our-website-"></a>Read more on Our Website!</h2>
 
     
@@ -281,7 +274,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 <p>On our website <a href='https://msberends.github.io/AMR/'>https://msberends.github.io/AMR/</a> you can find <a href='https://msberends.github.io/AMR/articles/AMR.html'>a comprehensive tutorial</a> about how to conduct AMR data analysis, the <a href='https://msberends.github.io/AMR/reference/'>complete documentation of all functions</a> and <a href='https://msberends.github.io/AMR/articles/WHONET.html'>an example analysis using WHONET data</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='fu'>italicise_taxonomy</span><span class='op'>(</span><span class='st'>"An overview of Staphylococcus aureus isolates"</span><span class='op'>)</span>
+    <pre class="examples"><span class='fu'>italicise_taxonomy</span><span class='op'>(</span><span class='st'>"An overview of Staphylococcus aureus isolates"</span><span class='op'>)</span>
 <span class='fu'>italicise_taxonomy</span><span class='op'>(</span><span class='st'>"An overview of S. aureus isolates"</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>italicise_taxonomy</span><span class='op'>(</span><span class='st'>"An overview of S. aureus isolates"</span>, type <span class='op'>=</span> <span class='st'>"ansi"</span><span class='op'>)</span><span class='op'>)</span>
@@ -295,7 +288,7 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>plot.title <span class='op'>=</span> <span class='fu'>ggtext</span><span class='fu'>::</span><span class='fu'><a href='https://wilkelab.org/ggtext/reference/element_markdown.html'>element_markdown</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
 <span class='co'># }</span>
-</code></pre></div>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -307,11 +300,11 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/" class="external-link">Matthijs S. Berends</a>, Christian F. Luz.</p></p>
+  <p>Developed by <a href='https://www.rug.nl/staff/m.s.berends/'>Matthijs S. Berends</a>, Christian F. Luz, Dennis Souverein, Erwin E. A. Hassing.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -319,8 +312,6 @@ The <a href='lifecycle.html'>lifecycle</a> of this function is <strong>maturing<
 
   
 
-
-  
 
   </body>
 </html>

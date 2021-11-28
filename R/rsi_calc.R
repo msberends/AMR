@@ -344,6 +344,7 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   } 
   
   rownames(out) <- NULL
+  class(out) <- c("rsi_df", class(out))
   out
 }
 
