@@ -1,6 +1,6 @@
 # `AMR` (for R) <img src="./logo.png" align="right" height="120px" />
 
-> Update: The latest EUCAST guideline for intrinsic resistance (v3.3, October 2021) is now supported, and our taxonomy tables has been updated as well (5 October 2021).
+> Update: The latest EUCAST guideline for intrinsic resistance (v3.3, October 2021) is now supported, and our taxonomy tables has been updated as well (LPSN, 5 October 2021).
 
 ### What is `AMR` (for R)?
 

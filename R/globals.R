@@ -56,7 +56,7 @@ SNOMED_VERSION <- list(title = "Public Health Information Network Vocabulary Acc
 CATALOGUE_OF_LIFE <- list(
   year = 2019,
   version = "Catalogue of Life: {year} Annual Checklist",
-  url_CoL = "http://www.catalogueoflife.org/col/",
+  url_CoL = "http://www.catalogueoflife.org",
   url_LPSN = "https://lpsn.dsmz.de",
   yearmonth_LPSN = "5 October 2021"
 )

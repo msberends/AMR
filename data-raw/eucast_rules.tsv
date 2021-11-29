@@ -7,7 +7,7 @@
 # The like.is.one_of column must be 'like' or 'is' or 'one_of' ('like' will read the 'this_value' column as regular expression)
 # The EUCAST guideline contains references to the 'Burkholderia cepacia complex'. All species in this group are noted on the 'B.cepacia' sheet of the EUCAST Clinical Breakpoint v.10.0 Excel file of 2020 (v_10.0_Breakpoint_Tables.xlsx).
 # >>>>> IF YOU WANT TO IMPORT THIS FILE INTO YOUR OWN SOFTWARE, HAVE THE FIRST 10 LINES SKIPPED <<<<<
-# -------------------------------------------------------------------------------------------------------------------------------				
+# -------------------------------------------------------------------------------------------------------------------------------			
 if_mo_property	like.is.one_of	this_value	and_these_antibiotics	have_these_values	then_change_these_antibiotics	to_value	reference.rule	reference.rule_group	reference.version	note
 order	is	Enterobacterales	AMP	S	AMX	S	Enterobacterales (Order)	Breakpoints	10	
 order	is	Enterobacterales	AMP	I	AMX	I	Enterobacterales (Order)	Breakpoints	10	
@@ -303,7 +303,7 @@ fullname	like	^Citrobacter (koseri|amalonaticus|sedlakii|farmeri|rodentium)			am
 fullname	like	^Citrobacter (freundii|braakii|murliniae|werkmanii|youngae)			aminopenicillins, AMC, SAM, CZO, CEP, LEX, CFR, FOX	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.2	
 genus_species	is	Enterobacter cloacae			aminopenicillins, AMC, SAM, CZO, CEP, LEX, CFR, FOX	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.2	
 genus_species	is	Escherichia hermannii			aminopenicillins, TIC	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.2	
-genus_species	is	Hafnia alvei			aminopenicillins, AMC, SAM, CZO, CEP, LEX, CFR, FOX, polymyxins	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.2	
+genus_species	is	Hafnia alvei			aminopenicillins, AMC, SAM, CXM, CZO, CEP, LEX, CFR, FOX, polymyxins	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.2	
 genus_species	is	Klebsiella aerogenes			aminopenicillins, AMC, SAM, CZO, CEP, LEX, CFR, FOX	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.2	
 genus_species	is	Klebsiella oxytoca			aminopenicillins, TIC	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.2	
 fullname	like	^Klebsiella( pneumoniae| quasipneumoniae| variicola)?			aminopenicillins, TIC	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.2	
@@ -415,3 +415,121 @@ fullname	like	^(Enterobacter|Klebsiella aerogenes|Citrobacter braakii|Citrobacte
 fullname	like	^(Enterobacter|Klebsiella aerogenes|Citrobacter braakii|Citrobacter freundii|Citrobacter gillenii|Citrobacter murliniae|Citrobacter rodenticum|Citrobacter sedlakii|Citrobacter werkmanii|Citrobacter youngae|Hafnia alvei|Serratia|Morganella morganii|Providencia)	CTX	I	CTX, CRO, CAZ		Expert Rules on Enterobacterales (AmpC de-repressed cephalosporins)	Expert Rules	3.2	This is rule 3 and 4 of EUCAST Expert Rules v3.2 on Enterobacterales, result will be set with the 'ampc_derepressed_cephalosporins' argument
 fullname	like	^(Enterobacter|Klebsiella aerogenes|Citrobacter braakii|Citrobacter freundii|Citrobacter gillenii|Citrobacter murliniae|Citrobacter rodenticum|Citrobacter sedlakii|Citrobacter werkmanii|Citrobacter youngae|Hafnia alvei|Serratia|Morganella morganii|Providencia)	CRO	I	CTX, CRO, CAZ		Expert Rules on Enterobacterales (AmpC de-repressed cephalosporins)	Expert Rules	3.2	This is rule 3 and 4 of EUCAST Expert Rules v3.2 on Enterobacterales, result will be set with the 'ampc_derepressed_cephalosporins' argument
 fullname	like	^(Enterobacter|Klebsiella aerogenes|Citrobacter braakii|Citrobacter freundii|Citrobacter gillenii|Citrobacter murliniae|Citrobacter rodenticum|Citrobacter sedlakii|Citrobacter werkmanii|Citrobacter youngae|Hafnia alvei|Serratia|Morganella morganii|Providencia)	CAZ	I	CTX, CRO, CAZ		Expert Rules on Enterobacterales (AmpC de-repressed cephalosporins)	Expert Rules	3.2	This is rule 3 and 4 of EUCAST Expert Rules v3.2 on Enterobacterales, result will be set with the 'ampc_derepressed_cephalosporins' argument
+order	is	Enterobacterales			PEN, glycopeptides_except_lipo, lipoglycopeptides, FUS, macrolides, lincosamides, streptogramins, RIF, oxazolidinones	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+fullname	like	^Citrobacter (koseri|amalonaticus|sedlakii|farmeri|rodentium)			aminopenicillins, TIC	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+fullname	like	^Citrobacter (freundii|braakii|murliniae|werkmanii|youngae)			aminopenicillins, AMC, SAM, CZO, CEP, LEX, CFR, FOX	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus_species	is	Enterobacter cloacae			aminopenicillins, AMC, SAM, CZO, CEP, LEX, CFR, FOX	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus_species	is	Escherichia hermannii			aminopenicillins, TIC	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus_species	is	Hafnia alvei			aminopenicillins, AMC, polymyxins	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus_species	is	Klebsiella aerogenes			aminopenicillins, AMC, SAM, CZO, CEP, LEX, CFR, FOX	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus_species	is	Klebsiella oxytoca			aminopenicillins, TIC	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+fullname	like	^Klebsiella( pneumoniae| quasipneumoniae| variicola)?			aminopenicillins, TIC	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus_species	is	Leclercia adecarboxylata			FOS	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus_species	is	Morganella morganii			aminopenicillins, AMC, SAM, CZO, CEP, LEX, CFR, DOX, MNO, TCY, polymyxins, NIT	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus_species	is	Plesiomonas shigelloides			aminopenicillins, AMC, SAM	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus_species	is	Proteus mirabilis			DOX, MNO, TCY, TGC, polymyxins, NIT	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus_species	is	Proteus penneri			aminopenicillins, CZO, CEP, LEX, CFR, CXM, DOX, MNO, TCY, TGC, polymyxins, NIT	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus_species	is	Proteus vulgaris			aminopenicillins, CZO, CEP, LEX, CFR, CXM, DOX, MNO, TCY, TGC, polymyxins, NIT	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus_species	is	Providencia rettgeri			aminopenicillins, AMC, SAM, CZO, CEP, LEX, CFR, DOX, MNO, TCY, polymyxins, NIT	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus_species	is	Providencia stuartii			aminopenicillins, AMC, SAM, CZO, CEP, LEX, CFR, DOX, MNO, TCY, polymyxins, NIT	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus	is	Raoultella			aminopenicillins, TIC	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus_species	is	Serratia marcescens			aminopenicillins, AMC, SAM, CZO, CEP, LEX, CFR, FOX, CXM, DOX, TCY, polymyxins, NIT	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus_species	is	Yersinia enterocolitica			aminopenicillins, AMC, SAM, TIC, CZO, CEP, LEX, CFR, FOX	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus_species	is	Yersinia pseudotuberculosis			polymyxins	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus_species	is	Aeromonas hydrophila			aminopenicillins, SAM	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus_species	is	Aeromonas veronii			aminopenicillins, SAM, TIC	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus_species	is	Aeromonas dhakensis			aminopenicillins, SAM, FOX	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus_species	is	Aeromonas caviae			aminopenicillins, SAM	R	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	Expert Rules	3.3	
+genus	one_of	Achromobacter, Acinetobacter, Alcaligenes, Bordetella, Burkholderia, Elizabethkingia, Flavobacterium, Ochrobactrum, Pseudomonas, Stenotrophomonas			PEN, cephalosporins_1st, cephalosporins_2nd, glycopeptides_except_lipo, lipoglycopeptides, FUS, macrolides, lincosamides, streptogramins, RIF, oxazolidinones	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.3	
+fullname	like	^Acinetobacter (baumannii|pittii|nosocomialis)			aminopenicillins, AMC, CRO, CTX, ATM, ETP, TMP, FOS, DOX, TCY	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.3	Additional rules from header added in separate rule (genus is one of…)
+genus	is	Acinetobacter			DOX, TCY	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.3	Additional rules from header added in separate rule (genus is one of…)
+genus_species	is	Achromobacter xylosoxidans 			aminopenicillins, CRO, CTX, ETP, ATM	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.3	Additional rules from header added in separate rule (genus is one of…)
+fullname	like	^Burkholderia (ambifaria|anthina|arboris|cepacia|cenocepacia|contaminans|diffusa|dolosa|lata|latens|metallica|multivorans|paludis|pseudomultivorans|pyrrocinia|pseudomultivorans|seminalis|stabilis|stagnalis|territorii|ubonensis|vietnamiensis)			aminopenicillins, AMC, SAM, TIC, TCC, PIP, TZP, CRO, CTX, ATM, ETP, CIP, CHL, aminoglycosides, TMP, FOS, polymyxins	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.3	Additional rules from header added in separate rule (genus is one of…)
+genus_species	is	Elizabethkingia meningoseptica			aminopenicillins, AMC, SAM, TIC, TCC, CTX, CRO, CAZ, FEP, ATM, ETP, IPM, MEM, polymyxins	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.3	Additional rules from header added in separate rule (genus is one of…)
+genus_species	is	Elizabethkingia anophelis			aminopenicillins, AMC, SAM, TIC, TCC, CTX, CRO, CAZ, FEP, ATM, ETP, IPM, MEM	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.3	Additional rules from header added in separate rule (genus is one of…)
+genus_species	is	Brucella anthropi			aminopenicillins, AMC, SAM, TIC, TCC, PIP, TZP, CZO, CTX, CRO, CAZ, FEP, ATM, ETP	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.3	Additional rules from header added in separate rule (genus is one of…)
+genus_species	is	Pseudomonas aeruginosa			aminopenicillins, AMC, SAM, CTX, CRO, ETP, CHL, KAN, NEO, TMP, DOX, MNO, TCY, TGC	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.3	Additional rules from header added in separate rule (genus is one of…)
+genus_species	is	Stenotrophomonas maltophilia			aminopenicillins, AMC, SAM, TIC, PIP, TZP, CRO, CTX, ATM, ETP, IPM, MEM, aminoglycosides, TMP, FOS, TCY	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.3	Additional rules from header added in separate rule (genus is one of…)
+genus	is	Chryseobacterium			aminopenicillins, AMC, SAM, TIC, TCC, CRO, CTX, CAZ, ATM, ETP, IPM, MEM, aminoglycosides, polymyxins	R	Table 2: Intrinsic resistance in non-fermentative gram-negative bacteria	Expert Rules	3.3	Additional rules from header added in separate rule (genus is one of…)
+genus_species	is	Haemophilus influenzae			FUS, streptogramins, glycopeptides_except_lipo, lipoglycopeptides, lincosamides, oxazolidinones	R	Table 3: Intrinsic resistance in other gram-negative bacteria	Expert Rules	3.3	
+genus_species	is	Moraxella catarrhalis			TMP, glycopeptides_except_lipo, lipoglycopeptides, lincosamides, oxazolidinones	R	Table 3: Intrinsic resistance in other gram-negative bacteria	Expert Rules	3.3	
+genus	is	Neisseria			TMP, glycopeptides_except_lipo, lipoglycopeptides, lincosamides, oxazolidinones	R	Table 3: Intrinsic resistance in other gram-negative bacteria	Expert Rules	3.3	
+genus_species	is	Campylobacter fetus			FUS, streptogramins, TMP, NAL, glycopeptides_except_lipo, lipoglycopeptides, lincosamides, oxazolidinones	R	Table 3: Intrinsic resistance in other gram-negative bacteria	Expert Rules	3.3	
+fullname	like	^Campylobacter (jejuni|coli)			FUS, streptogramins, TMP, glycopeptides_except_lipo, lipoglycopeptides, lincosamides, oxazolidinones	R	Table 3: Intrinsic resistance in other gram-negative bacteria	Expert Rules	3.3	
+gramstain	is	Gram-positive			ATM, TEM, polymyxins, NAL	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	
+genus_species	is	Staphylococcus saprophyticus			FUS, CAZ, FOS, NOV	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	
+genus_species	is	Staphylococcus cohnii			CAZ, NOV	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	
+genus_species	is	Staphylococcus xylosus			CAZ, NOV	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	
+genus_species	is	Staphylococcus capitis			CAZ, FOS	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	
+genus_species	is	Staphylococcus aureus			CAZ	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	
+genus_species	is	Staphylococcus coagulase-negative			CAZ	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	
+genus	is	Streptococcus			FUS, CAZ, aminoglycosides	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	
+genus_species	is	Enterococcus faecalis			FUS, CAZ, cephalosporins_except_CAZ, aminoglycosides, macrolides, CLI, QDA, SDI, SUD, SDM, SLF, SLF1, SLF2, SZO, SLF3, SLF4, SMX, SLF5, SLF6, SLF7, SLF8, SLF9, SLF10, SLF11, SLF12, SUT, SLF13	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	These last ones are all true sulfonamides
+genus_species	is	Enterococcus faecalis	TMP	S	SXT, SLT1, SLT2, SLT3, SLT4, SLT5	S	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	Since R to sulfonamides - TMP result is equal with combinations
+genus_species	is	Enterococcus faecalis	TMP	I	SXT, SLT1, SLT2, SLT3, SLT4, SLT5	I	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	Since R to sulfonamides - TMP result is equal with combinations
+genus_species	is	Enterococcus faecalis	TMP	R	SXT, SLT1, SLT2, SLT3, SLT4, SLT5	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	Since R to sulfonamides - TMP result is equal with combinations
+fullname	like	^Enterococcus (gallinarum|casseliflavus)			FUS, CAZ, cephalosporins_except_CAZ, aminoglycosides, macrolides, CLI, QDA, VAN, SDI, SUD, SDM, SLF, SLF1, SLF2, SZO, SLF3, SLF4, SMX, SLF5, SLF6, SLF7, SLF8, SLF9, SLF10, SLF11, SLF12, SUT, SLF13	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	These last ones are all true sulfonamides
+fullname	like	^Enterococcus (gallinarum|casseliflavus)	TMP	S	SXT, SLT1, SLT2, SLT3, SLT4, SLT5	S	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	Since R to sulfonamides - TMP result is equal with combinations
+fullname	like	^Enterococcus (gallinarum|casseliflavus)	TMP	I	SXT, SLT1, SLT2, SLT3, SLT4, SLT5	I	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	Since R to sulfonamides - TMP result is equal with combinations
+fullname	like	^Enterococcus (gallinarum|casseliflavus)	TMP	R	SXT, SLT1, SLT2, SLT3, SLT4, SLT5	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	Since R to sulfonamides - TMP result is equal with combinations
+genus_species	is	Enterococcus faecium			FUS, CAZ, cephalosporins_except_CAZ, aminoglycosides, macrolides, SDI, SUD, SDM, SLF, SLF1, SLF2, SZO, SLF3, SLF4, SMX, SLF5, SLF6, SLF7, SLF8, SLF9, SLF10, SLF11, SLF12, SUT, SLF13	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	These last ones are all true sulfonamides
+genus_species	is	Enterococcus faecium	TMP	S	SXT, SLT1, SLT2, SLT3, SLT4, SLT5	S	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	Since R to sulfonamides - TMP result is equal with combinations
+genus_species	is	Enterococcus faecium	TMP	I	SXT, SLT1, SLT2, SLT3, SLT4, SLT5	I	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	Since R to sulfonamides - TMP result is equal with combinations
+genus_species	is	Enterococcus faecium	TMP	R	SXT, SLT1, SLT2, SLT3, SLT4, SLT5	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	Since R to sulfonamides - TMP result is equal with combinations
+genus	is	Corynebacterium			FOS	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	
+genus_species	is	Listeria monocytogenes			CAZ, cephalosporins_except_CAZ	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	
+genus	one_of	Leuconostoc, Pediococcus			VAN, TEC	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	
+genus	is	Lactobacillus			VAN, TEC	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	
+fullname	like	^Clostridium (ramosum|innocuum)			VAN	R	Table 4: Intrinsic resistance in gram-positive bacteria	Expert Rules	3.3	
+genus_species	one_of	Escherichia coli, Proteus mirabilis	AMP	R	PIP	R	Expert Rules on Enterobacterales	Expert Rules	3.3	
+genus_species	one_of	Escherichia coli, Proteus mirabilis	AMP	S	PIP	S	Expert Rules on Enterobacterales	Expert Rules	3.3	
+fullname	like	^(Klebsiella(?! aerogenes)|Raoultella)			PIP	R	Expert Rules on Enterobacterales	Expert Rules	3.3	
+fullname	like	^(Enterobacter|Klebsiella aerogenes|Citrobacter freundii|Serratia|Morganella morganii|Hafnia alvei|Providencia)	CXM	S	CXM, cephalosporins_2nd	R	Expert Rules on Enterobacterales	Expert Rules	3.3	
+genus	one_of	Arsenophonus, Biostraticola, Brenneria, Buchnera, Budvicia, Buttiauxella, Cedecea, Citrobacter, Cosenzaea, Cronobacter, Dickeya, Edwardsiella, Enterobacillus, Enterobacter, Erwinia, Escherichia, Ewingella, Franconibacter, Gibbsiella, Hafnia, Izhakiella, Klebsiella, Kluyvera, Kosakonia, Leclercia, Lelliottia, Leminorella, Lonsdalea, Mangrovibacter, Mixta, Moellerella, Morganella, Obesumbacterium, Pantoea, Pectobacterium, Phaseolibacter, Photorhabdus, Phytobacter, Plesiomonas, Pluralibacter, Pragia, Proteus, Providencia, Pseudescherichia, Pseudocitrobacter, Rahnella, Raoultella, Rosenbergiella, Rouxiella, Saccharobacter, Samsonia, Serratia, Shigella, Shimwellia, Siccibacter, Sodalis, Tatumella, Thorsellia, Trabulsiella, Wigglesworthia, Xenorhabdus, Yersinia, Yokenella	CIP	R	fluoroquinolones	R	Expert Rules on Enterobacterales	Expert Rules	3.3	This is Enterobacterales except Salmonella spp.
+fullname	like	^(Serratia|Providencia|Morganella morganii)			TGC	R	Expert Rules on Enterobacterales	Expert Rules	3.3	
+genus	is	Salmonella			cephalosporins_2nd	R	Expert Rules on Salmonella	Expert Rules	3.3	
+genus	is	Salmonella			aminoglycosides	R	Expert Rules on Salmonella	Expert Rules	3.3	
+genus	is	Salmonella	PEF	R	CIP	R	Expert Rules on Salmonella	Expert Rules	3.3	
+genus_species	is	Staphylococcus aureus	FOX1	R	betalactams	R	Expert Rules on Staphylococcus	Expert Rules	3.3	
+genus_species	is	Staphylococcus aureus	FOX1	S	betalactams	S	Expert Rules on Staphylococcus	Expert Rules	3.3	
+genus_species	one_of	Staphylococcus aureus, Staphylococcus lugdunensis	PEN	R	AMP, AMX, AZL, BAM, CRB, CRN, EPC, HET, MEC, MEZ, MTM, PIP, PME, PVM, SBC, TAL, TEM, TIC	R	Expert Rules on Staphylococcus	Expert Rules	3.3	all penicillins without beta-lactamse inhibitor
+genus	is	Staphylococcus	ERY, CLI	S	macrolides, lincosamides	S	Expert Rules on Staphylococcus	Expert Rules	3.3	
+genus	is	Staphylococcus	NOR	S	CIP, LVX, MFX, OFX	S	Expert Rules on Staphylococcus	Expert Rules	3.3	
+genus	is	Staphylococcus	LVX	R	fluoroquinolones	R	Expert Rules on Staphylococcus	Expert Rules	3.3	
+genus	is	Staphylococcus	MFX	R	fluoroquinolones	R	Expert Rules on Staphylococcus	Expert Rules	3.3	
+genus	is	Staphylococcus	TCY	S	DOX, MNO, TGC	S	Expert Rules on Staphylococcus	Expert Rules	3.3	
+genus	is	Staphylococcus	TCY	R	DOX, MNO	R	Expert Rules on Staphylococcus	Expert Rules	3.3	
+genus	is	Staphylococcus	VAN	S	lipoglycopeptides	S	Expert Rules on Staphylococcus	Expert Rules	3.3	
+genus	is	Staphylococcus	LNZ	S	TZD	S	Expert Rules on Staphylococcus	Expert Rules	3.3	
+fullname	like	^Enterococcus (faecalis|faecium)	AMP	R	ureidopenicillins, IPM	R	Expert Rules on Enterococcus	Expert Rules	3.3	
+fullname	like	^Enterococcus (faecalis|faecium)	AMX	R	ureidopenicillins, IPM	R	Expert Rules on Enterococcus	Expert Rules	3.3	
+genus	is	Enterococcus	NOR	S	CIP, LVX	S	Expert Rules on Enterococcus	Expert Rules	3.3	
+genus	is	Enterococcus	VAN	S	lipoglycopeptides	S	Expert Rules on Enterococcus	Expert Rules	3.3	
+genus_species	is	Enterococcus faecium			CLI	R	Expert Rules on Enterococcus	Expert Rules	3.3	
+genus_species	one_of	Streptococcus group A, Streptococcus group B, Streptococcus group C, Streptococcus group G	PEN	S	aminopenicillins, cephalosporins, carbapenems	S	Expert Rules on Streptococcus A, B, C and G	Expert Rules	3.3	
+genus_species	one_of	Streptococcus group A, Streptococcus group B, Streptococcus group C, Streptococcus group G	NOR	S	LVX, MFX	S	Expert Rules on Streptococcus A, B, C and G	Expert Rules	3.3	
+genus_species	one_of	Streptococcus group A, Streptococcus group B, Streptococcus group C, Streptococcus group G	NOR	R	LVX, MFX	R	Expert Rules on Streptococcus A, B, C and G	Expert Rules	3.3	
+genus_species	is	Streptococcus pneumoniae	OXA	S	PHN, PEN, aminopenicillins, cephalosporins_except_CAZ, carbapenems	S	Expert Rules on Streptococcus pneumoniae	Expert Rules	3.3	
+genus_species	is	Streptococcus pneumoniae	NOR	S	LVX, MFX	S	Expert Rules on Streptococcus pneumoniae	Expert Rules	3.3	
+genus_species	is	Streptococcus pneumoniae	NOR	R	LVX, MFX	R	Expert Rules on Streptococcus pneumoniae	Expert Rules	3.3	
+genus_species	is	Streptococcus pneumoniae	LVX	R	fluoroquinolones	R	Expert Rules on Streptococcus pneumoniae	Expert Rules	3.3	
+genus_species	is	Streptococcus pneumoniae	MFX	R	fluoroquinolones	R	Expert Rules on Streptococcus pneumoniae	Expert Rules	3.3	
+genus_species	is	Streptococcus pneumoniae	TCY	S	DOX, MNO	S	Expert Rules on Streptococcus pneumoniae	Expert Rules	3.3	
+genus_species	is	Streptococcus pneumoniae	TCY	R	DOX, MNO	R	Expert Rules on Streptococcus pneumoniae	Expert Rules	3.3	
+genus_species	is	Streptococcus pneumoniae	VAN	S	lipoglycopeptides	S	Expert Rules on Streptococcus pneumoniae	Expert Rules	3.3	
+fullname	like	^Streptococcus (anginosus|australis|bovis|constellatus|cristatus|equinus|gallolyticus|gordonii|infantarius|infantis|intermedius|mitis|mutans|oligofermentans|oralis|parasanguinis|peroris|pseudopneumoniae|salivarius|sanguinis|sinensis|sobrinus|thermophilus|vestibularis|viridans)$	PEN	S	aminopenicillins, CTX, CRO	S	Expert Rules on Viridans Group Streptococci	Expert Rules	3.3	
+genus_species	is	Haemophilus influenzae 	PEN	S	betalactams	S	Expert Rules on Haemophilus influenzae	Expert Rules	3.3	
+genus_species	is	Haemophilus influenzae 	NAL	S	fluoroquinolones	S	Expert Rules on Haemophilus influenzae	Expert Rules	3.3	
+genus_species	is	Haemophilus influenzae 	NAL	R	CIP, LVX, MFX	R	Expert Rules on Haemophilus influenzae	Expert Rules	3.3	
+genus_species	is	Haemophilus influenzae 	TCY	S	DOX, MNO	S	Expert Rules on Haemophilus influenzae	Expert Rules	3.3	
+genus_species	is	Haemophilus influenzae 	TCY	R	DOX, MNO	R	Expert Rules on Haemophilus influenzae	Expert Rules	3.3	
+genus_species	is	Moraxella catarrhalis	NAL	S	fluoroquinolones	S	Expert Rules on Moraxella catarrhalis	Expert Rules	3.3	
+genus_species	is	Moraxella catarrhalis	NAL	R	fluoroquinolones	R	Expert Rules on Moraxella catarrhalis	Expert Rules	3.3	
+genus	is	Campylobacter	ERY	S	CLR, AZM	S	Expert Rules on Campylobacter	Expert Rules	3.3	
+genus_species	is	Campylobacter	ERY	R	CLR, AZM	R	Expert Rules on Campylobacter	Expert Rules	3.3	
+fullname	like	^(Enterobacter|Klebsiella aerogenes|Citrobacter braakii|Citrobacter freundii|Citrobacter gillenii|Citrobacter murliniae|Citrobacter rodenticum|Citrobacter sedlakii|Citrobacter werkmanii|Citrobacter youngae|Hafnia alvei|Serratia|Morganella morganii|Providencia)	CTX	S	CTX, CRO, CAZ		Expert Rules on Enterobacterales (AmpC de-repressed cephalosporins)	Expert Rules	3.3	This is rule 3 and 4 of EUCAST Expert Rules v3.2 on Enterobacterales, result will be set with the 'ampc_derepressed_cephalosporins' argument
+fullname	like	^(Enterobacter|Klebsiella aerogenes|Citrobacter braakii|Citrobacter freundii|Citrobacter gillenii|Citrobacter murliniae|Citrobacter rodenticum|Citrobacter sedlakii|Citrobacter werkmanii|Citrobacter youngae|Hafnia alvei|Serratia|Morganella morganii|Providencia)	CRO	S	CTX, CRO, CAZ		Expert Rules on Enterobacterales (AmpC de-repressed cephalosporins)	Expert Rules	3.3	This is rule 3 and 4 of EUCAST Expert Rules v3.2 on Enterobacterales, result will be set with the 'ampc_derepressed_cephalosporins' argument
+fullname	like	^(Enterobacter|Klebsiella aerogenes|Citrobacter braakii|Citrobacter freundii|Citrobacter gillenii|Citrobacter murliniae|Citrobacter rodenticum|Citrobacter sedlakii|Citrobacter werkmanii|Citrobacter youngae|Hafnia alvei|Serratia|Morganella morganii|Providencia)	CAZ	S	CTX, CRO, CAZ		Expert Rules on Enterobacterales (AmpC de-repressed cephalosporins)	Expert Rules	3.3	This is rule 3 and 4 of EUCAST Expert Rules v3.2 on Enterobacterales, result will be set with the 'ampc_derepressed_cephalosporins' argument
+fullname	like	^(Enterobacter|Klebsiella aerogenes|Citrobacter braakii|Citrobacter freundii|Citrobacter gillenii|Citrobacter murliniae|Citrobacter rodenticum|Citrobacter sedlakii|Citrobacter werkmanii|Citrobacter youngae|Hafnia alvei|Serratia|Morganella morganii|Providencia)	CTX	I	CTX, CRO, CAZ		Expert Rules on Enterobacterales (AmpC de-repressed cephalosporins)	Expert Rules	3.3	This is rule 3 and 4 of EUCAST Expert Rules v3.2 on Enterobacterales, result will be set with the 'ampc_derepressed_cephalosporins' argument
+fullname	like	^(Enterobacter|Klebsiella aerogenes|Citrobacter braakii|Citrobacter freundii|Citrobacter gillenii|Citrobacter murliniae|Citrobacter rodenticum|Citrobacter sedlakii|Citrobacter werkmanii|Citrobacter youngae|Hafnia alvei|Serratia|Morganella morganii|Providencia)	CRO	I	CTX, CRO, CAZ		Expert Rules on Enterobacterales (AmpC de-repressed cephalosporins)	Expert Rules	3.3	This is rule 3 and 4 of EUCAST Expert Rules v3.2 on Enterobacterales, result will be set with the 'ampc_derepressed_cephalosporins' argument
+fullname	like	^(Enterobacter|Klebsiella aerogenes|Citrobacter braakii|Citrobacter freundii|Citrobacter gillenii|Citrobacter murliniae|Citrobacter rodenticum|Citrobacter sedlakii|Citrobacter werkmanii|Citrobacter youngae|Hafnia alvei|Serratia|Morganella morganii|Providencia)	CAZ	I	CTX, CRO, CAZ		Expert Rules on Enterobacterales (AmpC de-repressed cephalosporins)	Expert Rules	3.3	This is rule 3 and 4 of EUCAST Expert Rules v3.2 on Enterobacterales, result will be set with the 'ampc_derepressed_cephalosporins' argument

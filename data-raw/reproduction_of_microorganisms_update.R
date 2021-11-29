@@ -25,6 +25,8 @@
 
 # Go to https://lpsn.dsmz.de/downloads (register first) and download the latest CSV file.
 
+file_location <- "data-raw/taxonomy.csv"
+
 library(tidyverse)
 library(AMR)
 
@@ -111,7 +113,7 @@ abbreviate_mo <- function(x, minlength = 5, prefix = "", ...) {
 
 # Read data ---------------------------------------------------------------
 
-taxonomy <- read_csv("~/Downloads/taxonomy.csv")
+taxonomy <- read_csv(file_location)
 
 # Create synonyms ---------------------------------------------------------
 
@@ -129,8 +131,7 @@ new_synonyms <- taxonomy %>%
   filter(fullname != fullname_new) %>% 
   # this part joins this table to itself to correct for entries that had >1 renames, 
   # such as:
-  # Bacteroides tectum -> Bacteroides tectus
-  # Bacteroides tectus -> Bacteroides pyogenes
+  # Bacteroides tectum -> Bacteroides tectus -> Bacteroides pyogenes
   left_join(., ., 
             by = c("fullname_new" = "fullname"), 
             suffix = c("", ".2")) %>%
@@ -359,6 +360,20 @@ MOs <- MOs %>%
 MOs <- MOs %>% 
   df_remove_nonASCII()
 
+# Add LPSN record IDs -----------------------------------------------------
+
+records_ids <- taxonomy %>%
+  mutate(across(1:3, function(x) { x[is.na(x)] <- ""; x}),
+         fullname = trimws(paste(genus_name, sp_epithet, subsp_epithet))) %>%
+  transmute(fullname, species_id = as.numeric(record_no))
+message("Adding ", sum(records_ids$fullname %in% microorganisms$fullname), " LPSN record IDs")
+MOs <- MOs %>%
+  select(-species_id) %>% 
+  left_join(records_ids, by = "fullname") %>%
+  relocate(species_id, .after = ref) %>% 
+  mutate(source = case_when(!is.na(species_id) ~ "LPSN",
+                            source %unlike% "manual" ~ "CoL",
+                            TRUE ~ source))
 
 # Merge synonyms ----------------------------------------------------------
 

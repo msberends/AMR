@@ -1,5 +1,5 @@
-# `AMR` 1.7.1.9054
-## <small>Last updated: 28 November 2021</small>
+# `AMR` 1.7.1.9055
+## <small>Last updated: 29 November 2021</small>
 
 ### Breaking changes
 * Removed `p_symbol()` and all `filter_*()` functions (except for `filter_first_isolate()`), which were all deprecated in a previous package version
@@ -54,6 +54,7 @@
 * `NA` values of the classes `<mic>`, `<disk>` and `<rsi>` are now exported objects of this package, e.g. `NA_mic_` is an `NA` of class `mic` (just like the base R `NA_character_` is an `NA` of class `character`)
 * The `proportion_df()`, `count_df()` and `rsi_df()` functions now return with the additional S3 class 'rsi_df' so they can be extended by other packages
 * The `mdro()` function now returns `NA` for all rows that have no test results
+* The `species_id` column in the `microorganisms` data set now only contains LPSN record numbers. For this reason, this column is now numeric instead of a character, and `mo_url()` has been updated to reflect this change.
 
 ### Other
 * This package is now being maintained by two epidemiologists and a data scientist from two different non-profit healthcare organisations. All functions in this package are now all considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months from now on.

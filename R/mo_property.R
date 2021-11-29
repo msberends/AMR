@@ -216,9 +216,9 @@ mo_shortname <- function(x, language = get_locale(), ...) {
   shortnames[shortnames == "S. coagulase-negative"] <- "CoNS"
   shortnames[shortnames == "S. coagulase-positive"] <- "CoPS"
   # exceptions for streptococci: Group A Streptococcus -> GAS
-  shortnames[shortnames %like% "S. group [ABCDFGHK]"] <- paste0("G", gsub("S. group ([ABCDFGHK])", "\\1", shortnames[shortnames %like% "S. group [ABCDFGHK]"]), "S")
+  shortnames[shortnames %like% "S. group [ABCDFGHK]"] <- paste0("G", gsub("S. group ([ABCDFGHK])", "\\1", shortnames[shortnames %like% "S. group [ABCDFGHK]"], perl = TRUE), "S")
   # unknown species etc.
-  shortnames[shortnames %like% "unknown"] <- paste0("(", trimws(gsub("[^a-zA-Z -]", "", shortnames[shortnames %like% "unknown"])), ")")
+  shortnames[shortnames %like% "unknown"] <- paste0("(", trimws(gsub("[^a-zA-Z -]", "", shortnames[shortnames %like% "unknown"], perl = TRUE)), ")")
   
   shortnames[is.na(x.mo)] <- NA_character_
   load_mo_failures_uncertainties_renamed(metadata)
@@ -518,7 +518,7 @@ mo_authors <- function(x, language = get_locale(), ...) {
   
   x <- mo_validate(x = x, property = "ref", language = language, ...)
   # remove last 4 digits and presumably the comma and space that preceed them
-  x[!is.na(x)] <- gsub(",? ?[0-9]{4}", "", x[!is.na(x)])
+  x[!is.na(x)] <- gsub(",? ?[0-9]{4}", "", x[!is.na(x)], perl = TRUE)
   suppressWarnings(x)
 }
 
@@ -534,7 +534,7 @@ mo_year <- function(x, language = get_locale(), ...) {
   
   x <- mo_validate(x = x, property = "ref", language = language, ...)
   # get last 4 digits
-  x[!is.na(x)] <- gsub(".*([0-9]{4})$", "\\1", x[!is.na(x)])
+  x[!is.na(x)] <- gsub(".*([0-9]{4})$", "\\1", x[!is.na(x)], perl = TRUE)
   suppressWarnings(as.integer(x))
 }
 
@@ -564,17 +564,17 @@ mo_taxonomy <- function(x, language = get_locale(),  ...) {
   x <- as.mo(x, language = language, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
   
-  result <- list(kingdom = mo_kingdom(x, language = language),
-                 phylum = mo_phylum(x, language = language),
-                 class = mo_class(x, language = language),
-                 order = mo_order(x, language = language),
-                 family = mo_family(x, language = language),
-                 genus = mo_genus(x, language = language),
-                 species = mo_species(x, language = language),
-                 subspecies = mo_subspecies(x, language = language))
+  out <- list(kingdom = mo_kingdom(x, language = language),
+              phylum = mo_phylum(x, language = language),
+              class = mo_class(x, language = language),
+              order = mo_order(x, language = language),
+              family = mo_family(x, language = language),
+              genus = mo_genus(x, language = language),
+              species = mo_species(x, language = language),
+              subspecies = mo_subspecies(x, language = language))
   
   load_mo_failures_uncertainties_renamed(metadata)
-  result
+  out
 }
 
 #' @rdname mo_property
@@ -652,31 +652,23 @@ mo_url <- function(x, open = FALSE, language = get_locale(), ...) {
   meet_criteria(open, allow_class = "logical", has_length = 1)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   
-  mo <- as.mo(x = x, language = language, ... = ...)
-  mo_names <- mo_name(mo)
+  x.mo <- as.mo(x = x, language = language, ... = ...)
   metadata <- get_mo_failures_uncertainties_renamed()
   
-  df <- data.frame(mo, stringsAsFactors = FALSE) %pm>%
-    pm_left_join(pm_select(microorganisms, mo, source, species_id), by = "mo")
-  df$url <- ifelse(df$source == "CoL",
-                   paste0(CATALOGUE_OF_LIFE$url_CoL, "details/species/id/", df$species_id, "/"),
-                   NA_character_)
+  df <- microorganisms[match(x.mo, microorganisms$mo), c("mo", "fullname", "source", "kingdom", "rank")]
+  df$url <- ifelse(df$source == "LPSN",
+                   paste0(CATALOGUE_OF_LIFE$url_LPSN, "/species/", gsub(" ", "-", tolower(df$fullname), fixed = TRUE)),
+                   paste0(CATALOGUE_OF_LIFE$url_CoL, "/data/search?type=EXACT&q=", gsub(" ", "%20", df$fullname, fixed = TRUE)))
+  
+  genera <- which(df$kingdom == "Bacteria" & df$rank == "genus")
+  df$url[genera] <- gsub("/species/", "/genus/", df$url[genera], fixed = TRUE)
+  subsp <- which(df$kingdom == "Bacteria" & df$rank %in% c("subsp.", "infraspecies"))
+  df$url[subsp] <- gsub("/species/", "/subspecies/", df$url[subsp], fixed = TRUE)
+  
   u <- df$url
-  u[mo_kingdom(mo) == "Bacteria"] <- paste0(CATALOGUE_OF_LIFE$url_LPSN, "/species/", gsub(" ", "-", tolower(mo_names), fixed = TRUE))
-  u[mo_kingdom(mo) == "Bacteria" & mo_rank(mo) == "genus"] <- gsub("/species/",
-                                                                   "/genus/",
-                                                                   u[mo_kingdom(mo) == "Bacteria" & mo_rank(mo) == "genus"],
-                                                                   fixed = TRUE)
-  u[mo_kingdom(mo) == "Bacteria" &
-      mo_rank(mo) %in% c("subsp.", "infraspecies")] <- gsub("/species/",
-                                                            "/subspecies/",
-                                                            u[mo_kingdom(mo) == "Bacteria" &
-                                                                mo_rank(mo) %in% c("subsp.", "infraspecies")],
-                                                            fixed = TRUE)
+  names(u) <- df$fullname
   
-  names(u) <- mo_names
-  
-  if (open == TRUE) {
+  if (isTRUE(open)) {
     if (length(u) > 1) {
       warning_("Only the first URL will be opened, as `browseURL()` only suports one string.")
     }
