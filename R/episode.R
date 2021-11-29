@@ -27,7 +27,7 @@
 #' 
 #' These functions determine which items in a vector can be considered (the start of) a new episode, based on the argument `episode_days`. This can be used to determine clinical episodes for any epidemiological analysis. The [get_episode()] function returns the index number of the episode per group, while the [is_new_episode()] function returns values `TRUE`/`FALSE` to indicate whether an item in a vector is the start of a new episode.
 #' @inheritSection lifecycle Stable Lifecycle
-#' @param x vector of dates (class `Date` or `POSIXt`)
+#' @param x vector of dates (class `Date` or `POSIXt`), will be sorted internally to determine episodes
 #' @param episode_days required episode length in days, can also be less than a day or `Inf`, see *Details*
 #' @param ... ignored, only in place to allow future extensions
 #' @details 
@@ -182,5 +182,5 @@ exec_episode <- function(x, type, episode_days, ...) {
   }
   
   ord <- order(x)
-  run_episodes(x[ord], episode_seconds)[ord]
+  run_episodes(x[ord], episode_seconds)[order(ord)]
 }

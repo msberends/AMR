@@ -1,4 +1,4 @@
-# `AMR` 1.7.1.9055
+# `AMR` 1.7.1.9056
 ## <small>Last updated: 29 November 2021</small>
 
 ### Breaking changes
@@ -55,6 +55,7 @@
 * The `proportion_df()`, `count_df()` and `rsi_df()` functions now return with the additional S3 class 'rsi_df' so they can be extended by other packages
 * The `mdro()` function now returns `NA` for all rows that have no test results
 * The `species_id` column in the `microorganisms` data set now only contains LPSN record numbers. For this reason, this column is now numeric instead of a character, and `mo_url()` has been updated to reflect this change.
+* Fixed a small bug in the functions `get_episode()` and `is_new_episode()`
 
 ### Other
 * This package is now being maintained by two epidemiologists and a data scientist from two different non-profit healthcare organisations. All functions in this package are now all considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months from now on.

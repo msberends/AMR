@@ -365,7 +365,9 @@ MOs <- MOs %>%
 records_ids <- taxonomy %>%
   mutate(across(1:3, function(x) { x[is.na(x)] <- ""; x}),
          fullname = trimws(paste(genus_name, sp_epithet, subsp_epithet))) %>%
-  transmute(fullname, species_id = as.numeric(record_no))
+  transmute(fullname, species_id = as.numeric(record_no)) %>% 
+  arrange(fullname, species_id) %>% 
+  distinct(fullname, .keep_all = TRUE)
 message("Adding ", sum(records_ids$fullname %in% microorganisms$fullname), " LPSN record IDs")
 MOs <- MOs %>%
   select(-species_id) %>% 

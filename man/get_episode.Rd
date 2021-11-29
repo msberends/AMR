@@ -10,7 +10,7 @@ get_episode(x, episode_days, ...)
 is_new_episode(x, episode_days, ...)
 }
 \arguments{
-\item{x}{vector of dates (class \code{Date} or \code{POSIXt})}
+\item{x}{vector of dates (class \code{Date} or \code{POSIXt}), will be sorted internally to determine episodes}
 
 \item{episode_days}{required episode length in days, can also be less than a day or \code{Inf}, see \emph{Details}}
 

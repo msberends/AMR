@@ -40,7 +40,7 @@ expect_identical(class(outcome), c("ordered", "factor"))
 
 # example_isolates should have these finding using Dutch guidelines
 expect_equal(as.double(table(outcome)),
-             c(1970, 24, 6)) # 1970 neg, 24 unconfirmed, 6 pos
+             c(1954, 24, 6)) # 1954 neg, 24 unconfirmed, 6 pos, rest is NA
 
 expect_equal(brmo(example_isolates, info = FALSE),
              mdro(example_isolates, guideline = "BRMO", info = FALSE))

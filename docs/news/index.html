@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9055</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9056</span>
       </span>
     </div>
 
@@ -232,9 +232,9 @@
       <small>Source: <a href='https://github.com/msberends/AMR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="amr-1719055" class="section level1">
-<h1 class="page-header" data-toc-text="1.7.1.9055">
-<a href="#amr-1719055" class="anchor"></a><small> Unreleased </small><code>AMR</code> 1.7.1.9055</h1>
+    <div id="amr-1719056" class="section level1">
+<h1 class="page-header" data-toc-text="1.7.1.9056">
+<a href="#amr-1719056" class="anchor"></a><small> Unreleased </small><code>AMR</code> 1.7.1.9056</h1>
 <div id="last-updated-29-november-2021" class="section level2">
 <h2 class="hasAnchor">
 <a href="#last-updated-29-november-2021" class="anchor"></a><small>Last updated: 29 November 2021</small>
@@ -325,6 +325,8 @@
 <li>The <code><a href="../reference/proportion.html">proportion_df()</a></code>, <code><a href="../reference/count.html">count_df()</a></code> and <code><a href="../reference/proportion.html">rsi_df()</a></code> functions now return with the additional S3 class ‘rsi_df’ so they can be extended by other packages</li>
 <li>The <code><a href="../reference/mdro.html">mdro()</a></code> function now returns <code>NA</code> for all rows that have no test results</li>
 <li>The <code>species_id</code> column in the <code>microorganisms</code> data set now only contains LPSN record numbers. For this reason, this column is now numeric instead of a character, and <code><a href="../reference/mo_property.html">mo_url()</a></code> has been updated to reflect this change.</li>
+<li>Fixed a small bug in the functions <code><a href="../reference/get_episode.html">get_episode()</a></code> and <code><a href="../reference/get_episode.html">is_new_episode()</a></code>
+</li>
 </ul>
 </div>
 <div id="other" class="section level3">
