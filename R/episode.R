@@ -105,7 +105,7 @@
 #' }
 #' }
 get_episode <- function(x, episode_days, ...) {
-  meet_criteria(x, allow_class = c("Date", "POSIXt"))
+  meet_criteria(x, allow_class = c("Date", "POSIXt"), allow_NA = TRUE)
   meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = FALSE)
   
   exec_episode(x = x, 
@@ -117,7 +117,7 @@ get_episode <- function(x, episode_days, ...) {
 #' @rdname get_episode
 #' @export
 is_new_episode <- function(x, episode_days, ...) {
-  meet_criteria(x, allow_class = c("Date", "POSIXt"))
+  meet_criteria(x, allow_class = c("Date", "POSIXt"), allow_NA = TRUE)
   meet_criteria(episode_days, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = FALSE)
   
   exec_episode(x = x, 
@@ -131,13 +131,13 @@ exec_episode <- function(x, type, episode_days, ...) {
   # since x is now in seconds, get seconds from episode_days as well
   episode_seconds <- episode_days * 60 * 60 * 24
   
-  if (length(x) == 1) {
+  if (length(x) == 1) { # this will also match 1 NA, which is fine
     if (type == "logical") {
       return(TRUE)
     } else if (type == "sequential") {
       return(1)
     }
-  } else if (length(x) == 2) {
+  } else if (length(x) == 2 && !all(is.na(x))) {
     if (max(x) - min(x) >= episode_seconds) {
       if (type == "logical") {
         return(c(TRUE, TRUE))
@@ -182,5 +182,7 @@ exec_episode <- function(x, type, episode_days, ...) {
   }
   
   ord <- order(x)
-  run_episodes(x[ord], episode_seconds)[order(ord)]
+  out <- run_episodes(x[ord], episode_seconds)[order(ord)]
+  out[is.na(x) & ord != 1] <- NA # every NA but the first must remain NA
+  out
 }
