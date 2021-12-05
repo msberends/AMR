@@ -72,4 +72,9 @@ expect_identical(colnames(set_ab_names(example_isolates[, 20:25], "atc")),
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_identical(example_isolates %>% set_ab_names(),
                    example_isolates %>% rename_with(set_ab_names))
+  expect_true(all(c("SXT", "nitrofurantoin", "fosfomycin", "linezolid", "ciprofloxacin",
+                    "moxifloxacin", "vancomycin", "TEC") %in%
+                    (example_isolates %>%
+                       set_ab_names(NIT:VAN) %>%
+                       colnames())))
 }

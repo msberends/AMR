@@ -33,6 +33,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -45,7 +47,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9055</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9058</span>
       </span>
     </div>
 
@@ -170,7 +172,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/msberends/AMR">
+  <a href="https://github.com/msberends/AMR" class="external-link">
     <span class="fab fa-github"></span>
      
     Source Code
@@ -188,37 +190,37 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="amr-for-r-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#amr-for-r-" class="anchor"></a><code>AMR</code> (for R) <img src="./logo.png" align="right" height="120px">
+<div class="section level1">
+<div class="page-header"><h1 id="amr-for-r-">
+<code>AMR</code> (for R) <img src="./logo.png" align="right" height="120px"><a class="anchor" aria-label="anchor" href="#amr-for-r-"></a>
 </h1></div>
 <blockquote>
 <p>Update: The latest EUCAST guideline for intrinsic resistance (v3.3, October 2021) is now supported, and our taxonomy tables has been updated as well (LPSN, 5 October 2021).</p>
 </blockquote>
-<div id="what-is-amr-for-r" class="section level3">
-<h3 class="hasAnchor">
-<a href="#what-is-amr-for-r" class="anchor"></a>What is <code>AMR</code> (for R)?</h3>
-<p><code>AMR</code> is a free, open-source and independent <a href="https://www.r-project.org">R package</a> (see <a href="#copyright">Copyright</a>) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. <strong>Our aim is to provide a standard</strong> for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.</p>
+<div class="section level3">
+<h3 id="what-is-amr-for-r">What is <code>AMR</code> (for R)?<a class="anchor" aria-label="anchor" href="#what-is-amr-for-r"></a>
+</h3>
+<p><code>AMR</code> is a free, open-source and independent <a href="https://www.r-project.org" class="external-link">R package</a> (see <a href="#copyright">Copyright</a>) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. <strong>Our aim is to provide a standard</strong> for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.</p>
 <p>After installing this package, R knows <a href="./reference/microorganisms.html"><strong>~71,000 distinct microbial species</strong></a> and all <a href="./reference/antibiotics.html"><strong>~560 antibiotic, antimycotic and antiviral drugs</strong></a> by name and code (including ATC, EARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data. Antimicrobial names and group names are available in Danish, Dutch, English, French, German, Italian, Portuguese and Spanish.</p>
-<p>This package is <a href="https://en.wikipedia.org/wiki/Dependency_hell">fully independent of any other R package</a> and works on Windows, macOS and Linux with all versions of R since R-3.0.0 (April 2013). <strong>It was designed to work in any setting, including those with very limited resources</strong>. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the <a href="https://www.rug.nl">University of Groningen</a>, in collaboration with non-profit organisations <a href="https://www.certe.nl">Certe Medical Diagnostics and Advice Foundation</a> and <a href="https://www.umcg.nl">University Medical Center Groningen</a>. This R package formed the basis of two PhD theses (<a href="https://doi.org/10.33612/diss.177417131">DOI 10.33612/diss.177417131</a> and <a href="https://doi.org/10.33612/diss.192486375">DOI 10.33612/diss.177417131</a>) but is <a href="./news">actively and durably maintained</a> by two public healthcare organisations in the Netherlands.</p>
+<p>This package is <a href="https://en.wikipedia.org/wiki/Dependency_hell" class="external-link">fully independent of any other R package</a> and works on Windows, macOS and Linux with all versions of R since R-3.0.0 (April 2013). <strong>It was designed to work in any setting, including those with very limited resources</strong>. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the <a href="https://www.rug.nl" class="external-link">University of Groningen</a>, in collaboration with non-profit organisations <a href="https://www.certe.nl" class="external-link">Certe Medical Diagnostics and Advice Foundation</a> and <a href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a>. This R package formed the basis of two PhD theses (<a href="https://doi.org/10.33612/diss.177417131" class="external-link">DOI 10.33612/diss.177417131</a> and <a href="https://doi.org/10.33612/diss.192486375" class="external-link">DOI 10.33612/diss.177417131</a>) but is <a href="./news">actively and durably maintained</a> by two public healthcare organisations in the Netherlands.</p>
 <div class="main-content" style="display: inline-block;">
 <p>
 <a href="./countries_large.png" target="_blank"><img src="./countries.png" class="countries_map"></a> <strong>Used in 175 countries</strong><br> Since its first public release in early 2018, this R package has been used in almost all countries in the world. Click the map to enlarge and to see the country names.
 </p>
 </div>
-<div id="with-amr-for-r-theres-always-a-knowledgeable-microbiologist-by-your-side" class="section level5">
-<h5 class="hasAnchor">
-<a href="#with-amr-for-r-theres-always-a-knowledgeable-microbiologist-by-your-side" class="anchor"></a>With <code>AMR</code> (for R), there’s always a knowledgeable microbiologist by your side!</h5>
+<div class="section level5">
+<h5 id="with-amr-for-r-theres-always-a-knowledgeable-microbiologist-by-your-side">With <code>AMR</code> (for R), there’s always a knowledgeable microbiologist by your side!<a class="anchor" aria-label="anchor" href="#with-amr-for-r-theres-always-a-knowledgeable-microbiologist-by-your-side"></a>
+</h5>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># AMR works great with dplyr, but it's not required or neccesary</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR">AMR</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR">AMR</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
 
-<span class="va">example_isolates</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>bacteria <span class="op">=</span> <span class="fu"><a href="reference/mo_property.html">mo_fullname</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="reference/mo_property.html">mo_is_gram_negative</a></span><span class="op">(</span><span class="op">)</span>,
-         <span class="fu"><a href="reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"cefotax"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">bacteria</span>,
+<span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>bacteria <span class="op">=</span> <span class="fu"><a href="reference/mo_property.html">mo_fullname</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="reference/mo_property.html">mo_is_gram_negative</a></span><span class="op">(</span><span class="op">)</span>,
+         <span class="fu"><a href="reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"cefotax"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">bacteria</span>,
          <span class="fu"><a href="reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>,
          <span class="fu"><a href="reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (<code><a href="reference/mo_property.html">mo_is_gram_negative()</a></code> and <code><a href="reference/mo_property.html">mo_is_intrinsic_resistant()</a></code>) and a column selection on two antibiotic groups (<code><a href="reference/antibiotic_class_selectors.html">aminoglycosides()</a></code> and <code><a href="reference/antibiotic_class_selectors.html">carbapenems()</a></code>), the reference data about <a href="./reference/microorganisms.html">all microorganisms</a> and <a href="./reference/antibiotics.html">all antibiotics</a> in the <code>AMR</code> package make sure you get what you meant:</p>
@@ -328,25 +330,25 @@
 <p>A base R equivalent would be, giving the exact same results:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">example_isolates</span><span class="op">$</span><span class="va">bacteria</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mo_property.html">mo_fullname</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">mo</span><span class="op">)</span>
-<span class="va">example_isolates</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="fu"><a href="reference/mo_property.html">mo_is_gram_negative</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&amp;</span>
+<span class="va">example_isolates</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="reference/mo_property.html">mo_is_gram_negative</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&amp;</span>
                          <span class="fu"><a href="reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"cefotax"</span><span class="op">)</span><span class="op">)</span>,
-                 <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"bacteria"</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></code></pre></div>
+                 <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bacteria"</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></code></pre></div>
 </div>
-<div id="partners" class="section level4">
-<h4 class="hasAnchor">
-<a href="#partners" class="anchor"></a>Partners</h4>
+<div class="section level4">
+<h4 id="partners">Partners<a class="anchor" aria-label="anchor" href="#partners"></a>
+</h4>
 <p>The development of this package is part of, related to, or made possible by:</p>
 <div align="center">
-<p><a href="https://www.rug.nl" title="University of Groningen"><img src="./logo_rug.png" class="partner_logo"></a> <a href="https://www.umcg.nl" title="University Medical Center Groningen"><img src="./logo_umcg.png" class="partner_logo"></a> <a href="https://www.certe.nl" title="Certe Medical Diagnostics and Advice Foundation"><img src="./logo_certe.png" class="partner_logo"></a> <a href="http://www.eurhealth-1health.eu" title="EurHealth-1-Health"><img src="./logo_eh1h.png" class="partner_logo"></a> <a href="https://www.deutschland-nederland.eu" title="INTERREG"><img src="./logo_interreg.png" class="partner_logo"></a></p>
+<p><a href="https://www.rug.nl" title="University of Groningen" class="external-link"><img src="./logo_rug.png" class="partner_logo"></a> <a href="https://www.umcg.nl" title="University Medical Center Groningen" class="external-link"><img src="./logo_umcg.png" class="partner_logo"></a> <a href="https://www.certe.nl" title="Certe Medical Diagnostics and Advice Foundation" class="external-link"><img src="./logo_certe.png" class="partner_logo"></a> <a href="http://www.eurhealth-1health.eu" title="EurHealth-1-Health" class="external-link"><img src="./logo_eh1h.png" class="partner_logo"></a> <a href="https://www.deutschland-nederland.eu" title="INTERREG" class="external-link"><img src="./logo_interreg.png" class="partner_logo"></a></p>
 </div>
 </div>
 </div>
-<div id="what-can-you-do-with-this-package" class="section level3">
-<h3 class="hasAnchor">
-<a href="#what-can-you-do-with-this-package" class="anchor"></a>What can you do with this package?</h3>
+<div class="section level3">
+<h3 id="what-can-you-do-with-this-package">What can you do with this package?<a class="anchor" aria-label="anchor" href="#what-can-you-do-with-this-package"></a>
+</h3>
 <p>This package can be used for:</p>
 <ul>
-<li>Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the <a href="http://www.catalogueoflife.org">Catalogue of Life</a> and <a href="https://lpsn.dsmz.de">List of Prokaryotic names with Standing in Nomenclature</a> (<a href="./reference/mo_property.html">manual</a>)</li>
+<li>Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the <a href="http://www.catalogueoflife.org" class="external-link">Catalogue of Life</a> and <a href="https://lpsn.dsmz.de" class="external-link">List of Prokaryotic names with Standing in Nomenclature</a> (<a href="./reference/mo_property.html">manual</a>)</li>
 <li>Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines (<a href="./reference/as.rsi.html">manual</a>)</li>
 <li>Retrieving antimicrobial drug names, doses and forms of administration from clinical health care records (<a href="./reference/ab_from_text.html">manual</a>)</li>
 <li>Determining first isolates to be used for AMR data analysis (<a href="./reference/first_isolate.html">manual</a>)</li>
@@ -364,74 +366,74 @@
 <li>Principal component analysis for AMR (<a href="./articles/PCA.html">tutorial</a>)</li>
 </ul>
 </div>
-<div id="get-this-package" class="section level3">
-<h3 class="hasAnchor">
-<a href="#get-this-package" class="anchor"></a>Get this package</h3>
-<div id="latest-released-version" class="section level4">
-<h4 class="hasAnchor">
-<a href="#latest-released-version" class="anchor"></a>Latest released version</h4>
-<p><a href="https://cran.r-project.org/package=AMR"><img src="https://www.r-pkg.org/badges/version-ago/AMR" alt="CRAN"></a> <a href="https://cran.r-project.org/package=AMR"><img src="https://cranlogs.r-pkg.org/badges/grand-total/AMR" alt="CRANlogs"></a></p>
-<p>This package is available <a href="https://cran.r-project.org/package=AMR">here on the official R network (CRAN)</a>. Install this package in R from CRAN by using the command:</p>
+<div class="section level3">
+<h3 id="get-this-package">Get this package<a class="anchor" aria-label="anchor" href="#get-this-package"></a>
+</h3>
+<div class="section level4">
+<h4 id="latest-released-version">Latest released version<a class="anchor" aria-label="anchor" href="#latest-released-version"></a>
+</h4>
+<p><a href="https://cran.r-project.org/package=AMR" class="external-link"><img src="https://www.r-pkg.org/badges/version-ago/AMR" alt="CRAN"></a> <a href="https://cran.r-project.org/package=AMR" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/AMR" alt="CRANlogs"></a></p>
+<p>This package is available <a href="https://cran.r-project.org/package=AMR" class="external-link">here on the official R network (CRAN)</a>. Install this package in R from CRAN by using the command:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"AMR"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"AMR"</span><span class="op">)</span></code></pre></div>
 <p>It will be downloaded and installed automatically. For RStudio, click on the menu <em>Tools</em> &gt; <em>Install Packages…</em> and then type in “AMR” and press <kbd>Install</kbd>.</p>
 <p><strong>Note:</strong> Not all functions on this website may be available in this latest release. To use all functions and data sets mentioned on this website, install the latest development version.</p>
 </div>
-<div id="latest-development-version" class="section level4">
-<h4 class="hasAnchor">
-<a href="#latest-development-version" class="anchor"></a>Latest development version</h4>
-<p><a href="https://codecov.io/gh/msberends/AMR?branch=main"><img src="https://github.com/msberends/AMR/workflows/R-code-check/badge.svg?branch=main" alt="R-code-check"></a> <a href="https://www.codefactor.io/repository/github/msberends/amr"><img src="https://www.codefactor.io/repository/github/msberends/amr/badge" alt="CodeFactor"></a> <a href="https://codecov.io/gh/msberends/AMR?branch=main"><img src="https://codecov.io/gh/msberends/AMR/branch/main/graph/badge.svg" alt="Codecov"></a></p>
+<div class="section level4">
+<h4 id="latest-development-version">Latest development version<a class="anchor" aria-label="anchor" href="#latest-development-version"></a>
+</h4>
+<p><a href="https://codecov.io/gh/msberends/AMR?branch=main" class="external-link"><img src="https://github.com/msberends/AMR/workflows/R-code-check/badge.svg?branch=main" alt="R-code-check"></a> <a href="https://www.codefactor.io/repository/github/msberends/amr" class="external-link"><img src="https://www.codefactor.io/repository/github/msberends/amr/badge" alt="CodeFactor"></a> <a href="https://codecov.io/gh/msberends/AMR?branch=main" class="external-link"><img src="https://codecov.io/gh/msberends/AMR/branch/main/graph/badge.svg" alt="Codecov"></a></p>
 <p>The latest and unpublished development version can be installed from GitHub in two ways:</p>
-<ol>
+<ol style="list-style-type: decimal">
 <li>
 <p>Manually, using:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span> <span class="co"># if you haven't already</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"msberends/AMR"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span> <span class="co"># if you haven't already</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"msberends/AMR"</span><span class="op">)</span></code></pre></div>
 </li>
 <li>
-<p>Automatically, using the <a href="https://ropensci.org/r-universe/">rOpenSci R-universe platform</a>, by adding <a href="https://msberends.r-universe.dev">our R-universe address</a> to your list of repositories (‘repos’):</p>
+<p>Automatically, using the <a href="https://ropensci.org/r-universe/" class="external-link">rOpenSci R-universe platform</a>, by adding <a href="https://msberends.r-universe.dev" class="external-link">our R-universe address</a> to your list of repositories (‘repos’):</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/options.html">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span>,
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span>,
                   msberends <span class="op">=</span> <span class="st">"https://msberends.r-universe.dev"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>After this, you can install and update this <code>AMR</code> package like any official release (e.g., using <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("AMR")</a></code> or in RStudio via <em>Tools</em> &gt; <em>Check for Package Updates…</em>).</p>
+<p>After this, you can install and update this <code>AMR</code> package like any official release (e.g., using <code>install.packages("AMR")</code> or in RStudio via <em>Tools</em> &gt; <em>Check for Package Updates…</em>).</p>
 </li>
 </ol>
-<p>You can also download the latest build from our repository: <a href="https://github.com/msberends/AMR/raw/main/data-raw/AMR_latest.tar.gz" class="uri">https://github.com/msberends/AMR/raw/main/data-raw/AMR_latest.tar.gz</a></p>
+<p>You can also download the latest build from our repository: <a href="https://github.com/msberends/AMR/raw/main/data-raw/AMR_latest.tar.gz" class="external-link uri">https://github.com/msberends/AMR/raw/main/data-raw/AMR_latest.tar.gz</a></p>
 </div>
 </div>
-<div id="get-started" class="section level3">
-<h3 class="hasAnchor">
-<a href="#get-started" class="anchor"></a>Get started</h3>
+<div class="section level3">
+<h3 id="get-started">Get started<a class="anchor" aria-label="anchor" href="#get-started"></a>
+</h3>
 <p>To find out how to conduct AMR data analysis, please <a href="./articles/AMR.html">continue reading here to get started</a> or click a link in the <a href="https://msberends.github.io/AMR/articles/">‘How to’ menu</a>.</p>
 </div>
-<div id="short-introduction" class="section level3">
-<h3 class="hasAnchor">
-<a href="#short-introduction" class="anchor"></a>Short introduction</h3>
-<div id="microbial-taxonomic-reference-data" class="section level4">
-<h4 class="hasAnchor">
-<a href="#microbial-taxonomic-reference-data" class="anchor"></a>Microbial (taxonomic) reference data</h4>
-<p>This package contains the complete taxonomic tree of almost all ~70,000 microorganisms from the authoritative and comprehensive Catalogue of Life (CoL, <a href="http://www.catalogueoflife.org">www.catalogueoflife.org</a>), supplemented by data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, <a href="https://lpsn.dsmz.de">lpsn.dsmz.de</a>). This supplementation is needed until the <a href="https://github.com/Sp2000/colplus">CoL+ project</a> is finished, which we await. With <code><a href="reference/catalogue_of_life_version.html">catalogue_of_life_version()</a></code> can be checked which version of the CoL is included in this package.</p>
+<div class="section level3">
+<h3 id="short-introduction">Short introduction<a class="anchor" aria-label="anchor" href="#short-introduction"></a>
+</h3>
+<div class="section level4">
+<h4 id="microbial-taxonomic-reference-data">Microbial (taxonomic) reference data<a class="anchor" aria-label="anchor" href="#microbial-taxonomic-reference-data"></a>
+</h4>
+<p>This package contains the complete taxonomic tree of almost all ~70,000 microorganisms from the authoritative and comprehensive Catalogue of Life (CoL, <a href="http://www.catalogueoflife.org" class="external-link">www.catalogueoflife.org</a>), supplemented by data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, <a href="https://lpsn.dsmz.de" class="external-link">lpsn.dsmz.de</a>). This supplementation is needed until the <a href="https://github.com/Sp2000/colplus" class="external-link">CoL+ project</a> is finished, which we await. With <code><a href="reference/catalogue_of_life_version.html">catalogue_of_life_version()</a></code> can be checked which version of the CoL is included in this package.</p>
 <p>Read more about which data from the Catalogue of Life <a href="./reference/catalogue_of_life.html">in our manual</a>.</p>
 </div>
-<div id="antimicrobial-reference-data" class="section level4">
-<h4 class="hasAnchor">
-<a href="#antimicrobial-reference-data" class="anchor"></a>Antimicrobial reference data</h4>
-<p>This package contains <strong>all ~550 antibiotic, antimycotic and antiviral drugs</strong> and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD, oral and IV) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, <a href="https://www.whocc.no" class="uri">https://www.whocc.no</a>) and the <a href="https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm">Pharmaceuticals Community Register of the European Commission</a>.</p>
-<p><strong>NOTE: The WHOCC copyright does not allow use for commercial purposes, unlike any other info from this package. See <a href="https://www.whocc.no/copyright_disclaimer/" class="uri">https://www.whocc.no/copyright_disclaimer/</a>.</strong></p>
+<div class="section level4">
+<h4 id="antimicrobial-reference-data">Antimicrobial reference data<a class="anchor" aria-label="anchor" href="#antimicrobial-reference-data"></a>
+</h4>
+<p>This package contains <strong>all ~550 antibiotic, antimycotic and antiviral drugs</strong> and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD, oral and IV) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, <a href="https://www.whocc.no" class="external-link uri">https://www.whocc.no</a>) and the <a href="https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm" class="external-link">Pharmaceuticals Community Register of the European Commission</a>.</p>
+<p><strong>NOTE: The WHOCC copyright does not allow use for commercial purposes, unlike any other info from this package. See <a href="https://www.whocc.no/copyright_disclaimer/" class="external-link uri">https://www.whocc.no/copyright_disclaimer/</a>.</strong></p>
 <p>Read more about the data from WHOCC <a href="./reference/WHOCC.html">in our manual</a>.</p>
 </div>
-<div id="whonet--ears-net" class="section level4">
-<h4 class="hasAnchor">
-<a href="#whonet--ears-net" class="anchor"></a>WHONET / EARS-Net</h4>
+<div class="section level4">
+<h4 id="whonet--ears-net">WHONET / EARS-Net<a class="anchor" aria-label="anchor" href="#whonet--ears-net"></a>
+</h4>
 <p>We support WHONET and EARS-Net data. Exported files from WHONET can be imported into R and can be analysed easily using this package. For education purposes, we created an <a href="./reference/WHONET.html">example data set <code>WHONET</code></a> with the exact same structure as a WHONET export file. Furthermore, this package also contains a <a href="./reference/antibiotics.html">data set antibiotics</a> with all EARS-Net antibiotic abbreviations, and knows almost all WHONET abbreviations for microorganisms. When using WHONET data as input for analysis, all input parameters will be set automatically.</p>
 <p>Read our tutorial about <a href="./articles/WHONET.html">how to work with WHONET data here</a>.</p>
 </div>
-<div id="overview-of-functions" class="section level4">
-<h4 class="hasAnchor">
-<a href="#overview-of-functions" class="anchor"></a>Overview of functions</h4>
+<div class="section level4">
+<h4 id="overview-of-functions">Overview of functions<a class="anchor" aria-label="anchor" href="#overview-of-functions"></a>
+</h4>
 <p>The <code>AMR</code> package basically does four important things:</p>
-<ol>
+<ol style="list-style-type: decimal">
 <li>
 <p>It <strong>cleanses existing data</strong> by providing new <em>classes</em> for microoganisms, antibiotics and antimicrobial results (both S/I/R and MIC). By installing this package, you teach R everything about microbiology that is needed for analysis. These functions all use intelligent rules to guess results that you would expect:</p>
 <ul>
@@ -444,21 +446,21 @@
 <li>
 <p>It <strong>enhances existing data</strong> and <strong>adds new data</strong> from data sets included in this package.</p>
 <ul>
-<li>Use <code><a href="reference/eucast_rules.html">eucast_rules()</a></code> to apply <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/">EUCAST expert rules to isolates</a> (not the translation from MIC to R/SI values, use <code><a href="reference/as.rsi.html">as.rsi()</a></code> for that).</li>
-<li>Use <code><a href="reference/first_isolate.html">first_isolate()</a></code> to identify the first isolates of every patient <a href="https://clsi.org/standards/products/microbiology/documents/m39/">using guidelines from the CLSI</a> (Clinical and Laboratory Standards Institute).
+<li>Use <code><a href="reference/eucast_rules.html">eucast_rules()</a></code> to apply <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/" class="external-link">EUCAST expert rules to isolates</a> (not the translation from MIC to R/SI values, use <code><a href="reference/as.rsi.html">as.rsi()</a></code> for that).</li>
+<li>Use <code><a href="reference/first_isolate.html">first_isolate()</a></code> to identify the first isolates of every patient <a href="https://clsi.org/standards/products/microbiology/documents/m39/" class="external-link">using guidelines from the CLSI</a> (Clinical and Laboratory Standards Institute).
 <ul>
 <li>You can also identify first <em>weighted</em> isolates of every patient, an adjusted version of the CLSI guideline. This takes into account key antibiotics of every strain and compares them.</li>
 </ul>
 </li>
-<li>Use <code><a href="reference/mdro.html">mdro()</a></code> to determine which micro-organisms are multi-drug resistant organisms (MDRO). It supports a variety of international guidelines, such as the MDR-paper by Magiorakos <em>et al.</em> (2012, <a href="https://www.ncbi.nlm.nih.gov/pubmed/?term=21793988">PMID 21793988</a>), the exceptional phenotype definitions of EUCAST and the WHO guideline on multi-drug resistant TB. It also supports the national guidelines of the Netherlands and Germany.</li>
-<li>The <a href="./reference/microorganisms.html">data set microorganisms</a> contains the complete taxonomic tree of ~70,000 microorganisms. Furthermore, some colloquial names and all Gram stains are available, which enables resistance analysis of e.g. different antibiotics per Gram stain. The package also contains functions to look up values in this data set like <code><a href="reference/mo_property.html">mo_genus()</a></code>, <code><a href="reference/mo_property.html">mo_family()</a></code>, <code><a href="reference/mo_property.html">mo_gramstain()</a></code> or even <code><a href="reference/mo_property.html">mo_phylum()</a></code>. Use <code><a href="reference/mo_property.html">mo_snomed()</a></code> to look up any SNOMED CT code associated with a microorganism. As all these function use <code><a href="reference/as.mo.html">as.mo()</a></code> internally, they also use the same intelligent rules for determination. For example, <code><a href="reference/mo_property.html">mo_genus("MRSA")</a></code> and <code><a href="reference/mo_property.html">mo_genus("S. aureus")</a></code> will both return <code>"Staphylococcus"</code>. They also come with support for German, Danish, Dutch, Spanish, Italian, French and Portuguese. These functions can be used to add new variables to your data.</li>
-<li>The <a href="./reference/antibiotics.html">data set antibiotics</a> contains ~450 antimicrobial drugs with their EARS-Net code, ATC code, PubChem compound ID, LOINC code, official name, common LIS codes and DDDs of both oral and parenteral administration. It also contains all (thousands of) trade names found in PubChem. Use functions like <code><a href="reference/ab_property.html">ab_name()</a></code>, <code><a href="reference/ab_property.html">ab_group()</a></code>, <code><a href="reference/ab_property.html">ab_atc()</a></code>, <code><a href="reference/ab_property.html">ab_loinc()</a></code> and <code><a href="reference/ab_property.html">ab_tradenames()</a></code> to look up values. The <code>ab_*</code> functions use <code><a href="reference/as.ab.html">as.ab()</a></code> internally so they support the same intelligent rules to guess the most probable result. For example, <code><a href="reference/ab_property.html">ab_name("Fluclox")</a></code>, <code><a href="reference/ab_property.html">ab_name("Floxapen")</a></code> and <code><a href="reference/ab_property.html">ab_name("J01CF05")</a></code> will all return <code>"Flucloxacillin"</code>. These functions can again be used to add new variables to your data.</li>
+<li>Use <code><a href="reference/mdro.html">mdro()</a></code> to determine which micro-organisms are multi-drug resistant organisms (MDRO). It supports a variety of international guidelines, such as the MDR-paper by Magiorakos <em>et al.</em> (2012, <a href="https://www.ncbi.nlm.nih.gov/pubmed/?term=21793988" class="external-link">PMID 21793988</a>), the exceptional phenotype definitions of EUCAST and the WHO guideline on multi-drug resistant TB. It also supports the national guidelines of the Netherlands and Germany.</li>
+<li>The <a href="./reference/microorganisms.html">data set microorganisms</a> contains the complete taxonomic tree of ~70,000 microorganisms. Furthermore, some colloquial names and all Gram stains are available, which enables resistance analysis of e.g. different antibiotics per Gram stain. The package also contains functions to look up values in this data set like <code><a href="reference/mo_property.html">mo_genus()</a></code>, <code><a href="reference/mo_property.html">mo_family()</a></code>, <code><a href="reference/mo_property.html">mo_gramstain()</a></code> or even <code><a href="reference/mo_property.html">mo_phylum()</a></code>. Use <code><a href="reference/mo_property.html">mo_snomed()</a></code> to look up any SNOMED CT code associated with a microorganism. As all these function use <code><a href="reference/as.mo.html">as.mo()</a></code> internally, they also use the same intelligent rules for determination. For example, <code>mo_genus("MRSA")</code> and <code>mo_genus("S. aureus")</code> will both return <code>"Staphylococcus"</code>. They also come with support for German, Danish, Dutch, Spanish, Italian, French and Portuguese. These functions can be used to add new variables to your data.</li>
+<li>The <a href="./reference/antibiotics.html">data set antibiotics</a> contains ~450 antimicrobial drugs with their EARS-Net code, ATC code, PubChem compound ID, LOINC code, official name, common LIS codes and DDDs of both oral and parenteral administration. It also contains all (thousands of) trade names found in PubChem. Use functions like <code><a href="reference/ab_property.html">ab_name()</a></code>, <code><a href="reference/ab_property.html">ab_group()</a></code>, <code><a href="reference/ab_property.html">ab_atc()</a></code>, <code><a href="reference/ab_property.html">ab_loinc()</a></code> and <code><a href="reference/ab_property.html">ab_tradenames()</a></code> to look up values. The <code>ab_*</code> functions use <code><a href="reference/as.ab.html">as.ab()</a></code> internally so they support the same intelligent rules to guess the most probable result. For example, <code>ab_name("Fluclox")</code>, <code>ab_name("Floxapen")</code> and <code>ab_name("J01CF05")</code> will all return <code>"Flucloxacillin"</code>. These functions can again be used to add new variables to your data.</li>
 </ul>
 </li>
 <li>
 <p>It <strong>analyses the data</strong> with convenient functions that use well-known methods.</p>
 <ul>
-<li>Calculate the microbial susceptibility or resistance (and even co-resistance) with the <code><a href="reference/proportion.html">susceptibility()</a></code> and <code><a href="reference/proportion.html">resistance()</a></code> functions, or be even more specific with the <code><a href="reference/proportion.html">proportion_R()</a></code>, <code><a href="reference/proportion.html">proportion_IR()</a></code>, <code><a href="reference/proportion.html">proportion_I()</a></code>, <code><a href="reference/proportion.html">proportion_SI()</a></code> and <code><a href="reference/proportion.html">proportion_S()</a></code> functions. Similarly, the <em>number</em> of isolates can be determined with the <code><a href="reference/count.html">count_resistant()</a></code>, <code><a href="reference/count.html">count_susceptible()</a></code> and <code><a href="reference/count.html">count_all()</a></code> functions. All these functions can be used with the <code>dplyr</code> package (e.g. in conjunction with <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>)</li>
+<li>Calculate the microbial susceptibility or resistance (and even co-resistance) with the <code><a href="reference/proportion.html">susceptibility()</a></code> and <code><a href="reference/proportion.html">resistance()</a></code> functions, or be even more specific with the <code><a href="reference/proportion.html">proportion_R()</a></code>, <code><a href="reference/proportion.html">proportion_IR()</a></code>, <code><a href="reference/proportion.html">proportion_I()</a></code>, <code><a href="reference/proportion.html">proportion_SI()</a></code> and <code><a href="reference/proportion.html">proportion_S()</a></code> functions. Similarly, the <em>number</em> of isolates can be determined with the <code><a href="reference/count.html">count_resistant()</a></code>, <code><a href="reference/count.html">count_susceptible()</a></code> and <code><a href="reference/count.html">count_all()</a></code> functions. All these functions can be used with the <code>dplyr</code> package (e.g. in conjunction with <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code>)</li>
 <li>Plot AMR results with <code><a href="reference/ggplot_rsi.html">geom_rsi()</a></code>, a function made for the <code>ggplot2</code> package</li>
 <li>Predict antimicrobial resistance for the nextcoming years using logistic regression models with the <code><a href="reference/resistance_predict.html">resistance_predict()</a></code> function</li>
 </ul>
@@ -478,9 +480,9 @@
 </ol>
 </div>
 </div>
-<div id="copyright" class="section level3">
-<h3 class="hasAnchor">
-<a href="#copyright" class="anchor"></a>Copyright</h3>
+<div class="section level3">
+<h3 id="copyright">Copyright<a class="anchor" aria-label="anchor" href="#copyright"></a>
+</h3>
 <p>This R package is free, open-source software and licensed under the <a href="./LICENSE-text.html">GNU General Public License v2.0 (GPL-2)</a>. In a nutshell, this means that this package:</p>
 <ul>
 <li><p>May be used for commercial purposes</p></li>
@@ -509,52 +511,57 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=AMR">https://​cloud.r-project.org/​package=AMR</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/msberends/AMR/">https://​github.com/​msberends/​AMR/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/msberends/AMR/issues">https://​github.com/​msberends/​AMR/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=AMR" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/msberends/AMR/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/msberends/AMR/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://www.r-project.org/Licenses/GPL-2">GPL-2</a> | file <a href="LICENSE-text.html">LICENSE</a>
+<a href="https://www.r-project.org/Licenses/GPL-2" class="external-link">GPL-2</a> | file <a href="LICENSE-text.html">LICENSE</a>
 </li>
 </ul>
 </div>
+
+
 <div class="citation">
-<h2>Citation</h2>
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html">Citing AMR</a></li>
+<li><a href="authors.html#citation">Citing AMR</a></li>
 </ul>
 </div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://www.rug.nl/staff/m.s.berends/">Matthijs S. Berends</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-7620-1800" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Christian F. Luz <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0001-5809-5995" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Dennis Souverein <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0003-0455-0336" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<a href="https://www.rug.nl/staff/m.s.berends/" class="external-link">Matthijs S. Berends</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-7620-1800" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Christian F. Luz <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0001-5809-5995" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Dennis Souverein <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0003-0455-0336" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Erwin E. A. Hassing <br><small class="roles"> Author, contributor </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
+
+
 
   </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/">Matthijs S. Berends</a>, Christian F. Luz, Dennis Souverein, Erwin E. A. Hassing.</p>
+  <p></p>
+<p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/" class="external-link">Matthijs S. Berends</a>, Christian F. Luz, Dennis Souverein, Erwin E. A. Hassing.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>
@@ -562,6 +569,8 @@
 
   
 
+
+  
 
   </body>
 </html>

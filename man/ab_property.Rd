@@ -49,6 +49,7 @@ ab_property(x, property = "name", language = get_locale(), ...)
 
 set_ab_names(
   data,
+  ...,
   property = "name",
   language = get_locale(),
   snake_case = NULL
@@ -61,7 +62,7 @@ set_ab_names(
 
 \item{tolower}{a \link{logical} to indicate whether the first \link{character} of every output should be transformed to a lower case \link{character}. This will lead to e.g. "polymyxin B" and not "polymyxin b".}
 
-\item{...}{other arguments passed on to \code{\link[=as.ab]{as.ab()}}}
+\item{...}{in case of \code{\link[=set_ab_names]{set_ab_names()}} and \code{data} is a \link{data.frame}: variables to select (supports tidy selection like \code{AMX:VAN}), otherwise other arguments passed on to \code{\link[=as.ab]{as.ab()}}}
 
 \item{only_first}{a \link{logical} to indicate whether only the first ATC code must be returned, with giving preference to J0-codes (i.e., the antimicrobial drug group)}
 
@@ -99,7 +100,7 @@ The function \code{\link[=set_ab_names]{set_ab_names()}} is a special column ren
 \if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
 
-If the unlying code needs breaking changes, they will occur gradually. For example, a argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
+If the unlying code needs breaking changes, they will occur gradually. For example, an argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
 }
 
 \section{Source}{
@@ -163,6 +164,7 @@ ab_atc("seephthriaaksone")
 # use set_ab_names() for renaming columns
 colnames(example_isolates)
 colnames(set_ab_names(example_isolates))
+colnames(set_ab_names(example_isolates, NIT:VAN))
 \donttest{
 if (require("dplyr")) {
   example_isolates \%>\%
@@ -175,6 +177,14 @@ if (require("dplyr")) {
   # set_ab_names() works with any AB property:
   example_isolates \%>\%
     set_ab_names("atc")
+    
+ example_isolates \%>\%
+   set_ab_names(where(is.rsi)) \%>\%
+   colnames()
+   
+ example_isolates \%>\%
+   set_ab_names(NIT:VAN) \%>\%
+   colnames()
 }
 }
 }

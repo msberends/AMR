@@ -53,6 +53,25 @@ pm_left_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
   merged
 }
 
+# support where() like tidyverse:
+# adapted from https://github.com/nathaneastwood/poorman/blob/52eb6947e0b4430cd588976ed8820013eddf955f/R/where.R#L17-L32
+where <- function(fn) {
+  if (!is.function(fn)) {
+    stop(deparse_var(fn), " is not a valid predicate function.")
+  }
+  preds <- unlist(lapply(
+    pm_select_env$.data,
+    function(x, fn) {
+      do.call("fn", list(x))
+    },
+    fn
+  ))
+  if (!is.logical(preds)) stop("`where()` must be used with functions that return `TRUE` or `FALSE`.")
+  data_cols <- pm_select_env$get_colnames()
+  cols <- data_cols[preds]
+  which(data_cols %in% cols)
+}
+
 # copied and slightly rewritten from poorman under same license (2021-10-15)
 quick_case_when <- function (...) {
   fs <- list(...)

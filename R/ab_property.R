@@ -33,7 +33,7 @@
 #' @param language language of the returned text, defaults to system language (see [get_locale()]) and can also be set with `getOption("AMR_locale")`. Use `language = NULL` or `language = ""` to prevent translation.
 #' @param administration way of administration, either `"oral"` or `"iv"`
 #' @param open browse the URL using [utils::browseURL()]
-#' @param ... other arguments passed on to [as.ab()]
+#' @param ... in case of [set_ab_names()] and `data` is a [data.frame]: variables to select (supports tidy selection like `AMX:VAN`), otherwise other arguments passed on to [as.ab()]
 #' @param data a [data.frame] of which the columns need to be renamed, or a [character] vector of column names
 #' @param snake_case a [logical] to indicate whether the names should be in so-called [snake case](https://en.wikipedia.org/wiki/Snake_case): in lower case and all spaces/slashes replaced with an underscore (`_`)
 #' @param only_first a [logical] to indicate whether only the first ATC code must be returned, with giving preference to J0-codes (i.e., the antimicrobial drug group)
@@ -97,6 +97,7 @@
 #' # use set_ab_names() for renaming columns
 #' colnames(example_isolates)
 #' colnames(set_ab_names(example_isolates))
+#' colnames(set_ab_names(example_isolates, NIT:VAN))
 #' \donttest{
 #' if (require("dplyr")) {
 #'   example_isolates %>%
@@ -109,6 +110,14 @@
 #'   # set_ab_names() works with any AB property:
 #'   example_isolates %>%
 #'     set_ab_names("atc")
+#'     
+#'  example_isolates %>%
+#'    set_ab_names(where(is.rsi)) %>%
+#'    colnames()
+#'    
+#'  example_isolates %>%
+#'    set_ab_names(NIT:VAN) %>%
+#'    colnames()
 #' }
 #' }
 ab_name <- function(x, language = get_locale(), tolower = FALSE, ...) {
@@ -328,7 +337,7 @@ ab_property <- function(x, property = "name", language = get_locale(), ...) {
 #' @rdname ab_property
 #' @aliases ATC
 #' @export
-set_ab_names <- function(data, property = "name", language = get_locale(), snake_case = NULL) {
+set_ab_names <- function(data, ..., property = "name", language = get_locale(), snake_case = NULL) {
   meet_criteria(data, allow_class = c("data.frame", "character"))
   meet_criteria(property, is_in = colnames(antibiotics), has_length = 1, ignore.case = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
@@ -345,7 +354,8 @@ set_ab_names <- function(data, property = "name", language = get_locale(), snake
   }
   
   if (is.data.frame(data)) {
-    vars <- get_column_abx(data, info = FALSE, only_rsi_columns = FALSE, sort = FALSE)
+    df <- pm_select(data, ...)
+    vars <- get_column_abx(df, info = FALSE, only_rsi_columns = FALSE, sort = FALSE)
     if (length(vars) == 0) {
       message_("No columns with antibiotic results found for `set_ab_names()`, leaving names unchanged.")
       return(data)

@@ -90,7 +90,7 @@ pca <- function(x,
           # this is to support quoted variables: df %pm>% pca("mycol1", "mycol2")
           new_list[[i]] <- x[, new_list[[i]]]
         } else {
-          # remove item - it's a argument like `center`
+          # remove item - it's an argument like `center`
           new_list[[i]] <- NULL
         }
       }

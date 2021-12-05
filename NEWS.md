@@ -1,5 +1,5 @@
-# `AMR` 1.7.1.9057
-## <small>Last updated:  2 December 2021</small>
+# `AMR` 1.7.1.9058
+## <small>Last updated:  5 December 2021</small>
 
 ### Breaking changes
 * Removed `p_symbol()` and all `filter_*()` functions (except for `filter_first_isolate()`), which were all deprecated in a previous package version
@@ -8,7 +8,11 @@
 
 ### New
 * Support for EUCAST Intrinsic Resistance and Unusual Phenotypes v3.3 (October 2021), effective in the `eucast_rules()` function. This is now the default guideline (all other guidelines are still available).
-* Function `set_ab_names()` to rename data set columns that resemble antimicrobial drugs. This allows for quickly renaming columns to official names, ATC codes, etc.
+* Function `set_ab_names()` to rename data set columns that resemble antimicrobial drugs. This allows for quickly renaming columns to official names, ATC codes, etc. Its second argument can be a tidyverse way of selecting:
+  ```r
+  example_isolates %>% set_ab_names(where(is.rsi))
+  example_isolates %>% set_ab_names(AMC:GEN, property = "atc")
+  ```
 * Support for Danish, and also added missing translations of all antimicrobial drugs in Italian, French and Portuguese
 
 ### Changed
