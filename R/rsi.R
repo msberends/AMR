@@ -604,7 +604,11 @@ as.rsi.data.frame <- function(x,
   }
 
   i <- 0
-  sel <- colnames(pm_select(x, ...))
+  if (tryCatch(length(list(...)) > 0, error = function(e) TRUE)) {
+    sel <- colnames(pm_select(x, ...))
+  } else {
+    sel <- colnames(x)
+  }
   if (!is.null(col_mo)) {
     sel <- sel[sel != col_mo]
   }

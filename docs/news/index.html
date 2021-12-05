@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9059</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9060</span>
       </span>
     </div>
 
@@ -157,19 +157,19 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.7.1.9059" id="amr-1719059">
-<code>AMR</code> 1.7.1.9059<a class="anchor" aria-label="anchor" href="#amr-1719059"></a></h2>
+<h2 class="page-header" data-toc-text="1.7.1.9060" id="amr-1719060">
+<code>AMR</code> 1.7.1.9060<a class="anchor" aria-label="anchor" href="#amr-1719060"></a></h2>
 <div class="section level3">
-<h3 id="last-updated-december-1-7-1-9059"><small>Last updated: 5 December 2021</small><a class="anchor" aria-label="anchor" href="#last-updated-december-1-7-1-9059"></a></h3>
+<h3 id="last-updated-december-1-7-1-9060"><small>Last updated: 5 December 2021</small><a class="anchor" aria-label="anchor" href="#last-updated-december-1-7-1-9060"></a></h3>
 <div class="section level4">
-<h4 id="breaking-changes-1-7-1-9059">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-1-7-1-9059"></a></h4>
+<h4 id="breaking-changes-1-7-1-9060">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-1-7-1-9060"></a></h4>
 <ul><li>Removed <code>p_symbol()</code> and all <code>filter_*()</code> functions (except for <code><a href="../reference/first_isolate.html">filter_first_isolate()</a></code>), which were all deprecated in a previous package version</li>
 <li>Removed the <code>key_antibiotics()</code> and <code>key_antibiotics_equal()</code> functions, which were deprecated and superseded by <code><a href="../reference/key_antimicrobials.html">key_antimicrobials()</a></code> and <code><a href="../reference/key_antimicrobials.html">antimicrobials_equal()</a></code>
 </li>
 <li>Removed all previously implemented <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> generics for classes <code>&lt;mic&gt;</code>, <code>&lt;disk&gt;</code>, <code>&lt;rsi&gt;</code> and <code>&lt;resistance_predict&gt;</code> as they did not follow the <code>ggplot2</code> logic. They were replaced with <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">ggplot2::autoplot()</a></code> generics.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-1-7-1-9059">New<a class="anchor" aria-label="anchor" href="#new-1-7-1-9059"></a></h4>
+<h4 id="new-1-7-1-9060">New<a class="anchor" aria-label="anchor" href="#new-1-7-1-9060"></a></h4>
 <ul><li><p>Support for EUCAST Intrinsic Resistance and Unusual Phenotypes v3.3 (October 2021), effective in the <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function. This is now the default guideline (all other guidelines are still available).</p></li>
 <li>
 <p>Function <code><a href="../reference/ab_property.html">set_ab_names()</a></code> to rename data set columns that resemble antimicrobial drugs. This allows for quickly renaming columns to official names, ATC codes, etc. Its second argument can be a tidyverse way of selecting:</p>
@@ -181,7 +181,7 @@
 <li><p>Support for Danish, and also added missing translations of all antimicrobial drugs in Italian, French and Portuguese</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-1-7-1-9059">Changed<a class="anchor" aria-label="anchor" href="#changed-1-7-1-9059"></a></h4>
+<h4 id="changed-1-7-1-9060">Changed<a class="anchor" aria-label="anchor" href="#changed-1-7-1-9060"></a></h4>
 <ul><li>Updated the bacterial taxonomy to 5 October 2021 (according to <a href="https://lpsn.dsmz.de" class="external-link">LPSN</a>), including all 11 new staphylococcal species named since 1 January last year</li>
 <li>The <code>antibiotics</code> data set now contains <strong>all ATC codes</strong> that are available through the <a href="https://www.whocc.no" class="external-link">WHOCC website</a>, regardless of drugs being present in more than one ATC group. This means that:
 <ul><li>Some drugs now contain multiple ATC codes (e.g., metronidazole contains 5)</li>
@@ -247,7 +247,7 @@
 <code><a href="../reference/get_episode.html">get_episode()</a></code> and <code><a href="../reference/get_episode.html">is_new_episode()</a></code> can now cope with <code>NA</code>s</li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-1-7-1-9059">Other<a class="anchor" aria-label="anchor" href="#other-1-7-1-9059"></a></h4>
+<h4 id="other-1-7-1-9060">Other<a class="anchor" aria-label="anchor" href="#other-1-7-1-9060"></a></h4>
 <ul><li>This package is now being maintained by two epidemiologists and a data scientist from two different non-profit healthcare organisations. All functions in this package are now all considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months from now on.</li>
 </ul></div>
 </div>

@@ -57,7 +57,7 @@ pm_left_join <- function(x, y, by = NULL, suffix = c(".x", ".y")) {
 # adapted from https://github.com/nathaneastwood/poorman/blob/52eb6947e0b4430cd588976ed8820013eddf955f/R/where.R#L17-L32
 where <- function(fn) {
   if (!is.function(fn)) {
-    stop(deparse_var(fn), " is not a valid predicate function.")
+    stop(pm_deparse_var(fn), " is not a valid predicate function.")
   }
   preds <- unlist(lapply(
     pm_select_env$.data,

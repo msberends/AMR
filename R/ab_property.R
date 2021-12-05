@@ -354,7 +354,7 @@ set_ab_names <- function(data, ..., property = "name", language = get_locale(), 
   }
   
   if (is.data.frame(data)) {
-    if (length(list(...)) > 0) {
+    if (tryCatch(length(list(...)) > 0, error = function(e) TRUE)) {
       df <- pm_select(data, ...)
     } else {
       df <- data
