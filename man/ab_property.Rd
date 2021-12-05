@@ -176,7 +176,7 @@ if (require("dplyr")) {
   
   # set_ab_names() works with any AB property:
   example_isolates \%>\%
-    set_ab_names("atc")
+    set_ab_names(property = "atc")
     
  example_isolates \%>\%
    set_ab_names(where(is.rsi)) \%>\%
