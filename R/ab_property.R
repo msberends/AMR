@@ -354,7 +354,11 @@ set_ab_names <- function(data, ..., property = "name", language = get_locale(), 
   }
   
   if (is.data.frame(data)) {
-    df <- pm_select(data, ...)
+    if (length(list(...)) > 0) {
+      df <- pm_select(data, ...)
+    } else {
+      df <- data
+    }
     vars <- get_column_abx(df, info = FALSE, only_rsi_columns = FALSE, sort = FALSE)
     if (length(vars) == 0) {
       message_("No columns with antibiotic results found for `set_ab_names()`, leaving names unchanged.")
