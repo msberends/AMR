@@ -85,11 +85,9 @@ $(document).ready(function() {
   // edit footer
   $('footer').html(
     '<div>' +
-      '<p><code>AMR</code> (for R). Developed at the <a href="https://www.rug.nl">University of Groningen</a> in collaboration with non-profit organisations <a href="https://www.certe.nl">Certe Medical Diagnostics and Advice Foundation</a> and <a href="https://www.umcg.nl">University Medical Center Groningen</a>.</p>' +
-            '<a href="https://www.rug.nl"><img src="https://github.com/msberends/AMR/raw/main/docs/logo_rug.png" class="footer_logo"></a>' + 
+      '<p><code>AMR</code> (for R). Developed at the <a target="_blank" href="https://www.rug.nl">University of Groningen</a> in collaboration with non-profit organisations<br><a target="_blank" href="https://www.certe.nl">Certe Medical Diagnostics and Advice Foundation</a> and <a target="_blank" href="https://www.umcg.nl">University Medical Center Groningen</a>.</p>' +
+            '<a target="_blank" href="https://www.rug.nl"><img src="https://github.com/msberends/AMR/raw/main/docs/logo_rug.png" class="footer_logo"></a>' + 
     '</div>');
-  // all links should open in new tab/window
-  $('footer').html($('footer').html().replace(/href/g, 'target="_blank" href'));
 
   // doctoral titles of authors
   function doct_tit(x) {

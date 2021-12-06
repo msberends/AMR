@@ -38,6 +38,9 @@
 #r4ds .img {
   width: 33%;
 }
+#r4ds .img img {
+  height: 120px;
+}
 
 /* class for footer */
 .footer_logo {
@@ -52,7 +55,7 @@
 .countries_map {
   float: left; 
   padding: 0 10px 10px 0;
-  max-width: 35%;
+  max-width: 35% !important;
 }
 @media only screen and (max-width: 992px) {
   .footer_logo {
@@ -62,6 +65,9 @@
 }
 footer p {
   display: inline-block;
+}
+footer {
+  padding: 15px 0 20px !important;
 }
 
 /* Supports icons for brand using font-awesome */
@@ -116,13 +122,11 @@ pre {
 kbd {
   display: inline-block;
   padding: 0 4px;
-  box-shadow: 1px 1px 1px #2c3e50;
-  margin: 2px;
+  box-shadow: 1px 1px 1px slategrey;
+  margin: 1px;
   font-size: small;
-  vertical-align: text-bottom;
   color: #2c3e50;
   background: #eeeeee;
-  font-weight: bold;
 }
 
 li, p {
@@ -133,6 +137,9 @@ li p {
 }
 .template-news li p {
   margin: 0;
+}
+.template-news h3 {
+  padding-top: 10px;
 }
 
 /* slightly smaller blockquote */
@@ -258,16 +265,9 @@ table a:not(.btn):hover {
   font-size: 16px;
 }
 
-/* logos on index page */
-.logo_img {
-  display: inline-block;
-}
-.logo_txt {
-  display: inline;
-  font-size: 125%;
-  vertical-align: middle;
-  color: black;
-  font-weight: bold;
+/* AMR logo on index page */
+.template-home h1 img {
+  height: 120px;
 }
 
 .btn.btn-info.btn-amr {

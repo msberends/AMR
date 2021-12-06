@@ -200,10 +200,6 @@ reference:
     contents:
     - "`AMR-deprecated`"
 
-authors:
-  Matthijs S. Berends:
-    href: https://www.rug.nl/staff/m.s.berends/
-
 template:
   bootstrap: 3
   opengraph:

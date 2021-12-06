@@ -30,7 +30,7 @@ Note: to keep the package size as small as possible, we only included this vigne
 
 After installing this package, R knows `r AMR:::format_included_data_number(AMR::microorganisms)` distinct microbial species and all `r AMR:::format_included_data_number(rbind(AMR::antibiotics[, "atc", drop = FALSE], AMR::antivirals[, "atc", drop = FALSE]))` antibiotic, antimycotic and antiviral drugs by name and code (including ATC, EARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data. Antimicrobial names and group names are available in Danish, Dutch, English, French, German, Italian, Portuguese and Spanish.
 
-This package is fully independent of any other R package and works on Windows, macOS and Linux with all versions of R since R-3.0.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. Since its first public release in early 2018, this package has been downloaded from more than 160 countries.
+This package is fully independent of any other R package and works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. Since its first public release in early 2018, this package has been downloaded from more than 175 countries.
 
 This package can be used for:
 

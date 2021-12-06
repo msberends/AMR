@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Latest development version">1.7.1.9030</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9062</span>
       </span>
     </div>
 
@@ -185,35 +185,35 @@
 
       
 
-      </header><script src="resistance_predict_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>How to predict antimicrobial resistance</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/main/vignettes/resistance_predict.Rmd" class="external-link"><code>vignettes/resistance_predict.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/HEAD/vignettes/resistance_predict.Rmd" class="external-link"><code>vignettes/resistance_predict.Rmd</code></a></small>
       <div class="hidden name"><code>resistance_predict.Rmd</code></div>
 
     </div>
 
     
     
-<div id="needed-r-packages" class="section level2">
-<h2 class="hasAnchor">
-<a href="#needed-r-packages" class="anchor" aria-hidden="true"></a>Needed R packages</h2>
+<div class="section level2">
+<h2 id="needed-r-packages">Needed R packages<a class="anchor" aria-label="anchor" href="#needed-r-packages"></a>
+</h2>
 <p>As with many uses in R, we need some additional packages for AMR data analysis. Our package works closely together with the <a href="https://www.tidyverse.org" class="external-link">tidyverse packages</a> <a href="https://dplyr.tidyverse.org/" class="external-link"><code>dplyr</code></a> and <a href="https://ggplot2.tidyverse.org" class="external-link"><code>ggplot2</code></a> by Dr Hadley Wickham. The tidyverse tremendously improves the way we conduct data science - it allows for a very natural way of writing syntaxes and creating beautiful plots in R.</p>
 <p>Our <code>AMR</code> package depends on these packages and even extends their use and functions.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/msberends/AMR" class="external-link">AMR</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR">AMR</a></span><span class="op">)</span>
 
 <span class="co"># (if not yet installed, install with:)</span>
 <span class="co"># install.packages(c("tidyverse", "AMR"))</span></code></pre></div>
 </div>
-<div id="prediction-analysis" class="section level2">
-<h2 class="hasAnchor">
-<a href="#prediction-analysis" class="anchor" aria-hidden="true"></a>Prediction analysis</h2>
+<div class="section level2">
+<h2 id="prediction-analysis">Prediction analysis<a class="anchor" aria-label="anchor" href="#prediction-analysis"></a>
+</h2>
 <p>Our package contains a function <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>, which takes the same input as functions for <a href="./AMR.html">other AMR data analysis</a>. Based on a date column, it calculates cases per year and uses a regression model to predict antimicrobial resistance.</p>
 <p>It is basically as easy as:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># resistance prediction of piperacillin/tazobactam (TZP):</span></span>
@@ -229,8 +229,8 @@
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">resistance_predict</span>(<span class="at">col_ab =</span> <span class="st">"TZP"</span>,</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">model =</span> <span class="st">"binomial"</span>)</span></code></pre></div>
 <p>The function will look for a date column itself if <code>col_date</code> is not set.</p>
-<p>When running any of these commands, a summary of the regression model will be printed unless using <code><a href="../reference/resistance_predict.html">resistance_predict(..., info = FALSE)</a></code>.</p>
-<pre><code># ℹ Using column 'date' as input for `col_date`.</code></pre>
+<p>When running any of these commands, a summary of the regression model will be printed unless using <code>resistance_predict(..., info = FALSE)</code>.</p>
+<pre><code><span class="co"># ℹ Using column 'date' as input for `col_date`.</span></code></pre>
 <p>This text is only a printed summary - the actual result (output) of the function is a <code>data.frame</code> containing for each year: the number of observations, the actual observed resistance, the estimated resistance and the standard error below and above the estimation:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">predict_TZP</span>
@@ -279,14 +279,14 @@
 <span class="co"># choose for error bars instead of a ribbon</span>
 <span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="va">predict_TZP</span>, ribbon <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-5-2.png" width="720"></p>
-<div id="choosing-the-right-model" class="section level3">
-<h3 class="hasAnchor">
-<a href="#choosing-the-right-model" class="anchor" aria-hidden="true"></a>Choosing the right model</h3>
+<div class="section level3">
+<h3 id="choosing-the-right-model">Choosing the right model<a class="anchor" aria-label="anchor" href="#choosing-the-right-model"></a>
+</h3>
 <p>Resistance is not easily predicted; if we look at vancomycin resistance in Gram-positive bacteria, the spread (i.e. standard error) is enormous:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">example_isolates</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="va">mo</span>, language <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">==</span> <span class="st">"Gram-positive"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span><span class="op">(</span>col_ab <span class="op">=</span> <span class="st">"VAN"</span>, year_min <span class="op">=</span> <span class="fl">2010</span>, info <span class="op">=</span> <span class="cn">FALSE</span>, model <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="va">mo</span>, language <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">==</span> <span class="st">"Gram-positive"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span><span class="op">(</span>col_ab <span class="op">=</span> <span class="st">"VAN"</span>, year_min <span class="op">=</span> <span class="fl">2010</span>, info <span class="op">=</span> <span class="cn">FALSE</span>, model <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co"># ℹ Using column 'date' as input for `col_date`.</span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-6-1.png" width="720"></p>
@@ -309,14 +309,14 @@
 <td>
 <code>"binomial"</code> or <code>"binom"</code> or <code>"logit"</code>
 </td>
-<td><code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm(..., family = binomial)</a></code></td>
+<td><code>glm(..., family = binomial)</code></td>
 <td>Generalised linear model with binomial distribution</td>
 </tr>
 <tr class="even">
 <td>
 <code>"loglin"</code> or <code>"poisson"</code>
 </td>
-<td><code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm(..., family = poisson)</a></code></td>
+<td><code>glm(..., family = poisson)</code></td>
 <td>Generalised linear model with poisson distribution</td>
 </tr>
 <tr class="odd">
@@ -330,9 +330,9 @@
 </table>
 <p>For the vancomycin resistance in Gram-positive bacteria, a linear model might be more appropriate since no binomial distribution is to be expected based on the observed years:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">example_isolates</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="va">mo</span>, language <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">==</span> <span class="st">"Gram-positive"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span><span class="op">(</span>col_ab <span class="op">=</span> <span class="st">"VAN"</span>, year_min <span class="op">=</span> <span class="fl">2010</span>, info <span class="op">=</span> <span class="cn">FALSE</span>, model <span class="op">=</span> <span class="st">"linear"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="va">mo</span>, language <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">==</span> <span class="st">"Gram-positive"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span><span class="op">(</span>col_ab <span class="op">=</span> <span class="st">"VAN"</span>, year_min <span class="op">=</span> <span class="fl">2010</span>, info <span class="op">=</span> <span class="cn">FALSE</span>, model <span class="op">=</span> <span class="st">"linear"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co"># ℹ Using column 'date' as input for `col_date`.</span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-7-1.png" width="720"></p>
@@ -366,12 +366,12 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="https://www.rug.nl/staff/m.s.berends/" class="external-link external-link">Matthijs S. Berends</a>, <a href="https://www.rug.nl/staff/c.f.luz/" class="external-link external-link">Christian F. Luz</a>, <a href="https://www.rug.nl/staff/a.w.friedrich/" class="external-link external-link">Alexander W. Friedrich</a>, <a href="https://www.rug.nl/staff/b.sinha/" class="external-link external-link">Bhanu N. M. Sinha</a>, <a href="https://www.rug.nl/staff/c.j.albers/" class="external-link external-link">Casper J. Albers</a>, <a href="https://www.rug.nl/staff/c.glasner/" class="external-link external-link">Corinna Glasner</a>.</p>
+<p>Developed by Matthijs S. Berends, Christian F. Luz, Dennis Souverein, Erwin E. A. Hassing.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>

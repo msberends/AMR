@@ -1,5 +1,5 @@
-# `AMR` 1.7.1.9061
-## <small>Last updated:  5 December 2021</small>
+# `AMR` 1.7.1.9062
+## <small>Last updated:  6 December 2021</small>
 
 ### Breaking changes
 * Removed `p_symbol()` and all `filter_*()` functions (except for `filter_first_isolate()`), which were all deprecated in a previous package version
