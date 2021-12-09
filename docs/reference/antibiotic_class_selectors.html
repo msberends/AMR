@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9062</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9063</span>
       </span>
     </div>
 
@@ -153,7 +153,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Antibiotic Selectors</h1>
-    <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/HEAD/R/ab_class_selectors.R" class="external-link"><code>R/ab_class_selectors.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/HEAD/R/ab_selectors.R" class="external-link"><code>R/ab_selectors.R</code></a></small>
     <div class="hidden name"><code>antibiotic_class_selectors.Rd</code></div>
     </div>
 
@@ -164,10 +164,6 @@
     <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ab_class</span><span class="op">(</span><span class="va">ab_class</span>, only_rsi_columns <span class="op">=</span> <span class="cn">FALSE</span>, only_treatable <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="fu">ab_selector</span><span class="op">(</span><span class="va">filter</span>, only_rsi_columns <span class="op">=</span> <span class="cn">FALSE</span>, only_treatable <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">administrable_per_os</span><span class="op">(</span>only_rsi_columns <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">administrable_iv</span><span class="op">(</span>only_rsi_columns <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="fu">aminoglycosides</span><span class="op">(</span>only_rsi_columns <span class="op">=</span> <span class="cn">FALSE</span>, only_treatable <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
 
@@ -217,7 +213,18 @@
 
 <span class="fu">trimethoprims</span><span class="op">(</span>only_rsi_columns <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
 
-<span class="fu">ureidopenicillins</span><span class="op">(</span>only_rsi_columns <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div></div>
+<span class="fu">ureidopenicillins</span><span class="op">(</span>only_rsi_columns <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
+
+<span class="fu">administrable_per_os</span><span class="op">(</span>only_rsi_columns <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
+
+<span class="fu">administrable_iv</span><span class="op">(</span>only_rsi_columns <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
+
+<span class="fu">not_intrinsic_resistant</span><span class="op">(</span>
+  only_rsi_columns <span class="op">=</span> <span class="cn">FALSE</span>,
+  col_mo <span class="op">=</span> <span class="cn">NULL</span>,
+  version_expertrules <span class="op">=</span> <span class="fl">3.3</span>,
+  <span class="va">...</span>
+<span class="op">)</span></code></pre></div></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
@@ -231,6 +238,10 @@
 <dd><p>ignored, only in place to allow future extensions</p></dd>
 <dt>filter</dt>
 <dd><p>an <a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a> to be evaluated in the <a href="antibiotics.html">antibiotics</a> data set, such as <code>name %like% "trim"</code></p></dd>
+<dt>col_mo</dt>
+<dd><p>column name of the IDs of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>), defaults to the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
+<dt>version_expertrules</dt>
+<dd><p>the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either "3.3", "3.2" or "3.1".</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -243,6 +254,7 @@
 <p>The <code>ab_class()</code> function can be used to filter/select on a manually defined antibiotic class. It searches for results in the <a href="antibiotics.html">antibiotics</a> data set within the columns <code>group</code>, <code>atc_group1</code> and <code>atc_group2</code>.</p>
 <p>The <code>ab_selector()</code> function can be used to internally filter the <a href="antibiotics.html">antibiotics</a> data set on any results, see <em>Examples</em>. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.</p>
 <p>The <code>administrable_per_os()</code> and <code>administrable_iv()</code> functions also rely on the <a href="antibiotics.html">antibiotics</a> data set - antibiotic columns will be matched where a DDD (defined daily dose) for resp. oral and IV treatment is available in the <a href="antibiotics.html">antibiotics</a> data set.</p>
+<p>The <code>not_intrinsic_resistant()</code> function can be used to only select antibiotic columns that pose no intrinsic resistance for the microorganisms in the data set. For example, if a data set contains only microorganism codes or names of <em>E. coli</em> and <em>K. pneumoniae</em> and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function. It currently applies <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/" class="external-link">'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3</a> (2021) to determine intrinsic resistance, using the <code><a href="eucast_rules.html">eucast_rules()</a></code> function internally. Because of this determination, this function is quite slow in terms of performance.</p>
     </div>
     <div id="full-list-of-supported-antibiotic-classes">
     <h2>Full list of supported (antibiotic) classes</h2>
@@ -349,6 +361,12 @@ The <a href="lifecycle.html">lifecycle</a> of this function is <strong>stable</s
   <span class="co"># You can combine selectors with '&amp;' to be more specific:</span>
   <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu">penicillins</span><span class="op">(</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu">administrable_per_os</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+  
+  <span class="co"># get AMR for only drugs that matter - no intrinsic resistance:</span>
+  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="mo_property.html">mo_genus</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Escherichia"</span>, <span class="st">"Klebsiella"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu">not_intrinsic_resistant</span><span class="op">(</span><span class="op">)</span>, <span class="va">resistance</span><span class="op">)</span><span class="op">)</span>
     
   <span class="co"># get susceptibility for antibiotics whose name contains "trim":</span>
   <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>

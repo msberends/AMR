@@ -194,7 +194,7 @@ check_dataset_integrity <- function() {
   data_in_globalenv <- ls(envir = globalenv())
   overwritten <- data_in_pkg[data_in_pkg %in% data_in_globalenv]
   # exception for example_isolates
-  overwritten <- overwritten[overwritten != "example_isolates"]
+  overwritten <- overwritten[overwritten %unlike% "example_isolates"]
   if (length(overwritten) > 0) {
     if (length(overwritten) > 1) {
       plural <- c("s are", "", "s")

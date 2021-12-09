@@ -97,20 +97,20 @@ $(document).ready(function() {
       x = x.replace(/Author, contributor/g, "Maintainer");
       x = x.replace(/Author, thesis advisor/g, "Doctoral advisor");
       x = x.replace(/Thesis advisor/g, "Doctoral advisor");
-      x = x.replace("Matthijs", "Dr. Matthijs");
-      x = x.replace("Christian", "Dr. Christian");
+      x = x.replace("Matthijs", "Dr Matthijs");
+      x = x.replace("Christian", "Dr Christian");
       x = x.replace("Alex", "Prof. Alex");
       x = x.replace("Bhanu", "Prof. Bhanu");
       x = x.replace("Casper", "Prof. Casper");
-      x = x.replace("Corinna", "Dr. Corinna");
+      x = x.replace("Corinna", "Dr Corinna");
       // others
-      x = x.replace("Bart", "Dr. Bart");
-      x = x.replace("Sofia", "Dr. Sofia");
-      x = x.replace("Dennis", "Dr. Dennis");
-      x = x.replace("Judith", "Dr. Judith");
-      x = x.replace("Gwen", "Dr. Gwen");
-      x = x.replace("Anthony", "Dr. Anthony");
-      x = x.replace("Rogier", "Dr. Rogier");
+      x = x.replace("Bart", "Dr Bart");
+      x = x.replace("Sofia", "Dr Sofia");
+      x = x.replace("Dennis", "Dr Dennis");
+      x = x.replace("Judith", "Dr Judith");
+      x = x.replace("Gwen", "Dr Gwen");
+      x = x.replace("Anthony", "Dr Anthony");
+      x = x.replace("Rogier", "Dr Rogier");
     }
     return(x);
   }

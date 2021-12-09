@@ -1,5 +1,5 @@
-# `AMR` 1.7.1.9062
-## <small>Last updated:  6 December 2021</small>
+# `AMR` 1.7.1.9063
+## <small>Last updated:  9 December 2021</small>
 
 ### Breaking changes
 * Removed `p_symbol()` and all `filter_*()` functions (except for `filter_first_isolate()`), which were all deprecated in a previous package version
@@ -8,12 +8,13 @@
 
 ### New
 * Support for EUCAST Intrinsic Resistance and Unusual Phenotypes v3.3 (October 2021), effective in the `eucast_rules()` function. This is now the default guideline (all other guidelines are still available).
+* Support for Danish, and also added missing translations of all antimicrobial drugs in Italian, French and Portuguese
 * Function `set_ab_names()` to rename data set columns that resemble antimicrobial drugs. This allows for quickly renaming columns to official names, ATC codes, etc. Its second argument can be a tidyverse way of selecting:
   ```r
   example_isolates %>% set_ab_names(where(is.rsi))
   example_isolates %>% set_ab_names(AMC:GEN, property = "atc")
   ```
-* Support for Danish, and also added missing translations of all antimicrobial drugs in Italian, French and Portuguese
+* Function `mo_lpsn()` to retrieve the [LPSN](https://lpsn.dsmz.de) record ID
 
 ### Changed
 * Updated the bacterial taxonomy to 5 October 2021 (according to [LPSN](https://lpsn.dsmz.de)), including all 11 new staphylococcal species named since 1 January last year
@@ -36,7 +37,9 @@
     example_isolates[, ab_selector(oral_ddd > 1 & oral_units == "g")]          # base R
     example_isolates %>% select(ab_selector(oral_ddd > 1 & oral_units == "g")) # dplyr
     ```
+  * Added the selector `not_intrinsic_resistant()`, which only keeps antibiotic columns that are not intrinsic resistant for all microorganisms in a data set, based on the latest EUCAST guideline on intrinsic resistance. For example, if a data set contains only microorganism codes or names of *E. coli* and *K. pneumoniae* and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function.
   * Fix for using selectors multiple times in one call (e.g., using them in `dplyr::filter()` and immediately after in `dplyr::select()`)
+  * Fix for using having multiple columns that are coerced to the same antibiotic agent
   * Added argument `only_treatable`, which defaults to `TRUE` and will exclude drugs that are only for laboratory tests and not for treating patients (such as imipenem/EDTA and gentamicin-high)
 * Fixed the Gram stain (`mo_gramstain()`) determination of the taxonomic class Negativicutes within the phylum of Firmicutes - they were considered Gram-positives because of their phylum but are actually Gram-negative. This impacts 137 taxonomic species, genera and families, such as *Negativicoccus* and *Veillonella*.
 * Dramatic speed improvement for `first_isolate()`

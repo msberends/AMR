@@ -96,6 +96,7 @@
 #' mo_ref("E. coli")             # "Castellani et al., 1919"
 #' mo_authors("E. coli")         # "Castellani et al."
 #' mo_year("E. coli")            # 1919
+#' mo_lpsn("E. coli")            # 776057 (LPSN record ID)
 #'
 #' # abbreviations known in the field -----------------------------------------
 #' mo_genus("MRSA")              # "Staphylococcus"
@@ -540,6 +541,19 @@ mo_year <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
+mo_lpsn <- function(x, language = get_locale(), ...) {
+  if (missing(x)) {
+    # this tries to find the data and an <mo> column
+    x <- find_mo_col(fn = "mo_rank")
+  }
+  meet_criteria(x, allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  
+  mo_validate(x = x, property = "species_id", language = language, ...)
+}
+
+#' @rdname mo_property
+#' @export
 mo_rank <- function(x, language = get_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
@@ -724,6 +738,8 @@ mo_validate <- function(x, property, language, ...) {
   
   if (property == "mo") {
     return(set_clean_class(x, new_class = c("mo", "character")))
+  } else if (property == "species_id") {
+    return(as.double(x))
   } else if (property == "snomed") {
     return(as.double(eval(parse(text = x))))
   } else {

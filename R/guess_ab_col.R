@@ -238,9 +238,10 @@ get_column_abx <- function(x,
   if (sort == TRUE) {
     out <- out[order(names(out), out)]
   }
-  duplicates <- c(out[duplicated(out)], out[duplicated(names(out))]) 
-  duplicates <- duplicates[unique(names(duplicates))]
-  out <- c(out[!names(out) %in% names(duplicates)], duplicates)
+  # only keep the first hits, no duplicates
+  duplicates <- c(out[duplicated(names(out))], out[duplicated(unname(out))])
+  out <- out[!duplicated(names(out))]
+  out <- out[!duplicated(unname(out))]
   if (sort == TRUE) {
     out <- out[order(names(out), out)]
   }

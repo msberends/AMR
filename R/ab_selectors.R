@@ -38,11 +38,6 @@
 #' All columns in the data in which these functions are called will be searched for known antibiotic names, abbreviations, brand names, and codes (ATC, EARS-Net, WHO, etc.) according to the [antibiotics] data set. This means that a selector such as [aminoglycosides()] will pick up column names like 'gen', 'genta', 'J01GB03', 'tobra', 'Tobracin', etc. 
 #' 
 #' The [ab_class()] function can be used to filter/select on a manually defined antibiotic class. It searches for results in the [antibiotics] data set within the columns `group`, `atc_group1` and `atc_group2`.
-#' 
-#' The [ab_selector()] function can be used to internally filter the [antibiotics] data set on any results, see *Examples*. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.
-#' 
-#' The [administrable_per_os()] and [administrable_iv()] functions also rely on the [antibiotics] data set - antibiotic columns will be matched where a DDD (defined daily dose) for resp. oral and IV treatment is available in the [antibiotics] data set.
-#' 
 #' @section Full list of supported (antibiotic) classes:
 #' 
 #' `r paste0(" * ", na.omit(sapply(DEFINED_AB_GROUPS, function(ab) ifelse(tolower(gsub("^AB_", "", ab)) %in% ls(envir = asNamespace("AMR")), paste0("[", tolower(gsub("^AB_", "", ab)), "()] can select: \\cr ", vector_and(paste0(ab_name(eval(parse(text = ab), envir = asNamespace("AMR")), language = NULL, tolower = TRUE), " (", eval(parse(text = ab), envir = asNamespace("AMR")), ")"), quotes = FALSE, sort = TRUE)), character(0)), USE.NAMES = FALSE)), "\n", collapse = "")`
@@ -105,6 +100,12 @@
 #'   # You can combine selectors with '&' to be more specific:
 #'   example_isolates %>%
 #'     select(penicillins() & administrable_per_os())
+#'   
+#'   # get AMR for only drugs that matter - no intrinsic resistance:
+#'   example_isolates %>%
+#'     filter(mo_genus() %in% c("Escherichia", "Klebsiella")) %>% 
+#'     group_by(hospital_id) %>% 
+#'     summarise(across(not_intrinsic_resistant(), resistance))
 #'     
 #'   # get susceptibility for antibiotics whose name contains "trim":
 #'   example_isolates %>%
@@ -167,6 +168,7 @@ ab_class <- function(ab_class,
 }
 
 #' @rdname antibiotic_class_selectors
+#' @details The [ab_selector()] function can be used to internally filter the [antibiotics] data set on any results, see *Examples*. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.
 #' @export
 ab_selector <- function(filter, 
                         only_rsi_columns = FALSE,
@@ -192,90 +194,6 @@ ab_selector <- function(filter,
   structure(unname(agents),
             class = c("ab_selector", "character"))
 }
-
-#' @rdname antibiotic_class_selectors
-#' @export
-administrable_per_os <- function(only_rsi_columns = FALSE, ...) {
-  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
-  # but it only takes a couple of milliseconds
-  vars_df <- get_current_data(arg_name = NA, call = -2)
-  # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
-  ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
-  agents_all <- antibiotics[which(!is.na(antibiotics$oral_ddd)), "ab", drop = TRUE]
-  agents <- antibiotics[which(antibiotics$ab %in% ab_in_data & !is.na(antibiotics$oral_ddd)), "ab", drop = TRUE]
-  agents <- ab_in_data[ab_in_data %in% agents]
-  message_agent_names(function_name = "administrable_per_os", 
-                      agents = agents,
-                      ab_group = "administrable_per_os",
-                      examples = paste0(" (such as ", 
-                                        vector_or(ab_name(sample(agents_all,
-                                                                 size = min(5, length(agents_all)),
-                                                                 replace = FALSE),
-                                                          tolower = TRUE,
-                                                          language = NULL),
-                                                  quotes = FALSE), 
-                                        ")"))
-  structure(unname(agents),
-            class = c("ab_selector", "character"))
-}
-
-#' @rdname antibiotic_class_selectors
-#' @export
-administrable_iv <- function(only_rsi_columns = FALSE, ...) {
-  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
-  # but it only takes a couple of milliseconds
-  vars_df <- get_current_data(arg_name = NA, call = -2)
-  # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
-  ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
-  agents_all <- antibiotics[which(!is.na(antibiotics$iv_ddd)), "ab", drop = TRUE]
-  agents <- antibiotics[which(antibiotics$ab %in% ab_in_data & !is.na(antibiotics$iv_ddd)), "ab", drop = TRUE]
-  agents <- ab_in_data[ab_in_data %in% agents]
-  message_agent_names(function_name = "administrable_iv", 
-                      agents = agents,
-                      ab_group = "administrable_iv",
-                      examples = "")
-  structure(unname(agents),
-            class = c("ab_selector", "character"))
-}
-
-# nolint start
-# #' @rdname antibiotic_class_selectors
-# #' @export
-# not_intrinsic_resistant <- function(mo, ..., only_rsi_columns = FALSE, ...) {
-#   meet_criteria(mo, allow_class = c("mo", "data.frame", "list", "character", "numeric", "integer", "factor"), has_length = 1, allow_NA = FALSE)
-#   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-# 
-#   x <- as.mo(mo, ...)
-#   wont_work <- intrinsic_resistant[which(intrinsic_resistant$microorganism == mo_name(x, language = NULL)),
-#                                    "antibiotic",
-#                                    drop = TRUE]
-# 
-#   # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
-#   # but it only takes a couple of milliseconds
-#   vars_df <- get_current_data(arg_name = NA, call = -2)
-#   # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
-#   ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
-# 
-#   agents <- ab_in_data[!names(ab_in_data) %in% as.character(as.ab(wont_work))]
-# 
-#   # show used version number once per session (pkg_env will reload every session)
-#   if (message_not_thrown_before("intrinsic_resistant_version.ab", entire_session = TRUE)) {
-#     message_("Determining intrinsic resistance based on ",
-#              format_eucast_version_nr(3.2, markdown = FALSE), ". ",
-#              font_red("This note will be shown once per session."))
-#   }
-# 
-#   message_agent_names(function_name = "not_intrinsic_resistant", 
-#                       agents = ab_in_data,
-#                       ab_group = NULL,
-#                       examples = "",
-#                       call = mo_name(x, language = NULL))
-# 
-#   agents
-# }
-# nolint end
 
 #' @rdname antibiotic_class_selectors
 #' @export
@@ -456,6 +374,94 @@ ureidopenicillins <- function(only_rsi_columns = FALSE, ...) {
   ab_select_exec("ureidopenicillins", only_rsi_columns = only_rsi_columns)
 }
 
+#' @rdname antibiotic_class_selectors
+#' @details The [administrable_per_os()] and [administrable_iv()] functions also rely on the [antibiotics] data set - antibiotic columns will be matched where a DDD (defined daily dose) for resp. oral and IV treatment is available in the [antibiotics] data set.
+#' @export
+administrable_per_os <- function(only_rsi_columns = FALSE, ...) {
+  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
+  # but it only takes a couple of milliseconds
+  vars_df <- get_current_data(arg_name = NA, call = -2)
+  # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
+  ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
+  agents_all <- antibiotics[which(!is.na(antibiotics$oral_ddd)), "ab", drop = TRUE]
+  agents <- antibiotics[which(antibiotics$ab %in% ab_in_data & !is.na(antibiotics$oral_ddd)), "ab", drop = TRUE]
+  agents <- ab_in_data[ab_in_data %in% agents]
+  message_agent_names(function_name = "administrable_per_os", 
+                      agents = agents,
+                      ab_group = "administrable_per_os",
+                      examples = paste0(" (such as ", 
+                                        vector_or(ab_name(sample(agents_all,
+                                                                 size = min(5, length(agents_all)),
+                                                                 replace = FALSE),
+                                                          tolower = TRUE,
+                                                          language = NULL),
+                                                  quotes = FALSE), 
+                                        ")"))
+  structure(unname(agents),
+            class = c("ab_selector", "character"))
+}
+
+#' @rdname antibiotic_class_selectors
+#' @export
+administrable_iv <- function(only_rsi_columns = FALSE, ...) {
+  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
+  # but it only takes a couple of milliseconds
+  vars_df <- get_current_data(arg_name = NA, call = -2)
+  # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
+  ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
+  agents_all <- antibiotics[which(!is.na(antibiotics$iv_ddd)), "ab", drop = TRUE]
+  agents <- antibiotics[which(antibiotics$ab %in% ab_in_data & !is.na(antibiotics$iv_ddd)), "ab", drop = TRUE]
+  agents <- ab_in_data[ab_in_data %in% agents]
+  message_agent_names(function_name = "administrable_iv", 
+                      agents = agents,
+                      ab_group = "administrable_iv",
+                      examples = "")
+  structure(unname(agents),
+            class = c("ab_selector", "character"))
+}
+
+#' @rdname antibiotic_class_selectors
+#' @inheritParams eucast_rules
+#' @details The [not_intrinsic_resistant()] function can be used to only select antibiotic columns that pose no intrinsic resistance for the microorganisms in the data set. For example, if a data set contains only microorganism codes or names of *E. coli* and *K. pneumoniae* and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function. It currently applies `r format_eucast_version_nr(names(EUCAST_VERSION_EXPERT_RULES[length(EUCAST_VERSION_EXPERT_RULES)]))` to determine intrinsic resistance, using the [eucast_rules()] function internally. Because of this determination, this function is quite slow in terms of performance.
+#' @export
+not_intrinsic_resistant <- function(only_rsi_columns = FALSE, col_mo = NULL, version_expertrules = 3.3, ...) {
+  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  # get_current_data() has to run each time, for cases where e.g., filter() and select() are used in same call
+  # but it only takes a couple of milliseconds
+  vars_df <- get_current_data(arg_name = NA, call = -2)
+  # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
+  ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
+  # intrinsic vars
+  vars_df_R <- tryCatch(sapply(eucast_rules(vars_df,
+                                            col_mo = col_mo,
+                                            version_expertrules = version_expertrules,
+                                            rules = "expert",
+                                            info = FALSE),
+                               function(col) tryCatch(!any(is.na(col)) && all(col == "R"),
+                                                      error = function(e) FALSE)),
+                        error = function(e) stop_("in not_intrinsic_resistant(): ", e$message, call = FALSE))
+  
+  agents <- ab_in_data[ab_in_data %in% names(vars_df_R[which(vars_df_R)])]
+  if (length(agents) > 0 &&
+      message_not_thrown_before(paste0("not_intrinsic_resistant.", paste(sort(agents), collapse = "|")))) {
+    agents_formatted <- paste0("'", font_bold(agents, collapse = NULL), "'")
+    agents_names <- ab_name(names(agents), tolower = TRUE, language = NULL)
+    need_name <- generalise_antibiotic_name(agents) != generalise_antibiotic_name(agents_names)
+    agents_formatted[need_name] <- paste0(agents_formatted[need_name], " (", agents_names[need_name], ")")
+    message_("For `not_intrinsic_resistant()` removing ",
+             ifelse(length(agents) == 1, "column ", "columns "),
+             vector_and(agents_formatted, quotes = FALSE, sort = FALSE))
+  }
+  
+  vars_df_R <- names(vars_df_R)[which(!vars_df_R)]
+  # find columns that are abx, but also intrinsic R
+  out <- unname(intersect(ab_in_data, vars_df_R))
+  structure(out,
+            class = c("ab_selector", "character"))
+}
+
 ab_select_exec <- function(function_name,
                            only_rsi_columns = FALSE,
                            only_treatable = FALSE,
@@ -465,7 +471,6 @@ ab_select_exec <- function(function_name,
   vars_df <- get_current_data(arg_name = NA, call = -3)
   # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
   ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
-  
   # untreatable drugs
   untreatable <- antibiotics[which(antibiotics$name %like% "-high|EDTA|polysorbate"), "ab", drop = TRUE]
   if (only_treatable == TRUE & any(untreatable %in% names(ab_in_data))) {

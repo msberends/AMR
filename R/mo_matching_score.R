@@ -27,7 +27,7 @@
 #' 
 #' This algorithm is used by [as.mo()] and all the [`mo_*`][mo_property()] functions to determine the most probable match of taxonomic records based on user input. 
 #' @inheritSection lifecycle Stable Lifecycle
-#' @author Matthijs S. Berends
+#' @author Dr. Matthijs Berends
 #' @param x Any user input value(s)
 #' @param n A full taxonomic name, that exists in [`microorganisms$fullname`][microorganisms]
 #' @section Matching Score for Microorganisms:

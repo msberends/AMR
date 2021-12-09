@@ -24,6 +24,7 @@
 \alias{mo_ref}
 \alias{mo_authors}
 \alias{mo_year}
+\alias{mo_lpsn}
 \alias{mo_rank}
 \alias{mo_taxonomy}
 \alias{mo_synonyms}
@@ -74,6 +75,8 @@ mo_ref(x, language = get_locale(), ...)
 mo_authors(x, language = get_locale(), ...)
 
 mo_year(x, language = get_locale(), ...)
+
+mo_lpsn(x, language = get_locale(), ...)
 
 mo_rank(x, language = get_locale(), ...)
 
@@ -226,6 +229,7 @@ mo_synonyms("E. coli")        # get previously accepted taxonomic names
 mo_ref("E. coli")             # "Castellani et al., 1919"
 mo_authors("E. coli")         # "Castellani et al."
 mo_year("E. coli")            # 1919
+mo_lpsn("E. coli")            # 776057 (LPSN record ID)
 
 # abbreviations known in the field -----------------------------------------
 mo_genus("MRSA")              # "Staphylococcus"

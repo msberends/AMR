@@ -76,6 +76,17 @@ expect_equal(nrow(example_isolates[all(c(carbapenems(), aminoglycosides()) == "R
 expect_equal(nrow(example_isolates[any(carbapenems() == "R"), penicillins()]), 55, tolerance = 0.5)
 expect_equal(ncol(example_isolates[any(carbapenems() == "R"), penicillins()]), 7, tolerance = 0.5)
 
+x <- data.frame(x = 0,
+                mo = 0,
+                gen = "S",
+                genta = "S",
+                J01GB03 = "S",
+                tobra = "S",
+                Tobracin = "S")
+# should have the first hits
+expect_identical(colnames(x[, aminoglycosides()]),
+                 c("gen", "tobra"))
+
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_equal(example_isolates %>% select(administrable_per_os() & penicillins()) %>% ncol(), 5, tolerance = 0.5)
   expect_equal(example_isolates %>% select(administrable_iv() & penicillins()) %>% ncol(), 7, tolerance = 0.5)

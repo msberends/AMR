@@ -63,5 +63,5 @@ mo_matching_score(x = "E. coli",
                   n = c("Escherichia coli", "Entamoeba coli"))
 }
 \author{
-Matthijs S. Berends
+Dr. Matthijs Berends
 }
