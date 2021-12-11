@@ -286,7 +286,7 @@ mdro <- function(x = NULL,
   }
   if (guideline == "eucast") {
     # turn into latest EUCAST guideline
-    guideline <- "eucast3.2"
+    guideline <- "eucast3.3"
   }
   if (guideline == "nl") {
     guideline <- "brmo"
@@ -294,7 +294,7 @@ mdro <- function(x = NULL,
   if (guideline == "de") {
     guideline <- "mrgn"
   }
-  stop_ifnot(guideline %in% c("brmo", "mrgn", "eucast3.1", "eucast3.2", "tb", "cmi2012"),
+  stop_ifnot(guideline %in% c("brmo", "mrgn", "eucast3.1", "eucast3.2", "eucast3.3", "tb", "cmi2012"),
              "invalid guideline: ", guideline.bak)
   guideline <- list(code = guideline)
   
