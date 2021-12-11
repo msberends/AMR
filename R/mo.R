@@ -1481,14 +1481,22 @@ exec_as.mo <- function(x,
       if (NROW(uncertainties) > 0 & initial_search == TRUE) {
         uncertainties <- as.list(pm_distinct(uncertainties, input, .keep_all = TRUE))
         pkg_env$mo_uncertainties <- uncertainties
-        
-        plural <- c("", "it", "was")
-        if (length(uncertainties$input) > 1) {
-          plural <- c("s", "them", "were")
+        if (message_not_thrown_before("as.mo", "uncertainties", uncertainties$input)) {
+          plural <- c("", "this", "uncertainty")
+          if (length(uncertainties$input) > 1) {
+            plural <- c("s", "these", "uncertainties")
+          }
+          if (length(uncertainties$input) <= 3) {
+            examples <- vector_and(paste0('"', uncertainties$input,
+                                          '" (assuming ', font_italic(uncertainties$fullname, collapse = NULL), ")"),
+                                   quotes = FALSE)
+          } else {
+            examples <- paste0(nr2char(length(uncertainties$input)), " microorganism", plural[1])
+          }
+          msg <- paste0("Function `as.mo()` is uncertain about ", examples,
+                        ". Run `mo_uncertainties()` to review ", plural[2], " ", plural[3], ".")
+          message_(msg)
         }
-        msg <- paste0("Translation is uncertain of ", nr2char(length(uncertainties$input)), " microorganism", plural[1],
-                      ". Use `mo_uncertainties()` to review ", plural[2], ".")
-        message_(msg)
       }
       x[already_known] <- x_known
     }
@@ -1505,7 +1513,7 @@ exec_as.mo <- function(x,
     # nolint start
     # comment below code if all staphylococcal species are categorised as CoNS/CoPS
     if (any(x %in% MO_lookup[which(MO_lookup$species %in% post_Becker), property])) {
-      if (message_not_thrown_before("as.mo_becker")) {
+      if (message_not_thrown_before("as.mo", "becker")) {
         warning_("Becker ", font_italic("et al."), " (2014, 2019, 2020) does not contain these species named after their publication: ",
                  font_italic(paste("S.",
                                    sort(mo_species(unique(x[x %in% MO_lookup[which(MO_lookup$species %in% post_Becker), property]]))),

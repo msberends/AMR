@@ -69,7 +69,7 @@
 #' # get isolates whose name start with 'Ent' or 'ent'
 #' example_isolates[which(mo_name(example_isolates$mo) %like% "^ent"), ]
 #' \donttest{
-#' # faster way, only works in R 3.2 and later:
+#' # faster way, since mo_name() is context-aware:
 #' example_isolates[which(mo_name() %like% "^ent"), ]
 #' 
 #' if (require("dplyr")) {

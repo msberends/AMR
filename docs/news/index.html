@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9063</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9064</span>
       </span>
     </div>
 
@@ -157,20 +157,20 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.7.1.9063" id="amr-1719063">
-<code>AMR</code> 1.7.1.9063<a class="anchor" aria-label="anchor" href="#amr-1719063"></a></h2>
+<h2 class="page-header" data-toc-text="1.7.1.9064" id="amr-1719064">
+<code>AMR</code> 1.7.1.9064<a class="anchor" aria-label="anchor" href="#amr-1719064"></a></h2>
 <div class="section level3">
-<h3 id="last-updated-december-1-7-1-9063"><small>Last updated: 9 December 2021</small><a class="anchor" aria-label="anchor" href="#last-updated-december-1-7-1-9063"></a></h3>
+<h3 id="last-updated-december-1-7-1-9064"><small>Last updated: 11 December 2021</small><a class="anchor" aria-label="anchor" href="#last-updated-december-1-7-1-9064"></a></h3>
 <div class="section level4">
-<h4 id="breaking-changes-1-7-1-9063">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-1-7-1-9063"></a></h4>
+<h4 id="breaking-changes-1-7-1-9064">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-1-7-1-9064"></a></h4>
 <ul><li>Removed <code>p_symbol()</code> and all <code>filter_*()</code> functions (except for <code><a href="../reference/first_isolate.html">filter_first_isolate()</a></code>), which were all deprecated in a previous package version</li>
 <li>Removed the <code>key_antibiotics()</code> and <code>key_antibiotics_equal()</code> functions, which were deprecated and superseded by <code><a href="../reference/key_antimicrobials.html">key_antimicrobials()</a></code> and <code><a href="../reference/key_antimicrobials.html">antimicrobials_equal()</a></code>
 </li>
 <li>Removed all previously implemented <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> generics for classes <code>&lt;mic&gt;</code>, <code>&lt;disk&gt;</code>, <code>&lt;rsi&gt;</code> and <code>&lt;resistance_predict&gt;</code> as they did not follow the <code>ggplot2</code> logic. They were replaced with <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">ggplot2::autoplot()</a></code> generics.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-1-7-1-9063">New<a class="anchor" aria-label="anchor" href="#new-1-7-1-9063"></a></h4>
-<ul><li><p>Support for EUCAST Intrinsic Resistance and Unusual Phenotypes v3.3 (October 2021), effective in the <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function. This is now the default guideline (all other guidelines are still available).</p></li>
+<h4 id="new-1-7-1-9064">New<a class="anchor" aria-label="anchor" href="#new-1-7-1-9064"></a></h4>
+<ul><li><p>Support for EUCAST Intrinsic Resistance and Unusual Phenotypes v3.3 (October 2021). This is now the default EUCAST guideline in the package (all older guidelines are still available) for <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>, <code>mo_intrinsic_resistant()</code> and <code><a href="../reference/mdro.html">mdro()</a></code>. The <code>intrinsic_resistant</code> data set was also updated accordingly.</p></li>
 <li><p>Support for Danish, and also added missing translations of all antimicrobial drugs in Italian, French and Portuguese</p></li>
 <li>
 <p>Function <code><a href="../reference/ab_property.html">set_ab_names()</a></code> to rename data set columns that resemble antimicrobial drugs. This allows for quickly renaming columns to official names, ATC codes, etc. Its second argument can be a tidyverse way of selecting:</p>
@@ -180,9 +180,10 @@
 <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/ab_property.html">set_ab_names</a></span><span class="op">(</span><span class="va">AMC</span><span class="op">:</span><span class="va">GEN</span>, property <span class="op">=</span> <span class="st">"atc"</span><span class="op">)</span></code></pre></div>
 </li>
 <li><p>Function <code><a href="../reference/mo_property.html">mo_lpsn()</a></code> to retrieve the <a href="https://lpsn.dsmz.de" class="external-link">LPSN</a> record ID</p></li>
+<li><p>Function <code><a href="../reference/ab_property.html">ab_ddd_units()</a></code> to get units of DDDs (daily defined doses), deprecating the use of <code>ab_ddd(..., units = TRUE)</code> to be more consistent in data types of function output</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-1-7-1-9063">Changed<a class="anchor" aria-label="anchor" href="#changed-1-7-1-9063"></a></h4>
+<h4 id="changed-1-7-1-9064">Changed<a class="anchor" aria-label="anchor" href="#changed-1-7-1-9064"></a></h4>
 <ul><li>Updated the bacterial taxonomy to 5 October 2021 (according to <a href="https://lpsn.dsmz.de" class="external-link">LPSN</a>), including all 11 new staphylococcal species named since 1 January last year</li>
 <li>The <code>antibiotics</code> data set now contains <strong>all ATC codes</strong> that are available through the <a href="https://www.whocc.no" class="external-link">WHOCC website</a>, regardless of drugs being present in more than one ATC group. This means that:
 <ul><li>Some drugs now contain multiple ATC codes (e.g., metronidazole contains 5)</li>
@@ -212,9 +213,10 @@
 <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="../reference/antibiotic_class_selectors.html">ab_selector</a></span><span class="op">(</span><span class="va">oral_ddd</span> <span class="op">&gt;</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="va">oral_units</span> <span class="op">==</span> <span class="st">"g"</span><span class="op">)</span><span class="op">)</span> <span class="co"># dplyr</span></code></pre></div>
 </li>
 <li><p>Added the selector <code><a href="../reference/antibiotic_class_selectors.html">not_intrinsic_resistant()</a></code>, which only keeps antibiotic columns that are not intrinsic resistant for all microorganisms in a data set, based on the latest EUCAST guideline on intrinsic resistance. For example, if a data set contains only microorganism codes or names of <em>E. coli</em> and <em>K. pneumoniae</em> and contains a column “vancomycin”, this column will be removed (or rather, unselected) using this function.</p></li>
+<li><p>Added argument <code>only_treatable</code>, which defaults to <code>TRUE</code> and will exclude drugs that are only for laboratory tests and not for treating patients (such as imipenem/EDTA and gentamicin-high)</p></li>
 <li><p>Fix for using selectors multiple times in one call (e.g., using them in <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter()</a></code> and immediately after in <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code>)</p></li>
 <li><p>Fix for using having multiple columns that are coerced to the same antibiotic agent</p></li>
-<li><p>Added argument <code>only_treatable</code>, which defaults to <code>TRUE</code> and will exclude drugs that are only for laboratory tests and not for treating patients (such as imipenem/EDTA and gentamicin-high)</p></li>
+<li><p>Fixed for using <code><a href="https://rdrr.io/r/base/all.html" class="external-link">all()</a></code> or <code><a href="https://rdrr.io/r/base/any.html" class="external-link">any()</a></code> on antibiotic selectors in an R Markdown file</p></li>
 </ul></li>
 <li>Fixed the Gram stain (<code><a href="../reference/mo_property.html">mo_gramstain()</a></code>) determination of the taxonomic class Negativicutes within the phylum of Firmicutes - they were considered Gram-positives because of their phylum but are actually Gram-negative. This impacts 137 taxonomic species, genera and families, such as <em>Negativicoccus</em> and <em>Veillonella</em>.</li>
 <li>Dramatic speed improvement for <code><a href="../reference/first_isolate.html">first_isolate()</a></code>
@@ -250,7 +252,7 @@
 <code><a href="../reference/get_episode.html">get_episode()</a></code> and <code><a href="../reference/get_episode.html">is_new_episode()</a></code> can now cope with <code>NA</code>s</li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-1-7-1-9063">Other<a class="anchor" aria-label="anchor" href="#other-1-7-1-9063"></a></h4>
+<h4 id="other-1-7-1-9064">Other<a class="anchor" aria-label="anchor" href="#other-1-7-1-9064"></a></h4>
 <ul><li>This package is now being maintained by two epidemiologists and a data scientist from two different non-profit healthcare organisations. All functions in this package are now all considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months from now on.</li>
 </ul></div>
 </div>

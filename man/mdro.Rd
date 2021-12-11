@@ -94,7 +94,10 @@ Currently supported guidelines are (case-insensitive):
 \item \code{guideline = "CMI2012"} (default)
 
 Magiorakos AP, Srinivasan A \emph{et al.} "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) (\href{https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext}{link})
-\item \code{guideline = "EUCAST3.2"} (or simply \code{guideline = "EUCAST"})
+\item \code{guideline = "EUCAST3.3"} (or simply \code{guideline = "EUCAST"})
+
+The European international guideline - EUCAST Expert Rules Version 3.3 "Intrinsic Resistance and Unusual Phenotypes" (\href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2021/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.3_20211018.pdf}{link})
+\item \code{guideline = "EUCAST3.2"}
 
 The European international guideline - EUCAST Expert Rules Version 3.2 "Intrinsic Resistance and Unusual Phenotypes" (\href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf}{link})
 \item \code{guideline = "EUCAST3.1"}

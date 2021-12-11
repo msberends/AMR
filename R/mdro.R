@@ -51,7 +51,11 @@
 #'
 #'   Magiorakos AP, Srinivasan A *et al.* "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance." Clinical Microbiology and Infection (2012) ([link](https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext))
 #' 
-#' * `guideline = "EUCAST3.2"` (or simply `guideline = "EUCAST"`)
+#' * `guideline = "EUCAST3.3"` (or simply `guideline = "EUCAST"`)
+#'
+#'   The European international guideline - EUCAST Expert Rules Version 3.3 "Intrinsic Resistance and Unusual Phenotypes" ([link](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2021/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.3_20211018.pdf))
+#'   
+#' * `guideline = "EUCAST3.2"`
 #'
 #'   The European international guideline - EUCAST Expert Rules Version 3.2 "Intrinsic Resistance and Unusual Phenotypes" ([link](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf))
 #' 
@@ -72,7 +76,6 @@
 #'   The Dutch national guideline - Rijksinstituut voor Volksgezondheid en Milieu "WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) (ZKH)" ([link](https://www.rivm.nl/wip-richtlijn-brmo-bijzonder-resistente-micro-organismen-zkh))
 #' 
 #' Please suggest your own (country-specific) guidelines by letting us know: <https://github.com/msberends/AMR/issues/new>.
-#' 
 #' 
 #' @section Using Custom Guidelines:
 #' 
@@ -325,8 +328,15 @@ mdro <- function(x = NULL,
   } else if (guideline$code == "eucast3.2") {
     guideline$name <- "EUCAST Expert Rules, \"Intrinsic Resistance and Unusual Phenotypes\""
     guideline$author <- "EUCAST (European Committee on Antimicrobial Susceptibility Testing)"
-    guideline$version <- "3.2, 2020"
+    guideline$version <- "3.2, February 2020"
     guideline$source_url <- "https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf"
+    guideline$type <- "EUCAST Unusual Phenotypes"
+    
+  } else if (guideline$code == "eucast3.3") {
+    guideline$name <- "EUCAST Expert Rules, \"Intrinsic Resistance and Unusual Phenotypes\""
+    guideline$author <- "EUCAST (European Committee on Antimicrobial Susceptibility Testing)"
+    guideline$version <- "3.3, October 2021"
+    guideline$source_url <- "https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2021/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.3_20211018.pdf"
     guideline$type <- "EUCAST Unusual Phenotypes"
     
   } else if (guideline$code == "tb") {
@@ -474,6 +484,7 @@ mdro <- function(x = NULL,
                               verbose = verbose,
                               info = info,
                               only_rsi_columns = only_rsi_columns,
+                              fn = "mdro",
                               ...)
   } else if (guideline$code == "eucast3.2") {
     cols_ab <- get_column_abx(x = x,
@@ -502,6 +513,36 @@ mdro <- function(x = NULL,
                               verbose = verbose,
                               info = info,
                               only_rsi_columns = only_rsi_columns,
+                              fn = "mdro",
+                              ...)
+  } else if (guideline$code == "eucast3.3") {
+    cols_ab <- get_column_abx(x = x,
+                              soft_dependencies = c("AMP",
+                                                    "AMX",
+                                                    "CIP",
+                                                    "DAL",
+                                                    "DAP",
+                                                    "ERV",
+                                                    "FDX",
+                                                    "GEN",
+                                                    "LNZ",
+                                                    "MEM",
+                                                    "MTR",
+                                                    "OMC",
+                                                    "ORI",
+                                                    "PEN",
+                                                    "QDA",
+                                                    "RIF",
+                                                    "TEC",
+                                                    "TGC",
+                                                    "TLV",
+                                                    "TOB",
+                                                    "TZD",
+                                                    "VAN"),
+                              verbose = verbose,
+                              info = info,
+                              only_rsi_columns = only_rsi_columns,
+                              fn = "mdro",
                               ...)
   } else if (guideline$code == "tb") {
     cols_ab <- get_column_abx(x = x,
@@ -516,6 +557,7 @@ mdro <- function(x = NULL,
                               verbose = verbose,
                               info = info,
                               only_rsi_columns = only_rsi_columns,
+                              fn = "mdro",
                               ...)
   } else if (guideline$code == "mrgn") {
     cols_ab <- get_column_abx(x = x,
@@ -528,12 +570,14 @@ mdro <- function(x = NULL,
                               verbose = verbose,
                               info = info,
                               only_rsi_columns = only_rsi_columns,
+                              fn = "mdro",
                               ...)
   } else {
     cols_ab <- get_column_abx(x = x,
                               verbose = verbose,
                               info = info,
                               only_rsi_columns = only_rsi_columns,
+                              fn = "mdro",
                               ...)
   }
   if (!"AMP" %in% names(cols_ab) & "AMX" %in% names(cols_ab)) {
@@ -1171,10 +1215,80 @@ mdro <- function(x = NULL,
               which(x$genus == "Streptococcus" & x$species == "pneumoniae"),
               c(carbapenems, VAN, TEC, TLV, DAL, ORI, DAP, LNZ, TZD, QDA, TGC, ERV, OMC, RIF),
               "any")
-    streps <- MO_lookup[which(MO_lookup$genus == "Streptococcus"), "mo", drop = TRUE]
-    streps_ABCG <- streps[as.mo(streps, Lancefield = TRUE) %in% c("B_STRPT_GRPA", "B_STRPT_GRPB", "B_STRPT_GRPC", "B_STRPT_GRPG")]
     trans_tbl(3, # Sr. groups A/B/C/G
-              which(x$mo %in% streps_ABCG),
+              which(x$mo %in% MO_STREP_ABCG),
+              c(PEN, cephalosporins, VAN, TEC, TLV, DAL, ORI, DAP, LNZ, TZD, QDA, TGC, ERV, OMC),
+              "any")
+    trans_tbl(3,
+              which(x$genus == "Enterococcus"),
+              c(DAP, LNZ, TGC, ERV, OMC, TEC),
+              "any")
+    trans_tbl(3,
+              which(x$genus == "Enterococcus" & x$species == "faecalis"),
+              c(AMP, AMX),
+              "any")
+    # Table 8
+    trans_tbl(3,
+              which(x$genus == "Bacteroides"),
+              MTR,
+              "any")
+    trans_tbl(3,
+              which(x$genus == "Clostridium" & x$species == "difficile"),
+              c(MTR, VAN, FDX),
+              "any")
+  }
+  
+  if (guideline$code == "eucast3.3") {
+    # EUCAST 3.3 --------------------------------------------------------------
+    # note: this guideline is equal to EUCAST 3.2 - no MDRO insights changed
+    # Table 6
+    trans_tbl(3,
+              which((x$order == "Enterobacterales" &
+                       !x$family == "Morganellaceae" & 
+                       !(x$genus == "Serratia" & x$species == "marcescens"))
+                    | (x$genus == "Pseudomonas" & x$species == "aeruginosa")
+                    | x$genus == "Acinetobacter"),
+              COL,
+              "all")
+    trans_tbl(3,
+              which(x$genus == "Salmonella" & x$species == "Typhi"),
+              c(carbapenems),
+              "any")
+    trans_tbl(3,
+              which(x$genus == "Haemophilus" & x$species == "influenzae"),
+              c(cephalosporins_3rd, carbapenems, fluoroquinolones),
+              "any")
+    trans_tbl(3,
+              which(x$genus == "Moraxella" & x$species == "catarrhalis"),
+              c(cephalosporins_3rd, fluoroquinolones),
+              "any")
+    trans_tbl(3,
+              which(x$genus == "Neisseria" & x$species == "meningitidis"),
+              c(cephalosporins_3rd, fluoroquinolones),
+              "any")
+    trans_tbl(3,
+              which(x$genus == "Neisseria" & x$species == "gonorrhoeae"),
+              SPT,
+              "any")
+    # Table 7
+    trans_tbl(3,
+              which(x$genus == "Staphylococcus" & x$species == "aureus"),
+              c(VAN, TEC, TLV, DAL, ORI, DAP, LNZ, TZD, QDA, TGC, ERV, OMC),
+              "any")
+    trans_tbl(3,
+              which(x$mo %in% MO_CONS), # coagulase-negative Staphylococcus
+              c(VAN, TLV, DAL, ORI, DAP, LNZ, TZD, QDA, TGC, ERV, OMC),
+              "any")
+    trans_tbl(3,
+              which(x$genus == "Corynebacterium"),
+              c(VAN, TEC, TLV, DAL, ORI, DAP, LNZ, TZD, QDA, TGC),
+              "any")
+    trans_tbl(3,
+              which(x$genus == "Streptococcus" & x$species == "pneumoniae"),
+              c(carbapenems, VAN, TEC, TLV, DAL, ORI, DAP, LNZ, TZD, QDA, TGC, ERV, OMC, RIF),
+              "any")
+    trans_tbl(3, # Sr. groups A/B/C/G
+              which(x$mo %in% MO_STREP_ABCG),
               c(PEN, cephalosporins, VAN, TEC, TLV, DAL, ORI, DAP, LNZ, TZD, QDA, TGC, ERV, OMC),
               "any")
     trans_tbl(3,
@@ -1435,7 +1549,7 @@ mdro <- function(x = NULL,
   # Results ----
   if (guideline$code == "cmi2012") {
     if (any(x$MDRO == -1, na.rm = TRUE)) {
-      if (message_not_thrown_before("mdro.availability")) {
+      if (message_not_thrown_before("mdro", "availability")) {
         warning_("NA introduced for isolates where the available percentage of antimicrobial classes was below ",
                  percentage(pct_required_classes), " (set with `pct_required_classes`)", call = FALSE)
       }

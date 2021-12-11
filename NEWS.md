@@ -1,5 +1,5 @@
-# `AMR` 1.7.1.9063
-## <small>Last updated:  9 December 2021</small>
+# `AMR` 1.7.1.9064
+## <small>Last updated: 11 December 2021</small>
 
 ### Breaking changes
 * Removed `p_symbol()` and all `filter_*()` functions (except for `filter_first_isolate()`), which were all deprecated in a previous package version
@@ -7,7 +7,7 @@
 * Removed all previously implemented `ggplot2::ggplot()` generics for classes `<mic>`, `<disk>`, `<rsi>` and `<resistance_predict>` as they did not follow the `ggplot2` logic. They were replaced with `ggplot2::autoplot()` generics.
 
 ### New
-* Support for EUCAST Intrinsic Resistance and Unusual Phenotypes v3.3 (October 2021), effective in the `eucast_rules()` function. This is now the default guideline (all other guidelines are still available).
+* Support for EUCAST Intrinsic Resistance and Unusual Phenotypes v3.3 (October 2021). This is now the default EUCAST guideline in the package (all older guidelines are still available) for `eucast_rules()`, `mo_intrinsic_resistant()` and `mdro()`. The `intrinsic_resistant` data set was also updated accordingly.
 * Support for Danish, and also added missing translations of all antimicrobial drugs in Italian, French and Portuguese
 * Function `set_ab_names()` to rename data set columns that resemble antimicrobial drugs. This allows for quickly renaming columns to official names, ATC codes, etc. Its second argument can be a tidyverse way of selecting:
   ```r
@@ -15,6 +15,7 @@
   example_isolates %>% set_ab_names(AMC:GEN, property = "atc")
   ```
 * Function `mo_lpsn()` to retrieve the [LPSN](https://lpsn.dsmz.de) record ID
+* Function `ab_ddd_units()` to get units of DDDs (daily defined doses), deprecating the use of `ab_ddd(..., units = TRUE)` to be more consistent in data types of function output
 
 ### Changed
 * Updated the bacterial taxonomy to 5 October 2021 (according to [LPSN](https://lpsn.dsmz.de)), including all 11 new staphylococcal species named since 1 January last year
@@ -38,9 +39,10 @@
     example_isolates %>% select(ab_selector(oral_ddd > 1 & oral_units == "g")) # dplyr
     ```
   * Added the selector `not_intrinsic_resistant()`, which only keeps antibiotic columns that are not intrinsic resistant for all microorganisms in a data set, based on the latest EUCAST guideline on intrinsic resistance. For example, if a data set contains only microorganism codes or names of *E. coli* and *K. pneumoniae* and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function.
+  * Added argument `only_treatable`, which defaults to `TRUE` and will exclude drugs that are only for laboratory tests and not for treating patients (such as imipenem/EDTA and gentamicin-high)
   * Fix for using selectors multiple times in one call (e.g., using them in `dplyr::filter()` and immediately after in `dplyr::select()`)
   * Fix for using having multiple columns that are coerced to the same antibiotic agent
-  * Added argument `only_treatable`, which defaults to `TRUE` and will exclude drugs that are only for laboratory tests and not for treating patients (such as imipenem/EDTA and gentamicin-high)
+  * Fixed for using `all()` or `any()` on antibiotic selectors in an R Markdown file
 * Fixed the Gram stain (`mo_gramstain()`) determination of the taxonomic class Negativicutes within the phylum of Firmicutes - they were considered Gram-positives because of their phylum but are actually Gram-negative. This impacts 137 taxonomic species, genera and families, such as *Negativicoccus* and *Veillonella*.
 * Dramatic speed improvement for `first_isolate()`
 * Fix to prevent introducing `NA`s for old MO codes when running `as.mo()` on them

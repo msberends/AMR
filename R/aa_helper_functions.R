@@ -201,7 +201,7 @@ check_dataset_integrity <- function() {
     } else {
       plural <- c(" is", "s", "")
     }
-    if (message_not_thrown_before("dataset_overwritten")) {
+    if (message_not_thrown_before("check_dataset_integrity", overwritten)) {
       warning_("The following data set", plural[1],
                " overwritten by your global environment and prevent", plural[2], 
                " the AMR package from working correctly: ",
@@ -323,7 +323,7 @@ search_type_in_df <- function(x, type, info = TRUE) {
   found <- found[1]
   
   if (!is.null(found) & info == TRUE) {
-    if (message_not_thrown_before(fn = paste0("search_", type))) {
+    if (message_not_thrown_before("search_in_type", type)) {
       msg <- paste0("Using column '", font_bold(found), "' as input for `col_", type, "`.")
       if (type %in% c("keyantibiotics", "keyantimicrobials", "specimen")) {
         msg <- paste(msg, "Use", font_bold(paste0("col_", type), "= FALSE"), "to prevent this.")
@@ -804,14 +804,17 @@ meet_criteria <- function(object,
 }
 
 get_current_data <- function(arg_name, call) {
+  valid_df <- function(x) {
+    !is.null(x) && is.data.frame(x)
+  }
   # try dplyr::cur_data_all() first to support dplyr groups
   # only useful for e.g. dplyr::filter(), dplyr::mutate() and dplyr::summarise()
   # not useful (throws error) with e.g. dplyr::select() - but that will be caught later in this function
   cur_data_all <- import_fn("cur_data_all", "dplyr", error_on_fail = FALSE)
   if (!is.null(cur_data_all)) {
     out <- tryCatch(cur_data_all(), error = function(e) NULL)
-    if (is.data.frame(out)) {
-      return(structure(out, type = "dplyr_cur_data_all"))
+    if (valid_df(out)) {
+      return(out)
     }
   }
   
@@ -820,18 +823,18 @@ get_current_data <- function(arg_name, call) {
     if (!is.null(env$`.Generic`)) {
       # don't check `".Generic" %in% names(env)`, because in R < 3.2, `names(env)` is always NULL
       
-      if (!is.null(env$`.data`) && is.data.frame(env$`.data`)) {
+      if (valid_df(env$`.data`)) {
         # an element `.data` will be in the environment when using `dplyr::select()`
         # (but not when using `dplyr::filter()`, `dplyr::mutate()` or `dplyr::summarise()`)
-        return(structure(env$`.data`, type = "dplyr_selector"))
+        return(env$`.data`)
         
-      } else if (!is.null(env$xx) && is.data.frame(env$xx)) {
+      } else if (valid_df(env$xx)) {
         # an element `xx` will be in the environment for rows + cols, e.g. `example_isolates[c(1:3), carbapenems()]`
-        return(structure(env$xx, type = "base_R"))
+        return(env$xx)
         
-      } else if (!is.null(env$x) && is.data.frame(env$x)) {
+      } else if (valid_df(env$x)) {
         # an element `x` will be in the environment for only cols, e.g. `example_isolates[, carbapenems()]`
-        return(structure(env$x, type = "base_R"))
+        return(env$x)
       }
     }
   }
@@ -901,32 +904,43 @@ is_null_or_grouped_tbl <- function(x) {
   is.null(x) || inherits(x, "grouped_df")
 }
 
-unique_call_id <- function(entire_session = FALSE) {
+unique_call_id <- function(entire_session = FALSE, match_fn = NULL) {
   if (entire_session == TRUE) {
-    c(envir = "session",
-      call = "session")
-  } else {
-    # combination of environment ID (such as "0x7fed4ee8c848")
-    # and highest system call
-    call <- paste0(deparse(sys.calls()[[1]]), collapse = "")
-    if (!interactive() || call %like% "run_test_dir|test_all|tinytest|test_package|testthat") {
-      # unit tests will keep the same call and environment - give them a unique ID
-      call <- paste0(sample(c(c(0:9), letters[1:6]), size = 64, replace = TRUE), collapse = "")
-    }
-    c(envir = gsub("<environment: (.*)>", "\\1", utils::capture.output(sys.frames()[[1]])),
-      call = call)
+    return(c(envir = "session", call = "session"))
   }
+  
+  # combination of environment ID (such as "0x7fed4ee8c848")
+  # and relevant system call (where 'match_fn' is being called in)
+  calls <- sys.calls()
+  int <- which(vapply(FUN.VALUE = logical(1),
+                      calls,
+                      function(call, fun = match_fn) {
+                        call_clean <- gsub("[^a-zA-Z0-9_().-]", "", as.character(call), perl = TRUE)
+                        any(call_clean %like% paste0(fun, "\\("), na.rm = TRUE)
+                      }))[1L]
+  if (is.na(int)) {
+    int <- 1
+  }
+  c(envir = gsub("<environment: (.*)>", "\\1", utils::capture.output(sys.frames()[[1]]), perl = TRUE),
+    call = paste0(deparse(calls[[int]]), collapse = ""))
 }
 
-message_not_thrown_before <- function(fn, entire_session = FALSE) {
+#' @noRd
+#' @param fn name of the function as a character
+#' @param ... character elements to be pasted together as a 'salt'
+#' @param entire_session show message once per session
+message_not_thrown_before <- function(fn, ..., entire_session = FALSE) {
   # this is to prevent that messages/notes will be printed for every dplyr group or more than once per session
   # e.g. this would show a msg 4 times: example_isolates %>% group_by(hospital_id) %>% filter(mo_is_gram_negative())
-  not_thrown_before <- is.null(pkg_env[[paste0("thrown_msg.", fn)]]) || !identical(pkg_env[[paste0("thrown_msg.", fn)]],
-                                                                                   unique_call_id(entire_session = entire_session))
+  salt <- gsub("[^a-zA-Z0-9|_-]", "?", paste(c(...), sep = "|", collapse = "|"), perl = TRUE)
+  not_thrown_before <- is.null(pkg_env[[paste0("thrown_msg.", fn, ".", salt)]]) ||
+    !identical(pkg_env[[paste0("thrown_msg.", fn, ".", salt)]],
+               unique_call_id(entire_session = entire_session,
+                              match_fn = fn))
   if (isTRUE(not_thrown_before)) {
     # message was not thrown before - remember this so on the next run it will return FALSE:
-    assign(x = paste0("thrown_msg.", fn),
-           value = unique_call_id(entire_session = entire_session),
+    assign(x = paste0("thrown_msg.", fn, ".", salt),
+           value = unique_call_id(entire_session = entire_session, match_fn = fn),
            envir = pkg_env)
   }
   not_thrown_before

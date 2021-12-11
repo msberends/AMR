@@ -33,7 +33,7 @@ for (i in seq_len(nrow(antibiotics))) {
 
 int_resis <- eucast_rules(int_resis, 
                           eucast_rules_df = subset(AMR:::EUCAST_RULES_DF,
-                                                   is.na(have_these_values) & reference.version == 3.2),
+                                                   is.na(have_these_values) & reference.version == 3.3),
                           info = FALSE)
 
 int_resis2 <- int_resis[, sapply(int_resis, function(x) any(!is.rsi(x) | x == "R"))] %>% 
@@ -41,6 +41,12 @@ int_resis2 <- int_resis[, sapply(int_resis, function(x) any(!is.rsi(x) | x == "R
   filter(value == "R") %>% 
   select(microorganism, antibiotic = name)
 
+# remove lab drugs
+untreatable <- antibiotics[which(antibiotics$name %like% "-high|EDTA|polysorbate|macromethod|screening"), "name", drop = TRUE]
+int_resis2 <- int_resis2 %>% 
+  filter(!antibiotic %in% untreatable) %>% 
+  arrange(microorganism, antibiotic)
+  
 int_resis2$microorganism <- mo_name(int_resis2$microorganism, language = NULL)
 
 intrinsic_resistant <- as.data.frame(int_resis2, stringsAsFactors = FALSE)

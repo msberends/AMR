@@ -75,7 +75,8 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE, only_r
     meet_criteria(search_string, allow_class = "character", has_length = 1, allow_NULL = FALSE)
   }
   
-  all_found <- get_column_abx(x, info = verbose, only_rsi_columns = only_rsi_columns, verbose = verbose)
+  all_found <- get_column_abx(x, info = verbose, only_rsi_columns = only_rsi_columns,
+                              verbose = verbose, fn = "guess_ab_col")
   search_string.ab <- suppressWarnings(as.ab(search_string))
   ab_result <- unname(all_found[names(all_found) == search_string.ab])
   
@@ -104,10 +105,12 @@ get_column_abx <- function(x,
                            info = TRUE,
                            only_rsi_columns = FALSE,
                            sort = TRUE,
-                           reuse_previous_result = TRUE) {
-  
+                           reuse_previous_result = TRUE,
+                           fn = NULL) {
   # check if retrieved before, then get it from package environment
-  if (isTRUE(reuse_previous_result) && identical(unique_call_id(entire_session = FALSE), pkg_env$get_column_abx.call)) {
+  if (isTRUE(reuse_previous_result) && identical(unique_call_id(entire_session = FALSE,
+                                                                match_fn = fn),
+                                                 pkg_env$get_column_abx.call)) {
     # so within the same call, within the same environment, we got here again.
     # but we could've come from another function within the same call, so now only check the columns that changed
     
@@ -194,6 +197,8 @@ get_column_abx <- function(x,
   # such as get_column_abx(example_isolates %>% rename(thisone = AMX), amox = "thisone")
   all_okay <- TRUE
   dots <- list(...)
+  # remove data.frames, since this is also used running `eucast_rules(eucast_rules_df = df)`
+  dots <- dots[!vapply(FUN.VALUE = logical(1), dots, is.data.frame)]
   if (length(dots) > 0) {
     newnames <- suppressWarnings(as.ab(names(dots), info = FALSE))
     if (any(is.na(newnames))) {
@@ -228,7 +233,7 @@ get_column_abx <- function(x,
     if (info == TRUE & all_okay == TRUE) {
       message_("No columns found.")
     }
-    pkg_env$get_column_abx.call <- unique_call_id(entire_session = FALSE)
+    pkg_env$get_column_abx.call <- unique_call_id(entire_session = FALSE, match_fn = fn)
     pkg_env$get_column_abx.checked_cols <- colnames(x.bak)
     pkg_env$get_column_abx.out <- out
     return(out)
@@ -240,30 +245,38 @@ get_column_abx <- function(x,
   }
   # only keep the first hits, no duplicates
   duplicates <- c(out[duplicated(names(out))], out[duplicated(unname(out))])
+  if (length(duplicates) > 0) {
+    all_okay <- FALSE
+  }
+  
+  if (info == TRUE) {
+    if (all_okay == TRUE) {
+      message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
+    } else {
+      message_(" WARNING.", add_fn = list(font_yellow, font_bold), as_note = FALSE)
+    }
+    for (i in seq_len(length(out))) {
+      if (verbose == TRUE & !names(out[i]) %in% names(duplicates)) {
+        message_("Using column '", font_bold(out[i]), "' as input for ", names(out)[i],
+                 " (", ab_name(names(out)[i], tolower = TRUE, language = NULL), ").")
+      }
+      if (names(out[i]) %in% names(duplicates)) {
+        already_set_as <- out[unname(out) == unname(out[i])][1L]
+        warning_(paste0("Column '", font_bold(out[i]), "' will not be used for ", 
+                        names(out)[i], " (", ab_name(names(out)[i], tolower = TRUE, language = NULL), ")",
+                        ", as it is already set for ", 
+                        names(already_set_as), " (", ab_name(names(already_set_as), tolower = TRUE, language = NULL), ")"),
+                 add_fn = font_red,
+                 call = FALSE, 
+                 immediate = verbose)
+      }
+    }
+  }
+  
   out <- out[!duplicated(names(out))]
   out <- out[!duplicated(unname(out))]
   if (sort == TRUE) {
     out <- out[order(names(out), out)]
-  }
-  
-  # succeeded with auto-guessing
-  if (info == TRUE & all_okay == TRUE) {
-    message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
-  }
-  
-  for (i in seq_len(length(out))) {
-    if (info == TRUE & verbose == TRUE & !names(out[i]) %in% names(duplicates)) {
-      message_("Using column '", font_bold(out[i]), "' as input for ", names(out)[i],
-               " (", ab_name(names(out)[i], tolower = TRUE, language = NULL), ").")
-    }
-    if (info == TRUE & names(out[i]) %in% names(duplicates)) {
-      warning_(paste0("Using column '", font_bold(out[i]), "' as input for ", names(out)[i],
-                      " (", ab_name(names(out)[i], tolower = TRUE, language = NULL),
-                      "), although it was matched for multiple antibiotics or columns."),
-               add_fn = font_red,
-               call = FALSE, 
-               immediate = verbose)
-    }
   }
   
   if (!is.null(hard_dependencies)) {
@@ -288,7 +301,7 @@ get_column_abx <- function(x,
     }
   }
   
-  pkg_env$get_column_abx.call <- unique_call_id(entire_session = FALSE)
+  pkg_env$get_column_abx.call <- unique_call_id(entire_session = FALSE, match_fn = fn)
   pkg_env$get_column_abx.checked_cols <- colnames(x.bak)
   pkg_env$get_column_abx.out <- out
   out

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9062</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9064</span>
       </span>
     </div>
 
@@ -215,7 +215,7 @@
     <dl><dt>x</dt>
 <dd><p>vector of values (for class <code><a href="as.mic.html">mic</a></code>: MIC values in mg/L, for class <code><a href="as.disk.html">disk</a></code>: a disk diffusion radius in millimetres)</p></dd>
 <dt>...</dt>
-<dd><p>for using on a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>: names of columns to apply <code>as.rsi()</code> on (supports tidy selection like <code>AMX:VAN</code>). Otherwise: arguments passed on to methods.</p></dd>
+<dd><p>for using on a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>: names of columns to apply <code>as.rsi()</code> on (supports tidy selection such as <code>column1:column4</code>). Otherwise: arguments passed on to methods.</p></dd>
 <dt>threshold</dt>
 <dd><p>maximum fraction of invalid antimicrobial interpretations of <code>x</code>, see <em>Examples</em></p></dd>
 <dt>mo</dt>
@@ -229,7 +229,7 @@
 <dt>conserve_capped_values</dt>
 <dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate that MIC values starting with <code>"&gt;"</code> (but not <code>"&gt;="</code>) must always return "R" , and that MIC values starting with <code>"&lt;"</code> (but not <code>"&lt;="</code>) must always return "S"</p></dd>
 <dt>add_intrinsic_resistance</dt>
-<dd><p><em>(only useful when using a EUCAST guideline)</em> a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in <em>Klebsiella</em> species. Determination is based on the <a href="intrinsic_resistant.html">intrinsic_resistant</a> data set, that itself is based on <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/" class="external-link">'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2</a> (2020).</p></dd>
+<dd><p><em>(only useful when using a EUCAST guideline)</em> a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in <em>Klebsiella</em> species. Determination is based on the <a href="intrinsic_resistant.html">intrinsic_resistant</a> data set, that itself is based on <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/" class="external-link">'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3</a> (2021).</p></dd>
 <dt>reference_data</dt>
 <dd><p>a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> to be used for interpretation, which defaults to the <a href="rsi_translation.html">rsi_translation</a> data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the <a href="rsi_translation.html">rsi_translation</a> data set (same column names and column types). Please note that the <code>guideline</code> argument will be ignored when <code>reference_data</code> is manually set.</p></dd>
 <dt>col_mo</dt>

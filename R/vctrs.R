@@ -28,6 +28,18 @@
 # They are to convert AMR-specific classes to bare characters and integers.
 # All of them will be exported using s3_register() in R/zzz.R when loading the package.
 
+# S3: ab_selector
+# see https://github.com/tidyverse/dplyr/issues/5955 why this is required
+vec_ptype2.character.ab_selector <- function(x, y, ...) {
+  x
+}
+vec_ptype2.ab_selector.character <- function(x, y, ...) {
+  y
+}
+vec_cast.character.ab_selector <- function(x, to, ...) {
+  unclass(x)
+}
+
 # S3: ab
 vec_ptype2.character.ab <- function(x, y, ...) {
   x
@@ -58,17 +70,5 @@ vec_ptype2.disk.integer <- function(x, y, ...) {
   y
 }
 vec_cast.integer.disk <- function(x, to, ...) {
-  unclass(x)
-}
-
-# S3: ab_selector
-# see https://github.com/tidyverse/dplyr/issues/5955 why this is required
-vec_ptype2.character.ab_selector <- function(x, y, ...) {
-  x
-}
-vec_ptype2.ab_selector.character <- function(x, y, ...) {
-  y
-}
-vec_cast.character.ab_selector <- function(x, to, ...) {
   unclass(x)
 }

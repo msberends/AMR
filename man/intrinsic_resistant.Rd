@@ -5,10 +5,10 @@
 \alias{intrinsic_resistant}
 \title{Data Set with Bacterial Intrinsic Resistance}
 \format{
-A \link{data.frame} with 93,892 observations and 2 variables:
+A \link{data.frame} with 134,956 observations and 2 variables:
 \itemize{
-\item \code{microorganism}\cr Name of the microorganism
-\item \code{antibiotic}\cr Name of the antibiotic drug
+\item \code{microorganism}\cr Official taxonomic name of the microorganism, according to the LPSN
+\item \code{antibiotic}\cr Official name of the antibiotic drug, according to the WHOCC
 }
 }
 \usage{
@@ -20,7 +20,7 @@ Data set containing defined intrinsic resistance by EUCAST of all bug-drug combi
 \details{
 The repository of this \code{AMR} package contains a file comprising this exact data set: \url{https://github.com/msberends/AMR/blob/main/data-raw/intrinsic_resistant.txt}. This file \strong{allows for machine reading EUCAST guidelines about intrinsic resistance}, which is almost impossible with the Excel and PDF files distributed by EUCAST. The file is updated automatically.
 
-This data set is based on \href{https://www.eucast.org/expert_rules_and_intrinsic_resistance/}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2} (2020).
+This data set is based on \href{https://www.eucast.org/expert_rules_and_intrinsic_resistance/}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3} (2021).
 }
 \section{Reference Data Publicly Available}{
 
@@ -33,12 +33,16 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 }
 
 \examples{
+subset(intrinsic_resistant,
+       antibiotic == "Vancomycin" & microorganism \%like\% "Enterococcus")$microorganism
+#> [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"
+
 \donttest{
 if (require("dplyr")) {
   intrinsic_resistant \%>\%
-    filter(antibiotic == "Vancomycin", microorganism \%like\% "Enterococcus") \%>\% 
+    filter(antibiotic == "Vancomycin" & microorganism \%like\% "Enterococcus") \%>\% 
     pull(microorganism)
-  # [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"
+  #> [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"
 }
 }
 }

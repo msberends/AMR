@@ -46,7 +46,7 @@
 #' 
 #' Determination of yeasts - [mo_is_yeast()] - will be based on the taxonomic kingdom and class. *Budding yeasts* are fungi of the phylum Ascomycetes, class Saccharomycetes (also called Hemiascomycetes). *True yeasts* are aggregated into the underlying order Saccharomycetales. Thus, for all microorganisms that are fungi and member of the taxonomic class Saccharomycetes, the function will return `TRUE`. It returns `FALSE` otherwise (except when the input is `NA` or the MO code is `UNKNOWN`).
 #' 
-#' Intrinsic resistance - [mo_is_intrinsic_resistant()] - will be determined based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(3.2)`. The [mo_is_intrinsic_resistant()] functions can be vectorised over arguments `x` (input for microorganisms) and over `ab` (input for antibiotics).
+#' Intrinsic resistance - [mo_is_intrinsic_resistant()] - will be determined based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(3.3)`. The [mo_is_intrinsic_resistant()] functions can be vectorised over arguments `x` (input for microorganisms) and over `ab` (input for antibiotics).
 #'
 #' All output [will be translated][translate] where possible.
 #'
@@ -471,9 +471,9 @@ mo_is_intrinsic_resistant <- function(x, ab, language = get_locale(), ...) {
   }
   
   # show used version number once per session (pkg_env will reload every session)
-  if (message_not_thrown_before("intrinsic_resistant_version.mo", entire_session = TRUE)) {
+  if (message_not_thrown_before("mo_is_intrinsic_resistant", "version.mo", entire_session = TRUE)) {
     message_("Determining intrinsic resistance based on ",
-             format_eucast_version_nr(3.2, markdown = FALSE), ". ",
+             format_eucast_version_nr(3.3, markdown = FALSE), ". ",
              font_red("This note will be shown once per session."))
   }
   

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9062</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9064</span>
       </span>
     </div>
 
@@ -165,13 +165,13 @@
 
     <div id="format">
     <h2>Format</h2>
-    <p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with 93,892 observations and 2 variables:</p><ul><li><p><code>microorganism</code><br> Name of the microorganism</p></li>
-<li><p><code>antibiotic</code><br> Name of the antibiotic drug</p></li>
+    <p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with 134,956 observations and 2 variables:</p><ul><li><p><code>microorganism</code><br> Official taxonomic name of the microorganism, according to the LPSN</p></li>
+<li><p><code>antibiotic</code><br> Official name of the antibiotic drug, according to the WHOCC</p></li>
 </ul></div>
     <div id="details">
     <h2>Details</h2>
     <p>The repository of this <code>AMR</code> package contains a file comprising this exact data set: <a href="https://github.com/msberends/AMR/blob/main/data-raw/intrinsic_resistant.txt" class="external-link">https://github.com/msberends/AMR/blob/main/data-raw/intrinsic_resistant.txt</a>. This file <strong>allows for machine reading EUCAST guidelines about intrinsic resistance</strong>, which is almost impossible with the Excel and PDF files distributed by EUCAST. The file is updated automatically.</p>
-<p>This data set is based on <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/" class="external-link">'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.2</a> (2020).</p>
+<p>This data set is based on <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/" class="external-link">'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3</a> (2021).</p>
     </div>
     <div id="reference-data-publicly-available">
     <h2>Reference Data Publicly Available</h2>
@@ -188,12 +188,16 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># \donttest{</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">intrinsic_resistant</span>,
+       <span class="va">antibiotic</span> <span class="op">==</span> <span class="st">"Vancomycin"</span> <span class="op">&amp;</span> <span class="va">microorganism</span> <span class="op"><a href="like.html">%like%</a></span> <span class="st">"Enterococcus"</span><span class="op">)</span><span class="op">$</span><span class="va">microorganism</span>
+<span class="co">#&gt; [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"</span>
+
+<span class="co"># \donttest{</span>
 <span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">intrinsic_resistant</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">antibiotic</span> <span class="op">==</span> <span class="st">"Vancomycin"</span>, <span class="va">microorganism</span> <span class="op"><a href="like.html">%like%</a></span> <span class="st">"Enterococcus"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">antibiotic</span> <span class="op">==</span> <span class="st">"Vancomycin"</span> <span class="op">&amp;</span> <span class="va">microorganism</span> <span class="op"><a href="like.html">%like%</a></span> <span class="st">"Enterococcus"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">microorganism</span><span class="op">)</span>
-  <span class="co"># [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"</span>
+  <span class="co">#&gt; [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"</span>
 <span class="op">}</span>
 <span class="co"># }</span>
 </code></pre></div>

@@ -181,7 +181,8 @@ ab_selector <- function(filter,
   # but it only takes a couple of milliseconds
   vars_df <- get_current_data(arg_name = NA, call = -2)
   # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
-  ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
+  ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns,
+                               sort = FALSE, fn = "ab_selector")
   call <- substitute(filter)
   agents <- tryCatch(AMR::antibiotics[which(eval(call, envir = AMR::antibiotics)), "ab", drop = TRUE],
                      error = function(e) stop_(e$message, call = -5))
@@ -383,7 +384,8 @@ administrable_per_os <- function(only_rsi_columns = FALSE, ...) {
   # but it only takes a couple of milliseconds
   vars_df <- get_current_data(arg_name = NA, call = -2)
   # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
-  ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
+  ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns,
+                               sort = FALSE, fn = "administrable_per_os")
   agents_all <- antibiotics[which(!is.na(antibiotics$oral_ddd)), "ab", drop = TRUE]
   agents <- antibiotics[which(antibiotics$ab %in% ab_in_data & !is.na(antibiotics$oral_ddd)), "ab", drop = TRUE]
   agents <- ab_in_data[ab_in_data %in% agents]
@@ -410,7 +412,8 @@ administrable_iv <- function(only_rsi_columns = FALSE, ...) {
   # but it only takes a couple of milliseconds
   vars_df <- get_current_data(arg_name = NA, call = -2)
   # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
-  ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
+  ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns,
+                               sort = FALSE, fn = "administrable_iv")
   agents_all <- antibiotics[which(!is.na(antibiotics$iv_ddd)), "ab", drop = TRUE]
   agents <- antibiotics[which(antibiotics$ab %in% ab_in_data & !is.na(antibiotics$iv_ddd)), "ab", drop = TRUE]
   agents <- ab_in_data[ab_in_data %in% agents]
@@ -432,7 +435,8 @@ not_intrinsic_resistant <- function(only_rsi_columns = FALSE, col_mo = NULL, ver
   # but it only takes a couple of milliseconds
   vars_df <- get_current_data(arg_name = NA, call = -2)
   # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
-  ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
+  ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns,
+                               sort = FALSE, fn = "not_intrinsic_resistant")
   # intrinsic vars
   vars_df_R <- tryCatch(sapply(eucast_rules(vars_df,
                                             col_mo = col_mo,
@@ -445,7 +449,7 @@ not_intrinsic_resistant <- function(only_rsi_columns = FALSE, col_mo = NULL, ver
   
   agents <- ab_in_data[ab_in_data %in% names(vars_df_R[which(vars_df_R)])]
   if (length(agents) > 0 &&
-      message_not_thrown_before(paste0("not_intrinsic_resistant.", paste(sort(agents), collapse = "|")))) {
+      message_not_thrown_before("not_intrinsic_resistant", sort(agents))) {
     agents_formatted <- paste0("'", font_bold(agents, collapse = NULL), "'")
     agents_names <- ab_name(names(agents), tolower = TRUE, language = NULL)
     need_name <- generalise_antibiotic_name(agents) != generalise_antibiotic_name(agents_names)
@@ -470,21 +474,24 @@ ab_select_exec <- function(function_name,
   # but it only takes a couple of milliseconds
   vars_df <- get_current_data(arg_name = NA, call = -3)
   # to improve speed, get_column_abx() will only run once when e.g. in a select or group call
-  ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns, sort = FALSE)
+  ab_in_data <- get_column_abx(vars_df, info = FALSE, only_rsi_columns = only_rsi_columns,
+                               sort = FALSE, fn = function_name)
   # untreatable drugs
-  untreatable <- antibiotics[which(antibiotics$name %like% "-high|EDTA|polysorbate"), "ab", drop = TRUE]
-  if (only_treatable == TRUE & any(untreatable %in% names(ab_in_data))) {
-    if (message_not_thrown_before(paste0("ab_class.untreatable.", function_name), entire_session = TRUE)) {
-      warning_("Some agents in `", function_name, "()` were ignored since they cannot be used for treating patients: ",
-               vector_and(ab_name(names(ab_in_data)[names(ab_in_data) %in% untreatable],
-                                  language = NULL,
-                                  tolower = TRUE),
-                          quotes = FALSE,
-                          sort = TRUE), ". They can be included using `", function_name, "(only_treatable = FALSE)`. ",
-               "This warning will be shown once per session.",
-               call = FALSE)
+  if (only_treatable == TRUE) {
+    untreatable <- antibiotics[which(antibiotics$name %like% "-high|EDTA|polysorbate|macromethod|screening"), "ab", drop = TRUE]
+    if (any(untreatable %in% names(ab_in_data))) {
+      if (message_not_thrown_before(function_name, "ab_class", "untreatable", entire_session = TRUE)) {
+        warning_("Some agents in `", function_name, "()` were ignored since they cannot be used for treating patients: ",
+                 vector_and(ab_name(names(ab_in_data)[names(ab_in_data) %in% untreatable],
+                                    language = NULL,
+                                    tolower = TRUE),
+                            quotes = FALSE,
+                            sort = TRUE), ". They can be included using `", function_name, "(only_treatable = FALSE)`. ",
+                 "This warning will be shown once per session.",
+                 call = FALSE)
+      }
+      ab_in_data <- ab_in_data[!names(ab_in_data) %in% untreatable]
     }
-    ab_in_data <- ab_in_data[!names(ab_in_data) %in% untreatable]
   }
   
   if (length(ab_in_data) == 0) {
@@ -666,14 +673,14 @@ any.ab_selector_any_all <- function(..., na.rm = FALSE) {
 }
 
 is_any <- function(el1) {
-  syscall <- paste0(trimws(deparse(sys.calls()[[1]])), collapse = " ")
+  syscalls <- paste0(trimws(deparse(sys.calls())), collapse = " ")
   el1 <- gsub("(.*),.*", "\\1", el1)
-  syscall %like% paste0("[^_a-zA-Z0-9]any\\(", "(c\\()?", el1)
+  syscalls %like% paste0("[^_a-zA-Z0-9]any\\(", "(c\\()?", el1)
 }
 is_all <- function(el1) {
-  syscall <- paste0(trimws(deparse(sys.calls()[[1]])), collapse = " ")
+  syscalls <- paste0(trimws(deparse(sys.calls())), collapse = " ")
   el1 <- gsub("(.*),.*", "\\1", el1)
-  syscall %like% paste0("[^_a-zA-Z0-9]all\\(", "(c\\()?", el1)
+  syscalls %like% paste0("[^_a-zA-Z0-9]all\\(", "(c\\()?", el1)
 }
 
 find_ab_group <- function(ab_class_args) {
@@ -714,7 +721,7 @@ find_ab_names <- function(ab_group, n = 3) {
 }
 
 message_agent_names <- function(function_name, agents, ab_group = NULL, examples = "", ab_class_args = NULL, call = NULL) {
-  if (message_not_thrown_before(paste0(function_name, ".", paste(sort(agents), collapse = "|")))) {
+  if (message_not_thrown_before(function_name, sort(agents))) {
     if (length(agents) == 0) {
       if (is.null(ab_group)) {
         message_("For `", function_name, "()` no antimicrobial agents found", examples, ".")

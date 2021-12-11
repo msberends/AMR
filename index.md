@@ -1,6 +1,6 @@
 # `AMR` (for R) <img src="./logo.png" align="right" height="120px" />
 
-> Update: The latest [EUCAST guideline for intrinsic resistance](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) (v3.3, October 2021) is now supported, and our taxonomy tables has been updated as well (LPSN, 5 October 2021). 
+> Update: The latest [EUCAST guideline for intrinsic resistance](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) (v3.3, October 2021) is now supported, and our taxonomy tables have been updated as well (LPSN, 5 October 2021). 
 > **A new version will be released after the [EUCAST guideline for clinical breakpoints](https://www.eucast.org/clinical_breakpoints/) (v12.0, likely January 2022) are implemented, to be expected shortly after the official guideline release.**
 
 ### What is `AMR` (for R)?
@@ -9,7 +9,7 @@
 
 After installing this package, R knows [**~71,000 distinct microbial species**](./reference/microorganisms.html) and all [**~560 antibiotic, antimycotic and antiviral drugs**](./reference/antibiotics.html) by name and code (including ATC, EARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data. Antimicrobial names and group names are available in Danish, Dutch, English, French, German, Italian, Portuguese and Spanish.
 
-This package is [fully independent of any other R package](https://en.wikipedia.org/wiki/Dependency_hell) and works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl), in collaboration with non-profit organisations [Certe Medical Diagnostics and Advice Foundation](https://www.certe.nl) and [University Medical Center Groningen](https://www.umcg.nl). This R package formed the basis of two PhD theses ([DOI 10.33612/diss.177417131](https://doi.org/10.33612/diss.177417131) and [DOI 10.33612/diss.177417131](https://doi.org/10.33612/diss.192486375)) but is [actively and durably maintained](./news) by two public healthcare organisations in the Netherlands.
+This package is [fully independent of any other R package](https://en.wikipedia.org/wiki/Dependency_hell) and works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl), in collaboration with non-profit organisations [Certe Medical Diagnostics and Advice Foundation](https://www.certe.nl) and [University Medical Center Groningen](https://www.umcg.nl). This R package formed the basis of two PhD theses ([DOI 10.33612/diss.177417131](https://doi.org/10.33612/diss.177417131) and [DOI 10.33612/diss.192486375](https://doi.org/10.33612/diss.192486375)) but is [actively and durably maintained](./news) by two public healthcare organisations in the Netherlands.
 
 <div class="main-content" style="display: inline-block;">
   <p>

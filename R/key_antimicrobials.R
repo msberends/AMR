@@ -142,7 +142,7 @@ key_antimicrobials <- function(x = NULL,
   
   # force regular data.frame, not a tibble or data.table
   x <- as.data.frame(x, stringsAsFactors = FALSE)
-  cols <- get_column_abx(x, info = FALSE, only_rsi_columns = only_rsi_columns)
+  cols <- get_column_abx(x, info = FALSE, only_rsi_columns = only_rsi_columns, fn = "key_antimicrobials")
   
   # try to find columns based on type
   # -- mo
@@ -171,7 +171,7 @@ key_antimicrobials <- function(x = NULL,
     
     if (values_new_length < values_old_length &
         any(filter, na.rm = TRUE) &
-        message_not_thrown_before(paste0("key_antimicrobials.", name))) {
+        message_not_thrown_before("key_antimicrobials", name)) {
       warning_(ifelse(values_new_length == 0,
                       "No columns available ",
                       paste0("Only using ", values_new_length, " out of ", values_old_length, " defined columns ")),
@@ -238,7 +238,8 @@ all_antimicrobials <- function(x = NULL,
   
   # force regular data.frame, not a tibble or data.table
   x <- as.data.frame(x, stringsAsFactors = FALSE)
-  cols <- get_column_abx(x, only_rsi_columns = only_rsi_columns, info = FALSE, sort = FALSE)
+  cols <- get_column_abx(x, only_rsi_columns = only_rsi_columns, info = FALSE,
+                         sort = FALSE, fn = "all_antimicrobials")
   
   generate_antimcrobials_string(x[ , cols, drop = FALSE])
 }

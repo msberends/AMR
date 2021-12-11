@@ -115,6 +115,7 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
 }
 MO_CONS <- create_species_cons_cops("CoNS")
 MO_COPS <- create_species_cons_cops("CoPS")
+MO_STREP_ABCG <- as.mo(MO_lookup[which(MO_lookup$genus == "Streptococcus"), "mo", drop = TRUE], Lancefield = TRUE) %in% c("B_STRPT_GRPA", "B_STRPT_GRPB", "B_STRPT_GRPC", "B_STRPT_GRPG")
 
 # antibiotic groups
 # (these will also be used for eucast_rules() and understanding data-raw/eucast_rules.tsv)
@@ -158,6 +159,7 @@ usethis::use_data(EUCAST_RULES_DF,
                   # EXAMPLE_ISOLATES,
                   MO_CONS,
                   MO_COPS,
+                  MO_STREP_ABCG,
                   AB_AMINOGLYCOSIDES,
                   AB_AMINOPENICILLINS,
                   AB_ANTIFUNGALS,

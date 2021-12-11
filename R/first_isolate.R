@@ -256,7 +256,7 @@ first_isolate <- function(x = NULL,
   if (method == "phenotype-based" & !any_col_contains_rsi) {
     method <- "episode-based"
   }
-  if (info == TRUE & message_not_thrown_before("first_isolate.method")) {
+  if (info == TRUE & message_not_thrown_before("first_isolate", "method")) {
     message_(paste0("Determining first isolates ",
                     ifelse(method %in% c("episode-based", "phenotype-based"),
                            ifelse(is.infinite(episode_days),
@@ -360,7 +360,7 @@ first_isolate <- function(x = NULL,
     testcodes_exclude <- NULL
   }
   # remove testcodes
-  if (!is.null(testcodes_exclude) & info == TRUE & message_not_thrown_before("first_isolate.excludingtestcodes")) {
+  if (!is.null(testcodes_exclude) & info == TRUE & message_not_thrown_before("first_isolate", "excludingtestcodes")) {
     message_("Excluding test codes: ", vector_and(testcodes_exclude, quotes = TRUE),
              add_fn = font_black,
              as_note = FALSE)
@@ -373,7 +373,7 @@ first_isolate <- function(x = NULL,
   # filter on specimen group and keyantibiotics when they are filled in
   if (!is.null(specimen_group)) {
     check_columns_existance(col_specimen, x)
-    if (info == TRUE & message_not_thrown_before("first_isolate.excludingspecimen")) {
+    if (info == TRUE & message_not_thrown_before("first_isolate", "excludingspecimen")) {
       message_("Excluding other than specimen group '", specimen_group, "'",
                add_fn = font_black,
                as_note = FALSE)
@@ -445,7 +445,7 @@ first_isolate <- function(x = NULL,
   
   # Analysis of first isolate ----
   if (!is.null(col_keyantimicrobials)) {
-    if (info == TRUE & message_not_thrown_before("first_isolate.type")) {
+    if (info == TRUE & message_not_thrown_before("first_isolate", "type")) {
       if (type == "keyantimicrobials") {
         message_("Basing inclusion on key antimicrobials, ",
                  ifelse(ignore_I == FALSE, "not ", ""),

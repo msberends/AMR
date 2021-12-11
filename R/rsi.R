@@ -35,10 +35,10 @@
 #' @inheritParams first_isolate
 #' @param guideline defaults to the latest included EUCAST guideline, see *Details* for all options
 #' @param conserve_capped_values a [logical] to indicate that MIC values starting with `">"` (but not `">="`) must always return "R" , and that MIC values starting with `"<"` (but not `"<="`) must always return "S"
-#' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.2)`.
+#' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.3)`.
 #' @param reference_data a [data.frame] to be used for interpretation, which defaults to the [rsi_translation] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [rsi_translation] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*
-#' @param ... for using on a [data.frame]: names of columns to apply [as.rsi()] on (supports tidy selection like `AMX:VAN`). Otherwise: arguments passed on to methods.
+#' @param ... for using on a [data.frame]: names of columns to apply [as.rsi()] on (supports tidy selection such as `column1:column4`). Otherwise: arguments passed on to methods.
 #' @details 
 #' ## How it Works
 #' 
@@ -61,7 +61,7 @@
 #'      your_data %>% mutate(across(where(is.disk), as.rsi)) # since dplyr 1.0.0
 #'      ```
 #' 
-#' 4. For **interpreting a complete data set**, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running `as.rsi(data)`.
+#' 4. For **interpreting a complete data set**, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running `as.rsi(your_data)`.
 #' 
 #' ## Supported Guidelines
 #' 
@@ -550,7 +550,7 @@ as.rsi.data.frame <- function(x,
 
   x.bak <- x
   for (i in seq_len(ncol(x))) {
-    # don't keep factors
+    # don't keep factors, overwriting them is hard
     if (is.factor(x[, i, drop = TRUE])) {
       x[, i] <- as.character(x[, i, drop = TRUE])
     }
@@ -775,7 +775,7 @@ exec_as.rsi <- function(method,
   
   guideline_coerced <- get_guideline(guideline, reference_data)
   if (guideline_coerced != guideline) {
-    if (message_not_thrown_before("as.rsi")) {
+    if (message_not_thrown_before("as.rsi", "msg1")) {
       message_("Using guideline ", font_bold(guideline_coerced), " as input for `guideline`.")
     }
   }
@@ -813,7 +813,7 @@ exec_as.rsi <- function(method,
     
     if (isTRUE(add_intrinsic_resistance) & is_intrinsic_r) {
       if (guideline_coerced %unlike% "EUCAST") {
-        if (message_not_thrown_before("as.rsi2")) {
+        if (message_not_thrown_before("as.rsi", "msg2")) {
           warning_("Using 'add_intrinsic_resistance' is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.", call = FALSE)
         }
       } else {
@@ -877,7 +877,7 @@ exec_as.rsi <- function(method,
   if (any_is_intrinsic_resistant & guideline_coerced %like% "EUCAST" & !isTRUE(add_intrinsic_resistance)) {
     # found some intrinsic resistance, but was not applied
     message_("WARNING.", add_fn = list(font_yellow, font_bold), as_note = FALSE)
-    if (message_not_thrown_before("as.rsi3")) {
+    if (message_not_thrown_before("as.rsi", "msg3")) {
       warning_("Found intrinsic resistance in some bug/drug combinations, although it was not applied.\nUse `as.rsi(..., add_intrinsic_resistance = TRUE)` to apply it.", call = FALSE)
     }
     warned <- TRUE

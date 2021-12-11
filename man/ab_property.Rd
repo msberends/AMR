@@ -62,7 +62,7 @@ set_ab_names(
 
 \item{tolower}{a \link{logical} to indicate whether the first \link{character} of every output should be transformed to a lower case \link{character}. This will lead to e.g. "polymyxin B" and not "polymyxin b".}
 
-\item{...}{in case of \code{\link[=set_ab_names]{set_ab_names()}} and \code{data} is a \link{data.frame}: variables to select (supports tidy selection like \code{AMX:VAN}), otherwise other arguments passed on to \code{\link[=as.ab]{as.ab()}}}
+\item{...}{in case of \code{\link[=set_ab_names]{set_ab_names()}} and \code{data} is a \link{data.frame}: variables to select (supports tidy selection such as \code{column1:column4}), otherwise other arguments passed on to \code{\link[=as.ab]{as.ab()}}}
 
 \item{only_first}{a \link{logical} to indicate whether only the first ATC code must be returned, with giving preference to J0-codes (i.e., the antimicrobial drug group)}
 
