@@ -30,6 +30,8 @@ expect_error(mdro(example_isolates, col_mo = "invalid", info = TRUE))
 
 expect_stdout(suppressMessages(suppressWarnings(mdro(example_isolates, info = TRUE))))
 expect_stdout(suppressMessages(suppressWarnings(mdro(example_isolates, "eucast3.1", info = TRUE))))
+expect_stdout(suppressMessages(suppressWarnings(mdro(example_isolates, "eucast3.2", info = TRUE))))
+expect_stdout(suppressMessages(suppressWarnings(mdro(example_isolates, "eucast3.3", info = TRUE))))
 expect_stdout(outcome <- suppressMessages(suppressWarnings(eucast_exceptional_phenotypes(example_isolates, info = TRUE))))
 # check class
 expect_identical(class(outcome), c("ordered", "factor"))

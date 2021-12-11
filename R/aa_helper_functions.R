@@ -912,17 +912,18 @@ unique_call_id <- function(entire_session = FALSE, match_fn = NULL) {
   # combination of environment ID (such as "0x7fed4ee8c848")
   # and relevant system call (where 'match_fn' is being called in)
   calls <- sys.calls()
-  int <- which(vapply(FUN.VALUE = logical(1),
-                      calls,
-                      function(call, fun = match_fn) {
-                        call_clean <- gsub("[^a-zA-Z0-9_().-]", "", as.character(call), perl = TRUE)
-                        any(call_clean %like% paste0(fun, "\\("), na.rm = TRUE)
-                      }))[1L]
-  if (is.na(int)) {
-    int <- 1
+  if (!identical(Sys.getenv("R_RUN_TINYTEST"), "true") &&
+      !any(as.character(calls[[1]]) %like_case% "run_test_dir|run_test_file|test_all|tinytest|test_package|testthat")) {
+    for (i in seq_len(length(calls))) {
+      call_clean <- gsub("[^a-zA-Z0-9_().-]", "", as.character(calls[[i]]), perl = TRUE)
+      if (any(call_clean %like% paste0(match_fn, "\\("), na.rm = TRUE)) {
+        return(c(envir = gsub("<environment: (.*)>", "\\1", utils::capture.output(sys.frames()[[1]]), perl = TRUE),
+                 call = paste0(deparse(calls[[i]]), collapse = "")))
+      }
+    }
   }
-  c(envir = gsub("<environment: (.*)>", "\\1", utils::capture.output(sys.frames()[[1]]), perl = TRUE),
-    call = paste0(deparse(calls[[int]]), collapse = ""))
+  c(envir = paste0(sample(c(c(0:9), letters[1:6]), size = 32, replace = TRUE), collapse = ""),
+    call = paste0(sample(c(c(0:9), letters[1:6]), size = 32, replace = TRUE), collapse = ""))
 }
 
 #' @noRd
