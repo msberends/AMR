@@ -69,8 +69,8 @@ TRANSLATIONS <- utils::read.delim(file = "data-raw/translations.tsv",
 
 # for checking input in `language` argument in e.g. mo_*() and ab_*() functions
 LANGUAGES_SUPPORTED <- c(Danish = "da",
-                         English = "en",
                          German = "de",
+                         English = "en",
                          Spanish = "es",
                          French = "fr",
                          Italian = "it",

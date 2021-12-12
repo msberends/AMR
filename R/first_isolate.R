@@ -490,8 +490,6 @@ first_isolate <- function(x = NULL,
                                          FALSE)
   } else {
     # no key antibiotics
-    x1 <<- x$other_pat_or_mo
-    x2 <<- x$more_than_episode_ago
     x$newvar_first_isolate <- pm_if_else(x$newvar_row_index_sorted >= row.start &
                                            x$newvar_row_index_sorted <= row.end &
                                            x$newvar_genus_species != "" & 

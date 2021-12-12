@@ -133,7 +133,7 @@ coerce_language_setting <- function(lang) {
     "fr"
   } else if (grepl("^(Portuguese|Portugu.+s|pt_|PT_)", lang, ignore.case = FALSE, perl = TRUE)) {
     "pt"
-  } else if (grepl("^(Russian|русс|ru_|RU_)", lang, ignore.case = FALSE, perl = TRUE)) {
+  } else if (grepl("^(Russian|pycc|ru_|RU_)", lang, ignore.case = FALSE, perl = TRUE)) {
     "ru"
   } else if (grepl("^(Swedish|Svenskt|sv_|SV_)", lang, ignore.case = FALSE, perl = TRUE)) {
     "sv"

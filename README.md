@@ -6,7 +6,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/msberends/amr/badge)](https://www.codefactor.io/repository/github/msberends/amr)
 [![Codecov](https://codecov.io/gh/msberends/AMR/branch/main/graph/badge.svg)](https://codecov.io/gh/msberends/AMR?branch=main)
 
-<img src="https://msberends.github.io/AMR/works_great_on.png" align="center" height="150px" />
+<img src="https://msberends.github.io/AMR/AMR_intro.svg" align="center" height="300px" />
 
 The latest built **source package** (`AMR_latest.tar.gz`) can be found in folder [/data-raw/](https://github.com/msberends/AMR/tree/main/data-raw).
 

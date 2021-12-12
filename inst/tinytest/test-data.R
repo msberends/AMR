@@ -49,8 +49,8 @@ expect_true(all(dosage$name %in% antibiotics$name))
 expect_identical(as.ab(antibiotics$name), antibiotics$ab)
 
 # check if all languages are included in package environmental variable
-expect_identical(sort(c("en", colnames(TRANSLATIONS)[nchar(colnames(TRANSLATIONS)) == 2])),
-                 unname(LANGUAGES_SUPPORTED))
+expect_identical(sort(c("en", colnames(AMR:::TRANSLATIONS)[nchar(colnames(AMR:::TRANSLATIONS)) == 2])),
+                 unname(AMR:::LANGUAGES_SUPPORTED))
 
 # there should be no diacritics (i.e. non ASCII) characters in the datasets (CRAN policy)
 datasets <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item"]

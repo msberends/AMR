@@ -1,4 +1,4 @@
-# `AMR` (for R) <img src="./logo.png" align="right" height="120px" />
+# `AMR` (for R) <img src="./logo.svg" align="right"/>
 
 > Update: The latest [EUCAST guideline for intrinsic resistance](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) (v3.3, October 2021) is now supported, and our taxonomy tables have been updated as well (LPSN, 5 October 2021).
 >
