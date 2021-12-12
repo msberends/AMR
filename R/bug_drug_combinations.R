@@ -162,7 +162,7 @@ bug_drug_combinations <- function(x,
 #' @rdname bug_drug_combinations
 format.bug_drug_combinations <- function(x,
                                          translate_ab = "name (ab, atc)",
-                                         language = get_locale(),
+                                         language = get_AMR_locale(),
                                          minimum = 30,
                                          combine_SI = TRUE,
                                          combine_IR = FALSE,

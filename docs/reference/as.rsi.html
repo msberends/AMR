@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9064</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9067</span>
       </span>
     </div>
 
@@ -254,7 +254,7 @@
 <li><p>For <strong>interpreting disk diffusion diameters</strong> according to EUCAST or CLSI. You must clean your disk zones first using <code><a href="as.disk.html">as.disk()</a></code>, that also gives your columns the new data class <code><a href="as.disk.html">disk</a></code>. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the <code>mo</code> argument.</p><ul><li><p>Using <code>dplyr</code>, R/SI interpretation can be done very easily with either:</p><div class="sourceCode"><pre><code><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.disk</span>, <span class="va">as.rsi</span><span class="op">)</span>             <span class="co"># until dplyr 1.0.0</span>
 <span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.disk</span><span class="op">)</span>, <span class="va">as.rsi</span><span class="op">)</span><span class="op">)</span> <span class="co"># since dplyr 1.0.0</span></code></pre></div></li>
 </ul></li>
-<li><p>For <strong>interpreting a complete data set</strong>, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running <code>as.rsi(data)</code>.</p></li>
+<li><p>For <strong>interpreting a complete data set</strong>, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running <code>as.rsi(your_data)</code>.</p></li>
 </ol></div>
 
 <div class="section">

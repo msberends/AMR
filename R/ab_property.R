@@ -30,7 +30,7 @@
 #' @param x any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
 #' @param tolower a [logical] to indicate whether the first [character] of every output should be transformed to a lower case [character]. This will lead to e.g. "polymyxin B" and not "polymyxin b".
 #' @param property one of the column names of one of the [antibiotics] data set: `vector_or(colnames(antibiotics), sort = FALSE)`.
-#' @param language language of the returned text, defaults to system language (see [get_locale()]) and can also be set with `getOption("AMR_locale")`. Use `language = NULL` or `language = ""` to prevent translation.
+#' @param language language of the returned text, defaults to system language (see [get_AMR_locale()]) and can also be set with `getOption("AMR_locale")`. Use `language = NULL` or `language = ""` to prevent translation.
 #' @param administration way of administration, either `"oral"` or `"iv"`
 #' @param open browse the URL using [utils::browseURL()]
 #' @param ... in case of [set_ab_names()] and `data` is a [data.frame]: variables to select (supports tidy selection such as `column1:column4`), otherwise other arguments passed on to [as.ab()]
@@ -120,7 +120,7 @@
 #'    colnames()
 #' }
 #' }
-ab_name <- function(x, language = get_locale(), tolower = FALSE, ...) {
+ab_name <- function(x, language = get_AMR_locale(), tolower = FALSE, ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(tolower, allow_class = "logical", has_length = 1)
@@ -163,7 +163,7 @@ ab_tradenames <- function(x, ...) {
 
 #' @rdname ab_property
 #' @export
-ab_group <- function(x, language = get_locale(), ...) {
+ab_group <- function(x, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   translate_AMR(ab_validate(x = x, property = "group", ...), language = language, only_affect_ab_names = TRUE)
@@ -201,7 +201,7 @@ ab_atc <- function(x, only_first = FALSE, ...) {
 
 #' @rdname ab_property
 #' @export
-ab_atc_group1 <- function(x, language = get_locale(), ...) {
+ab_atc_group1 <- function(x, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   translate_AMR(ab_validate(x = x, property = "atc_group1", ...), language = language, only_affect_ab_names = TRUE)
@@ -209,7 +209,7 @@ ab_atc_group1 <- function(x, language = get_locale(), ...) {
 
 #' @rdname ab_property
 #' @export
-ab_atc_group2 <- function(x, language = get_locale(), ...) {
+ab_atc_group2 <- function(x, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   translate_AMR(ab_validate(x = x, property = "atc_group2", ...), language = language, only_affect_ab_names = TRUE)
@@ -276,7 +276,7 @@ ab_ddd_units <- function(x, administration = "oral", ...) {
 
 #' @rdname ab_property
 #' @export
-ab_info <- function(x, language = get_locale(), ...) {
+ab_info <- function(x, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   
@@ -327,7 +327,7 @@ ab_url <- function(x, open = FALSE, ...) {
 
 #' @rdname ab_property
 #' @export
-ab_property <- function(x, property = "name", language = get_locale(), ...) {
+ab_property <- function(x, property = "name", language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(property, is_in = colnames(antibiotics), has_length = 1)
   meet_criteria(language, is_in = c(LANGUAGES_SUPPORTED, ""), has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
@@ -337,7 +337,7 @@ ab_property <- function(x, property = "name", language = get_locale(), ...) {
 #' @rdname ab_property
 #' @aliases ATC
 #' @export
-set_ab_names <- function(data, ..., property = "name", language = get_locale(), snake_case = NULL) {
+set_ab_names <- function(data, ..., property = "name", language = get_AMR_locale(), snake_case = NULL) {
   meet_criteria(data, allow_class = c("data.frame", "character"))
   meet_criteria(property, is_in = colnames(antibiotics), has_length = 1, ignore.case = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)

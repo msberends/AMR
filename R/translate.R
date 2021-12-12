@@ -29,7 +29,7 @@
 #' @inheritSection lifecycle Stable Lifecycle
 #' @details Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: <https://github.com/msberends/AMR/blob/main/data-raw/translations.tsv>. This file will be read by all functions where a translated output can be desired, like all [`mo_*`][mo_property()] functions (such as [mo_name()], [mo_gramstain()], [mo_type()], etc.) and [`ab_*`][ab_property()] functions (such as [ab_name()], [ab_group()], etc.). 
 #'
-#' Currently supported languages are: `r vector_and(gsub(";.*", "", ISOcodes::ISO_639_2[which(ISOcodes::ISO_639_2$Alpha_2 %in% LANGUAGES_SUPPORTED), "Name"]), quotes = FALSE)`. All these languages have translations available for all antimicrobial agents and colloquial microorganism names.
+#' Currently supported languages are: `r vector_and(names(LANGUAGES_SUPPORTED), quotes = FALSE)`. All these languages have translations available for all antimicrobial agents and colloquial microorganism names.
 #'
 #' Please suggest your own translations [by creating a new issue on our repository](https://github.com/msberends/AMR/issues/new?title=Translations).
 #'
@@ -39,7 +39,7 @@
 #'   1. Setting the R option `AMR_locale`, e.g. by running `options(AMR_locale = "de")`
 #'   2. Setting the system variable `LANGUAGE` or `LANG`, e.g. by adding `LANGUAGE="de_DE.utf8"` to your `.Renviron` file in your home directory
 #' 
-#' So if the R option `AMR_locale` is set, the system variables `LANGUAGE` and `LANG` will be ignored.
+#' Thus, if the R option `AMR_locale` is set, the system variables `LANGUAGE` and `LANG` will be ignored.
 #' @inheritSection AMR Read more on Our Website!
 #' @rdname translate
 #' @name translate
@@ -47,15 +47,15 @@
 #' @examples
 #' # The 'language' argument of below functions
 #' # will be set automatically to your system language
-#' # with get_locale()
+#' # with get_AMR_locale()
 #'
 #' # English
 #' mo_name("CoNS", language = "en")
 #' #> "Coagulase-negative Staphylococcus (CoNS)"
 #'
 #' # Danish
-#' mo_name("CoNS", language = "nl")
-#' #> "Koagulase-negative stafylokokker (CoNS)"
+#' mo_name("CoNS", language = "da")
+#' #> "Koagulase-negative stafylokokker (KNS)"
 #' 
 #' # Dutch
 #' mo_name("CoNS", language = "nl")
@@ -76,7 +76,7 @@
 #' # Spanish
 #' mo_name("CoNS", language = "es")
 #' #> "Staphylococcus coagulasa negativo (SCN)"
-get_locale <- function() {
+get_AMR_locale <- function() {
   # AMR versions 1.3.0 and prior used the environmental variable:
   if (!identical("", Sys.getenv("AMR_locale"))) {
     options(AMR_locale = Sys.getenv("AMR_locale"))
@@ -88,10 +88,10 @@ get_locale <- function() {
       return(lang)
     } else {
       stop_("unsupported language set as option 'AMR_locale': \"", lang, "\" - use either ",
-            vector_or(LANGUAGES_SUPPORTED, quotes = TRUE))
+            vector_or(paste0('"', LANGUAGES_SUPPORTED, '" (', names(LANGUAGES_SUPPORTED), ")"), quotes = FALSE))
     }
   } else {
-    # we now support the LANGUAGE system variable - return it if set
+    # now check the LANGUAGE system variable - return it if set
     if (!identical("", Sys.getenv("LANGUAGE"))) {
       return(coerce_language_setting(Sys.getenv("LANGUAGE")))
     }
@@ -100,11 +100,22 @@ get_locale <- function() {
     }
   }
   
+  # fallback - automatic determination based on LC_COLLATE
+  if (interactive() && message_not_thrown_before("get_AMR_locale", entire_session = TRUE)) {
+    lang <- coerce_language_setting(Sys.getlocale("LC_COLLATE"))
+    if (lang != "en") {
+      message_("Assuming the ", names(LANGUAGES_SUPPORTED)[LANGUAGES_SUPPORTED == lang], 
+               " language for the AMR package. Change this with `options(AMR_locale = \"...\")` or see `?get_AMR_locale()`. ",
+               "Supported languages are ", vector_and(names(LANGUAGES_SUPPORTED), quotes = FALSE),
+               ". This note will be shown once per session.")
+    }
+    return(lang)
+  }
   coerce_language_setting(Sys.getlocale("LC_COLLATE"))
 }
 
 coerce_language_setting <- function(lang) {
-  # grepl() with ignore.case = FALSE is faster than %like%
+  # grepl() with ignore.case = FALSE is 8x faster than %like_case%
   if (grepl("^(English|en_|EN_)", lang, ignore.case = FALSE, perl = TRUE)) {
     # as first option to optimise speed
     "en"
@@ -122,6 +133,10 @@ coerce_language_setting <- function(lang) {
     "fr"
   } else if (grepl("^(Portuguese|Portugu.+s|pt_|PT_)", lang, ignore.case = FALSE, perl = TRUE)) {
     "pt"
+  } else if (grepl("^(Russian|русс|ru_|RU_)", lang, ignore.case = FALSE, perl = TRUE)) {
+    "ru"
+  } else if (grepl("^(Swedish|Svenskt|sv_|SV_)", lang, ignore.case = FALSE, perl = TRUE)) {
+    "sv"
   } else {
     # other language -> set to English
     "en"
@@ -130,7 +145,7 @@ coerce_language_setting <- function(lang) {
 
 # translate strings based on inst/translations.tsv
 translate_AMR <- function(from,
-                          language = get_locale(), 
+                          language = get_AMR_locale(), 
                           only_unknown = FALSE,
                           only_affect_ab_names = FALSE,
                           only_affect_mo_names = FALSE) {

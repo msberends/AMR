@@ -18,7 +18,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9062</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9067</span>
       </span>
     </div>
 
@@ -180,7 +180,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 <span class="fu">proportion_df</span><span class="op">(</span>
   <span class="va">data</span>,
   translate_ab <span class="op">=</span> <span class="st">"name"</span>,
-  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_locale</a></span><span class="op">(</span><span class="op">)</span>,
+  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,
   minimum <span class="op">=</span> <span class="fl">30</span>,
   as_percent <span class="op">=</span> <span class="cn">FALSE</span>,
   combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,
@@ -190,7 +190,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 <span class="fu">rsi_df</span><span class="op">(</span>
   <span class="va">data</span>,
   translate_ab <span class="op">=</span> <span class="st">"name"</span>,
-  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_locale</a></span><span class="op">(</span><span class="op">)</span>,
+  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,
   minimum <span class="op">=</span> <span class="fl">30</span>,
   as_percent <span class="op">=</span> <span class="cn">FALSE</span>,
   combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,
@@ -216,7 +216,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 <dt>translate_ab</dt>
 <dd><p>a column name of the <a href="antibiotics.html">antibiotics</a> data set to translate the antibiotic abbreviations to, using <code><a href="ab_property.html">ab_property()</a></code></p></dd>
 <dt>language</dt>
-<dd><p>language of the returned text, defaults to system language (see <code><a href="translate.html">get_locale()</a></code>) and can also be set with <code>getOption("AMR_locale")</code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></dd>
+<dd><p>language of the returned text, defaults to system language (see <code><a href="translate.html">get_AMR_locale()</a></code>) and can also be set with <code>getOption("AMR_locale")</code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></dd>
 <dt>combine_SI</dt>
 <dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the argument <code>combine_IR</code>, but this now follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is <code>TRUE</code>.</p></dd>
 <dt>combine_IR</dt>

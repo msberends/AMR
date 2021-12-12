@@ -175,7 +175,7 @@ reference:
     - "`age_groups`"
     - "`age`"
     - "`availability`"
-    - "`get_locale`"
+    - "`get_AMR_locale`"
     - "`ggplot_pca`"
     - "`italicise_taxonomy`"
     - "`join`"

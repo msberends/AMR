@@ -13,7 +13,7 @@ bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname, ...)
 \method{format}{bug_drug_combinations}(
   x,
   translate_ab = "name (ab, atc)",
-  language = get_locale(),
+  language = get_AMR_locale(),
   minimum = 30,
   combine_SI = TRUE,
   combine_IR = FALSE,
@@ -35,7 +35,7 @@ bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname, ...)
 
 \item{translate_ab}{a \link{character} of length 1 containing column names of the \link{antibiotics} data set}
 
-\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
+\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
 \item{minimum}{the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
 

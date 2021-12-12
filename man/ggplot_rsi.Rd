@@ -22,7 +22,7 @@ ggplot_rsi(
   combine_SI = TRUE,
   combine_IR = FALSE,
   minimum = 30,
-  language = get_locale(),
+  language = get_AMR_locale(),
   nrow = NULL,
   colours = c(S = "#3CAEA3", SI = "#3CAEA3", I = "#F6D55C", IR = "#ED553B", R =
     "#ED553B"),
@@ -43,7 +43,7 @@ geom_rsi(
   fill = "interpretation",
   translate_ab = "name",
   minimum = 30,
-  language = get_locale(),
+  language = get_AMR_locale(),
   combine_SI = TRUE,
   combine_IR = FALSE,
   ...
@@ -62,7 +62,7 @@ labels_rsi_count(
   x = "antibiotic",
   translate_ab = "name",
   minimum = 30,
-  language = get_locale(),
+  language = get_AMR_locale(),
   combine_SI = TRUE,
   combine_IR = FALSE,
   datalabels.size = 3,
@@ -92,7 +92,7 @@ labels_rsi_count(
 
 \item{minimum}{the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
 
-\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
+\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
 \item{nrow}{(when using \code{facet}) number of rows}
 

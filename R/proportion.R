@@ -277,7 +277,7 @@ proportion_S <- function(...,
 #' @export
 proportion_df <- function(data,
                           translate_ab = "name",
-                          language = get_locale(),
+                          language = get_AMR_locale(),
                           minimum = 30,
                           as_percent = FALSE,
                           combine_SI = TRUE,

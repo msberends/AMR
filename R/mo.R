@@ -37,7 +37,7 @@
 #' @param allow_uncertain a number between `0` (or `"none"`) and `3` (or `"all"`), or `TRUE` (= `2`) or `FALSE` (= `0`) to indicate whether the input should be checked for less probable results, see *Details*
 #' @param reference_df a [data.frame] to be used for extra reference when translating `x` to a valid [`mo`]. See [set_mo_source()] and [get_mo_source()] to automate the usage of your own codes (e.g. used in your analysis or organisation).
 #' @param ignore_pattern a regular expression (case-insensitive) of which all matches in `x` must return `NA`. This can be convenient to exclude known non-relevant input and can also be set with the option `AMR_ignore_pattern`, e.g. `options(AMR_ignore_pattern = "(not reported|contaminated flora)")`.
-#' @param language language to translate text like "no growth", which defaults to the system language (see [get_locale()])
+#' @param language language to translate text like "no growth", which defaults to the system language (see [get_AMR_locale()])
 #' @param info a [logical] to indicate if a progress bar should be printed if more than 25 items are to be coerced, defaults to `TRUE` only in interactive mode
 #' @param ... other arguments passed on to functions
 #' @rdname as.mo
@@ -161,7 +161,7 @@ as.mo <- function(x,
                   allow_uncertain = TRUE,
                   reference_df = get_mo_source(),
                   ignore_pattern = getOption("AMR_ignore_pattern"),
-                  language = get_locale(),
+                  language = get_AMR_locale(),
                   info = interactive(),
                   ...) {
   meet_criteria(x, allow_class = c("mo", "data.frame", "list", "character", "numeric", "integer", "factor"), allow_NA = TRUE)
@@ -267,7 +267,7 @@ exec_as.mo <- function(x,
                        reference_data_to_use = MO_lookup,
                        actual_uncertainty = 1,
                        actual_input = NULL,
-                       language = get_locale()) {
+                       language = get_AMR_locale()) {
   meet_criteria(x, allow_class = c("mo", "data.frame", "list", "character", "numeric", "integer", "factor"), allow_NA = TRUE)
   meet_criteria(Becker, allow_class = c("logical", "character"), has_length = 1)
   meet_criteria(Lancefield, allow_class = c("logical", "character"), has_length = 1)

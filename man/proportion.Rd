@@ -34,7 +34,7 @@ proportion_S(..., minimum = 30, as_percent = FALSE, only_all_tested = FALSE)
 proportion_df(
   data,
   translate_ab = "name",
-  language = get_locale(),
+  language = get_AMR_locale(),
   minimum = 30,
   as_percent = FALSE,
   combine_SI = TRUE,
@@ -44,7 +44,7 @@ proportion_df(
 rsi_df(
   data,
   translate_ab = "name",
-  language = get_locale(),
+  language = get_AMR_locale(),
   minimum = 30,
   as_percent = FALSE,
   combine_SI = TRUE,
@@ -64,7 +64,7 @@ rsi_df(
 
 \item{translate_ab}{a column name of the \link{antibiotics} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
 
-\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
+\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
 \item{combine_SI}{a \link{logical} to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the argument \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is \code{TRUE}.}
 

@@ -124,31 +124,23 @@ like <- function(x, pattern, ignore.case = TRUE) {
 #' @rdname like
 #' @export
 "%like%" <- function(x, pattern) {
-  meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(pattern, allow_NA = FALSE)
   like(x, pattern, ignore.case = TRUE)
 }
 
 #' @rdname like
 #' @export
 "%unlike%" <- function(x, pattern) {
-  meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(pattern, allow_NA = FALSE)
   !like(x, pattern, ignore.case = TRUE)
 }
 
 #' @rdname like
 #' @export
 "%like_case%" <- function(x, pattern) {
-  meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(pattern, allow_NA = FALSE)
   like(x, pattern, ignore.case = FALSE)
 }
 
 #' @rdname like
 #' @export
 "%unlike_case%" <- function(x, pattern) {
-  meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(pattern, allow_NA = FALSE)
   !like(x, pattern, ignore.case = FALSE)
 }

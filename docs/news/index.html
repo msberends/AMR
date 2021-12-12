@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9066</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9067</span>
       </span>
     </div>
 
@@ -157,21 +157,22 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.7.1.9066" id="amr-1719066">
-<code>AMR</code> 1.7.1.9066<a class="anchor" aria-label="anchor" href="#amr-1719066"></a></h2>
+<h2 class="page-header" data-toc-text="1.7.1.9067" id="amr-1719067">
+<code>AMR</code> 1.7.1.9067<a class="anchor" aria-label="anchor" href="#amr-1719067"></a></h2>
 <div class="section level3">
-<h3 id="last-updated-december-1-7-1-9066"><small>Last updated: 11 December 2021</small><a class="anchor" aria-label="anchor" href="#last-updated-december-1-7-1-9066"></a></h3>
+<h3 id="last-updated-december-1-7-1-9067"><small>Last updated: 12 December 2021</small><a class="anchor" aria-label="anchor" href="#last-updated-december-1-7-1-9067"></a></h3>
 <div class="section level4">
-<h4 id="breaking-changes-1-7-1-9066">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-1-7-1-9066"></a></h4>
+<h4 id="breaking-changes-1-7-1-9067">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-1-7-1-9067"></a></h4>
 <ul><li>Removed <code>p_symbol()</code> and all <code>filter_*()</code> functions (except for <code><a href="../reference/first_isolate.html">filter_first_isolate()</a></code>), which were all deprecated in a previous package version</li>
 <li>Removed the <code>key_antibiotics()</code> and <code>key_antibiotics_equal()</code> functions, which were deprecated and superseded by <code><a href="../reference/key_antimicrobials.html">key_antimicrobials()</a></code> and <code><a href="../reference/key_antimicrobials.html">antimicrobials_equal()</a></code>
 </li>
 <li>Removed all previously implemented <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> generics for classes <code>&lt;mic&gt;</code>, <code>&lt;disk&gt;</code>, <code>&lt;rsi&gt;</code> and <code>&lt;resistance_predict&gt;</code> as they did not follow the <code>ggplot2</code> logic. They were replaced with <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">ggplot2::autoplot()</a></code> generics.</li>
+<li>Renamed function <code>get_locale()</code> to <code><a href="../reference/translate.html">get_AMR_locale()</a></code> to prevent conflicts with other packages</li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-1-7-1-9066">New<a class="anchor" aria-label="anchor" href="#new-1-7-1-9066"></a></h4>
+<h4 id="new-1-7-1-9067">New<a class="anchor" aria-label="anchor" href="#new-1-7-1-9067"></a></h4>
 <ul><li><p>Support for EUCAST Intrinsic Resistance and Unusual Phenotypes v3.3 (October 2021). This is now the default EUCAST guideline in the package (all older guidelines are still available) for <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>, <code>mo_intrinsic_resistant()</code> and <code><a href="../reference/mdro.html">mdro()</a></code>. The <code>intrinsic_resistant</code> data set was also updated accordingly.</p></li>
-<li><p>Support for Danish, and also added missing translations of all antimicrobial drugs in Italian, French and Portuguese</p></li>
+<li><p>Support for all antimicrobial drug (group) names and colloquial microorganism names in Danish, Dutch, English, French, German, Italian, Portuguese, Russian, Spanish and Swedish</p></li>
 <li>
 <p>Function <code><a href="../reference/ab_property.html">set_ab_names()</a></code> to rename data set columns that resemble antimicrobial drugs. This allows for quickly renaming columns to official names, ATC codes, etc. Its second argument can be a tidyverse way of selecting:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -183,7 +184,7 @@
 <li><p>Function <code><a href="../reference/ab_property.html">ab_ddd_units()</a></code> to get units of DDDs (daily defined doses), deprecating the use of <code>ab_ddd(..., units = TRUE)</code> to be more consistent in data types of function output</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-1-7-1-9066">Changed<a class="anchor" aria-label="anchor" href="#changed-1-7-1-9066"></a></h4>
+<h4 id="changed-1-7-1-9067">Changed<a class="anchor" aria-label="anchor" href="#changed-1-7-1-9067"></a></h4>
 <ul><li>Updated the bacterial taxonomy to 5 October 2021 (according to <a href="https://lpsn.dsmz.de" class="external-link">LPSN</a>), including all 11 new staphylococcal species named since 1 January last year</li>
 <li>The <code>antibiotics</code> data set now contains <strong>all ATC codes</strong> that are available through the <a href="https://www.whocc.no" class="external-link">WHOCC website</a>, regardless of drugs being present in more than one ATC group. This means that:
 <ul><li>Some drugs now contain multiple ATC codes (e.g., metronidazole contains 5)</li>
@@ -229,7 +230,7 @@
 </li>
 <li>The right input types for <code><a href="../reference/random.html">random_mic()</a></code>, <code><a href="../reference/random.html">random_disk()</a></code> and <code><a href="../reference/random.html">random_rsi()</a></code> are now enforced</li>
 <li>
-<code><a href="../reference/as.rsi.html">as.rsi()</a></code> has an improved algorithm and can now also correct for textual input (such as “Susceptible”, “Resistant”) in Danish, Dutch, English, French, German, Italian, Portuguese and Spanish</li>
+<code><a href="../reference/as.rsi.html">as.rsi()</a></code> has an improved algorithm and can now also correct for textual input (such as “Susceptible”, “Resistant”) in all supported languages</li>
 <li>
 <code><a href="../reference/as.mic.html">as.mic()</a></code> has an improved algorithm</li>
 <li>When warnings are thrown because of too few isolates in any <code>count_*()</code>, <code>proportion_*()</code> function (or <code>resistant()</code> or <code>susceptible()</code>), the <code>dplyr</code> group will be shown, if available</li>
@@ -252,7 +253,7 @@
 <code><a href="../reference/get_episode.html">get_episode()</a></code> and <code><a href="../reference/get_episode.html">is_new_episode()</a></code> can now cope with <code>NA</code>s</li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-1-7-1-9066">Other<a class="anchor" aria-label="anchor" href="#other-1-7-1-9066"></a></h4>
+<h4 id="other-1-7-1-9067">Other<a class="anchor" aria-label="anchor" href="#other-1-7-1-9067"></a></h4>
 <ul><li>This package is now being maintained by two epidemiologists and a data scientist from two different non-profit healthcare organisations. All functions in this package are now all considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months from now on.</li>
 </ul></div>
 </div>
@@ -623,7 +624,7 @@
 <li>Big speed improvement for already valid microorganism ID. This also means an significant speed improvement for using <code>mo_*</code> functions like <code><a href="../reference/mo_property.html">mo_name()</a></code> on microoganism IDs.</li>
 <li>Added argument <code>ignore_pattern</code> to <code><a href="../reference/as.mo.html">as.mo()</a></code> which can also be given to <code>mo_*</code> functions like <code><a href="../reference/mo_property.html">mo_name()</a></code>, to exclude known non-relevant input from analysing. This can also be set with the option <code>AMR_ignore_pattern</code>.</li>
 </ul></li>
-<li><p><code><a href="../reference/translate.html">get_locale()</a></code> now uses at default <code>Sys.getenv("LANG")</code> or, if <code>LANG</code> is not set, <code><a href="https://rdrr.io/r/base/locales.html" class="external-link">Sys.getlocale()</a></code>. This can be overwritten by setting the option <code>AMR_locale</code>.</p></li>
+<li><p><code>get_locale()</code> now uses at default <code>Sys.getenv("LANG")</code> or, if <code>LANG</code> is not set, <code><a href="https://rdrr.io/r/base/locales.html" class="external-link">Sys.getlocale()</a></code>. This can be overwritten by setting the option <code>AMR_locale</code>.</p></li>
 <li><p>Big speed improvement for <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code></p></li>
 <li><p>Overall speed improvement by tweaking joining functions</p></li>
 <li><p>Function <code><a href="../reference/mo_property.html">mo_shortname()</a></code> now returns the genus for input where the species is unknown</p></li>

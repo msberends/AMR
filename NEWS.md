@@ -1,14 +1,15 @@
-# `AMR` 1.7.1.9066
-## <small>Last updated: 11 December 2021</small>
+# `AMR` 1.7.1.9067
+## <small>Last updated: 12 December 2021</small>
 
 ### Breaking changes
 * Removed `p_symbol()` and all `filter_*()` functions (except for `filter_first_isolate()`), which were all deprecated in a previous package version
 * Removed the `key_antibiotics()` and `key_antibiotics_equal()` functions, which were deprecated and superseded by `key_antimicrobials()` and `antimicrobials_equal()`
 * Removed all previously implemented `ggplot2::ggplot()` generics for classes `<mic>`, `<disk>`, `<rsi>` and `<resistance_predict>` as they did not follow the `ggplot2` logic. They were replaced with `ggplot2::autoplot()` generics.
+* Renamed function `get_locale()` to `get_AMR_locale()` to prevent conflicts with other packages
 
 ### New
 * Support for EUCAST Intrinsic Resistance and Unusual Phenotypes v3.3 (October 2021). This is now the default EUCAST guideline in the package (all older guidelines are still available) for `eucast_rules()`, `mo_intrinsic_resistant()` and `mdro()`. The `intrinsic_resistant` data set was also updated accordingly.
-* Support for Danish, and also added missing translations of all antimicrobial drugs in Italian, French and Portuguese
+* Support for all antimicrobial drug (group) names and colloquial microorganism names in Danish, Dutch, English, French, German, Italian, Portuguese, Russian, Spanish and Swedish
 * Function `set_ab_names()` to rename data set columns that resemble antimicrobial drugs. This allows for quickly renaming columns to official names, ATC codes, etc. Its second argument can be a tidyverse way of selecting:
   ```r
   example_isolates %>% set_ab_names(where(is.rsi))
@@ -50,7 +51,7 @@
 * When printing a tibble with any old MO code, a warning will be thrown that old codes should be updated using `as.mo()`
 * Improved automatic column selector when `col_*` arguments are left blank, e.g. in `first_isolate()`
 * The right input types for `random_mic()`, `random_disk()` and `random_rsi()` are now enforced
-* `as.rsi()` has an improved algorithm and can now also correct for textual input (such as "Susceptible", "Resistant") in Danish, Dutch, English, French, German, Italian, Portuguese and Spanish
+* `as.rsi()` has an improved algorithm and can now also correct for textual input (such as "Susceptible", "Resistant") in all supported languages
 * `as.mic()` has an improved algorithm
 * When warnings are thrown because of too few isolates in any `count_*()`, `proportion_*()` function (or `resistant()` or `susceptible()`), the `dplyr` group will be shown, if available
 * Fix for legends created with `scale_rsi_colours()` when using `ggplot2` v3.3.4 or higher (this is ggplot2 bug 4511, soon to be fixed)

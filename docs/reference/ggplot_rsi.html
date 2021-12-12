@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9062</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9067</span>
       </span>
     </div>
 
@@ -173,7 +173,7 @@
   combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,
   combine_IR <span class="op">=</span> <span class="cn">FALSE</span>,
   minimum <span class="op">=</span> <span class="fl">30</span>,
-  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_locale</a></span><span class="op">(</span><span class="op">)</span>,
+  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,
   nrow <span class="op">=</span> <span class="cn">NULL</span>,
   colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>S <span class="op">=</span> <span class="st">"#3CAEA3"</span>, SI <span class="op">=</span> <span class="st">"#3CAEA3"</span>, I <span class="op">=</span> <span class="st">"#F6D55C"</span>, IR <span class="op">=</span> <span class="st">"#ED553B"</span>, R <span class="op">=</span>
     <span class="st">"#ED553B"</span><span class="op">)</span>,
@@ -194,7 +194,7 @@
   fill <span class="op">=</span> <span class="st">"interpretation"</span>,
   translate_ab <span class="op">=</span> <span class="st">"name"</span>,
   minimum <span class="op">=</span> <span class="fl">30</span>,
-  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_locale</a></span><span class="op">(</span><span class="op">)</span>,
+  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,
   combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,
   combine_IR <span class="op">=</span> <span class="cn">FALSE</span>,
   <span class="va">...</span>
@@ -213,7 +213,7 @@
   x <span class="op">=</span> <span class="st">"antibiotic"</span>,
   translate_ab <span class="op">=</span> <span class="st">"name"</span>,
   minimum <span class="op">=</span> <span class="fl">30</span>,
-  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_locale</a></span><span class="op">(</span><span class="op">)</span>,
+  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,
   combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,
   combine_IR <span class="op">=</span> <span class="cn">FALSE</span>,
   datalabels.size <span class="op">=</span> <span class="fl">3</span>,
@@ -245,7 +245,7 @@
 <dt>minimum</dt>
 <dd><p>the minimum allowed number of available (tested) isolates. Any isolate count lower than <code>minimum</code> will return <code>NA</code> with a warning. The default number of <code>30</code> isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see <em>Source</em>.</p></dd>
 <dt>language</dt>
-<dd><p>language of the returned text, defaults to system language (see <code><a href="translate.html">get_locale()</a></code>) and can also be set with <code>getOption("AMR_locale")</code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></dd>
+<dd><p>language of the returned text, defaults to system language (see <code><a href="translate.html">get_AMR_locale()</a></code>) and can also be set with <code>getOption("AMR_locale")</code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></dd>
 <dt>nrow</dt>
 <dd><p>(when using <code>facet</code>) number of rows</p></dd>
 <dt>colours</dt>

@@ -116,8 +116,8 @@ $(document).ready(function() {
   }
   $(".template-authors").html(doct_tit($(".template-authors").html()));
   $(".template-citation-authors").html(doct_tit($(".template-citation-authors").html()));
-  $('.template-citation-authors h1').eq(0).html("How to cite the <code>AMR</code> package");
-  $('.template-citation-authors h1').eq(1).html("All contributors of the <code>AMR</code> package");
+  $('.template-citation-authors h1').eq(0).html("All contributors of the <code>AMR</code> package");
+  $('.template-citation-authors h1').eq(1).html("How to cite the <code>AMR</code> package");
   $(".developers").html(doct_tit($(".developers").html()));
   $(".developers a[href='authors.html']").text("All contributors...");
 });

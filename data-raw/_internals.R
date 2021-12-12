@@ -68,7 +68,16 @@ TRANSLATIONS <- utils::read.delim(file = "data-raw/translations.tsv",
                                        quote = "")
 
 # for checking input in `language` argument in e.g. mo_*() and ab_*() functions
-LANGUAGES_SUPPORTED <- sort(c("en", colnames(TRANSLATIONS)[nchar(colnames(TRANSLATIONS)) == 2]))
+LANGUAGES_SUPPORTED <- c(Danish = "da",
+                         English = "en",
+                         German = "de",
+                         Spanish = "es",
+                         French = "fr",
+                         Italian = "it",
+                         Dutch = "nl",
+                         Portuguese = "pt",
+                         Russian = "ru",
+                         Swedish = "sv")
 
 # EXAMPLE_ISOLATES <- readRDS("data-raw/example_isolates.rds")
 

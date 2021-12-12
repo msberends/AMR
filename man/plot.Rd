@@ -22,7 +22,7 @@
   ylab = "Frequency",
   xlab = "Minimum Inhibitory Concentration (mg/L)",
   colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
-  language = get_locale(),
+  language = get_AMR_locale(),
   expand = TRUE,
   ...
 )
@@ -36,7 +36,7 @@
   ylab = "Frequency",
   xlab = "Minimum Inhibitory Concentration (mg/L)",
   colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
-  language = get_locale(),
+  language = get_AMR_locale(),
   expand = TRUE,
   ...
 )
@@ -52,7 +52,7 @@
   ab = NULL,
   guideline = "EUCAST",
   colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
-  language = get_locale(),
+  language = get_AMR_locale(),
   expand = TRUE,
   ...
 )
@@ -66,7 +66,7 @@
   xlab = "Disk diffusion diameter (mm)",
   guideline = "EUCAST",
   colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
-  language = get_locale(),
+  language = get_AMR_locale(),
   expand = TRUE,
   ...
 )
@@ -87,7 +87,7 @@
   xlab = "Antimicrobial Interpretation",
   ylab = "Frequency",
   colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
-  language = get_locale(),
+  language = get_AMR_locale(),
   ...
 )
 
@@ -108,7 +108,7 @@
 
 \item{colours_RSI}{colours to use for filling in the bars, must be a vector of three values (in the order R, S and I). The default colours are colour-blind friendly.}
 
-\item{language}{language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant', defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can be overwritten by setting the option \code{AMR_locale}, e.g. \code{options(AMR_locale = "de")}, see \link{translate}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
+\item{language}{language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant', defaults to system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can be overwritten by setting the option \code{AMR_locale}, e.g. \code{options(AMR_locale = "de")}, see \link{translate}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
 \item{expand}{a \link{logical} to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.}
 

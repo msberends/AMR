@@ -202,7 +202,7 @@ rsi_calc <- function(...,
 rsi_calc_df <- function(type, # "proportion", "count" or "both"
                         data,
                         translate_ab = "name",
-                        language = get_locale(),
+                        language = get_AMR_locale(),
                         minimum = 30,
                         as_percent = FALSE,
                         combine_SI = TRUE,

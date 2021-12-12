@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9064</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9067</span>
       </span>
     </div>
 
@@ -161,7 +161,7 @@
     <p>Use these functions to return a specific property of an antibiotic from the <a href="antibiotics.html">antibiotics</a> data set. All input values will be evaluated internally with <code><a href="as.ab.html">as.ab()</a></code>.</p>
     </div>
 
-    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ab_name</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_locale</a></span><span class="op">(</span><span class="op">)</span>, tolower <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
+    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ab_name</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, tolower <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="fu">ab_cid</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
 
@@ -169,13 +169,13 @@
 
 <span class="fu">ab_tradenames</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
 
-<span class="fu">ab_group</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">ab_group</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="fu">ab_atc</span><span class="op">(</span><span class="va">x</span>, only_first <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
 
-<span class="fu">ab_atc_group1</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">ab_atc_group1</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
 
-<span class="fu">ab_atc_group2</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">ab_atc_group2</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="fu">ab_loinc</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
 
@@ -183,17 +183,17 @@
 
 <span class="fu">ab_ddd_units</span><span class="op">(</span><span class="va">x</span>, administration <span class="op">=</span> <span class="st">"oral"</span>, <span class="va">...</span><span class="op">)</span>
 
-<span class="fu">ab_info</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">ab_info</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="fu">ab_url</span><span class="op">(</span><span class="va">x</span>, open <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
 
-<span class="fu">ab_property</span><span class="op">(</span><span class="va">x</span>, property <span class="op">=</span> <span class="st">"name"</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">ab_property</span><span class="op">(</span><span class="va">x</span>, property <span class="op">=</span> <span class="st">"name"</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="fu">set_ab_names</span><span class="op">(</span>
   <span class="va">data</span>,
   <span class="va">...</span>,
   property <span class="op">=</span> <span class="st">"name"</span>,
-  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_locale</a></span><span class="op">(</span><span class="op">)</span>,
+  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,
   snake_case <span class="op">=</span> <span class="cn">NULL</span>
 <span class="op">)</span></code></pre></div></div>
 
@@ -202,7 +202,7 @@
     <dl><dt>x</dt>
 <dd><p>any (vector of) text that can be coerced to a valid antibiotic code with <code><a href="as.ab.html">as.ab()</a></code></p></dd>
 <dt>language</dt>
-<dd><p>language of the returned text, defaults to system language (see <code><a href="translate.html">get_locale()</a></code>) and can also be set with <code>getOption("AMR_locale")</code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></dd>
+<dd><p>language of the returned text, defaults to system language (see <code><a href="translate.html">get_AMR_locale()</a></code>) and can also be set with <code>getOption("AMR_locale")</code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></dd>
 <dt>tolower</dt>
 <dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the first <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> of every output should be transformed to a lower case <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a>. This will lead to e.g. "polymyxin B" and not "polymyxin b".</p></dd>
 <dt>...</dt>

@@ -35,7 +35,7 @@
 #' @param main,title title of the plot
 #' @param xlab,ylab axis title
 #' @param colours_RSI colours to use for filling in the bars, must be a vector of three values (in the order R, S and I). The default colours are colour-blind friendly.
-#' @param language language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant', defaults to system language (see [get_locale()]) and can be overwritten by setting the option `AMR_locale`, e.g. `options(AMR_locale = "de")`, see [translate]. Use `language = NULL` or `language = ""` to prevent translation.
+#' @param language language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant', defaults to system language (see [get_AMR_locale()]) and can be overwritten by setting the option `AMR_locale`, e.g. `options(AMR_locale = "de")`, see [translate]. Use `language = NULL` or `language = ""` to prevent translation.
 #' @param expand a [logical] to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.
 #' @details
 #' The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
@@ -83,7 +83,7 @@ plot.mic <- function(x,
                      ylab = "Frequency",
                      xlab = "Minimum Inhibitory Concentration (mg/L)",
                      colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
-                     language = get_locale(),
+                     language = get_AMR_locale(),
                      expand = TRUE,
                      ...) {
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
@@ -169,7 +169,7 @@ barplot.mic <- function(height,
                         ylab = "Frequency",
                         xlab = "Minimum Inhibitory Concentration (mg/L)",
                         colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
-                        language = get_locale(),
+                        language = get_AMR_locale(),
                         expand = TRUE,
                         ...) {
   meet_criteria(main, allow_class = "character", has_length = 1, allow_NULL = TRUE)
@@ -214,7 +214,7 @@ autoplot.mic <- function(object,
                          ylab = "Frequency",
                          xlab = "Minimum Inhibitory Concentration (mg/L)",
                          colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
-                         language = get_locale(),
+                         language = get_AMR_locale(),
                          expand = TRUE,
                          ...) {
   stop_ifnot_installed("ggplot2")
@@ -305,7 +305,7 @@ plot.disk <- function(x,
                       ab = NULL,
                       guideline = "EUCAST",
                       colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
-                      language = get_locale(),
+                      language = get_AMR_locale(),
                       expand = TRUE,
                       ...) {
   meet_criteria(main, allow_class = "character", has_length = 1, allow_NULL = TRUE)
@@ -392,7 +392,7 @@ barplot.disk <- function(height,
                          ab = NULL,
                          guideline = "EUCAST",
                          colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
-                         language = get_locale(),
+                         language = get_AMR_locale(),
                          expand = TRUE,
                          ...) {
   meet_criteria(main, allow_class = "character", has_length = 1, allow_NULL = TRUE)
@@ -437,7 +437,7 @@ autoplot.disk <- function(object,
                           xlab = "Disk diffusion diameter (mm)",
                           guideline = "EUCAST",
                           colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
-                          language = get_locale(),
+                          language = get_AMR_locale(),
                           expand = TRUE,
                           ...) {
   stop_ifnot_installed("ggplot2")
@@ -579,7 +579,7 @@ barplot.rsi <- function(height,
                         xlab = "Antimicrobial Interpretation",
                         ylab = "Frequency",
                         colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
-                        language = get_locale(),
+                        language = get_AMR_locale(),
                         expand = TRUE,
                         ...) {
   meet_criteria(xlab, allow_class = "character", has_length = 1)
@@ -623,7 +623,7 @@ autoplot.rsi <- function(object,
                          xlab = "Antimicrobial Interpretation",
                          ylab = "Frequency",
                          colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
-                         language = get_locale(),
+                         language = get_AMR_locale(),
                          ...) {
   stop_ifnot_installed("ggplot2")
   meet_criteria(title, allow_class = "character", allow_NULL = TRUE)

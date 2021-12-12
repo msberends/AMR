@@ -213,7 +213,7 @@ n_rsi <- count_all
 #' @export
 count_df <- function(data,
                      translate_ab = "name",
-                     language = get_locale(),
+                     language = get_AMR_locale(),
                      combine_SI = TRUE,
                      combine_IR = FALSE) {
   tryCatch(

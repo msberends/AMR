@@ -29,7 +29,7 @@
 #' @inheritSection lifecycle Stable Lifecycle
 #' @param x any [character] (vector) that can be coerced to a valid microorganism code with [as.mo()]. Can be left blank for auto-guessing the column containing microorganism codes if used in a data set, see *Examples*.
 #' @param property one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`, or must be `"shortname"`
-#' @param language language of the returned text, defaults to system language (see [get_locale()]) and can be overwritten by setting the option `AMR_locale`, e.g. `options(AMR_locale = "de")`, see [translate]. Also used to translate text like "no growth". Use `language = NULL` or `language = ""` to prevent translation.
+#' @param language language of the returned text, defaults to system language (see [get_AMR_locale()]) and can be overwritten by setting the option `AMR_locale`, e.g. `options(AMR_locale = "de")`, see [translate]. Also used to translate text like "no growth". Use `language = NULL` or `language = ""` to prevent translation.
 #' @param ... other arguments passed on to [as.mo()], such as 'allow_uncertain' and 'ignore_pattern'
 #' @param ab any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
 #' @param open browse the URL using [`browseURL()`][utils::browseURL()]
@@ -170,7 +170,7 @@
 #' mo_info("E. coli")
 #' }
 #' }
-mo_name <- function(x, language = get_locale(), ...) {
+mo_name <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_name")
@@ -190,7 +190,7 @@ mo_fullname <- mo_name
 
 #' @rdname mo_property
 #' @export
-mo_shortname <- function(x, language = get_locale(), ...) {
+mo_shortname <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_shortname")
@@ -230,7 +230,7 @@ mo_shortname <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_subspecies <- function(x, language = get_locale(), ...) {
+mo_subspecies <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_subspecies")
@@ -243,7 +243,7 @@ mo_subspecies <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_species <- function(x, language = get_locale(), ...) {
+mo_species <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_species")
@@ -256,7 +256,7 @@ mo_species <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_genus <- function(x, language = get_locale(), ...) {
+mo_genus <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_genus")
@@ -269,7 +269,7 @@ mo_genus <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_family <- function(x, language = get_locale(), ...) {
+mo_family <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_family")
@@ -282,7 +282,7 @@ mo_family <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_order <- function(x, language = get_locale(), ...) {
+mo_order <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_order")
@@ -295,7 +295,7 @@ mo_order <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_class <- function(x, language = get_locale(), ...) {
+mo_class <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_class")
@@ -308,7 +308,7 @@ mo_class <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_phylum <- function(x, language = get_locale(), ...) {
+mo_phylum <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_phylum")
@@ -321,7 +321,7 @@ mo_phylum <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_kingdom <- function(x, language = get_locale(), ...) {
+mo_kingdom <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_kingdom")
@@ -338,7 +338,7 @@ mo_domain <- mo_kingdom
 
 #' @rdname mo_property
 #' @export
-mo_type <- function(x, language = get_locale(), ...) {
+mo_type <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_type")
@@ -354,7 +354,7 @@ mo_type <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_gramstain <- function(x, language = get_locale(), ...) {
+mo_gramstain <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_gramstain")
@@ -385,7 +385,7 @@ mo_gramstain <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_is_gram_negative <- function(x, language = get_locale(), ...) {
+mo_is_gram_negative <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_is_gram_negative")
@@ -404,7 +404,7 @@ mo_is_gram_negative <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_is_gram_positive <- function(x, language = get_locale(), ...) {
+mo_is_gram_positive <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_is_gram_positive")
@@ -423,7 +423,7 @@ mo_is_gram_positive <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_is_yeast <- function(x, language = get_locale(), ...) {
+mo_is_yeast <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_is_yeast")
@@ -449,7 +449,7 @@ mo_is_yeast <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_is_intrinsic_resistant <- function(x, ab, language = get_locale(), ...) {
+mo_is_intrinsic_resistant <- function(x, ab, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_is_intrinsic_resistant")
@@ -483,7 +483,7 @@ mo_is_intrinsic_resistant <- function(x, ab, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_snomed <- function(x, language = get_locale(), ...) {
+mo_snomed <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_snomed")
@@ -496,7 +496,7 @@ mo_snomed <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_ref <- function(x, language = get_locale(), ...) {
+mo_ref <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_ref")
@@ -509,7 +509,7 @@ mo_ref <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_authors <- function(x, language = get_locale(), ...) {
+mo_authors <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_authors")
@@ -525,7 +525,7 @@ mo_authors <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_year <- function(x, language = get_locale(), ...) {
+mo_year <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_year")
@@ -541,7 +541,7 @@ mo_year <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_lpsn <- function(x, language = get_locale(), ...) {
+mo_lpsn <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_rank")
@@ -554,7 +554,7 @@ mo_lpsn <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_rank <- function(x, language = get_locale(), ...) {
+mo_rank <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_rank")
@@ -567,7 +567,7 @@ mo_rank <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_taxonomy <- function(x, language = get_locale(),  ...) {
+mo_taxonomy <- function(x, language = get_AMR_locale(),  ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_taxonomy")
@@ -593,7 +593,7 @@ mo_taxonomy <- function(x, language = get_locale(),  ...) {
 
 #' @rdname mo_property
 #' @export
-mo_synonyms <- function(x, language = get_locale(), ...) {
+mo_synonyms <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_synonyms")
@@ -626,7 +626,7 @@ mo_synonyms <- function(x, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_info <- function(x, language = get_locale(),  ...) {
+mo_info <- function(x, language = get_AMR_locale(),  ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_info")
@@ -657,7 +657,7 @@ mo_info <- function(x, language = get_locale(),  ...) {
 
 #' @rdname mo_property
 #' @export
-mo_url <- function(x, open = FALSE, language = get_locale(), ...) {
+mo_url <- function(x, open = FALSE, language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_url")
@@ -696,7 +696,7 @@ mo_url <- function(x, open = FALSE, language = get_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_property <- function(x, property = "fullname", language = get_locale(), ...) {
+mo_property <- function(x, property = "fullname", language = get_AMR_locale(), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_property")

@@ -19,7 +19,7 @@
 \alias{set_ab_names}
 \title{Get Properties of an Antibiotic}
 \usage{
-ab_name(x, language = get_locale(), tolower = FALSE, ...)
+ab_name(x, language = get_AMR_locale(), tolower = FALSE, ...)
 
 ab_cid(x, ...)
 
@@ -27,13 +27,13 @@ ab_synonyms(x, ...)
 
 ab_tradenames(x, ...)
 
-ab_group(x, language = get_locale(), ...)
+ab_group(x, language = get_AMR_locale(), ...)
 
 ab_atc(x, only_first = FALSE, ...)
 
-ab_atc_group1(x, language = get_locale(), ...)
+ab_atc_group1(x, language = get_AMR_locale(), ...)
 
-ab_atc_group2(x, language = get_locale(), ...)
+ab_atc_group2(x, language = get_AMR_locale(), ...)
 
 ab_loinc(x, ...)
 
@@ -41,24 +41,24 @@ ab_ddd(x, administration = "oral", ...)
 
 ab_ddd_units(x, administration = "oral", ...)
 
-ab_info(x, language = get_locale(), ...)
+ab_info(x, language = get_AMR_locale(), ...)
 
 ab_url(x, open = FALSE, ...)
 
-ab_property(x, property = "name", language = get_locale(), ...)
+ab_property(x, property = "name", language = get_AMR_locale(), ...)
 
 set_ab_names(
   data,
   ...,
   property = "name",
-  language = get_locale(),
+  language = get_AMR_locale(),
   snake_case = NULL
 )
 }
 \arguments{
 \item{x}{any (vector of) text that can be coerced to a valid antibiotic code with \code{\link[=as.ab]{as.ab()}}}
 
-\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
+\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
 \item{tolower}{a \link{logical} to indicate whether the first \link{character} of every output should be transformed to a lower case \link{character}. This will lead to e.g. "polymyxin B" and not "polymyxin b".}
 

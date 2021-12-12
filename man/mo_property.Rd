@@ -32,68 +32,68 @@
 \alias{mo_url}
 \title{Get Properties of a Microorganism}
 \usage{
-mo_name(x, language = get_locale(), ...)
+mo_name(x, language = get_AMR_locale(), ...)
 
-mo_fullname(x, language = get_locale(), ...)
+mo_fullname(x, language = get_AMR_locale(), ...)
 
-mo_shortname(x, language = get_locale(), ...)
+mo_shortname(x, language = get_AMR_locale(), ...)
 
-mo_subspecies(x, language = get_locale(), ...)
+mo_subspecies(x, language = get_AMR_locale(), ...)
 
-mo_species(x, language = get_locale(), ...)
+mo_species(x, language = get_AMR_locale(), ...)
 
-mo_genus(x, language = get_locale(), ...)
+mo_genus(x, language = get_AMR_locale(), ...)
 
-mo_family(x, language = get_locale(), ...)
+mo_family(x, language = get_AMR_locale(), ...)
 
-mo_order(x, language = get_locale(), ...)
+mo_order(x, language = get_AMR_locale(), ...)
 
-mo_class(x, language = get_locale(), ...)
+mo_class(x, language = get_AMR_locale(), ...)
 
-mo_phylum(x, language = get_locale(), ...)
+mo_phylum(x, language = get_AMR_locale(), ...)
 
-mo_kingdom(x, language = get_locale(), ...)
+mo_kingdom(x, language = get_AMR_locale(), ...)
 
-mo_domain(x, language = get_locale(), ...)
+mo_domain(x, language = get_AMR_locale(), ...)
 
-mo_type(x, language = get_locale(), ...)
+mo_type(x, language = get_AMR_locale(), ...)
 
-mo_gramstain(x, language = get_locale(), ...)
+mo_gramstain(x, language = get_AMR_locale(), ...)
 
-mo_is_gram_negative(x, language = get_locale(), ...)
+mo_is_gram_negative(x, language = get_AMR_locale(), ...)
 
-mo_is_gram_positive(x, language = get_locale(), ...)
+mo_is_gram_positive(x, language = get_AMR_locale(), ...)
 
-mo_is_yeast(x, language = get_locale(), ...)
+mo_is_yeast(x, language = get_AMR_locale(), ...)
 
-mo_is_intrinsic_resistant(x, ab, language = get_locale(), ...)
+mo_is_intrinsic_resistant(x, ab, language = get_AMR_locale(), ...)
 
-mo_snomed(x, language = get_locale(), ...)
+mo_snomed(x, language = get_AMR_locale(), ...)
 
-mo_ref(x, language = get_locale(), ...)
+mo_ref(x, language = get_AMR_locale(), ...)
 
-mo_authors(x, language = get_locale(), ...)
+mo_authors(x, language = get_AMR_locale(), ...)
 
-mo_year(x, language = get_locale(), ...)
+mo_year(x, language = get_AMR_locale(), ...)
 
-mo_lpsn(x, language = get_locale(), ...)
+mo_lpsn(x, language = get_AMR_locale(), ...)
 
-mo_rank(x, language = get_locale(), ...)
+mo_rank(x, language = get_AMR_locale(), ...)
 
-mo_taxonomy(x, language = get_locale(), ...)
+mo_taxonomy(x, language = get_AMR_locale(), ...)
 
-mo_synonyms(x, language = get_locale(), ...)
+mo_synonyms(x, language = get_AMR_locale(), ...)
 
-mo_info(x, language = get_locale(), ...)
+mo_info(x, language = get_AMR_locale(), ...)
 
-mo_url(x, open = FALSE, language = get_locale(), ...)
+mo_url(x, open = FALSE, language = get_AMR_locale(), ...)
 
-mo_property(x, property = "fullname", language = get_locale(), ...)
+mo_property(x, property = "fullname", language = get_AMR_locale(), ...)
 }
 \arguments{
 \item{x}{any \link{character} (vector) that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}. Can be left blank for auto-guessing the column containing microorganism codes if used in a data set, see \emph{Examples}.}
 
-\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_locale]{get_locale()}}) and can be overwritten by setting the option \code{AMR_locale}, e.g. \code{options(AMR_locale = "de")}, see \link{translate}. Also used to translate text like "no growth". Use \code{language = NULL} or \code{language = ""} to prevent translation.}
+\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can be overwritten by setting the option \code{AMR_locale}, e.g. \code{options(AMR_locale = "de")}, see \link{translate}. Also used to translate text like "no growth". Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
 \item{...}{other arguments passed on to \code{\link[=as.mo]{as.mo()}}, such as 'allow_uncertain' and 'ignore_pattern'}
 

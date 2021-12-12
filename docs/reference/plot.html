@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9062</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9067</span>
       </span>
     </div>
 
@@ -171,7 +171,7 @@
   ylab <span class="op">=</span> <span class="st">"Frequency"</span>,
   xlab <span class="op">=</span> <span class="st">"Minimum Inhibitory Concentration (mg/L)"</span>,
   colours_RSI <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#ED553B"</span>, <span class="st">"#3CAEA3"</span>, <span class="st">"#F6D55C"</span><span class="op">)</span>,
-  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_locale</a></span><span class="op">(</span><span class="op">)</span>,
+  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,
   expand <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
@@ -186,7 +186,7 @@
   ylab <span class="op">=</span> <span class="st">"Frequency"</span>,
   xlab <span class="op">=</span> <span class="st">"Minimum Inhibitory Concentration (mg/L)"</span>,
   colours_RSI <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#ED553B"</span>, <span class="st">"#3CAEA3"</span>, <span class="st">"#F6D55C"</span><span class="op">)</span>,
-  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_locale</a></span><span class="op">(</span><span class="op">)</span>,
+  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,
   expand <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
@@ -204,7 +204,7 @@
   ab <span class="op">=</span> <span class="cn">NULL</span>,
   guideline <span class="op">=</span> <span class="st">"EUCAST"</span>,
   colours_RSI <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#ED553B"</span>, <span class="st">"#3CAEA3"</span>, <span class="st">"#F6D55C"</span><span class="op">)</span>,
-  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_locale</a></span><span class="op">(</span><span class="op">)</span>,
+  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,
   expand <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
@@ -219,7 +219,7 @@
   xlab <span class="op">=</span> <span class="st">"Disk diffusion diameter (mm)"</span>,
   guideline <span class="op">=</span> <span class="st">"EUCAST"</span>,
   colours_RSI <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#ED553B"</span>, <span class="st">"#3CAEA3"</span>, <span class="st">"#F6D55C"</span><span class="op">)</span>,
-  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_locale</a></span><span class="op">(</span><span class="op">)</span>,
+  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,
   expand <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
@@ -243,7 +243,7 @@
   xlab <span class="op">=</span> <span class="st">"Antimicrobial Interpretation"</span>,
   ylab <span class="op">=</span> <span class="st">"Frequency"</span>,
   colours_RSI <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#ED553B"</span>, <span class="st">"#3CAEA3"</span>, <span class="st">"#F6D55C"</span><span class="op">)</span>,
-  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_locale</a></span><span class="op">(</span><span class="op">)</span>,
+  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
@@ -267,7 +267,7 @@
 <dt>colours_RSI</dt>
 <dd><p>colours to use for filling in the bars, must be a vector of three values (in the order R, S and I). The default colours are colour-blind friendly.</p></dd>
 <dt>language</dt>
-<dd><p>language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant', defaults to system language (see <code><a href="translate.html">get_locale()</a></code>) and can be overwritten by setting the option <code>AMR_locale</code>, e.g. <code>options(AMR_locale = "de")</code>, see <a href="translate.html">translate</a>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></dd>
+<dd><p>language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant', defaults to system language (see <code><a href="translate.html">get_AMR_locale()</a></code>) and can be overwritten by setting the option <code>AMR_locale</code>, e.g. <code>options(AMR_locale = "de")</code>, see <a href="translate.html">translate</a>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></dd>
 <dt>expand</dt>
 <dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.</p></dd>
 <dt>...</dt>

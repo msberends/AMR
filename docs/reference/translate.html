@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9062</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9067</span>
       </span>
     </div>
 
@@ -161,19 +161,19 @@
     <p>For language-dependent output of AMR functions, like <code><a href="mo_property.html">mo_name()</a></code>, <code><a href="mo_property.html">mo_gramstain()</a></code>, <code><a href="mo_property.html">mo_type()</a></code> and <code><a href="ab_property.html">ab_name()</a></code>.</p>
     </div>
 
-    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">get_locale</span><span class="op">(</span><span class="op">)</span></code></pre></div></div>
+    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">get_AMR_locale</span><span class="op">(</span><span class="op">)</span></code></pre></div></div>
 
     <div id="details">
     <h2>Details</h2>
     <p>Strings will be translated to foreign languages if they are defined in a local translation file. Additions to this file can be suggested at our repository. The file can be found here: <a href="https://github.com/msberends/AMR/blob/main/data-raw/translations.tsv" class="external-link">https://github.com/msberends/AMR/blob/main/data-raw/translations.tsv</a>. This file will be read by all functions where a translated output can be desired, like all <code><a href="mo_property.html">mo_*</a></code> functions (such as <code><a href="mo_property.html">mo_name()</a></code>, <code><a href="mo_property.html">mo_gramstain()</a></code>, <code><a href="mo_property.html">mo_type()</a></code>, etc.) and <code><a href="ab_property.html">ab_*</a></code> functions (such as <code><a href="ab_property.html">ab_name()</a></code>, <code><a href="ab_property.html">ab_group()</a></code>, etc.).</p>
-<p>Currently supported languages are: Danish, Dutch, English, French, German, Italian, Portuguese and Spanish. All these languages have translations available for all antimicrobial agents and colloquial microorganism names.</p>
+<p>Currently supported languages are: Danish, Dutch, English, French, German, Italian, Portuguese, Russian, Spanish and Swedish. All these languages have translations available for all antimicrobial agents and colloquial microorganism names.</p>
 <p>Please suggest your own translations <a href="https://github.com/msberends/AMR/issues/new?title=Translations" class="external-link">by creating a new issue on our repository</a>.</p><div class="section">
 <h3 id="changing-the-default-language">Changing the Default Language<a class="anchor" aria-label="anchor" href="#changing-the-default-language"></a></h3>
 
 
 <p>The system language will be used at default (as returned by <code>Sys.getenv("LANG")</code> or, if <code>LANG</code> is not set, <code><a href="https://rdrr.io/r/base/locales.html" class="external-link">Sys.getlocale()</a></code>), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:</p><ol><li><p>Setting the R option <code>AMR_locale</code>, e.g. by running <code>options(AMR_locale = "de")</code></p></li>
 <li><p>Setting the system variable <code>LANGUAGE</code> or <code>LANG</code>, e.g. by adding <code>LANGUAGE="de_DE.utf8"</code> to your <code>.Renviron</code> file in your home directory</p></li>
-</ol><p>So if the R option <code>AMR_locale</code> is set, the system variables <code>LANGUAGE</code> and <code>LANG</code> will be ignored.</p>
+</ol><p>Thus, if the R option <code>AMR_locale</code> is set, the system variables <code>LANGUAGE</code> and <code>LANG</code> will be ignored.</p>
 </div>
 
     </div>
@@ -196,15 +196,15 @@ The <a href="lifecycle.html">lifecycle</a> of this function is <strong>stable</s
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># The 'language' argument of below functions</span>
 <span class="co"># will be set automatically to your system language</span>
-<span class="co"># with get_locale()</span>
+<span class="co"># with get_AMR_locale()</span>
 
 <span class="co"># English</span>
 <span class="fu"><a href="mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"CoNS"</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
 <span class="co">#&gt; "Coagulase-negative Staphylococcus (CoNS)"</span>
 
 <span class="co"># Danish</span>
-<span class="fu"><a href="mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"CoNS"</span>, language <span class="op">=</span> <span class="st">"nl"</span><span class="op">)</span>
-<span class="co">#&gt; "Koagulase-negative stafylokokker (CoNS)"</span>
+<span class="fu"><a href="mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"CoNS"</span>, language <span class="op">=</span> <span class="st">"da"</span><span class="op">)</span>
+<span class="co">#&gt; "Koagulase-negative stafylokokker (KNS)"</span>
 
 <span class="co"># Dutch</span>
 <span class="fu"><a href="mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"CoNS"</span>, language <span class="op">=</span> <span class="st">"nl"</span><span class="op">)</span>
