@@ -111,9 +111,9 @@ your_data \%>\% mutate(across(where(is.disk), as.rsi)) # since dplyr 1.0.0
 
 \subsection{Supported Guidelines}{
 
-For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (2011-2021) and CLSI (2010-2020).
+For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (2011-2021) and CLSI (2010-2021).
 
-Thus, the \code{guideline} argument must be set to e.g., \code{"EUCAST 2021"} or \code{"CLSI 2020"}. By simply using \code{"EUCAST"} (the default) or \code{"CLSI"} as input, the latest version of that guideline will automatically be selected. You can set your own data set using the \code{reference_data} argument. The \code{guideline} argument will then be ignored.
+Thus, the \code{guideline} argument must be set to e.g., \code{"EUCAST 2021"} or \code{"CLSI 2021"}. By simply using \code{"EUCAST"} (the default) or \code{"CLSI"} as input, the latest version of that guideline will automatically be selected. You can set your own data set using the \code{reference_data} argument. The \code{guideline} argument will then be ignored.
 }
 
 \subsection{After Interpretation}{
@@ -123,7 +123,7 @@ After using \code{\link[=as.rsi]{as.rsi()}}, you can use the \code{\link[=eucast
 
 \subsection{Machine-Readable Interpretation Guidelines}{
 
-The repository of this package \href{https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt}{contains a machine-readable version} of all guidelines. This is a CSV file consisting of 22,000 rows and 10 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. \strong{This allows for easy implementation of these rules in laboratory information systems (LIS)}. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
+The repository of this package \href{https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt}{contains a machine-readable version} of all guidelines. This is a CSV file consisting of 23,451 rows and 10 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. \strong{This allows for easy implementation of these rules in laboratory information systems (LIS)}. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
 }
 
 \subsection{Other}{

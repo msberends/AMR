@@ -8814,6 +8814,1457 @@
 "EUCAST 2011"	"DISK"		"Streptococcus pneumoniae"	"Vancomycin"		"5ug"	15	14	FALSE
 "EUCAST 2011"	"MIC"		"Streptococcus pneumoniae"	"Vancomycin"			2	4	FALSE
 "EUCAST 2011"	"MIC"		"Streptococcus pyogenes"	"Vancomycin"			2	4	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Amoxicillin/clavulanic acid"	"Table 2A"	"20μg/10μg"	18	13	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Amoxicillin/clavulanic acid"	"Table 2A"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Amoxicillin/clavulanic acid"	"M45 Table 2"	"20μg"	18	13	FALSE
+"CLSI 2021"	"MIC"		"Aggregatibacter"	"Amoxicillin/clavulanic acid"	"M45 Table 9"		4	8	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Amoxicillin/clavulanic acid"	"Table 2J"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Burkholderia pseudomallei"	"Amoxicillin/clavulanic acid"	"M45 Table 21"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Cardiobacterium"	"Amoxicillin/clavulanic acid"	"M45 Table 9"		4	8	FALSE
+"CLSI 2021"	"MIC"		"Eikenella corrodens"	"Amoxicillin/clavulanic acid"	"M45 Table 9"		4	8	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Amoxicillin/clavulanic acid"	"Table 2E"	"20/10μg"	20	19	FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Amoxicillin/clavulanic acid"	"Table 2E"		4	8	FALSE
+"CLSI 2021"	"MIC"		"Kingella"	"Amoxicillin/clavulanic acid"	"M45 Table 9"		4	8	FALSE
+"CLSI 2021"	"DISK"		"Moraxella catarrhalis"	"Amoxicillin/clavulanic acid"	"M45 Table 16"	"20μg"	24	23	FALSE
+"CLSI 2021"	"MIC"		"Moraxella catarrhalis"	"Amoxicillin/clavulanic acid"	"M45 Table 16"		4	8	FALSE
+"CLSI 2021"	"DISK"		"Pasteurella"	"Amoxicillin/clavulanic acid"	"M45 Table 17"	"20μg"	27		FALSE
+"CLSI 2021"	"MIC"		"Pasteurella"	"Amoxicillin/clavulanic acid"	"M45 Table 17"		0.5		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Amoxicillin/clavulanic acid"	"Table 2H-1"	"20μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Amoxicillin/clavulanic acid"	"Table 2H-1"				FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Amoxicillin/clavulanic acid"	"Table 2G"	"10/10μg"			FALSE
+"CLSI 2021"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Amoxicillin/clavulanic acid"	"Table 2G"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Amoxicillin/clavulanic acid"	"M45 Table 20"	"20μg"	18	13	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Amoxicillin/clavulanic acid"	"M45 Table 20"		8	32	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Amoxicillin/clavulanic acid"	"Generic CLSI rules"	"20-10μg"	18	13	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Amoxicillin/clavulanic acid"	"Generic CLSI rules"	"20-10μg"	8	32	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Amikacin"	"Table 2A"	"30μg"	17	14	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Amikacin"	"Table 2A"		16	64	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Amikacin"	"Table 2B-2"	"30μg"	17	14	FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Amikacin"	"Table 2B-2"		16	64	FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Amikacin"	"M45 Table 2"	"30μg"	17	14	FALSE
+"CLSI 2021"	"MIC"		"Aeromonas"	"Amikacin"	"M45 Table 3"		16	64	FALSE
+"CLSI 2021"	"MIC"		"Bacillus"	"Amikacin"	"M45 Table 4"		16	64	FALSE
+"CLSI 2021"	"DISK"		"Pseudomonas aeruginosa"	"Amikacin"	"Table 2B-1"	"30μg"	17	14	FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Amikacin"	"Table 2B-1"		16	64	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Amikacin"	"M45 Table 20"	"30μg"	17	14	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Amikacin"	"M45 Table 20"		16	64	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Amikacin"	"Generic CLSI rules"	"30μg"	17	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Amikacin"	"Generic CLSI rules"	"30μg"	16	64	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Ampicillin"	"Table 2A"	"10μg"	17	13	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Ampicillin"	"Table 2A"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Abiotrophia"	"Ampicillin"	"M45 Table 1"		0.25	8	FALSE
+"CLSI 2021"	"MIC"		"Aggregatibacter"	"Ampicillin"	"M45 Table 9"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Ampicillin"	"Table 2J"		0.5	2	FALSE
+"CLSI 2021"	"MIC"		"Bacillus"	"Ampicillin"	"M45 Table 4"		0.25	0.5	FALSE
+"CLSI 2021"	"MIC"		"Cardiobacterium"	"Ampicillin"	"M45 Table 9"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Eikenella corrodens"	"Ampicillin"	"M45 Table 9"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Enterococcus"	"Ampicillin"	"Table 2D"	"10μg"	17	16	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Ampicillin"	"Table 2D"		8	16	FALSE
+"CLSI 2021"	"MIC"		"Granulicatella"	"Ampicillin"	"M45 Table 1"		0.25	8	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Ampicillin"	"Table 2E"	"10μg"	22	18	FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Ampicillin"	"Table 2E"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Kingella"	"Ampicillin"	"M45 Table 9"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Leuconostoc"	"Ampicillin"	"M45 Table 13"		8		FALSE
+"CLSI 2021"	"MIC"		"Lactobacillus"	"Ampicillin"	"M45 Table 11"		8		FALSE
+"CLSI 2021"	"MIC"		"Lactococcus"	"Ampicillin"	"M45 Table 12"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Listeria monocytogenes"	"Ampicillin"	"M45 Table 14"		2		FALSE
+"CLSI 2021"	"DISK"		"Neisseria meningitidis"	"Ampicillin"	"Table 2I"	"10μg"			FALSE
+"CLSI 2021"	"MIC"		"Neisseria meningitidis"	"Ampicillin"	"Table 2I"		0.125	2	FALSE
+"CLSI 2021"	"MIC"		"Pediococcus"	"Ampicillin"	"M45 Table 18"		8		FALSE
+"CLSI 2021"	"DISK"		"Pasteurella"	"Ampicillin"	"M45 Table 17"	"10μg"	27		FALSE
+"CLSI 2021"	"MIC"		"Pasteurella"	"Ampicillin"	"M45 Table 17"		0.5		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Ampicillin"	"Table 2H-1"	"10μg"	24		FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Ampicillin"	"M45 Table 1"		0.25	8	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Ampicillin"	"Table 2H-1"		0.25		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Ampicillin"	"Table 2G"	"10μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Ampicillin"	"Table 2G"				FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Ampicillin"	"Table 2H-2"	"10μg"			FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Ampicillin"	"Table 2H-2"		0.25	8	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Ampicillin"	"M45 Table 20"	"10μg"	17	13	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Ampicillin"	"M45 Table 20"		8	32	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Ampicillin"	"Generic CLSI rules"	"10μg"	17	13	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Ampicillin"	"Generic CLSI rules"	"10μg"	8	32	FALSE
+"CLSI 2021"	"MIC"		"Bacillus anthracis"	"Amoxicillin"	"M45 Table 21"		0.125	0.25	FALSE
+"CLSI 2021"	"MIC"		"Pasteurella"	"Amoxicillin"	"M45 Table 17"		0.5		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Amoxicillin"	"Table 2H-1"	"30μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Amoxicillin"	"Table 2H-1"				FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Amoxicillin"	"Table 2G"	"30μg"			FALSE
+"CLSI 2021"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Amoxicillin"	"Table 2G"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Candida"	"Anidulafungin"	"Table 1"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Candida"	"Anidulafungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2021"	"MIC"		"Candida albicans"	"Anidulafungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2021"	"MIC"		"Candida glabrata"	"Anidulafungin"	"Table 1"		0.125	0.5	FALSE
+"CLSI 2021"	"MIC"		"Candida parapsilosis"	"Anidulafungin"	"Table 1"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Candida tropicalis"	"Anidulafungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Aztreonam"	"Table 2A"	"30μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Aztreonam"	"Table 2A"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Aztreonam"	"M45 Table 2"	"30μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"Aeromonas"	"Aztreonam"	"M45 Table 3"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Aztreonam"	"Table 2E"	"30μg"	26		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Aztreonam"	"Table 2E"		2		FALSE
+"CLSI 2021"	"DISK"		"Pseudomonas aeruginosa"	"Aztreonam"	"Table 2B-1"	"30μg"	22	15	FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Aztreonam"	"Table 2B-1"		8	32	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Aztreonam"	"Generic CLSI rules"	"30μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Aztreonam"	"Generic CLSI rules"	"30μg"	4	16	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Azlocillin"	"Generic CLSI rules"	"75μg"	18	17	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Azlocillin"	"Generic CLSI rules"	"75μg"	64	128	FALSE
+"CLSI 2021"	"MIC"		"Aggregatibacter"	"Azithromycin"	"M45 Table 9"		4		FALSE
+"CLSI 2021"	"MIC"		"Cardiobacterium"	"Azithromycin"	"M45 Table 9"		4		FALSE
+"CLSI 2021"	"MIC"		"Eikenella corrodens"	"Azithromycin"	"M45 Table 9"		4		FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Azithromycin"	"Table 2E"	"15μg"	12		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Azithromycin"	"Table 2E"		4		FALSE
+"CLSI 2021"	"MIC"		"Kingella"	"Azithromycin"	"M45 Table 9"		4		FALSE
+"CLSI 2021"	"DISK"		"Moraxella catarrhalis"	"Azithromycin"	"M45 Table 16"	"15μg"	26		FALSE
+"CLSI 2021"	"MIC"		"Moraxella catarrhalis"	"Azithromycin"	"M45 Table 16"		0.25		FALSE
+"CLSI 2021"	"DISK"		"Neisseria gonorrhoeae"	"Azithromycin"		"15μg"			FALSE
+"CLSI 2021"	"DISK"		"Neisseria gonorrhoeae"	"Azithromycin"	"Table 2F"	"15μg"	30		FALSE
+"CLSI 2021"	"MIC"		"Neisseria gonorrhoeae"	"Azithromycin"	"Table 2F"		1		FALSE
+"CLSI 2021"	"DISK"		"Neisseria meningitidis"	"Azithromycin"	"Table 2I"	"15μg"	20		FALSE
+"CLSI 2021"	"MIC"		"Neisseria meningitidis"	"Azithromycin"	"Table 2I"		2		FALSE
+"CLSI 2021"	"DISK"		"Pasteurella"	"Azithromycin"	"M45 Table 17"	"15μg"	20		FALSE
+"CLSI 2021"	"MIC"		"Pasteurella"	"Azithromycin"	"M45 Table 17"		1		FALSE
+"CLSI 2021"	"MIC"		"Shigella"	"Azithromycin"	"Table 2A"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Salmonella enterica"	"Azithromycin"	"Table 2A"		16	32	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Azithromycin"	"Table 2C"	"15μg"	18	13	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Azithromycin"	"Table 2C"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Azithromycin"	"Table 2H-1"	"15μg"	18	13	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Azithromycin"	"Table 2H-1"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Azithromycin"	"Table 2G"	"15μg"	18	13	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Azithromycin"	"Table 2G"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Azithromycin"	"Table 2H-2"	"15μg"	18	13	FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Azithromycin"	"Table 2H-2"		0.5	2	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Azithromycin"	"M45 Table 20"		2		FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Azithromycin"	"Generic CLSI rules"	"15μg"	18	13	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Azithromycin"	"Generic CLSI rules"	"15μg"	2	8	FALSE
+"CLSI 2021"	"DISK"		"Candida"	"Caspofungin"	"Table 1"		13	10	FALSE
+"CLSI 2021"	"DISK"		"Candida"	"Caspofungin"	"Table 1"		17	14	FALSE
+"CLSI 2021"	"MIC"		"Candida"	"Caspofungin"	"Table 1"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Candida"	"Caspofungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"Candida albicans"	"Caspofungin"	"Table 1"		17	14	FALSE
+"CLSI 2021"	"MIC"		"Candida albicans"	"Caspofungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2021"	"MIC"		"Candida glabrata"	"Caspofungin"	"Table 1"		0.125	0.5	FALSE
+"CLSI 2021"	"DISK"		"Candida parapsilosis"	"Caspofungin"	"Table 1"		13	10	FALSE
+"CLSI 2021"	"MIC"		"Candida parapsilosis"	"Caspofungin"	"Table 1"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Candida tropicalis"	"Caspofungin"	"Table 1"		17	14	FALSE
+"CLSI 2021"	"MIC"		"Candida tropicalis"	"Caspofungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Cefetamet"	"Table 2A"	"10μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Cefetamet"	"Table 2A"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Cefetamet"	"Table 2E"	"10μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Cefetamet"	"Table 2E"		4	16	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Cefetamet"	"Generic CLSI rules"	"10μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Cefetamet"	"Generic CLSI rules"	"10μg"	4	16	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Ceftazidime"	"Table 2A"	"30μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Ceftazidime"	"Table 2A"		4	16	FALSE
+"CLSI 2021"	"DISK"	"Parenteral"	"Acinetobacter"	"Ceftazidime"	"Table 2B-2"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"	"Parenteral"	"Acinetobacter"	"Ceftazidime"	"Table 2B-2"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Ceftazidime"	"M45 Table 2"	"30μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"Aeromonas"	"Ceftazidime"	"M45 Table 3"		4	16	FALSE
+"CLSI 2021"	"DISK"	"Parenteral"	"Burkholderia cepacia"	"Ceftazidime"	"Table 2B-3"	"30μg"	21	17	FALSE
+"CLSI 2021"	"DISK"	"Parenteral"	"Burkholderia cepacia"	"Ceftazidime"	"Table 2B-3"	"30μg"	21	17	FALSE
+"CLSI 2021"	"MIC"	"Parenteral"	"Burkholderia cepacia"	"Ceftazidime"	"Table 2B-3"		8	32	FALSE
+"CLSI 2021"	"MIC"	"Parenteral"	"Burkholderia cepacia"	"Ceftazidime"	"Table 2B-3"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Burkholderia mallei"	"Ceftazidime"	"M45 Table 21"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Burkholderia pseudomallei"	"Ceftazidime"	"M45 Table 21"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Ceftazidime"	"Table 2E"	"30μg"	26		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Ceftazidime"	"Table 2E"		2		FALSE
+"CLSI 2021"	"MIC"		"Moraxella catarrhalis"	"Ceftazidime"	"M45 Table 16"		2		FALSE
+"CLSI 2021"	"DISK"		"Pseudomonas aeruginosa"	"Ceftazidime"	"Table 2B-1"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Ceftazidime"	"Table 2B-1"		8	32	FALSE
+"CLSI 2021"	"DISK"	"Parenteral"	"Stenotrophomonas maltophilia"	"Ceftazidime"	"Table 2B-4"	"30μg"			FALSE
+"CLSI 2021"	"MIC"	"Parenteral"	"Stenotrophomonas maltophilia"	"Ceftazidime"	"Table 2B-4"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Ceftazidime"	"M45 Table 20"	"30μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Ceftazidime"	"M45 Table 20"		4	16	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Ceftazidime"	"Generic CLSI rules"	"30μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Ceftazidime"	"Generic CLSI rules"	"30μg"	4	16	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Cefdinir"	"Table 2A"	"5μg"	20	16	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Cefdinir"	"Table 2A"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Cefdinir"	"Table 2E"	"5μg"	20		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Cefdinir"	"Table 2E"		1		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Cefdinir"	"Table 2G"	"5μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Cefdinir"	"Table 2G"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Cefdinir"	"Generic CLSI rules"	"5μg"	20	16	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Cefdinir"	"Generic CLSI rules"	"5μg"	1	4	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Cefaclor"	"Table 2A"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Cefaclor"	"Table 2A"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Cefaclor"	"Table 2E"	"30μg"	20	16	FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Cefaclor"	"Table 2E"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Moraxella catarrhalis"	"Cefaclor"	"M45 Table 16"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Cefaclor"	"Table 2G"		1	4	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Cefaclor"	"Generic CLSI rules"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Cefaclor"	"Generic CLSI rules"	"30μg"	8	32	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Cefixime"	"Table 2A"	"5μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Cefixime"	"Table 2A"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Cefixime"	"Table 2E"	"5μg"	21		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Cefixime"	"Table 2E"		1		FALSE
+"CLSI 2021"	"DISK"		"Neisseria gonorrhoeae"	"Cefixime"	"Table 2F"	"5μg"	31		FALSE
+"CLSI 2021"	"MIC"		"Neisseria gonorrhoeae"	"Cefixime"	"Table 2F"		0.25		FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Cefixime"	"Generic CLSI rules"	"5μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Cefixime"	"Generic CLSI rules"	"5μg"	1	4	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Cefoperazone"	"Table 2A"	"75μg"	21	15	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Cefoperazone"	"Table 2A"		16	64	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Cefoperazone"	"Table 2J"		16	64	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Cefoperazone"	"Generic CLSI rules"	"75μg"	21	15	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Cefoperazone"	"Generic CLSI rules"	"75μg"	16	64	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Cefoperazone"	"Generic CLSI rules"	"30μg"	16	64	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Chloramphenicol"	"Table 2A"	"30μg"	18	12	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Chloramphenicol"	"Table 2A"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Abiotrophia"	"Chloramphenicol"	"M45 Table 1"		4	8	FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Chloramphenicol"	"M45 Table 2"	"30μg"	18	12	FALSE
+"CLSI 2021"	"MIC"		"Aeromonas"	"Chloramphenicol"	"M45 Table 3"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Aggregatibacter"	"Chloramphenicol"	"M45 Table 9"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Chloramphenicol"	"Table 2J"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Bacillus"	"Chloramphenicol"	"M45 Table 4"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Burkholderia cepacia"	"Chloramphenicol"	"Table 2B-3"	"30μg"			FALSE
+"CLSI 2021"	"DISK"		"Burkholderia cepacia"	"Chloramphenicol"	"Table 2B-3"	"30μg"			FALSE
+"CLSI 2021"	"MIC"		"Burkholderia cepacia"	"Chloramphenicol"	"Table 2B-3"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Burkholderia cepacia"	"Chloramphenicol"	"Table 2B-3"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Cardiobacterium"	"Chloramphenicol"	"M45 Table 9"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Eikenella corrodens"	"Chloramphenicol"	"M45 Table 9"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Enterococcus"	"Chloramphenicol"	"Table 2D"	"30μg"	18	12	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Chloramphenicol"	"Table 2D"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Francisella tularensis"	"Chloramphenicol"	"M45 Table 21"		8		FALSE
+"CLSI 2021"	"MIC"		"Granulicatella"	"Chloramphenicol"	"M45 Table 1"		4	8	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Chloramphenicol"	"Table 2E"	"30μg"	29	25	FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Chloramphenicol"	"Table 2E"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Kingella"	"Chloramphenicol"	"M45 Table 9"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Leuconostoc"	"Chloramphenicol"	"M45 Table 13"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Moraxella catarrhalis"	"Chloramphenicol"	"M45 Table 16"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Neisseria meningitidis"	"Chloramphenicol"	"Table 2I"	"30μg"	26	19	FALSE
+"CLSI 2021"	"MIC"		"Neisseria meningitidis"	"Chloramphenicol"	"Table 2I"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Pediococcus"	"Chloramphenicol"	"M45 Table 18"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Pasteurella"	"Chloramphenicol"	"M45 Table 17"	"30μg"	28		FALSE
+"CLSI 2021"	"MIC"		"Pasteurella"	"Chloramphenicol"	"M45 Table 17"		2		FALSE
+"CLSI 2021"	"DISK"		"Stenotrophomonas maltophilia"	"Chloramphenicol"	"Table 2B-4"	"30μg"			FALSE
+"CLSI 2021"	"MIC"		"Stenotrophomonas maltophilia"	"Chloramphenicol"	"Table 2B-4"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Chloramphenicol"	"Table 2C"	"30μg"	18	12	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Chloramphenicol"	"Table 2C"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Chloramphenicol"	"Table 2H-1"	"30μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Chloramphenicol"	"M45 Table 1"		4	8	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Chloramphenicol"	"Table 2H-1"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Chloramphenicol"	"Table 2G"	"30μg"	21	20	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Chloramphenicol"	"Table 2G"		4	8	FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Chloramphenicol"	"Table 2H-2"	"30μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Chloramphenicol"	"Table 2H-2"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Chloramphenicol"	"M45 Table 20"	"30μg"	18	12	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Chloramphenicol"	"M45 Table 20"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Yersinia pestis"	"Chloramphenicol"	"M45 Table 21"		8	32	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Chloramphenicol"	"Generic CLSI rules"	"30μg"	18	12	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Chloramphenicol"	"Generic CLSI rules"	"30μg"	8	32	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Cefonicid"	"Table 2A"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Cefonicid"	"Table 2A"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Cefonicid"	"Table 2E"	"30μg"	20	16	FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Cefonicid"	"Table 2E"		4	16	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Cefonicid"	"Generic CLSI rules"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Cefonicid"	"Generic CLSI rules"	"30μg"	8	32	FALSE
+"CLSI 2021"	"DISK"	"Urine"	"Enterobacteriaceae"	"Cinoxacin"	"Table 2A"	"100μg"	19	14	FALSE
+"CLSI 2021"	"MIC"	"Urine"	"Enterobacteriaceae"	"Cinoxacin"	"Table 2A"		16	64	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Cinoxacin"	"Generic CLSI rules"	"100μg"	19	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Cinoxacin"	"Generic CLSI rules"	"100μg"	16	64	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Ciprofloxacin"	"Table 2A"	"5μg"	26	21	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Ciprofloxacin"	"Table 2A"		0.25	1	FALSE
+"CLSI 2021"	"MIC"		"Abiotrophia"	"Ciprofloxacin"	"M45 Table 1"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Ciprofloxacin"	"Table 2B-2"	"5μg"	21	15	FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Ciprofloxacin"	"Table 2B-2"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Aerococcus"	"Ciprofloxacin"	"M45 Table 2"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Ciprofloxacin"	"M45 Table 2"	"5μg"	21	15	FALSE
+"CLSI 2021"	"MIC"		"Aeromonas"	"Ciprofloxacin"	"M45 Table 3"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Aggregatibacter"	"Ciprofloxacin"	"M45 Table 9"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Bacillus"	"Ciprofloxacin"	"M45 Table 4"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Bacillus anthracis"	"Ciprofloxacin"	"M45 Table 21"		0.25		FALSE
+"CLSI 2021"	"DISK"		"Campylobacter"	"Ciprofloxacin"	"M45 Table 5"		24	20	FALSE
+"CLSI 2021"	"MIC"		"Campylobacter"	"Ciprofloxacin"	"M45 Table 5"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Cardiobacterium"	"Ciprofloxacin"	"M45 Table 9"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Eikenella corrodens"	"Ciprofloxacin"	"M45 Table 9"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Enterococcus"	"Ciprofloxacin"	"Table 2D"	"5μg"	21	15	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Ciprofloxacin"	"Table 2D"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Francisella tularensis"	"Ciprofloxacin"	"M45 Table 21"		0.5		FALSE
+"CLSI 2021"	"MIC"		"Granulicatella"	"Ciprofloxacin"	"M45 Table 1"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Ciprofloxacin"	"Table 2E"	"5μg"	21		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Ciprofloxacin"	"Table 2E"		1		FALSE
+"CLSI 2021"	"MIC"		"Kingella"	"Ciprofloxacin"	"M45 Table 9"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Moraxella catarrhalis"	"Ciprofloxacin"	"M45 Table 16"		1		FALSE
+"CLSI 2021"	"DISK"		"Neisseria gonorrhoeae"	"Ciprofloxacin"	"Table 2F"	"5μg"	41	27	FALSE
+"CLSI 2021"	"MIC"		"Neisseria gonorrhoeae"	"Ciprofloxacin"	"Table 2F"		0.064	1	FALSE
+"CLSI 2021"	"DISK"		"Neisseria meningitidis"	"Ciprofloxacin"	"Table 2I"	"5μg"	35	32	FALSE
+"CLSI 2021"	"MIC"		"Neisseria meningitidis"	"Ciprofloxacin"	"Table 2I"		0.032	0.12	FALSE
+"CLSI 2021"	"DISK"		"Pseudomonas aeruginosa"	"Ciprofloxacin"	"Table 2B-1"	"5μg"	25	18	FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Ciprofloxacin"	"Table 2B-1"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Salmonella"	"Ciprofloxacin"	"Table 2A"	"5μg"	31	20	FALSE
+"CLSI 2021"	"MIC"		"Salmonella"	"Ciprofloxacin"	"Table 2A"		0.064	1	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Ciprofloxacin"	"Table 2C"	"5μg"	21	15	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Ciprofloxacin"	"Table 2C"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Ciprofloxacin"	"M45 Table 1"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Ciprofloxacin"	"Table 2G"	"5μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Ciprofloxacin"	"Table 2G"				FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Ciprofloxacin"	"M45 Table 20"	"5μg"	21	15	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Ciprofloxacin"	"M45 Table 20"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Yersinia pestis"	"Ciprofloxacin"	"M45 Table 21"		0.25		FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Ciprofloxacin"	"Generic CLSI rules"	"5μg"	26	21	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Ciprofloxacin"	"Generic CLSI rules"	"5μg"	0.25	1	FALSE
+"CLSI 2021"	"MIC"		"Abiotrophia"	"Clindamycin"	"M45 Table 1"		0.25	1	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Clindamycin"	"Table 2J"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Bacillus"	"Clindamycin"	"M45 Table 4"		0.5	4	FALSE
+"CLSI 2021"	"MIC"		"Gemella"	"Clindamycin"	"M45 Table 8"		0.25	1	FALSE
+"CLSI 2021"	"MIC"		"Granulicatella"	"Clindamycin"	"M45 Table 1"		0.25	1	FALSE
+"CLSI 2021"	"MIC"		"Lactobacillus"	"Clindamycin"	"M45 Table 11"		0.5	2	FALSE
+"CLSI 2021"	"MIC"		"Lactococcus"	"Clindamycin"	"M45 Table 12"		0.5	4	FALSE
+"CLSI 2021"	"MIC"		"Micrococcus"	"Clindamycin"	"M45 Table 15"		0.5	4	FALSE
+"CLSI 2021"	"MIC"		"Moraxella catarrhalis"	"Clindamycin"	"M45 Table 16"		0.5	4	FALSE
+"CLSI 2021"	"MIC"		"Rothia"	"Clindamycin"	"M45 Table 19"		0.5	4	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Clindamycin"	"Table 2C"	"2μg"	21	14	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Clindamycin"	"Table 2C"		0.5	4	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Clindamycin"	"Table 2H-1"	"2μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Clindamycin"	"M45 Table 1"		0.25	1	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Clindamycin"	"Table 2H-1"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Clindamycin"	"Table 2G"	"2μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Clindamycin"	"Table 2G"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Clindamycin"	"Table 2H-2"	"2μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Clindamycin"	"Table 2H-2"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Clindamycin"	"Generic CLSI rules"	"2μg"	21	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Clindamycin"	"Generic CLSI rules"	"2μg"	0.5	4	FALSE
+"CLSI 2021"	"MIC"		"Aggregatibacter"	"Clarithromycin"	"M45 Table 9"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Cardiobacterium"	"Clarithromycin"	"M45 Table 9"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Eikenella corrodens"	"Clarithromycin"	"M45 Table 9"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Helicobacter pylori"	"Clarithromycin"	"M45 Table 10"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Clarithromycin"	"Table 2E"	"15μg"	13	10	FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Clarithromycin"	"Table 2E"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Kingella"	"Clarithromycin"	"M45 Table 9"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Moraxella catarrhalis"	"Clarithromycin"	"M45 Table 16"	"15μg"	24		FALSE
+"CLSI 2021"	"MIC"		"Moraxella catarrhalis"	"Clarithromycin"	"M45 Table 16"		1		FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Clarithromycin"	"Table 2C"	"15μg"	18	13	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Clarithromycin"	"Table 2C"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Clarithromycin"	"Table 2H-1"	"15μg"	21	16	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Clarithromycin"	"Table 2H-1"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Clarithromycin"	"Table 2G"	"15μg"	21	16	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Clarithromycin"	"Table 2G"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Clarithromycin"	"Table 2H-2"	"15μg"	21	16	FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Clarithromycin"	"Table 2H-2"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Clarithromycin"	"Generic CLSI rules"	"15μg"	18	13	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Clarithromycin"	"Generic CLSI rules"	"15μg"	2	8	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Cefmetazole"	"Table 2A"	"30μg"	16	12	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Cefmetazole"	"Table 2A"		16	64	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Cefmetazole"	"Table 2J"		16	64	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Cefmetazole"	"Generic CLSI rules"	"30μg"	16	12	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Cefmetazole"	"Generic CLSI rules"	"30μg"	16	64	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Colistin"	"Table 2A"		0.001	4	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Colistin"	"Table 2B-2"	"10μg"			FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Colistin"	"Table 2B-2"		0.001	4	FALSE
+"CLSI 2021"	"DISK"		"Pseudomonas aeruginosa"	"Colistin"	"Table 2B-1"	"10μg"			FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Colistin"	"Table 2B-1"		0.001	4	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Colistin"	"Generic CLSI rules"	"10μg"	11	10	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Colistin"	"Generic CLSI rules"	"10μg"	0.001	4	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Cefpodoxime"	"Table 2A"	"10μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Cefpodoxime"	"Table 2A"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Cefpodoxime"	"Table 2E"	"10μg"	21		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Cefpodoxime"	"Table 2E"		2		FALSE
+"CLSI 2021"	"DISK"		"Neisseria gonorrhoeae"	"Cefpodoxime"	"Table 2F"	"10μg"	29		FALSE
+"CLSI 2021"	"MIC"		"Neisseria gonorrhoeae"	"Cefpodoxime"	"Table 2F"		0.5		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Cefpodoxime"	"Table 2G"	"10μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Cefpodoxime"	"Table 2G"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Cefpodoxime"	"Generic CLSI rules"	"10μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Cefpodoxime"	"Generic CLSI rules"	"10μg"	2	8	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Cefprozil"	"Table 2A"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Cefprozil"	"Table 2A"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Cefprozil"	"Table 2E"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Cefprozil"	"Table 2E"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Cefprozil"	"Table 2G"	"30μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Cefprozil"	"Table 2G"		2	8	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Cefprozil"	"Generic CLSI rules"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Cefprozil"	"Generic CLSI rules"	"30μg"	8	32	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Ceftaroline"	"Table 2A"	"30μg"	23	19	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Ceftaroline"	"Table 2A"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Ceftaroline"	"Table 2E"	"30μg"	30		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Ceftaroline"	"Table 2E"		0.5		FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus aureus"	"Ceftaroline"	"Table 2C"	"30μg"	25	19	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus aureus"	"Ceftaroline"	"Table 2C"		1	8	FALSE
+"CLSI 2021"	"DISK"		"Coagulase-positive Staphylococcus (CoPS)"	"Ceftaroline"	"Table 2C"	"30μg"	25	19	FALSE
+"CLSI 2021"	"MIC"		"Coagulase-positive Staphylococcus (CoPS)"	"Ceftaroline"	"Table 2C"		1	8	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Ceftaroline"	"Table 2H-1"	"30μg"	26		FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Ceftaroline"	"Table 2H-1"		0.5		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Ceftaroline"	"Table 2G"	"30μg"			FALSE
+"CLSI 2021"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Ceftaroline"	"Table 2G"		0.5		FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Ceftaroline"	"Generic CLSI rules"	"30μg"	23	19	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Ceftaroline"	"Generic CLSI rules"	"30μg"	0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Ceftriaxone"	"Table 2A"	"30μg"	23	19	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Ceftriaxone"	"Table 2A"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Abiotrophia"	"Ceftriaxone"	"M45 Table 1"		1	4	FALSE
+"CLSI 2021"	"DISK"	"Parenteral"	"Acinetobacter"	"Ceftriaxone"	"Table 2B-2"	"30μg"	21	13	FALSE
+"CLSI 2021"	"MIC"	"Parenteral"	"Acinetobacter"	"Ceftriaxone"	"Table 2B-2"		8	64	FALSE
+"CLSI 2021"	"MIC"		"Aerococcus"	"Ceftriaxone"	"M45 Table 2"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Ceftriaxone"	"M45 Table 2"	"30μg"	23	19	FALSE
+"CLSI 2021"	"MIC"		"Aeromonas"	"Ceftriaxone"	"M45 Table 3"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Aggregatibacter"	"Ceftriaxone"	"M45 Table 9"		2		FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Ceftriaxone"	"Table 2J"		16	64	FALSE
+"CLSI 2021"	"MIC"		"Cardiobacterium"	"Ceftriaxone"	"M45 Table 9"		2		FALSE
+"CLSI 2021"	"MIC"		"Eikenella corrodens"	"Ceftriaxone"	"M45 Table 9"		2		FALSE
+"CLSI 2021"	"MIC"		"Gemella"	"Ceftriaxone"	"M45 Table 8"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Granulicatella"	"Ceftriaxone"	"M45 Table 1"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Ceftriaxone"	"Table 2E"	"30μg"	26		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Ceftriaxone"	"Table 2E"		2		FALSE
+"CLSI 2021"	"MIC"		"Kingella"	"Ceftriaxone"	"M45 Table 9"		2		FALSE
+"CLSI 2021"	"MIC"		"Lactococcus"	"Ceftriaxone"	"M45 Table 12"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Moraxella catarrhalis"	"Ceftriaxone"	"M45 Table 16"		2		FALSE
+"CLSI 2021"	"DISK"		"Neisseria gonorrhoeae"	"Ceftriaxone"	"Table 2F"	"30μg"	35		FALSE
+"CLSI 2021"	"MIC"		"Neisseria gonorrhoeae"	"Ceftriaxone"	"Table 2F"		0.25		FALSE
+"CLSI 2021"	"DISK"		"Neisseria meningitidis"	"Ceftriaxone"	"Table 2I"	"30μg"	34		FALSE
+"CLSI 2021"	"MIC"		"Neisseria meningitidis"	"Ceftriaxone"	"Table 2I"		0.125		FALSE
+"CLSI 2021"	"DISK"		"Pasteurella"	"Ceftriaxone"	"M45 Table 17"	"30μg"	34		FALSE
+"CLSI 2021"	"MIC"		"Pasteurella"	"Ceftriaxone"	"M45 Table 17"		0.125		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Ceftriaxone"	"Table 2H-1"	"30μg"	24		FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Ceftriaxone"	"M45 Table 1"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Ceftriaxone"	"Table 2H-1"		0.5		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Ceftriaxone"	"Table 2G"	"30μg"			FALSE
+"CLSI 2021"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Ceftriaxone"	"Table 2G"		0.5	2	FALSE
+"CLSI 2021"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Ceftriaxone"	"Table 2G"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Ceftriaxone"	"Table 2H-2"	"30μg"	27	24	FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Ceftriaxone"	"Table 2H-2"		1	4	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Ceftriaxone"	"Generic CLSI rules"	"30μg"	23	19	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Ceftriaxone"	"Generic CLSI rules"	"30μg"	1	4	FALSE
+"CLSI 2021"	"DISK"	"Urine"	"Enterobacteriaceae"	"Ceftibuten"	"Table 2A"	"30μg"	21	17	FALSE
+"CLSI 2021"	"MIC"	"Urine"	"Enterobacteriaceae"	"Ceftibuten"	"Table 2A"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Ceftibuten"	"Table 2E"	"30μg"	28		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Ceftibuten"	"Table 2E"		2		FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Ceftibuten"	"Generic CLSI rules"	"30μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Ceftibuten"	"Generic CLSI rules"	"30μg"	8	32	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Cefotetan"	"Table 2A"	"30μg"	16	12	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Cefotetan"	"Table 2A"		16	64	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Cefotetan"	"Table 2J"		16	64	FALSE
+"CLSI 2021"	"DISK"		"Neisseria gonorrhoeae"	"Cefotetan"	"Table 2F"	"30μg"	26	19	FALSE
+"CLSI 2021"	"MIC"		"Neisseria gonorrhoeae"	"Cefotetan"	"Table 2F"		2	8	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Cefotetan"	"Generic CLSI rules"	"30μg"	16	12	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Cefotetan"	"Generic CLSI rules"	"30μg"	16	64	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Cefotaxime"	"Table 2A"	"30μg"	26	22	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Cefotaxime"	"Table 2A"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Abiotrophia"	"Cefotaxime"	"M45 Table 1"		1	4	FALSE
+"CLSI 2021"	"DISK"	"Parenteral"	"Acinetobacter"	"Cefotaxime"	"Table 2B-2"	"30μg"	23	14	FALSE
+"CLSI 2021"	"MIC"	"Parenteral"	"Acinetobacter"	"Cefotaxime"	"Table 2B-2"		8	64	FALSE
+"CLSI 2021"	"MIC"		"Aerococcus"	"Cefotaxime"	"M45 Table 2"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Cefotaxime"	"M45 Table 2"	"30μg"	26	22	FALSE
+"CLSI 2021"	"MIC"		"Aeromonas"	"Cefotaxime"	"M45 Table 3"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Aggregatibacter"	"Cefotaxime"	"M45 Table 9"		2		FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Cefotaxime"	"Table 2J"		16	64	FALSE
+"CLSI 2021"	"MIC"		"Cardiobacterium"	"Cefotaxime"	"M45 Table 9"		2		FALSE
+"CLSI 2021"	"MIC"		"Eikenella corrodens"	"Cefotaxime"	"M45 Table 9"		2		FALSE
+"CLSI 2021"	"MIC"		"Gemella"	"Cefotaxime"	"M45 Table 8"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Granulicatella"	"Cefotaxime"	"M45 Table 1"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Cefotaxime"	"Table 2E"	"30μg"	26		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Cefotaxime"	"Table 2E"		2		FALSE
+"CLSI 2021"	"MIC"		"Kingella"	"Cefotaxime"	"M45 Table 9"		2		FALSE
+"CLSI 2021"	"MIC"		"Moraxella catarrhalis"	"Cefotaxime"	"M45 Table 16"		2		FALSE
+"CLSI 2021"	"DISK"		"Neisseria gonorrhoeae"	"Cefotaxime"	"Table 2F"	"30μg"	31		FALSE
+"CLSI 2021"	"MIC"		"Neisseria gonorrhoeae"	"Cefotaxime"	"Table 2F"		0.5		FALSE
+"CLSI 2021"	"DISK"		"Neisseria meningitidis"	"Cefotaxime"	"Table 2I"	"30μg"	34		FALSE
+"CLSI 2021"	"MIC"		"Neisseria meningitidis"	"Cefotaxime"	"Table 2I"		0.125		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Cefotaxime"	"Table 2H-1"	"30μg"	24		FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Cefotaxime"	"M45 Table 1"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Cefotaxime"	"Table 2H-1"		0.5		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Cefotaxime"	"Table 2G"	"30μg"			FALSE
+"CLSI 2021"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Cefotaxime"	"Table 2G"		0.5	2	FALSE
+"CLSI 2021"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Cefotaxime"	"Table 2G"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Cefotaxime"	"Table 2H-2"	"30μg"	28	25	FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Cefotaxime"	"Table 2H-2"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Cefotaxime"	"M45 Table 20"	"30μg"	26	22	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Cefotaxime"	"M45 Table 20"		1	4	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Cefotaxime"	"Generic CLSI rules"	"30μg"	26	22	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Cefotaxime"	"Generic CLSI rules"	"30μg"	1	4	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Cefuroxime axetil"	"Table 2E"	"30μg"	20	16	FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Cefuroxime axetil"	"Table 2E"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Cefuroxime axetil"	"Table 2G"	"30μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Cefuroxime axetil"	"Table 2G"		1	4	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Cefuroxime axetil"	"Generic CLSI rules"	"30μg"	23	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Cefuroxime axetil"	"Generic CLSI rules"	"30μg"	4	32	FALSE
+"CLSI 2021"	"DISK"	"Parenteral"	"Enterobacteriaceae"	"Cefuroxime"	"Table 2A"	"30μg"	18	14	FALSE
+"CLSI 2021"	"DISK"	"Oral"	"Enterobacteriaceae"	"Cefuroxime"	"Table 2A"	"30μg"	23	14	FALSE
+"CLSI 2021"	"MIC"	"Parenteral"	"Enterobacteriaceae"	"Cefuroxime"	"Table 2A"		8	32	FALSE
+"CLSI 2021"	"MIC"	"Oral"	"Enterobacteriaceae"	"Cefuroxime"	"Table 2A"		4	32	FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Cefuroxime"	"M45 Table 2"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Aeromonas"	"Cefuroxime"	"M45 Table 3"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Cefuroxime"	"Table 2E"	"30μg"	20	16	FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Cefuroxime"	"Table 2E"		4	16	FALSE
+"CLSI 2021"	"MIC"	"Oral"	"Moraxella catarrhalis"	"Cefuroxime"	"M45 Table 16"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Cefuroxime"	"Table 2H-1"	"30μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Cefuroxime"	"Table 2H-1"				FALSE
+"CLSI 2021"	"DISK"	"Oral"	"Streptococcus pneumoniae"	"Cefuroxime"	"Table 2G"	"30μg"			FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Cefuroxime"	"Table 2G"	"30μg"			FALSE
+"CLSI 2021"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Cefuroxime"	"Table 2G"		1	4	FALSE
+"CLSI 2021"	"MIC"	"Parenteral"	"Streptococcus pneumoniae"	"Cefuroxime"	"Table 2G"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Cefuroxime"	"M45 Table 20"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Cefuroxime"	"M45 Table 20"		8	32	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Cefuroxime"	"Generic CLSI rules"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Cefuroxime"	"Generic CLSI rules"	"30μg"	8	32	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Ceftazidime/avibactam"	"Table 2A"	"30μg/20μg"	21	20	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Ceftazidime/avibactam"	"Table 2A"		8	16	FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Ceftazidime/avibactam"	"Table 2B-1"		8	16	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Ceftazidime/avibactam"	"Generic CLSI rules"	"30-20μg"	21	20	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Ceftazidime/avibactam"	"Generic CLSI rules"	"30-20μg"	8	16	FALSE
+"CLSI 2021"	"DISK"	"Urine"	"Enterobacteriaceae"	"Cefazolin"	"Table 2A"	"30μg"	15	14	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Cefazolin"	"Table 2A"	"30μg"	23	19	FALSE
+"CLSI 2021"	"MIC"	"Urine"	"Enterobacteriaceae"	"Cefazolin"	"Table 2A"		16	32	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Cefazolin"	"Table 2A"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Cefazolin"	"M45 Table 20"		2	8	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Cefazolin"	"Generic CLSI rules"	"30μg"	23	19	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Cefazolin"	"Generic CLSI rules"	"30μg"	2	8	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Ceftolozane/tazobactam"	"Table 2A"	"30μg/10μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Ceftolozane/tazobactam"	"Table 2A"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Ceftolozane/tazobactam"	"Table 2E"		0.5		FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Ceftolozane/tazobactam"	"Table 2B-1"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Ceftolozane/tazobactam"	"Table 2H-2"		8	32	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Ceftolozane/tazobactam"	"Generic CLSI rules"	"30-10μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Ceftolozane/tazobactam"	"Generic CLSI rules"	"30-10μg"	2	8	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Ceftizoxime"	"Table 2A"	"30μg"	25	21	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Ceftizoxime"	"Table 2A"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Ceftizoxime"	"Table 2J"		32	128	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Ceftizoxime"	"Table 2E"	"30μg"	26		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Ceftizoxime"	"Table 2E"		2		FALSE
+"CLSI 2021"	"DISK"		"Neisseria gonorrhoeae"	"Ceftizoxime"	"Table 2F"	"30μg"	38		FALSE
+"CLSI 2021"	"MIC"		"Neisseria gonorrhoeae"	"Ceftizoxime"	"Table 2F"		0.5		FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Ceftizoxime"	"Generic CLSI rules"	"30μg"	25	21	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Ceftizoxime"	"Generic CLSI rules"	"30μg"	1	4	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus faecalis"	"Dalbavancin"	"Table 2D"		0.25		FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus aureus"	"Dalbavancin"	"Table 2C"		0.25		FALSE
+"CLSI 2021"	"MIC"		"Coagulase-positive Staphylococcus (CoPS)"	"Dalbavancin"	"Table 2C"		0.25		FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Dalbavancin"	"Table 2H-1"		0.25		FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Dalbavancin"	"Table 2H-2"		0.25		FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Daptomycin"	"Table 2D"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus faecium"	"Daptomycin"	"Table 2D"		0.001	8	FALSE
+"CLSI 2021"	"MIC"		"Lactobacillus"	"Daptomycin"	"M45 Table 11"		4		FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Daptomycin"	"Table 2C"	"30μg"			FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Daptomycin"	"Table 2C"		1		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Daptomycin"	"Table 2H-1"	"30μg"	16		FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Daptomycin"	"Table 2H-1"				FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Daptomycin"	"Table 2G"	"30μg"			FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Daptomycin"	"Table 2H-2"	"30μg"			FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Daptomycin"	"Table 2H-2"		1		FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Daptomycin"	"Generic CLSI rules"	"30μg"	1		FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Difloxacin"	"Generic CLSI rules"	"10μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Difloxacin"	"Generic CLSI rules"	"10μg"	0.5	4	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Dirithromycin"	"Table 2C"	"15μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Dirithromycin"	"Table 2C"		4	8	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Dirithromycin"	"Table 2H-1"	"15μg"	18	13	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Dirithromycin"	"Table 2H-1"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Dirithromycin"	"Table 2G"	"15μg"	18	13	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Dirithromycin"	"Table 2G"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Dirithromycin"	"Table 2H-2"	"15μg"	18	13	FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Dirithromycin"	"Table 2H-2"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Dirithromycin"	"Generic CLSI rules"	"15μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Dirithromycin"	"Generic CLSI rules"	"15μg"	2	8	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Doripenem"	"Table 2A"	"10μg"	23	19	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Doripenem"	"Table 2A"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Doripenem"	"Table 2B-2"		18	14	FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Doripenem"	"Table 2B-2"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Doripenem"	"M45 Table 3"	"10μg"	23	19	FALSE
+"CLSI 2021"	"MIC"		"Aeromonas"	"Doripenem"	"M45 Table 3"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Doripenem"	"Table 2J"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Doripenem"	"Table 2E"	"10μg"	16		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Doripenem"	"Table 2E"		1		FALSE
+"CLSI 2021"	"DISK"		"Pseudomonas aeruginosa"	"Doripenem"	"Table 2B-1"	"10μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Doripenem"	"Table 2B-1"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Doripenem"	"Table 2H-1"	"10μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Doripenem"	"Table 2H-1"		0.125		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Doripenem"	"Table 2G"	"10μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Doripenem"	"Table 2G"		1		FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Doripenem"	"Table 2H-2"	"10μg"			FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Doripenem"	"Table 2H-2"		1		FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Doripenem"	"Generic CLSI rules"	"10μg"	23	19	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Doripenem"	"Generic CLSI rules"	"10μg"	1	4	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Doxycycline"	"Table 2A"	"30μg"	14	10	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Doxycycline"	"Table 2A"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Doxycycline"	"Table 2B-2"	"30μg"	13	9	FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Doxycycline"	"Table 2B-2"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Bacillus anthracis"	"Doxycycline"	"M45 Table 21"		1		FALSE
+"CLSI 2021"	"MIC"		"Brucella"	"Doxycycline"	"M45 Table 21"		1		FALSE
+"CLSI 2021"	"MIC"		"Burkholderia mallei"	"Doxycycline"	"M45 Table 21"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Burkholderia pseudomallei"	"Doxycycline"	"M45 Table 21"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Campylobacter"	"Doxycycline"	"M45 Table 5"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Enterococcus"	"Doxycycline"	"Table 2D"	"30μg"	16	12	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Doxycycline"	"Table 2D"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Francisella tularensis"	"Doxycycline"	"M45 Table 21"		4		FALSE
+"CLSI 2021"	"DISK"		"Pasteurella"	"Doxycycline"	"M45 Table 17"	"30μg"	23		FALSE
+"CLSI 2021"	"MIC"		"Pasteurella"	"Doxycycline"	"M45 Table 17"		0.5		FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Doxycycline"	"Table 2C"	"30μg"	16	12	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Doxycycline"	"Table 2C"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Doxycycline"	"Table 2G"	"30μg"	28	24	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Doxycycline"	"Table 2G"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Doxycycline"	"M45 Table 20"	"30μg"			FALSE
+"CLSI 2021"	"MIC"		"Yersinia pestis"	"Doxycycline"	"M45 Table 21"		4	16	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Doxycycline"	"Generic CLSI rules"	"30μg"	14	10	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Doxycycline"	"Generic CLSI rules"	"30μg"	4	16	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Enrofloxacin"	"Generic CLSI rules"	"5μg"	23	16	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Enrofloxacin"	"Generic CLSI rules"	"5μg"	0.25	2	FALSE
+"CLSI 2021"	"DISK"	"Urine"	"Enterobacteriaceae"	"Enoxacin"	"Table 2A"	"10μg"	18	14	FALSE
+"CLSI 2021"	"MIC"	"Urine"	"Enterobacteriaceae"	"Enoxacin"	"Table 2A"		2	8	FALSE
+"CLSI 2021"	"DISK"	"Urine"	"Staphylococcus"	"Enoxacin"	"Table 2C"	"10μg"	18	14	FALSE
+"CLSI 2021"	"MIC"	"Urine"	"Staphylococcus"	"Enoxacin"	"Table 2C"		2	8	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Enoxacin"	"Generic CLSI rules"	"10μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Enoxacin"	"Generic CLSI rules"	"10μg"	2	8	FALSE
+"CLSI 2021"	"MIC"		"Abiotrophia"	"Erythromycin"	"M45 Table 1"		0.25	1	FALSE
+"CLSI 2021"	"MIC"		"Bacillus"	"Erythromycin"	"M45 Table 4"		0.5	8	FALSE
+"CLSI 2021"	"DISK"		"Campylobacter"	"Erythromycin"	"M45 Table 5"		16	12	FALSE
+"CLSI 2021"	"MIC"		"Campylobacter"	"Erythromycin"	"M45 Table 5"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Enterococcus"	"Erythromycin"	"Table 2D"	"15μg"	23	13	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Erythromycin"	"Table 2D"		0.5	8	FALSE
+"CLSI 2021"	"MIC"		"Gemella"	"Erythromycin"	"M45 Table 8"		0.25	1	FALSE
+"CLSI 2021"	"MIC"		"Granulicatella"	"Erythromycin"	"M45 Table 1"		0.25	1	FALSE
+"CLSI 2021"	"MIC"		"Lactobacillus"	"Erythromycin"	"M45 Table 11"		0.5	8	FALSE
+"CLSI 2021"	"MIC"		"Lactococcus"	"Erythromycin"	"M45 Table 12"		0.5	8	FALSE
+"CLSI 2021"	"MIC"		"Micrococcus"	"Erythromycin"	"M45 Table 15"		0.5	8	FALSE
+"CLSI 2021"	"DISK"		"Moraxella catarrhalis"	"Erythromycin"	"M45 Table 16"	"15μg"	21		FALSE
+"CLSI 2021"	"MIC"		"Moraxella catarrhalis"	"Erythromycin"	"M45 Table 16"		2		FALSE
+"CLSI 2021"	"DISK"		"Pasteurella"	"Erythromycin"	"M45 Table 17"	"15μg"	27	24	FALSE
+"CLSI 2021"	"MIC"		"Pasteurella"	"Erythromycin"	"M45 Table 17"		0.5	2	FALSE
+"CLSI 2021"	"MIC"		"Rothia"	"Erythromycin"	"M45 Table 19"		0.5	8	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Erythromycin"	"Table 2C"	"15μg"	23	13	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Erythromycin"	"Table 2C"		0.5	8	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Erythromycin"	"Table 2H-1"	"15μg"	21	15	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Erythromycin"	"M45 Table 1"		0.25	1	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Erythromycin"	"Table 2H-1"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Erythromycin"	"Table 2G"	"15μg"	21	15	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Erythromycin"	"Table 2G"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Erythromycin"	"Table 2H-2"	"15μg"	21	15	FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Erythromycin"	"Table 2H-2"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Erythromycin"	"Generic CLSI rules"	"15μg"	23	13	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Erythromycin"	"Generic CLSI rules"	"15μg"	0.5	8	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Ertapenem"	"Table 2A"	"10μg"	22	18	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Ertapenem"	"Table 2A"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Ertapenem"	"Table 2B-2"	"10μg"			FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Ertapenem"	"Table 2B-2"				FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Ertapenem"	"M45 Table 2"	"10μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Aeromonas"	"Ertapenem"	"M45 Table 3"		0.5	2	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Ertapenem"	"Table 2J"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Ertapenem"	"Table 2E"	"10μg"	19		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Ertapenem"	"Table 2E"		0.5		FALSE
+"CLSI 2021"	"DISK"		"Pseudomonas"	"Ertapenem"		"10μg"			FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas"	"Ertapenem"					FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Ertapenem"	"Table 2H-1"	"10μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Ertapenem"	"Table 2H-1"		1		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Ertapenem"	"Table 2G"	"10μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Ertapenem"	"Table 2G"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Ertapenem"	"Table 2H-2"	"10μg"			FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Ertapenem"	"Table 2H-2"		1		FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Ertapenem"	"Generic CLSI rules"	"10μg"	22	18	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Ertapenem"	"Generic CLSI rules"	"10μg"	0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Cefiderocol"	"Table 2A"	"30μg"	16	11	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Cefiderocol"	"Table 2A"		4	16	FALSE
+"CLSI 2021"	"DISK"	"Parenteral"	"Acinetobacter"	"Cefiderocol"	"Table 2B-2"	"30μg"	15	10	FALSE
+"CLSI 2021"	"MIC"	"Parenteral"	"Acinetobacter"	"Cefiderocol"	"Table 2B-2"		4	16	FALSE
+"CLSI 2021"	"DISK"	"Parenteral"	"Pseudomonas aeruginosa"	"Cefiderocol"	"Table 2B-1"	"30μg"	18	12	FALSE
+"CLSI 2021"	"MIC"	"Parenteral"	"Pseudomonas aeruginosa"	"Cefiderocol"	"Table 2B-1"		4	16	FALSE
+"CLSI 2021"	"DISK"	"Parenteral"	"Stenotrophomonas maltophilia"	"Cefiderocol"	"Table 2B-4"	"30μg"	17	12	FALSE
+"CLSI 2021"	"MIC"	"Parenteral"	"Stenotrophomonas maltophilia"	"Cefiderocol"	"Table 2B-4"		4	16	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Cefiderocol"	"Generic CLSI rules"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Cefepime"	"Table 2A"	"30μg"	25	18	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Cefepime"	"Table 2A"		2	16	FALSE
+"CLSI 2021"	"MIC"		"Abiotrophia"	"Cefepime"	"M45 Table 1"		1	4	FALSE
+"CLSI 2021"	"DISK"	"Parenteral"	"Acinetobacter"	"Cefepime"	"Table 2B-2"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"	"Parenteral"	"Acinetobacter"	"Cefepime"	"Table 2B-2"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Cefepime"	"M45 Table 2"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Aeromonas"	"Cefepime"	"M45 Table 3"		2	16	FALSE
+"CLSI 2021"	"MIC"		"Granulicatella"	"Cefepime"	"M45 Table 1"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Cefepime"	"Table 2E"	"30μg"	26		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Cefepime"	"Table 2E"		2		FALSE
+"CLSI 2021"	"DISK"		"Neisseria gonorrhoeae"	"Cefepime"	"Table 2F"	"30μg"	31		FALSE
+"CLSI 2021"	"MIC"		"Neisseria gonorrhoeae"	"Cefepime"	"Table 2F"		0.5		FALSE
+"CLSI 2021"	"DISK"	"Parenteral"	"Pseudomonas aeruginosa"	"Cefepime"	"Table 2B-1"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"	"Parenteral"	"Pseudomonas aeruginosa"	"Cefepime"	"Table 2B-1"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Cefepime"	"Table 2H-1"	"30μg"	24		FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Cefepime"	"M45 Table 1"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Cefepime"	"Table 2H-1"		0.5		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Cefepime"	"Table 2G"	"30μg"			FALSE
+"CLSI 2021"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Cefepime"	"Table 2G"		0.5	2	FALSE
+"CLSI 2021"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Cefepime"	"Table 2G"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Cefepime"	"Table 2H-2"	"30μg"	24	21	FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Cefepime"	"Table 2H-2"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Cefepime"	"M45 Table 20"	"30μg"	25	18	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Cefepime"	"M45 Table 20"		2	16	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Cefepime"	"Generic CLSI rules"	"30μg"	25	18	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Cefepime"	"Generic CLSI rules"	"30μg"	2	16	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Fleroxacin"	"Table 2A"	"5μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Fleroxacin"	"Table 2A"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Fleroxacin"	"Table 2E"	"5μg"	19		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Fleroxacin"	"Table 2E"		2		FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Fleroxacin"	"Table 2C"	"5μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Fleroxacin"	"Table 2C"		2	8	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Fleroxacin"	"Generic CLSI rules"	"5μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Fleroxacin"	"Generic CLSI rules"	"5μg"	2	8	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Florfenicol"	"Generic CLSI rules"	"30μg"	19	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Florfenicol"	"Generic CLSI rules"	"30μg"	2	8	FALSE
+"CLSI 2021"	"DISK"		"Candida albicans"	"Fluconazole"	"Table 1"		17	13	FALSE
+"CLSI 2021"	"MIC"		"Candida albicans"	"Fluconazole"	"Table 1"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Candida glabrata"	"Fluconazole"	"Table 1"		50	14	FALSE
+"CLSI 2021"	"MIC"		"Candida glabrata"	"Fluconazole"	"Table 1"		0.001	64	FALSE
+"CLSI 2021"	"DISK"		"Candida parapsilosis"	"Fluconazole"	"Table 1"		17	13	FALSE
+"CLSI 2021"	"MIC"		"Candida parapsilosis"	"Fluconazole"	"Table 1"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Candida tropicalis"	"Fluconazole"	"Table 1"		17	13	FALSE
+"CLSI 2021"	"MIC"		"Candida tropicalis"	"Fluconazole"	"Table 1"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Enterococcus"	"Fosfomycin"	"Table 2D"	"200μg"	16	12	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Fosfomycin"	"Table 2D"		64	256	FALSE
+"CLSI 2021"	"MIC"		"Escherichia coli"	"Fosfomycin"	"Table 2A"		64	256	FALSE
+"CLSI 2021"	"MIC"		"Escherichia coli"	"Fosfomycin"	"Table 2A"		64	256	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Cefoxitin"	"Table 2A"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Cefoxitin"	"Table 2A"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Cefoxitin"	"M45 Table 2"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Aeromonas"	"Cefoxitin"	"M45 Table 3"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Cefoxitin"	"Table 2J"		16	64	FALSE
+"CLSI 2021"	"DISK"		"Neisseria gonorrhoeae"	"Cefoxitin"	"Table 2F"	"30μg"	28	23	FALSE
+"CLSI 2021"	"MIC"		"Neisseria gonorrhoeae"	"Cefoxitin"	"Table 2F"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Cefoxitin"	"Table 2C"	"30μg"	25	24	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus aureus"	"Cefoxitin"	"Table 2C"	"30μg"	22	21	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus aureus"	"Cefoxitin"	"Table 2C"		4	8	FALSE
+"CLSI 2021"	"DISK"		"Coagulase-positive Staphylococcus (CoPS)"	"Cefoxitin"	"Table 2C"	"30μg"	22	21	FALSE
+"CLSI 2021"	"MIC"		"Coagulase-positive Staphylococcus (CoPS)"	"Cefoxitin"	"Table 2C"		4	8	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus epidermidis"	"Cefoxitin"	"Table 2C"	"30μg"	25	24	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus lugdunensis"	"Cefoxitin"	"Table 2C"	"30μg"	22	21	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus lugdunensis"	"Cefoxitin"	"Table 2C"		4	8	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Cefoxitin"	"M45 Table 20"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Cefoxitin"	"M45 Table 20"		8	32	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Cefoxitin"	"Generic CLSI rules"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Cefoxitin"	"Generic CLSI rules"	"30μg"	8	32	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Gatifloxacin"	"Table 2A"	"5μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Gatifloxacin"	"Table 2A"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Gatifloxacin"	"Table 2B-2"	"5μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Gatifloxacin"	"Table 2B-2"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Enterococcus"	"Gatifloxacin"	"Table 2D"	"5μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Gatifloxacin"	"Table 2D"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Gatifloxacin"	"Table 2E"	"5μg"	18		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Gatifloxacin"	"Table 2E"		1		FALSE
+"CLSI 2021"	"DISK"		"Neisseria gonorrhoeae"	"Gatifloxacin"	"Table 2F"	"5μg"	38	33	FALSE
+"CLSI 2021"	"MIC"		"Neisseria gonorrhoeae"	"Gatifloxacin"	"Table 2F"		0.125	0.5	FALSE
+"CLSI 2021"	"DISK"		"Pseudomonas aeruginosa"	"Gatifloxacin"	"Table 2B-1"	"5μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Gatifloxacin"	"Table 2B-1"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Gatifloxacin"	"Table 2C"	"10μg"	23	19	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Gatifloxacin"	"Table 2C"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Gatifloxacin"	"Table 2H-1"	"5μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Gatifloxacin"	"M45 Table 1"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Gatifloxacin"	"Table 2H-1"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Gatifloxacin"	"Table 2G"	"5μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Gatifloxacin"	"Table 2G"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Gatifloxacin"	"Table 2H-2"	"5μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Gatifloxacin"	"Table 2H-2"		1	4	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Gatifloxacin"	"Generic CLSI rules"	"5μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Gatifloxacin"	"Generic CLSI rules"	"5μg"	2	8	FALSE
+"CLSI 2021"	"DISK"		"Enterococcus"	"Gentamicin-high"	"Table 2D"	"120μg"	10	6	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Gentamicin-high"	"Table 2D"		512	512	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Gentamicin-high"	"Generic CLSI rules"	"120μg"	10	6	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Gentamicin-high"	"Generic CLSI rules"	"120μg"	512	513	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Gemifloxacin"	"Table 2E"	"5μg"	18		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Gemifloxacin"	"Table 2E"		0.125		FALSE
+"CLSI 2021"	"DISK"		"Klebsiella pneumoniae"	"Gemifloxacin"	"Table 2A"	"5μg"	20	15	FALSE
+"CLSI 2021"	"MIC"		"Klebsiella pneumoniae"	"Gemifloxacin"	"Table 2A"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Gemifloxacin"	"Table 2H-1"	"5μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Gemifloxacin"	"Table 2H-1"				FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Gemifloxacin"	"Table 2G"	"5μg"	23	19	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Gemifloxacin"	"Table 2G"		0.125	0.5	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Gemifloxacin"	"Generic CLSI rules"	"5μg"	20	15	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Gemifloxacin"	"Generic CLSI rules"	"5μg"	0.25	1	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Gentamicin"	"Table 2A"	"10μg"	15	12	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Gentamicin"	"Table 2A"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Gentamicin"	"Table 2B-2"	"10μg"	15	12	FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Gentamicin"	"Table 2B-2"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Gentamicin"	"M45 Table 2"	"10μg"	15	12	FALSE
+"CLSI 2021"	"MIC"		"Aeromonas"	"Gentamicin"	"M45 Table 3"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Bacillus"	"Gentamicin"	"M45 Table 4"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Brucella"	"Gentamicin"	"M45 Table 21"		4		FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Gentamicin"	"Table 2D"		512	512	FALSE
+"CLSI 2021"	"MIC"		"Francisella tularensis"	"Gentamicin"	"M45 Table 21"		4		FALSE
+"CLSI 2021"	"MIC"		"Lactobacillus"	"Gentamicin"	"M45 Table 11"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Pseudomonas aeruginosa"	"Gentamicin"	"Table 2B-1"	"10μg"	15	12	FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Gentamicin"	"Table 2B-1"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Gentamicin"	"Table 2C"	"10μg"	15	12	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Gentamicin"	"Table 2C"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Gentamicin"	"M45 Table 20"	"10μg"	15	12	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Gentamicin"	"M45 Table 20"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Yersinia pestis"	"Gentamicin"	"M45 Table 21"		4	16	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Gentamicin"	"Generic CLSI rules"	"10μg"	15	12	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Gentamicin"	"Generic CLSI rules"	"10μg"	4	16	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Grepafloxacin"	"Table 2A"	"5μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Grepafloxacin"	"Table 2A"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Grepafloxacin"	"Table 2E"	"5μg"	24		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Grepafloxacin"	"Table 2E"		0.5		FALSE
+"CLSI 2021"	"DISK"		"Neisseria gonorrhoeae"	"Grepafloxacin"	"Table 2F"	"5μg"	37	27	FALSE
+"CLSI 2021"	"MIC"		"Neisseria gonorrhoeae"	"Grepafloxacin"	"Table 2F"		0.064	1	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Grepafloxacin"	"Table 2C"	"5μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Grepafloxacin"	"Table 2C"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Grepafloxacin"	"Table 2H-1"	"5μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Grepafloxacin"	"Table 2H-1"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Grepafloxacin"	"Table 2G"	"5μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Grepafloxacin"	"Table 2G"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Grepafloxacin"	"Table 2H-2"	"5μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Grepafloxacin"	"Table 2H-2"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Grepafloxacin"	"Generic CLSI rules"	"5μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Grepafloxacin"	"Generic CLSI rules"	"5μg"	1	4	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Imipenem/relebactam"	"Table 2A"	"10/25μg"	25	20	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Imipenem/relebactam"	"Table 2A"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Imipenem/relebactam"	"Table 2J"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Pseudomonas aeruginosa"	"Imipenem/relebactam"	"Table 2B-1"	"10/25μg"	23	19	FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Imipenem/relebactam"	"Table 2B-1"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Imipenem"	"Table 2A"	"10μg"	23	19	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Imipenem"	"Table 2A"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Abiotrophia"	"Imipenem"	"M45 Table 1"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Imipenem"	"Table 2B-2"	"10μg"	22	18	FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Imipenem"	"Table 2B-2"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Imipenem"	"M45 Table 2"	"10μg"	16	13	FALSE
+"CLSI 2021"	"MIC"		"Aeromonas"	"Imipenem"	"M45 Table 3"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Aggregatibacter"	"Imipenem"	"M45 Table 9"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Imipenem"	"Table 2J"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Bacillus"	"Imipenem"	"M45 Table 4"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Burkholderia mallei"	"Imipenem"	"M45 Table 21"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Burkholderia pseudomallei"	"Imipenem"	"M45 Table 21"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Cardiobacterium"	"Imipenem"	"M45 Table 9"		0.5	2	FALSE
+"CLSI 2021"	"MIC"		"Eikenella corrodens"	"Imipenem"	"M45 Table 9"		0.5	2	FALSE
+"CLSI 2021"	"MIC"		"Granulicatella"	"Imipenem"	"M45 Table 1"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Imipenem"	"Table 2E"	"10μg"	16		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Imipenem"	"Table 2E"		4		FALSE
+"CLSI 2021"	"MIC"		"Kingella"	"Imipenem"	"M45 Table 9"		0.5	2	FALSE
+"CLSI 2021"	"MIC"		"Lactobacillus"	"Imipenem"	"M45 Table 11"		0.5	2	FALSE
+"CLSI 2021"	"MIC"		"Pediococcus"	"Imipenem"	"M45 Table 18"		0.5		FALSE
+"CLSI 2021"	"DISK"		"Pseudomonas aeruginosa"	"Imipenem"	"Table 2B-1"	"10μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Imipenem"	"Table 2B-1"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Imipenem"	"Table 2H-1"	"10μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Imipenem"	"M45 Table 1"		0.5	2	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Imipenem"	"Table 2H-1"				FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Imipenem"	"Table 2G"	"10μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Imipenem"	"Table 2G"		0.125	1	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Imipenem"	"M45 Table 20"	"10μg"	23	19	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Imipenem"	"M45 Table 20"		1	4	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Imipenem"	"Generic CLSI rules"	"10μg"	23	19	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Imipenem"	"Generic CLSI rules"	"10μg"	1	4	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Kanamycin"	"Table 2A"	"30μg"	18	13	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Kanamycin"	"Table 2A"		16	64	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Kanamycin"	"Generic CLSI rules"	"30μg"	18	13	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Kanamycin"	"Generic CLSI rules"	"30μg"	16	64	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Lefamulin"	"Table 2E"	"20μg"	17		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Lefamulin"	"Table 2E"		2		FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus aureus"	"Lefamulin"	"Table 2C"	"20μg"	23		FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus aureus"	"Lefamulin"	"Table 2C"		0.25		FALSE
+"CLSI 2021"	"DISK"		"Coagulase-positive Staphylococcus (CoPS)"	"Lefamulin"	"Table 2C"	"20μg"	23		FALSE
+"CLSI 2021"	"MIC"		"Coagulase-positive Staphylococcus (CoPS)"	"Lefamulin"	"Table 2C"		0.25		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Lefamulin"	"Table 2G"	"20μg"	17		FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Lefamulin"	"Table 2G"		0.5		FALSE
+"CLSI 2021"	"MIC"		"Aerococcus"	"Linezolid"	"M45 Table 2"		2		FALSE
+"CLSI 2021"	"DISK"		"Enterococcus"	"Linezolid"	"Table 2D"	"30μg"	23	20	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Linezolid"	"Table 2D"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Lactobacillus"	"Linezolid"	"M45 Table 11"		4		FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Linezolid"	"Table 2C"	"30μg"	21	20	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Linezolid"	"Table 2C"		4	8	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Linezolid"	"Table 2H-1"	"30μg"	21		FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Linezolid"	"Table 2H-1"		2		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Linezolid"	"Table 2G"	"30μg"	21		FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Linezolid"	"Table 2G"		2		FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Linezolid"	"Table 2H-2"	"30μg"	21		FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Linezolid"	"Table 2H-2"		2		FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Linezolid"	"Generic CLSI rules"	"30μg"	21	20	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Linezolid"	"Generic CLSI rules"	"30μg"	4	8	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Lomefloxacin"	"Table 2A"	"10μg"	22	18	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Lomefloxacin"	"Table 2A"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Lomefloxacin"	"Table 2E"	"10μg"	22		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Lomefloxacin"	"Table 2E"		2		FALSE
+"CLSI 2021"	"DISK"	"Urine"	"Pseudomonas aeruginosa"	"Lomefloxacin"	"Table 2B-1"	"10μg"	22	18	FALSE
+"CLSI 2021"	"MIC"	"Urine"	"Pseudomonas aeruginosa"	"Lomefloxacin"	"Table 2B-1"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Lomefloxacin"	"Table 2C"	"10μg"	22	18	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Lomefloxacin"	"Table 2C"		2	8	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Lomefloxacin"	"Generic CLSI rules"	"10μg"	22	18	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Lomefloxacin"	"Generic CLSI rules"	"10μg"	2	8	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Loracarbef"	"Table 2A"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Loracarbef"	"Table 2A"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Loracarbef"	"Table 2E"	"30μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Loracarbef"	"Table 2E"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Loracarbef"	"Table 2G"	"30μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Loracarbef"	"Table 2G"		2	8	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Loracarbef"	"Generic CLSI rules"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Loracarbef"	"Generic CLSI rules"	"30μg"	8	32	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Latamoxef"	"Table 2A"	"30μg"	23	14	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Latamoxef"	"Table 2A"		8	64	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Latamoxef"	"Table 2J"		2	8	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Latamoxef"	"Generic CLSI rules"	"30μg"	23	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Latamoxef"	"Generic CLSI rules"	"30μg"	8	64	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Levofloxacin"	"Table 2A"	"5μg"	21	16	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Levofloxacin"	"Table 2A"		0.5	2	FALSE
+"CLSI 2021"	"MIC"		"Abiotrophia"	"Levofloxacin"	"M45 Table 1"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Levofloxacin"	"Table 2B-2"	"5μg"	17	13	FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Levofloxacin"	"Table 2B-2"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Aerococcus"	"Levofloxacin"	"M45 Table 2"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Levofloxacin"	"M45 Table 2"	"5μg"	17	13	FALSE
+"CLSI 2021"	"MIC"		"Aeromonas"	"Levofloxacin"	"M45 Table 3"		2	4	FALSE
+"CLSI 2021"	"MIC"		"Aggregatibacter"	"Levofloxacin"	"M45 Table 9"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Bacillus"	"Levofloxacin"	"M45 Table 4"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Bacillus anthracis"	"Levofloxacin"	"M45 Table 21"		0.25		FALSE
+"CLSI 2021"	"DISK"		"Burkholderia cepacia"	"Levofloxacin"	"Table 2B-3"	"5μg"			FALSE
+"CLSI 2021"	"DISK"		"Burkholderia cepacia"	"Levofloxacin"	"Table 2B-3"	"5μg"			FALSE
+"CLSI 2021"	"MIC"		"Burkholderia cepacia"	"Levofloxacin"	"Table 2B-3"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Burkholderia cepacia"	"Levofloxacin"	"Table 2B-3"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Cardiobacterium"	"Levofloxacin"	"M45 Table 9"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Eikenella corrodens"	"Levofloxacin"	"M45 Table 9"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Enterococcus"	"Levofloxacin"	"Table 2D"	"5μg"	17	13	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Levofloxacin"	"Table 2D"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Francisella tularensis"	"Levofloxacin"	"M45 Table 21"		0.5		FALSE
+"CLSI 2021"	"MIC"		"Gemella"	"Levofloxacin"	"M45 Table 8"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Granulicatella"	"Levofloxacin"	"M45 Table 1"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Levofloxacin"	"Table 2E"	"5μg"	17		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Levofloxacin"	"Table 2E"		2		FALSE
+"CLSI 2021"	"MIC"		"Kingella"	"Levofloxacin"	"M45 Table 9"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Lactococcus"	"Levofloxacin"	"M45 Table 12"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Moraxella catarrhalis"	"Levofloxacin"	"M45 Table 16"		2		FALSE
+"CLSI 2021"	"DISK"		"Neisseria meningitidis"	"Levofloxacin"	"Table 2I"	"5μg"			FALSE
+"CLSI 2021"	"MIC"		"Neisseria meningitidis"	"Levofloxacin"	"Table 2I"		0.032	0.12	FALSE
+"CLSI 2021"	"DISK"		"Pseudomonas aeruginosa"	"Levofloxacin"	"Table 2B-1"	"5μg"	22	14	FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Levofloxacin"	"Table 2B-1"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Pasteurella"	"Levofloxacin"	"M45 Table 17"	"5μg"	28		FALSE
+"CLSI 2021"	"MIC"		"Pasteurella"	"Levofloxacin"	"M45 Table 17"		0.064		FALSE
+"CLSI 2021"	"MIC"		"Rothia"	"Levofloxacin"	"M45 Table 19"		1	4	FALSE
+"CLSI 2021"	"MIC"	"Extraintestinal"	"Salmonella"	"Levofloxacin"	"Table 2A"		0.125	2	FALSE
+"CLSI 2021"	"DISK"		"Stenotrophomonas maltophilia"	"Levofloxacin"	"Table 2B-4"	"75μg"	17	13	FALSE
+"CLSI 2021"	"MIC"		"Stenotrophomonas maltophilia"	"Levofloxacin"	"Table 2B-4"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Levofloxacin"	"Table 2C"	"10μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Levofloxacin"	"Table 2C"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Levofloxacin"	"Table 2H-1"	"5μg"	17	13	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Levofloxacin"	"M45 Table 1"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Levofloxacin"	"Table 2H-1"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Levofloxacin"	"Table 2G"	"5μg"	17	13	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Levofloxacin"	"Table 2G"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Levofloxacin"	"Table 2H-2"	"5μg"	17	13	FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Levofloxacin"	"Table 2H-2"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Levofloxacin"	"M45 Table 20"	"5μg"	17	13	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Levofloxacin"	"M45 Table 20"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Yersinia pestis"	"Levofloxacin"	"M45 Table 21"		0.25		FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Levofloxacin"	"Generic CLSI rules"	"5μg"	21	16	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Levofloxacin"	"Generic CLSI rules"	"5μg"	0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Cefamandole"	"Table 2A"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Cefamandole"	"Table 2A"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Cefamandole"	"Table 2E"	"30μg"			FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Cefamandole"	"Table 2E"		4	16	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Cefamandole"	"Generic CLSI rules"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Cefamandole"	"Generic CLSI rules"	"30μg"	8	32	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Marbofloxacin"	"Generic CLSI rules"	"5μg"	20	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Marbofloxacin"	"Generic CLSI rules"	"5μg"	1	4	FALSE
+"CLSI 2021"	"DISK"	"Urine"	"Escherichia coli"	"Mecillinam (Amdinocillin)"	"Table 2A"	"10μg"	15	11	FALSE
+"CLSI 2021"	"MIC"	"Urine"	"Escherichia coli"	"Mecillinam (Amdinocillin)"	"Table 2A"		8	32	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Mecillinam (Amdinocillin)"	"Generic CLSI rules"	"10μg"	15	11	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Mecillinam (Amdinocillin)"	"Generic CLSI rules"	"10μg"	8	32	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Meropenem"	"Table 2A"	"10μg"	23	19	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Meropenem"	"Table 2A"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Abiotrophia"	"Meropenem"	"M45 Table 1"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Meropenem"	"Table 2B-2"	"10μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Meropenem"	"Table 2B-2"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Aerococcus"	"Meropenem"	"M45 Table 2"		0.5		FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Meropenem"	"M45 Table 2"	"10μg"	16	13	FALSE
+"CLSI 2021"	"MIC"		"Aeromonas"	"Meropenem"	"M45 Table 3"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Aggregatibacter"	"Meropenem"	"M45 Table 9"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Meropenem"	"Table 2J"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Bacillus"	"Meropenem"	"M45 Table 4"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Burkholderia cepacia"	"Meropenem"	"Table 2B-3"	"10μg"	20	15	FALSE
+"CLSI 2021"	"DISK"		"Burkholderia cepacia"	"Meropenem"	"Table 2B-3"	"10μg"	20	15	FALSE
+"CLSI 2021"	"MIC"		"Burkholderia cepacia"	"Meropenem"	"Table 2B-3"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Burkholderia cepacia"	"Meropenem"	"Table 2B-3"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Cardiobacterium"	"Meropenem"	"M45 Table 9"		0.5	2	FALSE
+"CLSI 2021"	"MIC"		"Eikenella corrodens"	"Meropenem"	"M45 Table 9"		0.5	2	FALSE
+"CLSI 2021"	"MIC"		"Gemella"	"Meropenem"	"M45 Table 8"		0.5	2	FALSE
+"CLSI 2021"	"MIC"		"Granulicatella"	"Meropenem"	"M45 Table 1"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Meropenem"	"Table 2E"	"10μg"	20		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Meropenem"	"Table 2E"		0.5		FALSE
+"CLSI 2021"	"MIC"		"Kingella"	"Meropenem"	"M45 Table 9"		0.5	2	FALSE
+"CLSI 2021"	"MIC"		"Lactobacillus"	"Meropenem"	"M45 Table 11"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Lactococcus"	"Meropenem"	"M45 Table 12"		0.25	1	FALSE
+"CLSI 2021"	"MIC"		"Listeria monocytogenes"	"Meropenem"	"M45 Table 14"		0.25		FALSE
+"CLSI 2021"	"DISK"		"Neisseria meningitidis"	"Meropenem"	"Table 2I"	"10μg"	30		FALSE
+"CLSI 2021"	"MIC"		"Neisseria meningitidis"	"Meropenem"	"Table 2I"		0.25		FALSE
+"CLSI 2021"	"DISK"		"Pseudomonas aeruginosa"	"Meropenem"	"Table 2B-1"	"10μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Meropenem"	"Table 2B-1"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Meropenem"	"Table 2H-1"	"10μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Meropenem"	"M45 Table 1"		0.5	2	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Meropenem"	"Table 2H-1"		0.5		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Meropenem"	"Table 2G"	"10μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Meropenem"	"Table 2G"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Meropenem"	"Table 2H-2"	"10μg"			FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Meropenem"	"Table 2H-2"		0.5		FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Meropenem"	"M45 Table 20"	"10μg"	23	19	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Meropenem"	"M45 Table 20"		1	4	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Meropenem"	"Generic CLSI rules"	"10μg"	23	19	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Meropenem"	"Generic CLSI rules"	"10μg"	1	4	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Methicillin"	"Generic CLSI rules"	"5μg"	14	9	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Methicillin"	"Generic CLSI rules"	"5μg"	8	16	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Meropenem/vaborbactam"	"Table 2A"	"20μg/10μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Meropenem/vaborbactam"	"Table 2A"		4	16	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Meropenem/vaborbactam"	"Generic CLSI rules"	"20-10μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Meropenem/vaborbactam"	"Generic CLSI rules"	"20-10μg"	4	16	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Moxifloxacin"	"Table 2E"	"5μg"	18		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Moxifloxacin"	"Table 2E"		1		FALSE
+"CLSI 2021"	"DISK"		"Pasteurella"	"Moxifloxacin"	"M45 Table 17"	"5μg"	28		FALSE
+"CLSI 2021"	"MIC"		"Pasteurella"	"Moxifloxacin"	"M45 Table 17"		0.064		FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Moxifloxacin"	"Table 2C"	"5μg"	24	20	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Moxifloxacin"	"Table 2C"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Moxifloxacin"	"Table 2H-1"	"5μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Moxifloxacin"	"Table 2H-1"				FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Moxifloxacin"	"Table 2G"	"5μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Moxifloxacin"	"Table 2G"		1	4	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Moxifloxacin"	"Generic CLSI rules"	"5μg"	24	20	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Moxifloxacin"	"Generic CLSI rules"	"5μg"	0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Candida"	"Micafungin"	"Table 1"		16	13	FALSE
+"CLSI 2021"	"DISK"		"Candida"	"Micafungin"	"Table 1"		22	19	FALSE
+"CLSI 2021"	"MIC"		"Candida"	"Micafungin"	"Table 1"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Candida"	"Micafungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"Candida albicans"	"Micafungin"	"Table 1"		22	19	FALSE
+"CLSI 2021"	"MIC"		"Candida albicans"	"Micafungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"Candida glabrata"	"Micafungin"	"Table 1"		30	27	FALSE
+"CLSI 2021"	"MIC"		"Candida glabrata"	"Micafungin"	"Table 1"		0.064	0.25	FALSE
+"CLSI 2021"	"DISK"		"Candida parapsilosis"	"Micafungin"	"Table 1"		16	13	FALSE
+"CLSI 2021"	"MIC"		"Candida parapsilosis"	"Micafungin"	"Table 1"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Candida tropicalis"	"Micafungin"	"Table 1"		22	19	FALSE
+"CLSI 2021"	"MIC"		"Candida tropicalis"	"Micafungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Minocycline"	"Table 2A"	"30μg"	16	12	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Minocycline"	"Table 2A"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Minocycline"	"Table 2B-2"	"30μg"	16	12	FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Minocycline"	"Table 2B-2"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Burkholderia cepacia"	"Minocycline"	"Table 2B-3"	"30μg"	19	14	FALSE
+"CLSI 2021"	"DISK"		"Burkholderia cepacia"	"Minocycline"	"Table 2B-3"	"30μg"	19	14	FALSE
+"CLSI 2021"	"MIC"		"Burkholderia cepacia"	"Minocycline"	"Table 2B-3"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Burkholderia cepacia"	"Minocycline"	"Table 2B-3"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Enterococcus"	"Minocycline"	"Table 2D"	"30μg"	19	14	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Minocycline"	"Table 2D"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Leuconostoc"	"Minocycline"	"M45 Table 13"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Neisseria meningitidis"	"Minocycline"	"Table 2I"	"30μg"	26		FALSE
+"CLSI 2021"	"MIC"		"Neisseria meningitidis"	"Minocycline"	"Table 2I"		2		FALSE
+"CLSI 2021"	"DISK"		"Stenotrophomonas maltophilia"	"Minocycline"	"Table 2B-4"	"30μg"	19	14	FALSE
+"CLSI 2021"	"MIC"		"Stenotrophomonas maltophilia"	"Minocycline"	"Table 2B-4"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Minocycline"	"Table 2C"	"30μg"	19	14	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Minocycline"	"Table 2C"		4	16	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Minocycline"	"Generic CLSI rules"	"30μg"	16	12	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Minocycline"	"Generic CLSI rules"	"30μg"	4	16	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Metronidazole"	"Table 2J"		8	32	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Nafcillin"	"Generic CLSI rules"	"1μg"	13	10	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Nafcillin"	"Generic CLSI rules"	"1μg"	2	4	FALSE
+"CLSI 2021"	"DISK"	"Urine"	"Enterobacteriaceae"	"Nalidixic acid"	"Table 2A"	"30μg"	19	13	FALSE
+"CLSI 2021"	"MIC"	"Urine"	"Enterobacteriaceae"	"Nalidixic acid"	"Table 2A"		16	32	FALSE
+"CLSI 2021"	"DISK"		"Neisseria meningitidis"	"Nalidixic acid"	"Table 2I"	"30μg"	26	25	FALSE
+"CLSI 2021"	"MIC"		"Neisseria meningitidis"	"Nalidixic acid"	"Table 2I"		4	8	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Nalidixic acid"	"Generic CLSI rules"	"30μg"	19	13	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Nalidixic acid"	"Generic CLSI rules"	"30μg"	16	32	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Netilmicin"	"Table 2A"	"30μg"	15	12	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Netilmicin"	"Table 2A"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Netilmicin"	"Table 2B-2"	"30μg"			FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Netilmicin"	"Table 2B-2"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Pseudomonas aeruginosa"	"Netilmicin"	"Table 2B-1"	"30μg"	15	12	FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Netilmicin"	"Table 2B-1"		8	32	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Netilmicin"	"Generic CLSI rules"	"30μg"	15	12	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Netilmicin"	"Generic CLSI rules"	"30μg"	8	32	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Nitrofurantoin"	"Table 2A"	"300μg"	17	14	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Nitrofurantoin"	"Table 2A"		32	128	FALSE
+"CLSI 2021"	"DISK"		"Enterococcus"	"Nitrofurantoin"	"Table 2D"	"300μg"	17	14	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Nitrofurantoin"	"Table 2D"		32	128	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Nitrofurantoin"	"Table 2C"	"300μg"	17	14	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Nitrofurantoin"	"Table 2C"		32	128	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Nitrofurantoin"	"Generic CLSI rules"	"300μg"	17	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Nitrofurantoin"	"Generic CLSI rules"	"300μg"	32	128	FALSE
+"CLSI 2021"	"DISK"	"Urine"	"Enterobacteriaceae"	"Norfloxacin"	"Table 2A"	"10μg"	17	12	FALSE
+"CLSI 2021"	"MIC"	"Urine"	"Enterobacteriaceae"	"Norfloxacin"	"Table 2A"		4	16	FALSE
+"CLSI 2021"	"DISK"	"Urine"	"Enterococcus"	"Norfloxacin"	"Table 2D"	"10μg"	17	12	FALSE
+"CLSI 2021"	"MIC"	"Urine"	"Enterococcus"	"Norfloxacin"	"Table 2D"		4	16	FALSE
+"CLSI 2021"	"MIC"	"Urine"	"Pseudomonas aeruginosa"	"Norfloxacin"	"Table 2B-1"		4	16	FALSE
+"CLSI 2021"	"DISK"	"Urine"	"Staphylococcus"	"Norfloxacin"	"Table 2C"	"10μg"	17	12	FALSE
+"CLSI 2021"	"MIC"	"Urine"	"Staphylococcus"	"Norfloxacin"	"Table 2C"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Ofloxacin"	"Table 2A"	"5μg"	16	12	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Ofloxacin"	"Table 2A"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Ofloxacin"	"Table 2E"	"5μg"	16		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Ofloxacin"	"Table 2E"		2		FALSE
+"CLSI 2021"	"DISK"		"Pseudomonas aeruginosa"	"Ofloxacin"	"Table 2B-1"	"5μg"	16	12	FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Ofloxacin"	"Table 2B-1"		2	8	FALSE
+"CLSI 2021"	"MIC"	"Extraintestinal"	"Salmonella"	"Ofloxacin"	"Table 2A"		0.125	2	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Ofloxacin"	"Table 2C"	"5μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Ofloxacin"	"Table 2C"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Ofloxacin"	"Table 2H-1"	"5μg"	16	12	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Ofloxacin"	"Table 2H-1"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Ofloxacin"	"Table 2G"	"5μg"	16	12	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Ofloxacin"	"Table 2G"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Ofloxacin"	"Table 2H-2"	"5μg"	16	12	FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Ofloxacin"	"Table 2H-2"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Ofloxacin"	"M45 Table 20"	"5μg"	16	12	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Ofloxacin"	"M45 Table 20"		2	8	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Ofloxacin"	"Generic CLSI rules"	"5μg"	16	12	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Ofloxacin"	"Generic CLSI rules"	"5μg"	2	8	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Orbifloxacin"	"Generic CLSI rules"	"10μg"	23	17	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Orbifloxacin"	"Generic CLSI rules"	"10μg"	1	8	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Oritavancin"	"Table 2D"		0.125		FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus aureus"	"Oritavancin"	"Table 2C"		0.125		FALSE
+"CLSI 2021"	"MIC"		"Coagulase-positive Staphylococcus (CoPS)"	"Oritavancin"	"Table 2C"		0.125		FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Oritavancin"	"Table 2H-1"		0.25		FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Oritavancin"	"Table 2H-2"		0.25		FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Oxacillin"	"Table 2C"		0.5	1	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus aureus"	"Oxacillin"	"Table 2C"		2	4	FALSE
+"CLSI 2021"	"MIC"		"Coagulase-positive Staphylococcus (CoPS)"	"Oxacillin"	"Table 2C"		2	4	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus epidermidis"	"Oxacillin"	"Table 2C"	"1μg"	18	17	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus epidermidis"	"Oxacillin"	"Table 2C"		0.5	1	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus lugdunensis"	"Oxacillin"	"Table 2C"		2	4	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus schleiferi"	"Oxacillin"	"Table 2C"	"1μg"	18	17	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus schleiferi"	"Oxacillin"	"Table 2C"		0.5	1	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Oxacillin"	"Table 2G"	"1μg"	20		FALSE
+"CLSI 2021"	"DISK"		"Pseudallescheria"	"Oxacillin"	"Table 2C"	"1μg"	18	17	FALSE
+"CLSI 2021"	"MIC"		"Pseudallescheria"	"Oxacillin"	"Table 2C"		0.5	1	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Oxacillin"	"Generic CLSI rules"	"1μg"	0.25	0.5	FALSE
+"CLSI 2021"	"DISK"		"Salmonella"	"Pefloxacin"	"Table 2A"	"5μg"	24	23	FALSE
+"CLSI 2021"	"MIC"		"Abiotrophia"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2021"	"MIC"		"Aerococcus"	"Benzylpenicillin"	"M45 Table 2"		0.125	4	FALSE
+"CLSI 2021"	"MIC"		"Aggregatibacter"	"Benzylpenicillin"	"M45 Table 9"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Benzylpenicillin"	"Table 2J"		0.5	2	FALSE
+"CLSI 2021"	"MIC"		"Bacillus"	"Benzylpenicillin"	"M45 Table 4"		0.125	0.25	FALSE
+"CLSI 2021"	"MIC"		"Bacillus anthracis"	"Benzylpenicillin"	"M45 Table 21"		0.5	1	FALSE
+"CLSI 2021"	"MIC"		"Cardiobacterium"	"Benzylpenicillin"	"M45 Table 9"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Eikenella corrodens"	"Benzylpenicillin"	"M45 Table 9"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Enterococcus"	"Benzylpenicillin"	"Table 2D"	"10units"	15	14	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Benzylpenicillin"	"Table 2D"		8	16	FALSE
+"CLSI 2021"	"MIC"		"Gemella"	"Benzylpenicillin"	"M45 Table 8"		0.125	4	FALSE
+"CLSI 2021"	"MIC"		"Granulicatella"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2021"	"MIC"		"Kingella"	"Benzylpenicillin"	"M45 Table 9"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Leuconostoc"	"Benzylpenicillin"	"M45 Table 13"		8		FALSE
+"CLSI 2021"	"MIC"		"Lactobacillus"	"Benzylpenicillin"	"M45 Table 11"		8		FALSE
+"CLSI 2021"	"MIC"		"Lactococcus"	"Benzylpenicillin"	"M45 Table 12"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Listeria monocytogenes"	"Benzylpenicillin"	"M45 Table 14"		2		FALSE
+"CLSI 2021"	"MIC"		"Micrococcus"	"Benzylpenicillin"	"M45 Table 15"		0.125	0.25	FALSE
+"CLSI 2021"	"DISK"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"Table 2F"	"10units"	47	26	FALSE
+"CLSI 2021"	"MIC"		"Neisseria gonorrhoeae"	"Benzylpenicillin"	"Table 2F"		0.064	2	FALSE
+"CLSI 2021"	"DISK"		"Neisseria meningitidis"	"Benzylpenicillin"	"Table 2I"	"10units"			FALSE
+"CLSI 2021"	"MIC"		"Neisseria meningitidis"	"Benzylpenicillin"	"Table 2I"		0.064	0.5	FALSE
+"CLSI 2021"	"MIC"		"Pediococcus"	"Benzylpenicillin"	"M45 Table 18"		8		FALSE
+"CLSI 2021"	"DISK"		"Pasteurella"	"Benzylpenicillin"	"M45 Table 17"	"10 Units"	25		FALSE
+"CLSI 2021"	"MIC"		"Pasteurella"	"Benzylpenicillin"	"M45 Table 17"		0.5		FALSE
+"CLSI 2021"	"MIC"		"Rothia"	"Benzylpenicillin"	"M45 Table 19"		0.125	4	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Benzylpenicillin"	"Table 2C"	"10μg"	29	28	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Benzylpenicillin"	"Table 2C"		0.125	0.25	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Benzylpenicillin"	"Table 2H-1"	"10units"	24		FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"M45 Table 1"		0.125	4	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Benzylpenicillin"	"Table 2H-1"		0.125		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"	"10units"			FALSE
+"CLSI 2021"	"MIC"	"Meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		0.064	0.12	FALSE
+"CLSI 2021"	"MIC"	"Non-meningitis"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		2	8	FALSE
+"CLSI 2021"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Benzylpenicillin"	"Table 2G"		0.064	2	FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Table 2H-2"	"10units"			FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Benzylpenicillin"	"Table 2H-2"		0.125	4	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	29	28	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Benzylpenicillin"	"Generic CLSI rules"	"10units"	0.125	0.25	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Phenoxymethylpenicillin"	"Table 2G"	"10μg"			FALSE
+"CLSI 2021"	"MIC"	"Oral"	"Streptococcus pneumoniae"	"Phenoxymethylpenicillin"	"Table 2G"		0.064	2	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Piperacillin"	"Table 2A"	"100μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Piperacillin"	"Table 2A"		16	128	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Piperacillin"	"Table 2B-2"	"100μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Piperacillin"	"Table 2B-2"		16	128	FALSE
+"CLSI 2021"	"DISK"		"Pseudomonas aeruginosa"	"Piperacillin"	"Table 2B-1"	"100μg"	21	14	FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Piperacillin"	"Table 2B-1"		16	128	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Piperacillin"	"M45 Table 20"	"100μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Piperacillin"	"M45 Table 20"		16	128	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Piperacillin"	"Generic CLSI rules"	"100μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Piperacillin"	"Generic CLSI rules"	"100μg"	16	128	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Polymyxin B"	"Table 2A"		0.001	4	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Polymyxin B"	"Table 2B-2"	"300μg"			FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Polymyxin B"	"Table 2B-2"		0.001	4	FALSE
+"CLSI 2021"	"DISK"		"Pseudomonas aeruginosa"	"Polymyxin B"	"Table 2B-1"	"300 units"			FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Polymyxin B"	"Table 2B-1"		0.001	8	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Polymyxin B"	"Generic CLSI rules"	"300units"	12	11	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Polymyxin B"	"Generic CLSI rules"	"300units"	2	8	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Penicillin/novobiocin"	"Generic CLSI rules"	"10units-30μg"	1	4	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2μg"	13	12	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Pirlimycin"	"Generic CLSI rules"	"2μg"	2	4	FALSE
+"CLSI 2021"	"DISK"		"Enterococcus"	"Quinupristin/dalfopristin"	"Table 2D"	"15μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Quinupristin/dalfopristin"	"Table 2D"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus aureus"	"Quinupristin/dalfopristin"	"Table 2C"	"15μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus aureus"	"Quinupristin/dalfopristin"	"Table 2C"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Coagulase-positive Staphylococcus (CoPS)"	"Quinupristin/dalfopristin"	"Table 2C"	"15μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Coagulase-positive Staphylococcus (CoPS)"	"Quinupristin/dalfopristin"	"Table 2C"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Quinupristin/dalfopristin"	"Table 2H-1"	"15μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Quinupristin/dalfopristin"	"Table 2H-1"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Quinupristin/dalfopristin"	"Table 2G"	"15μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Quinupristin/dalfopristin"	"Table 2G"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Quinupristin/dalfopristin"	"Table 2H-2"	"15μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Quinupristin/dalfopristin"	"Table 2H-2"		1	4	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Quinupristin/dalfopristin"	"Generic CLSI rules"	"15μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Quinupristin/dalfopristin"	"Generic CLSI rules"	"15μg"	1	4	FALSE
+"CLSI 2021"	"MIC"		"Aggregatibacter"	"Rifampicin"	"M45 Table 9"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Bacillus"	"Rifampicin"	"M45 Table 4"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Cardiobacterium"	"Rifampicin"	"M45 Table 9"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Eikenella corrodens"	"Rifampicin"	"M45 Table 9"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Enterococcus"	"Rifampicin"	"Table 2D"	"5μg"	20	16	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Rifampicin"	"Table 2D"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Rifampicin"	"Table 2E"	"5μg"	20	16	FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Rifampicin"	"Table 2E"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Kingella"	"Rifampicin"	"M45 Table 9"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Moraxella catarrhalis"	"Rifampicin"	"M45 Table 16"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Neisseria meningitidis"	"Rifampicin"	"Table 2I"	"5μg"	25	19	FALSE
+"CLSI 2021"	"MIC"		"Neisseria meningitidis"	"Rifampicin"	"Table 2I"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Rifampicin"	"Table 2C"	"5μg"	20	16	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Rifampicin"	"Table 2C"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Rifampicin"	"Table 2H-1"	"5μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Rifampicin"	"Table 2H-1"				FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Rifampicin"	"Table 2G"	"5μg"	19	16	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Rifampicin"	"Table 2G"		1	4	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Rifampicin"	"Generic CLSI rules"	"5μg"	20	16	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Rifampicin"	"Generic CLSI rules"	"5μg"	1	4	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Ampicillin/sulbactam"	"Table 2A"	"10μg/10μg"	15	11	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Ampicillin/sulbactam"	"Table 2A"		16	32	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Ampicillin/sulbactam"	"Table 2B-2"	"10μg"	15	11	FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Ampicillin/sulbactam"	"Table 2B-2"		8	32	FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Ampicillin/sulbactam"	"M45 Table 2"	"10μg"	15	11	FALSE
+"CLSI 2021"	"MIC"		"Aggregatibacter"	"Ampicillin/sulbactam"	"M45 Table 9"		2	4	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Ampicillin/sulbactam"	"Table 2J"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Cardiobacterium"	"Ampicillin/sulbactam"	"M45 Table 9"		2	4	FALSE
+"CLSI 2021"	"MIC"		"Eikenella corrodens"	"Ampicillin/sulbactam"	"M45 Table 9"		2	4	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Ampicillin/sulbactam"	"Table 2E"	"10/10μg"	20	19	FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Ampicillin/sulbactam"	"Table 2E"		2	4	FALSE
+"CLSI 2021"	"MIC"		"Kingella"	"Ampicillin/sulbactam"	"M45 Table 9"		2	4	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Ampicillin/sulbactam"	"Table 2G"	"10/10μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Ampicillin/sulbactam"	"Table 2G"				FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Ampicillin/sulbactam"	"M45 Table 20"	"10μg"	15	11	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Ampicillin/sulbactam"	"M45 Table 20"		8	32	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Ampicillin/sulbactam"	"Generic CLSI rules"	"10-10μg"	15	11	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Ampicillin/sulbactam"	"Generic CLSI rules"	"10-10μg"	8	32	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Sulfamethoxazole"	"Table 2A"	"200 – 300μg"	17	12	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Sulfamethoxazole"	"Table 2A"		256	512	FALSE
+"CLSI 2021"	"DISK"		"Neisseria meningitidis"	"Sulfamethoxazole"	"Table 2I"	"200-300μg"			FALSE
+"CLSI 2021"	"MIC"		"Neisseria meningitidis"	"Sulfamethoxazole"	"Table 2I"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Sulfamethoxazole"	"Table 2C"	"200-300μg"	17	12	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Sulfamethoxazole"	"Table 2C"		256	512	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Sulfamethoxazole"	"M45 Table 20"	"200μg"	17	12	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Sulfamethoxazole"	"Generic CLSI rules"	"200-300μg"	17	12	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Sulfamethoxazole"	"Generic CLSI rules"	"200-300μg"	256	512	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Sulfisoxazole"	"Table 2A"	"200 – 300μg"	17	12	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Sulfisoxazole"	"Table 2A"		256	512	FALSE
+"CLSI 2021"	"DISK"		"Neisseria meningitidis"	"Sulfisoxazole"	"Table 2I"	"200-300μg"			FALSE
+"CLSI 2021"	"MIC"		"Neisseria meningitidis"	"Sulfisoxazole"	"Table 2I"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Sulfisoxazole"	"Table 2C"	"200-300μg"	17	12	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Sulfisoxazole"	"Table 2C"		256	512	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Sulfisoxazole"	"M45 Table 20"	"200μg"	17	12	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Sulfisoxazole"	"Generic CLSI rules"	"200-300μg"	17	12	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Sulfisoxazole"	"Generic CLSI rules"	"200-300μg"	256	512	FALSE
+"CLSI 2021"	"DISK"		"Neisseria gonorrhoeae"	"Spectinomycin"	"Table 2F"	"100μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"Neisseria gonorrhoeae"	"Spectinomycin"	"Table 2F"		32	128	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Sparfloxacin"	"Table 2E"	"5μg"			FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Sparfloxacin"	"Table 2E"		0.25		FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Sparfloxacin"	"Table 2C"	"5μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Sparfloxacin"	"Table 2C"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Sparfloxacin"	"Table 2H-1"	"5μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Sparfloxacin"	"Table 2H-1"				FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Sparfloxacin"	"Table 2G"	"5μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Sparfloxacin"	"Table 2G"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Sparfloxacin"	"Generic CLSI rules"	"5μg"	0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Sulfonamide"	"Table 2A"	"200 – 300μg"	17	12	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Sulfonamide"	"Table 2A"		256	512	FALSE
+"CLSI 2021"	"DISK"		"Neisseria meningitidis"	"Sulfonamide"	"Table 2I"	"200-300μg"			FALSE
+"CLSI 2021"	"MIC"		"Neisseria meningitidis"	"Sulfonamide"	"Table 2I"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Sulfonamide"	"Table 2C"	"200μg"	17	12	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Sulfonamide"	"Table 2C"		256	512	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Sulfonamide"	"M45 Table 20"	"200μg"	17	12	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Sulfonamide"	"M45 Table 20"		256	512	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300μg"	17	12	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Sulfonamide"	"Generic CLSI rules"	"200-300μg"	256	512	FALSE
+"CLSI 2021"	"DISK"		"Enterococcus"	"Streptomycin-high"	"Table 2D"	"300μg"	10	6	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Streptomycin-high"	"Table 2D"		1024	1024	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Streptomycin-high"	"Generic CLSI rules"	"300μg"	10	6	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Streptomycin-high"	"Generic CLSI rules"	"300μg"	1024	1025	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Streptoduocin"	"Table 2A"	"10μg"	15	11	FALSE
+"CLSI 2021"	"MIC"		"Brucella"	"Streptoduocin"	"M45 Table 21"		8		FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Streptoduocin"	"Table 2D"		1024	1024	FALSE
+"CLSI 2021"	"MIC"		"Francisella tularensis"	"Streptoduocin"	"M45 Table 21"		8		FALSE
+"CLSI 2021"	"MIC"		"Yersinia pestis"	"Streptoduocin"	"M45 Table 21"		4	16	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Streptoduocin"	"Generic CLSI rules"	"10μg"	15	11	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Trimethoprim/sulfamethoxazole"	"Table 2A"	"1.25μg/23.75μg"	16	10	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Trimethoprim/sulfamethoxazole"	"Table 2A"		2	4	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Trimethoprim/sulfamethoxazole"	"Table 2B-2"	"1.25μg/23.75μg"	16	10	FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Trimethoprim/sulfamethoxazole"	"Table 2B-2"		2	4	FALSE
+"CLSI 2021"	"MIC"		"Aerococcus"	"Trimethoprim/sulfamethoxazole"	"M45 Table 2"		2	4	FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Trimethoprim/sulfamethoxazole"	"M45 Table 2"	"1.25μg/23.75μg"	16	10	FALSE
+"CLSI 2021"	"MIC"		"Aeromonas"	"Trimethoprim/sulfamethoxazole"	"M45 Table 3"		2	4	FALSE
+"CLSI 2021"	"MIC"		"Aggregatibacter"	"Trimethoprim/sulfamethoxazole"	"M45 Table 9"		0.5	4	FALSE
+"CLSI 2021"	"MIC"		"Bacillus"	"Trimethoprim/sulfamethoxazole"	"M45 Table 4"		2	4	FALSE
+"CLSI 2021"	"MIC"		"Brucella"	"Trimethoprim/sulfamethoxazole"	"M45 Table 21"		2		FALSE
+"CLSI 2021"	"DISK"		"Burkholderia cepacia"	"Trimethoprim/sulfamethoxazole"	"Table 2B-3"	"1.25μg/23.75μg"	16	10	FALSE
+"CLSI 2021"	"DISK"		"Burkholderia cepacia"	"Trimethoprim/sulfamethoxazole"	"Table 2B-3"	"1.25μg/23.75μg"	16	10	FALSE
+"CLSI 2021"	"MIC"		"Burkholderia cepacia"	"Trimethoprim/sulfamethoxazole"	"Table 2B-3"		2	4	FALSE
+"CLSI 2021"	"MIC"		"Burkholderia cepacia"	"Trimethoprim/sulfamethoxazole"	"Table 2B-3"		2	4	FALSE
+"CLSI 2021"	"MIC"		"Burkholderia pseudomallei"	"Trimethoprim/sulfamethoxazole"	"M45 Table 21"		2	4	FALSE
+"CLSI 2021"	"MIC"		"Cardiobacterium"	"Trimethoprim/sulfamethoxazole"	"M45 Table 9"		0.5	4	FALSE
+"CLSI 2021"	"MIC"		"Eikenella corrodens"	"Trimethoprim/sulfamethoxazole"	"M45 Table 9"		0.5	4	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Trimethoprim/sulfamethoxazole"	"Table 2E"	"1.25μg/23.75μg"	15	10	FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Trimethoprim/sulfamethoxazole"	"Table 2E"		0.5	4	FALSE
+"CLSI 2021"	"MIC"		"Kingella"	"Trimethoprim/sulfamethoxazole"	"M45 Table 9"		0.5	4	FALSE
+"CLSI 2021"	"MIC"		"Lactococcus"	"Trimethoprim/sulfamethoxazole"	"M45 Table 12"		2	4	FALSE
+"CLSI 2021"	"MIC"		"Listeria monocytogenes"	"Trimethoprim/sulfamethoxazole"	"M45 Table 14"		0.5		FALSE
+"CLSI 2021"	"DISK"		"Moraxella catarrhalis"	"Trimethoprim/sulfamethoxazole"	"M45 Table 16"	"1.25μg/23.75μg"	13	10	FALSE
+"CLSI 2021"	"MIC"		"Moraxella catarrhalis"	"Trimethoprim/sulfamethoxazole"	"M45 Table 16"		0.5	4	FALSE
+"CLSI 2021"	"DISK"		"Neisseria meningitidis"	"Trimethoprim/sulfamethoxazole"	"Table 2I"	"1.25μg/23.75μg"	30	25	FALSE
+"CLSI 2021"	"MIC"		"Neisseria meningitidis"	"Trimethoprim/sulfamethoxazole"	"Table 2I"		0.125	0.5	FALSE
+"CLSI 2021"	"DISK"		"Pasteurella"	"Trimethoprim/sulfamethoxazole"	"M45 Table 17"	"1.25μg/23.75μg"	24		FALSE
+"CLSI 2021"	"MIC"		"Pasteurella"	"Trimethoprim/sulfamethoxazole"	"M45 Table 17"		0.5		FALSE
+"CLSI 2021"	"MIC"		"Rothia"	"Trimethoprim/sulfamethoxazole"	"M45 Table 19"		2	4	FALSE
+"CLSI 2021"	"DISK"		"Stenotrophomonas maltophilia"	"Trimethoprim/sulfamethoxazole"	"Table 2B-4"	"30μg"	16	10	FALSE
+"CLSI 2021"	"MIC"		"Stenotrophomonas maltophilia"	"Trimethoprim/sulfamethoxazole"	"Table 2B-4"		2	4	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Trimethoprim/sulfamethoxazole"	"Table 2C"	"1.25μg/23.75μg"	16	10	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Trimethoprim/sulfamethoxazole"	"Table 2C"		2	4	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Trimethoprim/sulfamethoxazole"	"Table 2H-1"	"1.25μg/23.75μg"			FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Trimethoprim/sulfamethoxazole"	"Table 2H-1"				FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Trimethoprim/sulfamethoxazole"	"Table 2G"	"1.25μg/23.75μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Trimethoprim/sulfamethoxazole"	"Table 2G"		0.5	4	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Trimethoprim/sulfamethoxazole"	"M45 Table 20"	"1.25μg"	16	10	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Trimethoprim/sulfamethoxazole"	"M45 Table 20"		2	4	FALSE
+"CLSI 2021"	"MIC"		"Yersinia pestis"	"Trimethoprim/sulfamethoxazole"	"M45 Table 21"		2	4	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Trimethoprim/sulfamethoxazole"	"Generic CLSI rules"	"1.25-23.75μg"	16	10	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Trimethoprim/sulfamethoxazole"	"Generic CLSI rules"	"1.25-23.75μg"	2	4	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Ticarcillin/clavulanic acid"	"Table 2A"	"75μg/10μg"	20	14	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Ticarcillin/clavulanic acid"	"Table 2A"		16	128	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Ticarcillin/clavulanic acid"	"Table 2B-2"	"75μg"	20	14	FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Ticarcillin/clavulanic acid"	"Table 2B-2"		16	128	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Ticarcillin/clavulanic acid"	"Table 2J"		32	128	FALSE
+"CLSI 2021"	"DISK"		"Burkholderia cepacia"	"Ticarcillin/clavulanic acid"	"Table 2B-3"	"75μg"			FALSE
+"CLSI 2021"	"DISK"		"Burkholderia cepacia"	"Ticarcillin/clavulanic acid"	"Table 2B-3"	"75μg"			FALSE
+"CLSI 2021"	"MIC"		"Burkholderia cepacia"	"Ticarcillin/clavulanic acid"	"Table 2B-3"		16	128	FALSE
+"CLSI 2021"	"MIC"		"Burkholderia cepacia"	"Ticarcillin/clavulanic acid"	"Table 2B-3"		16	128	FALSE
+"CLSI 2021"	"DISK"		"Pseudomonas aeruginosa"	"Ticarcillin/clavulanic acid"	"Table 2B-1"	"75μg"	24	15	FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Ticarcillin/clavulanic acid"	"Table 2B-1"		16	128	FALSE
+"CLSI 2021"	"DISK"		"Stenotrophomonas maltophilia"	"Ticarcillin/clavulanic acid"	"Table 2B-4"	"30μg"			FALSE
+"CLSI 2021"	"MIC"		"Stenotrophomonas maltophilia"	"Ticarcillin/clavulanic acid"	"Table 2B-4"		16	128	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Ticarcillin/clavulanic acid"	"Generic CLSI rules"	"75-10-15μg"	20	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Ticarcillin/clavulanic acid"	"Generic CLSI rules"	"75-10-15μg"	16	128	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Tetracycline"	"Table 2A"	"30μg"	15	11	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Tetracycline"	"Table 2A"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Tetracycline"	"Table 2B-2"	"30μg"	15	11	FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Tetracycline"	"Table 2B-2"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Aerococcus"	"Tetracycline"	"M45 Table 2"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Tetracycline"	"M45 Table 2"	"30μg"	15	11	FALSE
+"CLSI 2021"	"MIC"		"Aeromonas"	"Tetracycline"	"M45 Table 3"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Aggregatibacter"	"Tetracycline"	"M45 Table 9"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Tetracycline"	"Table 2J"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Bacillus"	"Tetracycline"	"M45 Table 4"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Brucella"	"Tetracycline"	"M45 Table 21"		1		FALSE
+"CLSI 2021"	"MIC"		"Burkholderia mallei"	"Tetracycline"	"M45 Table 21"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Burkholderia pseudomallei"	"Tetracycline"	"M45 Table 21"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Campylobacter"	"Tetracycline"	"M45 Table 5"		26	22	FALSE
+"CLSI 2021"	"MIC"		"Campylobacter"	"Tetracycline"	"M45 Table 5"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Cardiobacterium"	"Tetracycline"	"M45 Table 9"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Eikenella corrodens"	"Tetracycline"	"M45 Table 9"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Enterococcus"	"Tetracycline"	"Table 2D"	"30μg"	19	14	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Tetracycline"	"Table 2D"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Francisella tularensis"	"Tetracycline"	"M45 Table 21"		4		FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Tetracycline"	"Table 2E"	"30μg"	29	25	FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Tetracycline"	"Table 2E"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Kingella"	"Tetracycline"	"M45 Table 9"		2	8	FALSE
+"CLSI 2021"	"MIC"		"Lactococcus"	"Tetracycline"	"M45 Table 12"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Moraxella catarrhalis"	"Tetracycline"	"M45 Table 16"	"30μg"	29	24	FALSE
+"CLSI 2021"	"MIC"		"Moraxella catarrhalis"	"Tetracycline"	"M45 Table 16"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Neisseria gonorrhoeae"	"Tetracycline"	"Table 2F"	"30μg"	38	30	FALSE
+"CLSI 2021"	"MIC"		"Neisseria gonorrhoeae"	"Tetracycline"	"Table 2F"		0.25	2	FALSE
+"CLSI 2021"	"DISK"		"Pasteurella"	"Tetracycline"	"M45 Table 17"	"30μg"	23		FALSE
+"CLSI 2021"	"MIC"		"Pasteurella"	"Tetracycline"	"M45 Table 17"		1		FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Tetracycline"	"Table 2C"	"30μg"	19	14	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Tetracycline"	"Table 2C"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Tetracycline"	"Table 2H-1"	"30μg"	23	18	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Tetracycline"	"Table 2H-1"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Tetracycline"	"Table 2G"	"30μg"	28	24	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Tetracycline"	"Table 2G"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Tetracycline"	"Table 2H-2"	"30μg"	23	18	FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Tetracycline"	"Table 2H-2"		2	8	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Tetracycline"	"M45 Table 20"	"30μg"	15	11	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Tetracycline"	"M45 Table 20"		4	16	FALSE
+"CLSI 2021"	"MIC"		"Yersinia pestis"	"Tetracycline"	"M45 Table 21"		4	16	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Tetracycline"	"Generic CLSI rules"	"30μg"	15	11	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Tetracycline"	"Generic CLSI rules"	"30μg"	4	16	FALSE
+"CLSI 2021"	"DISK"		"Enterococcus"	"Teicoplanin"	"Table 2D"	"30μg"	14	10	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Teicoplanin"	"Table 2D"		8	32	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Teicoplanin"	"Table 2C"		8	32	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Teicoplanin"	"Generic CLSI rules"	"30μg"	14	10	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Teicoplanin"	"Generic CLSI rules"	"30μg"	8	32	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Tiamulin"	"Generic CLSI rules"	"30μg"	9	8	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Tiamulin"	"Generic CLSI rules"	"30μg"	16	32	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Tilmicosin"	"Generic CLSI rules"	"15μg"	14	10	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Tilmicosin"	"Generic CLSI rules"	"15μg"	8	32	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Ceftiofur"	"Generic CLSI rules"	"30μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Ceftiofur"	"Generic CLSI rules"	"30μg"	2	8	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Telithromycin"	"Table 2H-1"				FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Telithromycin"	"Table 2G"	"15μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Telithromycin"	"Table 2G"		1	4	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Telithromycin"	"Generic CLSI rules"	"15μg"	22	18	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Telithromycin"	"Generic CLSI rules"	"15μg"	1	4	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Telavancin"	"Table 2D"		0.125		FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus aureus"	"Telavancin"	"Table 2C"		0.125		FALSE
+"CLSI 2021"	"MIC"		"Coagulase-positive Staphylococcus (CoPS)"	"Telavancin"	"Table 2C"		0.125		FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Telavancin"	"Table 2H-1"		0.125		FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Telavancin"	"Table 2H-2"		0.125		FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Trimethoprim"	"Table 2A"	"5μg"	16	10	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Trimethoprim"	"Table 2A"		8	16	FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Trimethoprim"	"Table 2C"	"5μg"	16	10	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Trimethoprim"	"Table 2C"		8	16	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Trimethoprim"	"Generic CLSI rules"	"5μg"	16	10	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Trimethoprim"	"Generic CLSI rules"	"5μg"	8	16	FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Tobramycin"	"Table 2A"	"10μg"	15	12	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Tobramycin"	"Table 2A"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Tobramycin"	"Table 2B-2"	"10μg"	15	12	FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Tobramycin"	"Table 2B-2"		4	16	FALSE
+"CLSI 2021"	"DISK"		"Pseudomonas aeruginosa"	"Tobramycin"	"Table 2B-1"	"10μg"	15	12	FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Tobramycin"	"Table 2B-1"		4	16	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Tobramycin"	"Generic CLSI rules"	"10μg"	15	12	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Tobramycin"	"Generic CLSI rules"	"10μg"	4	16	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Tulathromycin"	"Generic CLSI rules"	"30μg"	18	14	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Tulathromycin"	"Generic CLSI rules"	"30μg"	16	64	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Trovafloxacin"	"Table 2E"	"10μg"	22		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Trovafloxacin"	"Table 2E"		1		FALSE
+"CLSI 2021"	"DISK"		"Neisseria gonorrhoeae"	"Trovafloxacin"	"Table 2F"	"10μg"	34		FALSE
+"CLSI 2021"	"MIC"		"Neisseria gonorrhoeae"	"Trovafloxacin"	"Table 2F"		0.25		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Trovafloxacin"	"Table 2H-1"	"10μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Trovafloxacin"	"Table 2H-1"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Trovafloxacin"	"Table 2G"	"10μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Trovafloxacin"	"Table 2G"		1	4	FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Trovafloxacin"	"Table 2H-2"	"10μg"	19	15	FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Trovafloxacin"	"Table 2H-2"		1	4	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Tedizolid"	"Table 2D"		0.5		FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus aureus"	"Tedizolid"	"Table 2C"		0.5	2	FALSE
+"CLSI 2021"	"MIC"		"Coagulase-positive Staphylococcus (CoPS)"	"Tedizolid"	"Table 2C"		0.5	2	FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Tedizolid"	"Table 2H-1"		0.5		FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Tedizolid"	"Table 2H-2"		0.25		FALSE
+"CLSI 2021"	"DISK"		"Enterobacteriaceae"	"Piperacillin/tazobactam"	"Table 2A"	"100μg/10μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"Enterobacteriaceae"	"Piperacillin/tazobactam"	"Table 2A"		16	128	FALSE
+"CLSI 2021"	"DISK"		"Acinetobacter"	"Piperacillin/tazobactam"	"Table 2B-2"	"100μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"Acinetobacter"	"Piperacillin/tazobactam"	"Table 2B-2"		16	128	FALSE
+"CLSI 2021"	"DISK"		"Aeromonas"	"Piperacillin/tazobactam"	"M45 Table 2"	"100μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"Aeromonas"	"Piperacillin/tazobactam"	"M45 Table 3"		16	128	FALSE
+"CLSI 2021"	"MIC"		"Anaerosalibacter"	"Piperacillin/tazobactam"	"Table 2J"		16	128	FALSE
+"CLSI 2021"	"DISK"		"Haemophilus influenzae"	"Piperacillin/tazobactam"	"Table 2E"	"100μg"	21		FALSE
+"CLSI 2021"	"MIC"		"Haemophilus influenzae"	"Piperacillin/tazobactam"	"Table 2E"		1	2	FALSE
+"CLSI 2021"	"DISK"		"Pseudomonas aeruginosa"	"Piperacillin/tazobactam"	"Table 2B-1"	"100μg"	21	14	FALSE
+"CLSI 2021"	"MIC"		"Pseudomonas aeruginosa"	"Piperacillin/tazobactam"	"Table 2B-1"		16	128	FALSE
+"CLSI 2021"	"DISK"		"Vibrio"	"Piperacillin/tazobactam"	"M45 Table 20"	"100μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"Vibrio"	"Piperacillin/tazobactam"	"M45 Table 20"		16	128	FALSE
+"CLSI 2021"	"DISK"		"(unknown name)"	"Piperacillin/tazobactam"	"Generic CLSI rules"	"100-10μg"	21	17	FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Piperacillin/tazobactam"	"Generic CLSI rules"	"100-10μg"	16	128	FALSE
+"CLSI 2021"	"MIC"		"Abiotrophia"	"Vancomycin"	"M45 Table 1"		1		FALSE
+"CLSI 2021"	"MIC"		"Aerococcus"	"Vancomycin"	"M45 Table 2"		1		FALSE
+"CLSI 2021"	"MIC"		"Bacillus"	"Vancomycin"	"M45 Table 4"		4		FALSE
+"CLSI 2021"	"DISK"		"Enterococcus"	"Vancomycin"	"Table 2D"	"30μg"	17	14	FALSE
+"CLSI 2021"	"MIC"		"Enterococcus"	"Vancomycin"	"Table 2D"		4	32	FALSE
+"CLSI 2021"	"MIC"		"Gemella"	"Vancomycin"	"M45 Table 8"		1		FALSE
+"CLSI 2021"	"MIC"		"Granulicatella"	"Vancomycin"	"M45 Table 1"		1		FALSE
+"CLSI 2021"	"MIC"		"Lactobacillus"	"Vancomycin"	"M45 Table 11"		2	16	FALSE
+"CLSI 2021"	"MIC"		"Lactococcus"	"Vancomycin"	"M45 Table 12"		2	4	FALSE
+"CLSI 2021"	"MIC"		"Micrococcus"	"Vancomycin"	"M45 Table 15"		2		FALSE
+"CLSI 2021"	"MIC"		"Propionibacterium"	"Vancomycin"	"Table 2J-2"		2	4	FALSE
+"CLSI 2021"	"MIC"		"Rothia"	"Vancomycin"	"M45 Table 19"		2		FALSE
+"CLSI 2021"	"DISK"		"Staphylococcus"	"Vancomycin"	"Table 2C"	"30μg"			FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus"	"Vancomycin"	"Table 2C"		4	32	FALSE
+"CLSI 2021"	"MIC"		"Staphylococcus aureus"	"Vancomycin"	"Table 2C"		2	16	FALSE
+"CLSI 2021"	"MIC"		"Coagulase-positive Staphylococcus (CoPS)"	"Vancomycin"	"Table 2C"		2	16	FALSE
+"CLSI 2021"	"DISK"		"Streptococcus"	"Vancomycin"	"Table 2H-1"	"30μg"	17		FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Vancomycin"	"M45 Table 1"		1		FALSE
+"CLSI 2021"	"MIC"		"Streptococcus"	"Vancomycin"	"Table 2H-1"		1		FALSE
+"CLSI 2021"	"DISK"		"Streptococcus pneumoniae"	"Vancomycin"	"Table 2G"	"30μg"	17		FALSE
+"CLSI 2021"	"MIC"		"Streptococcus pneumoniae"	"Vancomycin"	"Table 2G"		1		FALSE
+"CLSI 2021"	"DISK"		"Viridans Group Streptococcus (VGS)"	"Vancomycin"	"Table 2H-2"	"30μg"	17		FALSE
+"CLSI 2021"	"MIC"		"Viridans Group Streptococcus (VGS)"	"Vancomycin"	"Table 2H-2"		1		FALSE
+"CLSI 2021"	"MIC"		"(unknown name)"	"Vancomycin"	"Generic CLSI rules"	"30μg"	4	32	FALSE
+"CLSI 2021"	"MIC"		"Aspergillus fumigatus"	"Voriconazole"	"M61 Table 1"		0.5	2	FALSE
+"CLSI 2021"	"MIC"		"Aspergillus fumigatus"	"Voriconazole"	"M61 Table 1"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Candida"	"Voriconazole"	"Table 1"		15	12	FALSE
+"CLSI 2021"	"MIC"		"Candida"	"Voriconazole"	"Table 1"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"Candida albicans"	"Voriconazole"	"Table 1"		17	14	FALSE
+"CLSI 2021"	"MIC"		"Candida albicans"	"Voriconazole"	"Table 1"		0.125	1	FALSE
+"CLSI 2021"	"DISK"		"Candida parapsilosis"	"Voriconazole"	"Table 1"		17	14	FALSE
+"CLSI 2021"	"MIC"		"Candida parapsilosis"	"Voriconazole"	"Table 1"		0.125	1	FALSE
+"CLSI 2021"	"DISK"		"Candida tropicalis"	"Voriconazole"	"Table 1"		17	14	FALSE
+"CLSI 2021"	"MIC"		"Candida tropicalis"	"Voriconazole"	"Table 1"		0.125	1	FALSE
 "CLSI 2020"	"DISK"		"Enterobacteriaceae"	"Amoxicillin/clavulanic acid"	"Table 2A"	"20ug/10ug"	18	13	FALSE
 "CLSI 2020"	"MIC"		"Enterobacteriaceae"	"Amoxicillin/clavulanic acid"	"Table 2A"		8	32	FALSE
 "CLSI 2020"	"DISK"		"Aeromonas"	"Amoxicillin/clavulanic acid"	"M45 Table 2"	"20ug"	18	13	FALSE

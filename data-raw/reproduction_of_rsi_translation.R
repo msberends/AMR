@@ -1,3 +1,28 @@
+# ==================================================================== #
+# TITLE                                                                #
+# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+#                                                                      #
+# SOURCE                                                               #
+# https://github.com/msberends/AMR                                     #
+#                                                                      #
+# LICENCE                                                              #
+# (c) 2018-2021 Berends MS, Luz CF et al.                              #
+# Developed at the University of Groningen, the Netherlands, in        #
+# collaboration with non-profit organisations Certe Medical            #
+# Diagnostics & Advice, and University Medical Center Groningen.       # 
+#                                                                      #
+# This R package is free software; you can freely use and distribute   #
+# it for both personal and commercial purposes under the terms of the  #
+# GNU General Public License version 2.0 (GNU GPL-2), as published by  #
+# the Free Software Foundation.                                        #
+# We created this package for both routine data analysis and academic  #
+# research and it was publicly released in the hope that it will be    #
+# useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
+#                                                                      #
+# Visit our website for the full manual and a complete tutorial about  #
+# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
+# ==================================================================== #
+
 library(dplyr)
 library(readr)
 library(tidyr)
@@ -11,9 +36,10 @@ rsi_trans <- DRGLST1 %>%
 if (any(is.na(rsi_trans$BREAKPOINT_TYPE)) | !"Human" %in% rsi_trans$BREAKPOINT_TYPE) {
   stop("Check column BREAKPOINT_TYPE - something is WRONG!")
 }
+sort(unique(rsi_trans$GUIDELINES))
 rsi_trans <- rsi_trans %>% 
   ##### If looking for adding a specific guideline, do it here!
-  # filter(GUIDELINES == "CLSI20") %>% 
+  filter(GUIDELINES == "CLSI21") %>% 
   #####
   filter(BREAKPOINT_TYPE == "Human") %>% 
   mutate(DISK_S = ifelse(as.double(DISK_S) > 50, 50, DISK_S),
@@ -52,6 +78,8 @@ rsi_trans <- bind_rows(tbl_mic, tbl_disk) %>%
   select(-ends_with("_mic"), -ends_with("_disk"))
 
 # add extra CLSI general guidelines
+# Installed WHONET software on Windows (http://www.whonet.org/software.html),
+#    imported C:\WHONET\Codes\DRGLST.txt
 clsi_general <- readr::read_tsv("data-raw/DRGLST.txt") %>%
   filter(CLSI == "X") %>%
   select(WHON5_CODE, 

@@ -1,5 +1,7 @@
-# `AMR` 1.7.1.9068
+# `AMR` 1.7.1.9069
 ## <small>Last updated: 12 December 2021</small>
+
+All functions in this package are now all considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months from now on.
 
 ### Breaking changes
 * Removed `p_symbol()` and all `filter_*()` functions (except for `filter_first_isolate()`), which were all deprecated in a previous package version
@@ -8,6 +10,7 @@
 * Renamed function `get_locale()` to `get_AMR_locale()` to prevent conflicts with other packages
 
 ### New
+* Support for the CLSI 2021 guideline for interpreting MIC/disk diffusion values, which are incorporated in the `rsi_translation` data set
 * Support for EUCAST Intrinsic Resistance and Unusual Phenotypes v3.3 (October 2021). This is now the default EUCAST guideline in the package (all older guidelines are still available) for `eucast_rules()`, `mo_intrinsic_resistant()` and `mdro()`. The `intrinsic_resistant` data set was also updated accordingly.
 * Support for all antimicrobial drug (group) names and colloquial microorganism names in Danish, Dutch, English, French, German, Italian, Portuguese, Russian, Spanish and Swedish
 * Function `set_ab_names()` to rename data set columns that resemble antimicrobial drugs. This allows for quickly renaming columns to official names, ATC codes, etc. Its second argument can be a tidyverse way of selecting:
@@ -69,7 +72,7 @@
 * `get_episode()` and `is_new_episode()` can now cope with `NA`s
 
 ### Other
-* This package is now being maintained by two epidemiologists and a data scientist from two different non-profit healthcare organisations. All functions in this package are now all considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months from now on.
+* This package is now being maintained by two epidemiologists and a data scientist from two different non-profit healthcare organisations.
 
 
 # AMR 1.7.1

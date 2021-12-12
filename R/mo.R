@@ -1482,9 +1482,9 @@ exec_as.mo <- function(x,
         uncertainties <- as.list(pm_distinct(uncertainties, input, .keep_all = TRUE))
         pkg_env$mo_uncertainties <- uncertainties
         if (message_not_thrown_before("as.mo", "uncertainties", uncertainties$input)) {
-          plural <- c("", "this", "uncertainty")
+          plural <- c("", "this")
           if (length(uncertainties$input) > 1) {
-            plural <- c("s", "these", "uncertainties")
+            plural <- c("s", "these uncertainties")
           }
           if (length(uncertainties$input) <= 3) {
             examples <- vector_and(paste0('"', uncertainties$input,
@@ -1494,7 +1494,7 @@ exec_as.mo <- function(x,
             examples <- paste0(nr2char(length(uncertainties$input)), " microorganism", plural[1])
           }
           msg <- paste0("Function `as.mo()` is uncertain about ", examples,
-                        ". Run `mo_uncertainties()` to review ", plural[2], " ", plural[3], ".")
+                        ". Run `mo_uncertainties()` to review ", plural[2], ".")
           message_(msg)
         }
       }
