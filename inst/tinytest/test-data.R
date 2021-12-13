@@ -44,6 +44,11 @@ expect_false(any(is.na(microorganisms.codes$code)))
 expect_false(any(is.na(microorganisms.codes$mo)))
 expect_true(all(dosage$ab %in% antibiotics$ab))
 expect_true(all(dosage$name %in% antibiotics$name))
+# check valid disks/MICs
+expect_false(any(is.na(as.mic(rsi_translation[which(rsi_translation$method == "MIC"), "breakpoint_S"]))))
+expect_false(any(is.na(as.mic(rsi_translation[which(rsi_translation$method == "MIC"), "breakpoint_R"]))))
+expect_false(any(is.na(as.disk(rsi_translation[which(rsi_translation$method == "DISK"), "breakpoint_S"]))))
+expect_false(any(is.na(as.disk(rsi_translation[which(rsi_translation$method == "DISK"), "breakpoint_R"]))))
 
 # antibiotic names must always be coercible to their original AB code
 expect_identical(as.ab(antibiotics$name), antibiotics$ab)

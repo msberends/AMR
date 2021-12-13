@@ -1,4 +1,4 @@
-# `AMR` 1.7.1.9070
+# `AMR` 1.7.1.9071
 ## <small>Last updated: 13 December 2021</small>
 
 All functions in this package are now all considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months from now on.
@@ -10,7 +10,7 @@ All functions in this package are now all considered to be stable. Updates to th
 * Renamed function `get_locale()` to `get_AMR_locale()` to prevent conflicts with other packages
 
 ### New
-* Support for the CLSI 2021 guideline for interpreting MIC/disk diffusion values, which are incorporated in the `rsi_translation` data set
+* Support for the CLSI 2021 guideline for interpreting MIC/disk diffusion values, which are incorporated in the `rsi_translation` data set. This data set now more strictly follows the WHONET software as well.
 * Support for EUCAST Intrinsic Resistance and Unusual Phenotypes v3.3 (October 2021). This is now the default EUCAST guideline in the package (all older guidelines are still available) for `eucast_rules()`, `mo_is_intrinsic_resistant()` and `mdro()`. The `intrinsic_resistant` data set was also updated accordingly.
 * Support for all antimicrobial drug (group) names and colloquial microorganism names in Danish, Dutch, English, French, German, Italian, Portuguese, Russian, Spanish and Swedish
 * Function `set_ab_names()` to rename data set columns that resemble antimicrobial drugs. This allows for quickly renaming columns to official names, ATC codes, etc. Its second argument can be a tidyverse way of selecting:

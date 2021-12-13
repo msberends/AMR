@@ -27,6 +27,9 @@ expect_true(as.mic(8) == as.mic("8"))
 expect_true(as.mic("1") > as.mic("<=0.0625"))
 expect_true(as.mic("1") < as.mic(">=32"))
 expect_true(is.mic(as.mic(8)))
+# expect_true(as.mic(1024) < as.mic(">1024"))
+# expect_true(as.mic("<1024") > as.mic("1024"))
+
 
 expect_equal(as.double(as.mic(">=32")), 32)
 expect_equal(as.numeric(as.mic(">=32")), 32)

@@ -111,6 +111,23 @@ rsi_translation <- rsi_generic %>%
   distinct(guideline, ab, mo, method, site, .keep_all = TRUE) %>% 
   as.data.frame(stringsAsFactors = FALSE)
 
+# disks MUST be 6-50 mm, so correct where that is wrong:
+rsi_translation[which(rsi_translation$method == "DISK" &
+                        (is.na(rsi_translation$breakpoint_S) | rsi_translation$breakpoint_S > 50)), "breakpoint_S"] <- 50
+rsi_translation[which(rsi_translation$method == "DISK" &
+                        (is.na(rsi_translation$breakpoint_R) | rsi_translation$breakpoint_R < 6)), "breakpoint_R"] <- 6
+m <- unique(as.double(as.mic(levels(as.mic(1)))))
+rsi_translation[which(rsi_translation$method == "MIC" &
+                        is.na(rsi_translation$breakpoint_S)), "breakpoint_S"] <- min(m)
+rsi_translation[which(rsi_translation$method == "MIC" &
+                        is.na(rsi_translation$breakpoint_R)), "breakpoint_R"] <- max(m)
+
+# WHONET has no >1024 but instead uses 1025, 513, etc, so raise these one higher valid MIC factor level:
+rsi_translation[which(rsi_translation$breakpoint_R == 129), "breakpoint_R"] <- m[which(m == 128) + 1]
+rsi_translation[which(rsi_translation$breakpoint_R == 257), "breakpoint_R"] <- m[which(m == 256) + 1]
+rsi_translation[which(rsi_translation$breakpoint_R == 513), "breakpoint_R"] <- m[which(m == 512) + 1]
+rsi_translation[which(rsi_translation$breakpoint_R == 1025), "breakpoint_R"] <- m[which(m == 1024) + 1]
+
 # save to package
 usethis::use_data(rsi_translation, overwrite = TRUE)
 rm(rsi_translation)

@@ -37,8 +37,8 @@ valid_mic_levels <- c(c(t(vapply(FUN.VALUE = character(9), ops,
                                  function(x) paste0(x, sort(c(1:9, 1.5)))))),
                       c(t(vapply(FUN.VALUE = character(45), ops,
                                  function(x) paste0(x, c(10:98)[9:98 %% 2 == TRUE])))),
-                      c(t(vapply(FUN.VALUE = character(15), ops,
-                                 function(x) paste0(x, sort(c(2 ^ c(7:10), 80 * c(2:12))))))))
+                      c(t(vapply(FUN.VALUE = character(16), ops,
+                                 function(x) paste0(x, sort(c(2 ^ c(7:11), 80 * c(2:12))))))))
 
 #' Transform Input to Minimum Inhibitory Concentrations (MIC)
 #'
@@ -628,6 +628,12 @@ cummin.mic <- function(x) {
 
 # Ops (see ?groupGeneric) -----------------------------------------------
 
+is_greater <- function(el) {
+  el %like_case% ">[0-9]"
+}
+is_lower <- function(el) {
+  el %like_case% "<[0-9]"
+}
 
 #' @method + mic
 #' @export
@@ -739,6 +745,12 @@ cummin.mic <- function(x) {
 #' @noRd
 `>.mic` <- function(e1, e2) {
   as.double(e1) > as.double(e2)
+  # doesn't work...
+  # nolint start
+  # as.double(e1) > as.double(e2) |
+  #   (as.double(e1) == as.double(e2) & is_lower(e2) & !is_lower(e1)) |
+  #   (as.double(e1) == as.double(e2) & is_greater(e1) & !is_greater(e2))
+  # nolint end
 }
 
 # Summary (see ?groupGeneric) -------------------------------------------
