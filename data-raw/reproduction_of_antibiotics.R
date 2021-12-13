@@ -461,7 +461,7 @@ antibiotics[which(antibiotics$ab == "MEZ"), "abbreviations"][[1]] <- list(c(anti
 antibiotics[which(antibiotics$ab == "MIF"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "MIF"), "abbreviations"][[1]], "mica"))
 antibiotics[which(antibiotics$ab == "MCZ"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "MCZ"), "abbreviations"][[1]], "mico"))
 antibiotics[which(antibiotics$ab == "MNO"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "MNO"), "abbreviations"][[1]], "mino"))
-antibiotics[which(antibiotics$ab == "LTM"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "LTM"), "abbreviations"][[1]], "moxa"))
+antibiotics[which(antibiotics$ab == "LTM"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "LTM"), "abbreviations"][[1]], "moxa", "moxalactam"))
 antibiotics[which(antibiotics$ab == "MFX"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "MFX"), "abbreviations"][[1]], "moxi"))
 antibiotics[which(antibiotics$ab == "NAL"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "NAL"), "abbreviations"][[1]], "nali"))
 antibiotics[which(antibiotics$ab == "NEO"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "NEO"), "abbreviations"][[1]], "neom"))
@@ -515,6 +515,10 @@ antibiotics[which(antibiotics$ab == "FOS"), "synonyms"][[1]] <- list(sort(c(anti
 antibiotics[which(antibiotics$ab == "FOS"), "synonyms"][[1]] <- list(sort(c(antibiotics[which(antibiotics$ab == "FOS"), "synonyms"][[1]], "Monurol")))
 
 antibiotics[which(antibiotics$ab == "TZP"), "abbreviations"][[1]] <- list(sort(c(antibiotics[which(antibiotics$ab == "TZP"), "abbreviations"][[1]], "piptazo")))
+
+antibiotics[which(antibiotics$ab == "RFP"), "abbreviations"][[1]] <- list(sort(c(antibiotics[which(antibiotics$ab == "RFP"), "abbreviations"][[1]], "RPT")))
+antibiotics[which(antibiotics$ab == "RTP"), "abbreviations"][[1]] <- list(sort(c(antibiotics[which(antibiotics$ab == "RTP"), "abbreviations"][[1]], "RET")))
+antibiotics[which(antibiotics$ab == "TYL1"), "abbreviations"][[1]] <- list(sort(c(antibiotics[which(antibiotics$ab == "TYL1"), "abbreviations"][[1]], "TVN")))
 
 antibiotics <- antibiotics %>% 
   mutate(ab = as.character(ab)) %>% 
@@ -594,6 +598,23 @@ antibiotics[which(antibiotics$ab == "CZA"), "synonyms"] <- list(c("Avycaz", "Zav
 # typo
 antibiotics[which(antibiotics$ab == "RXT"), "name"] <- "Roxithromycin"
 antibiotics[which(antibiotics$ab == "PEN"), "atc"] <- "J01CE01"
+
+# WHONET cleanup
+antibiotics[which(antibiotics$ab == "BCZ"), "name"] <-  "Bicyclomycin"
+antibiotics[which(antibiotics$ab == "CCL"), "name"] <-  "Cefetecol"
+antibiotics[which(antibiotics$ab == "ENV"), "name"] <-  "Enviomycin"
+antibiotics[which(antibiotics$ab == "KIT"), "name"] <-  "Kitasamycin"
+antibiotics[which(antibiotics$ab == "LSP"), "name"] <-  "Linco-spectin"
+antibiotics[which(antibiotics$ab == "MEC"), "name"] <-  "Mecillinam"
+antibiotics[which(antibiotics$ab == "PMR"), "name"] <-  "Pimaricin"
+antibiotics[which(antibiotics$ab == "BCZ"), "abbreviations"][[1]] <- list(sort(unique(c(antibiotics[which(antibiotics$ab == "BCZ"), "abbreviations"][[1]], "Bicozamycin"))))
+antibiotics[which(antibiotics$ab == "CCL"), "abbreviations"][[1]] <- list(sort(unique(c(antibiotics[which(antibiotics$ab == "CCL"), "abbreviations"][[1]], "Cefcatacol"))))
+antibiotics[which(antibiotics$ab == "ENV"), "abbreviations"][[1]] <- list(sort(unique(c(antibiotics[which(antibiotics$ab == "ENV"), "abbreviations"][[1]], "Tuberactinomycin"))))
+antibiotics[which(antibiotics$ab == "KIT"), "abbreviations"][[1]] <- list(sort(unique(c(antibiotics[which(antibiotics$ab == "KIT"), "abbreviations"][[1]], "Leucomycin"))))
+antibiotics[which(antibiotics$ab == "LSP"), "abbreviations"][[1]] <- list(sort(unique(c(antibiotics[which(antibiotics$ab == "LSP"), "abbreviations"][[1]], "lincomycin/spectinomycin"))))
+antibiotics[which(antibiotics$ab == "MEC"), "abbreviations"][[1]] <- list(sort(unique(c(antibiotics[which(antibiotics$ab == "MEC"), "abbreviations"][[1]], "Amdinocillin"))))
+antibiotics[which(antibiotics$ab == "PMR"), "abbreviations"][[1]] <- list(sort(unique(c(antibiotics[which(antibiotics$ab == "PMR"), "abbreviations"][[1]], "Natamycin"))))
+
 
 # set cephalosporins groups for the ones that could not be determined automatically:
 antibiotics <- antibiotics %>% 

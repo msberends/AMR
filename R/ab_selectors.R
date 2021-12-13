@@ -478,7 +478,7 @@ ab_select_exec <- function(function_name,
                                sort = FALSE, fn = function_name)
   # untreatable drugs
   if (only_treatable == TRUE) {
-    untreatable <- antibiotics[which(antibiotics$name %like% "-high|EDTA|polysorbate|macromethod|screening"), "ab", drop = TRUE]
+    untreatable <- antibiotics[which(antibiotics$name %like% "-high|EDTA|polysorbate|macromethod|screening|/nacubactam"), "ab", drop = TRUE]
     if (any(untreatable %in% names(ab_in_data))) {
       if (message_not_thrown_before(function_name, "ab_class", "untreatable", entire_session = TRUE)) {
         warning_("Some agents in `", function_name, "()` were ignored since they cannot be used for treating patients: ",

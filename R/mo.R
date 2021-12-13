@@ -469,7 +469,7 @@ exec_as.mo <- function(x,
     x_backup_untouched <- x
     x <- strip_whitespace(x, dyslexia_mode)
     # translate 'unknown' names back to English
-    if (any(x %like% "unbekannt|onbekend|desconocid|sconosciut|iconnu|desconhecid", na.rm = TRUE)) {
+    if (any(tolower(x) %like_case% "unbekannt|onbekend|desconocid|sconosciut|iconnu|desconhecid", na.rm = TRUE)) {
       trns <- subset(TRANSLATIONS, pattern %like% "unknown")
       langs <- LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED != "en"]
       for (l in langs) {
@@ -493,6 +493,11 @@ exec_as.mo <- function(x,
     x_backup[x %like_case% "^(fungus|fungi)$"] <- "(unknown fungus)" # will otherwise become the kingdom
     x_backup[x_backup_untouched == "Fungi"] <- "Fungi" # is literally the kingdom
     
+    # remove spp and species
+    x_backup <- gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x_backup, perl = TRUE)
+    x_backup <- gsub("( spp?.?| ss |subsp.?|subspecies|biovar|serovar|species)", "", x_backup, perl = TRUE)
+    x_backup <- strip_whitespace(x_backup, dyslexia_mode)
+    
     # Fill in fullnames and MO codes directly
     known_names <- tolower(x_backup) %in% MO_lookup$fullname_lower
     x[known_names] <- MO_lookup[match(tolower(x_backup)[known_names], MO_lookup$fullname_lower), property, drop = TRUE]
@@ -503,23 +508,19 @@ exec_as.mo <- function(x,
                                                                      microorganisms.codes$code), "mo", drop = TRUE],
                                           MO_lookup$mo), property, drop = TRUE]
     already_known <- known_names | known_codes_mo | known_codes_lis
-
+    
     # now only continue where the right taxonomic output is not already known
     if (any(!already_known)) {
       x_known <- x[already_known]
-
-      # remove spp and species
-      x <- gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x)
-      x <- gsub("(spp.?|subsp.?|subspecies|biovar|serovar|species)", "", x)
-      x <- gsub("^([a-z]{2,4})(spe.?)$", "\\1", x, perl = TRUE) # when ending in SPE instead of SPP and preceded by 2-4 characters
-      x <- strip_whitespace(x, dyslexia_mode)
       
+      # when ending in SPE instead of SPP and preceded by 2-4 characters
+      x <- gsub("^([a-z]{2,4})(spe.?)$", "\\1", x, perl = TRUE)
+
       x_backup_without_spp <- x
-      x_species <- paste(x, "species")
       # translate to English for supported languages of mo_property
       x <- gsub("(gruppe|groep|grupo|gruppo|groupe)", "group", x, perl = TRUE)
       # no groups and complexes as ending
-      x <- gsub("(complex|group)$", "", x, perl = TRUE)
+      x <- gsub("(complex|group|serotype|serovar|serogroup)[^a-zA-Z]*$", "", x, perl = TRUE)
       x <- gsub("(^|[^a-z])((an)?aero+b)[a-z]*", "", x, perl = TRUE)
       x <- gsub("^atyp[a-z]*", "", x, perl = TRUE)
       x <- gsub("(vergroen)[a-z]*", "viridans", x, perl = TRUE)
@@ -546,12 +547,12 @@ exec_as.mo <- function(x,
       # allow characters that resemble others = dyslexia_mode ----
       if (dyslexia_mode == TRUE) {
         x <- tolower(x)
-        x <- gsub("[iy]+", "[iy]+", x)
-        x <- gsub("(c|k|q|qu|s|z|x|ks)+", "(c|k|q|qu|s|z|x|ks)+", x)
-        x <- gsub("(ph|hp|f|v)+", "(ph|hp|f|v)+", x)
-        x <- gsub("(th|ht|t)+", "(th|ht|t)+", x)
-        x <- gsub("a+", "a+", x)
-        x <- gsub("u+", "u+", x)
+        x <- gsub("[iy]+", "[iy]+", x, perl = TRUE)
+        x <- gsub("(c|k|q|qu|s|z|x|ks)+", "(c|k|q|qu|s|z|x|ks)+", x, perl = TRUE)
+        x <- gsub("(ph|hp|f|v)+", "(ph|hp|f|v)+", x, perl = TRUE)
+        x <- gsub("(th|ht|t)+", "(th|ht|t)+", x, perl = TRUE)
+        x <- gsub("a+", "a+", x, perl = TRUE)
+        x <- gsub("u+", "u+", x, perl = TRUE)
         # allow any ending of -um, -us, -ium, -icum, -ius, -icus, -ica, -ia and -a (needs perl for the negative backward lookup):
         x <- gsub("(u\\+\\(c\\|k\\|q\\|qu\\+\\|s\\|z\\|x\\|ks\\)\\+)(?![a-z])",
                   "(u[s|m]|[iy][ck]?u[ms]|[iy]?[ck]?a)", x, perl = TRUE)
@@ -561,9 +562,9 @@ exec_as.mo <- function(x,
                   "(u[s|m]|[iy][ck]?u[ms]|[iy]?[ck]?a)", x, perl = TRUE)
         x <- gsub("(\\[iy\\]\\+a\\+)(?![a-z])",
                   "([iy]*a+|[iy]+a*)", x, perl = TRUE)
-        x <- gsub("e+", "e+", x)
-        x <- gsub("o+", "o+", x)
-        x <- gsub("(.)\\1+", "\\1+", x)
+        x <- gsub("e+", "e+", x, perl = TRUE)
+        x <- gsub("o+", "o+", x, perl = TRUE)
+        x <- gsub("(.)\\1+", "\\1+", x, perl = TRUE)
         # allow multiplication of all other consonants
         x <- gsub("([bdgjlnrw]+)", "\\1+", x, perl = TRUE)
         # allow ending in -en or -us
@@ -575,6 +576,8 @@ exec_as.mo <- function(x,
         # allow au and ou after all above regex implementations
         x <- gsub("a+[bcdfghjklmnpqrstvwxyz]?u+[bcdfghjklmnpqrstvwxyz]?", "(a+u+|o+u+)[bcdfghjklmnpqrstvwxyz]?", x, fixed = TRUE)
         x <- gsub("o+[bcdfghjklmnpqrstvwxyz]?u+[bcdfghjklmnpqrstvwxyz]?", "(a+u+|o+u+)[bcdfghjklmnpqrstvwxyz]?", x, fixed = TRUE)
+        # correct for a forgotten Latin ae instead of e
+        x <- gsub("e+", "a*e+", x, fixed = TRUE)
       }
       x <- strip_whitespace(x, dyslexia_mode)
       # make sure to remove regex overkill (will lead to errors)
@@ -582,10 +585,9 @@ exec_as.mo <- function(x,
       x <- gsub("?+", "?", x, fixed = TRUE)
       
       x_trimmed <- x
-      x_trimmed_species <- paste(x_trimmed, "species")
       x_trimmed_without_group <- gsub(" gro.u.p$", "", x_trimmed, perl = TRUE)
       # remove last part from "-" or "/"
-      x_trimmed_without_group <- gsub("(.*)[-/].*", "\\1", x_trimmed_without_group)
+      x_trimmed_without_group <- gsub("(.*)[-/].*", "\\1", x_trimmed_without_group, perl = TRUE)
       # replace space and dot by regex sign
       x_withspaces <- gsub("[ .]+", ".* ", x, perl = TRUE)
       x <- gsub("[ .]+", ".*", x, perl = TRUE)
@@ -598,14 +600,12 @@ exec_as.mo <- function(x,
       
       if (isTRUE(debug)) {
         cat(paste0(font_blue("x"), '                       "', x, '"\n'))
-        cat(paste0(font_blue("x_species"), '               "', x_species, '"\n'))
         cat(paste0(font_blue("x_withspaces_start_only"), ' "', x_withspaces_start_only, '"\n'))
         cat(paste0(font_blue("x_withspaces_end_only"), '   "', x_withspaces_end_only, '"\n'))
         cat(paste0(font_blue("x_withspaces_start_end"), '  "', x_withspaces_start_end, '"\n'))
         cat(paste0(font_blue("x_backup"), '                "', x_backup, '"\n'))
         cat(paste0(font_blue("x_backup_without_spp"), '    "', x_backup_without_spp, '"\n'))
         cat(paste0(font_blue("x_trimmed"), '               "', x_trimmed, '"\n'))
-        cat(paste0(font_blue("x_trimmed_species"), '       "', x_trimmed_species, '"\n'))
         cat(paste0(font_blue("x_trimmed_without_group"), ' "', x_trimmed_without_group, '"\n'))
       }
       
@@ -914,20 +914,12 @@ exec_as.mo <- function(x,
                                          d.x_withspaces_start_end,
                                          e.x_withspaces_start_only,
                                          f.x_withspaces_end_only,
-                                         g.x_backup_without_spp,
-                                         h.x_species,
-                                         i.x_trimmed_species) {
+                                         g.x_backup_without_spp) {
           
           # FIRST TRY FULLNAMES AND CODES ----
           # if only genus is available, return only genus
           
           if (all(c(x[i], b.x_trimmed) %unlike_case% " ")) {
-            found <- lookup(fullname_lower %in% c(h.x_species, i.x_trimmed_species),
-                            haystack = data_to_check)
-            if (!is.na(found)) {
-              x[i] <- found[1L]
-              return(x[i])
-            }
             if (nchar(g.x_backup_without_spp) >= 6) {
               found <- lookup(fullname_lower %like_case% paste0("^", unregex(g.x_backup_without_spp), "[a-z]+"),
                               haystack = data_to_check)
@@ -1425,13 +1417,10 @@ exec_as.mo <- function(x,
                                      d.x_withspaces_start_end = x_withspaces_start_end[i],
                                      e.x_withspaces_start_only = x_withspaces_start_only[i],
                                      f.x_withspaces_end_only = x_withspaces_end_only[i],
-                                     g.x_backup_without_spp = x_backup_without_spp[i],
-                                     h.x_species = x_species[i],
-                                     i.x_trimmed_species = x_trimmed_species[i])
+                                     g.x_backup_without_spp = x_backup_without_spp[i])
         if (!empty_result(x[i])) {
           next
         }
-        
         
         # no results found: make them UNKNOWN ----
         x[i] <- lookup(mo == "UNKNOWN", uncertainty = -1)

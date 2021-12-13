@@ -146,6 +146,7 @@ plot.mic <- function(x,
       legend_txt <- c(legend_txt, "Resistant")
       legend_col <- c(legend_col, colours_RSI[1])
     }
+    
     legend("top",
            x.intersp = 0.5,
            legend = translate_AMR(legend_txt, language = language),

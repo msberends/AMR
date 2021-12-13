@@ -79,10 +79,11 @@ S.aureus <- microbenchmark(
 print(S.aureus, unit = "ms", signif = 2)
 ```
 ```{r, echo = FALSE}
+mult_factor <- median(S.aureus[S.aureus$expr == S.aureus[which(S.aureus$time == max(S.aureus$time)), "expr"], "time"]) / median(S.aureus[S.aureus$expr == S.aureus[which(S.aureus$time == min(S.aureus$time)), "expr"], "time"])
 ggplot.bm(S.aureus)
 ```
 
-In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 5 milliseconds means it can determine 200 input values per second. It case of 200 milliseconds, this is only 5 input values per second. It is clear that accepted taxonomic names are extremely fast, but some variations are up to 200 times slower to determine.
+In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 5 milliseconds means it can determine 200 input values per second. It case of 200 milliseconds, this is only 5 input values per second. It is clear that accepted taxonomic names are extremely fast, but some variations are up to `r ceiling(mult_factor)` times slower to determine.
 
 To improve performance, we implemented two important algorithms to save unnecessary calculations: **repetitive results** and **already precalculated results**.
 
@@ -150,24 +151,30 @@ Of course, when running `mo_phylum("Firmicutes")` the function has zero knowledg
 
 ### Results in other languages
 
-When the system language is non-English and supported by this `AMR` package, some functions will have a translated result. This almost does't take extra time:
+When the system language is non-English and supported by this `AMR` package, some functions will have a translated result. This almost does't take extra time (compare "en" from the table below with the other languages):
 
 ```{r}
-mo_name("CoNS", language = "en") # or just mo_name("CoNS") on an English system
+CoNS <- as.mo("CoNS")
+CoNS
 
-mo_name("CoNS", language = "es") # or just mo_name("CoNS") on a Spanish system
+mo_name(CoNS, language = "en") # or just mo_name(CoNS) on an English system
 
-mo_name("CoNS", language = "nl") # or just mo_name("CoNS") on a Dutch system
+mo_name(CoNS, language = "es") # or just mo_name(CoNS) on a Spanish system
 
-run_it <- microbenchmark(en = mo_name("CoNS", language = "en"),
-                         de = mo_name("CoNS", language = "de"),
-                         nl = mo_name("CoNS", language = "nl"),
-                         es = mo_name("CoNS", language = "es"),
-                         it = mo_name("CoNS", language = "it"),
-                         fr = mo_name("CoNS", language = "fr"),
-                         pt = mo_name("CoNS", language = "pt"),
+mo_name(CoNS, language = "nl") # or just mo_name(CoNS) on a Dutch system
+
+run_it <- microbenchmark(da = mo_name(CoNS, language = "da"),
+                         de = mo_name(CoNS, language = "de"),
+                         en = mo_name(CoNS, language = "en"),
+                         es = mo_name(CoNS, language = "es"),
+                         fr = mo_name(CoNS, language = "fr"),
+                         it = mo_name(CoNS, language = "it"),
+                         nl = mo_name(CoNS, language = "nl"),
+                         pt = mo_name(CoNS, language = "pt"),
+                         ru = mo_name(CoNS, language = "ru"),
+                         sv = mo_name(CoNS, language = "sv"),
                          times = 100)
 print(run_it, unit = "ms", signif = 4)
 ```
 
-Currently supported non-English languages are German, Dutch, Spanish, Italian, French and Portuguese.
+Currently supported languages are `r AMR:::vector_and(names(AMR:::LANGUAGES_SUPPORTED))`.

@@ -33,8 +33,8 @@ vegetative	TRUE	TRUE	FALSE	FALSE	vegetativ	vegetatief	vegetativo	vegetativo	vég
 no .*growth	TRUE	FALSE	FALSE	FALSE	keine? .*wachstum	geen .*groei	no .*crecimientonon	sem .*crescimento	pas .*croissance	sem .*crescimento	ingen .*vækst	ingen .*tillväxt	отсутствие.*роста
 no|not	TRUE	FALSE	FALSE	FALSE	keine?	geen|niet	no|sin	sem	non	sem	nej|ikke	nej|inte	нет?
 Intermediate	TRUE	FALSE	FALSE	FALSE	Mittlere	Intermediair	Intermedio						
-Susceptible, incr. exp.	FALSE	TRUE	FALSE	FALSE	Empfindlich, erh Belastung	Gevoelig, hoge dosis							
-susceptible, incr. exp.	FALSE	TRUE	FALSE	FALSE	empfindlich, erh Belastung	gevoelig, hoge dosis							
+Susceptible, incr. exp.	FALSE	TRUE	FALSE	FALSE	Empfindlich, erh Belastung	Gevoelig bij verh. blootstelling							
+susceptible, incr. exp.	FALSE	TRUE	FALSE	FALSE	empfindlich, erh Belastung	gevoelig bij verh. blootstelling							
 Susceptible	TRUE	FALSE	FALSE	FALSE	Empfindlich	Gevoelig	Susceptible						
 Incr. exposure	TRUE	FALSE	FALSE	FALSE	Empfindlich, erh Belastung	'Incr. exposure'	'Incr. exposure'						
 Resistant	TRUE	FALSE	FALSE	FALSE	Resistent	Resistent	Resistente						

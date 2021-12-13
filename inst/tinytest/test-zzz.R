@@ -23,8 +23,9 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-# Check if these function still exist in the package (all are in Suggests field)
+# Check if these functions still exist in their package (all are in Suggests field)
 # Since GitHub Actions runs every night, we will get emailed when a dependency fails based on this unit test
+
 # functions used by import_fn()
 import_functions <- c(
   "anti_join" = "dplyr",
@@ -41,6 +42,7 @@ import_functions <- c(
   "insertText" = "rstudioapi",
   "left_join" = "dplyr",
   "new_pillar_shaft_simple" = "pillar",
+  "progress_bar" = "progress",
   "read_html" = "xml2",
   "right_join" = "dplyr",
   "semi_join" = "dplyr",

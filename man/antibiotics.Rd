@@ -4,9 +4,9 @@
 \name{antibiotics}
 \alias{antibiotics}
 \alias{antivirals}
-\title{Data Sets with 558 Antimicrobial Drugs}
+\title{Data Sets with 566 Antimicrobial Drugs}
 \format{
-\subsection{For the \link{antibiotics} data set: a \link{data.frame} with 456 observations and 14 variables:}{
+\subsection{For the \link{antibiotics} data set: a \link{data.frame} with 464 observations and 14 variables:}{
 \itemize{
 \item \code{ab}\cr Antibiotic ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
 \item \code{cid}\cr Compound ID as found in PubChem

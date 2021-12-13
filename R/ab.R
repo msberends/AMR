@@ -155,7 +155,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
                                                 x[known_codes_atc],
                                                 function(x_) which(vapply(FUN.VALUE = logical(1),
                                                                           AB_lookup$atc,
-                                                                          function(atc) x_ %in% atc)),
+                                                                          function(atc) x_ %in% atc))[1L],
                                                 USE.NAMES = FALSE)]
   x_new[known_codes_cid] <- AB_lookup$ab[match(x[known_codes_cid], AB_lookup$cid)]
   already_known <- known_names | known_codes_ab | known_codes_atc | known_codes_cid

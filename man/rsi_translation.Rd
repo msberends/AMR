@@ -5,12 +5,13 @@
 \alias{rsi_translation}
 \title{Data Set for R/SI Interpretation}
 \format{
-A \link{data.frame} with 23,451 observations and 10 variables:
+A \link{data.frame} with 20,318 observations and 11 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
 \item \code{method}\cr Either "DISK" or "MIC"
 \item \code{site}\cr Body site, e.g. "Oral" or "Respiratory"
 \item \code{mo}\cr Microbial ID, see \code{\link[=as.mo]{as.mo()}}
+\item \code{rank_index}\cr Taxonomic rank index of \code{mo} from 1 (subspecies/infraspecies) to 5 (unknown microorganism)
 \item \code{ab}\cr Antibiotic ID, see \code{\link[=as.ab]{as.ab()}}
 \item \code{ref_tbl}\cr Info about where the guideline rule can be found
 \item \code{disk_dose}\cr Dose of the used disk diffusion method
@@ -26,7 +27,7 @@ rsi_translation
 Data set containing reference data to interpret MIC and disk diffusion to R/SI values, according to international guidelines. Currently implemented guidelines are EUCAST (2011-2021) and CLSI (2010-2021). Use \code{\link[=as.rsi]{as.rsi()}} to transform MICs or disks measurements to R/SI values.
 }
 \details{
-The repository of this \code{AMR} package contains a file comprising this exact data set: \url{https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt}. This file \strong{allows for machine reading EUCAST and CLSI guidelines}, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. The file is updated automatically.
+The repository of this \code{AMR} package contains a file comprising this exact data set: \url{https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt}. This file \strong{allows for machine reading EUCAST and CLSI guidelines}, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. The file is updated automatically and the \code{mo} and \code{ab} columns have been transformed to contain the full official names instead of codes.
 }
 \section{Reference Data Publicly Available}{
 

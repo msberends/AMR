@@ -1,5 +1,5 @@
-# `AMR` 1.7.1.9069
-## <small>Last updated: 12 December 2021</small>
+# `AMR` 1.7.1.9070
+## <small>Last updated: 13 December 2021</small>
 
 All functions in this package are now all considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months from now on.
 
@@ -11,7 +11,7 @@ All functions in this package are now all considered to be stable. Updates to th
 
 ### New
 * Support for the CLSI 2021 guideline for interpreting MIC/disk diffusion values, which are incorporated in the `rsi_translation` data set
-* Support for EUCAST Intrinsic Resistance and Unusual Phenotypes v3.3 (October 2021). This is now the default EUCAST guideline in the package (all older guidelines are still available) for `eucast_rules()`, `mo_intrinsic_resistant()` and `mdro()`. The `intrinsic_resistant` data set was also updated accordingly.
+* Support for EUCAST Intrinsic Resistance and Unusual Phenotypes v3.3 (October 2021). This is now the default EUCAST guideline in the package (all older guidelines are still available) for `eucast_rules()`, `mo_is_intrinsic_resistant()` and `mdro()`. The `intrinsic_resistant` data set was also updated accordingly.
 * Support for all antimicrobial drug (group) names and colloquial microorganism names in Danish, Dutch, English, French, German, Italian, Portuguese, Russian, Spanish and Swedish
 * Function `set_ab_names()` to rename data set columns that resemble antimicrobial drugs. This allows for quickly renaming columns to official names, ATC codes, etc. Its second argument can be a tidyverse way of selecting:
   ```r
@@ -47,6 +47,7 @@ All functions in this package are now all considered to be stable. Updates to th
   * Fix for using selectors multiple times in one call (e.g., using them in `dplyr::filter()` and immediately after in `dplyr::select()`)
   * Fix for using having multiple columns that are coerced to the same antibiotic agent
   * Fixed for using `all()` or `any()` on antibiotic selectors in an R Markdown file
+* Added the following antimicrobial agents that are now covered by the WHO: aztreonam/nacubactam (ANC), cefepime/nacubactam (FNC), exebacase (EXE), ozenoxacin (OZN), zoliflodacin (ZFD), manogepix (MGX), ibrexafungerp (IBX), and rezafungin (RZF). None of these agents have an ATC code yet.
 * Fixed the Gram stain (`mo_gramstain()`) determination of the taxonomic class Negativicutes within the phylum of Firmicutes - they were considered Gram-positives because of their phylum but are actually Gram-negative. This impacts 137 taxonomic species, genera and families, such as *Negativicoccus* and *Veillonella*.
 * Dramatic speed improvement for `first_isolate()`
 * Fix to prevent introducing `NA`s for old MO codes when running `as.mo()` on them

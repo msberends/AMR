@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9069</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9070</span>
       </span>
     </div>
 
@@ -157,13 +157,13 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.7.1.9069" id="amr-1719069">
-<code>AMR</code> 1.7.1.9069<a class="anchor" aria-label="anchor" href="#amr-1719069"></a></h2>
+<h2 class="page-header" data-toc-text="1.7.1.9070" id="amr-1719070">
+<code>AMR</code> 1.7.1.9070<a class="anchor" aria-label="anchor" href="#amr-1719070"></a></h2>
 <div class="section level3">
-<h3 id="last-updated-december-1-7-1-9069"><small>Last updated: 12 December 2021</small><a class="anchor" aria-label="anchor" href="#last-updated-december-1-7-1-9069"></a></h3>
+<h3 id="last-updated-december-1-7-1-9070"><small>Last updated: 13 December 2021</small><a class="anchor" aria-label="anchor" href="#last-updated-december-1-7-1-9070"></a></h3>
 <p>All functions in this package are now all considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months from now on.</p>
 <div class="section level4">
-<h4 id="breaking-changes-1-7-1-9069">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-1-7-1-9069"></a></h4>
+<h4 id="breaking-changes-1-7-1-9070">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-1-7-1-9070"></a></h4>
 <ul><li>Removed <code>p_symbol()</code> and all <code>filter_*()</code> functions (except for <code><a href="../reference/first_isolate.html">filter_first_isolate()</a></code>), which were all deprecated in a previous package version</li>
 <li>Removed the <code>key_antibiotics()</code> and <code>key_antibiotics_equal()</code> functions, which were deprecated and superseded by <code><a href="../reference/key_antimicrobials.html">key_antimicrobials()</a></code> and <code><a href="../reference/key_antimicrobials.html">antimicrobials_equal()</a></code>
 </li>
@@ -171,9 +171,9 @@
 <li>Renamed function <code>get_locale()</code> to <code><a href="../reference/translate.html">get_AMR_locale()</a></code> to prevent conflicts with other packages</li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-1-7-1-9069">New<a class="anchor" aria-label="anchor" href="#new-1-7-1-9069"></a></h4>
+<h4 id="new-1-7-1-9070">New<a class="anchor" aria-label="anchor" href="#new-1-7-1-9070"></a></h4>
 <ul><li><p>Support for the CLSI 2021 guideline for interpreting MIC/disk diffusion values, which are incorporated in the <code>rsi_translation</code> data set</p></li>
-<li><p>Support for EUCAST Intrinsic Resistance and Unusual Phenotypes v3.3 (October 2021). This is now the default EUCAST guideline in the package (all older guidelines are still available) for <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>, <code>mo_intrinsic_resistant()</code> and <code><a href="../reference/mdro.html">mdro()</a></code>. The <code>intrinsic_resistant</code> data set was also updated accordingly.</p></li>
+<li><p>Support for EUCAST Intrinsic Resistance and Unusual Phenotypes v3.3 (October 2021). This is now the default EUCAST guideline in the package (all older guidelines are still available) for <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>, <code><a href="../reference/mo_property.html">mo_is_intrinsic_resistant()</a></code> and <code><a href="../reference/mdro.html">mdro()</a></code>. The <code>intrinsic_resistant</code> data set was also updated accordingly.</p></li>
 <li><p>Support for all antimicrobial drug (group) names and colloquial microorganism names in Danish, Dutch, English, French, German, Italian, Portuguese, Russian, Spanish and Swedish</p></li>
 <li>
 <p>Function <code><a href="../reference/ab_property.html">set_ab_names()</a></code> to rename data set columns that resemble antimicrobial drugs. This allows for quickly renaming columns to official names, ATC codes, etc. Its second argument can be a tidyverse way of selecting:</p>
@@ -186,7 +186,7 @@
 <li><p>Function <code><a href="../reference/ab_property.html">ab_ddd_units()</a></code> to get units of DDDs (daily defined doses), deprecating the use of <code>ab_ddd(..., units = TRUE)</code> to be more consistent in data types of function output</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-1-7-1-9069">Changed<a class="anchor" aria-label="anchor" href="#changed-1-7-1-9069"></a></h4>
+<h4 id="changed-1-7-1-9070">Changed<a class="anchor" aria-label="anchor" href="#changed-1-7-1-9070"></a></h4>
 <ul><li>Updated the bacterial taxonomy to 5 October 2021 (according to <a href="https://lpsn.dsmz.de" class="external-link">LPSN</a>), including all 11 new staphylococcal species named since 1 January last year</li>
 <li>The <code>antibiotics</code> data set now contains <strong>all ATC codes</strong> that are available through the <a href="https://www.whocc.no" class="external-link">WHOCC website</a>, regardless of drugs being present in more than one ATC group. This means that:
 <ul><li>Some drugs now contain multiple ATC codes (e.g., metronidazole contains 5)</li>
@@ -221,6 +221,7 @@
 <li><p>Fix for using having multiple columns that are coerced to the same antibiotic agent</p></li>
 <li><p>Fixed for using <code><a href="https://rdrr.io/r/base/all.html" class="external-link">all()</a></code> or <code><a href="https://rdrr.io/r/base/any.html" class="external-link">any()</a></code> on antibiotic selectors in an R Markdown file</p></li>
 </ul></li>
+<li>Added the following antimicrobial agents that are now covered by the WHO: aztreonam/nacubactam (ANC), cefepime/nacubactam (FNC), exebacase (EXE), ozenoxacin (OZN), zoliflodacin (ZFD), manogepix (MGX), ibrexafungerp (IBX), and rezafungin (RZF). None of these agents have an ATC code yet.</li>
 <li>Fixed the Gram stain (<code><a href="../reference/mo_property.html">mo_gramstain()</a></code>) determination of the taxonomic class Negativicutes within the phylum of Firmicutes - they were considered Gram-positives because of their phylum but are actually Gram-negative. This impacts 137 taxonomic species, genera and families, such as <em>Negativicoccus</em> and <em>Veillonella</em>.</li>
 <li>Dramatic speed improvement for <code><a href="../reference/first_isolate.html">first_isolate()</a></code>
 </li>
@@ -255,7 +256,7 @@
 <code><a href="../reference/get_episode.html">get_episode()</a></code> and <code><a href="../reference/get_episode.html">is_new_episode()</a></code> can now cope with <code>NA</code>s</li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-1-7-1-9069">Other<a class="anchor" aria-label="anchor" href="#other-1-7-1-9069"></a></h4>
+<h4 id="other-1-7-1-9070">Other<a class="anchor" aria-label="anchor" href="#other-1-7-1-9070"></a></h4>
 <ul><li>This package is now being maintained by two epidemiologists and a data scientist from two different non-profit healthcare organisations.</li>
 </ul></div>
 </div>

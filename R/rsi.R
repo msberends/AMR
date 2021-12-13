@@ -836,11 +836,11 @@ exec_as.rsi <- function(method,
       get_record <- get_record %pm>% 
         # be as specific as possible (i.e. prefer species over genus):
         # pm_desc(uti) = TRUE on top and FALSE on bottom
-        pm_arrange(pm_desc(uti), pm_desc(nchar(mo))) # 'uti' is a column in data set 'rsi_translation'
+        pm_arrange(pm_desc(uti), rank_index) # 'uti' is a column in data set 'rsi_translation'
     } else {
       get_record <- get_record %pm>% 
         pm_filter(uti == FALSE) %pm>% # 'uti' is a column in rsi_translation
-        pm_arrange(pm_desc(nchar(mo)))
+        pm_arrange(rank_index)
     }
     
     get_record <- get_record[1L, , drop = FALSE]
@@ -851,21 +851,16 @@ exec_as.rsi <- function(method,
       } else if (method == "mic") {
         new_rsi[i] <- quick_case_when(isTRUE(conserve_capped_values) & x[i] %like% "^<[0-9]" ~ "S",
                                       isTRUE(conserve_capped_values) & x[i] %like% "^>[0-9]" ~ "R",
-                                      # start interpreting: EUCAST uses <= S and > R, CLSI uses <=S and >= R
+                                      # these basically call `<=.mic()` and `>=.mic()`:
                                       x[i] <= get_record$breakpoint_S ~ "S",
-                                      guideline_coerced %like% "EUCAST" & x[i] > get_record$breakpoint_R ~ "R",
-                                      guideline_coerced %like% "CLSI" & x[i] >= get_record$breakpoint_R ~ "R",
+                                      x[i] >= get_record$breakpoint_R ~ "R",
                                       # return "I" when not match the bottom or top
                                       !is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R) ~ "I",
                                       # and NA otherwise
                                       TRUE ~ NA_character_)
       } else if (method == "disk") {
         new_rsi[i] <- quick_case_when(isTRUE(as.double(x[i]) >= as.double(get_record$breakpoint_S)) ~ "S",
-                                      # start interpreting: EUCAST uses >= S and < R, CLSI uses >=S and <= R
-                                      guideline_coerced %like% "EUCAST" &
-                                        isTRUE(as.double(x[i]) < as.double(get_record$breakpoint_R)) ~ "R",
-                                      guideline_coerced %like% "CLSI" &
-                                        isTRUE(as.double(x[i]) <= as.double(get_record$breakpoint_R)) ~ "R",
+                                      isTRUE(as.double(x[i]) <= as.double(get_record$breakpoint_R)) ~ "R",
                                       # return "I" when not match the bottom or top
                                       !is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R) ~ "I",
                                       # and NA otherwise

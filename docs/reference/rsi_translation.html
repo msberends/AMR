@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9069</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9070</span>
       </span>
     </div>
 
@@ -165,10 +165,11 @@
 
     <div id="format">
     <h2>Format</h2>
-    <p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with 23,451 observations and 10 variables:</p><ul><li><p><code>guideline</code><br> Name of the guideline</p></li>
+    <p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with 20,318 observations and 11 variables:</p><ul><li><p><code>guideline</code><br> Name of the guideline</p></li>
 <li><p><code>method</code><br> Either "DISK" or "MIC"</p></li>
 <li><p><code>site</code><br> Body site, e.g. "Oral" or "Respiratory"</p></li>
 <li><p><code>mo</code><br> Microbial ID, see <code><a href="as.mo.html">as.mo()</a></code></p></li>
+<li><p><code>rank_index</code><br> Taxonomic rank index of <code>mo</code> from 1 (subspecies/infraspecies) to 5 (unknown microorganism)</p></li>
 <li><p><code>ab</code><br> Antibiotic ID, see <code><a href="as.ab.html">as.ab()</a></code></p></li>
 <li><p><code>ref_tbl</code><br> Info about where the guideline rule can be found</p></li>
 <li><p><code>disk_dose</code><br> Dose of the used disk diffusion method</p></li>
@@ -178,7 +179,7 @@
 </ul></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The repository of this <code>AMR</code> package contains a file comprising this exact data set: <a href="https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt" class="external-link">https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt</a>. This file <strong>allows for machine reading EUCAST and CLSI guidelines</strong>, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. The file is updated automatically.</p>
+    <p>The repository of this <code>AMR</code> package contains a file comprising this exact data set: <a href="https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt" class="external-link">https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt</a>. This file <strong>allows for machine reading EUCAST and CLSI guidelines</strong>, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. The file is updated automatically and the <code>mo</code> and <code>ab</code> columns have been transformed to contain the full official names instead of codes.</p>
     </div>
     <div id="reference-data-publicly-available">
     <h2>Reference Data Publicly Available</h2>

@@ -1096,12 +1096,28 @@ progress_ticker <- function(n = 1, n_min = 0, print = TRUE, ...) {
     }
     set_clean_class(pb, new_class = "txtProgressBar")
   } else if (n >= n_min) {
-    pb <- utils::txtProgressBar(max = n, style = 3)
-    pb$tick <- function() {
-      pb$up(pb$getVal() + 1)
+    # rely on the progress package if it is available - it has a more verbose output
+    progress_bar <- import_fn("progress_bar", "progress", error_on_fail = FALSE)
+    if (!is.null(progress_bar)) {
+      # so we use progress::progress_bar
+      # a close() method was also added, see below this function
+      pb <- progress_bar$new(format = "[:bar] :percent (:current/:total)",
+                             total = n)
+    } else {
+      pb <- utils::txtProgressBar(max = n, style = 3)
+      pb$tick <- function() {
+        pb$up(pb$getVal() + 1)
+      }
     }
     pb
   }
+}
+
+#' @method close progress_bar
+#' @export
+#' @noRd
+close.progress_bar <- function(con, ...) {
+  con$terminate()
 }
 
 set_clean_class <- function(x, new_class) {

@@ -23,116 +23,95 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
+# This script runs in under a minute and renews all guidelines of CLSI and EUCAST!
+
 library(dplyr)
 library(readr)
 library(tidyr)
+library(AMR)
 
-# Installed WHONET software on Windows (http://www.whonet.org/software.html),
-#    imported C:\WHONET\Codes\DRGLST1.txt
-DRGLST1 <- readr::read_tsv("data-raw/DRGLST1.txt", na = c("", "NA", "-"))
-rsi_trans <- DRGLST1 %>%
-  # only keep CLSI and EUCAST guidelines:
-  filter(GUIDELINES %like% "^(CLSI|EUCST)")
-if (any(is.na(rsi_trans$BREAKPOINT_TYPE)) | !"Human" %in% rsi_trans$BREAKPOINT_TYPE) {
-  stop("Check column BREAKPOINT_TYPE - something is WRONG!")
-}
-sort(unique(rsi_trans$GUIDELINES))
-rsi_trans <- rsi_trans %>% 
-  ##### If looking for adding a specific guideline, do it here!
-  filter(GUIDELINES == "CLSI21") %>% 
-  #####
-  filter(BREAKPOINT_TYPE == "Human") %>% 
-  mutate(DISK_S = ifelse(as.double(DISK_S) > 50, 50, DISK_S),
-         MIC_R = ifelse(as.double(MIC_R) %in% c(1025, 129, 513), as.double(MIC_R) - 1, MIC_R)) %>%
-  # set a nice layout:
+# Install the WHONET software on Windows (http://www.whonet.org/software.html),
+# and copy the folder C:\WHONET\Codes to data-raw/WHONET/Codes
+DRGLST <- readr::read_tsv("data-raw/WHONET/Codes/DRGLST.txt", na = c("", "NA", "-"))
+DRGLST1 <- readr::read_tsv("data-raw/WHONET/Codes/DRGLST1.txt", na = c("", "NA", "-"))
+ORGLIST <- readr::read_tsv("data-raw/WHONET/Codes/ORGLIST.txt", na = c("", "NA", "-"))
+
+# create data set for generic rules (i.e., AB-specific but not MO-specific)
+rsi_generic <- DRGLST %>%
+  filter(CLSI == "X" | EUCST == "X") %>%
+  select(ab = ANTIBIOTIC, disk_dose = POTENCY, matches("^(CLSI|EUCST)[0-9]")) %>% 
+  mutate(ab = as.ab(ab),
+         across(matches("(CLSI|EUCST)"), as.double)) %>%
+  pivot_longer(-c(ab, disk_dose), names_to = "method") %>% 
+  separate(method, into = c("guideline", "method"), sep = "_") %>% 
+  mutate(method = ifelse(method %like% "D",
+                         gsub("D", "DISK_", method, fixed = TRUE),
+                         gsub("M", "MIC_", method, fixed = TRUE))) %>% 
+  separate(method, into = c("method", "rsi"), sep = "_") %>% 
+  # I is in the middle, so we only need R and S (saves data)
+  filter(rsi %in% c("R", "S")) %>% 
+  pivot_wider(names_from = rsi, values_from = value) %>%
+  transmute(guideline = gsub("([0-9]+)$", " 20\\1", gsub("EUCST", "EUCAST", guideline)),
+            method,
+            site = NA_character_,
+            mo = as.mo("UNKNOWN"),
+            ab,
+            ref_tbl = "Generic rules",
+            disk_dose,
+            breakpoint_S = S,
+            breakpoint_R = R,
+            uti = FALSE) %>% 
+  filter(!(is.na(breakpoint_S) & is.na(breakpoint_R)), !is.na(mo), !is.na(ab))
+rsi_generic
+
+# create data set for AB-specific and MO-specific rules
+rsi_specific <- DRGLST1 %>% 
+  # only support guidelines for humans (for now)
+  filter(HOST == "Human" & SITE_INF %unlike% "canine|feline",
+         # only CLSI and EUCAST
+         GUIDELINES %like% "(CLSI|EUCST)") %>% 
+  # get microorganism names from another WHONET table
+  mutate(ORG_CODE = tolower(ORG_CODE)) %>% 
+  left_join(ORGLIST %>%
+              transmute(ORG_CODE = tolower(ORG),
+                        SCT_TEXT = case_when(is.na(SCT_TEXT) & is.na(ORGANISM) ~ ORG_CODE,
+                                             is.na(SCT_TEXT) ~ ORGANISM,
+                                             TRUE ~ SCT_TEXT)) %>% 
+              # WHO for 'Generic'
+              bind_rows(tibble(ORG_CODE = "gen", SCT_TEXT = "Unknown")) %>% 
+              # WHO for 'Enterobacterales'
+              bind_rows(tibble(ORG_CODE = "ebc", SCT_TEXT = "Enterobacterales"))
+  ) %>% 
+  # still some manual cleaning required
+  filter(!SCT_TEXT %in% c("Anaerobic Actinomycetes")) %>% 
   transmute(guideline = gsub("([0-9]+)$", " 20\\1", gsub("EUCST", "EUCAST", GUIDELINES)),
-            method = TESTMETHOD,
+            method = toupper(TESTMETHOD),
             site = SITE_INF,
-            mo = as.mo(ORG_CODE),
+            mo = as.mo(SCT_TEXT),
             ab = as.ab(WHON5_CODE),
             ref_tbl = REF_TABLE,
-            dose_disk = POTENCY,
-            S_disk = as.disk(DISK_S),
-            R_disk = as.disk(DISK_R),
-            S_mic = as.mic(MIC_S),
-            R_mic = as.mic(MIC_R)) %>%
-  filter(!is.na(mo),
-         !is.na(ab),
-         !mo %in% c("UNKNOWN", "B_GRAMN", "B_GRAMP", "F_FUNGUS", "F_YEAST")) %>%
-  arrange(desc(guideline), mo, ab)
+            disk_dose = POTENCY,
+            breakpoint_S = as.double(ifelse(method == "DISK", DISK_S, MIC_S)),
+            breakpoint_R = as.double(ifelse(method == "DISK", DISK_R, MIC_R)),
+            uti = site %like% "(UTI|urinary|urine)") %>% 
+  filter(!(is.na(breakpoint_S) & is.na(breakpoint_R)), !is.na(mo), !is.na(ab))
+rsi_specific
 
-print(mo_failures())
-
-# create 2 tables: MIC and disk
-tbl_mic <- rsi_trans %>%
-  filter(method == "MIC") %>%
-  mutate(breakpoint_S = as.double(S_mic), breakpoint_R = as.double(R_mic))
-tbl_disk <- rsi_trans %>%
-  filter(method == "DISK") %>%
-  mutate(breakpoint_S = as.double(S_disk), breakpoint_R = as.double(R_disk))
-
-# merge them so every record is a unique combination of method, mo and ab
-rsi_trans <- bind_rows(tbl_mic, tbl_disk) %>%
-  rename(disk_dose = dose_disk) %>% 
-  mutate(disk_dose = gsub("µ", "u", disk_dose)) %>% 
-  select(-ends_with("_mic"), -ends_with("_disk"))
-
-# add extra CLSI general guidelines
-# Installed WHONET software on Windows (http://www.whonet.org/software.html),
-#    imported C:\WHONET\Codes\DRGLST.txt
-clsi_general <- readr::read_tsv("data-raw/DRGLST.txt") %>%
-  filter(CLSI == "X") %>%
-  select(WHON5_CODE, 
-         disk_dose = POTENCY, 
-         starts_with("CLSI"), 
-         -c(CLSI, CLSI_ORDER)) %>%
-  mutate_at(vars(matches("CLSI")), as.double) %>%
-  pivot_longer(-c(WHON5_CODE, disk_dose)) %>%
-  mutate(method = ifelse(name %like% "_D", "DISK", "MIC"),
-         breakpoint = paste0("breakpoint_", gsub(".*([A-Z])$", "\\1", name)), 
-         guideline = paste0("CLSI 20", cleaner::clean_integer(name))) %>%
-  filter(breakpoint != "breakpoint_I", !is.na(value)) %>%
-  select(-name) %>%
-  pivot_wider(names_from = breakpoint, values_from = value) %>% 
-  transmute(guideline, 
-            method, 
-            site = NA_character_, 
-            mo = as.mo("UNKNOWN"),
-            ab = as.ab(WHON5_CODE),
-            ref_tbl = "Generic CLSI rules", 
-            disk_dose = gsub("/", "-", disk_dose, fixed = TRUE), 
-            breakpoint_S, 
-            breakpoint_R)
-
-
-# add new EUCAST with read_EUCAST.R
-
-# 2020-04-14 did that now for 2019 and 2020
-rsi_trans <- rsi_trans %>%
-  filter(guideline != "EUCAST 2019") %>% 
-  bind_rows(new_EUCAST) %>% 
-  bind_rows(clsi_general) %>% 
-  mutate(uti = site %like% "(UTI|urinary|urine)") %>% 
-  as.data.frame(stringsAsFactors = FALSE) %>%
-  # force classes again
-  mutate(mo = as.mo(mo),
-         ab = as.ab(ab)) %>% 
-  arrange(desc(guideline), ab, mo, method)
-
-# 2021-01-12 did that now for 2021
-rsi_trans <- rsi_trans %>%
-  mutate(mo = as.character(mo)) %>% 
-  bind_rows(new_EUCAST) %>% 
-  mutate(uti = site %like% "(UTI|urinary)") %>% 
-  as.data.frame(stringsAsFactors = FALSE) %>%
-  # force classes again
-  mutate(mo = as.mo(mo),
-         ab = as.ab(ab)) %>% 
-  arrange(desc(guideline), ab, mo, method)
+rsi_translation <- rsi_generic %>% 
+  bind_rows(rsi_specific) %>% 
+  # add the taxonomic rank index, used for sorting (so subspecies match first, order matches last)
+  mutate(rank_index = case_when(mo_rank(mo) %like% "(infra|sub)" ~ 1,
+                                mo_rank(mo) == "species" ~ 2,
+                                mo_rank(mo) == "genus" ~ 3,
+                                mo_rank(mo) == "family" ~ 4,
+                                mo_rank(mo) == "order" ~ 5,
+                                TRUE ~ 6),
+         .after = mo) %>% 
+  arrange(desc(guideline), ab, mo, method) %>% 
+  distinct(guideline, ab, mo, method, site, .keep_all = TRUE) %>% 
+  as.data.frame(stringsAsFactors = FALSE)
 
 # save to package
-rsi_translation <- rsi_trans
 usethis::use_data(rsi_translation, overwrite = TRUE)
-rm(rsi_trans)
 rm(rsi_translation)
 devtools::load_all(".")

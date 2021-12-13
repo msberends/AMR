@@ -42,7 +42,7 @@ int_resis2 <- int_resis[, sapply(int_resis, function(x) any(!is.rsi(x) | x == "R
   select(microorganism, antibiotic = name)
 
 # remove lab drugs
-untreatable <- antibiotics[which(antibiotics$name %like% "-high|EDTA|polysorbate|macromethod|screening"), "name", drop = TRUE]
+untreatable <- antibiotics[which(antibiotics$name %like% "-high|EDTA|polysorbate|macromethod|screening|/nacubactam"), "name", drop = TRUE]
 int_resis2 <- int_resis2 %>% 
   filter(!antibiotic %in% untreatable) %>% 
   arrange(microorganism, antibiotic)
