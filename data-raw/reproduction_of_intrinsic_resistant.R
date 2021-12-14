@@ -25,29 +25,27 @@
 
 library(AMR)
 library(dplyr)
-int_resis <- data.frame(microorganism = microorganisms$mo, stringsAsFactors = FALSE)
+int_resis <- data.frame(mo = microorganisms$mo, stringsAsFactors = FALSE)
 for (i in seq_len(nrow(antibiotics))) {
   int_resis$new <- as.rsi("S")
-  colnames(int_resis)[ncol(int_resis)] <- antibiotics$name[i]
+  colnames(int_resis)[ncol(int_resis)] <- antibiotics$ab[i]
 }
 
-int_resis <- eucast_rules(int_resis, 
+int_resis <- eucast_rules(int_resis,
                           eucast_rules_df = subset(AMR:::EUCAST_RULES_DF,
                                                    is.na(have_these_values) & reference.version == 3.3),
                           info = FALSE)
 
 int_resis2 <- int_resis[, sapply(int_resis, function(x) any(!is.rsi(x) | x == "R"))] %>% 
-  tidyr::pivot_longer(-microorganism) %>%
+  tidyr::pivot_longer(-mo) %>%
   filter(value == "R") %>% 
-  select(microorganism, antibiotic = name)
+  select(mo, ab = name)
 
 # remove lab drugs
-untreatable <- antibiotics[which(antibiotics$name %like% "-high|EDTA|polysorbate|macromethod|screening|/nacubactam"), "name", drop = TRUE]
+untreatable <- antibiotics[which(antibiotics$name %like% "-high|EDTA|polysorbate|macromethod|screening|/nacubactam"), "ab", drop = TRUE]
 int_resis2 <- int_resis2 %>% 
-  filter(!antibiotic %in% untreatable) %>% 
-  arrange(microorganism, antibiotic)
-  
-int_resis2$microorganism <- mo_name(int_resis2$microorganism, language = NULL)
+  filter(!ab %in% untreatable) %>% 
+  arrange(mo, ab)
 
 intrinsic_resistant <- as.data.frame(int_resis2, stringsAsFactors = FALSE)
 usethis::use_data(intrinsic_resistant, internal = FALSE, overwrite = TRUE, version = 2, compress = "xz")

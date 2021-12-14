@@ -485,6 +485,11 @@ exec_as.mo <- function(x,
       }
     }
     
+    # remove spp and species
+    x <- gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x, ignore.case = TRUE, perl = TRUE)
+    x <- gsub("( spp?.?| ss |subsp.?|subspecies|biovar|serovar|species)", "", x, ignore.case = TRUE, perl = TRUE)
+    x <- strip_whitespace(x, dyslexia_mode)
+    
     x_backup <- x
     
     # from here on case-insensitive
@@ -492,11 +497,6 @@ exec_as.mo <- function(x,
     
     x_backup[x %like_case% "^(fungus|fungi)$"] <- "(unknown fungus)" # will otherwise become the kingdom
     x_backup[x_backup_untouched == "Fungi"] <- "Fungi" # is literally the kingdom
-    
-    # remove spp and species
-    x_backup <- gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x_backup, perl = TRUE)
-    x_backup <- gsub("( spp?.?| ss |subsp.?|subspecies|biovar|serovar|species)", "", x_backup, perl = TRUE)
-    x_backup <- strip_whitespace(x_backup, dyslexia_mode)
     
     # Fill in fullnames and MO codes directly
     known_names <- tolower(x_backup) %in% MO_lookup$fullname_lower
@@ -717,7 +717,7 @@ exec_as.mo <- function(x,
           # fewer than 3 chars and not looked for species, add as failure
           x[i] <- lookup(mo == "UNKNOWN")
           if (initial_search == TRUE) {
-            failures <- c(failures, x_backup[i])
+            failures <- c(failures, x_backup_untouched[i])
           }
           next
         }
@@ -900,7 +900,7 @@ exec_as.mo <- function(x,
           # (at this point the latest reference_df has also been checked)
           x[i] <- lookup(mo == "UNKNOWN")
           if (initial_search == TRUE) {
-            failures <- c(failures, x_backup[i])
+            failures <- c(failures, x_backup_untouched[i])
           }
           next
         }
@@ -1425,7 +1425,7 @@ exec_as.mo <- function(x,
         # no results found: make them UNKNOWN ----
         x[i] <- lookup(mo == "UNKNOWN", uncertainty = -1)
         if (initial_search == TRUE) {
-          failures <- c(failures, x_backup[i])
+          failures <- c(failures, x_backup_untouched[i])
         }
       }
       

@@ -279,15 +279,19 @@ if (changed_md5(av)) {
   try(openxlsx::write.xlsx(av, "data-raw/antivirals.xlsx"), silent = TRUE)
 }
 
-if (changed_md5(intrinsic_resistant)) {
+# give official names to ABs and MOs
+intrinsicR <- data.frame(microorganism = mo_name(intrinsic_resistant$mo),
+                         antibiotic = ab_name(intrinsic_resistant$ab),
+                         stringsAsFactors = FALSE)
+if (changed_md5(intrinsicR)) {
   usethis::ui_info(paste0("Saving {usethis::ui_value('intrinsic_resistant')} to {usethis::ui_value('/data-raw/')}"))
-  write_md5(intrinsic_resistant)
-  try(saveRDS(intrinsic_resistant, "data-raw/intrinsic_resistant.rds", version = 2, compress = "xz"), silent = TRUE)
-  try(write.table(intrinsic_resistant, "data-raw/intrinsic_resistant.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
-  try(haven::write_sas(intrinsic_resistant, "data-raw/intrinsic_resistant.sas"), silent = TRUE)
-  try(haven::write_sav(intrinsic_resistant, "data-raw/intrinsic_resistant.sav"), silent = TRUE)
-  try(haven::write_dta(intrinsic_resistant, "data-raw/intrinsic_resistant.dta"), silent = TRUE)
-  try(openxlsx::write.xlsx(intrinsic_resistant, "data-raw/intrinsic_resistant.xlsx"), silent = TRUE)
+  write_md5(intrinsicR)
+  try(saveRDS(intrinsicR, "data-raw/intrinsic_resistant.rds", version = 2, compress = "xz"), silent = TRUE)
+  try(write.table(intrinsicR, "data-raw/intrinsic_resistant.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
+  try(haven::write_sas(intrinsicR, "data-raw/intrinsic_resistant.sas"), silent = TRUE)
+  try(haven::write_sav(intrinsicR, "data-raw/intrinsic_resistant.sav"), silent = TRUE)
+  try(haven::write_dta(intrinsicR, "data-raw/intrinsic_resistant.dta"), silent = TRUE)
+  try(openxlsx::write.xlsx(intrinsicR, "data-raw/intrinsic_resistant.xlsx"), silent = TRUE)
 }
 
 if (changed_md5(dosage)) {

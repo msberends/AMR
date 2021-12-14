@@ -263,9 +263,9 @@
 #'
 #' Data set containing defined intrinsic resistance by EUCAST of all bug-drug combinations.
 #' @format A [data.frame] with `r format(nrow(intrinsic_resistant), big.mark = ",")` observations and `r ncol(intrinsic_resistant)` variables:
-#' - `microorganism`\cr Official taxonomic name of the microorganism, according to the LPSN
-#' - `antibiotic`\cr Official name of the antibiotic drug, according to the WHOCC
-#' @details The repository of this `AMR` package contains a file comprising this exact data set: <https://github.com/msberends/AMR/blob/main/data-raw/intrinsic_resistant.txt>. This file **allows for machine reading EUCAST guidelines about intrinsic resistance**, which is almost impossible with the Excel and PDF files distributed by EUCAST. The file is updated automatically.
+#' - `mo`\cr Microorganism ID
+#' - `ab`\cr Antibiotic ID
+#' @details The repository of this `AMR` package contains a file comprising this data set with full taxonomic and antibiotic names: <https://github.com/msberends/AMR/blob/main/data-raw/intrinsic_resistant.txt>. This file **allows for machine reading EUCAST guidelines about intrinsic resistance**, which is almost impossible with the Excel and PDF files distributed by EUCAST. The file is updated automatically.
 #' 
 #' This data set is based on `r format_eucast_version_nr(3.3)`.
 #' @inheritSection AMR Reference Data Publicly Available

@@ -165,6 +165,5 @@ create_MO.old_lookup <- function() {
 
 create_intr_resistance <- function() {
   # for mo_is_intrinsic_resistant() - saves a lot of time when executed on this vector
-  paste(AMR::microorganisms[match(AMR::intrinsic_resistant$microorganism, AMR::microorganisms$fullname), "mo", drop = TRUE],
-        AMR::antibiotics[match(AMR::intrinsic_resistant$antibiotic, AMR::antibiotics$name), "ab", drop = TRUE])
+  paste(AMR::intrinsic_resistant$mo, AMR::intrinsic_resistant$ab)
 }

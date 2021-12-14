@@ -177,4 +177,4 @@ run_it <- microbenchmark(da = mo_name(CoNS, language = "da"),
 print(run_it, unit = "ms", signif = 4)
 ```
 
-Currently supported languages are `r AMR:::vector_and(names(AMR:::LANGUAGES_SUPPORTED))`.
+Currently supported languages are `r AMR:::vector_and(names(AMR:::LANGUAGES_SUPPORTED), quotes = FALSE)`.
