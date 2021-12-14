@@ -799,7 +799,8 @@ exec_as.rsi <- function(method,
   lookup_lancefield <- paste(mo_lancefield, ab)
   lookup_other <- paste(mo_other, ab)
   
-  if (all(trans$uti == TRUE, na.rm = TRUE) & all(uti == FALSE)) {
+  if (length(unique(paste(trans$mo, trans$ab))) == length(unique(paste(trans$mo, trans$ab, trans$uti))) &&
+      any(trans$uti == TRUE, na.rm = TRUE) && all(uti == FALSE)) {
     message_("WARNING.", add_fn = list(font_yellow, font_bold), as_note = FALSE)
     warning_("Introducing NA: interpretation of ", font_bold(ab_name(ab, tolower = TRUE)), " for some microorganisms is only available for (uncomplicated) urinary tract infections (UTI). Use argument `uti` to set which isolates are from urine. See ?as.rsi.", call = FALSE)
     warned <- TRUE
