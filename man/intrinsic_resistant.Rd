@@ -33,15 +33,13 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 }
 
 \examples{
-subset(intrinsic_resistant,
-       antibiotic == "Vancomycin" & microorganism \%like\% "Enterococcus")$microorganism
-#> [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"
-
 \donttest{
 if (require("dplyr")) {
   intrinsic_resistant \%>\%
-    filter(antibiotic == "Vancomycin" & microorganism \%like\% "Enterococcus") \%>\% 
-    pull(microorganism)
+    mutate(mo = mo_name(mo),
+           ab = ab_name(mo))
+    filter(ab == "Vancomycin" & mo \%like\% "Enterococcus") \%>\% 
+    pull(mo)
   #> [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"
 }
 }

@@ -132,8 +132,8 @@
 #' List of Prokaryotic names with Standing in Nomenclature (`r CATALOGUE_OF_LIFE$yearmonth_LPSN`) as currently implemented in this `AMR` package:
 #' 
 #' * Parte, A.C., Sarda Carbasse, J., Meier-Kolthoff, J.P., Reimer, L.C. and Goker, M. (2020). List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ. International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \doi{10.1099/ijsem.0.004332}
-#' * Parte, A.C. (2018). LPSN — List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; \doi{10.1099/ijsem.0.002786}
-#' * Parte, A.C. (2014). LPSN — List of Prokaryotic names with Standing in Nomenclature. Nucleic Acids Research, 42, Issue D1, D613–D616; \doi{10.1093/nar/gkt1111}
+#' * Parte, A.C. (2018). LPSN - List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; \doi{10.1099/ijsem.0.002786}
+#' * Parte, A.C. (2014). LPSN - List of Prokaryotic names with Standing in Nomenclature. Nucleic Acids Research, 42, Issue D1, D613-D616; \doi{10.1093/nar/gkt1111}
 #' * Euzeby, J.P. (1997). List of Bacterial Names with Standing in Nomenclature: a Folder Available on the Internet. International Journal of Systematic Bacteriology, 47, 590-592; \doi{10.1099/00207713-47-2-590}
 #' 
 #' `r SNOMED_VERSION$current_source` as currently implemented in this `AMR` package:
@@ -155,7 +155,7 @@
 #' - `prevalence`\cr Prevalence of the microorganism, see [as.mo()]
 #' @source Catalogue of Life: Annual Checklist (public online taxonomic database), <http://www.catalogueoflife.org> (check included annual version with [catalogue_of_life_version()]).
 #' 
-#' Parte, A.C. (2018). LPSN — List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; \doi{10.1099/ijsem.0.002786}
+#' Parte, A.C. (2018). LPSN - List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; \doi{10.1099/ijsem.0.002786}
 #' @inheritSection AMR Reference Data Publicly Available
 #' @inheritSection AMR Read more on Our Website!
 #' @seealso [as.mo()] [mo_property()] [microorganisms]
@@ -271,15 +271,13 @@
 #' @inheritSection AMR Reference Data Publicly Available
 #' @inheritSection AMR Read more on Our Website!
 #' @examples
-#' subset(intrinsic_resistant,
-#'        antibiotic == "Vancomycin" & microorganism %like% "Enterococcus")$microorganism
-#' #> [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"
-#' 
 #' \donttest{
 #' if (require("dplyr")) {
 #'   intrinsic_resistant %>%
-#'     filter(antibiotic == "Vancomycin" & microorganism %like% "Enterococcus") %>% 
-#'     pull(microorganism)
+#'     mutate(mo = mo_name(mo),
+#'            ab = ab_name(mo))
+#'     filter(ab == "Vancomycin" & mo %like% "Enterococcus") %>% 
+#'     pull(mo)
 #'   #> [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"
 #' }
 #' }

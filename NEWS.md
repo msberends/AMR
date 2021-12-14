@@ -1,4 +1,4 @@
-# `AMR` 1.7.1.9073
+# `AMR` 1.7.1.9074
 ## <small>Last updated: 14 December 2021</small>
 
 All functions in this package are now all considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months from now on.
@@ -61,6 +61,7 @@ All functions in this package are now all considered to be stable. Updates to th
 * Fix for legends created with `scale_rsi_colours()` when using `ggplot2` v3.3.4 or higher (this is ggplot2 bug 4511, soon to be fixed)
 * Fix for minor translation errors
 * Fix for the MIC interpretation of *Morganellaceae* (such as *Morganella* and *Proteus*) when using the EUCAST 2021 guideline
+* Improved algorithm of `as.mo()`
 * Improved algorithm for generating random MICs with `random_mic()`
 * Improved plot legends for MICs and disk diffusion values
 * Improved speed of `as.ab()` and all `ab_*()` functions
@@ -731,7 +732,7 @@ This software is now out of beta and considered stable. Nonetheless, this packag
   * Added support for *Blastocystis*
   * Added support for 5,000 new fungi
   * Added support for unknown yeasts and fungi
-  * Changed most microorganism IDs to improve readability. For example, the old code `B_ENTRC_FAE` could have been both *E. faecalis* and *E. faecium*. Its new code is `B_ENTRC_FCLS` and *E. faecium* has become `B_ENTRC_FACM`. Also, the Latin character æ (ae) is now preserved at the start of each genus and species abbreviation. For example, the old code for *Aerococcus urinae* was `B_ARCCC_NAE`. This is now `B_AERCC_URIN`.
+  * Changed most microorganism IDs to improve readability. For example, the old code `B_ENTRC_FAE` could have been both *E. faecalis* and *E. faecium*. Its new code is `B_ENTRC_FCLS` and *E. faecium* has become `B_ENTRC_FACM`. Also, the Latin character ae is now preserved at the start of each genus and species abbreviation. For example, the old code for *Aerococcus urinae* was `B_ARCCC_NAE`. This is now `B_AERCC_URIN`.
     **IMPORTANT:** Old microorganism IDs are still supported, but support will be dropped in a future version. Use `as.mo()` on your old codes to transform them to the new format. Using functions from the `mo_*` family (like `mo_name()` and `mo_gramstain()`) on old codes, will throw a warning.
 * More intelligent guessing for `as.ab()`, including bidirectional language support
 * Added support for the German national guideline (3MRGN/4MRGN) in the `mdro()` function, to determine multi-drug resistant organisms
@@ -789,7 +790,7 @@ This software is now out of beta and considered stable. Nonetheless, this packag
   * EIEC (Entero-Invasive *E. coli*) 
   * EPEC (Entero-Pathogenic *E. coli*) 
   * ETEC (Entero-Toxigenic *E. coli*) 
-  * NMEC (Neonatal Meningitis‐causing *E. coli*) 
+  * NMEC (Neonatal Meningitis-causing *E. coli*) 
   * STEC (Shiga-toxin producing *E. coli*) 
   * UPEC (Uropathogenic *E. coli*)
   
@@ -1015,13 +1016,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
     Using `as.mo(..., allow_uncertain = 3)` could lead to very unreliable results.
   * Implemented the latest publication of Becker *et al.* (2019), for categorising coagulase-negative *Staphylococci*
   * All microbial IDs that found are now saved to a local file `~/.Rhistory_mo`. Use the new function `clean_mo_history()` to delete this file, which resets the algorithms.
-  * Incoercible results will now be considered 'unknown', MO code `UNKNOWN`. On foreign systems, properties of these will be translated to all languages already previously supported: German, Dutch, French, Italian, Spanish and Portuguese:
-    ```r
-    mo_genus("qwerty", language = "es")
-    # Warning: 
-    # one unique value (^= 100.0%) could not be coerced and is considered 'unknown': "qwerty". Use mo_failures() to review it.
-    #> [1] "(género desconocido)"
-    ```
+  * Incoercible results will now be considered 'unknown', MO code `UNKNOWN`. On foreign systems, properties of these will be translated to all languages already previously supported: German, Dutch, French, Italian, Spanish and Portuguese.
   * Fix for vector containing only empty values
   * Finds better results when input is in other languages
   * Better handling for subspecies
@@ -1297,7 +1292,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
   * New Becker classification for *Staphylococcus* to categorise them into Coagulase Negative *Staphylococci* (CoNS) and Coagulase Positve *Staphylococci* (CoPS)
   * New Lancefield classification for *Streptococcus* to categorise them into Lancefield groups
 * For convience, new descriptive statistical functions `kurtosis` and `skewness` that are lacking in base R - they are generic functions and have support for vectors, data.frames and matrices
-* Function `g.test` to perform the Χ<sup>2</sup> distributed [*G*-test](https://en.wikipedia.org/wiki/G-test), which use is the same as `chisq.test`
+* Function `g.test` to perform the X<sup>2</sup> distributed [*G*-test](https://en.wikipedia.org/wiki/G-test), which use is the same as `chisq.test`
 * ~~Function `ratio` to transform a vector of values to a preset ratio~~
   * ~~For example: `ratio(c(10, 500, 10), ratio = "1:2:1")` would return `130, 260, 130`~~
 * Support for Addins menu in RStudio to quickly insert `%in%` or `%like%` (and give them keyboard shortcuts), or to view the datasets that come with this package

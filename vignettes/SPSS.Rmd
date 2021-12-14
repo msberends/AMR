@@ -126,7 +126,7 @@ SPSS_data
 #  8 10011 1         1              73.1
 #  9 10017 1         1              56.7
 # 10 10018 0         1              66.6
-# # … with 4,193 more rows
+# # ... with 4,193 more rows
 
 as_factor(SPSS_data)
 # # A tibble: 4,203 x 4
@@ -142,7 +142,7 @@ as_factor(SPSS_data)
 #  8 10011 Male   alive       73.1
 #  9 10017 Male   alive       56.7
 # 10 10018 Female alive       66.6
-# # … with 4,193 more rows
+# # ... with 4,193 more rows
 ```
 
 ### Base R

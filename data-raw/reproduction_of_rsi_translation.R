@@ -128,6 +128,10 @@ rsi_translation[which(rsi_translation$breakpoint_R == 257), "breakpoint_R"] <- m
 rsi_translation[which(rsi_translation$breakpoint_R == 513), "breakpoint_R"] <- m[which(m == 512) + 1]
 rsi_translation[which(rsi_translation$breakpoint_R == 1025), "breakpoint_R"] <- m[which(m == 1024) + 1]
 
+# Greek symbols and EM dash symbols are not allowed by CRAN, so replace them with ASCII:
+rsi_translation$disk_dose <- gsub("μ", "u", rsi_translation$disk_dose, fixed = TRUE)
+rsi_translation$disk_dose <- gsub("–", "-", rsi_translation$disk_dose, fixed = TRUE)
+
 # save to package
 usethis::use_data(rsi_translation, overwrite = TRUE)
 rm(rsi_translation)

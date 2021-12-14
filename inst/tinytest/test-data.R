@@ -92,3 +92,36 @@ expect_true(NROW(uncategorised) == 0,
                           "All staphylococcal species categorised as CoNS/CoPS.",
                           paste0("Staphylococcal species not categorised as CoNS/CoPS: S. ",
                                  uncategorised$species, " (", uncategorised$mo, ")")))
+
+# THIS WILL CHECK NON-ASCII STRINGS IN ALL FILES:
+
+# check_non_ascii <- function() {
+#   purrr::map_df(
+#     .id = "file",
+#     # list common text files
+#     .x = fs::dir_ls(
+#       recurse = TRUE,
+#       type = "file",
+#       # ignore images, compressed
+#       regexp = "\\.(png|ico|rda|ai|tar.gz|zip|xlsx|csv|pdf|psd)$",
+#       invert = TRUE
+#     ),
+#     .f = function(path) {
+#       x <- readLines(path, warn = FALSE)
+#       # from tools::showNonASCII()
+#       asc <- iconv(x, "latin1", "ASCII")
+#       ind <- is.na(asc) | asc != x
+#       # make data frame
+#       if (any(ind)) {
+#         tibble::tibble(
+#           row = which(ind),
+#           line = iconv(x[ind], "latin1", "ASCII", sub = "byte")
+#         )
+#       } else {
+#         tibble::tibble()
+#       }
+#     }
+#   )
+# }
+# x <- check_non_ascii() %>% 
+#   filter(file %unlike% "^(data-raw|docs|git_)")

@@ -103,10 +103,10 @@
 #' @inheritSection catalogue_of_life Catalogue of Life
 #  (source as a section here, so it can be inherited by other man pages:)
 #' @section Source:
-#' 1. Becker K *et al.* **Coagulase-Negative Staphylococci**. 2014. Clin Microbiol Rev. 27(4): 870–926; \doi{10.1128/CMR.00109-13}
+#' 1. Becker K *et al.* **Coagulase-Negative Staphylococci**. 2014. Clin Microbiol Rev. 27(4): 870-926; \doi{10.1128/CMR.00109-13}
 #' 2. Becker K *et al.* **Implications of identifying the recently defined members of the *S. aureus* complex, *S. argenteus* and *S. schweitzeri*: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).** 2019. Clin Microbiol Infect; \doi{10.1016/j.cmi.2019.02.028}
 #' 3. Becker K *et al.* **Emergence of coagulase-negative staphylococci** 2020. Expert Rev Anti Infect Ther. 18(4):349-366; \doi{10.1080/14787210.2020.1730813}
-#' 4. Lancefield RC **A serological differentiation of human and other groups of hemolytic streptococci**. 1933. J Exp Med. 57(4): 571–95; \doi{10.1084/jem.57.4.571}
+#' 4. Lancefield RC **A serological differentiation of human and other groups of hemolytic streptococci**. 1933. J Exp Med. 57(4): 571-95; \doi{10.1084/jem.57.4.571}
 #' 5. `r gsub("{year}", CATALOGUE_OF_LIFE$year, CATALOGUE_OF_LIFE$version, fixed = TRUE)`, <http://www.catalogueoflife.org>
 #' 6. List of Prokaryotic names with Standing in Nomenclature (`r CATALOGUE_OF_LIFE$yearmonth_LPSN`), \doi{10.1099/ijsem.0.004332}
 #' 7. `r SNOMED_VERSION$current_source`, retrieved from the `r SNOMED_VERSION$title`, OID `r SNOMED_VERSION$current_oid`, version `r SNOMED_VERSION$current_version`; url: <`r SNOMED_VERSION$url`>
@@ -486,8 +486,7 @@ exec_as.mo <- function(x,
     }
     
     # remove spp and species
-    x <- gsub(" +(spp.?|ssp.?|sp.? |ss ?.?|subsp.?|subspecies|biovar |serovar |species)", " ", x, ignore.case = TRUE, perl = TRUE)
-    x <- gsub("( spp?.?| ss |subsp.?|subspecies|biovar|serovar|species)", "", x, ignore.case = TRUE, perl = TRUE)
+    x <- gsub("(^| )[ .]*(spp|ssp|ss|sp|subsp|subspecies|biovar|biotype|serovar|species)[ .]*( |$)", "", x, ignore.case = TRUE, perl = TRUE)
     x <- strip_whitespace(x, dyslexia_mode)
     
     x_backup <- x
@@ -613,6 +612,8 @@ exec_as.mo <- function(x,
         progress <- progress_ticker(n = length(x[!already_known]), n_min = 25, print = info) # start if n >= 25
         on.exit(close(progress))
       }
+      
+      xx <<- x_backup[!already_known]
       
       for (i in which(!already_known)) {
         
@@ -754,7 +755,7 @@ exec_as.mo <- function(x,
         # - EIEC (Entero-Invasive E. coli)
         # - EPEC (Entero-Pathogenic E. coli)
         # - ETEC (Entero-Toxigenic E. coli)
-        # - NMEC (Neonatal Meningitis‐causing E. coli)
+        # - NMEC (Neonatal Meningitis-causing E. coli)
         # - STEC (Shiga-toxin producing E. coli)
         # - UPEC (Uropathogenic E. coli)
         if (toupper(x_backup_without_spp[i]) %in% c("AIEC", "ATEC", "DAEC", "EAEC", "EHEC", "EIEC", "EPEC", "ETEC", "NMEC", "STEC", "UPEC")
