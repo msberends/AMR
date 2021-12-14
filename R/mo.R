@@ -613,8 +613,6 @@ exec_as.mo <- function(x,
         on.exit(close(progress))
       }
       
-      xx <<- x_backup[!already_known]
-      
       for (i in which(!already_known)) {
         
         if (initial_search == TRUE) {

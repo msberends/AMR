@@ -120,10 +120,8 @@ Included (sub)species per taxonomic kingdom:
 
 ```{r, echo = FALSE}
 microorganisms %>% 
-  pull(kingdom) %>% 
-  table() %>% 
-  as.data.frame() %>% 
-  mutate(Freq = format(Freq, big.mark = ",")) %>% 
+  count(kingdom) %>% 
+  mutate(n = format(n, big.mark = ",")) %>% 
   setNames(c("Kingdom", "Number of (sub)species")) %>% 
   print_df()
 ```
@@ -222,7 +220,7 @@ This data set is in R available as `intrinsic_resistant`, after you load the `AM
 
 ### Source
 
-This data set contains all defined intrinsic resistance by EUCAST of all bug-drug combinations, and is based on `r AMR:::format_eucast_version_nr("3.2")`.
+This data set contains all defined intrinsic resistance by EUCAST of all bug-drug combinations, and is based on `r AMR:::format_eucast_version_nr("3.3")`.
 
 ### Example content
 
@@ -230,6 +228,8 @@ Example rows when filtering on *Enterobacter cloacae*:
 
 ```{r, echo = FALSE}
 intrinsic_resistant %>%
+  transmute(microorganism = mo_name(mo),
+            antibiotic = ab_name(ab)) %>% 
   filter(microorganism == "Enterobacter cloacae") %>% 
   print_df(rows = Inf)
 ```

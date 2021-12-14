@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9073</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1.9075</span>
       </span>
     </div>
 
@@ -788,7 +788,7 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <div class="section level2">
 <h2 id="intrinsic-bacterial-resistance">Intrinsic bacterial resistance<a class="anchor" aria-label="anchor" href="#intrinsic-bacterial-resistance"></a>
 </h2>
-<p>A data set with 134,956 rows and 2 columns, containing the following column names:<br><em>microorganism</em> and <em>antibiotic</em>.</p>
+<p>A data set with 134,956 rows and 2 columns, containing the following column names:<br><em>mo</em> and <em>ab</em>.</p>
 <p>This data set is in R available as <code>intrinsic_resistant</code>, after you load the <code>AMR</code> package.</p>
 <p>It was last updated on 14 December 2021 17:16:54 UTC. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/intrinsic_resistant.html">here</a>.</p>
 <p><strong>Direct download links:</strong></p>
@@ -808,7 +808,7 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 <div class="section level3">
 <h3 id="source-4">Source<a class="anchor" aria-label="anchor" href="#source-4"></a>
 </h3>
-<p>This data set contains all defined intrinsic resistance by EUCAST of all bug-drug combinations, and is based on <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/" class="external-link">‘EUCAST Expert Rules’ and ‘EUCAST Intrinsic Resistance and Unusual Phenotypes’ v3.2</a> (2020).</p>
+<p>This data set contains all defined intrinsic resistance by EUCAST of all bug-drug combinations, and is based on <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/" class="external-link">‘EUCAST Expert Rules’ and ‘EUCAST Intrinsic Resistance and Unusual Phenotypes’ v3.3</a> (2021).</p>
 </div>
 <div class="section level3">
 <h3 id="example-content-4">Example content<a class="anchor" aria-label="anchor" href="#example-content-4"></a>
@@ -826,14 +826,6 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Acetylspiramycin</td>
-</tr>
-<tr class="odd">
-<td align="center">Enterobacter cloacae</td>
-<td align="center">Amoxicillin</td>
-</tr>
-<tr class="even">
-<td align="center">Enterobacter cloacae</td>
 <td align="center">Amoxicillin/clavulanic acid</td>
 </tr>
 <tr class="odd">
@@ -842,19 +834,19 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Ampicillin/sulbactam</td>
+<td align="center">Amoxicillin</td>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Avoparcin</td>
+<td align="center">Acetylspiramycin</td>
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Azithromycin</td>
+<td align="center">Avoparcin</td>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Benzylpenicillin</td>
+<td align="center">Azithromycin</td>
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
@@ -862,27 +854,11 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Cefadroxil</td>
-</tr>
-<tr class="even">
-<td align="center">Enterobacter cloacae</td>
-<td align="center">Cefazolin</td>
-</tr>
-<tr class="odd">
-<td align="center">Enterobacter cloacae</td>
-<td align="center">Cefoxitin</td>
-</tr>
-<tr class="even">
-<td align="center">Enterobacter cloacae</td>
-<td align="center">Cephalexin</td>
-</tr>
-<tr class="odd">
-<td align="center">Enterobacter cloacae</td>
 <td align="center">Cephalothin</td>
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Clarithromycin</td>
+<td align="center">Cefadroxil</td>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
@@ -890,7 +866,15 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
+<td align="center">Clarithromycin</td>
+</tr>
+<tr class="odd">
+<td align="center">Enterobacter cloacae</td>
 <td align="center">Cycloserine</td>
+</tr>
+<tr class="even">
+<td align="center">Enterobacter cloacae</td>
+<td align="center">Cefazolin</td>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
@@ -910,19 +894,27 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Fusidic acid</td>
+<td align="center">Cefoxitin</td>
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Gamithromycin</td>
+<td align="center">Fusidic acid</td>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Josamycin</td>
+<td align="center">Gamithromycin</td>
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Kitasamycin (Leucomycin)</td>
+<td align="center">Josamycin</td>
+</tr>
+<tr class="odd">
+<td align="center">Enterobacter cloacae</td>
+<td align="center">Kitasamycin</td>
+</tr>
+<tr class="even">
+<td align="center">Enterobacter cloacae</td>
+<td align="center">Cephalexin</td>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
@@ -934,43 +926,43 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Meleumycin</td>
-</tr>
-<tr class="even">
-<td align="center">Enterobacter cloacae</td>
-<td align="center">Midecamycin</td>
-</tr>
-<tr class="odd">
-<td align="center">Enterobacter cloacae</td>
 <td align="center">Miocamycin</td>
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Nafithromycin</td>
+<td align="center">Meleumycin</td>
 </tr>
 <tr class="odd">
+<td align="center">Enterobacter cloacae</td>
+<td align="center">Midecamycin</td>
+</tr>
+<tr class="even">
 <td align="center">Enterobacter cloacae</td>
 <td align="center">Norvancomycin</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="center">Enterobacter cloacae</td>
 <td align="center">Oleandomycin</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="center">Enterobacter cloacae</td>
 <td align="center">Oritavancin</td>
 </tr>
-<tr class="even">
-<td align="center">Enterobacter cloacae</td>
-<td align="center">Pirlimycin</td>
-</tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Primycin</td>
+<td align="center">Benzylpenicillin</td>
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
 <td align="center">Pristinamycin</td>
+</tr>
+<tr class="odd">
+<td align="center">Enterobacter cloacae</td>
+<td align="center">Pirlimycin</td>
+</tr>
+<tr class="even">
+<td align="center">Enterobacter cloacae</td>
+<td align="center">Primycin</td>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
@@ -994,15 +986,15 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Solithromycin</td>
+<td align="center">Ampicillin/sulbactam</td>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Spiramycin</td>
+<td align="center">Solithromycin</td>
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Tedizolid</td>
+<td align="center">Spiramycin</td>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
@@ -1010,7 +1002,15 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Telavancin</td>
+<td align="center">Thiacetazone</td>
+</tr>
+<tr class="odd">
+<td align="center">Enterobacter cloacae</td>
+<td align="center">Tilmicosin</td>
+</tr>
+<tr class="even">
+<td align="center">Enterobacter cloacae</td>
+<td align="center">Tildipirosin</td>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
@@ -1018,15 +1018,7 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Thiacetazone</td>
-</tr>
-<tr class="odd">
-<td align="center">Enterobacter cloacae</td>
-<td align="center">Tildipirosin</td>
-</tr>
-<tr class="even">
-<td align="center">Enterobacter cloacae</td>
-<td align="center">Tilmicosin</td>
+<td align="center">Telavancin</td>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
@@ -1046,7 +1038,15 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
+<td align="center">Tedizolid</td>
+</tr>
+<tr class="even">
+<td align="center">Enterobacter cloacae</td>
 <td align="center">Vancomycin</td>
+</tr>
+<tr class="odd">
+<td align="center">Enterobacter cloacae</td>
+<td align="center">Nafithromycin</td>
 </tr>
 </tbody>
 </table>
@@ -1057,7 +1057,7 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 </h2>
 <p>A data set with 20,318 rows and 11 columns, containing the following column names:<br><em>guideline</em>, <em>method</em>, <em>site</em>, <em>mo</em>, <em>rank_index</em>, <em>ab</em>, <em>ref_tbl</em>, <em>disk_dose</em>, <em>breakpoint_S</em>, <em>breakpoint_R</em> and <em>uti</em>.</p>
 <p>This data set is in R available as <code>rsi_translation</code>, after you load the <code>AMR</code> package.</p>
-<p>It was last updated on 13 December 2021 10:53:42 UTC. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/rsi_translation.html">here</a>.</p>
+<p>It was last updated on 14 December 2021 21:17:09 UTC. Find more info about the structure of this data set <a href="https://msberends.github.io/AMR/reference/rsi_translation.html">here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/rsi_translation.rds" class="external-link">R file</a> (39 kB)<br>
@@ -1070,7 +1070,7 @@ If you are reading this page from within R, please <a href="https://msberends.gi
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/rsi_translation.sav" class="external-link">SPSS file</a> (2.2 MB)<br>
 </li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/rsi_translation.dta" class="external-link">Stata file</a> (3.5 MB)</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/rsi_translation.dta" class="external-link">Stata file</a> (3.4 MB)</li>
 </ul>
 <div class="section level3">
 <h3 id="source-5">Source<a class="anchor" aria-label="anchor" href="#source-5"></a>
