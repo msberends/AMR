@@ -82,7 +82,7 @@ call_functions <- c(
   "xlab" = "ggplot2",
   "ylab" = "ggplot2"
 )
-if (pkg_is_available("skimr", also_load = FALSE, min_version = "2.0.0")) {
+if (AMR:::pkg_is_available("skimr", also_load = FALSE, min_version = "2.0.0")) {
   call_functions <- c(call_functions,
                       # skimr
                       "inline_hist" = "skimr",
