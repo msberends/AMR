@@ -133,8 +133,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   note_if_more_than_one_found <- function(found, index, from_text) {
     if (initial_search == TRUE & isTRUE(length(from_text) > 1)) {
       abnames <- ab_name(from_text, tolower = TRUE, initial_search = FALSE)
-      if (ab_name(found[1L], language = NULL) %like% "clavulanic acid") {
-        abnames <- abnames[!abnames == "clavulanic acid"]
+      if (ab_name(found[1L], language = NULL) %like% "(clavulanic acid|avibactam)") {
+        abnames <- abnames[!abnames %in% c("clavulanic acid", "avibactam")]
       }
       if (length(abnames) > 1) {
         message_("More than one result was found for item ", index, ": ",
@@ -222,6 +222,16 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       next
     }
     
+    # length of input is quite long, and Levenshtein distance is only max 2
+    if (nchar(x[i]) >= 10) {
+      levenshtein <- as.double(utils::adist(x[i], AB_lookup$generalised_name))
+      if (any(levenshtein <= 2)) {
+        found <- AB_lookup$ab[which(levenshtein <= 2)]
+        x_new[i] <- note_if_more_than_one_found(found, i, from_text)
+        next
+      }
+    }
+    
     # allow characters that resemble others, but only continue when having more than 3 characters
     if (nchar(x[i]) <= 3) {
       x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
@@ -238,7 +248,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       x_spelling <- gsub("E+", "E+", x_spelling, perl = TRUE)
       x_spelling <- gsub("O+", "O+", x_spelling, perl = TRUE)
       # allow any ending of -in/-ine and -im/-ime
-      x_spelling <- gsub("(\\[IY\\]\\+(N|M)|\\[IY\\]\\+(N|M)E\\+)$", "[IY]+(N|M)E*", x_spelling, perl = TRUE)
+      x_spelling <- gsub("(\\[IY\\]\\+(N|M)|\\[IY\\]\\+(N|M)E\\+?)$", "[IY]+(N|M)E*", x_spelling, perl = TRUE)
       # allow any ending of -ol/-ole
       x_spelling <- gsub("(O\\+L|O\\+LE\\+)$", "O+LE*", x_spelling, perl = TRUE)
       # allow any ending of -on/-one

@@ -61,6 +61,9 @@ expect_equal(as.character(as.ab(c("mreopenem", "co-maoxiclav"))),
 
 expect_message(as.ab("cipro mero"))
 
+# based on Levenshtein distance
+expect_identical(ab_name("ceftazidim/avibactam", language = NULL), "Ceftazidime/avibactam")
+
 # assigning and subsetting
 x <- antibiotics$ab
 expect_inherits(x[1], "ab")

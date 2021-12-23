@@ -57,10 +57,12 @@ if (utf8_supported && !is_latex) {
   s3_register("cleaner::freq", "mo")
   s3_register("cleaner::freq", "rsi")
   # Support for skim() from the skimr package
-  s3_register("skimr::get_skimmers", "mo")
-  s3_register("skimr::get_skimmers", "rsi")
-  s3_register("skimr::get_skimmers", "mic")
-  s3_register("skimr::get_skimmers", "disk")
+  if (pkg_is_available("skimr", also_load = FALSE, min_version = "2.0.0")) {
+    s3_register("skimr::get_skimmers", "mo")
+    s3_register("skimr::get_skimmers", "rsi")
+    s3_register("skimr::get_skimmers", "mic")
+    s3_register("skimr::get_skimmers", "disk")
+  }
   # Support for autoplot() from the ggplot2 package
   s3_register("ggplot2::autoplot", "rsi")
   s3_register("ggplot2::autoplot", "mic")
