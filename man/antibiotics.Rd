@@ -44,8 +44,6 @@ An object of class \code{data.frame} with 102 rows and 9 columns.
 \source{
 World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): \url{https://www.whocc.no/atc_ddd_index/}
 
-WHONET 2019 software: \url{http://www.whonet.org/software.html}
-
 European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm}
 }
 \usage{

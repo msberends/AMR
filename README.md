@@ -4,7 +4,7 @@
 
 ![R-code-check](https://github.com/msberends/AMR/workflows/R-code-check/badge.svg?branch=main)
 [![CodeFactor](https://www.codefactor.io/repository/github/msberends/amr/badge)](https://www.codefactor.io/repository/github/msberends/amr)
-[![Codecov](https://codecov.io/gh/msberends/AMR/branch/main/graph/badge.svg)](https://codecov.io/gh/msberends/AMR?branch=main)
+[![Codecov](https://codecov.io/gh/msberends/AMR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/msberends/AMR?branch=main)
 
 <img src="https://msberends.github.io/AMR/AMR_intro.svg" align="center" height="300px" />
 

@@ -66,7 +66,7 @@ Authors@R: c(
   person(given = "Anthony", 
          family = "Underwood", 
          role = "ctb",
-         comment = c(ORCID = "0000-0002-8547-427")))
+         comment = c(ORCID = "0000-0002-8547-4277")))
 Depends: R (>= 3.0.0)
 Enhances:
   cleaner,
@@ -84,7 +84,7 @@ Suggests:
   tinytest,
   xml2
 VignetteBuilder: knitr,rmarkdown
-URL: https://msberends.github.io/AMR, https://github.com/msberends/AMR
+URL: https://msberends.github.io/AMR/, https://github.com/msberends/AMR
 BugReports: https://github.com/msberends/AMR/issues
 License: GPL-2 | file LICENSE
 Encoding: UTF-8

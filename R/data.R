@@ -69,8 +69,6 @@
 #' * <https://github.com/msberends/AMR/raw/main/data/antivirals.rda>
 #' @source World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): <https://www.whocc.no/atc_ddd_index/>
 #'
-#' WHONET 2019 software: <http://www.whonet.org/software.html>
-#'
 #' European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm>
 #' @inheritSection AMR Reference Data Publicly Available
 #' @inheritSection WHOCC WHOCC

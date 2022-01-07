@@ -48,8 +48,6 @@
 #' @section Source:
 #' World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: \url{https://www.whocc.no/atc_ddd_index/}
 #'
-#' WHONET 2019 software: \url{http://www.whonet.org/software.html}
-#'
 #' European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm}
 #' @aliases ab
 #' @return A [character] [vector] with additional class [`ab`]
