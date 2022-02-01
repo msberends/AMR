@@ -67,7 +67,7 @@ The development of this package is part of, related to, or made possible by:
   <a href="https://www.rug.nl" title="University of Groningen"><img src="./logo_rug.png" class="partner_logo"></a>
   <a href="https://www.umcg.nl" title="University Medical Center Groningen"><img src="./logo_umcg.png" class="partner_logo"></a>
   <a href="https://www.certe.nl" title="Certe Medical Diagnostics and Advice Foundation"><img src="./logo_certe.png" class="partner_logo"></a>
-  <a href="http://www.eurhealth-1health.eu" title="EurHealth-1-Health"><img src="./logo_eh1h.png" class="partner_logo"></a>
+  <a href="https://www.deutschland-nederland.eu" title="EurHealth-1-Health"><img src="./logo_eh1h.png" class="partner_logo"></a>
   <a href="https://www.deutschland-nederland.eu" title="INTERREG"><img src="./logo_interreg.png" class="partner_logo"></a>
 </div>
 

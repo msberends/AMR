@@ -63,7 +63,7 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   
   expect_stdout(print(tibble(ab = as.rsi("S"))))
 }
-if (AMR:::pkg_is_available("skimr")) {
+if (AMR:::pkg_is_available("skimr", min_version = "2.0.0")) {
   expect_inherits(skim(example_isolates),
                   "data.frame")
   if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
