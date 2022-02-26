@@ -8,7 +8,7 @@ These functions are so-called '\link{Deprecated}'. \strong{They will be removed 
 }
 \section{Retired Lifecycle}{
 
-\if{html}{\figure{lifecycle_retired.svg}{options: style=margin-bottom:5px} \cr}
+\if{html}{\figure{lifecycle_retired.svg}{options: style=margin-bottom:"5"} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{retired}. A retired function is no longer under active development, and (if appropiate) a better alternative is available. No new arguments will be added, and only the most critical bugs will be fixed. In a future version, this function will be removed.
 }
 

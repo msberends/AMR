@@ -310,11 +310,15 @@ as.rsi.default <- function(x, ...) {
     x[x %like% "([^a-z]|^)sus(cep(tible)?)?"] <- "S"
     x[x %like% "([^a-z]|^)int(er(mediate)?)?|incr.*exp"] <- "I"
     # remove other invalid characters
-    x <- gsub("[^rsiRSIHi]+", "", x, perl = TRUE)
-    # some labs now report "H" instead of "I" to not interfere with EUCAST prior to 2019
-    x <- gsub("H", "I", x, ignore.case = TRUE)
     # set to capitals
     x <- toupper(x)
+    x <- gsub("[^RSIHDU]+", "", x, perl = TRUE)
+    # some labs now report "H" instead of "I" to not interfere with EUCAST prior to 2019
+    x <- gsub("^H$", "I", x, perl = TRUE)
+    # and MIPS uses D for Dose-dependent (which is I, but it will throw a note)
+    x <- gsub("^D$", "I", x, perl = TRUE)
+    # and MIPS uses U for "susceptible urine"
+    x <- gsub("^U$", "S", x, perl = TRUE)
     # in cases of "S;S" keep S, but in case of "S;I" make it NA
     x <- gsub("^S+$", "S", x)
     x <- gsub("^I+$", "I", x)
@@ -332,6 +336,15 @@ as.rsi.default <- function(x, ...) {
                  round(((na_after - na_before) / length(x)) * 100),
                  "%) that were invalid antimicrobial interpretations: ",
                  list_missing, call = FALSE)
+      }
+      if (any(toupper(x.bak) == "U") && message_not_thrown_before("as.rsi", "U")) {
+        warning_("in as.rsi(): 'U' was interpreted as 'S', following some laboratory systems", call = FALSE)
+      }
+      if (any(toupper(x.bak) == "D") && message_not_thrown_before("as.rsi", "D")) {
+        warning_("in as.rsi(): 'D' (dose-dependent) was interpreted as 'I', following some laboratory systems", call = FALSE)
+      }
+      if (any(toupper(x.bak) == "H") && message_not_thrown_before("as.rsi", "H")) {
+        warning_("in as.rsi(): 'H' was interpreted as 'I', following some laboratory systems", call = FALSE)
       }
     }
   }

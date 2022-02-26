@@ -18,7 +18,7 @@ This algorithm is used by \code{\link[=as.mo]{as.mo()}} and all the \code{\link[
 
 With ambiguous user input in \code{\link[=as.mo]{as.mo()}} and all the \code{\link[=mo_property]{mo_*}} functions, the returned results are chosen based on their matching score using \code{\link[=mo_matching_score]{mo_matching_score()}}. This matching score \eqn{m}, is calculated as:
 
-\ifelse{latex}{\deqn{m_{(x, n)} = \frac{l_{n} - 0.5 \cdot \min \begin{cases}l_{n} \\ \textrm{lev}(x, n)\end{cases}}{l_{n} \cdot p_{n} \cdot k_{n}}}}{\ifelse{html}{\figure{mo_matching_score.png}{options: width="300px" alt="mo matching score"}}{m(x, n) = ( l_n * min(l_n, lev(x, n) ) ) / ( l_n * p_n * k_n )}}
+\ifelse{latex}{\deqn{m_{(x, n)} = \frac{l_{n} - 0.5 \cdot \min \begin{cases}l_{n} \\ \textrm{lev}(x, n)\end{cases}}{l_{n} \cdot p_{n} \cdot k_{n}}}}{\ifelse{html}{\figure{mo_matching_score.png}{options: width="300" alt="mo matching score"}}{m(x, n) = ( l_n * min(l_n, lev(x, n) ) ) / ( l_n * p_n * k_n )}}
 
 where:
 \itemize{
@@ -35,11 +35,13 @@ The grouping into human pathogenic prevalence (\eqn{p}) is based on experience f
 All characters in \eqn{x} and \eqn{n} are ignored that are other than A-Z, a-z, 0-9, spaces and parentheses.
 
 All matches are sorted descending on their matching score and for all user input values, the top match will be returned. This will lead to the effect that e.g., \code{"E. coli"} will return the microbial ID of \emph{Escherichia coli} (\eqn{m = 0.688}, a highly prevalent microorganism found in humans) and not \emph{Entamoeba coli} (\eqn{m = 0.079}, a less prevalent microorganism in humans), although the latter would alphabetically come first.
+
+Since \code{AMR} version 1.8.1, common microorganism abbreviations are ignored in determining the matching score. These abbreviations are currently: AIEC, ATEC, BORSA, CRSM, DAEC, EAEC, EHEC, EIEC, EPEC, ETEC, GISA, MRPA, MRSA, MRSE, MSSA, MSSE, NMEC, PISP, PRSP, STEC, UPEC, VISA, VISP, VRE, VRSA and VRSP.
 }
 
 \section{Stable Lifecycle}{
 
-\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:5px} \cr}
+\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:"5"} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
 
 If the unlying code needs breaking changes, they will occur gradually. For example, an argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
@@ -63,5 +65,5 @@ mo_matching_score(x = "E. coli",
                   n = c("Escherichia coli", "Entamoeba coli"))
 }
 \author{
-Dr. Matthijs Berends
+Dr Matthijs Berends
 }

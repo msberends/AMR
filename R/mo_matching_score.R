@@ -27,13 +27,13 @@
 #' 
 #' This algorithm is used by [as.mo()] and all the [`mo_*`][mo_property()] functions to determine the most probable match of taxonomic records based on user input. 
 #' @inheritSection lifecycle Stable Lifecycle
-#' @author Dr. Matthijs Berends
+#' @author Dr Matthijs Berends
 #' @param x Any user input value(s)
 #' @param n A full taxonomic name, that exists in [`microorganisms$fullname`][microorganisms]
 #' @section Matching Score for Microorganisms:
 #' With ambiguous user input in [as.mo()] and all the [`mo_*`][mo_property()] functions, the returned results are chosen based on their matching score using [mo_matching_score()]. This matching score \eqn{m}, is calculated as:
 #' 
-#' \ifelse{latex}{\deqn{m_{(x, n)} = \frac{l_{n} - 0.5 \cdot \min \begin{cases}l_{n} \\ \textrm{lev}(x, n)\end{cases}}{l_{n} \cdot p_{n} \cdot k_{n}}}}{\ifelse{html}{\figure{mo_matching_score.png}{options: width="300px" alt="mo matching score"}}{m(x, n) = ( l_n * min(l_n, lev(x, n) ) ) / ( l_n * p_n * k_n )}}
+#' \ifelse{latex}{\deqn{m_{(x, n)} = \frac{l_{n} - 0.5 \cdot \min \begin{cases}l_{n} \\ \textrm{lev}(x, n)\end{cases}}{l_{n} \cdot p_{n} \cdot k_{n}}}}{\ifelse{html}{\figure{mo_matching_score.png}{options: width="300" alt="mo matching score"}}{m(x, n) = ( l_n * min(l_n, lev(x, n) ) ) / ( l_n * p_n * k_n )}}
 #' 
 #' where:
 #' 
@@ -49,6 +49,8 @@
 #' All characters in \eqn{x} and \eqn{n} are ignored that are other than A-Z, a-z, 0-9, spaces and parentheses.
 #' 
 #' All matches are sorted descending on their matching score and for all user input values, the top match will be returned. This will lead to the effect that e.g., `"E. coli"` will return the microbial ID of *Escherichia coli* (\eqn{m = `r round(mo_matching_score("E. coli", "Escherichia coli"), 3)`}, a highly prevalent microorganism found in humans) and not *Entamoeba coli* (\eqn{m = `r round(mo_matching_score("E. coli", "Entamoeba coli"), 3)`}, a less prevalent microorganism in humans), although the latter would alphabetically come first. 
+#' 
+#' Since `AMR` version 1.8.1, common microorganism abbreviations are ignored in determining the matching score. These abbreviations are currently: `r vector_and(pkg_env$mo_field_abbreviations, quotes = FALSE)`.
 #' @export
 #' @inheritSection AMR Reference Data Publicly Available
 #' @inheritSection AMR Read more on Our Website!
@@ -65,9 +67,16 @@ mo_matching_score <- function(x, n) {
   x <- parse_and_convert(x)
   # no dots and other non-whitespace characters
   x <- gsub("[^a-zA-Z0-9 \\(\\)]+", "", x)
+  
+  # remove abbreviations known to the field
+  x <- gsub(paste0("(^|[^a-z0-9]+)(",
+                   paste0(pkg_env$mo_field_abbreviations, collapse = "|"),
+                   ")([^a-z0-9]+|$)"),
+            "", x, perl = TRUE, ignore.case = TRUE)
+  
   # only keep one space
   x <- gsub(" +", " ", x)
-
+  
   # n is always a taxonomically valid full name
   if (length(n) == 1) {
     n <- rep(n, length(x))
@@ -82,7 +91,7 @@ mo_matching_score <- function(x, n) {
   l_n.lev <- double(length = length(x))
   for (i in seq_len(length(x))) {
     # determine Levenshtein distance, but maximise to nchar of n
-    lev[i] <- utils::adist(x[i], n[i], ignore.case = FALSE, fixed = TRUE)
+    lev[i] <- utils::adist(x[i], n[i], ignore.case = FALSE, fixed = TRUE, costs = c(ins = 1, del = 1, sub = 1))
     # minimum of (l_n, Levenshtein distance)
     l_n.lev[i] <- min(l_n[i], as.double(lev[i]))
   }

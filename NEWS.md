@@ -1,13 +1,22 @@
-# `AMR` 1.8.0.9000
-## <small>Last updated:  1 February 2022</small>
+# `AMR` 1.8.0.9001
+## <small>Last updated: 26 February 2022</small>
+
+All functions in this package are considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months.
 
 ### Changed
+* Support for antibiotic interpretations of the MIPS laboratory system: `"U"` for S ('susceptible urine'), `"D"` for I ('susceptible dose-dependent')
+* Improved algorithm of `as.mo()`, especially for ignoring non-taxonomic text, such as:
+  ```r
+  mo_name("methicillin-resistant S. aureus (MRSA)")
+  #> [1] "Staphylococcus aureus"
+  ```
+
+### Other
 * Fix for unit testing on R 3.3
+* Fix for size of some image elements, as requested by CRAN
 
 
 # `AMR` 1.8.0
-
-All functions in this package are now all considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months from now on.
 
 ### Breaking changes
 * Removed `p_symbol()` and all `filter_*()` functions (except for `filter_first_isolate()`), which were all deprecated in a previous package version

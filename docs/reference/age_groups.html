@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.0.9001</span>
       </span>
     </div>
 
@@ -161,7 +161,9 @@
     <p>Split ages into age groups defined by the <code>split</code> argument. This allows for easier demographic (antimicrobial resistance) analysis.</p>
     </div>
 
-    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">age_groups</span><span class="op">(</span><span class="va">x</span>, split_at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">25</span>, <span class="fl">55</span>, <span class="fl">75</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div></div>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">age_groups</span><span class="op">(</span><span class="va">x</span>, split_at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">25</span>, <span class="fl">55</span>, <span class="fl">75</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
@@ -190,7 +192,7 @@ The default is to split on young children (0-11), youth (12-24), young adults (2
     <h2>Stable Lifecycle</h2>
     
 
-<p><img src="figures/lifecycle_stable.svg" style="margin-bottom:5px"><br>
+<p><img src="figures/lifecycle_stable.svg" style='margin-bottom:"5"'><br>
 The <a href="lifecycle.html">lifecycle</a> of this function is <strong>stable</strong>. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.</p>
 <p>If the unlying code needs breaking changes, they will occur gradually. For example, an argument will be deprecated and first continue to work, but will emit an message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.</p>
     </div>
@@ -252,7 +254,7 @@ The <a href="lifecycle.html">lifecycle</a> of this function is <strong>stable</s
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>

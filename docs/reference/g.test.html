@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.0.9001</span>
       </span>
     </div>
 
@@ -161,7 +161,9 @@
     <p><code>g.test()</code> performs chi-squared contingency table tests and goodness-of-fit tests, just like <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">chisq.test()</a></code> but is more reliable (1). A <em>G</em>-test can be used to see whether the number of observations in each category fits a theoretical expectation (called a <strong><em>G</em>-test of goodness-of-fit</strong>), or to see whether the proportions of one variable are different for different values of the other variable (called a <strong><em>G</em>-test of independence</strong>).</p>
     </div>
 
-    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">g.test</span><span class="op">(</span><span class="va">x</span>, y <span class="op">=</span> <span class="cn">NULL</span>, p <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, rescale.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div></div>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">g.test</span><span class="op">(</span><span class="va">x</span>, y <span class="op">=</span> <span class="cn">NULL</span>, p <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, rescale.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    </div>
 
     <div id="source">
     <h2>Source</h2>
@@ -258,7 +260,7 @@
     <h2>Questioning Lifecycle</h2>
     
 
-<p><img src="figures/lifecycle_questioning.svg" style="margin-bottom:5px"><br>
+<p><img src="figures/lifecycle_questioning.svg" style='margin-bottom:"5"'><br>
 The <a href="lifecycle.html">lifecycle</a> of this function is <strong>questioning</strong>. This function might be no longer be optimal approach, or is it questionable whether this function should be in this <code>AMR</code> package at all.</p>
     </div>
     <div id="read-more-on-our-website-">
@@ -325,7 +327,7 @@ The <a href="lifecycle.html">lifecycle</a> of this function is <strong>questioni
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>

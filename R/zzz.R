@@ -26,6 +26,11 @@
 # set up package environment, used by numerous AMR functions
 pkg_env <- new.env(hash = FALSE)
 pkg_env$mo_failed <- character(0)
+pkg_env$mo_field_abbreviations <- c("AIEC", "ATEC", "BORSA", "CRSM", "DAEC", "EAEC",
+                                    "EHEC", "EIEC", "EPEC", "ETEC", "GISA", "MRPA",
+                                    "MRSA", "MRSE", "MSSA", "MSSE", "NMEC", "PISP",
+                                    "PRSP", "STEC", "UPEC", "VISA", "VISP", "VRE",
+                                    "VRSA", "VRSP")
 
 # determine info icon for messages
 utf8_supported <- isTRUE(base::l10n_info()$`UTF-8`)

@@ -99,7 +99,7 @@ If there are more than two categories and you want to find out which ones are si
 }
 \section{Questioning Lifecycle}{
 
-\if{html}{\figure{lifecycle_questioning.svg}{options: style=margin-bottom:5px} \cr}
+\if{html}{\figure{lifecycle_questioning.svg}{options: style=margin-bottom:"5"} \cr}
 The \link[=lifecycle]{lifecycle} of this function is \strong{questioning}. This function might be no longer be optimal approach, or is it questionable whether this function should be in this \code{AMR} package at all.
 }
 

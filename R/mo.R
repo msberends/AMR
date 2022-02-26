@@ -31,9 +31,9 @@
 #' @param Becker a [logical] to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker *et al.* (1,2,3).
 #'
 #' This excludes *Staphylococcus aureus* at default, use `Becker = "all"` to also categorise *S. aureus* as "CoPS".
-#' @param Lancefield a [logical] to indicate whether beta-haemolytic *Streptococci* should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (4). These *Streptococci* will be categorised in their first group, e.g. *Streptococcus dysgalactiae* will be group C, although officially it was also categorised into groups G and L.
+#' @param Lancefield a [logical] to indicate whether a beta-haemolytic *Streptococcus* should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (4). These streptococci will be categorised in their first group, e.g. *Streptococcus dysgalactiae* will be group C, although officially it was also categorised into groups G and L.
 #'
-#' This excludes *Enterococci* at default (who are in group D), use `Lancefield = "all"` to also categorise all *Enterococci* as group D.
+#' This excludes enterococci at default (who are in group D), use `Lancefield = "all"` to also categorise all enterococci as group D.
 #' @param allow_uncertain a number between `0` (or `"none"`) and `3` (or `"all"`), or `TRUE` (= `2`) or `FALSE` (= `0`) to indicate whether the input should be checked for less probable results, see *Details*
 #' @param reference_df a [data.frame] to be used for extra reference when translating `x` to a valid [`mo`]. See [set_mo_source()] and [get_mo_source()] to automate the usage of your own codes (e.g. used in your analysis or organisation).
 #' @param ignore_pattern a regular expression (case-insensitive) of which all matches in `x` must return `NA`. This can be convenient to exclude known non-relevant input and can also be set with the option `AMR_ignore_pattern`, e.g. `options(AMR_ignore_pattern = "(not reported|contaminated flora)")`.
@@ -1188,9 +1188,38 @@ exec_as.mo <- function(x,
                 return(found)
               }
               
-              # (6) try to strip off half an element from end and check the remains ----
+              # (6) remove non-taxonomic prefix and suffix ----
               if (isTRUE(debug)) {
-                cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (6) try to strip off half an element from end and check the remains\n"))
+                cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (6) remove non-taxonomic prefix and suffix\n"))
+              }
+              x_without_nontax <- gsub("(^[a-zA-Z]+[./-]+[a-zA-Z]+[^a-zA-Z]* )([a-zA-Z.]+ [a-zA-Z]+.*)",
+                                              "\\2", a.x_backup, perl = TRUE)
+              x_without_nontax <- gsub("( *[(].*[)] *)[^a-zA-Z]*$", "", x_without_nontax, perl = TRUE)
+              if (isTRUE(debug)) {
+                message("Running '", x_without_nontax, "'")
+              }
+              
+              # first try without dyslexia mode
+              found <- suppressMessages(suppressWarnings(exec_as.mo(x_without_nontax, initial_search = FALSE, dyslexia_mode = FALSE, allow_uncertain = FALSE, debug = debug, reference_data_to_use = uncertain.reference_data_to_use, actual_uncertainty = 2, actual_input = x_without_nontax)))
+              if (empty_result(found)) {
+                # then with dyslexia mode
+                found <- suppressMessages(suppressWarnings(exec_as.mo(x_without_nontax, initial_search = FALSE, dyslexia_mode = TRUE, allow_uncertain = FALSE, debug = debug, reference_data_to_use = uncertain.reference_data_to_use, actual_uncertainty = 2, actual_input = x_without_nontax)))
+              }
+              if (!empty_result(found) & nchar(g.x_backup_without_spp) >= 6) {
+                # we ran with actual_input = x_without_nontax, so now correct for a.x_backup:
+                uncertain_df <- attr(found, which = "uncertainties", exact = TRUE)
+                uncertain_df$input <- a.x_backup
+                found_result <- found
+                uncertainties <<- rbind(uncertainties,
+                                        uncertain_df,
+                                        stringsAsFactors = FALSE)
+                found <- lookup(mo == found)
+                return(found)
+              }
+              
+              # (7) try to strip off half an element from end and check the remains ----
+              if (isTRUE(debug)) {
+                cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (7) try to strip off half an element from end and check the remains\n"))
               }
               x_strip <- a.x_backup %pm>% strsplit("[ .]") %pm>% unlist()
               if (length(x_strip) > 1) {
@@ -1220,9 +1249,9 @@ exec_as.mo <- function(x,
                   }
                 }
               }
-              # (7) try to strip off one element from end and check the remains ----
+              # (8) try to strip off one element from end and check the remains ----
               if (isTRUE(debug)) {
-                cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (7) try to strip off one element from end and check the remains\n"))
+                cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (8) try to strip off one element from end and check the remains\n"))
               }
               if (length(x_strip) > 1) {
                 for (i in seq_len(length(x_strip) - 1)) {
@@ -1249,9 +1278,9 @@ exec_as.mo <- function(x,
                   }
                 }
               }
-              # (8) check for unknown yeasts/fungi ----
+              # (9) check for unknown yeasts/fungi ----
               if (isTRUE(debug)) {
-                cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (8) check for unknown yeasts/fungi\n"))
+                cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (9) check for unknown yeasts/fungi\n"))
               }
               if (b.x_trimmed %like_case% "yeast") {
                 found <- "F_YEAST"
@@ -1275,9 +1304,9 @@ exec_as.mo <- function(x,
                                         stringsAsFactors = FALSE)
                 return(found)
               }
-              # (9) try to strip off one element from start and check the remains (only allow >= 2-part name outcome) ----
+              # (10) try to strip off one element from start and check the remains (only allow >= 2-part name outcome) ----
               if (isTRUE(debug)) {
-                cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (9) try to strip off one element from start and check the remains (only allow >= 2-part name outcome)\n"))
+                cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (10) try to strip off one element from start and check the remains (only allow >= 2-part name outcome)\n"))
               }
               x_strip <- a.x_backup %pm>% strsplit("[ .]") %pm>% unlist()
               if (length(x_strip) > 1 & nchar(g.x_backup_without_spp) >= 6) {
@@ -1311,9 +1340,9 @@ exec_as.mo <- function(x,
             if (uncertainty_level >= 3) {
               now_checks_for_uncertainty_level <- 3
               
-              # (10) try to strip off one element from start and check the remains (any text size) ----
+              # (11) try to strip off one element from start and check the remains (any text size) ----
               if (isTRUE(debug)) {
-                cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (10) try to strip off one element from start and check the remains (any text size)\n"))
+                cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (11) try to strip off one element from start and check the remains (any text size)\n"))
               }
               x_strip <- a.x_backup %pm>% strsplit("[ .]") %pm>% unlist()
               if (length(x_strip) > 1 & nchar(g.x_backup_without_spp) >= 6) {
@@ -1338,10 +1367,10 @@ exec_as.mo <- function(x,
                   }
                 }
               }
-              # (11) try to strip off one element from end and check the remains (any text size) ----
+              # (12) try to strip off one element from end and check the remains (any text size) ----
               # (this is in fact 7 but without nchar limit of >=6)
               if (isTRUE(debug)) {
-                cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (11) try to strip off one element from end and check the remains (any text size)\n"))
+                cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (12) try to strip off one element from end and check the remains (any text size)\n"))
               }
               if (length(x_strip) > 1) {
                 for (i in seq_len(length(x_strip) - 1)) {
@@ -1366,9 +1395,9 @@ exec_as.mo <- function(x,
                 }
               }
               
-              # (12) part of a name (very unlikely match) ----
+              # (13) part of a name (very unlikely match) ----
               if (isTRUE(debug)) {
-                cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (12) part of a name (very unlikely match)\n"))
+                cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (13) part of a name (very unlikely match)\n"))
               }
               if (isTRUE(debug)) {
                 message("Running '", f.x_withspaces_end_only, "'")
@@ -1882,7 +1911,7 @@ print.mo_uncertainties <- function(x, ...) {
   if (NROW(x) == 0) {
     return(NULL)
   }
-  cat(word_wrap("Matching scores", ifelse(has_colour(), " (in blue)", ""), " are based on human pathogenic prevalence and the resemblance between the input and the full taxonomic name. See `?mo_matching_score`.\n\n", add_fn = font_blue))
+  cat(word_wrap("Matching scores", ifelse(has_colour(), " (in blue)", ""), " are based on pathogenicity in humans and the resemblance between the input and the full taxonomic name. See `?mo_matching_score`.\n\n", add_fn = font_blue))
   
   txt <- ""
   for (i in seq_len(nrow(x))) {

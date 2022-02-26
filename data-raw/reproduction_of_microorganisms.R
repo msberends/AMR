@@ -26,8 +26,8 @@
 # Reproduction of the `microorganisms` data set
 
 # Data retrieved from the Catalogue of Life (CoL):
-# https://download.catalogueoflife.org/col/monthly/life/
-# (download latest dwca, such as https://download.catalogueoflife.org/col/monthly/2020-12-01_dwca.zip)
+# https://download.catalogueoflife.org/col/monthly/
+# (download latest dwca, such as https://download.catalogueoflife.org/col/monthly/2022-01-14_dwca.zip)
 # Data retrieved from the Global Biodiversity Information Facility (GBIF): 
 # https://doi.org/10.15468/rffz4x
 #
