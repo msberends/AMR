@@ -1,4 +1,4 @@
-# `AMR` 1.8.0.9002
+# `AMR` 1.8.0.9003
 ## <small>Last updated:  2 March 2022</small>
 
 All functions in this package are considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months.
