@@ -106,7 +106,7 @@ random_exec <- function(type, size, mo = NULL, ab = NULL) {
     if (nrow(df_new) > 0) {
       df <- df_new
     } else {
-      warning_("No rows found that match mo '", mo, "', ignoring argument `mo`", call = FALSE)
+      warning_("in `random_", tolower(type), "()`: no rows found that match mo '", mo, "', ignoring argument `mo`")
     }
   }
   
@@ -117,7 +117,7 @@ random_exec <- function(type, size, mo = NULL, ab = NULL) {
     if (nrow(df_new) > 0) {
       df <- df_new
     } else {
-      warning_("No rows found that match ab '", ab, "', ignoring argument `ab`", call = FALSE)
+      warning_("in `random_", tolower(type), "()`: no rows found that match ab '", ab, "', ignoring argument `ab`")
     }
   }
  

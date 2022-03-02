@@ -153,7 +153,7 @@ resistance_predict <- function(x,
       x <- dots[which(dots.names == "tbl")]
     }
     if ("I_as_R" %in% dots.names) {
-      warning_("`I_as_R is deprecated - use I_as_S instead.", call = FALSE)
+      warning_("in `resistance_predict()`: I_as_R is deprecated - use I_as_S instead.")
     }
   }
   

@@ -175,7 +175,7 @@ as.mic <- function(x, na.rm = FALSE) {
         unique() %pm>%
         sort() %pm>%
         vector_and(quotes = TRUE)
-      warning_(na_after - na_before, " results truncated (",
+      warning_("in `as.mic()`: ", na_after - na_before, " results truncated (",
                round(((na_after - na_before) / length(x)) * 100),
                "%) that were invalid MICs: ",
                list_missing, call = FALSE)
@@ -358,7 +358,7 @@ sort.mic <- function(x, decreasing = FALSE, ...) {
 #' @export
 #' @noRd
 hist.mic <- function(x, ...) {
-  warning_("Use `plot()` or ggplot2's `autoplot()` for optimal plotting of MIC values", call = FALSE)
+  warning_("in `hist()`: use `plot()` or ggplot2's `autoplot()` for optimal plotting of MIC values")
   hist(log2(x))
 }
 

@@ -240,8 +240,8 @@ ab_ddd <- function(x, administration = "oral", ...) {
   units <- list(...)$units
   if (!is.null(units) && isTRUE(units)) {
     if (message_not_thrown_before("ab_ddd", entire_session = TRUE)) {
-      warning_("Using `ab_ddd(..., units = TRUE)` is deprecated, use `ab_ddd_units()` to retrieve units instead. ",
-               "This warning will be shown once per session.", call = FALSE)
+      warning_("in `ab_ddd()`: using `ab_ddd(..., units = TRUE)` is deprecated, use `ab_ddd_units()` to retrieve units instead.",
+               "This warning will be shown once per session.")
     }
     ddd_prop <- paste0(ddd_prop, "_units")
   } else {
@@ -250,9 +250,9 @@ ab_ddd <- function(x, administration = "oral", ...) {
   out <- ab_validate(x = x, property = ddd_prop)
   
   if (any(ab_name(x, language = NULL) %like% "/" & is.na(out))) {
-    warning_("DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package. ",
+    warning_("in `ab_ddd()`: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
              "Please refer to the WHOCC website:\n",
-             "www.whocc.no/ddd/list_of_ddds_combined_products/", call = FALSE)
+             "www.whocc.no/ddd/list_of_ddds_combined_products/")
   }
   out
 }
@@ -265,9 +265,9 @@ ab_ddd_units <- function(x, administration = "oral", ...) {
   
   x <- as.ab(x, ...)
   if (any(ab_name(x, language = NULL) %like% "/")) {
-    warning_("DDDs of combined products are available for different dose combinations and not (yet) part of the AMR package. ",
+    warning_("in `ab_ddd_units()`: DDDs of combined products are available for different dose combinations and not (yet) part of the AMR package.",
              "Please refer to the WHOCC website:\n",
-             "www.whocc.no/ddd/list_of_ddds_combined_products/", call = FALSE)
+             "www.whocc.no/ddd/list_of_ddds_combined_products/")
   }
   
   ddd_prop <- paste0(administration, "_units")
@@ -311,12 +311,12 @@ ab_url <- function(x, open = FALSE, ...) {
   
   NAs <- ab_name(ab, tolower = TRUE, language = NULL)[!is.na(ab) & is.na(atcs)]
   if (length(NAs) > 0) {
-    warning_("No ATC code available for ", vector_and(NAs, quotes = FALSE), ".")
+    warning_("in `ab_url()`: no ATC code available for ", vector_and(NAs, quotes = FALSE), ".")
   }
   
   if (open == TRUE) {
     if (length(u) > 1 & !is.na(u[1L])) {
-      warning_("Only the first URL will be opened, as `browseURL()` only suports one string.")
+      warning_("in `ab_url()`: only the first URL will be opened, as `browseURL()` only suports one string.")
     }
     if (!is.na(u[1L])) {
       utils::browseURL(u[1L])
@@ -385,7 +385,8 @@ set_ab_names <- function(data, ..., property = "name", language = get_AMR_locale
               },
               USE.NAMES = FALSE)
   if (any(x %in% c("", NA))) {
-    warning_("No ", property, " found for column(s): ", vector_and(vars[x %in% c("", NA)], sort = FALSE), call = FALSE)
+    warning_("in `set_ab_names()`: no ", property, " found for column(s): ",
+             vector_and(vars[x %in% c("", NA)], sort = FALSE))
     x[x %in% c("", NA)] <- vars[x %in% c("", NA)]
   }
   

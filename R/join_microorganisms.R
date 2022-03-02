@@ -170,7 +170,7 @@ join_microorganisms <- function(type, x, by, suffix, ...) {
   }
   
   if (type %like% "full|left|right|inner" && NROW(joined) > NROW(x)) {
-    warning_("The newly joined data set contains ", nrow(joined) - nrow(x), " rows more than the number of rows of `x`.", call = FALSE)
+    warning_("in `", type, "_join()`: the newly joined data set contains ", nrow(joined) - nrow(x), " rows more than the number of rows of `x`.")
   }
   
   joined

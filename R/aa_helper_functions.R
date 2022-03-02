@@ -206,7 +206,7 @@ check_dataset_integrity <- function() {
                " overwritten by your global environment and prevent", plural[2], 
                " the AMR package from working correctly: ",
                vector_and(overwritten, quotes = "'"),
-               ".\nPlease rename your object", plural[3], ".", call = FALSE)
+               ".\nPlease rename your object", plural[3], ".")
     }
   }
   # check if other packages did not overwrite our data sets
@@ -492,7 +492,7 @@ message_ <- function(...,
 warning_ <- function(...,
                      add_fn = list(),
                      immediate = FALSE,
-                     call = TRUE) {
+                     call = FALSE) {
   warning(word_wrap(..., 
                     add_fn = add_fn,
                     as_note = FALSE),
@@ -559,7 +559,7 @@ stop_ifnot <- function(expr, ..., call = TRUE) {
 
 return_after_integrity_check <- function(value, type, check_vector) {
   if (!all(value[!is.na(value)] %in% check_vector)) {
-    warning_(paste0("invalid ", type, ", NA generated"), call = FALSE)
+    warning_(paste0("invalid ", type, ", NA generated"))
     value[!value %in% check_vector] <- NA
   }
   value

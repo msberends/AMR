@@ -267,7 +267,6 @@ get_column_abx <- function(x,
                         ", as it is already set for ", 
                         names(already_set_as), " (", ab_name(names(already_set_as), tolower = TRUE, language = NULL), ")"),
                  add_fn = font_red,
-                 call = FALSE, 
                  immediate = verbose)
       }
     }
@@ -338,6 +337,5 @@ generate_warning_abs_missing <- function(missing, any = FALSE) {
   }
   warning_(paste0("Introducing NAs since", any_txt[1], " these antimicrobials ", any_txt[2], " required: ",
                   vector_and(missing, quotes = FALSE)),
-           immediate = TRUE,
-           call = FALSE)
+           immediate = TRUE)
 }

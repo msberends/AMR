@@ -98,7 +98,7 @@ pca <- function(x,
     
     x <- as.data.frame(new_list, stringsAsFactors = FALSE)
     if (any(vapply(FUN.VALUE = logical(1), x, function(y) !is.numeric(y)))) {
-      warning_("Be sure to first calculate the resistance (or susceptibility) of variables with antimicrobial test results, since PCA works with [numeric] variables only. See Examples in ?pca.", call = FALSE)
+      warning_("in `pca()`: be sure to first calculate the resistance (or susceptibility) of variables with antimicrobial test results, since PCA works with numeric variables only. See Examples in ?pca.", call = FALSE)
     }
     
     # set column names

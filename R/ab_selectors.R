@@ -481,14 +481,13 @@ ab_select_exec <- function(function_name,
     untreatable <- antibiotics[which(antibiotics$name %like% "-high|EDTA|polysorbate|macromethod|screening|/nacubactam"), "ab", drop = TRUE]
     if (any(untreatable %in% names(ab_in_data))) {
       if (message_not_thrown_before(function_name, "ab_class", "untreatable", entire_session = TRUE)) {
-        warning_("Some agents in `", function_name, "()` were ignored since they cannot be used for treating patients: ",
+        warning_("in `", function_name, "()`: some agents were ignored since they cannot be used for treating patients: ",
                  vector_and(ab_name(names(ab_in_data)[names(ab_in_data) %in% untreatable],
                                     language = NULL,
                                     tolower = TRUE),
                             quotes = FALSE,
                             sort = TRUE), ". They can be included using `", function_name, "(only_treatable = FALSE)`. ",
-                 "This warning will be shown once per session.",
-                 call = FALSE)
+                 "This warning will be shown once per session.")
       }
       ab_in_data <- ab_in_data[!names(ab_in_data) %in% untreatable]
     }

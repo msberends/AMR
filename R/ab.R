@@ -455,15 +455,13 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   x_unknown_ATCs <- x_unknown[x_unknown %like% "[A-Z][0-9][0-9][A-Z][A-Z][0-9][0-9]"]
   x_unknown <- x_unknown[!x_unknown %in% x_unknown_ATCs]
   if (length(x_unknown_ATCs) > 0 & fast_mode == FALSE) {
-    warning_("These ATC codes are not (yet) in the antibiotics data set: ",
-             vector_and(x_unknown_ATCs), ".",
-             call = FALSE)
+    warning_("in `as.ab()`: these ATC codes are not (yet) in the antibiotics data set: ",
+             vector_and(x_unknown_ATCs), ".")
   }
   
   if (length(x_unknown) > 0 & fast_mode == FALSE) {
-    warning_("These values could not be coerced to a valid antimicrobial ID: ",
-             vector_and(x_unknown), ".",
-             call = FALSE)
+    warning_("in `as.ab()`: these values could not be coerced to a valid antimicrobial ID: ",
+             vector_and(x_unknown), ".")
   }
 
   x_result <- x_new[match(x_bak_clean, x)]

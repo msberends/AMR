@@ -142,13 +142,11 @@ if [ $lazy == "FALSE" ]; then
   Rscript -e "devtools::install(quiet = TRUE, dependencies = FALSE)"
   Rscript -e "suppressMessages(pkgdown::build_site(lazy = FALSE, examples = FALSE, install = FALSE))"
 else
+  # always build home page
+  Rscript -e "pkgdown::build_home()"
   if ! git diff --quiet man; then
     # documentation has changed
     Rscript -e "pkgdown::build_reference(lazy = $lazy, examples = FALSE)"
-  fi
-  if ! git diff --quiet index.md; then
-    # home page has changed
-    Rscript -e "pkgdown::build_home()"
   fi
   if ! git diff --quiet NEWS.md; then
     # news has changed

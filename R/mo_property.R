@@ -684,7 +684,7 @@ mo_url <- function(x, open = FALSE, language = get_AMR_locale(), ...) {
   
   if (isTRUE(open)) {
     if (length(u) > 1) {
-      warning_("Only the first URL will be opened, as `browseURL()` only suports one string.")
+      warning_("in `mo_url()`: only the first URL will be opened, as `browseURL()` only suports one string.")
     }
     utils::browseURL(u[1L])
   }

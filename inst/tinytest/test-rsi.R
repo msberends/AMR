@@ -39,6 +39,7 @@ if (AMR:::pkg_is_available("ggplot2")) {
 }
 expect_stdout(print(as.rsi(c("S", "I", "R"))))
 expect_equal(as.character(as.rsi(c(1:3))), c("S", "I", "R"))
+expect_equal(as.character(as.rsi(c(1:3))), c("S", "I", "R"))
 expect_equal(suppressWarnings(as.logical(as.rsi("INVALID VALUE"))), NA)
 expect_equal(summary(as.rsi(c("S", "R"))),
              structure(c("Class" = "rsi",
@@ -75,6 +76,7 @@ if (AMR:::pkg_is_available("skimr", min_version = "2.0.0")) {
   }
 }
 
+expect_equal(as.rsi(c("", "-", NA, "NULL")), c(NA_rsi_, NA_rsi_, NA_rsi_, NA_rsi_))
 
 # S. pneumoniae/ampicillin in EUCAST 2020: 0.5-2 ug/ml (R is only > 2)
 expect_equal(as.character(

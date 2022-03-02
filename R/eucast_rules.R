@@ -181,8 +181,7 @@ eucast_rules <- function(x,
   meet_criteria(custom_rules, allow_class = "custom_eucast_rules", allow_NULL = TRUE)
   
   if ("custom" %in% rules & is.null(custom_rules)) {
-    warning_("No custom rules were set with the `custom_rules` argument",
-             call = FALSE,
+    warning_("in `eucast_rules()`: no custom rules were set with the `custom_rules` argument",
              immediate = TRUE)
     rules <- rules[rules != "custom"]
     if (length(rules) == 0) {
@@ -915,13 +914,12 @@ eucast_rules <- function(x,
     # take order from original data set
     warn_lacking_rsi_class <- warn_lacking_rsi_class[order(colnames(x.bak))]
     warn_lacking_rsi_class <- warn_lacking_rsi_class[!is.na(warn_lacking_rsi_class)]
-    warning_("Not all columns with antimicrobial results are of class <rsi>. Transform them on beforehand, with e.g.:\n",
+    warning_("in `eucast_rules()`: not all columns with antimicrobial results are of class <rsi>. Transform them on beforehand, with e.g.:\n",
              "  - ", x_deparsed, " %>% as.rsi(", ifelse(length(warn_lacking_rsi_class) == 1, 
                                                       warn_lacking_rsi_class,
                                                       paste0(warn_lacking_rsi_class[1], ":", warn_lacking_rsi_class[length(warn_lacking_rsi_class)])), ")\n", 
              "  - ", x_deparsed, " %>% mutate_if(is.rsi.eligible, as.rsi)\n",
-             "  - ", x_deparsed, " %>% mutate(across(where(is.rsi.eligible), as.rsi))",
-             call = FALSE)
+             "  - ", x_deparsed, " %>% mutate(across(where(is.rsi.eligible), as.rsi))")
   }
   
   # Return data set ---------------------------------------------------------
@@ -986,14 +984,14 @@ edit_rsi <- function(x,
             TRUE
           })
           suppressWarnings(new_edits[rows, cols] <<- to)
-          warning_("Value \"", to, "\" added to the factor levels of column", ifelse(length(cols) == 1, "", "s"), 
+          warning_("in `eucast_rules()`: value \"", to, "\" added to the factor levels of column",
+                   ifelse(length(cols) == 1, "", "s"), 
                    " ", vector_and(cols, quotes = "`", sort = FALSE), 
-                   " because this value was not an existing factor level.",
-                   call = FALSE)
+                   " because this value was not an existing factor level.")
           txt_warning()
           warned <- FALSE
         } else {
-          warning_(w$message, call = FALSE)
+          warning_("in `eucast_rules()`: ", w$message)
           txt_warning()
         }
       },

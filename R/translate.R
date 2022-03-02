@@ -193,7 +193,7 @@ translate_AMR <- function(from,
   any_form_in_patterns <- tryCatch(
     any(from_unique %like% paste0("(", paste(gsub(" +\\(.*", "", df_trans$pattern), collapse = "|"), ")")),
     error = function(e) {
-      warning_("Translation not possible. Please open an issue on GitHub (https://github.com/msberends/AMR/issues).", call = FALSE)
+      warning_("Translation not possible. Please open an issue on GitHub (https://github.com/msberends/AMR/issues).")
       return(FALSE)
     })
   

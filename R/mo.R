@@ -1489,9 +1489,8 @@ exec_as.mo <- function(x,
                       "You can also use your own reference data with set_mo_source() or directly, e.g.:\n",
                       '  as.mo("mycode", reference_df = data.frame(own = "mycode", mo = "', MO_lookup$mo[match("Escherichia coli", MO_lookup$fullname)], '"))\n',
                       '  mo_name("mycode", reference_df = data.frame(own = "mycode", mo = "', MO_lookup$mo[match("Escherichia coli", MO_lookup$fullname)], '"))\n')
-        warning_(paste0("\n", msg),
+        warning_(paste0("\nin `as.mo()`: ", msg),
                  add_fn = font_red,
-                 call = FALSE,
                  immediate = TRUE) # thus will always be shown, even if >= warnings
       }
       # handling uncertainties ----
@@ -1531,12 +1530,11 @@ exec_as.mo <- function(x,
     # comment below code if all staphylococcal species are categorised as CoNS/CoPS
     if (any(x %in% MO_lookup[which(MO_lookup$species %in% post_Becker), property])) {
       if (message_not_thrown_before("as.mo", "becker")) {
-        warning_("Becker ", font_italic("et al."), " (2014, 2019, 2020) does not contain these species named after their publication: ",
+        warning_("in `as.mo()`: Becker ", font_italic("et al."), " (2014, 2019, 2020) does not contain these species named after their publication: ",
                  font_italic(paste("S.",
                                    sort(mo_species(unique(x[x %in% MO_lookup[which(MO_lookup$species %in% post_Becker), property]]))),
                                    collapse = ", ")),
                  ". Categorisation to CoNS/CoPS was taken from the original scientific publication(s).",
-                 call = FALSE,
                  immediate = TRUE)
       }
     }
@@ -1709,8 +1707,7 @@ pillar_shaft.mo <- function(x, ...) {
       col <- "The data"
     }
     warning_(col, " contains old MO codes (from a previous AMR package version). ",
-             "Please update your MO codes with `as.mo()`.",
-             call = FALSE)
+             "Please update your MO codes with `as.mo()`.")
   }
   
   # make it always fit exactly
@@ -1784,8 +1781,7 @@ print.mo <- function(x, print.shortnames = FALSE, ...) {
   names(x) <- x_names
   if (!all(x[!is.na(x)] %in% MO_lookup$mo)) {
     warning_("Some MO codes are from a previous AMR package version. ",
-             "Please update these MO codes with `as.mo()`.",
-             call = FALSE)
+             "Please update the MO codes with `as.mo()`.")
   }
   print.default(x, quote = FALSE)
 }
@@ -1814,8 +1810,7 @@ summary.mo <- function(object, ...) {
 as.data.frame.mo <- function(x, ...) {
   if (!all(x[!is.na(x)] %in% MO_lookup$mo)) {
     warning_("The data contains old MO codes (from a previous AMR package version). ",
-             "Please update your MO codes with `as.mo()`.",
-             call = FALSE)
+             "Please update your MO codes with `as.mo()`.")
   }
   nm <- deparse1(substitute(x))
   if (!"nm" %in% names(list(...))) {
@@ -2119,24 +2114,22 @@ replace_old_mo_codes <- function(x, property) {
       n_unique <- ""
     }
     if (property != "mo") {
-      warning_(paste0("The input contained ", n_matched,
-                      " old MO code", ifelse(n_matched == 1, "", "s"),
-                      " (", n_unique, "from a previous AMR package version). ",
-                      "Please update your MO codes with `as.mo()` to increase speed."),
-               call = FALSE)
+      warning_("in `mo_", property, "()`: the input contained ", n_matched,
+               " old MO code", ifelse(n_matched == 1, "", "s"),
+               " (", n_unique, "from a previous AMR package version). ",
+               "Please update your MO codes with `as.mo()` to increase speed.")
     } else {
-      warning_(paste0("The input contained ", n_matched,
-                      " old MO code", ifelse(n_matched == 1, "", "s"),
-                      " (", n_unique, "from a previous AMR package version). ",
-                      n_solved, " old MO code", ifelse(n_solved == 1, "", "s"), 
-                      ifelse(n_solved == 1, " was", " were"), 
-                      ifelse(all_direct_matches, " updated ", font_bold(" guessed ")),
-                      "to ", ifelse(n_solved == 1, "a ", ""), 
-                      "currently used MO code", ifelse(n_solved == 1, "", "s"),
-                      ifelse(n_unsolved > 0,
-                             paste0(" and ", n_unsolved, " old MO code", ifelse(n_unsolved == 1, "", "s"), " could not be updated."),
-                             ".")),
-               call = FALSE)
+      warning_("in `as.mo()`: the input contained ", n_matched,
+               " old MO code", ifelse(n_matched == 1, "", "s"),
+               " (", n_unique, "from a previous AMR package version). ",
+               n_solved, " old MO code", ifelse(n_solved == 1, "", "s"), 
+               ifelse(n_solved == 1, " was", " were"), 
+               ifelse(all_direct_matches, " updated ", font_bold(" guessed ")),
+               "to ", ifelse(n_solved == 1, "a ", ""), 
+               "currently used MO code", ifelse(n_solved == 1, "", "s"),
+               ifelse(n_unsolved > 0,
+                      paste0(" and ", n_unsolved, " old MO code", ifelse(n_unsolved == 1, "", "s"), " could not be updated."),
+                      "."))
     }
   }
   x

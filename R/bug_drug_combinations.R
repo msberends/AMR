@@ -184,7 +184,7 @@ format.bug_drug_combinations <- function(x,
   
   if (inherits(x, "grouped")) {
     # bug_drug_combinations() has been run on groups, so de-group here
-    warning_("formatting the output of `bug_drug_combinations()` does not support grouped variables, they are ignored", call = FALSE)
+    warning_("in `format()`: formatting the output of `bug_drug_combinations()` does not support grouped variables, they were ignored")
     idx <- split(seq_len(nrow(x)), paste0(x$mo, "%%", x$ab))
     x <- data.frame(mo = gsub("(.*)%%(.*)", "\\1", names(idx)),
                     ab = gsub("(.*)%%(.*)", "\\2", names(idx)),

@@ -150,7 +150,7 @@ key_antimicrobials <- function(x = NULL,
     col_mo <- search_type_in_df(x = x, type = "mo", info = FALSE)
   }
   if (is.null(col_mo)) {
-    warning_("No column found for `col_mo`, ignoring antibiotics set in `gram_negative` and `gram_positive`, and antimycotics set in `antifungal`", call = FALSE)
+    warning_("in `key_antimicrobials()`: no column found for `col_mo`, ignoring antibiotics set in `gram_negative` and `gram_positive`, and antimycotics set in `antifungal`")
     gramstain <- NA_character_
     kingdom <- NA_character_
   } else {
@@ -172,11 +172,11 @@ key_antimicrobials <- function(x = NULL,
     if (values_new_length < values_old_length &
         any(filter, na.rm = TRUE) &
         message_not_thrown_before("key_antimicrobials", name)) {
-      warning_(ifelse(values_new_length == 0,
+      warning_("in `key_antimicrobials()`: ",
+               ifelse(values_new_length == 0,
                       "No columns available ",
                       paste0("Only using ", values_new_length, " out of ", values_old_length, " defined columns ")),
-               "as key antimicrobials for ", name, "s. See ?key_antimicrobials.",
-               call = FALSE)
+               "as key antimicrobials for ", name, "s. See ?key_antimicrobials.")
     }
     
     generate_antimcrobials_string(x[which(filter), c(universal, values), drop = FALSE])
@@ -217,7 +217,7 @@ key_antimicrobials <- function(x = NULL,
                                              cols = cols)
   
   if (length(unique(key_ab)) == 1) {
-    warning_("No distinct key antibiotics determined.", call = FALSE)
+    warning_("in `key_antimicrobials()`: no distinct key antibiotics determined.")
   }
   
   key_ab

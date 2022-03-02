@@ -1,5 +1,5 @@
-# `AMR` 1.8.0.9001
-## <small>Last updated: 26 February 2022</small>
+# `AMR` 1.8.0.9002
+## <small>Last updated:  2 March 2022</small>
 
 All functions in this package are considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months.
 
@@ -10,6 +10,7 @@ All functions in this package are considered to be stable. Updates to the AMR in
   mo_name("methicillin-resistant S. aureus (MRSA)")
   #> [1] "Staphylococcus aureus"
   ```
+* More informative warning messages
 
 ### Other
 * Fix for unit testing on R 3.3

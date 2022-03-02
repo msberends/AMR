@@ -240,7 +240,7 @@ mdro <- function(x = NULL,
   }
   
   if (!is.null(list(...)$country)) {
-    warning_("Using `country` is deprecated, use `guideline` instead. See ?mdro.", call = FALSE)
+    warning_("in `mdro()`: using `country` is deprecated, use `guideline` instead. See ?mdro")
     guideline <- list(...)$country
   }
   
@@ -1550,8 +1550,8 @@ mdro <- function(x = NULL,
   if (guideline$code == "cmi2012") {
     if (any(x$MDRO == -1, na.rm = TRUE)) {
       if (message_not_thrown_before("mdro", "availability")) {
-        warning_("NA introduced for isolates where the available percentage of antimicrobial classes was below ",
-                 percentage(pct_required_classes), " (set with `pct_required_classes`)", call = FALSE)
+        warning_("in `mdro()`: NA introduced for isolates where the available percentage of antimicrobial classes was below ",
+                 percentage(pct_required_classes), " (set with `pct_required_classes`)")
       }
       # set these -1s to NA
       x[which(x$MDRO == -1), "MDRO"] <- NA_integer_
@@ -1709,7 +1709,7 @@ run_custom_mdro_guideline <- function(df, guideline, info) {
                       return("error")
                     })
     if (identical(qry, "error")) {
-      warning_("in custom_mdro_guideline(): rule ", i, 
+      warning_("in `custom_mdro_guideline()`: rule ", i, 
                " (`", as.character(guideline[[i]]$query), "`) was ignored because of this error message: ",
                pkg_env$err_msg,
                call = FALSE, 
