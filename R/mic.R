@@ -37,8 +37,8 @@ valid_mic_levels <- c(c(t(vapply(FUN.VALUE = character(9), ops,
                                  function(x) paste0(x, sort(c(1:9, 1.5)))))),
                       c(t(vapply(FUN.VALUE = character(45), ops,
                                  function(x) paste0(x, c(10:98)[9:98 %% 2 == TRUE])))),
-                      c(t(vapply(FUN.VALUE = character(16), ops,
-                                 function(x) paste0(x, sort(c(2 ^ c(7:11), 80 * c(2:12))))))))
+                      c(t(vapply(FUN.VALUE = character(17), ops,
+                                 function(x) paste0(x, sort(c(2 ^ c(7:11), 192, 80 * c(2:12))))))))
 
 #' Transform Input to Minimum Inhibitory Concentrations (MIC)
 #'
@@ -247,7 +247,9 @@ pillar_shaft.mic <- function(x, ...) {
   out <- pasted
   out[is.na(x)] <- font_na(NA)
   out <- gsub("(<|=|>)", font_silver("\\1"), out)
-  out <- gsub("([.]?0+)$", font_white("\\1"), out)
+  if (any(out %like% "[.]", na.rm = TRUE)) {
+    out <- gsub("([.]?0+)$", font_white("\\1"), out)
+  }
   create_pillar_column(out, align = "right", width = max(nchar(pasted)))
 }
 

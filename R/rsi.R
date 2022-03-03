@@ -67,7 +67,7 @@
 #' 
 #' For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`). 
 #' 
-#' Thus, the `guideline` argument must be set to e.g., ``r paste0('"', subset(rsi_translation, guideline %like% "EUCAST")$guideline[1], '"')`` or ``r paste0('"', subset(rsi_translation, guideline %like% "CLSI")$guideline[1], '"')``. By simply using `"EUCAST"` (the default) or `"CLSI"` as input, the latest version of that guideline will automatically be selected. You can set your own data set using the `reference_data` argument. The `guideline` argument will then be ignored.
+#' Thus, the `guideline` argument must be set to e.g., ``r paste0('"', subset(rsi_translation, guideline %like% "EUCAST")$guideline[1], '"')`` or ``r paste0('"', subset(rsi_translation, guideline %like% "CLSI")$guideline[1], '"')``. By simply using `"EUCAST"` (the default) or `"CLSI"` as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the `reference_data` argument. The `guideline` argument will then be ignored.
 #' 
 #' ## After Interpretation
 #' 

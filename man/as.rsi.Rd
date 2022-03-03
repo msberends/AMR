@@ -113,7 +113,7 @@ your_data \%>\% mutate(across(where(is.disk), as.rsi)) # since dplyr 1.0.0
 
 For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (2011-2021) and CLSI (2010-2021).
 
-Thus, the \code{guideline} argument must be set to e.g., \code{"EUCAST 2021"} or \code{"CLSI 2021"}. By simply using \code{"EUCAST"} (the default) or \code{"CLSI"} as input, the latest version of that guideline will automatically be selected. You can set your own data set using the \code{reference_data} argument. The \code{guideline} argument will then be ignored.
+Thus, the \code{guideline} argument must be set to e.g., \code{"EUCAST 2021"} or \code{"CLSI 2021"}. By simply using \code{"EUCAST"} (the default) or \code{"CLSI"} as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the \code{reference_data} argument. The \code{guideline} argument will then be ignored.
 }
 
 \subsection{After Interpretation}{
