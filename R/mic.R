@@ -243,14 +243,12 @@ droplevels.mic <- function(x, exclude = if (any(is.na(levels(x)))) NULL else NA,
 pillar_shaft.mic <- function(x, ...) {
   crude_numbers <- as.double(x)
   operators <- gsub("[^<=>]+", "", as.character(x))
-  pasted <- trimws(paste0(operators, trimws(format(crude_numbers))))
-  out <- pasted
+  operators[operators != ""] <- font_silver(operators[operators != ""], collapse = NULL)
+  out <- trimws(paste0(operators, trimws(format(crude_numbers))))
   out[is.na(x)] <- font_na(NA)
-  out <- gsub("(<|=|>)", font_silver("\\1"), out)
-  if (any(out %like% "[.]", na.rm = TRUE)) {
-    out <- gsub("([.]?0+)$", font_white("\\1"), out)
-  }
-  create_pillar_column(out, align = "right", width = max(nchar(pasted)))
+  # maketrailing zeroes almost invisible
+  out[out %like% "[.]"] <- gsub("([.]?0+)$", font_white("\\1"), out[out %like% "[.]"], perl = TRUE)
+  create_pillar_column(out, align = "right", width = max(nchar(font_stripstyle(out))))
 }
 
 # will be exported using s3_register() in R/zzz.R

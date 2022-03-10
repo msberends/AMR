@@ -1,9 +1,10 @@
-# `AMR` 1.8.0.9004
-## <small>Last updated:  3 March 2022</small>
+# `AMR` 1.8.0.9005
+## <small>Last updated: 10 March 2022</small>
 
 All functions in this package are considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months.
 
 ### Changed
+* Fix for using `as.rsi()` on values containing capped values (such as `>=`), sometimes leading to `NA`
 * Support for antibiotic interpretations of the MIPS laboratory system: `"U"` for S ('susceptible urine'), `"D"` for I ('susceptible dose-dependent')
 * Improved algorithm of `as.mo()`, especially for ignoring non-taxonomic text, such as:
   ```r

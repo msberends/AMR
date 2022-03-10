@@ -690,7 +690,6 @@ as_rsi_method <- function(method_short = "mic",
            "... ",
            appendLF = FALSE,
            as_note = FALSE)
-  
   result <- exec_as.rsi(method = method_short,
                         x = x,
                         mo = mo_coerced,
@@ -715,7 +714,7 @@ exec_as.rsi <- function(method,
   metadata_mo <- get_mo_failures_uncertainties_renamed()
   
   x_bak <- data.frame(x_mo = paste0(x, mo), stringsAsFactors = FALSE)
-  df <- unique(data.frame(x, mo), stringsAsFactors = FALSE)
+  df <- unique(data.frame(x, mo, x_mo = paste0(x, mo), stringsAsFactors = FALSE))
   x <- df$x
   mo <- df$mo
   
@@ -848,7 +847,7 @@ exec_as.rsi <- function(method,
   }
   
   new_rsi <- x_bak %pm>%
-    pm_left_join(data.frame(x_mo = paste0(df$x, df$mo), new_rsi,
+    pm_left_join(data.frame(x_mo = paste0(x, mo), new_rsi,
                             stringsAsFactors = FALSE),
                  by = "x_mo") %pm>%
     pm_pull(new_rsi)
@@ -907,13 +906,13 @@ freq.rsi <- function(x, ...) {
                           .add_header = list(
                             Drug = paste0(ab_name(ab, language = NULL), " (", ab, ", ", paste(ab_atc(ab), collapse = "/"), ")"),
                             `Drug group` = ab_group(ab, language = NULL),
-                            `%SI` = percentage(susceptibility(x, minimum = 0, as_percent = FALSE),
-                                               digits = digits)))
+                            `%SI` = trimws(percentage(susceptibility(x, minimum = 0, as_percent = FALSE),
+                                                      digits = digits))))
   } else {
     cleaner::freq.default(x = x, ...,
                           .add_header = list(
-                            `%SI` = percentage(susceptibility(x, minimum = 0, as_percent = FALSE),
-                                               digits = digits)))
+                            `%SI` = trimws(percentage(susceptibility(x, minimum = 0, as_percent = FALSE),
+                                                      digits = digits))))
   }
 }
 
