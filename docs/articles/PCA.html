@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.0.9005</span>
       </span>
     </div>
 
@@ -185,7 +185,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="PCA_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>How to conduct principal component analysis (PCA) for AMR</h1>
@@ -199,18 +199,18 @@
     
     
 <p><strong>NOTE: This page will be updated soon, as the pca() function is currently being developed.</strong></p>
-<div class="section level1">
-<h1 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
-</h1>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
 </div>
-<div class="section level1">
-<h1 id="transforming">Transforming<a class="anchor" aria-label="anchor" href="#transforming"></a>
-</h1>
+<div class="section level2">
+<h2 id="transforming">Transforming<a class="anchor" aria-label="anchor" href="#transforming"></a>
+</h2>
 <p>For PCA, we need to transform our AMR data first. This is what the <code>example_isolates</code> data set in this package looks like:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR">AMR</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
-<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">)</span>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">)</span>
 <span class="co"># Rows: 2,000</span>
 <span class="co"># Columns: 49</span>
 <span class="co"># $ date            <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2002-01-02, 2002-01-03, 2002-01-07, 2002-01-07, 2002-…</span>
@@ -283,9 +283,9 @@
 <span class="co"># <span style="color: #BCBCBC;">5</span> Caryophanales     Gemella         <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span>
 <span class="co"># <span style="color: #BCBCBC;">6</span> Caryophanales     Listeria        <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="perform-principal-component-analysis">Perform principal component analysis<a class="anchor" aria-label="anchor" href="#perform-principal-component-analysis"></a>
-</h1>
+<div class="section level2">
+<h2 id="perform-principal-component-analysis">Perform principal component analysis<a class="anchor" aria-label="anchor" href="#perform-principal-component-analysis"></a>
+</h2>
 <p>The new <code><a href="../reference/pca.html">pca()</a></code> function will automatically filter on rows that contain numeric values in all selected variables, so we now only need to do:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pca_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pca.html">pca</a></span><span class="op">(</span><span class="va">resistance_data</span><span class="op">)</span>
@@ -305,9 +305,9 @@
 <span class="co"># [1] "Caryophanales"    "Enterobacterales" "Lactobacillales"  "Pseudomonadales"</span></code></pre>
 <p>Good news. The first two components explain a total of 93.3% of the variance (see the PC1 and PC2 values of the <em>Proportion of Variance</em>. We can create a so-called biplot with the base R <code><a href="https://rdrr.io/r/stats/biplot.html" class="external-link">biplot()</a></code> function, to see which antimicrobial resistance per drug explain the difference per microorganism.</p>
 </div>
-<div class="section level1">
-<h1 id="plotting-the-results">Plotting the results<a class="anchor" aria-label="anchor" href="#plotting-the-results"></a>
-</h1>
+<div class="section level2">
+<h2 id="plotting-the-results">Plotting the results<a class="anchor" aria-label="anchor" href="#plotting-the-results"></a>
+</h2>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/biplot.html" class="external-link">biplot</a></span><span class="op">(</span><span class="va">pca_result</span><span class="op">)</span></code></pre></div>
 <p><img src="PCA_files/figure-html/unnamed-chunk-5-1.png" width="750"></p>
@@ -340,7 +340,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
