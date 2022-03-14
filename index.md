@@ -144,13 +144,13 @@ To find out how to conduct AMR data analysis, please [continue reading here to g
 
 #### Microbial (taxonomic) reference data
 
-This package contains the complete taxonomic tree of almost all ~70,000 microorganisms from the authoritative and comprehensive Catalogue of Life (CoL, [www.catalogueoflife.org](http://www.catalogueoflife.org)), supplemented by data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, [lpsn.dsmz.de](https://lpsn.dsmz.de)). This supplementation is needed until the [CoL+ project](https://github.com/Sp2000/colplus) is finished, which we await. With `catalogue_of_life_version()` can be checked which version of the CoL is included in this package. 
+This package contains the complete taxonomic tree of almost all ~71,000 microorganisms from the authoritative and comprehensive Catalogue of Life (CoL, [www.catalogueoflife.org](http://www.catalogueoflife.org)), supplemented by data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, [lpsn.dsmz.de](https://lpsn.dsmz.de)). This supplementation is needed until the [CoL+ project](https://github.com/Sp2000/colplus) is finished, which we await. With `catalogue_of_life_version()` can be checked which version of the CoL is included in this package. 
 
 Read more about which data from the Catalogue of Life [in our manual](./reference/catalogue_of_life.html).
 
 #### Antimicrobial reference data
 
-This package contains **all ~550 antibiotic, antimycotic and antiviral drugs** and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD, oral and IV) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, https://www.whocc.no) and the [Pharmaceuticals Community Register of the European Commission](https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm).
+This package contains **all ~570 antibiotic, antimycotic and antiviral drugs** and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD, oral and IV) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, https://www.whocc.no) and the [Pharmaceuticals Community Register of the European Commission](https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm).
 
 **NOTE: The WHOCC copyright does not allow use for commercial purposes, unlike any other info from this package. See https://www.whocc.no/copyright_disclaimer/.**
 

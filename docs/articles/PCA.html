@@ -44,11 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-<<<<<<< HEAD
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1</span>
-=======
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.0.9005</span>
->>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
       </span>
     </div>
 
@@ -189,7 +185,7 @@
 
       
 
-      </header><script src="PCA_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>How to conduct principal component analysis
@@ -203,12 +199,8 @@
 
     
     
-<<<<<<< HEAD
 <p><strong>NOTE: This page will be updated soon, as the pca() function
 is currently being developed.</strong></p>
-=======
-<p><strong>NOTE: This page will be updated soon, as the pca() function is currently being developed.</strong></p>
->>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -216,16 +208,12 @@ is currently being developed.</strong></p>
 <div class="section level2">
 <h2 id="transforming">Transforming<a class="anchor" aria-label="anchor" href="#transforming"></a>
 </h2>
-<<<<<<< HEAD
 <p>For PCA, we need to transform our AMR data first. This is what the
 <code>example_isolates</code> data set in this package looks like:</p>
-=======
-<p>For PCA, we need to transform our AMR data first. This is what the <code>example_isolates</code> data set in this package looks like:</p>
->>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">)</span>
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">)</span>
 <span class="co"># Rows: 2,000</span>
 <span class="co"># Columns: 49</span>
 <span class="co"># $ date            <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2002-01-02, 2002-01-03, 2002-01-07, 2002-01-07, 2002-…</span>
@@ -302,13 +290,9 @@ per taxonomic order and genus:</p>
 <div class="section level2">
 <h2 id="perform-principal-component-analysis">Perform principal component analysis<a class="anchor" aria-label="anchor" href="#perform-principal-component-analysis"></a>
 </h2>
-<<<<<<< HEAD
 <p>The new <code><a href="../reference/pca.html">pca()</a></code> function will automatically filter on rows
 that contain numeric values in all selected variables, so we now only
 need to do:</p>
-=======
-<p>The new <code><a href="../reference/pca.html">pca()</a></code> function will automatically filter on rows that contain numeric values in all selected variables, so we now only need to do:</p>
->>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pca_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pca.html">pca</a></span><span class="op">(</span><span class="va">resistance_data</span><span class="op">)</span>
 <span class="co"># ℹ Columns selected for PCA: "AMC", "CAZ", "CTX", "CXM", "GEN", "SXT", "TMP"</span>
@@ -370,12 +354,8 @@ Erwin E. A. Hassing.</p>
 
 <div class="pkgdown">
   <p></p>
-<<<<<<< HEAD
 <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
 2.0.2.</p>
-=======
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
->>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 </div>
 
       </footer>

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 pandoc: 2.17.1.1
-=======
-pandoc: 2.9.2.1
->>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
@@ -16,11 +12,7 @@ articles:
   datasets: datasets.html
   resistance_predict: resistance_predict.html
   welcome_to_AMR: welcome_to_AMR.html
-<<<<<<< HEAD
-last_built: 2022-03-14T15:33Z
-=======
-last_built: 2022-03-12T18:42Z
->>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
+last_built: 2022-03-14T15:38Z
 urls:
   reference: https://msberends.github.io/AMR/reference
   article: https://msberends.github.io/AMR/articles
