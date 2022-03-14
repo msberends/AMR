@@ -44,7 +44,11 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
+<<<<<<< HEAD
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1</span>
+=======
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.0.9005</span>
+>>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
       </span>
     </div>
 
@@ -185,7 +189,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="resistance_predict_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>How to predict antimicrobial resistance</h1>
@@ -225,6 +229,7 @@ AMR data analysis</a>. Based on a date column, it calculates cases per
 year and uses a regression model to predict antimicrobial
 resistance.</p>
 <p>It is basically as easy as:</p>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># resistance prediction of piperacillin/tazobactam (TZP):</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">resistance_predict</span>(<span class="at">tbl =</span> example_isolates, <span class="at">col_date =</span> <span class="st">"date"</span>, <span class="at">col_ab =</span> <span class="st">"TZP"</span>, <span class="at">model =</span> <span class="st">"binomial"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -242,6 +247,22 @@ resistance.</p>
 <p>When running any of these commands, a summary of the regression model
 will be printed unless using
 <code>resistance_predict(..., info = FALSE)</code>.</p>
+=======
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="co"># resistance prediction of piperacillin/tazobactam (TZP):</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="kw">resistance_predict</span>(<span class="dt">tbl =</span> example_isolates, <span class="dt">col_date =</span> <span class="st">"date"</span>, <span class="dt">col_ab =</span> <span class="st">"TZP"</span>, <span class="dt">model =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="co"># or:</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>example_isolates <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">resistance_predict</span>(<span class="dt">col_ab =</span> <span class="st">"TZP"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>                     model  <span class="st">"binomial"</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="co"># to bind it to object 'predict_TZP' for example:</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>predict_TZP &lt;-<span class="st"> </span>example_isolates <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a><span class="st">  </span><span class="kw">resistance_predict</span>(<span class="dt">col_ab =</span> <span class="st">"TZP"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a>                     <span class="dt">model =</span> <span class="st">"binomial"</span>)</span></code></pre></div>
+<p>The function will look for a date column itself if <code>col_date</code> is not set.</p>
+<p>When running any of these commands, a summary of the regression model will be printed unless using <code>resistance_predict(..., info = FALSE)</code>.</p>
+>>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 <pre><code><span class="co"># ℹ Using column 'date' as input for `col_date`.</span></code></pre>
 <p>This text is only a printed summary - the actual result (output) of
 the function is a <code>data.frame</code> containing for each year: the
@@ -281,9 +302,13 @@ resistance and the standard error below and above the estimation:</p>
 <span class="co"># 29 2030 0.48639359 0.3782932 0.5944939           NA         NA 0.48639359</span>
 <span class="co"># 30 2031 0.51109592 0.3973697 0.6248221           NA         NA 0.51109592</span>
 <span class="co"># 31 2032 0.53574417 0.4169574 0.6545309           NA         NA 0.53574417</span></code></pre></div>
+<<<<<<< HEAD
 <p>The function <code>plot</code> is available in base R, and can be
 extended by other packages to depend the output based on the type of
 input. We extended its function to cope with resistance predictions:</p>
+=======
+<p>The function <code>plot</code> is available in base R, and can be extended by other packages to depend the output based on the type of input. We extended its function to cope with resistance predictions:</p>
+>>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">predict_TZP</span><span class="op">)</span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-4-1.png" width="720"></p>
@@ -405,8 +430,12 @@ Erwin E. A. Hassing.</p>
 
 <div class="pkgdown">
   <p></p>
+<<<<<<< HEAD
 <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
 2.0.2.</p>
+=======
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+>>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 </div>
 
       </footer>

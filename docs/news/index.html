@@ -17,7 +17,11 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
+<<<<<<< HEAD
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1</span>
+=======
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.0.9005</span>
+>>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
       </span>
     </div>
 
@@ -157,6 +161,7 @@
     </div>
 
     <div class="section level2">
+<<<<<<< HEAD
 <h2 class="page-header" data-toc-text="1.8.1" id="amr-181">
 <code>AMR</code> 1.8.1<a class="anchor" aria-label="anchor" href="#amr-181"></a></h2>
 <p>All functions in this package are considered to be stable. Updates to
@@ -174,6 +179,19 @@ for I (‘susceptible dose-dependent’)</p></li>
 <li>
 <p>Improved algorithm of <code><a href="../reference/as.mo.html">as.mo()</a></code>, especially for
 ignoring non-taxonomic text, such as:</p>
+=======
+<h2 class="page-header" data-toc-text="1.8.0.9005" id="amr-1809005">
+<code>AMR</code> 1.8.0.9005<a class="anchor" aria-label="anchor" href="#amr-1809005"></a></h2>
+<div class="section level3">
+<h3 id="last-updated-march-1-8-0-9005"><small>Last updated: 10 March 2022</small><a class="anchor" aria-label="anchor" href="#last-updated-march-1-8-0-9005"></a></h3>
+<p>All functions in this package are considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months.</p>
+<div class="section level4">
+<h4 id="changed-1-8-0-9005">Changed<a class="anchor" aria-label="anchor" href="#changed-1-8-0-9005"></a></h4>
+<ul><li><p>Fix for using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on values containing capped values (such as <code>&gt;=</code>), sometimes leading to <code>NA</code></p></li>
+<li><p>Support for antibiotic interpretations of the MIPS laboratory system: <code>"U"</code> for S (‘susceptible urine’), <code>"D"</code> for I (‘susceptible dose-dependent’)</p></li>
+<li>
+<p>Improved algorithm of <code><a href="../reference/as.mo.html">as.mo()</a></code>, especially for ignoring non-taxonomic text, such as:</p>
+>>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"methicillin-resistant S. aureus (MRSA)"</span><span class="op">)</span>
@@ -184,7 +202,11 @@ ignoring non-taxonomic text, such as:</p>
 <li><p>Updated MIC printing in tibbles</p></li>
 </ul></div>
 <div class="section level4">
+<<<<<<< HEAD
 <h4 id="other-1-8-1">Other<a class="anchor" aria-label="anchor" href="#other-1-8-1"></a></h4>
+=======
+<h4 id="other-1-8-0-9005">Other<a class="anchor" aria-label="anchor" href="#other-1-8-0-9005"></a></h4>
+>>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 <ul><li>Fix for unit testing on R 3.3</li>
 <li>Fix for size of some image elements, as requested by CRAN</li>
 </ul></div>
@@ -366,6 +388,7 @@ guideline</li>
 <code><a href="../reference/random.html">random_mic()</a></code>
 </li>
 <li>Improved plot legends for MICs and disk diffusion values</li>
+<<<<<<< HEAD
 <li>Improved speed of <code><a href="../reference/as.ab.html">as.ab()</a></code> and all <code>ab_*()</code>
 functions</li>
 <li>Added <code><a href="https://ggplot2.tidyverse.org/reference/fortify.html" class="external-link">fortify()</a></code> extensions for plotting methods</li>
@@ -392,6 +415,19 @@ change.</li>
 <li>
 <code><a href="../reference/get_episode.html">get_episode()</a></code> and <code><a href="../reference/get_episode.html">is_new_episode()</a></code> can now
 cope with <code>NA</code>s</li>
+=======
+<li>Improved speed of <code><a href="../reference/as.ab.html">as.ab()</a></code> and all <code>ab_*()</code> functions</li>
+<li>Added <code><a href="https://ggplot2.tidyverse.org/reference/fortify.html" class="external-link">fortify()</a></code> extensions for plotting methods</li>
+<li>
+<code>NA</code> values of the classes <code>&lt;mic&gt;</code>, <code>&lt;disk&gt;</code> and <code>&lt;rsi&gt;</code> are now exported objects of this package, e.g. <code>NA_mic_</code> is an <code>NA</code> of class <code>mic</code> (just like the base R <code>NA_character_</code> is an <code>NA</code> of class <code>character</code>)</li>
+<li>The <code><a href="../reference/proportion.html">proportion_df()</a></code>, <code><a href="../reference/count.html">count_df()</a></code> and <code><a href="../reference/proportion.html">rsi_df()</a></code> functions now return with the additional S3 class ‘rsi_df’ so they can be extended by other packages</li>
+<li>The <code><a href="../reference/mdro.html">mdro()</a></code> function now returns <code>NA</code> for all rows that have no test results</li>
+<li>The <code>species_id</code> column in the <code>microorganisms</code> data set now only contains LPSN record numbers. For this reason, this column is now numeric instead of a character, and <code><a href="../reference/mo_property.html">mo_url()</a></code> has been updated to reflect this change.</li>
+<li>Fixed a small bug in the functions <code><a href="../reference/get_episode.html">get_episode()</a></code> and <code><a href="../reference/get_episode.html">is_new_episode()</a></code>
+</li>
+<li>
+<code><a href="../reference/get_episode.html">get_episode()</a></code> and <code><a href="../reference/get_episode.html">is_new_episode()</a></code> can now cope with <code>NA</code>s</li>
+>>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 </ul></div>
 <div class="section level4">
 <h4 id="other-1-8-0">Other<a class="anchor" aria-label="anchor" href="#other-1-8-0"></a></h4>
@@ -480,12 +516,17 @@ deprecated.</li>
 <code><a href="../reference/key_antimicrobials.html">key_antimicrobials()</a></code> functions has been completely
 rewritten.</li>
 </ul></li>
+<<<<<<< HEAD
 <li>Function <code><a href="../reference/antibiotic_class_selectors.html">betalactams()</a></code> as additional antbiotic column
 selector and function <code>filter_betalactams()</code> as additional
 antbiotic column filter. The group of betalactams consists of all
 carbapenems, cephalosporins and penicillins.</li>
 <li>A <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code> method for
 <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>
+=======
+<li>Function <code><a href="../reference/antibiotic_class_selectors.html">betalactams()</a></code> as additional antbiotic column selector and function <code>filter_betalactams()</code> as additional antbiotic column filter. The group of betalactams consists of all carbapenems, cephalosporins and penicillins.</li>
+<li>A <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code> method for <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>
+>>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 </li>
 </ul></div>
 <div class="section level4">
@@ -538,6 +579,7 @@ throw an error</li>
 when the <code>vctrs</code> package is loaded (i.e., when using
 tidyverse)</li>
 <li>Colour fix for using <code><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot()</a></code> on an RSI class</li>
+<<<<<<< HEAD
 <li>Added 25 common system codes for bacteria to the
 <code>microorganisms.codes</code> data set</li>
 <li>Added 16 common system codes for antimicrobial agents to the
@@ -547,6 +589,12 @@ tidyverse)</li>
 <code>dplyr</code> v1.0.6</li>
 <li>Updated <code><a href="https://docs.ropensci.org/skimr/reference/skim.html" class="external-link">skimr::skim()</a></code> usage for MIC values to also
 include 25th and 75th percentiles</li>
+=======
+<li>Added 25 common system codes for bacteria to the <code>microorganisms.codes</code> data set</li>
+<li>Added 16 common system codes for antimicrobial agents to the <code>antibiotics</code> data set</li>
+<li>Fix for using <code>skimr::skim()</code> on classes <code>mo</code>, <code>mic</code> and <code>disk</code> when using the just released <code>dplyr</code> v1.0.6</li>
+<li>Updated <code>skimr::skim()</code> usage for MIC values to also include 25th and 75th percentiles</li>
+>>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 <li>Fix for plotting missing MIC/disk diffusion values</li>
 <li>Updated join functions to always use <code>dplyr</code> join
 functions if the <code>dplyr</code> package is installed - now also
@@ -625,11 +673,16 @@ function) to select/filter on e.g. linezolid and tedizolid</p>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">filter_oxazolidinones</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Filtering on oxazolidinones: value in column `LNZ` (linezolid) is either "R", "S" or "I"</span></code></pre></div>
 </li>
+<<<<<<< HEAD
 <li><p>Support for custom MDRO guidelines, using the new
 <code><a href="../reference/mdro.html">custom_mdro_guideline()</a></code> function, please see
 <code><a href="../reference/mdro.html">mdro()</a></code> for additional info</p></li>
 <li><p><code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code> generics for classes
 <code>&lt;mic&gt;</code> and <code>&lt;disk&gt;</code></p></li>
+=======
+<li><p>Support for custom MDRO guidelines, using the new <code><a href="../reference/mdro.html">custom_mdro_guideline()</a></code> function, please see <code><a href="../reference/mdro.html">mdro()</a></code> for additional info</p></li>
+<li><p><code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code> generics for classes <code>&lt;mic&gt;</code> and <code>&lt;disk&gt;</code></p></li>
+>>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 <li>
 <p>Function <code><a href="../reference/mo_property.html">mo_is_yeast()</a></code>, which determines whether a
 microorganism is a member of the taxonomic class Saccharomycetes or the
@@ -686,6 +739,7 @@ synomyms</li>
 to <a href="https://lpsn.dsmz.de" class="external-link uri">https://lpsn.dsmz.de</a>
 </li>
 </ul></li>
+<<<<<<< HEAD
 <li>Big update for plotting classes <code>rsi</code>,
 <code>&lt;mic&gt;</code>, and <code>&lt;disk&gt;</code>:
 <ul><li>Plotting of MIC and disk diffusion values now support interpretation
@@ -699,6 +753,13 @@ translated if the system language is German, Dutch or Spanish (see
 <li>Plotting is now possible with base R using <code><a href="../reference/plot.html">plot()</a></code> and
 with ggplot2 using <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code> on any vector of MIC and disk
 diffusion values</li>
+=======
+<li>Big update for plotting classes <code>rsi</code>, <code>&lt;mic&gt;</code>, and <code>&lt;disk&gt;</code>:
+<ul><li>Plotting of MIC and disk diffusion values now support interpretation colouring if you supply the microorganism and antimicrobial agent</li>
+<li>All colours were updated to colour-blind friendly versions for values R, S and I for all plot methods (also applies to tibble printing)</li>
+<li>Interpretation of MIC and disk diffusion values to R/SI will now be translated if the system language is German, Dutch or Spanish (see <code>translate</code>)</li>
+<li>Plotting is now possible with base R using <code><a href="../reference/plot.html">plot()</a></code> and with ggplot2 using <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code> on any vector of MIC and disk diffusion values</li>
+>>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 </ul></li>
 <li>Updated SNOMED codes to US Edition of SNOMED CT from 1 September
 2020 and added the source to the help page of the
@@ -1266,6 +1327,7 @@ versions of R since R-3.0.0 (April 2013). Our package is being used in
 settings where the resources are very limited. Fewer dependencies on
 newer software is helpful for such settings.</p>
 <p>Negative effects of this change are:</p>
+<<<<<<< HEAD
 <ul><li>Function <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq()</a></code> that was borrowed from the
 <code>cleaner</code> package was removed. Use
 <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">cleaner::freq()</a></code>, or run <code><a href="https://github.com/msberends/cleaner" class="external-link">library("cleaner")</a></code>
@@ -1282,6 +1344,12 @@ slower when running on hundreds of thousands of rows.</del></li>
 also inherit class <code>character</code>, to support any data
 transformation. This change invalidates code that checks for class
 length == 1.</li>
+=======
+<ul><li>Function <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq()</a></code> that was borrowed from the <code>cleaner</code> package was removed. Use <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">cleaner::freq()</a></code>, or run <code><a href="https://github.com/msberends/cleaner" class="external-link">library("cleaner")</a></code> before you use <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq()</a></code>.</li>
+<li><del>Printing values of class <code>mo</code> or <code>rsi</code> in a tibble will no longer be in colour and printing <code>rsi</code> in a tibble will show the class <code>&lt;ord&gt;</code>, not <code>&lt;rsi&gt;</code> anymore. This is purely a visual effect.</del></li>
+<li><del>All functions from the <code>mo_*</code> family (like <code><a href="../reference/mo_property.html">mo_name()</a></code> and <code><a href="../reference/mo_property.html">mo_gramstain()</a></code>) are noticeably slower when running on hundreds of thousands of rows.</del></li>
+<li>For developers: classes <code>mo</code> and <code>ab</code> now both also inherit class <code>character</code>, to support any data transformation. This change invalidates code that checks for class length == 1.</li>
+>>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 </ul></li>
 </ul></div>
 <div class="section level4">
@@ -1694,6 +1762,7 @@ data integrity, this means that invalid assignments will now result in
 <span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"testvalue"</span>
 <span class="co">#&gt; Warning message:</span>
 <span class="co">#&gt; invalid microorganism code, NA generated</span></code></pre></div>
+<<<<<<< HEAD
 <p>This is important, because a value like <code>"testvalue"</code>
 could never be understood by e.g. <code><a href="../reference/mo_property.html">mo_name()</a></code>, although the
 class would suggest a valid microbial code.</p>
@@ -1705,6 +1774,12 @@ re-exported from the <code>clean</code> package (which will be installed
 automatically upon updating this <code>AMR</code> package).</p></li>
 <li><p>Renamed data set <code>septic_patients</code> to
 <code>example_isolates</code></p></li>
+=======
+<p>This is important, because a value like <code>"testvalue"</code> could never be understood by e.g. <code><a href="../reference/mo_property.html">mo_name()</a></code>, although the class would suggest a valid microbial code.</p>
+</li>
+<li><p>Function <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq()</a></code> has moved to a new package, <a href="https://github.com/msberends/clean" class="external-link"><code>clean</code></a> (<a href="https://cran.r-project.org/package=clean" class="external-link">CRAN link</a>), since creating frequency tables actually does not fit the scope of this package. The <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq()</a></code> function still works, since it is re-exported from the <code>clean</code> package (which will be installed automatically upon updating this <code>AMR</code> package).</p></li>
+<li><p>Renamed data set <code>septic_patients</code> to <code>example_isolates</code></p></li>
+>>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 </ul></div>
 <div class="section level4">
 <h4 id="new-0-8-0">New<a class="anchor" aria-label="anchor" href="#new-0-8-0"></a></h4>
@@ -2053,6 +2128,7 @@ be viewed here</a>
 <code>caption</code>, <code>x.title</code> and <code>y.title</code> to
 set titles and axis descriptions</li>
 </ul></li>
+<<<<<<< HEAD
 <li>Improved intelligence of looking up antibiotic columns in a data set
 using <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>
 </li>
@@ -2071,6 +2147,14 @@ since it uses <code><a href="../reference/count.html">count_df()</a></code> inte
 <li>Removed deprecated functions <code>guess_mo()</code>,
 <code>guess_atc()</code>, <code>EUCAST_rules()</code>,
 <code>interpretive_reading()</code>, <code><a href="../reference/as.rsi.html">rsi()</a></code>
+=======
+<li>Improved intelligence of looking up antibiotic columns in a data set using <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>
+</li>
+<li>Added ~5,000 more old taxonomic names to the <code>microorganisms.old</code> data set, which leads to better results finding when using the <code><a href="../reference/as.mo.html">as.mo()</a></code> function</li>
+<li>This package now honours the new EUCAST insight (2019) that S and I are but classified as susceptible, where I is defined as ‘increased exposure’ and not ‘intermediate’ anymore. For functions like <code>portion_df()</code> and <code><a href="../reference/count.html">count_df()</a></code> this means that their new argument <code>combine_SI</code> is TRUE at default. Our plotting function <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> also reflects this change since it uses <code><a href="../reference/count.html">count_df()</a></code> internally.</li>
+<li>The <code><a href="../reference/age.html">age()</a></code> function gained a new argument <code>exact</code> to determine ages with decimals</li>
+<li>Removed deprecated functions <code>guess_mo()</code>, <code>guess_atc()</code>, <code>EUCAST_rules()</code>, <code>interpretive_reading()</code>, <code><a href="../reference/as.rsi.html">rsi()</a></code>
+>>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 </li>
 <li>Frequency tables (<code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq()</a></code>):
 <ul><li><p>speed improvement for microbial IDs</p></li>
@@ -2097,10 +2181,15 @@ be viewed here</a>
 </li>
 <li>Added ceftazidim intrinsic resistance to <em>Streptococci</em>
 </li>
+<<<<<<< HEAD
 <li>Changed default settings for <code><a href="../reference/age_groups.html">age_groups()</a></code>, to let
 groups of fives and tens end with 100+ instead of 120+</li>
 <li>Fix for <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq()</a></code> for when all values are
 <code>NA</code>
+=======
+<li>Changed default settings for <code><a href="../reference/age_groups.html">age_groups()</a></code>, to let groups of fives and tens end with 100+ instead of 120+</li>
+<li>Fix for <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq()</a></code> for when all values are <code>NA</code>
+>>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 </li>
 <li>Fix for <code><a href="../reference/first_isolate.html">first_isolate()</a></code> for when dates are missing</li>
 <li>Improved speed of <code><a href="../reference/guess_ab_col.html">guess_ab_col()</a></code>
@@ -2455,6 +2544,7 @@ frequency tables of function outcomes:</p>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </li>
+<<<<<<< HEAD
 <li><p>Header info is now available as a list, with the
 <code>header</code> function</p></li>
 <li><p>The argument <code>header</code> is now set to <code>TRUE</code>
@@ -2473,6 +2563,16 @@ like <code>format</code> defaults to
 levels when input is a factor</p></li>
 <li><p>Factor levels will be in header when present in input data
 (maximum of 5)</p></li>
+=======
+<li><p>Header info is now available as a list, with the <code>header</code> function</p></li>
+<li><p>The argument <code>header</code> is now set to <code>TRUE</code> at default, even for markdown</p></li>
+<li><p>Added header info for class <code>mo</code> to show unique count of families, genera and species</p></li>
+<li><p>Now honours the <code>decimal.mark</code> setting, which just like <code>format</code> defaults to <code>getOption("OutDec")</code></p></li>
+<li><p>The new <code>big.mark</code> argument will at default be <code>","</code> when <code>decimal.mark = "."</code> and <code>"."</code> otherwise</p></li>
+<li><p>Fix for header text where all observations are <code>NA</code></p></li>
+<li><p>New argument <code>droplevels</code> to exclude empty factor levels when input is a factor</p></li>
+<li><p>Factor levels will be in header when present in input data (maximum of 5)</p></li>
+>>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 <li><p>Fix for using <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code> on frequency tables</p></li>
 </ul></li>
 <li>Function <code><a href="../reference/ggplot_rsi.html">scale_y_percent()</a></code> now contains the
@@ -2563,6 +2663,7 @@ now supports genus abbreviations with “species” attached</p>
 <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"S. spp"</span><span class="op">)</span>            <span class="co"># B_STPHY</span>
 <span class="fu"><a href="../reference/mo_property.html">mo_fullname</a></span><span class="op">(</span><span class="st">"S. species"</span><span class="op">)</span>  <span class="co"># "Staphylococcus species"</span></code></pre></div>
 </li>
+<<<<<<< HEAD
 <li><p>Added argument <code>combine_IR</code> (TRUE/FALSE) to functions
 <code>portion_df</code> and <code>count_df</code>, to indicate that all
 values of I and R must be merged into one, so the output only consists
@@ -2579,6 +2680,13 @@ total available isolate is below argument <code>minimum</code></p></li>
 <li><p>Functions <code>as.mo</code>, <code>as.rsi</code>,
 <code>as.mic</code>, <code>as.atc</code> and <code>freq</code> will not
 set package name as attribute anymore</p></li>
+=======
+<li><p>Added argument <code>combine_IR</code> (TRUE/FALSE) to functions <code>portion_df</code> and <code>count_df</code>, to indicate that all values of I and R must be merged into one, so the output only consists of S vs. IR (susceptible vs. non-susceptible)</p></li>
+<li><p>Fix for <code>portion_*(..., as_percent = TRUE)</code> when minimal number of isolates would not be met</p></li>
+<li><p>Added argument <code>also_single_tested</code> for <code>portion_*</code> and <code>count_*</code> functions to also include cases where not all antibiotics were tested but at least one of the tested antibiotics includes the target antimicribial interpretation, see <code><a href="../reference/proportion.html">?portion</a></code></p></li>
+<li><p>Using <code>portion_*</code> functions now throws a warning when total available isolate is below argument <code>minimum</code></p></li>
+<li><p>Functions <code>as.mo</code>, <code>as.rsi</code>, <code>as.mic</code>, <code>as.atc</code> and <code>freq</code> will not set package name as attribute anymore</p></li>
+>>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 <li>
 <p>Frequency tables - <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq()</a></code>:</p>
 <ul><li>
@@ -2620,12 +2728,18 @@ input when arguments are left blank</p></li>
 <code>microorganisms$ref</code> and <code>microorganisms.old$ref</code>)
 to comply with CRAN policy to only allow ASCII characters</p></li>
 <li><p>Fix for <code>mo_property</code> not working properly</p></li>
+<<<<<<< HEAD
 <li><p>Fix for <code>eucast_rules</code> where some Streptococci would
 become ceftazidime R in EUCAST rule 4.5</p></li>
 <li><p>Support for named vectors of class <code>mo</code>, useful for
 <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">top_freq()</a></code></p></li>
 <li><p><code>ggplot_rsi</code> and <code>scale_y_percent</code> have
 <code>breaks</code> argument</p></li>
+=======
+<li><p>Fix for <code>eucast_rules</code> where some Streptococci would become ceftazidime R in EUCAST rule 4.5</p></li>
+<li><p>Support for named vectors of class <code>mo</code>, useful for <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">top_freq()</a></code></p></li>
+<li><p><code>ggplot_rsi</code> and <code>scale_y_percent</code> have <code>breaks</code> argument</p></li>
+>>>>>>> 8c9feea087f568fd4abbdb325140d1d628e6856f
 <li>
 <p>AI improvements for <code>as.mo</code>:</p>
 <ul><li>
