@@ -116,21 +116,7 @@ if (utf8_supported && !is_latex) {
 # Helper functions --------------------------------------------------------
 
 create_AB_lookup <- function() {
-  AB_lookup <- AMR::antibiotics
-  AB_lookup$generalised_name <- generalise_antibiotic_name(AB_lookup$name)
-  AB_lookup$generalised_synonyms <- lapply(AB_lookup$synonyms, generalise_antibiotic_name)
-  AB_lookup$generalised_abbreviations <- lapply(AB_lookup$abbreviations, generalise_antibiotic_name)
-  AB_lookup$generalised_loinc <- lapply(AB_lookup$loinc, generalise_antibiotic_name)
-  AB_lookup$generalised_all <- unname(lapply(as.list(as.data.frame(t(AB_lookup[, 
-                                                                               c("ab", "atc", "cid", "name",
-                                                                                 colnames(AB_lookup)[colnames(AB_lookup) %like% "generalised"]),
-                                                                               drop = FALSE]),
-                                                                   stringsAsFactors = FALSE)),
-                                             function(x) {
-                                               x <- generalise_antibiotic_name(unname(unlist(x)))
-                                               x[x != ""]
-                                             }))
-  AB_lookup
+  cbind(AMR::antibiotics, AB_LOOKUP)
 }
 
 create_MO_lookup <- function() {
@@ -145,12 +131,7 @@ create_MO_lookup <- function() {
   MO_lookup[which(is.na(MO_lookup$kingdom_index)), "kingdom_index"] <- 5
   
   # use this paste instead of `fullname` to work with Viridans Group Streptococci, etc.
-  MO_lookup$fullname_lower <- tolower(trimws(paste(MO_lookup$genus, 
-                                                   MO_lookup$species,
-                                                   MO_lookup$subspecies)))
-  ind <- MO_lookup$genus == "" | grepl("^[(]unknown ", MO_lookup$fullname, perl = TRUE)
-  MO_lookup[ind, "fullname_lower"] <- tolower(MO_lookup[ind, "fullname"])
-  MO_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", MO_lookup$fullname_lower, perl = TRUE))
+  MO_lookup$fullname_lower <- MO_FULLNAME_LOWER
   
   # add a column with only "e coli" like combinations
   MO_lookup$g_species <- gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO_lookup$fullname_lower, perl = TRUE)

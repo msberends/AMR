@@ -122,9 +122,21 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
              "mo", drop = TRUE]
   }
 }
+create_MO_fullname_lower <- function() {
+  MO_lookup <- AMR::microorganisms
+  # use this paste instead of `fullname` to work with Viridans Group Streptococci, etc.
+  MO_lookup$fullname_lower <- tolower(trimws(paste(MO_lookup$genus, 
+                                                   MO_lookup$species,
+                                                   MO_lookup$subspecies)))
+  ind <- MO_lookup$genus == "" | grepl("^[(]unknown ", MO_lookup$fullname, perl = TRUE)
+  MO_lookup[ind, "fullname_lower"] <- tolower(MO_lookup[ind, "fullname"])
+  MO_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", MO_lookup$fullname_lower, perl = TRUE))
+  MO_lookup$fullname_lower
+}
 MO_CONS <- create_species_cons_cops("CoNS")
 MO_COPS <- create_species_cons_cops("CoPS")
 MO_STREP_ABCG <- as.mo(MO_lookup[which(MO_lookup$genus == "Streptococcus"), "mo", drop = TRUE], Lancefield = TRUE) %in% c("B_STRPT_GRPA", "B_STRPT_GRPB", "B_STRPT_GRPC", "B_STRPT_GRPG")
+MO_FULLNAME_LOWER <- create_MO_fullname_lower()
 
 # antibiotic groups
 # (these will also be used for eucast_rules() and understanding data-raw/eucast_rules.tsv)
@@ -160,6 +172,24 @@ AB_BETALACTAMS <- c(AB_PENICILLINS, AB_CEPHALOSPORINS, AB_CARBAPENEMS)
 # this will be used for documentation:
 DEFINED_AB_GROUPS <- ls(envir = globalenv())
 DEFINED_AB_GROUPS <- DEFINED_AB_GROUPS[!DEFINED_AB_GROUPS %in% globalenv_before_ab]
+create_AB_lookup <- function() {
+  AB_lookup <- AMR::antibiotics
+  AB_lookup$generalised_name <- generalise_antibiotic_name(AB_lookup$name)
+  AB_lookup$generalised_synonyms <- lapply(AB_lookup$synonyms, generalise_antibiotic_name)
+  AB_lookup$generalised_abbreviations <- lapply(AB_lookup$abbreviations, generalise_antibiotic_name)
+  AB_lookup$generalised_loinc <- lapply(AB_lookup$loinc, generalise_antibiotic_name)
+  AB_lookup$generalised_all <- unname(lapply(as.list(as.data.frame(t(AB_lookup[, 
+                                                                               c("ab", "atc", "cid", "name",
+                                                                                 colnames(AB_lookup)[colnames(AB_lookup) %like% "generalised"]),
+                                                                               drop = FALSE]),
+                                                                   stringsAsFactors = FALSE)),
+                                             function(x) {
+                                               x <- generalise_antibiotic_name(unname(unlist(x)))
+                                               x[x != ""]
+                                             }))
+  AB_lookup[, colnames(AB_lookup)[colnames(AB_lookup) %like% "^generalised"]]
+}
+AB_LOOKUP <- create_AB_lookup()
 
 # Export to package as internal data ----
 usethis::use_data(EUCAST_RULES_DF, 
@@ -169,6 +199,8 @@ usethis::use_data(EUCAST_RULES_DF,
                   MO_CONS,
                   MO_COPS,
                   MO_STREP_ABCG,
+                  MO_FULLNAME_LOWER,
+                  AB_LOOKUP,
                   AB_AMINOGLYCOSIDES,
                   AB_AMINOPENICILLINS,
                   AB_ANTIFUNGALS,
