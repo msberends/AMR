@@ -1,5 +1,5 @@
-# `AMR` 1.8.1
-
+# `AMR` 1.8.0.9010
+## <small>Last updated: 15 March 2022</small>
 
 All functions in this package are considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months.
 
@@ -14,6 +14,7 @@ All functions in this package are considered to be stable. Updates to the AMR in
 * More informative warning messages
 * Added 192 as valid MIC
 * Updated MIC printing in tibbles
+* Increased speed for loading the package
 
 ### Other
 * Fix for unit testing on R 3.3

@@ -1003,6 +1003,35 @@ exec_as.mo <- function(x,
             }
           }
           
+          # try splitting of characters in the middle and then find ID based on old names ----
+          # only when text length is 6 or lower
+          # like esco = E. coli, klpn = K. pneumoniae, stau = S. aureus, staaur = S. aureus
+          if (nchar(g.x_backup_without_spp) <= 6) {
+            x_length <- nchar(g.x_backup_without_spp)
+            x_split <- paste0("^",
+                              g.x_backup_without_spp %pm>% substr(1, x_length / 2),
+                              ".* ",
+                              g.x_backup_without_spp %pm>% substr((x_length / 2) + 1, x_length))
+            found <- lookup(fullname_lower %like_case% x_split,
+                            haystack = MO.old_lookup,
+                            column = NULL)
+            if (!all(is.na(found))) {
+              # it's an old name, so return it
+              if (property == "ref") {
+                x[i] <- found["ref"]
+              } else {
+                x[i] <- lookup(fullname == found["fullname_new"], haystack = MO_lookup)
+              }
+              pkg_env$mo_renamed_last_run <- found["fullname"]
+              was_renamed(name_old = found["fullname"],
+                          name_new = lookup(fullname == found["fullname_new"], "fullname", haystack = MO_lookup),
+                          ref_old = found["ref"],
+                          ref_new = lookup(fullname == found["fullname_new"], "ref", haystack = MO_lookup),
+                          mo = lookup(fullname == found["fullname_new"], "mo", haystack = MO_lookup))
+              return(x[i])
+            }
+          }
+          
           # try fullname without start and without nchar limit of >= 6 ----
           # like "K. pneu rhino" >> "Klebsiella pneumoniae (rhinoscleromatis)" = KLEPNERH
           found <- lookup(fullname_lower %like_case% e.x_withspaces_start_only,

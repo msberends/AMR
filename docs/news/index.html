@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.0.9010</span>
       </span>
     </div>
 
@@ -157,14 +157,16 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.8.1" id="amr-181">
-<code>AMR</code> 1.8.1<a class="anchor" aria-label="anchor" href="#amr-181"></a></h2>
+<h2 class="page-header" data-toc-text="1.8.0.9010" id="amr-1809010">
+<code>AMR</code> 1.8.0.9010<a class="anchor" aria-label="anchor" href="#amr-1809010"></a></h2>
+<div class="section level3">
+<h3 id="last-updated-march-1-8-0-9010"><small>Last updated: 15 March 2022</small><a class="anchor" aria-label="anchor" href="#last-updated-march-1-8-0-9010"></a></h3>
 <p>All functions in this package are considered to be stable. Updates to
 the AMR interpretation rules (such as by EUCAST and CLSI), the microbial
 taxonomy, and the antibiotic dosages will all be updated every 6 to 12
 months.</p>
 <div class="section level4">
-<h4 id="changed-1-8-1">Changed<a class="anchor" aria-label="anchor" href="#changed-1-8-1"></a></h4>
+<h4 id="changed-1-8-0-9010">Changed<a class="anchor" aria-label="anchor" href="#changed-1-8-0-9010"></a></h4>
 <ul><li><p>Fix for using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on values containing capped
 values (such as <code>&gt;=</code>), sometimes leading to
 <code>NA</code></p></li>
@@ -182,12 +184,14 @@ ignoring non-taxonomic text, such as:</p>
 <li><p>More informative warning messages</p></li>
 <li><p>Added 192 as valid MIC</p></li>
 <li><p>Updated MIC printing in tibbles</p></li>
+<li><p>Increased speed for loading the package</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-1-8-1">Other<a class="anchor" aria-label="anchor" href="#other-1-8-1"></a></h4>
+<h4 id="other-1-8-0-9010">Other<a class="anchor" aria-label="anchor" href="#other-1-8-0-9010"></a></h4>
 <ul><li>Fix for unit testing on R 3.3</li>
 <li>Fix for size of some image elements, as requested by CRAN</li>
 </ul></div>
+</div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.8.0" id="amr-180">
@@ -368,7 +372,7 @@ guideline</li>
 <li>Improved plot legends for MICs and disk diffusion values</li>
 <li>Improved speed of <code><a href="../reference/as.ab.html">as.ab()</a></code> and all <code>ab_*()</code>
 functions</li>
-<li>Added <code><a href="https://ggplot2.tidyverse.org/reference/fortify.html" class="external-link">fortify()</a></code> extensions for plotting methods</li>
+<li>Added <code>fortify()</code> extensions for plotting methods</li>
 <li>
 <code>NA</code> values of the classes <code>&lt;mic&gt;</code>,
 <code>&lt;disk&gt;</code> and <code>&lt;rsi&gt;</code> are now exported
@@ -484,7 +488,7 @@ rewritten.</li>
 selector and function <code>filter_betalactams()</code> as additional
 antbiotic column filter. The group of betalactams consists of all
 carbapenems, cephalosporins and penicillins.</li>
-<li>A <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code> method for
+<li>A <code>ggplot()</code> method for
 <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>
 </li>
 </ul></div>
@@ -628,7 +632,7 @@ function) to select/filter on e.g. linezolid and tedizolid</p>
 <li><p>Support for custom MDRO guidelines, using the new
 <code><a href="../reference/mdro.html">custom_mdro_guideline()</a></code> function, please see
 <code><a href="../reference/mdro.html">mdro()</a></code> for additional info</p></li>
-<li><p><code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code> generics for classes
+<li><p><code>ggplot()</code> generics for classes
 <code>&lt;mic&gt;</code> and <code>&lt;disk&gt;</code></p></li>
 <li>
 <p>Function <code><a href="../reference/mo_property.html">mo_is_yeast()</a></code>, which determines whether a
@@ -697,7 +701,7 @@ printing)</li>
 translated if the system language is German, Dutch or Spanish (see
 <code>translate</code>)</li>
 <li>Plotting is now possible with base R using <code><a href="../reference/plot.html">plot()</a></code> and
-with ggplot2 using <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code> on any vector of MIC and disk
+with ggplot2 using <code>ggplot()</code> on any vector of MIC and disk
 diffusion values</li>
 </ul></li>
 <li>Updated SNOMED codes to US Edition of SNOMED CT from 1 September
@@ -740,7 +744,7 @@ per hour)</li>
 <li>Argument <code>ampc_cephalosporin_resistance</code> in
 <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> now also applies to value “I” (not only
 “S”)</li>
-<li>Functions <code><a href="https://docs.ropensci.org/skimr/reference/print.html" class="external-link">print()</a></code> and <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> on a
+<li>Functions <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> and <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> on a
 Principal Components Analysis object (<code><a href="../reference/pca.html">pca()</a></code>) now print
 additional group info if the original data was grouped using
 <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">dplyr::group_by()</a></code>
@@ -1266,10 +1270,10 @@ versions of R since R-3.0.0 (April 2013). Our package is being used in
 settings where the resources are very limited. Fewer dependencies on
 newer software is helpful for such settings.</p>
 <p>Negative effects of this change are:</p>
-<ul><li>Function <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq()</a></code> that was borrowed from the
+<ul><li>Function <code>freq()</code> that was borrowed from the
 <code>cleaner</code> package was removed. Use
 <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">cleaner::freq()</a></code>, or run <code><a href="https://github.com/msberends/cleaner" class="external-link">library("cleaner")</a></code>
-before you use <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq()</a></code>.</li>
+before you use <code>freq()</code>.</li>
 <li><del>Printing values of class <code>mo</code> or <code>rsi</code> in
 a tibble will no longer be in colour and printing <code>rsi</code> in a
 tibble will show the class <code>&lt;ord&gt;</code>, not
@@ -1698,9 +1702,9 @@ data integrity, this means that invalid assignments will now result in
 could never be understood by e.g. <code><a href="../reference/mo_property.html">mo_name()</a></code>, although the
 class would suggest a valid microbial code.</p>
 </li>
-<li><p>Function <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq()</a></code> has moved to a new package, <a href="https://github.com/msberends/clean" class="external-link"><code>clean</code></a> (<a href="https://cran.r-project.org/package=clean" class="external-link">CRAN link</a>), since
+<li><p>Function <code>freq()</code> has moved to a new package, <a href="https://github.com/msberends/clean" class="external-link"><code>clean</code></a> (<a href="https://cran.r-project.org/package=clean" class="external-link">CRAN link</a>), since
 creating frequency tables actually does not fit the scope of this
-package. The <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq()</a></code> function still works, since it is
+package. The <code>freq()</code> function still works, since it is
 re-exported from the <code>clean</code> package (which will be installed
 automatically upon updating this <code>AMR</code> package).</p></li>
 <li><p>Renamed data set <code>septic_patients</code> to
@@ -2072,7 +2076,7 @@ since it uses <code><a href="../reference/count.html">count_df()</a></code> inte
 <code>guess_atc()</code>, <code>EUCAST_rules()</code>,
 <code>interpretive_reading()</code>, <code><a href="../reference/as.rsi.html">rsi()</a></code>
 </li>
-<li>Frequency tables (<code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq()</a></code>):
+<li>Frequency tables (<code>freq()</code>):
 <ul><li><p>speed improvement for microbial IDs</p></li>
 <li><p>fixed factor level names for R Markdown</p></li>
 <li><p>when all values are unique it now shows a message instead of a
@@ -2082,12 +2086,12 @@ warning</p></li>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">septic_patients</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu">freq</span><span class="op">(</span><span class="va">age</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html" class="external-link">boxplot</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co"># grouped boxplots:</span>
 <span class="va">septic_patients</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu">freq</span><span class="op">(</span><span class="va">age</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html" class="external-link">boxplot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </li>
 </ul></li>
@@ -2099,7 +2103,7 @@ be viewed here</a>
 </li>
 <li>Changed default settings for <code><a href="../reference/age_groups.html">age_groups()</a></code>, to let
 groups of fives and tens end with 100+ instead of 120+</li>
-<li>Fix for <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq()</a></code> for when all values are
+<li>Fix for <code>freq()</code> for when all values are
 <code>NA</code>
 </li>
 <li>Fix for <code><a href="../reference/first_isolate.html">first_isolate()</a></code> for when dates are missing</li>
@@ -2435,7 +2439,7 @@ unique count, e.g. using <code>summary(mo)</code>
 return <code>S</code>
 </li>
 </ul></li>
-<li>Frequency tables (<code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq()</a></code> function):
+<li>Frequency tables (<code>freq()</code> function):
 <ul><li>
 <p>Support for tidyverse quasiquotation! Now you can create
 frequency tables of function outcomes:</p>
@@ -2445,15 +2449,15 @@ frequency tables of function outcomes:</p>
 <span class="co"># OLD WAY</span>
 <span class="va">septic_patients</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>genus <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq</a></span><span class="op">(</span><span class="va">genus</span><span class="op">)</span>
+  <span class="fu">freq</span><span class="op">(</span><span class="va">genus</span><span class="op">)</span>
 <span class="co"># NEW WAY</span>
 <span class="va">septic_patients</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu">freq</span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Even supports grouping variables:</span>
 <span class="va">septic_patients</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="fu">freq</span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="va">mo</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </li>
 <li><p>Header info is now available as a list, with the
 <code>header</code> function</p></li>
@@ -2580,21 +2584,21 @@ total available isolate is below argument <code>minimum</code></p></li>
 <code>as.mic</code>, <code>as.atc</code> and <code>freq</code> will not
 set package name as attribute anymore</p></li>
 <li>
-<p>Frequency tables - <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq()</a></code>:</p>
+<p>Frequency tables - <code>freq()</code>:</p>
 <ul><li>
 <p>Support for grouping variables, test with:</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">septic_patients</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span></code></pre></div>
+  <span class="fu">freq</span><span class="op">(</span><span class="va">gender</span><span class="op">)</span></code></pre></div>
 </li>
 <li>
 <p>Support for (un)selecting columns:</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">septic_patients</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq</a></span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu">freq</span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">count</span>, <span class="op">-</span><span class="va">cum_count</span><span class="op">)</span> <span class="co"># only get item, percent, cum_percent</span></code></pre></div>
 </li>
 <li><p>Check for <code><a href="https://hms.tidyverse.org/reference/Deprecated.html" class="external-link">hms::is.hms</a></code></p></li>
@@ -2623,7 +2627,7 @@ to comply with CRAN policy to only allow ASCII characters</p></li>
 <li><p>Fix for <code>eucast_rules</code> where some Streptococci would
 become ceftazidime R in EUCAST rule 4.5</p></li>
 <li><p>Support for named vectors of class <code>mo</code>, useful for
-<code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">top_freq()</a></code></p></li>
+<code>top_freq()</code></p></li>
 <li><p><code>ggplot_rsi</code> and <code>scale_y_percent</code> have
 <code>breaks</code> argument</p></li>
 <li>
@@ -2848,13 +2852,13 @@ tables</p></li>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">my_matrix</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">septic_patients</span>, <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">gender</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq</a></span><span class="op">(</span><span class="va">my_matrix</span><span class="op">)</span></code></pre></div>
+<span class="fu">freq</span><span class="op">(</span><span class="va">my_matrix</span><span class="op">)</span></code></pre></div>
 <p>For lists, subsetting is possible:</p>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">my_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>age <span class="op">=</span> <span class="va">septic_patients</span><span class="op">$</span><span class="va">age</span>, gender <span class="op">=</span> <span class="va">septic_patients</span><span class="op">$</span><span class="va">gender</span><span class="op">)</span>
-<span class="va">my_list</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span>
-<span class="va">my_list</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span></code></pre></div>
+<span class="va">my_list</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">freq</span><span class="op">(</span><span class="va">age</span><span class="op">)</span>
+<span class="va">my_list</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">freq</span><span class="op">(</span><span class="va">gender</span><span class="op">)</span></code></pre></div>
 </li>
 </ul></div>
 <div class="section level5">

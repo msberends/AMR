@@ -243,7 +243,7 @@ droplevels.mic <- function(x, exclude = if (any(is.na(levels(x)))) NULL else NA,
 pillar_shaft.mic <- function(x, ...) {
   crude_numbers <- as.double(x)
   operators <- gsub("[^<=>]+", "", as.character(x))
-  operators[operators != ""] <- font_silver(operators[operators != ""], collapse = NULL)
+  operators[!is.na(operators) & operators != ""] <- font_silver(operators[!is.na(operators) & operators != ""], collapse = NULL)
   out <- trimws(paste0(operators, trimws(format(crude_numbers))))
   out[is.na(x)] <- font_na(NA)
   # maketrailing zeroes almost invisible
