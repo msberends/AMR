@@ -65,7 +65,7 @@
 #' 
 #' * `guideline = "TB"`
 #'
-#'   The international guideline for multi-drug resistant tuberculosis - World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" ([link](https://www.who.int/tb/publications/pmdt_companionhandbook/en/))
+#'   The international guideline for multi-drug resistant tuberculosis - World Health Organization "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis" ([link](https://www.who.int/publications/i/item/9789241548809))
 #' 
 #' * `guideline = "MRGN"`
 #'
@@ -343,7 +343,7 @@ mdro <- function(x = NULL,
     guideline$name <- "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis"
     guideline$author <- "WHO (World Health Organization)"
     guideline$version <- "WHO/HTM/TB/2014.11, 2014"
-    guideline$source_url <- "https://www.who.int/tb/publications/pmdt_companionhandbook/en/"
+    guideline$source_url <- "https://www.who.int/publications/i/item/9789241548809"
     guideline$type <- "MDR-TB's"
     
     # support per country:

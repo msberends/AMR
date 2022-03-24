@@ -1,1 +1,2 @@
-* This package has a data folder size of ~1.7 MB, which might return a NOTE on some R CMD CHECKs. This package size is needed to provide users reference data for the complete taxonomy of microorganisms - one of the most important features of this package, as it has been in the 16 previous releases of this package. All data sets were compressed using `compression = "xz"` to make them as small as possible.
+Extra release for fixing image options, as requested by CRAN team on 17 February 2022 (Kurt Hornik).
+

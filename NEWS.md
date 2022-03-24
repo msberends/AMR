@@ -1,5 +1,5 @@
-# `AMR` 1.8.0.9010
-## <small>Last updated: 15 March 2022</small>
+# `AMR` 1.8.1
+
 
 All functions in this package are considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months.
 
@@ -276,7 +276,7 @@ All functions in this package are considered to be stable. Updates to the AMR in
     filter(is_new_episode(date, episode_days = 60))
   ```
 * Functions `mo_is_gram_negative()` and `mo_is_gram_positive()` as wrappers around `mo_gramstain()`. They always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
-* Function `mo_is_intrinsic_resistant()` to test for intrinsic resistance, based on [EUCAST Intrinsic Resistance and Unusual Phenotypes v3.2](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) from 2020.
+* Function `mo_is_intrinsic_resistant()` to test for intrinsic resistance, based on EUCAST Intrinsic Resistance and Unusual Phenotypes v3.2 from 2020.
 * Functions `random_mic()`, `random_disk()` and `random_rsi()` for random value generation. The functions `random_mic()` and `random_disk()` take microorganism names and antibiotic names as input to make generation more realistic.
 
 ### Changed
@@ -1372,7 +1372,7 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
 * Function `guess_atc` to **determine the ATC** of an antibiotic based on name, trade name, or known abbreviations
 * Function `freq` to create **frequency tables**, with additional info in a header
 * Function `MDRO` to **determine Multi Drug Resistant Organisms (MDRO)** with support for country-specific guidelines.
-  * [Exceptional resistances defined by EUCAST](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) are also supported instead of countries alone
+  * Exceptional resistances defined by EUCAST are also supported instead of countries alone
   * Functions `BRMO` and `MRGN` are wrappers for Dutch and German guidelines, respectively
 * New algorithm to determine weighted isolates, can now be `"points"` or `"keyantibiotics"`, see `?first_isolate`
 * New print format for `tibble`s and `data.table`s
