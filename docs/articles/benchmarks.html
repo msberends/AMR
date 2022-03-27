@@ -185,7 +185,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="benchmarks_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Benchmarks</h1>
@@ -198,30 +198,14 @@
 
     
     
-<p>One of the most important features of this package is the complete
-microbial taxonomic database, supplied by the <a href="http://www.catalogueoflife.org" class="external-link">Catalogue of Life</a> (CoL) and
-the <a href="https://lpsn.dsmz.de" class="external-link">List of Prokaryotic names with
-Standing in Nomenclature</a> (LPSN). We created a function
-<code><a href="../reference/as.mo.html">as.mo()</a></code> that transforms any user input value to a valid
-microbial ID by using intelligent rules combined with the microbial
-taxonomy.</p>
-<p>Using the <code>microbenchmark</code> package, we can review the
-calculation performance of this function. Its function
-<code><a href="https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html" class="external-link">microbenchmark()</a></code> runs different input expressions
-independently of each other and measures their time-to-result.</p>
+<p>One of the most important features of this package is the complete microbial taxonomic database, supplied by the <a href="http://www.catalogueoflife.org" class="external-link">Catalogue of Life</a> (CoL) and the <a href="https://lpsn.dsmz.de" class="external-link">List of Prokaryotic names with Standing in Nomenclature</a> (LPSN). We created a function <code><a href="../reference/as.mo.html">as.mo()</a></code> that transforms any user input value to a valid microbial ID by using intelligent rules combined with the microbial taxonomy.</p>
+<p>Using the <code>microbenchmark</code> package, we can review the calculation performance of this function. Its function <code><a href="https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html" class="external-link">microbenchmark()</a></code> runs different input expressions independently of each other and measures their time-to-result.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/joshuaulrich/microbenchmark/" class="external-link">microbenchmark</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></code></pre></div>
-<p>In the next test, we try to ‘coerce’ different input values into the
-microbial code of <em>Staphylococcus aureus</em>. Coercion is a
-computational process of forcing output based on an input. For
-microorganism names, coercing user input to taxonomically valid
-microorganism names is crucial to ensure correct interpretation and to
-enable grouping based on taxonomic properties.</p>
-<p>The actual result is the same every time: it returns its
-microorganism code <code>B_STPHY_AURS</code> (<em>B</em> stands for
-<em>Bacteria</em>, its taxonomic kingdom).</p>
+<p>In the next test, we try to ‘coerce’ different input values into the microbial code of <em>Staphylococcus aureus</em>. Coercion is a computational process of forcing output based on an input. For microorganism names, coercing user input to taxonomically valid microorganism names is crucial to ensure correct interpretation and to enable grouping based on taxonomic properties.</p>
+<p>The actual result is the same every time: it returns its microorganism code <code>B_STPHY_AURS</code> (<em>B</em> stands for <em>Bacteria</em>, its taxonomic kingdom).</p>
 <p>But the calculation time differs a lot:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">S.aureus</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html" class="external-link">microbenchmark</a></span><span class="op">(</span>
@@ -238,42 +222,29 @@ microorganism code <code>B_STPHY_AURS</code> (<em>B</em> stands for
   <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"MRSA"</span><span class="op">)</span>, <span class="co"># Methicillin Resistant S. aureus</span>
   <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"VISA"</span><span class="op">)</span>, <span class="co"># Vancomycin Intermediate S. aureus</span>
   times <span class="op">=</span> <span class="fl">25</span><span class="op">)</span>
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">S.aureus</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">S.aureus</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
-<span class="co">#                                   expr   min    lq  mean median  uq max neval</span>
-<span class="co">#                           as.mo("sau")  12.0  13.0  17.0   14.0  15  53    25</span>
-<span class="co">#                          as.mo("stau")  51.0  59.0  74.0   71.0  90  97    25</span>
-<span class="co">#                          as.mo("STAU")  53.0  60.0  77.0   87.0  91  96    25</span>
-<span class="co">#                        as.mo("staaur")  11.0  13.0  16.0   14.0  15  48    25</span>
-<span class="co">#                        as.mo("STAAUR")  13.0  14.0  19.0   15.0  16  48    25</span>
-<span class="co">#                     as.mo("S. aureus")  28.0  31.0  48.0   59.0  63  70    25</span>
-<span class="co">#                      as.mo("S aureus")  28.0  29.0  42.0   33.0  58  83    25</span>
-<span class="co">#         as.mo("Staphylococcus aureus")   3.9   4.1   6.1    4.4   5  43    25</span>
-<span class="co">#  as.mo("Staphylococcus aureus (MRSA)") 250.0 260.0 270.0  270.0 270 390    25</span>
-<span class="co">#       as.mo("Sthafilokkockus aaureuz") 160.0 190.0 200.0  200.0 220 240    25</span>
-<span class="co">#                          as.mo("MRSA")  13.0  13.0  19.0   14.0  15  50    25</span>
-<span class="co">#                          as.mo("VISA")  21.0  22.0  29.0   24.0  27  61    25</span></code></pre></div>
+<span class="co">#                                   expr   min    lq  mean median    uq max neval</span>
+<span class="co">#                           as.mo("sau")  19.0  20.0  25.0   20.0  26.0  55    25</span>
+<span class="co">#                          as.mo("stau")  94.0  95.0 110.0  100.0 130.0 140    25</span>
+<span class="co">#                          as.mo("STAU")  92.0  97.0 110.0  110.0 120.0 140    25</span>
+<span class="co">#                        as.mo("staaur")  19.0  19.0  24.0   20.0  21.0  56    25</span>
+<span class="co">#                        as.mo("STAAUR")  19.0  20.0  21.0   20.0  20.0  49    25</span>
+<span class="co">#                     as.mo("S. aureus")  54.0  57.0  72.0   64.0  86.0  96    25</span>
+<span class="co">#                      as.mo("S aureus")  55.0  55.0  72.0   57.0  90.0 100    25</span>
+<span class="co">#         as.mo("Staphylococcus aureus")   5.6   5.7   8.5    5.8   6.2  40    25</span>
+<span class="co">#  as.mo("Staphylococcus aureus (MRSA)") 360.0 370.0 400.0  400.0 420.0 550    25</span>
+<span class="co">#       as.mo("Sthafilokkockus aaureuz") 280.0 290.0 300.0  300.0 320.0 350    25</span>
+<span class="co">#                          as.mo("MRSA")  19.0  20.0  24.0   20.0  21.0  51    25</span>
+<span class="co">#                          as.mo("VISA")  34.0  34.0  48.0   36.0  65.0  73    25</span></code></pre></div>
 <p><img src="benchmarks_files/figure-html/unnamed-chunk-4-1.png" width="750"></p>
-<p>In the table above, all measurements are shown in milliseconds
-(thousands of seconds). A value of 5 milliseconds means it can determine
-200 input values per second. It case of 200 milliseconds, this is only 5
-input values per second. It is clear that accepted taxonomic names are
-extremely fast, but some variations are up to 61 times slower to
-determine.</p>
-<p>To improve performance, we implemented two important algorithms to
-save unnecessary calculations: <strong>repetitive results</strong> and
-<strong>already precalculated results</strong>.</p>
+<p>In the table above, all measurements are shown in milliseconds (thousands of seconds). A value of 5 milliseconds means it can determine 200 input values per second. It case of 200 milliseconds, this is only 5 input values per second. It is clear that accepted taxonomic names are extremely fast, but some variations are up to 69 times slower to determine.</p>
+<p>To improve performance, we implemented two important algorithms to save unnecessary calculations: <strong>repetitive results</strong> and <strong>already precalculated results</strong>.</p>
 <div class="section level3">
 <h3 id="repetitive-results">Repetitive results<a class="anchor" aria-label="anchor" href="#repetitive-results"></a>
 </h3>
-<p>Repetitive results are values that are present more than once in a
-vector. Unique values will only be calculated once by
-<code><a href="../reference/as.mo.html">as.mo()</a></code>. So running
-<code>as.mo(c("E. coli", "E. coli"))</code> will check the value
-<code>"E. coli"</code> only once.</p>
-<p>To prove this, we will use <code><a href="../reference/mo_property.html">mo_name()</a></code> for testing - a
-helper function that returns the full microbial name (genus, species and
-possibly subspecies) which uses <code><a href="../reference/as.mo.html">as.mo()</a></code> internally.</p>
+<p>Repetitive results are values that are present more than once in a vector. Unique values will only be calculated once by <code><a href="../reference/as.mo.html">as.mo()</a></code>. So running <code>as.mo(c("E. coli", "E. coli"))</code> will check the value <code>"E. coli"</code> only once.</p>
+<p>To prove this, we will use <code><a href="../reference/mo_property.html">mo_name()</a></code> for testing - a helper function that returns the full microbial name (genus, species and possibly subspecies) which uses <code><a href="../reference/as.mo.html">as.mo()</a></code> internally.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># start with the example_isolates data set</span>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
@@ -287,8 +258,8 @@ possibly subspecies) which uses <code><a href="../reference/as.mo.html">as.mo()<
 <span class="co"># what do these values look like? They are of class &lt;mo&gt;:</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co"># Class &lt;mo&gt;</span>
-<span class="co"># [1] B_ACNTB      B_ESCHR_COLI B_STRPT_GRPC B_STPHY_HMNS B_STPHY_CONS</span>
-<span class="co"># [6] B_ESCHR_COLI</span>
+<span class="co"># [1] B_ENTRBC_CLOC B_ESCHR_COLI  B_STRPT_PYGN  B_STPHY_AURS  B_ESCHR_COLI </span>
+<span class="co"># [6] B_STRPT_PNMN</span>
   
 <span class="co"># as the example_isolates data set has 2,000 rows, we should have 2 million items</span>
 <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
@@ -301,38 +272,28 @@ possibly subspecies) which uses <code><a href="../reference/as.mo.html">as.mo()<
 <span class="co"># now let's see:</span>
 <span class="va">run_it</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html" class="external-link">microbenchmark</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,
                          times <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
 <span class="co">#        expr min  lq mean median  uq max neval</span>
-<span class="co">#  mo_name(x) 200 204  265    225 320 392    10</span></code></pre></div>
-<p>So getting official taxonomic names of 2,000,000 (!!) items
-consisting of 90 unique values only takes 0.225 seconds. That is 112
-nanoseconds on average. You only lose time on your unique input
-values.</p>
+<span class="co">#  mo_name(x) 259 264  357    299 451 509    10</span></code></pre></div>
+<p>So getting official taxonomic names of 2,000,000 (!!) items consisting of 90 unique values only takes 0.299 seconds. That is 149 nanoseconds on average. You only lose time on your unique input values.</p>
 </div>
 <div class="section level3">
 <h3 id="precalculated-results">Precalculated results<a class="anchor" aria-label="anchor" href="#precalculated-results"></a>
 </h3>
-<p>What about precalculated results? If the input is an already
-precalculated result of a helper function such as
-<code><a href="../reference/mo_property.html">mo_name()</a></code>, it almost doesn’t take any time at all. In other
-words, if you run <code><a href="../reference/mo_property.html">mo_name()</a></code> on a valid taxonomic name, it
-will return the results immediately (see ‘C’ below):</p>
+<p>What about precalculated results? If the input is an already precalculated result of a helper function such as <code><a href="../reference/mo_property.html">mo_name()</a></code>, it almost doesn’t take any time at all. In other words, if you run <code><a href="../reference/mo_property.html">mo_name()</a></code> on a valid taxonomic name, it will return the results immediately (see ‘C’ below):</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">run_it</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html" class="external-link">microbenchmark</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"STAAUR"</span><span class="op">)</span>,
                          B <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"S. aureus"</span><span class="op">)</span>,
                          C <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"Staphylococcus aureus"</span><span class="op">)</span>,
                          times <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
-<span class="co">#  expr   min    lq  mean median    uq   max neval</span>
-<span class="co">#     A  8.35  8.84  9.10   9.01  9.32 10.20    10</span>
-<span class="co">#     B 23.00 24.70 30.30  25.00 26.90 72.70    10</span>
-<span class="co">#     C  2.05  2.07  2.44   2.41  2.83  3.05    10</span></code></pre></div>
-<p>So going from <code>mo_name("Staphylococcus aureus")</code> to
-<code>"Staphylococcus aureus"</code> takes 0.0024 seconds - it doesn’t
-even start calculating <em>if the result would be the same as the
-expected resulting value</em>. That goes for all helper functions:</p>
+<span class="co">#  expr   min    lq mean median    uq   max neval</span>
+<span class="co">#     A 11.90 12.10 13.0  13.50 13.70 13.80    10</span>
+<span class="co">#     B 60.90 61.20 67.7  66.20 66.90 99.70    10</span>
+<span class="co">#     C  2.91  2.94  3.2   3.32  3.38  3.46    10</span></code></pre></div>
+<p>So going from <code>mo_name("Staphylococcus aureus")</code> to <code>"Staphylococcus aureus"</code> takes 0.0033 seconds - it doesn’t even start calculating <em>if the result would be the same as the expected resulting value</em>. That goes for all helper functions:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">run_it</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html" class="external-link">microbenchmark</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_species</a></span><span class="op">(</span><span class="st">"aureus"</span><span class="op">)</span>,
                          B <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="st">"Staphylococcus"</span><span class="op">)</span>,
@@ -343,31 +304,23 @@ expected resulting value</em>. That goes for all helper functions:</p>
                          G <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_phylum</a></span><span class="op">(</span><span class="st">"Firmicutes"</span><span class="op">)</span>,
                          H <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_kingdom</a></span><span class="op">(</span><span class="st">"Bacteria"</span><span class="op">)</span>,
                          times <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
 <span class="co">#  expr  min   lq mean median   uq  max neval</span>
-<span class="co">#     A 1.89 1.93 2.09   2.05 2.17 2.40    10</span>
-<span class="co">#     B 1.89 1.93 2.08   2.00 2.19 2.63    10</span>
-<span class="co">#     C 1.91 1.92 2.10   1.97 2.30 2.43    10</span>
-<span class="co">#     D 1.90 1.94 2.21   2.02 2.53 2.88    10</span>
-<span class="co">#     E 1.87 1.95 2.09   2.04 2.22 2.33    10</span>
-<span class="co">#     F 1.84 1.91 1.97   1.92 2.04 2.14    10</span>
-<span class="co">#     G 1.87 1.92 2.10   1.96 2.12 2.96    10</span>
-<span class="co">#     H 1.90 1.96 2.12   2.06 2.21 2.47    10</span></code></pre></div>
-<p>Of course, when running <code>mo_phylum("Firmicutes")</code> the
-function has zero knowledge about the actual microorganism, namely
-<em>S. aureus</em>. But since the result would be
-<code>"Firmicutes"</code> anyway, there is no point in calculating the
-result. And because this package contains all phyla of all known
-bacteria, it can just return the initial value immediately.</p>
+<span class="co">#     A 2.92 2.93 3.02   2.94 3.02 3.40    10</span>
+<span class="co">#     B 2.87 2.90 3.14   3.09 3.32 3.71    10</span>
+<span class="co">#     C 2.91 2.94 3.15   3.12 3.33 3.46    10</span>
+<span class="co">#     D 2.86 2.90 3.05   2.96 3.27 3.30    10</span>
+<span class="co">#     E 2.87 2.88 3.03   2.96 3.16 3.29    10</span>
+<span class="co">#     F 2.92 2.95 3.08   2.98 3.29 3.35    10</span>
+<span class="co">#     G 2.89 2.96 3.04   2.99 3.11 3.29    10</span>
+<span class="co">#     H 2.85 2.95 3.11   3.08 3.31 3.38    10</span></code></pre></div>
+<p>Of course, when running <code>mo_phylum("Firmicutes")</code> the function has zero knowledge about the actual microorganism, namely <em>S. aureus</em>. But since the result would be <code>"Firmicutes"</code> anyway, there is no point in calculating the result. And because this package contains all phyla of all known bacteria, it can just return the initial value immediately.</p>
 </div>
 <div class="section level3">
 <h3 id="results-in-other-languages">Results in other languages<a class="anchor" aria-label="anchor" href="#results-in-other-languages"></a>
 </h3>
-<p>When the system language is non-English and supported by this
-<code>AMR</code> package, some functions will have a translated result.
-This almost does’t take extra time (compare “en” from the table below
-with the other languages):</p>
+<p>When the system language is non-English and supported by this <code>AMR</code> package, some functions will have a translated result. This almost does’t take extra time (compare “en” from the table below with the other languages):</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">CoNS</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"CoNS"</span><span class="op">)</span>
 <span class="va">CoNS</span>
@@ -394,21 +347,20 @@ with the other languages):</p>
                          ru <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="va">CoNS</span>, language <span class="op">=</span> <span class="st">"ru"</span><span class="op">)</span>,
                          sv <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_name</a></span><span class="op">(</span><span class="va">CoNS</span>, language <span class="op">=</span> <span class="st">"sv"</span><span class="op">)</span>,
                          times <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
-<span class="fu"><a href="https://docs.ropensci.org/skimr/reference/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">run_it</span>, unit <span class="op">=</span> <span class="st">"ms"</span>, signif <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 <span class="co"># Unit: milliseconds</span>
 <span class="co">#  expr   min    lq  mean median    uq    max neval</span>
-<span class="co">#    da 2.133 2.304 3.442  2.494 2.816 46.020   100</span>
-<span class="co">#    de 2.128 2.312 3.068  2.520 2.699 53.220   100</span>
-<span class="co">#    en 1.014 1.115 1.262  1.227 1.362  2.424   100</span>
-<span class="co">#    es 2.133 2.338 2.981  2.570 2.737 43.770   100</span>
-<span class="co">#    fr 1.986 2.149 3.139  2.377 2.567 41.610   100</span>
-<span class="co">#    it 2.072 2.268 2.911  2.468 2.656 44.560   100</span>
-<span class="co">#    nl 2.115 2.286 2.962  2.521 2.723 43.240   100</span>
-<span class="co">#    pt 2.055 2.205 2.912  2.520 2.687 39.520   100</span>
-<span class="co">#    ru 1.998 2.210 2.866  2.474 2.631 39.820   100</span>
-<span class="co">#    sv 2.022 2.187 2.759  2.357 2.536 38.560   100</span></code></pre></div>
-<p>Currently supported languages are Danish, Dutch, English, French,
-German, Italian, Portuguese, Russian, Spanish and Swedish.</p>
+<span class="co">#    da 3.546 3.643 4.072  3.704 3.832 35.930   100</span>
+<span class="co">#    de 3.597 3.659 4.422  3.734 3.839 36.400   100</span>
+<span class="co">#    en 1.672 1.726 1.804  1.767 1.794  2.259   100</span>
+<span class="co">#    es 3.609 3.685 4.496  3.760 3.843 36.540   100</span>
+<span class="co">#    fr 3.484 3.567 3.725  3.654 3.713  6.281   100</span>
+<span class="co">#    it 3.523 3.615 4.419  3.720 3.787 36.720   100</span>
+<span class="co">#    nl 3.614 3.676 3.805  3.732 3.838  4.703   100</span>
+<span class="co">#    pt 3.512 3.595 4.077  3.659 3.789 37.310   100</span>
+<span class="co">#    ru 3.556 3.647 4.057  3.680 3.812 35.230   100</span>
+<span class="co">#    sv 3.540 3.642 4.093  3.732 3.803 36.340   100</span></code></pre></div>
+<p>Currently supported languages are Danish, Dutch, English, French, German, Italian, Portuguese, Russian, Spanish and Swedish.</p>
 </div>
   </div>
 
@@ -422,14 +374,12 @@ German, Italian, Portuguese, Russian, Spanish and Swedish.</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Matthijs S. Berends, Christian F. Luz, Dennis Souverein,
-Erwin E. A. Hassing.</p>
+<p>Developed by Matthijs S. Berends, Christian F. Luz, Dennis Souverein, Erwin E. A. Hassing.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>

@@ -185,7 +185,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="resistance_predict_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>How to predict antimicrobial resistance</h1>
@@ -201,13 +201,8 @@
 <div class="section level2">
 <h2 id="needed-r-packages">Needed R packages<a class="anchor" aria-label="anchor" href="#needed-r-packages"></a>
 </h2>
-<p>As with many uses in R, we need some additional packages for AMR data
-analysis. Our package works closely together with the <a href="https://www.tidyverse.org" class="external-link">tidyverse packages</a> <a href="https://dplyr.tidyverse.org/" class="external-link"><code>dplyr</code></a> and <a href="https://ggplot2.tidyverse.org" class="external-link"><code>ggplot2</code></a> by Dr
-Hadley Wickham. The tidyverse tremendously improves the way we conduct
-data science - it allows for a very natural way of writing syntaxes and
-creating beautiful plots in R.</p>
-<p>Our <code>AMR</code> package depends on these packages and even
-extends their use and functions.</p>
+<p>As with many uses in R, we need some additional packages for AMR data analysis. Our package works closely together with the <a href="https://www.tidyverse.org" class="external-link">tidyverse packages</a> <a href="https://dplyr.tidyverse.org/" class="external-link"><code>dplyr</code></a> and <a href="https://ggplot2.tidyverse.org" class="external-link"><code>ggplot2</code></a> by Dr Hadley Wickham. The tidyverse tremendously improves the way we conduct data science - it allows for a very natural way of writing syntaxes and creating beautiful plots in R.</p>
+<p>Our <code>AMR</code> package depends on these packages and even extends their use and functions.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
@@ -219,34 +214,24 @@ extends their use and functions.</p>
 <div class="section level2">
 <h2 id="prediction-analysis">Prediction analysis<a class="anchor" aria-label="anchor" href="#prediction-analysis"></a>
 </h2>
-<p>Our package contains a function <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>,
-which takes the same input as functions for <a href="./AMR.html">other
-AMR data analysis</a>. Based on a date column, it calculates cases per
-year and uses a regression model to predict antimicrobial
-resistance.</p>
+<p>Our package contains a function <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>, which takes the same input as functions for <a href="./AMR.html">other AMR data analysis</a>. Based on a date column, it calculates cases per year and uses a regression model to predict antimicrobial resistance.</p>
 <p>It is basically as easy as:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># resistance prediction of piperacillin/tazobactam (TZP):</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">resistance_predict</span>(<span class="at">tbl =</span> example_isolates, <span class="at">col_date =</span> <span class="st">"date"</span>, <span class="at">col_ab =</span> <span class="st">"TZP"</span>, <span class="at">model =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># or:</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>example_isolates <span class="sc">%&gt;%</span> </span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">resistance_predict</span>(<span class="at">col_ab =</span> <span class="st">"TZP"</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                     model  <span class="st">"binomial"</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># to bind it to object 'predict_TZP' for example:</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>predict_TZP <span class="ot">&lt;-</span> example_isolates <span class="sc">%&gt;%</span> </span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">resistance_predict</span>(<span class="at">col_ab =</span> <span class="st">"TZP"</span>,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">model =</span> <span class="st">"binomial"</span>)</span></code></pre></div>
-<p>The function will look for a date column itself if
-<code>col_date</code> is not set.</p>
-<p>When running any of these commands, a summary of the regression model
-will be printed unless using
-<code>resistance_predict(..., info = FALSE)</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="co"># resistance prediction of piperacillin/tazobactam (TZP):</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="kw">resistance_predict</span>(<span class="dt">tbl =</span> example_isolates, <span class="dt">col_date =</span> <span class="st">"date"</span>, <span class="dt">col_ab =</span> <span class="st">"TZP"</span>, <span class="dt">model =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="co"># or:</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>example_isolates <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">resistance_predict</span>(<span class="dt">col_ab =</span> <span class="st">"TZP"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>                     model  <span class="st">"binomial"</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="co"># to bind it to object 'predict_TZP' for example:</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>predict_TZP &lt;-<span class="st"> </span>example_isolates <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a><span class="st">  </span><span class="kw">resistance_predict</span>(<span class="dt">col_ab =</span> <span class="st">"TZP"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a>                     <span class="dt">model =</span> <span class="st">"binomial"</span>)</span></code></pre></div>
+<p>The function will look for a date column itself if <code>col_date</code> is not set.</p>
+<p>When running any of these commands, a summary of the regression model will be printed unless using <code>resistance_predict(..., info = FALSE)</code>.</p>
 <pre><code><span class="co"># ℹ Using column 'date' as input for `col_date`.</span></code></pre>
-<p>This text is only a printed summary - the actual result (output) of
-the function is a <code>data.frame</code> containing for each year: the
-number of observations, the actual observed resistance, the estimated
-resistance and the standard error below and above the estimation:</p>
+<p>This text is only a printed summary - the actual result (output) of the function is a <code>data.frame</code> containing for each year: the number of observations, the actual observed resistance, the estimated resistance and the standard error below and above the estimation:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">predict_TZP</span>
 <span class="co">#    year      value    se_min    se_max observations   observed  estimated</span>
@@ -281,18 +266,12 @@ resistance and the standard error below and above the estimation:</p>
 <span class="co"># 29 2030 0.48639359 0.3782932 0.5944939           NA         NA 0.48639359</span>
 <span class="co"># 30 2031 0.51109592 0.3973697 0.6248221           NA         NA 0.51109592</span>
 <span class="co"># 31 2032 0.53574417 0.4169574 0.6545309           NA         NA 0.53574417</span></code></pre></div>
-<p>The function <code>plot</code> is available in base R, and can be
-extended by other packages to depend the output based on the type of
-input. We extended its function to cope with resistance predictions:</p>
+<p>The function <code>plot</code> is available in base R, and can be extended by other packages to depend the output based on the type of input. We extended its function to cope with resistance predictions:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">predict_TZP</span><span class="op">)</span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-4-1.png" width="720"></p>
-<p>This is the fastest way to plot the result. It automatically adds the
-right axes, error bars, titles, number of available observations and
-type of model.</p>
-<p>We also support the <code>ggplot2</code> package with our custom
-function <code><a href="../reference/resistance_predict.html">ggplot_rsi_predict()</a></code> to create more appealing
-plots:</p>
+<p>This is the fastest way to plot the result. It automatically adds the right axes, error bars, titles, number of available observations and type of model.</p>
+<p>We also support the <code>ggplot2</code> package with our custom function <code><a href="../reference/resistance_predict.html">ggplot_rsi_predict()</a></code> to create more appealing plots:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="va">predict_TZP</span><span class="op">)</span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-5-1.png" width="720"></p>
@@ -304,9 +283,7 @@ plots:</p>
 <div class="section level3">
 <h3 id="choosing-the-right-model">Choosing the right model<a class="anchor" aria-label="anchor" href="#choosing-the-right-model"></a>
 </h3>
-<p>Resistance is not easily predicted; if we look at vancomycin
-resistance in Gram-positive bacteria, the spread (i.e. standard error)
-is enormous:</p>
+<p>Resistance is not easily predicted; if we look at vancomycin resistance in Gram-positive bacteria, the spread (i.e. standard error) is enormous:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="va">mo</span>, language <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">==</span> <span class="st">"Gram-positive"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
@@ -314,13 +291,8 @@ is enormous:</p>
   <span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co"># ℹ Using column 'date' as input for `col_date`.</span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-6-1.png" width="720"></p>
-<p>Vancomycin resistance could be 100% in ten years, but might also stay
-around 0%.</p>
-<p>You can define the model with the <code>model</code> parameter. The
-model chosen above is a generalised linear regression model using a
-binomial distribution, assuming that a period of zero resistance was
-followed by a period of increasing resistance leading slowly to more and
-more resistance.</p>
+<p>Vancomycin resistance could be 100% in ten years, but might also stay around 0%.</p>
+<p>You can define the model with the <code>model</code> parameter. The model chosen above is a generalised linear regression model using a binomial distribution, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance.</p>
 <p>Valid values are:</p>
 <table class="table">
 <colgroup>
@@ -336,8 +308,7 @@ more resistance.</p>
 <tbody>
 <tr class="odd">
 <td>
-<code>"binomial"</code> or <code>"binom"</code> or
-<code>"logit"</code>
+<code>"binomial"</code> or <code>"binom"</code> or <code>"logit"</code>
 </td>
 <td><code>glm(..., family = binomial)</code></td>
 <td>Generalised linear model with binomial distribution</td>
@@ -358,9 +329,7 @@ more resistance.</p>
 </tr>
 </tbody>
 </table>
-<p>For the vancomycin resistance in Gram-positive bacteria, a linear
-model might be more appropriate since no binomial distribution is to be
-expected based on the observed years:</p>
+<p>For the vancomycin resistance in Gram-positive bacteria, a linear model might be more appropriate since no binomial distribution is to be expected based on the observed years:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="va">mo</span>, language <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">==</span> <span class="st">"Gram-positive"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
@@ -369,8 +338,7 @@ expected based on the observed years:</p>
 <span class="co"># ℹ Using column 'date' as input for `col_date`.</span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-7-1.png" width="720"></p>
 <p>This seems more likely, doesn’t it?</p>
-<p>The model itself is also available from the object, as an
-<code>attribute</code>:</p>
+<p>The model itself is also available from the object, as an <code>attribute</code>:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">predict_TZP</span><span class="op">)</span><span class="op">$</span><span class="va">model</span>
 
@@ -399,14 +367,12 @@ expected based on the observed years:</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Matthijs S. Berends, Christian F. Luz, Dennis Souverein,
-Erwin E. A. Hassing.</p>
+<p>Developed by Matthijs S. Berends, Christian F. Luz, Dennis Souverein, Erwin E. A. Hassing.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>

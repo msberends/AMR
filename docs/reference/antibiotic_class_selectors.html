@@ -256,7 +256,7 @@
 <p>The <code>ab_class()</code> function can be used to filter/select on a manually defined antibiotic class. It searches for results in the <a href="antibiotics.html">antibiotics</a> data set within the columns <code>group</code>, <code>atc_group1</code> and <code>atc_group2</code>.</p>
 <p>The <code>ab_selector()</code> function can be used to internally filter the <a href="antibiotics.html">antibiotics</a> data set on any results, see <em>Examples</em>. It allows for filtering on a (part of) a certain name, and/or a group name or even a minimum of DDDs for oral treatment. This function yields the highest flexibility, but is also the least user-friendly, since it requires a hard-coded filter to set.</p>
 <p>The <code>administrable_per_os()</code> and <code>administrable_iv()</code> functions also rely on the <a href="antibiotics.html">antibiotics</a> data set - antibiotic columns will be matched where a DDD (defined daily dose) for resp. oral and IV treatment is available in the <a href="antibiotics.html">antibiotics</a> data set.</p>
-<p>The <code>not_intrinsic_resistant()</code> function can be used to only select antibiotic columns that pose no intrinsic resistance for the microorganisms in the data set. For example, if a data set contains only microorganism codes or names of <em>E. coli</em> and <em>K. pneumoniae</em> and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function. It currently applies <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/" class="external-link">'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3</a> (2021) to determine intrinsic resistance, using the <code><a href="eucast_rules.html">eucast_rules()</a></code> function internally. Because of this determination, this function is quite slow in terms of performance.</p>
+<p>The <code>not_intrinsic_resistant()</code> function can be used to only select antibiotic columns that pose no intrinsic resistance for the microorganisms in the data set. For example, if a data set contains only microorganism codes or names of <em>E. coli</em> and <em>K. pneumoniae</em> and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function. It currently applies <a href="https://www.eucast.org/expert_rules_and_expected_phenotypes/" class="external-link">'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3</a> (2021) to determine intrinsic resistance, using the <code><a href="eucast_rules.html">eucast_rules()</a></code> function internally. Because of this determination, this function is quite slow in terms of performance.</p>
     </div>
     <div id="full-list-of-supported-antibiotic-classes">
     <h2>Full list of supported (antibiotic) classes</h2>
@@ -430,13 +430,11 @@ The <a href="lifecycle.html">lifecycle</a> of this function is <strong>stable</s
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Matthijs S. Berends, Christian F. Luz, Dennis Souverein,
-Erwin E. A. Hassing.</p>
+  <p></p><p>Developed by Matthijs S. Berends, Christian F. Luz, Dennis Souverein, Erwin E. A. Hassing.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>

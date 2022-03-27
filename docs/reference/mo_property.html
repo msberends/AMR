@@ -253,7 +253,7 @@
 <p>Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions <code>mo_kingdom()</code> and <code>mo_domain()</code> return the exact same results.</p>
 <p>The Gram stain - <code>mo_gramstain()</code> - will be determined based on the taxonomic kingdom and phylum. According to Cavalier-Smith (2002, <a href="https://pubmed.ncbi.nlm.nih.gov/11837318" class="external-link">PMID 11837318</a>), who defined subkingdoms Negibacteria and Posibacteria, only these phyla are Posibacteria: Actinobacteria, Chloroflexi, Firmicutes and Tenericutes. These bacteria are considered Gram-positive, except for members of the class Negativicutes which are Gram-negative. Members of other bacterial phyla are all considered Gram-negative. Species outside the kingdom of Bacteria will return a value <code>NA</code>. Functions <code>mo_is_gram_negative()</code> and <code>mo_is_gram_positive()</code> always return <code>TRUE</code> or <code>FALSE</code> (except when the input is <code>NA</code> or the MO code is <code>UNKNOWN</code>), thus always return <code>FALSE</code> for species outside the taxonomic kingdom of Bacteria.</p>
 <p>Determination of yeasts - <code>mo_is_yeast()</code> - will be based on the taxonomic kingdom and class. <em>Budding yeasts</em> are fungi of the phylum Ascomycetes, class Saccharomycetes (also called Hemiascomycetes). <em>True yeasts</em> are aggregated into the underlying order Saccharomycetales. Thus, for all microorganisms that are fungi and member of the taxonomic class Saccharomycetes, the function will return <code>TRUE</code>. It returns <code>FALSE</code> otherwise (except when the input is <code>NA</code> or the MO code is <code>UNKNOWN</code>).</p>
-<p>Intrinsic resistance - <code>mo_is_intrinsic_resistant()</code> - will be determined based on the <a href="intrinsic_resistant.html">intrinsic_resistant</a> data set, which is based on <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/" class="external-link">'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3</a> (2021). The <code>mo_is_intrinsic_resistant()</code> functions can be vectorised over arguments <code>x</code> (input for microorganisms) and over <code>ab</code> (input for antibiotics).</p>
+<p>Intrinsic resistance - <code>mo_is_intrinsic_resistant()</code> - will be determined based on the <a href="intrinsic_resistant.html">intrinsic_resistant</a> data set, which is based on <a href="https://www.eucast.org/expert_rules_and_expected_phenotypes/" class="external-link">'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3</a> (2021). The <code>mo_is_intrinsic_resistant()</code> functions can be vectorised over arguments <code>x</code> (input for microorganisms) and over <code>ab</code> (input for antibiotics).</p>
 <p>All output <a href="translate.html">will be translated</a> where possible.</p>
 <p>The function <code>mo_url()</code> will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.</p>
 <p>SNOMED codes - <code>mo_snomed()</code> - are from the US Edition of SNOMED CT from 1 September 2020. See <em>Source</em> and the <a href="microorganisms.html">microorganisms</a> data set for more info.</p>
@@ -433,13 +433,11 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Matthijs S. Berends, Christian F. Luz, Dennis Souverein,
-Erwin E. A. Hassing.</p>
+  <p></p><p>Developed by Matthijs S. Berends, Christian F. Luz, Dennis Souverein, Erwin E. A. Hassing.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>

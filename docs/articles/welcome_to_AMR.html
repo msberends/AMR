@@ -185,7 +185,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="welcome_to_AMR_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Welcome to the <code>AMR</code> package</h1>
@@ -198,83 +198,33 @@
 
     
     
-<p>Note: to keep the package size as small as possible, we only included
-this vignette on CRAN. You can read more vignettes on our website about
-how to conduct AMR data analysis, determine MDRO’s, find explanation of
-EUCAST rules, and much more: <a href="https://msberends.github.io/AMR/articles/" class="uri">https://msberends.github.io/AMR/articles/</a>.</p>
+<p>Note: to keep the package size as small as possible, we only included this vignette on CRAN. You can read more vignettes on our website about how to conduct AMR data analysis, determine MDRO’s, find explanation of EUCAST rules, and much more: <a href="https://msberends.github.io/AMR/articles/" class="uri">https://msberends.github.io/AMR/articles/</a>.</p>
 <hr>
-<p><code>AMR</code> is a free, open-source and independent R package
-(see <a href="https://msberends.github.io/AMR/#copyright">Copyright</a>)
-to simplify the analysis and prediction of Antimicrobial Resistance
-(AMR) and to work with microbial and antimicrobial data and properties,
-by using evidence-based methods. <strong>Our aim is to provide a
-standard</strong> for clean and reproducible antimicrobial resistance
-data analysis, that can therefore empower epidemiological analyses to
-continuously enable surveillance and treatment evaluation in any
-setting.</p>
-<p>After installing this package, R knows ~71,000 distinct microbial
-species and all ~570 antibiotic, antimycotic and antiviral drugs by name
-and code (including ATC, EARS-Net, PubChem, LOINC and SNOMED CT), and
-knows all about valid R/SI and MIC values. It supports any data format,
-including WHONET/EARS-Net data.</p>
-<p>The <code>AMR</code> package is available in Danish, Dutch, English,
-French, German, Italian, Portuguese, Russian, Spanish and Swedish.
-Antimicrobial drug (group) names and colloquial microorganism names are
-provided in these languages.</p>
-<p>This package is fully independent of any other R package and works on
-Windows, macOS and Linux with all versions of R since R-3.0 (April
-2013). <strong>It was designed to work in any setting, including those
-with very limited resources</strong>. Since its first public release in
-early 2018, this package has been downloaded from more than 175
-countries.</p>
+<p><code>AMR</code> is a free, open-source and independent R package (see <a href="https://msberends.github.io/AMR/#copyright">Copyright</a>) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. <strong>Our aim is to provide a standard</strong> for clean and reproducible antimicrobial resistance data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.</p>
+<p>After installing this package, R knows ~71,000 distinct microbial species and all ~570 antibiotic, antimycotic and antiviral drugs by name and code (including ATC, EARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data.</p>
+<p>The <code>AMR</code> package is available in Danish, Dutch, English, French, German, Italian, Portuguese, Russian, Spanish and Swedish. Antimicrobial drug (group) names and colloquial microorganism names are provided in these languages.</p>
+<p>This package is fully independent of any other R package and works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). <strong>It was designed to work in any setting, including those with very limited resources</strong>. Since its first public release in early 2018, this package has been downloaded from more than 175 countries.</p>
 <p>This package can be used for:</p>
 <ul>
-<li>Reference for the taxonomy of microorganisms, since the package
-contains all microbial (sub)species from the Catalogue of Life and List
-of Prokaryotic names with Standing in Nomenclature</li>
-<li>Interpreting raw MIC and disk diffusion values, based on the latest
-CLSI or EUCAST guidelines</li>
-<li>Retrieving antimicrobial drug names, doses and forms of
-administration from clinical health care records</li>
+<li>Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the Catalogue of Life and List of Prokaryotic names with Standing in Nomenclature</li>
+<li>Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines</li>
+<li>Retrieving antimicrobial drug names, doses and forms of administration from clinical health care records</li>
 <li>Determining first isolates to be used for AMR data analysis</li>
 <li>Calculating antimicrobial resistance</li>
-<li>Determining multi-drug resistance (MDR) / multi-drug resistant
-organisms (MDRO)</li>
-<li>Calculating (empirical) susceptibility of both mono therapy and
-combination therapies</li>
-<li>Predicting future antimicrobial resistance using regression
-models</li>
-<li>Getting properties for any microorganism (like Gram stain, species,
-genus or family)</li>
-<li>Getting properties for any antibiotic (like name, code of
-EARS-Net/ATC/LOINC/PubChem, defined daily dose or trade name)</li>
+<li>Determining multi-drug resistance (MDR) / multi-drug resistant organisms (MDRO)</li>
+<li>Calculating (empirical) susceptibility of both mono therapy and combination therapies</li>
+<li>Predicting future antimicrobial resistance using regression models</li>
+<li>Getting properties for any microorganism (like Gram stain, species, genus or family)</li>
+<li>Getting properties for any antibiotic (like name, code of EARS-Net/ATC/LOINC/PubChem, defined daily dose or trade name)</li>
 <li>Plotting antimicrobial resistance</li>
 <li>Applying EUCAST expert rules</li>
-<li>Getting SNOMED codes of a microorganism, or getting properties of a
-microorganism based on a SNOMED code</li>
-<li>Getting LOINC codes of an antibiotic, or getting properties of an
-antibiotic based on a LOINC code</li>
-<li>Machine reading the EUCAST and CLSI guidelines from 2011-2020 to
-translate MIC values and disk diffusion diameters to R/SI</li>
+<li>Getting SNOMED codes of a microorganism, or getting properties of a microorganism based on a SNOMED code</li>
+<li>Getting LOINC codes of an antibiotic, or getting properties of an antibiotic based on a LOINC code</li>
+<li>Machine reading the EUCAST and CLSI guidelines from 2011-2020 to translate MIC values and disk diffusion diameters to R/SI</li>
 <li>Principal component analysis for AMR</li>
 </ul>
-<p>All reference data sets (about microorganisms, antibiotics, R/SI
-interpretation, EUCAST rules, etc.) in this <code>AMR</code> package are
-publicly and freely available. We continually export our data sets to
-formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat
-files that are machine-readable and suitable for input in any software
-program, such as laboratory information systems. Please find <a href="https://msberends.github.io/AMR/articles/datasets.html">all
-download links on our website</a>, which is automatically updated with
-every code change.</p>
-<p>This R package was created for both routine data analysis and
-academic research at the Faculty of Medical Sciences of the <a href="https://www.rug.nl" class="external-link">University of Groningen</a>, in collaboration
-with non-profit organisations <a href="https://www.certe.nl" class="external-link">Certe
-Medical Diagnostics and Advice Foundation</a> and <a href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a>. This
-R package formed the basis of two PhD theses (<a href="https://doi.org/10.33612/diss.177417131" class="external-link">DOI
-10.33612/diss.177417131</a> and <a href="https://doi.org/10.33612/diss.192486375" class="external-link">DOI
-10.33612/diss.192486375</a>) but is actively and durably maintained (see
-<a href="https://msberends.github.io/AMR/news/index.html">changelog)</a>)
-by two public healthcare organisations in the Netherlands.</p>
+<p>All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this <code>AMR</code> package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find <a href="https://msberends.github.io/AMR/articles/datasets.html">all download links on our website</a>, which is automatically updated with every code change.</p>
+<p>This R package was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the <a href="https://www.rug.nl" class="external-link">University of Groningen</a>, in collaboration with non-profit organisations <a href="https://www.certe.nl" class="external-link">Certe Medical Diagnostics and Advice Foundation</a> and <a href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a>. This R package formed the basis of two PhD theses (<a href="https://doi.org/10.33612/diss.177417131" class="external-link">DOI 10.33612/diss.177417131</a> and <a href="https://doi.org/10.33612/diss.192486375" class="external-link">DOI 10.33612/diss.192486375</a>) but is actively and durably maintained (see <a href="https://msberends.github.io/AMR/news/index.html">changelog)</a>) by two public healthcare organisations in the Netherlands.</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -287,14 +237,12 @@ by two public healthcare organisations in the Netherlands.</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Matthijs S. Berends, Christian F. Luz, Dennis Souverein,
-Erwin E. A. Hassing.</p>
+<p>Developed by Matthijs S. Berends, Christian F. Luz, Dennis Souverein, Erwin E. A. Hassing.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
