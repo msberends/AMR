@@ -638,7 +638,7 @@ vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_ca
   if (isTRUE(initial_captital)) {
     v[1] <- gsub("^([a-z])", "\\U\\1", v[1], perl = TRUE)
   }
-  if (length(v) == 1) {
+  if (length(v) <= 1) {
     return(paste0(quotes, v, quotes))
   }
   if (identical(v, c("I", "R", "S"))) {

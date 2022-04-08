@@ -1,6 +1,6 @@
 # `AMR` (for R) <img src="./logo.svg" align="right"/>
 
-> Update: The latest [EUCAST guideline for intrinsic resistance](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) (v3.3, October 2021) is now supported, the CLSI 2021 interpretation guideline is now supported, and our taxonomy tables have been updated as well (LPSN, 5 October 2021).
+> Update March 2022: All functions in this package are considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months.
 
 ### What is `AMR` (for R)?
 

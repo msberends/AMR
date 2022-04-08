@@ -57,8 +57,8 @@ jobs:
           - {os: macOS-latest,   r: '3.6',     allowfail: false}
           - {os: macOS-latest,   r: '3.5',     allowfail: false}
           - {os: macOS-latest,   r: '3.4',     allowfail: false}
-          - {os: macOS-latest,   r: '3.3',     allowfail: false}
-          - {os: macOS-latest,   r: '3.2',     allowfail: false}
+          # - {os: macOS-latest,   r: '3.3',     allowfail: false}
+          # - {os: macOS-latest,   r: '3.2',     allowfail: false}
           # - {os: macOS-latest,   r: '3.1',     allowfail: true}
           # - {os: macOS-latest,   r: '3.0',     allowfail: true}
           - {os: ubuntu-20.04,   r: 'devel',   allowfail: true,  rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
@@ -77,7 +77,7 @@ jobs:
           - {os: windows-latest, r: '3.6',     allowfail: false}
           - {os: windows-latest, r: '3.5',     allowfail: false}
           - {os: windows-latest, r: '3.4',     allowfail: false}
-          - {os: windows-latest, r: '3.3',     allowfail: false}
+          # - {os: windows-latest, r: '3.3',     allowfail: false}
           # - {os: windows-latest, r: '3.2',     allowfail: true}
           # - {os: windows-latest, r: '3.1',     allowfail: true}
           # - {os: windows-latest, r: '3.0',     allowfail: true}

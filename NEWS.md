@@ -1,7 +1,11 @@
+# `AMR` 1.8.1.9001
+## <small>Last updated:  8 April 2022</small>
+
+### Changed
+* Small fix for using `ab_from_text()`
+
+
 # `AMR` 1.8.1
-
-
-All functions in this package are considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months.
 
 ### Changed
 * Fix for using `as.rsi()` on values containing capped values (such as `>=`), sometimes leading to `NA`
