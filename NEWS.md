@@ -1,7 +1,9 @@
-# `AMR` 1.8.1.9001
-## <small>Last updated:  8 April 2022</small>
+# `AMR` 1.8.1.9002
+## <small>Last updated:  9 May 2022</small>
 
 ### Changed
+* Removed `as.integer()` for MIC values, since MIC are not integer values and running `table()` on MIC values will consequently fail for not being able to retrieve the level position (as that's how normally `as.integer()` on `factor`s work)
+* `droplevels()` on MIC will now return a common `factor` at default and will lose the `<mic>` class. Use `droplevels(..., as.mic = TRUE)` to keep the `<mic>` class.
 * Small fix for using `ab_from_text()`
 
 

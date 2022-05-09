@@ -214,13 +214,6 @@ as.double.mic <- function(x, ...) {
   as.double(gsub("[<=>]+", "", as.character(x), perl = TRUE))
 }
 
-#' @method as.integer mic
-#' @export
-#' @noRd
-as.integer.mic <- function(x, ...) {
-  as.integer(gsub("[<=>]+", "", as.character(x), perl = TRUE))
-}
-
 #' @method as.numeric mic
 #' @export
 #' @noRd
@@ -231,7 +224,7 @@ as.numeric.mic <- function(x, ...) {
 #' @method droplevels mic
 #' @export
 #' @noRd
-droplevels.mic <- function(x, exclude = if (any(is.na(levels(x)))) NULL else NA, as.mic = TRUE, ...) {
+droplevels.mic <- function(x, exclude = if (any(is.na(levels(x)))) NULL else NA, as.mic = FALSE, ...) {
   x <- droplevels.factor(x, exclude = exclude, ...)
   if (as.mic == TRUE) {
     class(x) <- c("mic", "ordered", "factor")
