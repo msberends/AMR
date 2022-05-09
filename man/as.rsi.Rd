@@ -68,7 +68,7 @@ is.rsi.eligible(x, threshold = 0.05)
 
 \item{ab}{any (vector of) text that can be coerced to a valid antimicrobial code with \code{\link[=as.ab]{as.ab()}}}
 
-\item{guideline}{defaults to the latest included EUCAST guideline, see \emph{Details} for all options}
+\item{guideline}{defaults to the latest included EUCAST guideline, supports EUCAST (2011-2021) and CLSI (2010-2021), see \emph{Details}}
 
 \item{uti}{(Urinary Tract Infection) A vector with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.rsi]{as.rsi()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See \emph{Examples}.}
 
@@ -133,7 +133,7 @@ The function \code{\link[=is.rsi]{is.rsi()}} detects if the input contains class
 The function \code{\link[=is.rsi.eligible]{is.rsi.eligible()}} returns \code{TRUE} when a columns contains at most 5\% invalid antimicrobial interpretations (not S and/or I and/or R), and \code{FALSE} otherwise. The threshold of 5\% can be set with the \code{threshold} argument. If the input is a \link{data.frame}, it iterates over all columns and returns a \link{logical} vector.
 }
 
-\code{NA_rsi_} is a missing value of the new \verb{<rsi>} class.
+\code{NA_rsi_} is a missing value of the new \verb{<rsi>} class, analogous to e.g. base \R's \code{\link[base:NA]{NA_character_}}.
 }
 \section{Interpretation of R and S/I}{
 
@@ -247,7 +247,7 @@ if (require("dplyr")) {
   example_isolates \%>\%
     mutate_if(is.rsi.eligible, as.rsi)
     
-  # note: from dplyr 1.0.0 on, this will be: 
+  # since dplyr 1.0.0, this can also be: 
   # example_isolates \%>\%
   #   mutate(across(where(is.rsi.eligible), as.rsi))
 }

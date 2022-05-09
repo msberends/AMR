@@ -33,7 +33,7 @@
 #' @param ab any (vector of) text that can be coerced to a valid antimicrobial code with [as.ab()]
 #' @param uti (Urinary Tract Infection) A vector with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.rsi()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See *Examples*.
 #' @inheritParams first_isolate
-#' @param guideline defaults to the latest included EUCAST guideline, see *Details* for all options
+#' @param guideline defaults to the latest included EUCAST guideline, supports EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`), see *Details*
 #' @param conserve_capped_values a [logical] to indicate that MIC values starting with `">"` (but not `">="`) must always return "R" , and that MIC values starting with `"<"` (but not `"<="`) must always return "S"
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.3)`.
 #' @param reference_data a [data.frame] to be used for interpretation, which defaults to the [rsi_translation] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [rsi_translation] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
@@ -179,7 +179,7 @@
 #'   example_isolates %>%
 #'     mutate_if(is.rsi.eligible, as.rsi)
 #'     
-#'   # note: from dplyr 1.0.0 on, this will be: 
+#'   # since dplyr 1.0.0, this can also be: 
 #'   # example_isolates %>%
 #'   #   mutate(across(where(is.rsi.eligible), as.rsi))
 #' }
@@ -189,7 +189,7 @@ as.rsi <- function(x, ...) {
 }
 
 #' @rdname as.rsi
-#' @details `NA_rsi_` is a missing value of the new `<rsi>` class.
+#' @details `NA_rsi_` is a missing value of the new `<rsi>` class, analogous to e.g. base \R's [`NA_character_`][base::NA].
 #' @export
 NA_rsi_ <- set_clean_class(factor(NA, levels = c("S", "I", "R"), ordered = TRUE),
                            new_class =  c("rsi", "ordered", "factor"))

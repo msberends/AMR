@@ -33,7 +33,9 @@ expect_true(is.mic(as.mic(8)))
 
 expect_equal(as.double(as.mic(">=32")), 32)
 expect_equal(as.numeric(as.mic(">=32")), 32)
-expect_equal(as.integer(as.mic(">=32")), 32)
+expect_equal(as.integer(as.mic(">=32")), # should be factor level, not the MIC
+             as.integer(factor(as.character(">=32"),
+                               levels = levels(as.mic(">=32")))))
 expect_equal(suppressWarnings(as.logical(as.mic("INVALID VALUE"))), NA)
 
 # all levels should be valid MICs

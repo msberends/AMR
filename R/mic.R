@@ -47,7 +47,7 @@ valid_mic_levels <- c(c(t(vapply(FUN.VALUE = character(9), ops,
 #' @rdname as.mic
 #' @param x a [character] or [numeric] vector
 #' @param na.rm a [logical] indicating whether missing values should be removed
-#' @details To interpret MIC values as RSI values, use [as.rsi()] on MIC values. It supports guidelines from EUCAST and CLSI.
+#' @details To interpret MIC values as RSI values, use [as.rsi()] on MIC values. It supports guidelines from EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`).
 #' 
 #' This class for MIC values is a quite a special data type: formally it is an ordered [factor] with valid MIC values as [factor] levels (to make sure only valid MIC values are retained), but for any mathematical operation it acts as decimal numbers:
 #' 
@@ -86,6 +86,10 @@ valid_mic_levels <- c(c(t(vapply(FUN.VALUE = character(9), ops,
 #' ```
 #' 
 #' The following [generic functions][groupGeneric()] are implemented for the MIC class: `!`, `!=`, `%%`, `%/%`, `&`, `*`, `+`, `-`, `/`, `<`, `<=`, `==`, `>`, `>=`, `^`, `|`, [abs()], [acos()], [acosh()], [all()], [any()], [asin()], [asinh()], [atan()], [atanh()], [ceiling()], [cos()], [cosh()], [cospi()], [cummax()], [cummin()], [cumprod()], [cumsum()], [digamma()], [exp()], [expm1()], [floor()], [gamma()], [lgamma()], [log()], [log1p()], [log2()], [log10()], [max()], [mean()], [min()], [prod()], [range()], [round()], [sign()], [signif()], [sin()], [sinh()], [sinpi()], [sqrt()], [sum()], [tan()], [tanh()], [tanpi()], [trigamma()] and [trunc()]. Some functions of the `stats` package are also implemented: [median()], [quantile()], [mad()], [IQR()], [fivenum()]. Also, [boxplot.stats()] is supported. Since [sd()] and [var()] are non-generic functions, these could not be extended. Use [mad()] as an alternative, or use e.g. `sd(as.numeric(x))` where `x` is your vector of MIC values.
+#' 
+#' Using [as.double()] or [as.numeric()] on MIC values will remove the operators and return a numeric vector. Do **not** use [as.integer()] on MIC values as by the \R convention on [factor]s, it will return the index of the factor levels (which is often useless for regular users).
+#' 
+#' Use [droplevels()] to drop unused levels. At default, it will return a plain factor. Use `droplevels(..., as.mic = TRUE)` to maintain the `<mic>` class.
 #' @return Ordered [factor] with additional class [`mic`], that in mathematical operations acts as decimal numbers. Bare in mind that the outcome of any mathematical operation on MICs will return a [numeric] value.
 #' @aliases mic
 #' @export
@@ -196,7 +200,8 @@ all_valid_mics <- function(x) {
 }
 
 #' @rdname as.mic
-#' @details `NA_mic_` is a missing value of the new `<mic>` class.
+#' @details `NA_mic_` is a missing value of the new `<mic>` class, analogous to e.g. base \R's [`NA_character_`][base::NA].
+#' @format NULL
 #' @export
 NA_mic_ <- set_clean_class(factor(NA, levels = valid_mic_levels, ordered = TRUE),
                            new_class =  c("mic", "ordered", "factor"))
@@ -221,9 +226,11 @@ as.numeric.mic <- function(x, ...) {
   as.numeric(gsub("[<=>]+", "", as.character(x), perl = TRUE))
 }
 
+#' @rdname as.mic
 #' @method droplevels mic
+#' @param exclude factor levels which should be excluded from the result even if present, see [droplevels()][base::droplevels()]
+#' @param as.mic a [logical] to indicate whether the `<mic>` class should be kept, defaults to `FALSE`
 #' @export
-#' @noRd
 droplevels.mic <- function(x, exclude = if (any(is.na(levels(x)))) NULL else NA, as.mic = FALSE, ...) {
   x <- droplevels.factor(x, exclude = exclude, ...)
   if (as.mic == TRUE) {
@@ -253,7 +260,9 @@ type_sum.mic <- function(x, ...) {
 #' @export
 #' @noRd
 print.mic <- function(x, ...) {
-  cat("Class <mic>\n")
+  cat("Class <mic>",
+      ifelse(length(levels(x)) < length(valid_mic_levels), font_red(" with dropped levels"), ""),
+      "\n", sep = "")
   print(as.character(x), quote = FALSE)
   att <- attributes(x)
   if ("na.action" %in% names(att)) {

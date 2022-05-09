@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9004</span>
       </span>
     </div>
 
@@ -225,7 +225,7 @@
 <dt>ab</dt>
 <dd><p>any (vector of) text that can be coerced to a valid antimicrobial code with <code><a href="as.ab.html">as.ab()</a></code></p></dd>
 <dt>guideline</dt>
-<dd><p>defaults to the latest included EUCAST guideline, see <em>Details</em> for all options</p></dd>
+<dd><p>defaults to the latest included EUCAST guideline, supports EUCAST (2011-2021) and CLSI (2010-2021), see <em>Details</em></p></dd>
 <dt>uti</dt>
 <dd><p>(Urinary Tract Infection) A vector with <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>s (<code>TRUE</code> or <code>FALSE</code>) to specify whether a UTI specific interpretation from the guideline should be chosen. For using <code>as.rsi()</code> on a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>, this can also be a column containing <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See <em>Examples</em>.</p></dd>
 <dt>conserve_capped_values</dt>
@@ -289,7 +289,7 @@
 <p>The function <code>is.rsi.eligible()</code> returns <code>TRUE</code> when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and <code>FALSE</code> otherwise. The threshold of 5% can be set with the <code>threshold</code> argument. If the input is a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>, it iterates over all columns and returns a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> vector.</p>
 </div>
 
-<p><code>NA_rsi_</code> is a missing value of the new <code>&lt;rsi&gt;</code> class.</p>
+<p><code>NA_rsi_</code> is a missing value of the new <code>&lt;rsi&gt;</code> class, analogous to e.g. base <span style="R">R</span>'s <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">NA_character_</a></code>.</p>
     </div>
     <div id="interpretation-of-r-and-s-i">
     <h2>Interpretation of R and S/I</h2>
@@ -408,7 +408,7 @@ The <a href="lifecycle.html">lifecycle</a> of this function is <strong>stable</s
   <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.rsi.eligible</span>, <span class="va">as.rsi</span><span class="op">)</span>
     
-  <span class="co"># note: from dplyr 1.0.0 on, this will be: </span>
+  <span class="co"># since dplyr 1.0.0, this can also be: </span>
   <span class="co"># example_isolates %&gt;%</span>
   <span class="co">#   mutate(across(where(is.rsi.eligible), as.rsi))</span>
 <span class="op">}</span>

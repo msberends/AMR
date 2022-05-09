@@ -6,21 +6,30 @@
 \alias{mic}
 \alias{NA_mic_}
 \alias{is.mic}
+\alias{droplevels.mic}
 \title{Transform Input to Minimum Inhibitory Concentrations (MIC)}
-\format{
-An object of class \code{mic} (inherits from \code{ordered}, \code{factor}) of length 1.
-}
 \usage{
 as.mic(x, na.rm = FALSE)
 
 NA_mic_
 
 is.mic(x)
+
+\method{droplevels}{mic}(
+  x,
+  exclude = if (any(is.na(levels(x)))) NULL else NA,
+  as.mic = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{a \link{character} or \link{numeric} vector}
 
 \item{na.rm}{a \link{logical} indicating whether missing values should be removed}
+
+\item{exclude}{factor levels which should be excluded from the result even if present, see \link[base:droplevels]{droplevels()}}
+
+\item{as.mic}{a \link{logical} to indicate whether the \verb{<mic>} class should be kept, defaults to \code{FALSE}}
 }
 \value{
 Ordered \link{factor} with additional class \code{\link{mic}}, that in mathematical operations acts as decimal numbers. Bare in mind that the outcome of any mathematical operation on MICs will return a \link{numeric} value.
@@ -29,7 +38,7 @@ Ordered \link{factor} with additional class \code{\link{mic}}, that in mathemati
 This transforms vectors to a new class \code{\link{mic}}, which treats the input as decimal numbers, while maintaining operators (such as ">=") and only allowing valid MIC values known to the field of (medical) microbiology.
 }
 \details{
-To interpret MIC values as RSI values, use \code{\link[=as.rsi]{as.rsi()}} on MIC values. It supports guidelines from EUCAST and CLSI.
+To interpret MIC values as RSI values, use \code{\link[=as.rsi]{as.rsi()}} on MIC values. It supports guidelines from EUCAST (2011-2021) and CLSI (2010-2021).
 
 This class for MIC values is a quite a special data type: formally it is an ordered \link{factor} with valid MIC values as \link{factor} levels (to make sure only valid MIC values are retained), but for any mathematical operation it acts as decimal numbers:\preformatted{x <- random_mic(10)
 x
@@ -63,7 +72,11 @@ subset(df, x > 4) # or with dplyr: df \%>\% filter(x > 4)
 
 The following \link[=groupGeneric]{generic functions} are implemented for the MIC class: \code{!}, \code{!=}, \code{\%\%}, \code{\%/\%}, \code{&}, \code{*}, \code{+}, \code{-}, \code{/}, \code{<}, \code{<=}, \code{==}, \code{>}, \code{>=}, \code{^}, \code{|}, \code{\link[=abs]{abs()}}, \code{\link[=acos]{acos()}}, \code{\link[=acosh]{acosh()}}, \code{\link[=all]{all()}}, \code{\link[=any]{any()}}, \code{\link[=asin]{asin()}}, \code{\link[=asinh]{asinh()}}, \code{\link[=atan]{atan()}}, \code{\link[=atanh]{atanh()}}, \code{\link[=ceiling]{ceiling()}}, \code{\link[=cos]{cos()}}, \code{\link[=cosh]{cosh()}}, \code{\link[=cospi]{cospi()}}, \code{\link[=cummax]{cummax()}}, \code{\link[=cummin]{cummin()}}, \code{\link[=cumprod]{cumprod()}}, \code{\link[=cumsum]{cumsum()}}, \code{\link[=digamma]{digamma()}}, \code{\link[=exp]{exp()}}, \code{\link[=expm1]{expm1()}}, \code{\link[=floor]{floor()}}, \code{\link[=gamma]{gamma()}}, \code{\link[=lgamma]{lgamma()}}, \code{\link[=log]{log()}}, \code{\link[=log1p]{log1p()}}, \code{\link[=log2]{log2()}}, \code{\link[=log10]{log10()}}, \code{\link[=max]{max()}}, \code{\link[=mean]{mean()}}, \code{\link[=min]{min()}}, \code{\link[=prod]{prod()}}, \code{\link[=range]{range()}}, \code{\link[=round]{round()}}, \code{\link[=sign]{sign()}}, \code{\link[=signif]{signif()}}, \code{\link[=sin]{sin()}}, \code{\link[=sinh]{sinh()}}, \code{\link[=sinpi]{sinpi()}}, \code{\link[=sqrt]{sqrt()}}, \code{\link[=sum]{sum()}}, \code{\link[=tan]{tan()}}, \code{\link[=tanh]{tanh()}}, \code{\link[=tanpi]{tanpi()}}, \code{\link[=trigamma]{trigamma()}} and \code{\link[=trunc]{trunc()}}. Some functions of the \code{stats} package are also implemented: \code{\link[=median]{median()}}, \code{\link[=quantile]{quantile()}}, \code{\link[=mad]{mad()}}, \code{\link[=IQR]{IQR()}}, \code{\link[=fivenum]{fivenum()}}. Also, \code{\link[=boxplot.stats]{boxplot.stats()}} is supported. Since \code{\link[=sd]{sd()}} and \code{\link[=var]{var()}} are non-generic functions, these could not be extended. Use \code{\link[=mad]{mad()}} as an alternative, or use e.g. \code{sd(as.numeric(x))} where \code{x} is your vector of MIC values.
 
-\code{NA_mic_} is a missing value of the new \verb{<mic>} class.
+Using \code{\link[=as.double]{as.double()}} or \code{\link[=as.numeric]{as.numeric()}} on MIC values will remove the operators and return a numeric vector. Do \strong{not} use \code{\link[=as.integer]{as.integer()}} on MIC values as by the \R convention on \link{factor}s, it will return the index of the factor levels (which is often useless for regular users).
+
+Use \code{\link[=droplevels]{droplevels()}} to drop unused levels. At default, it will return a plain factor. Use \code{droplevels(..., as.mic = TRUE)} to maintain the \verb{<mic>} class.
+
+\code{NA_mic_} is a missing value of the new \verb{<mic>} class, analogous to e.g. base \R's \code{\link[base:NA]{NA_character_}}.
 }
 \section{Stable Lifecycle}{
 
