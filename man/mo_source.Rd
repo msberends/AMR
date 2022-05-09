@@ -14,7 +14,7 @@ set_mo_source(
 get_mo_source(destination = getOption("AMR_mo_source", "~/mo_source.rds"))
 }
 \arguments{
-\item{path}{location of your reference file, see \emph{Details}. Can be \code{""}, \code{NULL} or \code{FALSE} to delete the reference file.}
+\item{path}{location of your reference file, this can be any text file (comma-, tab- or pipe-separated) or an Excel file (see \emph{Details}). Can also be \code{""}, \code{NULL} or \code{FALSE} to delete the reference file.}
 
 \item{destination}{destination of the compressed data file, default to the user's home directory.}
 }
@@ -26,9 +26,9 @@ This is \strong{the fastest way} to have your organisation (or analysis) specifi
 \details{
 The reference file can be a text file separated with commas (CSV) or tabs or pipes, an Excel file (either 'xls' or 'xlsx' format) or an \R object file (extension '.rds'). To use an Excel file, you will need to have the \code{readxl} package installed.
 
-\code{\link[=set_mo_source]{set_mo_source()}} will check the file for validity: it must be a \link{data.frame}, must have a column named \code{"mo"} which contains values from \code{\link[=microorganisms]{microorganisms$mo}} and must have a reference column with your own defined values. If all tests pass, \code{\link[=set_mo_source]{set_mo_source()}} will read the file into \R and will ask to export it to \code{"~/mo_source.rds"}. The CRAN policy disallows packages to write to the file system, although '\emph{exceptions may be allowed in interactive sessions if the package obtains confirmation from the user}'. For this reason, this function only works in interactive sessions so that the user can \strong{specifically confirm and allow} that this file will be created. The destination of this file can be set with the \code{destination} argument and defaults to the user's home directory. It can also be set as an \R option, using \code{options(AMR_mo_source = "my/location/file.rds")}.
+\code{\link[=set_mo_source]{set_mo_source()}} will check the file for validity: it must be a \link{data.frame}, must have a column named \code{"mo"} which contains values from \code{\link[=microorganisms]{microorganisms$mo}} or \code{\link[=microorganisms]{microorganisms$fullname}} and must have a reference column with your own defined values. If all tests pass, \code{\link[=set_mo_source]{set_mo_source()}} will read the file into \R and will ask to export it to \code{"~/mo_source.rds"}. The CRAN policy disallows packages to write to the file system, although '\emph{exceptions may be allowed in interactive sessions if the package obtains confirmation from the user}'. For this reason, this function only works in interactive sessions so that the user can \strong{specifically confirm and allow} that this file will be created. The destination of this file can be set with the \code{destination} argument and defaults to the user's home directory. It can also be set as an \R option, using \code{options(AMR_mo_source = "my/location/file.rds")}.
 
-The created compressed data file \code{"mo_source.rds"} will be used at default for MO determination (function \code{\link[=as.mo]{as.mo()}} and consequently all \verb{mo_*} functions like \code{\link[=mo_genus]{mo_genus()}} and \code{\link[=mo_gramstain]{mo_gramstain()}}). The location and timestamp of the original file will be saved as an attribute to the compressed data file.
+The created compressed data file \code{"mo_source.rds"} will be used at default for MO determination (function \code{\link[=as.mo]{as.mo()}} and consequently all \verb{mo_*} functions like \code{\link[=mo_genus]{mo_genus()}} and \code{\link[=mo_gramstain]{mo_gramstain()}}). The location and timestamp of the original file will be saved as an \link[base:attributes]{attribute} to the compressed data file.
 
 The function \code{\link[=get_mo_source]{get_mo_source()}} will return the data set by reading \code{"mo_source.rds"} with \code{\link[=readRDS]{readRDS()}}. If the original file has changed (by checking the location and timestamp of the original file), it will call \code{\link[=set_mo_source]{set_mo_source()}} to update the data file automatically if used in an interactive session.
 
@@ -37,12 +37,12 @@ Reading an Excel file (\code{.xlsx}) with only one row has a size of 8-9 kB. The
 \section{How to Setup}{
 
 
-Imagine this data on a sheet of an Excel file (mo codes were looked up in the \link{microorganisms} data set). The first column contains the organisation specific codes, the second column contains an MO code from this package:\preformatted{  |         A          |       B      |
---|--------------------|--------------|
-1 | Organisation XYZ   | mo           |
-2 | lab_mo_ecoli       | B_ESCHR_COLI |
-3 | lab_mo_kpneumoniae | B_KLBSL_PNMN |
-4 |                    |              |
+Imagine this data on a sheet of an Excel file. The first column contains the organisation specific codes, the second column contains valid taxonomic names:\preformatted{  |         A          |            B          |
+--|--------------------|-----------------------|
+1 | Organisation XYZ   | mo                    |
+2 | lab_mo_ecoli       | Escherichia coli      |
+3 | lab_mo_kpneumoniae | Klebsiella pneumoniae |
+4 |                    |                       |
 }
 
 We save it as \code{"home/me/ourcodes.xlsx"}. Now we have to set it as a source:\preformatted{set_mo_source("home/me/ourcodes.xlsx")
@@ -68,13 +68,13 @@ as.mo(c("Escherichia coli", "E. coli", "lab_mo_ecoli"))
 #> [1] B_ESCHR_COLI B_ESCHR_COLI B_ESCHR_COLI
 }
 
-If we edit the Excel file by, let's say, adding row 4 like this:\preformatted{  |         A          |       B      |
---|--------------------|--------------|
-1 | Organisation XYZ   | mo           |
-2 | lab_mo_ecoli       | B_ESCHR_COLI |
-3 | lab_mo_kpneumoniae | B_KLBSL_PNMN |
-4 | lab_Staph_aureus   | B_STPHY_AURS |
-5 |                    |              |
+If we edit the Excel file by, let's say, adding row 4 like this:\preformatted{  |         A          |            B          |
+--|--------------------|-----------------------|
+1 | Organisation XYZ   | mo                    |
+2 | lab_mo_ecoli       | Escherichia coli      |
+3 | lab_mo_kpneumoniae | Klebsiella pneumoniae |
+4 | lab_Staph_aureus   | Staphylococcus aureus |
+5 |                    |                       |
 }
 
 ...any new usage of an MO function in this package will update your data file:\preformatted{as.mo("lab_mo_ecoli")

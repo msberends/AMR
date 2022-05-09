@@ -18,7 +18,7 @@ This is the fastest way to have your organisation (or analysis) specific codes p
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9003</span>
       </span>
     </div>
 
@@ -31,7 +31,7 @@ This is the fastest way to have your organisation (or analysis) specific codes p
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-question-circle"></span>
      
     How to
@@ -175,15 +175,15 @@ This is the fastest way to have your organisation (or analysis) specific codes p
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>path</dt>
-<dd><p>location of your reference file, see <em>Details</em>. Can be <code>""</code>, <code>NULL</code> or <code>FALSE</code> to delete the reference file.</p></dd>
+<dd><p>location of your reference file, this can be any text file (comma-, tab- or pipe-separated) or an Excel file (see <em>Details</em>). Can also be <code>""</code>, <code>NULL</code> or <code>FALSE</code> to delete the reference file.</p></dd>
 <dt>destination</dt>
 <dd><p>destination of the compressed data file, default to the user's home directory.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>
     <p>The reference file can be a text file separated with commas (CSV) or tabs or pipes, an Excel file (either 'xls' or 'xlsx' format) or an <span style="R">R</span> object file (extension '.rds'). To use an Excel file, you will need to have the <code>readxl</code> package installed.</p>
-<p><code>set_mo_source()</code> will check the file for validity: it must be a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>, must have a column named <code>"mo"</code> which contains values from <code><a href="microorganisms.html">microorganisms$mo</a></code> and must have a reference column with your own defined values. If all tests pass, <code>set_mo_source()</code> will read the file into <span style="R">R</span> and will ask to export it to <code>"~/mo_source.rds"</code>. The CRAN policy disallows packages to write to the file system, although '<em>exceptions may be allowed in interactive sessions if the package obtains confirmation from the user</em>'. For this reason, this function only works in interactive sessions so that the user can <strong>specifically confirm and allow</strong> that this file will be created. The destination of this file can be set with the <code>destination</code> argument and defaults to the user's home directory. It can also be set as an <span style="R">R</span> option, using <code>options(AMR_mo_source = "my/location/file.rds")</code>.</p>
-<p>The created compressed data file <code>"mo_source.rds"</code> will be used at default for MO determination (function <code><a href="as.mo.html">as.mo()</a></code> and consequently all <code>mo_*</code> functions like <code><a href="mo_property.html">mo_genus()</a></code> and <code><a href="mo_property.html">mo_gramstain()</a></code>). The location and timestamp of the original file will be saved as an attribute to the compressed data file.</p>
+<p><code>set_mo_source()</code> will check the file for validity: it must be a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>, must have a column named <code>"mo"</code> which contains values from <code><a href="microorganisms.html">microorganisms$mo</a></code> or <code><a href="microorganisms.html">microorganisms$fullname</a></code> and must have a reference column with your own defined values. If all tests pass, <code>set_mo_source()</code> will read the file into <span style="R">R</span> and will ask to export it to <code>"~/mo_source.rds"</code>. The CRAN policy disallows packages to write to the file system, although '<em>exceptions may be allowed in interactive sessions if the package obtains confirmation from the user</em>'. For this reason, this function only works in interactive sessions so that the user can <strong>specifically confirm and allow</strong> that this file will be created. The destination of this file can be set with the <code>destination</code> argument and defaults to the user's home directory. It can also be set as an <span style="R">R</span> option, using <code>options(AMR_mo_source = "my/location/file.rds")</code>.</p>
+<p>The created compressed data file <code>"mo_source.rds"</code> will be used at default for MO determination (function <code><a href="as.mo.html">as.mo()</a></code> and consequently all <code>mo_*</code> functions like <code><a href="mo_property.html">mo_genus()</a></code> and <code><a href="mo_property.html">mo_gramstain()</a></code>). The location and timestamp of the original file will be saved as an <a href="https://rdrr.io/r/base/attributes.html" class="external-link">attribute</a> to the compressed data file.</p>
 <p>The function <code>get_mo_source()</code> will return the data set by reading <code>"mo_source.rds"</code> with <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS()</a></code>. If the original file has changed (by checking the location and timestamp of the original file), it will call <code>set_mo_source()</code> to update the data file automatically if used in an interactive session.</p>
 <p>Reading an Excel file (<code>.xlsx</code>) with only one row has a size of 8-9 kB. The compressed file created with <code>set_mo_source()</code> will then have a size of 0.1 kB and can be read by <code>get_mo_source()</code> in only a couple of microseconds (millionths of a second).</p>
     </div>
@@ -192,12 +192,12 @@ This is the fastest way to have your organisation (or analysis) specific codes p
     
 
 
-<p>Imagine this data on a sheet of an Excel file (mo codes were looked up in the <a href="microorganisms.html">microorganisms</a> data set). The first column contains the organisation specific codes, the second column contains an MO code from this package:</p><div class="sourceCode"><pre><code>  |         A          |       B      |
---|--------------------|--------------|
-1 | Organisation XYZ   | mo           |
-2 | lab_mo_ecoli       | B_ESCHR_COLI |
-3 | lab_mo_kpneumoniae | B_KLBSL_PNMN |
-4 |                    |              |
+<p>Imagine this data on a sheet of an Excel file. The first column contains the organisation specific codes, the second column contains valid taxonomic names:</p><div class="sourceCode"><pre><code>  |         A          |            B          |
+--|--------------------|-----------------------|
+1 | Organisation XYZ   | mo                    |
+2 | lab_mo_ecoli       | Escherichia coli      |
+3 | lab_mo_kpneumoniae | Klebsiella pneumoniae |
+4 |                    |                       |
 </code></pre></div>
 
 <p>We save it as <code>"home/me/ourcodes.xlsx"</code>. Now we have to set it as a source:</p><div class="sourceCode"><pre><code><span class="fu"><a href="../reference/mo_source.html">set_mo_source</a></span><span class="op">(</span><span class="st">"home/me/ourcodes.xlsx"</span><span class="op">)</span>
@@ -220,13 +220,13 @@ This is the fastest way to have your organisation (or analysis) specific codes p
 <span class="co">#&gt; Class &lt;mo&gt;</span>
 <span class="co">#&gt; [1] B_ESCHR_COLI B_ESCHR_COLI B_ESCHR_COLI</span></code></pre></div>
 
-<p>If we edit the Excel file by, let's say, adding row 4 like this:</p><div class="sourceCode"><pre><code>  |         A          |       B      |
---|--------------------|--------------|
-1 | Organisation XYZ   | mo           |
-2 | lab_mo_ecoli       | B_ESCHR_COLI |
-3 | lab_mo_kpneumoniae | B_KLBSL_PNMN |
-4 | lab_Staph_aureus   | B_STPHY_AURS |
-5 |                    |              |
+<p>If we edit the Excel file by, let's say, adding row 4 like this:</p><div class="sourceCode"><pre><code>  |         A          |            B          |
+--|--------------------|-----------------------|
+1 | Organisation XYZ   | mo                    |
+2 | lab_mo_ecoli       | Escherichia coli      |
+3 | lab_mo_kpneumoniae | Klebsiella pneumoniae |
+4 | lab_Staph_aureus   | Staphylococcus aureus |
+5 |                    |                       |
 </code></pre></div>
 
 <p>...any new usage of an MO function in this package will update your data file:</p><div class="sourceCode"><pre><code><span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"lab_mo_ecoli"</span><span class="op">)</span>
@@ -271,7 +271,7 @@ The <a href="lifecycle.html">lifecycle</a> of this function is <strong>stable</s
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>

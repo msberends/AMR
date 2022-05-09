@@ -1,10 +1,11 @@
-# `AMR` 1.8.1.9002
+# `AMR` 1.8.1.9003
 ## <small>Last updated:  9 May 2022</small>
 
 ### Changed
-* Removed `as.integer()` for MIC values, since MIC are not integer values and running `table()` on MIC values will consequently fail for not being able to retrieve the level position (as that's how normally `as.integer()` on `factor`s work)
+* Removed `as.integer()` for MIC values, since MIC are not integer values and running `table()` on MIC values  consequently failed for not being able to retrieve the level position (as that's how normally `as.integer()` on `factor`s work)
 * `droplevels()` on MIC will now return a common `factor` at default and will lose the `<mic>` class. Use `droplevels(..., as.mic = TRUE)` to keep the `<mic>` class.
 * Small fix for using `ab_from_text()`
+* Fixes for reading in text files using `set_mo_source()`, which now also allows the source file to contain valid taxonomic names instead of only valid microorganism ID of this package
 
 
 # `AMR` 1.8.1

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9003</span>
       </span>
     </div>
 
@@ -157,17 +157,18 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.8.1.9002" id="amr-1819002">
-<code>AMR</code> 1.8.1.9002<a class="anchor" aria-label="anchor" href="#amr-1819002"></a></h2>
+<h2 class="page-header" data-toc-text="1.8.1.9003" id="amr-1819003">
+<code>AMR</code> 1.8.1.9003<a class="anchor" aria-label="anchor" href="#amr-1819003"></a></h2>
 <div class="section level3">
-<h3 id="last-updated-may-1-8-1-9002"><small>Last updated: 9 May 2022</small><a class="anchor" aria-label="anchor" href="#last-updated-may-1-8-1-9002"></a></h3>
+<h3 id="last-updated-may-1-8-1-9003"><small>Last updated: 9 May 2022</small><a class="anchor" aria-label="anchor" href="#last-updated-may-1-8-1-9003"></a></h3>
 <div class="section level4">
-<h4 id="changed-1-8-1-9002">Changed<a class="anchor" aria-label="anchor" href="#changed-1-8-1-9002"></a></h4>
-<ul><li>Removed <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> for MIC values, since MIC are not integer values and running <code><a href="https://rdrr.io/r/base/table.html" class="external-link">table()</a></code> on MIC values will consequently fail for not being able to retrieve the level position (as that’s how normally <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> on <code>factor</code>s work)</li>
+<h4 id="changed-1-8-1-9003">Changed<a class="anchor" aria-label="anchor" href="#changed-1-8-1-9003"></a></h4>
+<ul><li>Removed <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> for MIC values, since MIC are not integer values and running <code><a href="https://rdrr.io/r/base/table.html" class="external-link">table()</a></code> on MIC values consequently failed for not being able to retrieve the level position (as that’s how normally <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> on <code>factor</code>s work)</li>
 <li>
 <code><a href="https://rdrr.io/r/base/droplevels.html" class="external-link">droplevels()</a></code> on MIC will now return a common <code>factor</code> at default and will lose the <code>&lt;mic&gt;</code> class. Use <code>droplevels(..., as.mic = TRUE)</code> to keep the <code>&lt;mic&gt;</code> class.</li>
 <li>Small fix for using <code><a href="../reference/ab_from_text.html">ab_from_text()</a></code>
 </li>
+<li>Fixes for reading in text files using <code><a href="../reference/mo_source.html">set_mo_source()</a></code>, which now also allows the source file to contain valid taxonomic names instead of only valid microorganism ID of this package</li>
 </ul></div>
 </div>
 </div>

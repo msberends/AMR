@@ -29,16 +29,16 @@
 #'
 #' This is **the fastest way** to have your organisation (or analysis) specific codes picked up and translated by this package, since you don't have to bother about it again after setting it up once.
 #' @inheritSection lifecycle Stable Lifecycle
-#' @param path location of your reference file, see *Details*. Can be `""`, `NULL` or `FALSE` to delete the reference file.
+#' @param path location of your reference file, this can be any text file (comma-, tab- or pipe-separated) or an Excel file (see *Details*). Can also be `""`, `NULL` or `FALSE` to delete the reference file.
 #' @param destination destination of the compressed data file, default to the user's home directory.
 #' @rdname mo_source
 #' @name mo_source
 #' @aliases set_mo_source get_mo_source
 #' @details The reference file can be a text file separated with commas (CSV) or tabs or pipes, an Excel file (either 'xls' or 'xlsx' format) or an \R object file (extension '.rds'). To use an Excel file, you will need to have the `readxl` package installed.
 #'
-#' [set_mo_source()] will check the file for validity: it must be a [data.frame], must have a column named `"mo"` which contains values from [`microorganisms$mo`][microorganisms] and must have a reference column with your own defined values. If all tests pass, [set_mo_source()] will read the file into \R and will ask to export it to `"~/mo_source.rds"`. The CRAN policy disallows packages to write to the file system, although '*exceptions may be allowed in interactive sessions if the package obtains confirmation from the user*'. For this reason, this function only works in interactive sessions so that the user can **specifically confirm and allow** that this file will be created. The destination of this file can be set with the `destination` argument and defaults to the user's home directory. It can also be set as an \R option, using `options(AMR_mo_source = "my/location/file.rds")`.
+#' [set_mo_source()] will check the file for validity: it must be a [data.frame], must have a column named `"mo"` which contains values from [`microorganisms$mo`][microorganisms] or [`microorganisms$fullname`][microorganisms] and must have a reference column with your own defined values. If all tests pass, [set_mo_source()] will read the file into \R and will ask to export it to `"~/mo_source.rds"`. The CRAN policy disallows packages to write to the file system, although '*exceptions may be allowed in interactive sessions if the package obtains confirmation from the user*'. For this reason, this function only works in interactive sessions so that the user can **specifically confirm and allow** that this file will be created. The destination of this file can be set with the `destination` argument and defaults to the user's home directory. It can also be set as an \R option, using `options(AMR_mo_source = "my/location/file.rds")`.
 #' 
-#' The created compressed data file `"mo_source.rds"` will be used at default for MO determination (function [as.mo()] and consequently all `mo_*` functions like [mo_genus()] and [mo_gramstain()]). The location and timestamp of the original file will be saved as an attribute to the compressed data file. 
+#' The created compressed data file `"mo_source.rds"` will be used at default for MO determination (function [as.mo()] and consequently all `mo_*` functions like [mo_genus()] and [mo_gramstain()]). The location and timestamp of the original file will be saved as an [attribute][base::attributes()] to the compressed data file. 
 #' 
 #' The function [get_mo_source()] will return the data set by reading `"mo_source.rds"` with [readRDS()]. If the original file has changed (by checking the location and timestamp of the original file), it will call [set_mo_source()] to update the data file automatically if used in an interactive session.
 #'
@@ -46,15 +46,15 @@
 #' 
 #' @section How to Setup:
 #' 
-#' Imagine this data on a sheet of an Excel file (mo codes were looked up in the [microorganisms] data set). The first column contains the organisation specific codes, the second column contains an MO code from this package:
+#' Imagine this data on a sheet of an Excel file. The first column contains the organisation specific codes, the second column contains valid taxonomic names:
 #' 
 #' ```
-#'   |         A          |       B      |
-#' --|--------------------|--------------|
-#' 1 | Organisation XYZ   | mo           |
-#' 2 | lab_mo_ecoli       | B_ESCHR_COLI |
-#' 3 | lab_mo_kpneumoniae | B_KLBSL_PNMN |
-#' 4 |                    |              |
+#'   |         A          |            B          |
+#' --|--------------------|-----------------------|
+#' 1 | Organisation XYZ   | mo                    |
+#' 2 | lab_mo_ecoli       | Escherichia coli      |
+#' 3 | lab_mo_kpneumoniae | Klebsiella pneumoniae |
+#' 4 |                    |                       |
 #' ```
 #'
 #' We save it as `"home/me/ourcodes.xlsx"`. Now we have to set it as a source:
@@ -89,13 +89,13 @@
 #' If we edit the Excel file by, let's say, adding row 4 like this:
 #' 
 #' ```
-#'   |         A          |       B      |
-#' --|--------------------|--------------|
-#' 1 | Organisation XYZ   | mo           |
-#' 2 | lab_mo_ecoli       | B_ESCHR_COLI |
-#' 3 | lab_mo_kpneumoniae | B_KLBSL_PNMN |
-#' 4 | lab_Staph_aureus   | B_STPHY_AURS |
-#' 5 |                    |              |
+#'   |         A          |            B          |
+#' --|--------------------|-----------------------|
+#' 1 | Organisation XYZ   | mo                    |
+#' 2 | lab_mo_ecoli       | Escherichia coli      |
+#' 3 | lab_mo_kpneumoniae | Klebsiella pneumoniae |
+#' 4 | lab_Staph_aureus   | Staphylococcus aureus |
+#' 5 |                    |                       |
 #' ```
 #'
 #' ...any new usage of an MO function in this package will update your data file:
@@ -144,6 +144,7 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
   
   stop_ifnot(file.exists(path), "file not found: ", path)
   
+  df <- NULL
   if (path %like% "[.]rds$") {
     df <- readRDS(path)
     
@@ -153,28 +154,34 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
     df <- readxl::read_excel(path)
     
   } else if (path %like% "[.]tsv$") {
-    df <- utils::read.table(header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+    df <- utils::read.table(file = path, header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+    
+  } else if (path %like% "[.]csv$") {
+    df <- utils::read.table(file = path, header = TRUE, sep = ",", stringsAsFactors = FALSE)
     
   } else {
     # try comma first
     try(
-      df <- utils::read.table(header = TRUE, sep = ",", stringsAsFactors = FALSE),
+      df <- utils::read.table(file = path, header = TRUE, sep = ",", stringsAsFactors = FALSE),
       silent = TRUE)
     if (!check_validity_mo_source(df, stop_on_error = FALSE)) {
       # try tab
       try(
-        df <- utils::read.table(header = TRUE, sep = "\t", stringsAsFactors = FALSE),
+        df <- utils::read.table(file = path, header = TRUE, sep = "\t", stringsAsFactors = FALSE),
         silent = TRUE)
     }
     if (!check_validity_mo_source(df, stop_on_error = FALSE)) {
       # try pipe
       try(
-        df <- utils::read.table(header = TRUE, sep = "|", stringsAsFactors = FALSE),
+        df <- utils::read.table(file = path, header = TRUE, sep = "|", stringsAsFactors = FALSE),
         silent = TRUE)
     }
   }
   
   # check integrity
+  if (is.null(df)) {
+    stop_("the path '", path, "' could not be imported as a dataset.")
+  }
   check_validity_mo_source(df)
   
   df <- subset(df, !is.na(mo))
@@ -187,7 +194,7 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
   }
   
   df <- as.data.frame(df, stringAsFactors = FALSE)
-  df[, "mo"] <- set_clean_class(df[, "mo", drop = TRUE], c("mo", "character"))
+  df[, "mo"] <- as.mo(df[, "mo", drop = TRUE])
   
   # success
   if (file.exists(mo_source_destination)) {
@@ -275,9 +282,9 @@ check_validity_mo_source <- function(x, refer_to_name = "`reference_df`", stop_o
       return(FALSE)
     }
   }
-  if (!all(x$mo %in% c("", microorganisms$mo), na.rm = TRUE)) {
+  if (!all(x$mo %in% c("", microorganisms$mo, microorganisms$fullname), na.rm = TRUE)) {
     if (stop_on_error == TRUE) {
-      invalid <- x[which(!x$mo %in% c("", microorganisms$mo)), , drop = FALSE]
+      invalid <- x[which(!x$mo %in% c("", microorganisms$mo, microorganisms$fullname)), , drop = FALSE]
       if (nrow(invalid) > 1) {
         plural <- "s"
       } else {
