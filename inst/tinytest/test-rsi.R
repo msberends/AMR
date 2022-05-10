@@ -23,6 +23,10 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
+# we must only have EUCAST and CLSI, because otherwise the rules in as.rsi() will fail
+expect_identical(unique(gsub("[^A-Z]", "", AMR::rsi_translation$guideline)),
+                 c("EUCAST", "CLSI"))
+
 expect_true(as.rsi("S") < as.rsi("I"))
 expect_true(as.rsi("I") < as.rsi("R"))
 expect_true(is.rsi(as.rsi("S")))

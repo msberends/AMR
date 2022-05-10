@@ -818,18 +818,20 @@ exec_as.rsi <- function(method,
       if (is.na(x[i]) | (is.na(get_record$breakpoint_S) & is.na(get_record$breakpoint_R))) {
         new_rsi[i] <- NA_character_
       } else if (method == "mic") {
-        new_rsi[i] <- quick_case_when(isTRUE(conserve_capped_values) & x[i] %like% "^<[0-9]" ~ "S",
-                                      isTRUE(conserve_capped_values) & x[i] %like% "^>[0-9]" ~ "R",
+        new_rsi[i] <- quick_case_when(isTRUE(conserve_capped_values) & isTRUE(x[i] %like% "^<[0-9]") ~ "S",
+                                      isTRUE(conserve_capped_values) & isTRUE(x[i] %like% "^>[0-9]") ~ "R",
                                       # these basically call `<=.mic()` and `>=.mic()`:
-                                      x[i] <= get_record$breakpoint_S ~ "S",
-                                      x[i] >= get_record$breakpoint_R ~ "R",
+                                      isTRUE(x[i] <= get_record$breakpoint_S) ~ "S",
+                                      guideline_coerced %like% "EUCAST" & isTRUE(x[i] > get_record$breakpoint_R) ~ "R",
+                                      guideline_coerced %like% "CLSI" & isTRUE(x[i] >= get_record$breakpoint_R) ~ "R",
                                       # return "I" when not match the bottom or top
                                       !is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R) ~ "I",
                                       # and NA otherwise
                                       TRUE ~ NA_character_)
       } else if (method == "disk") {
         new_rsi[i] <- quick_case_when(isTRUE(as.double(x[i]) >= as.double(get_record$breakpoint_S)) ~ "S",
-                                      isTRUE(as.double(x[i]) <= as.double(get_record$breakpoint_R)) ~ "R",
+                                      guideline_coerced %like% "EUCAST" & isTRUE(as.double(x[i]) < as.double(get_record$breakpoint_R)) ~ "R",
+                                      guideline_coerced %like% "CLSI" & isTRUE(as.double(x[i]) <= as.double(get_record$breakpoint_R)) ~ "R",
                                       # return "I" when not match the bottom or top
                                       !is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R) ~ "I",
                                       # and NA otherwise

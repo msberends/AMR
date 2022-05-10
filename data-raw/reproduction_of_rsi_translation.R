@@ -128,11 +128,24 @@ rsi_translation[which(rsi_translation$breakpoint_R == 257), "breakpoint_R"] <- m
 rsi_translation[which(rsi_translation$breakpoint_R == 513), "breakpoint_R"] <- m[which(m == 512) + 1]
 rsi_translation[which(rsi_translation$breakpoint_R == 1025), "breakpoint_R"] <- m[which(m == 1024) + 1]
 
+# WHONET adds one log2 level to the R breakpoint for their software, e.g. in AMC in Enterobacterales:
+# EUCAST 2021 guideline: S <= 8 and R > 8
+#           WHONET file: S <= 8 and R >= 16
+# this will make an MIC of 12 I, which should be R, so:
+eucast_mics <- which(rsi_translation$guideline %like% "EUCAST" &
+                       rsi_translation$method == "MIC" &
+                       log2(as.double(rsi_translation$breakpoint_R)) - log2(as.double(rsi_translation$breakpoint_S)) != 0)
+rsi_translation[eucast_mics, "breakpoint_R"] <- 2 ^ (log2(as.double(rsi_translation[eucast_mics, "breakpoint_R", drop = TRUE])) - 1)
+eucast_disks <- which(rsi_translation$guideline %like% "EUCAST" &
+                       rsi_translation$method == "DISK" &
+                       rsi_translation$breakpoint_S - rsi_translation$breakpoint_R != 0)
+rsi_translation[eucast_disks, "breakpoint_R"] <- rsi_translation[eucast_disks, "breakpoint_R", drop = TRUE] + 1
+
 # Greek symbols and EM dash symbols are not allowed by CRAN, so replace them with ASCII:
 rsi_translation$disk_dose <- gsub("μ", "u", rsi_translation$disk_dose, fixed = TRUE)
 rsi_translation$disk_dose <- gsub("–", "-", rsi_translation$disk_dose, fixed = TRUE)
 
 # save to package
-usethis::use_data(rsi_translation, overwrite = TRUE)
+usethis::use_data(rsi_translation, overwrite = TRUE, compress = "xz")
 rm(rsi_translation)
 devtools::load_all(".")
