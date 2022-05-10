@@ -1,6 +1,8 @@
 # `AMR` (for R) <img src="./logo.svg" align="right"/>
 
-> Update March 2022: All functions in this package are considered to be stable. Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months.
+> Update May 2022: EUCAST 2022 and CLSI 2022 guidelines have been added for `as.rsi()`!
+> 
+> Updates to the AMR interpretation rules (such as by EUCAST and CLSI), the microbial taxonomy, and the antibiotic dosages will all be updated every 6 to 12 months.
 
 ### What is `AMR` (for R)?
 

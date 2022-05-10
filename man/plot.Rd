@@ -18,7 +18,7 @@
   mo = NULL,
   ab = NULL,
   guideline = "EUCAST",
-  main = paste("MIC values of", deparse(substitute(x))),
+  main = deparse(substitute(x)),
   ylab = "Frequency",
   xlab = "Minimum Inhibitory Concentration (mg/L)",
   colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
@@ -45,7 +45,7 @@
 
 \method{plot}{disk}(
   x,
-  main = paste("Disk zones of", deparse(substitute(x))),
+  main = deparse(substitute(x)),
   ylab = "Frequency",
   xlab = "Disk diffusion diameter (mm)",
   mo = NULL,
@@ -77,7 +77,7 @@
   x,
   ylab = "Percentage",
   xlab = "Antimicrobial Interpretation",
-  main = paste("Resistance Overview of", deparse(substitute(x))),
+  main = deparse(substitute(x)),
   ...
 )
 
@@ -125,7 +125,7 @@ Functions to plot classes \code{rsi}, \code{mic} and \code{disk}, with support f
 \details{
 The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
 
-For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the \code{guideline} argument are: "EUCAST 2021", "EUCAST 2020", "EUCAST 2019", "EUCAST 2018", "EUCAST 2017", "EUCAST 2016", "EUCAST 2015", "EUCAST 2014", "EUCAST 2013", "EUCAST 2012", "EUCAST 2011", "CLSI 2021", "CLSI 2020", "CLSI 2019", "CLSI 2018", "CLSI 2017", "CLSI 2016", "CLSI 2015", "CLSI 2014", "CLSI 2013", "CLSI 2012", "CLSI 2011" and "CLSI 2010".
+For interpreting MIC values as well as disk diffusion diameters, supported guidelines to be used as input for the \code{guideline} argument are: "EUCAST 2022", "EUCAST 2021", "EUCAST 2020", "EUCAST 2019", "EUCAST 2018", "EUCAST 2017", "EUCAST 2016", "EUCAST 2015", "EUCAST 2014", "EUCAST 2013", "EUCAST 2012", "EUCAST 2011", "CLSI 2022", "CLSI 2021", "CLSI 2020", "CLSI 2019", "CLSI 2018", "CLSI 2017", "CLSI 2016", "CLSI 2015", "CLSI 2014", "CLSI 2013", "CLSI 2012" and "CLSI 2011".
 
 Simply using \code{"CLSI"} or \code{"EUCAST"} as input will automatically select the latest version of that guideline.
 }

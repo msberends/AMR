@@ -24,6 +24,7 @@
 # ==================================================================== #
 
 # This script runs in under a minute and renews all guidelines of CLSI and EUCAST!
+# Run it with source("data-raw/reproduction_of_rsi_translation.R")
 
 library(dplyr)
 library(readr)
@@ -32,9 +33,9 @@ library(AMR)
 
 # Install the WHONET software on Windows (http://www.whonet.org/software.html),
 # and copy the folder C:\WHONET\Codes to data-raw/WHONET/Codes
-DRGLST <- readr::read_tsv("data-raw/WHONET/Codes/DRGLST.txt", na = c("", "NA", "-"))
-DRGLST1 <- readr::read_tsv("data-raw/WHONET/Codes/DRGLST1.txt", na = c("", "NA", "-"))
-ORGLIST <- readr::read_tsv("data-raw/WHONET/Codes/ORGLIST.txt", na = c("", "NA", "-"))
+DRGLST <- read_tsv("data-raw/WHONET/Codes/DRGLST.txt", na = c("", "NA", "-"), show_col_types = FALSE)
+DRGLST1 <- read_tsv("data-raw/WHONET/Codes/DRGLST1.txt", na = c("", "NA", "-"), show_col_types = FALSE)
+ORGLIST <- read_tsv("data-raw/WHONET/Codes/ORGLIST.txt", na = c("", "NA", "-"), show_col_types = FALSE)
 
 # create data set for generic rules (i.e., AB-specific but not MO-specific)
 rsi_generic <- DRGLST %>%
@@ -134,11 +135,17 @@ rsi_translation[which(rsi_translation$breakpoint_R == 1025), "breakpoint_R"] <- 
 # this will make an MIC of 12 I, which should be R, so:
 eucast_mics <- which(rsi_translation$guideline %like% "EUCAST" &
                        rsi_translation$method == "MIC" &
-                       log2(as.double(rsi_translation$breakpoint_R)) - log2(as.double(rsi_translation$breakpoint_S)) != 0)
-rsi_translation[eucast_mics, "breakpoint_R"] <- 2 ^ (log2(as.double(rsi_translation[eucast_mics, "breakpoint_R", drop = TRUE])) - 1)
+                       log2(as.double(rsi_translation$breakpoint_R)) - log2(as.double(rsi_translation$breakpoint_S)) != 0 &
+                       !is.na(rsi_translation$breakpoint_R))
+old_R <- rsi_translation[eucast_mics, "breakpoint_R", drop = TRUE]
+old_S <- rsi_translation[eucast_mics, "breakpoint_S", drop = TRUE]
+new_R <- 2 ^ (log2(old_R) - 1)
+new_R[new_R < old_S | is.na(as.mic(new_R))] <- old_S[new_R < old_S | is.na(as.mic(new_R))]
+rsi_translation[eucast_mics, "breakpoint_R"] <- new_R
 eucast_disks <- which(rsi_translation$guideline %like% "EUCAST" &
-                       rsi_translation$method == "DISK" &
-                       rsi_translation$breakpoint_S - rsi_translation$breakpoint_R != 0)
+                        rsi_translation$method == "DISK" &
+                        rsi_translation$breakpoint_S - rsi_translation$breakpoint_R != 0 &
+                        !is.na(rsi_translation$breakpoint_R))
 rsi_translation[eucast_disks, "breakpoint_R"] <- rsi_translation[eucast_disks, "breakpoint_R", drop = TRUE] + 1
 
 # Greek symbols and EM dash symbols are not allowed by CRAN, so replace them with ASCII:

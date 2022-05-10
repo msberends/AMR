@@ -5,7 +5,7 @@
 \alias{rsi_translation}
 \title{Data Set for R/SI Interpretation}
 \format{
-A \link{data.frame} with 20,318 observations and 11 variables:
+A \link{data.frame} with 20,369 observations and 11 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
 \item \code{method}\cr Either "DISK" or "MIC"
@@ -24,7 +24,7 @@ A \link{data.frame} with 20,318 observations and 11 variables:
 rsi_translation
 }
 \description{
-Data set containing reference data to interpret MIC and disk diffusion to R/SI values, according to international guidelines. Currently implemented guidelines are EUCAST (2011-2021) and CLSI (2010-2021). Use \code{\link[=as.rsi]{as.rsi()}} to transform MICs or disks measurements to R/SI values.
+Data set containing reference data to interpret MIC and disk diffusion to R/SI values, according to international guidelines. Currently implemented guidelines are EUCAST (2011-2022) and CLSI (2011-2022). Use \code{\link[=as.rsi]{as.rsi()}} to transform MICs or disks measurements to R/SI values.
 }
 \details{
 The repository of this \code{AMR} package contains a file comprising this exact data set: \url{https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt}. This file \strong{allows for machine reading EUCAST and CLSI guidelines}, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. The file is updated automatically and the \code{mo} and \code{ab} columns have been transformed to contain the full official names instead of codes.

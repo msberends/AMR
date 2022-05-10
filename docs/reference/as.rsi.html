@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9006</span>
       </span>
     </div>
 
@@ -225,7 +225,7 @@
 <dt>ab</dt>
 <dd><p>any (vector of) text that can be coerced to a valid antimicrobial code with <code><a href="as.ab.html">as.ab()</a></code></p></dd>
 <dt>guideline</dt>
-<dd><p>defaults to the latest included EUCAST guideline, supports EUCAST (2011-2021) and CLSI (2010-2021), see <em>Details</em></p></dd>
+<dd><p>defaults to the latest included EUCAST guideline, supports EUCAST (2011-2022) and CLSI (2011-2022), see <em>Details</em></p></dd>
 <dt>uti</dt>
 <dd><p>(Urinary Tract Infection) A vector with <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>s (<code>TRUE</code> or <code>FALSE</code>) to specify whether a UTI specific interpretation from the guideline should be chosen. For using <code>as.rsi()</code> on a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>, this can also be a column containing <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See <em>Examples</em>.</p></dd>
 <dt>conserve_capped_values</dt>
@@ -263,8 +263,8 @@
 <h3 id="supported-guidelines">Supported Guidelines<a class="anchor" aria-label="anchor" href="#supported-guidelines"></a></h3>
 
 
-<p>For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (2011-2021) and CLSI (2010-2021).</p>
-<p>Thus, the <code>guideline</code> argument must be set to e.g., <code>"EUCAST 2021"</code> or <code>"CLSI 2021"</code>. By simply using <code>"EUCAST"</code> (the default) or <code>"CLSI"</code> as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the <code>reference_data</code> argument. The <code>guideline</code> argument will then be ignored.</p>
+<p>For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (2011-2022) and CLSI (2011-2022).</p>
+<p>Thus, the <code>guideline</code> argument must be set to e.g., <code>"EUCAST 2022"</code> or <code>"CLSI 2022"</code>. By simply using <code>"EUCAST"</code> (the default) or <code>"CLSI"</code> as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the <code>reference_data</code> argument. The <code>guideline</code> argument will then be ignored.</p>
 </div>
 
 <div class="section">
@@ -278,7 +278,7 @@
 <h3 id="machine-readable-interpretation-guidelines">Machine-Readable Interpretation Guidelines<a class="anchor" aria-label="anchor" href="#machine-readable-interpretation-guidelines"></a></h3>
 
 
-<p>The repository of this package <a href="https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt" class="external-link">contains a machine-readable version</a> of all guidelines. This is a CSV file consisting of 20,318 rows and 11 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. <strong>This allows for easy implementation of these rules in laboratory information systems (LIS)</strong>. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.</p>
+<p>The repository of this package <a href="https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt" class="external-link">contains a machine-readable version</a> of all guidelines. This is a CSV file consisting of 20,369 rows and 11 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. <strong>This allows for easy implementation of these rules in laboratory information systems (LIS)</strong>. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.</p>
 </div>
 
 <div class="section">

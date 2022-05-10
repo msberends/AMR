@@ -79,7 +79,7 @@ plot.mic <- function(x,
                      mo = NULL,
                      ab = NULL,
                      guideline = "EUCAST",
-                     main = paste("MIC values of", deparse(substitute(x))),
+                     main = deparse(substitute(x)),
                      ylab = "Frequency",
                      xlab = "Minimum Inhibitory Concentration (mg/L)",
                      colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
@@ -166,7 +166,7 @@ barplot.mic <- function(height,
                         mo = NULL,
                         ab = NULL,
                         guideline = "EUCAST",
-                        main = paste("MIC values of", deparse(substitute(height))),
+                        main = deparse(substitute(height)),
                         ylab = "Frequency",
                         xlab = "Minimum Inhibitory Concentration (mg/L)",
                         colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
@@ -299,7 +299,7 @@ fortify.mic <- function(object, ...) {
 #' @importFrom graphics barplot axis mtext legend
 #' @rdname plot
 plot.disk <- function(x,
-                      main = paste("Disk zones of", deparse(substitute(x))),
+                      main = deparse(substitute(x)),
                       ylab = "Frequency",
                       xlab = "Disk diffusion diameter (mm)",
                       mo = NULL,
@@ -386,7 +386,7 @@ plot.disk <- function(x,
 #' @export
 #' @noRd
 barplot.disk <- function(height,
-                         main = paste("Disk zones of", deparse(substitute(height))),
+                         main = deparse(substitute(height)),
                          ylab = "Frequency",
                          xlab = "Disk diffusion diameter (mm)",
                          mo = NULL,
@@ -525,7 +525,7 @@ fortify.disk <- function(object, ...) {
 plot.rsi <- function(x,
                      ylab = "Percentage",
                      xlab = "Antimicrobial Interpretation",
-                     main = paste("Resistance Overview of", deparse(substitute(x))),
+                     main = deparse(substitute(x)),
                      ...) {
   meet_criteria(ylab, allow_class = "character", has_length = 1)
   meet_criteria(xlab, allow_class = "character", has_length = 1)
@@ -576,7 +576,7 @@ plot.rsi <- function(x,
 #' @export
 #' @noRd
 barplot.rsi <- function(height,
-                        main = paste("Resistance Overview of", deparse(substitute(height))),
+                        main = deparse(substitute(height)),
                         xlab = "Antimicrobial Interpretation",
                         ylab = "Frequency",
                         colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
@@ -738,7 +738,11 @@ plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_RSI, f
                ab_name(ab, language = NULL, tolower = TRUE), " in ", moname)
       guideline_txt <- ""
     } else {
-      guideline_txt <- paste0("(", guideline, ")")
+      guideline_txt <- guideline
+      if (isTRUE(list(...)$uti)) {
+        guideline_txt <- paste("UTIs,", guideline_txt)
+      }
+      guideline_txt <- paste0("(", guideline_txt, ")")
     }
     sub <- bquote(.(abname)~"-"~italic(.(moname))~.(guideline_txt))
   } else {
