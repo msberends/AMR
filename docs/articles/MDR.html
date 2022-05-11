@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9008</span>
       </span>
     </div>
 
@@ -58,7 +58,7 @@
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-question-circle"></span>
      
     How to
@@ -185,10 +185,11 @@
 
       
 
-      </header><script src="MDR_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>How to determine multi-drug resistance (MDR)</h1>
+      <h1 data-toc-skip>How to determine multi-drug resistance
+(MDR)</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/HEAD/vignettes/MDR.Rmd" class="external-link"><code>vignettes/MDR.Rmd</code></a></small>
@@ -198,54 +199,87 @@
 
     
     
-<p>With the function <code><a href="../reference/mdro.html">mdro()</a></code>, you can determine which micro-organisms are multi-drug resistant organisms (MDRO).</p>
+<p>With the function <code><a href="../reference/mdro.html">mdro()</a></code>, you can determine which
+micro-organisms are multi-drug resistant organisms (MDRO).</p>
 <div class="section level3">
 <h3 id="type-of-input">Type of input<a class="anchor" aria-label="anchor" href="#type-of-input"></a>
 </h3>
-<p>The <code><a href="../reference/mdro.html">mdro()</a></code> function takes a data set as input, such as a regular <code>data.frame</code>. It tries to automatically determine the right columns for info about your isolates, such as the name of the species and all columns with results of antimicrobial agents. See the help page for more info about how to set the right settings for your data with the command <code><a href="../reference/mdro.html">?mdro</a></code>.</p>
-<p>For WHONET data (and most other data), all settings are automatically set correctly.</p>
+<p>The <code><a href="../reference/mdro.html">mdro()</a></code> function takes a data set as input, such as a
+regular <code>data.frame</code>. It tries to automatically determine the
+right columns for info about your isolates, such as the name of the
+species and all columns with results of antimicrobial agents. See the
+help page for more info about how to set the right settings for your
+data with the command <code><a href="../reference/mdro.html">?mdro</a></code>.</p>
+<p>For WHONET data (and most other data), all settings are automatically
+set correctly.</p>
 </div>
 <div class="section level3">
 <h3 id="guidelines">Guidelines<a class="anchor" aria-label="anchor" href="#guidelines"></a>
 </h3>
-<p>The <code><a href="../reference/mdro.html">mdro()</a></code> function support multiple guidelines. You can select a guideline with the <code>guideline</code> parameter. Currently supported guidelines are (case-insensitive):</p>
+<p>The <code><a href="../reference/mdro.html">mdro()</a></code> function support multiple guidelines. You can
+select a guideline with the <code>guideline</code> parameter. Currently
+supported guidelines are (case-insensitive):</p>
 <ul>
 <li>
 <p><code>guideline = "CMI2012"</code> (default)</p>
-<p>Magiorakos AP, Srinivasan A <em>et al.</em> “Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance.” Clinical Microbiology and Infection (2012) (<a href="https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext" class="external-link">link</a>)</p>
+<p>Magiorakos AP, Srinivasan A <em>et al.</em> “Multidrug-resistant,
+extensively drug-resistant and pandrug-resistant bacteria: an
+international expert proposal for interim standard definitions for
+acquired resistance.” Clinical Microbiology and Infection (2012) (<a href="https://www.clinicalmicrobiologyandinfection.com/article/S1198-743X(14)61632-3/fulltext" class="external-link">link</a>)</p>
 </li>
 <li>
-<p><code>guideline = "EUCAST3.2"</code> (or simply <code>guideline = "EUCAST"</code>)</p>
-<p>The European international guideline - EUCAST Expert Rules Version 3.2 “Intrinsic Resistance and Unusual Phenotypes” (<a href="https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf" class="external-link">link</a>)</p>
+<p><code>guideline = "EUCAST3.2"</code> (or simply
+<code>guideline = "EUCAST"</code>)</p>
+<p>The European international guideline - EUCAST Expert Rules Version
+3.2 “Intrinsic Resistance and Unusual Phenotypes” (<a href="https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf" class="external-link">link</a>)</p>
 </li>
 <li>
 <p><code>guideline = "EUCAST3.1"</code></p>
-<p>The European international guideline - EUCAST Expert Rules Version 3.1 “Intrinsic Resistance and Exceptional Phenotypes Tables” (<a href="https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf" class="external-link">link</a>)</p>
+<p>The European international guideline - EUCAST Expert Rules Version
+3.1 “Intrinsic Resistance and Exceptional Phenotypes Tables” (<a href="https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf" class="external-link">link</a>)</p>
 </li>
 <li>
 <p><code>guideline = "TB"</code></p>
-<p>The international guideline for multi-drug resistant tuberculosis - World Health Organization “Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis” (<a href="https://www.who.int/tb/publications/pmdt_companionhandbook/en/" class="external-link">link</a>)</p>
+<p>The international guideline for multi-drug resistant tuberculosis -
+World Health Organization “Companion handbook to the WHO guidelines for
+the programmatic management of drug-resistant tuberculosis” (<a href="https://www.who.int/tb/publications/pmdt_companionhandbook/en/" class="external-link">link</a>)</p>
 </li>
 <li>
 <p><code>guideline = "MRGN"</code></p>
-<p>The German national guideline - Mueller <em>et al.</em> (2015) Antimicrobial Resistance and Infection Control 4:7. DOI: 10.1186/s13756-015-0047-6</p>
+<p>The German national guideline - Mueller <em>et al.</em> (2015)
+Antimicrobial Resistance and Infection Control 4:7. DOI:
+10.1186/s13756-015-0047-6</p>
 </li>
 <li>
 <p><code>guideline = "BRMO"</code></p>
-<p>The Dutch national guideline - Rijksinstituut voor Volksgezondheid en Milieu “WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen) (ZKH)” (<a href="https://www.rivm.nl/wip-richtlijn-brmo-bijzonder-resistente-micro-organismen-zkh" class="external-link">link</a>)</p>
+<p>The Dutch national guideline - Rijksinstituut voor Volksgezondheid en
+Milieu “WIP-richtlijn BRMO (Bijzonder Resistente Micro-Organismen)
+(ZKH)” (<a href="https://www.rivm.nl/wip-richtlijn-brmo-bijzonder-resistente-micro-organismen-zkh" class="external-link">link</a>)</p>
 </li>
 </ul>
-<p>Please suggest your own (country-specific) guidelines by letting us know: <a href="https://github.com/msberends/AMR/issues/new" class="external-link uri">https://github.com/msberends/AMR/issues/new</a>.</p>
+<p>Please suggest your own (country-specific) guidelines by letting us
+know: <a href="https://github.com/msberends/AMR/issues/new" class="external-link uri">https://github.com/msberends/AMR/issues/new</a>.</p>
 <div class="section level4">
 <h4 id="custom-guidelines">Custom Guidelines<a class="anchor" aria-label="anchor" href="#custom-guidelines"></a>
 </h4>
-<p>You can also use your own custom guideline. Custom guidelines can be set with the <code><a href="../reference/mdro.html">custom_mdro_guideline()</a></code> function. This is of great importance if you have custom rules to determine MDROs in your hospital, e.g., rules that are dependent on ward, state of contact isolation or other variables in your data.</p>
-<p>If you are familiar with <code><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when()</a></code> of the <code>dplyr</code> package, you will recognise the input method to set your own rules. Rules must be set using what R considers to be the ‘formula notation’:</p>
+<p>You can also use your own custom guideline. Custom guidelines can be
+set with the <code><a href="../reference/mdro.html">custom_mdro_guideline()</a></code> function. This is of
+great importance if you have custom rules to determine MDROs in your
+hospital, e.g., rules that are dependent on ward, state of contact
+isolation or other variables in your data.</p>
+<p>If you are familiar with <code><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when()</a></code> of the
+<code>dplyr</code> package, you will recognise the input method to set
+your own rules. Rules must be set using what R considers to be the
+‘formula notation’:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">custom</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mdro.html">custom_mdro_guideline</a></span><span class="op">(</span><span class="va">CIP</span> <span class="op">==</span> <span class="st">"R"</span> <span class="op">&amp;</span> <span class="va">age</span> <span class="op">&gt;</span> <span class="fl">60</span> <span class="op">~</span> <span class="st">"Elderly Type A"</span>,
                                 <span class="va">ERY</span> <span class="op">==</span> <span class="st">"R"</span> <span class="op">&amp;</span> <span class="va">age</span> <span class="op">&gt;</span> <span class="fl">60</span> <span class="op">~</span> <span class="st">"Elderly Type B"</span><span class="op">)</span></code></pre></div>
-<p>If a row/an isolate matches the first rule, the value after the first <code>~</code> (in this case <em>‘Elderly Type A’</em>) will be set as MDRO value. Otherwise, the second rule will be tried and so on. The maximum number of rules is unlimited.</p>
-<p>You can print the rules set in the console for an overview. Colours will help reading it if your console supports colours.</p>
+<p>If a row/an isolate matches the first rule, the value after the first
+<code>~</code> (in this case <em>‘Elderly Type A’</em>) will be set as
+MDRO value. Otherwise, the second rule will be tried and so on. The
+maximum number of rules is unlimited.</p>
+<p>You can print the rules set in the console for an overview. Colours
+will help reading it if your console supports colours.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">custom</span>
 <span class="co"># A set of custom MDRO rules:</span>
@@ -255,7 +289,8 @@
 <span class="co"># </span>
 <span class="co"># Unmatched rows will return NA.</span>
 <span class="co"># Results will be of class &lt;factor&gt;, with ordered levels: Negative &lt; Elderly Type A &lt; Elderly Type B</span></code></pre></div>
-<p>The outcome of the function can be used for the <code>guideline</code> argument in the <code><a href="../reference/mdro.html">mdro()</a></code> function:</p>
+<p>The outcome of the function can be used for the
+<code>guideline</code> argument in the <code><a href="../reference/mdro.html">mdro()</a></code> function:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mdro.html">mdro</a></span><span class="op">(</span><span class="va">example_isolates</span>, guideline <span class="op">=</span> <span class="va">custom</span><span class="op">)</span>
 <span class="co"># Determining MDROs based on custom rules, resulting in factor levels:</span>
@@ -266,14 +301,25 @@
 <span class="co"># x</span>
 <span class="co">#       Negative Elderly Type A Elderly Type B </span>
 <span class="co">#           1070            198            732</span></code></pre></div>
-<p>The rules set (the <code>custom</code> object in this case) could be exported to a shared file location using <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS()</a></code> if you collaborate with multiple users. The custom rules set could then be imported using <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS()</a></code>.</p>
+<p>The rules set (the <code>custom</code> object in this case) could be
+exported to a shared file location using <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS()</a></code> if you
+collaborate with multiple users. The custom rules set could then be
+imported using <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS()</a></code>.</p>
 </div>
 </div>
 <div class="section level3">
 <h3 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h3>
-<p>The <code><a href="../reference/mdro.html">mdro()</a></code> function always returns an ordered <code>factor</code> for predefined guidelines. For example, the output of the default guideline by Magiorakos <em>et al.</em> returns a <code>factor</code> with levels ‘Negative’, ‘MDR’, ‘XDR’ or ‘PDR’ in that order.</p>
-<p>The next example uses the <code>example_isolates</code> data set. This is a data set included with this package and contains full antibiograms of 2,000 microbial isolates. It reflects reality and can be used to practise AMR data analysis. If we test the MDR/XDR/PDR guideline on this data set, we get:</p>
+<p>The <code><a href="../reference/mdro.html">mdro()</a></code> function always returns an ordered
+<code>factor</code> for predefined guidelines. For example, the output
+of the default guideline by Magiorakos <em>et al.</em> returns a
+<code>factor</code> with levels ‘Negative’, ‘MDR’, ‘XDR’ or ‘PDR’ in
+that order.</p>
+<p>The next example uses the <code>example_isolates</code> data set.
+This is a data set included with this package and contains full
+antibiograms of 2,000 microbial isolates. It reflects reality and can be
+used to practise AMR data analysis. If we test the MDR/XDR/PDR guideline
+on this data set, we get:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>   <span class="co"># to support pipes: %&gt;%</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/msberends/cleaner" class="external-link">cleaner</a></span><span class="op">)</span> <span class="co"># to create frequency tables</span></code></pre></div>
@@ -297,16 +343,32 @@
 <span class="co"># Table 5 - Acinetobacter spp.... OK.</span>
 <span class="co"># Warning: in `mdro()`: NA introduced for isolates where the available percentage of</span>
 <span class="co"># antimicrobial classes was below 50% (set with `pct_required_classes`)</span></code></pre></div>
-<p>Only results with ‘R’ are considered as resistance. Use <code>combine_SI = FALSE</code> to also consider ‘I’ as resistance.</p>
-<p>Determining multidrug-resistant organisms (MDRO), according to: Guideline: Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance. Author(s): Magiorakos AP, Srinivasan A, Carey RB, …, Vatopoulos A, Weber JT, Monnet DL Source: Clinical Microbiology and Infection 18:3, 2012; doi: 10.1111/j.1469-0691.2011.03570.x</p>
+<p>Only results with ‘R’ are considered as resistance. Use
+<code>combine_SI = FALSE</code> to also consider ‘I’ as resistance.</p>
+<p>Determining multidrug-resistant organisms (MDRO), according to:
+Guideline: Multidrug-resistant, extensively drug-resistant and
+pandrug-resistant bacteria: an international expert proposal for interim
+standard definitions for acquired resistance. Author(s): Magiorakos AP,
+Srinivasan A, Carey RB, …, Vatopoulos A, Weber JT, Monnet DL Source:
+Clinical Microbiology and Infection 18:3, 2012; doi:
+10.1111/j.1469-0691.2011.03570.x</p>
 <p>(16 isolates had no test results)</p>
 <p><strong>Frequency table</strong></p>
 <p>Class: factor &gt; ordered (numeric)<br>
 Length: 2,000<br>
-Levels: 4: Negative &lt; Multi-drug-resistant (MDR) &lt; Extensively drug-resistant …<br>
+Levels: 4: Negative &lt; Multi-drug-resistant (MDR) &lt; Extensively
+drug-resistant …<br>
 Available: 1,729 (86.45%, NA: 271 = 13.55%)<br>
 Unique: 2</p>
-<table class="table">
+<table style="width:100%;" class="table">
+<colgroup>
+<col width="4%">
+<col width="38%">
+<col width="9%">
+<col width="12%">
+<col width="16%">
+<col width="19%">
+</colgroup>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="left">Item</th>
@@ -334,7 +396,8 @@ Unique: 2</p>
 </tr>
 </tbody>
 </table>
-<p>For another example, I will create a data set to determine multi-drug resistant TB:</p>
+<p>For another example, I will create a data set to determine multi-drug
+resistant TB:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># random_rsi() is a helper function to generate</span>
 <span class="co"># a random vector with values S, I and R</span>
@@ -345,7 +408,8 @@ Unique: 2</p>
                          pyrazinamide <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,
                          moxifloxacin <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,
                          kanamycin <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>Because all column names are automatically verified for valid drug names or codes, this would have worked exactly the same way:</p>
+<p>Because all column names are automatically verified for valid drug
+names or codes, this would have worked exactly the same way:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_TB_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>RIF <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,
                          INH <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,
@@ -358,20 +422,21 @@ Unique: 2</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">my_TB_data</span><span class="op">)</span>
 <span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span>
-<span class="co"># 1          S         R            S          I            R            S</span>
-<span class="co"># 2          I         I            S          S            I            I</span>
-<span class="co"># 3          I         S            R          R            R            S</span>
-<span class="co"># 4          S         S            I          S            R            S</span>
-<span class="co"># 5          R         R            S          I            R            I</span>
-<span class="co"># 6          R         S            R          S            S            I</span>
+<span class="co"># 1          R         I            R          R            I            S</span>
+<span class="co"># 2          I         I            S          S            R            S</span>
+<span class="co"># 3          I         S            R          R            S            R</span>
+<span class="co"># 4          R         I            S          R            R            I</span>
+<span class="co"># 5          R         I            I          I            R            I</span>
+<span class="co"># 6          R         I            R          S            R            I</span>
 <span class="co">#   kanamycin</span>
-<span class="co"># 1         I</span>
-<span class="co"># 2         S</span>
+<span class="co"># 1         R</span>
+<span class="co"># 2         R</span>
 <span class="co"># 3         S</span>
 <span class="co"># 4         I</span>
 <span class="co"># 5         I</span>
-<span class="co"># 6         I</span></code></pre></div>
-<p>We can now add the interpretation of MDR-TB to our data set. You can use:</p>
+<span class="co"># 6         R</span></code></pre></div>
+<p>We can now add the interpretation of MDR-TB to our data set. You can
+use:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mdro.html">mdro</a></span><span class="op">(</span><span class="va">my_TB_data</span>, guideline <span class="op">=</span> <span class="st">"TB"</span><span class="op">)</span></code></pre></div>
 <p>or its shortcut <code><a href="../reference/mdro.html">mdr_tb()</a></code>:</p>
@@ -397,10 +462,19 @@ Unique: 2</p>
 <p><strong>Frequency table</strong></p>
 <p>Class: factor &gt; ordered (numeric)<br>
 Length: 5,000<br>
-Levels: 5: Negative &lt; Mono-resistant &lt; Poly-resistant &lt; Multi-drug-resistant &lt;…<br>
+Levels: 5: Negative &lt; Mono-resistant &lt; Poly-resistant &lt;
+Multi-drug-resistant &lt;…<br>
 Available: 5,000 (100%, NA: 0 = 0%)<br>
 Unique: 5</p>
-<table class="table">
+<table style="width:100%;" class="table">
+<colgroup>
+<col width="4%">
+<col width="38%">
+<col width="9%">
+<col width="12%">
+<col width="16%">
+<col width="19%">
+</colgroup>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="left">Item</th>
@@ -413,40 +487,40 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistant</td>
-<td align="right">3244</td>
-<td align="right">64.88%</td>
-<td align="right">3244</td>
-<td align="right">64.88%</td>
+<td align="right">3218</td>
+<td align="right">64.36%</td>
+<td align="right">3218</td>
+<td align="right">64.36%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">990</td>
-<td align="right">19.80%</td>
-<td align="right">4234</td>
-<td align="right">84.68%</td>
+<td align="right">979</td>
+<td align="right">19.58%</td>
+<td align="right">4197</td>
+<td align="right">83.94%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multi-drug-resistant</td>
-<td align="right">417</td>
-<td align="right">8.34%</td>
-<td align="right">4651</td>
-<td align="right">93.02%</td>
+<td align="right">458</td>
+<td align="right">9.16%</td>
+<td align="right">4655</td>
+<td align="right">93.10%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistant</td>
-<td align="right">248</td>
-<td align="right">4.96%</td>
-<td align="right">4899</td>
-<td align="right">97.98%</td>
+<td align="right">237</td>
+<td align="right">4.74%</td>
+<td align="right">4892</td>
+<td align="right">97.84%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensively drug-resistant</td>
-<td align="right">101</td>
-<td align="right">2.02%</td>
+<td align="right">108</td>
+<td align="right">2.16%</td>
 <td align="right">5000</td>
 <td align="right">100.00%</td>
 </tr>
@@ -470,7 +544,7 @@ Unique: 5</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer>

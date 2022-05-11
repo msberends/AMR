@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9008</span>
       </span>
     </div>
 
@@ -58,7 +58,7 @@
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-question-circle"></span>
      
     How to
@@ -185,7 +185,7 @@
 
       
 
-      </header><script src="WHONET_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>How to work with WHONET data</h1>
@@ -201,26 +201,43 @@
 <div class="section level3">
 <h3 id="import-of-data">Import of data<a class="anchor" aria-label="anchor" href="#import-of-data"></a>
 </h3>
-<p>This tutorial assumes you already imported the WHONET data with e.g. the <a href="https://readxl.tidyverse.org/" class="external-link"><code>readxl</code> package</a>. In RStudio, this can be done using the menu button ‘Import Dataset’ in the tab ‘Environment’. Choose the option ‘From Excel’ and select your exported file. Make sure date fields are imported correctly.</p>
+<p>This tutorial assumes you already imported the WHONET data with
+e.g. the <a href="https://readxl.tidyverse.org/" class="external-link"><code>readxl</code>
+package</a>. In RStudio, this can be done using the menu button ‘Import
+Dataset’ in the tab ‘Environment’. Choose the option ‘From Excel’ and
+select your exported file. Make sure date fields are imported
+correctly.</p>
 <p>An example syntax could look like this:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org" class="external-link">readxl</a></span><span class="op">)</span>
 <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html" class="external-link">read_excel</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"path/to/your/file.xlsx"</span><span class="op">)</span></code></pre></div>
-<p>This package comes with an <a href="https://msberends.github.io/AMR/reference/WHONET.html">example data set <code>WHONET</code></a>. We will use it for this analysis.</p>
+<p>This package comes with an <a href="https://msberends.github.io/AMR/reference/WHONET.html">example
+data set <code>WHONET</code></a>. We will use it for this analysis.</p>
 </div>
 <div class="section level3">
 <h3 id="preparation">Preparation<a class="anchor" aria-label="anchor" href="#preparation"></a>
 </h3>
-<p>First, load the relevant packages if you did not yet did this. I use the tidyverse for all of my analyses. All of them. If you don’t know it yet, I suggest you read about it on their website: <a href="https://www.tidyverse.org/" class="external-link uri">https://www.tidyverse.org/</a>.</p>
+<p>First, load the relevant packages if you did not yet did this. I use
+the tidyverse for all of my analyses. All of them. If you don’t know it
+yet, I suggest you read about it on their website: <a href="https://www.tidyverse.org/" class="external-link uri">https://www.tidyverse.org/</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>   <span class="co"># part of tidyverse</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span> <span class="co"># part of tidyverse</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span>     <span class="co"># this package</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/msberends/cleaner" class="external-link">cleaner</a></span><span class="op">)</span> <span class="co"># to create frequency tables</span></code></pre></div>
-<p>We will have to transform some variables to simplify and automate the analysis:</p>
+<p>We will have to transform some variables to simplify and automate the
+analysis:</p>
 <ul>
-<li>Microorganisms should be transformed to our own microorganism codes (called an <code>mo</code>) using <a href="https://msberends.github.io/AMR/reference/catalogue_of_life">our Catalogue of Life reference data set</a>, which contains all ~70,000 microorganisms from the taxonomic kingdoms Bacteria, Fungi and Protozoa. We do the tranformation with <code><a href="../reference/as.mo.html">as.mo()</a></code>. This function also recognises almost all WHONET abbreviations of microorganisms.</li>
-<li>Antimicrobial results or interpretations have to be clean and valid. In other words, they should only contain values <code>"S"</code>, <code>"I"</code> or <code>"R"</code>. That is exactly where the <code><a href="../reference/as.rsi.html">as.rsi()</a></code> function is for.</li>
+<li>Microorganisms should be transformed to our own microorganism codes
+(called an <code>mo</code>) using <a href="https://msberends.github.io/AMR/reference/catalogue_of_life">our
+Catalogue of Life reference data set</a>, which contains all ~70,000
+microorganisms from the taxonomic kingdoms Bacteria, Fungi and Protozoa.
+We do the tranformation with <code><a href="../reference/as.mo.html">as.mo()</a></code>. This function also
+recognises almost all WHONET abbreviations of microorganisms.</li>
+<li>Antimicrobial results or interpretations have to be clean and valid.
+In other words, they should only contain values <code>"S"</code>,
+<code>"I"</code> or <code>"R"</code>. That is exactly where the
+<code><a href="../reference/as.rsi.html">as.rsi()</a></code> function is for.</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># transform variables</span>
@@ -230,7 +247,9 @@
   <span class="co"># transform everything from "AMP_ND10" to "CIP_EE" to the new `rsi` class</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">AMP_ND10</span><span class="op">:</span><span class="va">CIP_EE</span><span class="op">)</span>, <span class="va">as.rsi</span><span class="op">)</span></code></pre></div>
 <p>No errors or warnings, so all values are transformed succesfully.</p>
-<p>We also created a package dedicated to data cleaning and checking, called the <code>cleaner</code> package. Its <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq()</a></code> function can be used to create frequency tables.</p>
+<p>We also created a package dedicated to data cleaning and checking,
+called the <code>cleaner</code> package. Its <code><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq()</a></code>
+function can be used to create frequency tables.</p>
 <p>So let’s check our data, with a couple of frequency tables:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># our newly created `mo` variable, put in the mo_name() function</span>
@@ -243,6 +262,14 @@ Unique: 37</p>
 <p>Shortest: 11<br>
 Longest: 40</p>
 <table class="table">
+<colgroup>
+<col width="4%">
+<col width="47%">
+<col width="7%">
+<col width="10%">
+<col width="13%">
+<col width="15%">
+</colgroup>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="left">Item</th>
@@ -388,7 +415,8 @@ Drug group: Beta-lactams/penicillins<br>
 <div class="section level3">
 <h3 id="a-first-glimpse-at-results">A first glimpse at results<a class="anchor" aria-label="anchor" href="#a-first-glimpse-at-results"></a>
 </h3>
-<p>An easy <code>ggplot</code> will already give a lot of information, using the included <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> function:</p>
+<p>An easy <code>ggplot</code> will already give a lot of information,
+using the included <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> function:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Country</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
@@ -413,7 +441,7 @@ Drug group: Beta-lactams/penicillins<br>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer>

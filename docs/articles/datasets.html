@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9008</span>
       </span>
     </div>
 
@@ -881,6 +881,173 @@ Dipivoxil, …</td>
 </div>
 </div>
 <div class="section level2">
+<h2 id="interpretation-from-mic-values-disk-diameters-to-rsi">Interpretation from MIC values / disk diameters to R/SI<a class="anchor" aria-label="anchor" href="#interpretation-from-mic-values-disk-diameters-to-rsi"></a>
+</h2>
+<p>A data set with 20,369 rows and 11 columns, containing the following
+column names:<br><em>guideline</em>, <em>method</em>, <em>site</em>, <em>mo</em>,
+<em>rank_index</em>, <em>ab</em>, <em>ref_tbl</em>, <em>disk_dose</em>,
+<em>breakpoint_S</em>, <em>breakpoint_R</em> and <em>uti</em>.</p>
+<p>This data set is in R available as <code>rsi_translation</code>,
+after you load the <code>AMR</code> package.</p>
+<p>It was last updated on 11 mei 2022 08:14:33 UTC. Find more info about
+the structure of this data set <a href="https://msberends.github.io/AMR/reference/rsi_translation.html">here</a>.</p>
+<p><strong>Direct download links:</strong></p>
+<ul>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/rsi_translation.rds" class="external-link">R
+file</a> (49 kB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/rsi_translation.xlsx" class="external-link">Excel
+file</a> (0.9 MB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/rsi_translation.txt" class="external-link">plain
+text file</a> (2 MB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/rsi_translation.sas" class="external-link">SAS
+file</a> (4 MB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/rsi_translation.sav" class="external-link">SPSS
+file</a> (2.6 MB)<br>
+</li>
+<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/rsi_translation.dta" class="external-link">Stata
+file</a> (3.8 MB)</li>
+</ul>
+<div class="section level3">
+<h3 id="source-4">Source<a class="anchor" aria-label="anchor" href="#source-4"></a>
+</h3>
+<p>This data set contains interpretation rules for MIC values and disk
+diffusion diameters. Included guidelines are CLSI (2011-2022) and EUCAST
+(2011-2022).</p>
+</div>
+<div class="section level3">
+<h3 id="example-content-4">Example content<a class="anchor" aria-label="anchor" href="#example-content-4"></a>
+</h3>
+<table style="width:100%;" class="table">
+<colgroup>
+<col width="8%">
+<col width="5%">
+<col width="3%">
+<col width="8%">
+<col width="14%">
+<col width="7%">
+<col width="3%">
+<col width="10%">
+<col width="8%">
+<col width="7%">
+<col width="8%">
+<col width="8%">
+<col width="4%">
+</colgroup>
+<thead><tr class="header">
+<th align="center">guideline</th>
+<th align="center">method</th>
+<th align="center">site</th>
+<th align="center">mo</th>
+<th align="center">mo_name</th>
+<th align="center">rank_index</th>
+<th align="center">ab</th>
+<th align="center">ab_name</th>
+<th align="center">ref_tbl</th>
+<th align="center">disk_dose</th>
+<th align="center">breakpoint_S</th>
+<th align="center">breakpoint_R</th>
+<th align="center">uti</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="center">EUCAST 2022</td>
+<td align="center">MIC</td>
+<td align="center"></td>
+<td align="center">F_ASPRG_MGTS</td>
+<td align="center">Aspergillus fumigatus</td>
+<td align="center">2</td>
+<td align="center">AMB</td>
+<td align="center">Amphotericin B</td>
+<td align="center">Aspergillus</td>
+<td align="center"></td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">FALSE</td>
+</tr>
+<tr class="even">
+<td align="center">EUCAST 2022</td>
+<td align="center">MIC</td>
+<td align="center"></td>
+<td align="center">F_ASPRG_NIGR</td>
+<td align="center">Aspergillus niger</td>
+<td align="center">2</td>
+<td align="center">AMB</td>
+<td align="center">Amphotericin B</td>
+<td align="center">Aspergillus</td>
+<td align="center"></td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="center">EUCAST 2022</td>
+<td align="center">MIC</td>
+<td align="center"></td>
+<td align="center">F_CANDD</td>
+<td align="center">Candida</td>
+<td align="center">3</td>
+<td align="center">AMB</td>
+<td align="center">Amphotericin B</td>
+<td align="center">Candida</td>
+<td align="center"></td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">FALSE</td>
+</tr>
+<tr class="even">
+<td align="center">EUCAST 2022</td>
+<td align="center">MIC</td>
+<td align="center"></td>
+<td align="center">F_CANDD_ALBC</td>
+<td align="center">Candida albicans</td>
+<td align="center">2</td>
+<td align="center">AMB</td>
+<td align="center">Amphotericin B</td>
+<td align="center">Candida</td>
+<td align="center"></td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="center">EUCAST 2022</td>
+<td align="center">MIC</td>
+<td align="center"></td>
+<td align="center">F_CANDD_DBLN</td>
+<td align="center">Candida dubliniensis</td>
+<td align="center">2</td>
+<td align="center">AMB</td>
+<td align="center">Amphotericin B</td>
+<td align="center">Candida</td>
+<td align="center"></td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">FALSE</td>
+</tr>
+<tr class="even">
+<td align="center">EUCAST 2022</td>
+<td align="center">MIC</td>
+<td align="center"></td>
+<td align="center">F_CANDD_KRUS</td>
+<td align="center">Candida krusei</td>
+<td align="center">2</td>
+<td align="center">AMB</td>
+<td align="center">Amphotericin B</td>
+<td align="center">Candida</td>
+<td align="center"></td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">FALSE</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section level2">
 <h2 id="intrinsic-bacterial-resistance">Intrinsic bacterial resistance<a class="anchor" aria-label="anchor" href="#intrinsic-bacterial-resistance"></a>
 </h2>
 <p>A data set with 134,956 rows and 2 columns, containing the following
@@ -904,13 +1071,13 @@ text file</a> (5.1 MB)<br>
 file</a> (10.4 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/intrinsic_resistant.sav" class="external-link">SPSS
-file</a> (7.5 MB)<br>
+file</a> (7.4 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/intrinsic_resistant.dta" class="external-link">Stata
 file</a> (10.2 MB)</li>
 </ul>
 <div class="section level3">
-<h3 id="source-4">Source<a class="anchor" aria-label="anchor" href="#source-4"></a>
+<h3 id="source-5">Source<a class="anchor" aria-label="anchor" href="#source-5"></a>
 </h3>
 <p>This data set contains all defined intrinsic resistance by EUCAST of
 all bug-drug combinations, and is based on <a href="https://www.eucast.org/expert_rules_and_expected_phenotypes/" class="external-link">‘EUCAST
@@ -918,7 +1085,7 @@ Expert Rules’ and ‘EUCAST Intrinsic Resistance and Unusual Phenotypes’
 v3.3</a> (2021).</p>
 </div>
 <div class="section level3">
-<h3 id="example-content-4">Example content<a class="anchor" aria-label="anchor" href="#example-content-4"></a>
+<h3 id="example-content-5">Example content<a class="anchor" aria-label="anchor" href="#example-content-5"></a>
 </h3>
 <p>Example rows when filtering on <em>Enterobacter cloacae</em>:</p>
 <table class="table">
@@ -933,6 +1100,14 @@ v3.3</a> (2021).</p>
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
+<td align="center">Acetylspiramycin</td>
+</tr>
+<tr class="odd">
+<td align="center">Enterobacter cloacae</td>
+<td align="center">Amoxicillin</td>
+</tr>
+<tr class="even">
+<td align="center">Enterobacter cloacae</td>
 <td align="center">Amoxicillin/clavulanic acid</td>
 </tr>
 <tr class="odd">
@@ -941,19 +1116,19 @@ v3.3</a> (2021).</p>
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Amoxicillin</td>
+<td align="center">Ampicillin/sulbactam</td>
 </tr>
 <tr class="odd">
-<td align="center">Enterobacter cloacae</td>
-<td align="center">Acetylspiramycin</td>
-</tr>
-<tr class="even">
 <td align="center">Enterobacter cloacae</td>
 <td align="center">Avoparcin</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="center">Enterobacter cloacae</td>
 <td align="center">Azithromycin</td>
+</tr>
+<tr class="odd">
+<td align="center">Enterobacter cloacae</td>
+<td align="center">Benzylpenicillin</td>
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
@@ -961,15 +1136,23 @@ v3.3</a> (2021).</p>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Cephalothin</td>
+<td align="center">Cefadroxil</td>
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Cefadroxil</td>
+<td align="center">Cefazolin</td>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Clindamycin</td>
+<td align="center">Cefoxitin</td>
+</tr>
+<tr class="even">
+<td align="center">Enterobacter cloacae</td>
+<td align="center">Cephalexin</td>
+</tr>
+<tr class="odd">
+<td align="center">Enterobacter cloacae</td>
+<td align="center">Cephalothin</td>
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
@@ -977,11 +1160,11 @@ v3.3</a> (2021).</p>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Cycloserine</td>
+<td align="center">Clindamycin</td>
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Cefazolin</td>
+<td align="center">Cycloserine</td>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
@@ -1001,27 +1184,19 @@ v3.3</a> (2021).</p>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Cefoxitin</td>
-</tr>
-<tr class="even">
-<td align="center">Enterobacter cloacae</td>
 <td align="center">Fusidic acid</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="center">Enterobacter cloacae</td>
 <td align="center">Gamithromycin</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="center">Enterobacter cloacae</td>
 <td align="center">Josamycin</td>
 </tr>
-<tr class="odd">
-<td align="center">Enterobacter cloacae</td>
-<td align="center">Kitasamycin</td>
-</tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Cephalexin</td>
+<td align="center">Kitasamycin</td>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
@@ -1033,43 +1208,43 @@ v3.3</a> (2021).</p>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
+<td align="center">Meleumycin</td>
+</tr>
+<tr class="even">
+<td align="center">Enterobacter cloacae</td>
+<td align="center">Midecamycin</td>
+</tr>
+<tr class="odd">
+<td align="center">Enterobacter cloacae</td>
 <td align="center">Miocamycin</td>
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Meleumycin</td>
+<td align="center">Nafithromycin</td>
 </tr>
 <tr class="odd">
-<td align="center">Enterobacter cloacae</td>
-<td align="center">Midecamycin</td>
-</tr>
-<tr class="even">
 <td align="center">Enterobacter cloacae</td>
 <td align="center">Norvancomycin</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="center">Enterobacter cloacae</td>
 <td align="center">Oleandomycin</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="center">Enterobacter cloacae</td>
 <td align="center">Oritavancin</td>
 </tr>
+<tr class="even">
+<td align="center">Enterobacter cloacae</td>
+<td align="center">Pirlimycin</td>
+</tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Benzylpenicillin</td>
+<td align="center">Primycin</td>
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
 <td align="center">Pristinamycin</td>
-</tr>
-<tr class="odd">
-<td align="center">Enterobacter cloacae</td>
-<td align="center">Pirlimycin</td>
-</tr>
-<tr class="even">
-<td align="center">Enterobacter cloacae</td>
-<td align="center">Primycin</td>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
@@ -1093,15 +1268,15 @@ v3.3</a> (2021).</p>
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Ampicillin/sulbactam</td>
+<td align="center">Solithromycin</td>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Solithromycin</td>
+<td align="center">Spiramycin</td>
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Spiramycin</td>
+<td align="center">Tedizolid</td>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
@@ -1109,15 +1284,7 @@ v3.3</a> (2021).</p>
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Thiacetazone</td>
-</tr>
-<tr class="odd">
-<td align="center">Enterobacter cloacae</td>
-<td align="center">Tilmicosin</td>
-</tr>
-<tr class="even">
-<td align="center">Enterobacter cloacae</td>
-<td align="center">Tildipirosin</td>
+<td align="center">Telavancin</td>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
@@ -1125,7 +1292,15 @@ v3.3</a> (2021).</p>
 </tr>
 <tr class="even">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Telavancin</td>
+<td align="center">Thiacetazone</td>
+</tr>
+<tr class="odd">
+<td align="center">Enterobacter cloacae</td>
+<td align="center">Tildipirosin</td>
+</tr>
+<tr class="even">
+<td align="center">Enterobacter cloacae</td>
+<td align="center">Tilmicosin</td>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
@@ -1145,166 +1320,7 @@ v3.3</a> (2021).</p>
 </tr>
 <tr class="odd">
 <td align="center">Enterobacter cloacae</td>
-<td align="center">Tedizolid</td>
-</tr>
-<tr class="even">
-<td align="center">Enterobacter cloacae</td>
 <td align="center">Vancomycin</td>
-</tr>
-<tr class="odd">
-<td align="center">Enterobacter cloacae</td>
-<td align="center">Nafithromycin</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="section level2">
-<h2 id="interpretation-from-mic-values-disk-diameters-to-rsi">Interpretation from MIC values / disk diameters to R/SI<a class="anchor" aria-label="anchor" href="#interpretation-from-mic-values-disk-diameters-to-rsi"></a>
-</h2>
-<p>A data set with 20,318 rows and 11 columns, containing the following
-column names:<br><em>guideline</em>, <em>method</em>, <em>site</em>, <em>mo</em>,
-<em>rank_index</em>, <em>ab</em>, <em>ref_tbl</em>, <em>disk_dose</em>,
-<em>breakpoint_S</em>, <em>breakpoint_R</em> and <em>uti</em>.</p>
-<p>This data set is in R available as <code>rsi_translation</code>,
-after you load the <code>AMR</code> package.</p>
-<p>It was last updated on 11 mei 2022 08:01:12 UTC. Find more info about
-the structure of this data set <a href="https://msberends.github.io/AMR/reference/rsi_translation.html">here</a>.</p>
-<p><strong>Direct download links:</strong></p>
-<ul>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/rsi_translation.rds" class="external-link">R
-file</a> (40 kB)<br>
-</li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/rsi_translation.xlsx" class="external-link">Excel
-file</a> (0.7 MB)<br>
-</li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/rsi_translation.txt" class="external-link">plain
-text file</a> (1.7 MB)<br>
-</li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/rsi_translation.sas" class="external-link">SAS
-file</a> (3.6 MB)<br>
-</li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/rsi_translation.sav" class="external-link">SPSS
-file</a> (2.2 MB)<br>
-</li>
-<li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/rsi_translation.dta" class="external-link">Stata
-file</a> (3.4 MB)</li>
-</ul>
-<div class="section level3">
-<h3 id="source-5">Source<a class="anchor" aria-label="anchor" href="#source-5"></a>
-</h3>
-<p>This data set contains interpretation rules for MIC values and disk
-diffusion diameters. Included guidelines are CLSI (2010-2021) and EUCAST
-(2011-2021).</p>
-</div>
-<div class="section level3">
-<h3 id="example-content-5">Example content<a class="anchor" aria-label="anchor" href="#example-content-5"></a>
-</h3>
-<table class="table">
-<colgroup>
-<col width="9%">
-<col width="5%">
-<col width="4%">
-<col width="16%">
-<col width="8%">
-<col width="11%">
-<col width="9%">
-<col width="8%">
-<col width="10%">
-<col width="10%">
-<col width="5%">
-</colgroup>
-<thead><tr class="header">
-<th align="center">guideline</th>
-<th align="center">method</th>
-<th align="center">site</th>
-<th align="center">mo</th>
-<th align="center">rank_index</th>
-<th align="center">ab</th>
-<th align="center">ref_tbl</th>
-<th align="center">disk_dose</th>
-<th align="center">breakpoint_S</th>
-<th align="center">breakpoint_R</th>
-<th align="center">uti</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="center">EUCAST 2021</td>
-<td align="center">MIC</td>
-<td align="center"></td>
-<td align="center">Aspergillus fumigatus</td>
-<td align="center">2</td>
-<td align="center">Amphotericin B</td>
-<td align="center">Aspergillus</td>
-<td align="center"></td>
-<td align="center">1</td>
-<td align="center">4</td>
-<td align="center">FALSE</td>
-</tr>
-<tr class="even">
-<td align="center">EUCAST 2021</td>
-<td align="center">MIC</td>
-<td align="center"></td>
-<td align="center">Aspergillus niger</td>
-<td align="center">2</td>
-<td align="center">Amphotericin B</td>
-<td align="center">Aspergillus</td>
-<td align="center"></td>
-<td align="center">1</td>
-<td align="center">4</td>
-<td align="center">FALSE</td>
-</tr>
-<tr class="odd">
-<td align="center">EUCAST 2021</td>
-<td align="center">MIC</td>
-<td align="center"></td>
-<td align="center">Candida</td>
-<td align="center">3</td>
-<td align="center">Amphotericin B</td>
-<td align="center">Candida</td>
-<td align="center"></td>
-<td align="center">1</td>
-<td align="center">2</td>
-<td align="center">FALSE</td>
-</tr>
-<tr class="even">
-<td align="center">EUCAST 2021</td>
-<td align="center">MIC</td>
-<td align="center"></td>
-<td align="center">Candida albicans</td>
-<td align="center">2</td>
-<td align="center">Amphotericin B</td>
-<td align="center">Candida</td>
-<td align="center"></td>
-<td align="center">1</td>
-<td align="center">2</td>
-<td align="center">FALSE</td>
-</tr>
-<tr class="odd">
-<td align="center">EUCAST 2021</td>
-<td align="center">MIC</td>
-<td align="center"></td>
-<td align="center">Candida krusei</td>
-<td align="center">2</td>
-<td align="center">Amphotericin B</td>
-<td align="center">Candida</td>
-<td align="center"></td>
-<td align="center">1</td>
-<td align="center">2</td>
-<td align="center">FALSE</td>
-</tr>
-<tr class="even">
-<td align="center">EUCAST 2021</td>
-<td align="center">MIC</td>
-<td align="center"></td>
-<td align="center">Candida parapsilosis</td>
-<td align="center">2</td>
-<td align="center">Amphotericin B</td>
-<td align="center">Candida</td>
-<td align="center"></td>
-<td align="center">1</td>
-<td align="center">2</td>
-<td align="center">FALSE</td>
 </tr>
 </tbody>
 </table>

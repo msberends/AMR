@@ -209,6 +209,27 @@ antivirals %>%
   print_df()
 ```
 
+## Interpretation from MIC values / disk diameters to R/SI
+
+`r structure_txt(rsi_translation)`
+
+This data set is in R available as `rsi_translation`, after you load the `AMR` package.
+
+`r download_txt("rsi_translation")`
+
+### Source
+
+This data set contains interpretation rules for MIC values and disk diffusion diameters. Included guidelines are CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`) and EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`).
+
+### Example content
+
+```{r, echo = FALSE}
+rsi_translation %>% 
+  mutate(mo_name = mo_name(mo, language = NULL), .after = mo) %>% 
+  mutate(ab_name = ab_name(ab, language = NULL), .after = ab) %>% 
+  print_df()
+```
+
 
 ## Intrinsic bacterial resistance
 
@@ -231,28 +252,8 @@ intrinsic_resistant %>%
   transmute(microorganism = mo_name(mo),
             antibiotic = ab_name(ab)) %>% 
   filter(microorganism == "Enterobacter cloacae") %>% 
+  arrange(antibiotic) %>%
   print_df(rows = Inf)
-```
-
-
-## Interpretation from MIC values / disk diameters to R/SI
-
-`r structure_txt(rsi_translation)`
-
-This data set is in R available as `rsi_translation`, after you load the `AMR` package.
-
-`r download_txt("rsi_translation")`
-
-### Source
-
-This data set contains interpretation rules for MIC values and disk diffusion diameters. Included guidelines are CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`) and EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`).
-
-### Example content
-
-```{r, echo = FALSE}
-rsi_translation %>% 
-  mutate(ab = ab_name(ab), mo = mo_name(mo)) %>% 
-  print_df()
 ```
 
 

@@ -252,7 +252,9 @@ changed_md5 <- function(object) {
 }
 
 # give official names to ABs and MOs
-rsi <- dplyr::mutate(rsi_translation, ab = ab_name(ab), mo = mo_name(mo))
+rsi <- AMR::rsi_translation %>% 
+  mutate(mo_name = mo_name(mo, language = NULL), .after = mo) %>% 
+  mutate(ab_name = ab_name(ab, language = NULL), .after = ab)
 if (changed_md5(rsi)) {
   usethis::ui_info(paste0("Saving {usethis::ui_value('rsi_translation')} to {usethis::ui_value('/data-raw/')}"))
   write_md5(rsi)
@@ -312,8 +314,8 @@ if (changed_md5(av)) {
 }
 
 # give official names to ABs and MOs
-intrinsicR <- data.frame(microorganism = mo_name(intrinsic_resistant$mo),
-                         antibiotic = ab_name(intrinsic_resistant$ab),
+intrinsicR <- data.frame(microorganism = mo_name(intrinsic_resistant$mo, language = NULL),
+                         antibiotic = ab_name(intrinsic_resistant$ab, language = NULL),
                          stringsAsFactors = FALSE)
 if (changed_md5(intrinsicR)) {
   usethis::ui_info(paste0("Saving {usethis::ui_value('intrinsic_resistant')} to {usethis::ui_value('/data-raw/')}"))
