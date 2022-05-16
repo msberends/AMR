@@ -34,7 +34,7 @@
 #' @param ... ignored, only in place to allow future extensions
 #' @details The base \R function [sample()] is used for generating values.
 #' 
-#' Generated values are based on the latest EUCAST guideline implemented in the [rsi_translation] data set. To create specific generated values per bug or drug, set the `mo` and/or `ab` argument.
+#' Generated values are based on the EUCAST `r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))` guideline as implemented in the [rsi_translation] data set. To create specific generated values per bug or drug, set the `mo` and/or `ab` argument.
 #' @return class `<mic>` for [random_mic()] (see [as.mic()]) and class `<disk>` for [random_disk()] (see [as.disk()])
 #' @name random
 #' @rdname random
@@ -89,6 +89,7 @@ random_rsi <- function(size = NULL, prob_RSI = c(0.33, 0.33, 0.33), ...) {
 }
 
 random_exec <- function(type, size, mo = NULL, ab = NULL) {
+  check_dataset_integrity()
   df <- rsi_translation %pm>%
     pm_filter(guideline %like% "EUCAST") %pm>%
     pm_arrange(pm_desc(guideline)) %pm>%

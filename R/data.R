@@ -251,7 +251,14 @@
 #' - `breakpoint_S`\cr Lowest MIC value or highest number of millimetres that leads to "S"
 #' - `breakpoint_R`\cr Highest MIC value or lowest number of millimetres that leads to "R"
 #' - `uti`\cr A [logical] value (`TRUE`/`FALSE`) to indicate whether the rule applies to a urinary tract infection (UTI)
-#' @details The repository of this `AMR` package contains a file comprising this exact data set: <https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt>. This file **allows for machine reading EUCAST and CLSI guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. The file is updated automatically and the `mo` and `ab` columns have been transformed to contain the full official names instead of codes.
+#' @details 
+#' Overview of the data set:
+#' 
+#' ```{r}
+#' head(rsi_translation)
+#' ```
+#' 
+#' The repository of this `AMR` package contains a file comprising this exact data set: <https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt>. This file **allows for machine reading EUCAST and CLSI guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. The file is updated automatically and the `mo` and `ab` columns have been transformed to contain the full official names instead of codes.
 #' @inheritSection AMR Reference Data Publicly Available
 #' @inheritSection AMR Read more on Our Website!
 #' @seealso [intrinsic_resistant]

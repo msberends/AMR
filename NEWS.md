@@ -1,5 +1,5 @@
-# `AMR` 1.8.1.9008
-## <small>Last updated: 11 mei 2022</small>
+# `AMR` 1.8.1.9009
+## <small>Last updated: 16 May 2022</small>
 
 ### New
 * EUCAST 2022 and CLSI 2022 guidelines have been added for `as.rsi()`. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.
@@ -10,6 +10,7 @@
 * `droplevels()` on MIC will now return a common `factor` at default and will lose the `<mic>` class. Use `droplevels(..., as.mic = TRUE)` to keep the `<mic>` class.
 * Small fix for using `ab_from_text()`
 * Fixes for reading in text files using `set_mo_source()`, which now also allows the source file to contain valid taxonomic names instead of only valid microorganism ID of this package
+* Using any `random_*()` function (such as `random_mic()`) is now possible by directly calling the package without loading it first: `AMR::random_mic(10)`
 
 
 # `AMR` 1.8.1

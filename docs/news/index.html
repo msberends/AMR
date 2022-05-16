@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9009</span>
       </span>
     </div>
 
@@ -157,16 +157,16 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.8.1.9008" id="amr-1819008">
-<code>AMR</code> 1.8.1.9008<a class="anchor" aria-label="anchor" href="#amr-1819008"></a></h2>
+<h2 class="page-header" data-toc-text="1.8.1.9009" id="amr-1819009">
+<code>AMR</code> 1.8.1.9009<a class="anchor" aria-label="anchor" href="#amr-1819009"></a></h2>
 <div class="section level3">
-<h3 id="last-updated-mei-1-8-1-9008"><small>Last updated: 11 mei 2022</small><a class="anchor" aria-label="anchor" href="#last-updated-mei-1-8-1-9008"></a></h3>
+<h3 id="last-updated-may-1-8-1-9009"><small>Last updated: 16 May 2022</small><a class="anchor" aria-label="anchor" href="#last-updated-may-1-8-1-9009"></a></h3>
 <div class="section level4">
-<h4 id="new-1-8-1-9008">New<a class="anchor" aria-label="anchor" href="#new-1-8-1-9008"></a></h4>
+<h4 id="new-1-8-1-9009">New<a class="anchor" aria-label="anchor" href="#new-1-8-1-9009"></a></h4>
 <ul><li>EUCAST 2022 and CLSI 2022 guidelines have been added for <code><a href="../reference/as.rsi.html">as.rsi()</a></code>. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-1-8-1-9008">Changed<a class="anchor" aria-label="anchor" href="#changed-1-8-1-9008"></a></h4>
+<h4 id="changed-1-8-1-9009">Changed<a class="anchor" aria-label="anchor" href="#changed-1-8-1-9009"></a></h4>
 <ul><li>Fix for <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on certain EUCAST breakpoints for MIC values</li>
 <li>Removed <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> for MIC values, since MIC are not integer values and running <code><a href="https://rdrr.io/r/base/table.html" class="external-link">table()</a></code> on MIC values consequently failed for not being able to retrieve the level position (as that’s how normally <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> on <code>factor</code>s work)</li>
 <li>
@@ -174,6 +174,8 @@
 <li>Small fix for using <code><a href="../reference/ab_from_text.html">ab_from_text()</a></code>
 </li>
 <li>Fixes for reading in text files using <code><a href="../reference/mo_source.html">set_mo_source()</a></code>, which now also allows the source file to contain valid taxonomic names instead of only valid microorganism ID of this package</li>
+<li>Using any <code>random_*()</code> function (such as <code><a href="../reference/random.html">random_mic()</a></code>) is now possible by directly calling the package without loading it first: <code>AMR::random_mic(10)</code>
+</li>
 </ul></div>
 </div>
 </div>
@@ -1693,7 +1695,7 @@ This works for all drug combinations, such as ampicillin/sulbactam, ceftazidime/
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">thousands_of_E_colis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"E. coli"</span>, <span class="fl">25000</span><span class="op">)</span>
-<span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span><span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="va">thousands_of_E_colis</span><span class="op">)</span>, unit <span class="op">=</span> <span class="st">"s"</span><span class="op">)</span>
+<span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html" class="external-link">microbenchmark</a></span><span class="op">(</span><span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="va">thousands_of_E_colis</span><span class="op">)</span>, unit <span class="op">=</span> <span class="st">"s"</span><span class="op">)</span>
 <span class="co"># Unit: seconds</span>
 <span class="co">#         min       median         max  neval</span>
 <span class="co">#  0.01817717  0.01843957  0.03878077    100</span></code></pre></div>
