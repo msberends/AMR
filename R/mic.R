@@ -47,6 +47,7 @@ valid_mic_levels <- c(c(t(vapply(FUN.VALUE = character(9), ops,
 #' @rdname as.mic
 #' @param x a [character] or [numeric] vector
 #' @param na.rm a [logical] indicating whether missing values should be removed
+#' @param ... arguments passed on to methods
 #' @details To interpret MIC values as RSI values, use [as.rsi()] on MIC values. It supports guidelines from EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`).
 #' 
 #' This class for MIC values is a quite a special data type: formally it is an ordered [factor] with valid MIC values as [factor] levels (to make sure only valid MIC values are retained), but for any mathematical operation it acts as decimal numbers:
@@ -228,11 +229,10 @@ as.numeric.mic <- function(x, ...) {
 
 #' @rdname as.mic
 #' @method droplevels mic
-#' @param exclude factor levels which should be excluded from the result even if present, see [droplevels()][base::droplevels()]
 #' @param as.mic a [logical] to indicate whether the `<mic>` class should be kept, defaults to `FALSE`
 #' @export
-droplevels.mic <- function(x, exclude = if (any(is.na(levels(x)))) NULL else NA, as.mic = FALSE, ...) {
-  x <- droplevels.factor(x, exclude = exclude, ...)
+droplevels.mic <- function(x, as.mic = FALSE, ...) {
+  x <- droplevels.factor(x, ...)
   if (as.mic == TRUE) {
     class(x) <- c("mic", "ordered", "factor")
   }

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9010</span>
       </span>
     </div>
 
@@ -169,12 +169,7 @@
 <span class="fu">is.mic</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 
 <span class="co"># S3 method for mic</span>
-<span class="fu"><a href="https://rdrr.io/r/base/droplevels.html" class="external-link">droplevels</a></span><span class="op">(</span>
-  <span class="va">x</span>,
-  exclude <span class="op">=</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="cn">NULL</span> <span class="kw">else</span> <span class="cn">NA</span>,
-  as.mic <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/droplevels.html" class="external-link">droplevels</a></span><span class="op">(</span><span class="va">x</span>, as.mic <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -183,10 +178,10 @@
 <dd><p>a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> or <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> vector</p></dd>
 <dt>na.rm</dt>
 <dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> indicating whether missing values should be removed</p></dd>
-<dt>exclude</dt>
-<dd><p>factor levels which should be excluded from the result even if present, see <a href="https://rdrr.io/r/base/droplevels.html" class="external-link">droplevels()</a></p></dd>
 <dt>as.mic</dt>
 <dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the <code>&lt;mic&gt;</code> class should be kept, defaults to <code>FALSE</code></p></dd>
+<dt>...</dt>
+<dd><p>arguments passed on to methods</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

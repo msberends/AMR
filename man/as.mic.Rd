@@ -15,21 +15,16 @@ NA_mic_
 
 is.mic(x)
 
-\method{droplevels}{mic}(
-  x,
-  exclude = if (any(is.na(levels(x)))) NULL else NA,
-  as.mic = FALSE,
-  ...
-)
+\method{droplevels}{mic}(x, as.mic = FALSE, ...)
 }
 \arguments{
 \item{x}{a \link{character} or \link{numeric} vector}
 
 \item{na.rm}{a \link{logical} indicating whether missing values should be removed}
 
-\item{exclude}{factor levels which should be excluded from the result even if present, see \link[base:droplevels]{droplevels()}}
-
 \item{as.mic}{a \link{logical} to indicate whether the \verb{<mic>} class should be kept, defaults to \code{FALSE}}
+
+\item{...}{arguments passed on to methods}
 }
 \value{
 Ordered \link{factor} with additional class \code{\link{mic}}, that in mathematical operations acts as decimal numbers. Bare in mind that the outcome of any mathematical operation on MICs will return a \link{numeric} value.
