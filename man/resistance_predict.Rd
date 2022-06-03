@@ -69,7 +69,7 @@ ggplot_rsi_predict(
 
 \item{minimum}{minimal amount of available isolates per year to include. Years containing less observations will be estimated by the model.}
 
-\item{model}{the statistical model of choice. This could be a generalised linear regression model with binomial distribution (i.e. using `glm(..., family = binomial)``, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See \emph{Details} for all valid options.}
+\item{model}{the statistical model of choice. This could be a generalised linear regression model with binomial distribution (i.e. using \code{glm(..., family = binomial)}, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance. See \emph{Details} for all valid options.}
 
 \item{I_as_S}{a \link{logical} to indicate whether values \code{"I"} should be treated as \code{"S"} (will otherwise be treated as \code{"R"}). The default, \code{TRUE}, follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section \emph{Interpretation of S, I and R} below.}
 

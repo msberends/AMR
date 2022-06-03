@@ -27,7 +27,7 @@
 #' 
 #' Define custom EUCAST rules for your organisation or specific analysis and use the output of this function in [eucast_rules()].
 #' @inheritSection lifecycle Stable Lifecycle
-#' @param ... rules in formula notation, see *Examples*
+#' @param ... rules in [formula][`~`()] notation, see *Examples*
 #' @details
 #' Some organisations have their own adoption of EUCAST rules. This function can be used to define custom EUCAST rules to be used in the [eucast_rules()] function.
 #' 
@@ -75,7 +75,7 @@
 #' 
 #' ### Using taxonomic properties in rules
 #' 
-#' There is one exception in variables used for the rules: all column names of the [microorganisms] data set can also be used, but do not have to exist in the data set. These column names are: `r vector_and(colnames(microorganisms), quote = "``", sort = FALSE)`. Thus, this next example will work as well, despite the fact that the `df` data set does not contain a column `genus`:
+#' There is one exception in variables used for the rules: all column names of the [microorganisms] data set can also be used, but do not have to exist in the data set. These column names are: `r vector_and(colnames(microorganisms), quote = "\u0096", sort = FALSE)`. Thus, this next example will work as well, despite the fact that the `df` data set does not contain a column `genus`:
 #' 
 #' ```
 #' y <- custom_eucast_rules(TZP == "S" & genus == "Klebsiella" ~ aminopenicillins == "S",
@@ -91,7 +91,7 @@
 #' 
 #' It is possible to define antibiotic groups instead of single antibiotics for the rule consequence, the part *after* the tilde. In above examples, the antibiotic group `aminopenicillins` is used to include ampicillin and amoxicillin. The following groups are allowed (case-insensitive). Within parentheses are the agents that will be matched when running the rule.
 #' 
-#' `r paste0("  * ", sapply(DEFINED_AB_GROUPS, function(x) paste0("``", tolower(gsub("^AB_", "", x)), "``\\cr(", vector_and(ab_name(eval(parse(text = x), envir = asNamespace("AMR")), language = NULL, tolower = TRUE), quotes = FALSE), ")"), USE.NAMES = FALSE), "\n", collapse = "")`
+#' `r paste0("  * ", sapply(DEFINED_AB_GROUPS, function(x) paste0("\u0096", tolower(gsub("^AB_", "", x)), "\u0096\\cr(", vector_and(ab_name(eval(parse(text = x), envir = asNamespace("AMR")), language = NULL, tolower = TRUE), quotes = FALSE), ")"), USE.NAMES = FALSE), "\n", collapse = "")`
 #' @returns A [list] containing the custom rules
 #' @inheritSection AMR Read more on Our Website!
 #' @export

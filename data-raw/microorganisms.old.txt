@@ -278,9 +278,9 @@
 "Adelosina duthiersi"	"Quinqueloculina duthiersi"	"Schlumberger, 1886"	3
 "Adelosina linneiana"	"Pseudotriloculina linneiana"	"DOrbigny, 1839"	3
 "Aecidium ipomoeae-panduratae"	"Albugo ipomoeae-panduratae"	"Schwein, 1822"	3
-"Aedimorphus alboannulatus"	"Aedes alboannulatus"	"Theobald, 1905"	3
-"Aedimorphus albotaeniatus"	"Aedes albotaeniatus"	"Theobald, 1903"	3
-"Aedimorphus australis"	"Aedes australis"	"Taylor, 1914"	3
+"Aedimorphus alboannulatus"	"Aedes alboannulatus"	"Theobald, 1905"	2
+"Aedimorphus albotaeniatus"	"Aedes albotaeniatus"	"Theobald, 1903"	2
+"Aedimorphus australis"	"Aedes australis"	"Taylor, 1914"	2
 "Aegyria angustata"	"Dysteria angustata"	"Claparede et al., 1859"	3
 "Aegyria astyla"	"Dysteria astyla"	"Maskell, 1887"	3
 "Aegyria distyla"	"Dysteria distyla"	"Maskell, 1887"	3
@@ -880,7 +880,7 @@
 "Astacolus subaculeata"	"Vaginulinopsis subaculeata"	"Cushman, 1923"	3
 "Astacolus sublegumen"	"Vaginulinopsis sublegumen"	"Parr, 1950"	3
 "Asterellina pulchella"	"Eoeponidella pulchella"	"Parker, 1952"	3
-"Asterias ocellifera"	"Nectria ocellifera"	"Lamarck, 1816"	3
+"Asterias ocellifera"	"Nectria ocellifera"	"Lamarck, 1816"	2
 "Asterigerinata pulchella"	"Eoeponidella pulchella"	"Parker, 1952"	3
 "Asteromella anthemidis"	"Phoma anthemidis"	"Ruppr, 1958"	2
 "Asteromella longissima"	"Phoma longissima"	"Petr"	2
@@ -1324,8 +1324,8 @@
 "Bacteriovorax marinus"	"Halobacteriovorax marinus"	"Baer et al., 2004"	2
 "Bacteriovorax starrii"	"Peredibacter starrii"	"Baer et al., 2000"	2
 "Bacteroides amylophilus"	"Ruminobacter amylophilus"	"Hamlin et al., 1956"	1
-"Bacteroides asaccharolyticus"	"Porphyromonas asaccharolytica"	"Finegold et al., 1977"	3
-"Bacteroides barnesiae"	"Phocaeicola barnesiae"	"Lan et al., 2006"	3
+"Bacteroides asaccharolyticus"	"Porphyromonas asaccharolytica"	"Finegold et al., 1977"	2
+"Bacteroides barnesiae"	"Phocaeicola barnesiae"	"Lan et al., 2006"	2
 "Bacteroides bivius"	"Prevotella bivia"	"Holdeman et al., 1977"	2
 "Bacteroides buccae"	"Prevotella buccae"	"Holdeman et al., 1982"	2
 "Bacteroides buccalis"	"Prevotella buccalis"	"Shah et al., 1982"	2
@@ -1333,32 +1333,32 @@
 "Bacteroides capillus"	"Prevotella buccae"	"Kornman et al., 1982"	2
 "Bacteroides cellulosolvens"	"Pseudobacteroides cellulosolvens"	"Murray et al., 1984"	2
 "Bacteroides chinchillae"	"Bacteroides sartorii"	"Kitahara et al., 2011"	
-"Bacteroides chinchillae"	"Phocaeicola sartorii"	"Kitahara et al., 2011"	3
+"Bacteroides chinchillae"	"Phocaeicola sartorii"	"Kitahara et al., 2011"	2
 "Bacteroides coagulans"	"Ezakiella coagulans"	"Eggerth et al., 1933"	2
-"Bacteroides coprocola"	"Phocaeicola coprocola"	"Kitahara et al., 2005"	3
-"Bacteroides coprophilus"	"Phocaeicola coprophilus"	"Hayashi et al., 2016"	3
+"Bacteroides coprocola"	"Phocaeicola coprocola"	"Kitahara et al., 2005"	2
+"Bacteroides coprophilus"	"Phocaeicola coprophilus"	"Hayashi et al., 2016"	2
 "Bacteroides corporis"	"Prevotella corporis"	"Johnson et al., 1983"	2
 "Bacteroides denticola"	"Prevotella denticola"	"Shah et al., 1982"	2
 "Bacteroides disiens"	"Prevotella disiens"	"Holdeman et al., 1977"	2
-"Bacteroides distasonis"	"Parabacteroides distasonis"	"Eggerth et al., 1933"	3
-"Bacteroides dorei"	"Phocaeicola dorei"	"Bakir et al., 2016"	3
-"Bacteroides endodontalis"	"Porphyromonas endodontalis"	"Van Steenbergen et al., 1984"	3
+"Bacteroides distasonis"	"Parabacteroides distasonis"	"Eggerth et al., 1933"	2
+"Bacteroides dorei"	"Phocaeicola dorei"	"Bakir et al., 2016"	2
+"Bacteroides endodontalis"	"Porphyromonas endodontalis"	"Van Steenbergen et al., 1984"	2
 "Bacteroides forsythus"	"Tannerella forsythia"	"Tanner et al., 1986"	3
 "Bacteroides furcosus"	"Anaerorhabdus furcosa"	"Hauduroy et al., 1937"	2
-"Bacteroides gingivalis"	"Porphyromonas gingivalis"	"Coykendall et al., 1980"	3
-"Bacteroides goldsteinii"	"Parabacteroides goldsteinii"	"Song et al., 2006"	3
+"Bacteroides gingivalis"	"Porphyromonas gingivalis"	"Coykendall et al., 1980"	2
+"Bacteroides goldsteinii"	"Parabacteroides goldsteinii"	"Song et al., 2006"	2
 "Bacteroides gracilis"	"Campylobacter gracilis"	"Tanner et al., 1981"	2
 "Bacteroides heparinolyticus"	"Prevotella heparinolytica"	"Okuda et al., 1985"	2
 "Bacteroides hypermegas"	"Megamonas hypermegale"	"Harrison et al., 1963"	2
 "Bacteroides intermedius"	"Prevotella intermedia"	"Johnson et al., 1983"	2
-"Bacteroides levii"	"Porphyromonas levii"	"Johnson et al., 1983"	3
+"Bacteroides levii"	"Porphyromonas levii"	"Johnson et al., 1983"	2
 "Bacteroides loescheii"	"Prevotella loescheii"	"Holdeman et al., 1982"	2
-"Bacteroides macacae"	"Porphyromonas macacae"	"Coykendall et al., 1980"	3
-"Bacteroides massiliensis"	"Phocaeicola massiliensis"	"Fenner et al., 2016"	3
+"Bacteroides macacae"	"Porphyromonas macacae"	"Coykendall et al., 1980"	2
+"Bacteroides massiliensis"	"Phocaeicola massiliensis"	"Fenner et al., 2016"	2
 "Bacteroides melaninogenicus"	"Prevotella melaninogenica"	"Roy et al., 1982"	2
 "Bacteroides melaninogenicus intermedius"	"Prevotella intermedia"	"Holdeman et al., 1970"	2
-"Bacteroides melaninogenicus macacae"	"Porphyromonas macacae"	"Slots et al., 1980"	3
-"Bacteroides merdae"	"Parabacteroides merdae"	"Johnson et al., 1986"	3
+"Bacteroides melaninogenicus macacae"	"Porphyromonas macacae"	"Slots et al., 1980"	2
+"Bacteroides merdae"	"Parabacteroides merdae"	"Johnson et al., 1986"	2
 "Bacteroides microfusus"	"Rikenella microfusus"	"Kaneuchi et al., 1978"	3
 "Bacteroides multiacidus"	"Mitsuokella multacida"	"Mitsuoka et al., 1974"	2
 "Bacteroides nodosus"	"Dichelobacter nodosus"	"Mraz, 1963"	1
@@ -1366,19 +1366,19 @@
 "Bacteroides oralis"	"Prevotella oralis"	"Loesche et al., 1964"	2
 "Bacteroides oris"	"Prevotella oris"	"Holdeman et al., 1982"	2
 "Bacteroides oulorum"	"Prevotella oulorum"	"Shah et al., 1985"	2
-"Bacteroides paurosaccharolyticus"	"Phocaeicola paurosaccharolyticus"	"Ueki et al., 2011"	3
+"Bacteroides paurosaccharolyticus"	"Phocaeicola paurosaccharolyticus"	"Ueki et al., 2011"	2
 "Bacteroides pentosaceus"	"Prevotella buccae"	"Shah et al., 1982"	2
-"Bacteroides plebeius"	"Phocaeicola plebeius"	"Kitahara et al., 2005"	3
+"Bacteroides plebeius"	"Phocaeicola plebeius"	"Kitahara et al., 2005"	2
 "Bacteroides pneumosintes"	"Dialister pneumosintes"	"Holdeman et al., 1970"	2
 "Bacteroides praeacutus"	"Tissierella praeacuta"	"Holdeman et al., 1970"	2
-"Bacteroides putredinis"	"Alistipes putredinis"	"Kelly, 1957"	3
+"Bacteroides putredinis"	"Alistipes putredinis"	"Kelly, 1957"	2
 "Bacteroides ruminicola"	"Prevotella ruminicola"	"Bryant et al., 1958"	2
 "Bacteroides ruminicola brevis"	"Prevotella brevis"	"Bryant et al., 1958"	2
-"Bacteroides salanitronis"	"Phocaeicola salanitronis"	"Lan et al., 2006"	3
-"Bacteroides salivosus"	"Porphyromonas macacae"	"Love et al., 1987"	3
+"Bacteroides salanitronis"	"Phocaeicola salanitronis"	"Lan et al., 2006"	2
+"Bacteroides salivosus"	"Porphyromonas macacae"	"Love et al., 1987"	2
 "Bacteroides salyersae"	"Bacteroides salyersiae"	"Song et al., 2005"	2
-"Bacteroides sartorii"	"Phocaeicola sartorii"	"Clavel et al., 2012"	3
-"Bacteroides splanchnicus"	"Odoribacter splanchnicus"	"Werner et al., 1975"	3
+"Bacteroides sartorii"	"Phocaeicola sartorii"	"Clavel et al., 2012"	2
+"Bacteroides splanchnicus"	"Odoribacter splanchnicus"	"Werner et al., 1975"	2
 "Bacteroides succinogenes"	"Fibrobacter succinogenes"	"Hungate, 1950"	3
 "Bacteroides suis"	"Bacteroides pyogenes"	"Benno et al., 1983"	2
 "Bacteroides tectum"	"Bacteroides pyogenes"	"Love et al., 2019"	2
@@ -1386,7 +1386,7 @@
 "Bacteroides termitidis"	"Sebaldella termitidis"	"Holdeman et al., 1970"	3
 "Bacteroides ureolyticus"	"Campylobacter ureolyticus"	"Jackson et al., 1978"	2
 "Bacteroides veroralis"	"Prevotella veroralis"	"Watabe et al., 1983"	2
-"Bacteroides vulgatus"	"Phocaeicola vulgatus"	"Hahnke et al., 2016"	3
+"Bacteroides vulgatus"	"Phocaeicola vulgatus"	"Hahnke et al., 2016"	2
 "Bacteroides xylanolyticus"	"Hungatella xylanolytica"	"Scholten-Koerselman et al., 1988"	2
 "Bacteroides zoogleoformans"	"Prevotella zoogleoformans"	"Cato et al., 1982"	
 "Bacteroides zoogleoformans"	"Capsularis zoogleoformans"	"Cato et al., 1982"	3
@@ -1650,27 +1650,27 @@
 "Bolivinita subangularis"	"Saidovina subangularis"	"Brady, 1881"	3
 "Bolivinita subangularis lineata"	"Saidovina subangularis lineata"	"Cushman, 1933"	3
 "Borelis (Fasciolites) pygmaea"	"Neoalveolina pygmaea"	"Hanzawa, 1930"	3
-"Borrelia baltazardi"	"Borrelia baltazardii"	"Karimi et al., 1983"	3
-"Borrelia bavariensis"	"Borrelia garinii bavariensis"	"Margos et al., 2020"	3
-"Borrelia turdae"	"Borrelia turdi"	"Fukunaga et al., 1997"	3
-"Borreliella"	"Borrelia"	"Adeolu et al., 2015"	3
-"Borreliella afzelii"	"Borrelia afzelii"	"Adeolu et al., 2018"	3
-"Borreliella americana"	"Borrelia americana"	"Adeolu et al., 2018"	3
+"Borrelia baltazardi"	"Borrelia baltazardii"	"Karimi et al., 1983"	2
+"Borrelia bavariensis"	"Borrelia garinii bavariensis"	"Margos et al., 2020"	2
+"Borrelia turdae"	"Borrelia turdi"	"Fukunaga et al., 1997"	2
+"Borreliella"	"Borrelia"	"Adeolu et al., 2015"	2
+"Borreliella afzelii"	"Borrelia afzelii"	"Adeolu et al., 2018"	2
+"Borreliella americana"	"Borrelia americana"	"Adeolu et al., 2018"	2
 "Borreliella bavariensis"	"Borrelia bavariensis"	"Adeolu et al., 2015"	
-"Borreliella bavariensis"	"Borrelia garinii bavariensis"	"Adeolu et al., 2015"	3
-"Borreliella bissettiae"	"Borrelia bissettiae"	"Gupta, 2020"	3
-"Borreliella burgdorferi"	"Borrelia burgdorferi"	"Adeolu et al., 2015"	3
-"Borreliella californiensis"	"Borrelia californiensis"	"Gupta, 2020"	3
-"Borreliella carolinensis"	"Borrelia carolinensis"	"Adeolu et al., 2015"	3
-"Borreliella garinii"	"Borrelia garinii"	"Adeolu et al., 2015"	3
-"Borreliella japonica"	"Borrelia japonica"	"Adeolu et al., 2015"	3
-"Borreliella kurtenbachii"	"Borrelia kurtenbachii"	"Adeolu et al., 2015"	3
-"Borreliella lanei"	"Borrelia lanei"	"Gupta, 2020"	3
-"Borreliella mayonii"	"Borrelia mayonii"	"Gupta, 2020"	3
-"Borreliella sinica"	"Borrelia sinica"	"Adeolu et al., 2015"	3
-"Borreliella spielmanii"	"Borrelia spielmanii"	"Adeolu et al., 2015"	3
-"Borreliella valaisiana"	"Borrelia valaisiana"	"Adeolu et al., 2018"	3
-"Borreliella yangtzensis"	"Borrelia yangtzensis"	"Gupta, 2020"	3
+"Borreliella bavariensis"	"Borrelia garinii bavariensis"	"Adeolu et al., 2015"	2
+"Borreliella bissettiae"	"Borrelia bissettiae"	"Gupta, 2020"	2
+"Borreliella burgdorferi"	"Borrelia burgdorferi"	"Adeolu et al., 2015"	2
+"Borreliella californiensis"	"Borrelia californiensis"	"Gupta, 2020"	2
+"Borreliella carolinensis"	"Borrelia carolinensis"	"Adeolu et al., 2015"	2
+"Borreliella garinii"	"Borrelia garinii"	"Adeolu et al., 2015"	2
+"Borreliella japonica"	"Borrelia japonica"	"Adeolu et al., 2015"	2
+"Borreliella kurtenbachii"	"Borrelia kurtenbachii"	"Adeolu et al., 2015"	2
+"Borreliella lanei"	"Borrelia lanei"	"Gupta, 2020"	2
+"Borreliella mayonii"	"Borrelia mayonii"	"Gupta, 2020"	2
+"Borreliella sinica"	"Borrelia sinica"	"Adeolu et al., 2015"	2
+"Borreliella spielmanii"	"Borrelia spielmanii"	"Adeolu et al., 2015"	2
+"Borreliella valaisiana"	"Borrelia valaisiana"	"Adeolu et al., 2018"	2
+"Borreliella yangtzensis"	"Borrelia yangtzensis"	"Gupta, 2020"	2
 "Botryonipha aurantiaca"	"Nectria aurantiaca"	"Kuntze, 1891"	2
 "Botryonipha flavipes"	"Trichoderma flavipes"	"Kuntze, 1891"	2
 "Botryopyle setosa"	"Amphimelissa setosa"	"Cleve, 1899"	3
@@ -1857,9 +1857,9 @@
 "Buliminoides curta"	"Seiglieina curta"	"Seiglie, 1965"	3
 "Buliminoides laevigata"	"Fredsmithia laevigata"	"Seiglie, 1964"	3
 "Buliminoides milletti"	"Floresina milletti"	"Cushman, 1933"	3
-"Buliminus mantongensis"	"Giardia mantongensis"	"Kobelt, 1899"	3
-"Buliminus pharangensis"	"Giardia pharangensis"	"Dautzenberg et al., 1905"	3
-"Bulimus siamensis"	"Giardia siamensis"	"Redfield, 1853"	3
+"Buliminus mantongensis"	"Giardia mantongensis"	"Kobelt, 1899"	2
+"Buliminus pharangensis"	"Giardia pharangensis"	"Dautzenberg et al., 1905"	2
+"Bulimus siamensis"	"Giardia siamensis"	"Redfield, 1853"	2
 "Bulla ovum"	"Ovum ovum"	"Linnaeus, 1758"	3
 "Bullera aurantiaca"	"Dioszegia aurantiaca"	"Johri et al., 1984"	3
 "Bullera begoniae"	"Bulleribasidium begoniae"	"Nakase et al., 2004"	3
@@ -2009,7 +2009,7 @@
 "Caliciopsis calicioides"	"Exophiala calicioides"	"Fitzp, 1920"	2
 "Calidifontibacillus azotoformans"	"Schinkia azotoformans"	"Adiguzel et al., 2020"	2
 "Calidifontibacillus oryziterrae"	"Schinkia oryziterrae"	"Adiguzel et al., 2020"	2
-"Calliphora bicolor"	"Lucilia bicolor"	"Macquart, 1843"	3
+"Calliphora bicolor"	"Lucilia bicolor"	"Macquart, 1843"	2
 "Calomyxa longifila"	"Minakatella longifila"	"LGKrieglst, 1990"	3
 "Calonectria calami"	"Nectria calami"	"Henn et al., 1900"	2
 "Calonectria citrinoaurantia"	"Nectria citrinoaurantia"	"Sacc, 1883"	2
@@ -2302,7 +2302,7 @@
 "Cavostelium bisporum"	"Echinostelium bisporum"	"LSOlive et al., 1966"	3
 "Celeribacter manganoxidans"	"Pacificitalea manganoxidans"	"Wang et al., 2015"	2
 "Cellanthus biperforatus"	"Elphidium biperforatus"	"Whittaker et al., 1979"	3
-"Cellia pretoriensis"	"Anopheles pretoriensis"	"Gough, 1910"	3
+"Cellia pretoriensis"	"Anopheles pretoriensis"	"Gough, 1910"	2
 "Cellulomonas cartae"	"Cellulosimicrobium cellulans"	"Stackebrandt et al., 1980"	2
 "Cellulomonas cellulans"	"Cellulosimicrobium cellulans"	"Stackebrandt et al., 1988"	2
 "Cellulomonas fermentans"	"Actinotalea fermentans"	"Bagnara et al., 1985"	2
@@ -2522,11 +2522,11 @@
 "Chlamydonella distyla"	"Wilbertella distyla"	"Jankowski, 2007"	3
 "Chlamydonella polonica"	"Chlamydonellopsis polonica"	"Foissner et al., 1981"	3
 "Chlamydonella stricta"	"Wilbertiella stricta"	"Deroux, 1976"	3
-"Chlamydophila abortus"	"Chlamydia abortus"	"Everett et al., 1999"	3
-"Chlamydophila felis"	"Chlamydia felis"	"Everett et al., 1999"	3
-"Chlamydophila pecorum"	"Chlamydia pecorum"	"Everett et al., 1999"	3
-"Chlamydophila pneumoniae"	"Chlamydia pneumoniae"	"Everett et al., 1999"	3
-"Chlamydophila psittaci"	"Chlamydia psittaci"	"Everett et al., 1999"	3
+"Chlamydophila abortus"	"Chlamydia abortus"	"Everett et al., 1999"	2
+"Chlamydophila felis"	"Chlamydia felis"	"Everett et al., 1999"	2
+"Chlamydophila pecorum"	"Chlamydia pecorum"	"Everett et al., 1999"	2
+"Chlamydophila pneumoniae"	"Chlamydia pneumoniae"	"Everett et al., 1999"	2
+"Chlamydophila psittaci"	"Chlamydia psittaci"	"Everett et al., 1999"	2
 "Chlamydotomus beigelii"	"Geotrichum beigelii"	"Trevis, 1879"	3
 "Chlamydozyma pulcherrima"	"Metschnikowia pulcherrima"	"Wick, 1964"	3
 "Chlamydozyma reukaufii"	"Metschnikowia reukaufii"	"Wick, 1964"	3
@@ -2599,8 +2599,8 @@
 "Chrysalogonium piramidale"	"Acostina piramidale"	"Acosta, 1940"	3
 "Chryseobacterium arothri"	"Chryseobacterium hominis"	"Campbell et al., 2008"	2
 "Chryseobacterium greenlandense"	"Chryseobacterium aquaticum greenlandense"	"Loveland-Curtze et al., 2016"	2
-"Chryseobacterium meningosepticum"	"Elizabethkingia meningoseptica"	"Vandamme et al., 1994"	3
-"Chryseobacterium miricola"	"Elizabethkingia miricola"	"Li et al., 2004"	3
+"Chryseobacterium meningosepticum"	"Elizabethkingia meningoseptica"	"Vandamme et al., 1994"	2
+"Chryseobacterium miricola"	"Elizabethkingia miricola"	"Li et al., 2004"	2
 "Chryseomonas"	"Pseudomonas"	"Holmes et al., 1987"	1
 "Chryseomonas luteola"	"Pseudomonas luteola"	"Holmes et al., 1987"	1
 "Chryseomonas polytricha"	"Pseudomonas luteola"	"Holmes et al., 1986"	1
@@ -3331,11 +3331,11 @@
 "Cucurbitaria urceolus"	"Nectria urceolus"	"Kuntze, 1898"	2
 "Cucurbitaria uredinicola"	"Nectria uredinicola"	"Kuntze, 1898"	2
 "Cucurbitaria verrucosa"	"Nectria verrucosa"	"Kuntze, 1898"	2
-"Culex auratus"	"Aedes auratus"	"Leicester, 1908"	3
-"Culex sticticus"	"Aedes sticticus"	"Meigen, 1838"	3
-"Culex sudanensis"	"Aedes sudanensis"	"Theobald, 1911"	3
-"Culex sylvaticus"	"Aedes sylvaticus"	"Meigen, 1818"	3
-"Culicada annulipes"	"Aedes annulipes"	"Taylor, 1914"	3
+"Culex auratus"	"Aedes auratus"	"Leicester, 1908"	2
+"Culex sticticus"	"Aedes sticticus"	"Meigen, 1838"	2
+"Culex sudanensis"	"Aedes sudanensis"	"Theobald, 1911"	2
+"Culex sylvaticus"	"Aedes sylvaticus"	"Meigen, 1818"	2
+"Culicada annulipes"	"Aedes annulipes"	"Taylor, 1914"	2
 "Cuneolina angusta"	"Textulariella angusta"	"Cushman, 1919"	3
 "Cunninghamia infundibulifera"	"Choanephora infundibulifera"	"Curr, 1873"	3
 "Cupravidus yeoncheonense"	"Cupriavidus yeoncheonensis"	"Singh et al., 2015"	2
@@ -3456,11 +3456,11 @@
 "Cytophaga diffluens"	"Persicobacter diffluens"	"Reichenbach, 1989"	3
 "Cytophaga fermentans"	"Saccharicrinis fermentans"	"Bachmann, 1955"	3
 "Cytophaga flevensis"	"Flavobacterium flevense"	"Van der Meulen et al., 1974"	2
-"Cytophaga heparina"	"Pedobacter heparinus"	"Christensen, 1980"	3
+"Cytophaga heparina"	"Pedobacter heparinus"	"Christensen, 1980"	2
 "Cytophaga johnsonae"	"Flavobacterium johnsoniae"	"Stanier, 1947"	2
 "Cytophaga latercula"	"Aquimarina latercula"	"Lewin, 1969"	3
 "Cytophaga lytica"	"Cellulophaga lytica"	"Lewin, 1969"	3
-"Cytophaga marina"	"Tenacibaculum maritimum"	"Reichenbach, 1989"	3
+"Cytophaga marina"	"Tenacibaculum maritimum"	"Reichenbach, 1989"	2
 "Cytophaga marinoflava"	"Leeuwenhoekiella marinoflava"	"Reichenbach, 1989"	3
 "Cytophaga pectinovora"	"Flavobacterium pectinovorum"	"Reichenbach, 1989"	2
 "Cytophaga psychrophila"	"Flavobacterium psychrophilum"	"Reichenbach, 1989"	2
@@ -3514,11 +3514,11 @@
 "Defluviimonas pyrenivorans"	"Acidimangrovimonas pyrenivorans"	"Zhang et al., 2018"	2
 "Dehalospirillum"	"Sulfurospirillum"	"Scholz-Muramatsu et al., 2002"	2
 "Dehalospirillum multivorans"	"Sulfurospirillum multivorans"	"Scholz-Muramatsu et al., 2002"	2
-"Deinobacter"	"Deinococcus"	"Oyaizu et al., 1987"	3
-"Deinobacter grandis"	"Deinococcus grandis"	"Oyaizu et al., 1987"	3
+"Deinobacter"	"Deinococcus"	"Oyaizu et al., 1987"	2
+"Deinobacter grandis"	"Deinococcus grandis"	"Oyaizu et al., 1987"	2
 "Deinococcus erythromyxa"	"Kocuria rosea"	"Brooks et al., 1981"	2
-"Deinococcus mumbaiensis"	"Deinococcus ficus"	"Shashidhar et al., 2006"	3
-"Deinococcus xibeiensis"	"Deinococcus wulumuqiensis"	"Wang et al., 2010"	3
+"Deinococcus mumbaiensis"	"Deinococcus ficus"	"Shashidhar et al., 2006"	2
+"Deinococcus xibeiensis"	"Deinococcus wulumuqiensis"	"Wang et al., 2010"	2
 "Dekkeromyces aestuarii"	"Kluyveromyces aestuarii"	"Kock-Krat, 1982"	3
 "Dekkeromyces delphensis"	"Nakaseomyces delphensis"	"Novak et al., 1961"	3
 "Dekkeromyces dobzhanskii"	"Kluyveromyces dobzhanskii"	"Santa Maria et al., 1970"	3
@@ -3745,7 +3745,7 @@
 "Deuterammina williamsoni"	"Lepidodeuterammina williamsoni"	"Bronnimann et al., 1988"	3
 "Devosia nitraria"	"Devosia nitrariae"	"Xu et al., 2018"	2
 "Devosia subaequoris"	"Devosia soli"	"Lee, 2007"	2
-"Dexiogonimus ciureanus"	"Metagonimus ciureanus"	"Witenberg, 1929"	3
+"Dexiogonimus ciureanus"	"Metagonimus ciureanus"	"Witenberg, 1929"	2
 "Dexiotricha centralis"	"Dexiotrichides centralis"	"Stokes, 1885"	3
 "Diacanthocapsa brevithorax"	"Theocapsomma brevithorax"	"Dumitrica, 1970"	3
 "Diachaeella bulbillosa"	"Diachea bulbillosa"	"Hohn, 1909"	3
@@ -3772,11 +3772,11 @@
 "Diaphorobacter polyhydroxybutyrativorans"	"Diaphorobacter nitroreducens"	"Qiu et al., 2015"	2
 "Diatoma anceps"	"Meridion anceps"	"Kirchn"	3
 "Diatoma hyalina"	"Fragilaria hyalina"	"Kutzing"	3
-"Dibothriocephalus archeri"	"Diphyllobothrium archeri"	"Leiper et al., 1914"	3
-"Dibothriocephalus hians"	"Diphyllobothrium hians"	"Luhe, 1899"	3
-"Dibothriocephalus lashleyi"	"Diphyllobothrium lashleyi"	"Leiper et al., 1914"	3
-"Dibothriocephalus pygoscelis"	"Diphyllobothrium pygoscelis"	"Rennie et al., 1912"	3
-"Dibothriocephalus schistochilus"	"Diphyllobothrium schistochilus"	"Germanos, 1895"	3
+"Dibothriocephalus archeri"	"Diphyllobothrium archeri"	"Leiper et al., 1914"	2
+"Dibothriocephalus hians"	"Diphyllobothrium hians"	"Luhe, 1899"	2
+"Dibothriocephalus lashleyi"	"Diphyllobothrium lashleyi"	"Leiper et al., 1914"	2
+"Dibothriocephalus pygoscelis"	"Diphyllobothrium pygoscelis"	"Rennie et al., 1912"	2
+"Dibothriocephalus schistochilus"	"Diphyllobothrium schistochilus"	"Germanos, 1895"	2
 "Dicaeoma brassicae"	"Alternaria brassicae"	"Kuntze, 1898"	2
 "Dichotomomyces cejpii"	"Aspergillus cejpii"	"Scott, 1970"	2
 "Dickeya dieffenbachiae"	"Dickeya dadantii dieffenbachiae"	"Samson et al., 2005"	1
@@ -3938,7 +3938,7 @@
 "Diplodina pedicularis"	"Leptosphaeria pedicularis"	"Lind, 1924"	2
 "Diplodinium lunula"	"Gymnodinium lunula"	"Klebs, 1912"	3
 "Diplodinium uncinata"	"Blepharocorys uncinata"	"Fiorentini, 1890"	3
-"Diplogonoporus balaenopterae"	"Diphyllobothrium balaenopterae"	"Lonnberg, 1892"	3
+"Diplogonoporus balaenopterae"	"Diphyllobothrium balaenopterae"	"Lonnberg, 1892"	2
 "Diplophrys stercorea"	"Sorodiplophrys stercorea"	"Cienk, 1876"	3
 "Diplophysa saprolegniae"	"Olpidiopsis saprolegniae"	"Schrot, 1886"	3
 "Diploplenodomus piskorzii"	"Phoma piskorzii"	"Petr, 1923"	2
@@ -4105,7 +4105,7 @@
 "Drechslera spicifera"	"Curvularia spicifera"	"Arx, 1975"	2
 "Drechslera subpapendorfii"	"Curvularia subpapendorfii"	"Mouch, 1975"	2
 "Drechslera tripogonis"	"Curvularia tripogonis"	"Patil et al., 1972"	2
-"Drepanidotaenia dusmeti"	"Hymenolepis dusmeti"	"Lopez-Neyra, 1942"	3
+"Drepanidotaenia dusmeti"	"Hymenolepis dusmeti"	"Lopez-Neyra, 1942"	2
 "Drepanomonas simulans"	"Microthorax simulans"	"Kahl, 1926"	3
 "Drulanta edenshawi"	"Parahsuum edenshawi"	"Carter, 1988"	3
 "Drulanta mostleri"	"Parahsuum mostleri"	"Yeh, 1987"	3
@@ -4174,8 +4174,8 @@
 "Eidamia viridescens"	"Trichoderma viridescens"	"Horne et al., 1923"	2
 "Eilohedra weddellensis"	"Alabaminella weddellensis"	"Earland, 1936"	3
 "Electothigma acuminatus"	"Metopus acuminatus"	"Jankowski, 1967"	3
-"Elizabethkingia anophelis endophytica"	"Elizabethkingia anophelis"	"Garcia-Lopez et al., 2020"	3
-"Elizabethkingia endophytica"	"Elizabethkingia anophelis"	"Kampfer et al., 2015"	3
+"Elizabethkingia anophelis endophytica"	"Elizabethkingia anophelis"	"Garcia-Lopez et al., 2020"	2
+"Elizabethkingia endophytica"	"Elizabethkingia anophelis"	"Kampfer et al., 2015"	2
 "Elkelangia"	"Novosphingopyxis"	"Hordt et al., 2020"	2
 "Elkelangia baekryungensis"	"Novosphingopyxis baekryungensis"	"Hordt et al., 2020"	2
 "Ellipsolagena bidens"	"Parafissurina bidens"	"Cushman, 1930"	3
@@ -4255,7 +4255,7 @@
 "Emericella spectabilis"	"Aspergillus spectabilis"	"Chr, 1978"	2
 "Emericella unguis"	"Aspergillus unguis"	"Malloch et al., 1972"	2
 "Emmonsia crescens"	"Ajellomyces crescens"	"Emmons et al., 1960"	3
-"Empedobacter falsenii"	"Wautersiella falsenii"	"Zhang et al., 2014"	3
+"Empedobacter falsenii"	"Wautersiella falsenii"	"Zhang et al., 2014"	2
 "Enantiocristellaria navicula"	"Saracenaria navicula"	"DOrbigny, 1840"	3
 "Encephalitozoon cuniculi"	"Nosema cuniculi"	"Levaditi et al., 1923"	3
 "Encephalitozoon ixodis"	"Unikaryon ixodis"	"Weiser et al., 1975"	3
@@ -4341,7 +4341,7 @@
 "Enteridium splendens"	"Reticularia splendens"	"TMacbr, 1899"	3
 "Enterobacter aerogenes"	"Klebsiella aerogenes"	"Hormaeche et al., 1960"	1
 "Enterobacter agglomerans"	"Pantoea agglomerans"	"Ewing et al., 1972"	1
-"Enterobacter amnigenus"	"Lelliottia amnigena"	"Izard et al., 1981"	1
+"Enterobacter amnigenus"	"Lelliottia amnigena"	"Izard et al., 1981"	2
 "Enterobacter arachidis"	"Kosakonia arachidis"	"Madhaiyan et al., 2010"	1
 "Enterobacter cowanii"	"Kosakonia cowanii"	"Inoue et al., 2001"	1
 "Enterobacter dissolvens"	"Enterobacter cloacae dissolvens"	"Brenner et al., 1988"	1
@@ -4352,7 +4352,7 @@
 "Enterobacter massiliensis"	"Metakosakonia massiliensis"	"Lagier et al., 2014"	
 "Enterobacter massiliensis"	"Phytobacter massiliensis"	"Lagier et al., 2014"	1
 "Enterobacter muelleri"	"Enterobacter asburiae"	"Kampfer et al., 2015"	1
-"Enterobacter nimipressuralis"	"Lelliottia nimipressuralis"	"Brenner et al., 1988"	1
+"Enterobacter nimipressuralis"	"Lelliottia nimipressuralis"	"Brenner et al., 1988"	2
 "Enterobacter oligotrophica"	"Enterobacter oligotrophicus"	"Akita et al., 2020"	1
 "Enterobacter oryzae"	"Kosakonia oryzae"	"Peng et al., 2009"	1
 "Enterobacter oryzendophyticus"	"Kosakonia oryzendophytica"	"Hardoim et al., 2015"	1
@@ -4527,7 +4527,7 @@
 "Erwinia herbicola"	"Pantoea agglomerans"	"Dye, 1964"	1
 "Erwinia milletiae"	"Pantoea agglomerans"	"Magrou, 1937"	1
 "Erwinia nigrifluens"	"Brenneria nigrifluens"	"Wilson et al., 1957"	1
-"Erwinia nimipressuralis"	"Lelliottia nimipressuralis"	"Dye, 1969"	1
+"Erwinia nimipressuralis"	"Lelliottia nimipressuralis"	"Dye, 1969"	2
 "Erwinia paradisiaca"	"Dickeya paradisiaca"	"Fernandez-Borrero et al., 1970"	1
 "Erwinia persicinus"	"Erwinia persicina"	"Hao et al., 1990"	1
 "Erwinia quercina"	"Lonsdalea quercina"	"Hildebrand et al., 1967"	1
@@ -4844,33 +4844,33 @@
 "Flaviramulus ichthyoenteri"	"Wocania ichthyoenteri"	"Zhang et al., 2013"	3
 "Flavirhabdus"	"Lacinutrix"	"Shakeela et al., 2015"	3
 "Flavirhabdus iliipiscaria"	"Lacinutrix iliipiscaria"	"Shakeela et al., 2015"	3
-"Flavobacterium anatoliense"	"Myroides anatoliensis"	"Kacagan et al., 2013"	3
+"Flavobacterium anatoliense"	"Myroides anatoliensis"	"Kacagan et al., 2013"	2
 "Flavobacterium balustinum"	"Chryseobacterium balustinum"	"Harrison, 1929"	2
 "Flavobacterium bomensis"	"Flavobacterium bomense"	"Liu et al., 2019"	2
 "Flavobacterium branchiophila"	"Flavobacterium branchiophilum"	"Wakabayashi et al., 1989"	2
-"Flavobacterium breve"	"Empedobacter brevis"	"Holmes et al., 1982"	3
+"Flavobacterium breve"	"Empedobacter brevis"	"Holmes et al., 1982"	2
 "Flavobacterium capsulatum"	"Novosphingobium capsulatum"	"Leifson, 1962"	2
-"Flavobacterium ceti"	"Myroides ceti"	"Vela et al., 2013"	3
-"Flavobacterium cloacae"	"Myroides cloacae"	"Liu et al., 2017"	3
+"Flavobacterium ceti"	"Myroides ceti"	"Vela et al., 2013"	2
+"Flavobacterium cloacae"	"Myroides cloacae"	"Liu et al., 2017"	2
 "Flavobacterium daemonensis"	"Flavobacterium daemonense"	"Ngo et al., 2015"	2
 "Flavobacterium esteraromaticum"	"Microbacterium esteraromaticum"	"Bergey et al., 1930"	2
-"Flavobacterium ferrugineum"	"Terrimonas ferruginea"	"Sickles et al., 1934"	3
+"Flavobacterium ferrugineum"	"Terrimonas ferruginea"	"Sickles et al., 1934"	2
 "Flavobacterium gleum"	"Chryseobacterium gleum"	"Holmes et al., 1984"	2
 "Flavobacterium gondwanense"	"Psychroflexus gondwanensis"	"Dobson et al., 1993"	3
 "Flavobacterium halmephilium"	"Halomonas halmophila"	"Elazari-Volcani, 1940"	1
 "Flavobacterium halmophilum"	"Halomonas halmophila"	"Corrig Elazari-Volcani, 1940"	1
-"Flavobacterium heparinum"	"Pedobacter heparinus"	"Payza et al., 1956"	3
+"Flavobacterium heparinum"	"Pedobacter heparinus"	"Payza et al., 1956"	2
 "Flavobacterium indologenes"	"Chryseobacterium indologenes"	"Yabuuchi et al., 1983"	2
 "Flavobacterium indoltheticum"	"Chryseobacterium indoltheticum"	"Campbell et al., 1951"	2
 "Flavobacterium jejuensis"	"Flavobacterium jejuense"	"Park et al., 2016"	2
 "Flavobacterium johnsonae"	"Flavobacterium johnsoniae"	"Bernardet et al., 1996"	2
 "Flavobacterium kyungheensis"	"Flavobacterium kyungheense"	"Son et al., 2014"	2
 "Flavobacterium marinotypicum"	"Microbacterium maritypicum"	"ZoBell et al., 1944"	2
-"Flavobacterium marinum"	"Myroides aquimaris"	"Song et al., 2013"	3
-"Flavobacterium meningosepticum"	"Elizabethkingia meningoseptica"	"King, 1959"	3
-"Flavobacterium mizutaii"	"Sphingobacterium mizutaii"	"Holmes et al., 1988"	3
-"Flavobacterium multivorum"	"Sphingobacterium multivorum"	"Holmes et al., 1981"	3
-"Flavobacterium odoratum"	"Myroides odoratus"	"Stutzer, 1929"	3
+"Flavobacterium marinum"	"Myroides aquimaris"	"Song et al., 2013"	2
+"Flavobacterium meningosepticum"	"Elizabethkingia meningoseptica"	"King, 1959"	2
+"Flavobacterium mizutaii"	"Sphingobacterium mizutaii"	"Holmes et al., 1988"	2
+"Flavobacterium multivorum"	"Sphingobacterium multivorum"	"Holmes et al., 1981"	2
+"Flavobacterium odoratum"	"Myroides odoratus"	"Stutzer, 1929"	2
 "Flavobacterium okeanokoites"	"Planomicrobium okeanokoites"	"ZoBell et al., 1944"	
 "Flavobacterium okeanokoites"	"Planococcus okeanokoites"	"ZoBell et al., 1944"	2
 "Flavobacterium qiangtangensis"	"Flavobacterium qiangtangense"	"Huang et al., 2015"	2
@@ -4878,12 +4878,12 @@
 "Flavobacterium salegens"	"Salegentibacter salegens"	"Dobson et al., 1993"	3
 "Flavobacterium scophthalmum"	"Chryseobacterium scophthalmum"	"Mudarris et al., 1994"	2
 "Flavobacterium spartansii"	"Flavobacterium tructae"	"Loch et al., 2019"	2
-"Flavobacterium spiritivorum"	"Sphingobacterium spiritivorum"	"Holmes et al., 1982"	3
+"Flavobacterium spiritivorum"	"Sphingobacterium spiritivorum"	"Holmes et al., 1982"	2
 "Flavobacterium tangerina"	"Flavobacterium tangerinum"	"Li et al., 2020"	2
-"Flavobacterium thalpophilum"	"Sphingobacterium thalpophilum"	"Holmes et al., 1983"	3
+"Flavobacterium thalpophilum"	"Sphingobacterium thalpophilum"	"Holmes et al., 1983"	2
 "Flavobacterium uliginosum"	"Zobellia uliginosa"	"ZoBell et al., 1944"	3
 "Flavobacterium viscosus"	"Flavobacterium viscosum"	"Li et al., 2020"	2
-"Flavobacterium yabuuchiae"	"Sphingobacterium spiritivorum"	"Holmes et al., 1988"	3
+"Flavobacterium yabuuchiae"	"Sphingobacterium spiritivorum"	"Holmes et al., 1988"	2
 "Flavobacterium zhairuonensis"	"Flavobacterium zhairuonense"	"Debnath et al., 2020"	2
 "Flectobacillus glomeratus"	"Polaribacter glomeratus"	"McGuire et al., 1988"	3
 "Flectobacillus marinus"	"Cyclobacterium marinum"	"Borrall et al., 1978"	3
@@ -4895,8 +4895,8 @@
 "Flexibacter filiformis"	"Chitinophaga filiformis"	"Reichenbach, 1989"	3
 "Flexibacter japonensis"	"Chitinophaga japonensis"	"Fujita et al., 1997"	3
 "Flexibacter litoralis"	"Bernardetia litoralis"	"Lewin, 1969"	3
-"Flexibacter maritimus"	"Tenacibaculum maritimum"	"Wakabayashi et al., 1989"	3
-"Flexibacter ovolyticus"	"Tenacibaculum ovolyticum"	"Hansen et al., 1992"	3
+"Flexibacter maritimus"	"Tenacibaculum maritimum"	"Wakabayashi et al., 1989"	2
+"Flexibacter ovolyticus"	"Tenacibaculum ovolyticum"	"Hansen et al., 1992"	2
 "Flexibacter polymorphus"	"Garritya polymorpha"	"Lewin, 1974"	3
 "Flexibacter psychrophilus"	"Flavobacterium psychrophilum"	"Bernardet et al., 1989"	2
 "Flexibacter roseolus"	"Hugenholtzia roseola"	"Lewin et al., 2016"	3
@@ -5338,7 +5338,7 @@
 "Gordonia rubropertinctus"	"Gordonia rubripertincta"	"Stackebrandt et al., 1989"	2
 "Gordonibacter faecihominis"	"Gordonibacter urolithinfaciens"	"Jin et al., 2015"	2
 "Gottfriedia acidiceler"	"Gottfriedia acidiceleris"	"Gupta et al., 2020"	2
-"Grabhamia australis"	"Aedes australis"	"Strickland, 1911"	3
+"Grabhamia australis"	"Aedes australis"	"Strickland, 1911"	2
 "Grahamella"	"Bartonella"	"Ristic et al., 1984"	2
 "Grahamella peromysci"	"Bartonella peromysci"	"Ristic et al., 1984"	2
 "Grahamella talpae"	"Bartonella talpae"	"Ristic et al., 1984"	2
@@ -5486,20 +5486,20 @@
 "Haloarcobacter ebronensis"	"Halarcobacter ebronensis"	"Perez-Cataluna et al., 2019"	
 "Haloarcobacter ebronensis"	"Arcobacter ebronensis"	"Perez-Cataluna et al., 2019"	2
 "Haloarcula mukohataei"	"Halomicrobium mukohataei"	"Ihara et al., 1997"	3
-"Halobacterium cutirubrum"	"Halobacterium salinarum"	"Elazari-Volcani, 1957"	3
+"Halobacterium cutirubrum"	"Halobacterium salinarum"	"Elazari-Volcani, 1957"	2
 "Halobacterium denitrificans"	"Haloferax denitrificans"	"Tomlinson et al., 1986"	3
 "Halobacterium distributum"	"Halorubrum distributum"	"Zvyagintseva et al., 1989"	3
 "Halobacterium distributus"	"Halorubrum distributum"	"Zvyagintseva et al., 1989"	3
-"Halobacterium halobium"	"Halobacterium salinarum"	"Elazari-Volcani, 1957"	3
+"Halobacterium halobium"	"Halobacterium salinarum"	"Elazari-Volcani, 1957"	2
 "Halobacterium lacusprofundi"	"Halorubrum lacusprofundi"	"Franzmann et al., 1989"	3
 "Halobacterium mediterranei"	"Haloferax mediterranei"	"Rodriguez-Valera et al., 1983"	3
 "Halobacterium pharaonis"	"Natronomonas pharaonis"	"Soliman et al., 1983"	3
-"Halobacterium piscisalsi"	"Halobacterium salinarum"	"Yachai et al., 2008"	3
+"Halobacterium piscisalsi"	"Halobacterium salinarum"	"Yachai et al., 2008"	2
 "Halobacterium saccharovorum"	"Halorubrum saccharovorum"	"Tomlinson et al., 1977"	3
-"Halobacterium salinarium"	"Halobacterium salinarum"	"Elazari-Volcani, 1957"	3
+"Halobacterium salinarium"	"Halobacterium salinarum"	"Elazari-Volcani, 1957"	2
 "Halobacterium sodomense"	"Halorubrum sodomense"	"Oren, 1983"	3
 "Halobacterium trapanicum"	"Halorubrum trapanicum"	"Elazari-Volcani, 1957"	3
-"Halobacterium vallismortis"	"Haloarcula vallismortis"	"Gonzalez et al., 1979"	3
+"Halobacterium vallismortis"	"Haloarcula vallismortis"	"Gonzalez et al., 1979"	2
 "Halobacterium volcanii"	"Haloferax volcanii"	"Mullakhanbhai et al., 1975"	3
 "Halobacteroides acetoethylicus"	"Halanaerobium acetethylicum"	"Rengpipat et al., 1989"	2
 "Halobacteroides lacunaris"	"Halanaerobacter lacunarum"	"Zhilina et al., 1992"	2
@@ -5780,7 +5780,7 @@
 "Hendersonia pinicola"	"Hendersonula pinicola"	"Trotter, 1972"	2
 "Hendersonia symploci"	"Hendersonula symploci"	"Berk et al., 1873"	2
 "Hennebertia ovalis"	"Wardomyces ovalis"	"Morelet, 1969"	3
-"Hepatiarius longissimus"	"Opisthorchis longissimus"	"Feizullaev, 1961"	3
+"Hepatiarius longissimus"	"Opisthorchis longissimus"	"Feizullaev, 1961"	2
 "Heptameria acuta"	"Leptosphaeria acuta"	"Cooke, 1889"	2
 "Heptameria albopunctata"	"Leptosphaeria albopunctata"	"Cooke, 1889"	2
 "Heptameria artemisiae"	"Leptosphaeria artemisiae"	"Cooke, 1889"	2
@@ -5853,7 +5853,7 @@
 "Heteroconium chaetospira"	"Cladophialophora chaetospira"	"Ellis, 1976"	2
 "Heterolepa haidingeri"	"Cibicides haidingeri"	"DOrbigny, 1846"	3
 "Heteropatellina frustratiformis"	"Ungulatelloides frustratiformis"	"McCulloch, 1977"	3
-"Heterophyes yokogawai"	"Metagonimus yokogawai"	"Katsurada, 1912"	3
+"Heterophyes yokogawai"	"Metagonimus yokogawai"	"Katsurada, 1912"	2
 "Heterospiroloculina bikiniensis"	"Inaequalina bikiniensis"	"McCulloch, 1977"	3
 "Heterospiroloculina culebraensis"	"Inaequalina culebraensis"	"McCulloch, 1977"	3
 "Heterosporium algarum"	"Cladosporium algarum"	"Cooke et al., 1890"	2
@@ -5972,8 +5972,8 @@
 "Huaishuia"	"Celeribacter"	"Wang et al., 2012"	2
 "Huaishuia halophila"	"Celeribacter halophilus"	"Wang et al., 2012"	2
 "Hughesiella euricoi"	"Ceratocystis euricoi"	"Bat et al., 1956"	3
-"Hulecoeteomyia fluviatilis"	"Aedes fluviatilis"	"Leicester, 1908"	3
-"Hulecoeteomyia milsoni"	"Aedes milsoni"	"Taylor, 1916"	3
+"Hulecoeteomyia fluviatilis"	"Aedes fluviatilis"	"Leicester, 1908"	2
+"Hulecoeteomyia milsoni"	"Aedes milsoni"	"Taylor, 1916"	2
 "Humicoccus"	"Nakamurella"	"Yoon et al., 2007"	2
 "Humicoccus flavidus"	"Nakamurella flavida"	"Yoon et al., 2007"	2
 "Humicola minima"	"Ochroconis minima"	"Fassat, 1967"	2
@@ -6942,7 +6942,7 @@
 "Leifsonia pindariensis"	"Microterricola pindariensis"	"Reddy et al., 2008"	2
 "Leiotrocha serpularum"	"Cyclochaeta serpularum"	"Fabre-Domergue, 1888"	3
 "Leisingera nanhaiensis"	"Sedimentitalea nanhaiensis"	"Sun et al., 2014"	2
-"Lelliottia aquatilis"	"Lelliottia jeotgali"	"Kampfer et al., 2018"	1
+"Lelliottia aquatilis"	"Lelliottia jeotgali"	"Kampfer et al., 2018"	2
 "Lembus armatus"	"Philasterides armatus"	"Kahl, 1926"	3
 "Lembus kenti"	"Cohnilembus kenti"	"Kahl, 1931"	3
 "Lembus pusillus"	"Pseudocohnilembus pusillus"	"Quennerstedt, 1869"	3
@@ -7208,7 +7208,7 @@
 "Lonsdalea quercina iberica"	"Lonsdalea iberica"	"Brady et al., 2012"	1
 "Lonsdalea quercina populi"	"Lonsdalea populi"	"Toth et al., 2013"	1
 "Lonsdalea quercina quercina"	"Lonsdalea quercina"	"Brady et al., 2012"	1
-"Loossia dobrogiensis"	"Metagonimus dobrogiensis"	"Ciurea, 1915"	3
+"Loossia dobrogiensis"	"Metagonimus dobrogiensis"	"Ciurea, 1915"	2
 "Lophocorys neatum"	"Lophocyrtis neatum"	"Sanfilippo, 1990"	3
 "Lophophyton gallinae"	"Microsporum gallinae"	"Matr et al., 1899"	3
 "Loxocephalus colpidiopsis"	"Dexiotricha colpidiopsis"	"Kahl, 1926"	3
@@ -7490,7 +7490,7 @@
 "Mesoflavibacter sabulilitoris"	"Mesoflavibacter zeaxanthinifaciens sabulilitoris"	"Park et al., 2014"	3
 "Mesomycoplasma molaris"	"Mesomycoplasma molare"	"Gupta et al., 2018"	3
 "Mesonia maritimus"	"Mesonia maritima"	"Sung et al., 2017"	3
-"Mesoplasma pleciae"	"Acholeplasma pleciae"	"Tully et al., 1994"	3
+"Mesoplasma pleciae"	"Acholeplasma pleciae"	"Tully et al., 1994"	2
 "Metacarinina charlesensis"	"Laticarinina charlesensis"	"McCulloch, 1977"	3
 "Metacarinina chathamensis"	"Laticarinina chathamensis"	"McCulloch, 1977"	3
 "Metacarinina hoodensis"	"Laticarinina hoodensis"	"McCulloch, 1977"	3
@@ -7882,7 +7882,7 @@
 "Monosporium sclerotiale"	"Scedosporium sclerotiale"	"Pepere, 1914"	3
 "Monosporium sepedonioides"	"Chrysosporium sepedonioides"	"Harz, 1872"	3
 "Moorella thermoautotrophica"	"Moorella thermoacetica"	"Collins et al., 1994"	2
-"Moraxella anatipestifer"	"Riemerella anatipestifer"	"Bruner et al., 1954"	3
+"Moraxella anatipestifer"	"Riemerella anatipestifer"	"Bruner et al., 1954"	2
 "Moraxella phenylpyruvica"	"Psychrobacter phenylpyruvicus"	"Bovre et al., 1967"	1
 "Moraxella urethralis"	"Oligella urethralis"	"Lautrop et al., 1970"	2
 "Morella entamoebae"	"Sphaerita entamoebae"	"Perez Reyes, 1964"	3
@@ -7898,7 +7898,7 @@
 "Mrazekia niphargi"	"Microsporidium niphargi"	"Poisson, 1924"	3
 "Mrazekia piscicola"	"Jirovecia piscicola"	"Cepede, 1924"	3
 "Mrazekia tetraspora"	"Scipionospora tetraspora"	"Leger et al., 1922"	3
-"Mucidus africanus"	"Aedes africanus"	"Theobald, 1901"	3
+"Mucidus africanus"	"Aedes africanus"	"Theobald, 1901"	2
 "Mucor angarensis"	"Circinella angarensis"	"Schostak, 1897"	3
 "Mucor arrhizus"	"Rhizopus arrhizus"	"Hagem, 1908"	2
 "Mucor assamensis"	"Hyphomucor assamensis"	"Mehrotra et al., 1970"	3
@@ -7926,7 +7926,7 @@
 "Muricauda antarctica"	"Muricauda taeanensis"	"Wu et al., 2013"	3
 "Muricauda lutea"	"Croceivirga lutea"	"Wang et al., 2017"	3
 "Muriicola lacisalsi"	"Maritimibacter lacisalsi"	"Wang et al., 2021"	2
-"Musca azurea"	"Lucilia azurea"	"Doleschall, 1858"	3
+"Musca azurea"	"Lucilia azurea"	"Doleschall, 1858"	2
 "Mya nitens"	"Ervilia nitens"	"Montagu, 1808"	3
 "Myceloblastanon albicans"	"Candida albicans"	"Ota, 1927"	2
 "Myceloblastanon guilliermondii"	"Meyerozyma guilliermondii"	"Ota, 1927"	3
@@ -8221,7 +8221,7 @@
 "Mycterotrix ovata"	"Maryna ovata"	"Gelei, 1950"	3
 "Myllocercion rhodanon"	"Schadelfusslerus rhodanon"	"Foreman, 1968"	3
 "Myrionecta rubrum"	"Mesodinium rubrum"	"Jankowski, 1976"	3
-"Myroides xuanwuensis"	"Myroides odoratimimus xuanwuensis"	"Zhang et al., 2014"	3
+"Myroides xuanwuensis"	"Myroides odoratimimus xuanwuensis"	"Zhang et al., 2014"	2
 "Myxococcus coralloides"	"Corallococcus coralloides"	"Thaxter, 1892"	2
 "Myxococcus disciformis"	"Archangium disciforme"	"Thaxter, 1904"	2
 "Myxococcus flavescens"	"Myxococcus virescens"	"Yamanaka et al., 1990"	2
@@ -8231,8 +8231,8 @@
 "Myxotrichum johnstonii"	"Gymnoascus johnstonii"	"Massee et al., 1902"	3
 "Myzocytium humicola"	"Myzocytiopsis humicola"	"Barron et al., 1975"	3
 "Myzocytium vermicola"	"Myzocytiopsis vermicola"	"Fisch, 1892"	3
-"Myzorhynchus minutus"	"Anopheles minutus"	"Theobald, 1903"	3
-"Myzorhynchus pallidus"	"Anopheles pallidus"	"Swellengrebel, 1919"	3
+"Myzorhynchus minutus"	"Anopheles minutus"	"Theobald, 1903"	2
+"Myzorhynchus pallidus"	"Anopheles pallidus"	"Swellengrebel, 1919"	2
 "Mzabimyces"	"Halopolyspora"	"Saker et al., 2015"	2
 "Mzabimyces algeriensis"	"Halopolyspora algeriensis"	"Saker et al., 2015"	2
 "Naematelia aurantia"	"Tremella aurantia"	"Burt, 1921"	3
@@ -9265,8 +9265,8 @@
 "Orcadella operculata"	"Licea operculata"	"Wingate, 1889"	3
 "Orcadella parasitica"	"Licea parasitica"	"Hagelst, 1942"	3
 "Orcadella pusilla"	"Licea pusilla"	"Hagelst, 1942"	3
-"Oribaculum"	"Porphyromonas"	"Moore et al., 1994"	3
-"Oribaculum catoniae"	"Porphyromonas catoniae"	"Moore et al., 1994"	3
+"Oribaculum"	"Porphyromonas"	"Moore et al., 1994"	2
+"Oribaculum catoniae"	"Porphyromonas catoniae"	"Moore et al., 1994"	2
 "Ornatispora frondicola"	"Stachybotrys frondicola"	"Hyde et al., 1999"	2
 "Ornatispora gamsii"	"Stachybotrys gamsii"	"Hyde et al., 1999"	2
 "Ornatispora nepalensis"	"Stachybotrys nepalensis"	"Whitton et al., 2012"	2
@@ -9602,7 +9602,7 @@
 "Pedobacter huanghensis"	"Daejeonella huanghensis"	"Qiu et al., 2014"	3
 "Pedobacter luteus"	"Daejeonella lutea"	"Oh et al., 2013"	3
 "Pedobacter oryzae"	"Daejeonella oryzae"	"Jeon et al., 2009"	3
-"Pedobacter piscium"	"Pedobacter antarcticus"	"Steyn et al., 2014"	3
+"Pedobacter piscium"	"Pedobacter antarcticus"	"Steyn et al., 2014"	2
 "Pedobacter ruber"	"Daejeonella rubra"	"Margesin et al., 2013"	3
 "Pedobacter saltans"	"Pseudopedobacter saltans"	"Steyn et al., 1998"	3
 "Pedobacter tournemirensis"	"Arcticibacter tournemirensis"	"Urios et al., 2013"	3
@@ -9828,7 +9828,7 @@
 "Petersenia andreei"	"Sirolpidium andreei"	"Sparrow, 1936"	3
 "Petersenia catenophlyctidis"	"Cornumyces catenophlyctidis"	"Sundaram, 1968"	3
 "Petersenia irregularis"	"Cornumyces irregularis"	"Sparrow, 1943"	3
-"Petraeus vignei"	"Giardia vignei"	"Rochebrune, 1882"	3
+"Petraeus vignei"	"Giardia vignei"	"Rochebrune, 1882"	2
 "Petriella boulangeri"	"Microascus boulangeri"	"Curzi, 1930"	3
 "Petriellidium boydii"	"Pseudallescheria boydii"	"Malloch, 1970"	2
 "Petriellidium desertorum"	"Scedosporium desertorum"	"Arx et al., 1973"	3
@@ -9850,8 +9850,8 @@
 "Phacellium geranii"	"Graphium geranii"	"Braun, 1993"	3
 "Phacellium ligulariae"	"Graphium ligulariae"	"Braun, 1993"	3
 "Phacellium trifolii"	"Graphium trifolii"	"Braun, 1993"	3
-"Phaenicia azurea"	"Lucilia azurea"	"Robineau-Desvoidy, 1863"	3
-"Phaenicia pallescens"	"Lucilia pallescens"	"Shannon, 1924"	3
+"Phaenicia azurea"	"Lucilia azurea"	"Robineau-Desvoidy, 1863"	2
+"Phaenicia pallescens"	"Lucilia pallescens"	"Shannon, 1924"	2
 "Phaenicosphaera mammilla"	"Hegleria mammilla"	"Sheng et al., 1985"	3
 "Phaeobacter aquaemixtae"	"Leisingera aquaemixtae"	"Park et al., 2014"	2
 "Phaeobacter arcticus"	"Pseudophaeobacter arcticus"	"Zhang et al., 2008"	2
@@ -9895,7 +9895,7 @@
 "Phloeophthora syringae"	"Phytophthora syringae"	"Kleb, 1906"	3
 "Phloeospora trifolii"	"Leptosphaeria trifolii"	"Cavara, 1878"	2
 "Phlyctospora persoonii"	"Elaphomyces persoonii"	"Corda, 1854"	3
-"Phocaeicola chinchillae"	"Phocaeicola sartorii"	"Garcia-Lopez et al., 2020"	3
+"Phocaeicola chinchillae"	"Phocaeicola sartorii"	"Garcia-Lopez et al., 2020"	2
 "Phoma acuta"	"Leptosphaeria acuta"	"Fuckel, 1870"	2
 "Phoma errabunda"	"Leptosphaeria errabunda"	"Desm, 1849"	2
 "Phoma macrocapsa"	"Leptosphaeria macrocapsa"	"Trail, 1886"	2
@@ -10127,7 +10127,7 @@
 "Plagiotricha camelus"	"Trichoda camelus"	"Bory, 1824"	3
 "Plagiotricha sinuata"	"Trichoda sinuata"	"Bory, 1824"	3
 "Plagiotricha succisa"	"Psilotricha succisa"	"Bory, 1824"	3
-"Planaria punctata"	"Fasciola punctata"	"Muller, 1776"	3
+"Planaria punctata"	"Fasciola punctata"	"Muller, 1776"	2
 "Planctomyces brasiliensis"	"Rubinisphaera brasiliensis"	"Schlesner, 1990"	3
 "Planctomyces limnophilus"	"Planctopirus limnophila"	"Hirsch et al., 1986"	3
 "Planctomyces maris"	"Gimesia maris"	"Bauld et al., 1980"	3
@@ -10432,8 +10432,8 @@
 "Porphyrobacter mercurialis"	"Croceibacterium mercuriale"	"Coil et al., 2016"	2
 "Porphyrobacter neustonensis"	"Erythrobacter neustonensis"	"Fuerst et al., 2020"	2
 "Porphyrobacter sanguineus"	"Erythrobacter sanguineus"	"Hiraishi et al., 2002"	2
-"Porphyromonas cansulci"	"Porphyromonas crevioricanis"	"Collins et al., 1994"	3
-"Porphyromonas salivosa"	"Porphyromonas macacae"	"Love et al., 1992"	3
+"Porphyromonas cansulci"	"Porphyromonas crevioricanis"	"Collins et al., 1994"	2
+"Porphyromonas salivosa"	"Porphyromonas macacae"	"Love et al., 1992"	2
 "Posadasia esteriformis"	"Coccidioides esteriformis"	"Canton, 1898"	3
 "Poseidonibacter lekithochrous"	"Arcobacter lekithochrous"	"Perez-Cataluna et al., 2019"	2
 "Pottsiocles hannae"	"Manuelophrya hannae"	"Guhl, 1985"	3
@@ -10450,7 +10450,7 @@
 "Prauserella flava"	"Prauserella salsuginis"	"Li et al., 2009"	2
 "Prevotella oulora"	"Prevotella oulorum"	"Shah et al., 1990"	2
 "Prevotella ruminicola brevis"	"Prevotella brevis"	"Shah et al., 1990"	2
-"Prevotella tannerae"	"Alloprevotella tannerae"	"Moore et al., 1994"	3
+"Prevotella tannerae"	"Alloprevotella tannerae"	"Moore et al., 1994"	2
 "Prevotella zoogleoformans"	"Capsularis zoogleoformans"	"Shah et al., 1994"	3
 "Primorskyibacter insulae"	"Pseudoprimorskyibacter insulae"	"Park et al., 2015"	2
 "Procandida albicans"	"Candida albicans"	"Novak et al., 1961"	2
@@ -11111,7 +11111,7 @@
 "Rectocibicidella robertsi"	"Dyocibicides robertsi"	"McLean, 1956"	3
 "Rectoglandulina rotundata"	"Pseudonodosaria rotundata"	"Reuss, 1850"	3
 "Recurvoides trochamminiformis"	"Recurvoidatus trochamminiformis"	"Saidova, 1961"	3
-"Reedomyia sudanensis"	"Aedes sudanensis"	"Theobald, 1913"	3
+"Reedomyia sudanensis"	"Aedes sudanensis"	"Theobald, 1913"	2
 "Reichenbachia"	"Reichenbachiella"	"Nedashkovskaya et al., 2003"	3
 "Reichenbachia agariperforans"	"Reichenbachiella agariperforans"	"Nedashkovskaya et al., 2003"	3
 "Remaneica gonzalezi"	"Remaneicella gonzalezi"	"Seiglie, 1964"	3
@@ -11462,7 +11462,7 @@
 "Rotalina truncatulinoides"	"Globorotalia truncatulinoides"	"DOrbigny, 1839"	3
 "Rotamorphina minuta"	"Valvulineria minuta"	"Schubert, 1904"	3
 "Rothia dentocariosus"	"Rothia dentocariosa"	"Georg et al., 1967"	2
-"Roubaudiella caerulea"	"Lucilia caerulea"	"Seguy, 1925"	3
+"Roubaudiella caerulea"	"Lucilia caerulea"	"Seguy, 1925"	2
 "Rozella itersoniliae"	"Pleotrachelus itersoniliae"	"Barr et al., 1980"	3
 "Rozella septigena"	"Rozellopsis septigena"	"Cornu, 1872"	3
 "Rozella simulans"	"Rozellopsis simulans"	"Fisch, 1882"	3
@@ -11790,16 +11790,16 @@
 "Septotrochammina gonzalezi"	"Remaneicella gonzalezi"	"Seiglie, 1964"	3
 "Serpens"	"Pseudomonas"	"Hespell, 1977"	1
 "Serpens flexibilis"	"Pseudomonas flexibilis"	"Hespell, 1977"	1
-"Serpula"	"Brachyspira"	"Stanton et al., 1991"	3
-"Serpula hyodysenteriae"	"Brachyspira hyodysenteriae"	"Stanton et al., 1991"	3
-"Serpula innocens"	"Brachyspira innocens"	"Stanton et al., 1991"	3
-"Serpulina"	"Brachyspira"	"Stanton, 1992"	3
-"Serpulina alvinipulli"	"Brachyspira alvinipulli"	"Stanton et al., 1998"	3
-"Serpulina hyodysenteriae"	"Brachyspira hyodysenteriae"	"Stanton et al., 1992"	3
-"Serpulina innocens"	"Brachyspira innocens"	"Stanton et al., 1992"	3
-"Serpulina intermedia"	"Brachyspira intermedia"	"Stanton et al., 1997"	3
-"Serpulina murdochii"	"Brachyspira murdochii"	"Stanton et al., 1997"	3
-"Serpulina pilosicoli"	"Brachyspira pilosicoli"	"Trott et al., 1996"	3
+"Serpula"	"Brachyspira"	"Stanton et al., 1991"	2
+"Serpula hyodysenteriae"	"Brachyspira hyodysenteriae"	"Stanton et al., 1991"	2
+"Serpula innocens"	"Brachyspira innocens"	"Stanton et al., 1991"	2
+"Serpulina"	"Brachyspira"	"Stanton, 1992"	2
+"Serpulina alvinipulli"	"Brachyspira alvinipulli"	"Stanton et al., 1998"	2
+"Serpulina hyodysenteriae"	"Brachyspira hyodysenteriae"	"Stanton et al., 1992"	2
+"Serpulina innocens"	"Brachyspira innocens"	"Stanton et al., 1992"	2
+"Serpulina intermedia"	"Brachyspira intermedia"	"Stanton et al., 1997"	2
+"Serpulina murdochii"	"Brachyspira murdochii"	"Stanton et al., 1997"	2
+"Serpulina pilosicoli"	"Brachyspira pilosicoli"	"Trott et al., 1996"	2
 "Serratia glossinae"	"Serratia fonticola"	"Geiger et al., 2010"	1
 "Serratia marcescens sakuensis"	"Serratia marcescens"	"Ajithkumar et al., 2003"	1
 "Serratia marinorubra"	"Serratia rubidaea"	"ZoBell et al., 1944"	1
@@ -12111,12 +12111,12 @@
 "Sphaerulina amicta"	"Appendichordella amicta"	"Kohlm, 1962"	3
 "Sphaerulina tanaceti"	"Leptosphaeria tanaceti"	"Shoemaker, 1976"	2
 "Sphinctocystis elliptica"	"Cymatopleura elliptica"	"Kuntze"	3
-"Sphingobacterium antarcticum"	"Pedobacter antarcticus"	"Shivaji et al., 1992"	3
-"Sphingobacterium antarcticus"	"Pedobacter antarcticus"	"Shivaji et al., 1992"	3
-"Sphingobacterium heparinum"	"Pedobacter heparinus"	"Takeuchi et al., 1993"	3
-"Sphingobacterium mizutae"	"Sphingobacterium mizutaii"	"Yabuuchi et al., 1983"	3
-"Sphingobacterium pakistanensis"	"Sphingobacterium pakistanense"	"Ahmed et al., 2015"	3
-"Sphingobacterium piscium"	"Pedobacter antarcticus"	"Takeuchi et al., 1993"	3
+"Sphingobacterium antarcticum"	"Pedobacter antarcticus"	"Shivaji et al., 1992"	2
+"Sphingobacterium antarcticus"	"Pedobacter antarcticus"	"Shivaji et al., 1992"	2
+"Sphingobacterium heparinum"	"Pedobacter heparinus"	"Takeuchi et al., 1993"	2
+"Sphingobacterium mizutae"	"Sphingobacterium mizutaii"	"Yabuuchi et al., 1983"	2
+"Sphingobacterium pakistanensis"	"Sphingobacterium pakistanense"	"Ahmed et al., 2015"	2
+"Sphingobacterium piscium"	"Pedobacter antarcticus"	"Takeuchi et al., 1993"	2
 "Sphingobium algicola"	"Sphingobium limneticum"	"Lee et al., 2017"	2
 "Sphingobium barthaii"	"Sphingobium fuliginis"	"Maeda et al., 2015"	2
 "Sphingobium chinhatense"	"Sphingobium indicum"	"Dadhwal et al., 2020"	2
@@ -12415,7 +12415,7 @@
 "Staurosphaera pusilla"	"Stigmosphaerostylus pusilla"	"Hinde, 1899"	3
 "Staurosphaera sedecimporata"	"Emiluvia sedecimporata"	"Rust, 1885"	3
 "Staurosphaera trispinosa"	"Staurolonche trispinosa"	"Kozur et al., 1979"	3
-"Stegomyia wellmanii"	"Aedes wellmanii"	"Theobald, 1910"	3
+"Stegomyia wellmanii"	"Aedes wellmanii"	"Theobald, 1910"	2
 "Steinia balladynula"	"Oxytricha balladynula"	"Kahl, 1932"	3
 "Steinia candens"	"Cyrtohymena candens"	"Kahl, 1932"	3
 "Steinia citrina"	"Cyrtohymena citrina"	"Berger et al., 1987"	3
@@ -12487,7 +12487,7 @@
 "Stemphylium uredinis"	"Alternaria uredinis"	"Thirum, 1947"	2
 "Stenella gynoxidicola"	"Cladosporium gynoxidicola"	"Mulder, 1982"	2
 "Stenopterobia delicatissima"	"Surirella delicatissima"	"Van Heurck, 1896"	3
-"Stenoscutus africanus"	"Aedes africanus"	"Theobald, 1909"	3
+"Stenoscutus africanus"	"Aedes africanus"	"Theobald, 1909"	2
 "Stenothermobacter"	"Nonlabens"	"Lau et al., 2006"	3
 "Stenothermobacter spongiae"	"Nonlabens spongiae"	"Lau et al., 2006"	3
 "Stenotrophomonas africana"	"Stenotrophomonas maltophilia"	"Drancourt et al., 1997"	1
@@ -12889,7 +12889,7 @@
 "Strombidium viride"	"Limnostrombidium viride"	"Kahl, 1932"	3
 "Strombilidium tonsuratum"	"Strobilidium tonsuratum"	"Meunier, 1907"	3
 "Strongylidium wilberti"	"Hemiamphisiella wilberti"	"Foissner, 1982"	3
-"Strophalosia warwicki"	"Capillaria warwicki"	"Maxwell, 1954"	3
+"Strophalosia warwicki"	"Capillaria warwicki"	"Maxwell, 1954"	2
 "Stylocapsa catenarum"	"Plicaforacapsa catenarum"	"Matsuoka, 1982"	3
 "Stylocapsa oblongula"	"Kilinora oblongula"	"Kocher, 1981"	3
 "Stylocapsa spiralis"	"Kilinora spiralis"	"Matsuoka, 1982"	3
@@ -12986,7 +12986,7 @@
 "Tachysoma siseris"	"Oxytricha siseris"	"Stiller, 1974"	3
 "Tachysoma tricornis"	"Oxytricha tricornis"	"Milne, 1886"	3
 "Taeniolella boppii"	"Cladophialophora boppii"	"Borelli, 1983"	2
-"Taeniorhynchus africanus"	"Aedes africanus"	"Neveu-Lemaire, 1906"	3
+"Taeniorhynchus africanus"	"Aedes africanus"	"Neveu-Lemaire, 1906"	2
 "Talaromyces brevicompactus"	"Hamigera brevicompactus"	"Kong, 1999"	3
 "Talaromyces byssochlamydoides"	"Rasamsonia byssochlamydoides"	"Stolk et al., 1972"	3
 "Talaromyces cejpii"	"Aspergillus cejpii"	"Milko, 1964"	2
@@ -13539,8 +13539,8 @@
 "Tremella simplex"	"Phaeotremella simplex"	"Jacks et al., 1940"	3
 "Tremella translucens"	"Sirotrema translucens"	"Gordon, 1938"	3
 "Treponema caldaria"	"Treponema caldarium"	"Abt et al., 2013"	2
-"Treponema hyodysenteriae"	"Brachyspira hyodysenteriae"	"Harris et al., 1972"	3
-"Treponema innocens"	"Brachyspira innocens"	"Kinyon et al., 1979"	3
+"Treponema hyodysenteriae"	"Brachyspira hyodysenteriae"	"Harris et al., 1972"	2
+"Treponema innocens"	"Brachyspira innocens"	"Kinyon et al., 1979"	2
 "Treponema stenostrepta"	"Treponema stenostreptum"	"Abt et al., 2013"	2
 "Tretomphalus bermudezi"	"Cymbaloporetta bermudezi"	"Sellier de Civrieux, 1976"	3
 "Tretomphalus concinnus"	"Tretomphaloides concinnus"	"Brady, 1884"	3
@@ -14161,7 +14161,7 @@
 "Wautersia paucula"	"Cupriavidus pauculus"	"Vaneechoutte et al., 2004"	2
 "Wautersia respiraculi"	"Cupriavidus respiraculi"	"Vaneechoutte et al., 2004"	2
 "Wautersia taiwanensis"	"Cupriavidus taiwanensis"	"Vaneechoutte et al., 2004"	2
-"Weeksella zoohelcum"	"Bergeyella zoohelcum"	"Holmes et al., 1987"	3
+"Weeksella zoohelcum"	"Bergeyella zoohelcum"	"Holmes et al., 1987"	2
 "Weiseria spinosa"	"Golbergia spinosa"	"Golberg, 1971"	3
 "Weissella jogaejeotgali"	"Weissella thailandensis"	"Lee et al., 2015"	2
 "Weissella kimchii"	"Weissella cibaria"	"Choi et al., 2002"	2

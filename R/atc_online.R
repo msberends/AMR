@@ -51,7 +51,7 @@
 #' 
 #' - `"g"` = gram
 #' - `"mg"` = milligram
-#' - `"mcg"`` = microgram
+#' - `"mcg"` = microgram
 #' - `"U"` = unit
 #' - `"TU"` = thousand units
 #' - `"MU"` = million units

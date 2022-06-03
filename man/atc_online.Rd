@@ -59,7 +59,7 @@ Abbreviations of return values when using \code{property = "U"} (unit):
 \itemize{
 \item \code{"g"} = gram
 \item \code{"mg"} = milligram
-\item `"mcg"`` = microgram
+\item \code{"mcg"} = microgram
 \item \code{"U"} = unit
 \item \code{"TU"} = thousand units
 \item \code{"MU"} = million units
