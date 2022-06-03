@@ -89,7 +89,9 @@ The function \code{\link[=proportion_df]{proportion_df()}} takes any variable fr
 }
 \section{Combination Therapy}{
 
-When using more than one variable for \code{...} (= combination therapy), use \code{only_all_tested} to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Drug A and Drug B, about how \code{\link[=susceptibility]{susceptibility()}} works to calculate the \%SI:\preformatted{--------------------------------------------------------------------
+When using more than one variable for \code{...} (= combination therapy), use \code{only_all_tested} to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Drug A and Drug B, about how \code{\link[=susceptibility]{susceptibility()}} works to calculate the \%SI:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{--------------------------------------------------------------------
                     only_all_tested = FALSE  only_all_tested = TRUE
                     -----------------------  -----------------------
  Drug A    Drug B   include as  include as   include as  include as
@@ -105,15 +107,19 @@ When using more than one variable for \code{...} (= combination therapy), use \c
    R        <NA>        -            -            -            -
   <NA>      <NA>        -            -            -            -
 --------------------------------------------------------------------
-}
+}\if{html}{\out{</div>}}
 
-Please note that, in combination therapies, for \code{only_all_tested = TRUE} applies that:\preformatted{    count_S()    +   count_I()    +   count_R()    = count_all()
+Please note that, in combination therapies, for \code{only_all_tested = TRUE} applies that:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{    count_S()    +   count_I()    +   count_R()    = count_all()
   proportion_S() + proportion_I() + proportion_R() = 1
-}
+}\if{html}{\out{</div>}}
 
-and that, in combination therapies, for \code{only_all_tested = FALSE} applies that:\preformatted{    count_S()    +   count_I()    +   count_R()    >= count_all()
+and that, in combination therapies, for \code{only_all_tested = FALSE} applies that:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{    count_S()    +   count_I()    +   count_R()    >= count_all()
   proportion_S() + proportion_I() + proportion_R() >= 1
-}
+}\if{html}{\out{</div>}}
 
 Using \code{only_all_tested} has no impact when only using one antibiotic as input.
 }

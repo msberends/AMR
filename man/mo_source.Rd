@@ -37,23 +37,29 @@ Reading an Excel file (\code{.xlsx}) with only one row has a size of 8-9 kB. The
 \section{How to Setup}{
 
 
-Imagine this data on a sheet of an Excel file. The first column contains the organisation specific codes, the second column contains valid taxonomic names:\preformatted{  |         A          |            B          |
+Imagine this data on a sheet of an Excel file. The first column contains the organisation specific codes, the second column contains valid taxonomic names:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{  |         A          |            B          |
 --|--------------------|-----------------------|
 1 | Organisation XYZ   | mo                    |
 2 | lab_mo_ecoli       | Escherichia coli      |
 3 | lab_mo_kpneumoniae | Klebsiella pneumoniae |
 4 |                    |                       |
-}
+}\if{html}{\out{</div>}}
 
-We save it as \code{"home/me/ourcodes.xlsx"}. Now we have to set it as a source:\preformatted{set_mo_source("home/me/ourcodes.xlsx")
+We save it as \code{"home/me/ourcodes.xlsx"}. Now we have to set it as a source:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{set_mo_source("home/me/ourcodes.xlsx")
 #> NOTE: Created mo_source file '/Users/me/mo_source.rds' (0.3 kB) from
 #>       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns 
 #>       "Organisation XYZ" and "mo"
-}
+}\if{html}{\out{</div>}}
 
 It has now created a file \code{"~/mo_source.rds"} with the contents of our Excel file. Only the first column with foreign values and the 'mo' column will be kept when creating the RDS file.
 
-And now we can use it in our functions:\preformatted{as.mo("lab_mo_ecoli")
+And now we can use it in our functions:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{as.mo("lab_mo_ecoli")
 #> Class <mo>
 #> [1] B_ESCHR_COLI
 
@@ -66,18 +72,22 @@ as.mo(c("Escherichia coli", "E. coli", "lab_mo_ecoli"))
 #>       Use mo_uncertainties() to review it.
 #> Class <mo>
 #> [1] B_ESCHR_COLI B_ESCHR_COLI B_ESCHR_COLI
-}
+}\if{html}{\out{</div>}}
 
-If we edit the Excel file by, let's say, adding row 4 like this:\preformatted{  |         A          |            B          |
+If we edit the Excel file by, let's say, adding row 4 like this:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{  |         A          |            B          |
 --|--------------------|-----------------------|
 1 | Organisation XYZ   | mo                    |
 2 | lab_mo_ecoli       | Escherichia coli      |
 3 | lab_mo_kpneumoniae | Klebsiella pneumoniae |
 4 | lab_Staph_aureus   | Staphylococcus aureus |
 5 |                    |                       |
-}
+}\if{html}{\out{</div>}}
 
-...any new usage of an MO function in this package will update your data file:\preformatted{as.mo("lab_mo_ecoli")
+...any new usage of an MO function in this package will update your data file:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{as.mo("lab_mo_ecoli")
 #> NOTE: Updated mo_source file '/Users/me/mo_source.rds' (0.3 kB) from 
 #>       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns
 #>        "Organisation XYZ" and "mo"
@@ -86,11 +96,13 @@ If we edit the Excel file by, let's say, adding row 4 like this:\preformatted{  
 
 mo_genus("lab_Staph_aureus")
 #> [1] "Staphylococcus"
-}
+}\if{html}{\out{</div>}}
 
-To delete the reference data file, just use \code{""}, \code{NULL} or \code{FALSE} as input for \code{\link[=set_mo_source]{set_mo_source()}}:\preformatted{set_mo_source(NULL)
+To delete the reference data file, just use \code{""}, \code{NULL} or \code{FALSE} as input for \code{\link[=set_mo_source]{set_mo_source()}}:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{set_mo_source(NULL)
 #> Removed mo_source file '/Users/me/mo_source.rds'
-}
+}\if{html}{\out{</div>}}
 
 If the original file (in the previous case an Excel file) is moved or deleted, the \code{mo_source.rds} file will be removed upon the next use of \code{\link[=as.mo]{as.mo()}} or any \code{\link[=mo_property]{mo_*}} function.
 }

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9011</span>
       </span>
     </div>
 
@@ -217,20 +217,8 @@
 <h3 id="general-info">General Info<a class="anchor" aria-label="anchor" href="#general-info"></a></h3>
 
 
-<p>A microorganism (MO) code from this package (class: <code>mo</code>) is human readable and typically looks like these examples:</p><div class="sourceCode"><pre><code>  Code               Full name
-  ---------------    --------------------------------------
-  B_KLBSL            Klebsiella
-  B_KLBSL_PNMN       Klebsiella pneumoniae
-  B_KLBSL_PNMN_RHNS  Klebsiella pneumoniae rhinoscleromatis
-  |   |    |    |
-  |   |    |    |
-  |   |    |    \---&gt; subspecies, a 4-5 letter acronym
-  |   |    \----&gt; species, a 4-5 letter acronym
-  |   \----&gt; genus, a 5-7 letter acronym
-  \----&gt; taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria),
-                            C (Chromista), F (Fungi), P (Protozoa)
-</code></pre></div>
-
+<p>A microorganism (MO) code from this package (class: <code>mo</code>) is human readable and typically looks like these examples:</p>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
 <p>Values that cannot be coerced will be considered 'unknown' and will get the MO code <code>UNKNOWN</code>.</p>
 <p>Use the <code><a href="mo_property.html">mo_*</a></code> functions to get properties based on the returned code, see <em>Examples</em>.</p>
 <p>The algorithm uses data from the Catalogue of Life (see below) and from one other source (see <a href="microorganisms.html">microorganisms</a>).</p>
@@ -269,12 +257,12 @@
     <h2>Source</h2>
     
 
-<ol><li><p>Becker K <em>et al.</em> <strong>Coagulase-Negative Staphylococci</strong>. 2014. Clin Microbiol Rev. 27(4): 870-926; doi: <a href="https://doi.org/10.1128/CMR.00109-13" class="external-link">10.1128/CMR.00109-13</a></p></li>
-<li><p>Becker K <em>et al.</em> <strong>Implications of identifying the recently defined members of the <em>S. aureus</em> complex, <em>S. argenteus</em> and <em>S. schweitzeri</em>: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).</strong> 2019. Clin Microbiol Infect; doi: <a href="https://doi.org/10.1016/j.cmi.2019.02.028" class="external-link">10.1016/j.cmi.2019.02.028</a></p></li>
-<li><p>Becker K <em>et al.</em> <strong>Emergence of coagulase-negative staphylococci</strong> 2020. Expert Rev Anti Infect Ther. 18(4):349-366; doi: <a href="https://doi.org/10.1080/14787210.2020.1730813" class="external-link">10.1080/14787210.2020.1730813</a></p></li>
-<li><p>Lancefield RC <strong>A serological differentiation of human and other groups of hemolytic streptococci</strong>. 1933. J Exp Med. 57(4): 571-95; doi: <a href="https://doi.org/10.1084/jem.57.4.571" class="external-link">10.1084/jem.57.4.571</a></p></li>
+<ol><li><p>Becker K <em>et al.</em> <strong>Coagulase-Negative Staphylococci</strong>. 2014. Clin Microbiol Rev. 27(4): 870-926; <a href="https://doi.org/10.1128/CMR.00109-13" class="external-link">doi:10.1128/CMR.00109-13</a></p></li>
+<li><p>Becker K <em>et al.</em> <strong>Implications of identifying the recently defined members of the <em>S. aureus</em> complex, <em>S. argenteus</em> and <em>S. schweitzeri</em>: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).</strong> 2019. Clin Microbiol Infect; <a href="https://doi.org/10.1016/j.cmi.2019.02.028" class="external-link">doi:10.1016/j.cmi.2019.02.028</a></p></li>
+<li><p>Becker K <em>et al.</em> <strong>Emergence of coagulase-negative staphylococci</strong> 2020. Expert Rev Anti Infect Ther. 18(4):349-366; <a href="https://doi.org/10.1080/14787210.2020.1730813" class="external-link">doi:10.1080/14787210.2020.1730813</a></p></li>
+<li><p>Lancefield RC <strong>A serological differentiation of human and other groups of hemolytic streptococci</strong>. 1933. J Exp Med. 57(4): 571-95; <a href="https://doi.org/10.1084/jem.57.4.571" class="external-link">doi:10.1084/jem.57.4.571</a></p></li>
 <li><p>Catalogue of Life: 2019 Annual Checklist, <a href="http://www.catalogueoflife.org" class="external-link">http://www.catalogueoflife.org</a></p></li>
-<li><p>List of Prokaryotic names with Standing in Nomenclature (5 October 2021), doi: <a href="https://doi.org/10.1099/ijsem.0.004332" class="external-link">10.1099/ijsem.0.004332</a></p></li>
+<li><p>List of Prokaryotic names with Standing in Nomenclature (5 October 2021), <a href="https://doi.org/10.1099/ijsem.0.004332" class="external-link">doi:10.1099/ijsem.0.004332</a></p></li>
 <li><p>US Edition of SNOMED CT from 1 September 2020, retrieved from the Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS), OID 2.16.840.1.114222.4.11.1009, version 12; url: <a href="https://phinvads.cdc.gov/vads/ViewValueSet.action?oid=2.16.840.1.114222.4.11.1009" class="external-link">https://phinvads.cdc.gov/vads/ViewValueSet.action?oid=2.16.840.1.114222.4.11.1009</a></p></li>
 </ol></div>
     <div id="stable-lifecycle">

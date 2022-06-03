@@ -89,8 +89,10 @@ The \emph{G}-test uses the log of the ratio of two likelihoods as the test stati
 
 \eqn{G = 2 * sum(x * log(x / E))}
 
-where \code{E} are the expected values. Since this is chi-square distributed, the p value can be calculated in \R with:\preformatted{p <- stats::pchisq(G, df, lower.tail = FALSE)
-}
+where \code{E} are the expected values. Since this is chi-square distributed, the p value can be calculated in \R with:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{p <- stats::pchisq(G, df, lower.tail = FALSE)
+}\if{html}{\out{</div>}}
 
 where \code{df} are the degrees of freedom.
 

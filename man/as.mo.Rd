@@ -61,7 +61,9 @@ Use this function to determine a valid microorganism code (\code{\link{mo}}). De
 \details{
 \subsection{General Info}{
 
-A microorganism (MO) code from this package (class: \code{\link{mo}}) is human readable and typically looks like these examples:\preformatted{  Code               Full name
+A microorganism (MO) code from this package (class: \code{\link{mo}}) is human readable and typically looks like these examples:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{  Code               Full name
   ---------------    --------------------------------------
   B_KLBSL            Klebsiella
   B_KLBSL_PNMN       Klebsiella pneumoniae
@@ -73,7 +75,7 @@ A microorganism (MO) code from this package (class: \code{\link{mo}}) is human r
   |   \\----> genus, a 5-7 letter acronym
   \\----> taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria),
                             C (Chromista), F (Fungi), P (Protozoa)
-}
+}\if{html}{\out{</div>}}
 
 Values that cannot be coerced will be considered 'unknown' and will get the MO code \code{UNKNOWN}.
 

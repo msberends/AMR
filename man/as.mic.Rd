@@ -35,7 +35,9 @@ This transforms vectors to a new class \code{\link{mic}}, which treats the input
 \details{
 To interpret MIC values as RSI values, use \code{\link[=as.rsi]{as.rsi()}} on MIC values. It supports guidelines from EUCAST (2011-2022) and CLSI (2011-2022).
 
-This class for MIC values is a quite a special data type: formally it is an ordered \link{factor} with valid MIC values as \link{factor} levels (to make sure only valid MIC values are retained), but for any mathematical operation it acts as decimal numbers:\preformatted{x <- random_mic(10)
+This class for MIC values is a quite a special data type: formally it is an ordered \link{factor} with valid MIC values as \link{factor} levels (to make sure only valid MIC values are retained), but for any mathematical operation it acts as decimal numbers:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{x <- random_mic(10)
 x
 #> Class <mic>
 #>  [1] 16     1      8      8      64     >=128  0.0625 32     32     16
@@ -48,9 +50,11 @@ x[1] * 2
 
 median(x)
 #> [1] 26
-}
+}\if{html}{\out{</div>}}
 
-This makes it possible to maintain operators that often come with MIC values, such ">=" and "<=", even when filtering using \link{numeric} values in data analysis, e.g.:\preformatted{x[x > 4]
+This makes it possible to maintain operators that often come with MIC values, such ">=" and "<=", even when filtering using \link{numeric} values in data analysis, e.g.:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{x[x > 4]
 #> Class <mic>
 #> [1] 16    8     8     64    >=128 32    32    16
 
@@ -63,7 +67,7 @@ subset(df, x > 4) # or with dplyr: df \%>\% filter(x > 4)
 #> 8     32        A
 #> 9     32        A
 #> 10    16        A
-}
+}\if{html}{\out{</div>}}
 
 The following \link[=groupGeneric]{generic functions} are implemented for the MIC class: \code{!}, \code{!=}, \code{\%\%}, \code{\%/\%}, \code{&}, \code{*}, \code{+}, \code{-}, \code{/}, \code{<}, \code{<=}, \code{==}, \code{>}, \code{>=}, \code{^}, \code{|}, \code{\link[=abs]{abs()}}, \code{\link[=acos]{acos()}}, \code{\link[=acosh]{acosh()}}, \code{\link[=all]{all()}}, \code{\link[=any]{any()}}, \code{\link[=asin]{asin()}}, \code{\link[=asinh]{asinh()}}, \code{\link[=atan]{atan()}}, \code{\link[=atanh]{atanh()}}, \code{\link[=ceiling]{ceiling()}}, \code{\link[=cos]{cos()}}, \code{\link[=cosh]{cosh()}}, \code{\link[=cospi]{cospi()}}, \code{\link[=cummax]{cummax()}}, \code{\link[=cummin]{cummin()}}, \code{\link[=cumprod]{cumprod()}}, \code{\link[=cumsum]{cumsum()}}, \code{\link[=digamma]{digamma()}}, \code{\link[=exp]{exp()}}, \code{\link[=expm1]{expm1()}}, \code{\link[=floor]{floor()}}, \code{\link[=gamma]{gamma()}}, \code{\link[=lgamma]{lgamma()}}, \code{\link[=log]{log()}}, \code{\link[=log1p]{log1p()}}, \code{\link[=log2]{log2()}}, \code{\link[=log10]{log10()}}, \code{\link[=max]{max()}}, \code{\link[=mean]{mean()}}, \code{\link[=min]{min()}}, \code{\link[=prod]{prod()}}, \code{\link[=range]{range()}}, \code{\link[=round]{round()}}, \code{\link[=sign]{sign()}}, \code{\link[=signif]{signif()}}, \code{\link[=sin]{sin()}}, \code{\link[=sinh]{sinh()}}, \code{\link[=sinpi]{sinpi()}}, \code{\link[=sqrt]{sqrt()}}, \code{\link[=sum]{sum()}}, \code{\link[=tan]{tan()}}, \code{\link[=tanh]{tanh()}}, \code{\link[=tanpi]{tanpi()}}, \code{\link[=trigamma]{trigamma()}} and \code{\link[=trunc]{trunc()}}. Some functions of the \code{stats} package are also implemented: \code{\link[=median]{median()}}, \code{\link[=quantile]{quantile()}}, \code{\link[=mad]{mad()}}, \code{\link[=IQR]{IQR()}}, \code{\link[=fivenum]{fivenum()}}. Also, \code{\link[=boxplot.stats]{boxplot.stats()}} is supported. Since \code{\link[=sd]{sd()}} and \code{\link[=var]{var()}} are non-generic functions, these could not be extended. Use \code{\link[=mad]{mad()}} as an alternative, or use e.g. \code{sd(as.numeric(x))} where \code{x} is your vector of MIC values.
 

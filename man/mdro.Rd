@@ -122,35 +122,43 @@ Please suggest your own (country-specific) guidelines by letting us know: \url{h
 
 Custom guidelines can be set with the \code{\link[=custom_mdro_guideline]{custom_mdro_guideline()}} function. This is of great importance if you have custom rules to determine MDROs in your hospital, e.g., rules that are dependent on ward, state of contact isolation or other variables in your data.
 
-If you are familiar with the \code{\link[dplyr:case_when]{case_when()}} function of the \code{dplyr} package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation'. The rule is written \emph{before} the tilde (\code{~}) and the consequence of the rule is written \emph{after} the tilde:\preformatted{custom <- custom_mdro_guideline(CIP == "R" & age > 60 ~ "Elderly Type A",
+If you are familiar with the \code{\link[dplyr:case_when]{case_when()}} function of the \code{dplyr} package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation'. The rule is written \emph{before} the tilde (\code{~}) and the consequence of the rule is written \emph{after} the tilde:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{custom <- custom_mdro_guideline(CIP == "R" & age > 60 ~ "Elderly Type A",
                                 ERY == "R" & age > 60 ~ "Elderly Type B")
-}
+}\if{html}{\out{</div>}}
 
 If a row/an isolate matches the first rule, the value after the first \code{~} (in this case \emph{'Elderly Type A'}) will be set as MDRO value. Otherwise, the second rule will be tried and so on. The number of rules is unlimited.
 
-You can print the rules set in the console for an overview. Colours will help reading it if your console supports colours.\preformatted{custom
+You can print the rules set in the console for an overview. Colours will help reading it if your console supports colours.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{custom
 #> A set of custom MDRO rules:
 #>   1. CIP is "R" and age is higher than 60 -> Elderly Type A
 #>   2. ERY is "R" and age is higher than 60 -> Elderly Type B
 #>   3. Otherwise -> Negative
 #> 
 #> Unmatched rows will return NA.
-}
+}\if{html}{\out{</div>}}
 
-The outcome of the function can be used for the \code{guideline} argument in the \code{\link[=mdro]{mdro()}} function:\preformatted{x <- mdro(example_isolates,
+The outcome of the function can be used for the \code{guideline} argument in the \code{\link[=mdro]{mdro()}} function:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{x <- mdro(example_isolates,
           guideline = custom)
 table(x)
 #>       Negative Elderly Type A Elderly Type B
 #>           1070            198            732
-}
+}\if{html}{\out{</div>}}
 
-Rules can also be combined with other custom rules by using \code{\link[=c]{c()}}:\preformatted{x <- mdro(example_isolates,
+Rules can also be combined with other custom rules by using \code{\link[=c]{c()}}:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{x <- mdro(example_isolates,
           guideline = c(custom, 
                         custom_mdro_guideline(ERY == "R" & age > 50 ~ "Elderly Type C")))
 table(x)
 #>       Negative Elderly Type A Elderly Type B Elderly Type C 
 #>            961            198            732            109
-}
+}\if{html}{\out{</div>}}
 
 The rules set (the \code{custom} object in this case) could be exported to a shared file location using \code{\link[=saveRDS]{saveRDS()}} if you collaborate with multiple users. The custom rules set could then be imported using \code{\link[=readRDS]{readRDS()}}.
 }

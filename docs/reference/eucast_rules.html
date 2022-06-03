@@ -18,7 +18,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9011</span>
       </span>
     </div>
 
@@ -185,7 +185,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     <h2>Source</h2>
     
 <ul><li><p>EUCAST Expert Rules. Version 2.0, 2012.<br>
-Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility testing.</strong> <em>Clin Microbiol Infect.</em> 2013;19(2):141-60; doi: <a href="https://doi.org/10.1111/j.1469-0691.2011.03703.x" class="external-link">10.1111/j.1469-0691.2011.03703.x</a></p></li>
+Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility testing.</strong> <em>Clin Microbiol Infect.</em> 2013;19(2):141-60; <a href="https://doi.org/10.1111/j.1469-0691.2011.03703.x" class="external-link">doi:10.1111/j.1469-0691.2011.03703.x</a></p></li>
 <li><p>EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes Tables. Version 3.1, 2016. <a href="https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf" class="external-link">(link)</a></p></li>
 <li><p>EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.2, 2020. <a href="https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf" class="external-link">(link)</a></p></li>
 <li><p>EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.3, 2021. <a href="https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2021/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.3_20211018.pdf" class="external-link">(link)</a></p></li>
@@ -233,11 +233,8 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <h3 id="custom-rules">Custom Rules<a class="anchor" aria-label="anchor" href="#custom-rules"></a></h3>
 
 
-<p>Custom rules can be created using <code><a href="custom_eucast_rules.html">custom_eucast_rules()</a></code>, e.g.:</p><div class="sourceCode"><pre><code><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/custom_eucast_rules.html">custom_eucast_rules</a></span><span class="op">(</span><span class="va">AMC</span> <span class="op">==</span> <span class="st">"R"</span> <span class="op">&amp;</span> <span class="va">genus</span> <span class="op">==</span> <span class="st">"Klebsiella"</span> <span class="op">~</span> <span class="va">aminopenicillins</span> <span class="op">==</span> <span class="st">"R"</span>,
-                         <span class="va">AMC</span> <span class="op">==</span> <span class="st">"I"</span> <span class="op">&amp;</span> <span class="va">genus</span> <span class="op">==</span> <span class="st">"Klebsiella"</span> <span class="op">~</span> <span class="va">aminopenicillins</span> <span class="op">==</span> <span class="st">"I"</span><span class="op">)</span>
-
-<span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span><span class="op">(</span><span class="va">example_isolates</span>, rules <span class="op">=</span> <span class="st">"custom"</span>, custom_rules <span class="op">=</span> <span class="va">x</span><span class="op">)</span></code></pre></div>
-
+<p>Custom rules can be created using <code><a href="custom_eucast_rules.html">custom_eucast_rules()</a></code>, e.g.:</p>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
 </div>
 
 <div class="section">

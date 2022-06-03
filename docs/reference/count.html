@@ -18,7 +18,7 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9011</span>
       </span>
     </div>
 
@@ -243,30 +243,12 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
     <h2>Combination Therapy</h2>
     
 
-<p>When using more than one variable for <code>...</code> (= combination therapy), use <code>only_all_tested</code> to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Drug A and Drug B, about how <code><a href="proportion.html">susceptibility()</a></code> works to calculate the %SI:</p><div class="sourceCode"><pre><code>--------------------------------------------------------------------
-                    only_all_tested = FALSE  only_all_tested = TRUE
-                    -----------------------  -----------------------
- Drug A    Drug B   include as  include as   include as  include as
-                    numerator   denominator  numerator   denominator
---------  --------  ----------  -----------  ----------  -----------
- S or I    S or I       X            X            X            X
-   R       S or I       X            X            X            X
-  &lt;NA&gt;     S or I       X            X            -            -
- S or I      R          X            X            X            X
-   R         R          -            X            -            X
-  &lt;NA&gt;       R          -            -            -            -
- S or I     &lt;NA&gt;        X            X            -            -
-   R        &lt;NA&gt;        -            -            -            -
-  &lt;NA&gt;      &lt;NA&gt;        -            -            -            -
---------------------------------------------------------------------
-</code></pre></div>
-
-<p>Please note that, in combination therapies, for <code>only_all_tested = TRUE</code> applies that:</p><div class="sourceCode"><pre><code><span class="fu"><a href="../reference/count.html">count_S</a></span><span class="op">(</span><span class="op">)</span>    <span class="op">+</span>   <span class="fu"><a href="../reference/count.html">count_I</a></span><span class="op">(</span><span class="op">)</span>    <span class="op">+</span>   <span class="fu"><a href="../reference/count.html">count_R</a></span><span class="op">(</span><span class="op">)</span>    <span class="op">=</span> <span class="fu"><a href="../reference/count.html">count_all</a></span><span class="op">(</span><span class="op">)</span>
-  <span class="fu"><a href="../reference/proportion.html">proportion_S</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="../reference/proportion.html">proportion_I</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="../reference/proportion.html">proportion_R</a></span><span class="op">(</span><span class="op">)</span> <span class="op">=</span> <span class="fl">1</span></code></pre></div>
-
-<p>and that, in combination therapies, for <code>only_all_tested = FALSE</code> applies that:</p><div class="sourceCode"><pre><code><span class="fu"><a href="../reference/count.html">count_S</a></span><span class="op">(</span><span class="op">)</span>    <span class="op">+</span>   <span class="fu"><a href="../reference/count.html">count_I</a></span><span class="op">(</span><span class="op">)</span>    <span class="op">+</span>   <span class="fu"><a href="../reference/count.html">count_R</a></span><span class="op">(</span><span class="op">)</span>    <span class="op">&gt;=</span> <span class="fu"><a href="../reference/count.html">count_all</a></span><span class="op">(</span><span class="op">)</span>
-  <span class="fu"><a href="../reference/proportion.html">proportion_S</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="../reference/proportion.html">proportion_I</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="../reference/proportion.html">proportion_R</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fl">1</span></code></pre></div>
-
+<p>When using more than one variable for <code>...</code> (= combination therapy), use <code>only_all_tested</code> to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Drug A and Drug B, about how <code><a href="proportion.html">susceptibility()</a></code> works to calculate the %SI:</p>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
+<p>Please note that, in combination therapies, for <code>only_all_tested = TRUE</code> applies that:</p>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
+<p>and that, in combination therapies, for <code>only_all_tested = FALSE</code> applies that:</p>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
 <p>Using <code>only_all_tested</code> has no impact when only using one antibiotic as input.</p>
     </div>
     <div id="read-more-on-our-website-">

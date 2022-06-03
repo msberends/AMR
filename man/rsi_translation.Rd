@@ -27,8 +27,12 @@ rsi_translation
 Data set containing reference data to interpret MIC and disk diffusion to R/SI values, according to international guidelines. Currently implemented guidelines are EUCAST (2011-2022) and CLSI (2011-2022). Use \code{\link[=as.rsi]{as.rsi()}} to transform MICs or disks measurements to R/SI values.
 }
 \details{
-Overview of the data set:\if{html}{\out{<div class="sourceCode r">}}\preformatted{head(rsi_translation)
-}\if{html}{\out{</div>}}\preformatted{##     guideline method site           mo rank_index  ab     ref_tbl disk_dose
+Overview of the data set:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{head(rsi_translation)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{##     guideline method site           mo rank_index  ab     ref_tbl disk_dose
 ## 1 EUCAST 2022    MIC <NA> F_ASPRG_MGTS          2 AMB Aspergillus      <NA>
 ## 2 EUCAST 2022    MIC <NA> F_ASPRG_NIGR          2 AMB Aspergillus      <NA>
 ## 3 EUCAST 2022    MIC <NA>      F_CANDD          3 AMB     Candida      <NA>
@@ -42,7 +46,7 @@ Overview of the data set:\if{html}{\out{<div class="sourceCode r">}}\preformatte
 ## 4            1            1 FALSE
 ## 5            1            1 FALSE
 ## 6            1            1 FALSE
-}
+}\if{html}{\out{</div>}}
 
 The repository of this \code{AMR} package contains a file comprising this exact data set: \url{https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt}. This file \strong{allows for machine reading EUCAST and CLSI guidelines}, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. The file is updated automatically and the \code{mo} and \code{ab} columns have been transformed to contain the full official names instead of codes.
 }

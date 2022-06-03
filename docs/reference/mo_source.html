@@ -18,7 +18,7 @@ This is the fastest way to have your organisation (or analysis) specific codes p
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9011</span>
       </span>
     </div>
 
@@ -192,56 +192,19 @@ This is the fastest way to have your organisation (or analysis) specific codes p
     
 
 
-<p>Imagine this data on a sheet of an Excel file. The first column contains the organisation specific codes, the second column contains valid taxonomic names:</p><div class="sourceCode"><pre><code>  |         A          |            B          |
---|--------------------|-----------------------|
-1 | Organisation XYZ   | mo                    |
-2 | lab_mo_ecoli       | Escherichia coli      |
-3 | lab_mo_kpneumoniae | Klebsiella pneumoniae |
-4 |                    |                       |
-</code></pre></div>
-
-<p>We save it as <code>"home/me/ourcodes.xlsx"</code>. Now we have to set it as a source:</p><div class="sourceCode"><pre><code><span class="fu"><a href="../reference/mo_source.html">set_mo_source</a></span><span class="op">(</span><span class="st">"home/me/ourcodes.xlsx"</span><span class="op">)</span>
-<span class="co">#&gt; NOTE: Created mo_source file '/Users/me/mo_source.rds' (0.3 kB) from</span>
-<span class="co">#&gt;       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns </span>
-<span class="co">#&gt;       "Organisation XYZ" and "mo"</span></code></pre></div>
-
+<p>Imagine this data on a sheet of an Excel file. The first column contains the organisation specific codes, the second column contains valid taxonomic names:</p>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
+<p>We save it as <code>"home/me/ourcodes.xlsx"</code>. Now we have to set it as a source:</p>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
 <p>It has now created a file <code>"~/mo_source.rds"</code> with the contents of our Excel file. Only the first column with foreign values and the 'mo' column will be kept when creating the RDS file.</p>
-<p>And now we can use it in our functions:</p><div class="sourceCode"><pre><code><span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"lab_mo_ecoli"</span><span class="op">)</span>
-<span class="co">#&gt; Class &lt;mo&gt;</span>
-<span class="co">#&gt; [1] B_ESCHR_COLI</span>
-
-<span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="st">"lab_mo_kpneumoniae"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "Klebsiella"</span>
-
-<span class="co"># other input values still work too</span>
-<span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Escherichia coli"</span>, <span class="st">"E. coli"</span>, <span class="st">"lab_mo_ecoli"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; NOTE: Translation to one microorganism was guessed with uncertainty.</span>
-<span class="co">#&gt;       Use mo_uncertainties() to review it.</span>
-<span class="co">#&gt; Class &lt;mo&gt;</span>
-<span class="co">#&gt; [1] B_ESCHR_COLI B_ESCHR_COLI B_ESCHR_COLI</span></code></pre></div>
-
-<p>If we edit the Excel file by, let's say, adding row 4 like this:</p><div class="sourceCode"><pre><code>  |         A          |            B          |
---|--------------------|-----------------------|
-1 | Organisation XYZ   | mo                    |
-2 | lab_mo_ecoli       | Escherichia coli      |
-3 | lab_mo_kpneumoniae | Klebsiella pneumoniae |
-4 | lab_Staph_aureus   | Staphylococcus aureus |
-5 |                    |                       |
-</code></pre></div>
-
-<p>...any new usage of an MO function in this package will update your data file:</p><div class="sourceCode"><pre><code><span class="fu"><a href="../reference/as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"lab_mo_ecoli"</span><span class="op">)</span>
-<span class="co">#&gt; NOTE: Updated mo_source file '/Users/me/mo_source.rds' (0.3 kB) from </span>
-<span class="co">#&gt;       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns</span>
-<span class="co">#&gt;        "Organisation XYZ" and "mo"</span>
-<span class="co">#&gt; Class &lt;mo&gt;</span>
-<span class="co">#&gt; [1] B_ESCHR_COLI</span>
-
-<span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="st">"lab_Staph_aureus"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "Staphylococcus"</span></code></pre></div>
-
-<p>To delete the reference data file, just use <code>""</code>, <code>NULL</code> or <code>FALSE</code> as input for <code>set_mo_source()</code>:</p><div class="sourceCode"><pre><code><span class="fu"><a href="../reference/mo_source.html">set_mo_source</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>
-<span class="co">#&gt; Removed mo_source file '/Users/me/mo_source.rds'</span></code></pre></div>
-
+<p>And now we can use it in our functions:</p>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
+<p>If we edit the Excel file by, let's say, adding row 4 like this:</p>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
+<p>...any new usage of an MO function in this package will update your data file:</p>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
+<p>To delete the reference data file, just use <code>""</code>, <code>NULL</code> or <code>FALSE</code> as input for <code>set_mo_source()</code>:</p>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
 <p>If the original file (in the previous case an Excel file) is moved or deleted, the <code>mo_source.rds</code> file will be removed upon the next use of <code><a href="as.mo.html">as.mo()</a></code> or any <code><a href="mo_property.html">mo_*</a></code> function.</p>
     </div>
     <div id="stable-lifecycle">
