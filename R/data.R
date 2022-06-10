@@ -104,6 +104,7 @@
 #' - 11 entries of *Streptococcus* (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)
 #' - 2 entries of *Staphylococcus* (coagulase-negative (CoNS) and coagulase-positive (CoPS))
 #' - 3 entries of *Trichomonas* (*T. vaginalis*, and its family and genus)
+#' - 4 entries of *Toxoplasma* (*T. gondii*, and its order, family and genus)
 #' - 1 entry of *Candida* (*C.  krusei*), that is not (yet) in the Catalogue of Life
 #' - 1 entry of *Blastocystis* (*B.  hominis*), although it officially does not exist (Noel *et al.* 2005, PMID 15634993)
 #' - 1 entry of *Moraxella* (*M. catarrhalis*), which was formally named *Branhamella catarrhalis* (Catlin, 1970) though this change was never accepted within the field of clinical microbiology
@@ -111,13 +112,10 @@
 #' - 6 families under the Enterobacterales order, according to Adeolu *et al.* (2016, PMID 27620848), that are not (yet) in the Catalogue of Life
 #' 
 #' ## Direct download
-#' This data set is available as 'flat file' for use even without \R - you can find the file here:
+#' This data set is available as 'flat file' for use even without \R - you can find the file here: <https://github.com/msberends/AMR/raw/main/data-raw/microorganisms.txt>. 
 #' 
-#' * <https://github.com/msberends/AMR/raw/main/data-raw/microorganisms.txt>
+#' The file in \R format (with preserved data structure) can be found here: <https://github.com/msberends/AMR/raw/main/data/microorganisms.rda>.
 #' 
-#' The file in \R format (with preserved data structure) can be found here:
-#' 
-#' * <https://github.com/msberends/AMR/raw/main/data/microorganisms.rda>
 #' @section About the Records from LPSN (see *Source*):
 #' The List of Prokaryotic names with Standing in Nomenclature (LPSN) provides comprehensive information on the nomenclature of prokaryotes. LPSN is a free to use service founded by Jean P. Euzeby in 1997 and later on maintained by Aidan C. Parte.
 #' 

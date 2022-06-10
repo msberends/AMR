@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data Set with 70,760 Microorganisms}
+\title{Data Set with 70,764 Microorganisms}
 \format{
-A \link{data.frame} with 70,760 observations and 16 variables:
+A \link{data.frame} with 70,764 observations and 16 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}
@@ -54,6 +54,7 @@ For convenience, some entries were added manually:
 \item 11 entries of \emph{Streptococcus} (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)
 \item 2 entries of \emph{Staphylococcus} (coagulase-negative (CoNS) and coagulase-positive (CoPS))
 \item 3 entries of \emph{Trichomonas} (\emph{T. vaginalis}, and its family and genus)
+\item 4 entries of \emph{Toxoplasma} (\emph{T. gondii}, and its order, family and genus)
 \item 1 entry of \emph{Candida} (\emph{C.  krusei}), that is not (yet) in the Catalogue of Life
 \item 1 entry of \emph{Blastocystis} (\emph{B.  hominis}), although it officially does not exist (Noel \emph{et al.} 2005, PMID 15634993)
 \item 1 entry of \emph{Moraxella} (\emph{M. catarrhalis}), which was formally named \emph{Branhamella catarrhalis} (Catlin, 1970) though this change was never accepted within the field of clinical microbiology
@@ -64,15 +65,9 @@ For convenience, some entries were added manually:
 
 \subsection{Direct download}{
 
-This data set is available as 'flat file' for use even without \R - you can find the file here:
-\itemize{
-\item \url{https://github.com/msberends/AMR/raw/main/data-raw/microorganisms.txt}
-}
+This data set is available as 'flat file' for use even without \R - you can find the file here: \url{https://github.com/msberends/AMR/raw/main/data-raw/microorganisms.txt}.
 
-The file in \R format (with preserved data structure) can be found here:
-\itemize{
-\item \url{https://github.com/msberends/AMR/raw/main/data/microorganisms.rda}
-}
+The file in \R format (with preserved data structure) can be found here: \url{https://github.com/msberends/AMR/raw/main/data/microorganisms.rda}.
 }
 }
 \section{About the Records from LPSN (see \emph{Source})}{

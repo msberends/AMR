@@ -137,6 +137,29 @@ MO_CONS <- create_species_cons_cops("CoNS")
 MO_COPS <- create_species_cons_cops("CoPS")
 MO_STREP_ABCG <- as.mo(MO_lookup[which(MO_lookup$genus == "Streptococcus"), "mo", drop = TRUE], Lancefield = TRUE) %in% c("B_STRPT_GRPA", "B_STRPT_GRPB", "B_STRPT_GRPC", "B_STRPT_GRPG")
 MO_FULLNAME_LOWER <- create_MO_fullname_lower()
+MO_PREVALENT_GENERA <- c("Absidia", "Acholeplasma", "Acremonium", "Actinotignum", "Aedes", "Alistipes", "Alloprevotella",
+                         "Alternaria", "Anaerosalibacter", "Ancylostoma", "Angiostrongylus", "Anisakis", "Anopheles",
+                         "Apophysomyces", "Arachnia", "Aspergillus", "Aureobasidium", "Bacteroides", "Basidiobolus",
+                         "Beauveria", "Bergeyella", "Blastocystis", "Blastomyces", "Borrelia", "Brachyspira", "Branhamella",
+                         "Butyricimonas", "Candida", "Capillaria", "Capnocytophaga", "Catabacter", "Cetobacterium", "Chaetomium",
+                         "Chlamydia", "Chlamydophila", "Chryseobacterium", "Chrysonilia", "Cladophialophora", "Cladosporium",
+                         "Conidiobolus", "Contracaecum", "Cordylobia", "Cryptococcus", "Curvularia", "Deinococcus", "Demodex",
+                         "Dermatobia", "Diphyllobothrium", "Dirofilaria", "Dysgonomonas", "Echinostoma", "Elizabethkingia",
+                         "Empedobacter", "Enterobius", "Exophiala", "Exserohilum", "Fasciola", "Flavobacterium", "Fonsecaea",
+                         "Fusarium", "Fusobacterium", "Giardia", "Haloarcula", "Halobacterium", "Halococcus", "Hendersonula",
+                         "Heterophyes", "Histoplasma", "Hymenolepis", "Hypomyces", "Hysterothylacium", "Lelliottia",
+                         "Leptosphaeria", "Leptotrichia", "Lucilia", "Lumbricus", "Malassezia", "Malbranchea", "Metagonimus",
+                         "Microsporum", "Mortierella", "Mucor", "Mycocentrospora", "Mycoplasma", "Myroides", "Necator",
+                         "Nectria", "Ochroconis", "Odoribacter", "Oesophagostomum", "Oidiodendron", "Opisthorchis",
+                         "Ornithobacterium", "Parabacteroides", "Pediculus", "Pedobacter", "Phlebotomus", "Phocaeicola",
+                         "Phocanema", "Phoma", "Piedraia", "Pithomyces", "Pityrosporum", "Porphyromonas", "Prevotella",
+                         "Pseudallescheria", "Pseudoterranova", "Pulex", "Rhizomucor", "Rhizopus", "Rhodotorula", "Riemerella",
+                         "Saccharomyces", "Sarcoptes", "Scolecobasidium", "Scopulariopsis", "Scytalidium", "Sphingobacterium",
+                         "Spirometra", "Spiroplasma", "Sporobolomyces", "Stachybotrys", "Streptobacillus", "Strongyloides",
+                         "Syngamus", "Taenia", "Tannerella", "Tenacibaculum", "Terrimonas", "Toxocara", "Treponema", "Trichinella",
+                         "Trichobilharzia", "Trichoderma", "Trichomonas", "Trichophyton", "Trichosporon", "Trichostrongylus",
+                         "Trichuris", "Tritirachium", "Trombicula", "Tunga", "Ureaplasma", "Victivallis", "Wautersiella",
+                         "Weeksella", "Wuchereria")
 
 # antibiotic groups
 # (these will also be used for eucast_rules() and understanding data-raw/eucast_rules.tsv)
@@ -200,6 +223,7 @@ usethis::use_data(EUCAST_RULES_DF,
                   MO_COPS,
                   MO_STREP_ABCG,
                   MO_FULLNAME_LOWER,
+                  MO_PREVALENT_GENERA,
                   AB_LOOKUP,
                   AB_AMINOGLYCOSIDES,
                   AB_AMINOPENICILLINS,
@@ -275,7 +299,7 @@ if (changed_md5(mo)) {
   try(haven::write_sas(dplyr::select(mo, -snomed), "data-raw/microorganisms.sas"), silent = TRUE)
   try(haven::write_sav(dplyr::select(mo, -snomed), "data-raw/microorganisms.sav"), silent = TRUE)
   try(haven::write_dta(dplyr::select(mo, -snomed), "data-raw/microorganisms.dta"), silent = TRUE)
-  try(openxlsx::write.xlsx(mo, "data-raw/microorganisms.xlsx"), silent = TRUE)
+  try(openxlsx::write.xlsx(dplyr::select(mo, -snomed), "data-raw/microorganisms.xlsx"), silent = TRUE)
 }
 
 if (changed_md5(microorganisms.old)) {

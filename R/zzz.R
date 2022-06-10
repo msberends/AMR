@@ -131,7 +131,12 @@ create_MO_lookup <- function() {
   MO_lookup[which(is.na(MO_lookup$kingdom_index)), "kingdom_index"] <- 5
   
   # use this paste instead of `fullname` to work with Viridans Group Streptococci, etc.
-  MO_lookup$fullname_lower <- MO_FULLNAME_LOWER
+  if (length(MO_FULLNAME_LOWER) == nrow(MO_lookup)) {
+    MO_lookup$fullname_lower <- MO_FULLNAME_LOWER
+  } else {
+    MO_lookup$fullname_lower <- ""
+    warning("MO table updated - Run: source(\"data-raw/_internals.R\")", call. = FALSE)
+  }
   
   # add a column with only "e coli" like combinations
   MO_lookup$g_species <- gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO_lookup$fullname_lower, perl = TRUE)

@@ -168,41 +168,6 @@ rm(ref_taxonomy)
 rm(data_col.bak)
 rm(data_dsmz.bak)
 
-mo_found_in_NL <- c("Absidia", "Acholeplasma", "Acremonium", "Actinotignum", "Aedes", "Alistipes",
-                    "Alloprevotella", "Alternaria", "Anaerosalibacter", "Ancylostoma", "Angiostrongylus",
-                    "Anisakis", "Anopheles", "Apophysomyces", "Arachnia", "Ascaris", "Aspergillus",
-                    "Aureobacterium", "Aureobasidium", "Bacteroides", "Balantidum", "Basidiobolus",
-                    "Beauveria", "Bergeyella", "Bilophilia", "Blastocystis", "Borrelia", "Brachyspira",
-                    "Branhamella", "Brochontrix", "Brugia", "Butyricimonas", "Calymmatobacterium",
-                    "Candida", "Capillaria", "Capnocytophaga", "Catabacter", "Cdc", "Cetobacterium",
-                    "Chaetomium", "Chilomastix", "Chlamydia", "Chlamydophila", "Chryseobacterium",
-                    "Chryseomonas", "Chrysonilia", "Cladophialophora", "Cladosporium", "Clonorchis",
-                    "Conidiobolus", "Contracaecum", "Cordylobia", "Cryptococcus", "Curvularia", "Deinococcus",
-                    "Demodex", "Dermatobia", "Dicrocoelium", "Dioctophyma", "Diphyllobothrium", "Dipylidium",
-                    "Dirofilaria", "Dracunculus", "Dysgonomonas", "Echinococcus", "Echinostoma",
-                    "Elisabethkingia", "Elizabethkingia", "Empedobacter", "Enterobius", "Enteromonas",
-                    "Euascomycetes", "Exophiala", "Exserohilum", "Fasciola", "Fasciolopsis", "Flavobacterium",
-                    "Fonsecaea", "Fusarium", "Fusobacterium", "Giardia", "Gnathostoma", "Haloarcula",
-                    "Halobacterium", "Halococcus", "Hendersonula", "Heterophyes", "Hymenolepis", "Hypomyces",
-                    "Hysterothylacium", "Kloeckera", "Koserella", "Larva", "Lecythophora", "Leishmania",
-                    "Lelliottia", "Leptomyxida", "Leptosphaeria", "Leptotrichia", "Loa", "Lucilia", "Lumbricus",
-                    "Malassezia", "Malbranchea", "Mansonella", "Mesocestoides", "Metagonimus", "Metarrhizium",
-                    "Molonomonas", "Mortierella", "Mucor", "Multiceps", "Mycocentrospora", "Mycoplasma",
-                    "Myroides", "Nanophetus", "Nattrassia", "Necator", "Nectria", "Novospingobium", "Ochroconis",
-                    "Odoribacter", "Oesophagostomum", "Oidiodendron", "Onchocerca", "Opisthorchis",
-                    "Opistorchis", "Ornithobacterium", "Parabacteroides", "Paragonimus", "Paramyxovirus",
-                    "Pediculus", "Pedobacter", "Phlebotomus", "Phocaeicola", "Phocanema", "Phoma",
-                    "Phthirus", "Piedraia", "Pithomyces", "Pityrosporum", "Porphyromonas", "Prevotella",
-                    "Pseudallescheria", "Pseudoterranova", "Pulex", "Retortamonas", "Rhizomucor", "Rhizopus",
-                    "Rhodotorula", "Riemerella", "Salinococcus", "Sanguibacteroides", "Sarcophagidae", "Sarcoptes",
-                    "Schistosoma", "Scolecobasidium", "Scopulariopsis", "Scytalidium", "Sphingobacterium",
-                    "Spirometra", "Sporobolomyces", "Stachybotrys", "Stenotrophomononas", "Stomatococcus",
-                    "Streptobacillus", "Strongyloides", "Syncephalastraceae", "Syngamus", "Taenia",
-                    "Tenacibaculum", "Ternidens", "Terrimonas", "Torulopsis", "Toxocara", "Toxoplasma",
-                    "Treponema", "Trichinella", "Trichobilharzia", "Trichoderma", "Trichomonas", "Trichophyton",
-                    "Trichosporon", "Trichostrongylus", "Trichuris", "Tritirachium", "Trombicula", "Trypanosoma",
-                    "Tunga", "Ureaplasma", "Victivallis", "Wautersiella", "Weeksella", "Wuchereria")
-
 MOs <- data_total %>%
   filter(
     (
@@ -214,7 +179,7 @@ MOs <- data_total %>%
           & !order %in% c("Eurotiales", "Microascales", "Mucorales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales", "Onygenales", "Pneumocystales"))
     )
     # or the genus has to be one of the genera we found in our hospitals last decades (Northern Netherlands, 2002-2018)
-    | genus %in% mo_found_in_NL
+    | genus %in% MO_PREVALENT_GENERA
   ) %>%
   # really no Plantae (e.g. Dracunculus exist both as worm and as plant)
   filter(kingdom != "Plantae") %>% 
@@ -407,7 +372,7 @@ MOs <- MOs %>%
                      "Firmicutes",
                      "Actinobacteria",
                      "Sarcomastigophora")
-       | genus %in% mo_found_in_NL
+       | genus %in% MO_PREVALENT_GENERA
        | rank %in% c("kingdom", "phylum", "class", "order", "family"))
     ~ 2,
     TRUE ~ 3
