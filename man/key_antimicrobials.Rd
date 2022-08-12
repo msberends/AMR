@@ -11,12 +11,12 @@ key_antimicrobials(
   col_mo = NULL,
   universal = c("ampicillin", "amoxicillin/clavulanic acid", "cefuroxime",
     "piperacillin/tazobactam", "ciprofloxacin", "trimethoprim/sulfamethoxazole"),
-  gram_negative = c("gentamicin", "tobramycin", "colistin", "cefotaxime",
-    "ceftazidime", "meropenem"),
+  gram_negative = c("gentamicin", "tobramycin", "colistin", "cefotaxime", "ceftazidime",
+    "meropenem"),
   gram_positive = c("vancomycin", "teicoplanin", "tetracycline", "erythromycin",
     "oxacillin", "rifampin"),
-  antifungal = c("anidulafungin", "caspofungin", "fluconazole", "miconazole",
-    "nystatin", "voriconazole"),
+  antifungal = c("anidulafungin", "caspofungin", "fluconazole", "miconazole", "nystatin",
+    "voriconazole"),
   only_rsi_columns = FALSE,
   ...
 )

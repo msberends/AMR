@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9011</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9014</span>
       </span>
     </div>
 
@@ -162,53 +162,76 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">as.mo</span><span class="op">(</span>
-  <span class="va">x</span>,
-  Becker <span class="op">=</span> <span class="cn">FALSE</span>,
-  Lancefield <span class="op">=</span> <span class="cn">FALSE</span>,
-  allow_uncertain <span class="op">=</span> <span class="cn">TRUE</span>,
-  reference_df <span class="op">=</span> <span class="fu"><a href="mo_source.html">get_mo_source</a></span><span class="op">(</span><span class="op">)</span>,
-  ignore_pattern <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_ignore_pattern"</span><span class="op">)</span>,
-  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,
-  info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">is.mo</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-
-<span class="fu">mo_failures</span><span class="op">(</span><span class="op">)</span>
-
-<span class="fu">mo_uncertainties</span><span class="op">(</span><span class="op">)</span>
-
-<span class="fu">mo_renamed</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">as.mo</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  Becker <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  Lancefield <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  allow_uncertain <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  reference_df <span class="op">=</span> <span class="fu"><a href="mo_source.html">get_mo_source</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  ignore_pattern <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_ignore_pattern"</span><span class="op">)</span>,</span>
+<span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">is.mo</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_failures</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_uncertainties</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_renamed</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector or a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with one or two columns</p></dd>
+
+
 <dt>Becker</dt>
 <dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker <em>et al.</em> (1,2,3).</p>
 <p>This excludes <em>Staphylococcus aureus</em> at default, use <code>Becker = "all"</code> to also categorise <em>S. aureus</em> as "CoPS".</p></dd>
+
+
 <dt>Lancefield</dt>
 <dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether a beta-haemolytic <em>Streptococcus</em> should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (4). These streptococci will be categorised in their first group, e.g. <em>Streptococcus dysgalactiae</em> will be group C, although officially it was also categorised into groups G and L.</p>
 <p>This excludes enterococci at default (who are in group D), use <code>Lancefield = "all"</code> to also categorise all enterococci as group D.</p></dd>
+
+
 <dt>allow_uncertain</dt>
 <dd><p>a number between <code>0</code> (or <code>"none"</code>) and <code>3</code> (or <code>"all"</code>), or <code>TRUE</code> (= <code>2</code>) or <code>FALSE</code> (= <code>0</code>) to indicate whether the input should be checked for less probable results, see <em>Details</em></p></dd>
+
+
 <dt>reference_df</dt>
 <dd><p>a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> to be used for extra reference when translating <code>x</code> to a valid <code>mo</code>. See <code><a href="mo_source.html">set_mo_source()</a></code> and <code><a href="mo_source.html">get_mo_source()</a></code> to automate the usage of your own codes (e.g. used in your analysis or organisation).</p></dd>
+
+
 <dt>ignore_pattern</dt>
 <dd><p>a regular expression (case-insensitive) of which all matches in <code>x</code> must return <code>NA</code>. This can be convenient to exclude known non-relevant input and can also be set with the option <code>AMR_ignore_pattern</code>, e.g. <code>options(AMR_ignore_pattern = "(not reported|contaminated flora)")</code>.</p></dd>
+
+
 <dt>language</dt>
 <dd><p>language to translate text like "no growth", which defaults to the system language (see <code><a href="translate.html">get_AMR_locale()</a></code>)</p></dd>
+
+
 <dt>info</dt>
 <dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if a progress bar should be printed if more than 25 items are to be coerced, defaults to <code>TRUE</code> only in interactive mode</p></dd>
+
+
 <dt>...</dt>
 <dd><p>other arguments passed on to functions</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a> with additional class <code>mo</code></p>
+    
+
+<p>A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></p>
+<p></p>
+<p><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a> with additional class <code>mo</code></p>
+
+
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -218,7 +241,18 @@
 
 
 <p>A microorganism (MO) code from this package (class: <code>mo</code>) is human readable and typically looks like these examples:</p>
-<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  Code               Full name</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">---------------</span>    <span class="sc">--------------------------------------</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  B_KLBSL            Klebsiella</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  B_KLBSL_PNMN       Klebsiella pneumoniae</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  B_KLBSL_PNMN_RHNS  Klebsiella pneumoniae rhinoscleromatis</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="sc">|</span>   <span class="er">|</span>    <span class="er">|</span>    <span class="er">|</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="er">|</span>   <span class="er">|</span>    <span class="er">|</span>    <span class="er">|</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="er">|</span>   <span class="er">|</span>    <span class="er">|</span>    \<span class="sc">--</span><span class="ot">-&gt;</span> subspecies, a <span class="dv">4-5</span> letter acronym</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="sc">|</span>   <span class="er">|</span>    \<span class="sc">---</span><span class="ot">-&gt;</span> species, a <span class="dv">4-5</span> letter acronym</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="sc">|</span>   \<span class="sc">---</span><span class="ot">-&gt;</span> genus, a <span class="dv">5-7</span> letter acronym</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  \<span class="sc">---</span><span class="ot">-&gt;</span> taxonomic kingdom<span class="sc">:</span> <span class="fu">A</span> (Archaea), <span class="fu">AN</span> (Animalia), <span class="fu">B</span> (Bacteria),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">C</span> (Chromista), <span class="fu">F</span> (Fungi), <span class="fu">P</span> (Protozoa)</span></code></pre><p></p></div>
 <p>Values that cannot be coerced will be considered 'unknown' and will get the MO code <code>UNKNOWN</code>.</p>
 <p>Use the <code><a href="mo_property.html">mo_*</a></code> functions to get properties based on the returned code, see <em>Examples</em>.</p>
 <p>The algorithm uses data from the Catalogue of Life (see below) and from one other source (see <a href="microorganisms.html">microorganisms</a>).</p>
@@ -318,44 +352,43 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># \donttest{</span>
-<span class="co"># These examples all return "B_STPHY_AURS", the ID of S. aureus:</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"sau"</span><span class="op">)</span> <span class="co"># WHONET code</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"stau"</span><span class="op">)</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"STAU"</span><span class="op">)</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"staaur"</span><span class="op">)</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"S. aureus"</span><span class="op">)</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"S aureus"</span><span class="op">)</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"Staphylococcus aureus"</span><span class="op">)</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"Staphylococcus aureus (MRSA)"</span><span class="op">)</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"Zthafilokkoockus oureuz"</span><span class="op">)</span> <span class="co"># handles incorrect spelling</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"MRSA"</span><span class="op">)</span>    <span class="co"># Methicillin Resistant S. aureus</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"VISA"</span><span class="op">)</span>    <span class="co"># Vancomycin Intermediate S. aureus</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"VRSA"</span><span class="op">)</span>    <span class="co"># Vancomycin Resistant S. aureus</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="fl">115329001</span><span class="op">)</span> <span class="co"># SNOMED CT code</span>
-
-<span class="co"># Dyslexia is no problem - these all work:</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"Ureaplasma urealyticum"</span><span class="op">)</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"Ureaplasma urealyticus"</span><span class="op">)</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"Ureaplasmium urealytica"</span><span class="op">)</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"Ureaplazma urealitycium"</span><span class="op">)</span>
-
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"Streptococcus group A"</span><span class="op">)</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"GAS"</span><span class="op">)</span> <span class="co"># Group A Streptococci</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"GBS"</span><span class="op">)</span> <span class="co"># Group B Streptococci</span>
-
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"S. epidermidis"</span><span class="op">)</span>                 <span class="co"># will remain species: B_STPHY_EPDR</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"S. epidermidis"</span>, Becker <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="co"># will not remain species: B_STPHY_CONS</span>
-
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"S. pyogenes"</span><span class="op">)</span>                    <span class="co"># will remain species: B_STRPT_PYGN</span>
-<span class="fu">as.mo</span><span class="op">(</span><span class="st">"S. pyogenes"</span>, Lancefield <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># will not remain species: B_STRPT_GRPA</span>
-
-<span class="co"># All mo_* functions use as.mo() internally too (see ?mo_property):</span>
-<span class="fu"><a href="mo_property.html">mo_genus</a></span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>                           <span class="co"># returns "Escherichia"</span>
-<span class="fu"><a href="mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>                       <span class="co"># returns "Gram negative"</span>
-<span class="fu"><a href="mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span><span class="st">"E. coli"</span>, <span class="st">"vanco"</span><span class="op">)</span> <span class="co"># returns TRUE</span>
-<span class="co"># }</span>
-</code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># \donttest{</span></span>
+<span><span class="co"># These examples all return "B_STPHY_AURS", the ID of S. aureus:</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"sau"</span><span class="op">)</span> <span class="co"># WHONET code</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"stau"</span><span class="op">)</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"STAU"</span><span class="op">)</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"staaur"</span><span class="op">)</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"S. aureus"</span><span class="op">)</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"S aureus"</span><span class="op">)</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"Staphylococcus aureus"</span><span class="op">)</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"Staphylococcus aureus (MRSA)"</span><span class="op">)</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"Zthafilokkoockus oureuz"</span><span class="op">)</span> <span class="co"># handles incorrect spelling</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"MRSA"</span><span class="op">)</span>    <span class="co"># Methicillin Resistant S. aureus</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"VISA"</span><span class="op">)</span>    <span class="co"># Vancomycin Intermediate S. aureus</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"VRSA"</span><span class="op">)</span>    <span class="co"># Vancomycin Resistant S. aureus</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="fl">115329001</span><span class="op">)</span> <span class="co"># SNOMED CT code</span></span>
+<span></span>
+<span><span class="co"># Dyslexia is no problem - these all work:</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"Ureaplasma urealyticum"</span><span class="op">)</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"Ureaplasma urealyticus"</span><span class="op">)</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"Ureaplasmium urealytica"</span><span class="op">)</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"Ureaplazma urealitycium"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"Streptococcus group A"</span><span class="op">)</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"GAS"</span><span class="op">)</span> <span class="co"># Group A Streptococci</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"GBS"</span><span class="op">)</span> <span class="co"># Group B Streptococci</span></span>
+<span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"S. epidermidis"</span><span class="op">)</span>                 <span class="co"># will remain species: B_STPHY_EPDR</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"S. epidermidis"</span>, Becker <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="co"># will not remain species: B_STPHY_CONS</span></span>
+<span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"S. pyogenes"</span><span class="op">)</span>                    <span class="co"># will remain species: B_STRPT_PYGN</span></span>
+<span><span class="fu">as.mo</span><span class="op">(</span><span class="st">"S. pyogenes"</span>, Lancefield <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># will not remain species: B_STRPT_GRPA</span></span>
+<span></span>
+<span><span class="co"># All mo_* functions use as.mo() internally too (see ?mo_property):</span></span>
+<span><span class="fu"><a href="mo_property.html">mo_genus</a></span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>                           <span class="co"># returns "Escherichia"</span></span>
+<span><span class="fu"><a href="mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>                       <span class="co"># returns "Gram negative"</span></span>
+<span><span class="fu"><a href="mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span><span class="st">"E. coli"</span>, <span class="st">"vanco"</span><span class="op">)</span> <span class="co"># returns TRUE</span></span>
+<span><span class="co"># }</span></span></code></pre></div>
     </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -369,7 +402,7 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -30,22 +30,20 @@ Data set containing reference data to interpret MIC and disk diffusion to R/SI v
 Overview of the data set:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{head(rsi_translation)
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{##     guideline method site           mo rank_index  ab     ref_tbl disk_dose
-## 1 EUCAST 2022    MIC <NA> F_ASPRG_MGTS          2 AMB Aspergillus      <NA>
-## 2 EUCAST 2022    MIC <NA> F_ASPRG_NIGR          2 AMB Aspergillus      <NA>
-## 3 EUCAST 2022    MIC <NA>      F_CANDD          3 AMB     Candida      <NA>
-## 4 EUCAST 2022    MIC <NA> F_CANDD_ALBC          2 AMB     Candida      <NA>
-## 5 EUCAST 2022    MIC <NA> F_CANDD_DBLN          2 AMB     Candida      <NA>
-## 6 EUCAST 2022    MIC <NA> F_CANDD_KRUS          2 AMB     Candida      <NA>
-##   breakpoint_S breakpoint_R   uti
-## 1            1            1 FALSE
-## 2            1            1 FALSE
-## 3            1            1 FALSE
-## 4            1            1 FALSE
-## 5            1            1 FALSE
-## 6            1            1 FALSE
+#>     guideline method site           mo rank_index  ab     ref_tbl disk_dose
+#> 1 EUCAST 2022    MIC <NA> F_ASPRG_MGTS          2 AMB Aspergillus      <NA>
+#> 2 EUCAST 2022    MIC <NA> F_ASPRG_NIGR          2 AMB Aspergillus      <NA>
+#> 3 EUCAST 2022    MIC <NA>      F_CANDD          3 AMB     Candida      <NA>
+#> 4 EUCAST 2022    MIC <NA> F_CANDD_ALBC          2 AMB     Candida      <NA>
+#> 5 EUCAST 2022    MIC <NA> F_CANDD_DBLN          2 AMB     Candida      <NA>
+#> 6 EUCAST 2022    MIC <NA> F_CANDD_KRUS          2 AMB     Candida      <NA>
+#>   breakpoint_S breakpoint_R   uti
+#> 1            1            1 FALSE
+#> 2            1            1 FALSE
+#> 3            1            1 FALSE
+#> 4            1            1 FALSE
+#> 5            1            1 FALSE
+#> 6            1            1 FALSE
 }\if{html}{\out{</div>}}
 
 The repository of this \code{AMR} package contains a file comprising this exact data set: \url{https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt}. This file \strong{allows for machine reading EUCAST and CLSI guidelines}, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. The file is updated automatically and the \code{mo} and \code{ab} columns have been transformed to contain the full official names instead of codes.

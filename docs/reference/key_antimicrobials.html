@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9014</span>
       </span>
     </div>
 
@@ -162,59 +162,82 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">key_antimicrobials</span><span class="op">(</span>
-  x <span class="op">=</span> <span class="cn">NULL</span>,
-  col_mo <span class="op">=</span> <span class="cn">NULL</span>,
-  universal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ampicillin"</span>, <span class="st">"amoxicillin/clavulanic acid"</span>, <span class="st">"cefuroxime"</span>,
-    <span class="st">"piperacillin/tazobactam"</span>, <span class="st">"ciprofloxacin"</span>, <span class="st">"trimethoprim/sulfamethoxazole"</span><span class="op">)</span>,
-  gram_negative <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gentamicin"</span>, <span class="st">"tobramycin"</span>, <span class="st">"colistin"</span>, <span class="st">"cefotaxime"</span>,
-    <span class="st">"ceftazidime"</span>, <span class="st">"meropenem"</span><span class="op">)</span>,
-  gram_positive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vancomycin"</span>, <span class="st">"teicoplanin"</span>, <span class="st">"tetracycline"</span>, <span class="st">"erythromycin"</span>,
-    <span class="st">"oxacillin"</span>, <span class="st">"rifampin"</span><span class="op">)</span>,
-  antifungal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"anidulafungin"</span>, <span class="st">"caspofungin"</span>, <span class="st">"fluconazole"</span>, <span class="st">"miconazole"</span>,
-    <span class="st">"nystatin"</span>, <span class="st">"voriconazole"</span><span class="op">)</span>,
-  only_rsi_columns <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">all_antimicrobials</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, only_rsi_columns <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">antimicrobials_equal</span><span class="op">(</span>
-  <span class="va">y</span>,
-  <span class="va">z</span>,
-  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"points"</span>, <span class="st">"keyantimicrobials"</span><span class="op">)</span>,
-  ignore_I <span class="op">=</span> <span class="cn">TRUE</span>,
-  points_threshold <span class="op">=</span> <span class="fl">2</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">key_antimicrobials</span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  col_mo <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  universal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ampicillin"</span>, <span class="st">"amoxicillin/clavulanic acid"</span>, <span class="st">"cefuroxime"</span>,</span>
+<span>    <span class="st">"piperacillin/tazobactam"</span>, <span class="st">"ciprofloxacin"</span>, <span class="st">"trimethoprim/sulfamethoxazole"</span><span class="op">)</span>,</span>
+<span>  gram_negative <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gentamicin"</span>, <span class="st">"tobramycin"</span>, <span class="st">"colistin"</span>, <span class="st">"cefotaxime"</span>, <span class="st">"ceftazidime"</span>,</span>
+<span>    <span class="st">"meropenem"</span><span class="op">)</span>,</span>
+<span>  gram_positive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vancomycin"</span>, <span class="st">"teicoplanin"</span>, <span class="st">"tetracycline"</span>, <span class="st">"erythromycin"</span>,</span>
+<span>    <span class="st">"oxacillin"</span>, <span class="st">"rifampin"</span><span class="op">)</span>,</span>
+<span>  antifungal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"anidulafungin"</span>, <span class="st">"caspofungin"</span>, <span class="st">"fluconazole"</span>, <span class="st">"miconazole"</span>, <span class="st">"nystatin"</span>,</span>
+<span>    <span class="st">"voriconazole"</span><span class="op">)</span>,</span>
+<span>  only_rsi_columns <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">all_antimicrobials</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, only_rsi_columns <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">antimicrobials_equal</span><span class="op">(</span></span>
+<span>  <span class="va">y</span>,</span>
+<span>  <span class="va">z</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"points"</span>, <span class="st">"keyantimicrobials"</span><span class="op">)</span>,</span>
+<span>  ignore_I <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  points_threshold <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with antibiotics columns, like <code>AMX</code> or <code>amox</code>. Can be left blank to determine automatically</p></dd>
+
+
 <dt>col_mo</dt>
 <dd><p>column name of the IDs of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>), defaults to the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
+
+
 <dt>universal</dt>
 <dd><p>names of <strong>broad-spectrum</strong> antimicrobial agents, case-insensitive. Set to <code>NULL</code> to ignore. See <em>Details</em> for the default agents.</p></dd>
+
+
 <dt>gram_negative</dt>
 <dd><p>names of antibiotic agents for <strong>Gram-positives</strong>, case-insensitive. Set to <code>NULL</code> to ignore. See <em>Details</em> for the default agents.</p></dd>
+
+
 <dt>gram_positive</dt>
 <dd><p>names of antibiotic agents for <strong>Gram-negatives</strong>, case-insensitive. Set to <code>NULL</code> to ignore. See <em>Details</em> for the default agents.</p></dd>
+
+
 <dt>antifungal</dt>
 <dd><p>names of antifungal agents for <strong>fungi</strong>, case-insensitive. Set to <code>NULL</code> to ignore. See <em>Details</em> for the default agents.</p></dd>
+
+
 <dt>only_rsi_columns</dt>
 <dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether only columns must be included that were transformed to class <code>&lt;rsi&gt;</code> (see <code><a href="as.rsi.html">as.rsi()</a></code>) on beforehand (defaults to <code>FALSE</code>)</p></dd>
+
+
 <dt>...</dt>
 <dd><p>ignored, only in place to allow future extensions</p></dd>
+
+
 <dt>y, z</dt>
 <dd><p><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vectors to compare</p></dd>
+
+
 <dt>type</dt>
 <dd><p>type to determine weighed isolates; can be <code>"keyantimicrobials"</code> or <code>"points"</code>, see <em>Details</em></p></dd>
+
+
 <dt>ignore_I</dt>
 <dd><p><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether antibiotic interpretations with <code>"I"</code> will be ignored when <code>type = "keyantimicrobials"</code>, see <em>Details</em></p></dd>
+
+
 <dt>points_threshold</dt>
 <dd><p>minimum number of points to require before differences in the antibiogram will lead to inclusion of an isolate when <code>type = "points"</code>, see <em>Details</em></p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -267,38 +290,37 @@ The <a href="lifecycle.html">lifecycle</a> of this function is <strong>stable</s
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># `example_isolates` is a data set available in the AMR package.</span>
-<span class="co"># See ?example_isolates.</span>
-
-<span class="co"># output of the `key_antimicrobials()` function could be like this:</span>
-<span class="va">strainA</span> <span class="op">&lt;-</span> <span class="st">"SSSRR.S.R..S"</span>
-<span class="va">strainB</span> <span class="op">&lt;-</span> <span class="st">"SSSIRSSSRSSS"</span>
-
-<span class="co"># those strings can be compared with:</span>
-<span class="fu">antimicrobials_equal</span><span class="op">(</span><span class="va">strainA</span>, <span class="va">strainB</span>, type <span class="op">=</span> <span class="st">"keyantimicrobials"</span><span class="op">)</span>
-<span class="co"># TRUE, because I is ignored (as well as missing values)</span>
-
-<span class="fu">antimicrobials_equal</span><span class="op">(</span><span class="va">strainA</span>, <span class="va">strainB</span>, type <span class="op">=</span> <span class="st">"keyantimicrobials"</span>, ignore_I <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co"># FALSE, because I is not ignored and so the 4th [character] differs</span>
-
-<span class="co"># \donttest{</span>
-<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="co"># set key antibiotics to a new variable</span>
-  <span class="va">my_patients</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>keyab <span class="op">=</span> <span class="fu">key_antimicrobials</span><span class="op">(</span>antifungal <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># no need to define `x`</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>
-      <span class="co"># now calculate first isolates</span>
-      first_regular <span class="op">=</span> <span class="fu"><a href="first_isolate.html">first_isolate</a></span><span class="op">(</span>col_keyantimicrobials <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
-      <span class="co"># and first WEIGHTED isolates</span>
-      first_weighted <span class="op">=</span> <span class="fu"><a href="first_isolate.html">first_isolate</a></span><span class="op">(</span>col_keyantimicrobials <span class="op">=</span> <span class="st">"keyab"</span><span class="op">)</span>
-    <span class="op">)</span>
- 
-  <span class="co"># Check the difference, in this data set it results in more isolates:</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">my_patients</span><span class="op">$</span><span class="va">first_regular</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">my_patients</span><span class="op">$</span><span class="va">first_weighted</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="co"># }</span>
-</code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># `example_isolates` is a data set available in the AMR package.</span></span>
+<span><span class="co"># See ?example_isolates.</span></span>
+<span></span>
+<span><span class="co"># output of the `key_antimicrobials()` function could be like this:</span></span>
+<span><span class="va">strainA</span> <span class="op">&lt;-</span> <span class="st">"SSSRR.S.R..S"</span></span>
+<span><span class="va">strainB</span> <span class="op">&lt;-</span> <span class="st">"SSSIRSSSRSSS"</span></span>
+<span></span>
+<span><span class="co"># those strings can be compared with:</span></span>
+<span><span class="fu">antimicrobials_equal</span><span class="op">(</span><span class="va">strainA</span>, <span class="va">strainB</span>, type <span class="op">=</span> <span class="st">"keyantimicrobials"</span><span class="op">)</span></span>
+<span><span class="co"># TRUE, because I is ignored (as well as missing values)</span></span>
+<span></span>
+<span><span class="fu">antimicrobials_equal</span><span class="op">(</span><span class="va">strainA</span>, <span class="va">strainB</span>, type <span class="op">=</span> <span class="st">"keyantimicrobials"</span>, ignore_I <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co"># FALSE, because I is not ignored and so the 4th [character] differs</span></span>
+<span></span>
+<span><span class="co"># \donttest{</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># set key antibiotics to a new variable</span></span>
+<span>  <span class="va">my_patients</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>keyab <span class="op">=</span> <span class="fu">key_antimicrobials</span><span class="op">(</span>antifungal <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># no need to define `x`</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>      <span class="co"># now calculate first isolates</span></span>
+<span>      first_regular <span class="op">=</span> <span class="fu"><a href="first_isolate.html">first_isolate</a></span><span class="op">(</span>col_keyantimicrobials <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>      <span class="co"># and first WEIGHTED isolates</span></span>
+<span>      first_weighted <span class="op">=</span> <span class="fu"><a href="first_isolate.html">first_isolate</a></span><span class="op">(</span>col_keyantimicrobials <span class="op">=</span> <span class="st">"keyab"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span> </span>
+<span>  <span class="co"># Check the difference, in this data set it results in more isolates:</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">my_patients</span><span class="op">$</span><span class="va">first_regular</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">my_patients</span><span class="op">$</span><span class="va">first_weighted</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co"># }</span></span></code></pre></div>
     </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -312,7 +334,7 @@ The <a href="lifecycle.html">lifecycle</a> of this function is <strong>stable</s
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9014</span>
       </span>
     </div>
 
@@ -162,83 +162,96 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">mo_name</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_fullname</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_shortname</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_subspecies</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_species</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_genus</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_family</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_order</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_class</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_phylum</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_kingdom</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_domain</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_type</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_gramstain</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_is_gram_negative</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_is_gram_positive</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_is_yeast</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_is_intrinsic_resistant</span><span class="op">(</span><span class="va">x</span>, <span class="va">ab</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_snomed</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_ref</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_authors</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_year</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_lpsn</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_rank</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_taxonomy</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_synonyms</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_info</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_url</span><span class="op">(</span><span class="va">x</span>, open <span class="op">=</span> <span class="cn">FALSE</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mo_property</span><span class="op">(</span><span class="va">x</span>, property <span class="op">=</span> <span class="st">"fullname"</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mo_name</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_fullname</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_shortname</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_subspecies</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_species</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_genus</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_family</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_order</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_class</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_phylum</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_kingdom</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_domain</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_type</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_gramstain</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_is_gram_negative</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_is_gram_positive</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_is_yeast</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_is_intrinsic_resistant</span><span class="op">(</span><span class="va">x</span>, <span class="va">ab</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_snomed</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_ref</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_authors</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_year</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_lpsn</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_rank</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_taxonomy</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_synonyms</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_info</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_url</span><span class="op">(</span><span class="va">x</span>, open <span class="op">=</span> <span class="cn">FALSE</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mo_property</span><span class="op">(</span><span class="va">x</span>, property <span class="op">=</span> <span class="st">"fullname"</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>any <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> (vector) that can be coerced to a valid microorganism code with <code><a href="as.mo.html">as.mo()</a></code>. Can be left blank for auto-guessing the column containing microorganism codes if used in a data set, see <em>Examples</em>.</p></dd>
+
+
 <dt>language</dt>
 <dd><p>language of the returned text, defaults to system language (see <code><a href="translate.html">get_AMR_locale()</a></code>) and can be overwritten by setting the option <code>AMR_locale</code>, e.g. <code>options(AMR_locale = "de")</code>, see <a href="translate.html">translate</a>. Also used to translate text like "no growth". Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>other arguments passed on to <code><a href="as.mo.html">as.mo()</a></code>, such as 'allow_uncertain' and 'ignore_pattern'</p></dd>
+
+
 <dt>ab</dt>
 <dd><p>any (vector of) text that can be coerced to a valid antibiotic code with <code><a href="as.ab.html">as.ab()</a></code></p></dd>
+
+
 <dt>open</dt>
 <dd><p>browse the URL using <code><a href="https://rdrr.io/r/utils/browseURL.html" class="external-link">browseURL()</a></code></p></dd>
+
+
 <dt>property</dt>
 <dd><p>one of the column names of the <a href="microorganisms.html">microorganisms</a> data set: "mo", "fullname", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "species_id", "source", "prevalence" or "snomed", or must be <code>"shortname"</code></p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <ul><li><p>An <a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a> in case of <code>mo_year()</code></p></li>
+    
+
+<ul><li><p>An <a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a> in case of <code>mo_year()</code></p></li>
 <li><p>A <a href="https://rdrr.io/r/base/list.html" class="external-link">list</a> in case of <code>mo_taxonomy()</code> and <code>mo_info()</code></p></li>
 <li><p>A named <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> in case of <code>mo_url()</code></p></li>
 <li><p>A <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> in case of <code>mo_snomed()</code></p></li>
@@ -322,108 +335,107 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># taxonomic tree -----------------------------------------------------------</span>
-<span class="fu">mo_kingdom</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>         <span class="co"># "Bacteria"</span>
-<span class="fu">mo_phylum</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>          <span class="co"># "Proteobacteria"</span>
-<span class="fu">mo_class</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>           <span class="co"># "Gammaproteobacteria"</span>
-<span class="fu">mo_order</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>           <span class="co"># "Enterobacterales"</span>
-<span class="fu">mo_family</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>          <span class="co"># "Enterobacteriaceae"</span>
-<span class="fu">mo_genus</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>           <span class="co"># "Escherichia"</span>
-<span class="fu">mo_species</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>         <span class="co"># "coli"</span>
-<span class="fu">mo_subspecies</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>      <span class="co"># ""</span>
-
-<span class="co"># colloquial properties ----------------------------------------------------</span>
-<span class="fu">mo_name</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>            <span class="co"># "Escherichia coli"</span>
-<span class="fu">mo_fullname</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>        <span class="co"># "Escherichia coli" - same as mo_name()</span>
-<span class="fu">mo_shortname</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>       <span class="co"># "E. coli"</span>
-
-<span class="co"># other properties ---------------------------------------------------------</span>
-<span class="fu">mo_gramstain</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>       <span class="co"># "Gram-negative"</span>
-<span class="fu">mo_snomed</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>          <span class="co"># 112283007, 116395006, ... (SNOMED codes)</span>
-<span class="fu">mo_type</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>            <span class="co"># "Bacteria" (equal to kingdom, but may be translated)</span>
-<span class="fu">mo_rank</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>            <span class="co"># "species"</span>
-<span class="fu">mo_url</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>             <span class="co"># get the direct url to the online database entry</span>
-<span class="fu">mo_synonyms</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>        <span class="co"># get previously accepted taxonomic names</span>
-
-<span class="co"># scientific reference -----------------------------------------------------</span>
-<span class="fu">mo_ref</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>             <span class="co"># "Castellani et al., 1919"</span>
-<span class="fu">mo_authors</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>         <span class="co"># "Castellani et al."</span>
-<span class="fu">mo_year</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>            <span class="co"># 1919</span>
-<span class="fu">mo_lpsn</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>            <span class="co"># 776057 (LPSN record ID)</span>
-
-<span class="co"># abbreviations known in the field -----------------------------------------</span>
-<span class="fu">mo_genus</span><span class="op">(</span><span class="st">"MRSA"</span><span class="op">)</span>              <span class="co"># "Staphylococcus"</span>
-<span class="fu">mo_species</span><span class="op">(</span><span class="st">"MRSA"</span><span class="op">)</span>            <span class="co"># "aureus"</span>
-<span class="fu">mo_shortname</span><span class="op">(</span><span class="st">"VISA"</span><span class="op">)</span>          <span class="co"># "S. aureus"</span>
-<span class="fu">mo_gramstain</span><span class="op">(</span><span class="st">"VISA"</span><span class="op">)</span>          <span class="co"># "Gram-positive"</span>
-
-<span class="fu">mo_genus</span><span class="op">(</span><span class="st">"EHEC"</span><span class="op">)</span>              <span class="co"># "Escherichia"</span>
-<span class="fu">mo_species</span><span class="op">(</span><span class="st">"EHEC"</span><span class="op">)</span>            <span class="co"># "coli"</span>
-
-<span class="co"># known subspecies ---------------------------------------------------------</span>
-<span class="fu">mo_name</span><span class="op">(</span><span class="st">"doylei"</span><span class="op">)</span>             <span class="co"># "Campylobacter jejuni doylei"</span>
-<span class="fu">mo_genus</span><span class="op">(</span><span class="st">"doylei"</span><span class="op">)</span>            <span class="co"># "Campylobacter"</span>
-<span class="fu">mo_species</span><span class="op">(</span><span class="st">"doylei"</span><span class="op">)</span>          <span class="co"># "jejuni"</span>
-<span class="fu">mo_subspecies</span><span class="op">(</span><span class="st">"doylei"</span><span class="op">)</span>       <span class="co"># "doylei"</span>
-
-<span class="fu">mo_fullname</span><span class="op">(</span><span class="st">"K. pneu rh"</span><span class="op">)</span>     <span class="co"># "Klebsiella pneumoniae rhinoscleromatis"</span>
-<span class="fu">mo_shortname</span><span class="op">(</span><span class="st">"K. pneu rh"</span><span class="op">)</span>    <span class="co"># "K. pneumoniae"</span>
-
-<span class="co"># \donttest{</span>
-<span class="co"># Becker classification, see ?as.mo ----------------------------------------</span>
-<span class="fu">mo_fullname</span><span class="op">(</span><span class="st">"S. epi"</span><span class="op">)</span>                     <span class="co"># "Staphylococcus epidermidis"</span>
-<span class="fu">mo_fullname</span><span class="op">(</span><span class="st">"S. epi"</span>, Becker <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>      <span class="co"># "Coagulase-negative Staphylococcus (CoNS)"</span>
-<span class="fu">mo_shortname</span><span class="op">(</span><span class="st">"S. epi"</span><span class="op">)</span>                    <span class="co"># "S. epidermidis"</span>
-<span class="fu">mo_shortname</span><span class="op">(</span><span class="st">"S. epi"</span>, Becker <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>     <span class="co"># "CoNS"</span>
-
-<span class="co"># Lancefield classification, see ?as.mo ------------------------------------</span>
-<span class="fu">mo_fullname</span><span class="op">(</span><span class="st">"S. pyo"</span><span class="op">)</span>                     <span class="co"># "Streptococcus pyogenes"</span>
-<span class="fu">mo_fullname</span><span class="op">(</span><span class="st">"S. pyo"</span>, Lancefield <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="co"># "Streptococcus group A"</span>
-<span class="fu">mo_shortname</span><span class="op">(</span><span class="st">"S. pyo"</span><span class="op">)</span>                    <span class="co"># "S. pyogenes"</span>
-<span class="fu">mo_shortname</span><span class="op">(</span><span class="st">"S. pyo"</span>, Lancefield <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># "GAS" (='Group A Streptococci')</span>
-
-
-<span class="co"># language support  --------------------------------------------------------</span>
-<span class="fu">mo_gramstain</span><span class="op">(</span><span class="st">"E. coli"</span>, language <span class="op">=</span> <span class="st">"de"</span><span class="op">)</span>  <span class="co"># "Gramnegativ"</span>
-<span class="fu">mo_gramstain</span><span class="op">(</span><span class="st">"E. coli"</span>, language <span class="op">=</span> <span class="st">"nl"</span><span class="op">)</span>  <span class="co"># "Gram-negatief"</span>
-<span class="fu">mo_gramstain</span><span class="op">(</span><span class="st">"E. coli"</span>, language <span class="op">=</span> <span class="st">"es"</span><span class="op">)</span>  <span class="co"># "Gram negativo"</span>
-
-<span class="co"># mo_type is equal to mo_kingdom, but mo_kingdom will remain official</span>
-<span class="fu">mo_kingdom</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>                     <span class="co"># "Bacteria" on a German system</span>
-<span class="fu">mo_type</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>                        <span class="co"># "Bakterien" on a German system</span>
-<span class="fu">mo_type</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>                        <span class="co"># "Bacteria" on an English system</span>
-
-<span class="fu">mo_fullname</span><span class="op">(</span><span class="st">"S. pyogenes"</span>,
-            Lancefield <span class="op">=</span> <span class="cn">TRUE</span>,
-            language <span class="op">=</span> <span class="st">"de"</span><span class="op">)</span>              <span class="co"># "Streptococcus Gruppe A"</span>
-<span class="fu">mo_fullname</span><span class="op">(</span><span class="st">"S. pyogenes"</span>,
-            Lancefield <span class="op">=</span> <span class="cn">TRUE</span>,
-            language <span class="op">=</span> <span class="st">"nl"</span><span class="op">)</span>              <span class="co"># "Streptococcus groep A"</span>
-
-
-<span class="co"># other --------------------------------------------------------------------</span>
-
-<span class="fu">mo_is_yeast</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Candida"</span>, <span class="st">"E. coli"</span><span class="op">)</span><span class="op">)</span>      <span class="co"># TRUE, FALSE</span>
-
-<span class="co"># gram stains and intrinsic resistance can also be used as a filter in dplyr verbs</span>
-<span class="co"># \donttest{</span>
-<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">mo_is_gram_positive</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-    
-  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">mo_is_intrinsic_resistant</span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"vanco"</span><span class="op">)</span><span class="op">)</span>
-<span class="op">}</span>
-
-
-<span class="co"># get a list with the complete taxonomy (from kingdom to subspecies)</span>
-<span class="fu">mo_taxonomy</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>
-<span class="co"># get a list with the taxonomy, the authors, Gram-stain,</span>
-<span class="co">#   SNOMED codes, and URL to the online database</span>
-<span class="fu">mo_info</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>
-<span class="co"># }</span>
-<span class="co"># }</span>
-</code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># taxonomic tree -----------------------------------------------------------</span></span>
+<span><span class="fu">mo_kingdom</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>         <span class="co"># "Bacteria"</span></span>
+<span><span class="fu">mo_phylum</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>          <span class="co"># "Proteobacteria"</span></span>
+<span><span class="fu">mo_class</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>           <span class="co"># "Gammaproteobacteria"</span></span>
+<span><span class="fu">mo_order</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>           <span class="co"># "Enterobacterales"</span></span>
+<span><span class="fu">mo_family</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>          <span class="co"># "Enterobacteriaceae"</span></span>
+<span><span class="fu">mo_genus</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>           <span class="co"># "Escherichia"</span></span>
+<span><span class="fu">mo_species</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>         <span class="co"># "coli"</span></span>
+<span><span class="fu">mo_subspecies</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>      <span class="co"># ""</span></span>
+<span></span>
+<span><span class="co"># colloquial properties ----------------------------------------------------</span></span>
+<span><span class="fu">mo_name</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>            <span class="co"># "Escherichia coli"</span></span>
+<span><span class="fu">mo_fullname</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>        <span class="co"># "Escherichia coli" - same as mo_name()</span></span>
+<span><span class="fu">mo_shortname</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>       <span class="co"># "E. coli"</span></span>
+<span></span>
+<span><span class="co"># other properties ---------------------------------------------------------</span></span>
+<span><span class="fu">mo_gramstain</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>       <span class="co"># "Gram-negative"</span></span>
+<span><span class="fu">mo_snomed</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>          <span class="co"># 112283007, 116395006, ... (SNOMED codes)</span></span>
+<span><span class="fu">mo_type</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>            <span class="co"># "Bacteria" (equal to kingdom, but may be translated)</span></span>
+<span><span class="fu">mo_rank</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>            <span class="co"># "species"</span></span>
+<span><span class="fu">mo_url</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>             <span class="co"># get the direct url to the online database entry</span></span>
+<span><span class="fu">mo_synonyms</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>        <span class="co"># get previously accepted taxonomic names</span></span>
+<span></span>
+<span><span class="co"># scientific reference -----------------------------------------------------</span></span>
+<span><span class="fu">mo_ref</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>             <span class="co"># "Castellani et al., 1919"</span></span>
+<span><span class="fu">mo_authors</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>         <span class="co"># "Castellani et al."</span></span>
+<span><span class="fu">mo_year</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>            <span class="co"># 1919</span></span>
+<span><span class="fu">mo_lpsn</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>            <span class="co"># 776057 (LPSN record ID)</span></span>
+<span></span>
+<span><span class="co"># abbreviations known in the field -----------------------------------------</span></span>
+<span><span class="fu">mo_genus</span><span class="op">(</span><span class="st">"MRSA"</span><span class="op">)</span>              <span class="co"># "Staphylococcus"</span></span>
+<span><span class="fu">mo_species</span><span class="op">(</span><span class="st">"MRSA"</span><span class="op">)</span>            <span class="co"># "aureus"</span></span>
+<span><span class="fu">mo_shortname</span><span class="op">(</span><span class="st">"VISA"</span><span class="op">)</span>          <span class="co"># "S. aureus"</span></span>
+<span><span class="fu">mo_gramstain</span><span class="op">(</span><span class="st">"VISA"</span><span class="op">)</span>          <span class="co"># "Gram-positive"</span></span>
+<span></span>
+<span><span class="fu">mo_genus</span><span class="op">(</span><span class="st">"EHEC"</span><span class="op">)</span>              <span class="co"># "Escherichia"</span></span>
+<span><span class="fu">mo_species</span><span class="op">(</span><span class="st">"EHEC"</span><span class="op">)</span>            <span class="co"># "coli"</span></span>
+<span></span>
+<span><span class="co"># known subspecies ---------------------------------------------------------</span></span>
+<span><span class="fu">mo_name</span><span class="op">(</span><span class="st">"doylei"</span><span class="op">)</span>             <span class="co"># "Campylobacter jejuni doylei"</span></span>
+<span><span class="fu">mo_genus</span><span class="op">(</span><span class="st">"doylei"</span><span class="op">)</span>            <span class="co"># "Campylobacter"</span></span>
+<span><span class="fu">mo_species</span><span class="op">(</span><span class="st">"doylei"</span><span class="op">)</span>          <span class="co"># "jejuni"</span></span>
+<span><span class="fu">mo_subspecies</span><span class="op">(</span><span class="st">"doylei"</span><span class="op">)</span>       <span class="co"># "doylei"</span></span>
+<span></span>
+<span><span class="fu">mo_fullname</span><span class="op">(</span><span class="st">"K. pneu rh"</span><span class="op">)</span>     <span class="co"># "Klebsiella pneumoniae rhinoscleromatis"</span></span>
+<span><span class="fu">mo_shortname</span><span class="op">(</span><span class="st">"K. pneu rh"</span><span class="op">)</span>    <span class="co"># "K. pneumoniae"</span></span>
+<span></span>
+<span><span class="co"># \donttest{</span></span>
+<span><span class="co"># Becker classification, see ?as.mo ----------------------------------------</span></span>
+<span><span class="fu">mo_fullname</span><span class="op">(</span><span class="st">"S. epi"</span><span class="op">)</span>                     <span class="co"># "Staphylococcus epidermidis"</span></span>
+<span><span class="fu">mo_fullname</span><span class="op">(</span><span class="st">"S. epi"</span>, Becker <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>      <span class="co"># "Coagulase-negative Staphylococcus (CoNS)"</span></span>
+<span><span class="fu">mo_shortname</span><span class="op">(</span><span class="st">"S. epi"</span><span class="op">)</span>                    <span class="co"># "S. epidermidis"</span></span>
+<span><span class="fu">mo_shortname</span><span class="op">(</span><span class="st">"S. epi"</span>, Becker <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>     <span class="co"># "CoNS"</span></span>
+<span></span>
+<span><span class="co"># Lancefield classification, see ?as.mo ------------------------------------</span></span>
+<span><span class="fu">mo_fullname</span><span class="op">(</span><span class="st">"S. pyo"</span><span class="op">)</span>                     <span class="co"># "Streptococcus pyogenes"</span></span>
+<span><span class="fu">mo_fullname</span><span class="op">(</span><span class="st">"S. pyo"</span>, Lancefield <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="co"># "Streptococcus group A"</span></span>
+<span><span class="fu">mo_shortname</span><span class="op">(</span><span class="st">"S. pyo"</span><span class="op">)</span>                    <span class="co"># "S. pyogenes"</span></span>
+<span><span class="fu">mo_shortname</span><span class="op">(</span><span class="st">"S. pyo"</span>, Lancefield <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># "GAS" (='Group A Streptococci')</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># language support  --------------------------------------------------------</span></span>
+<span><span class="fu">mo_gramstain</span><span class="op">(</span><span class="st">"E. coli"</span>, language <span class="op">=</span> <span class="st">"de"</span><span class="op">)</span>  <span class="co"># "Gramnegativ"</span></span>
+<span><span class="fu">mo_gramstain</span><span class="op">(</span><span class="st">"E. coli"</span>, language <span class="op">=</span> <span class="st">"nl"</span><span class="op">)</span>  <span class="co"># "Gram-negatief"</span></span>
+<span><span class="fu">mo_gramstain</span><span class="op">(</span><span class="st">"E. coli"</span>, language <span class="op">=</span> <span class="st">"es"</span><span class="op">)</span>  <span class="co"># "Gram negativo"</span></span>
+<span></span>
+<span><span class="co"># mo_type is equal to mo_kingdom, but mo_kingdom will remain official</span></span>
+<span><span class="fu">mo_kingdom</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>                     <span class="co"># "Bacteria" on a German system</span></span>
+<span><span class="fu">mo_type</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>                        <span class="co"># "Bakterien" on a German system</span></span>
+<span><span class="fu">mo_type</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span>                        <span class="co"># "Bacteria" on an English system</span></span>
+<span></span>
+<span><span class="fu">mo_fullname</span><span class="op">(</span><span class="st">"S. pyogenes"</span>,</span>
+<span>            Lancefield <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>            language <span class="op">=</span> <span class="st">"de"</span><span class="op">)</span>              <span class="co"># "Streptococcus Gruppe A"</span></span>
+<span><span class="fu">mo_fullname</span><span class="op">(</span><span class="st">"S. pyogenes"</span>,</span>
+<span>            Lancefield <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>            language <span class="op">=</span> <span class="st">"nl"</span><span class="op">)</span>              <span class="co"># "Streptococcus groep A"</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># other --------------------------------------------------------------------</span></span>
+<span></span>
+<span><span class="fu">mo_is_yeast</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Candida"</span>, <span class="st">"E. coli"</span><span class="op">)</span><span class="op">)</span>      <span class="co"># TRUE, FALSE</span></span>
+<span></span>
+<span><span class="co"># gram stains and intrinsic resistance can also be used as a filter in dplyr verbs</span></span>
+<span><span class="co"># \donttest{</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">mo_is_gram_positive</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>    </span>
+<span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">mo_is_intrinsic_resistant</span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"vanco"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># get a list with the complete taxonomy (from kingdom to subspecies)</span></span>
+<span><span class="fu">mo_taxonomy</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span></span>
+<span><span class="co"># get a list with the taxonomy, the authors, Gram-stain,</span></span>
+<span><span class="co">#   SNOMED codes, and URL to the online database</span></span>
+<span><span class="fu">mo_info</span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span></span>
+<span><span class="co"># }</span></span>
+<span><span class="co"># }</span></span></code></pre></div>
     </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -437,7 +449,7 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

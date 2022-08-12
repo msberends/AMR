@@ -47,7 +47,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9013</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9014</span>
       </span>
     </div>
 
@@ -214,17 +214,17 @@
 <h5 id="with-amr-for-r-theres-always-a-knowledgeable-microbiologist-by-your-side">With <code>AMR</code> (for R), there’s always a knowledgeable microbiologist by your side!<a class="anchor" aria-label="anchor" href="#with-amr-for-r-theres-always-a-knowledgeable-microbiologist-by-your-side"></a>
 </h5>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># AMR works great with dplyr, but it's not required or neccesary</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
-
-<span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>bacteria <span class="op">=</span> <span class="fu"><a href="reference/mo_property.html">mo_fullname</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="reference/mo_property.html">mo_is_gram_negative</a></span><span class="op">(</span><span class="op">)</span>,
-         <span class="fu"><a href="reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"cefotax"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">bacteria</span>,
-         <span class="fu"><a href="reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>,
-         <span class="fu"><a href="reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># AMR works great with dplyr, but it's not required or neccesary</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>bacteria <span class="op">=</span> <span class="fu"><a href="reference/mo_property.html">mo_fullname</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="reference/mo_property.html">mo_is_gram_negative</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>         <span class="fu"><a href="reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"cefotax"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">bacteria</span>,</span>
+<span>         <span class="fu"><a href="reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>         <span class="fu"><a href="reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>With only having defined a row filter on Gram-negative bacteria with intrinsic resistance to cefotaxime (<code><a href="reference/mo_property.html">mo_is_gram_negative()</a></code> and <code><a href="reference/mo_property.html">mo_is_intrinsic_resistant()</a></code>) and a column selection on two antibiotic groups (<code><a href="reference/antibiotic_class_selectors.html">aminoglycosides()</a></code> and <code><a href="reference/antibiotic_class_selectors.html">carbapenems()</a></code>), the reference data about <a href="./reference/microorganisms.html">all microorganisms</a> and <a href="./reference/antibiotics.html">all antibiotics</a> in the <code>AMR</code> package make sure you get what you meant:</p>
 <table class="table">
 <thead><tr class="header">
@@ -331,10 +331,10 @@
 </table>
 <p>A base R equivalent would be, giving the exact same results:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">example_isolates</span><span class="op">$</span><span class="va">bacteria</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mo_property.html">mo_fullname</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">mo</span><span class="op">)</span>
-<span class="va">example_isolates</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="reference/mo_property.html">mo_is_gram_negative</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&amp;</span>
-                         <span class="fu"><a href="reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"cefotax"</span><span class="op">)</span><span class="op">)</span>,
-                 <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bacteria"</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">example_isolates</span><span class="op">$</span><span class="va">bacteria</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mo_property.html">mo_fullname</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">mo</span><span class="op">)</span></span>
+<span><span class="va">example_isolates</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="reference/mo_property.html">mo_is_gram_negative</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&amp;</span></span>
+<span>                         <span class="fu"><a href="reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"cefotax"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                 <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bacteria"</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antibiotic_class_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="partners">Partners<a class="anchor" aria-label="anchor" href="#partners"></a>
@@ -377,7 +377,7 @@
 <p><a href="https://cran.r-project.org/package=AMR" class="external-link"><img src="https://www.r-pkg.org/badges/version-ago/AMR" alt="CRAN"></a> <a href="https://cran.r-project.org/package=AMR" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/AMR" alt="CRANlogs"></a></p>
 <p>This package is available <a href="https://cran.r-project.org/package=AMR" class="external-link">here on the official R network (CRAN)</a>. Install this package in R from CRAN by using the command:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"AMR"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"AMR"</span><span class="op">)</span></span></code></pre></div>
 <p>It will be downloaded and installed automatically. For RStudio, click on the menu <em>Tools</em> &gt; <em>Install Packages…</em> and then type in “AMR” and press <kbd>Install</kbd>.</p>
 <p><strong>Note:</strong> Not all functions on this website may be available in this latest release. To use all functions and data sets mentioned on this website, install the latest development version.</p>
 </div>
@@ -390,14 +390,14 @@
 <li>
 <p>Manually, using:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span> <span class="co"># if you haven't already</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"msberends/AMR"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span> <span class="co"># if you haven't already</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"msberends/AMR"</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
 <p>Automatically, using the <a href="https://ropensci.org/r-universe/" class="external-link">rOpenSci R-universe platform</a>, by adding <a href="https://msberends.r-universe.dev" class="external-link">our R-universe address</a> to your list of repositories (‘repos’):</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span>,
-                  msberends <span class="op">=</span> <span class="st">"https://msberends.r-universe.dev"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span>,</span>
+<span>                  msberends <span class="op">=</span> <span class="st">"https://msberends.r-universe.dev"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>After this, you can install and update this <code>AMR</code> package like any official release (e.g., using <code>install.packages("AMR")</code> or in RStudio via <em>Tools</em> &gt; <em>Check for Package Updates…</em>).</p>
 </li>
 </ol>
@@ -562,7 +562,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

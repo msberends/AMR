@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">AMR (for R)</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9011</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.1.9014</span>
       </span>
     </div>
 
@@ -162,7 +162,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="va">rsi_translation</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="va">rsi_translation</span></span></code></pre></div>
     </div>
 
     <div id="format">
@@ -182,8 +182,21 @@
     <div id="details">
     <h2>Details</h2>
     <p>Overview of the data set:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rsi_translation</span><span class="op">)</span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rsi_translation</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     guideline method site           mo rank_index  ab     ref_tbl disk_dose</span></span>
+<span><span class="co">#&gt; 1 EUCAST 2022    MIC &lt;NA&gt; F_ASPRG_MGTS          2 AMB Aspergillus      &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 2 EUCAST 2022    MIC &lt;NA&gt; F_ASPRG_NIGR          2 AMB Aspergillus      &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 3 EUCAST 2022    MIC &lt;NA&gt;      F_CANDD          3 AMB     Candida      &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 4 EUCAST 2022    MIC &lt;NA&gt; F_CANDD_ALBC          2 AMB     Candida      &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 5 EUCAST 2022    MIC &lt;NA&gt; F_CANDD_DBLN          2 AMB     Candida      &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 6 EUCAST 2022    MIC &lt;NA&gt; F_CANDD_KRUS          2 AMB     Candida      &lt;NA&gt;</span></span>
+<span><span class="co">#&gt;   breakpoint_S breakpoint_R   uti</span></span>
+<span><span class="co">#&gt; 1            1            1 FALSE</span></span>
+<span><span class="co">#&gt; 2            1            1 FALSE</span></span>
+<span><span class="co">#&gt; 3            1            1 FALSE</span></span>
+<span><span class="co">#&gt; 4            1            1 FALSE</span></span>
+<span><span class="co">#&gt; 5            1            1 FALSE</span></span>
+<span><span class="co">#&gt; 6            1            1 FALSE</span></span></code></pre><p></p></div>
 <p>The repository of this <code>AMR</code> package contains a file comprising this exact data set: <a href="https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt" class="external-link">https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt</a>. This file <strong>allows for machine reading EUCAST and CLSI guidelines</strong>, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. The file is updated automatically and the <code>mo</code> and <code>ab</code> columns have been transformed to contain the full official names instead of codes.</p>
     </div>
     <div id="reference-data-publicly-available">
@@ -215,7 +228,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
