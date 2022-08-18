@@ -1,269 +1,270 @@
-pattern	regular_expr	case_sensitive	affect_ab_name	affect_mo_name	de	nl	es	it	fr	pt	da	sv	ru
-Coagulase-negative Staphylococcus	TRUE	TRUE	FALSE	TRUE	Koagulase-negative Staphylococcus	Coagulase-negatieve Staphylococcus	Staphylococcus coagulasa negativo	Staphylococcus negativo coagulasi	Staphylococcus à coagulase négative	Staphylococcus coagulase negativo	Koagulase-negative stafylokokker	Koagulasnegativa stafylokocker	Коагулазоотрицательный стафилококк
-Coagulase-positive Staphylococcus	TRUE	TRUE	FALSE	TRUE	Koagulase-positive Staphylococcus	Coagulase-positieve Staphylococcus	Staphylococcus coagulasa positivo	Staphylococcus positivo coagulasi	Staphylococcus à coagulase positif	Staphylococcus coagulase positivo	Koagulase-positive stafylokokker	Koagulaspositiva stafylokocker	Коагулазоположительный стафилококк
-Beta-haemolytic Streptococcus	TRUE	TRUE	FALSE	TRUE	Beta-hämolytischer Streptococcus	Beta-hemolytische Streptococcus	Streptococcus Beta-hemolítico	Streptococcus Beta-emolitico	Streptococcus Bêta-hémolytique	Streptococcus Beta-hemolítico	Beta-haemolytiske streptokokker	Beta-hemolytiska streptokocker	Бета-гемолитический стрептококк
-unknown Gram-negatives	TRUE	TRUE	FALSE	TRUE	unbekannte Gramnegativen	onbekende Gram-negatieven	Gram negativos desconocidos	Gram negativi sconosciuti	Gram négatifs inconnus	Gram negativos desconhecidos	ukendte Gram-negative	okända gramnegativa bakterier	неизвестные грамотрицательные
-unknown Gram-positives	TRUE	TRUE	FALSE	TRUE	unbekannte Grampositiven	onbekende Gram-positieven	Gram positivos desconocidos	Gram positivi sconosciuti	Gram positifs inconnus	Gram positivos desconhecidos	ukendte Gram-positive	okända Gram-positiva	неизвестные грамположительные
-unknown fungus	TRUE	TRUE	FALSE	TRUE	unbekannter Pilze	onbekende schimmel	hongo desconocido	fungo sconosciuto	champignon inconnu	fungo desconhecido	ukendt svamp	Okänd svamp	неизвестный грибок
-unknown yeast	TRUE	TRUE	FALSE	TRUE	unbekannte Hefe	onbekende gist	levadura desconocida	lievito sconosciuto	levure inconnue	levedura desconhecida	ukendt gær	Okänd jäst	неизвестные дрожжи
-unknown name	TRUE	TRUE	FALSE	TRUE	unbekannte Name	onbekende naam	nombre desconocido	nome sconosciuto	nom inconnu	nome desconhecido	ukendt navn	okänt namn	неизвестное название
-unknown kingdom	TRUE	TRUE	FALSE	TRUE	unbekanntes Reich	onbekend koninkrijk	reino desconocido	regno sconosciuto	règme inconnu	reino desconhecido	ukendt kongerige	okänt rike	неизвестное царство
-unknown phylum	TRUE	TRUE	FALSE	TRUE	unbekannter Stamm	onbekend fylum	filo desconocido	phylum sconosciuto	embranchement inconnu	filo desconhecido	ukendt stamme	okänt fylum	неизвестный филум
-unknown class	TRUE	TRUE	FALSE	TRUE	unbekannte Klasse	onbekende klasse	clase desconocida	classe sconosciuta	classe inconnue	classe desconhecida	ukendt klasse	okänd klass	неизвестный класс
-unknown order	TRUE	TRUE	FALSE	TRUE	unbekannte Ordnung	onbekende orde	orden desconocido	ordine sconosciuto	ordre inconnu	ordem desconhecido	ukendt orden	okänd ordning	неизвестный порядок
-unknown family	TRUE	TRUE	FALSE	TRUE	unbekannte Familie	onbekende familie	familia desconocida	famiglia sconosciuta	famille inconnue	família desconhecida	ukendt familie	okänd familj	неизвестное семейство
-unknown genus	TRUE	TRUE	FALSE	TRUE	unbekannte Gattung	onbekend geslacht	género desconocido	genere sconosciuto	genre inconnu	gênero desconhecido	ukendt slægt	okänt släkte	неизвестный род
-unknown species	TRUE	TRUE	FALSE	TRUE	unbekannte Art	onbekende soort	especie desconocida	specie sconosciute	espèce inconnue	espécies desconhecida	ukendt art	okänd art	неизвестный вид
-unknown subspecies	TRUE	TRUE	FALSE	TRUE	unbekannte Unterart	onbekende ondersoort	subespecie desconocida	sottospecie sconosciute	sous-espèce inconnue	subespécies desconhecida	ukendt underart	okänd underart	неизвестный подвид
-unknown rank	TRUE	TRUE	FALSE	TRUE	unbekannter Rang	onbekende rang	rango desconocido	grado sconosciuto	rang inconnu	classificação desconhecido	ukendt rang	okänd rang	неизвестный ранг
- group 	TRUE	TRUE	FALSE	TRUE	 Gruppe 	 groep 	 grupo 	 gruppo 	 groupe 	 grupo 	 gruppe 	 grupp 	 группа 
-CoNS	FALSE	TRUE	FALSE	TRUE	KNS	CNS	SCN				KNS	KNS	КОС
-CoPS	FALSE	TRUE	FALSE	TRUE	KPS	CPS	SCP				KPS	KPS	КПС
-Gram-negative	TRUE	TRUE	FALSE	FALSE	Gramnegativ	Gram-negatief	Gram negativo	Gram negativo	Gram négatif	Gram negativo	Gram-negativ	Gram-negativ	Грамотрицательные
-Gram-positive	TRUE	TRUE	FALSE	FALSE	Grampositiv	Gram-positief	Gram positivo	Gram positivo	Gram positif	Gram positivo	Gram-positiv	Gram-positiv	Грамположительные
-^Bacteria$	TRUE	TRUE	FALSE	FALSE	Bakterien	Bacteriën	Bacterias	Batteri	Bactéries	Bactérias	Bakterier	Bakterier	Бактерии
-^Fungi$	TRUE	TRUE	FALSE	FALSE	Pilze	Schimmels	Hongos	Funghi	Champignons	Fungos	Støbeforme	Svampar	Грибы
-^Yeasts$	TRUE	TRUE	FALSE	FALSE	Hefen	Gisten	Levaduras	Lieviti	Levures	Leveduras	Gær	Jästdjur	Животные
-^Protozoa$	TRUE	TRUE	FALSE	FALSE	Protozoen	Protozoën	Protozoarios	Protozoi	Protozoaires	Protozoários	Protozoer	Protozoer	Протозоа
-biogroup	TRUE	TRUE	FALSE	FALSE	Biogruppe	biogroep	biogrupo	biogruppo	biogroupe	biogrupo	biogruppe	biogrupp	биогруппа
-biotype	TRUE	TRUE	FALSE	FALSE	Biotyp		biotipo	biotipo		biótipo	biotype	biotyp	биотип
-vegetative	TRUE	TRUE	FALSE	FALSE	vegetativ	vegetatief	vegetativo	vegetativo	végétatif	vegetativo	vegetativ	vegetativ	вегетативный
-([([ ]*?)group	TRUE	TRUE	FALSE	FALSE	\\1Gruppe	\\1groep	\\1grupo	\\1gruppo	\\1groupe	\\1grupo	\\1gruppe	\\1grupp	\\1группа
-([([ ]*?)Group	TRUE	TRUE	FALSE	FALSE	\\1Gruppe	\\1Groep	\\1Grupo	\\1Gruppo	\\1Groupe	\\1Grupo	\\1Gruppe	\\1Grupp	\\1Группа
-no .*growth	TRUE	FALSE	FALSE	FALSE	keine? .*wachstum	geen .*groei	no .*crecimientonon	sem .*crescimento	pas .*croissance	sem .*crescimento	ingen .*vækst	ingen .*tillväxt	отсутствие.*роста
-no|not	TRUE	FALSE	FALSE	FALSE	keine?	geen|niet	no|sin	sem	non	sem	nej|ikke	nej|inte	нет?
-Intermediate	TRUE	FALSE	FALSE	FALSE	Mittlere	Intermediair	Intermedio						
-Susceptible, incr. exp.	FALSE	TRUE	FALSE	FALSE	Empfindlich, erh Belastung	Gevoelig bij verh. blootstelling							
-susceptible, incr. exp.	FALSE	TRUE	FALSE	FALSE	empfindlich, erh Belastung	gevoelig bij verh. blootstelling							
-Susceptible	TRUE	FALSE	FALSE	FALSE	Empfindlich	Gevoelig	Susceptible						
-Incr. exposure	TRUE	FALSE	FALSE	FALSE	Empfindlich, erh Belastung	'Incr. exposure'	'Incr. exposure'						
-Resistant	TRUE	FALSE	FALSE	FALSE	Resistent	Resistent	Resistente						
-antibiotic	TRUE	TRUE	FALSE	FALSE	Antibiotikum	antibioticum	antibiótico	antibiotico	antibiotique	antibiótico	antibiotikum	antibiotika	антибиотик
-Antibiotic	TRUE	TRUE	FALSE	FALSE	Antibiotikum	Antibioticum	Antibiótico	Antibiotico	Antibiotique	Antibiótico	Antibiotikum	Antibiotika	Антибиотик
-Drug	TRUE	TRUE	FALSE	FALSE	Medikament	Middel	Fármaco	Droga	Médicament	Droga	Lægemiddel	Läkemedel	Лекарство
-drug	TRUE	TRUE	FALSE	FALSE	Medikament	middel	fármaco	droga	médicament	droga	lægemiddel	läkemedel	лекарство
-Frequency	FALSE	TRUE	FALSE	FALSE	Zahl	Aantal	Frecuencia	Frequenza	Fréquence	Frequência	Frekvens	Frekvens	Частота
-Minimum Inhibitory Concentration (mg/L)	FALSE	FALSE	FALSE	FALSE	Minimale Hemm-Konzentration (mg/L)	Minimale inhiberende concentratie (mg/L)	Concentración mínima inhibitoria (mg/L)	Concentrazione minima inibitoria (mg/L)	Concentration minimale inhibitrice (mg/L)	Concentração Inibitória Mínima (mg/L)	Mindste hæmmende koncentration (mg/L)	Minsta hämmande koncentration (mg/L)	Минимальная ингибирующая концентрация (мг/л)
-Disk diffusion diameter (mm)	FALSE	FALSE	FALSE	FALSE	Durchmesser der Scheibenzone (mm)	Diameter diskzone (mm)	Diámetro de difusión en disco (mm)	Diametro di diffusione del disco (mm)	Diamètre de diffusion en disque (mm)	Diâmetro de difusão do disco (mm)	Diskdiffusionsdiameter (mm)	Diskdiffusionsdiameter (mm)	Диаметр диффузии диска (мм)
-Antimicrobial Interpretation	FALSE	FALSE	FALSE	FALSE	Antimikrobielle Auswertung	Antimicrobiële interpretatie	Interpretación antimicrobiana	Interpretazione antimicrobica	Interprétation antimicrobienne	Interpretação Antimicrobiana	Antimikrobiel fortolkning	Antimikrobiell tolkning	Антимикробная интерпретация
-4-aminosalicylic acid	FALSE	TRUE	TRUE	FALSE	4-Aminosalicylsäure	4-aminosalicylzuur	Ácido 4-aminosalicílico	Acido 4-aminosalicilico	Acide 4-aminosalicylique	Ácido 4-aminosalicílico	4-aminosalicylsyre	4-aminosalicylsyra	4-аминосалициловая кислота
-Adefovir dipivoxil	FALSE	TRUE	TRUE	FALSE	Adefovir Dipivoxil	Adefovir	Adefovir dipivoxil	Adefovir dipivoxil	Adéfovir dipivoxil	Adefovir dipivoxil	Adefovir dipivoxil	Adefovir dipivoxil	Адефовир дипивоксил
-Aldesulfone sodium	FALSE	TRUE	TRUE	FALSE	Aldesulfon-Natrium	Aldesulfon	Aldesulfona sódica	Aldesulfone sodio	Aldésulfone sodique	Aldesulfona de sódio	Aldesulfon-natrium	Aldesulfonnatrium	Альдесульфон натрия
-Amikacin	FALSE	TRUE	TRUE	FALSE	Amikacin	Amikacine	Amikacina	Amikacin	Amikacine	Amikacin	Amikacin	Amikacin	Амикацин
-Amoxicillin	FALSE	TRUE	TRUE	FALSE	Amoxicillin	Amoxicilline	Amoxicilina	Amoxicillina	Amoxicilline	Amoxicilina	Amoxicillin	Amoxicillin	Амоксициллин
-Amoxicillin/beta-lactamase inhibitor	FALSE	TRUE	TRUE	FALSE	Amoxicillin/Beta-Lactamase-Hemmer	Amoxicilline/enzymremmer	Amoxicilina/inhib. de la beta-lactamasa	Amoxicillina/inib. d. beta-lattamasi	Amoxicilline/inhib. de bêta-lactamase	Amoxicilina/inibid. da beta-lactamase	Amoxicillin/beta-lactamasehæmmer	Amoxicillin/betalaktamashämmare	Амоксициллин/ингибитор бета-лактамаз
-Amphotericin B	FALSE	TRUE	TRUE	FALSE	Amphotericin B	Amfotericine B	Anfotericina B	Amfotericina B	Amphotéricine B	Anfotericina B	Amfotericin B	Amfotericin B	Амфотерицин В
-Ampicillin	FALSE	TRUE	TRUE	FALSE	Ampicillin	Ampicilline	Ampicilina	Ampicillina	Ampicilline	Ampicilina	Ampicillin	Ampicillin	Ампициллин
-Ampicillin/beta-lactamase inhibitor	FALSE	TRUE	TRUE	FALSE	Ampicillin/Beta-Laktamase-Hemmer	Ampicilline/enzymremmer	Ampicilina/inhib. de la beta-lactamasa	Ampicillina/inib. d. beta-lattamasi	Ampicilline/inhib. de bêta-lactamase	Ampicilina/inibid. da beta-lactamase	Ampicillin/beta-lactamasehæmmer	Ampicillin/beta-laktamashämmare	Ампициллин/ингибитор бета-лактамазы
-Anidulafungin	FALSE	TRUE	TRUE	FALSE	Anidulafungin	Anidulafungine	Anidulafungina	Anidulafungin	Anidulafungine	Anidulafungin	Anidulafungin	Anidulafungin	Анидулафунгин
-Azidocillin	FALSE	TRUE	TRUE	FALSE	Azidocillin	Azidocilline	Azidocilina	Azidocillina	Azidocilline	Azidocillin	Azidocillin	Azidocillin	Азидоциллин
-Azithromycin	FALSE	TRUE	TRUE	FALSE	Azithromycin	Azitromycine	Azitromicina	Azitromicina	Azithromycine	Azitromicina	Azithromycin	Azitromycin	Азитромицин
-Azlocillin	FALSE	TRUE	TRUE	FALSE	Azlocillin	Azlocilline	Azlocilina	Azlocillina	Azlocilline	Azlocillin	Azlocillin	Azlocillin	Азлоциллин
-Bacampicillin	FALSE	TRUE	TRUE	FALSE	Bacampicillin	Bacampicilline	Bacampicilina	Bacampicillina	Bacampicilline	Bacampicilina	Bacampicillin	Bacampicillin	Бакампициллин
-Bacitracin	FALSE	TRUE	TRUE	FALSE	Bacitracin	Bacitracine	Bacitracina	Bacitracina	Bacitracine	Bacitracin	Bacitracin	Bacitracin	Бацитрацин
-Benzathine benzylpenicillin	FALSE	TRUE	TRUE	FALSE	Benzathin-Benzylpenicillin	Benzylpenicillinebenzathine	Bencilpenicilina benzatínica	Benzatina benzilpenicillina	Benzathine benzylpénicilline	Benzatina benzatina benzilpenicilina	Benzathinbenzylpenicillin	Benzathinbenzylpenicillin	Бензатин бензилпенициллин
-Benzathine phenoxymethylpenicillin	FALSE	TRUE	TRUE	FALSE	Benzathin-Phenoxymethylpenicillin	Fenoxymethylpenicillinebenzathine	Fenoximetilpenicilina benzatínica	Benzatina fenossimetilpenicillina	Phénoxyméthylpénicilline benzathine	Benzatina fenoximetilpenicilina	Benzathinfenoxymethylpenicillin	Bensathinfenoximetylpenicillin	Бензатин феноксиметилпенициллин
-Benzylpenicillin	FALSE	TRUE	TRUE	FALSE	Benzylpenicillin	Benzylpenicilline	Bencilpenicilina	Benzilpenicillina	Benzylpénicilline	Benzilpenicilina	Benzylpenicillin	Bensylpenicillin	Бензилпенициллин
-Calcium aminosalicylate	FALSE	TRUE	TRUE	FALSE	Kalzium-Aminosalicylat	Aminosalicylzuur	Aminosalicilato de calcio	Calcio aminosalicilato	Aminosalicylate de calcium	Aminosalicilato de cálcio	Calciumaminosalicylat	Kalciumaminosalicylat	Аминосалицилат кальция
-Capreomycin	FALSE	TRUE	TRUE	FALSE	Capreomycin	Capreomycine	Capreomicina	Capreomicina	Capréomycine	Capreomicina	Capreomycin	Kapreomycin	Капреомицин
-Carbenicillin	FALSE	TRUE	TRUE	FALSE	Carbenicillin	Carbenicilline	Carbenicilina	Carbenicillina	Carbénicilline	Carbenicilina	Carbenicillin	Karbenicillin	Карбенициллин
-Carindacillin	FALSE	TRUE	TRUE	FALSE	Carindacillin	Carindacilline	Carindacilina	Carindacillina	Carindacilline	Carindacillin	Carindacillin	Carindacillin	Кариндациллин
-Caspofungin	FALSE	TRUE	TRUE	FALSE	Caspofungin	Caspofungine	Caspofungina	Caspofungin	Caspofungine	Caspofungin	Caspofungin	Caspofungin	Каспофунгин
-Ce(f|ph)acetrile	TRUE	TRUE	TRUE	FALSE	Cefacetril	Cefacetril	Cefacetrilo	Cefacetrile	Céphacétrile	Cephacetrile	Cephacetril	Cephacetril	Цефацетрил
-Ce(f|ph)alotin	TRUE	TRUE	TRUE	FALSE	Cefalotin	Cefalotine	Cefalotina	Cefalotina	Céphalotine	Cefalotina	Cephalotin	Cefalotin	Цефалотин
-Ce(f|ph)amandole	TRUE	TRUE	TRUE	FALSE	Cefamandol	Cefamandol	Cefamandole	Cephamandole	Céphamandole	Cephamandole	Cephamandol	Cephamandol	Цефамандол
-Ce(f|ph)apirin	TRUE	TRUE	TRUE	FALSE	Cefapirin	Cefapirine	Cefapirina	Cefapirina	Céphapirine	Cephapirin	Cephapirin	Cephapirin	Цефапирин
-Ce(f|ph)azedone	TRUE	TRUE	TRUE	FALSE	Cefazedon	Cefazedon	Cefazedona	Cefazedone	Céphazédone	Cephazedone	Cephazedon	Cephazedon	Цефазедон
-Ce(f|ph)azolin	TRUE	TRUE	TRUE	FALSE	Cefazolin	Cefazoline	Cefazolina	Cephazolin	Céphazoline	Cephazolin	Cephazolin	Cephazolin	Цефазолин
-Ce(f|ph)alothin	TRUE	TRUE	TRUE	FALSE	Cefalothin	Cefalotine	Cefalotina	Cefalotina	Céphalothine	Cephalothin	Cephalothin	Kefalotin	Цефалотин
-Ce(f|ph)alexin	TRUE	TRUE	TRUE	FALSE	Cefalexin	Cefalexine	Cefalexina	Cephalexin	Céphalexine	Cephalexin	Cephalexin	Cephalexin	Цефалексин
-Ce(f|ph)epime	TRUE	TRUE	TRUE	FALSE	Cefepim	Cefepim	Cefepime	Cephepime	Céphépime	Cephepime	Cephepime	Cephepim	Цефепим
-Ce(f|ph)ixime	TRUE	TRUE	TRUE	FALSE	Cefixim	Cefixim	Cefixima	Cephixime	Céphixime	Cephixime	Cephixim	Cephixim	Цефиксим
-Ce(f|ph)menoxime	TRUE	TRUE	TRUE	FALSE	Cefmenoxim	Cefmenoxim	Cefmenoxima	Cephmenoxime	Céphénoxime	Cephmenoxime	Cephmenoxim	Cephmenoxim	Цефменоксим
-Ce(f|ph)metazole	TRUE	TRUE	TRUE	FALSE	Cefmetazol	Cefmetazol	Cefmetazol	Cephmetazole	Céphmétazole	Cefmetazole	Cephmetazol	Cephmetazol	Цефметазол
-Ce(f|ph)odizime	TRUE	TRUE	TRUE	FALSE	Cefodizim	Cefodizim	Cefodixima	Cephodizime	Céphodizime	Cephodizime	Cephodizim	Cephodizim	Цефодизим
-Ce(f|ph)onicid	TRUE	TRUE	TRUE	FALSE	Cefonicid	Cefonicide	Cefonicida	Cephonicid	Céphonicide	Cefonicid	Cephonicid	Cephonicid	Цефонизид
-Ce(f|ph)operazone	TRUE	TRUE	TRUE	FALSE	Cefoperazon	Cefoperazon	Cefoperazona	Cephoperazone	Céphopérazone	Cephoperazone	Cephoperazon	Cephoperazon	Цефоперазон
-Ce(f|ph)operazone/beta-lactamase inhibitor	TRUE	TRUE	TRUE	FALSE	Cefoperazon/Beta-Lactamase-Hemmer	Cefoperazon/enzymremmer	Cefoperazona/inhib. de betalactamasas	Cephoperazone/inib. d. beta-lattamasi	Céphopérazone/inhib. de bêta-lactamase	Cephoperazona/inibid. da beta-lactamase	Cephoperazon/beta-lactamasehæmmer	Cefoperazon/beta-laktamashämmare	Цефоперазон/ингибитор бета-лактамаз
-Ce(f|ph)otaxime	TRUE	TRUE	TRUE	FALSE	Cefotaxim	Cefotaxim	Cefotaxima	Cephotaxime	Céphotaxime	Cephotaxime	Cephotaxim	Cephotaxim	Цефотаксим
-Ce(f|ph)oxitin	TRUE	TRUE	TRUE	FALSE	Cefoxitin	Cefoxitine	Cefoxitina	Cefossitina	Céphoxitine	Cephoxitin	Cephoxitin	Cephoxitin	Цефокситин
-Ce(f|ph)pirome	TRUE	TRUE	TRUE	FALSE	Cefpirom	Cefpirom	Cephpirome	Cephpirome	Céphpirome	Cefpirome	Cephpirom	Cephpirom	Цефпиром
-Ce(f|ph)podoxime	TRUE	TRUE	TRUE	FALSE	Cefpodoxim	Cefpodoxim	Cefpodoxima	Cephpodoxime	Céphpodoxime	Cephpodoxime	Cephpodoxim	Cephpodoxim	Цефподоксим
-Ce(f|ph)radine	TRUE	TRUE	TRUE	FALSE	Cefradin	Cefradine	Cefradina	Cefradina	Céphradine	Cephradine	Cephradin	Cephradin	Цефрадин
-Ce(f|ph)sulodin	TRUE	TRUE	TRUE	FALSE	Cefsulodin	Cefsulodine	Cefsulodina	Cephsulodin	Céphsulodine	Cephsulodin	Cephsulodin	Cephsulodin	Цефсулодин
-Ce(f|ph)tazidime	TRUE	TRUE	TRUE	FALSE	Ceftazidim	Ceftazidim	Ceftazidima	Ceftazidima	Céphtazidime	Ceftazidima	Cephtazidim	Cephtazidim	Цефтазидим
-Ce(f|ph)tezole	TRUE	TRUE	TRUE	FALSE	Ceftezol	Ceftezol	Ceftezol	Cephtezole	Céphtézole	Ceftezole	Cephtezol	Cephtezole	Цефтезол
-Ce(f|ph)tizoxime	TRUE	TRUE	TRUE	FALSE	Ceftizoxim	Ceftizoxim	Ceftizoxima	Cephtizoxime	Céphtizoxime	Cephtizoxime	Cephtizoxim	Cephtizoxim	Цефтизоксим
-Ce(f|ph)triaxone	TRUE	TRUE	TRUE	FALSE	Ceftriaxon	Ceftriaxon	Ceftriaxona	Ceftriaxone	Céphtriaxone	Cefhtriaxone	Cephtriaxon	Ceftriaxon	Цефтриаксон
-Ce(f|ph)uroxime	TRUE	TRUE	TRUE	FALSE	Cefuroxim	Cefuroxim	Cefuroxima	Cefuroxima	Céphuroxime	Cephuroxime	Cephuroxim	Cefuroxim	Цефуроксим
-Ce(f|ph)uroxime/metronidazole	TRUE	TRUE	TRUE	FALSE	Cefuroxim/Metronidazol	Cefuroxim/andere antibacteriele middelen	Cefuroxima/metronidazol	Cefuroxima/metronidazolo	Céphuroxime/métronidazole	Cephuroxime/metronidazol	Cefuroxim/metronidazol	Cefuroxim/metronidazol	Цефуроксим/метронидазол
-Chloramphenicol	FALSE	TRUE	TRUE	FALSE	Chloramphenicol	Chlooramfenicol	Cloranfenicol	Cloramfenicolo	Chloramphénicol	Cloranfenicol	Kloramfenicol	Kloramfenikol	Хлорамфеникол
-Chlortetracycline	FALSE	TRUE	TRUE	FALSE	Chlortetracyclin	Chloortetracycline	Clortetraciclina	Clorotetraciclina	Chlortétracycline	Chlortetracycline	Chlortetracyclin	Klortetracyklin	Хлортетрациклин
-Cinoxacin	FALSE	TRUE	TRUE	FALSE	Cinoxacin	Cinoxacine	Cinoxacina	Cinoxacina	Cinoxacine	Cinoxacin	Cinoxacin	Cinoxacin	Циноксацин
-Ciprofloxacin	FALSE	TRUE	TRUE	FALSE	Ciprofloxacin	Ciprofloxacine	Ciprofloxacina	Ciprofloxacina	Ciprofloxacine	Ciprofloxacin	Ciprofloxacin	Ciprofloxacin	Ципрофлоксацин
-Clarithromycin	FALSE	TRUE	TRUE	FALSE	Clarithromycin	Claritromycine	Claritromicina	Claritromicina	Clarithromycine	Claritromicina	Clarithromycin	Claritromycin	Кларитромицин
-Clavulanic acid	FALSE	TRUE	TRUE	FALSE	Clavulansäure	Clavulaanzuur	Ácido clavulánico	Acido clavulanico	Acide clavulanique	Ácido clavulânico	Clavulansyre	Clavulansyra	Клавулановая кислота
-clavulanic acid	FALSE	TRUE	TRUE	FALSE	Clavulansäure	clavulaanzuur	ácido clavulánico	acido clavulanico	acide clavulanique	ácido clavulânico	clavulansyre	clavulansyra	клавулановая кислота
-Clindamycin	FALSE	TRUE	TRUE	FALSE	Clindamycin	Clindamycine	Clindamicina	Clindamicina	Clindamycine	Clindamicina	Clindamycin	Clindamycin	Клиндамицин
-Clometocillin	FALSE	TRUE	TRUE	FALSE	Clometocillin	Clometocilline	Clometocilina	Clometocillina	Clométocilline	Clometocillin	Clometocillin	Klometocillin	Клометоциллин
-Clotrimazole	FALSE	TRUE	TRUE	FALSE	Clotrimazol	Clotrimazol	Clotrimazol	Clotrimazolo	Clotrimazole	Clotrimazole	Clotrimazol	Klotrimazol	Клотримазол
-Cloxacillin	FALSE	TRUE	TRUE	FALSE	Cloxacillin	Cloxacilline	Cloxacilina	Cloxacillina	Cloxacilline	Cloxacillin	Cloxacillin	Kloxacillin	Клоксациллин
-Colistin	FALSE	TRUE	TRUE	FALSE	Colistin	Colistine	Colistina	Colistina	Colistine	Colistin	Colistin	Kolistin	Колистин
-Dapsone	FALSE	TRUE	TRUE	FALSE	Dapson	Dapson	Dapsona	Dapsone	Dapsone	Dapsone	Dapson	Dapson	Дапсон
-Daptomycin	FALSE	TRUE	TRUE	FALSE	Daptomycin	Daptomycine	Daptomicina	Daptomicina	Daptomycine	Daptomicina	Daptomycin	Daptomycin	Даптомицин
-Dibekacin	FALSE	TRUE	TRUE	FALSE	Dibekacin	Dibekacine	Dibekacina	Dibekacin	Dibekacine	Dibekacin	Dibekacin	Dibekacin	Дибекацин
-Dicloxacillin	FALSE	TRUE	TRUE	FALSE	Dicloxacillin	Dicloxacilline	Dicloxacilina	Dicloxacillina	Dicloxacilline	Dicloxacilina	Dicloxacillin	Dikloxacillin	Диклоксациллин
-Dirithromycin	FALSE	TRUE	TRUE	FALSE	Dirithromycin	Diritromycine	Diritromicina	Diritromicina	Dirithromycine	Diritromicina	Dirithromycin	Diritromycin	Диритромицин
-Econazole	FALSE	TRUE	TRUE	FALSE	Econazol	Econazol	Econazol	Econazolo	Econazole	Econazole	Econazol	Ekonazol	Эконазол
-Enoxacin	FALSE	TRUE	TRUE	FALSE	Enoxacin	Enoxacine	Enoxacina	Enoxacina	Enoxacine	Enoxacin	Enoxacin	Enoxacin	Эноксацин
-Epicillin	FALSE	TRUE	TRUE	FALSE	Epicillin	Epicilline	Epicilina	Epicillina	Epicilline	Epicilina	Epicillin	Epicillin	Эпициллин
-Erythromycin	FALSE	TRUE	TRUE	FALSE	Erythromycin	Erytromycine	Eritromicina	Eritromicina	Erythromycine	Eritromicina	Erythromycin	Erytromycin	Эритромицин
-Ethambutol/isoniazid	FALSE	TRUE	TRUE	FALSE	Ethambutol/Isoniazid	Ethambutol/isoniazide	Etambutol/isoniazida	Etambutolo/isoniazide	Ethambutol/isoniazide	Ethambutol/isoniazid	Ethambutol/isoniazid	Etambutol/isoniazid	Этамбутол/изониазид
-Fleroxacin	FALSE	TRUE	TRUE	FALSE	Fleroxacin	Fleroxacine	Fleroxacina	Fleroxacina	Fléroxacine	Fleroxacina	Fleroxacin	Fleroxacin	Флероксацин
-Flucloxacillin	FALSE	TRUE	TRUE	FALSE	Flucloxacillin	Flucloxacilline	Flucloxacilina	Flucloxacillina	Flucloxacilline	Flucloxacillin	Flucloxacillin	Flucloxacillin	Флуклоксациллин
-Fluconazole	FALSE	TRUE	TRUE	FALSE	Fluconazol	Fluconazol	Fluconazol	Fluconazolo	Fluconazole	Fluconazole	Fluconazol	Flukonazol	Флуконазол
-Flucytosine	FALSE	TRUE	TRUE	FALSE	Flucytosin	Fluorocytosine	Flucitosina	Flucytosine	Flucytosine	Flucytosine	Flucytosin	Flucytosin	Флуцитозин
-Flurithromycin	FALSE	TRUE	TRUE	FALSE	Flurithromycin	Fluritromycine	Fluritromicina	Fluritromicina	Flurithromycine	Fluritromicina	Flurithromycin	Fluritromycin	Флуритромицин
-Fosfomycin	FALSE	TRUE	TRUE	FALSE	Fosfomycin	Fosfomycine	Fosfomicina	Fosfomicina	Fosfomycine	Fosfomycin	Fosfomycin	Fosfomycin	Фосфомицин
-Fusidic acid	FALSE	TRUE	TRUE	FALSE	Fusidinsäure	Fusidinezuur	Ácido fusídico	Acido fusidico	Acide fusidique	Ácido fusídico	Fusidinsyre	Fusidinsyra	Фузидовая кислота
-Gatifloxacin	FALSE	TRUE	TRUE	FALSE	Gatifloxacin	Gatifloxacine	Gatifloxacina	Gatifloxacina	Gatifloxacine	Gatifloxacin	Gatifloxacin	Gatifloxacin	Гатифлоксацин
-Gemifloxacin	FALSE	TRUE	TRUE	FALSE	Gemifloxacin	Gemifloxacine	Gemifloxacina	Gemifloxacina	Gemifloxacine	Gemifloxacin	Gemifloxacin	Gemifloxacin	Гемифлоксацин
-Gentamicin	FALSE	TRUE	TRUE	FALSE	Gentamicin	Gentamicine	Gentamicina	Gentamicina	Gentamicine	Gentamicina	Gentamicin	Gentamicin	Гентамицин
-Grepafloxacin	FALSE	TRUE	TRUE	FALSE	Grepafloxacin	Grepafloxacine	Grepafloxacina	Grepafloxacina	Grepafloxacine	Grepafloxacin	Grepafloxacin	Grepafloxacin	Грепафлоксацин
-Hachimycin	FALSE	TRUE	TRUE	FALSE	Hachimycin	Hachimycine	Hachimycin	Hachimycin	Hachimycine	Hachimycin	Hachimycin	Hachimycin	Хатимицин
-Hetacillin	FALSE	TRUE	TRUE	FALSE	Hetacillin	Hetacilline	Hetacilina	Hetacillin	Hétacilline	Hetacillin	Hetacillin	Hetacillin	Гетациллин
-Imipenem/cilastatin	FALSE	TRUE	TRUE	FALSE	Imipenem/Cilastatin	Imipenem/enzymremmer	Imipenem/cilastatina	Imipenem/cilastatina	Imipénème/cilastatine	Imipenem/coteltelatina	Imipenem/cilastatin	Imipenem/cilastatin	Имипенем/циластатин
-Inosine pranobex	FALSE	TRUE	TRUE	FALSE	Inosin-Pranobex	Inosiplex	Inosina pranobex	Inosina pranobex	Inosine pranobex	Pranobex inosine	Inosin pranobex	Inosin pranobex	Инозин пранобекс
-Isepamicin	FALSE	TRUE	TRUE	FALSE	Isepamicin	Isepamicine	Isepamicina	Isepamicina	Isepamicine	Isepamicina	Isepamicin	Isepamicin	Исепамицин
-Isoconazole	FALSE	TRUE	TRUE	FALSE	Isoconazol	Isoconazol	Isoconazol	Isoconazolo	Isoconazole	Isoconazole	Isoconazol	Isokonazol	Изоконазол
-Isoniazid	FALSE	TRUE	TRUE	FALSE	Isoniazid	Isoniazide	Isoniazida	Isoniazide	Isoniazide	Isoniazid	Isoniazid	Isoniazid	Изониазид
-Itraconazole	FALSE	TRUE	TRUE	FALSE	Itraconazol	Itraconazol	Itraconazol	Itraconazolo	Itraconazole	Itraconazole	Itraconazol	Itrakonazol	Итраконазол
-Josamycin	FALSE	TRUE	TRUE	FALSE	Josamycin	Josamycine	Josamicina	Josamicina	Josamycine	Josamycin	Josamycin	Josamycin	Джозамицин
-Kanamycin	FALSE	TRUE	TRUE	FALSE	Kanamycin	Kanamycine	Kanamicina	Kanamicina	Kanamycine	Kanamycin	Kanamycin	Kanamycin	Канамицин
-Ketoconazole	FALSE	TRUE	TRUE	FALSE	Ketoconazol	Ketoconazol	Ketoconazol	Ketoconazolo	Kétoconazole	Ketoconazole	Ketoconazol	Ketokonazol	Кетоконазол
-Levofloxacin	FALSE	TRUE	TRUE	FALSE	Levofloxacin	Levofloxacine	Levofloxacina	Levofloxacina	Lévofloxacine	Levofloxacin	Levofloxacin	Levofloxacin	Левофлоксацин
-Lincomycin	FALSE	TRUE	TRUE	FALSE	Lincomycin	Lincomycine	Lincomicina	Lincomicina	Lincomycine	Lincomycin	Lincomycin	Lincomycin	Линкомицин
-Lomefloxacin	FALSE	TRUE	TRUE	FALSE	Lomefloxacin	Lomefloxacine	Lomefloxacina	Lomefloxacina	Loméfloxacine	Lomefloxacin	Lomefloxacin	Lomefloxacin	Ломефлоксацин
-Lysozyme	FALSE	TRUE	TRUE	FALSE	Lysozym	Lysozym	Lisozima	Lisozima	Lysozyme	Lysozyme	Lysozym	Lysozym	Лизоцим
-Mandelic acid	FALSE	TRUE	TRUE	FALSE	Mandelsäure	Amandelzuur	Ácido mandélico	Acido mandelico	Acide mandélique	Ácido mandélico	Mandelinsyre	Mandelsyra	Мандаловая кислота
-Metampicillin	FALSE	TRUE	TRUE	FALSE	Metampicillin	Metampicilline	Metampicilina	Metampicillina	Métampicilline	Metampicilina	Metampicillin	Metampicillin	Метампициллин
-Meticillin	FALSE	TRUE	TRUE	FALSE	Meticillin	Meticilline	Meticilina	Meticillina	Méticilline	Meticillin	Meticillin	Meticillin	Метициллин
-Metisazone	FALSE	TRUE	TRUE	FALSE	Metisazon	Metisazon	Metisazona	Metisazone	Métisazone	Metisazone	Metisazon	Metisazon	Метисазон
-Metronidazole	FALSE	TRUE	TRUE	FALSE	Metronidazol	Metronidazol	Metronidazol	Metronidazolo	Métronidazole	Metronidazol	Metronidazol	Metronidazol	Метронидазол
-Mezlocillin	FALSE	TRUE	TRUE	FALSE	Mezlocillin	Mezlocilline	Mezlocilina	Mezlocillina	Mezlocilline	Mezlocillin	Mezlocillin	Mezlocillin	Мезлоциллин
-Micafungin	FALSE	TRUE	TRUE	FALSE	Micafungin	Micafungine	Micafungina	Micafungin	Micafungine	Micafungin	Micafungin	Micafungin	Микафунгин
-Miconazole	FALSE	TRUE	TRUE	FALSE	Miconazol	Miconazol	Miconazol	Miconazolo	Miconazole	Miconazole	Miconazol	Miconazol	Миконазол
-Midecamycin	FALSE	TRUE	TRUE	FALSE	Midecamycin	Midecamycine	Midecamicina	Midecamicina	Midecamycine	Midecamycin	Midecamycin	Midecamycin	Мидекамицин
-Miocamycin	FALSE	TRUE	TRUE	FALSE	Miocamycin	Miocamycine	Miocamycin	Miocamicina	Miocamycine	Miocamicina	Miocamycin	Miocamycin	Миокамицин
-Moxifloxacin	FALSE	TRUE	TRUE	FALSE	Moxifloxacin	Moxifloxacine	Moxifloxacina	Moxifloxacin	Moxifloxacine	Moxifloxacina	Moxifloxacin	Moxifloxacin	Моксифлоксацин
-Mupirocin	FALSE	TRUE	TRUE	FALSE	Mupirocin	Mupirocine	Mupirocina	Mupirocina	Mupirocine	Mupirocina	Mupirocin	Mupirocin	Мупироцин
-Nalidixic acid	FALSE	TRUE	TRUE	FALSE	Nalidixinsäure	Nalidixinezuur	Ácido nalidíxico	Acido nalidixico	Acide nalidixique	Ácido nalidíxico	Nalidixinsyre	Nalidixinsyra	Налидиксовая кислота
-Neomycin	FALSE	TRUE	TRUE	FALSE	Neomycin	Neomycine	Neomicina	Neomicina	Néomycine	Neomicina	Neomycin	Neomycin	Неомицин
-Netilmicin	FALSE	TRUE	TRUE	FALSE	Netilmicin	Netilmicine	Netilmicina	Netilmicin	Netilmicine	Netilmicin	Netilmicin	Netilmicin	Нетилмицин
-Nitrofurantoin	FALSE	TRUE	TRUE	FALSE	Nitrofurantoin	Nitrofurantoine	Nitrofurantoína	Nitrofurantoina	Nitrofurantoïne	Nitrofurantoína	Nitrofurantoin	Nitrofurantoin	Нитрофурантоин
-Norfloxacin	FALSE	TRUE	TRUE	FALSE	Norfloxacin	Norfloxacine	Norfloxacina	Norfloxacina	Norfloxacine	Norfloxacin	Norfloxacin	Norfloxacin	Норфлоксацин
-Novobiocin	FALSE	TRUE	TRUE	FALSE	Novobiocin	Novobiocine	Novobiocina	Novobiocin	Novobiocine	Novobiocin	Novobiocin	Novobiocin	Новобиоцин
-Nystatin	FALSE	TRUE	TRUE	FALSE	Nystatin	Nystatine	Nistatina	Nystatin	Nystatine	Nystatin	Nystatin	Nystatin	Нистатин
-Ofloxacin	FALSE	TRUE	TRUE	FALSE	Ofloxacin	Ofloxacine	Ofloxacina	Ofloxacin	Ofloxacine	Ofloxacin	Ofloxacin	Ofloxacin	Офлоксацин
-Oleandomycin	FALSE	TRUE	TRUE	FALSE	Oleandomycin	Oleandomycine	Oleandomicina	Oleandomicina	Oleandomycine	Oleandomicina	Oleandomycin	Oleandomycin	Олеандомицин
-Ornidazole	FALSE	TRUE	TRUE	FALSE	Ornidazol	Ornidazol	Ornidazol	Ornidazolo	Ornidazole	Ornidazole	Ornidazol	Ornidazol	Орнидазол
-Oxacillin	FALSE	TRUE	TRUE	FALSE	Oxacillin	Oxacilline	Oxacilina	Oxacillina	Oxacilline	Oxacillin	Oxacillin	Oxacillin	Оксациллин
-Oxolinic acid	FALSE	TRUE	TRUE	FALSE	Oxolinsäure	Oxolinezuur	Ácido oxolínico	Acido ossolinico	Acide oxolinique	Ácido oxolínico	Oxolinsyre	Oxolinsyra	Оксолиновая кислота
-Oxytetracycline	FALSE	TRUE	TRUE	FALSE	Oxytetracyclin	Oxytetracycline	Oxitetraciclina	Ossitetraciclina	Oxytétracycline	Oxitetraciclina	Oxytetracyclin	Oxytetracyklin	Окситетрациклин
-Pazufloxacin	FALSE	TRUE	TRUE	FALSE	Pazufloxacin	Pazufloxacine	Pazufloxacina	Pazufloxacin	Pazufloxacine	Pazufloxacin	Pazufloxacin	Pazufloxacin	Пазуфлоксацин
-Pefloxacin	FALSE	TRUE	TRUE	FALSE	Pefloxacin	Pefloxacine	Pefloxacina	Pefloxacina	Péfloxacine	Pefloxacin	Pefloxacin	Pefloxacin	Пефлоксацин
-Penamecillin	FALSE	TRUE	TRUE	FALSE	Penamecillin	Penamecilline	Penamecilina	Penamecillina	Pénamécilline	Penamecilina	Penamecillin	Penamecillin	Пенамециллин
-Penicillin	FALSE	TRUE	TRUE	FALSE	Penicillin	Penicilline	Penicilina	Penicillina	Pénicilline	Penicilina	Penicillin	Penicillin	Пенициллин
-Pheneticillin	FALSE	TRUE	TRUE	FALSE	Pheneticillin	Feneticilline	Feneticilina	Feneticillina	Phénéticilline	Pheneticillin	Pheneticillin	Feneticillin	Фенетициллин
-Phenoxymethylpenicillin	FALSE	TRUE	TRUE	FALSE	Phenoxymethylpenicillin	Fenoxymethylpenicilline	Fenoximetilpenicilina	Fenossimetilpenicillina	Phénoxyméthylpénicilline	Fenoximetilpenicilina	Phenoxymethylpenicillin	Fenoximetylpenicillin	Феноксиметилпенициллин
-Pipemidic acid	FALSE	TRUE	TRUE	FALSE	Pipemidinsäure	Pipemidinezuur	Ácido pipemídico	Acido pipemidico	Acide pipémidique	Ácido pipemídico	Pipemidinsyre	Pipemidinsyra	Пипемидовая кислота
-Piperacillin	FALSE	TRUE	TRUE	FALSE	Piperacillin	Piperacilline	Piperacilina	Piperacillina	Pipéracilline	Piperacilina	Piperacillin	Piperacillin	Пиперациллин
-Piperacillin/beta-lactamase inhibitor	FALSE	TRUE	TRUE	FALSE	Piperacillin/Beta-Lactamase-Hemmer	Piperacilline/enzymremmer	Piperacilina/inhib. de la beta-lactamasa	Piperacillina/inib. d. beta-lattamasi	Pipéracilline/inhib. de bêta-lactamase	Piperacilina/inibid. da beta-lactamase	Piperacillin/beta-lactamasehæmmer	Piperacillin/betalaktamashämmare	Пиперациллин/ингибитор бета-лактамазы
-Piromidic acid	FALSE	TRUE	TRUE	FALSE	Piromidinsäure	Piromidinezuur	Ácido piromídico	Acido piromidico	Acide piromidique	Ácido piromídico	Piromidinsyre	Piromidinsyra	Пиромидовая кислота
-Pivampicillin	FALSE	TRUE	TRUE	FALSE	Pivampicillin	Pivampicilline	Pivampicilina	Pivampicillina	Pivampicilline	Pivampicilina	Pivampicillin	Pivampicillin	Пивампициллин
-Polymyxin B	FALSE	TRUE	TRUE	FALSE	Polymyxin B	Polymyxine B	Polimixina B	Polimixina B	Polymyxine B	Polimixina B	Polymyxin B	Polymyxin B	Полимиксин В
-Posaconazole	FALSE	TRUE	TRUE	FALSE	Posaconazol	Posaconazol	Posaconazol	Posaconazolo	Posaconazole	Posaconazole	Posaconazol	Posakonazol	Посаконазол
-Pristinamycin	FALSE	TRUE	TRUE	FALSE	Pristinamycin	Pristinamycine	Pristinamicina	Pristinamicina	Pristinamycine	Pristinamicina	Pristinamycin	Pristinamycin	Пристинамицин
-Procaine benzylpenicillin	FALSE	TRUE	TRUE	FALSE	Procain-Benzylpenicillin	Benzylpenicillineprocaine	Bencilpenicilina procaína	Procaina benzilpenicillina	Procaïne benzylpénicilline	Procaína benzilpenicilina	Prokainbenzylpenicillin	Prokainbenzylpenicillin	Прокаин бензилпенициллин
-Propicillin	FALSE	TRUE	TRUE	FALSE	Propicillin	Propicilline	Propicilina	Propicillina	Propicilline	Propicilina	Propicillin	Propicillin	Пропициллин
-Prulifloxacin	FALSE	TRUE	TRUE	FALSE	Prulifloxacin	Prulifloxacine	Prulifloxacina	Prulifloxacina	Prulifloxacine	Prulifloxacina	Prulifloxacin	Prulifloxacin	Прулифлоксацин
-Quinupristin/dalfopristin	FALSE	TRUE	TRUE	FALSE	Quinupristin/Dalfopristin	Quinupristine/dalfopristine	Quinupristina/dalfopristina	Quinupristina/dalfopristina	Quinupristine/dalfopristine	Quinupristin/dalfopristin	Quinupristin/dalfopristin	Quinupristin/dalfopristin	Квинупристин/дальфопристин
-Ribostamycin	FALSE	TRUE	TRUE	FALSE	Ribostamycin	Ribostamycine	Ribostamicina	Ribostamicina	Ribostamycine	Ribostamicina	Ribostamycin	Ribostamycin	Рибостамицин
-Rifabutin	FALSE	TRUE	TRUE	FALSE	Rifabutin	Rifabutine	Rifabutina	Rifabutina	Rifabutine	Rifabutin	Rifabutin	Rifabutin	Рифабутин
-Rifampicin	FALSE	TRUE	TRUE	FALSE	Rifampicin	Rifampicine	Rifampicina	Rifampicina	Rifampicine	Rifampicina	Rifampicin	Rifampicin	Рифампицин
-Rifampicin/pyrazinamide/ethambutol/isoniazid	FALSE	TRUE	TRUE	FALSE	Rifampicin/Pyrazinamid/Ethambutol/Isoniazid	Rifampicine/pyrazinamide/ethambutol/isoniazide	Rifampicina/pirazinamida/etambutol/isoniazida	Rifampicina/pirazinamide/etambutolo/isoniazide	Rifampicine/pyrazinamide/éthambutol/isoniazide	Rifampicina/pirazinamida/etambutol/isoniazida	Rifampicin/pyrazinamid/ethambutol/isoniazid	Rifampicin/pyrazinamid/ethambutol/isoniazid	Рифампицин/пиразинамид/этамбутол/исониазид
-Rifampicin/pyrazinamide/isoniazid	FALSE	TRUE	TRUE	FALSE	Rifampicin/Pyrazinamid/Isoniazid	Rifampicine/pyrazinamide/isoniazide	Rifampicina/pirazinamida/isoniazida	Rifampicina/pirazinamide/isoniazide	Rifampicine/pyrazinamide/isoniazide	Rifampicina/pirazinamida/isoniazida	Rifampicin/pyrazinamid/isoniazid	Rifampicin/pyrazinamid/isoniazid	Рифампицин/пиразинамид/изониазид
-Rifampicin/isoniazid	FALSE	TRUE	TRUE	FALSE	Rifampicin/Isoniazid	Rifampicine/isoniazide	Rifampicina/isoniazida	Rifampicina/isoniazide	Rifampicine/isoniazide	Rifampicina/isoniazida	Rifampicin/isoniazid	Rifampicin/isoniazid	Рифампицин/изониазид
-Rifamycin	FALSE	TRUE	TRUE	FALSE	Rifamycin	Rifamycine	Rifamicina	Rifamicina	Rifamycine	Rifamycin	Rifamycin	Rifamycin	Рифамицин
-Rifaximin	FALSE	TRUE	TRUE	FALSE	Rifaximin	Rifaximine	Rifaximina	Rifaximina	Rifaximine	Rifaximin	Rifaximin	Rifaximin	Рифаксимин
-Rokitamycin	FALSE	TRUE	TRUE	FALSE	Rokitamycin	Rokitamycine	Rokitamicina	Rokitamicina	Rokitamycine	Rokitamycin	Rokitamycin	Rokitamycin	Рокитамицин
-Rosoxacin	FALSE	TRUE	TRUE	FALSE	Rosoxacin	Rosoxacine	Rosoxacina	Rosoxacina	Rosoxacine	Rosoxacina	Rosoxacin	Rosoxacin	Розоксацин
-Roxithromycin	FALSE	TRUE	TRUE	FALSE	Roxithromycin	Roxitromycine	Roxitromicina	Roxitromicina	Roxithromycine	Roxitromicina	Roxithromycin	Roxitromycin	Рокситромицин
-Rufloxacin	FALSE	TRUE	TRUE	FALSE	Rufloxacin	Rufloxacine	Rufloxacina	Rufloxacina	Rufloxacine	Rufloxacin	Rufloxacin	Rufloxacin	Руфлоксацин
-Sisomicin	FALSE	TRUE	TRUE	FALSE	Sisomicin	Sisomicine	Sisomicina	Sisomicina	Sisomicine	Sisomicina	Sisomicin	Sisomicin	Сизомицин
-Sodium aminosalicylate	FALSE	TRUE	TRUE	FALSE	Natrium-Aminosalicylat	Aminosalicylzuur	Aminosalicilato de sodio	Sodio aminosalicilato	Aminosalicylate de sodium	Aminosalicilato de sódio	Natriumaminosalicylat	Natriumaminosalicylat	Аминосалицилат натрия
-Sparfloxacin	FALSE	TRUE	TRUE	FALSE	Sparfloxacin	Sparfloxacine	Esparfloxacina	Sparfloxacina	Sparfloxacine	Sparfloxacin	Sparfloxacin	Sparfloxacin	Спарфлоксацин
-Spectinomycin	FALSE	TRUE	TRUE	FALSE	Spectinomycin	Spectinomycine	Espectinomicina	Spectinomycin	Spectinomycine	Spectinomycin	Spectinomycin	Spektinomycin	Спектиномицин
-Spiramycin	FALSE	TRUE	TRUE	FALSE	Spiramycin	Spiramycine	Espiramicina	Spiramicina	Spiramycine	Spiramycin	Spiramycin	Spiramycin	Спирамицин
-Spiramycin/metronidazole	FALSE	TRUE	TRUE	FALSE	Spiramycin/Metronidazol	Spiramycine/metronidazol	Espiramicina/metronidazol	Spiramicina/metronidazolo	Spiramycine/métronidazole	Spiramycin/metronidazol	Spiramycin/metronidazol	Spiramycin/metronidazol	Спирамицин/метронидазол
-Staphylococcus immunoglobulin	FALSE	TRUE	TRUE	FALSE	Staphylococcus-Immunoglobulin	Stafylokokkenimmunoglobuline	Inmunoglobulina estafilocócica	Immunoglobulina per stafilococco	Immunoglobuline staphylococcique	Imunoglobulina de Staphylococcus	Stafylokok-immunglobulin	Immunoglobulin mot stafylokocker	Стафилококковый иммуноглобулин
-Streptoduocin	FALSE	TRUE	TRUE	FALSE	Streptoduocin	Streptoduocine	Estreptoduocina	Streptoduocin	Streptoduocine	Estreptoduocina	Streptoduocin	Streptoduocin	Стрептодуоцин
-Streptomycin	FALSE	TRUE	TRUE	FALSE	Streptomycin	Streptomycine	Estreptomicina	Streptomicina	Streptomycine	Streptomycin	Streptomycin	Streptomycin	Стрептомицин
-Streptomycin/isoniazid	FALSE	TRUE	TRUE	FALSE	Streptomycin/Isoniazid	Streptomycine/isoniazide	Estreptomicina/isoniazida	Streptomicina/isoniazide	Streptomycine/isoniazide	Streptomicina/isoniazida	Streptomycin/isoniazid	Streptomycin/isoniazid	Стрептомицин/изониазид
-Sulbenicillin	FALSE	TRUE	TRUE	FALSE	Sulbenicillin	Sulbenicilline	Sulbenicilina	Sulbenicillina	Sulbenicilline	Sulbenicilina	Sulbenicillin	Sulbenicillin	Сульбенициллин
-Sulfadiazine/tetroxoprim	FALSE	TRUE	TRUE	FALSE	Sulfadiazin/Tetroxoprim	Sulfadiazine/tetroxoprim	Sulfadiazina/tetroxoprim	Sulfadiazina/tetroxoprim	Sulfadiazine/tetroxoprime	Sulfadiazina/tetroxoprim	Sulfadiazin/tetroxoprim	Sulfadiazin/tetroxoprim	Сульфадиазин/тетроксоприм
-Sulfadiazine/trimethoprim	FALSE	TRUE	TRUE	FALSE	Sulfadiazin/Trimethoprim	Sulfadiazine/trimethoprim	Sulfadiazina/trimetoprima	Sulfadiazina/trimetoprim	Sulfadiazine/triméthoprime	Sulfadiazina/trimethoprim	Sulfadiazin/trimethoprim	Sulfadiazin/trimetoprim	Сульфадиазин/триметоприм
-Sulfadimidine/trimethoprim	FALSE	TRUE	TRUE	FALSE	Sulfadimidin/Trimethoprim	Sulfadimidine/trimethoprim	Sulfadimidina/trimetoprima	Sulfadimidina/trimetoprim	Sulfadimidine/triméthoprime	Sulfadimidina/trimethoprim	Sulfadimidin/trimethoprim	Sulfadimidin/trimetoprim	Сульфадимидин/триметоприм
-Sulfafurazole	FALSE	TRUE	TRUE	FALSE	Sulfafurazol	Sulfafurazol	Sulfafurazol	Sulfafurazolo	Sulfafurazole	Sulfafurazole	Sulfafurazol	Sulfafurazol	Сульфафуразол
-Sulfaisodimidine	FALSE	TRUE	TRUE	FALSE	Sulfaisodimidin	Sulfisomidine	Sulfaisodimidina	Sulfaisodimidina	Sulfaisodimidine	Sulfaisodimidina	Sulfaisodimidin	Sulfaisodimidin	Сульфаизодимидин
-Sulfalene	FALSE	TRUE	TRUE	FALSE	Sulfalene	Sulfaleen	Sulfaleno	Sulfalene	Sulfalène	Sulfaleno	Sulfalen	Sulfen	Сульфален
-Sulfamazone	FALSE	TRUE	TRUE	FALSE	Sulfamazon	Sulfamazon	Sulfamazona	Sulfamazone	Sulfamazone	Sulfamazona	Sulfamazon	Sulfamazon	Сульфамазон
-Sulfamerazine/trimethoprim	FALSE	TRUE	TRUE	FALSE	Sulfamerazin/Trimethoprim	Sulfamerazine/trimethoprim	Sulfamerazina/trimetoprima	Sulfamerazina/trimetoprim	Sulfamérazine/triméthoprime	Sulfamerazina/trimethoprim	Sulfamerazin/trimethoprim	Sulfamerazin/trimetoprim	Сульфамеразин/триметоприм
-Sulfamethizole	FALSE	TRUE	TRUE	FALSE	Sulfamethizol	Sulfamethizol	Sulfametozol	Sulfamethizolo	Sulfaméthizole	Sulfametizole	Sulfamethizol	Sulfamethizol	Сульфаметизол
-Sulfamethoxazole	FALSE	TRUE	TRUE	FALSE	Sulfamethoxazol	Sulfamethoxazol	Sulfametoxazol	Sulfametossazolo	Sulfaméthoxazole	Sulfamethoxazole	Sulfamethoxazol	Sulfametoxazol	Сульфаметоксазол
-Sulfamethoxazole/trimethoprim	FALSE	TRUE	TRUE	FALSE	Sulfamethoxazol/Trimethoprim	Sulfamethoxazol/trimethoprim	Sulfametoxazol/trimetoprima	Sulfametossazolo/trimetoprim	Sulfaméthoxazole/triméthoprime	Sulfametoxazol/trimethoprim	Sulfamethoxazol/trimethoprim	Sulfametoxazol/trimetoprim	Сульфаметоксазол/триметоприм
-Sulfametoxydiazine	FALSE	TRUE	TRUE	FALSE	Sulfametoxydiazin	Sulfamethoxydiazine	Sulfametoxidiazina	Sulfametoxydiazine	Sulfamétoxydiazine	Sulfametoxidiazina	Sulfametoxydiazin	Sulfametoxydiazin	Сульфаметоксидиазин
-Sulfametrole/trimethoprim	FALSE	TRUE	TRUE	FALSE	Sulfametrole/Trimethoprim	Sulfametrol/trimethoprim	Sulfametrol/trimetoprima	Sulfametrole/trimetoprim	Sulfamétrole/triméthoprime	Sulfametrole/trimethoprim	Sulfametrol/trimethoprim	Sulfametrol/trimetoprim	Сульфаметрол/триметоприм
-Sulfamoxole	FALSE	TRUE	TRUE	FALSE	Sulfamoxol	Sulfamoxol	Sulfamoxole	Sulfamoxolo	Sulfamoxole	Sulfamoxole	Sulfamoxol	Sulfamoxol	Сульфамоксол
-Sulfamoxole/trimethoprim	FALSE	TRUE	TRUE	FALSE	Sulfamoxol/Trimethoprim	Sulfamoxol/trimethoprim	Sulfamoxol/trimetoprima	Sulfamoxolo/trimetoprim	Sulfamoxole/triméthoprime	Sulfamoxole/trimethoprim	Sulfamoxol/trimethoprim	Sulfamoxol/trimetoprim	Сульфамоксол/триметоприм
-Sulfaperin	FALSE	TRUE	TRUE	FALSE	Sulfaperin	Sulfaperine	Sulfametoxazol	Sulfaperin	Sulfapérine	Sulfaperin	Sulfaperin	Sulfaperin	Сульфаперин
-Sulfaphenazole	FALSE	TRUE	TRUE	FALSE	Sulfaphenazol	Sulfafenazol	Sulfafenazol	Sulfafenazolo	Sulfaphénazole	Sulfafenazol	Sulfaphenazol	Sulfafenazol	Сульфафеназол
-Sulfathiazole	FALSE	TRUE	TRUE	FALSE	Sulfathiazol	Sulfathiazol	Sulfatiazol	Sulfathiazole	Sulfathiazole	Sulfatazol	Sulfathiazol	Sulfathiazol	Сульфатиазол
-Sulfathiourea	FALSE	TRUE	TRUE	FALSE	Sulfathioharnstoff	Sulfathioureum	Sulfathiourea	Sulfathiourea	Sulfathiourée	Sulfathiourea	Sulfathiourea	Sulfatiourea	Сульфатиомочевина
-Sultamicillin	FALSE	TRUE	TRUE	FALSE	Sultamicillin	Sultamicilline	Sultamicilina	Sultamicillina	Sultamicilline	Sultamicillin	Sultamicillin	Sultamicillin	Сультамициллин
-Talampicillin	FALSE	TRUE	TRUE	FALSE	Talampicillin	Talampicilline	Talampicilina	Talampicillina	Talampicilline	Talampicilina	Talampicillin	Talampicillin	Талампициллин
-Teicoplanin	FALSE	TRUE	TRUE	FALSE	Teicoplanin	Teicoplanine	Teicoplanina	Teicoplanina	Teicoplanine	Teicoplanin	Teicoplanin	Teicoplanin	Тейкопланин
-Telithromycin	FALSE	TRUE	TRUE	FALSE	Telithromycin	Telitromycine	Telitromicina	Telitromicina	Télithromycine	Telitromicina	Telithromycin	Telitromycin	Телитромицин
-Temafloxacin	FALSE	TRUE	TRUE	FALSE	Temafloxacin	Temafloxacine	Temafloxacina	Temafloxacina	Temafloxacine	Temafloxacin	Temafloxacin	Temafloxacin	Темафлоксацин
-Temocillin	FALSE	TRUE	TRUE	FALSE	Temocillin	Temocilline	Temocilina	Temocillina	Temocillin	Temocillin	Temocillin	Temocillin	Темоциллин
-Tenofovir disoproxil	FALSE	TRUE	TRUE	FALSE	Tenofovir Disoproxil	Tenofovir	Tenofovir disoproxil	Tenofovir disoproxil	Tenofovir disoproxil	Tenofovir disoproxil	Tenofovir disoproxil	Tenofovir disoproxil	Тенофовир дизопроксил
-Terizidone	FALSE	TRUE	TRUE	FALSE	Terizidon	Terizidon	Terizidona	Terizidone	Terizidone	Terizidone	Terizidon	Terizidon	Теризидон
-Thiamphenicol	FALSE	TRUE	TRUE	FALSE	Thiamphenicol	Thiamfenicol	Tiamfenicol	Tiamfenicolo	Thiamphénicol	Tiamfenicol	Thiamphenicol	Tiamfenikol	Тиамфеникол
-Thioacetazone/isoniazid	FALSE	TRUE	TRUE	FALSE	Thioacetazon/Isoniazid	Thioacetazon/isoniazide	Tioacetazona/isoniazida	Tioacetazone/isoniazide	Thioacétazone/isoniazide	Thioacetazone/isoniazid	Thioacetazon/isoniazid	Thioacetazon/isoniazid	Тиоацетазон/изониазид
-Ticarcillin	FALSE	TRUE	TRUE	FALSE	Ticarcillin	Ticarcilline	Ticarcilina	Ticarcillina	Ticarcilline	Ticarcilina	Ticarcillin	Ticarcillin	Тикарциллин
-Ticarcillin/beta-lactamase inhibitor	FALSE	TRUE	TRUE	FALSE	Ticarcillin/Beta-Lactamase-Hemmer	Ticarcilline/enzymremmer	Ticarcilina/inhib. de la betalactamasa	Ticarcillina/inib. d. beta-lattamasi	Ticarcilline/inhib. de bêta-lactamase	Ticarcilina/inibid. da beta-lactamase	Ticarcillin/beta-lactamasehæmmer	Ticarcillin/beta-laktamashämmare	Тикарциллин/ингибитор бета-лактамазы
-Ticarcillin/clavulanic acid	FALSE	TRUE	TRUE	FALSE	Ticarcillin/Clavulansäure	Ticarcilline/clavulaanzuur	Ticarcilina/ácido clavulánico	Ticarcillina/acido clavulanico	Ticarcilline/acide clavulanique	Ticarcilina/ácido clavulanico	Ticarcillin/clavulansyre	Ticarcillin/clavulansyra	Тикарциллин/клавулановая кислота
-Tinidazole	FALSE	TRUE	TRUE	FALSE	Tinidazol	Tinidazol	Tinidazol	Tinidazolo	Tinidazole	Tinidazole	Tinidazol	Tinidazol	Тинидазол
-Tobramycin	FALSE	TRUE	TRUE	FALSE	Tobramycin	Tobramycine	Tobramicina	Tobramicina	Tobramycine	Tobramycin	Tobramycin	Tobramycin	Тобрамицин
-Trimethoprim/sulfamethoxazole	FALSE	TRUE	TRUE	FALSE	Trimethoprim/Sulfamethoxazol	Cotrimoxazol	Trimetoprima/sulfametoxazol	Trimetoprim/sulfametossazolo	Triméthoprime/sulfaméthoxazole	Trimethoprim/sulfametoxazol	Trimethoprim/sulfamethoxazol	Trimetoprim/sulfametoxazol	Триметоприм/сульфаметоксазол
-Troleandomycin	FALSE	TRUE	TRUE	FALSE	Troleandomycin	Troleandomycine	Troleandomicina	Troleandomicina	Troleandomycine	Troleandomicina	Troleandomycin	Troleandomycin	Тролеандомицин
-Trovafloxacin	FALSE	TRUE	TRUE	FALSE	Trovafloxacin	Trovafloxacine	Trovafloxacina	Trovafloxacin	Trovafloxacine	Trovafloxacin	Trovafloxacin	Trovafloxacin	Тровафлоксацин
-Vancomycin	FALSE	TRUE	TRUE	FALSE	Vancomycin	Vancomycine	Vancomicina	Vancomicina	Vancomycine	Vancomycin	Vancomycin	Vancomycin	Ванкомицин
-Voriconazole	FALSE	TRUE	TRUE	FALSE	Voriconazol	Voriconazol	Voriconazol	Voriconazolo	Voriconazole	Voriconazol	Voriconazol	Vorikonazol	Вориконазол
-Aminoglycosides	FALSE	TRUE	TRUE	FALSE	Aminoglykoside	Aminoglycosiden	Aminoglucósidos	Aminoglicosidi	Aminoglycosides	Aminoglycosides	Aminoglykosider	Aminoglykosider	Аминогликозиды
-Amphenicols	FALSE	TRUE	TRUE	FALSE	Amphenicole	Amfenicolen	Anfenicoles	Amphenicols	Amphénicols	Anfenicóis	Amphenicoler	Amfenikoler	Амфениколы
-Antifungals/antimycotics	FALSE	TRUE	TRUE	FALSE	Antimykotika/Antimykotika	Antifungica/antimycotica	Antifúngicos/antimicóticos	Antifungini/antimicotici	Antifongiques/antimycotiques	Antifúngicos/antimicóticos	Antimykotika/antimykotika	Antimykotika/antimykotika	Противогрибковые препараты/антимикотики
-Antimycobacterials	FALSE	TRUE	TRUE	FALSE	Antimykobakterielle Mittel	Antimycobacteriele middelen	Antimicrobianos	Antimicobatterici	Antimycobactériens	Antimycobacterials	Antimycobakterier	Antimykobakterier	Антимикобактериальные препараты
-Beta-lactams/penicillins	FALSE	TRUE	TRUE	FALSE	Beta-Lactame/Penicilline	Beta-lactams/penicillines	Beta-lactámicos/penicilinas	Beta-lattami/penicilline	Bêta-lactamines/pénicillines	Beta-lactâmicas/penicilinas	Beta-lactamer/penicilliner	Beta-laktamer/penicilliner	Бета-лактамы/пенициллины
-Cephalosporins (1st gen.)	FALSE	TRUE	TRUE	FALSE	Cephalosporine (1. Gen.)	Cefalosporines (1e gen.)	Cefalosporinas (1er gen.)	Cefalosporine (1° gen.)	Céphalosporines (1ère génération)	Cefalosporinas (1º género)	Cefalosporiner (1. gen.)	Kefalosporiner (första gen.)	Цефалоспорины (1-го пок.)
-Cephalosporins (2nd gen.)	FALSE	TRUE	TRUE	FALSE	Cephalosporine (2. Gen.)	Cefalosporines (2e gen.)	Cefalosporinas (2do gen.)	Cefalosporine (2° gen.)	Céphalosporines (2ème génération)	Cefalosporinas (2ª gen.)	Cefalosporiner (2. gen.)	Kefalosporiner (andra gen.)	Цефалоспорины (2-го пок.)
-Cephalosporins (3rd gen.)	FALSE	TRUE	TRUE	FALSE	Cephalosporine (3. Gen.)	Cefalosporines (3e gen.)	Cefalosporinas (3er gen.)	Cefalosporine (3° gen.)	Céphalosporines (3ème génération)	Cefalosporinas (3ª gen.)	Cefalosporiner (3. gen.)	Kefalosporiner (tredje gen.)	Цефалоспорины (3-го пок.)
-Cephalosporins (4th gen.)	FALSE	TRUE	TRUE	FALSE	Cephalosporine (4. Gen.)	Cefalosporines (4e gen.)	Cefalosporinas (4ª gen.)	Cefalosporine (4° gen.)	Céphalosporines (4ème génération)	Cefalosporinas (4.ª gen.)	Cefalosporiner (4. gen.)	Kefalosporiner (4:e gen.)	Цефалоспорины (4-го пок.)
-Cephalosporins (5th gen.)	FALSE	TRUE	TRUE	FALSE	Cephalosporine (5. Gen.)	Cefalosporines (5e gen.)	Cefalosporinas (5º gen.)	Cefalosporine (5° gen.)	Céphalosporines (5e gén.)	Cefalosporinas (5.ª gen.)	Cefalosporiner (5. gen.)	Kefalosporiner (5:e gen.)	Цефалоспорины (5-го пок.)
-Cephalosporins (unclassified gen.)	FALSE	TRUE	TRUE	FALSE	Cephalosporine (unklassifiziert)	Cefalosporines (ongeclassificeerd)	Cefalosporinas (gen. no clasificado)	Cefalosporine (gen. non classificato)	Céphalosporines (genre non classifié)	Cefalosporinas (não classificado gen.)	Cefalosporiner (uklassificeret gen.)	Kefalosporiner (oklassificerad gen.)	Цефалоспорины (неклассифицированный род)
-Cephalosporins	FALSE	TRUE	TRUE	FALSE	Cephalosporine	Cefalosporines	Cefalosporinas	Cefalosporine	Céphalosporines	Cefalosporinas	Cefalosporiner	Kefalosporiner	Цефалоспорины
-Glycopeptides	FALSE	TRUE	TRUE	FALSE	Glykopeptide	Glycopeptiden	Glicopéptidos	Glicopeptidi	Glycopeptides	Glycopeptides	Glykopeptider	Glykopeptider	Гликопептиды
-Macrolides/lincosamides	FALSE	TRUE	TRUE	FALSE	Makrolide/Linkosamide	Macroliden/lincosamiden	Macrólidos/lincosamidas	Macrolidi/lincosamidi	Macrolides/lincosamides	Macrolides/lincosamidas	Makrolider/lincosamider	Makrolider/linkosamider	Макролиды/линкозамиды
-Other antibacterials	FALSE	TRUE	TRUE	FALSE	Andere Antibiotika	Overige antibiotica	Otros antibacterianos	Altri antibatterici	Autres antibactériens	Outros antibacterianos	Andre antibakterielle stoffer	Andra antibakteriella medel	Другие антибактериальные препараты
-Polymyxins	FALSE	TRUE	TRUE	FALSE	Polymyxine	Polymyxines	Polimixinas	Polimixine	Polymyxines	Polimixinas	Polymyxiner	Polymyxiner	Полимиксины
-Quinolones	FALSE	TRUE	TRUE	FALSE	Quinolone	Quinolonen	Quinolonas	Chinoloni	Quinolones	Quinolones	Kinoloner	Kinoloner	Хинолоны
+pattern	regular_expr	case_sensitive	affect_ab_name	affect_mo_name	de	nl	es	it	fr	pt	da	sv	ru	uk
+Coagulase-negative Staphylococcus	TRUE	TRUE	FALSE	TRUE	Koagulase-negative Staphylococcus	Coagulase-negatieve Staphylococcus	Staphylococcus coagulasa negativo	Staphylococcus negativo coagulasi	Staphylococcus à coagulase négative	Staphylococcus coagulase negativo	Koagulase-negative stafylokokker	Koagulasnegativa stafylokocker	Коагулазоотрицательный стафилококк	Коагулазонегативний стафілокок
+Coagulase-positive Staphylococcus	TRUE	TRUE	FALSE	TRUE	Koagulase-positive Staphylococcus	Coagulase-positieve Staphylococcus	Staphylococcus coagulasa positivo	Staphylococcus positivo coagulasi	Staphylococcus à coagulase positif	Staphylococcus coagulase positivo	Koagulase-positive stafylokokker	Koagulaspositiva stafylokocker	Коагулазоположительный стафилококк	Коагулазопозитивний стафілокок
+Beta-haemolytic Streptococcus	TRUE	TRUE	FALSE	TRUE	Beta-hämolytischer Streptococcus	Beta-hemolytische Streptococcus	Streptococcus Beta-hemolítico	Streptococcus Beta-emolitico	Streptococcus Bêta-hémolytique	Streptococcus Beta-hemolítico	Beta-haemolytiske streptokokker	Beta-hemolytiska streptokocker	Бета-гемолитический стрептококк	Бета-гемолітичний стрептокок
+unknown Gram-negatives	TRUE	TRUE	FALSE	TRUE	unbekannte Gramnegativen	onbekende Gram-negatieven	Gram negativos desconocidos	Gram negativi sconosciuti	Gram négatifs inconnus	Gram negativos desconhecidos	ukendte Gram-negative	okända gramnegativa bakterier	неизвестные грамотрицательные	невідомі грамнегативні
+unknown Gram-positives	TRUE	TRUE	FALSE	TRUE	unbekannte Grampositiven	onbekende Gram-positieven	Gram positivos desconocidos	Gram positivi sconosciuti	Gram positifs inconnus	Gram positivos desconhecidos	ukendte Gram-positive	okända Gram-positiva	неизвестные грамположительные	невідомі грампозитивні
+unknown fungus	TRUE	TRUE	FALSE	TRUE	unbekannter Pilze	onbekende schimmel	hongo desconocido	fungo sconosciuto	champignon inconnu	fungo desconhecido	ukendt svamp	Okänd svamp	неизвестный грибок	невідомий гриб
+unknown yeast	TRUE	TRUE	FALSE	TRUE	unbekannte Hefe	onbekende gist	levadura desconocida	lievito sconosciuto	levure inconnue	levedura desconhecida	ukendt gær	Okänd jäst	неизвестные дрожжи	невідомі дріжджі
+unknown name	TRUE	TRUE	FALSE	TRUE	unbekannte Name	onbekende naam	nombre desconocido	nome sconosciuto	nom inconnu	nome desconhecido	ukendt navn	okänt namn	неизвестное название	невідома назва
+unknown kingdom	TRUE	TRUE	FALSE	TRUE	unbekanntes Reich	onbekend koninkrijk	reino desconocido	regno sconosciuto	règme inconnu	reino desconhecido	ukendt kongerige	okänt rike	неизвестное царство	невідоме царство
+unknown phylum	TRUE	TRUE	FALSE	TRUE	unbekannter Stamm	onbekend fylum	filo desconocido	phylum sconosciuto	embranchement inconnu	filo desconhecido	ukendt stamme	okänt fylum	неизвестный филум	невідомий відділ
+unknown class	TRUE	TRUE	FALSE	TRUE	unbekannte Klasse	onbekende klasse	clase desconocida	classe sconosciuta	classe inconnue	classe desconhecida	ukendt klasse	okänd klass	неизвестный класс	невідомий клас
+unknown order	TRUE	TRUE	FALSE	TRUE	unbekannte Ordnung	onbekende orde	orden desconocido	ordine sconosciuto	ordre inconnu	ordem desconhecido	ukendt orden	okänd ordning	неизвестный порядок	невідомий порядок
+unknown family	TRUE	TRUE	FALSE	TRUE	unbekannte Familie	onbekende familie	familia desconocida	famiglia sconosciuta	famille inconnue	família desconhecida	ukendt familie	okänd familj	неизвестное семейство	невідома родина
+unknown genus	TRUE	TRUE	FALSE	TRUE	unbekannte Gattung	onbekend geslacht	género desconocido	genere sconosciuto	genre inconnu	gênero desconhecido	ukendt slægt	okänt släkte	неизвестный род	невідомий рід
+unknown species	TRUE	TRUE	FALSE	TRUE	unbekannte Art	onbekende soort	especie desconocida	specie sconosciute	espèce inconnue	espécies desconhecida	ukendt art	okänd art	неизвестный вид	невідомий вид
+unknown subspecies	TRUE	TRUE	FALSE	TRUE	unbekannte Unterart	onbekende ondersoort	subespecie desconocida	sottospecie sconosciute	sous-espèce inconnue	subespécies desconhecida	ukendt underart	okänd underart	неизвестный подвид	невідомий підвид
+unknown rank	TRUE	TRUE	FALSE	TRUE	unbekannter Rang	onbekende rang	rango desconocido	grado sconosciuto	rang inconnu	classificação desconhecido	ukendt rang	okänd rang	неизвестный ранг	невідомий ранг
+ group 	TRUE	TRUE	FALSE	TRUE	 Gruppe 	 groep 	 grupo 	 gruppo 	 groupe 	 grupo 	 gruppe 	 grupp 	 группа 	 група
+CoNS	FALSE	TRUE	FALSE	TRUE	KNS	CNS	SCN				KNS	KNS	КОС	КНС
+CoPS	FALSE	TRUE	FALSE	TRUE	KPS	CPS	SCP				KPS	KPS	КПС	КПС
+Gram-negative	TRUE	TRUE	FALSE	FALSE	Gramnegativ	Gram-negatief	Gram negativo	Gram negativo	Gram négatif	Gram negativo	Gram-negativ	Gram-negativ	Грамотрицательные	Грамнегативні
+Gram-positive	TRUE	TRUE	FALSE	FALSE	Grampositiv	Gram-positief	Gram positivo	Gram positivo	Gram positif	Gram positivo	Gram-positiv	Gram-positiv	Грамположительные	Грампозитивні
+^Bacteria$	TRUE	TRUE	FALSE	FALSE	Bakterien	Bacteriën	Bacterias	Batteri	Bactéries	Bactérias	Bakterier	Bakterier	Бактерии	Бактерії
+^Fungi$	TRUE	TRUE	FALSE	FALSE	Pilze	Schimmels	Hongos	Funghi	Champignons	Fungos	Støbeforme	Svampar	Грибы	Гриби
+^Yeasts$	TRUE	TRUE	FALSE	FALSE	Hefen	Gisten	Levaduras	Lieviti	Levures	Leveduras	Gær	Jästdjur	Животные	Дріжджі
+^Protozoa$	TRUE	TRUE	FALSE	FALSE	Protozoen	Protozoën	Protozoarios	Protozoi	Protozoaires	Protozoários	Protozoer	Protozoer	Протозоа	Найпростіші
+biogroup	TRUE	TRUE	FALSE	FALSE	Biogruppe	biogroep	biogrupo	biogruppo	biogroupe	biogrupo	biogruppe	biogrupp	биогруппа	біогрупа
+biotype	TRUE	TRUE	FALSE	FALSE	Biotyp		biotipo	biotipo		biótipo	biotype	biotyp	биотип	біотип
+vegetative	TRUE	TRUE	FALSE	FALSE	vegetativ	vegetatief	vegetativo	vegetativo	végétatif	vegetativo	vegetativ	vegetativ	вегетативный	вегетативний
+([([ ]*?)group	TRUE	TRUE	FALSE	FALSE	\\1Gruppe	\\1groep	\\1grupo	\\1gruppo	\\1groupe	\\1grupo	\\1gruppe	\\1grupp	\\1группа	\\1група
+([([ ]*?)Group	TRUE	TRUE	FALSE	FALSE	\\1Gruppe	\\1Groep	\\1Grupo	\\1Gruppo	\\1Groupe	\\1Grupo	\\1Gruppe	\\1Grupp	\\1Группа	\\1Група
+no .*growth	TRUE	FALSE	FALSE	FALSE	keine? .*wachstum	geen .*groei	no .*crecimientonon	sem .*crescimento	pas .*croissance	sem .*crescimento	ingen .*vækst	ingen .*tillväxt	отсутствие.*роста	відсутність .*росту
+no|not	TRUE	FALSE	FALSE	FALSE	keine?	geen|niet	no|sin	sem	non	sem	nej|ikke	nej|inte	нет?	ні
+Intermediate	TRUE	FALSE	FALSE	FALSE	Mittlere	Intermediair	Intermedio							Знижена чутливість
+Susceptible, incr. exp.	FALSE	TRUE	FALSE	FALSE	Empfindlich, erh Belastung	Gevoelig bij verh. blootstelling								Чутливий до підвищеної експозиції
+susceptible, incr. exp.	FALSE	TRUE	FALSE	FALSE	empfindlich, erh Belastung	gevoelig bij verh. blootstelling								чутливий до підвищеної експозиції
+Susceptible	TRUE	FALSE	FALSE	FALSE	Empfindlich	Gevoelig	Susceptible							Чутливий
+Incr. exposure	TRUE	FALSE	FALSE	FALSE	Empfindlich, erh Belastung	'Incr. exposure'	'Incr. exposure'							Підвищена експозиція
+Resistant	TRUE	FALSE	FALSE	FALSE	Resistent	Resistent	Resistente							Стійкий
+antibiotic	TRUE	TRUE	FALSE	FALSE	Antibiotikum	antibioticum	antibiótico	antibiotico	antibiotique	antibiótico	antibiotikum	antibiotika	антибиотик	антибіотик
+Antibiotic	TRUE	TRUE	FALSE	FALSE	Antibiotikum	Antibioticum	Antibiótico	Antibiotico	Antibiotique	Antibiótico	Antibiotikum	Antibiotika	Антибиотик	Антибіотик
+Drug	TRUE	TRUE	FALSE	FALSE	Medikament	Middel	Fármaco	Droga	Médicament	Droga	Lægemiddel	Läkemedel	Лекарство	Лікарський засіб
+drug	TRUE	TRUE	FALSE	FALSE	Medikament	middel	fármaco	droga	médicament	droga	lægemiddel	läkemedel	лекарство	лікарський засіб
+Frequency	FALSE	TRUE	FALSE	FALSE	Zahl	Aantal	Frecuencia	Frequenza	Fréquence	Frequência	Frekvens	Frekvens	Частота	Частота
+Minimum Inhibitory Concentration (mg/L)	FALSE	FALSE	FALSE	FALSE	Minimale Hemm-Konzentration (mg/L)	Minimale inhiberende concentratie (mg/L)	Concentración mínima inhibitoria (mg/L)	Concentrazione minima inibitoria (mg/L)	Concentration minimale inhibitrice (mg/L)	Concentração Inibitória Mínima (mg/L)	Mindste hæmmende koncentration (mg/L)	Minsta hämmande koncentration (mg/L)	Минимальная ингибирующая концентрация (мг/л)	Мінімальна інгібуюча концентрація (мг/мл)
+Disk diffusion diameter (mm)	FALSE	FALSE	FALSE	FALSE	Durchmesser der Scheibenzone (mm)	Diameter diskzone (mm)	Diámetro de difusión en disco (mm)	Diametro di diffusione del disco (mm)	Diamètre de diffusion en disque (mm)	Diâmetro de difusão do disco (mm)	Diskdiffusionsdiameter (mm)	Diskdiffusionsdiameter (mm)	Диаметр диффузии диска (мм)	Зона затримки росту (мм)
+Antimicrobial Interpretation	FALSE	FALSE	FALSE	FALSE	Antimikrobielle Auswertung	Antimicrobiële interpretatie	Interpretación antimicrobiana	Interpretazione antimicrobica	Interprétation antimicrobienne	Interpretação Antimicrobiana	Antimikrobiel fortolkning	Antimikrobiell tolkning	Антимикробная интерпретация	Фенотипи чутливості
+4-aminosalicylic acid	FALSE	TRUE	TRUE	FALSE	4-Aminosalicylsäure	4-aminosalicylzuur	Ácido 4-aminosalicílico	Acido 4-aminosalicilico	Acide 4-aminosalicylique	Ácido 4-aminosalicílico	4-aminosalicylsyre	4-aminosalicylsyra	4-аминосалициловая кислота	4-Аміносаліцилова кислота
+Adefovir dipivoxil	FALSE	TRUE	TRUE	FALSE	Adefovir Dipivoxil	Adefovir	Adefovir dipivoxil	Adefovir dipivoxil	Adéfovir dipivoxil	Adefovir dipivoxil	Adefovir dipivoxil	Adefovir dipivoxil	Адефовир дипивоксил	Адефовір діпівоксил
+Aldesulfone sodium	FALSE	TRUE	TRUE	FALSE	Aldesulfon-Natrium	Aldesulfon	Aldesulfona sódica	Aldesulfone sodio	Aldésulfone sodique	Aldesulfona de sódio	Aldesulfon-natrium	Aldesulfonnatrium	Альдесульфон натрия	Альденсульфон натрію
+Amikacin	FALSE	TRUE	TRUE	FALSE	Amikacin	Amikacine	Amikacina	Amikacin	Amikacine	Amikacin	Amikacin	Amikacin	Амикацин	Амікацин
+Amoxicillin	FALSE	TRUE	TRUE	FALSE	Amoxicillin	Amoxicilline	Amoxicilina	Amoxicillina	Amoxicilline	Amoxicilina	Amoxicillin	Amoxicillin	Амоксициллин	Амоксицилін
+Amoxicillin/beta-lactamase inhibitor	FALSE	TRUE	TRUE	FALSE	Amoxicillin/Beta-Lactamase-Hemmer	Amoxicilline/enzymremmer	Amoxicilina/inhib. de la beta-lactamasa	Amoxicillina/inib. d. beta-lattamasi	Amoxicilline/inhib. de bêta-lactamase	Amoxicilina/inibid. da beta-lactamase	Amoxicillin/beta-lactamasehæmmer	Amoxicillin/betalaktamashämmare	Амоксициллин/ингибитор бета-лактамаз	Амоксицилін / інгібітор бета-лактамаз
+Amphotericin B	FALSE	TRUE	TRUE	FALSE	Amphotericin B	Amfotericine B	Anfotericina B	Amfotericina B	Amphotéricine B	Anfotericina B	Amfotericin B	Amfotericin B	Амфотерицин В	Амфотерицин В
+Ampicillin	FALSE	TRUE	TRUE	FALSE	Ampicillin	Ampicilline	Ampicilina	Ampicillina	Ampicilline	Ampicilina	Ampicillin	Ampicillin	Ампициллин	Ампіцилін
+Ampicillin/beta-lactamase inhibitor	FALSE	TRUE	TRUE	FALSE	Ampicillin/Beta-Laktamase-Hemmer	Ampicilline/enzymremmer	Ampicilina/inhib. de la beta-lactamasa	Ampicillina/inib. d. beta-lattamasi	Ampicilline/inhib. de bêta-lactamase	Ampicilina/inibid. da beta-lactamase	Ampicillin/beta-lactamasehæmmer	Ampicillin/beta-laktamashämmare	Ампициллин/ингибитор бета-лактамазы	Ампіцилін / інгібітор бета-лактамаз
+Anidulafungin	FALSE	TRUE	TRUE	FALSE	Anidulafungin	Anidulafungine	Anidulafungina	Anidulafungin	Anidulafungine	Anidulafungin	Anidulafungin	Anidulafungin	Анидулафунгин	Анідулафунгін
+Azidocillin	FALSE	TRUE	TRUE	FALSE	Azidocillin	Azidocilline	Azidocilina	Azidocillina	Azidocilline	Azidocillin	Azidocillin	Azidocillin	Азидоциллин	Азидоцилін
+Azithromycin	FALSE	TRUE	TRUE	FALSE	Azithromycin	Azitromycine	Azitromicina	Azitromicina	Azithromycine	Azitromicina	Azithromycin	Azitromycin	Азитромицин	Азитроміцин
+Azlocillin	FALSE	TRUE	TRUE	FALSE	Azlocillin	Azlocilline	Azlocilina	Azlocillina	Azlocilline	Azlocillin	Azlocillin	Azlocillin	Азлоциллин	Азлоцилін
+Bacampicillin	FALSE	TRUE	TRUE	FALSE	Bacampicillin	Bacampicilline	Bacampicilina	Bacampicillina	Bacampicilline	Bacampicilina	Bacampicillin	Bacampicillin	Бакампициллин	Бакампіцилін
+Bacitracin	FALSE	TRUE	TRUE	FALSE	Bacitracin	Bacitracine	Bacitracina	Bacitracina	Bacitracine	Bacitracin	Bacitracin	Bacitracin	Бацитрацин	Бацитрацин
+Benzathine benzylpenicillin	FALSE	TRUE	TRUE	FALSE	Benzathin-Benzylpenicillin	Benzylpenicillinebenzathine	Bencilpenicilina benzatínica	Benzatina benzilpenicillina	Benzathine benzylpénicilline	Benzatina benzatina benzilpenicilina	Benzathinbenzylpenicillin	Benzathinbenzylpenicillin	Бензатин бензилпенициллин	Бензатину бензилпеніцилін
+Benzathine phenoxymethylpenicillin	FALSE	TRUE	TRUE	FALSE	Benzathin-Phenoxymethylpenicillin	Fenoxymethylpenicillinebenzathine	Fenoximetilpenicilina benzatínica	Benzatina fenossimetilpenicillina	Phénoxyméthylpénicilline benzathine	Benzatina fenoximetilpenicilina	Benzathinfenoxymethylpenicillin	Bensathinfenoximetylpenicillin	Бензатин феноксиметилпенициллин	Бензатину феноксиметилпеніцилін
+Benzylpenicillin	FALSE	TRUE	TRUE	FALSE	Benzylpenicillin	Benzylpenicilline	Bencilpenicilina	Benzilpenicillina	Benzylpénicilline	Benzilpenicilina	Benzylpenicillin	Bensylpenicillin	Бензилпенициллин	Бензилпеніцилін
+Calcium aminosalicylate	FALSE	TRUE	TRUE	FALSE	Kalzium-Aminosalicylat	Aminosalicylzuur	Aminosalicilato de calcio	Calcio aminosalicilato	Aminosalicylate de calcium	Aminosalicilato de cálcio	Calciumaminosalicylat	Kalciumaminosalicylat	Аминосалицилат кальция	Кальцію аміносаліцилат
+Capreomycin	FALSE	TRUE	TRUE	FALSE	Capreomycin	Capreomycine	Capreomicina	Capreomicina	Capréomycine	Capreomicina	Capreomycin	Kapreomycin	Капреомицин	Капреоміцин
+Carbenicillin	FALSE	TRUE	TRUE	FALSE	Carbenicillin	Carbenicilline	Carbenicilina	Carbenicillina	Carbénicilline	Carbenicilina	Carbenicillin	Karbenicillin	Карбенициллин	Карбеніцилін
+Carindacillin	FALSE	TRUE	TRUE	FALSE	Carindacillin	Carindacilline	Carindacilina	Carindacillina	Carindacilline	Carindacillin	Carindacillin	Carindacillin	Кариндациллин	Кариндацилін
+Caspofungin	FALSE	TRUE	TRUE	FALSE	Caspofungin	Caspofungine	Caspofungina	Caspofungin	Caspofungine	Caspofungin	Caspofungin	Caspofungin	Каспофунгин	Каспофунгін
+Ce(f|ph)acetrile	TRUE	TRUE	TRUE	FALSE	Cefacetril	Cefacetril	Cefacetrilo	Cefacetrile	Céphacétrile	Cephacetrile	Cephacetril	Cephacetril	Цефацетрил	Цефацетрил
+Ce(f|ph)alotin	TRUE	TRUE	TRUE	FALSE	Cefalotin	Cefalotine	Cefalotina	Cefalotina	Céphalotine	Cefalotina	Cephalotin	Cefalotin	Цефалотин	Цефалотин
+Ce(f|ph)amandole	TRUE	TRUE	TRUE	FALSE	Cefamandol	Cefamandol	Cefamandole	Cephamandole	Céphamandole	Cephamandole	Cephamandol	Cephamandol	Цефамандол	Цефамандол
+Ce(f|ph)apirin	TRUE	TRUE	TRUE	FALSE	Cefapirin	Cefapirine	Cefapirina	Cefapirina	Céphapirine	Cephapirin	Cephapirin	Cephapirin	Цефапирин	Цефапірин
+Ce(f|ph)azedone	TRUE	TRUE	TRUE	FALSE	Cefazedon	Cefazedon	Cefazedona	Cefazedone	Céphazédone	Cephazedone	Cephazedon	Cephazedon	Цефазедон	Цефазедон
+Ce(f|ph)azolin	TRUE	TRUE	TRUE	FALSE	Cefazolin	Cefazoline	Cefazolina	Cephazolin	Céphazoline	Cephazolin	Cephazolin	Cephazolin	Цефазолин	Цефазолін
+Ce(f|ph)alothin	TRUE	TRUE	TRUE	FALSE	Cefalothin	Cefalotine	Cefalotina	Cefalotina	Céphalothine	Cephalothin	Cephalothin	Kefalotin	Цефалотин	Цефалотин
+Ce(f|ph)alexin	TRUE	TRUE	TRUE	FALSE	Cefalexin	Cefalexine	Cefalexina	Cephalexin	Céphalexine	Cephalexin	Cephalexin	Cephalexin	Цефалексин	Цефалексин
+Ce(f|ph)epime	TRUE	TRUE	TRUE	FALSE	Cefepim	Cefepim	Cefepime	Cephepime	Céphépime	Cephepime	Cephepime	Cephepim	Цефепим	Цефепім
+Ce(f|ph)ixime	TRUE	TRUE	TRUE	FALSE	Cefixim	Cefixim	Cefixima	Cephixime	Céphixime	Cephixime	Cephixim	Cephixim	Цефиксим	Цефіксим
+Ce(f|ph)menoxime	TRUE	TRUE	TRUE	FALSE	Cefmenoxim	Cefmenoxim	Cefmenoxima	Cephmenoxime	Céphénoxime	Cephmenoxime	Cephmenoxim	Cephmenoxim	Цефменоксим	Цефменоксим
+Ce(f|ph)metazole	TRUE	TRUE	TRUE	FALSE	Cefmetazol	Cefmetazol	Cefmetazol	Cephmetazole	Céphmétazole	Cefmetazole	Cephmetazol	Cephmetazol	Цефметазол	Цефметазол
+Ce(f|ph)odizime	TRUE	TRUE	TRUE	FALSE	Cefodizim	Cefodizim	Cefodixima	Cephodizime	Céphodizime	Cephodizime	Cephodizim	Cephodizim	Цефодизим	Цефодізим
+Ce(f|ph)onicid	TRUE	TRUE	TRUE	FALSE	Cefonicid	Cefonicide	Cefonicida	Cephonicid	Céphonicide	Cefonicid	Cephonicid	Cephonicid	Цефонизид	Цефоніцид
+Ce(f|ph)operazone	TRUE	TRUE	TRUE	FALSE	Cefoperazon	Cefoperazon	Cefoperazona	Cephoperazone	Céphopérazone	Cephoperazone	Cephoperazon	Cephoperazon	Цефоперазон	Цефоперазон
+Ce(f|ph)operazone/beta-lactamase inhibitor	TRUE	TRUE	TRUE	FALSE	Cefoperazon/Beta-Lactamase-Hemmer	Cefoperazon/enzymremmer	Cefoperazona/inhib. de betalactamasas	Cephoperazone/inib. d. beta-lattamasi	Céphopérazone/inhib. de bêta-lactamase	Cephoperazona/inibid. da beta-lactamase	Cephoperazon/beta-lactamasehæmmer	Cefoperazon/beta-laktamashämmare	Цефоперазон/ингибитор бета-лактамаз	Цефоперазон / інгібітор бета-лактамаз
+Ce(f|ph)otaxime	TRUE	TRUE	TRUE	FALSE	Cefotaxim	Cefotaxim	Cefotaxima	Cephotaxime	Céphotaxime	Cephotaxime	Cephotaxim	Cephotaxim	Цефотаксим	Цефотаксим
+Ce(f|ph)oxitin	TRUE	TRUE	TRUE	FALSE	Cefoxitin	Cefoxitine	Cefoxitina	Cefossitina	Céphoxitine	Cephoxitin	Cephoxitin	Cephoxitin	Цефокситин	Цефокситин
+Ce(f|ph)pirome	TRUE	TRUE	TRUE	FALSE	Cefpirom	Cefpirom	Cephpirome	Cephpirome	Céphpirome	Cefpirome	Cephpirom	Cephpirom	Цефпиром	Цефпіром
+Ce(f|ph)podoxime	TRUE	TRUE	TRUE	FALSE	Cefpodoxim	Cefpodoxim	Cefpodoxima	Cephpodoxime	Céphpodoxime	Cephpodoxime	Cephpodoxim	Cephpodoxim	Цефподоксим	Цефподоксим
+Ce(f|ph)radine	TRUE	TRUE	TRUE	FALSE	Cefradin	Cefradine	Cefradina	Cefradina	Céphradine	Cephradine	Cephradin	Cephradin	Цефрадин	Цефрадін
+Ce(f|ph)sulodin	TRUE	TRUE	TRUE	FALSE	Cefsulodin	Cefsulodine	Cefsulodina	Cephsulodin	Céphsulodine	Cephsulodin	Cephsulodin	Cephsulodin	Цефсулодин	Цефсулодин
+Ce(f|ph)tazidime	TRUE	TRUE	TRUE	FALSE	Ceftazidim	Ceftazidim	Ceftazidima	Ceftazidima	Céphtazidime	Ceftazidima	Cephtazidim	Cephtazidim	Цефтазидим	Цефтазидим
+Ce(f|ph)tezole	TRUE	TRUE	TRUE	FALSE	Ceftezol	Ceftezol	Ceftezol	Cephtezole	Céphtézole	Ceftezole	Cephtezol	Cephtezole	Цефтезол	Цефтезол
+Ce(f|ph)tizoxime	TRUE	TRUE	TRUE	FALSE	Ceftizoxim	Ceftizoxim	Ceftizoxima	Cephtizoxime	Céphtizoxime	Cephtizoxime	Cephtizoxim	Cephtizoxim	Цефтизоксим	Цефтизоксим
+Ce(f|ph)triaxone	TRUE	TRUE	TRUE	FALSE	Ceftriaxon	Ceftriaxon	Ceftriaxona	Ceftriaxone	Céphtriaxone	Cefhtriaxone	Cephtriaxon	Ceftriaxon	Цефтриаксон	Цефтриаксон
+Ce(f|ph)uroxime	TRUE	TRUE	TRUE	FALSE	Cefuroxim	Cefuroxim	Cefuroxima	Cefuroxima	Céphuroxime	Cephuroxime	Cephuroxim	Cefuroxim	Цефуроксим	Цефуроксим
+Ce(f|ph)uroxime/metronidazole	TRUE	TRUE	TRUE	FALSE	Cefuroxim/Metronidazol	Cefuroxim/andere antibacteriele middelen	Cefuroxima/metronidazol	Cefuroxima/metronidazolo	Céphuroxime/métronidazole	Cephuroxime/metronidazol	Cefuroxim/metronidazol	Cefuroxim/metronidazol	Цефуроксим/метронидазол	Цефуроксим/метронідазол
+Chloramphenicol	FALSE	TRUE	TRUE	FALSE	Chloramphenicol	Chlooramfenicol	Cloranfenicol	Cloramfenicolo	Chloramphénicol	Cloranfenicol	Kloramfenicol	Kloramfenikol	Хлорамфеникол	Хлорамфенікол
+Chlortetracycline	FALSE	TRUE	TRUE	FALSE	Chlortetracyclin	Chloortetracycline	Clortetraciclina	Clorotetraciclina	Chlortétracycline	Chlortetracycline	Chlortetracyclin	Klortetracyklin	Хлортетрациклин	Хлортетрациклін
+Cinoxacin	FALSE	TRUE	TRUE	FALSE	Cinoxacin	Cinoxacine	Cinoxacina	Cinoxacina	Cinoxacine	Cinoxacin	Cinoxacin	Cinoxacin	Циноксацин	Циноксацин
+Ciprofloxacin	FALSE	TRUE	TRUE	FALSE	Ciprofloxacin	Ciprofloxacine	Ciprofloxacina	Ciprofloxacina	Ciprofloxacine	Ciprofloxacin	Ciprofloxacin	Ciprofloxacin	Ципрофлоксацин	Ципрофлоксацин
+Clarithromycin	FALSE	TRUE	TRUE	FALSE	Clarithromycin	Claritromycine	Claritromicina	Claritromicina	Clarithromycine	Claritromicina	Clarithromycin	Claritromycin	Кларитромицин	Кларитроміцин
+Clavulanic acid	FALSE	TRUE	TRUE	FALSE	Clavulansäure	Clavulaanzuur	Ácido clavulánico	Acido clavulanico	Acide clavulanique	Ácido clavulânico	Clavulansyre	Clavulansyra	Клавулановая кислота	Клавуланова кислота
+clavulanic acid	FALSE	TRUE	TRUE	FALSE	Clavulansäure	clavulaanzuur	ácido clavulánico	acido clavulanico	acide clavulanique	ácido clavulânico	clavulansyre	clavulansyra	клавулановая кислота	клавуланова кислота
+Clindamycin	FALSE	TRUE	TRUE	FALSE	Clindamycin	Clindamycine	Clindamicina	Clindamicina	Clindamycine	Clindamicina	Clindamycin	Clindamycin	Клиндамицин	Кліндаміцин
+Clometocillin	FALSE	TRUE	TRUE	FALSE	Clometocillin	Clometocilline	Clometocilina	Clometocillina	Clométocilline	Clometocillin	Clometocillin	Klometocillin	Клометоциллин	Клометоцилін
+Clotrimazole	FALSE	TRUE	TRUE	FALSE	Clotrimazol	Clotrimazol	Clotrimazol	Clotrimazolo	Clotrimazole	Clotrimazole	Clotrimazol	Klotrimazol	Клотримазол	Клотримазол
+Cloxacillin	FALSE	TRUE	TRUE	FALSE	Cloxacillin	Cloxacilline	Cloxacilina	Cloxacillina	Cloxacilline	Cloxacillin	Cloxacillin	Kloxacillin	Клоксациллин	Клоксацилін
+Colistin	FALSE	TRUE	TRUE	FALSE	Colistin	Colistine	Colistina	Colistina	Colistine	Colistin	Colistin	Kolistin	Колистин	Колістин
+Dapsone	FALSE	TRUE	TRUE	FALSE	Dapson	Dapson	Dapsona	Dapsone	Dapsone	Dapsone	Dapson	Dapson	Дапсон	Дапсон
+Daptomycin	FALSE	TRUE	TRUE	FALSE	Daptomycin	Daptomycine	Daptomicina	Daptomicina	Daptomycine	Daptomicina	Daptomycin	Daptomycin	Даптомицин	Даптоміцин
+Dibekacin	FALSE	TRUE	TRUE	FALSE	Dibekacin	Dibekacine	Dibekacina	Dibekacin	Dibekacine	Dibekacin	Dibekacin	Dibekacin	Дибекацин	Дібекацин
+Dicloxacillin	FALSE	TRUE	TRUE	FALSE	Dicloxacillin	Dicloxacilline	Dicloxacilina	Dicloxacillina	Dicloxacilline	Dicloxacilina	Dicloxacillin	Dikloxacillin	Диклоксациллин	Диклоксацилін
+Dirithromycin	FALSE	TRUE	TRUE	FALSE	Dirithromycin	Diritromycine	Diritromicina	Diritromicina	Dirithromycine	Diritromicina	Dirithromycin	Diritromycin	Диритромицин	Диритроміцин
+Econazole	FALSE	TRUE	TRUE	FALSE	Econazol	Econazol	Econazol	Econazolo	Econazole	Econazole	Econazol	Ekonazol	Эконазол	Еконазол
+Enoxacin	FALSE	TRUE	TRUE	FALSE	Enoxacin	Enoxacine	Enoxacina	Enoxacina	Enoxacine	Enoxacin	Enoxacin	Enoxacin	Эноксацин	Еноксацин
+Epicillin	FALSE	TRUE	TRUE	FALSE	Epicillin	Epicilline	Epicilina	Epicillina	Epicilline	Epicilina	Epicillin	Epicillin	Эпициллин	Епіцилін
+Erythromycin	FALSE	TRUE	TRUE	FALSE	Erythromycin	Erytromycine	Eritromicina	Eritromicina	Erythromycine	Eritromicina	Erythromycin	Erytromycin	Эритромицин	Еритроміцин
+Ethambutol/isoniazid	FALSE	TRUE	TRUE	FALSE	Ethambutol/Isoniazid	Ethambutol/isoniazide	Etambutol/isoniazida	Etambutolo/isoniazide	Ethambutol/isoniazide	Ethambutol/isoniazid	Ethambutol/isoniazid	Etambutol/isoniazid	Этамбутол/изониазид	Етамбутол/ізоніазид
+Fleroxacin	FALSE	TRUE	TRUE	FALSE	Fleroxacin	Fleroxacine	Fleroxacina	Fleroxacina	Fléroxacine	Fleroxacina	Fleroxacin	Fleroxacin	Флероксацин	Флероксацин
+Flucloxacillin	FALSE	TRUE	TRUE	FALSE	Flucloxacillin	Flucloxacilline	Flucloxacilina	Flucloxacillina	Flucloxacilline	Flucloxacillin	Flucloxacillin	Flucloxacillin	Флуклоксациллин	Флуклоксацилін
+Fluconazole	FALSE	TRUE	TRUE	FALSE	Fluconazol	Fluconazol	Fluconazol	Fluconazolo	Fluconazole	Fluconazole	Fluconazol	Flukonazol	Флуконазол	Флуконазол
+Flucytosine	FALSE	TRUE	TRUE	FALSE	Flucytosin	Fluorocytosine	Flucitosina	Flucytosine	Flucytosine	Flucytosine	Flucytosin	Flucytosin	Флуцитозин	Флуцитозин
+Flurithromycin	FALSE	TRUE	TRUE	FALSE	Flurithromycin	Fluritromycine	Fluritromicina	Fluritromicina	Flurithromycine	Fluritromicina	Flurithromycin	Fluritromycin	Флуритромицин	Флуритроміцин
+Fosfomycin	FALSE	TRUE	TRUE	FALSE	Fosfomycin	Fosfomycine	Fosfomicina	Fosfomicina	Fosfomycine	Fosfomycin	Fosfomycin	Fosfomycin	Фосфомицин	Фосфоміцин
+Fusidic acid	FALSE	TRUE	TRUE	FALSE	Fusidinsäure	Fusidinezuur	Ácido fusídico	Acido fusidico	Acide fusidique	Ácido fusídico	Fusidinsyre	Fusidinsyra	Фузидовая кислота	Фузидова кислота
+Gatifloxacin	FALSE	TRUE	TRUE	FALSE	Gatifloxacin	Gatifloxacine	Gatifloxacina	Gatifloxacina	Gatifloxacine	Gatifloxacin	Gatifloxacin	Gatifloxacin	Гатифлоксацин	Гатифлоксацин
+Gemifloxacin	FALSE	TRUE	TRUE	FALSE	Gemifloxacin	Gemifloxacine	Gemifloxacina	Gemifloxacina	Gemifloxacine	Gemifloxacin	Gemifloxacin	Gemifloxacin	Гемифлоксацин	Геміфлоксацин
+Gentamicin	FALSE	TRUE	TRUE	FALSE	Gentamicin	Gentamicine	Gentamicina	Gentamicina	Gentamicine	Gentamicina	Gentamicin	Gentamicin	Гентамицин	Гентаміцин
+Grepafloxacin	FALSE	TRUE	TRUE	FALSE	Grepafloxacin	Grepafloxacine	Grepafloxacina	Grepafloxacina	Grepafloxacine	Grepafloxacin	Grepafloxacin	Grepafloxacin	Грепафлоксацин	Грепафлоксацин
+Hachimycin	FALSE	TRUE	TRUE	FALSE	Hachimycin	Hachimycine	Hachimycin	Hachimycin	Hachimycine	Hachimycin	Hachimycin	Hachimycin	Хатимицин	Хачиміцин
+Hetacillin	FALSE	TRUE	TRUE	FALSE	Hetacillin	Hetacilline	Hetacilina	Hetacillin	Hétacilline	Hetacillin	Hetacillin	Hetacillin	Гетациллин	Гетацилін
+Imipenem/cilastatin	FALSE	TRUE	TRUE	FALSE	Imipenem/Cilastatin	Imipenem/enzymremmer	Imipenem/cilastatina	Imipenem/cilastatina	Imipénème/cilastatine	Imipenem/coteltelatina	Imipenem/cilastatin	Imipenem/cilastatin	Имипенем/циластатин	Іміпенем/циластатин
+Inosine pranobex	FALSE	TRUE	TRUE	FALSE	Inosin-Pranobex	Inosiplex	Inosina pranobex	Inosina pranobex	Inosine pranobex	Pranobex inosine	Inosin pranobex	Inosin pranobex	Инозин пранобекс	Інозин пранобекс
+Isepamicin	FALSE	TRUE	TRUE	FALSE	Isepamicin	Isepamicine	Isepamicina	Isepamicina	Isepamicine	Isepamicina	Isepamicin	Isepamicin	Исепамицин	Ізепаміцин
+Isoconazole	FALSE	TRUE	TRUE	FALSE	Isoconazol	Isoconazol	Isoconazol	Isoconazolo	Isoconazole	Isoconazole	Isoconazol	Isokonazol	Изоконазол	Ізоконазол
+Isoniazid	FALSE	TRUE	TRUE	FALSE	Isoniazid	Isoniazide	Isoniazida	Isoniazide	Isoniazide	Isoniazid	Isoniazid	Isoniazid	Изониазид	Ізоніазид
+Itraconazole	FALSE	TRUE	TRUE	FALSE	Itraconazol	Itraconazol	Itraconazol	Itraconazolo	Itraconazole	Itraconazole	Itraconazol	Itrakonazol	Итраконазол	Ітраконазол
+Josamycin	FALSE	TRUE	TRUE	FALSE	Josamycin	Josamycine	Josamicina	Josamicina	Josamycine	Josamycin	Josamycin	Josamycin	Джозамицин	Джозаміцин
+Kanamycin	FALSE	TRUE	TRUE	FALSE	Kanamycin	Kanamycine	Kanamicina	Kanamicina	Kanamycine	Kanamycin	Kanamycin	Kanamycin	Канамицин	Канаміцин
+Ketoconazole	FALSE	TRUE	TRUE	FALSE	Ketoconazol	Ketoconazol	Ketoconazol	Ketoconazolo	Kétoconazole	Ketoconazole	Ketoconazol	Ketokonazol	Кетоконазол	Кетоконазол
+Levofloxacin	FALSE	TRUE	TRUE	FALSE	Levofloxacin	Levofloxacine	Levofloxacina	Levofloxacina	Lévofloxacine	Levofloxacin	Levofloxacin	Levofloxacin	Левофлоксацин	Левофлоксацин
+Lincomycin	FALSE	TRUE	TRUE	FALSE	Lincomycin	Lincomycine	Lincomicina	Lincomicina	Lincomycine	Lincomycin	Lincomycin	Lincomycin	Линкомицин	Лінкоміцин
+Lomefloxacin	FALSE	TRUE	TRUE	FALSE	Lomefloxacin	Lomefloxacine	Lomefloxacina	Lomefloxacina	Loméfloxacine	Lomefloxacin	Lomefloxacin	Lomefloxacin	Ломефлоксацин	Ломефлоксацин
+Lysozyme	FALSE	TRUE	TRUE	FALSE	Lysozym	Lysozym	Lisozima	Lisozima	Lysozyme	Lysozyme	Lysozym	Lysozym	Лизоцим	Лізоцим
+Mandelic acid	FALSE	TRUE	TRUE	FALSE	Mandelsäure	Amandelzuur	Ácido mandélico	Acido mandelico	Acide mandélique	Ácido mandélico	Mandelinsyre	Mandelsyra	Мандаловая кислота	Мигдалева кислота
+Metampicillin	FALSE	TRUE	TRUE	FALSE	Metampicillin	Metampicilline	Metampicilina	Metampicillina	Métampicilline	Metampicilina	Metampicillin	Metampicillin	Метампициллин	Метампіцилін
+Meticillin	FALSE	TRUE	TRUE	FALSE	Meticillin	Meticilline	Meticilina	Meticillina	Méticilline	Meticillin	Meticillin	Meticillin	Метициллин	Метицилін
+Metisazone	FALSE	TRUE	TRUE	FALSE	Metisazon	Metisazon	Metisazona	Metisazone	Métisazone	Metisazone	Metisazon	Metisazon	Метисазон	Метисазон
+Metronidazole	FALSE	TRUE	TRUE	FALSE	Metronidazol	Metronidazol	Metronidazol	Metronidazolo	Métronidazole	Metronidazol	Metronidazol	Metronidazol	Метронидазол	Метронідазол
+Mezlocillin	FALSE	TRUE	TRUE	FALSE	Mezlocillin	Mezlocilline	Mezlocilina	Mezlocillina	Mezlocilline	Mezlocillin	Mezlocillin	Mezlocillin	Мезлоциллин	Мезлоцилін
+Micafungin	FALSE	TRUE	TRUE	FALSE	Micafungin	Micafungine	Micafungina	Micafungin	Micafungine	Micafungin	Micafungin	Micafungin	Микафунгин	Мікафунгін
+Miconazole	FALSE	TRUE	TRUE	FALSE	Miconazol	Miconazol	Miconazol	Miconazolo	Miconazole	Miconazole	Miconazol	Miconazol	Миконазол	Міконазол
+Midecamycin	FALSE	TRUE	TRUE	FALSE	Midecamycin	Midecamycine	Midecamicina	Midecamicina	Midecamycine	Midecamycin	Midecamycin	Midecamycin	Мидекамицин	Мідекаміцин
+Miocamycin	FALSE	TRUE	TRUE	FALSE	Miocamycin	Miocamycine	Miocamycin	Miocamicina	Miocamycine	Miocamicina	Miocamycin	Miocamycin	Миокамицин	Міокаміцин
+Moxifloxacin	FALSE	TRUE	TRUE	FALSE	Moxifloxacin	Moxifloxacine	Moxifloxacina	Moxifloxacin	Moxifloxacine	Moxifloxacina	Moxifloxacin	Moxifloxacin	Моксифлоксацин	Моксифлоксацин
+Mupirocin	FALSE	TRUE	TRUE	FALSE	Mupirocin	Mupirocine	Mupirocina	Mupirocina	Mupirocine	Mupirocina	Mupirocin	Mupirocin	Мупироцин	Мупіроцин
+Nalidixic acid	FALSE	TRUE	TRUE	FALSE	Nalidixinsäure	Nalidixinezuur	Ácido nalidíxico	Acido nalidixico	Acide nalidixique	Ácido nalidíxico	Nalidixinsyre	Nalidixinsyra	Налидиксовая кислота	Налідиксова кислота
+Neomycin	FALSE	TRUE	TRUE	FALSE	Neomycin	Neomycine	Neomicina	Neomicina	Néomycine	Neomicina	Neomycin	Neomycin	Неомицин	Неоміцин
+Netilmicin	FALSE	TRUE	TRUE	FALSE	Netilmicin	Netilmicine	Netilmicina	Netilmicin	Netilmicine	Netilmicin	Netilmicin	Netilmicin	Нетилмицин	Нетилміцин
+Nitrofurantoin	FALSE	TRUE	TRUE	FALSE	Nitrofurantoin	Nitrofurantoine	Nitrofurantoína	Nitrofurantoina	Nitrofurantoïne	Nitrofurantoína	Nitrofurantoin	Nitrofurantoin	Нитрофурантоин	Нітрофурантоїн
+Norfloxacin	FALSE	TRUE	TRUE	FALSE	Norfloxacin	Norfloxacine	Norfloxacina	Norfloxacina	Norfloxacine	Norfloxacin	Norfloxacin	Norfloxacin	Норфлоксацин	Норфлоксацин
+Novobiocin	FALSE	TRUE	TRUE	FALSE	Novobiocin	Novobiocine	Novobiocina	Novobiocin	Novobiocine	Novobiocin	Novobiocin	Novobiocin	Новобиоцин	Новобіоцин
+Nystatin	FALSE	TRUE	TRUE	FALSE	Nystatin	Nystatine	Nistatina	Nystatin	Nystatine	Nystatin	Nystatin	Nystatin	Нистатин	Ністатин
+Ofloxacin	FALSE	TRUE	TRUE	FALSE	Ofloxacin	Ofloxacine	Ofloxacina	Ofloxacin	Ofloxacine	Ofloxacin	Ofloxacin	Ofloxacin	Офлоксацин	Офлоксацин
+Oleandomycin	FALSE	TRUE	TRUE	FALSE	Oleandomycin	Oleandomycine	Oleandomicina	Oleandomicina	Oleandomycine	Oleandomicina	Oleandomycin	Oleandomycin	Олеандомицин	Олеандоміцин
+Ornidazole	FALSE	TRUE	TRUE	FALSE	Ornidazol	Ornidazol	Ornidazol	Ornidazolo	Ornidazole	Ornidazole	Ornidazol	Ornidazol	Орнидазол	Орнідазол
+Oxacillin	FALSE	TRUE	TRUE	FALSE	Oxacillin	Oxacilline	Oxacilina	Oxacillina	Oxacilline	Oxacillin	Oxacillin	Oxacillin	Оксациллин	Оксацилін
+Oxolinic acid	FALSE	TRUE	TRUE	FALSE	Oxolinsäure	Oxolinezuur	Ácido oxolínico	Acido ossolinico	Acide oxolinique	Ácido oxolínico	Oxolinsyre	Oxolinsyra	Оксолиновая кислота	Оксолінова кислота
+Oxytetracycline	FALSE	TRUE	TRUE	FALSE	Oxytetracyclin	Oxytetracycline	Oxitetraciclina	Ossitetraciclina	Oxytétracycline	Oxitetraciclina	Oxytetracyclin	Oxytetracyklin	Окситетрациклин	Окситетрациклін
+Pazufloxacin	FALSE	TRUE	TRUE	FALSE	Pazufloxacin	Pazufloxacine	Pazufloxacina	Pazufloxacin	Pazufloxacine	Pazufloxacin	Pazufloxacin	Pazufloxacin	Пазуфлоксацин	Пазуфлоксацин
+Pefloxacin	FALSE	TRUE	TRUE	FALSE	Pefloxacin	Pefloxacine	Pefloxacina	Pefloxacina	Péfloxacine	Pefloxacin	Pefloxacin	Pefloxacin	Пефлоксацин	Пефлоксацин
+Penamecillin	FALSE	TRUE	TRUE	FALSE	Penamecillin	Penamecilline	Penamecilina	Penamecillina	Pénamécilline	Penamecilina	Penamecillin	Penamecillin	Пенамециллин	Пенамецилін
+Penicillin	FALSE	TRUE	TRUE	FALSE	Penicillin	Penicilline	Penicilina	Penicillina	Pénicilline	Penicilina	Penicillin	Penicillin	Пенициллин	Пеніцилін
+Pheneticillin	FALSE	TRUE	TRUE	FALSE	Pheneticillin	Feneticilline	Feneticilina	Feneticillina	Phénéticilline	Pheneticillin	Pheneticillin	Feneticillin	Фенетициллин	Фенетіцилін
+Phenoxymethylpenicillin	FALSE	TRUE	TRUE	FALSE	Phenoxymethylpenicillin	Fenoxymethylpenicilline	Fenoximetilpenicilina	Fenossimetilpenicillina	Phénoxyméthylpénicilline	Fenoximetilpenicilina	Phenoxymethylpenicillin	Fenoximetylpenicillin	Феноксиметилпенициллин	Феноксиметилпеніцилін
+Pipemidic acid	FALSE	TRUE	TRUE	FALSE	Pipemidinsäure	Pipemidinezuur	Ácido pipemídico	Acido pipemidico	Acide pipémidique	Ácido pipemídico	Pipemidinsyre	Pipemidinsyra	Пипемидовая кислота	Піпемідова кислота
+Piperacillin	FALSE	TRUE	TRUE	FALSE	Piperacillin	Piperacilline	Piperacilina	Piperacillina	Pipéracilline	Piperacilina	Piperacillin	Piperacillin	Пиперациллин	Піперацилін
+Piperacillin/beta-lactamase inhibitor	FALSE	TRUE	TRUE	FALSE	Piperacillin/Beta-Lactamase-Hemmer	Piperacilline/enzymremmer	Piperacilina/inhib. de la beta-lactamasa	Piperacillina/inib. d. beta-lattamasi	Pipéracilline/inhib. de bêta-lactamase	Piperacilina/inibid. da beta-lactamase	Piperacillin/beta-lactamasehæmmer	Piperacillin/betalaktamashämmare	Пиперациллин/ингибитор бета-лактамазы	Піперацилін / інгібітор бета-лактамаз
+Piromidic acid	FALSE	TRUE	TRUE	FALSE	Piromidinsäure	Piromidinezuur	Ácido piromídico	Acido piromidico	Acide piromidique	Ácido piromídico	Piromidinsyre	Piromidinsyra	Пиромидовая кислота	Піромідова кислота
+Pivampicillin	FALSE	TRUE	TRUE	FALSE	Pivampicillin	Pivampicilline	Pivampicilina	Pivampicillina	Pivampicilline	Pivampicilina	Pivampicillin	Pivampicillin	Пивампициллин	Півампіцилін
+Polymyxin B	FALSE	TRUE	TRUE	FALSE	Polymyxin B	Polymyxine B	Polimixina B	Polimixina B	Polymyxine B	Polimixina B	Polymyxin B	Polymyxin B	Полимиксин В	Поліміксин B
+Posaconazole	FALSE	TRUE	TRUE	FALSE	Posaconazol	Posaconazol	Posaconazol	Posaconazolo	Posaconazole	Posaconazole	Posaconazol	Posakonazol	Посаконазол	Позаконазол
+Pristinamycin	FALSE	TRUE	TRUE	FALSE	Pristinamycin	Pristinamycine	Pristinamicina	Pristinamicina	Pristinamycine	Pristinamicina	Pristinamycin	Pristinamycin	Пристинамицин	Пристинаміцин
+Procaine benzylpenicillin	FALSE	TRUE	TRUE	FALSE	Procain-Benzylpenicillin	Benzylpenicillineprocaine	Bencilpenicilina procaína	Procaina benzilpenicillina	Procaïne benzylpénicilline	Procaína benzilpenicilina	Prokainbenzylpenicillin	Prokainbenzylpenicillin	Прокаин бензилпенициллин	Прокаїну бензилпеніцилін
+Propicillin	FALSE	TRUE	TRUE	FALSE	Propicillin	Propicilline	Propicilina	Propicillina	Propicilline	Propicilina	Propicillin	Propicillin	Пропициллин	Пропіцилін
+Prulifloxacin	FALSE	TRUE	TRUE	FALSE	Prulifloxacin	Prulifloxacine	Prulifloxacina	Prulifloxacina	Prulifloxacine	Prulifloxacina	Prulifloxacin	Prulifloxacin	Прулифлоксацин	Пруліфлоксацин
+Quinupristin/dalfopristin	FALSE	TRUE	TRUE	FALSE	Quinupristin/Dalfopristin	Quinupristine/dalfopristine	Quinupristina/dalfopristina	Quinupristina/dalfopristina	Quinupristine/dalfopristine	Quinupristin/dalfopristin	Quinupristin/dalfopristin	Quinupristin/dalfopristin	Квинупристин/дальфопристин	Хінупристин/дальфопристин
+Ribostamycin	FALSE	TRUE	TRUE	FALSE	Ribostamycin	Ribostamycine	Ribostamicina	Ribostamicina	Ribostamycine	Ribostamicina	Ribostamycin	Ribostamycin	Рибостамицин	Рибостаміцин
+Rifabutin	FALSE	TRUE	TRUE	FALSE	Rifabutin	Rifabutine	Rifabutina	Rifabutina	Rifabutine	Rifabutin	Rifabutin	Rifabutin	Рифабутин	Рифабутин
+Rifampicin	FALSE	TRUE	TRUE	FALSE	Rifampicin	Rifampicine	Rifampicina	Rifampicina	Rifampicine	Rifampicina	Rifampicin	Rifampicin	Рифампицин	Рифампіцин
+Rifampicin/pyrazinamide/ethambutol/isoniazid	FALSE	TRUE	TRUE	FALSE	Rifampicin/Pyrazinamid/Ethambutol/Isoniazid	Rifampicine/pyrazinamide/ethambutol/isoniazide	Rifampicina/pirazinamida/etambutol/isoniazida	Rifampicina/pirazinamide/etambutolo/isoniazide	Rifampicine/pyrazinamide/éthambutol/isoniazide	Rifampicina/pirazinamida/etambutol/isoniazida	Rifampicin/pyrazinamid/ethambutol/isoniazid	Rifampicin/pyrazinamid/ethambutol/isoniazid	Рифампицин/пиразинамид/этамбутол/исониазид	Рифампіцин/піразинамід/етамбутол/ізоніазид
+Rifampicin/pyrazinamide/isoniazid	FALSE	TRUE	TRUE	FALSE	Rifampicin/Pyrazinamid/Isoniazid	Rifampicine/pyrazinamide/isoniazide	Rifampicina/pirazinamida/isoniazida	Rifampicina/pirazinamide/isoniazide	Rifampicine/pyrazinamide/isoniazide	Rifampicina/pirazinamida/isoniazida	Rifampicin/pyrazinamid/isoniazid	Rifampicin/pyrazinamid/isoniazid	Рифампицин/пиразинамид/изониазид	Рифампіцин/піразинамід/ізоніазид
+Rifampicin/isoniazid	FALSE	TRUE	TRUE	FALSE	Rifampicin/Isoniazid	Rifampicine/isoniazide	Rifampicina/isoniazida	Rifampicina/isoniazide	Rifampicine/isoniazide	Rifampicina/isoniazida	Rifampicin/isoniazid	Rifampicin/isoniazid	Рифампицин/изониазид	Рифампіцин/ізоніазид
+Rifamycin	FALSE	TRUE	TRUE	FALSE	Rifamycin	Rifamycine	Rifamicina	Rifamicina	Rifamycine	Rifamycin	Rifamycin	Rifamycin	Рифамицин	Рифаміцин
+Rifaximin	FALSE	TRUE	TRUE	FALSE	Rifaximin	Rifaximine	Rifaximina	Rifaximina	Rifaximine	Rifaximin	Rifaximin	Rifaximin	Рифаксимин	Рифаксимін
+Rokitamycin	FALSE	TRUE	TRUE	FALSE	Rokitamycin	Rokitamycine	Rokitamicina	Rokitamicina	Rokitamycine	Rokitamycin	Rokitamycin	Rokitamycin	Рокитамицин	Рокітаміцин
+Rosoxacin	FALSE	TRUE	TRUE	FALSE	Rosoxacin	Rosoxacine	Rosoxacina	Rosoxacina	Rosoxacine	Rosoxacina	Rosoxacin	Rosoxacin	Розоксацин	Розоксацин
+Roxithromycin	FALSE	TRUE	TRUE	FALSE	Roxithromycin	Roxitromycine	Roxitromicina	Roxitromicina	Roxithromycine	Roxitromicina	Roxithromycin	Roxitromycin	Рокситромицин	Рокситроміцин
+Rufloxacin	FALSE	TRUE	TRUE	FALSE	Rufloxacin	Rufloxacine	Rufloxacina	Rufloxacina	Rufloxacine	Rufloxacin	Rufloxacin	Rufloxacin	Руфлоксацин	Руфлоксацин
+Sisomicin	FALSE	TRUE	TRUE	FALSE	Sisomicin	Sisomicine	Sisomicina	Sisomicina	Sisomicine	Sisomicina	Sisomicin	Sisomicin	Сизомицин	Сизоміцин
+Sodium aminosalicylate	FALSE	TRUE	TRUE	FALSE	Natrium-Aminosalicylat	Aminosalicylzuur	Aminosalicilato de sodio	Sodio aminosalicilato	Aminosalicylate de sodium	Aminosalicilato de sódio	Natriumaminosalicylat	Natriumaminosalicylat	Аминосалицилат натрия	Натрію аміносаліцилат
+Sparfloxacin	FALSE	TRUE	TRUE	FALSE	Sparfloxacin	Sparfloxacine	Esparfloxacina	Sparfloxacina	Sparfloxacine	Sparfloxacin	Sparfloxacin	Sparfloxacin	Спарфлоксацин	Спарфлоксацин
+Spectinomycin	FALSE	TRUE	TRUE	FALSE	Spectinomycin	Spectinomycine	Espectinomicina	Spectinomycin	Spectinomycine	Spectinomycin	Spectinomycin	Spektinomycin	Спектиномицин	Спектиноміцин
+Spiramycin	FALSE	TRUE	TRUE	FALSE	Spiramycin	Spiramycine	Espiramicina	Spiramicina	Spiramycine	Spiramycin	Spiramycin	Spiramycin	Спирамицин	Спіраміцин
+Spiramycin/metronidazole	FALSE	TRUE	TRUE	FALSE	Spiramycin/Metronidazol	Spiramycine/metronidazol	Espiramicina/metronidazol	Spiramicina/metronidazolo	Spiramycine/métronidazole	Spiramycin/metronidazol	Spiramycin/metronidazol	Spiramycin/metronidazol	Спирамицин/метронидазол	Спіраміцин/метронідазол
+Staphylococcus immunoglobulin	FALSE	TRUE	TRUE	FALSE	Staphylococcus-Immunoglobulin	Stafylokokkenimmunoglobuline	Inmunoglobulina estafilocócica	Immunoglobulina per stafilococco	Immunoglobuline staphylococcique	Imunoglobulina de Staphylococcus	Stafylokok-immunglobulin	Immunoglobulin mot stafylokocker	Стафилококковый иммуноглобулин	Стафілококовий імуноглобулін
+Streptoduocin	FALSE	TRUE	TRUE	FALSE	Streptoduocin	Streptoduocine	Estreptoduocina	Streptoduocin	Streptoduocine	Estreptoduocina	Streptoduocin	Streptoduocin	Стрептодуоцин	Стрептодуоцин
+Streptomycin	FALSE	TRUE	TRUE	FALSE	Streptomycin	Streptomycine	Estreptomicina	Streptomicina	Streptomycine	Streptomycin	Streptomycin	Streptomycin	Стрептомицин	Стрептоміцин
+Streptomycin/isoniazid	FALSE	TRUE	TRUE	FALSE	Streptomycin/Isoniazid	Streptomycine/isoniazide	Estreptomicina/isoniazida	Streptomicina/isoniazide	Streptomycine/isoniazide	Streptomicina/isoniazida	Streptomycin/isoniazid	Streptomycin/isoniazid	Стрептомицин/изониазид	Стрептоміцин/ізоніазид
+Sulbenicillin	FALSE	TRUE	TRUE	FALSE	Sulbenicillin	Sulbenicilline	Sulbenicilina	Sulbenicillina	Sulbenicilline	Sulbenicilina	Sulbenicillin	Sulbenicillin	Сульбенициллин	Сульбеніцилін
+Sulfadiazine/tetroxoprim	FALSE	TRUE	TRUE	FALSE	Sulfadiazin/Tetroxoprim	Sulfadiazine/tetroxoprim	Sulfadiazina/tetroxoprim	Sulfadiazina/tetroxoprim	Sulfadiazine/tetroxoprime	Sulfadiazina/tetroxoprim	Sulfadiazin/tetroxoprim	Sulfadiazin/tetroxoprim	Сульфадиазин/тетроксоприм	Сульфадіазин/тетроксоприм
+Sulfadiazine/trimethoprim	FALSE	TRUE	TRUE	FALSE	Sulfadiazin/Trimethoprim	Sulfadiazine/trimethoprim	Sulfadiazina/trimetoprima	Sulfadiazina/trimetoprim	Sulfadiazine/triméthoprime	Sulfadiazina/trimethoprim	Sulfadiazin/trimethoprim	Sulfadiazin/trimetoprim	Сульфадиазин/триметоприм	Сульфадіазин/триметоприм
+Sulfadimidine/trimethoprim	FALSE	TRUE	TRUE	FALSE	Sulfadimidin/Trimethoprim	Sulfadimidine/trimethoprim	Sulfadimidina/trimetoprima	Sulfadimidina/trimetoprim	Sulfadimidine/triméthoprime	Sulfadimidina/trimethoprim	Sulfadimidin/trimethoprim	Sulfadimidin/trimetoprim	Сульфадимидин/триметоприм	Сульфадимідин/триметоприм
+Sulfafurazole	FALSE	TRUE	TRUE	FALSE	Sulfafurazol	Sulfafurazol	Sulfafurazol	Sulfafurazolo	Sulfafurazole	Sulfafurazole	Sulfafurazol	Sulfafurazol	Сульфафуразол	Сульфафуразол
+Sulfaisodimidine	FALSE	TRUE	TRUE	FALSE	Sulfaisodimidin	Sulfisomidine	Sulfaisodimidina	Sulfaisodimidina	Sulfaisodimidine	Sulfaisodimidina	Sulfaisodimidin	Sulfaisodimidin	Сульфаизодимидин	Сульфаізодимідин
+Sulfalene	FALSE	TRUE	TRUE	FALSE	Sulfalene	Sulfaleen	Sulfaleno	Sulfalene	Sulfalène	Sulfaleno	Sulfalen	Sulfen	Сульфален	Сульфален
+Sulfamazone	FALSE	TRUE	TRUE	FALSE	Sulfamazon	Sulfamazon	Sulfamazona	Sulfamazone	Sulfamazone	Sulfamazona	Sulfamazon	Sulfamazon	Сульфамазон	Сульфамазон
+Sulfamerazine/trimethoprim	FALSE	TRUE	TRUE	FALSE	Sulfamerazin/Trimethoprim	Sulfamerazine/trimethoprim	Sulfamerazina/trimetoprima	Sulfamerazina/trimetoprim	Sulfamérazine/triméthoprime	Sulfamerazina/trimethoprim	Sulfamerazin/trimethoprim	Sulfamerazin/trimetoprim	Сульфамеразин/триметоприм	Сульфамеразин/триметоприм
+Sulfamethizole	FALSE	TRUE	TRUE	FALSE	Sulfamethizol	Sulfamethizol	Sulfametozol	Sulfamethizolo	Sulfaméthizole	Sulfametizole	Sulfamethizol	Sulfamethizol	Сульфаметизол	Сульфаметізол
+Sulfamethoxazole	FALSE	TRUE	TRUE	FALSE	Sulfamethoxazol	Sulfamethoxazol	Sulfametoxazol	Sulfametossazolo	Sulfaméthoxazole	Sulfamethoxazole	Sulfamethoxazol	Sulfametoxazol	Сульфаметоксазол	Сульфаметоксазол
+Sulfamethoxazole/trimethoprim	FALSE	TRUE	TRUE	FALSE	Sulfamethoxazol/Trimethoprim	Sulfamethoxazol/trimethoprim	Sulfametoxazol/trimetoprima	Sulfametossazolo/trimetoprim	Sulfaméthoxazole/triméthoprime	Sulfametoxazol/trimethoprim	Sulfamethoxazol/trimethoprim	Sulfametoxazol/trimetoprim	Сульфаметоксазол/триметоприм	Сульфаметоксазол/триметоприм
+Sulfametoxydiazine	FALSE	TRUE	TRUE	FALSE	Sulfametoxydiazin	Sulfamethoxydiazine	Sulfametoxidiazina	Sulfametoxydiazine	Sulfamétoxydiazine	Sulfametoxidiazina	Sulfametoxydiazin	Sulfametoxydiazin	Сульфаметоксидиазин	Сульфаметоксидіазин
+Sulfametrole/trimethoprim	FALSE	TRUE	TRUE	FALSE	Sulfametrole/Trimethoprim	Sulfametrol/trimethoprim	Sulfametrol/trimetoprima	Sulfametrole/trimetoprim	Sulfamétrole/triméthoprime	Sulfametrole/trimethoprim	Sulfametrol/trimethoprim	Sulfametrol/trimetoprim	Сульфаметрол/триметоприм	Сульфаметрол/триметоприм
+Sulfamoxole	FALSE	TRUE	TRUE	FALSE	Sulfamoxol	Sulfamoxol	Sulfamoxole	Sulfamoxolo	Sulfamoxole	Sulfamoxole	Sulfamoxol	Sulfamoxol	Сульфамоксол	Сульфамоксол
+Sulfamoxole/trimethoprim	FALSE	TRUE	TRUE	FALSE	Sulfamoxol/Trimethoprim	Sulfamoxol/trimethoprim	Sulfamoxol/trimetoprima	Sulfamoxolo/trimetoprim	Sulfamoxole/triméthoprime	Sulfamoxole/trimethoprim	Sulfamoxol/trimethoprim	Sulfamoxol/trimetoprim	Сульфамоксол/триметоприм	Сульфамоксол/триметоприм
+Sulfaperin	FALSE	TRUE	TRUE	FALSE	Sulfaperin	Sulfaperine	Sulfametoxazol	Sulfaperin	Sulfapérine	Sulfaperin	Sulfaperin	Sulfaperin	Сульфаперин	Сульфаперин
+Sulfaphenazole	FALSE	TRUE	TRUE	FALSE	Sulfaphenazol	Sulfafenazol	Sulfafenazol	Sulfafenazolo	Sulfaphénazole	Sulfafenazol	Sulfaphenazol	Sulfafenazol	Сульфафеназол	Сульфафеназол
+Sulfathiazole	FALSE	TRUE	TRUE	FALSE	Sulfathiazol	Sulfathiazol	Sulfatiazol	Sulfathiazole	Sulfathiazole	Sulfatazol	Sulfathiazol	Sulfathiazol	Сульфатиазол	Сульфатіазол
+Sulfathiourea	FALSE	TRUE	TRUE	FALSE	Sulfathioharnstoff	Sulfathioureum	Sulfathiourea	Sulfathiourea	Sulfathiourée	Sulfathiourea	Sulfathiourea	Sulfatiourea	Сульфатиомочевина	Сульфатіосечовина
+Sultamicillin	FALSE	TRUE	TRUE	FALSE	Sultamicillin	Sultamicilline	Sultamicilina	Sultamicillina	Sultamicilline	Sultamicillin	Sultamicillin	Sultamicillin	Сультамициллин	Сультаміцилін
+Talampicillin	FALSE	TRUE	TRUE	FALSE	Talampicillin	Talampicilline	Talampicilina	Talampicillina	Talampicilline	Talampicilina	Talampicillin	Talampicillin	Талампициллин	Талампіцилін
+Teicoplanin	FALSE	TRUE	TRUE	FALSE	Teicoplanin	Teicoplanine	Teicoplanina	Teicoplanina	Teicoplanine	Teicoplanin	Teicoplanin	Teicoplanin	Тейкопланин	Тейкопланін
+Telithromycin	FALSE	TRUE	TRUE	FALSE	Telithromycin	Telitromycine	Telitromicina	Telitromicina	Télithromycine	Telitromicina	Telithromycin	Telitromycin	Телитромицин	Телітроміцин
+Temafloxacin	FALSE	TRUE	TRUE	FALSE	Temafloxacin	Temafloxacine	Temafloxacina	Temafloxacina	Temafloxacine	Temafloxacin	Temafloxacin	Temafloxacin	Темафлоксацин	Темафлоксацин
+Temocillin	FALSE	TRUE	TRUE	FALSE	Temocillin	Temocilline	Temocilina	Temocillina	Temocillin	Temocillin	Temocillin	Temocillin	Темоциллин	Темоцилін
+Tenofovir disoproxil	FALSE	TRUE	TRUE	FALSE	Tenofovir Disoproxil	Tenofovir	Tenofovir disoproxil	Tenofovir disoproxil	Tenofovir disoproxil	Tenofovir disoproxil	Tenofovir disoproxil	Tenofovir disoproxil	Тенофовир дизопроксил	Тенофовір дизопроксил
+Terizidone	FALSE	TRUE	TRUE	FALSE	Terizidon	Terizidon	Terizidona	Terizidone	Terizidone	Terizidone	Terizidon	Terizidon	Теризидон	Теризидон
+Thiamphenicol	FALSE	TRUE	TRUE	FALSE	Thiamphenicol	Thiamfenicol	Tiamfenicol	Tiamfenicolo	Thiamphénicol	Tiamfenicol	Thiamphenicol	Tiamfenikol	Тиамфеникол	Тіамфенікол
+Thioacetazone/isoniazid	FALSE	TRUE	TRUE	FALSE	Thioacetazon/Isoniazid	Thioacetazon/isoniazide	Tioacetazona/isoniazida	Tioacetazone/isoniazide	Thioacétazone/isoniazide	Thioacetazone/isoniazid	Thioacetazon/isoniazid	Thioacetazon/isoniazid	Тиоацетазон/изониазид	Тіоацетазон/ізоніазид
+Ticarcillin	FALSE	TRUE	TRUE	FALSE	Ticarcillin	Ticarcilline	Ticarcilina	Ticarcillina	Ticarcilline	Ticarcilina	Ticarcillin	Ticarcillin	Тикарциллин	Тикарцилін
+Ticarcillin/beta-lactamase inhibitor	FALSE	TRUE	TRUE	FALSE	Ticarcillin/Beta-Lactamase-Hemmer	Ticarcilline/enzymremmer	Ticarcilina/inhib. de la betalactamasa	Ticarcillina/inib. d. beta-lattamasi	Ticarcilline/inhib. de bêta-lactamase	Ticarcilina/inibid. da beta-lactamase	Ticarcillin/beta-lactamasehæmmer	Ticarcillin/beta-laktamashämmare	Тикарциллин/ингибитор бета-лактамазы	Тикарцилін / інгібітор бета-лактамаз
+Ticarcillin/clavulanic acid	FALSE	TRUE	TRUE	FALSE	Ticarcillin/Clavulansäure	Ticarcilline/clavulaanzuur	Ticarcilina/ácido clavulánico	Ticarcillina/acido clavulanico	Ticarcilline/acide clavulanique	Ticarcilina/ácido clavulanico	Ticarcillin/clavulansyre	Ticarcillin/clavulansyra	Тикарциллин/клавулановая кислота	Тикарцилін / клавуланова кислота
+Tinidazole	FALSE	TRUE	TRUE	FALSE	Tinidazol	Tinidazol	Tinidazol	Tinidazolo	Tinidazole	Tinidazole	Tinidazol	Tinidazol	Тинидазол	Тинідазол
+Tobramycin	FALSE	TRUE	TRUE	FALSE	Tobramycin	Tobramycine	Tobramicina	Tobramicina	Tobramycine	Tobramycin	Tobramycin	Tobramycin	Тобрамицин	Тобраміцин
+Trimethoprim/sulfamethoxazole	FALSE	TRUE	TRUE	FALSE	Trimethoprim/Sulfamethoxazol	Cotrimoxazol	Trimetoprima/sulfametoxazol	Trimetoprim/sulfametossazolo	Triméthoprime/sulfaméthoxazole	Trimethoprim/sulfametoxazol	Trimethoprim/sulfamethoxazol	Trimetoprim/sulfametoxazol	Триметоприм/сульфаметоксазол	Триметоприм/сульфаметоксазол
+Troleandomycin	FALSE	TRUE	TRUE	FALSE	Troleandomycin	Troleandomycine	Troleandomicina	Troleandomicina	Troleandomycine	Troleandomicina	Troleandomycin	Troleandomycin	Тролеандомицин	Тролеандоміцин
+Trovafloxacin	FALSE	TRUE	TRUE	FALSE	Trovafloxacin	Trovafloxacine	Trovafloxacina	Trovafloxacin	Trovafloxacine	Trovafloxacin	Trovafloxacin	Trovafloxacin	Тровафлоксацин	Тровафлоксацин
+Vancomycin	FALSE	TRUE	TRUE	FALSE	Vancomycin	Vancomycine	Vancomicina	Vancomicina	Vancomycine	Vancomycin	Vancomycin	Vancomycin	Ванкомицин	Ванкоміцин
+Voriconazole	FALSE	TRUE	TRUE	FALSE	Voriconazol	Voriconazol	Voriconazol	Voriconazolo	Voriconazole	Voriconazol	Voriconazol	Vorikonazol	Вориконазол	Вориконазол
+Aminoglycosides	FALSE	TRUE	TRUE	FALSE	Aminoglykoside	Aminoglycosiden	Aminoglucósidos	Aminoglicosidi	Aminoglycosides	Aminoglycosides	Aminoglykosider	Aminoglykosider	Аминогликозиды	Аміноглікозиди
+Amphenicols	FALSE	TRUE	TRUE	FALSE	Amphenicole	Amfenicolen	Anfenicoles	Amphenicols	Amphénicols	Anfenicóis	Amphenicoler	Amfenikoler	Амфениколы	Амфеніколи
+Antifungals/antimycotics	FALSE	TRUE	TRUE	FALSE	Antimykotika/Antimykotika	Antifungica/antimycotica	Antifúngicos/antimicóticos	Antifungini/antimicotici	Antifongiques/antimycotiques	Antifúngicos/antimicóticos	Antimykotika/antimykotika	Antimykotika/antimykotika	Противогрибковые препараты/антимикотики	Протигрибкові засоби / антимікотики
+Antimycobacterials	FALSE	TRUE	TRUE	FALSE	Antimykobakterielle Mittel	Antimycobacteriele middelen	Antimicrobianos	Antimicobatterici	Antimycobactériens	Antimycobacterials	Antimycobakterier	Antimykobakterier	Антимикобактериальные препараты	Засоби, що діють на мікобактерії
+Beta-lactams/penicillins	FALSE	TRUE	TRUE	FALSE	Beta-Lactame/Penicilline	Beta-lactams/penicillines	Beta-lactámicos/penicilinas	Beta-lattami/penicilline	Bêta-lactamines/pénicillines	Beta-lactâmicas/penicilinas	Beta-lactamer/penicilliner	Beta-laktamer/penicilliner	Бета-лактамы/пенициллины	Бета-лактами/пеніциліни
+Cephalosporins (1st gen.)	FALSE	TRUE	TRUE	FALSE	Cephalosporine (1. Gen.)	Cefalosporines (1e gen.)	Cefalosporinas (1er gen.)	Cefalosporine (1° gen.)	Céphalosporines (1ère génération)	Cefalosporinas (1º género)	Cefalosporiner (1. gen.)	Kefalosporiner (första gen.)	Цефалоспорины (1-го пок.)	Цефалоспорини (1 пок.)
+Cephalosporins (2nd gen.)	FALSE	TRUE	TRUE	FALSE	Cephalosporine (2. Gen.)	Cefalosporines (2e gen.)	Cefalosporinas (2do gen.)	Cefalosporine (2° gen.)	Céphalosporines (2ème génération)	Cefalosporinas (2ª gen.)	Cefalosporiner (2. gen.)	Kefalosporiner (andra gen.)	Цефалоспорины (2-го пок.)	Цефалоспорини (2 пок.)
+Cephalosporins (3rd gen.)	FALSE	TRUE	TRUE	FALSE	Cephalosporine (3. Gen.)	Cefalosporines (3e gen.)	Cefalosporinas (3er gen.)	Cefalosporine (3° gen.)	Céphalosporines (3ème génération)	Cefalosporinas (3ª gen.)	Cefalosporiner (3. gen.)	Kefalosporiner (tredje gen.)	Цефалоспорины (3-го пок.)	Цефалоспорини (3 пок.)
+Cephalosporins (4th gen.)	FALSE	TRUE	TRUE	FALSE	Cephalosporine (4. Gen.)	Cefalosporines (4e gen.)	Cefalosporinas (4ª gen.)	Cefalosporine (4° gen.)	Céphalosporines (4ème génération)	Cefalosporinas (4.ª gen.)	Cefalosporiner (4. gen.)	Kefalosporiner (4:e gen.)	Цефалоспорины (4-го пок.)	Цефалоспорини (4 пок.)
+Cephalosporins (5th gen.)	FALSE	TRUE	TRUE	FALSE	Cephalosporine (5. Gen.)	Cefalosporines (5e gen.)	Cefalosporinas (5º gen.)	Cefalosporine (5° gen.)	Céphalosporines (5e gén.)	Cefalosporinas (5.ª gen.)	Cefalosporiner (5. gen.)	Kefalosporiner (5:e gen.)	Цефалоспорины (5-го пок.)	Цефалоспорини (5 пок.)
+Cephalosporins (unclassified gen.)	FALSE	TRUE	TRUE	FALSE	Cephalosporine (unklassifiziert)	Cefalosporines (ongeclassificeerd)	Cefalosporinas (gen. no clasificado)	Cefalosporine (gen. non classificato)	Céphalosporines (genre non classifié)	Cefalosporinas (não classificado gen.)	Cefalosporiner (uklassificeret gen.)	Kefalosporiner (oklassificerad gen.)	Цефалоспорины (неклассифицированный род)	Цефалоспорини (некласифікованого пок.)
+Cephalosporins	FALSE	TRUE	TRUE	FALSE	Cephalosporine	Cefalosporines	Cefalosporinas	Cefalosporine	Céphalosporines	Cefalosporinas	Cefalosporiner	Kefalosporiner	Цефалоспорины	Цефалоспорини
+Glycopeptides	FALSE	TRUE	TRUE	FALSE	Glykopeptide	Glycopeptiden	Glicopéptidos	Glicopeptidi	Glycopeptides	Glycopeptides	Glykopeptider	Glykopeptider	Гликопептиды	Глікопептиди
+Macrolides/lincosamides	FALSE	TRUE	TRUE	FALSE	Makrolide/Linkosamide	Macroliden/lincosamiden	Macrólidos/lincosamidas	Macrolidi/lincosamidi	Macrolides/lincosamides	Macrolides/lincosamidas	Makrolider/lincosamider	Makrolider/linkosamider	Макролиды/линкозамиды	Макроліди/лінкозаміди
+Other antibacterials	FALSE	TRUE	TRUE	FALSE	Andere Antibiotika	Overige antibiotica	Otros antibacterianos	Altri antibatterici	Autres antibactériens	Outros antibacterianos	Andre antibakterielle stoffer	Andra antibakteriella medel	Другие антибактериальные препараты	Інші антибактеріальні засоби
+Polymyxins	FALSE	TRUE	TRUE	FALSE	Polymyxine	Polymyxines	Polimixinas	Polimixine	Polymyxines	Polimixinas	Polymyxiner	Polymyxiner	Полимиксины	Поліміксини
+Quinolones	FALSE	TRUE	TRUE	FALSE	Quinolone	Quinolonen	Quinolonas	Chinoloni	Quinolones	Quinolones	Kinoloner	Kinoloner	Хинолоны	Хінолони
+Percentage														Відсоток
