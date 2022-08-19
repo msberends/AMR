@@ -98,10 +98,10 @@ plot.mic <- function(x,
   
   # translate if not specifically set
   if (missing(ylab)) {
-    ylab <- translate_AMR(ylab, language = language)
+    ylab <- translate_into_language(ylab, language = language)
   }
   if (missing(xlab)) {
-    xlab <- translate_AMR(xlab, language = language)
+    xlab <- translate_into_language(xlab, language = language)
   }
   
   if (length(colours_RSI) == 1) {
@@ -149,7 +149,7 @@ plot.mic <- function(x,
     
     legend("top",
            x.intersp = 0.5,
-           legend = translate_AMR(legend_txt, language = language),
+           legend = translate_into_language(legend_txt, language = language),
            fill = legend_col,
            horiz = TRUE,
            cex = 0.75,
@@ -185,10 +185,10 @@ barplot.mic <- function(height,
   
   # translate if not specifically set
   if (missing(ylab)) {
-    ylab <- translate_AMR(ylab, language = language)
+    ylab <- translate_into_language(ylab, language = language)
   }
   if (missing(xlab)) {
-    xlab <- translate_AMR(xlab, language = language)
+    xlab <- translate_into_language(xlab, language = language)
   }
   
   main <- gsub(" +", " ", paste0(main, collapse = " "))
@@ -211,7 +211,7 @@ autoplot.mic <- function(object,
                          mo = NULL,
                          ab = NULL,
                          guideline = "EUCAST",
-                         title = paste("MIC values of", deparse(substitute(object))),
+                         title = deparse(substitute(object)),
                          ylab = "Frequency",
                          xlab = "Minimum Inhibitory Concentration (mg/L)",
                          colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
@@ -231,10 +231,10 @@ autoplot.mic <- function(object,
   
   # translate if not specifically set
   if (missing(ylab)) {
-    ylab <- translate_AMR(ylab, language = language)
+    ylab <- translate_into_language(ylab, language = language)
   }
   if (missing(xlab)) {
-    xlab <- translate_AMR(xlab, language = language)
+    xlab <- translate_into_language(xlab, language = language)
   }
   
   if ("main" %in% names(list(...))) {
@@ -259,8 +259,8 @@ autoplot.mic <- function(object,
   df$cols[df$cols == colours_RSI[1]] <- "Resistant"
   df$cols[df$cols == colours_RSI[2]] <- "Susceptible"
   df$cols[df$cols == colours_RSI[3]] <- plot_name_of_I(cols_sub$guideline)
-  df$cols <- factor(translate_AMR(df$cols, language = language),
-                    levels = translate_AMR(c("Susceptible", plot_name_of_I(cols_sub$guideline), "Resistant"),
+  df$cols <- factor(translate_into_language(df$cols, language = language),
+                    levels = translate_into_language(c("Susceptible", plot_name_of_I(cols_sub$guideline), "Resistant"),
                                            language = language),
                     ordered = TRUE)
   p <- ggplot2::ggplot(df)
@@ -270,7 +270,7 @@ autoplot.mic <- function(object,
               "Susceptible" = colours_RSI[2],
               "Susceptible, incr. exp." = colours_RSI[3],
               "Intermediate" = colours_RSI[3])
-    names(vals) <- translate_AMR(names(vals), language = language)
+    names(vals) <- translate_into_language(names(vals), language = language)
     p <- p +
       ggplot2::geom_col(ggplot2::aes(x = mic, y = count, fill = cols)) + 
       # limits = force is needed because of a ggplot2 >= 3.3.4 bug (#4511)
@@ -321,10 +321,10 @@ plot.disk <- function(x,
   
   # translate if not specifically set
   if (missing(ylab)) {
-    ylab <- translate_AMR(ylab, language = language)
+    ylab <- translate_into_language(ylab, language = language)
   }
   if (missing(xlab)) {
-    xlab <- translate_AMR(xlab, language = language)
+    xlab <- translate_into_language(xlab, language = language)
   }
   
   if (length(colours_RSI) == 1) {
@@ -372,7 +372,7 @@ plot.disk <- function(x,
     }
     legend("top", 
            x.intersp = 0.5,
-           legend = translate_AMR(legend_txt, language = language),
+           legend = translate_into_language(legend_txt, language = language),
            fill = legend_col,
            horiz = TRUE,
            cex = 0.75,
@@ -408,10 +408,10 @@ barplot.disk <- function(height,
   
   # translate if not specifically set
   if (missing(ylab)) {
-    ylab <- translate_AMR(ylab, language = language)
+    ylab <- translate_into_language(ylab, language = language)
   }
   if (missing(xlab)) {
-    xlab <- translate_AMR(xlab, language = language)
+    xlab <- translate_into_language(xlab, language = language)
   }
   
   main <- gsub(" +", " ", paste0(main, collapse = " "))
@@ -433,7 +433,7 @@ barplot.disk <- function(height,
 autoplot.disk <- function(object,
                           mo = NULL,
                           ab = NULL,
-                          title = paste("Disk zones of", deparse(substitute(object))),
+                          title = deparse(substitute(object)),
                           ylab = "Frequency",
                           xlab = "Disk diffusion diameter (mm)",
                           guideline = "EUCAST",
@@ -454,10 +454,10 @@ autoplot.disk <- function(object,
   
   # translate if not specifically set
   if (missing(ylab)) {
-    ylab <- translate_AMR(ylab, language = language)
+    ylab <- translate_into_language(ylab, language = language)
   }
   if (missing(xlab)) {
-    xlab <- translate_AMR(xlab, language = language)
+    xlab <- translate_into_language(xlab, language = language)
   }
   
   if ("main" %in% names(list(...))) {
@@ -483,8 +483,8 @@ autoplot.disk <- function(object,
   df$cols[df$cols == colours_RSI[1]] <- "Resistant"
   df$cols[df$cols == colours_RSI[2]] <- "Susceptible"
   df$cols[df$cols == colours_RSI[3]] <- plot_name_of_I(cols_sub$guideline)
-  df$cols <- factor(translate_AMR(df$cols, language = language),
-                    levels = translate_AMR(c("Susceptible", plot_name_of_I(cols_sub$guideline), "Resistant"),
+  df$cols <- factor(translate_into_language(df$cols, language = language),
+                    levels = translate_into_language(c("Susceptible", plot_name_of_I(cols_sub$guideline), "Resistant"),
                                            language = language),
                     ordered = TRUE)
   p <- ggplot2::ggplot(df)
@@ -494,7 +494,7 @@ autoplot.disk <- function(object,
               "Susceptible" = colours_RSI[2],
               "Susceptible, incr. exp." = colours_RSI[3],
               "Intermediate" = colours_RSI[3])
-    names(vals) <- translate_AMR(names(vals), language = language)
+    names(vals) <- translate_into_language(names(vals), language = language)
     p <- p +
       ggplot2::geom_col(ggplot2::aes(x = disk, y = count, fill = cols)) + 
       # limits = force is needed because of a ggplot2 >= 3.3.4 bug (#4511)
@@ -526,10 +526,19 @@ plot.rsi <- function(x,
                      ylab = "Percentage",
                      xlab = "Antimicrobial Interpretation",
                      main = deparse(substitute(x)),
+                     language = get_AMR_locale(),
                      ...) {
   meet_criteria(ylab, allow_class = "character", has_length = 1)
   meet_criteria(xlab, allow_class = "character", has_length = 1)
   meet_criteria(main, allow_class = "character", has_length = 1, allow_NULL = TRUE)
+  
+  # translate if not specifically set
+  if (missing(ylab)) {
+    ylab <- translate_into_language(ylab, language = language)
+  }
+  if (missing(xlab)) {
+    xlab <- translate_into_language(xlab, language = language)
+  }
   
   data <- as.data.frame(table(x), stringsAsFactors = FALSE)
   colnames(data) <- c("x", "n")
@@ -592,10 +601,10 @@ barplot.rsi <- function(height,
   
   # translate if not specifically set
   if (missing(ylab)) {
-    ylab <- translate_AMR(ylab, language = language)
+    ylab <- translate_into_language(ylab, language = language)
   }
   if (missing(xlab)) {
-    xlab <- translate_AMR(xlab, language = language)
+    xlab <- translate_into_language(xlab, language = language)
   }
   
   if (length(colours_RSI) == 1) {
@@ -620,7 +629,7 @@ barplot.rsi <- function(height,
 #' @rdname plot
 # will be exported using s3_register() in R/zzz.R
 autoplot.rsi <- function(object,
-                         title = paste("Resistance Overview of", deparse(substitute(object))),
+                         title = deparse(substitute(object)),
                          xlab = "Antimicrobial Interpretation",
                          ylab = "Frequency",
                          colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
@@ -634,10 +643,10 @@ autoplot.rsi <- function(object,
   
   # translate if not specifically set
   if (missing(ylab)) {
-    ylab <- translate_AMR(ylab, language = language)
+    ylab <- translate_into_language(ylab, language = language)
   }
   if (missing(xlab)) {
-    xlab <- translate_AMR(xlab, language = language)
+    xlab <- translate_into_language(xlab, language = language)
   }
   
   if ("main" %in% names(list(...))) {

@@ -285,7 +285,7 @@ format.bug_drug_combinations <- function(x,
     y <- y %pm>% 
       pm_select(-ab_group) %pm>%
       pm_rename("Drug" = ab_txt)
-    colnames(y)[1] <- translate_AMR(colnames(y)[1], language, only_unknown = FALSE)
+    colnames(y)[1] <- translate_into_language(colnames(y)[1], language, only_unknown = FALSE)
   } else {
     y <- y %pm>% 
       pm_rename("Group" = ab_group,
@@ -293,7 +293,7 @@ format.bug_drug_combinations <- function(x,
   }
   
   if (!is.null(language)) {
-    colnames(y) <- translate_AMR(colnames(y), language, only_unknown = FALSE)
+    colnames(y) <- translate_into_language(colnames(y), language, only_unknown = FALSE)
   }
   
   if (remove_intrinsic_resistant == TRUE) {

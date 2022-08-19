@@ -282,9 +282,9 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
-
+    
     # INITIAL SEARCH - More uncertain results ----
-
+    
     if (initial_search == TRUE && fast_mode == FALSE) {
       # only run on first try
       
@@ -313,7 +313,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
                                        for (lang in LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED != "en"]) {
                                          y[i] <- ifelse(tolower(y[i]) %in% tolower(TRANSLATIONS[, lang, drop = TRUE]),
                                                         TRANSLATIONS[which(tolower(TRANSLATIONS[, lang, drop = TRUE]) == tolower(y[i]) &
-                                                                                  !isFALSE(TRANSLATIONS$fixed)), "pattern"],
+                                                                             !isFALSE(TRANSLATIONS$fixed)), "pattern"],
                                                         y[i])
                                        }
                                      }
@@ -463,7 +463,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     warning_("in `as.ab()`: these values could not be coerced to a valid antimicrobial ID: ",
              vector_and(x_unknown), ".")
   }
-
+  
   x_result <- x_new[match(x_bak_clean, x)]
   if (length(x_result) == 0) {
     x_result <- NA_character_

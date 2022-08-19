@@ -29,6 +29,8 @@
 library(dplyr, warn.conflicts = FALSE)
 devtools::load_all(quiet = TRUE)
 
+set_AMR_locale("en")
+
 old_globalenv <- ls(envir = globalenv())
 
 # Save internal data to R/sysdata.rda -------------------------------------
@@ -68,16 +70,21 @@ TRANSLATIONS <- utils::read.delim(file = "data-raw/translations.tsv",
                                        quote = "")
 
 # for checking input in `language` argument in e.g. mo_*() and ab_*() functions
-LANGUAGES_SUPPORTED <- c(Danish = "da",
-                         German = "de",
-                         English = "en",
-                         Spanish = "es",
-                         French = "fr",
-                         Italian = "it",
+LANGUAGES_SUPPORTED <- c(English = "en",
+                         Chinese = "zh",
+                         Danish = "da",
                          Dutch = "nl",
+                         French = "fr",
+                         German = "de",
+                         Greek = "el",
+                         Italian = "it",
+                         Japanese = "ja",
+                         Polish = "pl",
                          Portuguese = "pt",
                          Russian = "ru",
-                         Swedish = "sv")
+                         Spanish = "es",
+                         Swedish = "sv",
+                         Ukrainian = "uk")
 
 # EXAMPLE_ISOLATES <- readRDS("data-raw/example_isolates.rds")
 
@@ -362,6 +369,8 @@ if (changed_md5(dosage)) {
   try(haven::write_dta(dosage, "data-raw/dosage.dta"), silent = TRUE)
   try(openxlsx::write.xlsx(dosage, "data-raw/dosage.xlsx"), silent = TRUE)
 }
+
+reset_AMR_locale()
 
 # remove leftovers from global env
 current_globalenv <- ls(envir = globalenv())

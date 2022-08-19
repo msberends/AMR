@@ -174,7 +174,7 @@ as.mo <- function(x,
   meet_criteria(info, allow_class = "logical", has_length = 1)
   
   check_dataset_integrity()
-
+  
   if (tryCatch(all(x[!is.na(x)] %in% MO_lookup$mo)
                & isFALSE(Becker)
                & isFALSE(Lancefield), error = function(e) FALSE)) {
@@ -182,19 +182,19 @@ as.mo <- function(x,
     # is.mo() won't work - MO codes might change between package versions
     return(set_clean_class(x, new_class = c("mo", "character")))
   }
-
+  
   # start off with replaced language-specific non-ASCII characters with ASCII characters
   x <- parse_and_convert(x)
   # replace mo codes used in older package versions
   x <- replace_old_mo_codes(x, property = "mo")
   # ignore cases that match the ignore pattern
   x <- replace_ignore_pattern(x, ignore_pattern)
-
+  
   # WHONET: xxx = no growth
   x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
   # Laboratory systems: remove (translated) entries like "no growth", etc.
-  x[trimws2(x) %like% translate_AMR("no .*growth", language = language)] <- NA_character_
-  x[trimws2(x) %like% paste0("^(", translate_AMR("no|not", language = language), ") [a-z]+")] <- "UNKNOWN"
+  x[trimws2(x) %like% translate_into_language("no .*growth", language = language)] <- NA_character_
+  x[trimws2(x) %like% paste0("^(", translate_into_language("no|not", language = language), ") [a-z]+")] <- "UNKNOWN"
   uncertainty_level <- translate_allow_uncertain(allow_uncertain)
   
   if (tryCatch(all(x == "" | gsub(".*(unknown ).*", "unknown name", tolower(x), perl = TRUE) %in% MO_lookup$fullname_lower, na.rm = TRUE)
@@ -204,25 +204,25 @@ as.mo <- function(x,
     return(set_clean_class(MO_lookup[match(gsub(".*(unknown ).*", "unknown name", tolower(x), perl = TRUE), MO_lookup$fullname_lower), "mo", drop = TRUE],
                            new_class = c("mo", "character")))
   }
-
+  
   if (!is.null(reference_df)
       && check_validity_mo_source(reference_df)
       && isFALSE(Becker)
       && isFALSE(Lancefield)
       && all(x %in% unlist(reference_df), na.rm = TRUE)) {
-
+    
     reference_df <- repair_reference_df(reference_df)
     suppressWarnings(
       y <- data.frame(x = x, stringsAsFactors = FALSE) %pm>%
         pm_left_join(reference_df, by = "x") %pm>%
         pm_pull(mo) 
     )
-
+    
   } else if (all(x[!is.na(x)] %in% MO_lookup$mo)
              & isFALSE(Becker)
              & isFALSE(Lancefield)) {
     y <- x
-
+    
   } else {
     # will be checked for mo class in validation and uses exec_as.mo internally if necessary
     y <- mo_validate(x = x, property = "mo",
@@ -282,7 +282,7 @@ exec_as.mo <- function(x,
   meet_criteria(actual_uncertainty, allow_class = "numeric", has_length = 1)
   meet_criteria(actual_input, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
-
+  
   check_dataset_integrity()
   
   if (isTRUE(debug) && initial_search == TRUE) {
@@ -297,13 +297,13 @@ exec_as.mo <- function(x,
                      initial = initial_search,
                      uncertainty = actual_uncertainty,
                      input_actual = actual_input) {
-
+    
     if (!is.null(input_actual)) {
       input <- input_actual
     } else {
       input <- tryCatch(x_backup[i], error = function(e) "")
     }
-
+    
     # `column` can be NULL for all columns, or a selection
     # returns a [character] (vector) - if `column` > length 1 then with columns as names
     if (isTRUE(debug_mode)) {
@@ -360,19 +360,19 @@ exec_as.mo <- function(x,
       res
     }
   }
-
+  
   # start off with replaced language-specific non-ASCII characters with ASCII characters
   x <- parse_and_convert(x)
   # replace mo codes used in older package versions
   x <- replace_old_mo_codes(x, property)
   # ignore cases that match the ignore pattern
   x <- replace_ignore_pattern(x, ignore_pattern)
-
+  
   # WHONET: xxx = no growth
   x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
   # Laboratory systems: remove (translated) entries like "no growth", etc.
-  x[trimws2(x) %like% translate_AMR("no .*growth", language = language)] <- NA_character_
-  x[trimws2(x) %like% paste0("^(", translate_AMR("no|not", language = language), ") [a-z]+")] <- "UNKNOWN"
+  x[trimws2(x) %like% translate_into_language("no .*growth", language = language)] <- NA_character_
+  x[trimws2(x) %like% paste0("^(", translate_into_language("no|not", language = language), ") [a-z]+")] <- "UNKNOWN"
   
   if (initial_search == TRUE) {
     # keep track of time - give some hints to improve speed if it takes a long time
@@ -383,7 +383,7 @@ exec_as.mo <- function(x,
     pkg_env$mo_renamed <- NULL
   }
   pkg_env$mo_renamed_last_run <- NULL
-
+  
   failures <- character(0)
   uncertainty_level <- translate_allow_uncertain(allow_uncertain)
   uncertainties <- data.frame(uncertainty = integer(0),
@@ -393,7 +393,7 @@ exec_as.mo <- function(x,
                               mo = character(0),
                               candidates = character(0),
                               stringsAsFactors = FALSE)
-
+  
   x_input <- x
   # already strip leading and trailing spaces
   x <- trimws(x)
@@ -405,7 +405,7 @@ exec_as.mo <- function(x,
          & !is.null(x)
          & !identical(x, "")
          & !identical(x, "xxx")]
-
+  
   # defined df to check for
   if (!is.null(reference_df)) {
     check_validity_mo_source(reference_df)
@@ -420,27 +420,27 @@ exec_as.mo <- function(x,
     } else {
       return(rep(NA_character_, length(x_input)))
     }
-
+    
   } else if (all(x %in% reference_df[, 1][[1]])) {
     # all in reference df
     colnames(reference_df)[1] <- "x"
     suppressWarnings(
       x <- MO_lookup[match(reference_df[match(x, reference_df$x), "mo", drop = TRUE], MO_lookup$mo), property, drop = TRUE]
     )
-
+    
   } else if (all(x %in% reference_data_to_use$mo)) {
     x <- MO_lookup[match(x, MO_lookup$mo), property, drop = TRUE]
-
+    
   } else if (all(tolower(x) %in% reference_data_to_use$fullname_lower)) {
     # we need special treatment for very prevalent full names, they are likely!
     # e.g. as.mo("Staphylococcus aureus")
     x <- MO_lookup[match(tolower(x), MO_lookup$fullname_lower), property, drop = TRUE]
-
+    
   } else if (all(x %in% reference_data_to_use$fullname)) {
     # we need special treatment for very prevalent full names, they are likely!
     # e.g. as.mo("Staphylococcus aureus")
     x <- MO_lookup[match(x, MO_lookup$fullname), property, drop = TRUE]
-
+    
   } else if (all(toupper(x) %in% microorganisms.codes$code)) {
     # commonly used MO codes
     x <- MO_lookup[match(microorganisms.codes[match(toupper(x),
@@ -450,9 +450,9 @@ exec_as.mo <- function(x,
                          MO_lookup$mo),
                    property,
                    drop = TRUE]
-
+    
   } else if (!all(x %in% microorganisms[, property])) {
-
+    
     strip_whitespace <- function(x, dyslexia_mode) {
       # all whitespaces (tab, new lines, etc.) should be one space
       # and spaces before and after should be left blank
@@ -465,7 +465,7 @@ exec_as.mo <- function(x,
       }
       trimmed
     }
-
+    
     x_backup_untouched <- x
     x <- strip_whitespace(x, dyslexia_mode)
     # translate 'unknown' names back to English
@@ -514,7 +514,7 @@ exec_as.mo <- function(x,
       
       # when ending in SPE instead of SPP and preceded by 2-4 characters
       x <- gsub("^([a-z]{2,4})(spe.?)$", "\\1", x, perl = TRUE)
-
+      
       x_backup_without_spp <- x
       # translate to English for supported languages of mo_property
       x <- gsub("(gruppe|groep|grupo|gruppo|groupe)", "group", x, perl = TRUE)
@@ -1222,7 +1222,7 @@ exec_as.mo <- function(x,
                 cat(font_bold("\n[ UNCERTAINTY LEVEL", now_checks_for_uncertainty_level, "] (6) remove non-taxonomic prefix and suffix\n"))
               }
               x_without_nontax <- gsub("(^[a-zA-Z]+[./-]+[a-zA-Z]+[^a-zA-Z]* )([a-zA-Z.]+ [a-zA-Z]+.*)",
-                                              "\\2", a.x_backup, perl = TRUE)
+                                       "\\2", a.x_backup, perl = TRUE)
               x_without_nontax <- gsub("( *[(].*[)] *)[^a-zA-Z]*$", "", x_without_nontax, perl = TRUE)
               if (isTRUE(debug)) {
                 message("Running '", x_without_nontax, "'")
@@ -1572,15 +1572,15 @@ exec_as.mo <- function(x,
     # 'MO_CONS' and 'MO_COPS' are <mo> vectors created in R/zzz.R
     CoNS <- MO_lookup[which(MO_lookup$mo %in% MO_CONS), property, drop = TRUE]
     x[x %in% CoNS] <- lookup(mo == "B_STPHY_CONS", uncertainty = -1)
-
+    
     CoPS <- MO_lookup[which(MO_lookup$mo %in% MO_COPS), property, drop = TRUE]
     x[x %in% CoPS] <- lookup(mo == "B_STPHY_COPS", uncertainty = -1)
-
+    
     if (Becker == "all") {
       x[x %in% lookup(fullname %like_case% "^Staphylococcus aureus", n = Inf)] <- lookup(mo == "B_STPHY_COPS", uncertainty = -1)
     }
   }
-
+  
   # Lancefield ----
   if (Lancefield == TRUE | Lancefield == "all") {
     # group A - S. pyogenes
@@ -1602,15 +1602,15 @@ exec_as.mo <- function(x,
     # group K - S. salivarius
     x[x %in% lookup(genus == "Streptococcus" & species == "salivarius", n = Inf)] <- lookup(fullname == "Streptococcus group K", uncertainty = -1)
   }
-
+  
   # Wrap up ----------------------------------------------------------------
-
+  
   # comply to x, which is also unique and without empty values
   x_input_unique_nonempty <- unique(x_input[!is.na(x_input)
                                             & !is.null(x_input)
                                             & !identical(x_input, "")
                                             & !identical(x_input, "xxx")])
-
+  
   x <- x[match(x_input, x_input_unique_nonempty)]
   if (property == "mo") {
     x <- set_clean_class(x, new_class = c("mo", "character"))
@@ -1618,11 +1618,11 @@ exec_as.mo <- function(x,
   
   # keep track of time
   end_time <- Sys.time()
-
+  
   if (length(mo_renamed()) > 0) {
     print(mo_renamed())
   }
-
+  
   if (initial_search == FALSE) {
     # we got here from uncertain_fn().
     if (NROW(uncertainties) == 0) {
@@ -1656,7 +1656,7 @@ exec_as.mo <- function(x,
   if (isTRUE(debug) && initial_search == TRUE) {
     cat("Finished function", time_track(), "\n")
   }
-
+  
   x
 }
 
@@ -2328,8 +2328,8 @@ as.mo2 <- function(x,
   # WHONET: xxx = no growth
   x[tolower(as.character(paste0(x, ""))) %in% c("", "xxx", "na", "nan")] <- NA_character_
   # Laboratory systems: remove (translated) entries like "no growth", etc.
-  x[trimws2(x) %like% translate_AMR("no .*growth", language = language)] <- NA_character_
-  x[trimws2(x) %like% paste0("^(", translate_AMR("no|not", language = language), ") [a-z]+")] <- "UNKNOWN"
+  x[trimws2(x) %like% translate_into_language("no .*growth", language = language)] <- NA_character_
+  x[trimws2(x) %like% paste0("^(", translate_into_language("no|not", language = language), ") [a-z]+")] <- "UNKNOWN"
   
   if (initial_search == TRUE) {
     # keep track of time - give some hints to improve speed if it takes a long time

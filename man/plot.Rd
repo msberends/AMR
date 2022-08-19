@@ -32,7 +32,7 @@
   mo = NULL,
   ab = NULL,
   guideline = "EUCAST",
-  title = paste("MIC values of", deparse(substitute(object))),
+  title = deparse(substitute(object)),
   ylab = "Frequency",
   xlab = "Minimum Inhibitory Concentration (mg/L)",
   colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),
@@ -61,7 +61,7 @@
   object,
   mo = NULL,
   ab = NULL,
-  title = paste("Disk zones of", deparse(substitute(object))),
+  title = deparse(substitute(object)),
   ylab = "Frequency",
   xlab = "Disk diffusion diameter (mm)",
   guideline = "EUCAST",
@@ -78,12 +78,13 @@
   ylab = "Percentage",
   xlab = "Antimicrobial Interpretation",
   main = deparse(substitute(x)),
+  language = get_AMR_locale(),
   ...
 )
 
 \method{autoplot}{rsi}(
   object,
-  title = paste("Resistance Overview of", deparse(substitute(object))),
+  title = deparse(substitute(object)),
   xlab = "Antimicrobial Interpretation",
   ylab = "Frequency",
   colours_RSI = c("#ED553B", "#3CAEA3", "#F6D55C"),

@@ -178,10 +178,10 @@ mo_name <- function(x, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   
-  translate_AMR(mo_validate(x = x, property = "fullname", language = language, ...),
-                language = language,
-                only_unknown = FALSE,
-                only_affect_mo_names = TRUE)
+  translate_into_language(mo_validate(x = x, property = "fullname", language = language, ...),
+                          language = language,
+                          only_unknown = FALSE,
+                          only_affect_mo_names = TRUE)
 }
 
 #' @rdname mo_property
@@ -223,7 +223,7 @@ mo_shortname <- function(x, language = get_AMR_locale(), ...) {
   
   shortnames[is.na(x.mo)] <- NA_character_
   load_mo_failures_uncertainties_renamed(metadata)
-  translate_AMR(shortnames, language = language, only_unknown = FALSE, only_affect_mo_names = TRUE)
+  translate_into_language(shortnames, language = language, only_unknown = FALSE, only_affect_mo_names = TRUE)
 }
 
 
@@ -238,7 +238,7 @@ mo_subspecies <- function(x, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   
-  translate_AMR(mo_validate(x = x, property = "subspecies", language = language, ...), language = language, only_unknown = TRUE)
+  translate_into_language(mo_validate(x = x, property = "subspecies", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
@@ -251,7 +251,7 @@ mo_species <- function(x, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   
-  translate_AMR(mo_validate(x = x, property = "species", language = language, ...), language = language, only_unknown = TRUE)
+  translate_into_language(mo_validate(x = x, property = "species", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
@@ -264,7 +264,7 @@ mo_genus <- function(x, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   
-  translate_AMR(mo_validate(x = x, property = "genus", language = language, ...), language = language, only_unknown = TRUE)
+  translate_into_language(mo_validate(x = x, property = "genus", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
@@ -277,7 +277,7 @@ mo_family <- function(x, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   
-  translate_AMR(mo_validate(x = x, property = "family", language = language, ...), language = language, only_unknown = TRUE)
+  translate_into_language(mo_validate(x = x, property = "family", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
@@ -290,7 +290,7 @@ mo_order <- function(x, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   
-  translate_AMR(mo_validate(x = x, property = "order", language = language, ...), language = language, only_unknown = TRUE)
+  translate_into_language(mo_validate(x = x, property = "order", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
@@ -303,7 +303,7 @@ mo_class <- function(x, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   
-  translate_AMR(mo_validate(x = x, property = "class", language = language, ...), language = language, only_unknown = TRUE)
+  translate_into_language(mo_validate(x = x, property = "class", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
@@ -316,7 +316,7 @@ mo_phylum <- function(x, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   
-  translate_AMR(mo_validate(x = x, property = "phylum", language = language, ...), language = language, only_unknown = TRUE)
+  translate_into_language(mo_validate(x = x, property = "phylum", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
@@ -329,7 +329,7 @@ mo_kingdom <- function(x, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   
-  translate_AMR(mo_validate(x = x, property = "kingdom", language = language, ...), language = language, only_unknown = TRUE)
+  translate_into_language(mo_validate(x = x, property = "kingdom", language = language, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
@@ -349,7 +349,7 @@ mo_type <- function(x, language = get_AMR_locale(), ...) {
   x.mo <- as.mo(x, language = language, ...)
   out <- mo_kingdom(x.mo, language = NULL)
   out[which(mo_is_yeast(x.mo))] <- "Yeasts"
-  translate_AMR(out, language = language, only_unknown = FALSE)
+  translate_into_language(out, language = language, only_unknown = FALSE)
 }
 
 #' @rdname mo_property
@@ -380,7 +380,7 @@ mo_gramstain <- function(x, language = get_AMR_locale(), ...) {
     | x.mo == "B_GRAMP"] <- "Gram-positive"
   
   load_mo_failures_uncertainties_renamed(metadata)
-  translate_AMR(x, language = language, only_unknown = FALSE)
+  translate_into_language(x, language = language, only_unknown = FALSE)
 }
 
 #' @rdname mo_property
@@ -435,9 +435,7 @@ mo_is_yeast <- function(x, language = get_AMR_locale(), ...) {
   metadata <- get_mo_failures_uncertainties_renamed()
   
   x.kingdom <- mo_kingdom(x.mo, language = NULL)
-  x.phylum <- mo_phylum(x.mo, language = NULL)
   x.class <- mo_class(x.mo, language = NULL)
-  x.order <- mo_order(x.mo, language = NULL)
   
   load_mo_failures_uncertainties_renamed(metadata)
   
@@ -705,7 +703,7 @@ mo_property <- function(x, property = "fullname", language = get_AMR_locale(), .
   meet_criteria(property, allow_class = "character", has_length = 1, is_in = colnames(microorganisms))
   meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
   
-  translate_AMR(mo_validate(x = x, property = property, language = language, ...), language = language, only_unknown = TRUE)
+  translate_into_language(mo_validate(x = x, property = property, language = language, ...), language = language, only_unknown = TRUE)
 }
 
 mo_validate <- function(x, property, language, ...) {
@@ -724,7 +722,7 @@ mo_validate <- function(x, property, language, ...) {
   if (tryCatch(all(x[!is.na(x)] %in% MO_lookup$mo) & !has_Becker_or_Lancefield, error = function(e) FALSE)) {
     # special case for mo_* functions where class is already <mo>
     x <- MO_lookup[match(x, MO_lookup$mo), property, drop = TRUE]
-
+    
   } else {
     # try to catch an error when inputting an invalid argument
     # so the 'call.' can be set to FALSE
