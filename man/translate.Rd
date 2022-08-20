@@ -17,7 +17,7 @@ reset_AMR_locale()
 translate_AMR(x, language = get_AMR_locale())
 }
 \arguments{
-\item{lang}{language to choose. Use one of these supported language names or ISO-639-1 codes: "English" ("en"), "Chinese" ("zh"), "Danish" ("da"), "Dutch" ("nl"), "French" ("fr"), "German" ("de"), "Greek" ("el"), "Italian" ("it"), "Japanese" ("ja"), "Polish" ("pl"), "Portuguese" ("pt"), "Russian" ("ru"), "Spanish" ("es"), "Swedish" ("sv"), "Ukrainian" ("uk").}
+\item{lang}{language to choose. Use one of these supported language names or ISO-639-1 codes: "English" ("en"), "Chinese" ("zh"), "Danish" ("da"), "Dutch" ("nl"), "French" ("fr"), "German" ("de"), "Greek" ("el"), "Italian" ("it"), "Japanese" ("ja"), "Polish" ("pl"), "Portuguese" ("pt"), "Russian" ("ru"), "Spanish" ("es"), "Swedish" ("sv"), "Turkish" ("tr"), "Ukrainian" ("uk").}
 
 \item{x}{text to translate}
 }
@@ -25,9 +25,9 @@ translate_AMR(x, language = get_AMR_locale())
 For language-dependent output of AMR functions, like \code{\link[=mo_name]{mo_name()}}, \code{\link[=mo_gramstain]{mo_gramstain()}}, \code{\link[=mo_type]{mo_type()}} and \code{\link[=ab_name]{ab_name()}}.
 }
 \details{
-The currently 15 supported languages are English, Chinese, Danish, Dutch, French, German, Greek, Italian, Japanese, Polish, Portuguese, Russian, Spanish, Swedish and Ukrainian. All these languages have translations available for all antimicrobial agents and colloquial microorganism names.
+The currently 16 supported languages are English, Chinese, Danish, Dutch, French, German, Greek, Italian, Japanese, Polish, Portuguese, Russian, Spanish, Swedish, Turkish and Ukrainian. All these languages have translations available for all antimicrobial agents and colloquial microorganism names.
 
-Please suggest your own translations \href{https://github.com/msberends/AMR/issues/new?title=Translations}{by creating a new issue on our repository}. Strings will be translated to foreign languages if they are defined in \href{https://github.com/msberends/AMR/blob/main/data-raw/translations.tsv}{this repository file}. This file will be read by all functions where a translated output can be desired, like all \code{\link[=mo_property]{mo_*}} functions (such as \code{\link[=mo_name]{mo_name()}}, \code{\link[=mo_gramstain]{mo_gramstain()}}, \code{\link[=mo_type]{mo_type()}}, etc.) and \code{\link[=ab_property]{ab_*}} functions (such as \code{\link[=ab_name]{ab_name()}}, \code{\link[=ab_group]{ab_group()}}, etc.).
+Please read about adding or updating a language in \href{https://github.com/msberends/AMR/blob/main/developer-guideline.md}{our developer guideline}.
 \subsection{Changing the Default Language}{
 
 The system language will be used at default (as returned by \code{Sys.getenv("LANG")} or, if \code{LANG} is not set, \link{Sys.getlocale("LC_COLLATE")}), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:
@@ -55,7 +55,7 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 }
 
 \examples{
-# Current settings
+# Current settings (based on system language)
 ab_name("Ciprofloxacin")
 mo_name("Coagulase-negative Staphylococcus")
 
@@ -68,5 +68,11 @@ set_AMR_locale("Spanish")
 ab_name("Ciprofloxacin")
 mo_name("Coagulase-negative Staphylococcus")
 
+# set_AMR_locale() understands endonyms, English exonyms, and ISO-639-1:
+set_AMR_locale("Deutsch")
+set_AMR_locale("German")
+set_AMR_locale("de")
+
+# reset to system default
 reset_AMR_locale()
 }

@@ -132,6 +132,7 @@ as.mic <- function(x, na.rm = FALSE) {
     if (na.rm == TRUE) {
       x <- x[!is.na(x)]
     }
+    x[trimws(x) == ""] <- NA
     x.bak <- x
     
     # comma to period

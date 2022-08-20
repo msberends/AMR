@@ -53,10 +53,6 @@ expect_false(any(is.na(as.disk(rsi_translation[which(rsi_translation$method == "
 # antibiotic names must always be coercible to their original AB code
 expect_identical(as.ab(antibiotics$name), antibiotics$ab)
 
-# check if all languages are included in package environmental variable
-expect_identical(sort(c("en", colnames(AMR:::TRANSLATIONS)[nchar(colnames(AMR:::TRANSLATIONS)) == 2])),
-                 unname(AMR:::LANGUAGES_SUPPORTED))
-
 # there should be no diacritics (i.e. non ASCII) characters in the datasets (CRAN policy)
 datasets <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item"]
 for (i in seq_len(length(datasets))) {

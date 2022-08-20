@@ -37,12 +37,12 @@ old_globalenv <- ls(envir = globalenv())
 
 # See 'data-raw/eucast_rules.tsv' for the EUCAST reference file
 EUCAST_RULES_DF <- utils::read.delim(file = "data-raw/eucast_rules.tsv",
-                                       skip = 10,
-                                       sep = "\t",
-                                       stringsAsFactors = FALSE,
-                                       header = TRUE,
-                                       strip.white = TRUE,
-                                       na = c(NA, "", NULL)) %>% 
+                                     skip = 10,
+                                     sep = "\t",
+                                     stringsAsFactors = FALSE,
+                                     header = TRUE,
+                                     strip.white = TRUE,
+                                     na = c(NA, "", NULL)) %>% 
   # take the order of the reference.rule_group column in the original data file
   mutate(reference.rule_group = factor(reference.rule_group,
                                        levels = unique(reference.rule_group),
@@ -54,39 +54,6 @@ EUCAST_RULES_DF <- utils::read.delim(file = "data-raw/eucast_rules.tsv",
           reference.rule) %>% 
   mutate(reference.rule_group = as.character(reference.rule_group)) %>% 
   select(-sorting_rule)
-
-# Translations
-TRANSLATIONS <- utils::read.delim(file = "data-raw/translations.tsv",
-                                       sep = "\t",
-                                       stringsAsFactors = FALSE,
-                                       header = TRUE,
-                                       blank.lines.skip = TRUE,
-                                       fill = TRUE,
-                                       strip.white = TRUE,
-                                       encoding = "UTF-8",
-                                       fileEncoding = "UTF-8",
-                                       na.strings = c(NA, "", NULL),
-                                       allowEscapes = TRUE, # else "\\1" will be imported as "\\\\1"
-                                       quote = "")
-
-# for checking input in `language` argument in e.g. mo_*() and ab_*() functions
-LANGUAGES_SUPPORTED <- c(English = "en",
-                         Chinese = "zh",
-                         Danish = "da",
-                         Dutch = "nl",
-                         French = "fr",
-                         German = "de",
-                         Greek = "el",
-                         Italian = "it",
-                         Japanese = "ja",
-                         Polish = "pl",
-                         Portuguese = "pt",
-                         Russian = "ru",
-                         Spanish = "es",
-                         Swedish = "sv",
-                         Ukrainian = "uk")
-
-# EXAMPLE_ISOLATES <- readRDS("data-raw/example_isolates.rds")
 
 # vectors of CoNS and CoPS, improves speed in as.mo()
 create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
@@ -223,9 +190,6 @@ AB_LOOKUP <- create_AB_lookup()
 
 # Export to package as internal data ----
 usethis::use_data(EUCAST_RULES_DF, 
-                  TRANSLATIONS,
-                  LANGUAGES_SUPPORTED,
-                  # EXAMPLE_ISOLATES,
                   MO_CONS,
                   MO_COPS,
                   MO_STREP_ABCG,

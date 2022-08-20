@@ -11,6 +11,7 @@
 ^codecov\.yml$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
+^developer-guideline.md$
 ^\.github$
 ^doc$
 ^docs$
