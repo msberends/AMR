@@ -142,6 +142,7 @@ plot(some_rsi_values)
 # when providing the microorganism and antibiotic, colours will show interpretations:
 plot(some_mic_values, mo = "S. aureus", ab = "ampicillin")
 plot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
+plot(some_disk_values, mo = "Escherichia coli", ab = "cipro", language = "uk")
 
 \donttest{
 if (require("ggplot2")) {

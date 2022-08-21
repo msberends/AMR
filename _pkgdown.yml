@@ -33,6 +33,7 @@ template:
   bslib:
     code_font: {google: "Fira Code"}
     body-text-align: "justify"
+    line-height-base: 1.75
     # the green "success" colour of this bootstrap theme should be the same as the green in our logo
     success: "#128f76"
     link-color: "#128f76"
