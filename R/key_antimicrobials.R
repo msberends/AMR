@@ -26,7 +26,6 @@
 #' (Key) Antimicrobials for First Weighted Isolates
 #'
 #' These functions can be used to determine first weighted isolates by considering the phenotype for isolate selection (see [first_isolate()]). Using a phenotype-based method to determine first isolates is more reliable than methods that disregard phenotypes.
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param x a [data.frame] with antibiotics columns, like `AMX` or `amox`. Can be left blank to determine automatically
 #' @param y,z [character] vectors to compare
 #' @inheritParams first_isolate
@@ -82,7 +81,6 @@
 #' @rdname key_antimicrobials
 #' @export
 #' @seealso [first_isolate()]
-#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' # `example_isolates` is a data set available in the AMR package.
 #' # See ?example_isolates.
@@ -110,7 +108,7 @@
 #'       first_weighted = first_isolate(col_keyantimicrobials = "keyab")
 #'     )
 #'  
-#'   # Check the difference, in this data set it results in more isolates:
+#'   # Check the difference in this data set, 'weighted' results in more isolates:
 #'   sum(my_patients$first_regular, na.rm = TRUE)
 #'   sum(my_patients$first_weighted, na.rm = TRUE)
 #' }

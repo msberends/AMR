@@ -31,11 +31,6 @@ The Catalogue of Life (\url{http://www.catalogueoflife.org}) is the most compreh
 The syntax used to transform the original data to a cleansed \R format, can be found here: \url{https://github.com/msberends/AMR/blob/main/data-raw/reproduction_of_microorganisms.R}.
 }
 
-\section{Read more on Our Website!}{
-
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
-}
-
 \examples{
 # Get version info of included data set
 catalogue_of_life_version()
@@ -43,28 +38,19 @@ catalogue_of_life_version()
 
 # Get a note when a species was renamed
 mo_shortname("Chlamydophila psittaci")
-# Note: 'Chlamydophila psittaci' (Everett et al., 1999) was renamed back to
-#       'Chlamydia psittaci' (Page, 1968)
-#> [1] "C. psittaci"
 
 # Get any property from the entire taxonomic tree for all included species
 mo_class("E. coli")
-#> [1] "Gammaproteobacteria"
 
 mo_family("E. coli")
-#> [1] "Enterobacteriaceae"
 
 mo_gramstain("E. coli") # based on kingdom and phylum, see ?mo_gramstain
-#> [1] "Gram-negative"
 
 mo_ref("E. coli")
-#> [1] "Castellani et al., 1919"
 
 # Do not get mistaken - this package is about microorganisms
 mo_kingdom("C. elegans")
-#> [1] "Fungi"                 # Fungi?!
 mo_name("C. elegans")
-#> [1] "Cladosporium elegans"  # Because a microorganism was found
 }
 \seealso{
 Data set \link{microorganisms} for the actual data. \cr

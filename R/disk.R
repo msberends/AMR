@@ -26,7 +26,6 @@
 #' Transform Input to Disk Diffusion Diameters
 #'
 #' This transforms a vector to a new class [`disk`], which is a disk diffusion growth zone size (around an antibiotic disk) in millimetres between 6 and 50.
-#' @inheritSection lifecycle Stable Lifecycle
 #' @rdname as.disk
 #' @param x vector
 #' @param na.rm a [logical] indicating whether missing values should be removed
@@ -35,27 +34,31 @@
 #' @aliases disk
 #' @export
 #' @seealso [as.rsi()]
-#' @inheritSection AMR Read more on Our Website!
 #' @examples
-#' \donttest{
-#' # transform existing disk zones to the `disk` class
-#' df <- data.frame(microorganism = "E. coli",
+#' # transform existing disk zones to the `disk` class (using base R)
+#' df <- data.frame(microorganism = "Escherichia coli",
 #'                  AMP = 20,
 #'                  CIP = 14,
 #'                  GEN = 18,
 #'                  TOB = 16)
 #' df[, 2:5] <- lapply(df[, 2:5], as.disk)
-#' # same with dplyr:
-#' # df %>% mutate(across(AMP:TOB, as.disk))
+#' str(df)
+#' 
+#' #' \donttest{
+#' # transforming is easier with dplyr:
+#' if (require("dplyr")) {
+#'   df %>% mutate(across(AMP:TOB, as.disk))
+#' }
+#' }
 #' 
 #' # interpret disk values, see ?as.rsi
 #' as.rsi(x = as.disk(18),
 #'        mo = "Strep pneu",  # `mo` will be coerced with as.mo()
 #'        ab = "ampicillin",  # and `ab` with as.ab()
 #'        guideline = "EUCAST")
-#'        
-#' as.rsi(df)
-#' }
+#'
+#' # interpret whole data set, pretend to be all from urinary tract infections:
+#' as.rsi(df, uti = TRUE)
 as.disk <- function(x, na.rm = FALSE) {
   meet_criteria(x, allow_class = c("disk", "character", "numeric", "integer"), allow_NA = TRUE)
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)

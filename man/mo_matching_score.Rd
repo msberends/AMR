@@ -39,22 +39,9 @@ All matches are sorted descending on their matching score and for all user input
 Since \code{AMR} version 1.8.1, common microorganism abbreviations are ignored in determining the matching score. These abbreviations are currently: AIEC, ATEC, BORSA, CRSM, DAEC, EAEC, EHEC, EIEC, EPEC, ETEC, GISA, MRPA, MRSA, MRSE, MSSA, MSSE, NMEC, PISP, PRSP, STEC, UPEC, VISA, VISP, VRE, VRSA and VRSP.
 }
 
-\section{Stable Lifecycle}{
-
-\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:"5"} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
-
-If the unlying code needs breaking changes, they will occur gradually. For example, an argument will be deprecated and first continue to work, but will emit a message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
-}
-
 \section{Reference Data Publicly Available}{
 
 All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
-}
-
-\section{Read more on Our Website!}{
-
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
 }
 
 \examples{

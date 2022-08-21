@@ -26,7 +26,6 @@
 #' Get Properties of a Microorganism
 #'
 #' Use these functions to return a specific property of a microorganism based on the latest accepted taxonomy. All input values will be evaluated internally with [as.mo()], which makes it possible to use microbial abbreviations, codes and names as input. See *Examples*.
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param x any [character] (vector) that can be coerced to a valid microorganism code with [as.mo()]. Can be left blank for auto-guessing the column containing microorganism codes if used in a data set, see *Examples*.
 #' @param property one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`, or must be `"shortname"`
 #' @param language language of the returned text, defaults to system language (see [get_AMR_locale()]) and can be overwritten by setting the option `AMR_locale`, e.g. `options(AMR_locale = "de")`, see [translate]. Also used to translate text like "no growth". Use `language = NULL` or `language = ""` to prevent translation.
@@ -67,93 +66,91 @@
 #' @export
 #' @seealso Data set [microorganisms]
 #' @inheritSection AMR Reference Data Publicly Available
-#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' # taxonomic tree -----------------------------------------------------------
-#' mo_kingdom("E. coli")         # "Bacteria"
-#' mo_phylum("E. coli")          # "Proteobacteria"
-#' mo_class("E. coli")           # "Gammaproteobacteria"
-#' mo_order("E. coli")           # "Enterobacterales"
-#' mo_family("E. coli")          # "Enterobacteriaceae"
-#' mo_genus("E. coli")           # "Escherichia"
-#' mo_species("E. coli")         # "coli"
-#' mo_subspecies("E. coli")      # ""
+#' mo_kingdom("Klebsiella pneumoniae")
+#' mo_phylum("Klebsiella pneumoniae")
+#' mo_class("Klebsiella pneumoniae")
+#' mo_order("Klebsiella pneumoniae")
+#' mo_family("Klebsiella pneumoniae")
+#' mo_genus("Klebsiella pneumoniae")
+#' mo_species("Klebsiella pneumoniae")
+#' mo_subspecies("Klebsiella pneumoniae")
 #'
 #' # colloquial properties ----------------------------------------------------
-#' mo_name("E. coli")            # "Escherichia coli"
-#' mo_fullname("E. coli")        # "Escherichia coli" - same as mo_name()
-#' mo_shortname("E. coli")       # "E. coli"
+#' mo_name("Klebsiella pneumoniae")
+#' mo_fullname("Klebsiella pneumoniae")
+#' mo_shortname("Klebsiella pneumoniae")
 #'
 #' # other properties ---------------------------------------------------------
-#' mo_gramstain("E. coli")       # "Gram-negative"
-#' mo_snomed("E. coli")          # 112283007, 116395006, ... (SNOMED codes)
-#' mo_type("E. coli")            # "Bacteria" (equal to kingdom, but may be translated)
-#' mo_rank("E. coli")            # "species"
-#' mo_url("E. coli")             # get the direct url to the online database entry
-#' mo_synonyms("E. coli")        # get previously accepted taxonomic names
+#' mo_gramstain("Klebsiella pneumoniae")
+#' mo_snomed("Klebsiella pneumoniae")
+#' mo_type("Klebsiella pneumoniae")
+#' mo_rank("Klebsiella pneumoniae")
+#' mo_url("Klebsiella pneumoniae")
+#' mo_synonyms("Klebsiella pneumoniae")
 #'
 #' # scientific reference -----------------------------------------------------
-#' mo_ref("E. coli")             # "Castellani et al., 1919"
-#' mo_authors("E. coli")         # "Castellani et al."
-#' mo_year("E. coli")            # 1919
-#' mo_lpsn("E. coli")            # 776057 (LPSN record ID)
+#' mo_ref("Klebsiella pneumoniae")
+#' mo_authors("Klebsiella pneumoniae")
+#' mo_year("Klebsiella pneumoniae")
+#' mo_lpsn("Klebsiella pneumoniae")
 #'
 #' # abbreviations known in the field -----------------------------------------
-#' mo_genus("MRSA")              # "Staphylococcus"
-#' mo_species("MRSA")            # "aureus"
-#' mo_shortname("VISA")          # "S. aureus"
-#' mo_gramstain("VISA")          # "Gram-positive"
+#' mo_genus("MRSA")
+#' mo_species("MRSA")
+#' mo_shortname("VISA")
+#' mo_gramstain("VISA")
 #'
-#' mo_genus("EHEC")              # "Escherichia"
-#' mo_species("EHEC")            # "coli"
+#' mo_genus("EHEC")
+#' mo_species("EHEC")
 #'
 #' # known subspecies ---------------------------------------------------------
-#' mo_name("doylei")             # "Campylobacter jejuni doylei"
-#' mo_genus("doylei")            # "Campylobacter"
-#' mo_species("doylei")          # "jejuni"
-#' mo_subspecies("doylei")       # "doylei"
+#' mo_name("doylei")
+#' mo_genus("doylei")
+#' mo_species("doylei")
+#' mo_subspecies("doylei")
 #'
-#' mo_fullname("K. pneu rh")     # "Klebsiella pneumoniae rhinoscleromatis"
-#' mo_shortname("K. pneu rh")    # "K. pneumoniae"
+#' mo_fullname("K. pneu rh")
+#' mo_shortname("K. pneu rh")
 #'
 #' \donttest{
 #' # Becker classification, see ?as.mo ----------------------------------------
-#' mo_fullname("S. epi")                     # "Staphylococcus epidermidis"
-#' mo_fullname("S. epi", Becker = TRUE)      # "Coagulase-negative Staphylococcus (CoNS)"
-#' mo_shortname("S. epi")                    # "S. epidermidis"
-#' mo_shortname("S. epi", Becker = TRUE)     # "CoNS"
+#' mo_fullname("S. epi")
+#' mo_fullname("S. epi", Becker = TRUE)
+#' mo_shortname("S. epi")
+#' mo_shortname("S. epi", Becker = TRUE)
 #'
 #' # Lancefield classification, see ?as.mo ------------------------------------
-#' mo_fullname("S. pyo")                     # "Streptococcus pyogenes"
-#' mo_fullname("S. pyo", Lancefield = TRUE)  # "Streptococcus group A"
-#' mo_shortname("S. pyo")                    # "S. pyogenes"
-#' mo_shortname("S. pyo", Lancefield = TRUE) # "GAS" (='Group A Streptococci')
+#' mo_fullname("S. pyo")
+#' mo_fullname("S. pyo", Lancefield = TRUE)
+#' mo_shortname("S. pyo")
+#' mo_shortname("S. pyo", Lancefield = TRUE)
 #'
 #'
 #' # language support  --------------------------------------------------------
-#' mo_gramstain("E. coli", language = "de")  # "Gramnegativ"
-#' mo_gramstain("E. coli", language = "nl")  # "Gram-negatief"
-#' mo_gramstain("E. coli", language = "es")  # "Gram negativo"
+#' mo_gramstain("Klebsiella pneumoniae", language = "de")
+#' mo_gramstain("Klebsiella pneumoniae", language = "nl")
+#' mo_gramstain("Klebsiella pneumoniae", language = "es")
 #'
 #' # mo_type is equal to mo_kingdom, but mo_kingdom will remain official
-#' mo_kingdom("E. coli")                     # "Bacteria" on a German system
-#' mo_type("E. coli")                        # "Bakterien" on a German system
-#' mo_type("E. coli")                        # "Bacteria" on an English system
+#' mo_kingdom("Klebsiella pneumoniae")
+#' mo_type("Klebsiella pneumoniae")
+#' mo_type("Klebsiella pneumoniae")
 #'
 #' mo_fullname("S. pyogenes",
 #'             Lancefield = TRUE,
-#'             language = "de")              # "Streptococcus Gruppe A"
+#'             language = "de")
 #' mo_fullname("S. pyogenes",
 #'             Lancefield = TRUE,
-#'             language = "nl")              # "Streptococcus groep A"
+#'             language = "nl")
 #'
 #'
 #' # other --------------------------------------------------------------------
 #' 
-#' mo_is_yeast(c("Candida", "E. coli"))      # TRUE, FALSE
+#' mo_is_yeast(c("Candida", "Trichophyton", "Klebsiella"))
 #' 
-#' # gram stains and intrinsic resistance can also be used as a filter in dplyr verbs
-#' \donttest{
+#' # gram stains and intrinsic resistance can be used as a filter in dplyr verbs
 #' if (require("dplyr")) {
 #'   example_isolates %>%
 #'     filter(mo_is_gram_positive())
@@ -164,11 +161,11 @@
 #' 
 #' 
 #' # get a list with the complete taxonomy (from kingdom to subspecies)
-#' mo_taxonomy("E. coli")
+#' mo_taxonomy("Klebsiella pneumoniae")
+#' 
 #' # get a list with the taxonomy, the authors, Gram-stain,
-#' #   SNOMED codes, and URL to the online database
-#' mo_info("E. coli")
-#' }
+#' # SNOMED codes, and URL to the online database
+#' mo_info("Klebsiella pneumoniae")
 #' }
 mo_name <- function(x, language = get_AMR_locale(), ...) {
   if (missing(x)) {

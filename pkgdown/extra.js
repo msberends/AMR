@@ -25,27 +25,8 @@
 # ==================================================================== #
 */
 
-// Add updated Font Awesome 5.8.2 library
-$('head').append('<!-- Updated Font Awesome library --><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">');
-
 $(document).ready(function() {
 
-  // remove version label from header
-  $(".version.label").remove();
-
-  // redirect GitLab to GitHub
-  var url_old = window.location.href;
-  var url_new = url_old.replace("gitlab", "github");
-  if (url_old != url_new) {
-    window.location.replace(url_new);
-  }
-  
-  // Edit title of manual
-  $('.template-reference-index h1').text('Manual');
-
-  // replace 'Value' in manual with 'Returned value'
-  $(".template-reference-topic h2#value").text("Returned value");
-  
   // replace \donttest and \dontrun texts in Examples
   if ($(".ref-examples pre").length > 0) {
     $(".ref-examples pre").html($(".ref-examples pre").html().replaceAll("# \\donttest{", ""));
@@ -57,67 +38,34 @@ $(document).ready(function() {
   if ($("body .template-news").length > 0) {
     $("body .template-news").html($("body .template-news").html().replaceAll('sourceCode R">\n<span', 'sourceCode R"><span'));
   }
-  // change H1  header on dev version on changelog, since pkgdown uses the version number from the installed version
-  // (rather then using the DESCRIPTION file)
-  $("h1[id^=unreleased]").text("Current development version");
-  
-  // PR for 'R for Data Science' on How To pages
-  if ($(".template-article").length > 0) {
-    $('#pkgdown-sidebar').prepend(
-    '<div id="r4ds">' +
-    '  <div class="txt">' +
-    '    <p>' +
-    '      Learn R reading this great book: <i>R for Data Science</i>.' +
-    '      <br><br>' +
-    '      <a target="_blank" href="https://r4ds.had.co.nz/">' +
-    '        Click to read it online - it was published for free.' +
-    '      </a>' +
-    '    </p>' +
-    '  </div>' +
-    '  <div class="img">' +
-    '    <a target="_blank" href="https://r4ds.had.co.nz/">' +
-    '      <img src="https://github.com/msberends/AMR/raw/main/docs/cover_r4ds.png">' +
-    '    </a>' +
-    '  </div>' +
-    '</div>');
-  }
 
-  // edit footer
-  $('footer').html(
-    '<div>' +
-      '<p><code>AMR</code> (for R). Developed at the <a target="_blank" href="https://www.rug.nl">University of Groningen</a> in collaboration with non-profit organisations<br><a target="_blank" href="https://www.certe.nl">Certe Medical Diagnostics and Advice Foundation</a> and <a target="_blank" href="https://www.umcg.nl">University Medical Center Groningen</a>.</p>' +
-            '<a target="_blank" href="https://www.rug.nl"><img src="https://github.com/msberends/AMR/raw/main/docs/logo_rug.png" class="footer_logo"></a>' + 
-    '</div>');
-
-  // doctoral titles of authors
+  // add doctoral titles to authors
   function doct_tit(x) {
     if (typeof(x) != "undefined") {
-      // authors
-      x = x.replace(/Author, maintainer/g, "Maintainer");
-      x = x.replace(/Author, contributor/g, "Maintainer");
+      x = x.replace(/Author, maintainer/g, "Principle developer");
+      x = x.replace(/Author, contributor/g, "Contributing maintainer");
       x = x.replace(/Author, thesis advisor/g, "Doctoral advisor");
       x = x.replace(/Thesis advisor/g, "Doctoral advisor");
-      x = x.replace("Matthijs", "Dr Matthijs");
-      x = x.replace("Christian", "Dr Christian");
-      x = x.replace("Alex", "Prof. Alex");
-      x = x.replace("Bhanu", "Prof. Bhanu");
-      x = x.replace("Casper", "Prof. Casper");
-      x = x.replace("Corinna", "Dr Corinna");
-      // others
-      x = x.replace("Bart", "Dr Bart");
-      x = x.replace("Sofia", "Dr Sofia");
-      x = x.replace("Dennis", "Dr Dennis");
-      x = x.replace("Judith", "Dr Judith");
-      x = x.replace("Gwen", "Dr Gwen");
-      x = x.replace("Anthony", "Dr Anthony");
-      x = x.replace("Rogier", "Dr Rogier");
+      // authors
+      x = x.replace("Alex", "Prof. Dr. Alex");
+      x = x.replace("Anthony", "Dr. Anthony");
+      x = x.replace("Bart", "Dr. Bart");
+      x = x.replace("Bhanu", "Prof. Dr. Bhanu");
+      x = x.replace("Casper", "Prof. Dr. Casper");
+      x = x.replace("Christian", "Dr. Christian");
+      x = x.replace("Corinna", "Dr. Corinna");
+      x = x.replace("Dennis", "Dr. Dennis");
+      x = x.replace("Gwen", "Dr. Gwen");
+      x = x.replace("Judith", "Dr. Judith");
+      x = x.replace("Matthijs", "Dr. Matthijs");
+      x = x.replace("Peter", "Dr. Peter");
+      x = x.replace("Rogier", "Dr. Rogier");
+      x = x.replace("Sofia", "Dr. Sofia");
     }
     return(x);
   }
   $(".template-authors").html(doct_tit($(".template-authors").html()));
   $(".template-citation-authors").html(doct_tit($(".template-citation-authors").html()));
-  $('.template-citation-authors h1').eq(0).html("All contributors of the <code>AMR</code> package");
-  $('.template-citation-authors h1').eq(1).html("How to cite the <code>AMR</code> package");
   $(".developers").html(doct_tit($(".developers").html()));
   $(".developers a[href='authors.html']").text("All contributors...");
 });

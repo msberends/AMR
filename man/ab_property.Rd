@@ -95,14 +95,6 @@ The function \code{\link[=ab_url]{ab_url()}} will return the direct URL to the o
 
 The function \code{\link[=set_ab_names]{set_ab_names()}} is a special column renaming function for \link{data.frame}s. It renames columns names that resemble antimicrobial drugs. It always makes sure that the new column names are unique. If \code{property = "atc"} is set, preference is given to ATC codes from the J-group.
 }
-\section{Stable Lifecycle}{
-
-\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:"5"} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
-
-If the unlying code needs breaking changes, they will occur gradually. For example, an argument will be deprecated and first continue to work, but will emit a message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
-}
-
 \section{Source}{
 
 World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: \url{https://www.whocc.no/atc_ddd_index/}
@@ -113,11 +105,6 @@ European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{htt
 \section{Reference Data Publicly Available}{
 
 All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
-}
-
-\section{Read more on Our Website!}{
-
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
 }
 
 \examples{
@@ -166,15 +153,18 @@ colnames(set_ab_names(example_isolates, NIT:VAN))
 \donttest{
 if (require("dplyr")) {
   example_isolates \%>\%
-    set_ab_names()
+    set_ab_names() \%>\%
+    head()
     
   # this does the same:
   example_isolates \%>\%
-    rename_with(set_ab_names)
+    rename_with(set_ab_names)\%>\%
+    head()
   
   # set_ab_names() works with any AB property:
   example_isolates \%>\%
-    set_ab_names(property = "atc")
+    set_ab_names(property = "atc")\%>\%
+    head()
     
  example_isolates \%>\%
    set_ab_names(where(is.rsi)) \%>\%

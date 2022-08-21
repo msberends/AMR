@@ -1,6 +1,6 @@
 Package: AMR
-Version: 1.8.1.9018
-Date: 2022-08-20
+Version: 1.8.1.9019
+Date: 2022-08-21
 Title: Antimicrobial Resistance Data Analysis
 Description: Functions to simplify and standardise antimicrobial resistance (AMR)
     data analysis and to work with microbial and antimicrobial properties by
@@ -12,6 +12,7 @@ Authors@R: c(
     person("Dennis", "Souverein", role = c("aut", "ctb"), comment = c(ORCID = "0000-0003-0455-0336")),
     person(c("Erwin", "E.", "A."), "Hassing", role = c("aut", "ctb")),
     person("Casper",  "Albers", role = "ths", comment = c(ORCID = "0000-0002-9213-6743")),
+    person("Peter",   "Dutey-Magni", role = "ctb", comment = c(ORCID = "0000-0002-8942-9836")),
     person("Judith",  "Fonville", role = "ctb"),
     person("Alex",    "Friedrich", role = "ths", comment = c(ORCID = "0000-0003-4881-038X")),
     person("Corinna", "Glasner", role = "ths", comment = c(ORCID = "0000-0003-1241-1328")),
@@ -33,7 +34,6 @@ Enhances:
 Suggests: 
   curl,
   dplyr,
-  ggtext,
   knitr,
   progress,
   readxl,

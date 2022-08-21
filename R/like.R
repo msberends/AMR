@@ -26,7 +26,6 @@
 #' Vectorised Pattern Matching with Keyboard Shortcut
 #'
 #' Convenient wrapper around [grepl()] to match a pattern: `x %like% pattern`. It always returns a [`logical`] vector and is always case-insensitive (use `x %like_case% pattern` for case-sensitive matching). Also, `pattern` can be as long as `x` to compare items of each index in both vectors, or they both can have the same length to iterate over all cases.
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param x a [character] vector where matches are sought, or an object which can be coerced by [as.character()] to a [character] vector.
 #' @param pattern a [character] vector containing regular expressions (or a [character] string for `fixed = TRUE`) to be matched in the given [character] vector. Coerced by [as.character()] to a [character] string if possible.
 #' @param ignore.case if `FALSE`, the pattern matching is *case sensitive* and if `TRUE`, case is ignored during matching.
@@ -44,27 +43,21 @@
 #' Using RStudio? The `%like%`/`%unlike%` functions can also be directly inserted in your code from the Addins menu and can have its own keyboard shortcut like `Shift+Ctrl+L` or `Shift+Cmd+L` (see menu `Tools` > `Modify Keyboard Shortcuts...`). If you keep pressing your shortcut, the inserted text will be iterated over `%like%` -> `%unlike%` -> `%like_case%` -> `%unlike_case%`.
 #' @source Idea from the [`like` function from the `data.table` package](https://github.com/Rdatatable/data.table/blob/ec1259af1bf13fc0c96a1d3f9e84d55d8106a9a4/R/like.R), although altered as explained in *Details*.
 #' @seealso [grepl()]
-#' @inheritSection AMR Read more on Our Website!
+
 #' @examples
 #' a <- "This is a test"
 #' b <- "TEST"
 #' a %like% b
-#' #> TRUE
 #' b %like% a
-#' #> FALSE
 #' 
 #' # also supports multiple patterns
 #' a <- c("Test case", "Something different", "Yet another thing")
 #' b <- c(     "case",           "diff",      "yet")
 #' a %like% b
-#' #> TRUE TRUE TRUE
 #' a %unlike% b
-#' #> FALSE FALSE FALSE
 #' 
 #' a[1] %like% b
-#' #> TRUE FALSE FALSE
 #' a %like% b[1]
-#' #> TRUE FALSE FALSE
 #' 
 #' # get isolates whose name start with 'Ent' or 'ent'
 #' example_isolates[which(mo_name(example_isolates$mo) %like% "^ent"), ]

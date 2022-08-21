@@ -26,14 +26,15 @@
 #' Kurtosis of the Sample
 #'
 #' @description Kurtosis is a measure of the "tailedness" of the probability distribution of a real-valued random variable. A normal distribution has a kurtosis of 3 and a excess kurtosis of 0.
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param x a vector of values, a [matrix] or a [data.frame]
 #' @param na.rm a [logical] to indicate whether `NA` values should be stripped before the computation proceeds
 #' @param excess a [logical] to indicate whether the *excess kurtosis* should be returned, defined as the kurtosis minus 3.
 #' @seealso [skewness()]
 #' @rdname kurtosis
-#' @inheritSection AMR Read more on Our Website!
 #' @export
+#' @examples 
+#' kurtosis(rnorm(10000))
+#' kurtosis(rnorm(10000), excess = TRUE)
 kurtosis <- function(x, na.rm = FALSE, excess = FALSE) {
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)
   meet_criteria(excess, allow_class = "logical", has_length = 1)

@@ -15,7 +15,7 @@ italicize_taxonomy(string, type = c("markdown", "ansi"))
 \item{type}{type of conversion of the taxonomic names, either "markdown" or "ansi", see \emph{Details}}
 }
 \description{
-According to the binomial nomenclature, the lowest four taxonomic levels (family, genus, species, subspecies) should be printed in italic. This function finds taxonomic names within strings and makes them italic.
+According to the binomial nomenclature, the lowest four taxonomic levels (family, genus, species, subspecies) should be printed in italics. This function finds taxonomic names within strings and makes them italic.
 }
 \details{
 This function finds the taxonomic names and makes them italic based on the \link{microorganisms} data set.
@@ -24,32 +24,9 @@ The taxonomic names can be italicised using markdown (the default) by adding \co
 
 This function also supports abbreviation of the genus if it is followed by a species, such as "E. coli" and "K. pneumoniae ozaenae".
 }
-\section{Stable Lifecycle}{
-
-\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:"5"} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
-
-If the unlying code needs breaking changes, they will occur gradually. For example, an argument will be deprecated and first continue to work, but will emit a message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
-}
-
-\section{Read more on Our Website!}{
-
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
-}
-
 \examples{
 italicise_taxonomy("An overview of Staphylococcus aureus isolates")
 italicise_taxonomy("An overview of S. aureus isolates")
 
 cat(italicise_taxonomy("An overview of S. aureus isolates", type = "ansi"))
-
-# since ggplot2 supports no markdown (yet), use
-# italicise_taxonomy() and the `ggtext` package for titles:
-\donttest{
-if (require("ggplot2") && require("ggtext")) {
-  autoplot(example_isolates$AMC,
-           title = italicise_taxonomy("Amoxi/clav in E. coli")) +
-    theme(plot.title = ggtext::element_markdown())
-}
-}
 }

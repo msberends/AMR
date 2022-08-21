@@ -108,35 +108,32 @@ Produces a \code{ggplot2} variant of a so-called \href{https://en.wikipedia.org/
 \details{
 The colours for labels and points can be changed by adding another scale layer for colour, such as \code{scale_colour_viridis_d()} and \code{scale_colour_brewer()}.
 }
-\section{Stable Lifecycle}{
-
-\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:"5"} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
-
-If the unlying code needs breaking changes, they will occur gradually. For example, an argument will be deprecated and first continue to work, but will emit a message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
-}
-
 \examples{
 # `example_isolates` is a data set available in the AMR package.
 # See ?example_isolates.
 
-# See ?pca for more info about Principal Component Analysis (PCA).
 \donttest{
 if (require("dplyr")) {
-  pca_model <- example_isolates \%>\% 
-    filter(mo_genus(mo) == "Staphylococcus") \%>\% 
-    group_by(species = mo_shortname(mo)) \%>\%
-    summarise_if (is.rsi, resistance) \%>\%
-    pca(FLC, AMC, CXM, GEN, TOB, TMP, SXT, CIP, TEC, TCY, ERY)
+  # calculate the resistance per group first 
+  resistance_data <- example_isolates \%>\% 
+    group_by(order = mo_order(mo),       # group on anything, like order
+             genus = mo_genus(mo)) \%>\%   #   and genus as we do here;
+    filter(n() >= 30) \%>\%                # filter on only 30 results per group
+    summarise_if(is.rsi, resistance)     # then get resistance of all drugs
     
-  # old (base R)
-  biplot(pca_model)
+  # now conduct PCA for certain antimicrobial agents
+  pca_result <- resistance_data \%>\%         
+    pca(AMC, CXM, CTX, CAZ, GEN, TOB, TMP, SXT) 
+    
+  summary(pca_result)
   
-  # new 
-  ggplot_pca(pca_model)
+  # old base R plotting method:
+  biplot(pca_result)
+  # new ggplot2 plotting method using this package:
+  ggplot_pca(pca_result)
   
   if (require("ggplot2")) {
-    ggplot_pca(pca_model) +
+    ggplot_pca(pca_result) +
       scale_colour_viridis_d() +
       labs(title = "Title here")
   }

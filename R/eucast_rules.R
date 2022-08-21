@@ -52,7 +52,6 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <https://eucast.org>), see *Source*. Use [eucast_dosage()] to get a [data.frame] with advised dosages of a certain bug-drug combination, which is based on the [dosage] data set.
 #' 
 #' To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see *Details*.
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param x data with antibiotic columns, such as `amox`, `AMX` and `AMC`
 #' @param info a [logical] to indicate whether progress should be printed to the console, defaults to only print while in interactive sessions
 #' @param rules a [character] vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expert"`, `"other"`, `"custom"`, `"all"`, and defaults to `c("breakpoints", "expert")`. The default value can be set to another value, e.g. using `options(AMR_eucastrules = "all")`. If using `"custom"`, be sure to fill in argument `custom_rules` too. Custom rules can be created with [custom_eucast_rules()].
@@ -76,11 +75,11 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' 
 #' Custom rules can be created using [custom_eucast_rules()], e.g.:
 #' 
-#' ```
+#' ```{r}
 #' x <- custom_eucast_rules(AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
 #'                          AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I")
 #'
-#' eucast_rules(example_isolates, rules = "custom", custom_rules = x)
+#' eucast_rules(example_isolates, rules = "custom", custom_rules = x, info = FALSE)
 #' ```
 #' 
 #' 
@@ -113,8 +112,9 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 9.0, 2019. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx)
 #' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 10.0, 2020. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_10.0_Breakpoint_Tables.xlsx)
 #' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 11.0, 2021. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_11.0_Breakpoint_Tables.xlsx)
+#' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 12.0, 2022. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_12.0_Breakpoint_Tables.xlsx)
 #' @inheritSection AMR Reference Data Publicly Available
-#' @inheritSection AMR Read more on Our Website!
+
 #' @examples
 #' \donttest{
 #' a <- data.frame(mo = c("Staphylococcus aureus",
@@ -131,33 +131,26 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #'                 FOX = "S",       # Cefoxitin
 #'                 stringsAsFactors = FALSE)
 #'
-#' a
-#' #                       mo  VAN  AMX  COL  CAZ  CXM  PEN  FOX
-#' # 1  Staphylococcus aureus    -    -    -    -    -    S    S
-#' # 2  Enterococcus faecalis    -    -    -    -    -    S    S
-#' # 3       Escherichia coli    -    -    -    -    -    S    S
-#' # 4  Klebsiella pneumoniae    -    -    -    -    -    S    S
-#' # 5 Pseudomonas aeruginosa    -    -    -    -    -    S    S
+#' head(a)
 #'
 #'
 #' # apply EUCAST rules: some results wil be changed
 #' b <- eucast_rules(a)
 #'
-#' b
-#' #                       mo  VAN  AMX  COL  CAZ  CXM  PEN  FOX
-#' # 1  Staphylococcus aureus    -    S    R    R    S    S    S
-#' # 2  Enterococcus faecalis    -    -    R    R    R    S    R
-#' # 3       Escherichia coli    R    -    -    -    -    R    S
-#' # 4  Klebsiella pneumoniae    R    R    -    -    -    R    S
-#' # 5 Pseudomonas aeruginosa    R    R    -    -    R    R    R
+#' head(b)
 #'
 #'
 #' # do not apply EUCAST rules, but rather get a data.frame
 #' # containing all details about the transformations:
 #' c <- eucast_rules(a, verbose = TRUE)
+#' head(c)
 #' }
 #' 
+#' # Dosage guidelines:
+#' 
 #' eucast_dosage(c("tobra", "genta", "cipro"), "iv")
+#' 
+#' eucast_dosage(c("tobra", "genta", "cipro"), "iv", version_breakpoints = 10)
 eucast_rules <- function(x,
                          col_mo = NULL,
                          info = interactive(),

@@ -26,7 +26,6 @@
 #' Transform Input to an Antibiotic ID
 #'
 #' Use this function to determine the antibiotic code of one or more antibiotics. The data set [antibiotics] will be searched for abbreviations, official names and synonyms (brand names).
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param x a [character] vector to determine to antibiotic ID
 #' @param flag_multiple_results a [logical] to indicate whether a note should be printed to the console that probably more than one antibiotic code or name can be retrieved from a single input value.
 #' @param info a [logical] to indicate whether a progress bar should be printed, defaults to `TRUE` only in interactive mode
@@ -55,7 +54,6 @@
 #' * [antibiotics] for the [data.frame] that is being used to determine ATCs
 #' * [ab_from_text()] for a function to retrieve antimicrobial drugs from clinical text (from health care records)
 #' @inheritSection AMR Reference Data Publicly Available
-#' @inheritSection AMR Read more on Our Website!
 #' @export
 #' @examples
 #' # these examples all return "ERY", the ID of erythromycin:

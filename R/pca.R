@@ -26,7 +26,6 @@
 #' Principal Component Analysis (for AMR)
 #' 
 #' Performs a principal component analysis (PCA) based on a data set with automatic determination for afterwards plotting the groups and labels, and automatic filtering on only suitable (i.e. non-empty and numeric) variables.
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param x a [data.frame] containing [numeric] columns
 #' @param ... columns of `x` to be selected for PCA, can be unquoted since it supports quasiquotation.
 #' @inheritParams stats::prcomp
@@ -36,7 +35,6 @@
 #' @return An object of classes [pca] and [prcomp]
 #' @importFrom stats prcomp
 #' @export
-#' @inheritSection AMR Read more on Our Website!
 #' @examples 
 #' # `example_isolates` is a data set available in the AMR package.
 #' # See ?example_isolates.
@@ -47,6 +45,7 @@
 #'   resistance_data <- example_isolates %>% 
 #'     group_by(order = mo_order(mo),       # group on anything, like order
 #'              genus = mo_genus(mo)) %>%   #   and genus as we do here;
+#'     filter(n() >= 30) %>%                # filter on only 30 results per group
 #'     summarise_if(is.rsi, resistance)     # then get resistance of all drugs
 #'     
 #'   # now conduct PCA for certain antimicrobial agents
@@ -55,8 +54,17 @@
 #'     
 #'   pca_result
 #'   summary(pca_result)
+#'   
+#'   # old base R plotting method:
 #'   biplot(pca_result)
-#'   ggplot_pca(pca_result) # a new and convenient plot function
+#'   # new ggplot2 plotting method using this package:
+#'   ggplot_pca(pca_result)
+#'   
+#'   if (require("ggplot2")) {
+#'     ggplot_pca(pca_result) +
+#'       scale_colour_viridis_d() +
+#'       labs(title = "Title here")
+#'   }
 #' }
 #' }
 pca <- function(x,

@@ -25,8 +25,7 @@
 
 #' Age in Years of Individuals
 #'
-#' Calculates age in years based on a reference date, which is the sytem date at default.
-#' @inheritSection lifecycle Stable Lifecycle
+#' Calculates age in years based on a reference date, which is the system date at default.
 #' @param x date(s), [character] (vectors) will be coerced with [as.POSIXlt()]
 #' @param reference reference date(s) (defaults to today), [character] (vectors) will be coerced with [as.POSIXlt()]
 #' @param exact a [logical] to indicate whether age calculation should be exact, i.e. with decimals. It divides the number of days of [year-to-date](https://en.wikipedia.org/wiki/Year-to-date) (YTD) of `x` by the number of days in the year of `reference` (either 365 or 366).
@@ -37,15 +36,19 @@
 #' This function vectorises over both `x` and `reference`, meaning that either can have a length of 1 while the other argument has a larger length.
 #' @return An [integer] (no decimals) if `exact = FALSE`, a [double] (with decimals) otherwise
 #' @seealso To split ages into groups, use the [age_groups()] function.
-#' @inheritSection AMR Read more on Our Website!
 #' @export
 #' @examples
-#' # 10 random birth dates
-#' df <- data.frame(birth_date = Sys.Date() - runif(10) * 25000)
+#' # 10 random pre-Y2K birth dates
+#' df <- data.frame(birth_date = as.Date("2000-01-01") - runif(10) * 25000)
+#' 
 #' # add ages
 #' df$age <- age(df$birth_date)
+#' 
 #' # add exact ages
 #' df$age_exact <- age(df$birth_date, exact = TRUE)
+#' 
+#' # add age at millenium switch
+#' df$age_at_y2k <- age(df$birth_date, "2000-01-01")
 #'
 #' df
 age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
@@ -115,7 +118,6 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
 #' Split Ages into Age Groups
 #'
 #' Split ages into age groups defined by the `split` argument. This allows for easier demographic (antimicrobial resistance) analysis.
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param x age, e.g. calculated with [age()]
 #' @param split_at values to split `x` at, defaults to age groups 0-11, 12-24, 25-54, 55-74 and 75+. See *Details*.
 #' @param na.rm a [logical] to indicate whether missing values should be removed
@@ -131,7 +133,7 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
 #' @return Ordered [factor]
 #' @seealso To determine ages, based on one or more reference dates, use the [age()] function.
 #' @export
-#' @inheritSection AMR Read more on Our Website!
+
 #' @examples
 #' ages <- c(3, 8, 16, 54, 31, 76, 101, 43, 21)
 #'
@@ -150,7 +152,7 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
 #' age_groups(ages, split_at = "fives")
 #'
 #' # split specifically for children
-#' age_groups(ages, c(1, 2, 4, 6, 13, 17))
+#' age_groups(ages, c(1, 2, 4, 6, 13, 18))
 #' age_groups(ages, "children")
 #'
 #' \donttest{
@@ -161,7 +163,10 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
 #'     filter(mo == as.mo("E. coli")) %>%
 #'     group_by(age_group = age_groups(age)) %>%
 #'     select(age_group, CIP) %>%
-#'     ggplot_rsi(x = "age_group", minimum = 0)
+#'     ggplot_rsi(x = "age_group",
+#'                minimum = 0,
+#'                x.title = "Age Group",
+#'                title = "Ciprofloxacin resistance per age group")
 #' }
 #' }
 age_groups <- function(x, split_at = c(12, 25, 55, 75), na.rm = FALSE) {

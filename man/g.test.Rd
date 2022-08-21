@@ -99,17 +99,6 @@ where \code{df} are the degrees of freedom.
 If there are more than two categories and you want to find out which ones are significantly different from their null expectation, you can use the same method of testing each category vs. the sum of all categories, with the Bonferroni correction. You use \emph{G}-tests for each category, of course.
 }
 }
-\section{Questioning Lifecycle}{
-
-\if{html}{\figure{lifecycle_questioning.svg}{options: style=margin-bottom:"5"} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{questioning}. This function might be no longer be optimal approach, or is it questionable whether this function should be in this \code{AMR} package at all.
-}
-
-\section{Read more on Our Website!}{
-
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
-}
-
 \examples{
 # = EXAMPLE 1 =
 # Shivrain et al. (2006) crossed clearfield rice (which are resistant
@@ -121,8 +110,7 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 # ratio.
 
 x <- c(772, 1611, 737)
-G <- g.test(x, p = c(1, 2, 1) / 4)
-# G$p.value = 0.12574.
+g.test(x, p = c(1, 2, 1) / 4)
 
 # There is no significant difference from a 1:2:1 ratio.
 # Meaning: resistance controlled by a single gene with two co-dominant
@@ -138,11 +126,9 @@ G <- g.test(x, p = c(1, 2, 1) / 4)
 
 x <- c(1752, 1895)
 g.test(x)
-# p = 0.01787343
 
 # There is a significant difference from a 1:1 ratio.
 # Meaning: there are significantly more left-billed birds.
-
 }
 \references{
 \enumerate{

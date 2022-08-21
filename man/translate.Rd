@@ -27,7 +27,7 @@ For language-dependent output of AMR functions, like \code{\link[=mo_name]{mo_na
 \details{
 The currently 16 supported languages are English, Chinese, Danish, Dutch, French, German, Greek, Italian, Japanese, Polish, Portuguese, Russian, Spanish, Swedish, Turkish and Ukrainian. All these languages have translations available for all antimicrobial agents and colloquial microorganism names.
 
-Please read about adding or updating a language in \href{https://github.com/msberends/AMR/blob/main/developer-guideline.md}{our developer guideline}.
+Please read about adding or updating a language in \href{https://github.com/msberends/AMR/wiki/}{our Wiki}.
 \subsection{Changing the Default Language}{
 
 The system language will be used at default (as returned by \code{Sys.getenv("LANG")} or, if \code{LANG} is not set, \link{Sys.getlocale("LC_COLLATE")}), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:
@@ -41,19 +41,6 @@ Note that setting an \R option only works in the same session. Save the command 
 Thus, if the R option \code{AMR_locale} is set, the system variables \code{LANGUAGE} and \code{LANG} will be ignored.
 }
 }
-\section{Stable Lifecycle}{
-
-\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:"5"} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
-
-If the unlying code needs breaking changes, they will occur gradually. For example, an argument will be deprecated and first continue to work, but will emit a message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
-}
-
-\section{Read more on Our Website!}{
-
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
-}
-
 \examples{
 # Current settings (based on system language)
 ab_name("Ciprofloxacin")

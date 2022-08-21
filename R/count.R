@@ -28,7 +28,6 @@
 #' @description These functions can be used to count resistant/susceptible microbial isolates. All functions support quasiquotation with pipes, can be used in `summarise()` from the `dplyr` package and also support grouped variables, see *Examples*.
 #'
 #' [count_resistant()] should be used to count resistant isolates, [count_susceptible()] should be used to count susceptible isolates.
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param ... one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with [as.rsi()] if needed.
 #' @inheritParams proportion
 #' @inheritSection as.rsi Interpretation of R and S/I
@@ -45,11 +44,11 @@
 #' @rdname count
 #' @name count
 #' @export
-#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' # example_isolates is a data set available in the AMR package.
-#' ?example_isolates
+#' # run ?example_isolates for more info.
 #' 
+#' # base R ------------------------------------------------------------
 #' count_resistant(example_isolates$AMX)   # counts "R"
 #' count_susceptible(example_isolates$AMX) # counts "S" and "I"
 #' count_all(example_isolates$AMX)         # counts "S", "I" and "R"
@@ -72,6 +71,7 @@
 #' count_susceptible(example_isolates$AMX)
 #' susceptibility(example_isolates$AMX) * n_rsi(example_isolates$AMX)
 #'
+#' # dplyr -------------------------------------------------------------
 #' \donttest{
 #' if (require("dplyr")) {
 #'   example_isolates %>%

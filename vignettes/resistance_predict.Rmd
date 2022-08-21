@@ -96,7 +96,7 @@ example_isolates %>%
   ggplot_rsi_predict()
 ```
 
-Vancomycin resistance could be 100% in ten years, but might also stay around 0%. 
+Vancomycin resistance could be 100% in ten years, but might remain very low. 
 
 You can define the model with the `model` parameter. The model chosen above is a generalised linear regression model using a binomial distribution, assuming that a period of zero resistance was followed by a period of increasing resistance leading slowly to more and more resistance.
 
@@ -108,7 +108,7 @@ Valid values are:
 | `"loglin"` or `"poisson"`              | `glm(..., family = poisson)`  | Generalised linear model with poisson distribution  |
 | `"lin"` or `"linear"`                  | `lm()`                        | Linear model                                        |
 
-For the vancomycin resistance in Gram-positive bacteria, a linear model might be more appropriate since no binomial distribution is to be expected based on the observed years:
+For the vancomycin resistance in Gram-positive bacteria, a linear model might be more appropriate:
 
 ```{r}
 example_isolates %>%
@@ -116,8 +116,6 @@ example_isolates %>%
   resistance_predict(col_ab = "VAN", year_min = 2010, info = FALSE, model = "linear") %>% 
   ggplot_rsi_predict()
 ```
-
-This seems more likely, doesn't it?
 
 The model itself is also available from the object, as an `attribute`:
 ```{r}

@@ -72,8 +72,10 @@
 #' European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm>
 #' @inheritSection AMR Reference Data Publicly Available
 #' @inheritSection WHOCC WHOCC
-#' @inheritSection AMR Read more on Our Website!
 #' @seealso [microorganisms], [intrinsic_resistant]
+#' @examples
+#' head(antibiotics)
+#' head(antivirals)
 "antibiotics"
 
 #' @rdname antibiotics
@@ -136,8 +138,9 @@
 #' 
 #' * Retrieved from the `r SNOMED_VERSION$title`, OID `r SNOMED_VERSION$current_oid`, version `r SNOMED_VERSION$current_version`; url: <`r SNOMED_VERSION$url`>
 #' @inheritSection AMR Reference Data Publicly Available
-#' @inheritSection AMR Read more on Our Website!
 #' @seealso [as.mo()], [mo_property()], [microorganisms.codes], [intrinsic_resistant]
+#' @examples
+#' head(microorganisms)
 "microorganisms"
 
 #' Data Set with Previously Accepted Taxonomic Names
@@ -153,8 +156,9 @@
 #' 
 #' Parte, A.C. (2018). LPSN - List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; \doi{10.1099/ijsem.0.002786}
 #' @inheritSection AMR Reference Data Publicly Available
-#' @inheritSection AMR Read more on Our Website!
 #' @seealso [as.mo()] [mo_property()] [microorganisms]
+#' @examples
+#' head(microorganisms.old)
 "microorganisms.old"
 
 #' Data Set with `r format(nrow(microorganisms.codes), big.mark = ",")` Common Microorganism Codes
@@ -165,8 +169,9 @@
 #' - `mo`\cr ID of the microorganism in the [microorganisms] data set
 #' @inheritSection AMR Reference Data Publicly Available
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @inheritSection AMR Read more on Our Website!
 #' @seealso [as.mo()] [microorganisms]
+#' @examples
+#' head(microorganisms.codes)
 "microorganisms.codes"
 
 #' Data Set with `r format(nrow(example_isolates), big.mark = ",")` Example Isolates
@@ -184,7 +189,8 @@
 #' - `mo`\cr ID of microorganism created with [as.mo()], see also [microorganisms]
 #' - `PEN:RIF`\cr `r sum(vapply(FUN.VALUE = logical(1), example_isolates, is.rsi))` different antibiotics with class [`rsi`] (see [as.rsi()]); these column names occur in the [antibiotics] data set and can be translated with [ab_name()]
 #' @inheritSection AMR Reference Data Publicly Available
-#' @inheritSection AMR Read more on Our Website!
+#' @examples
+#' head(example_isolates)
 "example_isolates"
 
 #' Data Set with Unclean Data
@@ -197,7 +203,8 @@
 #' - `bacteria`\cr info about microorganism that can be transformed with [as.mo()], see also [microorganisms]
 #' - `AMX:GEN`\cr 4 different antibiotics that have to be transformed with [as.rsi()]
 #' @inheritSection AMR Reference Data Publicly Available
-#' @inheritSection AMR Read more on Our Website!
+#' @examples
+#' head(example_isolates_unclean)
 "example_isolates_unclean"
 
 #' Data Set with `r format(nrow(WHONET), big.mark = ",")` Isolates - WHONET Example
@@ -231,7 +238,8 @@
 #' - `Date of data entry`\cr [Date] this data was entered in WHONET
 #' - `AMP_ND10:CIP_EE`\cr `r sum(vapply(FUN.VALUE = logical(1), WHONET, is.rsi))` different antibiotics. You can lookup the abbreviations in the [antibiotics] data set, or use e.g. [`ab_name("AMP")`][ab_name()] to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using [as.rsi()].
 #' @inheritSection AMR Reference Data Publicly Available
-#' @inheritSection AMR Read more on Our Website!
+#' @examples
+#' head(WHONET)
 "WHONET"
 
 #' Data Set for R/SI Interpretation
@@ -250,16 +258,11 @@
 #' - `breakpoint_R`\cr Highest MIC value or lowest number of millimetres that leads to "R"
 #' - `uti`\cr A [logical] value (`TRUE`/`FALSE`) to indicate whether the rule applies to a urinary tract infection (UTI)
 #' @details 
-#' Overview of the data set:
-#' 
-#' ```{r}
-#' head(rsi_translation)
-#' ```
-#' 
 #' The repository of this `AMR` package contains a file comprising this exact data set: <https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt>. This file **allows for machine reading EUCAST and CLSI guidelines**, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. The file is updated automatically and the `mo` and `ab` columns have been transformed to contain the full official names instead of codes.
 #' @inheritSection AMR Reference Data Publicly Available
-#' @inheritSection AMR Read more on Our Website!
 #' @seealso [intrinsic_resistant]
+#' @examples
+#' head(rsi_translation)
 "rsi_translation"
 
 #' Data Set with Bacterial Intrinsic Resistance
@@ -272,18 +275,8 @@
 #' 
 #' This data set is based on `r format_eucast_version_nr(3.3)`.
 #' @inheritSection AMR Reference Data Publicly Available
-#' @inheritSection AMR Read more on Our Website!
 #' @examples
-#' \donttest{
-#' if (require("dplyr")) {
-#'   intrinsic_resistant %>%
-#'     mutate(mo = mo_name(mo),
-#'            ab = ab_name(mo))
-#'     filter(ab == "Vancomycin" & mo %like% "Enterococcus") %>% 
-#'     pull(mo)
-#'   #> [1] "Enterococcus casseliflavus" "Enterococcus gallinarum"
-#' }
-#' }
+#' head(intrinsic_resistant)
 "intrinsic_resistant"
 
 #' Data Set with Treatment Dosages as Defined by EUCAST
@@ -301,5 +294,6 @@
 #' - `eucast_version`\cr Version number of the EUCAST Clinical Breakpoints guideline to which these dosages apply
 #' @details `r format_eucast_version_nr(11.0)` are based on the dosages in this data set.
 #' @inheritSection AMR Reference Data Publicly Available
-#' @inheritSection AMR Read more on Our Website!
+#' @examples
+#' head(dosage)
 "dosage"

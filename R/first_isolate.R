@@ -26,7 +26,6 @@
 #' Determine First Isolates
 #'
 #' Determine first isolates of all microorganisms of every patient per episode and (if needed) per specimen type. These functions support all four methods as summarised by Hindler *et al.* in 2007 (\doi{10.1086/511864}). To determine patient episodes not necessarily based on microorganisms, use [is_new_episode()] that also supports grouping with the `dplyr` package.
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param x a [data.frame] containing isolates. Can be left blank for automatic determination, see *Examples*.
 #' @param col_date column name of the result date (or date that is was received on the lab), defaults to the first column with a date class
 #' @param col_patient_id column name of the unique IDs of the patients, defaults to the first column that starts with 'patient' or 'patid' (case insensitive)
@@ -126,7 +125,6 @@
 #' - **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition**, 2014, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
 #' 
 #' - Hindler JF and Stelling J (2007). **Analysis and Presentation of Cumulative Antibiograms: A New Consensus Guideline from the Clinical and Laboratory Standards Institute.** Clinical Infectious Diseases, 44(6), 867-873. \doi{10.1086/511864}
-#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' # `example_isolates` is a data set available in the AMR package.
 #' # See ?example_isolates.
@@ -134,7 +132,7 @@
 #' example_isolates[first_isolate(), ]
 #' \donttest{
 #' # get all first Gram-negatives
-#' example_isolates[which(first_isolate() & mo_is_gram_negative()), ]
+#' example_isolates[which(first_isolate(info = FALSE) & mo_is_gram_negative()), ]
 #'
 #' if (require("dplyr")) {
 #'   # filter on first isolates using dplyr:
@@ -143,12 +141,13 @@
 #'  
 #'   # short-hand version:
 #'   example_isolates %>%
-#'     filter_first_isolate()
+#'     filter_first_isolate(info = FALSE)
 #'     
-#'  # grouped determination of first isolates (also prints group names):
+#'  # flag the first isolates per group:
 #'  example_isolates %>%
 #'    group_by(hospital_id) %>%
-#'    mutate(first = first_isolate())
+#'    mutate(first = first_isolate()) %>%
+#'    select(hospital_id, date, patient_id, mo, first)
 #'   
 #'   # now let's see if first isolates matter:
 #'   A <- example_isolates %>%
@@ -163,6 +162,9 @@
 #'               resistance = resistance(GEN))  # gentamicin resistance
 #'  
 #'   # Have a look at A and B.
+#'   A
+#'   B
+#'   
 #'   # B is more reliable because every isolate is counted only once.
 #'   # Gentamicin resistance in hospital D appears to be 4.2% higher than
 #'   # when you (erroneously) would have used all isolates for analysis.

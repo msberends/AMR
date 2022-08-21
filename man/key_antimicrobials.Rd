@@ -107,19 +107,6 @@ The default antimicrobial agents used for \strong{fungi} (set in \code{antifunga
 \item Voriconazole
 }
 }
-\section{Stable Lifecycle}{
-
-\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:"5"} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
-
-If the unlying code needs breaking changes, they will occur gradually. For example, an argument will be deprecated and first continue to work, but will emit a message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
-}
-
-\section{Read more on Our Website!}{
-
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
-}
-
 \examples{
 # `example_isolates` is a data set available in the AMR package.
 # See ?example_isolates.
@@ -147,7 +134,7 @@ if (require("dplyr")) {
       first_weighted = first_isolate(col_keyantimicrobials = "keyab")
     )
  
-  # Check the difference, in this data set it results in more isolates:
+  # Check the difference in this data set, 'weighted' results in more isolates:
   sum(my_patients$first_regular, na.rm = TRUE)
   sum(my_patients$first_weighted, na.rm = TRUE)
 }

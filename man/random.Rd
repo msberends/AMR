@@ -35,32 +35,19 @@ The base \R function \code{\link[=sample]{sample()}} is used for generating valu
 
 Generated values are based on the EUCAST 2022 guideline as implemented in the \link{rsi_translation} data set. To create specific generated values per bug or drug, set the \code{mo} and/or \code{ab} argument.
 }
-\section{Stable Lifecycle}{
-
-\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:"5"} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
-
-If the unlying code needs breaking changes, they will occur gradually. For example, an argument will be deprecated and first continue to work, but will emit a message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
-}
-
-\section{Read more on Our Website!}{
-
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
-}
-
 \examples{
-random_mic(100)
-random_disk(100)
-random_rsi(100)
+random_mic(25)
+random_disk(25)
+random_rsi(25)
 
 \donttest{
 # make the random generation more realistic by setting a bug and/or drug:
-random_mic(100, "Klebsiella pneumoniae")                 # range 0.0625-64
-random_mic(100, "Klebsiella pneumoniae", "meropenem")    # range 0.0625-16
-random_mic(100, "Streptococcus pneumoniae", "meropenem") # range 0.0625-4
+random_mic(25, "Klebsiella pneumoniae")                 # range 0.0625-64
+random_mic(25, "Klebsiella pneumoniae", "meropenem")    # range 0.0625-16
+random_mic(25, "Streptococcus pneumoniae", "meropenem") # range 0.0625-4
 
-random_disk(100, "Klebsiella pneumoniae")                  # range 8-50
-random_disk(100, "Klebsiella pneumoniae", "ampicillin")    # range 11-17
-random_disk(100, "Streptococcus pneumoniae", "ampicillin") # range 12-27
+random_disk(25, "Klebsiella pneumoniae")                  # range 8-50
+random_disk(25, "Klebsiella pneumoniae", "ampicillin")    # range 11-17
+random_disk(25, "Streptococcus pneumoniae", "ampicillin") # range 12-27
 }
 }

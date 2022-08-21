@@ -26,7 +26,6 @@
 #' *G*-test for Count Data
 #'
 #' [g.test()] performs chi-squared contingency table tests and goodness-of-fit tests, just like [chisq.test()] but is more reliable (1). A *G*-test can be used to see whether the number of observations in each category fits a theoretical expectation (called a ***G*-test of goodness-of-fit**), or to see whether the proportions of one variable are different for different values of the other variable (called a ***G*-test of independence**).
-#' @inheritSection lifecycle Questioning Lifecycle
 #' @inherit stats::chisq.test params return
 #' @details If `x` is a [matrix] with one row or column, or if `x` is a vector and `y` is not given, then a *goodness-of-fit test* is performed (`x` is treated as a one-dimensional contingency table). The entries of `x` must be non-negative integers. In this case, the hypothesis tested is whether the population probabilities equal those in `p`, or are all equal if `p` is not given.
 #'
@@ -76,7 +75,6 @@
 #' - The possibility to simulate p values with `simulate.p.value` was removed
 #' @export
 #' @importFrom stats pchisq complete.cases
-#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' # = EXAMPLE 1 =
 #' # Shivrain et al. (2006) crossed clearfield rice (which are resistant
@@ -88,8 +86,7 @@
 #' # ratio.
 #'
 #' x <- c(772, 1611, 737)
-#' G <- g.test(x, p = c(1, 2, 1) / 4)
-#' # G$p.value = 0.12574.
+#' g.test(x, p = c(1, 2, 1) / 4)
 #'
 #' # There is no significant difference from a 1:2:1 ratio.
 #' # Meaning: resistance controlled by a single gene with two co-dominant
@@ -105,11 +102,9 @@
 #'
 #' x <- c(1752, 1895)
 #' g.test(x)
-#' # p = 0.01787343
 #'
 #' # There is a significant difference from a 1:1 ratio.
 #' # Meaning: there are significantly more left-billed birds.
-#'
 g.test <- function(x,
                    y = NULL,
                    # correct = TRUE,

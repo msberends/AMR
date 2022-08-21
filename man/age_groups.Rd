@@ -33,19 +33,6 @@ The default is to split on young children (0-11), youth (12-24), young adults (2
 }
 }
 }
-\section{Stable Lifecycle}{
-
-\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:"5"} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
-
-If the unlying code needs breaking changes, they will occur gradually. For example, an argument will be deprecated and first continue to work, but will emit a message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
-}
-
-\section{Read more on Our Website!}{
-
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
-}
-
 \examples{
 ages <- c(3, 8, 16, 54, 31, 76, 101, 43, 21)
 
@@ -64,7 +51,7 @@ age_groups(ages, 1:20 * 5)
 age_groups(ages, split_at = "fives")
 
 # split specifically for children
-age_groups(ages, c(1, 2, 4, 6, 13, 17))
+age_groups(ages, c(1, 2, 4, 6, 13, 18))
 age_groups(ages, "children")
 
 \donttest{
@@ -75,7 +62,10 @@ if (require("dplyr")) {
     filter(mo == as.mo("E. coli")) \%>\%
     group_by(age_group = age_groups(age)) \%>\%
     select(age_group, CIP) \%>\%
-    ggplot_rsi(x = "age_group", minimum = 0)
+    ggplot_rsi(x = "age_group",
+               minimum = 0,
+               x.title = "Age Group",
+               title = "Ciprofloxacin resistance per age group")
 }
 }
 }

@@ -26,7 +26,6 @@
 #' Transform Input to a Microorganism Code
 #'
 #' Use this function to determine a valid microorganism code ([`mo`]). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see *Source*). The input can be almost anything: a full name (like `"Staphylococcus aureus"`), an abbreviated name (such as `"S. aureus"`), an abbreviation known in the field (such as `"MRSA"`), or just a genus. See *Examples*.
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param x a [character] vector or a [data.frame] with one or two columns
 #' @param Becker a [logical] to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker *et al.* (1,2,3).
 #'
@@ -116,7 +115,6 @@
 #'
 #' The [`mo_*`][mo_property()] functions (such as [mo_genus()], [mo_gramstain()]) to get properties based on the returned code.
 #' @inheritSection AMR Reference Data Publicly Available
-#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' \donttest{
 #' # These examples all return "B_STPHY_AURS", the ID of S. aureus:

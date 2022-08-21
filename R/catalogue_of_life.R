@@ -59,7 +59,6 @@ format_included_data_number <- function(data) {
 #' The Catalogue of Life (<http://www.catalogueoflife.org>) is the most comprehensive and authoritative global index of species currently available. It holds essential information on the names, relationships and distributions of over 1.9 million species. The Catalogue of Life is used to support the major biodiversity and conservation information services such as the Global Biodiversity Information Facility (GBIF), Encyclopedia of Life (EoL) and the International Union for Conservation of Nature Red List. It is recognised by the Convention on Biological Diversity as a significant component of the Global Taxonomy Initiative and a contribution to Target 1 of the Global Strategy for Plant Conservation.
 #'
 #' The syntax used to transform the original data to a cleansed \R format, can be found here: <https://github.com/msberends/AMR/blob/main/data-raw/reproduction_of_microorganisms.R>.
-#' @inheritSection AMR Read more on Our Website!
 #' @name catalogue_of_life
 #' @rdname catalogue_of_life
 #' @seealso Data set [microorganisms] for the actual data. \cr
@@ -71,28 +70,19 @@ format_included_data_number <- function(data) {
 #'
 #' # Get a note when a species was renamed
 #' mo_shortname("Chlamydophila psittaci")
-#' # Note: 'Chlamydophila psittaci' (Everett et al., 1999) was renamed back to
-#' #       'Chlamydia psittaci' (Page, 1968)
-#' #> [1] "C. psittaci"
 #'
 #' # Get any property from the entire taxonomic tree for all included species
 #' mo_class("E. coli")
-#' #> [1] "Gammaproteobacteria"
 #'
 #' mo_family("E. coli")
-#' #> [1] "Enterobacteriaceae"
 #'
 #' mo_gramstain("E. coli") # based on kingdom and phylum, see ?mo_gramstain
-#' #> [1] "Gram-negative"
 #'
 #' mo_ref("E. coli")
-#' #> [1] "Castellani et al., 1919"
 #'
 #' # Do not get mistaken - this package is about microorganisms
 #' mo_kingdom("C. elegans")
-#' #> [1] "Fungi"                 # Fungi?!
 #' mo_name("C. elegans")
-#' #> [1] "Cladosporium elegans"  # Because a microorganism was found
 NULL
 
 #' Version info of included Catalogue of Life
@@ -102,7 +92,6 @@ NULL
 #' @details For LPSN, see [microorganisms].
 #' @return a [list], which prints in pretty format
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @inheritSection AMR Read more on Our Website!
 #' @export
 catalogue_of_life_version <- function() {
   

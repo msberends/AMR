@@ -26,7 +26,6 @@
 #' Determine (New) Episodes for Patients
 #' 
 #' These functions determine which items in a vector can be considered (the start of) a new episode, based on the argument `episode_days`. This can be used to determine clinical episodes for any epidemiological analysis. The [get_episode()] function returns the index number of the episode per group, while the [is_new_episode()] function returns values `TRUE`/`FALSE` to indicate whether an item in a vector is the start of a new episode.
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param x vector of dates (class `Date` or `POSIXt`), will be sorted internally to determine episodes
 #' @param episode_days required episode length in days, can also be less than a day or `Inf`, see *Details*
 #' @param ... ignored, only in place to allow future extensions
@@ -42,16 +41,16 @@
 #' @seealso [first_isolate()]
 #' @rdname get_episode
 #' @export
-#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' # `example_isolates` is a data set available in the AMR package.
-#' # See ?example_isolates.
+#' # See ?example_isolates
+#' df <- example_isolates[sample(seq_len(2000), size = 200), ]
 #' 
-#' get_episode(example_isolates$date, episode_days = 60)    # indices
-#' is_new_episode(example_isolates$date, episode_days = 60) # TRUE/FALSE
+#' get_episode(df$date, episode_days = 60)    # indices
+#' is_new_episode(df$date, episode_days = 60) # TRUE/FALSE
 #' 
 #' # filter on results from the third 60-day episode only, using base R
-#' example_isolates[which(get_episode(example_isolates$date, 60) == 3), ]
+#' df[which(get_episode(df$date, 60) == 3), ]
 #' 
 #' # the functions also work for less than a day, e.g. to include one per hour:
 #' get_episode(c(Sys.time(),
@@ -62,24 +61,24 @@
 #' if (require("dplyr")) {
 #'   # is_new_episode() can also be used in dplyr verbs to determine patient
 #'   # episodes based on any (combination of) grouping variables:
-#'   example_isolates %>%
+#'   df %>%
 #'     mutate(condition = sample(x = c("A", "B", "C"), 
 #'                               size = 2000,
 #'                               replace = TRUE)) %>% 
 #'     group_by(condition) %>%
-#'     mutate(new_episode = is_new_episode(date, 365))
+#'     mutate(new_episode = is_new_episode(date, 365)) %>%
+#'     select(patient_id, date, condition, new_episode)
 #'     
-#'   example_isolates %>%
+#'   df %>%
 #'     group_by(hospital_id, patient_id) %>%
 #'     transmute(date, 
 #'               patient_id,
 #'               new_index = get_episode(date, 60),
 #'               new_logical = is_new_episode(date, 60))
 #'   
-#'   
-#'   example_isolates %>%
+#'   df %>%
 #'     group_by(hospital_id) %>% 
-#'     summarise(patients = n_distinct(patient_id),
+#'     summarise(n_patients = n_distinct(patient_id),
 #'               n_episodes_365 = sum(is_new_episode(date, episode_days = 365)),
 #'               n_episodes_60  = sum(is_new_episode(date, episode_days = 60)),
 #'               n_episodes_30  = sum(is_new_episode(date, episode_days = 30)))
@@ -87,21 +86,23 @@
 #'     
 #'   # grouping on patients and microorganisms leads to the same
 #'   # results as first_isolate() when using 'episode-based':
-#'   x <- example_isolates %>%
+#'   x <- df %>%
 #'     filter_first_isolate(include_unknown = TRUE,
 #'                          method = "episode-based")
 #'     
-#'   y <- example_isolates %>%
+#'   y <- df %>%
 #'     group_by(patient_id, mo) %>%
-#'     filter(is_new_episode(date, 365))
+#'     filter(is_new_episode(date, 365)) %>%
+#'     ungroup()
 #'
-#'   identical(x$patient_id, y$patient_id)
+#'   identical(x, y)
 #'   
 #'   # but is_new_episode() has a lot more flexibility than first_isolate(),
 #'   # since you can now group on anything that seems relevant:
-#'   example_isolates %>%
+#'   df %>%
 #'     group_by(patient_id, mo, hospital_id, ward_icu) %>%
-#'     mutate(flag_episode = is_new_episode(date, 365))
+#'     mutate(flag_episode = is_new_episode(date, 365)) %>%
+#'     select(group_vars(.), flag_episode)
 #' }
 #' }
 get_episode <- function(x, episode_days, ...) {

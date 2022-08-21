@@ -32,28 +32,16 @@ The \code{\link[=first_isolate]{first_isolate()}} function is a wrapper around t
 
 The \code{dplyr} package is not required for these functions to work, but these functions do support \link[dplyr:group_by]{variable grouping} and work conveniently inside \code{dplyr} verbs such as \code{\link[dplyr:filter]{filter()}}, \code{\link[dplyr:mutate]{mutate()}} and \code{\link[dplyr:summarise]{summarise()}}.
 }
-\section{Stable Lifecycle}{
-
-\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:"5"} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
-
-If the unlying code needs breaking changes, they will occur gradually. For example, an argument will be deprecated and first continue to work, but will emit a message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
-}
-
-\section{Read more on Our Website!}{
-
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
-}
-
 \examples{
 # `example_isolates` is a data set available in the AMR package.
-# See ?example_isolates.
+# See ?example_isolates
+df <- example_isolates[sample(seq_len(2000), size = 200), ]
 
-get_episode(example_isolates$date, episode_days = 60)    # indices
-is_new_episode(example_isolates$date, episode_days = 60) # TRUE/FALSE
+get_episode(df$date, episode_days = 60)    # indices
+is_new_episode(df$date, episode_days = 60) # TRUE/FALSE
 
 # filter on results from the third 60-day episode only, using base R
-example_isolates[which(get_episode(example_isolates$date, 60) == 3), ]
+df[which(get_episode(df$date, 60) == 3), ]
 
 # the functions also work for less than a day, e.g. to include one per hour:
 get_episode(c(Sys.time(),
@@ -64,24 +52,24 @@ get_episode(c(Sys.time(),
 if (require("dplyr")) {
   # is_new_episode() can also be used in dplyr verbs to determine patient
   # episodes based on any (combination of) grouping variables:
-  example_isolates \%>\%
+  df \%>\%
     mutate(condition = sample(x = c("A", "B", "C"), 
                               size = 2000,
                               replace = TRUE)) \%>\% 
     group_by(condition) \%>\%
-    mutate(new_episode = is_new_episode(date, 365))
+    mutate(new_episode = is_new_episode(date, 365)) \%>\%
+    select(patient_id, date, condition, new_episode)
     
-  example_isolates \%>\%
+  df \%>\%
     group_by(hospital_id, patient_id) \%>\%
     transmute(date, 
               patient_id,
               new_index = get_episode(date, 60),
               new_logical = is_new_episode(date, 60))
   
-  
-  example_isolates \%>\%
+  df \%>\%
     group_by(hospital_id) \%>\% 
-    summarise(patients = n_distinct(patient_id),
+    summarise(n_patients = n_distinct(patient_id),
               n_episodes_365 = sum(is_new_episode(date, episode_days = 365)),
               n_episodes_60  = sum(is_new_episode(date, episode_days = 60)),
               n_episodes_30  = sum(is_new_episode(date, episode_days = 30)))
@@ -89,21 +77,23 @@ if (require("dplyr")) {
     
   # grouping on patients and microorganisms leads to the same
   # results as first_isolate() when using 'episode-based':
-  x <- example_isolates \%>\%
+  x <- df \%>\%
     filter_first_isolate(include_unknown = TRUE,
                          method = "episode-based")
     
-  y <- example_isolates \%>\%
+  y <- df \%>\%
     group_by(patient_id, mo) \%>\%
-    filter(is_new_episode(date, 365))
+    filter(is_new_episode(date, 365)) \%>\%
+    ungroup()
 
-  identical(x$patient_id, y$patient_id)
+  identical(x, y)
   
   # but is_new_episode() has a lot more flexibility than first_isolate(),
   # since you can now group on anything that seems relevant:
-  example_isolates \%>\%
+  df \%>\%
     group_by(patient_id, mo, hospital_id, ward_icu) \%>\%
-    mutate(flag_episode = is_new_episode(date, 365))
+    mutate(flag_episode = is_new_episode(date, 365)) \%>\%
+    select(group_vars(.), flag_episode)
 }
 }
 }

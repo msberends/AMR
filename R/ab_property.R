@@ -26,7 +26,6 @@
 #' Get Properties of an Antibiotic
 #'
 #' Use these functions to return a specific property of an antibiotic from the [antibiotics] data set. All input values will be evaluated internally with [as.ab()].
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param x any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
 #' @param tolower a [logical] to indicate whether the first [character] of every output should be transformed to a lower case [character]. This will lead to e.g. "polymyxin B" and not "polymyxin b".
 #' @param property one of the column names of one of the [antibiotics] data set: `vector_or(colnames(antibiotics), sort = FALSE)`.
@@ -54,7 +53,6 @@
 #' @export
 #' @seealso [antibiotics]
 #' @inheritSection AMR Reference Data Publicly Available
-#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' # all properties:
 #' ab_name("AMX")       # "Amoxicillin"
@@ -101,15 +99,18 @@
 #' \donttest{
 #' if (require("dplyr")) {
 #'   example_isolates %>%
-#'     set_ab_names()
+#'     set_ab_names() %>%
+#'     head()
 #'     
 #'   # this does the same:
 #'   example_isolates %>%
-#'     rename_with(set_ab_names)
+#'     rename_with(set_ab_names)%>%
+#'     head()
 #'   
 #'   # set_ab_names() works with any AB property:
 #'   example_isolates %>%
-#'     set_ab_names(property = "atc")
+#'     set_ab_names(property = "atc")%>%
+#'     head()
 #'     
 #'  example_isolates %>%
 #'    set_ab_names(where(is.rsi)) %>%

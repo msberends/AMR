@@ -43,7 +43,6 @@ valid_mic_levels <- c(c(t(vapply(FUN.VALUE = character(9), ops,
 #' Transform Input to Minimum Inhibitory Concentrations (MIC)
 #'
 #' This transforms vectors to a new class [`mic`], which treats the input as decimal numbers, while maintaining operators (such as ">=") and only allowing valid MIC values known to the field of (medical) microbiology.
-#' @inheritSection lifecycle Stable Lifecycle
 #' @rdname as.mic
 #' @param x a [character] or [numeric] vector
 #' @param na.rm a [logical] indicating whether missing values should be removed
@@ -95,32 +94,35 @@ valid_mic_levels <- c(c(t(vapply(FUN.VALUE = character(9), ops,
 #' @aliases mic
 #' @export
 #' @seealso [as.rsi()]
-#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' mic_data <- as.mic(c(">=32", "1.0", "1", "1.00", 8, "<=0.128", "8", "16", "16"))
+#' mic_data
 #' is.mic(mic_data)
 #'
 #' # this can also coerce combined MIC/RSI values:
-#' as.mic("<=0.002; S") # will return <=0.002
+#' as.mic("<=0.002; S")
 #' 
-#' # mathematical processing treats MICs as [numeric] values
+#' # mathematical processing treats MICs as numeric values
 #' fivenum(mic_data)
 #' quantile(mic_data)
 #' all(mic_data < 512)
 #'
 #' # interpret MIC values
 #' as.rsi(x = as.mic(2),
-#'        mo = as.mo("S. pneumoniae"),
+#'        mo = as.mo("Streptococcus pneumoniae"),
 #'        ab = "AMX",
 #'        guideline = "EUCAST")
-#' as.rsi(x = as.mic(4),
-#'        mo = as.mo("S. pneumoniae"),
+#' as.rsi(x = as.mic(c(0.01, 2, 4, 8)),
+#'        mo = as.mo("Streptococcus pneumoniae"),
 #'        ab = "AMX",
 #'        guideline = "EUCAST")
 #'
 #' # plot MIC values, see ?plot
 #' plot(mic_data)
 #' plot(mic_data, mo = "E. coli", ab = "cipro")
+#' autoplot(mic_data, mo = "E. coli", ab = "cipro")
+#' autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "nl") # Dutch
+#' autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "uk") # Ukrainian
 as.mic <- function(x, na.rm = FALSE) {
   meet_criteria(x, allow_class = c("mic", "character", "numeric", "integer", "factor"), allow_NA = TRUE)
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)

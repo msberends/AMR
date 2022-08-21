@@ -26,7 +26,6 @@
 #' PCA Biplot with `ggplot2`
 #'
 #' Produces a `ggplot2` variant of a so-called [biplot](https://en.wikipedia.org/wiki/Biplot) for PCA (principal component analysis), but is more flexible and more appealing than the base \R [biplot()] function.
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param x an object returned by [pca()], [prcomp()] or [princomp()]
 #' @inheritParams stats::biplot.prcomp
 #' @param labels an optional vector of labels for the observations. If set, the labels will be placed below their respective points. When using the [pca()] function as input for `x`, this will be determined automatically based on the attribute `non_numeric_cols`, see [pca()].
@@ -64,23 +63,28 @@
 #' # `example_isolates` is a data set available in the AMR package.
 #' # See ?example_isolates.
 #'
-#' # See ?pca for more info about Principal Component Analysis (PCA).
 #' \donttest{
 #' if (require("dplyr")) {
-#'   pca_model <- example_isolates %>% 
-#'     filter(mo_genus(mo) == "Staphylococcus") %>% 
-#'     group_by(species = mo_shortname(mo)) %>%
-#'     summarise_if (is.rsi, resistance) %>%
-#'     pca(FLC, AMC, CXM, GEN, TOB, TMP, SXT, CIP, TEC, TCY, ERY)
+#'   # calculate the resistance per group first 
+#'   resistance_data <- example_isolates %>% 
+#'     group_by(order = mo_order(mo),       # group on anything, like order
+#'              genus = mo_genus(mo)) %>%   #   and genus as we do here;
+#'     filter(n() >= 30) %>%                # filter on only 30 results per group
+#'     summarise_if(is.rsi, resistance)     # then get resistance of all drugs
 #'     
-#'   # old (base R)
-#'   biplot(pca_model)
+#'   # now conduct PCA for certain antimicrobial agents
+#'   pca_result <- resistance_data %>%         
+#'     pca(AMC, CXM, CTX, CAZ, GEN, TOB, TMP, SXT) 
+#'     
+#'   summary(pca_result)
 #'   
-#'   # new 
-#'   ggplot_pca(pca_model)
+#'   # old base R plotting method:
+#'   biplot(pca_result)
+#'   # new ggplot2 plotting method using this package:
+#'   ggplot_pca(pca_result)
 #'   
 #'   if (require("ggplot2")) {
-#'     ggplot_pca(pca_model) +
+#'     ggplot_pca(pca_result) +
 #'       scale_colour_viridis_d() +
 #'       labs(title = "Title here")
 #'   }

@@ -26,7 +26,6 @@
 #' AMR Plots with `ggplot2`
 #'
 #' Use these functions to create bar plots for AMR data analysis. All functions rely on [ggplot2][ggplot2::ggplot()] functions.
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param data a [data.frame] with column(s) of class [`rsi`] (see [as.rsi()])
 #' @param position position adjustment of bars, either `"fill"`, `"stack"` or `"dodge"`
 #' @param x variable to show on x axis, either `"antibiotic"` (default) or `"interpretation"` or a grouping variable
@@ -65,7 +64,6 @@
 #' [ggplot_rsi()] is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (`%>%`). See *Examples*.
 #' @rdname ggplot_rsi
 #' @export
-#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' \donttest{
 #' if (require("ggplot2") & require("dplyr")) {

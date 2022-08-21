@@ -33,39 +33,31 @@ Interpret disk values as RSI values with \code{\link[=as.rsi]{as.rsi()}}. It sup
 
 \code{NA_disk_} is a missing value of the new \verb{<disk>} class.
 }
-\section{Stable Lifecycle}{
-
-\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:"5"} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
-
-If the unlying code needs breaking changes, they will occur gradually. For example, an argument will be deprecated and first continue to work, but will emit a message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
-}
-
-\section{Read more on Our Website!}{
-
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
-}
-
 \examples{
-\donttest{
-# transform existing disk zones to the `disk` class
-df <- data.frame(microorganism = "E. coli",
+# transform existing disk zones to the `disk` class (using base R)
+df <- data.frame(microorganism = "Escherichia coli",
                  AMP = 20,
                  CIP = 14,
                  GEN = 18,
                  TOB = 16)
 df[, 2:5] <- lapply(df[, 2:5], as.disk)
-# same with dplyr:
-# df \%>\% mutate(across(AMP:TOB, as.disk))
+str(df)
+
+#' \donttest{
+# transforming is easier with dplyr:
+if (require("dplyr")) {
+  df \%>\% mutate(across(AMP:TOB, as.disk))
+}
+}
 
 # interpret disk values, see ?as.rsi
 as.rsi(x = as.disk(18),
        mo = "Strep pneu",  # `mo` will be coerced with as.mo()
        ab = "ampicillin",  # and `ab` with as.ab()
        guideline = "EUCAST")
-       
-as.rsi(df)
-}
+
+# interpret whole data set, pretend to be all from urinary tract infections:
+as.rsi(df, uti = TRUE)
 }
 \seealso{
 \code{\link[=as.rsi]{as.rsi()}}

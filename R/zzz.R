@@ -87,6 +87,9 @@ if (utf8_supported && !is_latex) {
   s3_register("vctrs::vec_ptype2", "ab_selector.character")
   s3_register("vctrs::vec_ptype2", "character.ab_selector")
   s3_register("vctrs::vec_cast", "character.ab_selector")
+  s3_register("vctrs::vec_ptype2", "ab_selector_any_all.logical")
+  s3_register("vctrs::vec_ptype2", "logical.ab_selector_any_all")
+  s3_register("vctrs::vec_cast", "logical.ab_selector_any_all")
   s3_register("vctrs::vec_ptype2", "disk.integer")
   s3_register("vctrs::vec_ptype2", "integer.disk")
   s3_register("vctrs::vec_cast", "integer.disk")
@@ -106,11 +109,6 @@ if (utf8_supported && !is_latex) {
   assign(x = "MO.old_lookup", value = create_MO.old_lookup(), envir = asNamespace("AMR"))
   # for mo_is_intrinsic_resistant() - saves a lot of time when executed on this vector
   assign(x = "INTRINSIC_R", value = create_intr_resistance(), envir = asNamespace("AMR"))
-  
-  # for building the website, only print first 5 rows of a data set
-  # if (Sys.getenv("IN_PKGDOWN") != "" && !interactive()) {
-  #   ...
-  # }
 }
 
 # Helper functions --------------------------------------------------------

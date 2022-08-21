@@ -110,14 +110,6 @@ Valid options for the statistical model (argument \code{model}) are:
 \item \code{"lin"} or \code{"linear"}: a linear regression model
 }
 }
-\section{Stable Lifecycle}{
-
-\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:"5"} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
-
-If the unlying code needs breaking changes, they will occur gradually. For example, an argument will be deprecated and first continue to work, but will emit a message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
-}
-
 \section{Interpretation of R and S/I}{
 
 In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories R and S/I as shown below (\url{https://www.eucast.org/newsiandr/}).
@@ -131,11 +123,6 @@ A microorganism is categorised as \emph{Susceptible, Increased exposure} when th
 }
 
 This AMR package honours this (new) insight. Use \code{\link[=susceptibility]{susceptibility()}} (equal to \code{\link[=proportion_SI]{proportion_SI()}}) to determine antimicrobial susceptibility and \code{\link[=count_susceptible]{count_susceptible()}} (equal to \code{\link[=count_SI]{count_SI()}}) to count susceptible isolates.
-}
-
-\section{Read more on Our Website!}{
-
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
 }
 
 \examples{
@@ -172,24 +159,8 @@ if (require("dplyr") & require("ggplot2")) {
                        model = "binomial",
                        info = FALSE,
                        minimum = 15)
-                       
+  head(data)
   autoplot(data)
-
-  ggplot(data,
-         aes(x = year)) +
-    geom_col(aes(y = value),
-             fill = "grey75") +
-    geom_errorbar(aes(ymin = se_min,
-                      ymax = se_max),
-                  colour = "grey50") +
-    scale_y_continuous(limits = c(0, 1),
-                       breaks = seq(0, 1, 0.1),
-                       labels = paste0(seq(0, 100, 10), "\%")) +
-    labs(title = expression(paste("Forecast of Amoxicillin Resistance in ",
-                                  italic("E. coli"))),
-         y = "\%R",
-         x = "Year") +
-    theme_minimal(base_size = 13)
 }
 }
 }

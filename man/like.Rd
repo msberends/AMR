@@ -45,39 +45,20 @@ These \code{\link[=like]{like()}} and \verb{\%like\%}/\verb{\%unlike\%} function
 
 Using RStudio? The \verb{\%like\%}/\verb{\%unlike\%} functions can also be directly inserted in your code from the Addins menu and can have its own keyboard shortcut like \code{Shift+Ctrl+L} or \code{Shift+Cmd+L} (see menu \code{Tools} > \verb{Modify Keyboard Shortcuts...}). If you keep pressing your shortcut, the inserted text will be iterated over \verb{\%like\%} -> \verb{\%unlike\%} -> \verb{\%like_case\%} -> \verb{\%unlike_case\%}.
 }
-\section{Stable Lifecycle}{
-
-\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:"5"} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
-
-If the unlying code needs breaking changes, they will occur gradually. For example, an argument will be deprecated and first continue to work, but will emit a message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
-}
-
-\section{Read more on Our Website!}{
-
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
-}
-
 \examples{
 a <- "This is a test"
 b <- "TEST"
 a \%like\% b
-#> TRUE
 b \%like\% a
-#> FALSE
 
 # also supports multiple patterns
 a <- c("Test case", "Something different", "Yet another thing")
 b <- c(     "case",           "diff",      "yet")
 a \%like\% b
-#> TRUE TRUE TRUE
 a \%unlike\% b
-#> FALSE FALSE FALSE
 
 a[1] \%like\% b
-#> TRUE FALSE FALSE
 a \%like\% b[1]
-#> TRUE FALSE FALSE
 
 # get isolates whose name start with 'Ent' or 'ent'
 example_isolates[which(mo_name(example_isolates$mo) \%like\% "^ent"), ]

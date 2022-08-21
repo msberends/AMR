@@ -6,15 +6,4 @@
 \description{
 These functions are so-called '\link{Deprecated}'. \strong{They will be removed in a future release.} Using the functions will give a warning with the name of the function it has been replaced by (if there is one).
 }
-\section{Retired Lifecycle}{
-
-\if{html}{\figure{lifecycle_retired.svg}{options: style=margin-bottom:"5"} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{retired}. A retired function is no longer under active development, and (if appropiate) a better alternative is available. No new arguments will be added, and only the most critical bugs will be fixed. In a future version, this function will be removed.
-}
-
-\section{Read more on Our Website!}{
-
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
-}
-
 \keyword{internal}

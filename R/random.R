@@ -25,8 +25,7 @@
 
 #' Random MIC Values/Disk Zones/RSI Generation
 #'
-#' These functions can be used for generating random MIC values and disk diffusion diameters, for AMR data analysis practice. By providing a microorganism and antimicrobial agent, the generated results will reflect reality as much as possible.
-#' @inheritSection lifecycle Stable Lifecycle 
+#' These functions can be used for generating random MIC values and disk diffusion diameters, for AMR data analysis practice. By providing a microorganism and antimicrobial agent, the generated results will reflect reality as much as possible. 
 #' @param size desired size of the returned vector. If used in a [data.frame] call or `dplyr` verb, will get the current (group) size if left blank.
 #' @param mo any [character] that can be coerced to a valid microorganism code with [as.mo()]
 #' @param ab any [character] that can be coerced to a valid antimicrobial agent code with [as.ab()]
@@ -39,21 +38,20 @@
 #' @name random
 #' @rdname random
 #' @export
-#' @inheritSection AMR Read more on Our Website!
 #' @examples
-#' random_mic(100)
-#' random_disk(100)
-#' random_rsi(100)
+#' random_mic(25)
+#' random_disk(25)
+#' random_rsi(25)
 #' 
 #' \donttest{
 #' # make the random generation more realistic by setting a bug and/or drug:
-#' random_mic(100, "Klebsiella pneumoniae")                 # range 0.0625-64
-#' random_mic(100, "Klebsiella pneumoniae", "meropenem")    # range 0.0625-16
-#' random_mic(100, "Streptococcus pneumoniae", "meropenem") # range 0.0625-4
+#' random_mic(25, "Klebsiella pneumoniae")                 # range 0.0625-64
+#' random_mic(25, "Klebsiella pneumoniae", "meropenem")    # range 0.0625-16
+#' random_mic(25, "Streptococcus pneumoniae", "meropenem") # range 0.0625-4
 #' 
-#' random_disk(100, "Klebsiella pneumoniae")                  # range 8-50
-#' random_disk(100, "Klebsiella pneumoniae", "ampicillin")    # range 11-17
-#' random_disk(100, "Streptococcus pneumoniae", "ampicillin") # range 12-27
+#' random_disk(25, "Klebsiella pneumoniae")                  # range 8-50
+#' random_disk(25, "Klebsiella pneumoniae", "ampicillin")    # range 11-17
+#' random_disk(25, "Streptococcus pneumoniae", "ampicillin") # range 12-27
 #' }
 random_mic <- function(size = NULL, mo = NULL, ab = NULL, ...) {
   meet_criteria(size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE, allow_NULL = TRUE)

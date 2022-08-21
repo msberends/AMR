@@ -26,7 +26,6 @@
 #' Guess Antibiotic Column
 #'
 #' This tries to find a column name in a data set based on information from the [antibiotics] data set. Also supports WHONET abbreviations.
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param x a [data.frame]
 #' @param search_string a text to search `x` for, will be checked with [as.ab()] if this value is not a column in `x`
 #' @param verbose a [logical] to indicate whether additional info should be printed
@@ -34,7 +33,6 @@
 #' @details You can look for an antibiotic (trade) name or abbreviation and it will search `x` and the [antibiotics] data set for any column containing a name or code of that antibiotic. **Longer columns names take precedence over shorter column names.**
 #' @return A column name of `x`, or `NULL` when no result is found.
 #' @export
-#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' df <- data.frame(amox = "S",
 #'                  tetr = "R")

@@ -77,44 +77,35 @@ Use \code{\link[=droplevels]{droplevels()}} to drop unused levels. At default, i
 
 \code{NA_mic_} is a missing value of the new \verb{<mic>} class, analogous to e.g. base \R's \code{\link[base:NA]{NA_character_}}.
 }
-\section{Stable Lifecycle}{
-
-\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:"5"} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
-
-If the unlying code needs breaking changes, they will occur gradually. For example, an argument will be deprecated and first continue to work, but will emit a message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
-}
-
-\section{Read more on Our Website!}{
-
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
-}
-
 \examples{
 mic_data <- as.mic(c(">=32", "1.0", "1", "1.00", 8, "<=0.128", "8", "16", "16"))
+mic_data
 is.mic(mic_data)
 
 # this can also coerce combined MIC/RSI values:
-as.mic("<=0.002; S") # will return <=0.002
+as.mic("<=0.002; S")
 
-# mathematical processing treats MICs as [numeric] values
+# mathematical processing treats MICs as numeric values
 fivenum(mic_data)
 quantile(mic_data)
 all(mic_data < 512)
 
 # interpret MIC values
 as.rsi(x = as.mic(2),
-       mo = as.mo("S. pneumoniae"),
+       mo = as.mo("Streptococcus pneumoniae"),
        ab = "AMX",
        guideline = "EUCAST")
-as.rsi(x = as.mic(4),
-       mo = as.mo("S. pneumoniae"),
+as.rsi(x = as.mic(c(0.01, 2, 4, 8)),
+       mo = as.mo("Streptococcus pneumoniae"),
        ab = "AMX",
        guideline = "EUCAST")
 
 # plot MIC values, see ?plot
 plot(mic_data)
 plot(mic_data, mo = "E. coli", ab = "cipro")
+autoplot(mic_data, mo = "E. coli", ab = "cipro")
+autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "nl") # Dutch
+autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "uk") # Ukrainian
 }
 \seealso{
 \code{\link[=as.rsi]{as.rsi()}}

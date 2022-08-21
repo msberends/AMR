@@ -28,7 +28,6 @@
 #' @description These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in `summarise()` from the `dplyr` package and also support grouped variables, see *Examples*.
 #'
 #' [resistance()] should be used to calculate resistance, [susceptibility()] should be used to calculate susceptibility.\cr
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param ... one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with [as.rsi()] if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See *Examples*.
 #' @param minimum the minimum allowed number of available (tested) isolates. Any isolate count lower than `minimum` will return `NA` with a warning. The default number of `30` isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see *Source*.
 #' @param as_percent a [logical] to indicate whether the output must be returned as a hundred fold with % sign (a character). A value of `0.123456` will then be returned as `"12.3%"`.
@@ -88,11 +87,11 @@
 #' @aliases portion
 #' @name proportion
 #' @export
-#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' # example_isolates is a data set available in the AMR package.
-#' ?example_isolates
+#' # run ?example_isolates for more info.
 #' 
+#' # base R ------------------------------------------------------------
 #' resistance(example_isolates$AMX)     # determines %R
 #' susceptibility(example_isolates$AMX) # determines %S+I
 #'
@@ -103,6 +102,7 @@
 #' proportion_IR(example_isolates$AMX)
 #' proportion_R(example_isolates$AMX)
 #'
+#' # dplyr -------------------------------------------------------------
 #' \donttest{
 #' if (require("dplyr")) {
 #'   example_isolates %>%
@@ -157,10 +157,11 @@
 #'     proportion_df(translate = FALSE)
 #'  
 #'   # It also supports grouping variables
+#'   # (use rsi_df to also include the count)
 #'   example_isolates %>%
 #'     select(hospital_id, AMX, CIP) %>%
 #'     group_by(hospital_id) %>%
-#'     proportion_df(translate = FALSE)
+#'     rsi_df(translate = FALSE)
 #' }
 #' }
 resistance <- function(...,

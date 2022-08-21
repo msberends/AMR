@@ -26,7 +26,6 @@
 #' Interpret MIC and Disk Values, or Clean Raw R/SI Data
 #'
 #' Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class [`rsi`], which is an ordered [factor] with levels `S < I < R`.
-#' @inheritSection lifecycle Stable Lifecycle
 #' @rdname as.rsi
 #' @param x vector of values (for class [`mic`]: MIC values in mg/L, for class [`disk`]: a disk diffusion radius in millimetres)
 #' @param mo any (vector of) text that can be coerced to valid microorganism codes with [as.mo()], can be left empty to determine it automatically
@@ -98,15 +97,10 @@
 #' @export
 #' @seealso [as.mic()], [as.disk()], [as.mo()]
 #' @inheritSection AMR Reference Data Publicly Available
-#' @inheritSection AMR Read more on Our Website!
 #' @examples
+#' example_isolates
 #' summary(example_isolates) # see all R/SI results at a glance
-#' \donttest{
-#' if (require("skimr")) {
-#'   # class <rsi> supported in skim() too:
-#'   skim(example_isolates)
-#' }
-#' }
+#' 
 #' # For INTERPRETING disk diffusion and MIC values -----------------------
 #'        
 #' # a whole data set, even with combined MIC values and disk zones
@@ -796,7 +790,7 @@ exec_as.rsi <- function(method,
                            lookup_lancefield[i],
                            lookup_other[i]))
     
-    if (any(get_record$uti == TRUE, na.rm = TRUE) && message_not_thrown_before("as.rsi", "msg3", ab)) {
+    if (any(get_record$uti == TRUE, na.rm = TRUE) && !any(uti == TRUE, na.rm = TRUE) && message_not_thrown_before("as.rsi", "msg3", ab)) {
       warning_("in `as.rsi()`: interpretation of ", font_bold(ab_name(ab, tolower = TRUE)), " is only available for (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use argument `uti` to set which isolates are from urine. See ?as.rsi.")
       rise_warning <- TRUE
     }

@@ -26,7 +26,6 @@
 #' Determine Multidrug-Resistant Organisms (MDRO)
 #'
 #' Determine which isolates are multidrug-resistant organisms (MDRO) according to international, national and custom guidelines.
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param x a [data.frame] with antibiotics columns, like `AMX` or `amox`. Can be left blank for automatic determination.
 #' @param guideline a specific guideline to follow, see sections *Supported international / national guidelines* and *Using Custom Guidelines* below. When left empty, the publication by Magiorakos *et al.* (see below) will be followed.
 #' @param ... in case of [custom_mdro_guideline()]: a set of rules, see section *Using Custom Guidelines* below. Otherwise: column name of an antibiotic, see section *Antibiotics* below.
@@ -137,15 +136,17 @@
 #' @rdname mdro
 #' @aliases MDR XDR PDR BRMO 3MRGN 4MRGN
 #' @export
-#' @inheritSection AMR Read more on Our Website!
 #' @source
 #' See the supported guidelines above for the [list] of publications used for this function.
 #' @examples
-#' mdro(example_isolates, guideline = "EUCAST")
+#' out <- mdro(example_isolates, guideline = "EUCAST")
+#' str(out)
+#' table(out)
 #' 
-#' mdro(example_isolates,
-#'      guideline = custom_mdro_guideline(AMX == "R" ~ "Custom MDRO 1",
-#'                                        VAN == "R" ~ "Custom MDRO 2"))
+#' out <- mdro(example_isolates,
+#'             guideline = custom_mdro_guideline(AMX == "R" ~ "Custom MDRO 1",
+#'                                               VAN == "R" ~ "Custom MDRO 2"))
+#' table(out)
 #' 
 #' \donttest{
 #' if (require("dplyr")) {
@@ -155,10 +156,10 @@
 #'   
 #'   # no need to define `x` when used inside dplyr verbs:
 #'   example_isolates %>%
-#'     mutate(MDRO = mdro(),
-#'            EUCAST = eucast_exceptional_phenotypes(),
-#'            BRMO = brmo(),
-#'            MRGN = mrgn())
+#'     mutate(MDRO = mdro()) %>%
+#'     pull(MDRO) %>%
+#'     table()
+#'            
 #' }
 #' }
 mdro <- function(x = NULL,
@@ -191,8 +192,10 @@ mdro <- function(x = NULL,
   
   info.bak <- info
   # don't thrown info's more than once per call
-  info <- message_not_thrown_before("mdro")
-
+  if (isTRUE(info)) {
+    info <- message_not_thrown_before("mdro")
+  }
+  
   if (interactive() & verbose == TRUE & info == TRUE) {
     txt <- paste0("WARNING: In Verbose mode, the mdro() function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.",
                   "\n\nThis may overwrite your existing data if you use e.g.:",

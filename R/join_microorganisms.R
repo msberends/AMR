@@ -26,7 +26,6 @@
 #' Join [microorganisms] to a Data Set
 #'
 #' Join the data set [microorganisms] easily to an existing data set or to a [character] vector.
-#' @inheritSection lifecycle Stable Lifecycle
 #' @rdname join
 #' @name join
 #' @aliases join inner_join
@@ -37,7 +36,6 @@
 #' @details **Note:** As opposed to the `join()` functions of `dplyr`, [character] vectors are supported and at default existing columns will get a suffix `"2"` and the newly joined columns will not get a suffix. 
 #' 
 #' If the `dplyr` package is installed, their join functions will be used. Otherwise, the much slower [merge()] and [interaction()] functions from base \R will be used.
-#' @inheritSection AMR Read more on Our Website!
 #' @return a [data.frame]
 #' @export
 #' @examples

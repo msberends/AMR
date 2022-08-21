@@ -164,19 +164,6 @@ The default method is phenotype-based (using \code{type = "points"}) and episode
 
 }
 }
-\section{Stable Lifecycle}{
-
-\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:"5"} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
-
-If the unlying code needs breaking changes, they will occur gradually. For example, an argument will be deprecated and first continue to work, but will emit a message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
-}
-
-\section{Read more on Our Website!}{
-
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
-}
-
 \examples{
 # `example_isolates` is a data set available in the AMR package.
 # See ?example_isolates.
@@ -184,7 +171,7 @@ On our website \url{https://msberends.github.io/AMR/} you can find \href{https:/
 example_isolates[first_isolate(), ]
 \donttest{
 # get all first Gram-negatives
-example_isolates[which(first_isolate() & mo_is_gram_negative()), ]
+example_isolates[which(first_isolate(info = FALSE) & mo_is_gram_negative()), ]
 
 if (require("dplyr")) {
   # filter on first isolates using dplyr:
@@ -193,12 +180,13 @@ if (require("dplyr")) {
  
   # short-hand version:
   example_isolates \%>\%
-    filter_first_isolate()
+    filter_first_isolate(info = FALSE)
     
- # grouped determination of first isolates (also prints group names):
+ # flag the first isolates per group:
  example_isolates \%>\%
    group_by(hospital_id) \%>\%
-   mutate(first = first_isolate())
+   mutate(first = first_isolate()) \%>\%
+   select(hospital_id, date, patient_id, mo, first)
   
   # now let's see if first isolates matter:
   A <- example_isolates \%>\%
@@ -213,6 +201,9 @@ if (require("dplyr")) {
               resistance = resistance(GEN))  # gentamicin resistance
  
   # Have a look at A and B.
+  A
+  B
+  
   # B is more reliable because every isolate is counted only once.
   # Gentamicin resistance in hospital D appears to be 4.2\% higher than
   # when you (erroneously) would have used all isolates for analysis.

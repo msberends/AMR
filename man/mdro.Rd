@@ -163,14 +163,6 @@ table(x)
 The rules set (the \code{custom} object in this case) could be exported to a shared file location using \code{\link[=saveRDS]{saveRDS()}} if you collaborate with multiple users. The custom rules set could then be imported using \code{\link[=readRDS]{readRDS()}}.
 }
 
-\section{Stable Lifecycle}{
-
-\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:"5"} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
-
-If the unlying code needs breaking changes, they will occur gradually. For example, an argument will be deprecated and first continue to work, but will emit a message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
-}
-
 \section{Antibiotics}{
 
 To define antibiotics column names, leave as it is to determine it automatically with \code{\link[=guess_ab_col]{guess_ab_col()}} or input a text (case-insensitive), or use \code{NULL} to skip a column (e.g. \code{TIC = NULL} to skip ticarcillin). Manually defined but non-existing columns will be skipped with a warning.
@@ -195,17 +187,15 @@ A microorganism is categorised as \emph{Susceptible, Increased exposure} when th
 This AMR package honours this (new) insight. Use \code{\link[=susceptibility]{susceptibility()}} (equal to \code{\link[=proportion_SI]{proportion_SI()}}) to determine antimicrobial susceptibility and \code{\link[=count_susceptible]{count_susceptible()}} (equal to \code{\link[=count_SI]{count_SI()}}) to count susceptible isolates.
 }
 
-\section{Read more on Our Website!}{
-
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
-}
-
 \examples{
-mdro(example_isolates, guideline = "EUCAST")
+out <- mdro(example_isolates, guideline = "EUCAST")
+str(out)
+table(out)
 
-mdro(example_isolates,
-     guideline = custom_mdro_guideline(AMX == "R" ~ "Custom MDRO 1",
-                                       VAN == "R" ~ "Custom MDRO 2"))
+out <- mdro(example_isolates,
+            guideline = custom_mdro_guideline(AMX == "R" ~ "Custom MDRO 1",
+                                              VAN == "R" ~ "Custom MDRO 2"))
+table(out)
 
 \donttest{
 if (require("dplyr")) {
@@ -215,10 +205,10 @@ if (require("dplyr")) {
   
   # no need to define `x` when used inside dplyr verbs:
   example_isolates \%>\%
-    mutate(MDRO = mdro(),
-           EUCAST = eucast_exceptional_phenotypes(),
-           BRMO = brmo(),
-           MRGN = mrgn())
+    mutate(MDRO = mdro()) \%>\%
+    pull(MDRO) \%>\%
+    table()
+           
 }
 }
 }

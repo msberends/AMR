@@ -26,8 +26,7 @@
 #' Plotting for Classes `rsi`, `mic` and `disk`
 #' 
 #' Functions to plot classes `rsi`, `mic` and `disk`, with support for base \R and `ggplot2`.
-#' @inheritSection lifecycle Stable Lifecycle
-#' @inheritSection AMR Read more on Our Website!
+
 #' @param x,object values created with [as.mic()], [as.disk()] or [as.rsi()] (or their `random_*` variants, such as [random_mic()])
 #' @param mo any (vector of) text that can be coerced to a valid microorganism code with [as.mo()]
 #' @param ab any (vector of) text that can be coerced to a valid antimicrobial code with [as.ab()]

@@ -25,293 +25,60 @@
 # ==================================================================== #
 */
 
-/* R for Data Science (r4ds) on vignettes (articles) */
-#r4ds {
-  display: flex;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 10px;
-  padding-bottom: 10px;
+h1, h2 {
+  text-align: left !important;
 }
-#r4ds .txt {
-  width: 67%;
-}
-#r4ds .img {
-  width: 33%;
-}
-#r4ds .img img {
-  height: 120px;
-}
-
-/* class for footer */
-.footer_logo {
-  float: right;
-  height: 43px;
-  margin-top: 2px;
-}
-.partner_logo {
-  width: 19%;
-  min-width: 125px;
-}
-.countries_map {
-  float: left; 
-  padding: 0 10px 10px 0;
-  max-width: 35% !important;
-}
-@media only screen and (max-width: 992px) {
-  .footer_logo {
-    float: left;
-    margin-top: 15px;
-  }
-}
-footer p {
-  display: inline-block;
-}
-footer {
-  padding: 15px 0 20px !important;
-}
-
-/* Supports icons for brand using font-awesome */
-.fab {
-  font-family: "Font Awesome 5 Brands" !important;
-}
-
-/* Remove the 'Read more on our website!' part from the manual pages */
-#read-more-on-our-website-,
-#read-more-on-our-website- + p,
-li a[href="#read-more-on-our-website-"] {
-  display: none !important;
-}
-
-code {
-  color: black;
-  background-color: #f4f4f4;
-}
-/* make colour darker and better readable for links */
-code a, code a:hover, code a:focus,
-pre a, pre a:hover, pre a:focus,
-a, a:hover, a:focus {
-  /* do not set colour to element without href attribute, they aren't links! */
-  color: black;
-}
-a[href], a[href]:hover, a[href]:focus,
-code a[href], code a[href]:hover, code a[href]:focus,
-a[href] code, a[href] code:hover, a[href] code:focus,
-pre a[href], pre a[href]:hover, pre a[href]:focus,
-a code[href], a code[href]:hover, a code[href]:focus,
-a pre[href], a pre[href]:hover, a pre[href]:focus {
-  /* adjusted colour for all real links; having href attribute */
-  color: #128f76;
-}
-
-.ot, .dv, .fl, .cn {
-  /* numbers and TRUE/FALSE */
-  color: slategray;
-}
-
-/* syntax font */
-pre, code {
-  font-size: 95% !important;
-}
-pre code {
-  word-wrap: normal !important;
-  white-space: pre !important;
-}
-pre {
-  font-size: 90% !important;
-}
-kbd {
-  display: inline-block;
-  padding: 0 4px;
-  box-shadow: 1px 1px 1px slategrey;
-  margin: 1px;
-  font-size: small;
-  color: #2c3e50;
-  background: #eeeeee;
-}
-
-li, p {
-  line-height: 1.5;
-}
-li p {
-  margin-top: 10.5px;
-}
-.template-news li p {
-  margin: 0;
-}
-.template-news h3 {
-  padding-top: 10px;
-}
-
-/* slightly smaller blockquote */
-blockquote {
-  font-size: 98%;
-}
-.template-home blockquote {
-  border: 5px solid #128f7645 !important;
-}
-
-/* 2nd list in navigation should be smaller */
-#tocnav li li {
-  font-size: 90%;
-  margin-left: 5px;
-}
-
-/* new <help> element with dotted underline */
-help {
-  border-bottom: 1px dotted;
-  cursor: help;
-}
-
-/* replace 'Developers' with 'Authors' */
+/* replace 'Developers' with 'Maintainers' */
 .developers h2 {
   display: none;
 }
 .developers:before {
   content: 'Maintainers';
-  font-size: 1.5em;
 }
 
-/* Beautify manually added 'Last updated' text of NEWS */
-div[id^=last-updated] h2 {
-  padding-top: 10px;
-}
 
-.version.label {
-  display: none;
-}
+/* SYNTAX */
+/* These are simple changes for the syntax highlighting */
 
-/* Date of vignettes */
-.template-article .date:before {
-  content: 'Last updated: ';
+pre code {
+  /* never wrap code on smaller screens */
+  word-wrap: normal !important;
+  white-space: pre !important;
 }
-.template-article .date {
-  font-size: 14px;
-  padding-top: 40px;
+.ot, .dv, .fl, .cn, .at,
+.op a {
+  /* numbers, TRUE/FALSE and operators */
+  color: var(--bs-dark) !important;
 }
-
-/* more space between icon and text in top menu */
-#navbar .fa,
-#navbar .fab,
-#navbar .fal,
-#navbar .far,
-#navbar .fas {
-  margin-right: 5px;
-}
-#navbar li.dropdown li .fa {
-  font-size: 120%;
-  width: 24px;
-  text-align: center;
-}
-
-/* tables, make them look like scientific ones */
-.table {
-  font-size: 90%;
-}
-.table * {
-  vertical-align: middle !important;
-}
-.table td {
-  padding: 4px !important;
-}
-.table thead,
-.template-reference-topic .table tr:first-child {
-  /* tables in manual are in LaTeX and thus have no thead */
-  border-top: 2px solid black;
-  border-bottom: 2px solid black;
-}
-.table thead ~ tbody,
-.template-reference-topic .table tr:last-child {
-  /* only when it has a header */
-  /* tables in manual are in LaTeX and thus have no thead */
-  border-bottom: 2px solid black;
-}
-.table thead th {
-  /* text-align: inherit; */
-}
-/* all tables, including argument lists */
-table a:not(.btn) {
-  text-decoration: inherit;
-}
-table a:not(.btn):hover {
-  text-decoration: underline;
-}
-.template-article thead th {
-  text-align: inherit;
-}
-
-/* text below header in manual overview */
-.template-reference-index h2 ~ p {
-  font-size: 15px;
-}
-.template-reference-topic h2 {
-  font-size: 24px;
-}
-.template-reference-topic h3 {
-  font-size: 18px;
-}
-.template-reference-topic h4 {
-  font-size: 15px;
-  font-weight: bold;
-  padding-top: 35px;
-}
-
-.template-home h4 {
-  padding-top: 40px !important;
+pre .fu, .fu {
+  /* functions */
+  color: var(--bs-primary) !important;
   font-weight: bold !important;
+  letter-spacing: -1px !important;
 }
-.template-home h5 {
-  font-weight: normal;
-  font-style: italic;
-  font-size: 16px;
+pre .st, .st {
+  /* strings, regular text */
+  color: #60a799 !important;
 }
-
-/* AMR logo on index page */
-.template-home h1 img {
-  height: 120px;
-  margin-right: 10px !important;
+pre .co, .co {
+  /* comments */
+  color: #999999 !important;
+  font-style: italic !important;
 }
-
-.btn.btn-info.btn-amr {
-  background: #128f76;
-  color: #ffffff;
-  border-color: #128f76;
-  line-height: 1;
-  width: 100%;
-  font-weight: bold;
+code a[href],
+a[href] code,
+pre a[href],
+a code[href],
+a pre[href] {
+  /* adjusted colour for all real links; having href attribute */
+  color: var(--bs-success);
+  text-decoration: none;
 }
-.btn.btn-info.btn-amr:hover {
-  background: #128f7645;
-  color: #2c3e50;
-}
-.home-buttons {
-  display: flex;
-  margin-bottom: 5px;
-}
-.home-buttons a {
-	display: grid;
-	text-align: center;
-	font-size: 14px;
-	text-transform: uppercase;
-	max-width: 25%;
-}
-.home-buttons a:hover {
-	text-decoration: none;
-	opacity: 0.75;
-}
-.home-buttons div {
-	display: grid;
-	padding: 10px;
-}
-.home-buttons .fa {
-	font-size: 3.5em;
-}
-.dataset-within-r {
-  display: none;
-}
-.dataset-download-button {
-  margin-right: 2%;
-}
-.dataset-download-button img {
-  width: 80px !important;
-  max-width: 14% !important;
+code a[href]:hover, code a[href]:focus,
+a[href] code:hover, a[href] code:focus,
+pre a[href]:hover, pre a[href]:focus,
+a code[href]:hover, a code[href]:focus,
+a pre[href]:hover, a pre[href]:focus {
+  /* adjusted colour for all real links; having href attribute */
+  text-decoration: underline;
 }

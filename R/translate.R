@@ -26,12 +26,11 @@
 #' Translate Strings from the AMR Package
 #'
 #' For language-dependent output of AMR functions, like [mo_name()], [mo_gramstain()], [mo_type()] and [ab_name()].
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param x text to translate
 #' @param lang language to choose. Use one of these supported language names or ISO-639-1 codes: `r paste0('"', sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), '" ("' , LANGUAGES_SUPPORTED, '")', collapse = ", ")`.
 #' @details The currently `r length(LANGUAGES_SUPPORTED)` supported languages are `r vector_and(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), quotes = FALSE, sort = FALSE)`. All these languages have translations available for all antimicrobial agents and colloquial microorganism names.
 #'
-#' Please read about adding or updating a language in [our developer guideline](https://github.com/msberends/AMR/blob/main/developer-guideline.md).
+#' Please read about adding or updating a language in [our Wiki](https://github.com/msberends/AMR/wiki/).
 #'
 #' ## Changing the Default Language
 #' The system language will be used at default (as returned by `Sys.getenv("LANG")` or, if `LANG` is not set, [Sys.getlocale("LC_COLLATE")]), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:
@@ -42,7 +41,6 @@
 #'   2. Setting the system variable `LANGUAGE` or `LANG`, e.g. by adding `LANGUAGE="de_DE.utf8"` to your `.Renviron` file in your home directory.
 #' 
 #' Thus, if the R option `AMR_locale` is set, the system variables `LANGUAGE` and `LANG` will be ignored.
-#' @inheritSection AMR Read more on Our Website!
 #' @rdname translate
 #' @name translate
 #' @export

@@ -124,14 +124,6 @@ and that, in combination therapies, for \code{only_all_tested = FALSE} applies t
 Using \code{only_all_tested} has no impact when only using one antibiotic as input.
 }
 
-\section{Stable Lifecycle}{
-
-\if{html}{\figure{lifecycle_stable.svg}{options: style=margin-bottom:"5"} \cr}
-The \link[=lifecycle]{lifecycle} of this function is \strong{stable}. In a stable function, major changes are unlikely. This means that the unlying code will generally evolve by adding new arguments; removing arguments or changing the meaning of existing arguments will be avoided.
-
-If the unlying code needs breaking changes, they will occur gradually. For example, an argument will be deprecated and first continue to work, but will emit a message informing you of the change. Next, typically after at least one newly released version on CRAN, the message will be transformed to an error.
-}
-
 \section{Interpretation of R and S/I}{
 
 In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories R and S/I as shown below (\url{https://www.eucast.org/newsiandr/}).
@@ -147,15 +139,11 @@ A microorganism is categorised as \emph{Susceptible, Increased exposure} when th
 This AMR package honours this (new) insight. Use \code{\link[=susceptibility]{susceptibility()}} (equal to \code{\link[=proportion_SI]{proportion_SI()}}) to determine antimicrobial susceptibility and \code{\link[=count_susceptible]{count_susceptible()}} (equal to \code{\link[=count_SI]{count_SI()}}) to count susceptible isolates.
 }
 
-\section{Read more on Our Website!}{
-
-On our website \url{https://msberends.github.io/AMR/} you can find \href{https://msberends.github.io/AMR/articles/AMR.html}{a comprehensive tutorial} about how to conduct AMR data analysis, the \href{https://msberends.github.io/AMR/reference/}{complete documentation of all functions} and \href{https://msberends.github.io/AMR/articles/WHONET.html}{an example analysis using WHONET data}.
-}
-
 \examples{
 # example_isolates is a data set available in the AMR package.
-?example_isolates
+# run ?example_isolates for more info.
 
+# base R ------------------------------------------------------------
 resistance(example_isolates$AMX)     # determines \%R
 susceptibility(example_isolates$AMX) # determines \%S+I
 
@@ -166,6 +154,7 @@ proportion_I(example_isolates$AMX)
 proportion_IR(example_isolates$AMX)
 proportion_R(example_isolates$AMX)
 
+# dplyr -------------------------------------------------------------
 \donttest{
 if (require("dplyr")) {
   example_isolates \%>\%
@@ -220,10 +209,11 @@ if (require("dplyr")) {
     proportion_df(translate = FALSE)
  
   # It also supports grouping variables
+  # (use rsi_df to also include the count)
   example_isolates \%>\%
     select(hospital_id, AMX, CIP) \%>\%
     group_by(hospital_id) \%>\%
-    proportion_df(translate = FALSE)
+    rsi_df(translate = FALSE)
 }
 }
 }

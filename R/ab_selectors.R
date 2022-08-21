@@ -26,7 +26,6 @@
 #' Antibiotic Selectors
 #' 
 #' These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class or group, without the need to define the columns or antibiotic abbreviations. In short, if you have a column name that resembles an antimicrobial agent, it will be picked up by any of these functions that matches its pharmaceutical class: "cefazolin", "CZO" and "J01DB04" will all be picked up by [cephalosporins()].
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param ab_class an antimicrobial class or a part of it, such as `"carba"` and `"carbapenems"`. The columns `group`, `atc_group1` and `atc_group2` of the [antibiotics] data set will be searched (case-insensitive) for this value.
 #' @param filter an [expression] to be evaluated in the [antibiotics] data set, such as `name %like% "trim"`
 #' @param only_rsi_columns a [logical] to indicate whether only columns of class `<rsi>` must be selected (defaults to `FALSE`), see [as.rsi()]
@@ -46,103 +45,105 @@
 #' @return (internally) a [character] vector of column names, with additional class `"ab_selector"`
 #' @export
 #' @inheritSection AMR Reference Data Publicly Available
-#' @inheritSection AMR Read more on Our Website!
+
 #' @examples 
 #' # `example_isolates` is a data set available in the AMR package.
 #' # See ?example_isolates.
+#' df <- example_isolates[ , c("hospital_id", "mo",
+#'                             "AMP", "AMC", "TZP", "CXM", "CRO", "GEN",
+#'                             "TOB", "COL", "IPM", "MEM", "TEC", "VAN")]
 #' 
 #' # base R ------------------------------------------------------------------
 #' 
 #' # select columns 'IPM' (imipenem) and 'MEM' (meropenem)
-#' example_isolates[, carbapenems()]
+#' df[, carbapenems()]
 #' 
 #' # select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB'
-#' example_isolates[, c("mo", aminoglycosides())]
+#' df[, c("mo", aminoglycosides())]
 #' 
 #' # select only antibiotic columns with DDDs for oral treatment
-#' example_isolates[, administrable_per_os()]
+#' df[, administrable_per_os()]
 #' 
 #' # filter using any() or all()
-#' example_isolates[any(carbapenems() == "R"), ]
-#' subset(example_isolates, any(carbapenems() == "R"))
+#' df[any(carbapenems() == "R"), ]
+#' subset(df, any(carbapenems() == "R"))
 #' 
 #' # filter on any or all results in the carbapenem columns (i.e., IPM, MEM):
-#' example_isolates[any(carbapenems()), ]
-#' example_isolates[all(carbapenems()), ]
+#' df[any(carbapenems()), ]
+#' df[all(carbapenems()), ]
 #' 
 #' # filter with multiple antibiotic selectors using c()
-#' example_isolates[all(c(carbapenems(), aminoglycosides()) == "R"), ]
+#' df[all(c(carbapenems(), aminoglycosides()) == "R"), ]
 #' 
 #' # filter + select in one go: get penicillins in carbapenems-resistant strains
-#' example_isolates[any(carbapenems() == "R"), penicillins()]
+#' df[any(carbapenems() == "R"), penicillins()]
 #' 
 #' # You can combine selectors with '&' to be more specific. For example,
 #' # penicillins() would select benzylpenicillin ('peni G') and
 #' # administrable_per_os() would select erythromycin. Yet, when combined these
 #' # drugs are both omitted since benzylpenicillin is not administrable per os
 #' # and erythromycin is not a penicillin:
-#' example_isolates[, penicillins() & administrable_per_os()]
+#' df[, penicillins() & administrable_per_os()]
 #' 
 #' # ab_selector() applies a filter in the `antibiotics` data set and is thus very
 #' # flexible. For instance, to select antibiotic columns with an oral DDD of at
 #' # least 1 gram:
-#' example_isolates[, ab_selector(oral_ddd > 1 & oral_units == "g")]
+#' df[, ab_selector(oral_ddd > 1 & oral_units == "g")]
 #' 
 #' # dplyr -------------------------------------------------------------------
 #' \donttest{
 #' if (require("dplyr")) {
 #' 
 #'   # get AMR for all aminoglycosides e.g., per hospital:
-#'   example_isolates %>%
+#'   df %>%
 #'     group_by(hospital_id) %>% 
 #'     summarise(across(aminoglycosides(), resistance))
 #'     
 #'   # You can combine selectors with '&' to be more specific:
-#'   example_isolates %>%
+#'   df %>%
 #'     select(penicillins() & administrable_per_os())
 #'   
 #'   # get AMR for only drugs that matter - no intrinsic resistance:
-#'   example_isolates %>%
+#'   df %>%
 #'     filter(mo_genus() %in% c("Escherichia", "Klebsiella")) %>% 
 #'     group_by(hospital_id) %>% 
 #'     summarise(across(not_intrinsic_resistant(), resistance))
 #'     
 #'   # get susceptibility for antibiotics whose name contains "trim":
-#'   example_isolates %>%
+#'   df %>%
 #'     filter(first_isolate()) %>% 
 #'     group_by(hospital_id) %>% 
 #'     summarise(across(ab_selector(name %like% "trim"), susceptibility))
 #' 
 #'   # this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
-#'   example_isolates %>% 
+#'   df %>% 
 #'     select(carbapenems())
 #'     
 #'   # this will select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB':
-#'   example_isolates %>% 
+#'   df %>% 
 #'     select(mo, aminoglycosides())
 #'     
 #'  # any() and all() work in dplyr's filter() too:
-#'  example_isolates %>% 
+#'  df %>% 
 #'     filter(any(aminoglycosides() == "R"),
 #'            all(cephalosporins_2nd() == "R"))
 #'     
 #'  # also works with c():
-#'  example_isolates %>% 
+#'  df %>% 
 #'     filter(any(c(carbapenems(), aminoglycosides()) == "R"))
 #'     
 #'  # not setting any/all will automatically apply all():
-#'  example_isolates %>% 
+#'  df %>% 
 #'     filter(aminoglycosides() == "R")
-#'  #> i Assuming a filter on all 4 aminoglycosides.
 #'     
 #'   # this will select columns 'mo' and all antimycobacterial drugs ('RIF'):
-#'   example_isolates %>% 
+#'   df %>% 
 #'     select(mo, ab_class("mycobact"))
 #'     
-#'   # get bug/drug combinations for only macrolides in Gram-positives:
-#'   example_isolates %>% 
+#'   # get bug/drug combinations for only glycopeptides in Gram-positives:
+#'   df %>% 
 #'     filter(mo_is_gram_positive()) %>% 
-#'     select(mo, macrolides()) %>% 
+#'     select(mo, glycopeptides()) %>% 
 #'     bug_drug_combinations() %>%
 #'     format()
 #'     
@@ -151,10 +152,12 @@
 #'     select(penicillins())         # only the 'J01CA01' column will be selected
 #'     
 #'     
-#'   # with dplyr 1.0.0 and higher (that adds 'across()'), this is all equal:
-#'   example_isolates[carbapenems() == "R", ]
-#'   example_isolates %>% filter(carbapenems() == "R")
-#'   example_isolates %>% filter(across(carbapenems(), ~.x == "R"))
+#'   # with recent versions of dplyr this is all equal:
+#'   x <- df[carbapenems() == "R", ]
+#'   y <- df %>% filter(carbapenems() == "R")
+#'   z <- df %>% filter(if_all(carbapenems(), ~.x == "R"))
+#'   identical(x, y)
+#'   identical(y, z)
 #' }
 #' }
 ab_class <- function(ab_class, 

@@ -26,7 +26,6 @@
 #' Predict Antimicrobial Resistance
 #'
 #' Create a prediction model to predict antimicrobial resistance for the next years on statistical solid ground. Standard errors (SE) will be returned as columns `se_min` and `se_max`. See *Examples* for a real live example.
-#' @inheritSection lifecycle Stable Lifecycle
 #' @param object model data to be plotted
 #' @param col_ab column name of `x` containing antimicrobial interpretations (`"R"`, `"I"` and `"S"`)
 #' @param col_date column name of the date, will be used to calculate years if this column doesn't consist of years already, defaults to the first column of with a date class
@@ -64,7 +63,6 @@
 #' @rdname resistance_predict
 #' @export
 #' @importFrom stats predict glm lm
-#' @inheritSection AMR Read more on Our Website!
 #' @examples
 #' x <- resistance_predict(example_isolates, 
 #'                         col_ab = "AMX",
@@ -99,24 +97,8 @@
 #'                        model = "binomial",
 #'                        info = FALSE,
 #'                        minimum = 15)
-#'                        
+#'   head(data)
 #'   autoplot(data)
-#'
-#'   ggplot(data,
-#'          aes(x = year)) +
-#'     geom_col(aes(y = value),
-#'              fill = "grey75") +
-#'     geom_errorbar(aes(ymin = se_min,
-#'                       ymax = se_max),
-#'                   colour = "grey50") +
-#'     scale_y_continuous(limits = c(0, 1),
-#'                        breaks = seq(0, 1, 0.1),
-#'                        labels = paste0(seq(0, 100, 10), "%")) +
-#'     labs(title = expression(paste("Forecast of Amoxicillin Resistance in ",
-#'                                   italic("E. coli"))),
-#'          y = "%R",
-#'          x = "Year") +
-#'     theme_minimal(base_size = 13)
 #' }
 #' }
 resistance_predict <- function(x,

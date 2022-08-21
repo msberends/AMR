@@ -26,7 +26,6 @@
 #' Calculate the Matching Score for Microorganisms
 #' 
 #' This algorithm is used by [as.mo()] and all the [`mo_*`][mo_property()] functions to determine the most probable match of taxonomic records based on user input. 
-#' @inheritSection lifecycle Stable Lifecycle
 #' @author Dr Matthijs Berends
 #' @param x Any user input value(s)
 #' @param n A full taxonomic name, that exists in [`microorganisms$fullname`][microorganisms]
@@ -53,7 +52,6 @@
 #' Since `AMR` version 1.8.1, common microorganism abbreviations are ignored in determining the matching score. These abbreviations are currently: `r vector_and(pkg_env$mo_field_abbreviations, quotes = FALSE)`.
 #' @export
 #' @inheritSection AMR Reference Data Publicly Available
-#' @inheritSection AMR Read more on Our Website!
 #' @examples 
 #' as.mo("E. coli")
 #' mo_uncertainties()
