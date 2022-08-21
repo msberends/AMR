@@ -28,15 +28,16 @@
 $(document).ready(function() {
 
   // replace \donttest and \dontrun texts in Examples
-  if ($(".ref-examples pre").length > 0) {
-    $(".ref-examples pre").html($(".ref-examples pre").html().replaceAll("# \\donttest{", ""));
-    $(".ref-examples pre").html($(".ref-examples pre").html().replaceAll("# \\dontrun{", ""));
-    $(".ref-examples pre").html($(".ref-examples pre").html().replaceAll("# }", ""));
+  if ($("#ref-examples ~ div pre").length > 0) {
+    $("#ref-examples ~ div pre").html($("#ref-examples ~ div pre").html().replaceAll("# \\donttest{", ""));
+    $("#ref-examples ~ div pre").html($("#ref-examples ~ div pre").html().replaceAll("# \\dontrun{", ""));
+    $("#ref-examples ~ div pre").html($("#ref-examples ~ div pre").html().replaceAll("# }", ""));
   }
   
   // remove leading newline in code examples on changelog
   if ($("body .template-news").length > 0) {
     $("body .template-news").html($("body .template-news").html().replaceAll('sourceCode R">\n<span', 'sourceCode R"><span'));
+    $("body .template-news").html($("body .template-news").html().replaceAll('sourceCode R"><span></span>\n<span', 'sourceCode R"><span'));
   }
 
   // add doctoral titles to authors

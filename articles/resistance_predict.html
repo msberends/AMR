@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9020</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9021</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -176,7 +176,7 @@
 <div class="section level2">
 <h2 id="needed-r-packages">Needed R packages<a class="anchor" aria-label="anchor" href="#needed-r-packages"></a>
 </h2>
-<p>As with many uses in R, we need some additional packages for AMR data analysis. Our package works closely together with the <a href="https://www.tidyverse.org" class="external-link">tidyverse packages</a> <a href="https://dplyr.tidyverse.org/" class="external-link"><code>dplyr</code></a> and <a href="https://ggplot2.tidyverse.org" class="external-link"><code>ggplot2</code></a> by Dr Hadley Wickham. The tidyverse tremendously improves the way we conduct data science - it allows for a very natural way of writing syntaxes and creating beautiful plots in R.</p>
+<p>As with many uses in R, we need some additional packages for AMR data analysis. Our package works closely together with the <a href="https://www.tidyverse.org" class="external-link">tidyverse packages</a> <a href="https://dplyr.tidyverse.org/" class="external-link"><code>dplyr</code></a> and <a href="https://ggplot2.tidyverse.org" class="external-link"><code>ggplot2</code></a>. The tidyverse tremendously improves the way we conduct data science - it allows for a very natural way of writing syntaxes and creating beautiful plots in R.</p>
 <p>Our <code>AMR</code> package depends on these packages and even extends their use and functions.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
@@ -205,9 +205,8 @@
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">model =</span> <span class="st">"binomial"</span>)</span></code></pre></div>
 <p>The function will look for a date column itself if <code>col_date</code> is not set.</p>
 <p>When running any of these commands, a summary of the regression model will be printed unless using <code>resistance_predict(..., info = FALSE)</code>.</p>
-<pre><code><span><span class="co"># ℹ Using column 'date' as input for `col_date`.</span></span></code></pre>
 <p>This text is only a printed summary - the actual result (output) of the function is a <code>data.frame</code> containing for each year: the number of observations, the actual observed resistance, the estimated resistance and the standard error below and above the estimation:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">predict_TZP</span></span>
 <span><span class="co">#    year      value    se_min    se_max observations   observed  estimated</span></span>
 <span><span class="co"># 1  2002 0.20000000        NA        NA           15 0.20000000 0.05616378</span></span>
@@ -242,15 +241,15 @@
 <span><span class="co"># 30 2031 0.51109592 0.3973697 0.6248221           NA         NA 0.51109592</span></span>
 <span><span class="co"># 31 2032 0.53574417 0.4169574 0.6545309           NA         NA 0.53574417</span></span></code></pre></div>
 <p>The function <code>plot</code> is available in base R, and can be extended by other packages to depend the output based on the type of input. We extended its function to cope with resistance predictions:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">predict_TZP</span><span class="op">)</span></span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-4-1.png" width="720"></p>
 <p>This is the fastest way to plot the result. It automatically adds the right axes, error bars, titles, number of available observations and type of model.</p>
 <p>We also support the <code>ggplot2</code> package with our custom function <code><a href="../reference/resistance_predict.html">ggplot_rsi_predict()</a></code> to create more appealing plots:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="va">predict_TZP</span><span class="op">)</span></span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-5-1.png" width="720"></p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># choose for error bars instead of a ribbon</span></span>
 <span><span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="va">predict_TZP</span>, ribbon <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
@@ -259,7 +258,7 @@
 <h3 id="choosing-the-right-model">Choosing the right model<a class="anchor" aria-label="anchor" href="#choosing-the-right-model"></a>
 </h3>
 <p>Resistance is not easily predicted; if we look at vancomycin resistance in Gram-positive bacteria, the spread (i.e. standard error) is enormous:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="va">mo</span>, language <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">==</span> <span class="st">"Gram-positive"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span><span class="op">(</span>col_ab <span class="op">=</span> <span class="st">"VAN"</span>, year_min <span class="op">=</span> <span class="fl">2010</span>, info <span class="op">=</span> <span class="cn">FALSE</span>, model <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
@@ -305,7 +304,7 @@
 </tbody>
 </table>
 <p>For the vancomycin resistance in Gram-positive bacteria, a linear model might be more appropriate:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="va">mo</span>, language <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">==</span> <span class="st">"Gram-positive"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span><span class="op">(</span>col_ab <span class="op">=</span> <span class="st">"VAN"</span>, year_min <span class="op">=</span> <span class="fl">2010</span>, info <span class="op">=</span> <span class="cn">FALSE</span>, model <span class="op">=</span> <span class="st">"linear"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
@@ -313,7 +312,7 @@
 <span><span class="co"># ℹ Using column 'date' as input for `col_date`.</span></span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-7-1.png" width="720"></p>
 <p>The model itself is also available from the object, as an <code>attribute</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">predict_TZP</span><span class="op">)</span><span class="op">$</span><span class="va">model</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">$</span><span class="va">family</span></span>
