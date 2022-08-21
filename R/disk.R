@@ -44,7 +44,7 @@
 #' df[, 2:5] <- lapply(df[, 2:5], as.disk)
 #' str(df)
 #' 
-#' #' \donttest{
+#' \donttest{
 #' # transforming is easier with dplyr:
 #' if (require("dplyr")) {
 #'   df %>% mutate(across(AMP:TOB, as.disk))

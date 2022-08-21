@@ -1,6 +1,6 @@
 ---
 title: "How to conduct AMR data analysis"
-author: "Dr Matthijs Berends"
+author: "Dr. Matthijs Berends"
 date: '`r format(Sys.Date(), "%d %B %Y")`'
 output: 
   rmarkdown::html_vignette:
