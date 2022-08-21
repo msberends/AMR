@@ -1,0 +1,18 @@
+pandoc: 2.14.2
+pkgdown: 2.0.6
+pkgdown_sha: ~
+articles:
+  AMR: AMR.html
+  EUCAST: EUCAST.html
+  MDR: MDR.html
+  PCA: PCA.html
+  SPSS: SPSS.html
+  WHONET: WHONET.html
+  datasets: datasets.html
+  resistance_predict: resistance_predict.html
+  welcome_to_AMR: welcome_to_AMR.html
+last_built: 2022-08-21T14:56Z
+urls:
+  reference: https://msberends.github.io/AMR/reference
+  article: https://msberends.github.io/AMR/articles
+

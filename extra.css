@@ -1,0 +1,84 @@
+/*
+# ==================================================================== #
+# TITLE                                                                #
+# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+#                                                                      #
+# SOURCE                                                               #
+# https://github.com/msberends/AMR                                     #
+#                                                                      #
+# LICENCE                                                              #
+# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# Developed at the University of Groningen, the Netherlands, in        #
+# collaboration with non-profit organisations Certe Medical            #
+# Diagnostics & Advice, and University Medical Center Groningen.       # 
+#                                                                      #
+# This R package is free software; you can freely use and distribute   #
+# it for both personal and commercial purposes under the terms of the  #
+# GNU General Public License version 2.0 (GNU GPL-2), as published by  #
+# the Free Software Foundation.                                        #
+# We created this package for both routine data analysis and academic  #
+# research and it was publicly released in the hope that it will be    #
+# useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
+#                                                                      #
+# Visit our website for the full manual and a complete tutorial about  #
+# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
+# ==================================================================== #
+*/
+
+h1, h2 {
+  text-align: left !important;
+}
+/* replace 'Developers' with 'Maintainers' */
+.developers h2 {
+  display: none;
+}
+.developers:before {
+  content: 'Maintainers';
+}
+
+
+/* SYNTAX */
+/* These are simple changes for the syntax highlighting */
+
+pre code {
+  /* never wrap code on smaller screens */
+  word-wrap: normal !important;
+  white-space: pre !important;
+}
+.ot, .dv, .fl, .cn, .at,
+.op a {
+  /* numbers, TRUE/FALSE and operators */
+  color: var(--bs-dark) !important;
+}
+pre .fu, .fu {
+  /* functions */
+  color: var(--bs-primary) !important;
+  font-weight: bold !important;
+  letter-spacing: -1px !important;
+}
+pre .st, .st {
+  /* strings, regular text */
+  color: #60a799 !important;
+}
+pre .co, .co {
+  /* comments */
+  color: #999999 !important;
+  font-style: italic !important;
+}
+code a[href],
+a[href] code,
+pre a[href],
+a code[href],
+a pre[href] {
+  /* adjusted colour for all real links; having href attribute */
+  color: var(--bs-success);
+  text-decoration: none;
+}
+code a[href]:hover, code a[href]:focus,
+a[href] code:hover, a[href] code:focus,
+pre a[href]:hover, pre a[href]:focus,
+a code[href]:hover, a code[href]:focus,
+a pre[href]:hover, a pre[href]:focus {
+  /* adjusted colour for all real links; having href attribute */
+  text-decoration: underline;
+}
