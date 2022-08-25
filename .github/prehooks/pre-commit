@@ -5,7 +5,7 @@ echo "Running pre-commit hook..."
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 echo ">>  Updating R documentation..."
 if command -v Rscript > /dev/null; then
-  if [ "$(Rscript -e 'cat(all(c('"'roxygen2'"', '"'pkgload'"') %in% rownames(installed.packages())))')" == "TRUE" ]; then
+  if [ "$(Rscript -e 'cat(all(c('"'roxygen2'"', '"'pkgload'"') %in% rownames(installed.packages())))')" -eq "TRUE" ]; then
     Rscript -e "suppressMessages(roxygen2::roxygenise())"
     currentpkg=`Rscript -e "cat(pkgload::pkg_name())"`
     git add man/*
