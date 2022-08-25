@@ -32,7 +32,7 @@ template:
   assets: "pkgdown/logos" # use logos in this folder
   bslib:
     code_font: {google: "Fira Code"}
-    body-text-align: "justify"
+    # body-text-align: "justify"
     line-height-base: 1.75
     # the green "success" colour of this bootstrap theme should be the same as the green in our logo
     success: "#128f76"
@@ -47,9 +47,9 @@ template:
 news:
   one_page: true
   cran_dates: true
-  
+
 footer:
-  structure: 
+  structure:
     left: [devtext]
     right: [logo]
   components:
@@ -99,9 +99,9 @@ navbar:
       - text: "Get properties of an antibiotic"
         icon: "fa-capsules"
         href: "reference/ab_property.html" # reference instead of an article
-      - text: "Other: benchmarks"
-        icon: "fa-shipping-fast"
-        href: "articles/benchmarks.html"
+      # - text: "Other: benchmarks"
+      #   icon: "fa-shipping-fast"
+      #   href: "articles/benchmarks.html"
     - text: "Manual"
       icon: "fa-book-open"
       href: "reference/index.html"
@@ -128,7 +128,7 @@ reference:
     - "`as.mo`"
     - "`mo_property`"
     - "`mo_source`"
-    
+
   - title: "Preparing data: antibiotics"
     desc: >
       Use these functions to get valid properties of antibiotics from any input or to clean your input.
@@ -138,7 +138,7 @@ reference:
     - "`ab_property`"
     - "`ab_from_text`"
     - "`atc_online_property`"
-    
+
   - title: "Preparing data: antimicrobial resistance"
     desc: >
       With `as.mic()` and `as.disk()` you can transform your raw input to valid MIC or disk diffusion values.
@@ -150,7 +150,7 @@ reference:
     - "`as.disk`"
     - "`eucast_rules`"
     - "`custom_eucast_rules`"
-    
+
   - title: "Analysing data: antimicrobial resistance"
     desc: >
       Use these function for the analysis part. You can use `susceptibility()` or `resistance()` on any antibiotic column.
@@ -190,7 +190,7 @@ reference:
     - "`example_isolates_unclean`"
     - "`rsi_translation`"
     - "`WHONET`"
-    
+
   - title: "Other: miscellaneous functions"
     desc: >
       These functions are mostly for internal use, but some of
@@ -208,7 +208,7 @@ reference:
     - "`mo_matching_score`"
     - "`pca`"
     - "`random`"
-  
+
   - title: "Other: statistical tests"
     desc: >
       Some statistical tests or methods are not part of base R and were added to this package for convenience.
@@ -224,4 +224,3 @@ reference:
       in a future version.
     contents:
     - "`AMR-deprecated`"
-
