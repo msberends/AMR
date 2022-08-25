@@ -53,7 +53,7 @@ sed -i -- "s/^Version: .*/Version: ${currentversion}/" DESCRIPTION
 sed -i -- "s/^Date: .*/Date: $(date '+%Y-%m-%d')/" DESCRIPTION
 echo ">>  - updated DESCRIPTION"
 # remove leftover on macOS
-rm DESCRIPTION--
+rm -f DESCRIPTION--
 # add to commit
 git add DESCRIPTION
 
@@ -62,7 +62,7 @@ if [ -e "NEWS.md" ]; then
   sed -i -- "1s/.*/# ${currentpkg} ${currentversion}/" NEWS.md
   echo ">>  - updated NEWS.md"
   # remove leftover on macOS
-  rm NEWS.md--
+  rm -f NEWS.md--
   # add to commit
   git add NEWS.md
 else
