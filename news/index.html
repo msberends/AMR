@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9027</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,15 +127,16 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.8.1.9027" id="amr-1819027">AMR 1.8.1.9027<a class="anchor" aria-label="anchor" href="#amr-1819027"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.8.1.9030" id="amr-1819030">AMR 1.8.1.9030<a class="anchor" aria-label="anchor" href="#amr-1819030"></a></h2>
 <div class="section level4">
-<h4 id="new-1-8-1-9027">New<a class="anchor" aria-label="anchor" href="#new-1-8-1-9027"></a></h4>
+<h4 id="new-1-8-1-9030">New<a class="anchor" aria-label="anchor" href="#new-1-8-1-9030"></a></h4>
 <ul><li>EUCAST 2022 and CLSI 2022 guidelines have been added for <code><a href="../reference/as.rsi.html">as.rsi()</a></code>. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.</li>
 <li>Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. The <code>AMR</code> package is now available in 16 languages.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-1-8-1-9027">Changed<a class="anchor" aria-label="anchor" href="#changed-1-8-1-9027"></a></h4>
-<ul><li>Fix for <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on certain EUCAST breakpoints for MIC values</li>
+<h4 id="changed-1-8-1-9030">Changed<a class="anchor" aria-label="anchor" href="#changed-1-8-1-9030"></a></h4>
+<ul><li>Fix for using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on certain EUCAST breakpoints for MIC values</li>
+<li>Fix for using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on <code>NA</code> values (e.g. <code>as.rsi(as.disk(NA), ...)</code>)</li>
 <li>Removed <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> for MIC values, since MIC are not integer values and running <code><a href="https://rdrr.io/r/base/table.html" class="external-link">table()</a></code> on MIC values consequently failed for not being able to retrieve the level position (as that’s how normally <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> on <code>factor</code>s work)</li>
 <li>
 <code><a href="https://rdrr.io/r/base/droplevels.html" class="external-link">droplevels()</a></code> on MIC will now return a common <code>factor</code> at default and will lose the <code>&lt;mic&gt;</code> class. Use <code>droplevels(..., as.mic = TRUE)</code> to keep the <code>&lt;mic&gt;</code> class.</li>
@@ -152,9 +153,11 @@
 </li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-1-8-1-9027">Other<a class="anchor" aria-label="anchor" href="#other-1-8-1-9027"></a></h4>
+<h4 id="other-1-8-1-9030">Other<a class="anchor" aria-label="anchor" href="#other-1-8-1-9030"></a></h4>
 <ul><li>New website to make use of the new Bootstrap 5 and pkgdown v2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions</li>
 <li>Added Peter Dutey-Magni and Anton Mymrikov as contributors, to thank them for their valuable input</li>
+<li>Our data sets are now also continually exported to Apache Feather and Apache Parquet formats</li>
+<li>Set up Git Large File Storage (Git LFS) for the large SAS and SPSS file formats</li>
 </ul></div>
 </div>
     <div class="section level2">
