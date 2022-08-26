@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 library(AMR)
 library(dplyr)
 
-options(knitr.kable.NA = '')
+options(knitr.kable.NA = "")
 
 structure_txt <- function(dataset) {
   paste0("A data set with ",
@@ -94,8 +94,6 @@ All reference data (about microorganisms, antibiotics, R/SI interpretation, EUCA
 
 On this page, we explain how to download them and how the structure of the data sets look like. 
 
-<p class="dataset-within-r">If you are reading this page from within R, please <a href="https://msberends.github.io/AMR/articles/datasets.html">visit our website</a>, which is automatically updated with every code change.</p>
-
 ## Microorganisms (currently accepted names)
 
 `r structure_txt(microorganisms)`
@@ -103,8 +101,6 @@ On this page, we explain how to download them and how the structure of the data 
 This data set is in R available as `microorganisms`, after you load the `AMR` package.
 
 `r download_txt("microorganisms")`
-
-**NOTE: The exported files for SAS, SPSS and Stata do not contain SNOMED codes, as their file size would exceed 100 MB; the file size limit of GitHub.** Advice? Use R instead.
 
 ### Source
 

@@ -59,9 +59,6 @@ git add DESCRIPTION
 
 # set version number to NEWS file
 if [ -e "NEWS.md" ]; then
-  if [ "$currentpkg" = "your" ]; then
-    currentpkg=""
-  fi
   sed -i -- "1s/.*/# ${currentpkg} ${currentversion}/" NEWS.md
   echo ">>  - updated NEWS.md"
   # remove leftover on macOS
