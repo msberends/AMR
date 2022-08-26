@@ -1,11 +1,12 @@
-# AMR 1.8.1.9027
+# AMR 1.8.1.9028
 
 ### New
 * EUCAST 2022 and CLSI 2022 guidelines have been added for `as.rsi()`. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.
 * Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. The `AMR` package is now available in 16 languages.
 
 ### Changed
-* Fix for `as.rsi()` on certain EUCAST breakpoints for MIC values
+* Fix for using `as.rsi()` on certain EUCAST breakpoints for MIC values
+* Fix for using `as.rsi()` on `NA` values (e.g. `as.rsi(as.disk(NA), ...)`)
 * Removed `as.integer()` for MIC values, since MIC are not integer values and running `table()` on MIC values  consequently failed for not being able to retrieve the level position (as that's how normally `as.integer()` on `factor`s work)
 * `droplevels()` on MIC will now return a common `factor` at default and will lose the `<mic>` class. Use `droplevels(..., as.mic = TRUE)` to keep the `<mic>` class.
 * Small fix for using `ab_from_text()`
@@ -19,6 +20,9 @@
 ### Other
 * New website to make use of the new Bootstrap 5 and pkgdown v2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions
 * Added Peter Dutey-Magni and Anton Mymrikov as contributors, to thank them for their valuable input
+* Our data sets are now also continually exported to Apache Feather and Apache Parquet formats
+* Set up Git Large File Storage (Git LFS) for the large SAS and SPSS file formats
+
 
 # `AMR` 1.8.1
 

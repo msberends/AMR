@@ -5,13 +5,13 @@ echo "Running pre-commit hook..."
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 echo ">>  Updating R documentation..."
 if command -v Rscript > /dev/null; then
-  if [ "$(Rscript -e 'cat(all(c('"'roxygen2'"', '"'pkgload'"') %in% rownames(installed.packages())))')" = "TRUE" ]; then
-    Rscript -e "suppressMessages(roxygen2::roxygenise())"
+  if [ "$(Rscript -e 'cat(all(c('"'pkgload'"', '"'devtools'"', '"'dplyr'"') %in% rownames(installed.packages())))')" = "TRUE" ]; then
+    Rscript -e "source('data-raw/pre-commit-hook.R')"
     currentpkg=`Rscript -e "cat(pkgload::pkg_name())"`
     git add man/*
-    echo ">>  done."
+    git add R/sysdata.rda
   else
-    echo ">>  R packages 'roxygen2' and 'pkgload' are not installed!"
+    echo ">>  R package 'pkgload', 'devtools', or 'dplyr' not installed!"
     currentpkg="your"
   fi
 else
@@ -30,7 +30,7 @@ currenttagfull=`git describe --tags --abbrev=0`
 currenttag=`git describe --tags --abbrev=0 | sed 's/v//'`
 if [ "$currenttag" = "" ]; then
   # there is no tag, so set tag to 0.0.1 and commit index to current count
-  echo ">>  - no git tags found, create some using v(x).(y).(z)"
+  echo ">>  - no git tags found, create one in this format: 'v(x).(y).(z)'!"
   currenttag="0.0.1"
   currentcommit=`git rev-list --count HEAD`
 else

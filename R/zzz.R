@@ -133,7 +133,7 @@ create_MO_lookup <- function() {
     MO_lookup$fullname_lower <- MO_FULLNAME_LOWER
   } else {
     MO_lookup$fullname_lower <- ""
-    warning("MO table updated - Run: source(\"data-raw/_internals.R\")", call. = FALSE)
+    warning("MO table updated - Run: source(\"data-raw/pre-commit-hook.R\")", call. = FALSE)
   }
   
   # add a column with only "e coli" like combinations

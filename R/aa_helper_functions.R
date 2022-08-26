@@ -596,7 +596,7 @@ create_eucast_ab_documentation <- function() {
   ab <- character()
   for (val in x) {
     if (paste0("AB_", val) %in% ls(envir = asNamespace("AMR"))) {
-      # antibiotic group names, as defined in data-raw/_internals.R, such as `CARBAPENEMS`
+      # antibiotic group names, as defined in data-raw/pre-commit-hook.R, such as `CARBAPENEMS`
       val <- eval(parse(text = paste0("AB_", val)), envir = asNamespace("AMR"))
     } else if (val %in% AB_lookup$ab) {
       # separate drugs, such as `AMX`

@@ -5,7 +5,6 @@ doc
 .Rhistory
 .RData
 .Ruserdata
-AMR.Rproj
 tests/testthat/Rplots.pdf
 inst/doc
 /src/*.o

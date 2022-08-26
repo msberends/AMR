@@ -444,7 +444,7 @@ rm(intrinsic_resistant)
 
 # load new data sets again
 devtools::load_all(".")
-source("data-raw/_internals.R")
+source("data-raw/pre-commit-hook.R")
 devtools::load_all(".")
 
 

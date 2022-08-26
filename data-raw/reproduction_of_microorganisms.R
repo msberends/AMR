@@ -901,7 +901,7 @@ usethis::use_data(rsi_translation, overwrite = TRUE, version = 2)
 usethis::use_data(microorganisms.codes, overwrite = TRUE, version = 2)
 # saveRDS(microorganisms.translation, file = "data-raw/microorganisms.translation.rds", version = 2)
 # to save microorganisms.translation internally to the package
-# source("data-raw/_internals.R")
+# source("data-raw/pre-commit-hook.R")
 
 # load new data sets again
 devtools::load_all(".")

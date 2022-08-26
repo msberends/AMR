@@ -1,6 +1,0 @@
-*.dta filter=lfs diff=lfs merge=lfs -text
-*.sas filter=lfs diff=lfs merge=lfs -text
-*.sav filter=lfs diff=lfs merge=lfs -text
-data-raw/*.dta filter=lfs diff=lfs merge=lfs -text
-data-raw/*.sas filter=lfs diff=lfs merge=lfs -text
-data-raw/*.sav filter=lfs diff=lfs merge=lfs -text

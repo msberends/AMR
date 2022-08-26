@@ -597,18 +597,18 @@ get_guideline <- function(guideline, reference_data) {
   guideline_param
 }
 
-as_rsi_method <- function(method_short = "mic",
-                          method_long = "MIC values",
-                          x = x,
-                          mo = NULL, 
-                          ab = deparse(substitute(x)), 
-                          guideline = "EUCAST", 
-                          uti = FALSE,
-                          conserve_capped_values = FALSE,
-                          add_intrinsic_resistance = FALSE,
-                          reference_data = AMR::rsi_translation,
+as_rsi_method <- function(method_short,
+                          method_long,
+                          x,
+                          mo,
+                          ab,
+                          guideline,
+                          uti,
+                          conserve_capped_values,
+                          add_intrinsic_resistance,
+                          reference_data,
                           ...) {
-  meet_criteria(x)
+  meet_criteria(x, allow_NA = TRUE)
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = c("ab", "character"))
   meet_criteria(guideline, allow_class = "character", has_length = 1)

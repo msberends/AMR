@@ -543,7 +543,7 @@ eucast_rules <- function(x,
     # this allows: eucast_rules(x, eucast_rules_df = AMR:::EUCAST_RULES_DF %>% filter(is.na(have_these_values)))
     eucast_rules_df <- list(...)$eucast_rules_df
   } else {
-    # otherwise internal data file, created in data-raw/_internals.R
+    # otherwise internal data file, created in data-raw/pre-commit-hook.R
     eucast_rules_df <- EUCAST_RULES_DF
   }
   

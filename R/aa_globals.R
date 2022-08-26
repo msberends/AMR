@@ -24,7 +24,7 @@
 # ==================================================================== #
 
 # add new version numbers here, and add the rules themselves to "data-raw/eucast_rules.tsv" and rsi_translation
-# (sourcing "data-raw/_internals.R" will process the TSV file)
+# (sourcing "data-raw/pre-commit-hook.R" will process the TSV file)
 EUCAST_VERSION_BREAKPOINTS <- list("11.0" = list(version_txt = "v11.0",
                                                  year = 2021, 
                                                  title = "'EUCAST Clinical Breakpoint Tables'",

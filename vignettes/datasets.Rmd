@@ -13,7 +13,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, include = FALSE, results = 'markup'}
+```{r setup, include = FALSE, results = "markup"}
 knitr::opts_chunk$set(
   warning = FALSE,
   collapse = TRUE,
@@ -40,30 +40,41 @@ download_txt <- function(filename) {
                 ". Find more info about the structure of this data set [here](https://msberends.github.io/AMR/reference/", ifelse(filename == "antivirals", "antibiotics", filename), ".html).\n")
   github_base <- "https://github.com/msberends/AMR/raw/main/data-raw/"
   filename <- paste0("../data-raw/", filename)
-  txt <- paste0(filename, ".txt")
   rds <- paste0(filename, ".rds")
+  txt <- paste0(filename, ".txt")
+  excel <- paste0(filename, ".xlsx")
+  feather <- paste0(filename, ".feather")
+  parquet <- paste0(filename, ".parquet")
+  sas <- paste0(filename, ".sas")
   spss <- paste0(filename, ".sav")
   stata <- paste0(filename, ".dta")
-  sas <- paste0(filename, ".sas")
-  excel <- paste0(filename, ".xlsx")
-  create_txt <- function(filename, type, software) {
-    paste0("* Download as [", software, " file](", github_base, filename, ") (", AMR:::formatted_filesize(filename), ")  \n")
+  create_txt <- function(filename, type, software, exists) {
+    if (isTRUE(exists)) {
+      paste0("* Download as [", software, "](", github_base, filename, ") (",
+             AMR:::formatted_filesize(filename), ")  \n")
+    } else {
+      paste0("* *(unavailable as ", software, ")*\n")
+    }
   }
-
+  
   if (any(file.exists(rds),
-          file.exists(excel),
           file.exists(txt),
+          file.exists(excel),
+          file.exists(feather),
+          file.exists(parquet),
           file.exists(sas),
           file.exists(spss),
           file.exists(stata))) {
-    msg <- c(msg, "\n**Direct download links:**\n\n")
+    msg <- c(msg, "\n**Direct download links:**\n\n",
+             create_txt(rds, "rds", "original R Data Structure (RDS) file", file.exists(rds)),
+             create_txt(txt, "txt", "tab-separated text file", file.exists(txt)),
+             create_txt(excel, "xlsx", "Microsoft Excel workbook", file.exists(excel)),
+             create_txt(feather, "feather", "Apache Feather file", file.exists(feather)),
+             create_txt(parquet, "parquet", "Apache Parquet file", file.exists(parquet)),
+             create_txt(sas, "sas", "SAS data file", file.exists(sas)),
+             create_txt(spss, "sav", "IBM SPSS Statistics data file", file.exists(spss)),
+             create_txt(stata, "dta", "Stata DTA file", file.exists(stata)))
   }
-  if (file.exists(rds)) msg <- c(msg, create_txt(rds, "rds", "R"))
-  if (file.exists(excel)) msg <- c(msg, create_txt(excel, "xlsx", "Excel"))
-  if (file.exists(txt)) msg <- c(msg, create_txt(txt, "txt", "plain text"))
-  if (file.exists(sas)) msg <- c(msg, create_txt(sas, "sas", "SAS"))
-  if (file.exists(spss)) msg <- c(msg, create_txt(spss, "sav", "SPSS"))
-  if (file.exists(stata)) msg <- c(msg, create_txt(stata, "dta", "Stata"))
   paste0(msg, collapse = "")
 }
 
@@ -87,20 +98,21 @@ print_df <- function(x, rows = 6) {
     }) %>%
     knitr::kable(align = "c")
 }
-
 ```
 
-All reference data (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this `AMR` package are reliable, up-to-date and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply  tab separated files that are machine-readable and suitable for input in any software program, such as laboratory information systems. 
+All reference data (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this `AMR` package are reliable, up-to-date and freely available. We continually export our data sets to formats for use in R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. We also provide tab-separated text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. 
 
 On this page, we explain how to download them and how the structure of the data sets look like. 
 
-## Microorganisms (currently accepted names)
+## `microorganisms`: Microbial Taxonomy (currently accepted names)
 
 `r structure_txt(microorganisms)`
 
 This data set is in R available as `microorganisms`, after you load the `AMR` package.
 
 `r download_txt("microorganisms")`
+
+**NOTE: The exported files for Excel, SAS, SPSS and Stata contain only the first 50 SNOMED codes per record, as their file size would otherwise exceed 100 MB; the file size limit of GitHub.** Advice? Use R instead.
 
 ### Source
 
@@ -130,7 +142,7 @@ microorganisms %>%
   print_df()
 ```
 
-## Microorganisms (previously accepted names)
+## `microorganisms.old`: Microbial Taxonomy (previously accepted names)
 
 `r structure_txt(microorganisms.old)`
 
@@ -158,7 +170,7 @@ microorganisms.old %>%
 ```
 
 
-## Antibiotic agents
+## `antibiotics`: Antibiotic Agents
 
 `r structure_txt(antibiotics)`
 
@@ -183,7 +195,7 @@ antibiotics %>%
 ```
 
 
-## Antiviral agents
+## `antivirals`: Antiviral Agents
 
 `r structure_txt(antivirals)`
 
@@ -205,7 +217,7 @@ antivirals %>%
   print_df()
 ```
 
-## Interpretation from MIC values / disk diameters to R/SI
+## `rsi_translation`: Interpretation from MIC values / disk diameters to R/SI
 
 `r structure_txt(rsi_translation)`
 
@@ -227,7 +239,7 @@ rsi_translation %>%
 ```
 
 
-## Intrinsic bacterial resistance
+## `intrinsic_resistant`: Intrinsic Bacterial Resistance
 
 `r structure_txt(intrinsic_resistant)`
 
@@ -253,7 +265,7 @@ intrinsic_resistant %>%
 ```
 
 
-## Dosage guidelines from EUCAST
+## `dosage`: Dosage Guidelines from EUCAST
 
 `r structure_txt(dosage)`
 
