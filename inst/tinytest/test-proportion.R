@@ -48,7 +48,7 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   
   # percentages
   expect_equal(example_isolates %>%
-                 group_by(hospital_id) %>%
+                 group_by(ward) %>%
                  summarise(R = proportion_R(CIP, as_percent = TRUE),
                            I = proportion_I(CIP, as_percent = TRUE),
                            S = proportion_S(CIP, as_percent = TRUE),
@@ -60,7 +60,7 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   
   # count of cases
   expect_equal(example_isolates %>%
-                 group_by(hospital_id) %>%
+                 group_by(ward) %>%
                  summarise(cipro_p = proportion_SI(CIP, as_percent = TRUE),
                            cipro_n = n_rsi(CIP),
                            genta_p = proportion_SI(GEN, as_percent = TRUE),
@@ -122,4 +122,4 @@ expect_warning(proportion_R(as.character(example_isolates$GEN)))
 expect_warning(proportion_I(as.character(example_isolates$GEN)))
 expect_warning(proportion_S(example_isolates$AMC, as.character(example_isolates$GEN)))
 expect_error(proportion_df(c("A", "B", "C")))
-expect_error(proportion_df(example_isolates[, "date"]))
+expect_error(proportion_df(example_isolates[, "date", drop = TRUE]))

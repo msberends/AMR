@@ -158,12 +158,12 @@ proportion_R(example_isolates$AMX)
 \donttest{
 if (require("dplyr")) {
   example_isolates \%>\%
-    group_by(hospital_id) \%>\%
+    group_by(ward) \%>\%
     summarise(r = resistance(CIP),
               n = n_rsi(CIP)) # n_rsi works like n_distinct in dplyr, see ?n_rsi
  
   example_isolates \%>\%
-    group_by(hospital_id) \%>\%
+    group_by(ward) \%>\%
     summarise(R  = resistance(CIP, as_percent = TRUE),
               SI = susceptibility(CIP, as_percent = TRUE),
               n1 = count_all(CIP),  # the actual total; sum of all three
@@ -195,7 +195,7 @@ if (require("dplyr")) {
  
  
   example_isolates \%>\%
-    group_by(hospital_id) \%>\%
+    group_by(ward) \%>\%
     summarise(cipro_p = susceptibility(CIP, as_percent = TRUE),
               cipro_n = count_all(CIP),
               genta_p = susceptibility(GEN, as_percent = TRUE),
@@ -211,8 +211,8 @@ if (require("dplyr")) {
   # It also supports grouping variables
   # (use rsi_df to also include the count)
   example_isolates \%>\%
-    select(hospital_id, AMX, CIP) \%>\%
-    group_by(hospital_id) \%>\%
+    select(ward, AMX, CIP) \%>\%
+    group_by(ward) \%>\%
     rsi_df(translate = FALSE)
 }
 }

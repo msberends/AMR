@@ -36,7 +36,7 @@ int_resis <- eucast_rules(int_resis,
                                                    is.na(have_these_values) & reference.version == 3.3),
                           info = FALSE)
 
-int_resis2 <- int_resis[, sapply(int_resis, function(x) any(!is.rsi(x) | x == "R"))] %>% 
+int_resis2 <- int_resis[, sapply(int_resis, function(x) any(!is.rsi(x) | x == "R")), drop = FALSE] %>% 
   tidyr::pivot_longer(-mo) %>%
   filter(value == "R") %>% 
   select(mo, ab = name)

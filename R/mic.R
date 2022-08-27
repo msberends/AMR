@@ -120,9 +120,16 @@ valid_mic_levels <- c(c(t(vapply(FUN.VALUE = character(9), ops,
 #' # plot MIC values, see ?plot
 #' plot(mic_data)
 #' plot(mic_data, mo = "E. coli", ab = "cipro")
-#' autoplot(mic_data, mo = "E. coli", ab = "cipro")
-#' autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "nl") # Dutch
-#' autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "uk") # Ukrainian
+#' 
+#' if (require("ggplot2")) {
+#'   autoplot(mic_data, mo = "E. coli", ab = "cipro")
+#' }
+#' if (require("ggplot2")) {
+#'   autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "nl") # Dutch
+#' }
+#' if (require("ggplot2")) {
+#'   autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "uk") # Ukrainian
+#' }
 as.mic <- function(x, na.rm = FALSE) {
   meet_criteria(x, allow_class = c("mic", "character", "numeric", "integer", "factor"), allow_NA = TRUE)
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)

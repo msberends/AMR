@@ -29,7 +29,7 @@
 library(dplyr, warn.conflicts = FALSE)
 devtools::load_all(quiet = TRUE)
 
-set_AMR_locale("en")
+suppressMessages(set_AMR_locale("en"))
 
 old_globalenv <- ls(envir = globalenv())
 
@@ -69,7 +69,7 @@ TRANSLATIONS <- utils::read.delim(file = "data-raw/translations.tsv",
                                   quote = "")
 
 LANGUAGES_SUPPORTED_NAMES <- c(list(en = list(exonym = "English", endonym = "English")),
-                               lapply(TRANSLATIONS[, which(nchar(colnames(TRANSLATIONS)) == 2)],
+                               lapply(TRANSLATIONS[, which(nchar(colnames(TRANSLATIONS)) == 2), drop = FALSE],
                                       function(x) list(exonym = x[1], endonym = x[2])))
 
 LANGUAGES_SUPPORTED <- names(LANGUAGES_SUPPORTED_NAMES)
@@ -122,7 +122,7 @@ create_MO_fullname_lower <- function() {
                                                    MO_lookup$species,
                                                    MO_lookup$subspecies)))
   ind <- MO_lookup$genus == "" | grepl("^[(]unknown ", MO_lookup$fullname, perl = TRUE)
-  MO_lookup[ind, "fullname_lower"] <- tolower(MO_lookup[ind, "fullname"])
+  MO_lookup[ind, "fullname_lower"] <- tolower(MO_lookup[ind, "fullname", drop = TRUE])
   MO_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", MO_lookup$fullname_lower, perl = TRUE))
   MO_lookup$fullname_lower
 }
@@ -208,49 +208,50 @@ create_AB_lookup <- function() {
 AB_LOOKUP <- create_AB_lookup()
 
 # Export to package as internal data ----
-usethis::use_data(EUCAST_RULES_DF,
-                  TRANSLATIONS,
-                  LANGUAGES_SUPPORTED_NAMES,
-                  LANGUAGES_SUPPORTED,
-                  MO_CONS,
-                  MO_COPS,
-                  MO_STREP_ABCG,
-                  MO_FULLNAME_LOWER,
-                  MO_PREVALENT_GENERA,
-                  AB_LOOKUP,
-                  AB_AMINOGLYCOSIDES,
-                  AB_AMINOPENICILLINS,
-                  AB_ANTIFUNGALS,
-                  AB_ANTIMYCOBACTERIALS,
-                  AB_CARBAPENEMS,
-                  AB_CEPHALOSPORINS,
-                  AB_CEPHALOSPORINS_1ST,
-                  AB_CEPHALOSPORINS_2ND,
-                  AB_CEPHALOSPORINS_3RD,
-                  AB_CEPHALOSPORINS_4TH,
-                  AB_CEPHALOSPORINS_5TH,
-                  AB_CEPHALOSPORINS_EXCEPT_CAZ,
-                  AB_FLUOROQUINOLONES,
-                  AB_LIPOGLYCOPEPTIDES,
-                  AB_GLYCOPEPTIDES,
-                  AB_GLYCOPEPTIDES_EXCEPT_LIPO,
-                  AB_LINCOSAMIDES,
-                  AB_MACROLIDES,
-                  AB_OXAZOLIDINONES,
-                  AB_PENICILLINS,
-                  AB_POLYMYXINS,
-                  AB_QUINOLONES,
-                  AB_STREPTOGRAMINS,
-                  AB_TETRACYCLINES,
-                  AB_TETRACYCLINES_EXCEPT_TGC,
-                  AB_TRIMETHOPRIMS,
-                  AB_UREIDOPENICILLINS,
-                  AB_BETALACTAMS,
-                  DEFINED_AB_GROUPS,
-                  internal = TRUE,
-                  overwrite = TRUE,
-                  version = 2,
-                  compress = "xz")
+usethis::ui_info(paste0("Saving {usethis::ui_value('sysdata.rda')} to {usethis::ui_value('R/')}"))
+suppressMessages(usethis::use_data(EUCAST_RULES_DF,
+                                   TRANSLATIONS,
+                                   LANGUAGES_SUPPORTED_NAMES,
+                                   LANGUAGES_SUPPORTED,
+                                   MO_CONS,
+                                   MO_COPS,
+                                   MO_STREP_ABCG,
+                                   MO_FULLNAME_LOWER,
+                                   MO_PREVALENT_GENERA,
+                                   AB_LOOKUP,
+                                   AB_AMINOGLYCOSIDES,
+                                   AB_AMINOPENICILLINS,
+                                   AB_ANTIFUNGALS,
+                                   AB_ANTIMYCOBACTERIALS,
+                                   AB_CARBAPENEMS,
+                                   AB_CEPHALOSPORINS,
+                                   AB_CEPHALOSPORINS_1ST,
+                                   AB_CEPHALOSPORINS_2ND,
+                                   AB_CEPHALOSPORINS_3RD,
+                                   AB_CEPHALOSPORINS_4TH,
+                                   AB_CEPHALOSPORINS_5TH,
+                                   AB_CEPHALOSPORINS_EXCEPT_CAZ,
+                                   AB_FLUOROQUINOLONES,
+                                   AB_LIPOGLYCOPEPTIDES,
+                                   AB_GLYCOPEPTIDES,
+                                   AB_GLYCOPEPTIDES_EXCEPT_LIPO,
+                                   AB_LINCOSAMIDES,
+                                   AB_MACROLIDES,
+                                   AB_OXAZOLIDINONES,
+                                   AB_PENICILLINS,
+                                   AB_POLYMYXINS,
+                                   AB_QUINOLONES,
+                                   AB_STREPTOGRAMINS,
+                                   AB_TETRACYCLINES,
+                                   AB_TETRACYCLINES_EXCEPT_TGC,
+                                   AB_TRIMETHOPRIMS,
+                                   AB_UREIDOPENICILLINS,
+                                   AB_BETALACTAMS,
+                                   DEFINED_AB_GROUPS,
+                                   internal = TRUE,
+                                   overwrite = TRUE,
+                                   version = 2,
+                                   compress = "xz"))
 
 # Export data sets to the repository in different formats -----------------
 
@@ -285,7 +286,7 @@ rsi <- rsi_translation %>%
   mutate(mo_name = mo_name(mo, language = NULL), .after = mo) %>%
   mutate(ab_name = ab_name(ab, language = NULL), .after = ab)
 if (changed_md5(rsi)) {
-  usethis::ui_info(paste0("Saving {usethis::ui_value('rsi_translation')} to {usethis::ui_value('/data-raw/')}"))
+  usethis::ui_info(paste0("Saving {usethis::ui_value('rsi_translation')} to {usethis::ui_value('data-raw/')}"))
   write_md5(rsi)
   try(saveRDS(rsi, "data-raw/rsi_translation.rds", version = 2, compress = "xz"), silent = TRUE)
   try(write.table(rsi, "data-raw/rsi_translation.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
@@ -298,7 +299,7 @@ if (changed_md5(rsi)) {
 }
 
 if (changed_md5(microorganisms)) {
-  usethis::ui_info(paste0("Saving {usethis::ui_value('microorganisms')} to {usethis::ui_value('/data-raw/')}"))
+  usethis::ui_info(paste0("Saving {usethis::ui_value('microorganisms')} to {usethis::ui_value('data-raw/')}"))
   write_md5(microorganisms)
   try(saveRDS(microorganisms, "data-raw/microorganisms.rds", version = 2, compress = "xz"), silent = TRUE)
   try(write.table(mo, "data-raw/microorganisms.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
@@ -315,7 +316,7 @@ if (changed_md5(microorganisms)) {
 }
 
 if (changed_md5(microorganisms.old)) {
-  usethis::ui_info(paste0("Saving {usethis::ui_value('microorganisms.old')} to {usethis::ui_value('/data-raw/')}"))
+  usethis::ui_info(paste0("Saving {usethis::ui_value('microorganisms.old')} to {usethis::ui_value('data-raw/')}"))
   write_md5(microorganisms.old)
   try(saveRDS(microorganisms.old, "data-raw/microorganisms.old.rds", version = 2, compress = "xz"), silent = TRUE)
   try(write.table(microorganisms.old, "data-raw/microorganisms.old.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
@@ -329,7 +330,7 @@ if (changed_md5(microorganisms.old)) {
 
 ab <- dplyr::mutate_if(antibiotics, ~!is.numeric(.), as.character)
 if (changed_md5(ab)) {
-  usethis::ui_info(paste0("Saving {usethis::ui_value('antibiotics')} to {usethis::ui_value('/data-raw/')}"))
+  usethis::ui_info(paste0("Saving {usethis::ui_value('antibiotics')} to {usethis::ui_value('data-raw/')}"))
   write_md5(ab)
   try(saveRDS(antibiotics, "data-raw/antibiotics.rds", version = 2, compress = "xz"), silent = TRUE)
   try(write.table(antibiotics, "data-raw/antibiotics.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
@@ -343,7 +344,7 @@ if (changed_md5(ab)) {
 
 av <- dplyr::mutate_if(antivirals, ~!is.numeric(.), as.character)
 if (changed_md5(av)) {
-  usethis::ui_info(paste0("Saving {usethis::ui_value('antivirals')} to {usethis::ui_value('/data-raw/')}"))
+  usethis::ui_info(paste0("Saving {usethis::ui_value('antivirals')} to {usethis::ui_value('data-raw/')}"))
   write_md5(av)
   try(saveRDS(antivirals, "data-raw/antivirals.rds", version = 2, compress = "xz"), silent = TRUE)
   try(write.table(av, "data-raw/antivirals.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
@@ -360,7 +361,7 @@ intrinsicR <- data.frame(microorganism = mo_name(intrinsic_resistant$mo, languag
                          antibiotic = ab_name(intrinsic_resistant$ab, language = NULL),
                          stringsAsFactors = FALSE)
 if (changed_md5(intrinsicR)) {
-  usethis::ui_info(paste0("Saving {usethis::ui_value('intrinsic_resistant')} to {usethis::ui_value('/data-raw/')}"))
+  usethis::ui_info(paste0("Saving {usethis::ui_value('intrinsic_resistant')} to {usethis::ui_value('data-raw/')}"))
   write_md5(intrinsicR)
   try(saveRDS(intrinsicR, "data-raw/intrinsic_resistant.rds", version = 2, compress = "xz"), silent = TRUE)
   try(write.table(intrinsicR, "data-raw/intrinsic_resistant.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
@@ -373,7 +374,7 @@ if (changed_md5(intrinsicR)) {
 }
 
 if (changed_md5(dosage)) {
-  usethis::ui_info(paste0("Saving {usethis::ui_value('dosage')} to {usethis::ui_value('/data-raw/')}"))
+  usethis::ui_info(paste0("Saving {usethis::ui_value('dosage')} to {usethis::ui_value('data-raw/')}"))
   write_md5(dosage)
   try(saveRDS(dosage, "data-raw/dosage.rds", version = 2, compress = "xz"), silent = TRUE)
   try(write.table(dosage, "data-raw/dosage.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
@@ -385,7 +386,7 @@ if (changed_md5(dosage)) {
   try(arrow::write_parquet(dosage, "data-raw/dosage.parquet"), silent = TRUE)
 }
 
-reset_AMR_locale()
+suppressMessages(reset_AMR_locale())
 
 # remove leftovers from global env
 current_globalenv <- ls(envir = globalenv())

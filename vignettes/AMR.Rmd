@@ -534,7 +534,7 @@ autoplot(disk_values,
 
 ## Independence test
 
-The next example uses the `example_isolates` data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR data analysis.
+The next example uses the `example_isolates` data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practise AMR data analysis.
 
 We will compare the resistance to fosfomycin (column `FOS`) in hospital A and D. The input for the `fisher.test()` can be retrieved with a transformation like this:
 
@@ -543,11 +543,11 @@ We will compare the resistance to fosfomycin (column `FOS`) in hospital A and D.
 library(tidyr)
 
 check_FOS <- example_isolates %>%
-  filter(hospital_id %in% c("A", "D")) %>% # filter on only hospitals A and D
-  select(hospital_id, FOS) %>%             # select the hospitals and fosfomycin
-  group_by(hospital_id) %>%                # group on the hospitals
-  count_df(combine_SI = TRUE) %>%          # count all isolates per group (hospital_id)
-  pivot_wider(names_from = hospital_id,    # transform output so A and D are columns
+  filter(ward %in% c("A", "D")) %>% # filter on only hospitals A and D
+  select(ward, FOS) %>%             # select the hospitals and fosfomycin
+  group_by(ward) %>%                # group on the hospitals
+  count_df(combine_SI = TRUE) %>%          # count all isolates per group (ward)
+  pivot_wider(names_from = ward,    # transform output so A and D are columns
               values_from = value) %>%     
   select(A, D) %>%                         # and only select these columns
   as.matrix()                              # transform to a good old matrix for fisher.test()

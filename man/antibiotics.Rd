@@ -6,7 +6,7 @@
 \alias{antivirals}
 \title{Data Sets with 566 Antimicrobial Drugs}
 \format{
-\subsection{For the \link{antibiotics} data set: a \link{data.frame} with 464 observations and 14 variables:}{
+\subsection{For the \link{antibiotics} data set: a [tibble\link[tibble:tibble]{tibble::tibble} with 464 observations and 14 variables:}{
 \itemize{
 \item \code{ab}\cr Antibiotic ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
 \item \code{cid}\cr Compound ID as found in PubChem
@@ -25,7 +25,7 @@
 }
 }
 
-\subsection{For the \link{antivirals} data set: a \link{data.frame} with 102 observations and 9 variables:}{
+\subsection{For the \link{antivirals} data set: a [tibble\link[tibble:tibble]{tibble::tibble} with 102 observations and 9 variables:}{
 \itemize{
 \item \code{atc}\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC
 \item \code{cid}\cr Compound ID as found in PubChem
@@ -39,7 +39,7 @@
 }
 }
 
-An object of class \code{data.frame} with 102 rows and 9 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 102 rows and 9 columns.
 }
 \source{
 World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): \url{https://www.whocc.no/atc_ddd_index/}
@@ -60,24 +60,9 @@ Properties that are based on an ATC code are only available when an ATC is avail
 Synonyms (i.e. trade names) were derived from the Compound ID (\code{cid}) and consequently only available where a CID is available.
 \subsection{Direct download}{
 
-These data sets are available as 'flat files' for use even without \R - you can find the files here:
-\itemize{
-\item \url{https://github.com/msberends/AMR/raw/main/data-raw/antibiotics.txt}
-\item \url{https://github.com/msberends/AMR/raw/main/data-raw/antivirals.txt}
-}
-
-Files in \R format (with preserved data structure) can be found here:
-\itemize{
-\item \url{https://github.com/msberends/AMR/raw/main/data/antibiotics.rda}
-\item \url{https://github.com/msberends/AMR/raw/main/data/antivirals.rda}
+Like all data sets in this package, these data sets are publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 }
-}
-\section{Reference Data Publicly Available}{
-
-All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
-}
-
 \section{WHOCC}{
 
 \if{html}{\figure{logo_who.png}{options: height="60" style=margin-bottom:"5"} \cr}
@@ -91,8 +76,8 @@ The WHOCC is located in Oslo at the Norwegian Institute of Public Health and fun
 }
 
 \examples{
-head(antibiotics)
-head(antivirals)
+antibiotics
+antivirals
 }
 \seealso{
 \link{microorganisms}, \link{intrinsic_resistant}

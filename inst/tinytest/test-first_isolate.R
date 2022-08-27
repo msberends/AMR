@@ -52,8 +52,8 @@ expect_equal(
     first_isolate(example_isolates,
                   col_mo = "mo",
                   col_date = "date",
-                  col_patient_id = "patient_id",
-                  col_icu = "ward_icu",
+                  col_patient_id = "patient",
+                  col_icu = example_isolates$ward == "ICU",
                   info = TRUE,
                   icu_exclude = TRUE),
     na.rm = TRUE),
@@ -67,7 +67,7 @@ x[random_rows, "specimen"] <- "Urine"
 expect_true(
   sum(first_isolate(x = x,
                     col_date = "date",
-                    col_patient_id = "patient_id",
+                    col_patient_id = "patient",
                     col_mo = "mo",
                     col_specimen = "specimen",
                     filter_specimen = "Urine",
@@ -76,11 +76,11 @@ expect_true(
 expect_true(
   sum(first_isolate(x = x,
                     col_date = "date",
-                    col_patient_id = "patient_id",
+                    col_patient_id = "patient",
                     col_mo = "mo",
                     col_specimen = "specimen",
                     filter_specimen = "Urine",
-                    col_icu = "ward_icu",
+                    col_icu = x$ward == "ICU",
                     icu_exclude = TRUE,
                     info = TRUE), na.rm = TRUE) < 1501)
 
@@ -89,7 +89,7 @@ test_iso <- example_isolates
 test_iso$specimen <- "test"
 expect_message(first_isolate(test_iso, 
                              "date", 
-                             "patient_id",
+                             "patient",
                              col_mo = "mo",
                              col_specimen = "specimen",
                              filter_specimen = "something_unexisting",
@@ -99,13 +99,13 @@ expect_message(first_isolate(test_iso,
 expect_message(first_isolate(example_isolates,
                              col_date = "date",
                              col_mo = "mo",
-                             col_patient_id = "patient_id",
+                             col_patient_id = "patient",
                              col_testcode = "gender",
                              testcodes_exclude = "M",
                              info = TRUE))
 
 # errors
-expect_error(first_isolate("date", "patient_id", col_mo = "mo"))
+expect_error(first_isolate("date", "patient", col_mo = "mo"))
 expect_error(first_isolate(example_isolates,
                            col_date = "non-existing col",
                            col_mo = "mo"))
@@ -116,12 +116,12 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
                      mutate(mo = as.character(mo)) %>%
                      first_isolate(col_date = "date",
                                    col_mo = "mo",
-                                   col_patient_id = "patient_id",
+                                   col_patient_id = "patient",
                                    info = FALSE),
                    example_isolates %>%
                      first_isolate(col_date = "date",
                                    col_mo = "mo",
-                                   col_patient_id = "patient_id",
+                                   col_patient_id = "patient",
                                    info = FALSE))
   
   # support for WHONET
@@ -133,8 +133,8 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
                    first_isolate(info = TRUE))
   
   # groups
-  x <- example_isolates %>% group_by(ward_icu) %>% mutate(first = first_isolate())
-  y <- example_isolates %>% group_by(ward_icu) %>% mutate(first = first_isolate(.))
+  x <- example_isolates %>% group_by(ward) %>% mutate(first = first_isolate())
+  y <- example_isolates %>% group_by(ward) %>% mutate(first = first_isolate(.))
   expect_identical(x, y)
   
 }
@@ -146,7 +146,7 @@ expect_equal(
   sum(
     first_isolate(x = df,
                   col_date = "date",
-                  col_patient_id = "patient_id",
+                  col_patient_id = "patient",
                   col_mo = "mo",
                   info = TRUE),
     na.rm = TRUE),

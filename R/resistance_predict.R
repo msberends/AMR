@@ -80,7 +80,7 @@
 #'     filter_first_isolate() %>%
 #'     filter(mo_genus(mo) == "Staphylococcus") %>%
 #'     resistance_predict("PEN", model = "binomial")
-#'   plot(x)
+#'   print(plot(x))
 #'
 #'   # get the model from the object
 #'   mymodel <- attributes(x)$model
@@ -88,7 +88,7 @@
 #' }
 #'
 #' # create nice plots with ggplot2 yourself
-#' if (require("dplyr") & require("ggplot2")) {
+#' if (require("dplyr") && require("ggplot2")) {
 #' 
 #'   data <- example_isolates %>%
 #'     filter(mo == as.mo("E. coli")) %>%
@@ -127,6 +127,9 @@ resistance_predict <- function(x,
   
   stop_if(is.null(model), 'choose a regression model with the `model` argument, e.g. resistance_predict(..., model = "binomial")')
   
+  x.bak <- x
+  x <- as.data.frame(x, stringsAsFactors = FALSE)
+  
   dots <- unlist(list(...))
   if (length(dots) != 0) {
     # backwards compatibility with old arguments
@@ -146,9 +149,6 @@ resistance_predict <- function(x,
   }
   stop_ifnot(col_date %in% colnames(x),
              "column '", col_date, "' not found")
-  
-  # no grouped tibbles
-  x <- as.data.frame(x, stringsAsFactors = FALSE)
   
   year <- function(x) {
     # don't depend on lubridate or so, would be overkill for only this function
@@ -173,7 +173,7 @@ resistance_predict <- function(x,
   # remove rows with NAs
   df <- subset(df, !is.na(df[, col_ab, drop = TRUE]))
   df$year <- year(df[, col_date, drop = TRUE])
-  df <- as.data.frame(rbind(table(df[, c("year", col_ab)])),
+  df <- as.data.frame(rbind(table(df[, c("year", col_ab), drop = FALSE])),
                       stringsAsFactors = FALSE)
   df$year <- as.integer(rownames(df))
   rownames(df) <- NULL
@@ -275,15 +275,15 @@ resistance_predict <- function(x,
   }
   
   df_prediction$value <- ifelse(df_prediction$value > 1, 1, ifelse(df_prediction$value < 0, 0, df_prediction$value))
-  df_prediction <- df_prediction[order(df_prediction$year), ]
+  df_prediction <- df_prediction[order(df_prediction$year), , drop = FALSE]
   
-  structure(
-    .Data = df_prediction,
-    class = c("resistance_predict", "data.frame"),
-    I_as_S = I_as_S,
-    model_title = model,
-    model = model_lm,
-    ab = col_ab
+  out <- as_original_data_class(df_prediction, class(x.bak))
+  structure(out,
+            class = c("resistance_predict", class(out)),
+            I_as_S = I_as_S,
+            model_title = model,
+            model = model_lm,
+            ab = col_ab
   )
 }
 

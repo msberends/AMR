@@ -429,10 +429,10 @@ ab_validate <- function(x, property, ...) {
   } else {
     # try to catch an error when inputting an invalid argument
     # so the 'call.' can be set to FALSE
-    tryCatch(x[1L] %in% antibiotics[1, property],
+    tryCatch(x[1L] %in% antibiotics[1, property, drop = TRUE],
              error = function(e) stop(e$message, call. = FALSE))
     
-    if (!all(x %in% AB_lookup[, property])) {
+    if (!all(x %in% AB_lookup[, property, drop = TRUE])) {
       x <- as.ab(x, ...)
       x <- AB_lookup[match(x, AB_lookup$ab), property, drop = TRUE]
     }

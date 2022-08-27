@@ -40,13 +40,13 @@ catalogue_of_life_version()
 mo_shortname("Chlamydophila psittaci")
 
 # Get any property from the entire taxonomic tree for all included species
-mo_class("E. coli")
+mo_class("Escherichia coli")
 
-mo_family("E. coli")
+mo_family("Escherichia coli")
 
-mo_gramstain("E. coli") # based on kingdom and phylum, see ?mo_gramstain
+mo_gramstain("Escherichia coli") # based on kingdom and phylum, see ?mo_gramstain
 
-mo_ref("E. coli")
+mo_ref("Escherichia coli")
 
 # Do not get mistaken - this package is about microorganisms
 mo_kingdom("C. elegans")

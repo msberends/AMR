@@ -147,7 +147,8 @@ expect_identical(as.character(as.mo("S. salivarius",  Lancefield = TRUE)),  "B_S
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   # select with one column
   expect_identical(
-    example_isolates[1:10, ] %>%
+    example_isolates %>%
+      slice(1:10) %>%
       left_join_microorganisms() %>%
       select(genus) %>%
       as.mo() %>%
@@ -157,9 +158,11 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   
   # select with two columns
   expect_identical(
-    example_isolates[1:10, ] %>%
+    example_isolates %>%
+      slice(1:10) %>%
       pull(mo),
-    example_isolates[1:10, ] %>%
+    example_isolates %>%
+      slice(1:10) %>%
       left_join_microorganisms() %>%
       select(genus, species) %>%
       as.mo())

@@ -75,7 +75,7 @@
 #' \donttest{
 #' if (require("dplyr")) {
 #'   example_isolates %>%
-#'     group_by(hospital_id) %>%
+#'     group_by(ward) %>%
 #'     summarise(R  = count_R(CIP),
 #'               I  = count_I(CIP),
 #'               S  = count_S(CIP),
@@ -86,7 +86,7 @@
 #'   # Number of available isolates for a whole antibiotic class
 #'   # (i.e., in this data set columns GEN, TOB, AMK, KAN)
 #'   example_isolates %>%
-#'     group_by(hospital_id) %>%
+#'     group_by(ward) %>%
 #'     summarise(across(aminoglycosides(), n_rsi))
 #'  
 #'   # Count co-resistance between amoxicillin/clav acid and gentamicin,
@@ -108,8 +108,8 @@
 #'  
 #'   # It also supports grouping variables
 #'   example_isolates %>%
-#'     select(hospital_id, AMX, CIP) %>%
-#'     group_by(hospital_id) %>%
+#'     select(ward, AMX, CIP) %>%
+#'     group_by(ward) %>%
 #'     count_df(translate = FALSE)
 #' }
 #' }

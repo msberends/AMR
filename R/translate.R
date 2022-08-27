@@ -27,13 +27,13 @@
 #'
 #' For language-dependent output of AMR functions, like [mo_name()], [mo_gramstain()], [mo_type()] and [ab_name()].
 #' @param x text to translate
-#' @param lang language to choose. Use one of these supported language names or ISO-639-1 codes: `r paste0('"', sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), '" ("' , LANGUAGES_SUPPORTED, '")', collapse = ", ")`.
+#' @param language language to choose. Use one of these supported language names or ISO-639-1 codes: `r paste0('"', sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), '" ("' , LANGUAGES_SUPPORTED, '")', collapse = ", ")`.
 #' @details The currently `r length(LANGUAGES_SUPPORTED)` supported languages are `r vector_and(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), quotes = FALSE, sort = FALSE)`. All these languages have translations available for all antimicrobial agents and colloquial microorganism names.
 #'
 #' Please read about adding or updating a language in [our Wiki](https://github.com/msberends/AMR/wiki/).
 #'
 #' ## Changing the Default Language
-#' The system language will be used at default (as returned by `Sys.getenv("LANG")` or, if `LANG` is not set, [Sys.getlocale("LC_COLLATE")]), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:
+#' The system language will be used at default (as returned by `Sys.getenv("LANG")` or, if `LANG` is not set, [`Sys.getlocale("LC_COLLATE")`][Sys.getlocale()]), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:
 #' 
 #'   1. Setting the R option `AMR_locale`, either by using `set_AMR_locale()` or by running e.g. `options(AMR_locale = "de")`.
 #'   
@@ -93,10 +93,10 @@ get_AMR_locale <- function() {
 
 #' @rdname translate
 #' @export
-set_AMR_locale <- function(lang) {
-  lang <- validate_language(lang)
-  options(AMR_locale = lang)
-  message_("Using the ", LANGUAGES_SUPPORTED_NAMES[[lang]]$exonym,  " language (", LANGUAGES_SUPPORTED_NAMES[[lang]]$endonym, ") for the AMR package for this session.")
+set_AMR_locale <- function(language) {
+  language <- validate_language(language)
+  options(AMR_locale = language)
+  message_("Using the ", LANGUAGES_SUPPORTED_NAMES[[language]]$exonym,  " language (", LANGUAGES_SUPPORTED_NAMES[[language]]$endonym, ") for the AMR package for this session.")
 }
 
 #' @rdname translate
@@ -111,6 +111,7 @@ translate_AMR <- function(x, language = get_AMR_locale()) {
   translate_into_language(x, language = language)
 }
 
+
 validate_language <- function(language, extra_txt = character(0)) {
   if (trimws(tolower(language)) %in% c("en", "english", "", "false", NA)) {
     return("en")
@@ -124,8 +125,8 @@ validate_language <- function(language, extra_txt = character(0)) {
   lang
 }
 
-find_language <- function(lang, fallback = TRUE) {
-  lang <- Map(function(l, n, check = lang) {
+find_language <- function(language, fallback = TRUE) {
+  language <- Map(function(l, n, check = language) {
     grepl(paste0("^(", l[1], "|", l[2], "|",
                  n, "(_|$)|", toupper(n), "(_|$))"),
           check,
@@ -136,12 +137,12 @@ find_language <- function(lang, fallback = TRUE) {
   LANGUAGES_SUPPORTED_NAMES,
   LANGUAGES_SUPPORTED,
   USE.NAMES = TRUE)
-  lang <- names(which(lang == TRUE))
-  if (isTRUE(fallback) && length(lang) == 0) {
+  language <- names(which(language == TRUE))
+  if (isTRUE(fallback) && length(language) == 0) {
     # other language -> set to English
-    lang <- "en"
+    language <- "en"
   }
-  lang
+  language
 }
 
 # translate strings based on inst/translations.tsv

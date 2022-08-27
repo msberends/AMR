@@ -10,14 +10,14 @@
 \usage{
 get_AMR_locale()
 
-set_AMR_locale(lang)
+set_AMR_locale(language)
 
 reset_AMR_locale()
 
 translate_AMR(x, language = get_AMR_locale())
 }
 \arguments{
-\item{lang}{language to choose. Use one of these supported language names or ISO-639-1 codes: "English" ("en"), "Chinese" ("zh"), "Danish" ("da"), "Dutch" ("nl"), "French" ("fr"), "German" ("de"), "Greek" ("el"), "Italian" ("it"), "Japanese" ("ja"), "Polish" ("pl"), "Portuguese" ("pt"), "Russian" ("ru"), "Spanish" ("es"), "Swedish" ("sv"), "Turkish" ("tr"), "Ukrainian" ("uk").}
+\item{language}{language to choose. Use one of these supported language names or ISO-639-1 codes: "English" ("en"), "Chinese" ("zh"), "Danish" ("da"), "Dutch" ("nl"), "French" ("fr"), "German" ("de"), "Greek" ("el"), "Italian" ("it"), "Japanese" ("ja"), "Polish" ("pl"), "Portuguese" ("pt"), "Russian" ("ru"), "Spanish" ("es"), "Swedish" ("sv"), "Turkish" ("tr"), "Ukrainian" ("uk").}
 
 \item{x}{text to translate}
 }
@@ -30,7 +30,7 @@ The currently 16 supported languages are English, Chinese, Danish, Dutch, French
 Please read about adding or updating a language in \href{https://github.com/msberends/AMR/wiki/}{our Wiki}.
 \subsection{Changing the Default Language}{
 
-The system language will be used at default (as returned by \code{Sys.getenv("LANG")} or, if \code{LANG} is not set, \link{Sys.getlocale("LC_COLLATE")}), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:
+The system language will be used at default (as returned by \code{Sys.getenv("LANG")} or, if \code{LANG} is not set, \code{\link[=Sys.getlocale]{Sys.getlocale("LC_COLLATE")}}), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:
 \enumerate{
 \item Setting the R option \code{AMR_locale}, either by using \code{set_AMR_locale()} or by running e.g. \code{options(AMR_locale = "de")}.
 

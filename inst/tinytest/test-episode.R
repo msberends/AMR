@@ -49,7 +49,7 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
       mutate(out = first_isolate(., include_unknown = TRUE, method = "episode-based", info = FALSE))
   )
   y <- example_isolates %>%
-    group_by(patient_id, mo) %>%
+    group_by(patient, mo) %>%
     mutate(out = is_new_episode(date, 365))
   
   expect_identical(which(x$out), which(y$out))

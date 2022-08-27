@@ -166,121 +166,153 @@ The \code{\link[=not_intrinsic_resistant]{not_intrinsic_resistant()}} function c
 
 \section{Reference Data Publicly Available}{
 
-All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
+All data sets in this \code{AMR} package (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
 # `example_isolates` is a data set available in the AMR package.
 # See ?example_isolates.
-df <- example_isolates[ , c("hospital_id", "mo",
-                            "AMP", "AMC", "TZP", "CXM", "CRO", "GEN",
-                            "TOB", "COL", "IPM", "MEM", "TEC", "VAN")]
+example_isolates
 
 # base R ------------------------------------------------------------------
 
 # select columns 'IPM' (imipenem) and 'MEM' (meropenem)
-df[, carbapenems()]
+example_isolates[, carbapenems()]
 
 # select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB'
-df[, c("mo", aminoglycosides())]
+example_isolates[, c("mo", aminoglycosides())]
 
 # select only antibiotic columns with DDDs for oral treatment
-df[, administrable_per_os()]
+example_isolates[, administrable_per_os()]
 
 # filter using any() or all()
-df[any(carbapenems() == "R"), ]
-subset(df, any(carbapenems() == "R"))
+example_isolates[any(carbapenems() == "R"), ]
+subset(example_isolates, any(carbapenems() == "R"))
 
 # filter on any or all results in the carbapenem columns (i.e., IPM, MEM):
-df[any(carbapenems()), ]
-df[all(carbapenems()), ]
+example_isolates[any(carbapenems()), ]
+example_isolates[all(carbapenems()), ]
 
 # filter with multiple antibiotic selectors using c()
-df[all(c(carbapenems(), aminoglycosides()) == "R"), ]
+example_isolates[all(c(carbapenems(), aminoglycosides()) == "R"), ]
 
 # filter + select in one go: get penicillins in carbapenems-resistant strains
-df[any(carbapenems() == "R"), penicillins()]
+example_isolates[any(carbapenems() == "R"), penicillins()]
 
 # You can combine selectors with '&' to be more specific. For example,
 # penicillins() would select benzylpenicillin ('peni G') and
 # administrable_per_os() would select erythromycin. Yet, when combined these
 # drugs are both omitted since benzylpenicillin is not administrable per os
 # and erythromycin is not a penicillin:
-df[, penicillins() & administrable_per_os()]
+example_isolates[, penicillins() & administrable_per_os()]
 
 # ab_selector() applies a filter in the `antibiotics` data set and is thus very
 # flexible. For instance, to select antibiotic columns with an oral DDD of at
 # least 1 gram:
-df[, ab_selector(oral_ddd > 1 & oral_units == "g")]
+example_isolates[, ab_selector(oral_ddd > 1 & oral_units == "g")]
 
 # dplyr -------------------------------------------------------------------
 \donttest{
 if (require("dplyr")) {
 
-  # get AMR for all aminoglycosides e.g., per hospital:
-  df \%>\%
-    group_by(hospital_id) \%>\% 
+  # get AMR for all aminoglycosides e.g., per ward:
+  example_isolates \%>\%
+    group_by(ward) \%>\% 
     summarise(across(aminoglycosides(), resistance))
     
+}
+if (require("dplyr")) {
+    
   # You can combine selectors with '&' to be more specific:
-  df \%>\%
+  example_isolates \%>\%
     select(penicillins() & administrable_per_os())
+    
+}
+if (require("dplyr")) {
   
   # get AMR for only drugs that matter - no intrinsic resistance:
-  df \%>\%
+  example_isolates \%>\%
     filter(mo_genus() \%in\% c("Escherichia", "Klebsiella")) \%>\% 
-    group_by(hospital_id) \%>\% 
+    group_by(ward) \%>\% 
     summarise(across(not_intrinsic_resistant(), resistance))
     
+}
+if (require("dplyr")) {
+    
   # get susceptibility for antibiotics whose name contains "trim":
-  df \%>\%
+  example_isolates \%>\%
     filter(first_isolate()) \%>\% 
-    group_by(hospital_id) \%>\% 
+    group_by(ward) \%>\% 
     summarise(across(ab_selector(name \%like\% "trim"), susceptibility))
+    
+}
+if (require("dplyr")) {
 
   # this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
-  df \%>\% 
+  example_isolates \%>\% 
     select(carbapenems())
     
+}
+if (require("dplyr")) {
+    
   # this will select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB':
-  df \%>\% 
+  example_isolates \%>\% 
     select(mo, aminoglycosides())
     
+}
+if (require("dplyr")) {
+    
  # any() and all() work in dplyr's filter() too:
- df \%>\% 
+ example_isolates \%>\% 
     filter(any(aminoglycosides() == "R"),
            all(cephalosporins_2nd() == "R"))
     
+}
+if (require("dplyr")) {
+    
  # also works with c():
- df \%>\% 
+ example_isolates \%>\% 
     filter(any(c(carbapenems(), aminoglycosides()) == "R"))
     
+}
+if (require("dplyr")) {
+    
  # not setting any/all will automatically apply all():
- df \%>\% 
+ example_isolates \%>\% 
     filter(aminoglycosides() == "R")
     
+}
+if (require("dplyr")) {
+    
   # this will select columns 'mo' and all antimycobacterial drugs ('RIF'):
-  df \%>\% 
+  example_isolates \%>\% 
     select(mo, ab_class("mycobact"))
     
+}
+if (require("dplyr")) {
+    
   # get bug/drug combinations for only glycopeptides in Gram-positives:
-  df \%>\% 
+  example_isolates \%>\% 
     filter(mo_is_gram_positive()) \%>\% 
     select(mo, glycopeptides()) \%>\% 
     bug_drug_combinations() \%>\%
     format()
     
+}
+if (require("dplyr")) {
+
   data.frame(some_column = "some_value",
              J01CA01 = "S") \%>\%   # ATC code of ampicillin
     select(penicillins())         # only the 'J01CA01' column will be selected
     
-    
+}
+if (require("dplyr")) {
+
   # with recent versions of dplyr this is all equal:
-  x <- df[carbapenems() == "R", ]
-  y <- df \%>\% filter(carbapenems() == "R")
-  z <- df \%>\% filter(if_all(carbapenems(), ~.x == "R"))
-  identical(x, y)
-  identical(y, z)
+  x <- example_isolates[carbapenems() == "R", ]
+  y <- example_isolates \%>\% filter(carbapenems() == "R")
+  z <- example_isolates \%>\% filter(if_all(carbapenems(), ~.x == "R"))
+  identical(x, y) && identical(y, z)
 }
 }
 }

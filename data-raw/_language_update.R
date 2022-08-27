@@ -55,7 +55,7 @@ lang_env$TRANSLATIONS <- utils::read.delim(file = "data-raw/translations.tsv",
                                            quote = "")
 
 lang_env$LANGUAGES_SUPPORTED_NAMES <- c(list(en = list(exonym = "English", endonym = "English")),
-                                        lapply(lang_env$TRANSLATIONS[, which(nchar(colnames(lang_env$TRANSLATIONS)) == 2)],
+                                        lapply(lang_env$TRANSLATIONS[, which(nchar(colnames(lang_env$TRANSLATIONS)) == 2), drop = FALSE],
                                                function(x) list(exonym = x[1], endonym = x[2])))
 
 lang_env$LANGUAGES_SUPPORTED <- names(lang_env$LANGUAGES_SUPPORTED_NAMES)

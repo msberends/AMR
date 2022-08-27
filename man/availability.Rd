@@ -25,7 +25,7 @@ availability(example_isolates)
 \donttest{
 if (require("dplyr")) {
   example_isolates \%>\%
-    filter(mo == as.mo("E. coli")) \%>\%
+    filter(mo == as.mo("Escherichia coli")) \%>\%
     select_if(is.rsi) \%>\%
     availability()
 }

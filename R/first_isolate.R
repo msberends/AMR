@@ -32,7 +32,7 @@
 #' @param col_mo column name of the IDs of the microorganisms (see [as.mo()]), defaults to the first column of class [`mo`]. Values will be coerced using [as.mo()].
 #' @param col_testcode column name of the test codes. Use `col_testcode = NULL` to **not** exclude certain test codes (such as test codes for screening). In that case `testcodes_exclude` will be ignored.
 #' @param col_specimen column name of the specimen type or group
-#' @param col_icu column name of the logicals (`TRUE`/`FALSE`) whether a ward or department is an Intensive Care Unit (ICU)
+#' @param col_icu column name of the logicals (`TRUE`/`FALSE`) whether a ward or department is an Intensive Care Unit (ICU). This can also be a [logical] vector with the same length as rows in `x`.
 #' @param col_keyantimicrobials (only useful when `method = "phenotype-based"`) column name of the key antimicrobials to determine first isolates, see [key_antimicrobials()]. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' or 'antimicrobials' (case insensitive). Use `col_keyantimicrobials = FALSE` to prevent this. Can also be the output of [key_antimicrobials()].
 #' @param episode_days episode in days after which a genus/species combination will be determined as 'first isolate' again. The default of 365 days is based on the guideline by CLSI, see *Source*. 
 #' @param testcodes_exclude a [character] vector with test codes that should be excluded (case-insensitive)
@@ -119,7 +119,7 @@
 #' @rdname first_isolate
 #' @seealso [key_antimicrobials()]
 #' @export
-#' @return A [`logical`] vector
+#' @return A [logical] vector
 #' @source Methodology of this function is strictly based on:
 #' 
 #' - **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition**, 2014, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
@@ -138,36 +138,22 @@
 #'   # filter on first isolates using dplyr:
 #'   example_isolates %>%
 #'     filter(first_isolate())
+#'     
+#' }
+#' if (require("dplyr")) {
 #'  
 #'   # short-hand version:
 #'   example_isolates %>%
 #'     filter_first_isolate(info = FALSE)
 #'     
+#' }
+#' if (require("dplyr")) {
+#'     
 #'  # flag the first isolates per group:
 #'  example_isolates %>%
-#'    group_by(hospital_id) %>%
+#'    group_by(ward) %>%
 #'    mutate(first = first_isolate()) %>%
-#'    select(hospital_id, date, patient_id, mo, first)
-#'   
-#'   # now let's see if first isolates matter:
-#'   A <- example_isolates %>%
-#'     group_by(hospital_id) %>%
-#'     summarise(count = n_rsi(GEN),            # gentamicin availability
-#'               resistance = resistance(GEN))  # gentamicin resistance
-#'  
-#'   B <- example_isolates %>%
-#'     filter_first_isolate() %>%               # the 1st isolate filter
-#'     group_by(hospital_id) %>%
-#'     summarise(count = n_rsi(GEN),            # gentamicin availability
-#'               resistance = resistance(GEN))  # gentamicin resistance
-#'  
-#'   # Have a look at A and B.
-#'   A
-#'   B
-#'   
-#'   # B is more reliable because every isolate is counted only once.
-#'   # Gentamicin resistance in hospital D appears to be 4.2% higher than
-#'   # when you (erroneously) would have used all isolates for analysis.
+#'    select(ward, date, patient, mo, first)
 #' }
 #' }
 first_isolate <- function(x = NULL,
@@ -217,7 +203,15 @@ first_isolate <- function(x = NULL,
     col_specimen <- NULL
   }
   meet_criteria(col_specimen, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
-  meet_criteria(col_icu, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+  if (is.logical(col_icu)) {
+    meet_criteria(col_icu, allow_class = "logical", has_length = c(1, nrow(x)), allow_NULL = TRUE)
+    if (length(col_icu) == 1) {
+      col_icu <- rep(col_icu, nrow(x))
+    }
+  } else {
+    meet_criteria(col_icu, allow_class = c("character", "logical"), has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+    col_icu <- x[, col_icu, drop = TRUE]
+  }
   # method
   method <- coerce_method(method)
   meet_criteria(method, allow_class = "character", has_length = 1, is_in = c("phenotype-based", "episode-based", "patient-based", "isolate-based"))
@@ -343,7 +337,6 @@ first_isolate <- function(x = NULL,
   check_columns_existance(col_patient_id)
   check_columns_existance(col_mo)
   check_columns_existance(col_testcode)
-  check_columns_existance(col_icu)
   check_columns_existance(col_keyantimicrobials)
   
   # convert dates to Date
@@ -508,10 +501,10 @@ first_isolate <- function(x = NULL,
   }
   if (!is.null(col_icu)) {
     if (icu_exclude == TRUE) {
-      message_("Excluding isolates from ICU.",
+      message_("Excluding ", format(sum(!col_icu, na.rm = TRUE), big.mark = ","), " isolates from ICU.",
                add_fn = font_black,
                as_note = FALSE)
-      x[which(as.logical(x[, col_icu, drop = TRUE])), "newvar_first_isolate"] <- FALSE
+      x[which(col_icu), "newvar_first_isolate"] <- FALSE
     } else {
       message_("Including isolates from ICU.",
                add_fn = font_black,

@@ -5,32 +5,27 @@
 \alias{example_isolates}
 \title{Data Set with 2,000 Example Isolates}
 \format{
-A \link{data.frame} with 2,000 observations and 49 variables:
+A [tibble\link[tibble:tibble]{tibble::tibble} with 2,000 observations and 46 variables:
 \itemize{
-\item \code{date}\cr date of receipt at the laboratory
-\item \code{hospital_id}\cr ID of the hospital, from A to D
-\item \code{ward_icu}\cr \link{logical} to determine if ward is an intensive care unit
-\item \code{ward_clinical}\cr \link{logical} to determine if ward is a regular clinical ward
-\item \code{ward_outpatient}\cr \link{logical} to determine if ward is an outpatient clinic
-\item \code{age}\cr age of the patient
-\item \code{gender}\cr gender of the patient
-\item \code{patient_id}\cr ID of the patient
-\item \code{mo}\cr ID of microorganism created with \code{\link[=as.mo]{as.mo()}}, see also \link{microorganisms}
-\item \code{PEN:RIF}\cr 40 different antibiotics with class \code{\link{rsi}} (see \code{\link[=as.rsi]{as.rsi()}}); these column names occur in the \link{antibiotics} data set and can be translated with \code{\link[=ab_name]{ab_name()}}
+\item \code{date}\cr Date of receipt at the laboratory
+\item \code{patient}\cr ID of the patient
+\item \code{age}\cr Age of the patient
+\item \code{gender}\cr Gender of the patient, either "F" or "M"
+\item \code{ward}\cr Ward type where the patient was admitted, either "Clinical", "ICU" or "Outpatient"
+\item \code{mo}\cr ID of microorganism created with \code{\link[=as.mo]{as.mo()}}, see also the \link{microorganisms} data set
+\item \code{PEN:RIF}\cr 40 different antibiotics with class \code{\link{rsi}} (see \code{\link[=as.rsi]{as.rsi()}}); these column names occur in the \link{antibiotics} data set and can be translated with \code{\link[=set_ab_names]{set_ab_names()}} or \code{\link[=ab_name]{ab_name()}}
 }
 }
 \usage{
 example_isolates
 }
 \description{
-A data set containing 2,000 microbial isolates with their full antibiograms. The data set reflects reality and can be used to practice AMR data analysis. For examples, please read \href{https://msberends.github.io/AMR/articles/AMR.html}{the tutorial on our website}.
+A data set containing 2,000 microbial isolates with their full antibiograms. This data set contains randomised fictitious data, but reflects reality and can be used to practise AMR data analysis. For examples, please read \href{https://msberends.github.io/AMR/articles/AMR.html}{the tutorial on our website}.
 }
-\section{Reference Data Publicly Available}{
-
-All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
+\details{
+Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
-
 \examples{
-head(example_isolates)
+example_isolates
 }
 \keyword{datasets}

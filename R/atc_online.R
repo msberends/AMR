@@ -180,15 +180,15 @@ atc_online_property <- function(atc_code,
       
       if (property %in% c("atc", "name")) {
         # ATC and name are only in first row
-        returnvalue[i] <- out[1, property]
+        returnvalue[i] <- out[1, property, drop = TRUE]
       } else {
-        if (!"adm.r" %in% colnames(out) | is.na(out[1, "adm.r"])) {
+        if (!"adm.r" %in% colnames(out) | is.na(out[1, "adm.r", drop = TRUE])) {
           returnvalue[i] <- NA
           next
         } else {
           for (j in seq_len(nrow(out))) {
             if (out[j, "adm.r"] == administration) {
-              returnvalue[i] <- out[j, property]
+              returnvalue[i] <- out[j, property, drop = TRUE]
             }
           }
         }

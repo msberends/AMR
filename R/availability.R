@@ -36,7 +36,7 @@
 #' \donttest{
 #' if (require("dplyr")) {
 #'   example_isolates %>%
-#'     filter(mo == as.mo("E. coli")) %>%
+#'     filter(mo == as.mo("Escherichia coli")) %>%
 #'     select_if(is.rsi) %>%
 #'     availability()
 #' }
@@ -44,6 +44,8 @@
 availability <- function(tbl, width = NULL) {
   meet_criteria(tbl, allow_class = "data.frame")
   meet_criteria(width, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE, is_positive = TRUE, is_finite = TRUE)
+  
+  tbl <- as.data.frame(tbl, stringsAsFactors = FALSE)
   
   x <- vapply(FUN.VALUE = double(1), tbl, function(x) {
     1 - sum(is.na(x)) / length(x) 
@@ -87,7 +89,7 @@ availability <- function(tbl, width = NULL) {
                    visual_resistance = vis_resistance,
                    stringsAsFactors = FALSE)
   if (length(R[is.na(R)]) == ncol(tbl)) {
-    df[, 1:3]
+    df[, 1:3, drop = FALSE]
   } else {
     df
   }

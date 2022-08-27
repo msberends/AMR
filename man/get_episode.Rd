@@ -54,26 +54,34 @@ if (require("dplyr")) {
   # episodes based on any (combination of) grouping variables:
   df \%>\%
     mutate(condition = sample(x = c("A", "B", "C"), 
-                              size = 2000,
+                              size = 200,
                               replace = TRUE)) \%>\% 
     group_by(condition) \%>\%
     mutate(new_episode = is_new_episode(date, 365)) \%>\%
-    select(patient_id, date, condition, new_episode)
+    select(patient, date, condition, new_episode)
+    
+}
+if (require("dplyr")) {
     
   df \%>\%
-    group_by(hospital_id, patient_id) \%>\%
+    group_by(ward, patient) \%>\%
     transmute(date, 
-              patient_id,
+              patient,
               new_index = get_episode(date, 60),
               new_logical = is_new_episode(date, 60))
+    
+}
+if (require("dplyr")) {
   
   df \%>\%
-    group_by(hospital_id) \%>\% 
-    summarise(n_patients = n_distinct(patient_id),
+    group_by(ward) \%>\% 
+    summarise(n_patients = n_distinct(patient),
               n_episodes_365 = sum(is_new_episode(date, episode_days = 365)),
               n_episodes_60  = sum(is_new_episode(date, episode_days = 60)),
               n_episodes_30  = sum(is_new_episode(date, episode_days = 30)))
     
+}
+if (require("dplyr")) {
     
   # grouping on patients and microorganisms leads to the same
   # results as first_isolate() when using 'episode-based':
@@ -82,16 +90,19 @@ if (require("dplyr")) {
                          method = "episode-based")
     
   y <- df \%>\%
-    group_by(patient_id, mo) \%>\%
+    group_by(patient, mo) \%>\%
     filter(is_new_episode(date, 365)) \%>\%
     ungroup()
 
   identical(x, y)
+    
+}
+if (require("dplyr")) {
   
   # but is_new_episode() has a lot more flexibility than first_isolate(),
   # since you can now group on anything that seems relevant:
   df \%>\%
-    group_by(patient_id, mo, hospital_id, ward_icu) \%>\%
+    group_by(patient, mo, ward) \%>\%
     mutate(flag_episode = is_new_episode(date, 365)) \%>\%
     select(group_vars(.), flag_episode)
 }

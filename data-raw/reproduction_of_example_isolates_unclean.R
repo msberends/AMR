@@ -92,7 +92,7 @@ example_isolates_unclean <- data_a %>%
 example_isolates_unclean$patient_id <- sample(patients, size = nrow(example_isolates_unclean), replace = TRUE)
 
 example_isolates_unclean <- example_isolates_unclean %>% 
-  select(patient_id, hospital, date, bacteria, everything())
+  select(patient_id, hospital, date, bacteria, everything()) %>% 
+  dataset_UTF8_to_ASCII()
 
-usethis::use_data(example_isolates_unclean, overwrite = TRUE)
-
+usethis::use_data(example_isolates_unclean, overwrite = TRUE, internal = FALSE, version = 2, compress = "xz")

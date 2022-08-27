@@ -142,7 +142,7 @@ if (require("dplyr")) {
     filter_first_isolate() \%>\%
     filter(mo_genus(mo) == "Staphylococcus") \%>\%
     resistance_predict("PEN", model = "binomial")
-  plot(x)
+  print(plot(x))
 
   # get the model from the object
   mymodel <- attributes(x)$model
@@ -150,7 +150,7 @@ if (require("dplyr")) {
 }
 
 # create nice plots with ggplot2 yourself
-if (require("dplyr") & require("ggplot2")) {
+if (require("dplyr") && require("ggplot2")) {
 
   data <- example_isolates \%>\%
     filter(mo == as.mo("E. coli")) \%>\%

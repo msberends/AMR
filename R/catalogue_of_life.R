@@ -49,9 +49,9 @@ format_included_data_number <- function(data) {
 #' [Click here][catalogue_of_life] for more information about the included taxa. Check which versions of the CoL and LPSN were included in this package with [catalogue_of_life_version()].
 #' @section Included Taxa:
 #' Included are:
-#' - All `r format_included_data_number(microorganisms[which(microorganisms$kingdom %in% c("Archeae", "Bacteria", "Chromista", "Protozoa")), ])` (sub)species from the kingdoms of Archaea, Bacteria, Chromista and Protozoa
-#' - All `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Fungi" & microorganisms$order %in% c("Eurotiales", "Microascales", "Mucorales", "Onygenales", "Pneumocystales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales")), ])` (sub)species from these orders of the kingdom of Fungi: Eurotiales, Microascales, Mucorales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales, as well as `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Fungi" & !microorganisms$order %in% c("Eurotiales", "Microascales", "Mucorales", "Onygenales", "Pneumocystales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales")), ])` other fungal (sub)species. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant fungi are covered (such as all species of *Aspergillus*, *Candida*, *Cryptococcus*, *Histplasma*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*).
-#' - All `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Animalia"), ])` (sub)species from `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Animalia"), "genus"])` other relevant genera from the kingdom of Animalia (such as *Strongyloides* and *Taenia*)
+#' - All `r format_included_data_number(microorganisms[which(microorganisms$kingdom %in% c("Archeae", "Bacteria", "Chromista", "Protozoa")), , drop = FALSE])` (sub)species from the kingdoms of Archaea, Bacteria, Chromista and Protozoa
+#' - All `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Fungi" & microorganisms$order %in% c("Eurotiales", "Microascales", "Mucorales", "Onygenales", "Pneumocystales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales")), , drop = FALSE])` (sub)species from these orders of the kingdom of Fungi: Eurotiales, Microascales, Mucorales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales, as well as `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Fungi" & !microorganisms$order %in% c("Eurotiales", "Microascales", "Mucorales", "Onygenales", "Pneumocystales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales")), ])` other fungal (sub)species. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant fungi are covered (such as all species of *Aspergillus*, *Candida*, *Cryptococcus*, *Histplasma*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*).
+#' - All `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Animalia"), , drop = FALSE])` (sub)species from `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Animalia"), "genus", drop = TRUE])` other relevant genera from the kingdom of Animalia (such as *Strongyloides* and *Taenia*)
 #' - All `r format_included_data_number(microorganisms.old)` previously accepted names of all included (sub)species (these were taxonomically renamed)
 #' - The complete taxonomic tree of all included (sub)species: from kingdom to subspecies
 #' - The responsible author(s) and year of scientific publication
@@ -72,13 +72,13 @@ format_included_data_number <- function(data) {
 #' mo_shortname("Chlamydophila psittaci")
 #'
 #' # Get any property from the entire taxonomic tree for all included species
-#' mo_class("E. coli")
+#' mo_class("Escherichia coli")
 #'
-#' mo_family("E. coli")
+#' mo_family("Escherichia coli")
 #'
-#' mo_gramstain("E. coli") # based on kingdom and phylum, see ?mo_gramstain
+#' mo_gramstain("Escherichia coli") # based on kingdom and phylum, see ?mo_gramstain
 #'
-#' mo_ref("E. coli")
+#' mo_ref("Escherichia coli")
 #'
 #' # Do not get mistaken - this package is about microorganisms
 #' mo_kingdom("C. elegans")

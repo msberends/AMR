@@ -24,8 +24,9 @@
 ^\.lintr$
 ^tests/testthat/_snaps$
 ^vignettes/AMR\.Rmd$
+^vignettes/AMR_intro\.png$
 ^vignettes/benchmarks\.Rmd$
-^vignettes/*\.not$
+^vignettes/benchmarks\.Rmd\.not$
 ^vignettes/datasets\.Rmd$
 ^vignettes/EUCAST\.Rmd$
 ^vignettes/MDR\.Rmd$

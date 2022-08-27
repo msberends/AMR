@@ -1740,7 +1740,7 @@ run_custom_mdro_guideline <- function(df, guideline, info) {
     out <- factor(out, levels = attributes(guideline)$values, ordered = TRUE)
   }
   
-  columns_nonsusceptible <- as.data.frame(t(df[, is.rsi(df)] == "R"))
+  columns_nonsusceptible <- as.data.frame(t(df[, is.rsi(df), drop = FALSE] == "R"))
   columns_nonsusceptible <- vapply(FUN.VALUE = character(1), 
                                    columns_nonsusceptible, 
                                    function(x) paste0(rownames(columns_nonsusceptible)[which(x)], collapse = " "))

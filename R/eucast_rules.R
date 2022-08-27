@@ -52,7 +52,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <https://eucast.org>), see *Source*. Use [eucast_dosage()] to get a [data.frame] with advised dosages of a certain bug-drug combination, which is based on the [dosage] data set.
 #' 
 #' To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see *Details*.
-#' @param x data with antibiotic columns, such as `amox`, `AMX` and `AMC`
+#' @param x a data set with antibiotic columns, such as `amox`, `AMX` and `AMC`
 #' @param info a [logical] to indicate whether progress should be printed to the console, defaults to only print while in interactive sessions
 #' @param rules a [character] vector that specifies which rules should be applied. Must be one or more of `"breakpoints"`, `"expert"`, `"other"`, `"custom"`, `"all"`, and defaults to `c("breakpoints", "expert")`. The default value can be set to another value, e.g. using `options(AMR_eucastrules = "all")`. If using `"custom"`, be sure to fill in argument `custom_rules` too. Custom rules can be created with [custom_eucast_rules()].
 #' @param verbose a [logical] to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.
@@ -412,11 +412,11 @@ eucast_rules <- function(x,
   }
   
   if (any(x$genus == "Staphylococcus", na.rm = TRUE)) {
-    all_staph <- MO_lookup[which(MO_lookup$genus == "Staphylococcus"), ]
+    all_staph <- MO_lookup[which(MO_lookup$genus == "Staphylococcus"), , drop = FALSE]
     all_staph$CNS_CPS <- suppressWarnings(mo_name(all_staph$mo, Becker = "all", language = NULL))
   }
   if (any(x$genus == "Streptococcus", na.rm = TRUE)) {
-    all_strep <- MO_lookup[which(MO_lookup$genus == "Streptococcus"), ]
+    all_strep <- MO_lookup[which(MO_lookup$genus == "Streptococcus"), , drop = FALSE]
     all_strep$Lancefield <- suppressWarnings(mo_name(all_strep$mo, Lancefield = TRUE, language = NULL))
   }
   
@@ -432,7 +432,7 @@ eucast_rules <- function(x,
                          font_red(paste0("v", utils::packageDescription("AMR")$Version, ", ", 
                                          format(as.Date(utils::packageDescription("AMR")$Date), format = "%Y"))), "), see ?eucast_rules\n"))))
     }
-    ab_enzyme <- subset(antibiotics, name %like% "/")[, c("ab", "name")]
+    ab_enzyme <- subset(antibiotics, name %like% "/")[, c("ab", "name"), drop = FALSE]
     colnames(ab_enzyme) <- c("enzyme_ab", "enzyme_name")
     ab_enzyme$base_name <- gsub("^([a-zA-Z0-9]+).*", "\\1", ab_enzyme$enzyme_name)
     ab_enzyme$base_ab <- antibiotics[match(ab_enzyme$base_name, antibiotics$name), "ab", drop = TRUE]
@@ -446,7 +446,7 @@ eucast_rules <- function(x,
     amox$base_name <- ab_name("AMX", language = NULL)
     # merge and sort
     ab_enzyme <- rbind(ab_enzyme, ampi, amox)
-    ab_enzyme <- ab_enzyme[order(ab_enzyme$enzyme_name), ]
+    ab_enzyme <- ab_enzyme[order(ab_enzyme$enzyme_name), , drop = FALSE]
     
     for (i in seq_len(nrow(ab_enzyme))) {
       # check if both base and base + enzyme inhibitor are part of the data set
@@ -917,7 +917,7 @@ eucast_rules <- function(x,
   
   # Return data set ---------------------------------------------------------
   if (verbose == TRUE) {
-    verbose_info
+    as_original_data_class(verbose_info, old_attributes$class)
   } else {
     # x was analysed with only unique rows, so join everything together again
     x <- x[, c(cols_ab, ".rowid"), drop = FALSE]
@@ -925,7 +925,7 @@ eucast_rules <- function(x,
     x.bak <- x.bak %pm>% 
       pm_left_join(x, by = ".rowid")
     x.bak <- x.bak[, old_cols, drop = FALSE]
-    # reset original attributes
+    # reset original attributes, no need for as_original_data_class() here
     attributes(x.bak) <- old_attributes
     x.bak
   }
@@ -1060,15 +1060,19 @@ eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 11.0)
     lst[[i]] <- list(ab = "",
                      name = "",
                      standard_dosage = ifelse("standard_dosage" %in% df$type,
-                                              df[which(df$type == "standard_dosage"), ]$original_txt, 
+                                              df[which(df$type == "standard_dosage"), "original_txt", drop = TRUE],
                                               NA_character_),
                      high_dosage = ifelse("high_dosage" %in% df$type,
-                                          df[which(df$type == "high_dosage"), ]$original_txt, 
+                                          df[which(df$type == "high_dosage"), "original_txt", drop = TRUE],
                                           NA_character_))
   }
   out <- do.call("rbind", lapply(lst, as.data.frame, stringsAsFactors = FALSE))
   rownames(out) <- NULL
   out$ab <- ab
   out$name <- ab_name(ab, language = NULL)
-  out
+  if (pkg_is_available("tibble", also_load = FALSE)) {
+    import_fn("as_tibble", "tibble")(out)
+  } else {
+    out
+  }
 }

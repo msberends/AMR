@@ -89,7 +89,7 @@ rsi_calc <- function(...,
     x <- NULL
     try(x <- as.data.frame(dots, stringsAsFactors = FALSE), silent = TRUE)
     if (is.null(x)) {
-      # support for example_isolates %pm>% group_by(hospital_id) %pm>% summarise(amox = susceptibility(GEN, AMX))
+      # support for example_isolates %pm>% group_by(ward) %pm>% summarise(amox = susceptibility(GEN, AMX))
       x <- as.data.frame(list(...), stringsAsFactors = FALSE)
     }
   }
@@ -226,6 +226,7 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   
   translate_ab <- get_translate_ab(translate_ab)
   
+  data.bak <- data
   # select only groups and antibiotics
   if (is_null_or_grouped_tbl(data)) {
     data_has_groups <- TRUE
@@ -331,9 +332,9 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   
   if (data_has_groups) {
     # ordering by the groups and two more: "antibiotic" and "interpretation"
-   out <-  pm_ungroup(out[do.call("order", out[, seq_len(length(groups) + 2)]), ])
+   out <-  pm_ungroup(out[do.call("order", out[, seq_len(length(groups) + 2), drop = FALSE]), , drop = FALSE])
   } else {
-    out <- out[order(out$antibiotic, out$interpretation), ]
+    out <- out[order(out$antibiotic, out$interpretation), , drop = FALSE]
   }
   
   if (type == "proportion") {
@@ -344,8 +345,8 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   } 
   
   rownames(out) <- NULL
-  class(out) <- c("rsi_df", class(out))
-  out
+  out <- as_original_data_class(out, class(data.bak))
+  structure(out, class = c("rsi_df", class(out)))
 }
 
 get_translate_ab <- function(translate_ab) {

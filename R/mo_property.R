@@ -601,7 +601,7 @@ mo_synonyms <- function(x, language = get_AMR_locale(), ...) {
   
   IDs <- mo_name(x = x, language = NULL)
   syns <- lapply(IDs, function(newname) {
-    res <- sort(microorganisms.old[which(microorganisms.old$fullname_new == newname), "fullname"])
+    res <- sort(microorganisms.old[which(microorganisms.old$fullname_new == newname), "fullname", drop = TRUE])
     if (length(res) == 0) {
       NULL
     } else {
@@ -664,7 +664,7 @@ mo_url <- function(x, open = FALSE, language = get_AMR_locale(), ...) {
   x.mo <- as.mo(x = x, language = language, ... = ...)
   metadata <- get_mo_failures_uncertainties_renamed()
   
-  df <- microorganisms[match(x.mo, microorganisms$mo), c("mo", "fullname", "source", "kingdom", "rank")]
+  df <- microorganisms[match(x.mo, microorganisms$mo), c("mo", "fullname", "source", "kingdom", "rank"), drop = FALSE]
   df$url <- ifelse(df$source == "LPSN",
                    paste0(CATALOGUE_OF_LIFE$url_LPSN, "/species/", gsub(" ", "-", tolower(df$fullname), fixed = TRUE)),
                    paste0(CATALOGUE_OF_LIFE$url_CoL, "/data/search?type=EXACT&q=", gsub(" ", "%20", df$fullname, fixed = TRUE)))

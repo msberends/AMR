@@ -49,7 +49,7 @@ expect_error(count_susceptible("test", minimum = "test"))
 expect_error(count_susceptible("test", as_percent = "test"))
 
 expect_error(count_df(c("A", "B", "C")))
-expect_error(count_df(example_isolates[, "date"]))
+expect_error(count_df(example_isolates[, "date", drop = TRUE]))
 
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_equal(example_isolates %>% count_susceptible(AMC), 1433)
@@ -63,7 +63,7 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   
   # count of cases
   expect_equal(example_isolates %>%
-                 group_by(hospital_id) %>%
+                 group_by(ward) %>%
                  summarise(cipro = count_susceptible(CIP),
                            genta = count_susceptible(GEN),
                            combination = count_susceptible(CIP, GEN)) %>%
@@ -89,9 +89,9 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   )
   
   # grouping in rsi_calc_df() (= backbone of rsi_df())
-  expect_true("hospital_id" %in% (example_isolates %>% 
-                                    group_by(hospital_id) %>% 
-                                    select(hospital_id, AMX, CIP, gender) %>%
+  expect_true("ward" %in% (example_isolates %>% 
+                                    group_by(ward) %>% 
+                                    select(ward, AMX, CIP, gender) %>%
                                     rsi_df() %>% 
                                     colnames()))
 }

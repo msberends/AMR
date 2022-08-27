@@ -52,13 +52,11 @@
 #' - Principal component analysis for AMR
 #' 
 #' @section Reference Data Publicly Available:
-#' All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this `AMR` package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find [all download links on our website](https://msberends.github.io/AMR/articles/datasets.html), which is automatically updated with every code change.
-#' @section Read more on Our Website!:
-#' On our website <https://msberends.github.io/AMR/> you can find [a comprehensive tutorial](https://msberends.github.io/AMR/articles/AMR.html) about how to conduct AMR data analysis, the [complete documentation of all functions](https://msberends.github.io/AMR/reference/) and [an example analysis using WHONET data](https://msberends.github.io/AMR/articles/WHONET.html).
+#' All data sets in this `AMR` package (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #' @section Contact Us:
-#' For suggestions, comments or questions, please contact us at:
+#' For suggestions, comments or questions, please contact us via:
 #'
-#' Matthijs S. Berends \cr
+#' Dr. Matthijs S. Berends \cr
 #' m.s.berends \[at\] umcg \[dot\] nl \cr
 #' University of Groningen
 #' Department of Medical Microbiology and Infection Prevention \cr

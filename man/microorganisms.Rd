@@ -5,7 +5,7 @@
 \alias{microorganisms}
 \title{Data Set with 70,764 Microorganisms}
 \format{
-A \link{data.frame} with 70,764 observations and 16 variables:
+A [tibble\link[tibble:tibble]{tibble::tibble} with 70,764 observations and 16 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}
@@ -65,9 +65,7 @@ For convenience, some entries were added manually:
 
 \subsection{Direct download}{
 
-This data set is available as 'flat file' for use even without \R - you can find the file here: \url{https://github.com/msberends/AMR/raw/main/data-raw/microorganisms.txt}.
-
-The file in \R format (with preserved data structure) can be found here: \url{https://github.com/msberends/AMR/raw/main/data/microorganisms.rda}.
+Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 }
 \section{About the Records from LPSN (see \emph{Source})}{
@@ -85,13 +83,8 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 \link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which versions of the CoL and LPSN were included in this package with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}.
 }
 
-\section{Reference Data Publicly Available}{
-
-All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
-}
-
 \examples{
-head(microorganisms)
+microorganisms
 }
 \seealso{
 \code{\link[=as.mo]{as.mo()}}, \code{\link[=mo_property]{mo_property()}}, \link{microorganisms.codes}, \link{intrinsic_resistant}

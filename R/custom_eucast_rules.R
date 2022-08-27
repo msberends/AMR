@@ -26,7 +26,7 @@
 #' Define Custom EUCAST Rules
 #' 
 #' Define custom EUCAST rules for your organisation or specific analysis and use the output of this function in [eucast_rules()].
-#' @param ... rules in [formula][`~`()] notation, see *Examples*
+#' @param ... rules in [formula][base::tilde] notation, see *Examples*
 #' @details
 #' Some organisations have their own adoption of EUCAST rules. This function can be used to define custom EUCAST rules to be used in the [eucast_rules()] function.
 #' @section How it works:

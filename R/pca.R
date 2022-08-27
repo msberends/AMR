@@ -114,7 +114,7 @@ pca <- function(x,
              error = function(e) warning("column names could not be set"))
     
     # keep only numeric columns
-    x <- x[, vapply(FUN.VALUE = logical(1), x, function(y) is.numeric(y))]
+    x <- x[, vapply(FUN.VALUE = logical(1), x, function(y) is.numeric(y)), drop = FALSE]
     # bind the data set with the non-numeric columns
     x <- cbind(x.bak[, vapply(FUN.VALUE = logical(1), x.bak, function(y) !is.numeric(y) & !all(is.na(y))), drop = FALSE], x)
   }
@@ -122,7 +122,7 @@ pca <- function(x,
   x <- pm_ungroup(x)  # would otherwise select the grouping vars
   x <- x[rowSums(is.na(x)) == 0, ] # remove columns containing NAs
   
-  pca_data <- x[, which(vapply(FUN.VALUE = logical(1), x, function(x) is.numeric(x)))]
+  pca_data <- x[, which(vapply(FUN.VALUE = logical(1), x, function(x) is.numeric(x))), drop = FALSE]
   
   message_("Columns selected for PCA: ", vector_and(font_bold(colnames(pca_data), collapse = NULL), quotes = TRUE),
            ". Total observations available: ", nrow(pca_data), ".")

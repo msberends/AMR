@@ -101,9 +101,13 @@ if (utf8_supported && !is_latex) {
     }
   }, silent = TRUE)
   
+  # be sure to print tibbles as tibbles
+  if (pkg_is_available("tibble", also_load = FALSE)) {
+    loadNamespace("tibble")
+  }
   
   # reference data - they have additional columns compared to `antibiotics` and `microorganisms` to improve speed
-  # they cannott be part of R/sysdata.rda since CRAN thinks it would make the package too large (+3 MB)
+  # they cannot be part of R/sysdata.rda since CRAN thinks it would make the package too large (+3 MB)
   assign(x = "AB_lookup", value = create_AB_lookup(), envir = asNamespace("AMR"))
   assign(x = "MO_lookup", value = create_MO_lookup(), envir = asNamespace("AMR"))
   assign(x = "MO.old_lookup", value = create_MO.old_lookup(), envir = asNamespace("AMR"))
@@ -140,7 +144,7 @@ create_MO_lookup <- function() {
   MO_lookup$g_species <- gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO_lookup$fullname_lower, perl = TRUE)
   
   # so arrange data on prevalence first, then kingdom, then full name
-  MO_lookup[order(MO_lookup$prevalence, MO_lookup$kingdom_index, MO_lookup$fullname_lower), ]
+  MO_lookup[order(MO_lookup$prevalence, MO_lookup$kingdom_index, MO_lookup$fullname_lower), , drop = FALSE]
 }
 
 create_MO.old_lookup <- function() {
@@ -151,7 +155,7 @@ create_MO.old_lookup <- function() {
   MO.old_lookup$g_species <- trimws(gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO.old_lookup$fullname_lower))
   
   # so arrange data on prevalence first, then full name
-  MO.old_lookup[order(MO.old_lookup$prevalence, MO.old_lookup$fullname_lower), ]
+  MO.old_lookup[order(MO.old_lookup$prevalence, MO.old_lookup$fullname_lower), , drop = FALSE]
 }
 
 create_intr_resistance <- function() {

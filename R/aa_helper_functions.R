@@ -565,7 +565,7 @@ return_after_integrity_check <- function(value, type, check_vector) {
   value
 }
 
-# transforms data set to data.frame with only ASCII values, to comply with CRAN policies
+# transforms data set to a tibble with only ASCII values, to comply with CRAN policies
 dataset_UTF8_to_ASCII <- function(df) {
   trans <- function(vect) {
     iconv(vect, from = "UTF-8", to = "ASCII//TRANSLIT")
@@ -587,7 +587,7 @@ dataset_UTF8_to_ASCII <- function(df) {
       df[, i] <- col
     }
   }
-  df
+  tibble::as_tibble(df)
 }
 
 # for eucast_rules() and mdro(), creates markdown output with URLs and names
@@ -711,7 +711,7 @@ meet_criteria <- function(object,
   if (!is.null(pkg_env$meet_criteria_error_txt)) {
     error_txt <- pkg_env$meet_criteria_error_txt
     pkg_env$meet_criteria_error_txt <- NULL
-    stop(error_txt, call. = FALSE) # don't use stop_() here, pkg may not be loaded yet
+    stop(error_txt, call. = FALSE) # don't use stop_() here, our pkg may not be loaded yet
   }
   pkg_env$meet_criteria_error_txt <- NULL
 
@@ -932,7 +932,7 @@ unique_call_id <- function(entire_session = FALSE, match_fn = NULL) {
 #' @param entire_session show message once per session
 message_not_thrown_before <- function(fn, ..., entire_session = FALSE) {
   # this is to prevent that messages/notes will be printed for every dplyr group or more than once per session
-  # e.g. this would show a msg 4 times: example_isolates %>% group_by(hospital_id) %>% filter(mo_is_gram_negative())
+  # e.g. this would show a msg 4 times: example_isolates %>% group_by(ward) %>% filter(mo_is_gram_negative())
   salt <- gsub("[^a-zA-Z0-9|_-]", "?", paste(c(...), sep = "|", collapse = "|"), perl = TRUE)
   not_thrown_before <- is.null(pkg_env[[paste0("thrown_msg.", fn, ".", salt)]]) ||
     !identical(pkg_env[[paste0("thrown_msg.", fn, ".", salt)]],
@@ -1151,6 +1151,19 @@ formatted_filesize <- function(...) {
 create_pillar_column <- function(x, ...) {
   new_pillar_shaft_simple <- import_fn("new_pillar_shaft_simple", "pillar")
   new_pillar_shaft_simple(x, ...)
+}
+
+as_original_data_class <- function(df, old_class = NULL) {
+  if ("tbl_df" %in% old_class && pkg_is_available("tibble", also_load = FALSE)) {
+    fn <- import_fn("as_tibble", "tibble")
+  } else if ("tbl_ts" %in% old_class && pkg_is_available("tsibble", also_load = FALSE)) {
+    fn <- import_fn("as_tsibble", "tsibble")
+  } else if ("data.table" %in% old_class && pkg_is_available("data.table", also_load = FALSE)) {
+    fn <- import_fn("as.data.table", "data.table")
+  } else {
+    fn <- base::as.data.frame
+  }
+  fn(df)
 }
 
 # copied from vctrs::s3_register by their permission:

@@ -51,7 +51,7 @@
 #'                       FUN = mo_gramstain)
 #'                            
 #' bug_drug_combinations(example_isolates,
-#'                       FUN = function(x) ifelse(x == as.mo("E. coli"),
+#'                       FUN = function(x) ifelse(x == as.mo("Escherichia coli"),
 #'                                                "E. coli",
 #'                                                "Others"))
 #' }
@@ -144,15 +144,12 @@ bug_drug_combinations <- function(x,
   
   if (data_has_groups) {
     out <- apply_group(x, "run_it", groups)
-    rownames(out) <- NULL
-    set_clean_class(out,
-                    new_class = c("grouped", "bug_drug_combinations", "data.frame"))
   } else {
     out <- run_it(x)
-    rownames(out) <- NULL
-    set_clean_class(out,
-                    new_class = c("bug_drug_combinations", "data.frame"))
   }
+  rownames(out) <- NULL
+  out <- as_original_data_class(out, class(x.bak))
+  structure(out, class = c("bug_drug_combinations", ifelse(data_has_groups, "grouped", character(0)), class(out)))
 }
 
 #' @method format bug_drug_combinations
@@ -180,18 +177,20 @@ format.bug_drug_combinations <- function(x,
   meet_criteria(decimal.mark, allow_class = "character", has_length = 1)
   meet_criteria(big.mark, allow_class = "character", has_length = 1)
   
+  x.bak <- x
   if (inherits(x, "grouped")) {
     # bug_drug_combinations() has been run on groups, so de-group here
     warning_("in `format()`: formatting the output of `bug_drug_combinations()` does not support grouped variables, they were ignored")
+    x <- as.data.frame(x, stringsAsFactors = FALSE)
     idx <- split(seq_len(nrow(x)), paste0(x$mo, "%%", x$ab))
     x <- data.frame(mo = gsub("(.*)%%(.*)", "\\1", names(idx)),
                     ab = gsub("(.*)%%(.*)", "\\2", names(idx)),
-                    S = sapply(idx, function(i) sum(y$S[i], na.rm = TRUE)), 
-                    I = sapply(idx, function(i) sum(y$I[i], na.rm = TRUE)), 
-                    R = sapply(idx, function(i) sum(y$R[i], na.rm = TRUE)),
-                    total = sapply(idx, function(i) sum(y$S[i], na.rm = TRUE) + 
-                                     sum(y$I[i], na.rm = TRUE) +
-                                     sum(y$R[i], na.rm = TRUE)),
+                    S = sapply(idx, function(i) sum(x$S[i], na.rm = TRUE)), 
+                    I = sapply(idx, function(i) sum(x$I[i], na.rm = TRUE)), 
+                    R = sapply(idx, function(i) sum(x$R[i], na.rm = TRUE)),
+                    total = sapply(idx, function(i) sum(x$S[i], na.rm = TRUE) + 
+                                     sum(x$I[i], na.rm = TRUE) +
+                                     sum(x$R[i], na.rm = TRUE)),
                     stringsAsFactors = FALSE)
   }
   
@@ -256,7 +255,7 @@ format.bug_drug_combinations <- function(x,
   
   # replace tidyr::pivot_wider() from here
   for (i in unique(y$mo)) {
-    mo_group <- y[which(y$mo == i), c("ab", "txt")]
+    mo_group <- y[which(y$mo == i), c("ab", "txt"), drop = FALSE]
     colnames(mo_group) <- c("ab", i)
     rownames(mo_group) <- NULL
     y <- y %pm>% 
@@ -269,7 +268,7 @@ format.bug_drug_combinations <- function(x,
     remove_NAs()
 
   select_ab_vars <- function(.data) {
-    .data[, c("ab_group", "ab_txt", colnames(.data)[!colnames(.data) %in% c("ab_group", "ab_txt", "ab")])]
+    .data[, c("ab_group", "ab_txt", colnames(.data)[!colnames(.data) %in% c("ab_group", "ab_txt", "ab")]), drop = FALSE]
   }
   
   y <- y %pm>% 
@@ -299,7 +298,7 @@ format.bug_drug_combinations <- function(x,
   }
   
   rownames(y) <- NULL
-  y
+  as_original_data_class(y, class(x.bak))
 }
 
 #' @method print bug_drug_combinations

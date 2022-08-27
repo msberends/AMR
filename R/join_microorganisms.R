@@ -42,21 +42,22 @@
 #' left_join_microorganisms(as.mo("K. pneumoniae"))
 #' left_join_microorganisms("B_KLBSL_PNMN")
 #'
+#' df <- data.frame(date = seq(from = as.Date("2018-01-01"),
+#'                             to = as.Date("2018-01-07"),
+#'                             by = 1),
+#'                  bacteria = as.mo(c("S. aureus", "MRSA", "MSSA", "STAAUR",
+#'                                     "E. coli", "E. coli", "E. coli")),
+#'                  stringsAsFactors = FALSE)
+#' colnames(df)
+#' 
+#' df_joined <- left_join_microorganisms(df, "bacteria")
+#' colnames(df_joined)
+#' 
 #' \donttest{
 #' if (require("dplyr")) {
 #'   example_isolates %>%
 #'     left_join_microorganisms() %>% 
 #'     colnames()
-#'  
-#'   df <- data.frame(date = seq(from = as.Date("2018-01-01"),
-#'                               to = as.Date("2018-01-07"),
-#'                               by = 1),
-#'                    bacteria = as.mo(c("S. aureus", "MRSA", "MSSA", "STAAUR",
-#'                                       "E. coli", "E. coli", "E. coli")),
-#'                    stringsAsFactors = FALSE)
-#'   colnames(df)
-#'   df_joined <- left_join_microorganisms(df, "bacteria")
-#'   colnames(df_joined)
 #' }
 #' }
 inner_join_microorganisms <- function(x, by = NULL, suffix = c("2", ""), ...) {
@@ -119,9 +120,14 @@ join_microorganisms <- function(type, x, by, suffix, ...) {
   check_dataset_integrity()
   
   if (!is.data.frame(x)) {
-    x <- data.frame(mo = x, stringsAsFactors = FALSE)
+    if (pkg_is_available("tibble", also_load = FALSE)) {
+      x <- import_fn("tibble", "tibble")(mo = x)
+    } else {
+      x <- data.frame(mo = x, stringsAsFactors = FALSE)
+    }
     by <- "mo"
   }
+  x.bak <- x
   if (is.null(by)) {
     by <- search_type_in_df(x, "mo", info = FALSE)
     if (is.null(by) && NCOL(x) == 1) {
@@ -171,5 +177,5 @@ join_microorganisms <- function(type, x, by, suffix, ...) {
     warning_("in `", type, "_join()`: the newly joined data set contains ", nrow(joined) - nrow(x), " rows more than the number of rows of `x`.")
   }
   
-  joined
+  as_original_data_class(joined, class(x.bak))
 }

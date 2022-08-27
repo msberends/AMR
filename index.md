@@ -65,8 +65,8 @@ library(AMR)
 library(dplyr)
 
 out <- example_isolates %>%
-  # group by hospital code:
-  group_by(hospital_id) %>%
+  # group by ward:
+  group_by(ward) %>%
   # calculate AMR using resistance(), over all aminoglycosides
   # and polymyxins:
   summarise(across(c(aminoglycosides(), polymyxins()),
@@ -74,36 +74,33 @@ out <- example_isolates %>%
 out
 ```
 
-| hospital_id |  GEN  |  TOB  |  AMK  |  KAN  |  COL  |
-|:------------|:-----:|:-----:|:-----:|:-----:|:-----:|
-| A           | 0.203 | 0.328 | 0.657 |     1 | 0.853 |
-| B           | 0.274 | 0.367 | 0.645 |     1 | 0.845 |
-| C           | 0.212 | 0.342 | 0.582 |     1 | 0.865 |
-| D           | 0.251 | 0.332 | 0.642 |     1 | 0.745 |
+| ward       |   GEN |   TOB |   AMK |   KAN |   COL |
+|:-----------|------:|------:|------:|------:|------:|
+| Clinical   | 0.229 | 0.315 | 0.626 |     1 | 0.780 |
+| ICU        | 0.290 | 0.400 | 0.662 |     1 | 0.857 |
+| Outpatient | 0.200 | 0.368 | 0.605 |    NA | 0.889 |
 
 ```r
 # transform the antibiotic columns to names:
 out %>% set_ab_names()
 ```
 
-| hospital_id | gentamicin | tobramycin | amikacin | kanamycin | colistin  |
-|:------------|:----------:|:----------:|:---------|:---------:|:---------:|
-| A           |   0.203    |    0.328   |   0.657  |     1     |   0.853   |
-| B           |   0.274    |    0.367   |   0.645  |     1     |   0.845   |
-| C           |   0.212    |    0.342   |   0.582  |     1     |   0.865   |
-| D           |   0.251    |    0.332   |   0.642  |     1     |   0.745   |
+| ward       | gentamicin | tobramycin | amikacin | kanamycin | colistin  |
+|:-----------|-----------:|-----------:|----------|----------:|----------:|
+| Clinical   | 0.229      | 0.315      | 0.626    |     1     | 0.780     |
+| ICU        | 0.290      | 0.400      | 0.662    |     1     | 0.857     |
+| Outpatient | 0.200      | 0.368      | 0.605    |    NA     | 0.889     |
 
 ```r
 # transform the antibiotic column to ATC codes:
 out %>% set_ab_names(property = "atc")
 ```
 
-| hospital_id |  J01GB03   |   J01GB01  |  J01GB06 |  J01GB04  |  J01XB01  |
-|:------------|:----------:|:----------:|:---------|:---------:|:---------:|
-| A           |   0.203    |    0.328   |   0.657  |     1     |   0.853   |
-| B           |   0.274    |    0.367   |   0.645  |     1     |   0.845   |
-| C           |   0.212    |    0.342   |   0.582  |     1     |   0.865   |
-| D           |   0.251    |    0.332   |   0.642  |     1     |   0.745   |
+| ward       |  J01GB03   |   J01GB01  |  J01GB06 |  J01GB04  |  J01XB01  |
+|:-----------|-----------:|-----------:|----------|----------:|----------:|
+| Clinical   | 0.229      | 0.315      | 0.626    |     1     | 0.780     |
+| ICU        | 0.290      | 0.400      | 0.662    |     1     | 0.857     |
+| Outpatient | 0.200      | 0.368      | 0.605    |    NA     | 0.889     |
 
 ### What else can you do with this package?
 

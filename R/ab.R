@@ -260,13 +260,13 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     }
     
     # try if name starts with it
-    found <- antibiotics[which(AB_lookup$generalised_name %like% paste0("^", x_spelling)), ]$ab
+    found <- antibiotics[which(AB_lookup$generalised_name %like% paste0("^", x_spelling)), "ab", drop = TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
     # try if name ends with it
-    found <- antibiotics[which(AB_lookup$generalised_name %like% paste0(x_spelling, "$")), ]$ab
+    found <- antibiotics[which(AB_lookup$generalised_name %like% paste0(x_spelling, "$")), "ab", drop = TRUE]
     if (nchar(x[i]) >= 4 & length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next

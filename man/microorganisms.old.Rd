@@ -5,7 +5,7 @@
 \alias{microorganisms.old}
 \title{Data Set with Previously Accepted Taxonomic Names}
 \format{
-A \link{data.frame} with 14,338 observations and 4 variables:
+A [tibble\link[tibble:tibble]{tibble::tibble} with 14,338 observations and 4 variables:
 \itemize{
 \item \code{fullname}\cr Old full taxonomic name of the microorganism
 \item \code{fullname_new}\cr New full taxonomic name of the microorganism
@@ -24,6 +24,9 @@ microorganisms.old
 \description{
 A data set containing old (previously valid or accepted) taxonomic names according to the Catalogue of Life. This data set is used internally by \code{\link[=as.mo]{as.mo()}}.
 }
+\details{
+Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+}
 \section{Catalogue of Life}{
 
 \if{html}{\figure{logo_col.png}{options: height="40" style=margin-bottom:"5"} \cr}
@@ -32,13 +35,8 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 \link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which versions of the CoL and LPSN were included in this package with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}.
 }
 
-\section{Reference Data Publicly Available}{
-
-All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
-}
-
 \examples{
-head(microorganisms.old)
+microorganisms.old
 }
 \seealso{
 \code{\link[=as.mo]{as.mo()}} \code{\link[=mo_property]{mo_property()}} \link{microorganisms}

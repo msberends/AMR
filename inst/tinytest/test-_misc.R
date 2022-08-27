@@ -49,5 +49,5 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
 
 # we rely on "grouped_tbl" being a class of grouped tibbles, so implement a test that checks for this:
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
-  expect_true(AMR:::is_null_or_grouped_tbl(example_isolates %>% group_by(hospital_id)))
+  expect_true(AMR:::is_null_or_grouped_tbl(example_isolates %>% group_by(ward)))
 }

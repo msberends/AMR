@@ -138,7 +138,7 @@ abx2 <- abx2 %>% arrange(ab)
 seqnr <- 0
 # add follow up nrs
 for (i in 2:nrow(abx2)) {
-  if (abx2[i, "ab"] == abx2[i - 1, "ab"]) {
+  if (abx2[i, "ab", drop = TRUE] == abx2[i - 1, "ab", drop = TRUE]) {
     seqnr <- seqnr + 1
     abx2[i, "seqnr"] <- seqnr
   } else {
@@ -147,7 +147,7 @@ for (i in 2:nrow(abx2)) {
 }
 for (i in 2:nrow(abx2)) {
   if (!is.na(abx2[i, "seqnr"])) {
-    abx2[i, "ab"] <- paste0(abx2[i, "ab"], abx2[i, "seqnr"])
+    abx2[i, "ab"] <- paste0(abx2[i, "ab", drop = TRUE], abx2[i, "seqnr", drop = TRUE])
   }
 }
 abx2 <- abx2 %>% select(-seqnr) %>% arrange(name)

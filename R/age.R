@@ -160,7 +160,7 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
 #' if (require("dplyr")) {
 #'   example_isolates %>%
 #'     filter_first_isolate() %>%
-#'     filter(mo == as.mo("E. coli")) %>%
+#'     filter(mo == as.mo("Escherichia coli")) %>%
 #'     group_by(age_group = age_groups(age)) %>%
 #'     select(age_group, CIP) %>%
 #'     ggplot_rsi(x = "age_group",

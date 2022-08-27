@@ -1,35 +1,36 @@
 Package: AMR
-Version: 1.8.1.9030
-Date: 2022-08-26
+Version: 1.8.1.9031
+Date: 2022-08-27
 Title: Antimicrobial Resistance Data Analysis
 Description: Functions to simplify and standardise antimicrobial resistance (AMR)
     data analysis and to work with microbial and antimicrobial properties by
     using evidence-based methods and reliable reference data such as LPSN
     <doi:10.1099/ijsem.0.004332>.
 Authors@R: c(
-    person(c("Matthijs", "S."), "Berends", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-7620-1800"), email = "m.berends@certe.nl"),
-    person(c("Christian", "F."), "Luz", role = c("aut", "ctb"), comment = c(ORCID = "0000-0001-5809-5995")),
-    person("Dennis", "Souverein", role = c("aut", "ctb"), comment = c(ORCID = "0000-0003-0455-0336")),
-    person(c("Erwin", "E.", "A."), "Hassing", role = c("aut", "ctb")),
-    person("Casper",  "Albers", role = "ths", comment = c(ORCID = "0000-0002-9213-6743")),
-    person("Peter",   "Dutey-Magni", role = "ctb", comment = c(ORCID = "0000-0002-8942-9836")),
-    person("Judith",  "Fonville", role = "ctb"),
-    person("Alex",    "Friedrich", role = "ths", comment = c(ORCID = "0000-0003-4881-038X")),
-    person("Corinna", "Glasner", role = "ths", comment = c(ORCID = "0000-0003-1241-1328")),
-    person("Eric",    "Hazenberg", role = "ctb"),
-    person("Gwen",    "Knight", role = "ctb", comment = c(ORCID = "0000-0002-7263-9896")),
-    person("Annick",  "Lenglet", role = "ctb", comment = c(ORCID = "0000-0003-2013-8405")),
-    person("Bart",    "Meijer", role = "ctb"),
-    person("Anton",   "Mymrikov", role = "ctb"),
-    person("Sofia",   "Ny", role = "ctb", comment = c(ORCID = "0000-0002-2017-1363")),
-    person("Rogier",  "Schade", role = "ctb"),
-    person("Bhanu",   "Sinha", role = "ths", comment = c(ORCID = "0000-0003-1634-0010")),
-    person("Anthony", "Underwood", role = "ctb", comment = c(ORCID = "0000-0002-8547-4277")))
+ person(family = "Berends",     c("Matthijs", "S."), role = c("aut", "cre"), comment = c(ORCID = "0000-0001-7620-1800"), email = "m.berends@certe.nl"),
+ person(family = "Luz",         c("Christian", "F."), role = c("aut", "ctb"), comment = c(ORCID = "0000-0001-5809-5995")),
+ person(family = "Souverein",   c("Dennis"), role = c("aut", "ctb"), comment = c(ORCID = "0000-0003-0455-0336")),
+ person(family = "Hassing",     c("Erwin", "E.", "A."), role = c("aut", "ctb")),
+ person(family = "Albers",      c("Casper", "J."), role = "ths", comment = c(ORCID = "0000-0002-9213-6743")),
+ person(family = "Dutey-Magni", c("Peter"), role = "ctb", comment = c(ORCID = "0000-0002-8942-9836")),
+ person(family = "Fonville",    c("Judith", "M"), role = "ctb"),
+ person(family = "Friedrich",   c("Alex", "W."), role = "ths", comment = c(ORCID = "0000-0003-4881-038X")),
+ person(family = "Glasner",     c("Corinna"), role = "ths", comment = c(ORCID = "0000-0003-1241-1328")),
+ person(family = "Hazenberg",   c("Eric", "H.", "L.", "C.", "M."), role = "ctb"),
+ person(family = "Knight",      c("Gwen"), role = "ctb", comment = c(ORCID = "0000-0002-7263-9896")),
+ person(family = "Lenglet",     c("Annick"), role = "ctb", comment = c(ORCID = "0000-0003-2013-8405")),
+ person(family = "Meijer",      c("Bart", "C."), role = "ctb"),
+ person(family = "Mymrikov",    c("Anton"), role = "ctb"),
+ person(family = "Ny",          c("Sofia"), role = "ctb", comment = c(ORCID = "0000-0002-2017-1363")),
+ person(family = "Schade",      c("Rogier", "P."), role = "ctb"),
+ person(family = "Sinha",       c("Bhanu", "N.", "M."), role = "ths", comment = c(ORCID = "0000-0003-1634-0010")),
+ person(family = "Underwood",   c("Anthony"), role = "ctb", comment = c(ORCID = "0000-0002-8547-4277")))
 Depends: R (>= 3.0.0)
 Enhances:
   cleaner,
   skimr,
   ggplot2,
+  tibble,
   tidyselect
 Suggests: 
   curl,
@@ -41,7 +42,7 @@ Suggests:
   rvest,
   tinytest,
   xml2
-VignetteBuilder: knitr,rmarkdown
+VignetteBuilder: knitr
 URL: https://msberends.github.io/AMR/, https://github.com/msberends/AMR
 BugReports: https://github.com/msberends/AMR/issues
 License: GPL-2 | file LICENSE
