@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9045</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -138,7 +138,7 @@
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with 20,369 observations and 11 variables:</p><ul><li><p><code>guideline</code><br> Name of the guideline</p></li>
+    <p>A [tibble<a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble</a> with 20,369 observations and 11 variables:</p><ul><li><p><code>guideline</code><br> Name of the guideline</p></li>
 <li><p><code>method</code><br> Either "DISK" or "MIC"</p></li>
 <li><p><code>site</code><br> Body site, e.g. "Oral" or "Respiratory"</p></li>
 <li><p><code>mo</code><br> Microbial ID, see <code><a href="as.mo.html">as.mo()</a></code></p></li>
@@ -152,13 +152,8 @@
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The repository of this <code>AMR</code> package contains a file comprising this exact data set: <a href="https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt" class="external-link">https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt</a>. This file <strong>allows for machine reading EUCAST and CLSI guidelines</strong>, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. The file is updated automatically and the <code>mo</code> and <code>ab</code> columns have been transformed to contain the full official names instead of codes.</p>
-    </div>
-    <div class="section level2">
-    <h2 id="reference-data-publicly-available">Reference Data Publicly Available<a class="anchor" aria-label="anchor" href="#reference-data-publicly-available"></a></h2>
-    
-
-<p>All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this <code>AMR</code> package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find <a href="https://msberends.github.io/AMR/articles/datasets.html">all download links on our website</a>, which is automatically updated with every code change.</p>
+    <p>Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit <a href="https://msberends.github.io/AMR/articles/datasets.html">our website for the download links</a>. The actual files are of course available on <a href="https://github.com/msberends/AMR/tree/main/data-raw" class="external-link">our GitHub repository</a>.</p>
+<p>They <strong>allow for machine reading EUCAST and CLSI guidelines</strong>, which is almost impossible with the MS Excel and PDF files distributed by EUCAST and CLSI.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -167,21 +162,22 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rsi_translation</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     guideline method site           mo rank_index  ab     ref_tbl disk_dose</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 EUCAST 2022    MIC &lt;NA&gt; F_ASPRG_MGTS          2 AMB Aspergillus      &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 EUCAST 2022    MIC &lt;NA&gt; F_ASPRG_NIGR          2 AMB Aspergillus      &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 EUCAST 2022    MIC &lt;NA&gt;      F_CANDD          3 AMB     Candida      &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 EUCAST 2022    MIC &lt;NA&gt; F_CANDD_ALBC          2 AMB     Candida      &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 EUCAST 2022    MIC &lt;NA&gt; F_CANDD_DBLN          2 AMB     Candida      &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 EUCAST 2022    MIC &lt;NA&gt; F_CANDD_KRUS          2 AMB     Candida      &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   breakpoint_S breakpoint_R   uti</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1            1            1 FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2            1            1 FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3            1            1 FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4            1            1 FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5            1            1 FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6            1            1 FALSE</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">rsi_translation</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 20,369 × 11</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    guideline   method site  mo           rank_in…¹ ab   ref_tbl  disk_…² break…³</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> EUCAST 2022 MIC    <span style="color: #BB0000;">NA</span>    F_ASPRG_MGTS         2 AMB  Aspergi… <span style="color: #BB0000;">NA</span>            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> EUCAST 2022 MIC    <span style="color: #BB0000;">NA</span>    F_ASPRG_NIGR         2 AMB  Aspergi… <span style="color: #BB0000;">NA</span>            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> EUCAST 2022 MIC    <span style="color: #BB0000;">NA</span>    F_CANDD              3 AMB  Candida  <span style="color: #BB0000;">NA</span>            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> EUCAST 2022 MIC    <span style="color: #BB0000;">NA</span>    F_CANDD_ALBC         2 AMB  Candida  <span style="color: #BB0000;">NA</span>            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> EUCAST 2022 MIC    <span style="color: #BB0000;">NA</span>    F_CANDD_DBLN         2 AMB  Candida  <span style="color: #BB0000;">NA</span>            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> EUCAST 2022 MIC    <span style="color: #BB0000;">NA</span>    F_CANDD_KRUS         2 AMB  Candida  <span style="color: #BB0000;">NA</span>            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> EUCAST 2022 MIC    <span style="color: #BB0000;">NA</span>    F_CANDD_PRPS         2 AMB  Candida  <span style="color: #BB0000;">NA</span>            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> EUCAST 2022 MIC    <span style="color: #BB0000;">NA</span>    F_CANDD_TRPC         2 AMB  Candida  <span style="color: #BB0000;">NA</span>            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> EUCAST 2022 MIC    <span style="color: #BB0000;">NA</span>    F_CRYPT_NFRM         2 AMB  Candida  <span style="color: #BB0000;">NA</span>            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> EUCAST 2022 MIC    <span style="color: #BB0000;">NA</span>    F_PICHI              3 AMB  Candida  <span style="color: #BB0000;">NA</span>            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 20,359 more rows, 2 more variables: breakpoint_R &lt;dbl&gt;, uti &lt;lgl&gt;, and</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   abbreviated variable names ¹​rank_index, ²​disk_dose, ³​breakpoint_S</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

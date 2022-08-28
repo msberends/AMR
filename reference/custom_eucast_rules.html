@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9045</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -139,7 +139,7 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>...</dt>
-<dd><p>rules in formula notation, see <em>Examples</em></p></dd>
+<dd><p>rules in <a href="https://rdrr.io/r/base/tilde.html" class="external-link">formula</a> notation, see <em>Examples</em></p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -240,8 +240,10 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">custom_eucast_rules</span><span class="op">(</span><span class="va">AMC</span> <span class="op">==</span> <span class="st">"R"</span> <span class="op">&amp;</span> <span class="va">genus</span> <span class="op">==</span> <span class="st">"Klebsiella"</span> <span class="op">~</span> <span class="va">aminopenicillins</span> <span class="op">==</span> <span class="st">"R"</span>,</span></span>
-<span class="r-in"><span>                         <span class="va">AMC</span> <span class="op">==</span> <span class="st">"I"</span> <span class="op">&amp;</span> <span class="va">genus</span> <span class="op">==</span> <span class="st">"Klebsiella"</span> <span class="op">~</span> <span class="va">aminopenicillins</span> <span class="op">==</span> <span class="st">"I"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">custom_eucast_rules</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">AMC</span> <span class="op">==</span> <span class="st">"R"</span> <span class="op">&amp;</span> <span class="va">genus</span> <span class="op">==</span> <span class="st">"Klebsiella"</span> <span class="op">~</span> <span class="va">aminopenicillins</span> <span class="op">==</span> <span class="st">"R"</span>,</span></span>
+<span class="r-in"><span>  <span class="va">AMC</span> <span class="op">==</span> <span class="st">"I"</span> <span class="op">&amp;</span> <span class="va">genus</span> <span class="op">==</span> <span class="st">"Klebsiella"</span> <span class="op">~</span> <span class="va">aminopenicillins</span> <span class="op">==</span> <span class="st">"I"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A set of custom EUCAST rules:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -253,50 +255,29 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># run the custom rule set (verbose = TRUE will return a logbook instead of the data set):</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="eucast_rules.html">eucast_rules</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span></span>
-<span class="r-in"><span>             rules <span class="op">=</span> <span class="st">"custom"</span>,</span></span>
-<span class="r-in"><span>             custom_rules <span class="op">=</span> <span class="va">x</span>,</span></span>
-<span class="r-in"><span>             info <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>             verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    row col           mo_fullname old new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   33 AMP Klebsiella pneumoniae   R   I</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   33 AMX Klebsiella pneumoniae   R   I</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   34 AMP Klebsiella pneumoniae   R   I</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   34 AMX Klebsiella pneumoniae   R   I</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  531 AMP Klebsiella pneumoniae   R   I</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  531 AMX Klebsiella pneumoniae   R   I</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 1485 AMP    Klebsiella oxytoca   R   I</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8 1485 AMX    Klebsiella oxytoca   R   I</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                               rule</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 report as 'I' when AMC is "I" and genus is "Klebsiella": amoxicillin, ampicillin</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 report as 'I' when AMC is "I" and genus is "Klebsiella": amoxicillin, ampicillin</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 report as 'I' when AMC is "I" and genus is "Klebsiella": amoxicillin, ampicillin</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 report as 'I' when AMC is "I" and genus is "Klebsiella": amoxicillin, ampicillin</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 report as 'I' when AMC is "I" and genus is "Klebsiella": amoxicillin, ampicillin</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 report as 'I' when AMC is "I" and genus is "Klebsiella": amoxicillin, ampicillin</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 report as 'I' when AMC is "I" and genus is "Klebsiella": amoxicillin, ampicillin</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8 report as 'I' when AMC is "I" and genus is "Klebsiella": amoxicillin, ampicillin</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            rule_group            rule_name</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Custom EUCAST rules Custom EUCAST rule 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Custom EUCAST rules Custom EUCAST rule 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Custom EUCAST rules Custom EUCAST rule 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Custom EUCAST rules Custom EUCAST rule 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Custom EUCAST rules Custom EUCAST rule 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 Custom EUCAST rules Custom EUCAST rule 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 Custom EUCAST rules Custom EUCAST rule 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8 Custom EUCAST rules Custom EUCAST rule 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                               rule_source</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Object 'x' consisting of 2 custom rules</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Object 'x' consisting of 2 custom rules</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Object 'x' consisting of 2 custom rules</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Object 'x' consisting of 2 custom rules</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Object 'x' consisting of 2 custom rules</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 Object 'x' consisting of 2 custom rules</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 Object 'x' consisting of 2 custom rules</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8 Object 'x' consisting of 2 custom rules</span>
-<span class="r-in"><span>             </span></span>
+<span class="r-in"><span>  rules <span class="op">=</span> <span class="st">"custom"</span>,</span></span>
+<span class="r-in"><span>  custom_rules <span class="op">=</span> <span class="va">x</span>,</span></span>
+<span class="r-in"><span>  info <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8 × 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     row col   mo_fullname           old   new   rule     rule_…¹ rule_…² rule_…³</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>    33 AMP   Klebsiella pneumoniae R     I     <span style="color: #949494;">"</span>report… Custom… Custom… Object…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>    33 AMX   Klebsiella pneumoniae R     I     <span style="color: #949494;">"</span>report… Custom… Custom… Object…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>    34 AMP   Klebsiella pneumoniae R     I     <span style="color: #949494;">"</span>report… Custom… Custom… Object…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>    34 AMX   Klebsiella pneumoniae R     I     <span style="color: #949494;">"</span>report… Custom… Custom… Object…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>   531 AMP   Klebsiella pneumoniae R     I     <span style="color: #949494;">"</span>report… Custom… Custom… Object…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>   531 AMX   Klebsiella pneumoniae R     I     <span style="color: #949494;">"</span>report… Custom… Custom… Object…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span>  <span style="text-decoration: underline;">1</span>485 AMP   Klebsiella oxytoca    R     I     <span style="color: #949494;">"</span>report… Custom… Custom… Object…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span>  <span style="text-decoration: underline;">1</span>485 AMX   Klebsiella oxytoca    R     I     <span style="color: #949494;">"</span>report… Custom… Custom… Object…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with abbreviated variable names ¹​rule_group, ²​rule_name, ³​rule_source</span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># combine rule sets</span></span></span>
-<span class="r-in"><span><span class="va">x2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">x</span>,</span></span>
-<span class="r-in"><span>        <span class="fu">custom_eucast_rules</span><span class="op">(</span><span class="va">TZP</span> <span class="op">==</span> <span class="st">"R"</span> <span class="op">~</span> <span class="va">carbapenems</span> <span class="op">==</span> <span class="st">"R"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">x</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">custom_eucast_rules</span><span class="op">(</span><span class="va">TZP</span> <span class="op">==</span> <span class="st">"R"</span> <span class="op">~</span> <span class="va">carbapenems</span> <span class="op">==</span> <span class="st">"R"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x2</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A set of custom EUCAST rules:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

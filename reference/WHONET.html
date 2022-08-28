@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9045</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -138,7 +138,7 @@
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with 500 observations and 53 variables:</p><ul><li><p><code>Identification number</code><br> ID of the sample</p></li>
+    <p>A [tibble<a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble</a> with 500 observations and 53 variables:</p><ul><li><p><code>Identification number</code><br> ID of the sample</p></li>
 <li><p><code>Specimen number</code><br> ID of the specimen</p></li>
 <li><p><code>Organism</code><br> Name of the microorganism. Before analysis, you should transform this to a valid microbial class, using <code><a href="as.mo.html">as.mo()</a></code>.</p></li>
 <li><p><code>Country</code><br> Country of origin</p></li>
@@ -166,78 +166,33 @@
 <li><p><code>AMP_ND10:CIP_EE</code><br> 28 different antibiotics. You can lookup the abbreviations in the <a href="antibiotics.html">antibiotics</a> data set, or use e.g. <code><a href="ab_property.html">ab_name("AMP")</a></code> to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using <code><a href="as.rsi.html">as.rsi()</a></code>.</p></li>
 </ul></div>
     <div class="section level2">
-    <h2 id="reference-data-publicly-available">Reference Data Publicly Available<a class="anchor" aria-label="anchor" href="#reference-data-publicly-available"></a></h2>
-    
-
-<p>All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this <code>AMR</code> package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find <a href="https://msberends.github.io/AMR/articles/datasets.html">all download links on our website</a>, which is automatically updated with every code change.</p>
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit <a href="https://msberends.github.io/AMR/articles/datasets.html">our website for the download links</a>. The actual files are of course available on <a href="https://github.com/msberends/AMR/tree/main/data-raw" class="external-link">our GitHub repository</a>.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">WHONET</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Identification number Specimen number Organism         Country</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1            fe41d7bafa            1748      SPN         Belgium</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2            91f175ec37            1767      eco The Netherlands</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3            cc4015056e            1343      eco The Netherlands</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4            e864b692f5            1894      MAP         Denmark</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5            3d051fe345            1739      PVU         Belgium</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6            c80762a08d            1846      103 The Netherlands</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                               Laboratory  Last name First name Sex Age</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1         National Laboratory of Belgium       Abel         B.   F  68</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 National Laboratory of The Netherlands  Delacroix         F.   M  89</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 National Laboratory of The Netherlands   Steensen         F.   M  85</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4         National Laboratory of Denmark Beyersdorf         L.   M  62</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5         National Laboratory of Belgium     Hummel         W.   M  86</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 National Laboratory of The Netherlands  Eikenboom         J.   F  53</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Age category Date of admission Specimen date Specimen type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        55-74        2005-01-12    2005-01-30         Urine</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2          75+        2006-07-30    2006-08-16         Urine</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3          75+        2014-03-05    2014-03-14         Urine</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4        55-74        2014-10-22    2014-11-01         Urine</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5          75+        2016-10-28    2016-11-17         Urine</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6        25-54        2017-12-21    2018-01-02         Urine</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Specimen type (Numeric)  Reason Isolate number Organism type Serotype</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                       2 Unknown           1748      Bacteria         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                       2 Unknown           1767      Bacteria         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                       2 Unknown           1343      Bacteria         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                       2 Unknown           1894      Bacteria         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                       2 Unknown           1739      Bacteria         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6                       2 Unknown           1846      Bacteria         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Beta-lactamase  ESBL Carbapenemase MRSA screening test</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1          FALSE FALSE         FALSE               FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2          FALSE FALSE         FALSE               FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3          FALSE FALSE         FALSE               FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4          FALSE FALSE         FALSE               FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5          FALSE FALSE         FALSE               FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6          FALSE FALSE         FALSE               FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Inducible clindamycin resistance Comment Date of data entry AMP_ND10 AMC_ED20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                            FALSE                 2005-01-30        S        S</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                            FALSE                 2006-08-16     &lt;NA&gt;        S</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                            FALSE                 2014-03-14        S        S</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                            FALSE                 2014-11-01        R     &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                            FALSE                 2016-11-17        R        R</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6                            FALSE                 2018-01-02        S        S</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   TZP_ED30 FEP_ED30 CTX_ED5 FOX_ED30 CAZ_ED10 CRO_ED30 CIP_ED5 AMK_ED30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        S     &lt;NA&gt;    &lt;NA&gt;     &lt;NA&gt;        R     &lt;NA&gt;    &lt;NA&gt;     &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     &lt;NA&gt;     &lt;NA&gt;    &lt;NA&gt;     &lt;NA&gt;        R     &lt;NA&gt;    &lt;NA&gt;     &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3        S     &lt;NA&gt;    &lt;NA&gt;     &lt;NA&gt;     &lt;NA&gt;     &lt;NA&gt;    &lt;NA&gt;     &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     &lt;NA&gt;     &lt;NA&gt;    &lt;NA&gt;     &lt;NA&gt;        R     &lt;NA&gt;    &lt;NA&gt;     &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5        S     &lt;NA&gt;       S        R        S        S       S     &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6        S     &lt;NA&gt;       S        S        S        S       S     &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   GEN_ED10 TOB_ED10 SXT_ED1.2 IPM_ND10 PEN_ND1 AMP_ND2 AMC_ND2 CHL_ND30 VAN_ED5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        R        R         S     &lt;NA&gt;       S       S       S     &lt;NA&gt;       S</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        S     &lt;NA&gt;         R     &lt;NA&gt;       R    &lt;NA&gt;       S     &lt;NA&gt;       S</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     &lt;NA&gt;     &lt;NA&gt;      &lt;NA&gt;     &lt;NA&gt;       S       S       S     &lt;NA&gt;    &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4        R        R      &lt;NA&gt;     &lt;NA&gt;       R       R    &lt;NA&gt;     &lt;NA&gt;    &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5        S        S         R        I       R       R       R     &lt;NA&gt;       R</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6        S        S         S        S       R       S       S     &lt;NA&gt;       R</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   OXA_ED1 ERY_ED15 CLI_ED2 TCY_ED30 RIF_ED5 PEN_EE AMP_EE CRO_EE CIP_EE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    &lt;NA&gt;        S    &lt;NA&gt;        S    &lt;NA&gt;      S      S   &lt;NA&gt;   &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    &lt;NA&gt;        S       S        S    &lt;NA&gt;      R   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    &lt;NA&gt;     &lt;NA&gt;       S     &lt;NA&gt;    &lt;NA&gt;      S      S   &lt;NA&gt;   &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    &lt;NA&gt;     &lt;NA&gt;       S     &lt;NA&gt;    &lt;NA&gt;      R      R   &lt;NA&gt;   &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    &lt;NA&gt;        R    &lt;NA&gt;        R       R      R      R      S      S</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    &lt;NA&gt;        R    &lt;NA&gt;     &lt;NA&gt;       R      R      S      S      S</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">WHONET</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 500 × 53</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Identif…¹ Speci…² Organ…³ Country Labor…⁴ Last …⁵ First…⁶ Sex     Age Age c…⁷</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> fe41d7ba…    <span style="text-decoration: underline;">1</span>748 SPN     Belgium Nation… Abel    B.      F        68 55-74  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 91f175ec…    <span style="text-decoration: underline;">1</span>767 eco     The Ne… Nation… Delacr… F.      M        89 75+    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> cc401505…    <span style="text-decoration: underline;">1</span>343 eco     The Ne… Nation… Steens… F.      M        85 75+    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> e864b692…    <span style="text-decoration: underline;">1</span>894 MAP     Denmark Nation… Beyers… L.      M        62 55-74  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 3d051fe3…    <span style="text-decoration: underline;">1</span>739 PVU     Belgium Nation… Hummel  W.      M        86 75+    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> c80762a0…    <span style="text-decoration: underline;">1</span>846 103     The Ne… Nation… Eikenb… J.      F        53 25-54  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 8022d372…    <span style="text-decoration: underline;">1</span>628 103     Denmark Nation… Leclerc S.      F        77 75+    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> f3dc5f55…    <span style="text-decoration: underline;">1</span>493 eco     The Ne… Nation… Delacr… W.      M        53 25-54  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 15add38f…    <span style="text-decoration: underline;">1</span>847 eco     France  Nation… Van La… S.      F        63 55-74  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> fd41248d…    <span style="text-decoration: underline;">1</span>458 eco     Germany Nation… Moulin  O.      F        75 75+    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 490 more rows, 43 more variables: `Date of admission` &lt;date&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Specimen date` &lt;date&gt;, `Specimen type` &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Specimen type (Numeric)` &lt;dbl&gt;, Reason &lt;chr&gt;, `Isolate number` &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Organism type` &lt;chr&gt;, Serotype &lt;chr&gt;, `Beta-lactamase` &lt;lgl&gt;, ESBL &lt;lgl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Carbapenemase &lt;lgl&gt;, `MRSA screening test` &lt;lgl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Inducible clindamycin resistance` &lt;lgl&gt;, Comment &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Date of data entry` &lt;date&gt;, AMP_ND10 &lt;rsi&gt;, AMC_ED20 &lt;rsi&gt;, …</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

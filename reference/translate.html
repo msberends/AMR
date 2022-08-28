@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9045</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -135,7 +135,7 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_AMR_locale</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">set_AMR_locale</span><span class="op">(</span><span class="va">lang</span><span class="op">)</span></span>
+<span><span class="fu">set_AMR_locale</span><span class="op">(</span><span class="va">language</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">reset_AMR_locale</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -144,7 +144,7 @@
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>lang</dt>
+    <dl><dt>language</dt>
 <dd><p>language to choose. Use one of these supported language names or ISO-639-1 codes: "English" ("en"), "Chinese" ("zh"), "Danish" ("da"), "Dutch" ("nl"), "French" ("fr"), "German" ("de"), "Greek" ("el"), "Italian" ("it"), "Japanese" ("ja"), "Polish" ("pl"), "Portuguese" ("pt"), "Russian" ("ru"), "Spanish" ("es"), "Swedish" ("sv"), "Turkish" ("tr"), "Ukrainian" ("uk").</p></dd>
 
 
@@ -159,7 +159,7 @@
 <h3 id="changing-the-default-language">Changing the Default Language<a class="anchor" aria-label="anchor" href="#changing-the-default-language"></a></h3>
 
 
-<p>The system language will be used at default (as returned by <code>Sys.getenv("LANG")</code> or, if <code>LANG</code> is not set, Sys.getlocale("LC_COLLATE")), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:</p><ol><li><p>Setting the R option <code>AMR_locale</code>, either by using <code>set_AMR_locale()</code> or by running e.g. <code>options(AMR_locale = "de")</code>.</p>
+<p>The system language will be used at default (as returned by <code>Sys.getenv("LANG")</code> or, if <code>LANG</code> is not set, <code><a href="https://rdrr.io/r/base/locales.html" class="external-link">Sys.getlocale("LC_COLLATE")</a></code>), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:</p><ol><li><p>Setting the R option <code>AMR_locale</code>, either by using <code>set_AMR_locale()</code> or by running e.g. <code>options(AMR_locale = "de")</code>.</p>
 <p>Note that setting an <span style="R">R</span> option only works in the same session. Save the command <code>options(AMR_locale = "(your language)")</code> to your <code>.Rprofile</code> file to apply it for every session.</p></li>
 <li><p>Setting the system variable <code>LANGUAGE</code> or <code>LANG</code>, e.g. by adding <code>LANGUAGE="de_DE.utf8"</code> to your <code>.Renviron</code> file in your home directory.</p></li>
 </ol><p>Thus, if the R option <code>AMR_locale</code> is set, the system variables <code>LANGUAGE</code> and <code>LANG</code> will be ignored.</p>

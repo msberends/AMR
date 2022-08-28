@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9045</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -305,7 +305,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
     <h2 id="reference-data-publicly-available">Reference Data Publicly Available<a class="anchor" aria-label="anchor" href="#reference-data-publicly-available"></a></h2>
     
 
-<p>All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this <code>AMR</code> package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find <a href="https://msberends.github.io/AMR/articles/datasets.html">all download links on our website</a>, which is automatically updated with every code change.</p>
+<p>All data sets in this <code>AMR</code> package (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit <a href="https://msberends.github.io/AMR/articles/datasets.html">our website for the download links</a>. The actual files are of course available on <a href="https://github.com/msberends/AMR/tree/main/data-raw" class="external-link">our GitHub repository</a>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -315,172 +315,167 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">example_isolates</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,000 × 49</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    date       hospit…¹ ward_…² ward_…³ ward_…⁴   age gender patie…⁵ mo          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2002-01-02 D        FALSE   TRUE    FALSE      65 F      A77334  B_ESCHR_COLI</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2002-01-03 D        FALSE   TRUE    FALSE      65 F      A77334  B_ESCHR_COLI</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2002-01-07 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2002-01-07 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2002-01-13 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2002-01-13 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2002-01-14 D        FALSE   TRUE    FALSE      78 M      462729  B_STPHY_AURS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2002-01-14 D        FALSE   TRUE    FALSE      78 M      462729  B_STPHY_AURS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2002-01-16 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2002-01-17 B        TRUE    FALSE   FALSE      79 F      858515  B_STPHY_EPDR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 1,990 more rows, 40 more variables: PEN &lt;rsi&gt;, OXA &lt;rsi&gt;, FLC &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   AMX &lt;rsi&gt;, AMC &lt;rsi&gt;, AMP &lt;rsi&gt;, TZP &lt;rsi&gt;, CZO &lt;rsi&gt;, FEP &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CXM &lt;rsi&gt;, FOX &lt;rsi&gt;, CTX &lt;rsi&gt;, CAZ &lt;rsi&gt;, CRO &lt;rsi&gt;, GEN &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TOB &lt;rsi&gt;, AMK &lt;rsi&gt;, KAN &lt;rsi&gt;, TMP &lt;rsi&gt;, SXT &lt;rsi&gt;, NIT &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   FOS &lt;rsi&gt;, LNZ &lt;rsi&gt;, CIP &lt;rsi&gt;, MFX &lt;rsi&gt;, VAN &lt;rsi&gt;, TEC &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TCY &lt;rsi&gt;, TGC &lt;rsi&gt;, DOX &lt;rsi&gt;, ERY &lt;rsi&gt;, CLI &lt;rsi&gt;, AZM &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   IPM &lt;rsi&gt;, MEM &lt;rsi&gt;, MTR &lt;rsi&gt;, CHL &lt;rsi&gt;, COL &lt;rsi&gt;, MUP &lt;rsi&gt;, …</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,000 × 46</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2002-01-02 A77334     65 F      Clinical B_ESCHR_COLI R     NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2002-01-03 A77334     65 F      Clinical B_ESCHR_COLI R     NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2002-01-13 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2002-01-13 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R     NA    S     R    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R     NA    S     R    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2002-01-16 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2002-01-17 858515     79 F      ICU      B_STPHY_EPDR R     NA    S     NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 1,990 more rows, and 36 more variables: AMC &lt;rsi&gt;, AMP &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TZP &lt;rsi&gt;, CZO &lt;rsi&gt;, FEP &lt;rsi&gt;, CXM &lt;rsi&gt;, FOX &lt;rsi&gt;, CTX &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CAZ &lt;rsi&gt;, CRO &lt;rsi&gt;, GEN &lt;rsi&gt;, TOB &lt;rsi&gt;, AMK &lt;rsi&gt;, KAN &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TMP &lt;rsi&gt;, SXT &lt;rsi&gt;, NIT &lt;rsi&gt;, FOS &lt;rsi&gt;, LNZ &lt;rsi&gt;, CIP &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   MFX &lt;rsi&gt;, VAN &lt;rsi&gt;, TEC &lt;rsi&gt;, TCY &lt;rsi&gt;, TGC &lt;rsi&gt;, DOX &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ERY &lt;rsi&gt;, CLI &lt;rsi&gt;, AZM &lt;rsi&gt;, IPM &lt;rsi&gt;, MEM &lt;rsi&gt;, MTR &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CHL &lt;rsi&gt;, COL &lt;rsi&gt;, MUP &lt;rsi&gt;, RIF &lt;rsi&gt;</span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">)</span> <span class="co"># see all R/SI results at a glance</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       date            hospital_id  ward_icu       ward_clinical  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Min.   :2002-01-02   A:321       Mode :logical   Mode :logical  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1st Qu.:2005-07-31   B:663       FALSE:1354      FALSE:536      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Median :2009-07-31   C:254       TRUE :646       TRUE :1464     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Mean   :2009-11-20   D:762                                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3rd Qu.:2014-05-30                                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Max.   :2017-12-28                                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ward_outpatient      age           gender           patient_id       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Mode :logical   Min.   : 0.00   Length:2000        Length:2000       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  FALSE:1880      1st Qu.:63.00   Class :character   Class :character  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  TRUE :120       Median :74.00   Mode  :character   Mode  :character  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Mean   :70.69                                        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  3rd Qu.:82.00                                        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Max.   :97.00                                        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       mo                  PEN                    OXA               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class :mo             Class:rsi              Class:rsi            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  &lt;NA&gt;  :0              %R   :73.7% (n=1201)   %R   :31.2% (n=114)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Unique:90             %SI  :26.3% (n=428)    %SI  :68.8% (n=251)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  #1    :B_ESCHR_COLI   - %S :25.6% (n=417)    - %S :68.8% (n=251)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  #2    :B_STPHY_CONS   - %I : 0.7% (n=11)     - %I : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  #3    :B_STPHY_AURS                                               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     FLC                   AMX                   AMC                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       date              patient               age           gender         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Min.   :2002-01-02   Length:2000        Min.   : 0.00   Length:2000       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1st Qu.:2005-07-31   Class :character   1st Qu.:63.00   Class :character  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Median :2009-07-31   Mode  :character   Median :74.00   Mode  :character  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Mean   :2009-11-20                      Mean   :70.69                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3rd Qu.:2014-05-30                      3rd Qu.:82.00                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Max.   :2017-12-28                      Max.   :97.00                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      ward                mo                  PEN                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Length:2000        Class :mo             Class:rsi             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Class :character   &lt;NA&gt;  :0              %R   :73.7% (n=1201)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Mode  :character   Unique:90             %SI  :26.3% (n=428)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     #1    :B_ESCHR_COLI   - %S :25.6% (n=417)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     #2    :B_STPHY_CONS   - %I : 0.7% (n=11)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     #3    :B_STPHY_AURS                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     OXA                   FLC                   AMX               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:rsi             Class:rsi             Class:rsi            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :31.2% (n=114)   %R   :29.5% (n=278)   %R   :59.6% (n=804)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :68.8% (n=251)   %SI  :70.5% (n=665)   %SI  :40.4% (n=546)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :68.8% (n=251)   - %S :70.5% (n=665)   - %S :40.2% (n=543)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 0.0% (n=0)     - %I : 0.0% (n=0)     - %I : 0.2% (n=3)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     AMC                    AMP                   TZP               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:rsi              Class:rsi             Class:rsi            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :23.7% (n=446)    %R   :59.6% (n=804)   %R   :12.6% (n=126)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :76.3% (n=1433)   %SI  :40.4% (n=546)   %SI  :87.4% (n=875)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :71.4% (n=1342)   - %S :40.2% (n=543)   - %S :86.1% (n=862)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 4.8% (n=91)     - %I : 0.2% (n=3)     - %I : 1.3% (n=13)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     CZO                   FEP                   CXM                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Class:rsi             Class:rsi             Class:rsi             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :29.5% (n=278)   %R   :59.6% (n=804)   %R   :23.7% (n=446)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :70.5% (n=665)   %SI  :40.4% (n=546)   %SI  :76.3% (n=1433)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :70.5% (n=665)   - %S :40.2% (n=543)   - %S :71.4% (n=1342)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 0.0% (n=0)     - %I : 0.2% (n=3)     - %I : 4.8% (n=91)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :44.6% (n=199)   %R   :14.2% (n=103)   %R   :26.3% (n=470)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :55.4% (n=247)   %SI  :85.8% (n=621)   %SI  :73.7% (n=1319)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :54.9% (n=245)   - %S :85.6% (n=620)   - %S :72.5% (n=1297)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 0.4% (n=2)     - %I : 0.1% (n=1)     - %I : 1.2% (n=22)    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     AMP                   TZP                   CZO               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:rsi             Class:rsi             Class:rsi            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :59.6% (n=804)   %R   :12.6% (n=126)   %R   :44.6% (n=199)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :40.4% (n=546)   %SI  :87.4% (n=875)   %SI  :55.4% (n=247)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :40.2% (n=543)   - %S :86.1% (n=862)   - %S :54.9% (n=245)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 0.2% (n=3)     - %I : 1.3% (n=13)    - %I : 0.4% (n=2)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     FEP                   CXM                    FOX               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     FOX                   CTX                   CAZ                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:rsi             Class:rsi             Class:rsi             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :27.4% (n=224)   %R   :15.5% (n=146)   %R   :66.5% (n=1204)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :72.6% (n=594)   %SI  :84.5% (n=797)   %SI  :33.5% (n=607)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :71.6% (n=586)   - %S :84.4% (n=796)   - %S :33.5% (n=607)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 1.0% (n=8)     - %I : 0.1% (n=1)     - %I : 0.0% (n=0)     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     CRO                   GEN                    TOB               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Class:rsi             Class:rsi              Class:rsi            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :14.2% (n=103)   %R   :26.3% (n=470)    %R   :27.4% (n=224)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :85.8% (n=621)   %SI  :73.7% (n=1319)   %SI  :72.6% (n=594)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :85.6% (n=620)   - %S :72.5% (n=1297)   - %S :71.6% (n=586)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 0.1% (n=1)     - %I : 1.2% (n=22)     - %I : 1.0% (n=8)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :15.5% (n=146)   %R   :24.6% (n=456)    %R   :34.4% (n=465)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :84.5% (n=797)   %SI  :75.4% (n=1399)   %SI  :65.6% (n=886)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :84.4% (n=796)   - %S :74.0% (n=1372)   - %S :65.1% (n=879)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 0.1% (n=1)     - %I : 1.5% (n=27)     - %I : 0.5% (n=7)    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     CTX                   CAZ                    CRO               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     AMK                   KAN                    TMP               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Class:rsi             Class:rsi              Class:rsi            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :15.5% (n=146)   %R   :66.5% (n=1204)   %R   :15.5% (n=146)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :84.5% (n=797)   %SI  :33.5% (n=607)    %SI  :84.5% (n=797)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :84.4% (n=796)   - %S :33.5% (n=607)    - %S :84.4% (n=796)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 0.1% (n=1)     - %I : 0.0% (n=0)      - %I : 0.1% (n=1)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :63.7% (n=441)   %R   :100.0% (n=471)   %R   :38.1% (n=571)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :36.3% (n=251)   %SI  : 0.0% (n=0)      %SI  :61.9% (n=928)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :36.3% (n=251)   - %S : 0.0% (n=0)      - %S :61.2% (n=918)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 0.0% (n=0)     - %I : 0.0% (n=0)      - %I : 0.7% (n=10)   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     GEN                    TOB                   AMK               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     SXT                    NIT                   FOS               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Class:rsi              Class:rsi             Class:rsi            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :24.6% (n=456)    %R   :34.4% (n=465)   %R   :63.7% (n=441)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :75.4% (n=1399)   %SI  :65.6% (n=886)   %SI  :36.3% (n=251)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :74.0% (n=1372)   - %S :65.1% (n=879)   - %S :36.3% (n=251)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 1.5% (n=27)     - %I : 0.5% (n=7)     - %I : 0.0% (n=0)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :20.5% (n=361)    %R   :17.1% (n=127)   %R   :42.2% (n=148)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :79.5% (n=1398)   %SI  :82.9% (n=616)   %SI  :57.8% (n=203)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :79.1% (n=1392)   - %S :76.0% (n=565)   - %S :57.8% (n=203)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 0.3% (n=6)      - %I : 6.9% (n=51)    - %I : 0.0% (n=0)    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     KAN                    TMP                   SXT                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:rsi              Class:rsi             Class:rsi             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :100.0% (n=471)   %R   :38.1% (n=571)   %R   :20.5% (n=361)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  : 0.0% (n=0)      %SI  :61.9% (n=928)   %SI  :79.5% (n=1398)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S : 0.0% (n=0)      - %S :61.2% (n=918)   - %S :79.1% (n=1392)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 0.0% (n=0)      - %I : 0.7% (n=10)    - %I : 0.3% (n=6)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     NIT                   FOS                   LNZ               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:rsi             Class:rsi             Class:rsi            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :17.1% (n=127)   %R   :42.2% (n=148)   %R   :69.3% (n=709)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :82.9% (n=616)   %SI  :57.8% (n=203)   %SI  :30.7% (n=314)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :76.0% (n=565)   - %S :57.8% (n=203)   - %S :30.7% (n=314)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 6.9% (n=51)    - %I : 0.0% (n=0)     - %I : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     CIP                    MFX                   VAN                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:rsi              Class:rsi             Class:rsi             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :16.2% (n=228)    %R   :33.6% (n=71)    %R   :38.3% (n=712)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :83.8% (n=1181)   %SI  :66.4% (n=140)   %SI  :61.7% (n=1149)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :78.9% (n=1112)   - %S :64.5% (n=136)   - %S :61.7% (n=1149)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 4.9% (n=69)     - %I : 1.9% (n=4)     - %I : 0.0% (n=0)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     TEC                   TCY                   TGC               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:rsi             Class:rsi             Class:rsi            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :75.7% (n=739)   %R   :29.8% (n=357)   %R   :12.7% (n=101)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :24.3% (n=237)   %SI  :70.3% (n=843)   %SI  :87.3% (n=697)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :24.3% (n=237)   - %S :68.3% (n=820)   - %S :87.3% (n=697)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 0.0% (n=0)     - %I : 1.9% (n=23)    - %I : 0.0% (n=0)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     DOX                   ERY                    CLI               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     LNZ                   CIP                    MFX               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Class:rsi             Class:rsi              Class:rsi            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :27.7% (n=315)   %R   :57.2% (n=1084)   %R   :61.2% (n=930)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :72.3% (n=821)   %SI  :42.8% (n=810)    %SI  :38.8% (n=590)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :71.7% (n=814)   - %S :42.3% (n=801)    - %S :38.6% (n=586)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 0.6% (n=7)     - %I : 0.5% (n=9)      - %I : 0.3% (n=4)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :69.3% (n=709)   %R   :16.2% (n=228)    %R   :33.6% (n=71)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :30.7% (n=314)   %SI  :83.8% (n=1181)   %SI  :66.4% (n=140)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :30.7% (n=314)   - %S :78.9% (n=1112)   - %S :64.5% (n=136)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 0.0% (n=0)     - %I : 4.9% (n=69)     - %I : 1.9% (n=4)    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     AZM                    IPM                   MEM               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     VAN                    TEC                   TCY               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Class:rsi              Class:rsi             Class:rsi            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :57.2% (n=1084)   %R   : 6.2% (n=55)    %R   : 5.9% (n=49)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :42.8% (n=810)    %SI  :93.8% (n=834)   %SI  :94.1% (n=780)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :42.3% (n=801)    - %S :92.7% (n=824)   - %S :94.1% (n=780)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 0.5% (n=9)      - %I : 1.1% (n=10)    - %I : 0.0% (n=0)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :38.3% (n=712)    %R   :75.7% (n=739)   %R   :29.8% (n=357)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :61.7% (n=1149)   %SI  :24.3% (n=237)   %SI  :70.3% (n=843)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :61.7% (n=1149)   - %S :24.3% (n=237)   - %S :68.3% (n=820)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 0.0% (n=0)      - %I : 0.0% (n=0)     - %I : 1.9% (n=23)   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     MTR                  CHL                   COL                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:rsi            Class:rsi             Class:rsi             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :14.7% (n=5)    %R   :21.4% (n=33)    %R   :81.2% (n=1331)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :85.3% (n=29)   %SI  :78.6% (n=121)   %SI  :18.8% (n=309)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :85.3% (n=29)   - %S :78.6% (n=121)   - %S :18.8% (n=309)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 0.0% (n=0)    - %I : 0.0% (n=0)     - %I : 0.0% (n=0)     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     MUP                   RIF               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:rsi             Class:rsi            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   : 5.9% (n=16)    %R   :69.6% (n=698)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :94.1% (n=254)   %SI  :30.4% (n=305)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :93.0% (n=251)   - %S :30.2% (n=303)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 1.1% (n=3)     - %I : 0.2% (n=2)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     TGC                   DOX                   ERY                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:rsi             Class:rsi             Class:rsi             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :12.7% (n=101)   %R   :27.7% (n=315)   %R   :57.2% (n=1084)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :87.3% (n=697)   %SI  :72.3% (n=821)   %SI  :42.8% (n=810)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :87.3% (n=697)   - %S :71.7% (n=814)   - %S :42.3% (n=801)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 0.0% (n=0)     - %I : 0.6% (n=7)     - %I : 0.5% (n=9)     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     CLI                   AZM                    IPM               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:rsi             Class:rsi              Class:rsi            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :61.2% (n=930)   %R   :57.2% (n=1084)   %R   : 6.2% (n=55)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :38.8% (n=590)   %SI  :42.8% (n=810)    %SI  :93.8% (n=834)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :38.6% (n=586)   - %S :42.3% (n=801)    - %S :92.7% (n=824)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 0.3% (n=4)     - %I : 0.5% (n=9)      - %I : 1.1% (n=10)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     MEM                   MTR                  CHL               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:rsi             Class:rsi            Class:rsi            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   : 5.9% (n=49)    %R   :14.7% (n=5)    %R   :21.4% (n=33)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :94.1% (n=780)   %SI  :85.3% (n=29)   %SI  :78.6% (n=121)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :94.1% (n=780)   - %S :85.3% (n=29)   - %S :78.6% (n=121)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 0.0% (n=0)     - %I : 0.0% (n=0)    - %I : 0.0% (n=0)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     COL                    MUP                   RIF               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Class:rsi              Class:rsi             Class:rsi            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %R   :81.2% (n=1331)   %R   : 5.9% (n=16)    %R   :69.6% (n=698)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  %SI  :18.8% (n=309)    %SI  :94.1% (n=254)   %SI  :30.4% (n=305)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %S :18.8% (n=309)    - %S :93.0% (n=251)   - %S :30.2% (n=303)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - %I : 0.0% (n=0)      - %I : 1.1% (n=3)     - %I : 0.2% (n=2)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                    </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># For INTERPRETING disk diffusion and MIC values -----------------------</span></span></span>
-<span class="r-in"><span>       </span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># a whole data set, even with combined MIC values and disk zones</span></span></span>
-<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>microorganism <span class="op">=</span> <span class="st">"Escherichia coli"</span>,</span></span>
-<span class="r-in"><span>                 AMP <span class="op">=</span> <span class="fu"><a href="as.mic.html">as.mic</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                 CIP <span class="op">=</span> <span class="fu"><a href="as.mic.html">as.mic</a></span><span class="op">(</span><span class="fl">0.256</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                 GEN <span class="op">=</span> <span class="fu"><a href="as.disk.html">as.disk</a></span><span class="op">(</span><span class="fl">18</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                 TOB <span class="op">=</span> <span class="fu"><a href="as.disk.html">as.disk</a></span><span class="op">(</span><span class="fl">16</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                 NIT <span class="op">=</span> <span class="fu"><a href="as.mic.html">as.mic</a></span><span class="op">(</span><span class="fl">32</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                 ERY <span class="op">=</span> <span class="st">"R"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  microorganism <span class="op">=</span> <span class="st">"Escherichia coli"</span>,</span></span>
+<span class="r-in"><span>  AMP <span class="op">=</span> <span class="fu"><a href="as.mic.html">as.mic</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  CIP <span class="op">=</span> <span class="fu"><a href="as.mic.html">as.mic</a></span><span class="op">(</span><span class="fl">0.256</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  GEN <span class="op">=</span> <span class="fu"><a href="as.disk.html">as.disk</a></span><span class="op">(</span><span class="fl">18</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  TOB <span class="op">=</span> <span class="fu"><a href="as.disk.html">as.disk</a></span><span class="op">(</span><span class="fl">16</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  NIT <span class="op">=</span> <span class="fu"><a href="as.mic.html">as.mic</a></span><span class="op">(</span><span class="fl">32</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  ERY <span class="op">=</span> <span class="st">"R"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">as.rsi</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Using column 'microorganism' as input for `col_mo`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of column 'AMP' (AMP, ampicillin) according to</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of column 'AMP' (ampicillin) according to EUCAST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of column 'CIP' (ciprofloxacin) according to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of column 'CIP' (CIP, ciprofloxacin) according</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of column 'GEN' (gentamicin) according</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    to EUCAST 2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of column 'GEN' (GEN, gentamicin)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    according to EUCAST 2022...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of gentamicin is only available for</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of column 'TOB' (TOB, tobramycin)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    according to EUCAST 2022...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of column 'TOB' (tobramycin) according</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    to EUCAST 2022...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of tobramycin is only available for</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of column 'NIT' (NIT, nitrofurantoin) according</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    to EUCAST 2022...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of column 'NIT' (nitrofurantoin) according to</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of nitrofurantoin is only available for</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
@@ -491,22 +486,26 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli   S   I   S   S &lt;NA&gt;   R</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># for single values</span></span></span>
-<span class="r-in"><span><span class="fu">as.rsi</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="as.mic.html">as.mic</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>       mo <span class="op">=</span> <span class="fu"><a href="as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"S. pneumoniae"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>       ab <span class="op">=</span> <span class="st">"AMP"</span>,</span></span>
-<span class="r-in"><span>       guideline <span class="op">=</span> <span class="st">"EUCAST"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">as.rsi</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  x <span class="op">=</span> <span class="fu"><a href="as.mic.html">as.mic</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  mo <span class="op">=</span> <span class="fu"><a href="as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"S. pneumoniae"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  ab <span class="op">=</span> <span class="st">"AMP"</span>,</span></span>
+<span class="r-in"><span>  guideline <span class="op">=</span> <span class="st">"EUCAST"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Function `as.mo()` is uncertain about "S. pneumoniae" (assuming</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Streptococcus pneumoniae). Run `mo_uncertainties()` to review this.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (AMP, ampicillin) according to EUCAST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) according to EUCAST</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class &lt;rsi&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] R</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">as.rsi</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="as.disk.html">as.disk</a></span><span class="op">(</span><span class="fl">18</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>       mo <span class="op">=</span> <span class="st">"Strep pneu"</span>,  <span class="co"># `mo` will be coerced with as.mo()</span></span></span>
-<span class="r-in"><span>       ab <span class="op">=</span> <span class="st">"ampicillin"</span>,  <span class="co"># and `ab` with as.ab()</span></span></span>
-<span class="r-in"><span>       guideline <span class="op">=</span> <span class="st">"EUCAST"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">as.rsi</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  x <span class="op">=</span> <span class="fu"><a href="as.disk.html">as.disk</a></span><span class="op">(</span><span class="fl">18</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  mo <span class="op">=</span> <span class="st">"Strep pneu"</span>, <span class="co"># `mo` will be coerced with as.mo()</span></span></span>
+<span class="r-in"><span>  ab <span class="op">=</span> <span class="st">"ampicillin"</span>, <span class="co"># and `ab` with as.ab()</span></span></span>
+<span class="r-in"><span>  guideline <span class="op">=</span> <span class="st">"EUCAST"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'ampicillin' according to EUCAST</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
@@ -521,122 +520,126 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-in"><span>  <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.mic</span><span class="op">)</span>, <span class="va">as.rsi</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">AMP</span><span class="op">:</span><span class="va">TOB</span><span class="op">)</span>, <span class="va">as.rsi</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="va">AMP</span><span class="op">:</span><span class="va">TOB</span>, <span class="va">as.rsi</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span> </span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">AMP</span><span class="op">:</span><span class="va">TOB</span><span class="op">)</span>, <span class="va">as.rsi</span>, mo <span class="op">=</span> <span class="va">.</span><span class="op">$</span><span class="va">microorganism</span><span class="op">)</span></span></span>
-<span class="r-in"><span>    </span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># to include information about urinary tract infections (UTI)</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mo <span class="op">=</span> <span class="st">"E. coli"</span>,</span></span>
-<span class="r-in"><span>             NIT <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;= 2"</span>, <span class="fl">32</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>             from_the_bladder <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    mo <span class="op">=</span> <span class="st">"E. coli"</span>,</span></span>
+<span class="r-in"><span>    NIT <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;= 2"</span>, <span class="fl">32</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    from_the_bladder <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu">as.rsi</span><span class="op">(</span>uti <span class="op">=</span> <span class="st">"from_the_bladder"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>    </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mo <span class="op">=</span> <span class="st">"E. coli"</span>,</span></span>
-<span class="r-in"><span>             NIT <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;= 2"</span>, <span class="fl">32</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>             specimen <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"urine"</span>, <span class="st">"blood"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    mo <span class="op">=</span> <span class="st">"E. coli"</span>,</span></span>
+<span class="r-in"><span>    NIT <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;= 2"</span>, <span class="fl">32</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    specimen <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"urine"</span>, <span class="st">"blood"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu">as.rsi</span><span class="op">(</span><span class="op">)</span> <span class="co"># automatically determines urine isolates</span></span></span>
-<span class="r-in"><span>  </span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">AMP</span><span class="op">:</span><span class="va">NIT</span><span class="op">)</span>, <span class="va">as.rsi</span>, mo <span class="op">=</span> <span class="st">"E. coli"</span>, uti <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">AMP</span><span class="op">:</span><span class="va">NIT</span><span class="op">)</span>, <span class="va">as.rsi</span>, mo <span class="op">=</span> <span class="st">"E. coli"</span>, uti <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (AMP, ampicillin) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (CIP, ciprofloxacin) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (ciprofloxacin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'NIT' (NIT, nitrofurantoin) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'NIT' (nitrofurantoin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of nitrofurantoin is only available for</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (AMP, ampicillin) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (CIP, ciprofloxacin) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (ciprofloxacin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (GEN, gentamicin) based on</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    column 'microorganism' according to EUCAST 2022...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (gentamicin) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of gentamicin is only available for</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'TOB' (TOB, tobramycin) based on</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    column 'microorganism' according to EUCAST 2022...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'TOB' (tobramycin) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of tobramycin is only available for</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'NIT' (NIT, nitrofurantoin) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'NIT' (nitrofurantoin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of nitrofurantoin is only available for</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (AMP, ampicillin) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (CIP, ciprofloxacin) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (ciprofloxacin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'NIT' (NIT, nitrofurantoin) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'NIT' (nitrofurantoin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of nitrofurantoin is only available for</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (AMP, ampicillin) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (CIP, ciprofloxacin) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (ciprofloxacin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (GEN, gentamicin) based on</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    column 'microorganism' according to EUCAST 2022...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (gentamicin) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of gentamicin is only available for</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'TOB' (TOB, tobramycin) based on</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    column 'microorganism' according to EUCAST 2022...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'TOB' (tobramycin) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of tobramycin is only available for</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (AMP, ampicillin) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (CIP, ciprofloxacin) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (ciprofloxacin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (GEN, gentamicin) based on</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    column 'microorganism' according to EUCAST 2022...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (gentamicin) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of gentamicin is only available for</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'TOB' (TOB, tobramycin) based on</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    column 'microorganism' according to EUCAST 2022...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'TOB' (tobramycin) based on column</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of tobramycin is only available for</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (AMP, ampicillin) according to EUCAST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) according to EUCAST</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (CIP, ciprofloxacin) according to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (ciprofloxacin) according to EUCAST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (GEN, gentamicin) according</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    to EUCAST 2022...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (gentamicin) according to</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of gentamicin is only available for</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'TOB' (TOB, tobramycin) according</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    to EUCAST 2022...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'TOB' (tobramycin) according to</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of tobramycin is only available for</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
@@ -644,8 +647,8 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Using column 'mo' as input for `col_mo`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Function `as.mo()` is uncertain about "E. coli" (assuming Escherichia</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   coli). Run `mo_uncertainties()` to review this.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of column 'NIT' (NIT, nitrofurantoin) according</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    to EUCAST 2022...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of column 'NIT' (nitrofurantoin) according to</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Assuming value "urine" in column 'specimen' reflects a urinary tract</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   infection.</span>
@@ -653,25 +656,25 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Using column 'mo' as input for `col_mo`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Function `as.mo()` is uncertain about "E. coli" (assuming Escherichia</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   coli). Run `mo_uncertainties()` to review this.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of column 'NIT' (NIT, nitrofurantoin) according</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    to EUCAST 2022...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of column 'NIT' (nitrofurantoin) according to</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Function `as.mo()` is uncertain about "E. coli" (assuming Escherichia</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   coli). Run `mo_uncertainties()` to review this.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (AMP, ampicillin) according to EUCAST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) according to EUCAST</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (CIP, ciprofloxacin) according to</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (ciprofloxacin) according to EUCAST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (gentamicin) according to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (GEN, gentamicin) according</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    to EUCAST 2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'TOB' (TOB, tobramycin) according</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    to EUCAST 2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'NIT' (NIT, nitrofurantoin) according to</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'TOB' (tobramycin) according to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'NIT' (nitrofurantoin) according to EUCAST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      microorganism AMP CIP GEN TOB NIT ERY</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli   S   I   S   S   S   R</span>
@@ -689,7 +692,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-in"><span><span class="va">rsi_data</span> <span class="op">&lt;-</span> <span class="fu">as.rsi</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"S"</span>, <span class="fl">474</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"I"</span>, <span class="fl">36</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"R"</span>, <span class="fl">370</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">is.rsi</span><span class="op">(</span><span class="va">rsi_data</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">rsi_data</span><span class="op">)</span>    <span class="co"># for percentages</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">rsi_data</span><span class="op">)</span> <span class="co"># for percentages</span></span></span>
 <span class="r-plt img"><img src="as.rsi-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot</a></span><span class="op">(</span><span class="va">rsi_data</span><span class="op">)</span> <span class="co"># for frequencies</span></span></span>
 <span class="r-plt img"><img src="as.rsi-2.png" alt="" width="700" height="433"></span>
@@ -698,38 +701,38 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_at</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">PEN</span><span class="op">:</span><span class="va">RIF</span><span class="op">)</span>, <span class="va">as.rsi</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="co"># same:   </span></span></span>
+<span class="r-in"><span>  <span class="co"># same:</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu">as.rsi</span><span class="op">(</span><span class="va">PEN</span><span class="op">:</span><span class="va">RIF</span><span class="op">)</span></span></span>
-<span class="r-in"><span> </span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># fastest way to transform all columns with already valid AMR results to class `rsi`:</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.rsi.eligible</span>, <span class="va">as.rsi</span><span class="op">)</span></span></span>
-<span class="r-in"><span>    </span></span>
-<span class="r-in"><span>  <span class="co"># since dplyr 1.0.0, this can also be: </span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># since dplyr 1.0.0, this can also be:</span></span></span>
 <span class="r-in"><span>  <span class="co"># example_isolates %&gt;%</span></span></span>
 <span class="r-in"><span>  <span class="co">#   mutate(across(where(is.rsi.eligible), as.rsi))</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,000 × 49</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    date       hospit…¹ ward_…² ward_…³ ward_…⁴   age gender patie…⁵ mo          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2002-01-02 D        FALSE   TRUE    FALSE      65 F      A77334  B_ESCHR_COLI</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2002-01-03 D        FALSE   TRUE    FALSE      65 F      A77334  B_ESCHR_COLI</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2002-01-07 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2002-01-07 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2002-01-13 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2002-01-13 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2002-01-14 D        FALSE   TRUE    FALSE      78 M      462729  B_STPHY_AURS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2002-01-14 D        FALSE   TRUE    FALSE      78 M      462729  B_STPHY_AURS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2002-01-16 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2002-01-17 B        TRUE    FALSE   FALSE      79 F      858515  B_STPHY_EPDR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 1,990 more rows, 40 more variables: PEN &lt;rsi&gt;, OXA &lt;rsi&gt;, FLC &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   AMX &lt;rsi&gt;, AMC &lt;rsi&gt;, AMP &lt;rsi&gt;, TZP &lt;rsi&gt;, CZO &lt;rsi&gt;, FEP &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CXM &lt;rsi&gt;, FOX &lt;rsi&gt;, CTX &lt;rsi&gt;, CAZ &lt;rsi&gt;, CRO &lt;rsi&gt;, GEN &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TOB &lt;rsi&gt;, AMK &lt;rsi&gt;, KAN &lt;rsi&gt;, TMP &lt;rsi&gt;, SXT &lt;rsi&gt;, NIT &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   FOS &lt;rsi&gt;, LNZ &lt;rsi&gt;, CIP &lt;rsi&gt;, MFX &lt;rsi&gt;, VAN &lt;rsi&gt;, TEC &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TCY &lt;rsi&gt;, TGC &lt;rsi&gt;, DOX &lt;rsi&gt;, ERY &lt;rsi&gt;, CLI &lt;rsi&gt;, AZM &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   IPM &lt;rsi&gt;, MEM &lt;rsi&gt;, MTR &lt;rsi&gt;, CHL &lt;rsi&gt;, COL &lt;rsi&gt;, MUP &lt;rsi&gt;, …</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,000 × 46</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2002-01-02 A77334     65 F      Clinical B_ESCHR_COLI R     NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2002-01-03 A77334     65 F      Clinical B_ESCHR_COLI R     NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2002-01-13 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2002-01-13 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R     NA    S     R    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R     NA    S     R    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2002-01-16 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2002-01-17 858515     79 F      ICU      B_STPHY_EPDR R     NA    S     NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 1,990 more rows, and 36 more variables: AMC &lt;rsi&gt;, AMP &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TZP &lt;rsi&gt;, CZO &lt;rsi&gt;, FEP &lt;rsi&gt;, CXM &lt;rsi&gt;, FOX &lt;rsi&gt;, CTX &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CAZ &lt;rsi&gt;, CRO &lt;rsi&gt;, GEN &lt;rsi&gt;, TOB &lt;rsi&gt;, AMK &lt;rsi&gt;, KAN &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TMP &lt;rsi&gt;, SXT &lt;rsi&gt;, NIT &lt;rsi&gt;, FOS &lt;rsi&gt;, LNZ &lt;rsi&gt;, CIP &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   MFX &lt;rsi&gt;, VAN &lt;rsi&gt;, TEC &lt;rsi&gt;, TCY &lt;rsi&gt;, TGC &lt;rsi&gt;, DOX &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ERY &lt;rsi&gt;, CLI &lt;rsi&gt;, AZM &lt;rsi&gt;, IPM &lt;rsi&gt;, MEM &lt;rsi&gt;, MTR &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CHL &lt;rsi&gt;, COL &lt;rsi&gt;, MUP &lt;rsi&gt;, RIF &lt;rsi&gt;</span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

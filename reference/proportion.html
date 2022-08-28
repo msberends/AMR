@@ -12,7 +12,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9045</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -278,7 +278,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-in"><span><span class="co"># run ?example_isolates for more info.</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># base R ------------------------------------------------------------</span></span></span>
-<span class="r-in"><span><span class="fu">resistance</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span>     <span class="co"># determines %R</span></span></span>
+<span class="r-in"><span><span class="fu">resistance</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span> <span class="co"># determines %R</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5955556</span>
 <span class="r-in"><span><span class="fu">susceptibility</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">AMX</span><span class="op">)</span> <span class="co"># determines %S+I</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.4044444</span>
@@ -299,80 +299,88 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>r <span class="op">=</span> <span class="fu">resistance</span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>              n <span class="op">=</span> <span class="fu"><a href="count.html">n_rsi</a></span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span><span class="op">)</span> <span class="co"># n_rsi works like n_distinct in dplyr, see ?n_rsi</span></span></span>
-<span class="r-in"><span> </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      r <span class="op">=</span> <span class="fu">resistance</span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      n <span class="op">=</span> <span class="fu"><a href="count.html">n_rsi</a></span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span> <span class="co"># n_rsi works like n_distinct in dplyr, see ?n_rsi</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>R  <span class="op">=</span> <span class="fu">resistance</span><span class="op">(</span><span class="va">CIP</span>, as_percent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>              SI <span class="op">=</span> <span class="fu">susceptibility</span><span class="op">(</span><span class="va">CIP</span>, as_percent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>              n1 <span class="op">=</span> <span class="fu"><a href="count.html">count_all</a></span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span>,  <span class="co"># the actual total; sum of all three</span></span></span>
-<span class="r-in"><span>              n2 <span class="op">=</span> <span class="fu"><a href="count.html">n_rsi</a></span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span>,      <span class="co"># same - analogous to n_distinct</span></span></span>
-<span class="r-in"><span>              total <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>          <span class="co"># NOT the number of tested isolates!</span></span></span>
-<span class="r-in"><span> </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      R <span class="op">=</span> <span class="fu">resistance</span><span class="op">(</span><span class="va">CIP</span>, as_percent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      SI <span class="op">=</span> <span class="fu">susceptibility</span><span class="op">(</span><span class="va">CIP</span>, as_percent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      n1 <span class="op">=</span> <span class="fu"><a href="count.html">count_all</a></span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span>, <span class="co"># the actual total; sum of all three</span></span></span>
+<span class="r-in"><span>      n2 <span class="op">=</span> <span class="fu"><a href="count.html">n_rsi</a></span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span>, <span class="co"># same - analogous to n_distinct</span></span></span>
+<span class="r-in"><span>      total <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span> <span class="co"># NOT the number of tested isolates!</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># Calculate co-resistance between amoxicillin/clav acid and gentamicin,</span></span></span>
 <span class="r-in"><span>  <span class="co"># so we can see that combination therapy does a lot more than mono therapy:</span></span></span>
-<span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">susceptibility</span><span class="op">(</span><span class="va">AMC</span><span class="op">)</span>  <span class="co"># %SI = 76.3%</span></span></span>
-<span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="count.html">count_all</a></span><span class="op">(</span><span class="va">AMC</span><span class="op">)</span>       <span class="co">#   n = 1879</span></span></span>
-<span class="r-in"><span> </span></span>
-<span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">susceptibility</span><span class="op">(</span><span class="va">GEN</span><span class="op">)</span>  <span class="co"># %SI = 75.4%</span></span></span>
-<span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="count.html">count_all</a></span><span class="op">(</span><span class="va">GEN</span><span class="op">)</span>       <span class="co">#   n = 1855</span></span></span>
-<span class="r-in"><span> </span></span>
+<span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">susceptibility</span><span class="op">(</span><span class="va">AMC</span><span class="op">)</span> <span class="co"># %SI = 76.3%</span></span></span>
+<span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="count.html">count_all</a></span><span class="op">(</span><span class="va">AMC</span><span class="op">)</span> <span class="co">#   n = 1879</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">susceptibility</span><span class="op">(</span><span class="va">GEN</span><span class="op">)</span> <span class="co"># %SI = 75.4%</span></span></span>
+<span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="count.html">count_all</a></span><span class="op">(</span><span class="va">GEN</span><span class="op">)</span> <span class="co">#   n = 1855</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">susceptibility</span><span class="op">(</span><span class="va">AMC</span>, <span class="va">GEN</span><span class="op">)</span> <span class="co"># %SI = 94.1%</span></span></span>
-<span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="count.html">count_all</a></span><span class="op">(</span><span class="va">AMC</span>, <span class="va">GEN</span><span class="op">)</span>      <span class="co">#   n = 1939</span></span></span>
-<span class="r-in"><span> </span></span>
-<span class="r-in"><span> </span></span>
+<span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="count.html">count_all</a></span><span class="op">(</span><span class="va">AMC</span>, <span class="va">GEN</span><span class="op">)</span> <span class="co">#   n = 1939</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># See Details on how `only_all_tested` works. Example:</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>numerator <span class="op">=</span> <span class="fu"><a href="count.html">count_susceptible</a></span><span class="op">(</span><span class="va">AMC</span>, <span class="va">GEN</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>              denominator <span class="op">=</span> <span class="fu"><a href="count.html">count_all</a></span><span class="op">(</span><span class="va">AMC</span>, <span class="va">GEN</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>              proportion <span class="op">=</span> <span class="fu">susceptibility</span><span class="op">(</span><span class="va">AMC</span>, <span class="va">GEN</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span> </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      numerator <span class="op">=</span> <span class="fu"><a href="count.html">count_susceptible</a></span><span class="op">(</span><span class="va">AMC</span>, <span class="va">GEN</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      denominator <span class="op">=</span> <span class="fu"><a href="count.html">count_all</a></span><span class="op">(</span><span class="va">AMC</span>, <span class="va">GEN</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      proportion <span class="op">=</span> <span class="fu">susceptibility</span><span class="op">(</span><span class="va">AMC</span>, <span class="va">GEN</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>numerator <span class="op">=</span> <span class="fu"><a href="count.html">count_susceptible</a></span><span class="op">(</span><span class="va">AMC</span>, <span class="va">GEN</span>, only_all_tested <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>              denominator <span class="op">=</span> <span class="fu"><a href="count.html">count_all</a></span><span class="op">(</span><span class="va">AMC</span>, <span class="va">GEN</span>, only_all_tested <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>              proportion <span class="op">=</span> <span class="fu">susceptibility</span><span class="op">(</span><span class="va">AMC</span>, <span class="va">GEN</span>, only_all_tested <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span> </span></span>
-<span class="r-in"><span> </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      numerator <span class="op">=</span> <span class="fu"><a href="count.html">count_susceptible</a></span><span class="op">(</span><span class="va">AMC</span>, <span class="va">GEN</span>, only_all_tested <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      denominator <span class="op">=</span> <span class="fu"><a href="count.html">count_all</a></span><span class="op">(</span><span class="va">AMC</span>, <span class="va">GEN</span>, only_all_tested <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      proportion <span class="op">=</span> <span class="fu">susceptibility</span><span class="op">(</span><span class="va">AMC</span>, <span class="va">GEN</span>, only_all_tested <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>cipro_p <span class="op">=</span> <span class="fu">susceptibility</span><span class="op">(</span><span class="va">CIP</span>, as_percent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>              cipro_n <span class="op">=</span> <span class="fu"><a href="count.html">count_all</a></span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>              genta_p <span class="op">=</span> <span class="fu">susceptibility</span><span class="op">(</span><span class="va">GEN</span>, as_percent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>              genta_n <span class="op">=</span> <span class="fu"><a href="count.html">count_all</a></span><span class="op">(</span><span class="va">GEN</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>              combination_p <span class="op">=</span> <span class="fu">susceptibility</span><span class="op">(</span><span class="va">CIP</span>, <span class="va">GEN</span>, as_percent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>              combination_n <span class="op">=</span> <span class="fu"><a href="count.html">count_all</a></span><span class="op">(</span><span class="va">CIP</span>, <span class="va">GEN</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span> </span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      cipro_p <span class="op">=</span> <span class="fu">susceptibility</span><span class="op">(</span><span class="va">CIP</span>, as_percent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      cipro_n <span class="op">=</span> <span class="fu"><a href="count.html">count_all</a></span><span class="op">(</span><span class="va">CIP</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      genta_p <span class="op">=</span> <span class="fu">susceptibility</span><span class="op">(</span><span class="va">GEN</span>, as_percent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      genta_n <span class="op">=</span> <span class="fu"><a href="count.html">count_all</a></span><span class="op">(</span><span class="va">GEN</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      combination_p <span class="op">=</span> <span class="fu">susceptibility</span><span class="op">(</span><span class="va">CIP</span>, <span class="va">GEN</span>, as_percent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      combination_n <span class="op">=</span> <span class="fu"><a href="count.html">count_all</a></span><span class="op">(</span><span class="va">CIP</span>, <span class="va">GEN</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># Get proportions S/I/R immediately of all rsi columns</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">AMX</span>, <span class="va">CIP</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu">proportion_df</span><span class="op">(</span>translate <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-in"><span> </span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># It also supports grouping variables</span></span></span>
 <span class="r-in"><span>  <span class="co"># (use rsi_df to also include the count)</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">hospital_id</span>, <span class="va">AMX</span>, <span class="va">CIP</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">ward</span>, <span class="va">AMX</span>, <span class="va">CIP</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu">rsi_df</span><span class="op">(</span>translate <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    hospital_id antibiotic interpretation     value isolates</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1            A        AMX             SI 0.3932584       70</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2            A        AMX              R 0.6067416      108</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3            A        CIP             SI 0.8743961      181</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4            A        CIP              R 0.1256039       26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5            B        AMX             SI 0.3854875      170</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6            B        AMX              R 0.6145125      271</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7            B        CIP             SI 0.8296593      414</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8            B        CIP              R 0.1703407       85</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9            C        AMX             SI 0.3714286       65</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10           C        AMX              R 0.6285714      110</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11           C        CIP             SI 0.7970297      161</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12           C        CIP              R 0.2029703       41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13           D        AMX             SI 0.4334532      241</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14           D        AMX              R 0.5665468      315</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15           D        CIP             SI 0.8483034      425</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16           D        CIP              R 0.1516966       76</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 12 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    ward       antibiotic interpretation value isolates</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Clinical   AMX        SI             0.423      357</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Clinical   AMX        R              0.577      487</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Clinical   CIP        SI             0.853      741</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Clinical   CIP        R              0.147      128</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ICU        AMX        SI             0.369      158</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ICU        AMX        R              0.631      270</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ICU        CIP        SI             0.810      362</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ICU        CIP        R              0.190       85</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Outpatient AMX        SI             0.397       31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Outpatient AMX        R              0.603       47</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> Outpatient CIP        SI             0.839       78</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> Outpatient CIP        R              0.161       15</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9045</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -175,11 +175,13 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># transform existing disk zones to the `disk` class (using base R)</span></span></span>
-<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>microorganism <span class="op">=</span> <span class="st">"Escherichia coli"</span>,</span></span>
-<span class="r-in"><span>                 AMP <span class="op">=</span> <span class="fl">20</span>,</span></span>
-<span class="r-in"><span>                 CIP <span class="op">=</span> <span class="fl">14</span>,</span></span>
-<span class="r-in"><span>                 GEN <span class="op">=</span> <span class="fl">18</span>,</span></span>
-<span class="r-in"><span>                 TOB <span class="op">=</span> <span class="fl">16</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  microorganism <span class="op">=</span> <span class="st">"Escherichia coli"</span>,</span></span>
+<span class="r-in"><span>  AMP <span class="op">=</span> <span class="fl">20</span>,</span></span>
+<span class="r-in"><span>  CIP <span class="op">=</span> <span class="fl">14</span>,</span></span>
+<span class="r-in"><span>  GEN <span class="op">=</span> <span class="fl">18</span>,</span></span>
+<span class="r-in"><span>  TOB <span class="op">=</span> <span class="fl">16</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">df</span><span class="op">[</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, <span class="va">as.disk</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	1 obs. of  5 variables:</span>
@@ -199,10 +201,12 @@
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># interpret disk values, see ?as.rsi</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="as.rsi.html">as.rsi</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">as.disk</span><span class="op">(</span><span class="fl">18</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>       mo <span class="op">=</span> <span class="st">"Strep pneu"</span>,  <span class="co"># `mo` will be coerced with as.mo()</span></span></span>
-<span class="r-in"><span>       ab <span class="op">=</span> <span class="st">"ampicillin"</span>,  <span class="co"># and `ab` with as.ab()</span></span></span>
-<span class="r-in"><span>       guideline <span class="op">=</span> <span class="st">"EUCAST"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="as.rsi.html">as.rsi</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  x <span class="op">=</span> <span class="fu">as.disk</span><span class="op">(</span><span class="fl">18</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  mo <span class="op">=</span> <span class="st">"Strep pneu"</span>, <span class="co"># `mo` will be coerced with as.mo()</span></span></span>
+<span class="r-in"><span>  ab <span class="op">=</span> <span class="st">"ampicillin"</span>, <span class="co"># and `ab` with as.ab()</span></span></span>
+<span class="r-in"><span>  guideline <span class="op">=</span> <span class="st">"EUCAST"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'ampicillin' according to EUCAST</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
@@ -212,17 +216,17 @@
 <span class="r-in"><span><span class="co"># interpret whole data set, pretend to be all from urinary tract infections:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="as.rsi.html">as.rsi</a></span><span class="op">(</span><span class="va">df</span>, uti <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Using column 'microorganism' as input for `col_mo`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of column 'AMP' (AMP, ampicillin)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of column 'AMP' (ampicillin) according</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    to EUCAST 2022...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of column 'CIP' (ciprofloxacin)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of column 'CIP' (CIP, ciprofloxacin)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    according to EUCAST 2022...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of column 'GEN' (gentamicin) according</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of column 'GEN' (GEN, gentamicin)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    according to EUCAST 2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of column 'TOB' (TOB, tobramycin)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    according to EUCAST 2022...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of column 'TOB' (tobramycin) according</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      microorganism AMP CIP GEN TOB</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli   S   R   S   S</span>

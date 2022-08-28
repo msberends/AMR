@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9045</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -142,7 +142,7 @@
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
     
 <div class="section">
-<h3 id="for-the-antibiotics-data-set-a-data-frame-with-observations-and-variables-">For the antibiotics data set: a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with 464 observations and 14 variables:<a class="anchor" aria-label="anchor" href="#for-the-antibiotics-data-set-a-data-frame-with-observations-and-variables-"></a></h3>
+<h3 id="for-the-antibiotics-data-set-a-tibbletibble-tibble-with-observations-and-variables-">For the antibiotics data set: a [tibble<a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble</a> with 464 observations and 14 variables:<a class="anchor" aria-label="anchor" href="#for-the-antibiotics-data-set-a-tibbletibble-tibble-with-observations-and-variables-"></a></h3>
 
 <ul><li><p><code>ab</code><br> Antibiotic ID as used in this package (such as <code>AMC</code>), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available</p></li>
 <li><p><code>cid</code><br> Compound ID as found in PubChem</p></li>
@@ -161,7 +161,7 @@
 </ul></div>
 
 <div class="section">
-<h3 id="for-the-antivirals-data-set-a-data-frame-with-observations-and-variables-">For the antivirals data set: a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with 102 observations and 9 variables:<a class="anchor" aria-label="anchor" href="#for-the-antivirals-data-set-a-data-frame-with-observations-and-variables-"></a></h3>
+<h3 id="for-the-antivirals-data-set-a-tibbletibble-tibble-with-observations-and-variables-">For the antivirals data set: a [tibble<a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble</a> with 102 observations and 9 variables:<a class="anchor" aria-label="anchor" href="#for-the-antivirals-data-set-a-tibbletibble-tibble-with-observations-and-variables-"></a></h3>
 
 <ul><li><p><code>atc</code><br> ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC</p></li>
 <li><p><code>cid</code><br> Compound ID as found in PubChem</p></li>
@@ -174,7 +174,7 @@
 <li><p><code>iv_units</code><br> Units of <code>iv_ddd</code></p></li>
 </ul></div>
 
-<p>An object of class <code>data.frame</code> with 102 rows and 9 columns.</p>
+<p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 102 rows and 9 columns.</p>
     </div>
     <div class="section level2">
     <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
@@ -188,18 +188,9 @@
 <h3 id="direct-download">Direct download<a class="anchor" aria-label="anchor" href="#direct-download"></a></h3>
 
 
-<p>These data sets are available as 'flat files' for use even without <span style="R">R</span> - you can find the files here:</p><ul><li><p><a href="https://github.com/msberends/AMR/raw/main/data-raw/antibiotics.txt" class="external-link">https://github.com/msberends/AMR/raw/main/data-raw/antibiotics.txt</a></p></li>
-<li><p><a href="https://github.com/msberends/AMR/raw/main/data-raw/antivirals.txt" class="external-link">https://github.com/msberends/AMR/raw/main/data-raw/antivirals.txt</a></p></li>
-</ul><p>Files in <span style="R">R</span> format (with preserved data structure) can be found here:</p><ul><li><p><a href="https://github.com/msberends/AMR/raw/main/data/antibiotics.rda" class="external-link">https://github.com/msberends/AMR/raw/main/data/antibiotics.rda</a></p></li>
-<li><p><a href="https://github.com/msberends/AMR/raw/main/data/antivirals.rda" class="external-link">https://github.com/msberends/AMR/raw/main/data/antivirals.rda</a></p></li>
-</ul></div>
+<p>Like all data sets in this package, these data sets are publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit <a href="https://msberends.github.io/AMR/articles/datasets.html">our website for the download links</a>. The actual files are of course available on <a href="https://github.com/msberends/AMR/tree/main/data-raw" class="external-link">our GitHub repository</a>.</p>
+</div>
 
-    </div>
-    <div class="section level2">
-    <h2 id="reference-data-publicly-available">Reference Data Publicly Available<a class="anchor" aria-label="anchor" href="#reference-data-publicly-available"></a></h2>
-    
-
-<p>All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this <code>AMR</code> package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find <a href="https://msberends.github.io/AMR/articles/datasets.html">all download links on our website</a>, which is automatically updated with every code change.</p>
     </div>
     <div class="section level2">
     <h2 id="whocc">WHOCC<a class="anchor" aria-label="anchor" href="#whocc"></a></h2>
@@ -218,78 +209,39 @@ This package contains <strong>all ~550 antibiotic, antimycotic and antiviral dru
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">antibiotics</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    ab      cid                  name                    group</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 AMA     4649 4-aminosalicylic acid       Antimycobacterials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 FCT     3366      5-fluorocytosine Antifungals/antimycotics</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 ACM  6450012     Acetylmidecamycin  Macrolides/lincosamides</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 ASP 49787020      Acetylspiramycin  Macrolides/lincosamides</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 ALS     8954    Aldesulfone sodium     Other antibacterials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 AMK    37768              Amikacin          Aminoglycosides</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         atc                          atc_group1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                   J04AA01 Drugs for treatment of tuberculosis</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                   D01AE21         Antifungals for topical use</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                        NA                                &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                        NA                                &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                   J04BA03        Drugs for treatment of lepra</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 D06AX12, J01GB06, S01AA21       Aminoglycoside antibacterials</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                            atc_group2          abbreviations</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Aminosalicylic acid and derivatives                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   Other antifungals for topical use  5flc, fcu, fluo, fluy</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                                &lt;NA&gt;                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                                &lt;NA&gt;                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5        Drugs for treatment of lepra                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6               Other aminoglycosides ak, ami, amik, amk, an</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                                                                                                                                                                                                                                                synonyms</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 aminopar, aminosalicylic, aminosalicylic acid, aminosalyl, aminox, apacil, deapasil, entepas, ferrosan, gabbropas, helipidyl, hellipidyl, neopasalate, osacyl, pamacyl, pamisyl, paramycin, parasal, parasalicil, parasalindon, pasalon, pasara, pascorbic, pasdium, paser granules, paskalium, pasmed, pasnodia, pasolac, propasa, rezipas, teebacin, wln: zr cq dvq</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                                                                                                                                                                                                                          alcobon, ancobon, ancotil, ancotyl, flucitosina, flucystine, flucytosin, flucytosine, flucytosinum, flucytosone, fluocytosine, fluorcytosine</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                                                                                                                                                                                                                                                                                                                                                                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                                                                                                                                                                                                                                                                                                                        acetylspiramycin, foromacidin b, spiramycin ii</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                                                                                                                                                 adesulfone sodium, aldapsone, aldesulfona sodica, aldesulfone, aldesulfone sodique, aldesulfone sodium, diamidin, diasone, diasone sodium, diazon, novotrone, sodium aldesulphone, sodium sulfoxone, sulfoxone sodium</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6                                                                                                                                            amicacin, amikacillin, amikacin, amikacin base, amikacin dihydrate, amikacin sulfate, amikacina, amikacine, amikacinum, amikavet, amikin, amiklin, amikozit, amukin, arikace, briclin, lukadin, mikavir, pierami, potentox</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   oral_ddd oral_units iv_ddd iv_units</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    12.00          g     NA     &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       NA       &lt;NA&gt;     NA     &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       NA       &lt;NA&gt;     NA     &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       NA       &lt;NA&gt;     NA     &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     0.33          g     NA     &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       NA       &lt;NA&gt;      1        g</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                loinc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                                                                                                                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                                                                                10974-4, 23805-5, 25142-1, 25143-9, 3639-2, 46218-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                                                                                                                                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                                                                                                                                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                                                                                                                                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 13546-7, 15098-7, 17798-0, 31097-9, 31098-7, 31099-5, 3319-1, 3320-9, 3321-7, 35669-1, 50802-8, 50803-6, 56628-1, 59378-0, 80972-3</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">antivirals</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       atc       cid               name</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 J05AF06    441300           Abacavir</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 J05AB01 135398513          Aciclovir</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 J05AF08     60871 Adefovir dipivoxil</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 J05AE05     65016         Amprenavir</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 J05AP06  16076883        Asunaprevir</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 J05AE08    148192         Atazanavir</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                            atc_group</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1         Nucleoside and nucleotide reverse transcriptase inhibitors</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Nucleosides and nucleotides excl. reverse transcriptase inhibitors</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3         Nucleoside and nucleotide reverse transcriptase inhibitors</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                                                Protease inhibitors</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                         Antivirals for treatment of HCV infections</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6                                                Protease inhibitors</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                                                                                                                                                                                          synonyms</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                                                                                                                                                                                                                                                              Abacavir, Abacavir sulfate, Ziagen</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Acicloftal, Aciclovier, Aciclovir, Aciclovirum, Activir, AcycloFoam, Acycloguanosine, Acyclovir, Acyclovir Lauriad, ACYCLOVIR SODIUM, Avirax, Cargosil, Cyclovir, Genvir, Gerpevir, Hascovir, Herpevir, Maynar, Poviral, Sitavig, Sitavir, Vipral, Virolex, Viropump, Virorax, Zovirax, Zovirax topical, Zyclir</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                                                                                                                                 Adefovir di ester, Adefovir dipivoxil, Adefovir Dipivoxil, Adefovir dipivoxyl, Adefovir pivoxil, Adefovirdipivoxl, Bisadenine, BISADENINE, BisPMEA, Hepsera, Preveon, YouHeDing</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                                                                                                                                                                                                                                                             Agenerase, Amprenavir, Amprenavirum, Prozei, Vertex</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                                                                                                                                                                                                                                                                                           Asunaprevir, Sunvepra</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6                                                                                                                                                                                                                                                      Atazanavir, Atazanavir Base, Latazanavir, Reyataz, Zrivada</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   oral_ddd oral_units iv_ddd iv_units</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      0.6          g     NA     &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      4.0          g      4        g</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     10.0         mg     NA     &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      1.2          g     NA     &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       NA       &lt;NA&gt;     NA     &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      0.3          g     NA     &lt;NA&gt;</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">antibiotics</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 464 × 14</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    ab        cid name        group atc   atc_g…¹ atc_g…² abbre…³ synon…⁴ oral_…⁵</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lis&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> AMA      <span style="text-decoration: underline;">4</span>649 4-aminosal… Anti… &lt;chr&gt; Drugs … Aminos… &lt;chr&gt;   &lt;chr&gt;     12   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> FCT      <span style="text-decoration: underline;">3</span>366 5-fluorocy… Anti… &lt;chr&gt; Antifu… Other … &lt;chr&gt;   &lt;chr&gt;     <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> ACM   6<span style="text-decoration: underline;">450</span>012 Acetylmide… Macr… &lt;chr&gt; <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      &lt;chr&gt;   &lt;chr&gt;     <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> ASP  49<span style="text-decoration: underline;">787</span>020 Acetylspir… Macr… &lt;chr&gt; <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      &lt;chr&gt;   &lt;chr&gt;     <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ALS      <span style="text-decoration: underline;">8</span>954 Aldesulfon… Othe… &lt;chr&gt; Drugs … Drugs … &lt;chr&gt;   &lt;chr&gt;      0.33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> AMK     <span style="text-decoration: underline;">37</span>768 Amikacin    Amin… &lt;chr&gt; Aminog… Other … &lt;chr&gt;   &lt;chr&gt;     <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> AKF        <span style="color: #BB0000;">NA</span> Amikacin/f… Amin… &lt;chr&gt; <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      &lt;chr&gt;   &lt;chr&gt;     <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> AMX     <span style="text-decoration: underline;">33</span>613 Amoxicillin Beta… &lt;chr&gt; Beta-l… Penici… &lt;chr&gt;   &lt;chr&gt;      1.5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> AMC  23<span style="text-decoration: underline;">665</span>637 Amoxicilli… Beta… &lt;chr&gt; Beta-l… Combin… &lt;chr&gt;   &lt;chr&gt;      1.5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> AXS    <span style="text-decoration: underline;">465</span>441 Amoxicilli… Beta… &lt;chr&gt; <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      &lt;chr&gt;   &lt;chr&gt;     <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 454 more rows, 4 more variables: oral_units &lt;chr&gt;, iv_ddd &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   iv_units &lt;chr&gt;, loinc &lt;list&gt;, and abbreviated variable names ¹​atc_group1,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​atc_group2, ³​abbreviations, ⁴​synonyms, ⁵​oral_ddd</span></span>
+<span class="r-in"><span><span class="va">antivirals</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 102 × 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    atc           cid name         atc_g…¹ synon…² oral_…³ oral_…⁴ iv_ddd iv_un…⁵</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> J05AF06    <span style="text-decoration: underline;">441</span>300 Abacavir     Nucleo… &lt;chr&gt;     0.6   g           <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> J05AB01 135<span style="text-decoration: underline;">398</span>513 Aciclovir    Nucleo… &lt;chr&gt;     4     g            4 g      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> J05AF08     <span style="text-decoration: underline;">60</span>871 Adefovir di… Nucleo… &lt;chr&gt;    10     mg          <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> J05AE05     <span style="text-decoration: underline;">65</span>016 Amprenavir   Protea… &lt;chr&gt;     1.2   g           <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> J05AP06  16<span style="text-decoration: underline;">076</span>883 Asunaprevir  Antivi… &lt;chr&gt;    <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> J05AE08    <span style="text-decoration: underline;">148</span>192 Atazanavir   Protea… &lt;chr&gt;     0.3   g           <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> J05AR15  86<span style="text-decoration: underline;">583</span>336 Atazanavir … Antivi… &lt;chr&gt;    <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> J05AR23        <span style="color: #BB0000;">NA</span> Atazanavir … Antivi… &lt;chr&gt;     0.3   g           <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> J05AP03  10<span style="text-decoration: underline;">324</span>367 Boceprevir   Antivi… &lt;chr&gt;     2.4   g           <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> J05AB15    <span style="text-decoration: underline;">446</span>727 Brivudine    Nucleo… &lt;chr&gt;     0.125 g           <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 92 more rows, and abbreviated variable names ¹​atc_group, ²​synonyms,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ³​oral_ddd, ⁴​oral_units, ⁵​iv_units</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

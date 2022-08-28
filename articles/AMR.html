@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9045</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -162,7 +162,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>How to conduct AMR data analysis</h1>
                         <h4 data-toc-skip class="author">Dr. Matthijs Berends</h4>
             
-            <h4 data-toc-skip class="date">26 August 2022</h4>
+            <h4 data-toc-skip class="date">28 August 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/HEAD/vignettes/AMR.Rmd" class="external-link"><code>vignettes/AMR.Rmd</code></a></small>
       <div class="d-none name"><code>AMR.Rmd</code></div>
@@ -170,7 +170,7 @@
 
     
     
-<p><strong>Note:</strong> values on this page will change with every website update since they are based on randomly created values and the page was written in <a href="https://rmarkdown.rstudio.com/" class="external-link">R Markdown</a>. However, the methodology remains unchanged. This page was generated on 26 August 2022.</p>
+<p><strong>Note:</strong> values on this page will change with every website update since they are based on randomly created values and the page was written in <a href="https://rmarkdown.rstudio.com/" class="external-link">R Markdown</a>. However, the methodology remains unchanged. This page was generated on 28 August 2022.</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -201,21 +201,21 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2022-08-26</td>
+<td align="center">2022-08-28</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">S</td>
 </tr>
 <tr class="even">
-<td align="center">2022-08-26</td>
+<td align="center">2022-08-28</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">R</td>
 </tr>
 <tr class="odd">
-<td align="center">2022-08-26</td>
+<td align="center">2022-08-28</td>
 <td align="center">efgh</td>
 <td align="center">Escherichia coli</td>
 <td align="center">R</td>
@@ -251,9 +251,13 @@
 <code class="sourceCode R"><span><span class="va">patients</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">LETTERS</span>, <span class="va">paste0</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The <code>LETTERS</code> object is available in R - it’s a vector with 26 characters: <code>A</code> to <code>Z</code>. The <code>patients</code> object we just created is now a vector of length 260, with values (patient IDs) varying from <code>A1</code> to <code>Z10</code>. Now we we also set the gender of our patients, by putting the ID and the gender in a table:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">patients_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>patient_id <span class="op">=</span> <span class="va">patients</span>,</span>
-<span>                             gender <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="fl">135</span><span class="op">)</span>,</span>
-<span>                                        <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"F"</span>, <span class="fl">125</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">patients_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  patient_id <span class="op">=</span> <span class="va">patients</span>,</span>
+<span>  gender <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="fl">135</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"F"</span>, <span class="fl">125</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>The first 135 patient IDs are now male, the other 125 are female.</p>
 </div>
 <div class="section level3">
@@ -268,8 +272,10 @@
 </h5>
 <p>For this tutorial, we will uses four different microorganisms: <em>Escherichia coli</em>, <em>Staphylococcus aureus</em>, <em>Streptococcus pneumoniae</em>, and <em>Klebsiella pneumoniae</em>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bacteria</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Escherichia coli"</span>, <span class="st">"Staphylococcus aureus"</span>,</span>
-<span>              <span class="st">"Streptococcus pneumoniae"</span>, <span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bacteria</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"Escherichia coli"</span>, <span class="st">"Staphylococcus aureus"</span>,</span>
+<span>  <span class="st">"Streptococcus pneumoniae"</span>, <span class="st">"Klebsiella pneumoniae"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -278,20 +284,27 @@
 <p>Using the <code><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample()</a></code> function, we can randomly select items from all objects we defined earlier. To let our fake data reflect reality a bit, we will also approximately define the probabilities of bacteria and the antibiotic results, using the <code><a href="../reference/random.html">random_rsi()</a></code> function.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sample_size</span> <span class="op">&lt;-</span> <span class="fl">20000</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">dates</span>, size <span class="op">=</span> <span class="va">sample_size</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>                   patient_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">patients</span>, size <span class="op">=</span> <span class="va">sample_size</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>                   hospital <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hospital A"</span>,</span>
-<span>                                       <span class="st">"Hospital B"</span>,</span>
-<span>                                       <span class="st">"Hospital C"</span>,</span>
-<span>                                       <span class="st">"Hospital D"</span><span class="op">)</span>,</span>
-<span>                                     size <span class="op">=</span> <span class="va">sample_size</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                                     prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.30</span>, <span class="fl">0.35</span>, <span class="fl">0.15</span>, <span class="fl">0.20</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                   bacteria <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">bacteria</span>, size <span class="op">=</span> <span class="va">sample_size</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                                     prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.50</span>, <span class="fl">0.25</span>, <span class="fl">0.15</span>, <span class="fl">0.10</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                   AMX <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="va">sample_size</span>, prob_RSI <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.35</span>, <span class="fl">0.60</span>, <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                   AMC <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="va">sample_size</span>, prob_RSI <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.15</span>, <span class="fl">0.75</span>, <span class="fl">0.10</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                   CIP <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="va">sample_size</span>, prob_RSI <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.20</span>, <span class="fl">0.80</span>, <span class="fl">0.00</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                   GEN <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="va">sample_size</span>, prob_RSI <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.08</span>, <span class="fl">0.92</span>, <span class="fl">0.00</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">dates</span>, size <span class="op">=</span> <span class="va">sample_size</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  patient_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">patients</span>, size <span class="op">=</span> <span class="va">sample_size</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  hospital <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Hospital A"</span>,</span>
+<span>    <span class="st">"Hospital B"</span>,</span>
+<span>    <span class="st">"Hospital C"</span>,</span>
+<span>    <span class="st">"Hospital D"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  size <span class="op">=</span> <span class="va">sample_size</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.30</span>, <span class="fl">0.35</span>, <span class="fl">0.15</span>, <span class="fl">0.20</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  bacteria <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">bacteria</span>,</span>
+<span>    size <span class="op">=</span> <span class="va">sample_size</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.50</span>, <span class="fl">0.25</span>, <span class="fl">0.15</span>, <span class="fl">0.10</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  AMX <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="va">sample_size</span>, prob_RSI <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.35</span>, <span class="fl">0.60</span>, <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  AMC <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="va">sample_size</span>, prob_RSI <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.15</span>, <span class="fl">0.75</span>, <span class="fl">0.10</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  CIP <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="va">sample_size</span>, prob_RSI <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.20</span>, <span class="fl">0.80</span>, <span class="fl">0.00</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  GEN <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="va">sample_size</span>, prob_RSI <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.08</span>, <span class="fl">0.92</span>, <span class="fl">0.00</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Using the <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join()</a></code> function from the <code>dplyr</code> package, we can ‘map’ the gender to the patient ID using the <code>patients_table</code> object we created earlier:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">patients_table</span><span class="op">)</span></span></code></pre></div>
@@ -312,68 +325,68 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2014-06-06</td>
-<td align="center">A5</td>
+<td align="center">2017-01-18</td>
+<td align="center">C5</td>
 <td align="center">Hospital B</td>
 <td align="center">Escherichia coli</td>
-<td align="center">I</td>
-<td align="center">S</td>
 <td align="center">R</td>
+<td align="center">S</td>
+<td align="center">S</td>
 <td align="center">S</td>
 <td align="center">M</td>
 </tr>
 <tr class="even">
-<td align="center">2014-02-26</td>
-<td align="center">R3</td>
+<td align="center">2014-12-30</td>
+<td align="center">G6</td>
+<td align="center">Hospital B</td>
+<td align="center">Streptococcus pneumoniae</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">M</td>
+</tr>
+<tr class="odd">
+<td align="center">2013-12-06</td>
+<td align="center">B1</td>
 <td align="center">Hospital A</td>
+<td align="center">Escherichia coli</td>
+<td align="center">S</td>
+<td align="center">I</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">M</td>
+</tr>
+<tr class="even">
+<td align="center">2016-04-15</td>
+<td align="center">V2</td>
+<td align="center">Hospital D</td>
+<td align="center">Staphylococcus aureus</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">F</td>
+</tr>
+<tr class="odd">
+<td align="center">2014-11-22</td>
+<td align="center">Q1</td>
+<td align="center">Hospital A</td>
+<td align="center">Escherichia coli</td>
+<td align="center">R</td>
+<td align="center">I</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">F</td>
+</tr>
+<tr class="even">
+<td align="center">2012-03-08</td>
+<td align="center">E5</td>
+<td align="center">Hospital B</td>
 <td align="center">Staphylococcus aureus</td>
 <td align="center">R</td>
 <td align="center">S</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">F</td>
-</tr>
-<tr class="odd">
-<td align="center">2011-12-02</td>
-<td align="center">H2</td>
-<td align="center">Hospital B</td>
-<td align="center">Escherichia coli</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">M</td>
-</tr>
-<tr class="even">
-<td align="center">2011-05-29</td>
-<td align="center">C5</td>
-<td align="center">Hospital A</td>
-<td align="center">Streptococcus pneumoniae</td>
-<td align="center">S</td>
 <td align="center">R</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">M</td>
-</tr>
-<tr class="odd">
-<td align="center">2017-07-23</td>
-<td align="center">U3</td>
-<td align="center">Hospital A</td>
-<td align="center">Escherichia coli</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">F</td>
-</tr>
-<tr class="even">
-<td align="center">2011-11-18</td>
-<td align="center">C7</td>
-<td align="center">Hospital D</td>
-<td align="center">Escherichia coli</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">S</td>
 <td align="center">S</td>
 <td align="center">M</td>
 </tr>
@@ -409,16 +422,16 @@ Longest: 1</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">M</td>
-<td align="right">10,514</td>
-<td align="right">52.57%</td>
-<td align="right">10,514</td>
-<td align="right">52.57%</td>
+<td align="right">10,364</td>
+<td align="right">51.82%</td>
+<td align="right">10,364</td>
+<td align="right">51.82%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">F</td>
-<td align="right">9,486</td>
-<td align="right">47.43%</td>
+<td align="right">9,636</td>
+<td align="right">48.18%</td>
 <td align="right">20,000</td>
 <td align="right">100.00%</td>
 </tr>
@@ -448,10 +461,12 @@ Longest: 1</p>
 </h2>
 <p>Now that we have the microbial ID, we can add some taxonomic properties:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>gramstain <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="va">bacteria</span><span class="op">)</span>,</span>
-<span>         genus <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="va">bacteria</span><span class="op">)</span>,</span>
-<span>         species <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_species</a></span><span class="op">(</span><span class="va">bacteria</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    gramstain <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="va">bacteria</span><span class="op">)</span>,</span>
+<span>    genus <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_genus</a></span><span class="op">(</span><span class="va">bacteria</span><span class="op">)</span>,</span>
+<span>    species <span class="op">=</span> <span class="fu"><a href="../reference/mo_property.html">mo_species</a></span><span class="op">(</span><span class="va">bacteria</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="first-isolates">First isolates<a class="anchor" aria-label="anchor" href="#first-isolates"></a>
 </h3>
@@ -464,7 +479,7 @@ Longest: 1</p>
 <p>This <code>AMR</code> package includes this methodology with the <code><a href="../reference/first_isolate.html">first_isolate()</a></code> function and is able to apply the four different methods as defined by <a href="https://academic.oup.com/cid/article/44/6/867/364325" class="external-link">Hindler <em>et al.</em> in 2007</a>: phenotype-based, episode-based, patient-based, isolate-based. The right method depends on your goals and analysis, but the default phenotype-based method is in any case the method to properly correct for most duplicate isolates. This method also takes into account the antimicrobial susceptibility test results using <code>all_microbials()</code>. Read more about the methods on the <code><a href="../reference/first_isolate.html">first_isolate()</a></code> page.</p>
 <p>The outcome of the function can easily be added to our data:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>first <span class="op">=</span> <span class="fu"><a href="../reference/first_isolate.html">first_isolate</a></span><span class="op">(</span>info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co"># Determining first isolates using an episode length of 365 days</span></span>
 <span><span class="co"># ℹ Using column 'bacteria' as input for `col_mo`.</span></span>
@@ -472,20 +487,22 @@ Longest: 1</p>
 <span><span class="co"># ℹ Using column 'patient_id' as input for `col_patient_id`.</span></span>
 <span><span class="co"># Basing inclusion on all antimicrobial results, using a points threshold of</span></span>
 <span><span class="co"># 2</span></span>
-<span><span class="co"># =&gt; Found 10,709 'phenotype-based' first isolates (53.5% of total where a</span></span>
+<span><span class="co"># Including isolates from ICU.</span></span>
+<span><span class="co"># =&gt; Found 10,729 'phenotype-based' first isolates (53.6% of total where a</span></span>
 <span><span class="co">#    microbial ID was available)</span></span></code></pre></div>
-<p>So only 53.5% is suitable for resistance analysis! We can now filter on it with the <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> function, also from the <code>dplyr</code> package:</p>
+<p>So only 53.6% is suitable for resistance analysis! We can now filter on it with the <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> function, also from the <code>dplyr</code> package:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">first</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>For future use, the above two syntaxes can be shortened:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="../reference/first_isolate.html">filter_first_isolate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>So we end up with 10,709 isolates for analysis. Now our data looks like:</p>
+<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/first_isolate.html">filter_first_isolate</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># Including isolates from ICU.</span></span></code></pre></div>
+<p>So we end up with 10,729 isolates for analysis. Now our data looks like:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data_1st</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
+<table style="width:100%;" class="table">
 <colgroup>
 <col width="2%">
 <col width="9%">
@@ -498,7 +515,7 @@ Longest: 1</p>
 <col width="3%">
 <col width="6%">
 <col width="11%">
-<col width="11%">
+<col width="12%">
 <col width="9%">
 <col width="5%">
 </colgroup>
@@ -520,26 +537,58 @@ Longest: 1</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="center">2014-06-06</td>
-<td align="center">A5</td>
+<td align="left">2</td>
+<td align="center">2014-12-30</td>
+<td align="center">G6</td>
 <td align="center">Hospital B</td>
-<td align="center">B_ESCHR_COLI</td>
-<td align="center">I</td>
-<td align="center">S</td>
+<td align="center">B_STRPT_PNMN</td>
+<td align="center">R</td>
 <td align="center">R</td>
 <td align="center">S</td>
+<td align="center">R</td>
 <td align="center">M</td>
-<td align="center">Gram-negative</td>
-<td align="center">Escherichia</td>
-<td align="center">coli</td>
+<td align="center">Gram-positive</td>
+<td align="center">Streptococcus</td>
+<td align="center">pneumoniae</td>
 <td align="center">TRUE</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
-<td align="center">2011-05-29</td>
-<td align="center">C5</td>
-<td align="center">Hospital A</td>
+<td align="center">2016-04-15</td>
+<td align="center">V2</td>
+<td align="center">Hospital D</td>
+<td align="center">B_STPHY_AURS</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">F</td>
+<td align="center">Gram-positive</td>
+<td align="center">Staphylococcus</td>
+<td align="center">aureus</td>
+<td align="center">TRUE</td>
+</tr>
+<tr class="odd">
+<td align="left">6</td>
+<td align="center">2012-03-08</td>
+<td align="center">E5</td>
+<td align="center">Hospital B</td>
+<td align="center">B_STPHY_AURS</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">M</td>
+<td align="center">Gram-positive</td>
+<td align="center">Staphylococcus</td>
+<td align="center">aureus</td>
+<td align="center">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">7</td>
+<td align="center">2012-03-22</td>
+<td align="center">K6</td>
+<td align="center">Hospital C</td>
 <td align="center">B_STRPT_PNMN</td>
 <td align="center">R</td>
 <td align="center">R</td>
@@ -552,67 +601,35 @@ Longest: 1</p>
 <td align="center">TRUE</td>
 </tr>
 <tr class="odd">
-<td align="left">7</td>
-<td align="center">2010-02-05</td>
-<td align="center">B6</td>
+<td align="left">8</td>
+<td align="center">2013-02-09</td>
+<td align="center">P4</td>
 <td align="center">Hospital A</td>
 <td align="center">B_ESCHR_COLI</td>
 <td align="center">R</td>
 <td align="center">R</td>
-<td align="center">R</td>
-<td align="center">S</td>
-<td align="center">M</td>
-<td align="center">Gram-negative</td>
-<td align="center">Escherichia</td>
-<td align="center">coli</td>
-<td align="center">TRUE</td>
-</tr>
-<tr class="even">
-<td align="left">9</td>
-<td align="center">2016-10-20</td>
-<td align="center">F6</td>
-<td align="center">Hospital D</td>
-<td align="center">B_ESCHR_COLI</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">R</td>
-<td align="center">R</td>
-<td align="center">M</td>
-<td align="center">Gram-negative</td>
-<td align="center">Escherichia</td>
-<td align="center">coli</td>
-<td align="center">TRUE</td>
-</tr>
-<tr class="odd">
-<td align="left">13</td>
-<td align="center">2010-05-11</td>
-<td align="center">G7</td>
-<td align="center">Hospital D</td>
-<td align="center">B_KLBSL_PNMN</td>
-<td align="center">R</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">M</td>
-<td align="center">Gram-negative</td>
-<td align="center">Klebsiella</td>
-<td align="center">pneumoniae</td>
-<td align="center">TRUE</td>
-</tr>
-<tr class="even">
-<td align="left">14</td>
-<td align="center">2010-04-05</td>
-<td align="center">T2</td>
-<td align="center">Hospital D</td>
-<td align="center">B_ESCHR_COLI</td>
-<td align="center">S</td>
-<td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">F</td>
 <td align="center">Gram-negative</td>
 <td align="center">Escherichia</td>
 <td align="center">coli</td>
+<td align="center">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="center">2014-06-11</td>
+<td align="center">G9</td>
+<td align="center">Hospital B</td>
+<td align="center">B_STPHY_AURS</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">M</td>
+<td align="center">Gram-positive</td>
+<td align="center">Staphylococcus</td>
+<td align="center">aureus</td>
 <td align="center">TRUE</td>
 </tr>
 </tbody>
@@ -636,8 +653,8 @@ Longest: 1</p>
 <code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq</a></span><span class="op">(</span><span class="va">genus</span>, <span class="va">species</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Frequency table</strong></p>
 <p>Class: character<br>
-Length: 10,709<br>
-Available: 10,709 (100.0%, NA: 0 = 0.0%)<br>
+Length: 10,729<br>
+Available: 10,729 (100.0%, NA: 0 = 0.0%)<br>
 Unique: 4</p>
 <p>Shortest: 16<br>
 Longest: 24</p>
@@ -654,33 +671,33 @@ Longest: 24</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Escherichia coli</td>
-<td align="right">4,602</td>
-<td align="right">42.97%</td>
-<td align="right">4,602</td>
-<td align="right">42.97%</td>
+<td align="right">4,652</td>
+<td align="right">43.36%</td>
+<td align="right">4,652</td>
+<td align="right">43.36%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Staphylococcus aureus</td>
-<td align="right">2,816</td>
-<td align="right">26.30%</td>
-<td align="right">7,418</td>
-<td align="right">69.27%</td>
+<td align="right">2,729</td>
+<td align="right">25.44%</td>
+<td align="right">7,381</td>
+<td align="right">68.79%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Streptococcus pneumoniae</td>
-<td align="right">2,079</td>
-<td align="right">19.41%</td>
-<td align="right">9,497</td>
-<td align="right">88.68%</td>
+<td align="right">2,153</td>
+<td align="right">20.07%</td>
+<td align="right">9,534</td>
+<td align="right">88.86%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Klebsiella pneumoniae</td>
-<td align="right">1,212</td>
-<td align="right">11.32%</td>
-<td align="right">10,709</td>
+<td align="right">1,195</td>
+<td align="right">11.14%</td>
+<td align="right">10,729</td>
 <td align="right">100.00%</td>
 </tr>
 </tbody>
@@ -691,7 +708,7 @@ Longest: 24</p>
 </h3>
 <p>Using <a href="https://tidyselect.r-lib.org/reference/language.html" class="external-link">tidyverse selections</a>, you can also select or filter columns based on the antibiotic class they are in:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="../reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="st">"R"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co"># ℹ For `aminoglycosides()` using column 'GEN' (gentamicin)</span></span></code></pre>
 <table class="table">
@@ -727,9 +744,9 @@ Longest: 24</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2011-05-29</td>
-<td align="center">C5</td>
-<td align="center">Hospital A</td>
+<td align="center">2014-12-30</td>
+<td align="center">G6</td>
+<td align="center">Hospital B</td>
 <td align="center">B_STRPT_PNMN</td>
 <td align="center">R</td>
 <td align="center">R</td>
@@ -742,54 +759,24 @@ Longest: 24</p>
 <td align="center">TRUE</td>
 </tr>
 <tr class="even">
-<td align="center">2016-10-20</td>
-<td align="center">F6</td>
-<td align="center">Hospital D</td>
-<td align="center">B_ESCHR_COLI</td>
-<td align="center">S</td>
-<td align="center">S</td>
+<td align="center">2012-03-22</td>
+<td align="center">K6</td>
+<td align="center">Hospital C</td>
+<td align="center">B_STRPT_PNMN</td>
 <td align="center">R</td>
+<td align="center">R</td>
+<td align="center">S</td>
 <td align="center">R</td>
 <td align="center">M</td>
-<td align="center">Gram-negative</td>
-<td align="center">Escherichia</td>
-<td align="center">coli</td>
+<td align="center">Gram-positive</td>
+<td align="center">Streptococcus</td>
+<td align="center">pneumoniae</td>
 <td align="center">TRUE</td>
 </tr>
 <tr class="odd">
-<td align="center">2011-12-15</td>
-<td align="center">U7</td>
-<td align="center">Hospital A</td>
-<td align="center">B_STRPT_PNMN</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">R</td>
-<td align="center">F</td>
-<td align="center">Gram-positive</td>
-<td align="center">Streptococcus</td>
-<td align="center">pneumoniae</td>
-<td align="center">TRUE</td>
-</tr>
-<tr class="even">
-<td align="center">2015-06-08</td>
-<td align="center">U7</td>
-<td align="center">Hospital A</td>
-<td align="center">B_ESCHR_COLI</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">R</td>
-<td align="center">R</td>
-<td align="center">F</td>
-<td align="center">Gram-negative</td>
-<td align="center">Escherichia</td>
-<td align="center">coli</td>
-<td align="center">TRUE</td>
-</tr>
-<tr class="odd">
-<td align="center">2011-07-14</td>
-<td align="center">J7</td>
-<td align="center">Hospital D</td>
+<td align="center">2013-08-11</td>
+<td align="center">A1</td>
+<td align="center">Hospital C</td>
 <td align="center">B_STRPT_PNMN</td>
 <td align="center">R</td>
 <td align="center">R</td>
@@ -802,8 +789,8 @@ Longest: 24</p>
 <td align="center">TRUE</td>
 </tr>
 <tr class="even">
-<td align="center">2017-10-13</td>
-<td align="center">G8</td>
+<td align="center">2012-05-02</td>
+<td align="center">H8</td>
 <td align="center">Hospital B</td>
 <td align="center">B_STRPT_PNMN</td>
 <td align="center">S</td>
@@ -816,12 +803,42 @@ Longest: 24</p>
 <td align="center">pneumoniae</td>
 <td align="center">TRUE</td>
 </tr>
+<tr class="odd">
+<td align="center">2010-06-19</td>
+<td align="center">Y9</td>
+<td align="center">Hospital D</td>
+<td align="center">B_STRPT_PNMN</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">R</td>
+<td align="center">F</td>
+<td align="center">Gram-positive</td>
+<td align="center">Streptococcus</td>
+<td align="center">pneumoniae</td>
+<td align="center">TRUE</td>
+</tr>
+<tr class="even">
+<td align="center">2016-07-18</td>
+<td align="center">M1</td>
+<td align="center">Hospital D</td>
+<td align="center">B_ESCHR_COLI</td>
+<td align="center">R</td>
+<td align="center">I</td>
+<td align="center">S</td>
+<td align="center">R</td>
+<td align="center">M</td>
+<td align="center">Gram-negative</td>
+<td align="center">Escherichia</td>
+<td align="center">coli</td>
+<td align="center">TRUE</td>
+</tr>
 </tbody>
 </table>
 <p>If you want to get a quick glance of the number of isolates in different bug/drug combinations, you can use the <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> function:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="../reference/bug_drug_combinations.html">bug_drug_combinations</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/bug_drug_combinations.html">bug_drug_combinations</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># show first 6 rows</span></span></code></pre></div>
 <pre><code><span><span class="co"># ℹ Using column 'bacteria' as input for `col_mo`.</span></span></code></pre>
 <table class="table">
@@ -837,56 +854,56 @@ Longest: 24</p>
 <tr class="odd">
 <td align="center">E. coli</td>
 <td align="center">AMX</td>
-<td align="center">2159</td>
-<td align="center">125</td>
-<td align="center">2318</td>
-<td align="center">4602</td>
+<td align="center">2176</td>
+<td align="center">119</td>
+<td align="center">2357</td>
+<td align="center">4652</td>
 </tr>
 <tr class="even">
 <td align="center">E. coli</td>
 <td align="center">AMC</td>
-<td align="center">3391</td>
-<td align="center">140</td>
-<td align="center">1071</td>
-<td align="center">4602</td>
+<td align="center">3369</td>
+<td align="center">148</td>
+<td align="center">1135</td>
+<td align="center">4652</td>
 </tr>
 <tr class="odd">
 <td align="center">E. coli</td>
 <td align="center">CIP</td>
-<td align="center">3331</td>
+<td align="center">3443</td>
 <td align="center">0</td>
-<td align="center">1271</td>
-<td align="center">4602</td>
+<td align="center">1209</td>
+<td align="center">4652</td>
 </tr>
 <tr class="even">
 <td align="center">E. coli</td>
 <td align="center">GEN</td>
-<td align="center">4013</td>
+<td align="center">4080</td>
 <td align="center">0</td>
-<td align="center">589</td>
-<td align="center">4602</td>
+<td align="center">572</td>
+<td align="center">4652</td>
 </tr>
 <tr class="odd">
 <td align="center">K. pneumoniae</td>
 <td align="center">AMX</td>
 <td align="center">0</td>
 <td align="center">0</td>
-<td align="center">1212</td>
-<td align="center">1212</td>
+<td align="center">1195</td>
+<td align="center">1195</td>
 </tr>
 <tr class="even">
 <td align="center">K. pneumoniae</td>
 <td align="center">AMC</td>
-<td align="center">980</td>
-<td align="center">30</td>
+<td align="center">948</td>
+<td align="center">45</td>
 <td align="center">202</td>
-<td align="center">1212</td>
+<td align="center">1195</td>
 </tr>
 </tbody>
 </table>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">bacteria</span>, <span class="fu"><a href="../reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">bacteria</span>, <span class="fu"><a href="../reference/antibiotic_class_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/bug_drug_combinations.html">bug_drug_combinations</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co"># ℹ For `aminoglycosides()` using column 'GEN' (gentamicin)</span></span>
 <span><span class="co"># ℹ Using column 'bacteria' as input for `col_mo`.</span></span></code></pre>
@@ -903,34 +920,34 @@ Longest: 24</p>
 <tr class="odd">
 <td align="center">E. coli</td>
 <td align="center">GEN</td>
-<td align="center">4013</td>
+<td align="center">4080</td>
 <td align="center">0</td>
-<td align="center">589</td>
-<td align="center">4602</td>
+<td align="center">572</td>
+<td align="center">4652</td>
 </tr>
 <tr class="even">
 <td align="center">K. pneumoniae</td>
 <td align="center">GEN</td>
-<td align="center">1069</td>
+<td align="center">1083</td>
 <td align="center">0</td>
-<td align="center">143</td>
-<td align="center">1212</td>
+<td align="center">112</td>
+<td align="center">1195</td>
 </tr>
 <tr class="odd">
 <td align="center">S. aureus</td>
 <td align="center">GEN</td>
-<td align="center">2505</td>
+<td align="center">2404</td>
 <td align="center">0</td>
-<td align="center">311</td>
-<td align="center">2816</td>
+<td align="center">325</td>
+<td align="center">2729</td>
 </tr>
 <tr class="even">
 <td align="center">S. pneumoniae</td>
 <td align="center">GEN</td>
 <td align="center">0</td>
 <td align="center">0</td>
-<td align="center">2079</td>
-<td align="center">2079</td>
+<td align="center">2153</td>
+<td align="center">2153</td>
 </tr>
 </tbody>
 </table>
@@ -944,11 +961,11 @@ Longest: 24</p>
 <p>As per the EUCAST guideline of 2019, we calculate resistance as the proportion of R (<code><a href="../reference/proportion.html">proportion_R()</a></code>, equal to <code><a href="../reference/proportion.html">resistance()</a></code>) and susceptibility as the proportion of S and I (<code><a href="../reference/proportion.html">proportion_SI()</a></code>, equal to <code><a href="../reference/proportion.html">susceptibility()</a></code>). These functions can be used on their own:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/proportion.html">resistance</a></span><span class="op">(</span><span class="va">AMX</span><span class="op">)</span></span>
-<span><span class="co"># [1] 0.5464563</span></span></code></pre></div>
+<span><span class="co"># [1] 0.5527076</span></span></code></pre></div>
 <p>Or can be used in conjunction with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code>, both from the <code>dplyr</code> package:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>amoxicillin <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">resistance</a></span><span class="op">(</span><span class="va">AMX</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -958,28 +975,30 @@ Longest: 24</p>
 <tbody>
 <tr class="odd">
 <td align="center">Hospital A</td>
-<td align="center">0.5425565</td>
+<td align="center">0.5551059</td>
 </tr>
 <tr class="even">
 <td align="center">Hospital B</td>
-<td align="center">0.5403611</td>
+<td align="center">0.5576464</td>
 </tr>
 <tr class="odd">
 <td align="center">Hospital C</td>
-<td align="center">0.5634772</td>
+<td align="center">0.5445860</td>
 </tr>
 <tr class="even">
 <td align="center">Hospital D</td>
-<td align="center">0.5504023</td>
+<td align="center">0.5464581</td>
 </tr>
 </tbody>
 </table>
 <p>Of course it would be very convenient to know the number of isolates responsible for the percentages. For that purpose the <code><a href="../reference/count.html">n_rsi()</a></code> can be used, which works exactly like <code><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct()</a></code> from the <code>dplyr</code> package. It counts all isolates available for every group (i.e. values S, I or R):</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>amoxicillin <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">resistance</a></span><span class="op">(</span><span class="va">AMX</span><span class="op">)</span>,</span>
-<span>            available <span class="op">=</span> <span class="fu"><a href="../reference/count.html">n_rsi</a></span><span class="op">(</span><span class="va">AMX</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span></span>
+<span>    amoxicillin <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">resistance</a></span><span class="op">(</span><span class="va">AMX</span><span class="op">)</span>,</span>
+<span>    available <span class="op">=</span> <span class="fu"><a href="../reference/count.html">n_rsi</a></span><span class="op">(</span><span class="va">AMX</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="center">hospital</th>
@@ -989,33 +1008,35 @@ Longest: 24</p>
 <tbody>
 <tr class="odd">
 <td align="center">Hospital A</td>
-<td align="center">0.5425565</td>
-<td align="center">3231</td>
+<td align="center">0.5551059</td>
+<td align="center">3212</td>
 </tr>
 <tr class="even">
 <td align="center">Hospital B</td>
-<td align="center">0.5403611</td>
-<td align="center">3766</td>
+<td align="center">0.5576464</td>
+<td align="center">3773</td>
 </tr>
 <tr class="odd">
 <td align="center">Hospital C</td>
-<td align="center">0.5634772</td>
-<td align="center">1599</td>
+<td align="center">0.5445860</td>
+<td align="center">1570</td>
 </tr>
 <tr class="even">
 <td align="center">Hospital D</td>
-<td align="center">0.5504023</td>
-<td align="center">2113</td>
+<td align="center">0.5464581</td>
+<td align="center">2174</td>
 </tr>
 </tbody>
 </table>
 <p>These functions can also be used to get the proportion of multiple antibiotics, to calculate empiric susceptibility of combination therapies very easily:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">genus</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>amoxiclav <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">AMC</span><span class="op">)</span>,</span>
-<span>            gentamicin <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">GEN</span><span class="op">)</span>,</span>
-<span>            amoxiclav_genta <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">AMC</span>, <span class="va">GEN</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">genus</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span></span>
+<span>    amoxiclav <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">AMC</span><span class="op">)</span>,</span>
+<span>    gentamicin <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">GEN</span><span class="op">)</span>,</span>
+<span>    amoxiclav_genta <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">AMC</span>, <span class="va">GEN</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="center">genus</th>
@@ -1026,39 +1047,39 @@ Longest: 24</p>
 <tbody>
 <tr class="odd">
 <td align="center">Escherichia</td>
-<td align="center">0.7672751</td>
-<td align="center">0.8720122</td>
-<td align="center">0.9778357</td>
+<td align="center">0.7560189</td>
+<td align="center">0.8770421</td>
+<td align="center">0.9804385</td>
 </tr>
 <tr class="even">
 <td align="center">Klebsiella</td>
-<td align="center">0.8333333</td>
-<td align="center">0.8820132</td>
-<td align="center">0.9768977</td>
+<td align="center">0.8309623</td>
+<td align="center">0.9062762</td>
+<td align="center">0.9866109</td>
 </tr>
 <tr class="odd">
 <td align="center">Staphylococcus</td>
-<td align="center">0.8004261</td>
-<td align="center">0.8895597</td>
-<td align="center">0.9808239</td>
+<td align="center">0.7805057</td>
+<td align="center">0.8809088</td>
+<td align="center">0.9783804</td>
 </tr>
 <tr class="even">
 <td align="center">Streptococcus</td>
-<td align="center">0.5430495</td>
+<td align="center">0.5332095</td>
 <td align="center">0.0000000</td>
-<td align="center">0.5430495</td>
+<td align="center">0.5332095</td>
 </tr>
 </tbody>
 </table>
 <p>Or if you are curious for the resistance within certain antibiotic classes, use a antibiotic class selector such as <code><a href="../reference/antibiotic_class_selectors.html">penicillins()</a></code>, which automatically will include the columns <code>AMX</code> and <code>AMC</code> of our data:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># group by hospital</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co">#                / -&gt; select all penicillins in the data for calculation</span></span>
 <span>  <span class="co">#                |              / -&gt; use resistance() for all peni's per hospital</span></span>
 <span>  <span class="co">#                |              |           / -&gt; print as percentages</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="../reference/antibiotic_class_selectors.html">penicillins</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">resistance</span>, as_percent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="../reference/antibiotic_class_selectors.html">penicillins</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">resistance</span>, as_percent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># format the antibiotic column names, using so-called snake case,</span></span>
 <span>  <span class="co"># so 'Amoxicillin/clavulanic acid' becomes 'amoxicillin_clavulanic_acid'</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename_with</a></span><span class="op">(</span><span class="va">set_ab_names</span>, <span class="fu"><a href="../reference/antibiotic_class_selectors.html">penicillins</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -1071,38 +1092,42 @@ Longest: 24</p>
 <tbody>
 <tr class="odd">
 <td align="left">Hospital A</td>
-<td align="right">54.3%</td>
-<td align="right">26.3%</td>
+<td align="right">55.5%</td>
+<td align="right">28.0%</td>
 </tr>
 <tr class="even">
 <td align="left">Hospital B</td>
-<td align="right">54.0%</td>
-<td align="right">25.3%</td>
+<td align="right">55.8%</td>
+<td align="right">27.5%</td>
 </tr>
 <tr class="odd">
 <td align="left">Hospital C</td>
-<td align="right">56.3%</td>
-<td align="right">27.4%</td>
+<td align="right">54.5%</td>
+<td align="right">27.8%</td>
 </tr>
 <tr class="even">
 <td align="left">Hospital D</td>
-<td align="right">55.0%</td>
-<td align="right">25.8%</td>
+<td align="right">54.6%</td>
+<td align="right">26.2%</td>
 </tr>
 </tbody>
 </table>
 <p>To make a transition to the next part, let’s see how differences in the previously calculated combination therapies could be plotted:</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">genus</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="st">"1. Amoxi/clav"</span> <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">AMC</span><span class="op">)</span>,</span>
-<span>            <span class="st">"2. Gentamicin"</span> <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">GEN</span><span class="op">)</span>,</span>
-<span>            <span class="st">"3. Amoxi/clav + genta"</span> <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">AMC</span>, <span class="va">GEN</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">genus</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span></span>
+<span>    <span class="st">"1. Amoxi/clav"</span> <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">AMC</span><span class="op">)</span>,</span>
+<span>    <span class="st">"2. Gentamicin"</span> <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">GEN</span><span class="op">)</span>,</span>
+<span>    <span class="st">"3. Amoxi/clav + genta"</span> <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">AMC</span>, <span class="va">GEN</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># pivot_longer() from the tidyr package "lengthens" data:</span></span>
-<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span><span class="op">-</span><span class="va">genus</span>, names_to <span class="op">=</span> <span class="st">"antibiotic"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">genus</span>,</span>
-<span>             y <span class="op">=</span> <span class="va">value</span>,</span>
-<span>             fill <span class="op">=</span> <span class="va">antibiotic</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span><span class="op">-</span><span class="va">genus</span>, names_to <span class="op">=</span> <span class="st">"antibiotic"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="va">genus</span>,</span>
+<span>    y <span class="op">=</span> <span class="va">value</span>,</span>
+<span>    fill <span class="op">=</span> <span class="va">antibiotic</span></span>
+<span>  <span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge2"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AMR_files/figure-html/plot%201-1.png" width="720"></p>
 </div>
@@ -1111,14 +1136,20 @@ Longest: 24</p>
 </h3>
 <p>To show results in plots, most R users would nowadays use the <code>ggplot2</code> package. This package lets you create plots in layers. You can read more about it <a href="https://ggplot2.tidyverse.org/" class="external-link">on their website</a>. A quick example would look like these syntaxes:</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">a_data_set</span>,</span>
-<span>       mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>,</span>
-<span>                     y <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">a_data_set</span>,</span>
+<span>  mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="va">year</span>,</span>
+<span>    y <span class="op">=</span> <span class="va">value</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"A title"</span>,</span>
-<span>       subtitle <span class="op">=</span> <span class="st">"A subtitle"</span>,</span>
-<span>       x <span class="op">=</span> <span class="st">"My X axis"</span>,</span>
-<span>       y <span class="op">=</span> <span class="st">"My Y axis"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"A title"</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"A subtitle"</span>,</span>
+<span>    x <span class="op">=</span> <span class="st">"My X axis"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"My Y axis"</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="co"># or as short as:</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">a_data_set</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1132,11 +1163,11 @@ Longest: 24</p>
 <p>If we group on e.g. the <code>genus</code> column and add some additional functions from our package, we can create this:</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># group the data on `genus`</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">genus</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">genus</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># create bars with genus on x axis</span></span>
 <span>  <span class="co"># it looks for variables with class `rsi`,</span></span>
 <span>  <span class="co"># of which we have 4 (earlier created with `as.rsi`)</span></span>
-<span>  <span class="fu"><a href="../reference/ggplot_rsi.html">geom_rsi</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"genus"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="../reference/ggplot_rsi.html">geom_rsi</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"genus"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># split plots on antibiotic</span></span>
 <span>  <span class="fu"><a href="../reference/ggplot_rsi.html">facet_rsi</a></span><span class="op">(</span>facet <span class="op">=</span> <span class="st">"antibiotic"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># set colours to the R/SI interpretations (colour-blind friendly)</span></span>
@@ -1146,20 +1177,24 @@ Longest: 24</p>
 <span>  <span class="co"># turn 90 degrees, to make it bars instead of columns</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># add labels</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Resistance per genus and antibiotic"</span>, </span>
-<span>       subtitle <span class="op">=</span> <span class="st">"(this is fake data)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Resistance per genus and antibiotic"</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"(this is fake data)"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># and print genus in italic to follow our convention</span></span>
 <span>  <span class="co"># (is now y axis because we turned the plot)</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>face <span class="op">=</span> <span class="st">"italic"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AMR_files/figure-html/plot%204-1.png" width="720"></p>
 <p>To simplify this, we also created the <code><a href="../reference/ggplot_rsi.html">ggplot_rsi()</a></code> function, which combines almost all above functions:</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">genus</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/ggplot_rsi.html">ggplot_rsi</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"genus"</span>,</span>
-<span>             facet <span class="op">=</span> <span class="st">"antibiotic"</span>,</span>
-<span>             breaks <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">4</span> <span class="op">*</span> <span class="fl">25</span>,</span>
-<span>             datalabels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/ggplot_rsi.html">ggplot_rsi</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="st">"genus"</span>,</span>
+<span>    facet <span class="op">=</span> <span class="st">"antibiotic"</span>,</span>
+<span>    breaks <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">4</span> <span class="op">*</span> <span class="fl">25</span>,</span>
+<span>    datalabels <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AMR_files/figure-html/plot%205-1.png" width="720"></p>
 <div class="section level4">
@@ -1171,16 +1206,18 @@ Longest: 24</p>
 <code class="sourceCode R"><span><span class="va">mic_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/random.html">random_mic</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span><span class="va">mic_values</span></span>
 <span><span class="co"># Class &lt;mic&gt;</span></span>
-<span><span class="co">#   [1] 0.5    0.025  0.025  2      0.005  64     0.001  0.025  &gt;=256  0.025 </span></span>
-<span><span class="co">#  [11] 4      1      32     0.002  0.01   64     16     0.001  4      0.005 </span></span>
-<span><span class="co">#  [21] 0.125  2      &gt;=256  8      &gt;=256  64     0.5    64     0.0625 2     </span></span>
-<span><span class="co">#  [31] 128    1      4      8      &gt;=256  4      0.5    0.025  0.0625 &gt;=256 </span></span>
-<span><span class="co">#  [41] 0.125  64     1      &gt;=256  1      0.001  0.01   2      0.005  0.025 </span></span>
-<span><span class="co">#  [51] 16     0.001  8      32     0.025  1      0.025  0.25   64     0.125 </span></span>
-<span><span class="co">#  [61] 0.0625 0.01   128    0.5    0.025  0.001  32     0.001  0.01   0.0625</span></span>
-<span><span class="co">#  [71] 8      2      0.25   0.002  2      0.01   0.025  0.025  128    128   </span></span>
-<span><span class="co">#  [81] 0.002  1      0.25   &gt;=256  128    &gt;=256  0.5    0.0625 4      0.01  </span></span>
-<span><span class="co">#  [91] 0.002  0.002  0.0625 2      0.01   8      0.0625 0.01   0.025  0.25</span></span></code></pre></div>
+<span><span class="co">#   [1] 2       64      0.25    &gt;=256   4       0.025   128     0.125   2      </span></span>
+<span><span class="co">#  [10] 0.25    32      32      2       0.25    32      0.125   16      32     </span></span>
+<span><span class="co">#  [19] 0.025   1       16      0.01    64      8       32      128     2      </span></span>
+<span><span class="co">#  [28] 1       2       0.002   0.01    2       0.25    0.002   0.01    1      </span></span>
+<span><span class="co">#  [37] 4       8       0.005   0.002   0.005   0.025   8       0.5     8      </span></span>
+<span><span class="co">#  [46] 128     0.25    0.025   0.01    0.01    128     32      1       &lt;=0.001</span></span>
+<span><span class="co">#  [55] 16      0.002   8       0.0625  0.125   64      0.125   0.0625  0.5    </span></span>
+<span><span class="co">#  [64] 0.025   &lt;=0.001 128     0.01    0.01    1       0.002   &gt;=256   128    </span></span>
+<span><span class="co">#  [73] 0.005   32      0.25    0.002   0.25    0.5     0.5     16      16     </span></span>
+<span><span class="co">#  [82] 2       64      0.005   2       0.025   2       32      0.005   0.0625 </span></span>
+<span><span class="co">#  [91] &lt;=0.001 0.0625  64      0.002   0.025   0.005   64      0.002   1      </span></span>
+<span><span class="co"># [100] 32</span></span></code></pre></div>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># base R:</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">mic_values</span><span class="op">)</span></span></code></pre></div>
@@ -1209,62 +1246,66 @@ Longest: 24</p>
 <span><span class="co">#   coli). Run `mo_uncertainties()` to review this.</span></span>
 <span><span class="va">disk_values</span></span>
 <span><span class="co"># Class &lt;disk&gt;</span></span>
-<span><span class="co">#   [1] 21 29 21 29 23 20 17 18 24 18 26 30 24 31 18 20 19 21 19 27 28 31 17 30 25</span></span>
-<span><span class="co">#  [26] 20 17 21 17 23 25 29 29 30 19 31 18 29 22 28 29 28 30 25 31 20 26 22 29 22</span></span>
-<span><span class="co">#  [51] 23 29 20 31 30 31 28 28 19 27 28 29 17 26 29 30 27 18 17 30 24 25 30 22 26</span></span>
-<span><span class="co">#  [76] 31 28 26 29 20 23 20 23 27 29 21 24 17 21 29 22 29 28 27 24 23 17 22 22 30</span></span></code></pre></div>
+<span><span class="co">#   [1] 21 31 26 23 25 28 30 26 17 25 18 25 17 26 22 27 19 20 31 23 20 20 19 24 18</span></span>
+<span><span class="co">#  [26] 25 28 29 18 17 27 29 31 17 20 18 18 18 30 26 26 31 25 27 26 31 19 21 22 25</span></span>
+<span><span class="co">#  [51] 31 26 30 20 25 31 18 18 17 31 20 24 26 20 26 23 17 27 17 24 21 22 23 24 31</span></span>
+<span><span class="co">#  [76] 17 21 22 22 19 25 23 28 18 28 25 18 17 17 18 23 29 28 20 31 19 30 27 28 17</span></span></code></pre></div>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># base R:</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">disk_values</span>, mo <span class="op">=</span> <span class="st">"E. coli"</span>, ab <span class="op">=</span> <span class="st">"cipro"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AMR_files/figure-html/disk_plots-1.png" width="720"></p>
 <p>And when using the <code>ggplot2</code> package, but now choosing the latest implemented CLSI guideline (notice that the EUCAST-specific term “Susceptible, incr. exp.” has changed to “Intermediate”):</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">disk_values</span>,</span>
-<span>       mo <span class="op">=</span> <span class="st">"E. coli"</span>,</span>
-<span>       ab <span class="op">=</span> <span class="st">"cipro"</span>,</span>
-<span>       guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span></span>
+<span>  <span class="va">disk_values</span>,</span>
+<span>  mo <span class="op">=</span> <span class="st">"E. coli"</span>,</span>
+<span>  ab <span class="op">=</span> <span class="st">"cipro"</span>,</span>
+<span>  guideline <span class="op">=</span> <span class="st">"CLSI"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="AMR_files/figure-html/disk_plots_mo_ab-1.png" width="720"></p>
 </div>
 </div>
 <div class="section level3">
 <h3 id="independence-test">Independence test<a class="anchor" aria-label="anchor" href="#independence-test"></a>
 </h3>
-<p>The next example uses the <code>example_isolates</code> data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practice AMR data analysis.</p>
-<p>We will compare the resistance to fosfomycin (column <code>FOS</code>) in hospital A and D. The input for the <code><a href="https://rdrr.io/r/stats/fisher.test.html" class="external-link">fisher.test()</a></code> can be retrieved with a transformation like this:</p>
+<p>The next example uses the <code>example_isolates</code> data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practise AMR data analysis.</p>
+<p>We will compare the resistance to amoxicillin/clavulanic acid (column <code>FOS</code>) between an ICU and other clinical wards. The input for the <code><a href="https://rdrr.io/r/stats/fisher.test.html" class="external-link">fisher.test()</a></code> can be retrieved with a transformation like this:</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># use package 'tidyr' to pivot data:</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">check_FOS</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">hospital_id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"D"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># filter on only hospitals A and D</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">hospital_id</span>, <span class="va">FOS</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>             <span class="co"># select the hospitals and fosfomycin</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>                <span class="co"># group on the hospitals</span></span>
-<span>  <span class="fu"><a href="../reference/count.html">count_df</a></span><span class="op">(</span>combine_SI <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>          <span class="co"># count all isolates per group (hospital_id)</span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">hospital_id</span>,    <span class="co"># transform output so A and D are columns</span></span>
-<span>              values_from <span class="op">=</span> <span class="va">value</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>     </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">D</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>                         <span class="co"># and only select these columns</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="op">)</span>                              <span class="co"># transform to a good old matrix for fisher.test()</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ward</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ICU"</span>, <span class="st">"Clinical"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># filter on only these wards</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">ward</span>, <span class="va">AMC</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># select the wards and amoxi/clav</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># group on the wards</span></span>
+<span>  <span class="fu"><a href="../reference/count.html">count_df</a></span><span class="op">(</span>combine_SI <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># count all isolates per group (ward)</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span></span>
+<span>    names_from <span class="op">=</span> <span class="va">ward</span>, <span class="co"># transform output so "ICU" and "Clinical" are columns</span></span>
+<span>    values_from <span class="op">=</span> <span class="va">value</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">ICU</span>, <span class="va">Clinical</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># and only select these columns</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># transform to a good old matrix for fisher.test()</span></span>
 <span></span>
 <span><span class="va">check_FOS</span></span>
-<span><span class="co">#       A  D</span></span>
-<span><span class="co"># [1,] 25 77</span></span>
-<span><span class="co"># [2,] 24 33</span></span></code></pre></div>
+<span><span class="co">#      ICU Clinical</span></span>
+<span><span class="co"># [1,] 396      942</span></span>
+<span><span class="co"># [2,] 184      240</span></span></code></pre></div>
 <p>We can apply the test now with:</p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># do Fisher's Exact Test</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/fisher.test.html" class="external-link">fisher.test</a></span><span class="op">(</span><span class="va">check_FOS</span><span class="op">)</span>                            </span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/fisher.test.html" class="external-link">fisher.test</a></span><span class="op">(</span><span class="va">check_FOS</span><span class="op">)</span></span>
 <span><span class="co"># </span></span>
 <span><span class="co">#   Fisher's Exact Test for Count Data</span></span>
 <span><span class="co"># </span></span>
 <span><span class="co"># data:  check_FOS</span></span>
-<span><span class="co"># p-value = 0.03104</span></span>
+<span><span class="co"># p-value = 2.263e-07</span></span>
 <span><span class="co"># alternative hypothesis: true odds ratio is not equal to 1</span></span>
 <span><span class="co"># 95 percent confidence interval:</span></span>
-<span><span class="co">#  0.2111489 0.9485124</span></span>
+<span><span class="co">#  0.435261 0.691614</span></span>
 <span><span class="co"># sample estimates:</span></span>
 <span><span class="co"># odds ratio </span></span>
-<span><span class="co">#  0.4488318</span></span></code></pre></div>
-<p>As can be seen, the p value is 0.031, which means that the fosfomycin resistance found in isolates from patients in hospital A and D are really different.</p>
+<span><span class="co">#  0.5485079</span></span></code></pre></div>
+<p>As can be seen, the p value is practically zero (0.0000002263247), which means that the amoxicillin/clavulanic acid resistance found in isolates between patients in ICUs and other clinical wards are really different.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9045</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -206,7 +206,7 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># mind the bad spelling of amoxicillin in this line, </span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># mind the bad spelling of amoxicillin in this line,</span></span></span>
 <span class="r-in"><span><span class="co"># straight from a true health care record:</span></span></span>
 <span class="r-in"><span><span class="fu">ab_from_text</span><span class="op">(</span><span class="st">"28/03/2020 regular amoxicilliin 500mg po tds"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
@@ -237,22 +237,28 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Beta-lactams/penicillins" "Quinolones"              </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>clinical_text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"given 400mg cipro and 500 mg amox"</span>,</span></span>
-<span class="r-in"><span>                           <span class="st">"started on doxy iv today"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>abx_codes <span class="op">=</span> <span class="fu">ab_from_text</span><span class="op">(</span><span class="va">clinical_text</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>           abx_doses <span class="op">=</span> <span class="fu">ab_from_text</span><span class="op">(</span><span class="va">clinical_text</span>, type <span class="op">=</span> <span class="st">"doses"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>           abx_admin <span class="op">=</span> <span class="fu">ab_from_text</span><span class="op">(</span><span class="va">clinical_text</span>, type <span class="op">=</span> <span class="st">"admin"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>           abx_coll <span class="op">=</span> <span class="fu">ab_from_text</span><span class="op">(</span><span class="va">clinical_text</span>, collapse <span class="op">=</span> <span class="st">"|"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>           abx_coll_names <span class="op">=</span> <span class="fu">ab_from_text</span><span class="op">(</span><span class="va">clinical_text</span>,</span></span>
-<span class="r-in"><span>                                         collapse <span class="op">=</span> <span class="st">"|"</span>,</span></span>
-<span class="r-in"><span>                                         translate_ab <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>           abx_coll_doses <span class="op">=</span> <span class="fu">ab_from_text</span><span class="op">(</span><span class="va">clinical_text</span>,</span></span>
-<span class="r-in"><span>                                         type <span class="op">=</span> <span class="st">"doses"</span>,</span></span>
-<span class="r-in"><span>                                         collapse <span class="op">=</span> <span class="st">"|"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>           abx_coll_admin <span class="op">=</span> <span class="fu">ab_from_text</span><span class="op">(</span><span class="va">clinical_text</span>,</span></span>
-<span class="r-in"><span>                                         type <span class="op">=</span> <span class="st">"admin"</span>,</span></span>
-<span class="r-in"><span>                                         collapse <span class="op">=</span> <span class="st">"|"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>clinical_text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"given 400mg cipro and 500 mg amox"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"started on doxy iv today"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      abx_codes <span class="op">=</span> <span class="fu">ab_from_text</span><span class="op">(</span><span class="va">clinical_text</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      abx_doses <span class="op">=</span> <span class="fu">ab_from_text</span><span class="op">(</span><span class="va">clinical_text</span>, type <span class="op">=</span> <span class="st">"doses"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      abx_admin <span class="op">=</span> <span class="fu">ab_from_text</span><span class="op">(</span><span class="va">clinical_text</span>, type <span class="op">=</span> <span class="st">"admin"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      abx_coll <span class="op">=</span> <span class="fu">ab_from_text</span><span class="op">(</span><span class="va">clinical_text</span>, collapse <span class="op">=</span> <span class="st">"|"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      abx_coll_names <span class="op">=</span> <span class="fu">ab_from_text</span><span class="op">(</span><span class="va">clinical_text</span>,</span></span>
+<span class="r-in"><span>        collapse <span class="op">=</span> <span class="st">"|"</span>,</span></span>
+<span class="r-in"><span>        translate_ab <span class="op">=</span> <span class="st">"name"</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span>,</span></span>
+<span class="r-in"><span>      abx_coll_doses <span class="op">=</span> <span class="fu">ab_from_text</span><span class="op">(</span><span class="va">clinical_text</span>,</span></span>
+<span class="r-in"><span>        type <span class="op">=</span> <span class="st">"doses"</span>,</span></span>
+<span class="r-in"><span>        collapse <span class="op">=</span> <span class="st">"|"</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span>,</span></span>
+<span class="r-in"><span>      abx_coll_admin <span class="op">=</span> <span class="fu">ab_from_text</span><span class="op">(</span><span class="va">clinical_text</span>,</span></span>
+<span class="r-in"><span>        type <span class="op">=</span> <span class="st">"admin"</span>,</span></span>
+<span class="r-in"><span>        collapse <span class="op">=</span> <span class="st">"|"</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: dplyr</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>

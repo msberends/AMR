@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9045</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -138,7 +138,7 @@
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with 14,338 observations and 4 variables:</p><ul><li><p><code>fullname</code><br> Old full taxonomic name of the microorganism</p></li>
+    <p>A [tibble<a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble</a> with 14,338 observations and 4 variables:</p><ul><li><p><code>fullname</code><br> Old full taxonomic name of the microorganism</p></li>
 <li><p><code>fullname_new</code><br> New full taxonomic name of the microorganism</p></li>
 <li><p><code>ref</code><br> Author(s) and year of concerning scientific publication</p></li>
 <li><p><code>prevalence</code><br> Prevalence of the microorganism, see <code><a href="as.mo.html">as.mo()</a></code></p></li>
@@ -149,6 +149,10 @@
 <p>Parte, A.C. (2018). LPSN - List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; <a href="https://doi.org/10.1099/ijsem.0.002786" class="external-link">doi:10.1099/ijsem.0.002786</a></p>
     </div>
     <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit <a href="https://msberends.github.io/AMR/articles/datasets.html">our website for the download links</a>. The actual files are of course available on <a href="https://github.com/msberends/AMR/tree/main/data-raw" class="external-link">our GitHub repository</a>.</p>
+    </div>
+    <div class="section level2">
     <h2 id="catalogue-of-life">Catalogue of Life<a class="anchor" aria-label="anchor" href="#catalogue-of-life"></a></h2>
     
 
@@ -157,33 +161,27 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 <p><a href="catalogue_of_life.html">Click here</a> for more information about the included taxa. Check which versions of the CoL and LPSN were included in this package with <code><a href="catalogue_of_life_version.html">catalogue_of_life_version()</a></code>.</p>
     </div>
     <div class="section level2">
-    <h2 id="reference-data-publicly-available">Reference Data Publicly Available<a class="anchor" aria-label="anchor" href="#reference-data-publicly-available"></a></h2>
-    
-
-<p>All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this <code>AMR</code> package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find <a href="https://msberends.github.io/AMR/articles/datasets.html">all download links on our website</a>, which is automatically updated with every code change.</p>
-    </div>
-    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="as.mo.html">as.mo()</a></code> <code><a href="mo_property.html">mo_property()</a></code> <a href="microorganisms.html">microorganisms</a></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">microorganisms.old</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     fullname                 fullname_new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Abaphospora petrucciana          Nectria petrucciana</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      Abathostoma stercoris    Echinocyclidium stercoris</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Abbottina tannerbankensis       Nonion tannerbankensis</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Abditodentrix rhomboidalis  Tortoplectella rhomboidalis</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       Abiotrophia adiacens      Granulicatella adiacens</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  Abiotrophia balaenopterae Granulicatella balaenopterae</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       ref prevalence</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1          Kirschst, 1939          2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Berger in Corliss, 1979          3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3         McCulloch, 1977          3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4           Millett, 1899          3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Kawamura et al., 1995          2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     Lawson et al., 1999          2</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">microorganisms.old</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 14,338 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    fullname                   fullname_new                 ref           preva…¹</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Abaphospora petrucciana    Nectria petrucciana          Kirschst, 19…       2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Abathostoma stercoris      Echinocyclidium stercoris    Berger in Co…       3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Abbottina tannerbankensis  Nonion tannerbankensis       McCulloch, 1…       3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Abditodentrix rhomboidalis Tortoplectella rhomboidalis  Millett, 1899       3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Abiotrophia adiacens       Granulicatella adiacens      Kawamura et …       2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Abiotrophia balaenopterae  Granulicatella balaenopterae Lawson et al…       2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Abiotrophia elegans        Granulicatella elegans       Roggenkamp e…       2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Absidia blakesleeana       Lichtheimia blakesleeana     Lendn, 1924         3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Absidia butleri            Gongronella butleri          Lendn, 1926         3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Absidia corymbifera        Lichtheimia corymbifera      Sacc et al.,…       3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 14,328 more rows, and abbreviated variable name ¹​prevalence</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

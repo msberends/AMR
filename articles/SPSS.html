@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9045</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -162,7 +162,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>How to import data from SPSS / SAS / Stata</h1>
                         <h4 data-toc-skip class="author">Dr. Matthijs Berends</h4>
             
-            <h4 data-toc-skip class="date">26 August 2022</h4>
+            <h4 data-toc-skip class="date">28 August 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/HEAD/vignettes/SPSS.Rmd" class="external-link"><code>vignettes/SPSS.Rmd</code></a></small>
       <div class="d-none name"><code>SPSS.Rmd</code></div>
@@ -196,7 +196,7 @@
 </li>
 <li>
 <p><strong>R has a huge community.</strong></p>
-<p>Many R users just ask questions on websites like <a href="https://stackoverflow.com" class="external-link">StackOverflow.com</a>, the largest online community for programmers. At the time of writing, <a href="https://stackoverflow.com/questions/tagged/r?sort=votes" class="external-link">460,146 R-related questions</a> have already been asked on this platform (that covers questions and answers for any programming language). In my own experience, most questions are answered within a couple of minutes.</p>
+<p>Many R users just ask questions on websites like <a href="https://stackoverflow.com" class="external-link">StackOverflow.com</a>, the largest online community for programmers. At the time of writing, <a href="https://stackoverflow.com/questions/tagged/r?sort=votes" class="external-link">461,064 R-related questions</a> have already been asked on this platform (that covers questions and answers for any programming language). In my own experience, most questions are answered within a couple of minutes.</p>
 </li>
 <li>
 <p><strong>R understands any data type, including SPSS/SAS/Stata.</strong></p>
@@ -229,9 +229,11 @@
 <span><span class="co"># [1] "Gram-negative"</span></span>
 <span></span>
 <span><span class="co"># Klebsiella is intrinsic resistant to amoxicillin, according to EUCAST:</span></span>
-<span><span class="va">klebsiella_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mo <span class="op">=</span> <span class="st">"klebsiella"</span>, </span>
-<span>                              amox <span class="op">=</span> <span class="st">"S"</span>,</span>
-<span>                              stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">klebsiella_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  mo <span class="op">=</span> <span class="st">"klebsiella"</span>,</span>
+<span>  amox <span class="op">=</span> <span class="st">"S"</span>,</span>
+<span>  stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">klebsiella_test</span> <span class="co"># (our original data)</span></span>
 <span><span class="co">#           mo amox</span></span>
 <span><span class="co"># 1 klebsiella    S</span></span>
@@ -304,7 +306,7 @@
 <code class="sourceCode R"><span><span class="co"># download and install the latest version:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"haven"</span><span class="op">)</span></span>
 <span><span class="co"># load the package you just installed:</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://haven.tidyverse.org" class="external-link">haven</a></span><span class="op">)</span> </span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://haven.tidyverse.org" class="external-link">haven</a></span><span class="op">)</span></span></code></pre></div>
 <p>You can now import files as follows:</p>
 <div class="section level4">
 <h4 id="spss">SPSS<a class="anchor" aria-label="anchor" href="#spss"></a>
@@ -343,7 +345,7 @@
 <code class="sourceCode R"><span><span class="co"># save as regular SAS file:</span></span>
 <span><span class="fu">write_sas</span><span class="op">(</span>data <span class="op">=</span> <span class="va">yourdata</span>, path <span class="op">=</span> <span class="st">"path/to/file"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># the SAS transport format is an open format </span></span>
+<span><span class="co"># the SAS transport format is an open format</span></span>
 <span><span class="co"># (required for submission of the data to the FDA)</span></span>
 <span><span class="fu">write_xpt</span><span class="op">(</span>data <span class="op">=</span> <span class="va">yourdata</span>, path <span class="op">=</span> <span class="st">"path/to/file"</span>, version <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span></code></pre></div>
 </div>

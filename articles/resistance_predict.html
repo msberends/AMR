@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9045</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -186,55 +186,42 @@
 </h2>
 <p>Our package contains a function <code><a href="../reference/resistance_predict.html">resistance_predict()</a></code>, which takes the same input as functions for <a href="./AMR.html">other AMR data analysis</a>. Based on a date column, it calculates cases per year and uses a regression model to predict antimicrobial resistance.</p>
 <p>It is basically as easy as:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># resistance prediction of piperacillin/tazobactam (TZP):</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">resistance_predict</span>(<span class="at">tbl =</span> example_isolates, <span class="at">col_date =</span> <span class="st">"date"</span>, <span class="at">col_ab =</span> <span class="st">"TZP"</span>, <span class="at">model =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># or:</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>example_isolates <span class="sc">%&gt;%</span> </span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">resistance_predict</span>(<span class="at">col_ab =</span> <span class="st">"TZP"</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                     model  <span class="st">"binomial"</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># to bind it to object 'predict_TZP' for example:</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>predict_TZP <span class="ot">&lt;-</span> example_isolates <span class="sc">%&gt;%</span> </span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">resistance_predict</span>(<span class="at">col_ab =</span> <span class="st">"TZP"</span>,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">model =</span> <span class="st">"binomial"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># resistance prediction of piperacillin/tazobactam (TZP):</span></span>
+<span><span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">example_isolates</span>, col_date <span class="op">=</span> <span class="st">"date"</span>, col_ab <span class="op">=</span> <span class="st">"TZP"</span>, model <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># or:</span></span>
+<span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span><span class="op">(</span></span>
+<span>    col_ab <span class="op">=</span> <span class="st">"TZP"</span>,</span>
+<span>    model <span class="op">=</span> <span class="st">"binomial"</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="co"># to bind it to object 'predict_TZP' for example:</span></span>
+<span><span class="va">predict_TZP</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span><span class="op">(</span></span>
+<span>    col_ab <span class="op">=</span> <span class="st">"TZP"</span>,</span>
+<span>    model <span class="op">=</span> <span class="st">"binomial"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p>The function will look for a date column itself if <code>col_date</code> is not set.</p>
 <p>When running any of these commands, a summary of the regression model will be printed unless using <code>resistance_predict(..., info = FALSE)</code>.</p>
 <p>This text is only a printed summary - the actual result (output) of the function is a <code>data.frame</code> containing for each year: the number of observations, the actual observed resistance, the estimated resistance and the standard error below and above the estimation:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">predict_TZP</span></span>
-<span><span class="co">#    year      value    se_min    se_max observations   observed  estimated</span></span>
-<span><span class="co"># 1  2002 0.20000000        NA        NA           15 0.20000000 0.05616378</span></span>
-<span><span class="co"># 2  2003 0.06250000        NA        NA           32 0.06250000 0.06163839</span></span>
-<span><span class="co"># 3  2004 0.08536585        NA        NA           82 0.08536585 0.06760841</span></span>
-<span><span class="co"># 4  2005 0.05000000        NA        NA           60 0.05000000 0.07411100</span></span>
-<span><span class="co"># 5  2006 0.05084746        NA        NA           59 0.05084746 0.08118454</span></span>
-<span><span class="co"># 6  2007 0.12121212        NA        NA           66 0.12121212 0.08886843</span></span>
-<span><span class="co"># 7  2008 0.04166667        NA        NA           72 0.04166667 0.09720264</span></span>
-<span><span class="co"># 8  2009 0.01639344        NA        NA           61 0.01639344 0.10622731</span></span>
-<span><span class="co"># 9  2010 0.05660377        NA        NA           53 0.05660377 0.11598223</span></span>
-<span><span class="co"># 10 2011 0.18279570        NA        NA           93 0.18279570 0.12650615</span></span>
-<span><span class="co"># 11 2012 0.30769231        NA        NA           65 0.30769231 0.13783610</span></span>
-<span><span class="co"># 12 2013 0.06896552        NA        NA           58 0.06896552 0.15000651</span></span>
-<span><span class="co"># 13 2014 0.10000000        NA        NA           60 0.10000000 0.16304829</span></span>
-<span><span class="co"># 14 2015 0.23636364        NA        NA           55 0.23636364 0.17698785</span></span>
-<span><span class="co"># 15 2016 0.22619048        NA        NA           84 0.22619048 0.19184597</span></span>
-<span><span class="co"># 16 2017 0.16279070        NA        NA           86 0.16279070 0.20763675</span></span>
-<span><span class="co"># 17 2018 0.22436641 0.1938710 0.2548618           NA         NA 0.22436641</span></span>
-<span><span class="co"># 18 2019 0.24203228 0.2062911 0.2777735           NA         NA 0.24203228</span></span>
-<span><span class="co"># 19 2020 0.26062172 0.2191758 0.3020676           NA         NA 0.26062172</span></span>
-<span><span class="co"># 20 2021 0.28011130 0.2325557 0.3276669           NA         NA 0.28011130</span></span>
-<span><span class="co"># 21 2022 0.30046606 0.2464567 0.3544755           NA         NA 0.30046606</span></span>
-<span><span class="co"># 22 2023 0.32163907 0.2609011 0.3823771           NA         NA 0.32163907</span></span>
-<span><span class="co"># 23 2024 0.34357130 0.2759081 0.4112345           NA         NA 0.34357130</span></span>
-<span><span class="co"># 24 2025 0.36619175 0.2914934 0.4408901           NA         NA 0.36619175</span></span>
-<span><span class="co"># 25 2026 0.38941799 0.3076686 0.4711674           NA         NA 0.38941799</span></span>
-<span><span class="co"># 26 2027 0.41315710 0.3244399 0.5018743           NA         NA 0.41315710</span></span>
-<span><span class="co"># 27 2028 0.43730688 0.3418075 0.5328063           NA         NA 0.43730688</span></span>
-<span><span class="co"># 28 2029 0.46175755 0.3597639 0.5637512           NA         NA 0.46175755</span></span>
-<span><span class="co"># 29 2030 0.48639359 0.3782932 0.5944939           NA         NA 0.48639359</span></span>
-<span><span class="co"># 30 2031 0.51109592 0.3973697 0.6248221           NA         NA 0.51109592</span></span>
-<span><span class="co"># 31 2032 0.53574417 0.4169574 0.6545309           NA         NA 0.53574417</span></span></code></pre></div>
+<span><span class="co"># <span style="color: #949494;"># A tibble: 31 × 7</span></span></span>
+<span><span class="co">#     year  value se_min se_max observations observed estimated</span></span>
+<span><span class="co">#  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co"># <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>002 0.2        <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           15   0.2       0.056<span style="text-decoration: underline;">2</span></span></span>
+<span><span class="co"># <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>003 0.062<span style="text-decoration: underline;">5</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           32   0.062<span style="text-decoration: underline;">5</span>    0.061<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co"># <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>004 0.085<span style="text-decoration: underline;">4</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           82   0.085<span style="text-decoration: underline;">4</span>    0.067<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co"># <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>005 0.05       <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           60   0.05      0.074<span style="text-decoration: underline;">1</span></span></span>
+<span><span class="co"># <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>006 0.050<span style="text-decoration: underline;">8</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           59   0.050<span style="text-decoration: underline;">8</span>    0.081<span style="text-decoration: underline;">2</span></span></span>
+<span><span class="co"># <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>007 0.121      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           66   0.121     0.088<span style="text-decoration: underline;">9</span></span></span>
+<span><span class="co"># <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>008 0.041<span style="text-decoration: underline;">7</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           72   0.041<span style="text-decoration: underline;">7</span>    0.097<span style="text-decoration: underline;">2</span></span></span>
+<span><span class="co"># <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>009 0.016<span style="text-decoration: underline;">4</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           61   0.016<span style="text-decoration: underline;">4</span>    0.106 </span></span>
+<span><span class="co"># <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>010 0.056<span style="text-decoration: underline;">6</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           53   0.056<span style="text-decoration: underline;">6</span>    0.116 </span></span>
+<span><span class="co"># <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>011 0.183      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           93   0.183     0.127 </span></span>
+<span><span class="co"># <span style="color: #949494;"># … with 21 more rows</span></span></span></code></pre></div>
 <p>The function <code>plot</code> is available in base R, and can be extended by other packages to depend the output based on the type of input. We extended its function to cope with resistance predictions:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">predict_TZP</span><span class="op">)</span></span></code></pre></div>
@@ -256,7 +243,7 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="va">mo</span>, language <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">==</span> <span class="st">"Gram-positive"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span><span class="op">(</span>col_ab <span class="op">=</span> <span class="st">"VAN"</span>, year_min <span class="op">=</span> <span class="fl">2010</span>, info <span class="op">=</span> <span class="cn">FALSE</span>, model <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span><span class="op">(</span>col_ab <span class="op">=</span> <span class="st">"VAN"</span>, year_min <span class="op">=</span> <span class="fl">2010</span>, info <span class="op">=</span> <span class="cn">FALSE</span>, model <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># ℹ Using column 'date' as input for `col_date`.</span></span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-6-1.png" width="720"></p>
@@ -302,7 +289,7 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/mo_property.html">mo_gramstain</a></span><span class="op">(</span><span class="va">mo</span>, language <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">==</span> <span class="st">"Gram-positive"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span><span class="op">(</span>col_ab <span class="op">=</span> <span class="st">"VAN"</span>, year_min <span class="op">=</span> <span class="fl">2010</span>, info <span class="op">=</span> <span class="cn">FALSE</span>, model <span class="op">=</span> <span class="st">"linear"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/resistance_predict.html">resistance_predict</a></span><span class="op">(</span>col_ab <span class="op">=</span> <span class="st">"VAN"</span>, year_min <span class="op">=</span> <span class="fl">2010</span>, info <span class="op">=</span> <span class="cn">FALSE</span>, model <span class="op">=</span> <span class="st">"linear"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/resistance_predict.html">ggplot_rsi_predict</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># ℹ Using column 'date' as input for `col_date`.</span></span></code></pre></div>
 <p><img src="resistance_predict_files/figure-html/unnamed-chunk-7-1.png" width="720"></p>

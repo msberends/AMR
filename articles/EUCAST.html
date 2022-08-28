@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9045</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -184,9 +184,13 @@
 <p>These rules can be used to discard impossible bug-drug combinations in your data. For example, <em>Klebsiella</em> produces beta-lactamase that prevents ampicillin (or amoxicillin) from working against it. In other words, practically every strain of <em>Klebsiella</em> is resistant to ampicillin.</p>
 <p>Sometimes, laboratory data can still contain such strains with ampicillin being susceptible to ampicillin. This could be because an antibiogram is available before an identification is available, and the antibiogram is then not re-interpreted based on the identification (namely, <em>Klebsiella</em>). EUCAST expert rules solve this, that can be applied using <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">oops</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Klebsiella"</span>, </span>
-<span>                          <span class="st">"Escherichia"</span><span class="op">)</span>,</span>
-<span>                   ampicillin <span class="op">=</span> <span class="st">"S"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">oops</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  mo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Klebsiella"</span>,</span>
+<span>    <span class="st">"Escherichia"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  ampicillin <span class="op">=</span> <span class="st">"S"</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">oops</span></span>
 <span><span class="co">#            mo ampicillin</span></span>
 <span><span class="co"># 1  Klebsiella          S</span></span>
@@ -198,28 +202,36 @@
 <span><span class="co"># 2 Escherichia          S</span></span></code></pre></div>
 <p>A more convenient function is <code><a href="../reference/mo_property.html">mo_is_intrinsic_resistant()</a></code> that uses the same guideline, but allows to check for one or more specific microorganisms or antibiotics:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Klebsiella"</span>, <span class="st">"Escherichia"</span><span class="op">)</span>,</span>
-<span>                          <span class="st">"ampicillin"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Klebsiella"</span>, <span class="st">"Escherichia"</span><span class="op">)</span>,</span>
+<span>  <span class="st">"ampicillin"</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co"># [1]  TRUE FALSE</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span><span class="st">"Klebsiella"</span>,</span>
-<span>                          <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ampicillin"</span>, <span class="st">"kanamycin"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/mo_property.html">mo_is_intrinsic_resistant</a></span><span class="op">(</span></span>
+<span>  <span class="st">"Klebsiella"</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ampicillin"</span>, <span class="st">"kanamycin"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co"># [1]  TRUE FALSE</span></span></code></pre></div>
 <p>EUCAST rules can not only be used for correction, they can also be used for filling in known resistance and susceptibility based on results of other antimicrobials drugs. This process is called <em>interpretive reading</em>, is basically a form of imputation, and is part of the <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> function as well:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Staphylococcus aureus"</span>,</span>
-<span>                          <span class="st">"Enterococcus faecalis"</span>,</span>
-<span>                          <span class="st">"Escherichia coli"</span>,</span>
-<span>                          <span class="st">"Klebsiella pneumoniae"</span>,</span>
-<span>                          <span class="st">"Pseudomonas aeruginosa"</span><span class="op">)</span>,</span>
-<span>                   VAN <span class="op">=</span> <span class="st">"-"</span>,       <span class="co"># Vancomycin</span></span>
-<span>                   AMX <span class="op">=</span> <span class="st">"-"</span>,       <span class="co"># Amoxicillin</span></span>
-<span>                   COL <span class="op">=</span> <span class="st">"-"</span>,       <span class="co"># Colistin</span></span>
-<span>                   CAZ <span class="op">=</span> <span class="st">"-"</span>,       <span class="co"># Ceftazidime</span></span>
-<span>                   CXM <span class="op">=</span> <span class="st">"-"</span>,       <span class="co"># Cefuroxime</span></span>
-<span>                   PEN <span class="op">=</span> <span class="st">"S"</span>,       <span class="co"># Benzylenicillin</span></span>
-<span>                   FOX <span class="op">=</span> <span class="st">"S"</span>,       <span class="co"># Cefoxitin</span></span>
-<span>                   stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  mo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Staphylococcus aureus"</span>,</span>
+<span>    <span class="st">"Enterococcus faecalis"</span>,</span>
+<span>    <span class="st">"Escherichia coli"</span>,</span>
+<span>    <span class="st">"Klebsiella pneumoniae"</span>,</span>
+<span>    <span class="st">"Pseudomonas aeruginosa"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  VAN <span class="op">=</span> <span class="st">"-"</span>, <span class="co"># Vancomycin</span></span>
+<span>  AMX <span class="op">=</span> <span class="st">"-"</span>, <span class="co"># Amoxicillin</span></span>
+<span>  COL <span class="op">=</span> <span class="st">"-"</span>, <span class="co"># Colistin</span></span>
+<span>  CAZ <span class="op">=</span> <span class="st">"-"</span>, <span class="co"># Ceftazidime</span></span>
+<span>  CXM <span class="op">=</span> <span class="st">"-"</span>, <span class="co"># Cefuroxime</span></span>
+<span>  PEN <span class="op">=</span> <span class="st">"S"</span>, <span class="co"># Benzylenicillin</span></span>
+<span>  FOX <span class="op">=</span> <span class="st">"S"</span>, <span class="co"># Cefoxitin</span></span>
+<span>  stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span></span></code></pre></div>
 <table class="table">

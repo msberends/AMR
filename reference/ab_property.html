@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9045</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -239,7 +239,7 @@
     <h2 id="reference-data-publicly-available">Reference Data Publicly Available<a class="anchor" aria-label="anchor" href="#reference-data-publicly-available"></a></h2>
     
 
-<p>All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this <code>AMR</code> package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find <a href="https://msberends.github.io/AMR/articles/datasets.html">all download links on our website</a>, which is automatically updated with every code change.</p>
+<p>All data sets in this <code>AMR</code> package (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit <a href="https://msberends.github.io/AMR/articles/datasets.html">our website for the download links</a>. The actual files are of course available on <a href="https://github.com/msberends/AMR/tree/main/data-raw" class="external-link">our GitHub repository</a>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -249,13 +249,13 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># all properties:</span></span></span>
-<span class="r-in"><span><span class="fu">ab_name</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span>       <span class="co"># "Amoxicillin"</span></span></span>
+<span class="r-in"><span><span class="fu">ab_name</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span> <span class="co"># "Amoxicillin"</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Amoxicillin"</span>
-<span class="r-in"><span><span class="fu">ab_atc</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span>        <span class="co"># "J01CA04" (ATC code from the WHO)</span></span></span>
+<span class="r-in"><span><span class="fu">ab_atc</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span> <span class="co"># "J01CA04" (ATC code from the WHO)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01CA04"</span>
-<span class="r-in"><span><span class="fu">ab_cid</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span>        <span class="co"># 33613 (Compound ID from PubChem)</span></span></span>
+<span class="r-in"><span><span class="fu">ab_cid</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span> <span class="co"># 33613 (Compound ID from PubChem)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 33613</span>
-<span class="r-in"><span><span class="fu">ab_synonyms</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span>   <span class="co"># a list with brand names of amoxicillin</span></span></span>
+<span class="r-in"><span><span class="fu">ab_synonyms</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span> <span class="co"># a list with brand names of amoxicillin</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "actimoxi"           "amoclen"            "amolin"            </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "amopen"             "amopenixin"         "amoxibiotic"       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "amoxicaps"          "amoxicilina"        "amoxicillin"       </span>
@@ -287,34 +287,36 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [37] "ospamox"            "pamoxicillin"       "piramox"           </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [40] "robamox"            "sawamox pm"         "tolodina"          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [43] "unicillin"          "utimox"             "vetramox"          </span>
-<span class="r-in"><span><span class="fu">ab_group</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span>      <span class="co"># "Beta-lactams/penicillins"</span></span></span>
+<span class="r-in"><span><span class="fu">ab_group</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span> <span class="co"># "Beta-lactams/penicillins"</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Beta-lactams/penicillins"</span>
 <span class="r-in"><span><span class="fu">ab_atc_group1</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span> <span class="co"># "Beta-lactam antibacterials, penicillins"</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Beta-lactam antibacterials, penicillins"</span>
 <span class="r-in"><span><span class="fu">ab_atc_group2</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span> <span class="co"># "Penicillins with extended spectrum"</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Penicillins with extended spectrum"</span>
-<span class="r-in"><span><span class="fu">ab_url</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span>        <span class="co"># link to the official WHO page</span></span></span>
+<span class="r-in"><span><span class="fu">ab_url</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span> <span class="co"># link to the official WHO page</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                           Amoxicillin </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> "https://www.whocc.no/atc_ddd_index/?code=J01CA04&amp;showdescription=no" </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># smart lowercase tranformation</span></span></span>
-<span class="r-in"><span><span class="fu">ab_name</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"PLB"</span><span class="op">)</span><span class="op">)</span>  <span class="co"># "Amoxicillin/clavulanic acid" "Polymyxin B"</span></span></span>
+<span class="r-in"><span><span class="fu">ab_name</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"PLB"</span><span class="op">)</span><span class="op">)</span> <span class="co"># "Amoxicillin/clavulanic acid" "Polymyxin B"</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Amoxicillin/clavulanic acid" "Polymyxin B"                </span>
-<span class="r-in"><span><span class="fu">ab_name</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"PLB"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>        tolower <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>       <span class="co"># "amoxicillin/clavulanic acid" "polymyxin B"</span></span></span>
+<span class="r-in"><span><span class="fu">ab_name</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"PLB"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  tolower <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span> <span class="co"># "amoxicillin/clavulanic acid" "polymyxin B"</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "amoxicillin/clavulanic acid" "polymyxin B"                </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># defined daily doses (DDD)</span></span></span>
-<span class="r-in"><span><span class="fu">ab_ddd</span><span class="op">(</span><span class="st">"AMX"</span>, <span class="st">"oral"</span><span class="op">)</span>       <span class="co">#  1.5</span></span></span>
+<span class="r-in"><span><span class="fu">ab_ddd</span><span class="op">(</span><span class="st">"AMX"</span>, <span class="st">"oral"</span><span class="op">)</span> <span class="co">#  1.5</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.5</span>
 <span class="r-in"><span><span class="fu">ab_ddd_units</span><span class="op">(</span><span class="st">"AMX"</span>, <span class="st">"oral"</span><span class="op">)</span> <span class="co"># "g"</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "g"</span>
-<span class="r-in"><span><span class="fu">ab_ddd</span><span class="op">(</span><span class="st">"AMX"</span>, <span class="st">"iv"</span><span class="op">)</span>         <span class="co">#  3</span></span></span>
+<span class="r-in"><span><span class="fu">ab_ddd</span><span class="op">(</span><span class="st">"AMX"</span>, <span class="st">"iv"</span><span class="op">)</span> <span class="co">#  3</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3</span>
-<span class="r-in"><span><span class="fu">ab_ddd_units</span><span class="op">(</span><span class="st">"AMX"</span>, <span class="st">"iv"</span><span class="op">)</span>   <span class="co"># "g"</span></span></span>
+<span class="r-in"><span><span class="fu">ab_ddd_units</span><span class="op">(</span><span class="st">"AMX"</span>, <span class="st">"iv"</span><span class="op">)</span> <span class="co"># "g"</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "g"</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">ab_info</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span>       <span class="co"># all properties as a list</span></span></span>
+<span class="r-in"><span><span class="fu">ab_info</span><span class="op">(</span><span class="st">"AMX"</span><span class="op">)</span> <span class="co"># all properties as a list</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ab</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "AMX"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -376,17 +378,17 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># all ab_* functions use as.ab() internally, so you can go from 'any' to 'any':</span></span></span>
-<span class="r-in"><span><span class="fu">ab_atc</span><span class="op">(</span><span class="st">"AMP"</span><span class="op">)</span>           <span class="co"># ATC code of AMP (ampicillin)</span></span></span>
+<span class="r-in"><span><span class="fu">ab_atc</span><span class="op">(</span><span class="st">"AMP"</span><span class="op">)</span> <span class="co"># ATC code of AMP (ampicillin)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01CA01" "S01AA19"</span>
-<span class="r-in"><span><span class="fu">ab_group</span><span class="op">(</span><span class="st">"J01CA01"</span><span class="op">)</span>     <span class="co"># Drug group of ampicillins ATC code</span></span></span>
+<span class="r-in"><span><span class="fu">ab_group</span><span class="op">(</span><span class="st">"J01CA01"</span><span class="op">)</span> <span class="co"># Drug group of ampicillins ATC code</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Beta-lactams/penicillins"</span>
-<span class="r-in"><span><span class="fu">ab_loinc</span><span class="op">(</span><span class="st">"ampicillin"</span><span class="op">)</span>  <span class="co"># LOINC codes of ampicillin</span></span></span>
+<span class="r-in"><span><span class="fu">ab_loinc</span><span class="op">(</span><span class="st">"ampicillin"</span><span class="op">)</span> <span class="co"># LOINC codes of ampicillin</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "21066-6" "3355-5"  "33562-0" "33919-2" "43883-8" "43884-6" "87604-5"</span>
-<span class="r-in"><span><span class="fu">ab_name</span><span class="op">(</span><span class="st">"21066-6"</span><span class="op">)</span>      <span class="co"># "Ampicillin" (using LOINC)</span></span></span>
+<span class="r-in"><span><span class="fu">ab_name</span><span class="op">(</span><span class="st">"21066-6"</span><span class="op">)</span> <span class="co"># "Ampicillin" (using LOINC)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Ampicillin"</span>
-<span class="r-in"><span><span class="fu">ab_name</span><span class="op">(</span><span class="fl">6249</span><span class="op">)</span>           <span class="co"># "Ampicillin" (using CID)</span></span></span>
+<span class="r-in"><span><span class="fu">ab_name</span><span class="op">(</span><span class="fl">6249</span><span class="op">)</span> <span class="co"># "Ampicillin" (using CID)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Ampicillin"</span>
-<span class="r-in"><span><span class="fu">ab_name</span><span class="op">(</span><span class="st">"J01CA01"</span><span class="op">)</span>      <span class="co"># "Ampicillin" (using ATC)</span></span></span>
+<span class="r-in"><span><span class="fu">ab_name</span><span class="op">(</span><span class="st">"J01CA01"</span><span class="op">)</span> <span class="co"># "Ampicillin" (using ATC)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Ampicillin"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># spelling from different languages and dyslexia are no problem</span></span></span>
@@ -401,96 +403,86 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># use set_ab_names() for renaming columns</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "date"            "hospital_id"     "ward_icu"        "ward_clinical"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "ward_outpatient" "age"             "gender"          "patient_id"     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "mo"              "PEN"             "OXA"             "FLC"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "AMX"             "AMC"             "AMP"             "TZP"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "CZO"             "FEP"             "CXM"             "FOX"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "CTX"             "CAZ"             "CRO"             "GEN"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "TOB"             "AMK"             "KAN"             "TMP"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "SXT"             "NIT"             "FOS"             "LNZ"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [33] "CIP"             "MFX"             "VAN"             "TEC"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "TCY"             "TGC"             "DOX"             "ERY"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [41] "CLI"             "AZM"             "IPM"             "MEM"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [45] "MTR"             "CHL"             "COL"             "MUP"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [49] "RIF"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "date"    "patient" "age"     "gender"  "ward"    "mo"      "PEN"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "OXA"     "FLC"     "AMX"     "AMC"     "AMP"     "TZP"     "CZO"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "FEP"     "CXM"     "FOX"     "CTX"     "CAZ"     "CRO"     "GEN"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "TOB"     "AMK"     "KAN"     "TMP"     "SXT"     "NIT"     "FOS"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "LNZ"     "CIP"     "MFX"     "VAN"     "TEC"     "TCY"     "TGC"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [36] "DOX"     "ERY"     "CLI"     "AZM"     "IPM"     "MEM"     "MTR"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "CHL"     "COL"     "MUP"     "RIF"    </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="fu">set_ab_names</span><span class="op">(</span><span class="va">example_isolates</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "date"                          "hospital_id"                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "ward_icu"                      "ward_clinical"                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "ward_outpatient"               "age"                          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "gender"                        "patient_id"                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "mo"                            "benzylpenicillin"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11] "oxacillin"                     "flucloxacillin"               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "amoxicillin"                   "amoxicillin_clavulanic_acid"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "ampicillin"                    "piperacillin_tazobactam"      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "cefazolin"                     "cefepime"                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "cefuroxime"                    "cefoxitin"                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "cefotaxime"                    "ceftazidime"                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [23] "ceftriaxone"                   "gentamicin"                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "tobramycin"                    "amikacin"                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [27] "kanamycin"                     "trimethoprim"                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "trimethoprim_sulfamethoxazole" "nitrofurantoin"               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "fosfomycin"                    "linezolid"                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [33] "ciprofloxacin"                 "moxifloxacin"                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [35] "vancomycin"                    "teicoplanin"                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "tetracycline"                  "tigecycline"                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [39] "doxycycline"                   "erythromycin"                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [41] "clindamycin"                   "azithromycin"                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "imipenem"                      "meropenem"                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [45] "metronidazole"                 "chloramphenicol"              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [47] "colistin"                      "mupirocin"                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [49] "rifampicin"                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "date"                          "patient"                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "age"                           "gender"                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "ward"                          "mo"                           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "benzylpenicillin"              "oxacillin"                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "flucloxacillin"                "amoxicillin"                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11] "amoxicillin_clavulanic_acid"   "ampicillin"                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "piperacillin_tazobactam"       "cefazolin"                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "cefepime"                      "cefuroxime"                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "cefoxitin"                     "cefotaxime"                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "ceftazidime"                   "ceftriaxone"                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "gentamicin"                    "tobramycin"                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [23] "amikacin"                      "kanamycin"                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "trimethoprim"                  "trimethoprim_sulfamethoxazole"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [27] "nitrofurantoin"                "fosfomycin"                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "linezolid"                     "ciprofloxacin"                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "moxifloxacin"                  "vancomycin"                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [33] "teicoplanin"                   "tetracycline"                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [35] "tigecycline"                   "doxycycline"                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "erythromycin"                  "clindamycin"                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [39] "azithromycin"                  "imipenem"                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [41] "meropenem"                     "metronidazole"                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "chloramphenicol"               "colistin"                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [45] "mupirocin"                     "rifampicin"                   </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="fu">set_ab_names</span><span class="op">(</span><span class="va">example_isolates</span>, <span class="va">NIT</span><span class="op">:</span><span class="va">VAN</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "date"            "hospital_id"     "ward_icu"        "ward_clinical"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "ward_outpatient" "age"             "gender"          "patient_id"     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "mo"              "PEN"             "OXA"             "FLC"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "AMX"             "AMC"             "AMP"             "TZP"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "CZO"             "FEP"             "CXM"             "FOX"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "CTX"             "CAZ"             "CRO"             "GEN"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "TOB"             "AMK"             "KAN"             "TMP"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "SXT"             "nitrofurantoin"  "fosfomycin"      "linezolid"      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [33] "ciprofloxacin"   "moxifloxacin"    "vancomycin"      "TEC"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "TCY"             "TGC"             "DOX"             "ERY"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [41] "CLI"             "AZM"             "IPM"             "MEM"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [45] "MTR"             "CHL"             "COL"             "MUP"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [49] "RIF"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "date"           "patient"        "age"            "gender"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "ward"           "mo"             "PEN"            "OXA"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "FLC"            "AMX"            "AMC"            "AMP"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "TZP"            "CZO"            "FEP"            "CXM"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "FOX"            "CTX"            "CAZ"            "CRO"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "GEN"            "TOB"            "AMK"            "KAN"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "TMP"            "SXT"            "nitrofurantoin" "fosfomycin"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "linezolid"      "ciprofloxacin"  "moxifloxacin"   "vancomycin"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [33] "TEC"            "TCY"            "TGC"            "DOX"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "ERY"            "CLI"            "AZM"            "IPM"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [41] "MEM"            "MTR"            "CHL"            "COL"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [45] "MUP"            "RIF"           </span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu">set_ab_names</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span>    </span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># this does the same:</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename_with</a></span><span class="op">(</span><span class="va">set_ab_names</span><span class="op">)</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename_with</a></span><span class="op">(</span><span class="va">set_ab_names</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  </span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># set_ab_names() works with any AB property:</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu">set_ab_names</span><span class="op">(</span>property <span class="op">=</span> <span class="st">"atc"</span><span class="op">)</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">set_ab_names</span><span class="op">(</span>property <span class="op">=</span> <span class="st">"atc"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span>    </span></span>
-<span class="r-in"><span> <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>   <span class="fu">set_ab_names</span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.rsi</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span>   </span></span>
-<span class="r-in"><span> <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>   <span class="fu">set_ab_names</span><span class="op">(</span><span class="va">NIT</span><span class="op">:</span><span class="va">VAN</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">set_ab_names</span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.rsi</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">set_ab_names</span><span class="op">(</span><span class="va">NIT</span><span class="op">:</span><span class="va">VAN</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "date"            "hospital_id"     "ward_icu"        "ward_clinical"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "ward_outpatient" "age"             "gender"          "patient_id"     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "mo"              "PEN"             "OXA"             "FLC"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "AMX"             "AMC"             "AMP"             "TZP"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "CZO"             "FEP"             "CXM"             "FOX"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "CTX"             "CAZ"             "CRO"             "GEN"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "TOB"             "AMK"             "KAN"             "TMP"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "SXT"             "nitrofurantoin"  "fosfomycin"      "linezolid"      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [33] "ciprofloxacin"   "moxifloxacin"    "vancomycin"      "TEC"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "TCY"             "TGC"             "DOX"             "ERY"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [41] "CLI"             "AZM"             "IPM"             "MEM"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [45] "MTR"             "CHL"             "COL"             "MUP"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [49] "RIF"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "date"           "patient"        "age"            "gender"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "ward"           "mo"             "PEN"            "OXA"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "FLC"            "AMX"            "AMC"            "AMP"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "TZP"            "CZO"            "FEP"            "CXM"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "FOX"            "CTX"            "CAZ"            "CRO"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "GEN"            "TOB"            "AMK"            "KAN"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "TMP"            "SXT"            "nitrofurantoin" "fosfomycin"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "linezolid"      "ciprofloxacin"  "moxifloxacin"   "vancomycin"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [33] "TEC"            "TCY"            "TGC"            "DOX"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "ERY"            "CLI"            "AZM"            "IPM"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [41] "MEM"            "MTR"            "CHL"            "COL"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [45] "MUP"            "RIF"           </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

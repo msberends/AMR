@@ -12,7 +12,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9045</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -169,7 +169,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
-<dd><p>data with antibiotic columns, such as <code>amox</code>, <code>AMX</code> and <code>AMC</code></p></dd>
+<dd><p>a data set with antibiotic columns, such as <code>amox</code>, <code>AMX</code> and <code>AMC</code></p></dd>
 
 
 <dt>col_mo</dt>
@@ -238,26 +238,26 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <span>                         <span class="va">AMC</span> <span class="op">==</span> <span class="st">"I"</span> <span class="op">&amp;</span> <span class="va">genus</span> <span class="op">==</span> <span class="st">"Klebsiella"</span> <span class="op">~</span> <span class="va">aminopenicillins</span> <span class="op">==</span> <span class="st">"I"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span><span class="op">(</span><span class="va">example_isolates</span>, rules <span class="op">=</span> <span class="st">"custom"</span>, custom_rules <span class="op">=</span> <span class="va">x</span>, info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 2,000 x 49</span></span>
-<span><span class="co">#&gt;    date       hospit~1 ward_~2 ward_~3 ward_~4   age gender patie~5 mo          </span></span>
-<span><span class="co">#&gt;  * &lt;date&gt;     &lt;fct&gt;    &lt;lgl&gt;   &lt;lgl&gt;   &lt;lgl&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;mo&gt;        </span></span>
-<span><span class="co">#&gt;  1 2002-01-02 D        FALSE   TRUE    FALSE      65 F      A77334  B_ESCHR_COLI</span></span>
-<span><span class="co">#&gt;  2 2002-01-03 D        FALSE   TRUE    FALSE      65 F      A77334  B_ESCHR_COLI</span></span>
-<span><span class="co">#&gt;  3 2002-01-07 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR</span></span>
-<span><span class="co">#&gt;  4 2002-01-07 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR</span></span>
-<span><span class="co">#&gt;  5 2002-01-13 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR</span></span>
-<span><span class="co">#&gt;  6 2002-01-13 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR</span></span>
-<span><span class="co">#&gt;  7 2002-01-14 D        FALSE   TRUE    FALSE      78 M      462729  B_STPHY_AURS</span></span>
-<span><span class="co">#&gt;  8 2002-01-14 D        FALSE   TRUE    FALSE      78 M      462729  B_STPHY_AURS</span></span>
-<span><span class="co">#&gt;  9 2002-01-16 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR</span></span>
-<span><span class="co">#&gt; 10 2002-01-17 B        TRUE    FALSE   FALSE      79 F      858515  B_STPHY_EPDR</span></span>
-<span><span class="co">#&gt; # ... with 1,990 more rows, 40 more variables: PEN &lt;rsi&gt;, OXA &lt;rsi&gt;, FLC &lt;rsi&gt;,</span></span>
-<span><span class="co">#&gt; #   AMX &lt;rsi&gt;, AMC &lt;rsi&gt;, AMP &lt;rsi&gt;, TZP &lt;rsi&gt;, CZO &lt;rsi&gt;, FEP &lt;rsi&gt;,</span></span>
-<span><span class="co">#&gt; #   CXM &lt;rsi&gt;, FOX &lt;rsi&gt;, CTX &lt;rsi&gt;, CAZ &lt;rsi&gt;, CRO &lt;rsi&gt;, GEN &lt;rsi&gt;,</span></span>
-<span><span class="co">#&gt; #   TOB &lt;rsi&gt;, AMK &lt;rsi&gt;, KAN &lt;rsi&gt;, TMP &lt;rsi&gt;, SXT &lt;rsi&gt;, NIT &lt;rsi&gt;,</span></span>
-<span><span class="co">#&gt; #   FOS &lt;rsi&gt;, LNZ &lt;rsi&gt;, CIP &lt;rsi&gt;, MFX &lt;rsi&gt;, VAN &lt;rsi&gt;, TEC &lt;rsi&gt;,</span></span>
-<span><span class="co">#&gt; #   TCY &lt;rsi&gt;, TGC &lt;rsi&gt;, DOX &lt;rsi&gt;, ERY &lt;rsi&gt;, CLI &lt;rsi&gt;, AZM &lt;rsi&gt;,</span></span>
-<span><span class="co">#&gt; #   IPM &lt;rsi&gt;, MEM &lt;rsi&gt;, MTR &lt;rsi&gt;, CHL &lt;rsi&gt;, COL &lt;rsi&gt;, MUP &lt;rsi&gt;, ...</span></span>
+<span><span class="co">#&gt; # A tibble: 2,000 x 46</span></span>
+<span><span class="co">#&gt;    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  </span></span>
+<span><span class="co">#&gt;  * &lt;date&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;mo&gt;         &lt;rsi&gt; &lt;rsi&gt; &lt;rsi&gt; &lt;rsi&gt;</span></span>
+<span><span class="co">#&gt;  1 2002-01-02 A77334     65 F      Clinical B_ESCHR_COLI R     NA    NA    NA   </span></span>
+<span><span class="co">#&gt;  2 2002-01-03 A77334     65 F      Clinical B_ESCHR_COLI R     NA    NA    NA   </span></span>
+<span><span class="co">#&gt;  3 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span></span>
+<span><span class="co">#&gt;  4 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span></span>
+<span><span class="co">#&gt;  5 2002-01-13 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span></span>
+<span><span class="co">#&gt;  6 2002-01-13 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span></span>
+<span><span class="co">#&gt;  7 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R     NA    S     R    </span></span>
+<span><span class="co">#&gt;  8 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R     NA    S     R    </span></span>
+<span><span class="co">#&gt;  9 2002-01-16 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span></span>
+<span><span class="co">#&gt; 10 2002-01-17 858515     79 F      ICU      B_STPHY_EPDR R     NA    S     NA   </span></span>
+<span><span class="co">#&gt; # ... with 1,990 more rows, and 36 more variables: AMC &lt;rsi&gt;, AMP &lt;rsi&gt;,</span></span>
+<span><span class="co">#&gt; #   TZP &lt;rsi&gt;, CZO &lt;rsi&gt;, FEP &lt;rsi&gt;, CXM &lt;rsi&gt;, FOX &lt;rsi&gt;, CTX &lt;rsi&gt;,</span></span>
+<span><span class="co">#&gt; #   CAZ &lt;rsi&gt;, CRO &lt;rsi&gt;, GEN &lt;rsi&gt;, TOB &lt;rsi&gt;, AMK &lt;rsi&gt;, KAN &lt;rsi&gt;,</span></span>
+<span><span class="co">#&gt; #   TMP &lt;rsi&gt;, SXT &lt;rsi&gt;, NIT &lt;rsi&gt;, FOS &lt;rsi&gt;, LNZ &lt;rsi&gt;, CIP &lt;rsi&gt;,</span></span>
+<span><span class="co">#&gt; #   MFX &lt;rsi&gt;, VAN &lt;rsi&gt;, TEC &lt;rsi&gt;, TCY &lt;rsi&gt;, TGC &lt;rsi&gt;, DOX &lt;rsi&gt;,</span></span>
+<span><span class="co">#&gt; #   ERY &lt;rsi&gt;, CLI &lt;rsi&gt;, AZM &lt;rsi&gt;, IPM &lt;rsi&gt;, MEM &lt;rsi&gt;, MTR &lt;rsi&gt;,</span></span>
+<span><span class="co">#&gt; #   CHL &lt;rsi&gt;, COL &lt;rsi&gt;, MUP &lt;rsi&gt;, RIF &lt;rsi&gt;</span></span>
 <span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span></code></pre><p></p></div>
 </div>
 
@@ -284,25 +284,29 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
     <h2 id="reference-data-publicly-available">Reference Data Publicly Available<a class="anchor" aria-label="anchor" href="#reference-data-publicly-available"></a></h2>
     
 
-<p>All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this <code>AMR</code> package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find <a href="https://msberends.github.io/AMR/articles/datasets.html">all download links on our website</a>, which is automatically updated with every code change.</p>
+<p>All data sets in this <code>AMR</code> package (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit <a href="https://msberends.github.io/AMR/articles/datasets.html">our website for the download links</a>. The actual files are of course available on <a href="https://github.com/msberends/AMR/tree/main/data-raw" class="external-link">our GitHub repository</a>.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Staphylococcus aureus"</span>,</span></span>
-<span class="r-in"><span>                       <span class="st">"Enterococcus faecalis"</span>,</span></span>
-<span class="r-in"><span>                       <span class="st">"Escherichia coli"</span>,</span></span>
-<span class="r-in"><span>                       <span class="st">"Klebsiella pneumoniae"</span>,</span></span>
-<span class="r-in"><span>                       <span class="st">"Pseudomonas aeruginosa"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                VAN <span class="op">=</span> <span class="st">"-"</span>,       <span class="co"># Vancomycin</span></span></span>
-<span class="r-in"><span>                AMX <span class="op">=</span> <span class="st">"-"</span>,       <span class="co"># Amoxicillin</span></span></span>
-<span class="r-in"><span>                COL <span class="op">=</span> <span class="st">"-"</span>,       <span class="co"># Colistin</span></span></span>
-<span class="r-in"><span>                CAZ <span class="op">=</span> <span class="st">"-"</span>,       <span class="co"># Ceftazidime</span></span></span>
-<span class="r-in"><span>                CXM <span class="op">=</span> <span class="st">"-"</span>,       <span class="co"># Cefuroxime</span></span></span>
-<span class="r-in"><span>                PEN <span class="op">=</span> <span class="st">"S"</span>,       <span class="co"># Benzylpenicillin</span></span></span>
-<span class="r-in"><span>                FOX <span class="op">=</span> <span class="st">"S"</span>,       <span class="co"># Cefoxitin</span></span></span>
-<span class="r-in"><span>                stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  mo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"Staphylococcus aureus"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Enterococcus faecalis"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Escherichia coli"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Klebsiella pneumoniae"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Pseudomonas aeruginosa"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
+<span class="r-in"><span>  VAN <span class="op">=</span> <span class="st">"-"</span>, <span class="co"># Vancomycin</span></span></span>
+<span class="r-in"><span>  AMX <span class="op">=</span> <span class="st">"-"</span>, <span class="co"># Amoxicillin</span></span></span>
+<span class="r-in"><span>  COL <span class="op">=</span> <span class="st">"-"</span>, <span class="co"># Colistin</span></span></span>
+<span class="r-in"><span>  CAZ <span class="op">=</span> <span class="st">"-"</span>, <span class="co"># Ceftazidime</span></span></span>
+<span class="r-in"><span>  CXM <span class="op">=</span> <span class="st">"-"</span>, <span class="co"># Cefuroxime</span></span></span>
+<span class="r-in"><span>  PEN <span class="op">=</span> <span class="st">"S"</span>, <span class="co"># Benzylpenicillin</span></span></span>
+<span class="r-in"><span>  FOX <span class="op">=</span> <span class="st">"S"</span>, <span class="co"># Cefoxitin</span></span></span>
+<span class="r-in"><span>  stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       mo VAN AMX COL CAZ CXM PEN FOX</span>
@@ -367,18 +371,22 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <span class="r-in"><span><span class="fu">eucast_dosage</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tobra"</span>, <span class="st">"genta"</span>, <span class="st">"cipro"</span><span class="op">)</span>, <span class="st">"iv"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Dosages for antimicrobial drugs, as meant for 'EUCAST Clinical Breakpoint</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Tables' v11.0 (2021). This note will be shown once per session.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    ab          name  standard_dosage  high_dosage</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 TOB    Tobramycin 6-7 mg/kg x 1 iv         &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 GEN    Gentamicin 6-7 mg/kg x 1 iv         &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 CIP Ciprofloxacin     0.4 g x 2 iv 0.4 g x 3 iv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ab   name          standard_dosage  high_dosage </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> TOB  Tobramycin    6-7 mg/kg x 1 iv <span style="color: #BB0000;">NA</span>          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> GEN  Gentamicin    6-7 mg/kg x 1 iv <span style="color: #BB0000;">NA</span>          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> CIP  Ciprofloxacin 0.4 g x 2 iv     0.4 g x 3 iv</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">eucast_dosage</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tobra"</span>, <span class="st">"genta"</span>, <span class="st">"cipro"</span><span class="op">)</span>, <span class="st">"iv"</span>, version_breakpoints <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Dosages for antimicrobial drugs, as meant for 'EUCAST Clinical Breakpoint</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Tables' v10.0 (2020). This note will be shown once per session.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    ab          name  standard_dosage  high_dosage</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 TOB    Tobramycin 6-7 mg/kg x 1 iv         &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 GEN    Gentamicin 6-7 mg/kg x 1 iv         &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 CIP Ciprofloxacin     0.4 g x 2 iv 0.4 g x 3 iv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ab   name          standard_dosage  high_dosage </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> TOB  Tobramycin    6-7 mg/kg x 1 iv <span style="color: #BB0000;">NA</span>          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> GEN  Gentamicin    6-7 mg/kg x 1 iv <span style="color: #BB0000;">NA</span>          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> CIP  Ciprofloxacin 0.4 g x 2 iv     0.4 g x 3 iv</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

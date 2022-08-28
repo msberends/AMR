@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9045</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -192,7 +192,7 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># also supports multiple patterns</span></span></span>
 <span class="r-in"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Test case"</span>, <span class="st">"Something different"</span>, <span class="st">"Yet another thing"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>     <span class="st">"case"</span>,           <span class="st">"diff"</span>,      <span class="st">"yet"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"case"</span>, <span class="st">"diff"</span>, <span class="st">"yet"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">a</span> <span class="op">%like%</span> <span class="va">b</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE TRUE TRUE</span>
 <span class="r-in"><span><span class="va">a</span> <span class="op">%unlike%</span> <span class="va">b</span></span></span>
@@ -203,78 +203,56 @@
 <span class="r-in"><span><span class="va">a</span> <span class="op">%like%</span> <span class="va">b</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  TRUE FALSE FALSE</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># get isolates whose name start with 'Ent' or 'ent'</span></span></span>
-<span class="r-in"><span><span class="va">example_isolates</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="mo_property.html">mo_name</a></span><span class="op">(</span><span class="va">example_isolates</span><span class="op">$</span><span class="va">mo</span><span class="op">)</span> <span class="op">%like%</span> <span class="st">"^ent"</span><span class="op">)</span>, <span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 106 × 49</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    date       hospi…¹ ward_…² ward_…³ ward_…⁴   age gender patie…⁵ mo           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2002-02-21 C       FALSE   TRUE    FALSE      69 M      4FC193  B_ENTRC_FACM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2002-04-08 A       TRUE    TRUE    FALSE      78 M      130252  B_ENTRC_FCLS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2002-06-23 D       FALSE   TRUE    FALSE      82 M      798871  B_ENTRC_FCLS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2002-06-23 D       FALSE   TRUE    FALSE      82 M      798871  B_ENTRC_FCLS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2003-04-20 D       TRUE    TRUE    FALSE      62 M      6BC362  B_ENTRC      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2003-04-21 D       TRUE    TRUE    FALSE      62 M      6BC362  B_ENTRC      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2003-08-13 B       TRUE    FALSE   FALSE      52 M      F35553  B_ENTRBC_CLOC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2003-08-13 B       TRUE    FALSE   FALSE      52 M      F35553  B_ENTRC_FCLS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2003-09-05 B       TRUE    FALSE   FALSE      52 M      F35553  B_ENTRC      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2003-09-05 B       TRUE    FALSE   FALSE      52 M      F35553  B_ENTRBC_CLOC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 96 more rows, 40 more variables: PEN &lt;rsi&gt;, OXA &lt;rsi&gt;, FLC &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   AMX &lt;rsi&gt;, AMC &lt;rsi&gt;, AMP &lt;rsi&gt;, TZP &lt;rsi&gt;, CZO &lt;rsi&gt;, FEP &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CXM &lt;rsi&gt;, FOX &lt;rsi&gt;, CTX &lt;rsi&gt;, CAZ &lt;rsi&gt;, CRO &lt;rsi&gt;, GEN &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TOB &lt;rsi&gt;, AMK &lt;rsi&gt;, KAN &lt;rsi&gt;, TMP &lt;rsi&gt;, SXT &lt;rsi&gt;, NIT &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   FOS &lt;rsi&gt;, LNZ &lt;rsi&gt;, CIP &lt;rsi&gt;, MFX &lt;rsi&gt;, VAN &lt;rsi&gt;, TEC &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TCY &lt;rsi&gt;, TGC &lt;rsi&gt;, DOX &lt;rsi&gt;, ERY &lt;rsi&gt;, CLI &lt;rsi&gt;, AZM &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   IPM &lt;rsi&gt;, MEM &lt;rsi&gt;, MTR &lt;rsi&gt;, CHL &lt;rsi&gt;, COL &lt;rsi&gt;, MUP &lt;rsi&gt;, …</span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="co"># faster way, since mo_name() is context-aware:</span></span></span>
-<span class="r-in"><span><span class="va">example_isolates</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="mo_property.html">mo_name</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%like%</span> <span class="st">"^ent"</span><span class="op">)</span>, <span class="op">]</span></span></span>
+<span class="r-in"><span><span class="co"># get isolates whose name start with 'Entero' (case-insensitive)</span></span></span>
+<span class="r-in"><span><span class="va">example_isolates</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="mo_property.html">mo_name</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%like%</span> <span class="st">"^entero"</span><span class="op">)</span>, <span class="op">]</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Using column 'mo' as input for `mo_name()`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 106 × 49</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    date       hospi…¹ ward_…² ward_…³ ward_…⁴   age gender patie…⁵ mo           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2002-02-21 C       FALSE   TRUE    FALSE      69 M      4FC193  B_ENTRC_FACM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2002-04-08 A       TRUE    TRUE    FALSE      78 M      130252  B_ENTRC_FCLS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2002-06-23 D       FALSE   TRUE    FALSE      82 M      798871  B_ENTRC_FCLS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2002-06-23 D       FALSE   TRUE    FALSE      82 M      798871  B_ENTRC_FCLS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2003-04-20 D       TRUE    TRUE    FALSE      62 M      6BC362  B_ENTRC      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2003-04-21 D       TRUE    TRUE    FALSE      62 M      6BC362  B_ENTRC      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2003-08-13 B       TRUE    FALSE   FALSE      52 M      F35553  B_ENTRBC_CLOC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2003-08-13 B       TRUE    FALSE   FALSE      52 M      F35553  B_ENTRC_FCLS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2003-09-05 B       TRUE    FALSE   FALSE      52 M      F35553  B_ENTRC      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2003-09-05 B       TRUE    FALSE   FALSE      52 M      F35553  B_ENTRBC_CLOC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 96 more rows, 40 more variables: PEN &lt;rsi&gt;, OXA &lt;rsi&gt;, FLC &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   AMX &lt;rsi&gt;, AMC &lt;rsi&gt;, AMP &lt;rsi&gt;, TZP &lt;rsi&gt;, CZO &lt;rsi&gt;, FEP &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CXM &lt;rsi&gt;, FOX &lt;rsi&gt;, CTX &lt;rsi&gt;, CAZ &lt;rsi&gt;, CRO &lt;rsi&gt;, GEN &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TOB &lt;rsi&gt;, AMK &lt;rsi&gt;, KAN &lt;rsi&gt;, TMP &lt;rsi&gt;, SXT &lt;rsi&gt;, NIT &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   FOS &lt;rsi&gt;, LNZ &lt;rsi&gt;, CIP &lt;rsi&gt;, MFX &lt;rsi&gt;, VAN &lt;rsi&gt;, TEC &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TCY &lt;rsi&gt;, TGC &lt;rsi&gt;, DOX &lt;rsi&gt;, ERY &lt;rsi&gt;, CLI &lt;rsi&gt;, AZM &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   IPM &lt;rsi&gt;, MEM &lt;rsi&gt;, MTR &lt;rsi&gt;, CHL &lt;rsi&gt;, COL &lt;rsi&gt;, MUP &lt;rsi&gt;, …</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 106 × 46</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    date       patient   age gender ward    mo            PEN   OXA   FLC   AMX  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2002-02-21 4FC193     69 M      Clinic… B_ENTRC_FACM  NA    NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2002-04-08 130252     78 M      ICU     B_ENTRC_FCLS  NA    NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2002-06-23 798871     82 M      Clinic… B_ENTRC_FCLS  NA    NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2002-06-23 798871     82 M      Clinic… B_ENTRC_FCLS  NA    NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2003-04-20 6BC362     62 M      ICU     B_ENTRC       NA    NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2003-04-21 6BC362     62 M      ICU     B_ENTRC       NA    NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2003-08-13 F35553     52 M      ICU     B_ENTRBC_CLOC R     NA    NA    R    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2003-08-13 F35553     52 M      ICU     B_ENTRC_FCLS  NA    NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2003-09-05 F35553     52 M      ICU     B_ENTRC       NA    NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2003-09-05 F35553     52 M      ICU     B_ENTRBC_CLOC R     NA    NA    R    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 96 more rows, and 36 more variables: AMC &lt;rsi&gt;, AMP &lt;rsi&gt;, TZP &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CZO &lt;rsi&gt;, FEP &lt;rsi&gt;, CXM &lt;rsi&gt;, FOX &lt;rsi&gt;, CTX &lt;rsi&gt;, CAZ &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CRO &lt;rsi&gt;, GEN &lt;rsi&gt;, TOB &lt;rsi&gt;, AMK &lt;rsi&gt;, KAN &lt;rsi&gt;, TMP &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   SXT &lt;rsi&gt;, NIT &lt;rsi&gt;, FOS &lt;rsi&gt;, LNZ &lt;rsi&gt;, CIP &lt;rsi&gt;, MFX &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   VAN &lt;rsi&gt;, TEC &lt;rsi&gt;, TCY &lt;rsi&gt;, TGC &lt;rsi&gt;, DOX &lt;rsi&gt;, ERY &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CLI &lt;rsi&gt;, AZM &lt;rsi&gt;, IPM &lt;rsi&gt;, MEM &lt;rsi&gt;, MTR &lt;rsi&gt;, CHL &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   COL &lt;rsi&gt;, MUP &lt;rsi&gt;, RIF &lt;rsi&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="mo_property.html">mo_name</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%like%</span> <span class="st">"^ent"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Using column 'mo' as input for `mo_name()`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 106 × 49</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    date       hospi…¹ ward_…² ward_…³ ward_…⁴   age gender patie…⁵ mo           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2002-02-21 C       FALSE   TRUE    FALSE      69 M      4FC193  B_ENTRC_FACM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2002-04-08 A       TRUE    TRUE    FALSE      78 M      130252  B_ENTRC_FCLS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2002-06-23 D       FALSE   TRUE    FALSE      82 M      798871  B_ENTRC_FCLS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2002-06-23 D       FALSE   TRUE    FALSE      82 M      798871  B_ENTRC_FCLS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2003-04-20 D       TRUE    TRUE    FALSE      62 M      6BC362  B_ENTRC      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2003-04-21 D       TRUE    TRUE    FALSE      62 M      6BC362  B_ENTRC      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2003-08-13 B       TRUE    FALSE   FALSE      52 M      F35553  B_ENTRBC_CLOC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2003-08-13 B       TRUE    FALSE   FALSE      52 M      F35553  B_ENTRC_FCLS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2003-09-05 B       TRUE    FALSE   FALSE      52 M      F35553  B_ENTRC      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2003-09-05 B       TRUE    FALSE   FALSE      52 M      F35553  B_ENTRBC_CLOC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 96 more rows, 40 more variables: PEN &lt;rsi&gt;, OXA &lt;rsi&gt;, FLC &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   AMX &lt;rsi&gt;, AMC &lt;rsi&gt;, AMP &lt;rsi&gt;, TZP &lt;rsi&gt;, CZO &lt;rsi&gt;, FEP &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CXM &lt;rsi&gt;, FOX &lt;rsi&gt;, CTX &lt;rsi&gt;, CAZ &lt;rsi&gt;, CRO &lt;rsi&gt;, GEN &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TOB &lt;rsi&gt;, AMK &lt;rsi&gt;, KAN &lt;rsi&gt;, TMP &lt;rsi&gt;, SXT &lt;rsi&gt;, NIT &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   FOS &lt;rsi&gt;, LNZ &lt;rsi&gt;, CIP &lt;rsi&gt;, MFX &lt;rsi&gt;, VAN &lt;rsi&gt;, TEC &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TCY &lt;rsi&gt;, TGC &lt;rsi&gt;, DOX &lt;rsi&gt;, ERY &lt;rsi&gt;, CLI &lt;rsi&gt;, AZM &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   IPM &lt;rsi&gt;, MEM &lt;rsi&gt;, MTR &lt;rsi&gt;, CHL &lt;rsi&gt;, COL &lt;rsi&gt;, MUP &lt;rsi&gt;, …</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 106 × 46</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    date       patient   age gender ward    mo            PEN   OXA   FLC   AMX  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2002-02-21 4FC193     69 M      Clinic… B_ENTRC_FACM  NA    NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2002-04-08 130252     78 M      ICU     B_ENTRC_FCLS  NA    NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2002-06-23 798871     82 M      Clinic… B_ENTRC_FCLS  NA    NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2002-06-23 798871     82 M      Clinic… B_ENTRC_FCLS  NA    NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2003-04-20 6BC362     62 M      ICU     B_ENTRC       NA    NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2003-04-21 6BC362     62 M      ICU     B_ENTRC       NA    NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2003-08-13 F35553     52 M      ICU     B_ENTRBC_CLOC R     NA    NA    R    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2003-08-13 F35553     52 M      ICU     B_ENTRC_FCLS  NA    NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2003-09-05 F35553     52 M      ICU     B_ENTRC       NA    NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2003-09-05 F35553     52 M      ICU     B_ENTRBC_CLOC R     NA    NA    R    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 96 more rows, and 36 more variables: AMC &lt;rsi&gt;, AMP &lt;rsi&gt;, TZP &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CZO &lt;rsi&gt;, FEP &lt;rsi&gt;, CXM &lt;rsi&gt;, FOX &lt;rsi&gt;, CTX &lt;rsi&gt;, CAZ &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CRO &lt;rsi&gt;, GEN &lt;rsi&gt;, TOB &lt;rsi&gt;, AMK &lt;rsi&gt;, KAN &lt;rsi&gt;, TMP &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   SXT &lt;rsi&gt;, NIT &lt;rsi&gt;, FOS &lt;rsi&gt;, LNZ &lt;rsi&gt;, CIP &lt;rsi&gt;, MFX &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   VAN &lt;rsi&gt;, TEC &lt;rsi&gt;, TCY &lt;rsi&gt;, TGC &lt;rsi&gt;, DOX &lt;rsi&gt;, ERY &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CLI &lt;rsi&gt;, AZM &lt;rsi&gt;, IPM &lt;rsi&gt;, MEM &lt;rsi&gt;, MTR &lt;rsi&gt;, CHL &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   COL &lt;rsi&gt;, MUP &lt;rsi&gt;, RIF &lt;rsi&gt;</span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

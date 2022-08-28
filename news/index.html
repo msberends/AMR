@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9045</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,14 +127,16 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.8.1.9030" id="amr-1819030">AMR 1.8.1.9030<a class="anchor" aria-label="anchor" href="#amr-1819030"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.8.1.9045" id="amr-1819045">AMR 1.8.1.9045<a class="anchor" aria-label="anchor" href="#amr-1819045"></a></h2>
 <div class="section level4">
-<h4 id="new-1-8-1-9030">New<a class="anchor" aria-label="anchor" href="#new-1-8-1-9030"></a></h4>
+<h4 id="new-1-8-1-9045">New<a class="anchor" aria-label="anchor" href="#new-1-8-1-9045"></a></h4>
 <ul><li>EUCAST 2022 and CLSI 2022 guidelines have been added for <code><a href="../reference/as.rsi.html">as.rsi()</a></code>. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.</li>
-<li>Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. The <code>AMR</code> package is now available in 16 languages.</li>
+<li>Support for <code>data.frame</code>-enhancing R packages, more specifically: <code>data.table</code>, <code>tibble</code>, and <code>tsibble</code>. AMR package functions that have a data set as output (such as <code><a href="../reference/proportion.html">rsi_df()</a></code> and <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code>), will now return the same data type as the input. Furthermore, all our data sets are now in <code>tibble</code> format.</li>
+<li>Our data sets are now also continually exported to Apache Feather and Apache Parquet formats. You can find more info <a href="https://msberends.github.io/AMR/articles/datasets.html">in this article on our website</a>.</li>
+<li>Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. We are very grateful for the valuable input by our colleagues from other countries. The <code>AMR</code> package is now available in 16 languages.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-1-8-1-9030">Changed<a class="anchor" aria-label="anchor" href="#changed-1-8-1-9030"></a></h4>
+<h4 id="changed-1-8-1-9045">Changed<a class="anchor" aria-label="anchor" href="#changed-1-8-1-9045"></a></h4>
 <ul><li>Fix for using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on certain EUCAST breakpoints for MIC values</li>
 <li>Fix for using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on <code>NA</code> values (e.g. <code>as.rsi(as.disk(NA), ...)</code>)</li>
 <li>Removed <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> for MIC values, since MIC are not integer values and running <code><a href="https://rdrr.io/r/base/table.html" class="external-link">table()</a></code> on MIC values consequently failed for not being able to retrieve the level position (as that’s how normally <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> on <code>factor</code>s work)</li>
@@ -151,13 +153,17 @@
 <li>Fix for using the form <code>df[carbapenems() == "R", ]</code> using the latest <code>vctrs</code> package</li>
 <li>Fix for using <code>info = FALSE</code> in <code><a href="../reference/mdro.html">mdro()</a></code>
 </li>
+<li>All data sets in this package are now exported as <code>tibble</code>, instead of base R <code>data.frame</code>s. Older R versions are still supported.</li>
+<li>Automatic language determination will give a note once a session</li>
+<li>For all interpretation guidelines using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on amoxicillin, the rules for ampicillin will be used if amoxicillin rules are not available</li>
+<li>Fix for using <code><a href="../reference/ab_property.html">ab_atc()</a></code> on non-existing ATC codes</li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-1-8-1-9030">Other<a class="anchor" aria-label="anchor" href="#other-1-8-1-9030"></a></h4>
+<h4 id="other-1-8-1-9045">Other<a class="anchor" aria-label="anchor" href="#other-1-8-1-9045"></a></h4>
 <ul><li>New website to make use of the new Bootstrap 5 and pkgdown v2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions</li>
 <li>Added Peter Dutey-Magni and Anton Mymrikov as contributors, to thank them for their valuable input</li>
-<li>Our data sets are now also continually exported to Apache Feather and Apache Parquet formats</li>
 <li>Set up Git Large File Storage (Git LFS) for the large SAS and SPSS file formats</li>
+<li>All R and Rmd files in this project are now styled using the <code>styler</code> package</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -398,7 +404,7 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">hospital_id</span>, <span class="fu"><a href="../reference/antibiotic_class_selectors.html">oxazolidinones</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">ward</span>, <span class="fu"><a href="../reference/antibiotic_class_selectors.html">oxazolidinones</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Selecting oxazolidinones: column 'LNZ' (linezolid)</span></span>
 <span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">filter_oxazolidinones</span><span class="op">(</span><span class="op">)</span></span>
@@ -501,7 +507,7 @@
 <code class="sourceCode R"><span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">patient_id</span>, <span class="va">hospital_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">patient_id</span>, <span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_episode.html">is_new_episode</a></span><span class="op">(</span><span class="va">date</span>, episode_days <span class="op">=</span> <span class="fl">60</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li><p>Functions <code><a href="../reference/mo_property.html">mo_is_gram_negative()</a></code> and <code><a href="../reference/mo_property.html">mo_is_gram_positive()</a></code> as wrappers around <code><a href="../reference/mo_property.html">mo_gramstain()</a></code>. They always return <code>TRUE</code> or <code>FALSE</code> (except when the input is <code>NA</code> or the MO code is <code>UNKNOWN</code>), thus always return <code>FALSE</code> for species outside the taxonomic kingdom of Bacteria.</p></li>
@@ -1232,7 +1238,7 @@
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html" class="external-link">boxplot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># grouped boxplots:</span></span>
 <span><span class="va">septic_patients</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html" class="external-link">boxplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </li>
@@ -1530,7 +1536,7 @@
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">septic_patients</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
@@ -1538,7 +1544,7 @@
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">septic_patients</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq</a></span><span class="op">(</span><span class="va">hospital_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">count</span>, <span class="op">-</span><span class="va">cum_count</span><span class="op">)</span> <span class="co"># only get item, percent, cum_percent</span></span></code></pre></div>
 </li>
 <li><p>Check for <code><a href="https://hms.tidyverse.org/reference/Deprecated.html" class="external-link">hms::is.hms</a></code></p></li>

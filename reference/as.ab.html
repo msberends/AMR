@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9045</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -197,7 +197,7 @@ This package contains <strong>all ~550 antibiotic, antimycotic and antiviral dru
     <h2 id="reference-data-publicly-available">Reference Data Publicly Available<a class="anchor" aria-label="anchor" href="#reference-data-publicly-available"></a></h2>
     
 
-<p>All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this <code>AMR</code> package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find <a href="https://msberends.github.io/AMR/articles/datasets.html">all download links on our website</a>, which is automatically updated with every code change.</p>
+<p>All data sets in this <code>AMR</code> package (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit <a href="https://msberends.github.io/AMR/articles/datasets.html">our website for the download links</a>. The actual files are of course available on <a href="https://github.com/msberends/AMR/tree/main/data-raw" class="external-link">our GitHub repository</a>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -234,28 +234,28 @@ This package contains <strong>all ~550 antibiotic, antimycotic and antiviral dru
 <span class="r-in"><span><span class="fu">as.ab</span><span class="op">(</span><span class="st">"eritromicine"</span><span class="op">)</span> <span class="co"># spelled wrong, yet works</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class &lt;ab&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] ERY</span>
-<span class="r-in"><span><span class="fu">as.ab</span><span class="op">(</span><span class="st">"Erythrocin"</span><span class="op">)</span>   <span class="co"># trade name</span></span></span>
+<span class="r-in"><span><span class="fu">as.ab</span><span class="op">(</span><span class="st">"Erythrocin"</span><span class="op">)</span> <span class="co"># trade name</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class &lt;ab&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] ERY</span>
-<span class="r-in"><span><span class="fu">as.ab</span><span class="op">(</span><span class="st">"Romycin"</span><span class="op">)</span>      <span class="co"># trade name</span></span></span>
+<span class="r-in"><span><span class="fu">as.ab</span><span class="op">(</span><span class="st">"Romycin"</span><span class="op">)</span> <span class="co"># trade name</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class &lt;ab&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] ERY</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># spelling from different languages and dyslexia are no problem</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="ab_property.html">ab_atc</a></span><span class="op">(</span><span class="st">"ceftriaxon"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01DD04"</span>
-<span class="r-in"><span><span class="fu"><a href="ab_property.html">ab_atc</a></span><span class="op">(</span><span class="st">"cephtriaxone"</span><span class="op">)</span>     <span class="co"># small spelling error</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="ab_property.html">ab_atc</a></span><span class="op">(</span><span class="st">"cephtriaxone"</span><span class="op">)</span> <span class="co"># small spelling error</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01DD04"</span>
-<span class="r-in"><span><span class="fu"><a href="ab_property.html">ab_atc</a></span><span class="op">(</span><span class="st">"cephthriaxone"</span><span class="op">)</span>    <span class="co"># or a bit more severe</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="ab_property.html">ab_atc</a></span><span class="op">(</span><span class="st">"cephthriaxone"</span><span class="op">)</span> <span class="co"># or a bit more severe</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01DD04"</span>
 <span class="r-in"><span><span class="fu"><a href="ab_property.html">ab_atc</a></span><span class="op">(</span><span class="st">"seephthriaaksone"</span><span class="op">)</span> <span class="co"># and even this works</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "J01DD04"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># use ab_* functions to get a specific properties (see ?ab_property);</span></span></span>
 <span class="r-in"><span><span class="co"># they use as.ab() internally:</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="ab_property.html">ab_name</a></span><span class="op">(</span><span class="st">"J01FA01"</span><span class="op">)</span>    <span class="co"># "Erythromycin"</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="ab_property.html">ab_name</a></span><span class="op">(</span><span class="st">"J01FA01"</span><span class="op">)</span> <span class="co"># "Erythromycin"</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Erythromycin"</span>
-<span class="r-in"><span><span class="fu"><a href="ab_property.html">ab_name</a></span><span class="op">(</span><span class="st">"eryt"</span><span class="op">)</span>       <span class="co"># "Erythromycin"</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="ab_property.html">ab_name</a></span><span class="op">(</span><span class="st">"eryt"</span><span class="op">)</span> <span class="co"># "Erythromycin"</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Erythromycin"</span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
@@ -263,28 +263,27 @@ This package contains <strong>all ~550 antibiotic, antimycotic and antiviral dru
 <span class="r-in"><span>  <span class="co"># you can quickly rename &lt;rsi&gt; columns using dplyr &gt;= 1.0.0:</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename_with</a></span><span class="op">(</span><span class="va">as.ab</span>, <span class="fu">where</span><span class="op">(</span><span class="va">is.rsi</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>   </span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,000 × 49</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    date       hospit…¹ ward_…² ward_…³ ward_…⁴   age gender patie…⁵ mo          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2002-01-02 D        FALSE   TRUE    FALSE      65 F      A77334  B_ESCHR_COLI</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2002-01-03 D        FALSE   TRUE    FALSE      65 F      A77334  B_ESCHR_COLI</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2002-01-07 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2002-01-07 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2002-01-13 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2002-01-13 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2002-01-14 D        FALSE   TRUE    FALSE      78 M      462729  B_STPHY_AURS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2002-01-14 D        FALSE   TRUE    FALSE      78 M      462729  B_STPHY_AURS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2002-01-16 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2002-01-17 B        TRUE    FALSE   FALSE      79 F      858515  B_STPHY_EPDR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 1,990 more rows, 40 more variables: PEN &lt;rsi&gt;, OXA &lt;rsi&gt;, FLC &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   AMX &lt;rsi&gt;, AMC &lt;rsi&gt;, AMP &lt;rsi&gt;, TZP &lt;rsi&gt;, CZO &lt;rsi&gt;, FEP &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CXM &lt;rsi&gt;, FOX &lt;rsi&gt;, CTX &lt;rsi&gt;, CAZ &lt;rsi&gt;, CRO &lt;rsi&gt;, GEN &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TOB &lt;rsi&gt;, AMK &lt;rsi&gt;, KAN &lt;rsi&gt;, TMP &lt;rsi&gt;, SXT &lt;rsi&gt;, NIT &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   FOS &lt;rsi&gt;, LNZ &lt;rsi&gt;, CIP &lt;rsi&gt;, MFX &lt;rsi&gt;, VAN &lt;rsi&gt;, TEC &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TCY &lt;rsi&gt;, TGC &lt;rsi&gt;, DOX &lt;rsi&gt;, ERY &lt;rsi&gt;, CLI &lt;rsi&gt;, AZM &lt;rsi&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   IPM &lt;rsi&gt;, MEM &lt;rsi&gt;, MTR &lt;rsi&gt;, CHL &lt;rsi&gt;, COL &lt;rsi&gt;, MUP &lt;rsi&gt;, …</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,000 × 46</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2002-01-02 A77334     65 F      Clinical B_ESCHR_COLI R     NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2002-01-03 A77334     65 F      Clinical B_ESCHR_COLI R     NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2002-01-13 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2002-01-13 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R     NA    S     R    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R     NA    S     R    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2002-01-16 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2002-01-17 858515     79 F      ICU      B_STPHY_EPDR R     NA    S     NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 1,990 more rows, and 36 more variables: AMC &lt;rsi&gt;, AMP &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TZP &lt;rsi&gt;, CZO &lt;rsi&gt;, FEP &lt;rsi&gt;, CXM &lt;rsi&gt;, FOX &lt;rsi&gt;, CTX &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CAZ &lt;rsi&gt;, CRO &lt;rsi&gt;, GEN &lt;rsi&gt;, TOB &lt;rsi&gt;, AMK &lt;rsi&gt;, KAN &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TMP &lt;rsi&gt;, SXT &lt;rsi&gt;, NIT &lt;rsi&gt;, FOS &lt;rsi&gt;, LNZ &lt;rsi&gt;, CIP &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   MFX &lt;rsi&gt;, VAN &lt;rsi&gt;, TEC &lt;rsi&gt;, TCY &lt;rsi&gt;, TGC &lt;rsi&gt;, DOX &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ERY &lt;rsi&gt;, CLI &lt;rsi&gt;, AZM &lt;rsi&gt;, IPM &lt;rsi&gt;, MEM &lt;rsi&gt;, MTR &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CHL &lt;rsi&gt;, COL &lt;rsi&gt;, MUP &lt;rsi&gt;, RIF &lt;rsi&gt;</span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9045</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -212,8 +212,10 @@
 <p>You can also use your own custom guideline. Custom guidelines can be set with the <code><a href="../reference/mdro.html">custom_mdro_guideline()</a></code> function. This is of great importance if you have custom rules to determine MDROs in your hospital, e.g., rules that are dependent on ward, state of contact isolation or other variables in your data.</p>
 <p>If you are familiar with <code><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when()</a></code> of the <code>dplyr</code> package, you will recognise the input method to set your own rules. Rules must be set using what R considers to be the ‘formula notation’:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">custom</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mdro.html">custom_mdro_guideline</a></span><span class="op">(</span><span class="va">CIP</span> <span class="op">==</span> <span class="st">"R"</span> <span class="op">&amp;</span> <span class="va">age</span> <span class="op">&gt;</span> <span class="fl">60</span> <span class="op">~</span> <span class="st">"Elderly Type A"</span>,</span>
-<span>                                <span class="va">ERY</span> <span class="op">==</span> <span class="st">"R"</span> <span class="op">&amp;</span> <span class="va">age</span> <span class="op">&gt;</span> <span class="fl">60</span> <span class="op">~</span> <span class="st">"Elderly Type B"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">custom</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mdro.html">custom_mdro_guideline</a></span><span class="op">(</span></span>
+<span>  <span class="va">CIP</span> <span class="op">==</span> <span class="st">"R"</span> <span class="op">&amp;</span> <span class="va">age</span> <span class="op">&gt;</span> <span class="fl">60</span> <span class="op">~</span> <span class="st">"Elderly Type A"</span>,</span>
+<span>  <span class="va">ERY</span> <span class="op">==</span> <span class="st">"R"</span> <span class="op">&amp;</span> <span class="va">age</span> <span class="op">&gt;</span> <span class="fl">60</span> <span class="op">~</span> <span class="st">"Elderly Type B"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>If a row/an isolate matches the first rule, the value after the first <code>~</code> (in this case <em>‘Elderly Type A’</em>) will be set as MDRO value. Otherwise, the second rule will be tried and so on. The maximum number of rules is unlimited.</p>
 <p>You can print the rules set in the console for an overview. Colours will help reading it if your console supports colours.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -241,11 +243,11 @@
 <p>The <code><a href="../reference/mdro.html">mdro()</a></code> function always returns an ordered <code>factor</code> for predefined guidelines. For example, the output of the default guideline by Magiorakos <em>et al.</em> returns a <code>factor</code> with levels ‘Negative’, ‘MDR’, ‘XDR’ or ‘PDR’ in that order.</p>
 <p>The next example uses the <code>example_isolates</code> data set. This is a data set included with this package and contains full antibiograms of 2,000 microbial isolates. It reflects reality and can be used to practise AMR data analysis. If we test the MDR/XDR/PDR guideline on this data set, we get:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>   <span class="co"># to support pipes: %&gt;%</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span> <span class="co"># to support pipes: %&gt;%</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/msberends/cleaner" class="external-link">cleaner</a></span><span class="op">)</span> <span class="co"># to create frequency tables</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="../reference/mdro.html">mdro</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/mdro.html">mdro</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># show frequency table of the result</span></span>
 <span><span class="co"># Warning: in `mdro()`: NA introduced for isolates where the available percentage of</span></span>
 <span><span class="co"># antimicrobial classes was below 50% (set with `pct_required_classes`)</span></span></code></pre></div>
@@ -288,39 +290,43 @@ Unique: 2</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># random_rsi() is a helper function to generate</span></span>
 <span><span class="co"># a random vector with values S, I and R</span></span>
-<span><span class="va">my_TB_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>rifampicin <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>                         isoniazid <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>                         gatifloxacin <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>                         ethambutol <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>                         pyrazinamide <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>                         moxifloxacin <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>                         kanamycin <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">my_TB_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  rifampicin <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  isoniazid <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  gatifloxacin <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  ethambutol <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  pyrazinamide <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  moxifloxacin <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  kanamycin <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Because all column names are automatically verified for valid drug names or codes, this would have worked exactly the same way:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">my_TB_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>RIF <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>                         INH <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>                         GAT <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>                         ETH <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>                         PZA <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>                         MFX <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
-<span>                         KAN <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">my_TB_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  RIF <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  INH <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  GAT <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  ETH <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  PZA <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  MFX <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>,</span>
+<span>  KAN <span class="op">=</span> <span class="fu"><a href="../reference/random.html">random_rsi</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>The data set now looks like this:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">my_TB_data</span><span class="op">)</span></span>
 <span><span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span></span>
-<span><span class="co"># 1          R         R            S          R            R            R</span></span>
-<span><span class="co"># 2          S         I            S          R            I            I</span></span>
-<span><span class="co"># 3          S         I            I          S            R            R</span></span>
-<span><span class="co"># 4          S         R            R          S            I            S</span></span>
-<span><span class="co"># 5          R         S            R          S            I            S</span></span>
-<span><span class="co"># 6          S         I            S          S            R            R</span></span>
+<span><span class="co"># 1          R         R            R          I            R            R</span></span>
+<span><span class="co"># 2          R         S            R          S            R            I</span></span>
+<span><span class="co"># 3          R         I            R          R            S            S</span></span>
+<span><span class="co"># 4          S         S            I          R            R            S</span></span>
+<span><span class="co"># 5          S         S            I          I            I            R</span></span>
+<span><span class="co"># 6          S         R            S          S            I            I</span></span>
 <span><span class="co">#   kanamycin</span></span>
-<span><span class="co"># 1         S</span></span>
-<span><span class="co"># 2         I</span></span>
-<span><span class="co"># 3         R</span></span>
-<span><span class="co"># 4         S</span></span>
-<span><span class="co"># 5         S</span></span>
-<span><span class="co"># 6         S</span></span></code></pre></div>
+<span><span class="co"># 1         R</span></span>
+<span><span class="co"># 2         S</span></span>
+<span><span class="co"># 3         S</span></span>
+<span><span class="co"># 4         I</span></span>
+<span><span class="co"># 5         I</span></span>
+<span><span class="co"># 6         I</span></span></code></pre></div>
 <p>We can now add the interpretation of MDR-TB to our data set. You can use:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/mdro.html">mdro</a></span><span class="op">(</span><span class="va">my_TB_data</span>, guideline <span class="op">=</span> <span class="st">"TB"</span><span class="op">)</span></span></code></pre></div>
@@ -351,40 +357,40 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistant</td>
-<td align="right">3220</td>
-<td align="right">64.40%</td>
-<td align="right">3220</td>
-<td align="right">64.40%</td>
+<td align="right">3163</td>
+<td align="right">63.26%</td>
+<td align="right">3163</td>
+<td align="right">63.26%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">986</td>
-<td align="right">19.72%</td>
+<td align="right">1043</td>
+<td align="right">20.86%</td>
 <td align="right">4206</td>
 <td align="right">84.12%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multi-drug-resistant</td>
-<td align="right">480</td>
-<td align="right">9.60%</td>
-<td align="right">4686</td>
-<td align="right">93.72%</td>
+<td align="right">442</td>
+<td align="right">8.84%</td>
+<td align="right">4648</td>
+<td align="right">92.96%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistant</td>
-<td align="right">237</td>
-<td align="right">4.74%</td>
-<td align="right">4923</td>
-<td align="right">98.46%</td>
+<td align="right">245</td>
+<td align="right">4.90%</td>
+<td align="right">4893</td>
+<td align="right">97.86%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensively drug-resistant</td>
-<td align="right">77</td>
-<td align="right">1.54%</td>
+<td align="right">107</td>
+<td align="right">2.14%</td>
 <td align="right">5000</td>
 <td align="right">100.00%</td>
 </tr>
