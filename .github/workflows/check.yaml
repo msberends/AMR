@@ -100,7 +100,6 @@ jobs:
       - name: Unpack AMR and install R dependencies
         if: always()
         run: |
-          tar -xf data-raw/AMR_latest.tar.gz
           Rscript -e "source('data-raw/_install_deps.R')"
         shell: bash
         
