@@ -112,13 +112,13 @@ jobs:
         shell: Rscript {0}
         
       - name: Remove vignettes on R without knitr support
-        if: matrix.config.r == '3.0' || matrix.config.r == '3.1' || matrix.config.r == '3.2'
-        # writing to DESCRIPTION2 and then moving to DESCRIPTION is required for R < 3.3 as writeLines() cannot overwrite
+        if: matrix.config.r == '3.0' || matrix.config.r == '3.1' || matrix.config.r == '3.2' || matrix.config.r == '3.3'
+        # writing to DESCRIPTION2 and then moving to DESCRIPTION is required for R <= 3.3 as writeLines() cannot overwrite
         run: |
-          rm -rf AMR/vignettes
-          Rscript -e "writeLines(readLines('AMR/DESCRIPTION')[!grepl('VignetteBuilder', readLines('AMR/DESCRIPTION'))], 'AMR/DESCRIPTION2')"
-          rm AMR/DESCRIPTION
-          mv AMR/DESCRIPTION2 AMR/DESCRIPTION
+          rm -rf vignettes
+          Rscript -e "writeLines(readLines('DESCRIPTION')[!grepl('VignetteBuilder', readLines('DESCRIPTION'))], 'DESCRIPTION2')"
+          rm DESCRIPTION
+          mv DESCRIPTION2 DESCRIPTION
         shell: bash
         
       - name: Run R CMD check
@@ -135,7 +135,6 @@ jobs:
           R_RUN_TINYTEST: true
         run: |
           cd ..
-          ls -lh
           R CMD build AMR
           R CMD check --no-manual --run-donttest --run-dontrun AMR_*.tar.gz
         shell: bash
@@ -143,8 +142,7 @@ jobs:
       - name: Show unit tests output
         if: always()
         run: |
-          ls -lh
-          cd AMR
+          cd ../AMR.Rcheck
           find . -name 'tinytest.Rout*' -exec cat '{}' \; || true
         shell: bash
 
@@ -153,4 +151,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: artifacts-${{ matrix.config.os }}-r${{ matrix.config.r }}
-          path: AMR.Rcheck
+          path: ../AMR.Rcheck
