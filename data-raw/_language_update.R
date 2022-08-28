@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -28,9 +28,10 @@
 
 if (!file.exists("DESCRIPTION") || !"Package: AMR" %in% readLines("DESCRIPTION")) {
   stop("Be sure to run this script in the root location of the AMR package folder.\n",
-       "Working directory expected to contain the DESCRIPTION file of the AMR package.\n",
-       "Current working directory: ", getwd(),
-       call. = FALSE)
+    "Working directory expected to contain the DESCRIPTION file of the AMR package.\n",
+    "Current working directory: ", getwd(),
+    call. = FALSE
+  )
 }
 
 # save old global env to restore later
@@ -41,34 +42,42 @@ load("R/sysdata.rda", envir = lang_env)
 
 # replace language objects with updates
 message("Reading translation file...")
-lang_env$TRANSLATIONS <- utils::read.delim(file = "data-raw/translations.tsv",
-                                           sep = "\t",
-                                           stringsAsFactors = FALSE,
-                                           header = TRUE,
-                                           blank.lines.skip = TRUE,
-                                           fill = TRUE,
-                                           strip.white = TRUE,
-                                           encoding = "UTF-8",
-                                           fileEncoding = "UTF-8",
-                                           na.strings = c(NA, "", NULL),
-                                           allowEscapes = TRUE, # else "\\1" will be imported as "\\\\1"
-                                           quote = "")
+lang_env$TRANSLATIONS <- utils::read.delim(
+  file = "data-raw/translations.tsv",
+  sep = "\t",
+  stringsAsFactors = FALSE,
+  header = TRUE,
+  blank.lines.skip = TRUE,
+  fill = TRUE,
+  strip.white = TRUE,
+  encoding = "UTF-8",
+  fileEncoding = "UTF-8",
+  na.strings = c(NA, "", NULL),
+  allowEscapes = TRUE, # else "\\1" will be imported as "\\\\1"
+  quote = ""
+)
 
-lang_env$LANGUAGES_SUPPORTED_NAMES <- c(list(en = list(exonym = "English", endonym = "English")),
-                                        lapply(lang_env$TRANSLATIONS[, which(nchar(colnames(lang_env$TRANSLATIONS)) == 2)],
-                                               function(x) list(exonym = x[1], endonym = x[2])))
+lang_env$LANGUAGES_SUPPORTED_NAMES <- c(
+  list(en = list(exonym = "English", endonym = "English")),
+  lapply(
+    lang_env$TRANSLATIONS[, which(nchar(colnames(lang_env$TRANSLATIONS)) == 2), drop = FALSE],
+    function(x) list(exonym = x[1], endonym = x[2])
+  )
+)
 
 lang_env$LANGUAGES_SUPPORTED <- names(lang_env$LANGUAGES_SUPPORTED_NAMES)
 
 # save env to internal package data
 # usethis::use_data() does not allow to save a list :(
 message("Saving to internal data...")
-save(list = names(lang_env),
-     file = "R/sysdata.rda",
-     ascii = FALSE,
-     version = 2,
-     compress = "xz",
-     envir = lang_env)
+save(
+  list = names(lang_env),
+  file = "R/sysdata.rda",
+  ascii = FALSE,
+  version = 2,
+  compress = "xz",
+  envir = lang_env
+)
 
 rm(lang_env)
 

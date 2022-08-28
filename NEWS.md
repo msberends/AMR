@@ -1,8 +1,10 @@
-# AMR 1.8.1.9030
+# AMR 1.8.1.9043
 
 ### New
 * EUCAST 2022 and CLSI 2022 guidelines have been added for `as.rsi()`. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.
-* Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. The `AMR` package is now available in 16 languages.
+* Support for `data.frame`-enhancing R packages, more specifically: `data.table`, `tibble`, and `tsibble`. AMR package functions that have a data set as output (such as `rsi_df()` and `bug_drug_combinations()`), will now return the same data type as the input. Furthermore, all our data sets are now in `tibble` format.
+* Our data sets are now also continually exported to Apache Feather and Apache Parquet formats. You can find more info [in this article on our website](https://msberends.github.io/AMR/articles/datasets.html).
+* Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. We are very grateful for the valuable input by our colleagues from other countries. The `AMR` package is now available in 16 languages.
 
 ### Changed
 * Fix for using `as.rsi()` on certain EUCAST breakpoints for MIC values
@@ -16,12 +18,16 @@
 * Changed value in column `prevalence` of the `microorganisms` data set from 3 to 2 for these genera: *Acholeplasma*, *Alistipes*, *Alloprevotella*, *Bergeyella*, *Borrelia*, *Brachyspira*, *Butyricimonas*, *Cetobacterium*, *Chlamydia*, *Chlamydophila*, *Deinococcus*, *Dysgonomonas*, *Elizabethkingia*, *Empedobacter*, *Haloarcula*, *Halobacterium*, *Halococcus*, *Myroides*, *Odoribacter*, *Ornithobacterium*, *Parabacteroides*, *Pedobacter*, *Phocaeicola*, *Porphyromonas*, *Riemerella*, *Sphingobacterium*, *Streptobacillus*, *Tenacibaculum*, *Terrimonas*, *Victivallis*, *Wautersiella*, *Weeksella*
 * Fix for using the form `df[carbapenems() == "R", ]` using the latest `vctrs` package
 * Fix for using `info = FALSE` in `mdro()`
+* All data sets in this package are now exported as `tibble`, instead of base R `data.frame`s. Older R versions are still supported.
+* Automatic language determination will give a note once a session
+* For all interpretation guidelines using `as.rsi()` on amoxicillin, the rules for ampicillin will be used if amoxicillin rules are not available
+* Fix for using `ab_atc()` on non-existing ATC codes
 
 ### Other
 * New website to make use of the new Bootstrap 5 and pkgdown v2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions
 * Added Peter Dutey-Magni and Anton Mymrikov as contributors, to thank them for their valuable input
-* Our data sets are now also continually exported to Apache Feather and Apache Parquet formats
 * Set up Git Large File Storage (Git LFS) for the large SAS and SPSS file formats
+* All R and Rmd files in this project are now styled using the `styler` package
 
 
 # `AMR` 1.8.1
@@ -210,7 +216,7 @@
 * Functions `oxazolidinones()` (an antibiotic selector function) and `filter_oxazolidinones()` (an antibiotic filter function) to select/filter on e.g. linezolid and tedizolid
   ```r
   library(dplyr)
-  x <- example_isolates %>% select(date, hospital_id, oxazolidinones())
+  x <- example_isolates %>% select(date, ward, oxazolidinones())
   #> Selecting oxazolidinones: column 'LNZ' (linezolid)
   
   x <- example_isolates %>% filter_oxazolidinones()
@@ -295,7 +301,7 @@
   ```r
   library(dplyr)
   example_isolates %>%
-    group_by(patient_id, hospital_id) %>%
+    group_by(patient_id, ward) %>%
     filter(is_new_episode(date, episode_days = 60))
   ```
 * Functions `mo_is_gram_negative()` and `mo_is_gram_positive()` as wrappers around `mo_gramstain()`. They always return `TRUE` or `FALSE` (except when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
@@ -909,7 +915,7 @@ This software is now out of beta and considered stable. Nonetheless, this packag
       boxplot()
     # grouped boxplots:
     septic_patients %>% 
-      group_by(hospital_id) %>% 
+      group_by(ward) %>% 
       freq(age) %>%
       boxplot()
     ```
@@ -1162,13 +1168,13 @@ We've got a new website: [https://msberends.gitlab.io/AMR](https://msberends.git
   * Support for grouping variables, test with:
     ```r
     septic_patients %>% 
-      group_by(hospital_id) %>% 
+      group_by(ward) %>% 
       freq(gender)
     ```
   * Support for (un)selecting columns:
     ```r
     septic_patients %>% 
-      freq(hospital_id) %>% 
+      freq(ward) %>% 
       select(-count, -cum_count) # only get item, percent, cum_percent
     ```
   * Check for `hms::is.hms`

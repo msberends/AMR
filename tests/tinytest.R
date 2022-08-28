@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -27,15 +27,18 @@
 if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
   # env var 'R_LIBS_USER' got overwritten during 'R CMD check' in GitHub Actions, so:
   .libPaths(c(Sys.getenv("R_LIBS_USER_GH_ACTIONS"), .libPaths()))
-  if (AMR:::pkg_is_available("tinytest")) {
+  if (AMR:::pkg_is_available("tinytest", also_load = TRUE)) {
     library(AMR)
+    set_AMR_locale("English")
     out <- test_package("AMR",
-                        testdir = ifelse(AMR:::dir.exists("inst/tinytest"),
-                                         "inst/tinytest",
-                                         "tinytest"),
-                        verbose = 99,
-                        color = FALSE)
-    cat("SUMMARY:\n")
+      testdir = ifelse(AMR:::dir.exists("inst/tinytest"),
+        "inst/tinytest",
+        "tinytest"
+      ),
+      verbose = 99,
+      color = FALSE
+    )
+    cat("\n\nSUMMARY:\n")
     print(summary(out))
   }
 }

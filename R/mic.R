@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -25,20 +25,42 @@
 
 # these are allowed MIC values and will become [factor] levels
 ops <- c("<", "<=", "", ">=", ">")
-valid_mic_levels <- c(c(t(vapply(FUN.VALUE = character(9), ops,
-                                 function(x) paste0(x, "0.00", 1:9)))),
-                      unique(c(t(vapply(FUN.VALUE = character(104), ops,
-                                        function(x) paste0(x, sort(as.double(paste0("0.0", 
-                                                                                    sort(c(1:99, 125, 128, 256, 512, 625)))))))))),
-                      unique(c(t(vapply(FUN.VALUE = character(103), ops,
-                                        function(x) paste0(x, sort(as.double(paste0("0.", 
-                                                                                    c(1:99, 125, 128, 256, 512))))))))),
-                      c(t(vapply(FUN.VALUE = character(10), ops,
-                                 function(x) paste0(x, sort(c(1:9, 1.5)))))),
-                      c(t(vapply(FUN.VALUE = character(45), ops,
-                                 function(x) paste0(x, c(10:98)[9:98 %% 2 == TRUE])))),
-                      c(t(vapply(FUN.VALUE = character(17), ops,
-                                 function(x) paste0(x, sort(c(2 ^ c(7:11), 192, 80 * c(2:12))))))))
+valid_mic_levels <- c(
+  c(t(vapply(
+    FUN.VALUE = character(9), ops,
+    function(x) paste0(x, "0.00", 1:9)
+  ))),
+  unique(c(t(vapply(
+    FUN.VALUE = character(104), ops,
+    function(x) {
+      paste0(x, sort(as.double(paste0(
+        "0.0",
+        sort(c(1:99, 125, 128, 256, 512, 625))
+      ))))
+    }
+  )))),
+  unique(c(t(vapply(
+    FUN.VALUE = character(103), ops,
+    function(x) {
+      paste0(x, sort(as.double(paste0(
+        "0.",
+        c(1:99, 125, 128, 256, 512)
+      ))))
+    }
+  )))),
+  c(t(vapply(
+    FUN.VALUE = character(10), ops,
+    function(x) paste0(x, sort(c(1:9, 1.5)))
+  ))),
+  c(t(vapply(
+    FUN.VALUE = character(45), ops,
+    function(x) paste0(x, c(10:98)[9:98 %% 2 == TRUE])
+  ))),
+  c(t(vapply(
+    FUN.VALUE = character(17), ops,
+    function(x) paste0(x, sort(c(2^c(7:11), 192, 80 * c(2:12))))
+  )))
+)
 
 #' Transform Input to Minimum Inhibitory Concentrations (MIC)
 #'
@@ -48,32 +70,32 @@ valid_mic_levels <- c(c(t(vapply(FUN.VALUE = character(9), ops,
 #' @param na.rm a [logical] indicating whether missing values should be removed
 #' @param ... arguments passed on to methods
 #' @details To interpret MIC values as RSI values, use [as.rsi()] on MIC values. It supports guidelines from EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`).
-#' 
+#'
 #' This class for MIC values is a quite a special data type: formally it is an ordered [factor] with valid MIC values as [factor] levels (to make sure only valid MIC values are retained), but for any mathematical operation it acts as decimal numbers:
-#' 
+#'
 #' ```
 #' x <- random_mic(10)
 #' x
 #' #> Class <mic>
 #' #>  [1] 16     1      8      8      64     >=128  0.0625 32     32     16
-#' 
+#'
 #' is.factor(x)
 #' #> [1] TRUE
-#' 
+#'
 #' x[1] * 2
 #' #> [1] 32
-#' 
+#'
 #' median(x)
 #' #> [1] 26
 #' ```
-#' 
+#'
 #' This makes it possible to maintain operators that often come with MIC values, such ">=" and "<=", even when filtering using [numeric] values in data analysis, e.g.:
-#' 
+#'
 #' ```
 #' x[x > 4]
 #' #> Class <mic>
 #' #> [1] 16    8     8     64    >=128 32    32    16
-#' 
+#'
 #' df <- data.frame(x, hospital = "A")
 #' subset(df, x > 4) # or with dplyr: df %>% filter(x > 4)
 #' #>        x hospital
@@ -84,11 +106,11 @@ valid_mic_levels <- c(c(t(vapply(FUN.VALUE = character(9), ops,
 #' #> 9     32        A
 #' #> 10    16        A
 #' ```
-#' 
+#'
 #' The following [generic functions][groupGeneric()] are implemented for the MIC class: `!`, `!=`, `%%`, `%/%`, `&`, `*`, `+`, `-`, `/`, `<`, `<=`, `==`, `>`, `>=`, `^`, `|`, [abs()], [acos()], [acosh()], [all()], [any()], [asin()], [asinh()], [atan()], [atanh()], [ceiling()], [cos()], [cosh()], [cospi()], [cummax()], [cummin()], [cumprod()], [cumsum()], [digamma()], [exp()], [expm1()], [floor()], [gamma()], [lgamma()], [log()], [log1p()], [log2()], [log10()], [max()], [mean()], [min()], [prod()], [range()], [round()], [sign()], [signif()], [sin()], [sinh()], [sinpi()], [sqrt()], [sum()], [tan()], [tanh()], [tanpi()], [trigamma()] and [trunc()]. Some functions of the `stats` package are also implemented: [median()], [quantile()], [mad()], [IQR()], [fivenum()]. Also, [boxplot.stats()] is supported. Since [sd()] and [var()] are non-generic functions, these could not be extended. Use [mad()] as an alternative, or use e.g. `sd(as.numeric(x))` where `x` is your vector of MIC values.
-#' 
+#'
 #' Using [as.double()] or [as.numeric()] on MIC values will remove the operators and return a numeric vector. Do **not** use [as.integer()] on MIC values as by the \R convention on [factor]s, it will return the index of the factor levels (which is often useless for regular users).
-#' 
+#'
 #' Use [droplevels()] to drop unused levels. At default, it will return a plain factor. Use `droplevels(..., as.mic = TRUE)` to maintain the `<mic>` class.
 #' @return Ordered [factor] with additional class [`mic`], that in mathematical operations acts as decimal numbers. Bare in mind that the outcome of any mathematical operation on MICs will return a [numeric] value.
 #' @aliases mic
@@ -101,32 +123,43 @@ valid_mic_levels <- c(c(t(vapply(FUN.VALUE = character(9), ops,
 #'
 #' # this can also coerce combined MIC/RSI values:
 #' as.mic("<=0.002; S")
-#' 
+#'
 #' # mathematical processing treats MICs as numeric values
 #' fivenum(mic_data)
 #' quantile(mic_data)
 #' all(mic_data < 512)
 #'
 #' # interpret MIC values
-#' as.rsi(x = as.mic(2),
-#'        mo = as.mo("Streptococcus pneumoniae"),
-#'        ab = "AMX",
-#'        guideline = "EUCAST")
-#' as.rsi(x = as.mic(c(0.01, 2, 4, 8)),
-#'        mo = as.mo("Streptococcus pneumoniae"),
-#'        ab = "AMX",
-#'        guideline = "EUCAST")
+#' as.rsi(
+#'   x = as.mic(2),
+#'   mo = as.mo("Streptococcus pneumoniae"),
+#'   ab = "AMX",
+#'   guideline = "EUCAST"
+#' )
+#' as.rsi(
+#'   x = as.mic(c(0.01, 2, 4, 8)),
+#'   mo = as.mo("Streptococcus pneumoniae"),
+#'   ab = "AMX",
+#'   guideline = "EUCAST"
+#' )
 #'
 #' # plot MIC values, see ?plot
 #' plot(mic_data)
 #' plot(mic_data, mo = "E. coli", ab = "cipro")
-#' autoplot(mic_data, mo = "E. coli", ab = "cipro")
-#' autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "nl") # Dutch
-#' autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "uk") # Ukrainian
+#'
+#' if (require("ggplot2")) {
+#'   autoplot(mic_data, mo = "E. coli", ab = "cipro")
+#' }
+#' if (require("ggplot2")) {
+#'   autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "nl") # Dutch
+#' }
+#' if (require("ggplot2")) {
+#'   autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "uk") # Ukrainian
+#' }
 as.mic <- function(x, na.rm = FALSE) {
   meet_criteria(x, allow_class = c("mic", "character", "numeric", "integer", "factor"), allow_NA = TRUE)
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)
-  
+
   if (is.mic(x)) {
     x
   } else {
@@ -136,7 +169,7 @@ as.mic <- function(x, na.rm = FALSE) {
     }
     x[trimws(x) == ""] <- NA
     x.bak <- x
-    
+
     # comma to period
     x <- gsub(",", ".", x, fixed = TRUE)
     # transform Unicode for >= and <=
@@ -170,27 +203,30 @@ as.mic <- function(x, na.rm = FALSE) {
     x <- gsub("[.]$", "", x, perl = TRUE)
     # trim it
     x <- trimws(x)
-    
+
     ## previously unempty values now empty - should return a warning later on
     x[x.bak != "" & x == ""] <- "invalid"
-    
+
     na_before <- x[is.na(x) | x == ""] %pm>% length()
     x[!x %in% valid_mic_levels] <- NA
     na_after <- x[is.na(x) | x == ""] %pm>% length()
-    
+
     if (na_before != na_after) {
       list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ""] %pm>%
         unique() %pm>%
         sort() %pm>%
         vector_and(quotes = TRUE)
       warning_("in `as.mic()`: ", na_after - na_before, " results truncated (",
-               round(((na_after - na_before) / length(x)) * 100),
-               "%) that were invalid MICs: ",
-               list_missing, call = FALSE)
+        round(((na_after - na_before) / length(x)) * 100),
+        "%) that were invalid MICs: ",
+        list_missing,
+        call = FALSE
+      )
     }
-    
+
     set_clean_class(factor(x, levels = valid_mic_levels, ordered = TRUE),
-                    new_class =  c("mic", "ordered", "factor"))
+      new_class = c("mic", "ordered", "factor")
+    )
   }
 }
 
@@ -199,7 +235,8 @@ all_valid_mics <- function(x) {
     return(FALSE)
   }
   x_mic <- tryCatch(suppressWarnings(as.mic(x[!is.na(x)])),
-                    error = function(e) NA)
+    error = function(e) NA
+  )
   !any(is.na(x_mic)) && !all(is.na(x))
 }
 
@@ -208,7 +245,8 @@ all_valid_mics <- function(x) {
 #' @format NULL
 #' @export
 NA_mic_ <- set_clean_class(factor(NA, levels = valid_mic_levels, ordered = TRUE),
-                           new_class =  c("mic", "ordered", "factor"))
+  new_class = c("mic", "ordered", "factor")
+)
 
 #' @rdname as.mic
 #' @export
@@ -264,8 +302,10 @@ type_sum.mic <- function(x, ...) {
 #' @noRd
 print.mic <- function(x, ...) {
   cat("Class <mic>",
-      ifelse(length(levels(x)) < length(valid_mic_levels), font_red(" with dropped levels"), ""),
-      "\n", sep = "")
+    ifelse(length(levels(x)) < length(valid_mic_levels), font_red(" with dropped levels"), ""),
+    "\n",
+    sep = ""
+  )
   print(as.character(x), quote = FALSE)
   att <- attributes(x)
   if ("na.action" %in% names(att)) {
@@ -371,12 +411,12 @@ hist.mic <- function(x, ...) {
 get_skimmers.mic <- function(column) {
   skimr::sfl(
     skim_type = "mic",
-    p0 = ~stats::quantile(., probs = 0, na.rm = TRUE, names = FALSE),
-    p25 = ~stats::quantile(., probs = 0.25, na.rm = TRUE, names = FALSE),
-    p50 = ~stats::quantile(., probs = 0.5, na.rm = TRUE, names = FALSE),
-    p75 = ~stats::quantile(., probs = 0.75, na.rm = TRUE, names = FALSE),
-    p100 = ~stats::quantile(., probs = 1, na.rm = TRUE, names = FALSE),
-    hist = ~skimr::inline_hist(log2(stats::na.omit(.)), 5)
+    p0 = ~ stats::quantile(., probs = 0, na.rm = TRUE, names = FALSE),
+    p25 = ~ stats::quantile(., probs = 0.25, na.rm = TRUE, names = FALSE),
+    p50 = ~ stats::quantile(., probs = 0.5, na.rm = TRUE, names = FALSE),
+    p75 = ~ stats::quantile(., probs = 0.75, na.rm = TRUE, names = FALSE),
+    p100 = ~ stats::quantile(., probs = 1, na.rm = TRUE, names = FALSE),
+    hist = ~ skimr::inline_hist(log2(stats::na.omit(.)), 5)
   )
 }
 
@@ -672,7 +712,7 @@ is_lower <- function(el) {
 #' @export
 #' @noRd
 `^.mic` <- function(e1, e2) {
-  as.double(e1) ^ as.double(e2)
+  as.double(e1)^as.double(e2)
 }
 
 #' @method %% mic

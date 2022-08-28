@@ -58,7 +58,7 @@ filter_first_isolate(
 
 \item{col_specimen}{column name of the specimen type or group}
 
-\item{col_icu}{column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU)}
+\item{col_icu}{column name of the logicals (\code{TRUE}/\code{FALSE}) whether a ward or department is an Intensive Care Unit (ICU). This can also be a \link{logical} vector with the same length as rows in \code{x}.}
 
 \item{col_keyantimicrobials}{(only useful when \code{method = "phenotype-based"}) column name of the key antimicrobials to determine first isolates, see \code{\link[=key_antimicrobials]{key_antimicrobials()}}. Defaults to the first column that starts with 'key' followed by 'ab' or 'antibiotics' or 'antimicrobials' (case insensitive). Use \code{col_keyantimicrobials = FALSE} to prevent this. Can also be the output of \code{\link[=key_antimicrobials]{key_antimicrobials()}}.}
 
@@ -87,7 +87,7 @@ filter_first_isolate(
 \item{...}{arguments passed on to \code{\link[=first_isolate]{first_isolate()}} when using \code{\link[=filter_first_isolate]{filter_first_isolate()}}, otherwise arguments passed on to \code{\link[=key_antimicrobials]{key_antimicrobials()}} (such as \code{universal}, \code{gram_negative}, \code{gram_positive})}
 }
 \value{
-A \code{\link{logical}} vector
+A \link{logical} vector
 }
 \description{
 Determine first isolates of all microorganisms of every patient per episode and (if needed) per specimen type. These functions support all four methods as summarised by Hindler \emph{et al.} in 2007 (\doi{10.1086/511864}). To determine patient episodes not necessarily based on microorganisms, use \code{\link[=is_new_episode]{is_new_episode()}} that also supports grouping with the \code{dplyr} package.
@@ -177,36 +177,20 @@ if (require("dplyr")) {
   # filter on first isolates using dplyr:
   example_isolates \%>\%
     filter(first_isolate())
- 
+}
+if (require("dplyr")) {
+
   # short-hand version:
   example_isolates \%>\%
     filter_first_isolate(info = FALSE)
-    
- # flag the first isolates per group:
- example_isolates \%>\%
-   group_by(hospital_id) \%>\%
-   mutate(first = first_isolate()) \%>\%
-   select(hospital_id, date, patient_id, mo, first)
-  
-  # now let's see if first isolates matter:
-  A <- example_isolates \%>\%
-    group_by(hospital_id) \%>\%
-    summarise(count = n_rsi(GEN),            # gentamicin availability
-              resistance = resistance(GEN))  # gentamicin resistance
- 
-  B <- example_isolates \%>\%
-    filter_first_isolate() \%>\%               # the 1st isolate filter
-    group_by(hospital_id) \%>\%
-    summarise(count = n_rsi(GEN),            # gentamicin availability
-              resistance = resistance(GEN))  # gentamicin resistance
- 
-  # Have a look at A and B.
-  A
-  B
-  
-  # B is more reliable because every isolate is counted only once.
-  # Gentamicin resistance in hospital D appears to be 4.2\% higher than
-  # when you (erroneously) would have used all isolates for analysis.
+}
+if (require("dplyr")) {
+
+  # flag the first isolates per group:
+  example_isolates \%>\%
+    group_by(ward) \%>\%
+    mutate(first = first_isolate()) \%>\%
+    select(ward, date, patient, mo, first)
 }
 }
 }

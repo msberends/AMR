@@ -5,7 +5,7 @@
 \alias{example_isolates_unclean}
 \title{Data Set with Unclean Data}
 \format{
-A \link{data.frame} with 3,000 observations and 8 variables:
+A [tibble\link[tibble:tibble]{tibble::tibble} with 3,000 observations and 8 variables:
 \itemize{
 \item \code{patient_id}\cr ID of the patient
 \item \code{date}\cr date of receipt at the laboratory
@@ -20,12 +20,10 @@ example_isolates_unclean
 \description{
 A data set containing 3,000 microbial isolates that are not cleaned up and consequently not ready for AMR data analysis. This data set can be used for practice.
 }
-\section{Reference Data Publicly Available}{
-
-All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
+\details{
+Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
-
 \examples{
-head(example_isolates_unclean)
+example_isolates_unclean
 }
 \keyword{datasets}

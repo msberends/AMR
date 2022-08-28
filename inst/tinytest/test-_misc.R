@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -47,7 +47,7 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_warning(AMR:::get_column_abx(rename(example_isolates, thisone = AMX), amox = "thisone", tmp = "thisone", verbose = FALSE))
 }
 
-# we rely on "grouped_tbl" being a class of grouped tibbles, so implement a test that checks for this:
+# we rely on "grouped_tbl" being a class of grouped tibbles, so run a test that checks for this:
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
-  expect_true(AMR:::is_null_or_grouped_tbl(example_isolates %>% group_by(hospital_id)))
+  expect_true(AMR:::is_null_or_grouped_tbl(example_isolates %>% group_by(ward)))
 }

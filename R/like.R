@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -39,7 +39,7 @@
 #' * Support multiple patterns
 #' * Check if `pattern` is a valid regular expression and sets `fixed = TRUE` if not, to greatly improve speed (vectorised over `pattern`)
 #' * Always use compatibility with Perl unless `fixed = TRUE`, to greatly improve speed
-#' 
+#'
 #' Using RStudio? The `%like%`/`%unlike%` functions can also be directly inserted in your code from the Addins menu and can have its own keyboard shortcut like `Shift+Ctrl+L` or `Shift+Cmd+L` (see menu `Tools` > `Modify Keyboard Shortcuts...`). If you keep pressing your shortcut, the inserted text will be iterated over `%like%` -> `%unlike%` -> `%like_case%` -> `%unlike_case%`.
 #' @source Idea from the [`like` function from the `data.table` package](https://github.com/Rdatatable/data.table/blob/ec1259af1bf13fc0c96a1d3f9e84d55d8106a9a4/R/like.R), although altered as explained in *Details*.
 #' @seealso [grepl()]
@@ -49,22 +49,20 @@
 #' b <- "TEST"
 #' a %like% b
 #' b %like% a
-#' 
+#'
 #' # also supports multiple patterns
 #' a <- c("Test case", "Something different", "Yet another thing")
-#' b <- c(     "case",           "diff",      "yet")
+#' b <- c("case", "diff", "yet")
 #' a %like% b
 #' a %unlike% b
-#' 
+#'
 #' a[1] %like% b
 #' a %like% b[1]
-#' 
-#' # get isolates whose name start with 'Ent' or 'ent'
-#' example_isolates[which(mo_name(example_isolates$mo) %like% "^ent"), ]
+#'
 #' \donttest{
-#' # faster way, since mo_name() is context-aware:
-#' example_isolates[which(mo_name() %like% "^ent"), ]
-#' 
+#' # get isolates whose name start with 'Entero' (case-insensitive)
+#' example_isolates[which(mo_name() %like% "^entero"), ]
+#'
 #' if (require("dplyr")) {
 #'   example_isolates %>%
 #'     filter(mo_name() %like% "^ent")
@@ -74,7 +72,7 @@ like <- function(x, pattern, ignore.case = TRUE) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(pattern, allow_NA = FALSE)
   meet_criteria(ignore.case, allow_class = "logical", has_length = 1)
-  
+
   if (all(is.na(x))) {
     return(rep(FALSE, length(x)))
   }
@@ -98,18 +96,22 @@ like <- function(x, pattern, ignore.case = TRUE) {
     if (length(x) == 1) {
       x <- rep(x, length(pattern))
     } else if (length(pattern) != length(x)) {
-      stop_("arguments `x` and `pattern` must be of same length, or either one must be 1 ",
-            "(`x` has length ", length(x), " and `pattern` has length ", length(pattern), ")")
+      stop_(
+        "arguments `x` and `pattern` must be of same length, or either one must be 1 ",
+        "(`x` has length ", length(x), " and `pattern` has length ", length(pattern), ")"
+      )
     }
     unlist(
-      mapply(FUN = grepl,
-             x = x,
-             pattern = pattern,
-             fixed = fixed,
-             perl = !fixed,
-             MoreArgs = list(ignore.case = FALSE),
-             SIMPLIFY = FALSE,
-             USE.NAMES = FALSE)
+      mapply(
+        FUN = grepl,
+        x = x,
+        pattern = pattern,
+        fixed = fixed,
+        perl = !fixed,
+        MoreArgs = list(ignore.case = FALSE),
+        SIMPLIFY = FALSE,
+        USE.NAMES = FALSE
+      )
     )
   }
 }

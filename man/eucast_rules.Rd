@@ -36,7 +36,7 @@ eucast_rules(
 eucast_dosage(ab, administration = "iv", version_breakpoints = 11)
 }
 \arguments{
-\item{x}{data with antibiotic columns, such as \code{amox}, \code{AMX} and \code{AMC}}
+\item{x}{a data set with antibiotic columns, such as \code{amox}, \code{AMX} and \code{AMC}}
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
@@ -83,26 +83,26 @@ Custom rules can be created using \code{\link[=custom_eucast_rules]{custom_eucas
                          AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I")
 
 eucast_rules(example_isolates, rules = "custom", custom_rules = x, info = FALSE)
-#> # A tibble: 2,000 x 49
-#>    date       hospit~1 ward_~2 ward_~3 ward_~4   age gender patie~5 mo          
-#>  * <date>     <fct>    <lgl>   <lgl>   <lgl>   <dbl> <chr>  <chr>   <mo>        
-#>  1 2002-01-02 D        FALSE   TRUE    FALSE      65 F      A77334  B_ESCHR_COLI
-#>  2 2002-01-03 D        FALSE   TRUE    FALSE      65 F      A77334  B_ESCHR_COLI
-#>  3 2002-01-07 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR
-#>  4 2002-01-07 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR
-#>  5 2002-01-13 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR
-#>  6 2002-01-13 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR
-#>  7 2002-01-14 D        FALSE   TRUE    FALSE      78 M      462729  B_STPHY_AURS
-#>  8 2002-01-14 D        FALSE   TRUE    FALSE      78 M      462729  B_STPHY_AURS
-#>  9 2002-01-16 B        TRUE    FALSE   FALSE      45 F      067927  B_STPHY_EPDR
-#> 10 2002-01-17 B        TRUE    FALSE   FALSE      79 F      858515  B_STPHY_EPDR
-#> # ... with 1,990 more rows, 40 more variables: PEN <rsi>, OXA <rsi>, FLC <rsi>,
-#> #   AMX <rsi>, AMC <rsi>, AMP <rsi>, TZP <rsi>, CZO <rsi>, FEP <rsi>,
-#> #   CXM <rsi>, FOX <rsi>, CTX <rsi>, CAZ <rsi>, CRO <rsi>, GEN <rsi>,
-#> #   TOB <rsi>, AMK <rsi>, KAN <rsi>, TMP <rsi>, SXT <rsi>, NIT <rsi>,
-#> #   FOS <rsi>, LNZ <rsi>, CIP <rsi>, MFX <rsi>, VAN <rsi>, TEC <rsi>,
-#> #   TCY <rsi>, TGC <rsi>, DOX <rsi>, ERY <rsi>, CLI <rsi>, AZM <rsi>,
-#> #   IPM <rsi>, MEM <rsi>, MTR <rsi>, CHL <rsi>, COL <rsi>, MUP <rsi>, ...
+#> # A tibble: 2,000 x 46
+#>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  
+#>  * <date>     <chr>   <dbl> <chr>  <chr>    <mo>         <rsi> <rsi> <rsi> <rsi>
+#>  1 2002-01-02 A77334     65 F      Clinical B_ESCHR_COLI R     NA    NA    NA   
+#>  2 2002-01-03 A77334     65 F      Clinical B_ESCHR_COLI R     NA    NA    NA   
+#>  3 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   
+#>  4 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   
+#>  5 2002-01-13 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   
+#>  6 2002-01-13 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   
+#>  7 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R     NA    S     R    
+#>  8 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R     NA    S     R    
+#>  9 2002-01-16 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   
+#> 10 2002-01-17 858515     79 F      ICU      B_STPHY_EPDR R     NA    S     NA   
+#> # ... with 1,990 more rows, and 36 more variables: AMC <rsi>, AMP <rsi>,
+#> #   TZP <rsi>, CZO <rsi>, FEP <rsi>, CXM <rsi>, FOX <rsi>, CTX <rsi>,
+#> #   CAZ <rsi>, CRO <rsi>, GEN <rsi>, TOB <rsi>, AMK <rsi>, KAN <rsi>,
+#> #   TMP <rsi>, SXT <rsi>, NIT <rsi>, FOS <rsi>, LNZ <rsi>, CIP <rsi>,
+#> #   MFX <rsi>, VAN <rsi>, TEC <rsi>, TCY <rsi>, TGC <rsi>, DOX <rsi>,
+#> #   ERY <rsi>, CLI <rsi>, AZM <rsi>, IPM <rsi>, MEM <rsi>, MTR <rsi>,
+#> #   CHL <rsi>, COL <rsi>, MUP <rsi>, RIF <rsi>
 #> # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 }\if{html}{\out{</div>}}
 }
@@ -131,24 +131,28 @@ Amikacin (\code{AMK}, \href{https://www.whocc.no/atc_ddd_index/?code=J01GB06&sho
 
 \section{Reference Data Publicly Available}{
 
-All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
+All data sets in this \code{AMR} package (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
 \donttest{
-a <- data.frame(mo = c("Staphylococcus aureus",
-                       "Enterococcus faecalis",
-                       "Escherichia coli",
-                       "Klebsiella pneumoniae",
-                       "Pseudomonas aeruginosa"),
-                VAN = "-",       # Vancomycin
-                AMX = "-",       # Amoxicillin
-                COL = "-",       # Colistin
-                CAZ = "-",       # Ceftazidime
-                CXM = "-",       # Cefuroxime
-                PEN = "S",       # Benzylpenicillin
-                FOX = "S",       # Cefoxitin
-                stringsAsFactors = FALSE)
+a <- data.frame(
+  mo = c(
+    "Staphylococcus aureus",
+    "Enterococcus faecalis",
+    "Escherichia coli",
+    "Klebsiella pneumoniae",
+    "Pseudomonas aeruginosa"
+  ),
+  VAN = "-", # Vancomycin
+  AMX = "-", # Amoxicillin
+  COL = "-", # Colistin
+  CAZ = "-", # Ceftazidime
+  CXM = "-", # Cefuroxime
+  PEN = "S", # Benzylpenicillin
+  FOX = "S", # Cefoxitin
+  stringsAsFactors = FALSE
+)
 
 head(a)
 

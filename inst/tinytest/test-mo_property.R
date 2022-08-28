@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -45,15 +45,19 @@ expect_equal(mo_subspecies("Escherichia coli"), "")
 expect_equal(mo_type("Escherichia coli", language = "en"), "Bacteria")
 expect_equal(mo_gramstain("Escherichia coli", language = "en"), "Gram-negative")
 expect_inherits(mo_taxonomy("Escherichia coli"), "list")
-expect_equal(names(mo_taxonomy("Escherichia coli")), c("kingdom", "phylum", "class", "order",
-                                                       "family", "genus", "species", "subspecies"))
+expect_equal(names(mo_taxonomy("Escherichia coli")), c(
+  "kingdom", "phylum", "class", "order",
+  "family", "genus", "species", "subspecies"
+))
 expect_equal(mo_synonyms("Escherichia coli"), NULL)
 expect_true(length(mo_synonyms("Candida albicans")) > 1)
 expect_inherits(mo_synonyms(c("Candida albicans", "Escherichia coli")), "list")
-expect_equal(names(mo_info("Escherichia coli")), c("kingdom", "phylum", "class", "order",
-                                                   "family", "genus", "species", "subspecies",
-                                                   "synonyms", "gramstain", "url", "ref",
-                                                   "snomed"))
+expect_equal(names(mo_info("Escherichia coli")), c(
+  "kingdom", "phylum", "class", "order",
+  "family", "genus", "species", "subspecies",
+  "synonyms", "gramstain", "url", "ref",
+  "snomed"
+))
 expect_inherits(mo_info(c("Escherichia coli", "Staphylococcus aureus")), "list")
 
 expect_equal(mo_ref("Escherichia coli"), "Castellani et al., 1919")
@@ -86,14 +90,22 @@ expect_identical(mo_name(dutch, language = NULL), microorganisms$fullname) # gig
 # manual property function
 expect_error(mo_property("Escherichia coli", property = c("tsn", "fullname")))
 expect_error(mo_property("Escherichia coli", property = "UNKNOWN"))
-expect_identical(mo_property("Escherichia coli", property = "fullname"),
-                 mo_fullname("Escherichia coli"))
-expect_identical(mo_property("Escherichia coli", property = "genus"),
-                 mo_genus("Escherichia coli"))
-expect_identical(mo_property("Escherichia coli", property = "species"),
-                 mo_species("Escherichia coli"))
-expect_identical(mo_property("Escherichia coli", property = "species_id"),
-                 mo_lpsn("Escherichia coli"))
+expect_identical(
+  mo_property("Escherichia coli", property = "fullname"),
+  mo_fullname("Escherichia coli")
+)
+expect_identical(
+  mo_property("Escherichia coli", property = "genus"),
+  mo_genus("Escherichia coli")
+)
+expect_identical(
+  mo_property("Escherichia coli", property = "species"),
+  mo_species("Escherichia coli")
+)
+expect_identical(
+  mo_property("Escherichia coli", property = "species_id"),
+  mo_lpsn("Escherichia coli")
+)
 
 expect_identical(suppressWarnings(mo_ref("Chlamydia psittaci")), "Page, 1968")
 expect_identical(mo_ref("Chlamydophila psittaci"), "Everett et al., 1999")
@@ -102,30 +114,48 @@ expect_true(112283007 %in% mo_snomed("Escherichia coli"))
 # old codes must throw a warning in mo_* family
 expect_warning(mo_name(c("B_ESCHR_COL", "B_STPHY_AUR")))
 # outcome of mo_fullname must always return the fullname from the data set
-x <- data.frame(mo = microorganisms$mo,
-                # fullname from the original data:
-                f1 = microorganisms$fullname,
-                # newly created fullname based on MO code:
-                f2 = mo_fullname(microorganisms$mo, language = "en"),
-                stringsAsFactors = FALSE)
+x <- data.frame(
+  mo = microorganisms$mo,
+  # fullname from the original data:
+  f1 = microorganisms$fullname,
+  # newly created fullname based on MO code:
+  f2 = mo_fullname(microorganisms$mo, language = "en"),
+  stringsAsFactors = FALSE
+)
 expect_equal(nrow(subset(x, f1 != f2)), 0)
 # is gram pos/neg (also return FALSE for all non-bacteria)
-expect_equal(mo_is_gram_negative(c("Escherichia coli", "Staphylococcus aureus", "Candida albicans")),
-             c(TRUE, FALSE, FALSE))
-expect_equal(mo_is_gram_positive(c("Escherichia coli", "Staphylococcus aureus", "Candida albicans")),
-             c(FALSE, TRUE, FALSE))
+expect_equal(
+  mo_is_gram_negative(c("Escherichia coli", "Staphylococcus aureus", "Candida albicans")),
+  c(TRUE, FALSE, FALSE)
+)
+expect_equal(
+  mo_is_gram_positive(c("Escherichia coli", "Staphylococcus aureus", "Candida albicans")),
+  c(FALSE, TRUE, FALSE)
+)
 # is intrinsic resistant
-expect_equal(mo_is_intrinsic_resistant(c("Escherichia coli", "Staphylococcus aureus", "Candida albicans"),
-                                       "vanco"),
-             c(TRUE, FALSE, FALSE))
+expect_equal(
+  mo_is_intrinsic_resistant(
+    c("Escherichia coli", "Staphylococcus aureus", "Candida albicans"),
+    "vanco"
+  ),
+  c(TRUE, FALSE, FALSE)
+)
 # with reference data
-expect_equal(mo_name("test", reference_df = data.frame(col1 = "test", mo = "B_ESCHR_COLI")), 
-             "Escherichia coli")
+expect_equal(
+  mo_name("test", reference_df = data.frame(col1 = "test", mo = "B_ESCHR_COLI")),
+  "Escherichia coli"
+)
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_equal(example_isolates %>% filter(mo_is_gram_negative()) %>% nrow(),
-               730, tolerance = 0.5)
+    730,
+    tolerance = 0.5
+  )
   expect_equal(example_isolates %>% filter(mo_is_gram_positive()) %>% nrow(),
-               1238, tolerance = 0.5)
+    1238,
+    tolerance = 0.5
+  )
   expect_equal(example_isolates %>% filter(mo_is_intrinsic_resistant(ab = "Vancomycin")) %>% nrow(),
-               710, tolerance = 0.5)
+    710,
+    tolerance = 0.5
+  )
 }

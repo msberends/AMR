@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -30,8 +30,9 @@
 # 2. Download the CSV from https://loinc.org/download/loinc-table-file-csv/ (Loinc_2.67_Text_2.67.zip)
 # 3. Read Loinc.csv that's in this zip file
 loinc_df <- read.csv("data-raw/Loinc.csv",
-                     row.names = NULL,
-                     stringsAsFactors = FALSE)
+  row.names = NULL,
+  stringsAsFactors = FALSE
+)
 
 # 4. Clean and add
 library(dplyr)
@@ -39,7 +40,10 @@ library(cleaner)
 library(AMR)
 loinc_df %>% freq(CLASS) # to find the drugs
 loinc_df <- loinc_df %>% filter(CLASS == "DRUG/TOX")
-ab_names <- antibiotics %>% pull(name) %>% paste0(collapse = "|") %>% paste0("(", ., ")")
+ab_names <- antibiotics %>%
+  pull(name) %>%
+  paste0(collapse = "|") %>%
+  paste0("(", ., ")")
 
 antibiotics$loinc <- as.list(rep(NA_character_, nrow(antibiotics)))
 for (i in seq_len(nrow(antibiotics))) {

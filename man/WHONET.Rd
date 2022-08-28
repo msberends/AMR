@@ -5,7 +5,7 @@
 \alias{WHONET}
 \title{Data Set with 500 Isolates - WHONET Example}
 \format{
-A \link{data.frame} with 500 observations and 53 variables:
+A [tibble\link[tibble:tibble]{tibble::tibble} with 500 observations and 53 variables:
 \itemize{
 \item \verb{Identification number}\cr ID of the sample
 \item \verb{Specimen number}\cr ID of the specimen
@@ -41,12 +41,10 @@ WHONET
 \description{
 This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The antibiotic results are from our \link{example_isolates} data set. All patient names are created using online surname generators and are only in place for practice purposes.
 }
-\section{Reference Data Publicly Available}{
-
-All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
+\details{
+Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
-
 \examples{
-head(WHONET)
+WHONET
 }
 \keyword{datasets}

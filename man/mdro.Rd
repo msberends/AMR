@@ -137,7 +137,7 @@ You can print the rules set in the console for an overview. Colours will help re
 #>   1. CIP is "R" and age is higher than 60 -> Elderly Type A
 #>   2. ERY is "R" and age is higher than 60 -> Elderly Type B
 #>   3. Otherwise -> Negative
-#> 
+#>
 #> Unmatched rows will return NA.
 }\if{html}{\out{</div>}}
 
@@ -153,10 +153,10 @@ table(x)
 Rules can also be combined with other custom rules by using \code{\link[=c]{c()}}:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{x <- mdro(example_isolates,
-          guideline = c(custom, 
+          guideline = c(custom,
                         custom_mdro_guideline(ERY == "R" & age > 50 ~ "Elderly Type C")))
 table(x)
-#>       Negative Elderly Type A Elderly Type B Elderly Type C 
+#>       Negative Elderly Type A Elderly Type B Elderly Type C
 #>            961            198            732            109
 }\if{html}{\out{</div>}}
 
@@ -193,8 +193,11 @@ str(out)
 table(out)
 
 out <- mdro(example_isolates,
-            guideline = custom_mdro_guideline(AMX == "R" ~ "Custom MDRO 1",
-                                              VAN == "R" ~ "Custom MDRO 2"))
+  guideline = custom_mdro_guideline(
+    AMX == "R" ~ "Custom MDRO 1",
+    VAN == "R" ~ "Custom MDRO 2"
+  )
+)
 table(out)
 
 \donttest{
@@ -202,13 +205,12 @@ if (require("dplyr")) {
   example_isolates \%>\%
     mdro() \%>\%
     table()
-  
+
   # no need to define `x` when used inside dplyr verbs:
   example_isolates \%>\%
     mutate(MDRO = mdro()) \%>\%
     pull(MDRO) \%>\%
     table()
-           
 }
 }
 }

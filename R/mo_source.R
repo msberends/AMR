@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -36,17 +36,17 @@
 #' @details The reference file can be a text file separated with commas (CSV) or tabs or pipes, an Excel file (either 'xls' or 'xlsx' format) or an \R object file (extension '.rds'). To use an Excel file, you will need to have the `readxl` package installed.
 #'
 #' [set_mo_source()] will check the file for validity: it must be a [data.frame], must have a column named `"mo"` which contains values from [`microorganisms$mo`][microorganisms] or [`microorganisms$fullname`][microorganisms] and must have a reference column with your own defined values. If all tests pass, [set_mo_source()] will read the file into \R and will ask to export it to `"~/mo_source.rds"`. The CRAN policy disallows packages to write to the file system, although '*exceptions may be allowed in interactive sessions if the package obtains confirmation from the user*'. For this reason, this function only works in interactive sessions so that the user can **specifically confirm and allow** that this file will be created. The destination of this file can be set with the `destination` argument and defaults to the user's home directory. It can also be set as an \R option, using `options(AMR_mo_source = "my/location/file.rds")`.
-#' 
-#' The created compressed data file `"mo_source.rds"` will be used at default for MO determination (function [as.mo()] and consequently all `mo_*` functions like [mo_genus()] and [mo_gramstain()]). The location and timestamp of the original file will be saved as an [attribute][base::attributes()] to the compressed data file. 
-#' 
+#'
+#' The created compressed data file `"mo_source.rds"` will be used at default for MO determination (function [as.mo()] and consequently all `mo_*` functions like [mo_genus()] and [mo_gramstain()]). The location and timestamp of the original file will be saved as an [attribute][base::attributes()] to the compressed data file.
+#'
 #' The function [get_mo_source()] will return the data set by reading `"mo_source.rds"` with [readRDS()]. If the original file has changed (by checking the location and timestamp of the original file), it will call [set_mo_source()] to update the data file automatically if used in an interactive session.
 #'
 #' Reading an Excel file (`.xlsx`) with only one row has a size of 8-9 kB. The compressed file created with [set_mo_source()] will then have a size of 0.1 kB and can be read by [get_mo_source()] in only a couple of microseconds (millionths of a second).
-#' 
+#'
 #' @section How to Setup:
-#' 
+#'
 #' Imagine this data on a sheet of an Excel file. The first column contains the organisation specific codes, the second column contains valid taxonomic names:
-#' 
+#'
 #' ```
 #'   |         A          |            B          |
 #' --|--------------------|-----------------------|
@@ -57,18 +57,18 @@
 #' ```
 #'
 #' We save it as `"home/me/ourcodes.xlsx"`. Now we have to set it as a source:
-#' 
+#'
 #' ```
 #' set_mo_source("home/me/ourcodes.xlsx")
 #' #> NOTE: Created mo_source file '/Users/me/mo_source.rds' (0.3 kB) from
-#' #>       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns 
+#' #>       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns
 #' #>       "Organisation XYZ" and "mo"
 #' ```
 #'
 #' It has now created a file `"~/mo_source.rds"` with the contents of our Excel file. Only the first column with foreign values and the 'mo' column will be kept when creating the RDS file.
 #'
 #' And now we can use it in our functions:
-#' 
+#'
 #' ```
 #' as.mo("lab_mo_ecoli")
 #' #> Class <mo>
@@ -86,7 +86,7 @@
 #' ```
 #'
 #' If we edit the Excel file by, let's say, adding row 4 like this:
-#' 
+#'
 #' ```
 #'   |         A          |            B          |
 #' --|--------------------|-----------------------|
@@ -98,10 +98,10 @@
 #' ```
 #'
 #' ...any new usage of an MO function in this package will update your data file:
-#' 
+#'
 #' ```
 #' as.mo("lab_mo_ecoli")
-#' #> NOTE: Updated mo_source file '/Users/me/mo_source.rds' (0.3 kB) from 
+#' #> NOTE: Updated mo_source file '/Users/me/mo_source.rds' (0.3 kB) from
 #' #>       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns
 #' #>        "Organisation XYZ" and "mo"
 #' #> Class <mo>
@@ -112,21 +112,21 @@
 #' ```
 #'
 #' To delete the reference data file, just use `""`, `NULL` or `FALSE` as input for [set_mo_source()]:
-#' 
+#'
 #' ```
 #' set_mo_source(NULL)
 #' #> Removed mo_source file '/Users/me/mo_source.rds'
 #' ```
-#' 
+#'
 #' If the original file (in the previous case an Excel file) is moved or deleted, the `mo_source.rds` file will be removed upon the next use of [as.mo()] or any [`mo_*`][mo_property()] function.
 #' @export
 set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_source.rds")) {
   meet_criteria(path, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(destination, allow_class = "character", has_length = 1)
   stop_ifnot(destination %like% "[.]rds$", "the `destination` must be a file location with file extension .rds.")
-  
+
   mo_source_destination <- path.expand(destination)
-  
+
   stop_ifnot(interactive(), "this function can only be used in interactive mode, since it must ask for the user's permission to write a file to their home folder.")
 
   if (is.null(path) || path %in% c(FALSE, "")) {
@@ -134,77 +134,81 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
     if (file.exists(mo_source_destination)) {
       unlink(mo_source_destination)
       message_("Removed mo_source file '", font_bold(mo_source_destination), "'",
-               add_fn = font_red,
-               as_note = FALSE)
+        add_fn = font_red,
+        as_note = FALSE
+      )
     }
     return(invisible())
   }
-  
+
   stop_ifnot(file.exists(path), "file not found: ", path)
-  
+
   df <- NULL
   if (path %like% "[.]rds$") {
     df <- readRDS(path)
-    
   } else if (path %like% "[.]xlsx?$") {
     # is Excel file (old or new)
     stop_ifnot_installed("readxl")
     df <- readxl::read_excel(path)
-    
   } else if (path %like% "[.]tsv$") {
     df <- utils::read.table(file = path, header = TRUE, sep = "\t", stringsAsFactors = FALSE)
-    
   } else if (path %like% "[.]csv$") {
     df <- utils::read.table(file = path, header = TRUE, sep = ",", stringsAsFactors = FALSE)
-    
   } else {
     # try comma first
     try(
       df <- utils::read.table(file = path, header = TRUE, sep = ",", stringsAsFactors = FALSE),
-      silent = TRUE)
+      silent = TRUE
+    )
     if (!check_validity_mo_source(df, stop_on_error = FALSE)) {
       # try tab
       try(
         df <- utils::read.table(file = path, header = TRUE, sep = "\t", stringsAsFactors = FALSE),
-        silent = TRUE)
+        silent = TRUE
+      )
     }
     if (!check_validity_mo_source(df, stop_on_error = FALSE)) {
       # try pipe
       try(
         df <- utils::read.table(file = path, header = TRUE, sep = "|", stringsAsFactors = FALSE),
-        silent = TRUE)
+        silent = TRUE
+      )
     }
   }
-  
+
   # check integrity
   if (is.null(df)) {
     stop_("the path '", path, "' could not be imported as a dataset.")
   }
   check_validity_mo_source(df)
-  
+
   df <- subset(df, !is.na(mo))
-  
+
   # keep only first two columns, second must be mo
   if (colnames(df)[1] == "mo") {
     df <- df[, c(colnames(df)[2], "mo")]
   } else {
     df <- df[, c(colnames(df)[1], "mo")]
   }
-  
+
   df <- as.data.frame(df, stringAsFactors = FALSE)
   df[, "mo"] <- as.mo(df[, "mo", drop = TRUE])
-  
+
   # success
   if (file.exists(mo_source_destination)) {
     action <- "Updated"
   } else {
     action <- "Created"
     # only ask when file is created, not when it is updated
-    txt <- paste0(word_wrap(paste0("This will write create the new file '", 
-                                   mo_source_destination, 
-                                   "', for which your permission is needed.")),
-                  "\n\n",
-                  word_wrap("Do you agree that this file will be created?"))
+    txt <- paste0(
+      word_wrap(paste0(
+        "This will write create the new file '",
+        mo_source_destination,
+        "', for which your permission is needed."
+      )),
+      "\n\n",
+      word_wrap("Do you agree that this file will be created?")
+    )
     showQuestion <- import_fn("showQuestion", "rstudioapi", error_on_fail = FALSE)
     if (!is.null(showQuestion)) {
       q_continue <- showQuestion("Create new file in home directory", txt)
@@ -220,11 +224,13 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
   attr(df, "mo_source_timestamp") <- file.mtime(path)
   saveRDS(df, mo_source_destination)
   pkg_env$mo_source <- df
-  message_(action, " mo_source file '", font_bold(mo_source_destination),
-           "' (", formatted_filesize(mo_source_destination),
-           ") from '", font_bold(path),
-           "' (", formatted_filesize(path),
-           '), columns "', colnames(df)[1], '" and "', colnames(df)[2], '"')
+  message_(
+    action, " mo_source file '", font_bold(mo_source_destination),
+    "' (", formatted_filesize(mo_source_destination),
+    ") from '", font_bold(path),
+    "' (", formatted_filesize(path),
+    '), columns "', colnames(df)[1], '" and "', colnames(df)[2], '"'
+  )
 }
 
 #' @rdname mo_source
@@ -240,7 +246,7 @@ get_mo_source <- function(destination = getOption("AMR_mo_source", "~/mo_source.
   if (is.null(pkg_env$mo_source)) {
     pkg_env$mo_source <- readRDS(path.expand(destination))
   }
-  
+
   old_time <- attributes(pkg_env$mo_source)$mo_source_timestamp
   new_time <- file.mtime(attributes(pkg_env$mo_source)$mo_source_location)
   if (interactive() && !identical(old_time, new_time)) {
@@ -252,7 +258,7 @@ get_mo_source <- function(destination = getOption("AMR_mo_source", "~/mo_source.
 
 check_validity_mo_source <- function(x, refer_to_name = "`reference_df`", stop_on_error = TRUE) {
   check_dataset_integrity()
-  
+
   if (paste(deparse(substitute(x)), collapse = "") == "get_mo_source()") {
     return(TRUE)
   }
@@ -288,10 +294,11 @@ check_validity_mo_source <- function(x, refer_to_name = "`reference_df`", stop_o
       } else {
         plural <- ""
       }
-      stop_("Value", plural, " ", vector_and(invalid[, 1, drop = TRUE], quotes = TRUE), 
-           " found in ", tolower(refer_to_name), 
-           ", but with invalid microorganism code", plural, " ", vector_and(invalid$mo, quotes = TRUE),
-           call = FALSE)
+      stop_("Value", plural, " ", vector_and(invalid[, 1, drop = TRUE], quotes = TRUE),
+        " found in ", tolower(refer_to_name),
+        ", but with invalid microorganism code", plural, " ", vector_and(invalid$mo, quotes = TRUE),
+        call = FALSE
+      )
     } else {
       return(FALSE)
     }

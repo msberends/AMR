@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -36,7 +36,7 @@
 #' In the contingency table case simulation is done by random sampling from the set of all contingency tables with given marginals, and works only if the marginals are strictly positive. Note that this is not the usual sampling situation assumed for a chi-squared test (such as the *G*-test) but rather that for Fisher's exact test.
 #'
 #' In the goodness-of-fit case simulation is done by random sampling from the discrete distribution specified by `p`, each sample being of size `n = sum(x)`. This simulation is done in \R and may be slow.
-#'   
+#'
 #' ## *G*-test Of Goodness-of-Fit (Likelihood Ratio Test)
 #' Use the *G*-test of goodness-of-fit when you have one nominal variable with two or more values (such as male and female, or red, pink and white flowers). You compare the observed counts of numbers of observations in each category with the expected counts, which you calculate using some kind of theoretical expectation (such as a 1:1 sex ratio or a 1:2:1 ratio in a genetic cross).
 #'
@@ -57,9 +57,9 @@
 #' Unlike the exact test of goodness-of-fit ([fisher.test()]), the *G*-test does not directly calculate the probability of obtaining the observed results or something more extreme. Instead, like almost all statistical tests, the *G*-test has an intermediate step; it uses the data to calculate a test statistic that measures how far the observed data are from the null expectation. You then use a mathematical relationship, in this case the chi-square distribution, to estimate the probability of obtaining that value of the test statistic.
 #'
 #' The *G*-test uses the log of the ratio of two likelihoods as the test statistic, which is why it is also called a likelihood ratio test or log-likelihood ratio test. The formula to calculate a *G*-statistic is:
-#' 
+#'
 #' \eqn{G = 2 * sum(x * log(x / E))}
-#' 
+#'
 #' where `E` are the expected values. Since this is chi-square distributed, the p value can be calculated in \R with:
 #' ```
 #' p <- stats::pchisq(G, df, lower.tail = FALSE)
@@ -111,92 +111,112 @@ g.test <- function(x,
                    p = rep(1 / length(x), length(x)),
                    rescale.p = FALSE) {
   DNAME <- deparse(substitute(x))
-  if (is.data.frame(x))
+  if (is.data.frame(x)) {
     x <- as.matrix(x)
+  }
   if (is.matrix(x)) {
-    if (min(dim(x)) == 1L)
+    if (min(dim(x)) == 1L) {
       x <- as.vector(x)
+    }
   }
   if (!is.matrix(x) && !is.null(y)) {
-    if (length(x) != length(y))
+    if (length(x) != length(y)) {
       stop("'x' and 'y' must have the same length")
+    }
     DNAME2 <- deparse(substitute(y))
     xname <- if (length(DNAME) > 1L || nchar(DNAME, "w") >
-                 30)
+      30) {
       ""
-    else DNAME
+    } else {
+      DNAME
+    }
     yname <- if (length(DNAME2) > 1L || nchar(DNAME2, "w") >
-                 30)
+      30) {
       ""
-    else DNAME2
+    } else {
+      DNAME2
+    }
     OK <- complete.cases(x, y)
     x <- factor(x[OK])
     y <- factor(y[OK])
-    if ((nlevels(x) < 2L) || (nlevels(y) < 2L))
+    if ((nlevels(x) < 2L) || (nlevels(y) < 2L)) {
       stop("'x' and 'y' must have at least 2 levels")
+    }
     x <- table(x, y)
     names(dimnames(x)) <- c(xname, yname)
-    DNAME <- paste(paste(DNAME, collapse = "\n"), "and",
-                   paste(DNAME2, collapse = "\n"))
+    DNAME <- paste(
+      paste(DNAME, collapse = "\n"), "and",
+      paste(DNAME2, collapse = "\n")
+    )
   }
-  if (any(x < 0) || any(is.na((x)))) # this last one was anyNA, but only introduced in R 3.1.0
+  if (any(x < 0) || any(is.na((x)))) { # this last one was anyNA, but only introduced in R 3.1.0
     stop("all entries of 'x' must be nonnegative and finite")
-  if ((n <- sum(x)) == 0)
+  }
+  if ((n <- sum(x)) == 0) {
     stop("at least one entry of 'x' must be positive")
-  
-  
+  }
+
+
   if (is.matrix(x)) {
     METHOD <- "G-test of independence"
     nr <- as.integer(nrow(x))
     nc <- as.integer(ncol(x))
-    if (is.na(nr) || is.na(nc) || is.na(nr * nc))
+    if (is.na(nr) || is.na(nc) || is.na(nr * nc)) {
       stop("invalid nrow(x) or ncol(x)", domain = NA)
+    }
     # add fisher.test suggestion
-    if (nr == 2 && nc == 2)
+    if (nr == 2 && nc == 2) {
       warning("`fisher.test()` is always more reliable for 2x2 tables and although much slower, often only takes seconds.")
+    }
     sr <- rowSums(x)
     sc <- colSums(x)
     E <- outer(sr, sc, "*") / n
-    v <- function(r, c, n) c * r * (n - r) * (n - c) / n ^ 3
+    v <- function(r, c, n) c * r * (n - r) * (n - c) / n^3
     V <- outer(sr, sc, v, n)
     dimnames(E) <- dimnames(x)
-    
+
     STATISTIC <- 2 * sum(x * log(x / E)) # sum((abs(x - E) - YATES)^2/E) for chisq.test
     PARAMETER <- (nr - 1L) * (nc - 1L)
     PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
-    
-  }
-  else {
-    if (length(dim(x)) > 2L)
+  } else {
+    if (length(dim(x)) > 2L) {
       stop("invalid 'x'")
-    if (length(x) == 1L)
+    }
+    if (length(x) == 1L) {
       stop("'x' must at least have 2 elements")
-    if (length(x) != length(p))
+    }
+    if (length(x) != length(p)) {
       stop("'x' and 'p' must have the same number of elements")
-    if (any(p < 0))
+    }
+    if (any(p < 0)) {
       stop("probabilities must be non-negative.")
+    }
     if (abs(sum(p) - 1) > sqrt(.Machine$double.eps)) {
-      if (rescale.p)
+      if (rescale.p) {
         p <- p / sum(p)
-      else stop("probabilities must sum to 1.")
+      } else {
+        stop("probabilities must sum to 1.")
+      }
     }
     METHOD <- "G-test of goodness-of-fit (likelihood ratio test)"
     E <- n * p
     V <- n * p * (1 - p)
     STATISTIC <- 2 * sum(x * log(x / E)) # sum((x - E)^2/E) for chisq.test
     names(E) <- names(x)
-    
+
     PARAMETER <- length(x) - 1
     PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
-    
   }
   names(STATISTIC) <- "X-squared"
   names(PARAMETER) <- "df"
-  if (any(E < 5) && is.finite(PARAMETER))
+  if (any(E < 5) && is.finite(PARAMETER)) {
     warning("G-statistic approximation may be incorrect due to E < 5")
-  
-  structure(list(statistic = STATISTIC, argument = PARAMETER,
-                 p.value = PVAL, method = METHOD, data.name = DNAME,
-                 observed = x, expected = E, residuals = (x - E) / sqrt(E),
-                 stdres = (x - E) / sqrt(V)), class = "htest")
+  }
+
+  structure(list(
+    statistic = STATISTIC, argument = PARAMETER,
+    p.value = PVAL, method = METHOD, data.name = DNAME,
+    observed = x, expected = E, residuals = (x - E) / sqrt(E),
+    stdres = (x - E) / sqrt(V)
+  ), class = "htest")
 }

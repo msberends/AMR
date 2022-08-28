@@ -27,6 +27,9 @@
 
 $(document).ready(function() {
 
+  // Replace 'Developers' with 'Maintainers' on the main page
+  $(".developers h2").text("Maintainers");
+
   // replace \donttest and \dontrun texts in Examples
   if ($("#ref-examples ~ div pre").length > 0) {
     $("#ref-examples ~ div pre").html($("#ref-examples ~ div pre").html().replaceAll("# \\donttest{", ""));

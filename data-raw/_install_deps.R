@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -26,12 +26,15 @@
 # some old R instances have trouble installing tinytest, so we ship it too
 install.packages("data-raw/tinytest_1.3.1.tar.gz", dependencies = c("Depends", "Imports", "LinkingTo"))
 install.packages(getwd(), repos = NULL, type = "source")
-# install.packages("data-raw/AMR_latest.tar.gz", dependencies = FALSE)
 
-pkg_suggests <- gsub("[^a-zA-Z0-9]+", "",
-                     unlist(strsplit(unlist(packageDescription("AMR",
-                                                               fields = c("Suggests", "Enhances", "LinkingTo"))),
-                                     split = ", ?")))
+pkg_suggests <- gsub(
+  "[^a-zA-Z0-9]+", "",
+  unlist(strsplit(unlist(packageDescription("AMR",
+    fields = c("Suggests", "Enhances", "LinkingTo")
+  )),
+  split = ", ?"
+  ))
+)
 pkg_suggests <- unname(pkg_suggests[!is.na(pkg_suggests)])
 cat("################################################\n")
 cat("Packages listed in Suggests/Enhances:", paste(pkg_suggests, collapse = ", "), "\n")
@@ -49,22 +52,26 @@ if (length(to_install) == 0) {
 for (i in seq_len(length(to_install))) {
   cat("Installing package", to_install[i], "\n")
   tryCatch(install.packages(to_install[i],
-                            type = "source",
-                            repos = "https://cran.rstudio.com/",
-                            dependencies = c("Depends", "Imports", "LinkingTo"),
-                            quiet = FALSE),
-           # message = function(m) invisible(),
-           warning = function(w) message(w$message),
-           error = function(e) message(e$message))
+    type = "source",
+    repos = "https://cran.rstudio.com/",
+    dependencies = c("Depends", "Imports", "LinkingTo"),
+    quiet = FALSE
+  ),
+  # message = function(m) invisible(),
+  warning = function(w) message(w$message),
+  error = function(e) message(e$message)
+  )
   if (.Platform$OS.type != "unix" && !to_install[i] %in% rownames(utils::installed.packages())) {
     tryCatch(install.packages(to_install[i],
-                              type = "binary",
-                              repos = "https://cran.rstudio.com/",
-                              dependencies = c("Depends", "Imports", "LinkingTo"),
-                              quiet = FALSE),
-             # message = function(m) invisible(),
-             warning = function(w) message(w$message),
-             error = function(e) message(e$message))
+      type = "binary",
+      repos = "https://cran.rstudio.com/",
+      dependencies = c("Depends", "Imports", "LinkingTo"),
+      quiet = FALSE
+    ),
+    # message = function(m) invisible(),
+    warning = function(w) message(w$message),
+    error = function(e) message(e$message)
+    )
   }
 }
 
@@ -76,8 +83,9 @@ if (length(to_update) == 0) {
 for (i in seq_len(length(to_update))) {
   cat("Updating package '", to_update[i], "' v", as.character(packageVersion(to_update[i])), "\n", sep = "")
   tryCatch(update.packages(to_update[i], repos = "https://cran.rstudio.com/", ask = FALSE),
-           # message = function(m) invisible(),
-           warning = function(w) message(w$message),
-           error = function(e) message(e$message))
+    # message = function(m) invisible(),
+    warning = function(w) message(w$message),
+    error = function(e) message(e$message)
+  )
   cat("Updated to '", to_update[i], "' v", as.character(packageVersion(to_update[i])), "\n", sep = "")
 }

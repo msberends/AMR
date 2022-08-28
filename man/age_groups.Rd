@@ -59,13 +59,15 @@ age_groups(ages, "children")
 if (require("dplyr")) {
   example_isolates \%>\%
     filter_first_isolate() \%>\%
-    filter(mo == as.mo("E. coli")) \%>\%
+    filter(mo == as.mo("Escherichia coli")) \%>\%
     group_by(age_group = age_groups(age)) \%>\%
     select(age_group, CIP) \%>\%
-    ggplot_rsi(x = "age_group",
-               minimum = 0,
-               x.title = "Age Group",
-               title = "Ciprofloxacin resistance per age group")
+    ggplot_rsi(
+      x = "age_group",
+      minimum = 0,
+      x.title = "Age Group",
+      title = "Ciprofloxacin resistance per age group"
+    )
 }
 }
 }

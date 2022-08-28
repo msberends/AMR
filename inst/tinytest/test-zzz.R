@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -46,7 +46,8 @@ import_functions <- c(
   "read_html" = "xml2",
   "right_join" = "dplyr",
   "semi_join" = "dplyr",
-  "showQuestion" = "rstudioapi")
+  "showQuestion" = "rstudioapi"
+)
 # functions that are called directly
 
 call_functions <- c(
@@ -84,9 +85,10 @@ call_functions <- c(
 )
 if (AMR:::pkg_is_available("skimr", also_load = FALSE, min_version = "2.0.0")) {
   call_functions <- c(call_functions,
-                      # skimr
-                      "inline_hist" = "skimr",
-                      "sfl" = "skimr")
+    # skimr
+    "inline_hist" = "skimr",
+    "sfl" = "skimr"
+  )
 }
 
 extended_functions <- c(
@@ -105,12 +107,15 @@ for (i in seq_len(length(import_functions))) {
   pkg <- unname(import_functions[i])
   # function should exist in foreign pkg namespace
   if (AMR:::pkg_is_available(pkg,
-                             also_load = FALSE,
-                             min_version = if (pkg == "dplyr") "1.0.0" else NULL)) {
+    also_load = FALSE,
+    min_version = if (pkg == "dplyr") "1.0.0" else NULL
+  )) {
     tst <- !is.null(AMR:::import_fn(name = fn, pkg = pkg, error_on_fail = FALSE))
     expect_true(tst,
-                info = ifelse(tst,
-                              "All external function references exist.",
-                              paste0("Function ", pkg, "::", fn, "() does not exist anymore")))
+      info = ifelse(tst,
+        "All external function references exist.",
+        paste0("Function ", pkg, "::", fn, "() does not exist anymore")
+      )
+    )
   }
 }

@@ -80,9 +80,11 @@ as.mic("testvalue")
 mo_gramstain("E. coli")
 
 # Klebsiella is intrinsic resistant to amoxicillin, according to EUCAST:
-klebsiella_test <- data.frame(mo = "klebsiella", 
-                              amox = "S",
-                              stringsAsFactors = FALSE)
+klebsiella_test <- data.frame(
+  mo = "klebsiella",
+  amox = "S",
+  stringsAsFactors = FALSE
+)
 klebsiella_test # (our original data)
 eucast_rules(klebsiella_test, info = FALSE) # (the edited data by EUCAST rules)
 
@@ -153,7 +155,7 @@ To import data from SPSS, SAS or Stata, you can use the [great `haven` package](
 # download and install the latest version:
 install.packages("haven")
 # load the package you just installed:
-library(haven) 
+library(haven)
 ```
 
 You can now import files as follows:
@@ -203,7 +205,7 @@ To export your R objects to the SAS file format:
 # save as regular SAS file:
 write_sas(data = yourdata, path = "path/to/file")
 
-# the SAS transport format is an open format 
+# the SAS transport format is an open format
 # (required for submission of the data to the FDA)
 write_xpt(data = yourdata, path = "path/to/file", version = 8)
 ```

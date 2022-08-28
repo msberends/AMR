@@ -25,9 +25,6 @@
 # ==================================================================== #
 */
 
-h1, h2 {
-  text-align: left !important;
-}
 /* replace 'Developers' with 'Maintainers' */
 .developers h2 {
   display: none;
@@ -74,11 +71,15 @@ a pre[href] {
   color: var(--bs-success);
   text-decoration: none;
 }
+a[href] {
+  text-decoration: none;
+}
 code a[href]:hover, code a[href]:focus,
 a[href] code:hover, a[href] code:focus,
 pre a[href]:hover, pre a[href]:focus,
 a code[href]:hover, a code[href]:focus,
-a pre[href]:hover, a pre[href]:focus {
+a pre[href]:hover, a pre[href]:focus,
+a[href]:hover, a[href]:focus {
   /* adjusted colour for all real links; having href attribute */
   text-decoration: underline;
 }

@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -33,34 +33,43 @@ library(dplyr)
 library(readxl)
 DRGLST <- read_excel("DRGLST.xlsx")
 abx <- DRGLST %>%
-  select(ab = WHON5_CODE,
-         name = ANTIBIOTIC) %>%
+  select(
+    ab = WHON5_CODE,
+    name = ANTIBIOTIC
+  ) %>%
   # remove the ones without WHONET code
   filter(!is.na(ab)) %>%
   distinct(name, .keep_all = TRUE) %>%
   # add the ones without WHONET code
   bind_rows(
     DRGLST %>%
-      select(ab = WHON5_CODE,
-             name = ANTIBIOTIC) %>%
+      select(
+        ab = WHON5_CODE,
+        name = ANTIBIOTIC
+      ) %>%
       filter(is.na(ab)) %>%
       distinct(name, .keep_all = TRUE)
-      # add new ab code later
+    # add new ab code later
   ) %>%
   arrange(name)
 
 # add old ATC codes
 ab_old <- AMR::antibiotics %>%
-  mutate(official = gsub("( and |, )", "/", official),
-         abbr = tolower(paste(ifelse(is.na(abbr), "", abbr),
-                      ifelse(is.na(certe), "", certe),
-                      ifelse(is.na(umcg), "", umcg),
-                      sep = "|")))
+  mutate(
+    official = gsub("( and |, )", "/", official),
+    abbr = tolower(paste(ifelse(is.na(abbr), "", abbr),
+      ifelse(is.na(certe), "", certe),
+      ifelse(is.na(umcg), "", umcg),
+      sep = "|"
+    ))
+  )
 for (i in 1:nrow(ab_old)) {
   abbr <- ab_old[i, "abbr"]
-  abbr <- strsplit(abbr, "|", fixed = TRUE) %>% unlist() %>% unique()
+  abbr <- strsplit(abbr, "|", fixed = TRUE) %>%
+    unlist() %>%
+    unique()
   abbr <- abbr[abbr != ""]
-  #print(abbr)
+  # print(abbr)
   if (length(abbr) == 0) {
     ab_old[i, "abbr"] <- NA_character_
   } else {
@@ -72,50 +81,54 @@ for (i in 1:nrow(ab_old)) {
 abx_atc1 <- abx %>%
   mutate(name_lower = tolower(name)) %>%
   left_join(ab_old %>%
-              select(ears_net, atc), by = c(ab = "ears_net")) %>%
+    select(ears_net, atc), by = c(ab = "ears_net")) %>%
   rename(atc1 = atc) %>%
   left_join(ab_old %>%
-              mutate(official = gsub(", combinations", "", official, fixed = TRUE)) %>%
-              transmute(official = tolower(official), atc), by = c(name_lower = "official")) %>%
+    mutate(official = gsub(", combinations", "", official, fixed = TRUE)) %>%
+    transmute(official = tolower(official), atc), by = c(name_lower = "official")) %>%
   rename(atc2 = atc) %>%
   left_join(ab_old %>%
-              mutate(official = gsub(", combinations", "", official, fixed = TRUE)) %>%
-              mutate(official = gsub("f", "ph", official)) %>%
-              transmute(official = tolower(official), atc), by = c(name_lower = "official")) %>%
+    mutate(official = gsub(", combinations", "", official, fixed = TRUE)) %>%
+    mutate(official = gsub("f", "ph", official)) %>%
+    transmute(official = tolower(official), atc), by = c(name_lower = "official")) %>%
   rename(atc3 = atc) %>%
   left_join(ab_old %>%
-              mutate(official = gsub(", combinations", "", official, fixed = TRUE)) %>%
-              mutate(official = gsub("t", "th", official)) %>%
-              transmute(official = tolower(official), atc), by = c(name_lower = "official")) %>%
+    mutate(official = gsub(", combinations", "", official, fixed = TRUE)) %>%
+    mutate(official = gsub("t", "th", official)) %>%
+    transmute(official = tolower(official), atc), by = c(name_lower = "official")) %>%
   rename(atc4 = atc) %>%
   left_join(ab_old %>%
-              mutate(official = gsub(", combinations", "", official, fixed = TRUE)) %>%
-              mutate(official = gsub("f", "ph", official)) %>%
-              mutate(official = gsub("t", "th", official)) %>%
-              transmute(official = tolower(official), atc), by = c(name_lower = "official")) %>%
+    mutate(official = gsub(", combinations", "", official, fixed = TRUE)) %>%
+    mutate(official = gsub("f", "ph", official)) %>%
+    mutate(official = gsub("t", "th", official)) %>%
+    transmute(official = tolower(official), atc), by = c(name_lower = "official")) %>%
   rename(atc5 = atc) %>%
   left_join(ab_old %>%
-              mutate(official = gsub(", combinations", "", official, fixed = TRUE)) %>%
-              mutate(official = gsub("f", "ph", official)) %>%
-              mutate(official = gsub("t", "th", official)) %>%
-              mutate(official = gsub("ine$", "in", official)) %>%
-              transmute(official = tolower(official), atc), by = c(name_lower = "official")) %>%
+    mutate(official = gsub(", combinations", "", official, fixed = TRUE)) %>%
+    mutate(official = gsub("f", "ph", official)) %>%
+    mutate(official = gsub("t", "th", official)) %>%
+    mutate(official = gsub("ine$", "in", official)) %>%
+    transmute(official = tolower(official), atc), by = c(name_lower = "official")) %>%
   rename(atc6 = atc) %>%
-  mutate(atc = case_when(!is.na(atc1) ~ atc1,
-                         !is.na(atc2) ~ atc2,
-                         !is.na(atc3) ~ atc3,
-                         !is.na(atc4) ~ atc4,
-                         !is.na(atc4) ~ atc5,
-                         TRUE ~ atc6)) %>%
+  mutate(atc = case_when(
+    !is.na(atc1) ~ atc1,
+    !is.na(atc2) ~ atc2,
+    !is.na(atc3) ~ atc3,
+    !is.na(atc4) ~ atc4,
+    !is.na(atc4) ~ atc5,
+    TRUE ~ atc6
+  )) %>%
   distinct(ab, name, .keep_all = TRUE) %>%
   select(ab, atc, name)
 
 abx_atc2 <- ab_old %>%
-  filter(!atc %in% abx_atc1$atc,
-         is.na(ears_net),
-         !is.na(atc_group1),
-         atc_group1 %unlike% ("virus|vaccin|viral|immun"),
-         official %unlike% "(combinations| with )") %>%
+  filter(
+    !atc %in% abx_atc1$atc,
+    is.na(ears_net),
+    !is.na(atc_group1),
+    atc_group1 %unlike% ("virus|vaccin|viral|immun"),
+    official %unlike% "(combinations| with )"
+  ) %>%
   mutate(ab = NA_character_) %>%
   as.data.frame(stringsAsFactors = FALSE) %>%
   select(ab, atc, name = official)
@@ -125,12 +138,15 @@ abx2 <- bind_rows(abx_atc1, abx_atc2)
 rm(abx_atc1)
 rm(abx_atc2)
 
-abx2$ab[is.na(abx2$ab)] <- toupper(abbreviate(gsub("[/0-9-]",
-                                                   " ",
-                                                   abx2$name[is.na(abx2$ab)]),
-                                              minlength = 3,
-                                              method = "left.kept",
-                                              strict = TRUE))
+abx2$ab[is.na(abx2$ab)] <- toupper(abbreviate(gsub(
+  "[/0-9-]",
+  " ",
+  abx2$name[is.na(abx2$ab)]
+),
+minlength = 3,
+method = "left.kept",
+strict = TRUE
+))
 
 n_distinct(abx2$ab)
 
@@ -138,7 +154,7 @@ abx2 <- abx2 %>% arrange(ab)
 seqnr <- 0
 # add follow up nrs
 for (i in 2:nrow(abx2)) {
-  if (abx2[i, "ab"] == abx2[i - 1, "ab"]) {
+  if (abx2[i, "ab", drop = TRUE] == abx2[i - 1, "ab", drop = TRUE]) {
     seqnr <- seqnr + 1
     abx2[i, "seqnr"] <- seqnr
   } else {
@@ -147,10 +163,12 @@ for (i in 2:nrow(abx2)) {
 }
 for (i in 2:nrow(abx2)) {
   if (!is.na(abx2[i, "seqnr"])) {
-    abx2[i, "ab"] <- paste0(abx2[i, "ab"], abx2[i, "seqnr"])
+    abx2[i, "ab"] <- paste0(abx2[i, "ab", drop = TRUE], abx2[i, "seqnr", drop = TRUE])
   }
 }
-abx2 <- abx2 %>% select(-seqnr) %>% arrange(name)
+abx2 <- abx2 %>%
+  select(-seqnr) %>%
+  arrange(name)
 
 # everything unique??
 nrow(abx2) == n_distinct(abx2$ab)
@@ -158,8 +176,10 @@ nrow(abx2) == n_distinct(abx2$ab)
 # get ATC properties
 abx2 <- abx2 %>%
   left_join(ab_old %>%
-              select(atc, abbr, atc_group1, atc_group2,
-                     oral_ddd, oral_units, iv_ddd, iv_units))
+    select(
+      atc, abbr, atc_group1, atc_group2,
+      oral_ddd, oral_units, iv_ddd, iv_units
+    ))
 
 abx2$abbr <- lapply(as.list(abx2$abbr), function(x) unlist(strsplit(x, "|", fixed = TRUE)))
 
@@ -171,29 +191,41 @@ get_CID <- function(ab) {
     p$tick()$print()
 
     CID[i] <- tryCatch(
-      data.table::fread(paste0("https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/",
-                               URLencode(ab[i], reserved = TRUE),
-                               "/cids/TXT?name_type=complete"),
-                        showProgress = FALSE)[[1]][1],
-      error = function(e) NA_integer_)
+      data.table::fread(paste0(
+        "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/",
+        URLencode(ab[i], reserved = TRUE),
+        "/cids/TXT?name_type=complete"
+      ),
+      showProgress = FALSE
+      )[[1]][1],
+      error = function(e) NA_integer_
+    )
     if (is.na(CID[i])) {
       # try with removing the text in brackets
       CID[i] <- tryCatch(
-        data.table::fread(paste0("https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/",
-                                 URLencode(trimws(gsub("[(].*[)]", "", ab[i])), reserved = TRUE),
-                                 "/cids/TXT?name_type=complete"),
-                          showProgress = FALSE)[[1]][1],
-        error = function(e) NA_integer_)
+        data.table::fread(paste0(
+          "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/",
+          URLencode(trimws(gsub("[(].*[)]", "", ab[i])), reserved = TRUE),
+          "/cids/TXT?name_type=complete"
+        ),
+        showProgress = FALSE
+        )[[1]][1],
+        error = function(e) NA_integer_
+      )
     }
     if (is.na(CID[i])) {
       # try match on word and take the lowest CID value (sorted)
       ab[i] <- gsub("[^a-z0-9]+", " ", ab[i], ignore.case = TRUE)
       CID[i] <- tryCatch(
-        data.table::fread(paste0("https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/",
-                                 URLencode(ab[i], reserved = TRUE),
-                                 "/cids/TXT?name_type=word"),
-                          showProgress = FALSE)[[1]][1],
-        error = function(e) NA_integer_)
+        data.table::fread(paste0(
+          "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/",
+          URLencode(ab[i], reserved = TRUE),
+          "/cids/TXT?name_type=word"
+        ),
+        showProgress = FALSE
+        )[[1]][1],
+        error = function(e) NA_integer_
+      )
     }
     Sys.sleep(0.1)
   }
@@ -203,15 +235,15 @@ get_CID <- function(ab) {
 # get CIDs (2-3 min)
 CIDs <- get_CID(abx2$name)
 # These could not be found:
-abx2[is.na(CIDs),] %>% View()
+abx2[is.na(CIDs), ] %>% View()
 
 # returns list with synonyms (brand names), with CIDs as names
 get_synonyms <- function(CID, clean = TRUE) {
   synonyms <- rep(NA_character_, length(CID))
-  #p <- progress_ticker(n = length(CID), min_time = 0)
+  # p <- progress_ticker(n = length(CID), min_time = 0)
 
   for (i in 1:length(CID)) {
-    #p$tick()$print()
+    # p$tick()$print()
 
     synonyms_txt <- ""
 
@@ -220,27 +252,37 @@ get_synonyms <- function(CID, clean = TRUE) {
     }
 
     synonyms_txt <- tryCatch(
-      data.table::fread(paste0("https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/fastidentity/cid/",
-                               CID[i],
-                               "/synonyms/TXT"),
-                        sep = "\n",
-                        showProgress = FALSE)[[1]],
-      error = function(e) NA_character_)
+      data.table::fread(paste0(
+        "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/fastidentity/cid/",
+        CID[i],
+        "/synonyms/TXT"
+      ),
+      sep = "\n",
+      showProgress = FALSE
+      )[[1]],
+      error = function(e) NA_character_
+    )
 
     Sys.sleep(0.1)
 
     if (clean == TRUE) {
       # remove text between brackets
-      synonyms_txt <- trimws(gsub("[(].*[)]", "",
-                                  gsub("[[].*[]]", "",
-                                       gsub("[(].*[]]", "",
-                                            gsub("[[].*[)]", "", synonyms_txt)))))
+      synonyms_txt <- trimws(gsub(
+        "[(].*[)]", "",
+        gsub(
+          "[[].*[]]", "",
+          gsub(
+            "[(].*[]]", "",
+            gsub("[[].*[)]", "", synonyms_txt)
+          )
+        )
+      ))
       synonyms_txt <- gsub("Co-", "Co", synonyms_txt, fixed = TRUE)
       # only length 6 to 20 and no txt with reading marks or numbers and must start with capital letter (= brand)
-      synonyms_txt <- synonyms_txt[nchar(synonyms_txt) %in% c(6:20)
-                                   & !grepl("[-&{},_0-9/]", synonyms_txt)
-                                   & grepl("^[A-Z]", synonyms_txt, ignore.case = FALSE)]
-      synonyms_txt <- unlist(strsplit(synonyms_txt,  ";", fixed = TRUE))
+      synonyms_txt <- synonyms_txt[nchar(synonyms_txt) %in% c(6:20) &
+        !grepl("[-&{},_0-9/]", synonyms_txt) &
+        grepl("^[A-Z]", synonyms_txt, ignore.case = FALSE)]
+      synonyms_txt <- unlist(strsplit(synonyms_txt, ";", fixed = TRUE))
     }
     synonyms_txt <- unique(trimws(synonyms_txt[tolower(synonyms_txt) %in% unique(tolower(synonyms_txt))]))
     synonyms[i] <- list(sort(synonyms_txt))
@@ -251,52 +293,56 @@ get_synonyms <- function(CID, clean = TRUE) {
 
 # get brand names from PubChem (2-3 min)
 synonyms <- get_synonyms(CIDs)
-synonyms <- lapply(synonyms,
-                   function(x) {
-                     if (length(x) == 0 | all(is.na(x))) {
-                       ""
-                     } else {
-                       x
-                     }})
+synonyms <- lapply(
+  synonyms,
+  function(x) {
+    if (length(x) == 0 | all(is.na(x))) {
+      ""
+    } else {
+      x
+    }
+  }
+)
 
 # add them to data set
 antibiotics <- abx2 %>%
   left_join(DRGLST %>%
-              select(ab = WHON5_CODE, CLASS, SUBCLASS) %>%
-              distinct(ab, .keep_all = TRUE), by = "ab") %>%
+    select(ab = WHON5_CODE, CLASS, SUBCLASS) %>%
+    distinct(ab, .keep_all = TRUE), by = "ab") %>%
   transmute(ab,
-            atc,
-            cid = CIDs,
-            # no capital after a slash: Ampicillin/Sulbactam -> Ampicillin/sulbactam
-            name = name %>%
-              gsub("([/-])([A-Z])", "\\1\\L\\2", ., perl = TRUE) %>%
-              gsub("edta", "EDTA", ., ignore.case = TRUE),
-            group = case_when(
-              paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "am(ph|f)enicol" ~ "Amphenicols",
-              paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "aminoglycoside" ~ "Aminoglycosides",
-              paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "carbapenem" | name %like% "(imipenem|meropenem)" ~ "Carbapenems",
-              paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "First-generation cephalosporin" ~ "Cephalosporins (1st gen.)",
-              paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "Second-generation cephalosporin" ~ "Cephalosporins (2nd gen.)",
-              paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "Third-generation cephalosporin" ~ "Cephalosporins (3rd gen.)",
-              paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "Fourth-generation cephalosporin" ~ "Cephalosporins (4th gen.)",
-              paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "(tuberculosis|mycobacter)" ~ "Antimycobacterials",
-              paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "cephalosporin" ~ "Cephalosporins",
-              name %like% "^Ce" & is.na(atc_group1) & paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "beta-?lactam" ~ "Cephalosporins",
-              paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "(beta-?lactam|penicillin)" ~ "Beta-lactams/penicillins",
-              paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "quinolone" ~ "Quinolones",
-              paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "glycopeptide" ~ "Glycopeptides",
-              paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "macrolide" ~ "Macrolides/lincosamides",
-              paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "tetracycline" ~ "Tetracyclines",
-              paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "trimethoprim" ~ "Trimethoprims",
-              paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "polymyxin" ~ "Polymyxins",
-              paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "(fungal|mycot)" ~ "Antifungals/antimycotics",
-              TRUE ~ "Other antibacterials"
-            ),
-            atc_group1, atc_group2,
-            abbreviations = unname(abbr),
-            synonyms = unname(synonyms),
-            oral_ddd, oral_units,
-            iv_ddd, iv_units) %>%
+    atc,
+    cid = CIDs,
+    # no capital after a slash: Ampicillin/Sulbactam -> Ampicillin/sulbactam
+    name = name %>%
+      gsub("([/-])([A-Z])", "\\1\\L\\2", ., perl = TRUE) %>%
+      gsub("edta", "EDTA", ., ignore.case = TRUE),
+    group = case_when(
+      paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "am(ph|f)enicol" ~ "Amphenicols",
+      paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "aminoglycoside" ~ "Aminoglycosides",
+      paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "carbapenem" | name %like% "(imipenem|meropenem)" ~ "Carbapenems",
+      paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "First-generation cephalosporin" ~ "Cephalosporins (1st gen.)",
+      paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "Second-generation cephalosporin" ~ "Cephalosporins (2nd gen.)",
+      paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "Third-generation cephalosporin" ~ "Cephalosporins (3rd gen.)",
+      paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "Fourth-generation cephalosporin" ~ "Cephalosporins (4th gen.)",
+      paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "(tuberculosis|mycobacter)" ~ "Antimycobacterials",
+      paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "cephalosporin" ~ "Cephalosporins",
+      name %like% "^Ce" & is.na(atc_group1) & paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "beta-?lactam" ~ "Cephalosporins",
+      paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "(beta-?lactam|penicillin)" ~ "Beta-lactams/penicillins",
+      paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "quinolone" ~ "Quinolones",
+      paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "glycopeptide" ~ "Glycopeptides",
+      paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "macrolide" ~ "Macrolides/lincosamides",
+      paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "tetracycline" ~ "Tetracyclines",
+      paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "trimethoprim" ~ "Trimethoprims",
+      paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "polymyxin" ~ "Polymyxins",
+      paste(atc_group1, atc_group2, CLASS, SUBCLASS) %like% "(fungal|mycot)" ~ "Antifungals/antimycotics",
+      TRUE ~ "Other antibacterials"
+    ),
+    atc_group1, atc_group2,
+    abbreviations = unname(abbr),
+    synonyms = unname(synonyms),
+    oral_ddd, oral_units,
+    iv_ddd, iv_units
+  ) %>%
   as.data.frame(stringsAsFactors = FALSE)
 
 # some exceptions
@@ -329,13 +375,15 @@ antibiotics[which(antibiotics$ab == as.ab("cefepime")), "abbreviations"][[1]] <-
 antibiotics[which(antibiotics$ab == as.ab("cefoxitin")), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == as.ab("cefoxitin")), "abbreviations"][[1]], "cfxt"))
 # Add cefoxitin screening
 class(antibiotics$ab) <- "character"
-antibiotics <- rbind(antibiotics,data.frame(ab = "FOX1", atc = NA, cid = NA, 
-                                            name = "Cefoxitin screening",
-                                            group = "Cephalosporins (2nd gen.)", atc_group1 = NA, atc_group2 = NA, 
-                                            abbreviations = "cfsc", synonyms = NA, 
-                                            oral_ddd = NA, oral_units  = NA, iv_ddd  = NA, iv_units = NA,
-                                            loinc = NA,
-                                            stringsAsFactors = FALSE))
+antibiotics <- rbind(antibiotics, data.frame(
+  ab = "FOX1", atc = NA, cid = NA,
+  name = "Cefoxitin screening",
+  group = "Cephalosporins (2nd gen.)", atc_group1 = NA, atc_group2 = NA,
+  abbreviations = "cfsc", synonyms = NA,
+  oral_ddd = NA, oral_units = NA, iv_ddd = NA, iv_units = NA,
+  loinc = NA,
+  stringsAsFactors = FALSE
+))
 # More GLIMS codes
 antibiotics[which(antibiotics$ab == "AMB"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "AMB"), "abbreviations"][[1]], "amf"))
 antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]] <- list(c(antibiotics[which(antibiotics$ab == "CAZ"), "abbreviations"][[1]], "cftz"))
@@ -520,27 +568,33 @@ antibiotics[which(antibiotics$ab == "RFP"), "abbreviations"][[1]] <- list(sort(c
 antibiotics[which(antibiotics$ab == "RTP"), "abbreviations"][[1]] <- list(sort(c(antibiotics[which(antibiotics$ab == "RTP"), "abbreviations"][[1]], "RET")))
 antibiotics[which(antibiotics$ab == "TYL1"), "abbreviations"][[1]] <- list(sort(c(antibiotics[which(antibiotics$ab == "TYL1"), "abbreviations"][[1]], "TVN")))
 
-antibiotics <- antibiotics %>% 
-  mutate(ab = as.character(ab)) %>% 
-  rbind(antibiotics %>% 
-          filter(ab == "GEH") %>% 
-          mutate(ab = "AMH",
-                 name = "Amphotericin B-high",
-                 abbreviations = list(c("amhl", "amfo b high", "ampho b high", "amphotericin high")))) %>% 
-  rbind(antibiotics %>% 
-          filter(ab == "GEH") %>% 
-          mutate(ab = "TOH",
-                 name = "Tobramycin-high",
-                 abbreviations = list(c("tohl", "tobra high", "tobramycin high")))) %>% 
-  rbind(antibiotics %>% 
-          filter(ab == "BUT") %>% 
-          mutate(ab = "CIX",
-                 atc = "D01AE14",
-                 name = "Ciclopirox",
-                 group = "Antifungals/antimycotics",
-                 atc_group1 = "Antifungals for topical use",
-                 atc_group2 = "Other antifungals for topical use",
-                 abbreviations = list(c("cipx"))))
+antibiotics <- antibiotics %>%
+  mutate(ab = as.character(ab)) %>%
+  rbind(antibiotics %>%
+    filter(ab == "GEH") %>%
+    mutate(
+      ab = "AMH",
+      name = "Amphotericin B-high",
+      abbreviations = list(c("amhl", "amfo b high", "ampho b high", "amphotericin high"))
+    )) %>%
+  rbind(antibiotics %>%
+    filter(ab == "GEH") %>%
+    mutate(
+      ab = "TOH",
+      name = "Tobramycin-high",
+      abbreviations = list(c("tohl", "tobra high", "tobramycin high"))
+    )) %>%
+  rbind(antibiotics %>%
+    filter(ab == "BUT") %>%
+    mutate(
+      ab = "CIX",
+      atc = "D01AE14",
+      name = "Ciclopirox",
+      group = "Antifungals/antimycotics",
+      atc_group1 = "Antifungals for topical use",
+      atc_group2 = "Other antifungals for topical use",
+      abbreviations = list(c("cipx"))
+    ))
 antibiotics[which(antibiotics$ab == "SSS"), "name"] <- "Sulfonamide"
 # ESBL E-test codes:
 antibiotics[which(antibiotics$ab == "CCV"), "abbreviations"][[1]] <- list(c("xtzl"))
@@ -600,13 +654,13 @@ antibiotics[which(antibiotics$ab == "RXT"), "name"] <- "Roxithromycin"
 antibiotics[which(antibiotics$ab == "PEN"), "atc"] <- "J01CE01"
 
 # WHONET cleanup
-antibiotics[which(antibiotics$ab == "BCZ"), "name"] <-  "Bicyclomycin"
-antibiotics[which(antibiotics$ab == "CCL"), "name"] <-  "Cefetecol"
-antibiotics[which(antibiotics$ab == "ENV"), "name"] <-  "Enviomycin"
-antibiotics[which(antibiotics$ab == "KIT"), "name"] <-  "Kitasamycin"
-antibiotics[which(antibiotics$ab == "LSP"), "name"] <-  "Linco-spectin"
-antibiotics[which(antibiotics$ab == "MEC"), "name"] <-  "Mecillinam"
-antibiotics[which(antibiotics$ab == "PMR"), "name"] <-  "Pimaricin"
+antibiotics[which(antibiotics$ab == "BCZ"), "name"] <- "Bicyclomycin"
+antibiotics[which(antibiotics$ab == "CCL"), "name"] <- "Cefetecol"
+antibiotics[which(antibiotics$ab == "ENV"), "name"] <- "Enviomycin"
+antibiotics[which(antibiotics$ab == "KIT"), "name"] <- "Kitasamycin"
+antibiotics[which(antibiotics$ab == "LSP"), "name"] <- "Linco-spectin"
+antibiotics[which(antibiotics$ab == "MEC"), "name"] <- "Mecillinam"
+antibiotics[which(antibiotics$ab == "PMR"), "name"] <- "Pimaricin"
 antibiotics[which(antibiotics$ab == "BCZ"), "abbreviations"][[1]] <- list(sort(unique(c(antibiotics[which(antibiotics$ab == "BCZ"), "abbreviations"][[1]], "Bicozamycin"))))
 antibiotics[which(antibiotics$ab == "CCL"), "abbreviations"][[1]] <- list(sort(unique(c(antibiotics[which(antibiotics$ab == "CCL"), "abbreviations"][[1]], "Cefcatacol"))))
 antibiotics[which(antibiotics$ab == "ENV"), "abbreviations"][[1]] <- list(sort(unique(c(antibiotics[which(antibiotics$ab == "ENV"), "abbreviations"][[1]], "Tuberactinomycin"))))
@@ -617,7 +671,7 @@ antibiotics[which(antibiotics$ab == "PMR"), "abbreviations"][[1]] <- list(sort(u
 
 
 # set cephalosporins groups for the ones that could not be determined automatically:
-antibiotics <- antibiotics %>% 
+antibiotics <- antibiotics %>%
   mutate(group = case_when(
     name == "Cefcapene" ~ "Cephalosporins (3rd gen.)",
     name == "Cefcapene pivoxil" ~ "Cephalosporins (3rd gen.)",
@@ -650,21 +704,24 @@ antibiotics <- antibiotics %>%
     name == "Ceftolozane/enzyme inhibitor" ~ "Cephalosporins (5th gen.)",
     name == "Ceftolozane/tazobactam" ~ "Cephalosporins (5th gen.)",
     name == "Cefuroxime axetil" ~ "Cephalosporins (2nd gen.)",
-    TRUE ~ group))
+    TRUE ~ group
+  ))
 antibiotics[which(antibiotics$ab %in% c("CYC", "LNZ", "THA", "TZD")), "group"] <- "Oxazolidinones"
 
 # add pretomanid
 antibiotics <- antibiotics %>%
-  mutate(ab = as.character(ab)) %>% 
+  mutate(ab = as.character(ab)) %>%
   bind_rows(antibiotics %>%
-              mutate(ab = as.character(ab)) %>% 
-              filter(ab == "SMF") %>%
-              mutate(ab = "PMD",
-                     atc = "J04AK08",
-                     cid = 456199, 
-                     name = "Pretomanid", 
-                     abbreviations = list(""),
-                     oral_ddd = NA_real_))
+    mutate(ab = as.character(ab)) %>%
+    filter(ab == "SMF") %>%
+    mutate(
+      ab = "PMD",
+      atc = "J04AK08",
+      cid = 456199,
+      name = "Pretomanid",
+      abbreviations = list(""),
+      oral_ddd = NA_real_
+    ))
 
 
 
@@ -675,25 +732,24 @@ antibiotics <- antibiotics %>%
 updated_atc <- as.list(antibiotics$atc)
 
 get_atcs <- function(ab_name, url = "https://www.whocc.no/atc_ddd_index/") {
-  
   ab_name <- gsub("/", " and ", tolower(ab_name), fixed = TRUE)
-  
+
   # we will do a search on their website, which means:
-  
+
   # go to the url
-  atc_tbl <- read_html(url) %>% 
+  atc_tbl <- read_html(url) %>%
     # get all forms
     html_form() %>%
     # get the second form (the first form is a global website form)
-    .[[2]] %>% 
+    .[[2]] %>%
     # set the name input box to our search parameter
-    html_form_set(name = ab_name) %>% 
+    html_form_set(name = ab_name) %>%
     # hit Submit
-    html_form_submit() %>% 
+    html_form_submit() %>%
     # read the resulting page
-    read_html() %>% 
+    read_html() %>%
     # retrieve the table on it
-    html_node("table") %>% 
+    html_node("table") %>%
     # transform it to an R data set
     html_table(header = FALSE)
   # and get the ATCs (first column) of only exact hits
@@ -702,9 +758,10 @@ get_atcs <- function(ab_name, url = "https://www.whocc.no/atc_ddd_index/") {
 
 # this takes around 4 minutes (some are skipped and go faster)
 for (i in seq_len(nrow(antibiotics))) {
-  message(percentage(i / nrow(antibiotics), digits = 1), 
-          " - Downloading ", antibiotics$name[i],
-          appendLF = FALSE)
+  message(percentage(i / nrow(antibiotics), digits = 1),
+    " - Downloading ", antibiotics$name[i],
+    appendLF = FALSE
+  )
   atcs <- get_atcs(antibiotics$name[i])
   if (length(atcs) > 0) {
     updated_atc[[i]] <- atcs

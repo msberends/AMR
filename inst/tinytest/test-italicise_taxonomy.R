@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -23,11 +23,17 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-expect_identical(italicise_taxonomy("test for E. coli"),
-                 "test for *E. coli*")
-expect_identical(italicise_taxonomy("test for E. coli"),
-                 italicize_taxonomy("test for E. coli"))
+expect_identical(
+  italicise_taxonomy("test for E. coli"),
+  "test for *E. coli*"
+)
+expect_identical(
+  italicise_taxonomy("test for E. coli"),
+  italicize_taxonomy("test for E. coli")
+)
 if (AMR:::has_colour()) {
-  expect_identical(italicise_taxonomy("test for E. coli", type = "ansi"),
-                   "test for \033[3mE. coli\033[23m")
+  expect_identical(
+    italicise_taxonomy("test for E. coli", type = "ansi"),
+    "test for \033[3mE. coli\033[23m"
+  )
 }

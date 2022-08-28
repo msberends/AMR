@@ -61,7 +61,7 @@ The WHOCC is located in Oslo at the Norwegian Institute of Public Health and fun
 
 \section{Reference Data Publicly Available}{
 
-All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
+All data sets in this \code{AMR} package (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -74,26 +74,25 @@ as.ab("   eryt 123")
 as.ab("ERYT")
 as.ab("ERY")
 as.ab("eritromicine") # spelled wrong, yet works
-as.ab("Erythrocin")   # trade name
-as.ab("Romycin")      # trade name
+as.ab("Erythrocin") # trade name
+as.ab("Romycin") # trade name
 
 # spelling from different languages and dyslexia are no problem
 ab_atc("ceftriaxon")
-ab_atc("cephtriaxone")     # small spelling error
-ab_atc("cephthriaxone")    # or a bit more severe
+ab_atc("cephtriaxone") # small spelling error
+ab_atc("cephthriaxone") # or a bit more severe
 ab_atc("seephthriaaksone") # and even this works
 
 # use ab_* functions to get a specific properties (see ?ab_property);
 # they use as.ab() internally:
-ab_name("J01FA01")    # "Erythromycin"
-ab_name("eryt")       # "Erythromycin"
+ab_name("J01FA01") # "Erythromycin"
+ab_name("eryt") # "Erythromycin"
 \donttest{
 if (require("dplyr")) {
 
   # you can quickly rename <rsi> columns using dplyr >= 1.0.0:
   example_isolates \%>\%
     rename_with(as.ab, where(is.rsi))
-   
 }
 }
 }

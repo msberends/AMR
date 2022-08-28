@@ -3,26 +3,28 @@
 echo "Running pre-commit hook..."
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-echo ">>  Updating R documentation..."
 if command -v Rscript > /dev/null; then
-  if [ "$(Rscript -e 'cat(all(c('"'pkgload'"', '"'devtools'"', '"'dplyr'"') %in% rownames(installed.packages())))')" = "TRUE" ]; then
-    Rscript -e "source('data-raw/pre-commit-hook.R')"
+  if [ "$(Rscript -e 'cat(all(c('"'pkgload'"', '"'devtools'"', '"'dplyr'"', '"'styler'"') %in% rownames(installed.packages())))')" = "TRUE" ]; then
+    Rscript -e "source('data-raw/_pre_commit_hook.R')"
     currentpkg=`Rscript -e "cat(pkgload::pkg_name())"`
+    echo "-> Adding all files in folders 'data-raw', 'inst', 'man', and 'R' to this git commit"
+    git add data-raw/*
+    git add inst/*
     git add man/*
-    git add R/sysdata.rda
+    git add R/*
   else
-    echo ">>  R package 'pkgload', 'devtools', or 'dplyr' not installed!"
+    echo "- R package 'pkgload', 'devtools', 'dplyr', or 'styler' not installed!"
     currentpkg="your"
   fi
 else
-  echo ">>  R is not available on your system!"
+  echo "- R is not available on your system!"
   currentpkg="your"
 fi
-echo ">>  "
+echo ""
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-echo ">>  Updating semantic versioning and date..."
+echo ">> Updating semantic versioning and date..."
 
 # get tags from remote, and remove tags not on remote:
 git fetch origin --prune --prune-tags --quiet

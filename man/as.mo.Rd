@@ -173,7 +173,7 @@ This package contains the complete taxonomic tree of almost all microorganisms (
 
 \section{Reference Data Publicly Available}{
 
-All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
+All data sets in this \code{AMR} package (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -188,9 +188,9 @@ as.mo("S aureus")
 as.mo("Staphylococcus aureus")
 as.mo("Staphylococcus aureus (MRSA)")
 as.mo("Zthafilokkoockus oureuz") # handles incorrect spelling
-as.mo("MRSA")    # Methicillin Resistant S. aureus
-as.mo("VISA")    # Vancomycin Intermediate S. aureus
-as.mo("VRSA")    # Vancomycin Resistant S. aureus
+as.mo("MRSA") # Methicillin Resistant S. aureus
+as.mo("VISA") # Vancomycin Intermediate S. aureus
+as.mo("VRSA") # Vancomycin Resistant S. aureus
 as.mo(115329001) # SNOMED CT code
 
 # Dyslexia is no problem - these all work:
@@ -203,15 +203,15 @@ as.mo("Streptococcus group A")
 as.mo("GAS") # Group A Streptococci
 as.mo("GBS") # Group B Streptococci
 
-as.mo("S. epidermidis")                 # will remain species: B_STPHY_EPDR
-as.mo("S. epidermidis", Becker = TRUE)  # will not remain species: B_STPHY_CONS
+as.mo("S. epidermidis") # will remain species: B_STPHY_EPDR
+as.mo("S. epidermidis", Becker = TRUE) # will not remain species: B_STPHY_CONS
 
-as.mo("S. pyogenes")                    # will remain species: B_STRPT_PYGN
+as.mo("S. pyogenes") # will remain species: B_STRPT_PYGN
 as.mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPT_GRPA
 
 # All mo_* functions use as.mo() internally too (see ?mo_property):
-mo_genus("E. coli")                           # returns "Escherichia"
-mo_gramstain("E. coli")                       # returns "Gram negative"
+mo_genus("E. coli") # returns "Escherichia"
+mo_gramstain("E. coli") # returns "Gram negative"
 mo_is_intrinsic_resistant("E. coli", "vanco") # returns TRUE
 }
 }

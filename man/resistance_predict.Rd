@@ -126,10 +126,11 @@ This AMR package honours this (new) insight. Use \code{\link[=susceptibility]{su
 }
 
 \examples{
-x <- resistance_predict(example_isolates, 
-                        col_ab = "AMX",
-                        year_min = 2010,
-                        model = "binomial")
+x <- resistance_predict(example_isolates,
+  col_ab = "AMX",
+  year_min = 2010,
+  model = "binomial"
+)
 plot(x)
 \donttest{
 if (require("ggplot2")) {
@@ -142,7 +143,7 @@ if (require("dplyr")) {
     filter_first_isolate() \%>\%
     filter(mo_genus(mo) == "Staphylococcus") \%>\%
     resistance_predict("PEN", model = "binomial")
-  plot(x)
+  print(plot(x))
 
   # get the model from the object
   mymodel <- attributes(x)$model
@@ -150,15 +151,16 @@ if (require("dplyr")) {
 }
 
 # create nice plots with ggplot2 yourself
-if (require("dplyr") & require("ggplot2")) {
-
+if (require("dplyr") && require("ggplot2")) {
   data <- example_isolates \%>\%
     filter(mo == as.mo("E. coli")) \%>\%
-    resistance_predict(col_ab = "AMX",
-                       col_date = "date",
-                       model = "binomial",
-                       info = FALSE,
-                       minimum = 15)
+    resistance_predict(
+      col_ab = "AMX",
+      col_date = "date",
+      model = "binomial",
+      info = FALSE,
+      minimum = 15
+    )
   head(data)
   autoplot(data)
 }

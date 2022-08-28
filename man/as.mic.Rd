@@ -91,21 +91,32 @@ quantile(mic_data)
 all(mic_data < 512)
 
 # interpret MIC values
-as.rsi(x = as.mic(2),
-       mo = as.mo("Streptococcus pneumoniae"),
-       ab = "AMX",
-       guideline = "EUCAST")
-as.rsi(x = as.mic(c(0.01, 2, 4, 8)),
-       mo = as.mo("Streptococcus pneumoniae"),
-       ab = "AMX",
-       guideline = "EUCAST")
+as.rsi(
+  x = as.mic(2),
+  mo = as.mo("Streptococcus pneumoniae"),
+  ab = "AMX",
+  guideline = "EUCAST"
+)
+as.rsi(
+  x = as.mic(c(0.01, 2, 4, 8)),
+  mo = as.mo("Streptococcus pneumoniae"),
+  ab = "AMX",
+  guideline = "EUCAST"
+)
 
 # plot MIC values, see ?plot
 plot(mic_data)
 plot(mic_data, mo = "E. coli", ab = "cipro")
-autoplot(mic_data, mo = "E. coli", ab = "cipro")
-autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "nl") # Dutch
-autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "uk") # Ukrainian
+
+if (require("ggplot2")) {
+  autoplot(mic_data, mo = "E. coli", ab = "cipro")
+}
+if (require("ggplot2")) {
+  autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "nl") # Dutch
+}
+if (require("ggplot2")) {
+  autoplot(mic_data, mo = "E. coli", ab = "cipro", language = "uk") # Ukrainian
+}
 }
 \seealso{
 \code{\link[=as.rsi]{as.rsi()}}

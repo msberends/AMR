@@ -42,12 +42,12 @@ random_rsi(25)
 
 \donttest{
 # make the random generation more realistic by setting a bug and/or drug:
-random_mic(25, "Klebsiella pneumoniae")                 # range 0.0625-64
-random_mic(25, "Klebsiella pneumoniae", "meropenem")    # range 0.0625-16
+random_mic(25, "Klebsiella pneumoniae") # range 0.0625-64
+random_mic(25, "Klebsiella pneumoniae", "meropenem") # range 0.0625-16
 random_mic(25, "Streptococcus pneumoniae", "meropenem") # range 0.0625-4
 
-random_disk(25, "Klebsiella pneumoniae")                  # range 8-50
-random_disk(25, "Klebsiella pneumoniae", "ampicillin")    # range 11-17
+random_disk(25, "Klebsiella pneumoniae") # range 8-50
+random_disk(25, "Klebsiella pneumoniae", "ampicillin") # range 11-17
 random_disk(25, "Streptococcus pneumoniae", "ampicillin") # range 12-27
 }
 }

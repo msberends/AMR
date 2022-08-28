@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -23,7 +23,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-# These are all S3 implementations for the vctrs package, 
+# These are all S3 implementations for the vctrs package,
 # that is used internally by tidyverse packages such as dplyr.
 # They are to convert AMR-specific classes to bare characters and integers.
 # All of them will be exported using s3_register() in R/zzz.R when loading the package.

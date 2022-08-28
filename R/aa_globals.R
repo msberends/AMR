@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -24,34 +24,50 @@
 # ==================================================================== #
 
 # add new version numbers here, and add the rules themselves to "data-raw/eucast_rules.tsv" and rsi_translation
-# (sourcing "data-raw/pre-commit-hook.R" will process the TSV file)
-EUCAST_VERSION_BREAKPOINTS <- list("11.0" = list(version_txt = "v11.0",
-                                                 year = 2021, 
-                                                 title = "'EUCAST Clinical Breakpoint Tables'",
-                                                 url = "https://www.eucast.org/clinical_breakpoints/"),
-                                   "10.0" = list(version_txt = "v10.0",
-                                                 year = 2020, 
-                                                 title = "'EUCAST Clinical Breakpoint Tables'",
-                                                 url = "https://www.eucast.org/ast_of_bacteria/previous_versions_of_documents/"))
-EUCAST_VERSION_EXPERT_RULES <- list("3.1" = list(version_txt = "v3.1",
-                                                 year = 2016, 
-                                                 title = "'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes'",
-                                                 url = "https://www.eucast.org/expert_rules_and_expected_phenotypes/"),
-                                    "3.2" = list(version_txt = "v3.2",
-                                                 year = 2020, 
-                                                 title = "'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes'",
-                                                 url = "https://www.eucast.org/expert_rules_and_expected_phenotypes/"),
-                                    "3.3" = list(version_txt = "v3.3",
-                                                 year = 2021, 
-                                                 title = "'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes'",
-                                                 url = "https://www.eucast.org/expert_rules_and_expected_phenotypes/"))
+# (sourcing "data-raw/_pre_commit_hook.R" will process the TSV file)
+EUCAST_VERSION_BREAKPOINTS <- list(
+  "11.0" = list(
+    version_txt = "v11.0",
+    year = 2021,
+    title = "'EUCAST Clinical Breakpoint Tables'",
+    url = "https://www.eucast.org/clinical_breakpoints/"
+  ),
+  "10.0" = list(
+    version_txt = "v10.0",
+    year = 2020,
+    title = "'EUCAST Clinical Breakpoint Tables'",
+    url = "https://www.eucast.org/ast_of_bacteria/previous_versions_of_documents/"
+  )
+)
+EUCAST_VERSION_EXPERT_RULES <- list(
+  "3.1" = list(
+    version_txt = "v3.1",
+    year = 2016,
+    title = "'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes'",
+    url = "https://www.eucast.org/expert_rules_and_expected_phenotypes/"
+  ),
+  "3.2" = list(
+    version_txt = "v3.2",
+    year = 2020,
+    title = "'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes'",
+    url = "https://www.eucast.org/expert_rules_and_expected_phenotypes/"
+  ),
+  "3.3" = list(
+    version_txt = "v3.3",
+    year = 2021,
+    title = "'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes'",
+    url = "https://www.eucast.org/expert_rules_and_expected_phenotypes/"
+  )
+)
 
-SNOMED_VERSION <- list(title = "Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS)",
-                       current_source = "US Edition of SNOMED CT from 1 September 2020",
-                       current_version = 12,
-                       current_oid = "2.16.840.1.114222.4.11.1009",
-                       value_set_name = "Microorganism",
-                       url = "https://phinvads.cdc.gov/vads/ViewValueSet.action?oid=2.16.840.1.114222.4.11.1009")
+SNOMED_VERSION <- list(
+  title = "Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS)",
+  current_source = "US Edition of SNOMED CT from 1 September 2020",
+  current_version = 12,
+  current_oid = "2.16.840.1.114222.4.11.1009",
+  value_set_name = "Microorganism",
+  url = "https://phinvads.cdc.gov/vads/ViewValueSet.action?oid=2.16.840.1.114222.4.11.1009"
+)
 
 CATALOGUE_OF_LIFE <- list(
   year = 2019,
@@ -61,73 +77,75 @@ CATALOGUE_OF_LIFE <- list(
   yearmonth_LPSN = "5 October 2021"
 )
 
-globalVariables(c(".rowid",
-                  "ab",
-                  "ab_txt",
-                  "affect_ab_name",
-                  "affect_mo_name",
-                  "angle",
-                  "antibiotic",
-                  "antibiotics",
-                  "atc_group1",
-                  "atc_group2",
-                  "base_ab",
-                  "code",
-                  "cols",
-                  "count",
-                  "data",
-                  "disk",
-                  "dosage",
-                  "dose",
-                  "dose_times",
-                  "fullname",
-                  "fullname_lower",
-                  "g_species",
-                  "genus",
-                  "gr",
-                  "group",
-                  "guideline",
-                  "hjust",
-                  "input",
-                  "intrinsic_resistant",
-                  "isolates",
-                  "lang",
-                  "language",
-                  "lookup",
-                  "method",
-                  "mic",
-                  "mic ",
-                  "microorganism",
-                  "microorganisms",
-                  "microorganisms.codes",
-                  "microorganisms.old",
-                  "mo",
-                  "name",
-                  "new",
-                  "observations",
-                  "old",
-                  "old_name",
-                  "pattern",
-                  "R",
-                  "rank_index",
-                  "reference.rule",
-                  "reference.rule_group",
-                  "reference.version",
-                  "rowid",
-                  "rsi",
-                  "rsi_translation",
-                  "rule_group",
-                  "rule_name",
-                  "se_max",
-                  "se_min",
-                  "species",
-                  "species_id",
-                  "total",
-                  "txt",
-                  "type",
-                  "value",
-                  "varname",
-                  "xvar",
-                  "y",
-                  "year",
-                  "yvar"))
+globalVariables(c(
+  ".rowid",
+  "ab",
+  "ab_txt",
+  "affect_ab_name",
+  "affect_mo_name",
+  "angle",
+  "antibiotic",
+  "antibiotics",
+  "atc_group1",
+  "atc_group2",
+  "base_ab",
+  "code",
+  "cols",
+  "count",
+  "data",
+  "disk",
+  "dosage",
+  "dose",
+  "dose_times",
+  "fullname",
+  "fullname_lower",
+  "g_species",
+  "genus",
+  "gr",
+  "group",
+  "guideline",
+  "hjust",
+  "input",
+  "intrinsic_resistant",
+  "isolates",
+  "lang",
+  "language",
+  "lookup",
+  "method",
+  "mic",
+  "mic ",
+  "microorganism",
+  "microorganisms",
+  "microorganisms.codes",
+  "microorganisms.old",
+  "mo",
+  "name",
+  "new",
+  "observations",
+  "old",
+  "old_name",
+  "pattern",
+  "R",
+  "rank_index",
+  "reference.rule",
+  "reference.rule_group",
+  "reference.version",
+  "rowid",
+  "rsi",
+  "rsi_translation",
+  "rule_group",
+  "rule_name",
+  "se_max",
+  "se_min",
+  "species",
+  "species_id",
+  "total",
+  "txt",
+  "type",
+  "value",
+  "varname",
+  "xvar",
+  "y",
+  "year",
+  "yvar"
+))

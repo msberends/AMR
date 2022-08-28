@@ -156,7 +156,7 @@ This AMR package honours this (new) insight. Use \code{\link[=susceptibility]{su
 
 \section{Reference Data Publicly Available}{
 
-All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
+All data sets in this \code{AMR} package (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{
@@ -164,27 +164,33 @@ example_isolates
 summary(example_isolates) # see all R/SI results at a glance
 
 # For INTERPRETING disk diffusion and MIC values -----------------------
-       
+
 # a whole data set, even with combined MIC values and disk zones
-df <- data.frame(microorganism = "Escherichia coli",
-                 AMP = as.mic(8),
-                 CIP = as.mic(0.256),
-                 GEN = as.disk(18),
-                 TOB = as.disk(16),
-                 NIT = as.mic(32),
-                 ERY = "R")
+df <- data.frame(
+  microorganism = "Escherichia coli",
+  AMP = as.mic(8),
+  CIP = as.mic(0.256),
+  GEN = as.disk(18),
+  TOB = as.disk(16),
+  NIT = as.mic(32),
+  ERY = "R"
+)
 as.rsi(df)
 
 # for single values
-as.rsi(x = as.mic(2),
-       mo = as.mo("S. pneumoniae"),
-       ab = "AMP",
-       guideline = "EUCAST")
+as.rsi(
+  x = as.mic(2),
+  mo = as.mo("S. pneumoniae"),
+  ab = "AMP",
+  guideline = "EUCAST"
+)
 
-as.rsi(x = as.disk(18),
-       mo = "Strep pneu",  # `mo` will be coerced with as.mo()
-       ab = "ampicillin",  # and `ab` with as.ab()
-       guideline = "EUCAST")
+as.rsi(
+  x = as.disk(18),
+  mo = "Strep pneu", # `mo` will be coerced with as.mo()
+  ab = "ampicillin", # and `ab` with as.ab()
+  guideline = "EUCAST"
+)
 
 \donttest{
 # the dplyr way
@@ -194,23 +200,27 @@ if (require("dplyr")) {
   df \%>\% mutate(across(where(is.mic), as.rsi))
   df \%>\% mutate_at(vars(AMP:TOB), as.rsi)
   df \%>\% mutate(across(AMP:TOB, as.rsi))
- 
+
   df \%>\%
     mutate_at(vars(AMP:TOB), as.rsi, mo = .$microorganism)
-    
+
   # to include information about urinary tract infections (UTI)
-  data.frame(mo = "E. coli",
-             NIT = c("<= 2", 32),
-             from_the_bladder = c(TRUE, FALSE)) \%>\%
+  data.frame(
+    mo = "E. coli",
+    NIT = c("<= 2", 32),
+    from_the_bladder = c(TRUE, FALSE)
+  ) \%>\%
     as.rsi(uti = "from_the_bladder")
-    
-  data.frame(mo = "E. coli",
-             NIT = c("<= 2", 32),
-             specimen = c("urine", "blood")) \%>\%
+
+  data.frame(
+    mo = "E. coli",
+    NIT = c("<= 2", 32),
+    specimen = c("urine", "blood")
+  ) \%>\%
     as.rsi() # automatically determines urine isolates
-  
+
   df \%>\%
-    mutate_at(vars(AMP:NIT), as.rsi, mo = "E. coli", uti = TRUE)  
+    mutate_at(vars(AMP:NIT), as.rsi, mo = "E. coli", uti = TRUE)
 }
 
 # For CLEANING existing R/SI values ------------------------------------
@@ -219,22 +229,22 @@ as.rsi(c("S", "I", "R", "A", "B", "C"))
 as.rsi("<= 0.002; S") # will return "S"
 rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370)))
 is.rsi(rsi_data)
-plot(rsi_data)    # for percentages
+plot(rsi_data) # for percentages
 barplot(rsi_data) # for frequencies
 
 # the dplyr way
 if (require("dplyr")) {
   example_isolates \%>\%
     mutate_at(vars(PEN:RIF), as.rsi)
-  # same:   
+  # same:
   example_isolates \%>\%
     as.rsi(PEN:RIF)
- 
+
   # fastest way to transform all columns with already valid AMR results to class `rsi`:
   example_isolates \%>\%
     mutate_if(is.rsi.eligible, as.rsi)
-    
-  # since dplyr 1.0.0, this can also be: 
+
+  # since dplyr 1.0.0, this can also be:
   # example_isolates \%>\%
   #   mutate(across(where(is.rsi.eligible), as.rsi))
 }

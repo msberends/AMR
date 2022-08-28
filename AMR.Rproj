@@ -1,7 +1,7 @@
 Version: 1.0
 
 RestoreWorkspace: No
-SaveWorkspace: Ask
+SaveWorkspace: No
 AlwaysSaveHistory: Yes
 
 EnableCodeIndexing: Yes
@@ -13,6 +13,7 @@ RnwWeave: Sweave
 LaTeX: pdfLaTeX
 
 AutoAppendNewline: Yes
+LineEndingConversion: Posix
 
 BuildType: Package
 PackageUseDevtools: Yes
@@ -20,3 +21,5 @@ PackageInstallArgs: --no-multiarch --with-keep.source
 PackageBuildArgs: --no-build-vignettes
 PackageCheckArgs: --no-build-vignettes --as-cran
 PackageRoxygenize: rd,collate,namespace
+
+UseNativePipeOperator: No

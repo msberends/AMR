@@ -5,7 +5,7 @@
 \alias{dosage}
 \title{Data Set with Treatment Dosages as Defined by EUCAST}
 \format{
-A \link{data.frame} with 169 observations and 9 variables:
+A [tibble\link[tibble:tibble]{tibble::tibble} with 169 observations and 9 variables:
 \itemize{
 \item \code{ab}\cr Antibiotic ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
 \item \code{name}\cr Official name of the antimicrobial agent as used by WHONET/EARS-Net or the WHO
@@ -25,14 +25,13 @@ dosage
 EUCAST breakpoints used in this package are based on the dosages in this data set. They can be retrieved with \code{\link[=eucast_dosage]{eucast_dosage()}}.
 }
 \details{
-\href{https://www.eucast.org/clinical_breakpoints/}{'EUCAST Clinical Breakpoint Tables' v11.0} (2021) are based on the dosages in this data set.
-}
-\section{Reference Data Publicly Available}{
+This data set is based on \href{https://www.eucast.org/clinical_breakpoints/}{'EUCAST Clinical Breakpoint Tables' v11.0} (2021).
+\subsection{Direct download}{
 
-All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
+Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
-
+}
 \examples{
-head(dosage)
+dosage
 }
 \keyword{datasets}

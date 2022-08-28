@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -32,37 +32,45 @@ library(cleaner)
 # download the PDF file, open in Acrobat Pro and export as Excel workbook
 breakpoints_version <- 11
 
-dosage_source <- read_excel("data-raw/Dosages_v_11.0_Breakpoint_Tables.xlsx", skip = 5, na = "None") %>% 
-  format_names(snake_case = TRUE, penicillins = "drug") %>% 
-  filter(!tolower(standard_dosage) %in% c("standard dosage_source", "under review")) %>% 
-  filter(!is.na(standard_dosage)) %>% 
+dosage_source <- read_excel("data-raw/Dosages_v_11.0_Breakpoint_Tables.xlsx", skip = 5, na = "None") %>%
+  format_names(snake_case = TRUE, penicillins = "drug") %>%
+  filter(!tolower(standard_dosage) %in% c("standard dosage_source", "under review")) %>%
+  filter(!is.na(standard_dosage)) %>%
   # keep only one drug in the table
-  arrange(desc(drug)) %>% 
-  mutate(drug = gsub("(.*) ([(]|iv|oral).*", "\\1", drug)) %>% 
-  #distinct(drug, .keep_all = TRUE) %>% 
-  arrange(drug) %>% 
-  mutate(ab = as.ab(drug),
-         ab_name = ab_name(ab, language = NULL))
+  arrange(desc(drug)) %>%
+  mutate(drug = gsub("(.*) ([(]|iv|oral).*", "\\1", drug)) %>%
+  # distinct(drug, .keep_all = TRUE) %>%
+  arrange(drug) %>%
+  mutate(
+    ab = as.ab(drug),
+    ab_name = ab_name(ab, language = NULL)
+  )
 
 dosage_source <- bind_rows(
   # oral
-  dosage_source %>% 
+  dosage_source %>%
     filter(standard_dosage %like% " oral") %>%
-    mutate(standard_dosage = gsub("oral.*", "oral", standard_dosage),
-           high_dosage = if_else(high_dosage %like% "oral", 
-                                 gsub("oral.*", "oral", high_dosage),
-                                 NA_character_)),
+    mutate(
+      standard_dosage = gsub("oral.*", "oral", standard_dosage),
+      high_dosage = if_else(high_dosage %like% "oral",
+        gsub("oral.*", "oral", high_dosage),
+        NA_character_
+      )
+    ),
   # iv
-  dosage_source %>% 
+  dosage_source %>%
     filter(standard_dosage %like% " iv") %>%
-    mutate(standard_dosage = gsub(".* or ", "", standard_dosage),
-           high_dosage = if_else(high_dosage %like% "( or | iv)", 
-                                 gsub(".* or ", "", high_dosage),
-                                 NA_character_)),
+    mutate(
+      standard_dosage = gsub(".* or ", "", standard_dosage),
+      high_dosage = if_else(high_dosage %like% "( or | iv)",
+        gsub(".* or ", "", high_dosage),
+        NA_character_
+      )
+    ),
   # im
-  dosage_source %>% 
+  dosage_source %>%
     filter(standard_dosage %like% " im")
-) %>% 
+) %>%
   arrange(drug)
 
 
@@ -71,34 +79,36 @@ get_dosage_lst <- function(col_data) {
     # remove new lines
     gsub(" ?(\n|\t)+ ?", " ", .) %>%
     # keep only the first suggestion, replace all after 'or' and more informative texts
-    gsub("(.*?) (or|with|loading|depending|over|by) .*", "\\1", .) %>% 
+    gsub("(.*?) (or|with|loading|depending|over|by) .*", "\\1", .) %>%
     # remove (1 MU)
-    gsub(" [(][0-9] [A-Z]+[)]", "", .) %>% 
+    gsub(" [(][0-9] [A-Z]+[)]", "", .) %>%
     # remove parentheses
-    gsub("[)(]", "", .) %>% 
+    gsub("[)(]", "", .) %>%
     # remove drug names
-    gsub(" [a-z]{5,99}( |$)", " ", .) %>% 
-    gsub(" [a-z]{5,99}( |$)", " ", .) %>% 
-    gsub(" (acid|dose)", "", .)# %>% 
-    # keep lowest value only (25-30 mg -> 25 mg)
-   # gsub("[-].*? ", " ", .)
-  
-  dosage_lst <- lapply(strsplit(standard, " x "), 
-                         function(x) {
-                           dose <- x[1]
-                           if (dose %like% "under") {
-                             dose <- NA_character_
-                           }
-                           admin <- x[2]
-                           
-                           list(
-                             dose = trimws(dose),
-                             dose_times = gsub("^([0-9.]+).*", "\\1", admin),
-                             administration = clean_character(admin),
-                             notes = "",
-                             original_txt = ""
-                           )
-                         })
+    gsub(" [a-z]{5,99}( |$)", " ", .) %>%
+    gsub(" [a-z]{5,99}( |$)", " ", .) %>%
+    gsub(" (acid|dose)", "", .) # %>%
+  # keep lowest value only (25-30 mg -> 25 mg)
+  # gsub("[-].*? ", " ", .)
+
+  dosage_lst <- lapply(
+    strsplit(standard, " x "),
+    function(x) {
+      dose <- x[1]
+      if (dose %like% "under") {
+        dose <- NA_character_
+      }
+      admin <- x[2]
+
+      list(
+        dose = trimws(dose),
+        dose_times = gsub("^([0-9.]+).*", "\\1", admin),
+        administration = clean_character(admin),
+        notes = "",
+        original_txt = ""
+      )
+    }
+  )
   for (i in seq_len(length(col_data))) {
     dosage_lst[[i]]$original_txt <- gsub("\n", " ", col_data[i])
     if (col_data[i] %like% " (or|with|loading|depending|over) ") {
@@ -147,12 +157,15 @@ dosage <- bind_rows(
     notes = sapply(uti, function(x) x$notes),
     original_txt = sapply(uti, function(x) x$original_txt),
     stringsAsFactors = FALSE
-  )) %>% 
-  mutate(eucast_version = breakpoints_version,
-         dose_times = as.integer(dose_times),
-         administration = gsub("([a-z]+) .*", "\\1", administration)) %>% 
-  arrange(name, administration, type) %>% 
-  filter(!is.na(dose), dose != ".") %>% 
+  )
+) %>%
+  mutate(
+    eucast_version = breakpoints_version,
+    dose_times = as.integer(dose_times),
+    administration = gsub("([a-z]+) .*", "\\1", administration)
+  ) %>%
+  arrange(name, administration, type) %>%
+  filter(!is.na(dose), dose != ".") %>%
   as.data.frame(stringsAsFactors = FALSE)
 rownames(dosage) <- NULL
 

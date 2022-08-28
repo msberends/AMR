@@ -5,7 +5,7 @@
 \alias{rsi_translation}
 \title{Data Set for R/SI Interpretation}
 \format{
-A \link{data.frame} with 20,369 observations and 11 variables:
+A [tibble\link[tibble:tibble]{tibble::tibble} with 20,369 observations and 11 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
 \item \code{method}\cr Either "DISK" or "MIC"
@@ -27,15 +27,12 @@ rsi_translation
 Data set containing reference data to interpret MIC and disk diffusion to R/SI values, according to international guidelines. Currently implemented guidelines are EUCAST (2011-2022) and CLSI (2011-2022). Use \code{\link[=as.rsi]{as.rsi()}} to transform MICs or disks measurements to R/SI values.
 }
 \details{
-The repository of this \code{AMR} package contains a file comprising this exact data set: \url{https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt}. This file \strong{allows for machine reading EUCAST and CLSI guidelines}, which is almost impossible with the Excel and PDF files distributed by EUCAST and CLSI. The file is updated automatically and the \code{mo} and \code{ab} columns have been transformed to contain the full official names instead of codes.
-}
-\section{Reference Data Publicly Available}{
+Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 
-All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this \code{AMR} package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find \href{https://msberends.github.io/AMR/articles/datasets.html}{all download links on our website}, which is automatically updated with every code change.
+They \strong{allow for machine reading EUCAST and CLSI guidelines}, which is almost impossible with the MS Excel and PDF files distributed by EUCAST and CLSI.
 }
-
 \examples{
-head(rsi_translation)
+rsi_translation
 }
 \seealso{
 \link{intrinsic_resistant}

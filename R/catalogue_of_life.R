@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -49,9 +49,9 @@ format_included_data_number <- function(data) {
 #' [Click here][catalogue_of_life] for more information about the included taxa. Check which versions of the CoL and LPSN were included in this package with [catalogue_of_life_version()].
 #' @section Included Taxa:
 #' Included are:
-#' - All `r format_included_data_number(microorganisms[which(microorganisms$kingdom %in% c("Archeae", "Bacteria", "Chromista", "Protozoa")), ])` (sub)species from the kingdoms of Archaea, Bacteria, Chromista and Protozoa
-#' - All `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Fungi" & microorganisms$order %in% c("Eurotiales", "Microascales", "Mucorales", "Onygenales", "Pneumocystales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales")), ])` (sub)species from these orders of the kingdom of Fungi: Eurotiales, Microascales, Mucorales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales, as well as `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Fungi" & !microorganisms$order %in% c("Eurotiales", "Microascales", "Mucorales", "Onygenales", "Pneumocystales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales")), ])` other fungal (sub)species. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant fungi are covered (such as all species of *Aspergillus*, *Candida*, *Cryptococcus*, *Histplasma*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*).
-#' - All `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Animalia"), ])` (sub)species from `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Animalia"), "genus"])` other relevant genera from the kingdom of Animalia (such as *Strongyloides* and *Taenia*)
+#' - All `r format_included_data_number(microorganisms[which(microorganisms$kingdom %in% c("Archeae", "Bacteria", "Chromista", "Protozoa")), , drop = FALSE])` (sub)species from the kingdoms of Archaea, Bacteria, Chromista and Protozoa
+#' - All `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Fungi" & microorganisms$order %in% c("Eurotiales", "Microascales", "Mucorales", "Onygenales", "Pneumocystales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales")), , drop = FALSE])` (sub)species from these orders of the kingdom of Fungi: Eurotiales, Microascales, Mucorales, Onygenales, Pneumocystales, Saccharomycetales, Schizosaccharomycetales and Tremellales, as well as `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Fungi" & !microorganisms$order %in% c("Eurotiales", "Microascales", "Mucorales", "Onygenales", "Pneumocystales", "Saccharomycetales", "Schizosaccharomycetales", "Tremellales")), ])` other fungal (sub)species. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including the aforementioned taxonomic orders, the most relevant fungi are covered (such as all species of *Aspergillus*, *Candida*, *Cryptococcus*, *Histplasma*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*).
+#' - All `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Animalia"), , drop = FALSE])` (sub)species from `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Animalia"), "genus", drop = TRUE])` other relevant genera from the kingdom of Animalia (such as *Strongyloides* and *Taenia*)
 #' - All `r format_included_data_number(microorganisms.old)` previously accepted names of all included (sub)species (these were taxonomically renamed)
 #' - The complete taxonomic tree of all included (sub)species: from kingdom to subspecies
 #' - The responsible author(s) and year of scientific publication
@@ -72,13 +72,13 @@ format_included_data_number <- function(data) {
 #' mo_shortname("Chlamydophila psittaci")
 #'
 #' # Get any property from the entire taxonomic tree for all included species
-#' mo_class("E. coli")
+#' mo_class("Escherichia coli")
 #'
-#' mo_family("E. coli")
+#' mo_family("Escherichia coli")
 #'
-#' mo_gramstain("E. coli") # based on kingdom and phylum, see ?mo_gramstain
+#' mo_gramstain("Escherichia coli") # based on kingdom and phylum, see ?mo_gramstain
 #'
-#' mo_ref("E. coli")
+#' mo_ref("Escherichia coli")
 #'
 #' # Do not get mistaken - this package is about microorganisms
 #' mo_kingdom("C. elegans")
@@ -94,41 +94,52 @@ NULL
 #' @inheritSection catalogue_of_life Catalogue of Life
 #' @export
 catalogue_of_life_version <- function() {
-  
   check_dataset_integrity()
-  
+
   # see the `CATALOGUE_OF_LIFE` list in R/globals.R
-  lst <- list(CoL =
-                list(version = gsub("{year}", CATALOGUE_OF_LIFE$year, CATALOGUE_OF_LIFE$version, fixed = TRUE),
-                     url = gsub("{year}", CATALOGUE_OF_LIFE$year, CATALOGUE_OF_LIFE$url_CoL, fixed = TRUE),
-                     n = nrow(pm_filter(microorganisms, source == "CoL"))),
-              LPSN =
-                list(version = "List of Prokaryotic names with Standing in Nomenclature",
-                     url = CATALOGUE_OF_LIFE$url_LPSN,
-                     yearmonth = CATALOGUE_OF_LIFE$yearmonth_LPSN,
-                     n = nrow(pm_filter(microorganisms, source == "LPSN"))),
-              total_included =
-                list(
-                  n_total_species = nrow(microorganisms),
-                  n_total_synonyms = nrow(microorganisms.old)))
-  
+  lst <- list(
+    CoL =
+      list(
+        version = gsub("{year}", CATALOGUE_OF_LIFE$year, CATALOGUE_OF_LIFE$version, fixed = TRUE),
+        url = gsub("{year}", CATALOGUE_OF_LIFE$year, CATALOGUE_OF_LIFE$url_CoL, fixed = TRUE),
+        n = nrow(pm_filter(microorganisms, source == "CoL"))
+      ),
+    LPSN =
+      list(
+        version = "List of Prokaryotic names with Standing in Nomenclature",
+        url = CATALOGUE_OF_LIFE$url_LPSN,
+        yearmonth = CATALOGUE_OF_LIFE$yearmonth_LPSN,
+        n = nrow(pm_filter(microorganisms, source == "LPSN"))
+      ),
+    total_included =
+      list(
+        n_total_species = nrow(microorganisms),
+        n_total_synonyms = nrow(microorganisms.old)
+      )
+  )
+
   set_clean_class(lst,
-                  new_class = c("catalogue_of_life_version", "list"))
+    new_class = c("catalogue_of_life_version", "list")
+  )
 }
 
 #' @method print catalogue_of_life_version
 #' @export
 #' @noRd
 print.catalogue_of_life_version <- function(x, ...) {
-  cat(paste0(font_bold("Included in this AMR package (v", utils::packageDescription("AMR")$Version, ") are:\n\n", collapse = ""),
-             font_underline(x$CoL$version), "\n",
-             "  Available at: ", font_blue(x$CoL$url), "\n",
-             "  Number of included microbial species: ", format(x$CoL$n, big.mark = ","), "\n",
-             font_underline(paste0(x$LPSN$version, " (",
-                                   x$LPSN$yearmonth, ")")), "\n",
-             "  Available at: ", font_blue(x$LPSN$url), "\n",
-             "  Number of included bacterial species: ", format(x$LPSN$n, big.mark = ","), "\n\n",
-             "=> Total number of species included:  ", format(x$total_included$n_total_species, big.mark = ","), "\n",
-             "=> Total number of synonyms included: ", format(x$total_included$n_total_synonyms, big.mark = ","), "\n\n",
-             "See for more info ", font_grey_bg("`?microorganisms`"), " and ", font_grey_bg("`?catalogue_of_life`"), ".\n"))
+  cat(paste0(
+    font_bold("Included in this AMR package (v", utils::packageDescription("AMR")$Version, ") are:\n\n", collapse = ""),
+    font_underline(x$CoL$version), "\n",
+    "  Available at: ", font_blue(x$CoL$url), "\n",
+    "  Number of included microbial species: ", format(x$CoL$n, big.mark = ","), "\n",
+    font_underline(paste0(
+      x$LPSN$version, " (",
+      x$LPSN$yearmonth, ")"
+    )), "\n",
+    "  Available at: ", font_blue(x$LPSN$url), "\n",
+    "  Number of included bacterial species: ", format(x$LPSN$n, big.mark = ","), "\n\n",
+    "=> Total number of species included:  ", format(x$total_included$n_total_species, big.mark = ","), "\n",
+    "=> Total number of synonyms included: ", format(x$total_included$n_total_synonyms, big.mark = ","), "\n\n",
+    "See for more info ", font_grey_bg("`?microorganisms`"), " and ", font_grey_bg("`?catalogue_of_life`"), ".\n"
+  ))
 }

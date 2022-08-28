@@ -33,19 +33,25 @@ ggplot.bm <- function(df) {
     summ <- tapply(.x, .f, .fun)
     factor(.f, levels = names(summ)[order(summ, decreasing = .desc)], ordered = is.ordered(.f))
   }
-  ggplot(df,
-         aes(x = reorder(expr, time, median), y = time / 1000 / 1000)) + 
-  stat_boxplot(geom = "errorbar", width = 0.5) +
-  geom_boxplot(outlier.alpha = 0) +
-  coord_flip() +
-  scale_y_continuous(trans = "log", breaks = c(1, 2, 5, 
-                                                10, 20, 50,
-                                                100, 200, 500,
-                                                1000, 2000, 5000)) +
-  labs(x = "Expression",
-       y = "Time in milliseconds (log scale)") +
-  theme_minimal() +
-  theme(axis.text.y = element_text(family = "mono"))
+  ggplot(
+    df,
+    aes(x = reorder(expr, time, median), y = time / 1000 / 1000)
+  ) +
+    stat_boxplot(geom = "errorbar", width = 0.5) +
+    geom_boxplot(outlier.alpha = 0) +
+    coord_flip() +
+    scale_y_continuous(trans = "log", breaks = c(
+      1, 2, 5,
+      10, 20, 50,
+      100, 200, 500,
+      1000, 2000, 5000
+    )) +
+    labs(
+      x = "Expression",
+      y = "Time in milliseconds (log scale)"
+    ) +
+    theme_minimal() +
+    theme(axis.text.y = element_text(family = "mono"))
 }
 ```
 
@@ -75,7 +81,8 @@ S.aureus <- microbenchmark(
   as.mo("Sthafilokkockus aaureuz"), # incorrect spelling
   as.mo("MRSA"), # Methicillin Resistant S. aureus
   as.mo("VISA"), # Vancomycin Intermediate S. aureus
-  times = 25)
+  times = 25
+)
 print(S.aureus, unit = "ms", signif = 2)
 ```
 ```{r, echo = FALSE}
@@ -95,7 +102,7 @@ To prove this, we will use `mo_name()` for testing - a helper function that retu
 
 ```{r, message = FALSE}
 # start with the example_isolates data set
-x <- example_isolates %>% 
+x <- example_isolates %>%
   # take all MO codes from the 'mo' column
   pull(mo) %>%
   # and copy them a thousand times
@@ -105,7 +112,7 @@ x <- example_isolates %>%
 
 # what do these values look like? They are of class <mo>:
 head(x)
-  
+
 # as the example_isolates data set has 2,000 rows, we should have 2 million items
 length(x)
 
@@ -114,7 +121,8 @@ n_distinct(x)
 
 # now let's see:
 run_it <- microbenchmark(mo_name(x),
-                         times = 10)
+  times = 10
+)
 print(run_it, unit = "ms", signif = 3)
 ```
 
@@ -125,25 +133,29 @@ So getting official taxonomic names of `r format(length(x), big.mark = ",")` (!!
 What about precalculated results? If the input is an already precalculated result of a helper function such as `mo_name()`, it almost doesn't take any time at all. In other words, if you run `mo_name()` on a valid taxonomic name, it will return the results immediately (see 'C' below):
 
 ```{r, warning=FALSE, message=FALSE}
-run_it <- microbenchmark(A = mo_name("STAAUR"),
-                         B = mo_name("S. aureus"),
-                         C = mo_name("Staphylococcus aureus"),
-                         times = 10)
+run_it <- microbenchmark(
+  A = mo_name("STAAUR"),
+  B = mo_name("S. aureus"),
+  C = mo_name("Staphylococcus aureus"),
+  times = 10
+)
 print(run_it, unit = "ms", signif = 3)
 ```
 
 So going from `mo_name("Staphylococcus aureus")` to `"Staphylococcus aureus"` takes `r format(round(run_it %>% filter(expr == "C") %>% pull(time) %>% median() / 1e9, 4), scientific = FALSE)` seconds - it doesn't even start calculating *if the result would be the same as the expected resulting value*. That goes for all helper functions:
 
 ```{r}
-run_it <- microbenchmark(A = mo_species("aureus"),
-                         B = mo_genus("Staphylococcus"),
-                         C = mo_name("Staphylococcus aureus"),
-                         D = mo_family("Staphylococcaceae"),
-                         E = mo_order("Bacillales"),
-                         F = mo_class("Bacilli"),
-                         G = mo_phylum("Firmicutes"),
-                         H = mo_kingdom("Bacteria"),
-                         times = 10)
+run_it <- microbenchmark(
+  A = mo_species("aureus"),
+  B = mo_genus("Staphylococcus"),
+  C = mo_name("Staphylococcus aureus"),
+  D = mo_family("Staphylococcaceae"),
+  E = mo_order("Bacillales"),
+  F = mo_class("Bacilli"),
+  G = mo_phylum("Firmicutes"),
+  H = mo_kingdom("Bacteria"),
+  times = 10
+)
 print(run_it, unit = "ms", signif = 3)
 ```
 
@@ -163,17 +175,19 @@ mo_name(CoNS, language = "es") # or just mo_name(CoNS) on a Spanish system
 
 mo_name(CoNS, language = "nl") # or just mo_name(CoNS) on a Dutch system
 
-run_it <- microbenchmark(da = mo_name(CoNS, language = "da"),
-                         de = mo_name(CoNS, language = "de"),
-                         en = mo_name(CoNS, language = "en"),
-                         es = mo_name(CoNS, language = "es"),
-                         fr = mo_name(CoNS, language = "fr"),
-                         it = mo_name(CoNS, language = "it"),
-                         nl = mo_name(CoNS, language = "nl"),
-                         pt = mo_name(CoNS, language = "pt"),
-                         ru = mo_name(CoNS, language = "ru"),
-                         sv = mo_name(CoNS, language = "sv"),
-                         times = 100)
+run_it <- microbenchmark(
+  da = mo_name(CoNS, language = "da"),
+  de = mo_name(CoNS, language = "de"),
+  en = mo_name(CoNS, language = "en"),
+  es = mo_name(CoNS, language = "es"),
+  fr = mo_name(CoNS, language = "fr"),
+  it = mo_name(CoNS, language = "it"),
+  nl = mo_name(CoNS, language = "nl"),
+  pt = mo_name(CoNS, language = "pt"),
+  ru = mo_name(CoNS, language = "ru"),
+  sv = mo_name(CoNS, language = "sv"),
+  times = 100
+)
 print(run_it, unit = "ms", signif = 4)
 ```
 

@@ -35,11 +35,13 @@ Interpret disk values as RSI values with \code{\link[=as.rsi]{as.rsi()}}. It sup
 }
 \examples{
 # transform existing disk zones to the `disk` class (using base R)
-df <- data.frame(microorganism = "Escherichia coli",
-                 AMP = 20,
-                 CIP = 14,
-                 GEN = 18,
-                 TOB = 16)
+df <- data.frame(
+  microorganism = "Escherichia coli",
+  AMP = 20,
+  CIP = 14,
+  GEN = 18,
+  TOB = 16
+)
 df[, 2:5] <- lapply(df[, 2:5], as.disk)
 str(df)
 
@@ -51,10 +53,12 @@ if (require("dplyr")) {
 }
 
 # interpret disk values, see ?as.rsi
-as.rsi(x = as.disk(18),
-       mo = "Strep pneu",  # `mo` will be coerced with as.mo()
-       ab = "ampicillin",  # and `ab` with as.ab()
-       guideline = "EUCAST")
+as.rsi(
+  x = as.disk(18),
+  mo = "Strep pneu", # `mo` will be coerced with as.mo()
+  ab = "ampicillin", # and `ab` with as.ab()
+  guideline = "EUCAST"
+)
 
 # interpret whole data set, pretend to be all from urinary tract infections:
 as.rsi(df, uti = TRUE)
