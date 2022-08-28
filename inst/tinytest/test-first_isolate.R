@@ -75,7 +75,7 @@ expect_equal(
     ),
     na.rm = TRUE
   ),
-  941
+  942
 )
 
 # set 1500 random observations to be of specimen type 'Urine'
@@ -160,7 +160,7 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
 
   # support for WHONET
   expect_message(example_isolates %>%
-    select(-patient_id) %>%
+    select(-patient) %>%
     mutate(
       `First name` = "test",
       `Last name` = "test",

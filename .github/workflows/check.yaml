@@ -131,6 +131,7 @@ jobs:
           _R_CHECK_LENGTH_1_LOGIC2_: verbose
           # during 'R CMD check', R_LIBS_USER will be overwritten, so:
           R_LIBS_USER_GH_ACTIONS: ${{ env.R_LIBS_USER }}
+          # this is a required value to run the unit tests:
           R_RUN_TINYTEST: true
         run: |
           cd ..

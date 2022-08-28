@@ -68,15 +68,15 @@ expect_true(ab_url("AMX") %like% "whocc.no")
 expect_warning(ab_url("ASP"))
 
 expect_identical(
-  colnames(set_ab_names(example_isolates[, 20:25])),
+  colnames(set_ab_names(example_isolates[, 17:22])),
   c("cefoxitin", "cefotaxime", "ceftazidime", "ceftriaxone", "gentamicin", "tobramycin")
 )
 expect_identical(
-  colnames(set_ab_names(example_isolates[, 20:25], language = "nl", snake_case = FALSE)),
+  colnames(set_ab_names(example_isolates[, 17:22], language = "nl", snake_case = FALSE)),
   c("Cefoxitine", "Cefotaxim", "Ceftazidim", "Ceftriaxon", "Gentamicine", "Tobramycine")
 )
 expect_identical(
-  colnames(set_ab_names(example_isolates[, 20:25], property = "atc")),
+  colnames(set_ab_names(example_isolates[, 17:22], property = "atc")),
   c("J01DC01", "J01DD01", "J01DD02", "J01DD04", "J01GB03", "J01GB01")
 )
 

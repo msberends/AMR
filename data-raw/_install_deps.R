@@ -26,7 +26,6 @@
 # some old R instances have trouble installing tinytest, so we ship it too
 install.packages("data-raw/tinytest_1.3.1.tar.gz", dependencies = c("Depends", "Imports", "LinkingTo"))
 install.packages(getwd(), repos = NULL, type = "source")
-# install.packages("data-raw/AMR_latest.tar.gz", dependencies = FALSE)
 
 pkg_suggests <- gsub(
   "[^a-zA-Z0-9]+", "",

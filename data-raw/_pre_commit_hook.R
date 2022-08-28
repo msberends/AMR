@@ -475,6 +475,11 @@ rm(current_globalenv)
 devtools::load_all(quiet = TRUE)
 
 
+# Update URLs -------------------------------------------------------------
+usethis::ui_info("Checking URLs for redirects")
+invisible(capture.output(urlchecker::url_update()))
+
+
 # Document pkg ------------------------------------------------------------
 usethis::ui_info("Documenting package")
 suppressMessages(devtools::document(quiet = TRUE))

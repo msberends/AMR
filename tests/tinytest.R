@@ -27,8 +27,9 @@
 if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
   # env var 'R_LIBS_USER' got overwritten during 'R CMD check' in GitHub Actions, so:
   .libPaths(c(Sys.getenv("R_LIBS_USER_GH_ACTIONS"), .libPaths()))
-  if (AMR:::pkg_is_available("tinytest")) {
+  if (AMR:::pkg_is_available("tinytest", also_load = TRUE)) {
     library(AMR)
+    set_AMR_locale("English")
     out <- test_package("AMR",
       testdir = ifelse(AMR:::dir.exists("inst/tinytest"),
         "inst/tinytest",
@@ -37,7 +38,7 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
       verbose = 99,
       color = FALSE
     )
-    cat("SUMMARY:\n")
+    cat("\n\nSUMMARY:\n")
     print(summary(out))
   }
 }

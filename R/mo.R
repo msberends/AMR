@@ -204,12 +204,12 @@ as.mo <- function(x,
     ))
   }
 
+  reference_df <- repair_reference_df(reference_df)
   if (!is.null(reference_df) &&
     check_validity_mo_source(reference_df) &&
     isFALSE(Becker) &&
     isFALSE(Lancefield) &&
-    all(x %in% unlist(reference_df), na.rm = TRUE)) {
-    reference_df <- repair_reference_df(reference_df)
+    all(x %in% reference_df[, 1, drop = TRUE], na.rm = TRUE)) {
     suppressWarnings(
       y <- data.frame(x = x, stringsAsFactors = FALSE) %pm>%
         pm_left_join(reference_df, by = "x") %pm>%
@@ -221,6 +221,7 @@ as.mo <- function(x,
     y <- x
   } else {
     # will be checked for mo class in validation and uses exec_as.mo internally if necessary
+
     y <- mo_validate(
       x = x, property = "mo",
       Becker = Becker, Lancefield = Lancefield,
@@ -420,7 +421,7 @@ exec_as.mo <- function(x,
   }
 
   # all empty
-  if (all(identical(trimws(x_input), "") | is.na(x_input) | length(x) == 0)) {
+  if (all(identical(trimws(x_input), "") | is.na(x_input) | length(x) == 0, na.rm = TRUE)) {
     if (property == "mo") {
       return(set_clean_class(rep(NA_character_, length(x_input)),
         new_class = c("mo", "character")
@@ -428,7 +429,7 @@ exec_as.mo <- function(x,
     } else {
       return(rep(NA_character_, length(x_input)))
     }
-  } else if (all(x %in% reference_df[, 1, drop = TRUE][[1]])) {
+  } else if (all(x %in% reference_df[, 1, drop = TRUE], na.rm = TRUE)) {
     # all in reference df
     colnames(reference_df)[1] <- "x"
     suppressWarnings(
@@ -2357,6 +2358,9 @@ replace_ignore_pattern <- function(x, ignore_pattern) {
 }
 
 repair_reference_df <- function(reference_df) {
+  if (is.null(reference_df)) {
+    return(NULL)
+  }
   # has valid own reference_df
   reference_df <- reference_df %pm>%
     pm_filter(!is.na(mo))

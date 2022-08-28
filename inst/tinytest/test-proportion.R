@@ -84,7 +84,7 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
         combination_n = n_rsi(CIP, GEN)
       ) %>%
       pull(combination_n),
-    c(305, 617, 241, 711)
+    c(1181, 577, 116)
   )
 
   # proportion_df

@@ -79,7 +79,7 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
         combination = count_susceptible(CIP, GEN)
       ) %>%
       pull(combination),
-    c(253, 465, 192, 558)
+    c(946, 428, 94)
   )
 
   # count_df
