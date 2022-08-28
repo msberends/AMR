@@ -569,7 +569,8 @@ plot(disk_values, mo = "E. coli", ab = "cipro")
 And when using the `ggplot2` package, but now choosing the latest implemented CLSI guideline (notice that the EUCAST-specific term "Susceptible, incr. exp." has changed to "Intermediate"):
 
 ```{r disk_plots_mo_ab, message = FALSE, warning = FALSE}
-autoplot(disk_values,
+autoplot(
+  disk_values,
   mo = "E. coli",
   ab = "cipro",
   guideline = "CLSI"
@@ -580,22 +581,22 @@ autoplot(disk_values,
 
 The next example uses the `example_isolates` data set. This is a data set included with this package and contains 2,000 microbial isolates with their full antibiograms. It reflects reality and can be used to practise AMR data analysis.
 
-We will compare the resistance to fosfomycin (column `FOS`) in hospital A and D. The input for the `fisher.test()` can be retrieved with a transformation like this:
+We will compare the resistance to amoxicillin/clavulanic acid (column `FOS`) between an ICU and other clinical wards. The input for the `fisher.test()` can be retrieved with a transformation like this:
 
 ```{r, results = 'markup'}
 # use package 'tidyr' to pivot data:
 library(tidyr)
 
 check_FOS <- example_isolates %>%
-  filter(ward %in% c("A", "D")) %>% # filter on only hospitals A and D
-  select(ward, FOS) %>% # select the hospitals and fosfomycin
-  group_by(ward) %>% # group on the hospitals
+  filter(ward %in% c("ICU", "Clinical")) %>% # filter on only these wards
+  select(ward, AMC) %>% # select the wards and amoxi/clav
+  group_by(ward) %>% # group on the wards
   count_df(combine_SI = TRUE) %>% # count all isolates per group (ward)
   pivot_wider(
-    names_from = ward, # transform output so A and D are columns
+    names_from = ward, # transform output so "ICU" and "Clinical" are columns
     values_from = value
   ) %>%
-  select(A, D) %>% # and only select these columns
+  select(ICU, Clinical) %>% # and only select these columns
   as.matrix() # transform to a good old matrix for fisher.test()
 
 check_FOS
@@ -608,4 +609,4 @@ We can apply the test now with:
 fisher.test(check_FOS)
 ```
 
-As can be seen, the p value is `r round(fisher.test(check_FOS)$p.value, 3)`, which means that the fosfomycin resistance found in isolates from patients in hospital A and D are really different.
+As can be seen, the p value is practically zero (`r format(fisher.test(check_FOS)$p.value, scientific = FALSE)`), which means that the amoxicillin/clavulanic acid resistance found in isolates between patients in ICUs and other clinical wards are really different.

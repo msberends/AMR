@@ -54,5 +54,5 @@ mo_matching_score(
 )
 }
 \author{
-Dr Matthijs Berends
+Dr. Matthijs Berends
 }

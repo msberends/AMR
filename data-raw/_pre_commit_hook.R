@@ -29,7 +29,7 @@
 library(dplyr, warn.conflicts = FALSE)
 devtools::load_all(quiet = TRUE)
 
-suppressMessages(set_AMR_locale("en"))
+suppressMessages(set_AMR_locale("English"))
 
 old_globalenv <- ls(envir = globalenv())
 
@@ -473,7 +473,7 @@ rm(list = current_globalenv[!current_globalenv %in% old_globalenv])
 rm(current_globalenv)
 
 devtools::load_all(quiet = TRUE)
-
+suppressMessages(set_AMR_locale("English"))
 
 # Update URLs -------------------------------------------------------------
 usethis::ui_info("Checking URLs for redirects")
@@ -500,3 +500,4 @@ invisible(capture.output(styler::style_dir(
 
 # Finished ----------------------------------------------------------------
 usethis::ui_done("All done")
+suppressMessages(reset_AMR_locale())
