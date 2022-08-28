@@ -125,6 +125,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   x <- unique(x_bak_clean) # this means that every x is in fact generalise_antibiotic_name(x)
   x_new <- rep(NA_character_, length(x))
   x_unknown <- character(0)
+  x_unknown_ATCs <- character(0)
 
   note_if_more_than_one_found <- function(found, index, from_text) {
     if (initial_search == TRUE & isTRUE(length(from_text) > 1)) {
@@ -181,6 +182,13 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       # prevent "bacteria" from coercing to TMP, since Bacterial is a brand name of it:
       identical(tolower(x[i]), "bacteria")) {
       x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
+      next
+    }
+    if (x[i] %like_case% "[A-Z][0-9][0-9][A-Z][A-Z][0-9][0-9]") {
+      # seems an ATC code, but the available ones are in `already_known`, so:
+      x_unknown <- c(x_unknown, x[i])
+      x_unknown_ATCs <- c(x_unknown_ATCs, x[i])
+      x_new[i] <- NA_character_
       next
     }
 
@@ -474,16 +482,15 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   }
 
   # take failed ATC codes apart from rest
-  x_unknown_ATCs <- x_unknown[x_unknown %like% "[A-Z][0-9][0-9][A-Z][A-Z][0-9][0-9]"]
-  x_unknown <- x_unknown[!x_unknown %in% x_unknown_ATCs]
-  if (length(x_unknown_ATCs) > 0 & fast_mode == FALSE) {
+  if (length(x_unknown_ATCs) > 0 && fast_mode == FALSE) {
     warning_(
       "in `as.ab()`: these ATC codes are not (yet) in the antibiotics data set: ",
       vector_and(x_unknown_ATCs), "."
     )
   }
+  x_unknown <- x_unknown[!x_unknown %in% x_unknown_ATCs]
 
-  if (length(x_unknown) > 0 & fast_mode == FALSE) {
+  if (length(x_unknown) > 0 && fast_mode == FALSE) {
     warning_(
       "in `as.ab()`: these values could not be coerced to a valid antimicrobial ID: ",
       vector_and(x_unknown), "."

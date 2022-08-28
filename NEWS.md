@@ -1,4 +1,4 @@
-# AMR 1.8.1.9042
+# AMR 1.8.1.9043
 
 ### New
 * EUCAST 2022 and CLSI 2022 guidelines have been added for `as.rsi()`. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.
@@ -21,6 +21,7 @@
 * All data sets in this package are now exported as `tibble`, instead of base R `data.frame`s. Older R versions are still supported.
 * Automatic language determination will give a note once a session
 * For all interpretation guidelines using `as.rsi()` on amoxicillin, the rules for ampicillin will be used if amoxicillin rules are not available
+* Fix for using `ab_atc()` on non-existing ATC codes
 
 ### Other
 * New website to make use of the new Bootstrap 5 and pkgdown v2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions

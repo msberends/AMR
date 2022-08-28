@@ -457,7 +457,11 @@ ab_validate <- function(x, property, ...) {
 
     if (!all(x %in% AB_lookup[, property, drop = TRUE])) {
       x <- as.ab(x, ...)
-      x <- AB_lookup[match(x, AB_lookup$ab), property, drop = TRUE]
+      if (all(is.na(x)) && is.list(AB_lookup[, property, drop = TRUE])) {
+        x <- rep(NA_character_, length(x))
+      } else {
+        x <- AB_lookup[match(x, AB_lookup$ab), property, drop = TRUE]
+      }
     }
   }
 

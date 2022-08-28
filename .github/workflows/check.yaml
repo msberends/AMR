@@ -130,7 +130,7 @@ jobs:
           _R_CHECK_LENGTH_1_CONDITION_: verbose
           _R_CHECK_LENGTH_1_LOGIC2_: verbose
           # no check for old R versions - these packages require higher R versions
-          _R_CHECK_RD_XREFS_: {{ matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2' && matrix.config.r != '3.3' && matrix.config.r != '3.4' }}
+          _R_CHECK_RD_XREFS_: ${{ matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2' && matrix.config.r != '3.3' && matrix.config.r != '3.4' }}
           _R_CHECK_FORCE_SUGGESTS_: false
           R_CHECK_CONSTANTS: 5
           R_JIT_STRATEGY: 3
