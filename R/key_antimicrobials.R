@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -35,15 +35,15 @@
 #' @param antifungal names of antifungal agents for **fungi**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default agents.
 #' @param only_rsi_columns a [logical] to indicate whether only columns must be included that were transformed to class `<rsi>` (see [as.rsi()]) on beforehand (defaults to `FALSE`)
 #' @param ... ignored, only in place to allow future extensions
-#' @details 
+#' @details
 #' The [key_antimicrobials()] and [all_antimicrobials()] functions are context-aware. This means that the `x` argument can be left blank if used inside a [data.frame] call, see *Examples*.
-#' 
+#'
 #' The function [key_antimicrobials()] returns a [character] vector with 12 antimicrobial results for every isolate. The function [all_antimicrobials()] returns a [character] vector with all antimicrobial results for every isolate. These vectors can then be compared using [antimicrobials_equal()], to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (`"."`) by [key_antimicrobials()] and ignored by [antimicrobials_equal()].
-#' 
+#'
 #' Please see the [first_isolate()] function how these important functions enable the 'phenotype-based' method for determination of first isolates.
 #'
 #' The default antimicrobial agents used for **all rows** (set in `universal`) are:
-#' 
+#'
 #' - Ampicillin
 #' - Amoxicillin/clavulanic acid
 #' - Cefuroxime
@@ -52,7 +52,7 @@
 #' - Trimethoprim/sulfamethoxazole
 #'
 #' The default antimicrobial agents used for **Gram-negative bacteria** (set in `gram_negative`) are:
-#' 
+#'
 #' - Cefotaxime
 #' - Ceftazidime
 #' - Colistin
@@ -61,17 +61,17 @@
 #' - Tobramycin
 #'
 #' The default antimicrobial agents used for **Gram-positive bacteria** (set in `gram_positive`) are:
-#' 
+#'
 #' - Erythromycin
 #' - Oxacillin
 #' - Rifampin
 #' - Teicoplanin
 #' - Tetracycline
 #' - Vancomycin
-#' 
-#' 
+#'
+#'
 #' The default antimicrobial agents used for **fungi** (set in `antifungal`) are:
-#' 
+#'
 #' - Anidulafungin
 #' - Caspofungin
 #' - Fluconazole
@@ -84,7 +84,7 @@
 #' @examples
 #' # `example_isolates` is a data set available in the AMR package.
 #' # See ?example_isolates.
-#' 
+#'
 #' # output of the `key_antimicrobials()` function could be like this:
 #' strainA <- "SSSRR.S.R..S"
 #' strainB <- "SSSIRSSSRSSS"
@@ -107,7 +107,7 @@
 #'       # and first WEIGHTED isolates
 #'       first_weighted = first_isolate(col_keyantimicrobials = "keyab")
 #'     )
-#'  
+#'
 #'   # Check the difference in this data set, 'weighted' results in more isolates:
 #'   sum(my_patients$first_regular, na.rm = TRUE)
 #'   sum(my_patients$first_weighted, na.rm = TRUE)
@@ -115,14 +115,22 @@
 #' }
 key_antimicrobials <- function(x = NULL,
                                col_mo = NULL,
-                               universal = c("ampicillin", "amoxicillin/clavulanic acid", "cefuroxime",
-                                             "piperacillin/tazobactam", "ciprofloxacin", "trimethoprim/sulfamethoxazole"),
-                               gram_negative = c("gentamicin", "tobramycin", "colistin",
-                                                 "cefotaxime", "ceftazidime", "meropenem"),
-                               gram_positive = c("vancomycin", "teicoplanin", "tetracycline",
-                                                 "erythromycin", "oxacillin", "rifampin"),
-                               antifungal = c("anidulafungin", "caspofungin", "fluconazole",
-                                              "miconazole", "nystatin", "voriconazole"),
+                               universal = c(
+                                 "ampicillin", "amoxicillin/clavulanic acid", "cefuroxime",
+                                 "piperacillin/tazobactam", "ciprofloxacin", "trimethoprim/sulfamethoxazole"
+                               ),
+                               gram_negative = c(
+                                 "gentamicin", "tobramycin", "colistin",
+                                 "cefotaxime", "ceftazidime", "meropenem"
+                               ),
+                               gram_positive = c(
+                                 "vancomycin", "teicoplanin", "tetracycline",
+                                 "erythromycin", "oxacillin", "rifampin"
+                               ),
+                               antifungal = c(
+                                 "anidulafungin", "caspofungin", "fluconazole",
+                                 "miconazole", "nystatin", "voriconazole"
+                               ),
                                only_rsi_columns = FALSE,
                                ...) {
   if (is_null_or_grouped_tbl(x)) {
@@ -137,11 +145,11 @@ key_antimicrobials <- function(x = NULL,
   meet_criteria(gram_positive, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(antifungal, allow_class = "character", allow_NULL = TRUE)
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  
+
   # force regular data.frame, not a tibble or data.table
   x <- as.data.frame(x, stringsAsFactors = FALSE)
   cols <- get_column_abx(x, info = FALSE, only_rsi_columns = only_rsi_columns, fn = "key_antimicrobials")
-  
+
   # try to find columns based on type
   # -- mo
   if (is.null(col_mo)) {
@@ -156,68 +164,79 @@ key_antimicrobials <- function(x = NULL,
     gramstain <- mo_gramstain(x.mo, language = NULL)
     kingdom <- mo_kingdom(x.mo, language = NULL)
   }
-  
+
   AMR_string <- function(x, values, name, filter, cols = cols) {
     if (is.null(values)) {
       return(rep(NA_character_, length(which(filter))))
     }
-    
+
     values_old_length <- length(values)
     values <- as.ab(values, flag_multiple_results = FALSE, info = FALSE)
     values <- cols[names(cols) %in% values]
     values_new_length <- length(values)
-    
+
     if (values_new_length < values_old_length &
-        any(filter, na.rm = TRUE) &
-        message_not_thrown_before("key_antimicrobials", name)) {
-      warning_("in `key_antimicrobials()`: ",
-               ifelse(values_new_length == 0,
-                      "No columns available ",
-                      paste0("Only using ", values_new_length, " out of ", values_old_length, " defined columns ")),
-               "as key antimicrobials for ", name, "s. See ?key_antimicrobials.")
+      any(filter, na.rm = TRUE) &
+      message_not_thrown_before("key_antimicrobials", name)) {
+      warning_(
+        "in `key_antimicrobials()`: ",
+        ifelse(values_new_length == 0,
+          "No columns available ",
+          paste0("Only using ", values_new_length, " out of ", values_old_length, " defined columns ")
+        ),
+        "as key antimicrobials for ", name, "s. See ?key_antimicrobials."
+      )
     }
-    
+
     generate_antimcrobials_string(x[which(filter), c(universal, values), drop = FALSE])
   }
-  
+
   if (is.null(universal)) {
     universal <- character(0)
   } else {
     universal <- as.ab(universal, flag_multiple_results = FALSE, info = FALSE)
     universal <- cols[names(cols) %in% universal]
   }
-  
+
   key_ab <- rep(NA_character_, nrow(x))
-  
-  key_ab[which(gramstain == "Gram-negative")] <- AMR_string(x = x,
-                                                            values = gram_negative,
-                                                            name = "Gram-negative",
-                                                            filter = gramstain == "Gram-negative",
-                                                            cols = cols)
-  
-  key_ab[which(gramstain == "Gram-positive")] <- AMR_string(x = x,
-                                                            values = gram_positive,
-                                                            name = "Gram-positive",
-                                                            filter = gramstain == "Gram-positive",
-                                                            cols = cols)
-  
-  key_ab[which(kingdom == "Fungi")] <- AMR_string(x = x,
-                                                  values = antifungal,
-                                                  name = "antifungal",
-                                                  filter = kingdom == "Fungi",
-                                                  cols = cols)
-  
+
+  key_ab[which(gramstain == "Gram-negative")] <- AMR_string(
+    x = x,
+    values = gram_negative,
+    name = "Gram-negative",
+    filter = gramstain == "Gram-negative",
+    cols = cols
+  )
+
+  key_ab[which(gramstain == "Gram-positive")] <- AMR_string(
+    x = x,
+    values = gram_positive,
+    name = "Gram-positive",
+    filter = gramstain == "Gram-positive",
+    cols = cols
+  )
+
+  key_ab[which(kingdom == "Fungi")] <- AMR_string(
+    x = x,
+    values = antifungal,
+    name = "antifungal",
+    filter = kingdom == "Fungi",
+    cols = cols
+  )
+
   # back-up - only use `universal`
-  key_ab[which(is.na(key_ab))] <- AMR_string(x = x,
-                                             values = character(0),
-                                             name = "",
-                                             filter = is.na(key_ab),
-                                             cols = cols)
-  
+  key_ab[which(is.na(key_ab))] <- AMR_string(
+    x = x,
+    values = character(0),
+    name = "",
+    filter = is.na(key_ab),
+    cols = cols
+  )
+
   if (length(unique(key_ab)) == 1) {
     warning_("in `key_antimicrobials()`: no distinct key antibiotics determined.")
   }
-  
+
   key_ab
 }
 
@@ -233,13 +252,15 @@ all_antimicrobials <- function(x = NULL,
   }
   meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-  
+
   # force regular data.frame, not a tibble or data.table
   x <- as.data.frame(x, stringsAsFactors = FALSE)
-  cols <- get_column_abx(x, only_rsi_columns = only_rsi_columns, info = FALSE,
-                         sort = FALSE, fn = "all_antimicrobials")
-  
-  generate_antimcrobials_string(x[ , cols, drop = FALSE])
+  cols <- get_column_abx(x,
+    only_rsi_columns = only_rsi_columns, info = FALSE,
+    sort = FALSE, fn = "all_antimicrobials"
+  )
+
+  generate_antimcrobials_string(x[, cols, drop = FALSE])
 }
 
 generate_antimcrobials_string <- function(df) {
@@ -249,26 +270,32 @@ generate_antimcrobials_string <- function(df) {
   if (NROW(df) == 0) {
     return(character(0))
   }
-  tryCatch({
-    do.call(paste0,
-            lapply(as.list(df),
-                   function(x) {
-                     x <- toupper(as.character(x))
-                     x[!x %in% c("R", "S", "I")] <- "."
-                     paste(x)
-                   }))
-  },
-  error = function(e) rep(strrep(".", NCOL(df)), NROW(df)))
+  tryCatch(
+    {
+      do.call(
+        paste0,
+        lapply(
+          as.list(df),
+          function(x) {
+            x <- toupper(as.character(x))
+            x[!x %in% c("R", "S", "I")] <- "."
+            paste(x)
+          }
+        )
+      )
+    },
+    error = function(e) rep(strrep(".", NCOL(df)), NROW(df))
+  )
 }
 
 #' @rdname key_antimicrobials
 #' @export
 antimicrobials_equal <- function(y,
-                                  z,
-                                  type = c("points", "keyantimicrobials"),
-                                  ignore_I = TRUE,
-                                  points_threshold = 2,
-                                  ...) {
+                                 z,
+                                 type = c("points", "keyantimicrobials"),
+                                 ignore_I = TRUE,
+                                 points_threshold = 2,
+                                 ...) {
   meet_criteria(y, allow_class = "character")
   meet_criteria(z, allow_class = "character")
   stop_if(missing(type), "argument \"type\" is missing, with no default")
@@ -289,10 +316,10 @@ antimicrobials_equal <- function(y,
   uniq <- unique(c(y, z))
   uniq_list <- lapply(uniq, key2rsi)
   names(uniq_list) <- uniq
-  
+
   y <- uniq_list[match(y, names(uniq_list))]
   z <- uniq_list[match(z, names(uniq_list))]
-  
+
   determine_equality <- function(a, b, type, points_threshold, ignore_I) {
     if (length(a) != length(b)) {
       # incomparable, so not equal
@@ -302,7 +329,7 @@ antimicrobials_equal <- function(y,
     NA_ind <- which(is.na(a) | is.na(b))
     a[NA_ind] <- NA_real_
     b[NA_ind] <- NA_real_
-    
+
     if (type == "points") {
       # count points for every single character:
       # - no change is 0 points
@@ -320,14 +347,18 @@ antimicrobials_equal <- function(y,
       all(a == b, na.rm = TRUE)
     }
   }
-  out <- unlist(mapply(FUN = determine_equality,
-                       y,
-                       z,
-                       MoreArgs = list(type = type,
-                                       points_threshold = points_threshold,
-                                       ignore_I = ignore_I),
-                       SIMPLIFY = FALSE,
-                       USE.NAMES = FALSE))
+  out <- unlist(mapply(
+    FUN = determine_equality,
+    y,
+    z,
+    MoreArgs = list(
+      type = type,
+      points_threshold = points_threshold,
+      ignore_I = ignore_I
+    ),
+    SIMPLIFY = FALSE,
+    USE.NAMES = FALSE
+  ))
   out[is.na(y) | is.na(z)] <- NA
   out
 }

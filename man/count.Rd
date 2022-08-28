@@ -129,9 +129,9 @@ Using \code{only_all_tested} has no impact when only using one antibiotic as inp
 # run ?example_isolates for more info.
 
 # base R ------------------------------------------------------------
-count_resistant(example_isolates$AMX)   # counts "R"
+count_resistant(example_isolates$AMX) # counts "R"
 count_susceptible(example_isolates$AMX) # counts "S" and "I"
-count_all(example_isolates$AMX)         # counts "S", "I" and "R"
+count_all(example_isolates$AMX) # counts "S", "I" and "R"
 
 # be more specific
 count_S(example_isolates$AMX)
@@ -156,36 +156,38 @@ susceptibility(example_isolates$AMX) * n_rsi(example_isolates$AMX)
 if (require("dplyr")) {
   example_isolates \%>\%
     group_by(ward) \%>\%
-    summarise(R  = count_R(CIP),
-              I  = count_I(CIP),
-              S  = count_S(CIP),
-              n1 = count_all(CIP),  # the actual total; sum of all three
-              n2 = n_rsi(CIP),      # same - analogous to n_distinct
-              total = n())          # NOT the number of tested isolates!
-              
+    summarise(
+      R = count_R(CIP),
+      I = count_I(CIP),
+      S = count_S(CIP),
+      n1 = count_all(CIP), # the actual total; sum of all three
+      n2 = n_rsi(CIP), # same - analogous to n_distinct
+      total = n()
+    ) # NOT the number of tested isolates!
+
   # Number of available isolates for a whole antibiotic class
   # (i.e., in this data set columns GEN, TOB, AMK, KAN)
   example_isolates \%>\%
     group_by(ward) \%>\%
     summarise(across(aminoglycosides(), n_rsi))
- 
+
   # Count co-resistance between amoxicillin/clav acid and gentamicin,
   # so we can see that combination therapy does a lot more than mono therapy.
   # Please mind that `susceptibility()` calculates percentages right away instead.
   example_isolates \%>\% count_susceptible(AMC) # 1433
-  example_isolates \%>\% count_all(AMC)         # 1879
- 
+  example_isolates \%>\% count_all(AMC) # 1879
+
   example_isolates \%>\% count_susceptible(GEN) # 1399
-  example_isolates \%>\% count_all(GEN)         # 1855
- 
+  example_isolates \%>\% count_all(GEN) # 1855
+
   example_isolates \%>\% count_susceptible(AMC, GEN) # 1764
-  example_isolates \%>\% count_all(AMC, GEN)         # 1936
- 
+  example_isolates \%>\% count_all(AMC, GEN) # 1936
+
   # Get number of S+I vs. R immediately of selected columns
   example_isolates \%>\%
     select(AMX, CIP) \%>\%
     count_df(translate = FALSE)
- 
+
   # It also supports grouping variables
   example_isolates \%>\%
     select(ward, AMX, CIP) \%>\%

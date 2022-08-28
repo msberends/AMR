@@ -58,7 +58,7 @@ With using \code{collapse}, this function will return a \link{character}:\cr
 }
 }
 \examples{
-# mind the bad spelling of amoxicillin in this line, 
+# mind the bad spelling of amoxicillin in this line,
 # straight from a true health care record:
 ab_from_text("28/03/2020 regular amoxicilliin 500mg po tds")
 
@@ -73,22 +73,28 @@ abx <- ab_from_text("500 mg amoxi po and 400mg cipro iv")
 ab_group(abx[[1]])
 
 if (require("dplyr")) {
-  tibble(clinical_text = c("given 400mg cipro and 500 mg amox",
-                           "started on doxy iv today")) \%>\% 
-    mutate(abx_codes = ab_from_text(clinical_text),
-           abx_doses = ab_from_text(clinical_text, type = "doses"),
-           abx_admin = ab_from_text(clinical_text, type = "admin"),
-           abx_coll = ab_from_text(clinical_text, collapse = "|"),
-           abx_coll_names = ab_from_text(clinical_text,
-                                         collapse = "|",
-                                         translate_ab = "name"),
-           abx_coll_doses = ab_from_text(clinical_text,
-                                         type = "doses",
-                                         collapse = "|"),
-           abx_coll_admin = ab_from_text(clinical_text,
-                                         type = "admin",
-                                         collapse = "|"))
-
+  tibble(clinical_text = c(
+    "given 400mg cipro and 500 mg amox",
+    "started on doxy iv today"
+  )) \%>\%
+    mutate(
+      abx_codes = ab_from_text(clinical_text),
+      abx_doses = ab_from_text(clinical_text, type = "doses"),
+      abx_admin = ab_from_text(clinical_text, type = "admin"),
+      abx_coll = ab_from_text(clinical_text, collapse = "|"),
+      abx_coll_names = ab_from_text(clinical_text,
+        collapse = "|",
+        translate_ab = "name"
+      ),
+      abx_coll_doses = ab_from_text(clinical_text,
+        type = "doses",
+        collapse = "|"
+      ),
+      abx_coll_admin = ab_from_text(clinical_text,
+        type = "admin",
+        collapse = "|"
+      )
+    )
 }
 }
 }

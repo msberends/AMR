@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -94,41 +94,52 @@ NULL
 #' @inheritSection catalogue_of_life Catalogue of Life
 #' @export
 catalogue_of_life_version <- function() {
-  
   check_dataset_integrity()
-  
+
   # see the `CATALOGUE_OF_LIFE` list in R/globals.R
-  lst <- list(CoL =
-                list(version = gsub("{year}", CATALOGUE_OF_LIFE$year, CATALOGUE_OF_LIFE$version, fixed = TRUE),
-                     url = gsub("{year}", CATALOGUE_OF_LIFE$year, CATALOGUE_OF_LIFE$url_CoL, fixed = TRUE),
-                     n = nrow(pm_filter(microorganisms, source == "CoL"))),
-              LPSN =
-                list(version = "List of Prokaryotic names with Standing in Nomenclature",
-                     url = CATALOGUE_OF_LIFE$url_LPSN,
-                     yearmonth = CATALOGUE_OF_LIFE$yearmonth_LPSN,
-                     n = nrow(pm_filter(microorganisms, source == "LPSN"))),
-              total_included =
-                list(
-                  n_total_species = nrow(microorganisms),
-                  n_total_synonyms = nrow(microorganisms.old)))
-  
+  lst <- list(
+    CoL =
+      list(
+        version = gsub("{year}", CATALOGUE_OF_LIFE$year, CATALOGUE_OF_LIFE$version, fixed = TRUE),
+        url = gsub("{year}", CATALOGUE_OF_LIFE$year, CATALOGUE_OF_LIFE$url_CoL, fixed = TRUE),
+        n = nrow(pm_filter(microorganisms, source == "CoL"))
+      ),
+    LPSN =
+      list(
+        version = "List of Prokaryotic names with Standing in Nomenclature",
+        url = CATALOGUE_OF_LIFE$url_LPSN,
+        yearmonth = CATALOGUE_OF_LIFE$yearmonth_LPSN,
+        n = nrow(pm_filter(microorganisms, source == "LPSN"))
+      ),
+    total_included =
+      list(
+        n_total_species = nrow(microorganisms),
+        n_total_synonyms = nrow(microorganisms.old)
+      )
+  )
+
   set_clean_class(lst,
-                  new_class = c("catalogue_of_life_version", "list"))
+    new_class = c("catalogue_of_life_version", "list")
+  )
 }
 
 #' @method print catalogue_of_life_version
 #' @export
 #' @noRd
 print.catalogue_of_life_version <- function(x, ...) {
-  cat(paste0(font_bold("Included in this AMR package (v", utils::packageDescription("AMR")$Version, ") are:\n\n", collapse = ""),
-             font_underline(x$CoL$version), "\n",
-             "  Available at: ", font_blue(x$CoL$url), "\n",
-             "  Number of included microbial species: ", format(x$CoL$n, big.mark = ","), "\n",
-             font_underline(paste0(x$LPSN$version, " (",
-                                   x$LPSN$yearmonth, ")")), "\n",
-             "  Available at: ", font_blue(x$LPSN$url), "\n",
-             "  Number of included bacterial species: ", format(x$LPSN$n, big.mark = ","), "\n\n",
-             "=> Total number of species included:  ", format(x$total_included$n_total_species, big.mark = ","), "\n",
-             "=> Total number of synonyms included: ", format(x$total_included$n_total_synonyms, big.mark = ","), "\n\n",
-             "See for more info ", font_grey_bg("`?microorganisms`"), " and ", font_grey_bg("`?catalogue_of_life`"), ".\n"))
+  cat(paste0(
+    font_bold("Included in this AMR package (v", utils::packageDescription("AMR")$Version, ") are:\n\n", collapse = ""),
+    font_underline(x$CoL$version), "\n",
+    "  Available at: ", font_blue(x$CoL$url), "\n",
+    "  Number of included microbial species: ", format(x$CoL$n, big.mark = ","), "\n",
+    font_underline(paste0(
+      x$LPSN$version, " (",
+      x$LPSN$yearmonth, ")"
+    )), "\n",
+    "  Available at: ", font_blue(x$LPSN$url), "\n",
+    "  Number of included bacterial species: ", format(x$LPSN$n, big.mark = ","), "\n\n",
+    "=> Total number of species included:  ", format(x$total_included$n_total_species, big.mark = ","), "\n",
+    "=> Total number of synonyms included: ", format(x$total_included$n_total_synonyms, big.mark = ","), "\n\n",
+    "See for more info ", font_grey_bg("`?microorganisms`"), " and ", font_grey_bg("`?catalogue_of_life`"), ".\n"
+  ))
 }

@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -32,7 +32,7 @@
 #' @inheritParams proportion
 #' @inheritSection as.rsi Interpretation of R and S/I
 #' @details These functions are meant to count isolates. Use the [resistance()]/[susceptibility()] functions to calculate microbial resistance/susceptibility.
-#' 
+#'
 #' The function [count_resistant()] is equal to the function [count_R()]. The function [count_susceptible()] is equal to the function [count_SI()].
 #'
 #' The function [n_rsi()] is an alias of [count_all()]. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to `n_distinct()`. Their function is equal to `count_susceptible(...) + count_resistant(...)`.
@@ -47,11 +47,11 @@
 #' @examples
 #' # example_isolates is a data set available in the AMR package.
 #' # run ?example_isolates for more info.
-#' 
+#'
 #' # base R ------------------------------------------------------------
-#' count_resistant(example_isolates$AMX)   # counts "R"
+#' count_resistant(example_isolates$AMX) # counts "R"
 #' count_susceptible(example_isolates$AMX) # counts "S" and "I"
-#' count_all(example_isolates$AMX)         # counts "S", "I" and "R"
+#' count_all(example_isolates$AMX) # counts "S", "I" and "R"
 #'
 #' # be more specific
 #' count_S(example_isolates$AMX)
@@ -76,36 +76,38 @@
 #' if (require("dplyr")) {
 #'   example_isolates %>%
 #'     group_by(ward) %>%
-#'     summarise(R  = count_R(CIP),
-#'               I  = count_I(CIP),
-#'               S  = count_S(CIP),
-#'               n1 = count_all(CIP),  # the actual total; sum of all three
-#'               n2 = n_rsi(CIP),      # same - analogous to n_distinct
-#'               total = n())          # NOT the number of tested isolates!
-#'               
+#'     summarise(
+#'       R = count_R(CIP),
+#'       I = count_I(CIP),
+#'       S = count_S(CIP),
+#'       n1 = count_all(CIP), # the actual total; sum of all three
+#'       n2 = n_rsi(CIP), # same - analogous to n_distinct
+#'       total = n()
+#'     ) # NOT the number of tested isolates!
+#'
 #'   # Number of available isolates for a whole antibiotic class
 #'   # (i.e., in this data set columns GEN, TOB, AMK, KAN)
 #'   example_isolates %>%
 #'     group_by(ward) %>%
 #'     summarise(across(aminoglycosides(), n_rsi))
-#'  
+#'
 #'   # Count co-resistance between amoxicillin/clav acid and gentamicin,
 #'   # so we can see that combination therapy does a lot more than mono therapy.
 #'   # Please mind that `susceptibility()` calculates percentages right away instead.
 #'   example_isolates %>% count_susceptible(AMC) # 1433
-#'   example_isolates %>% count_all(AMC)         # 1879
-#'  
+#'   example_isolates %>% count_all(AMC) # 1879
+#'
 #'   example_isolates %>% count_susceptible(GEN) # 1399
-#'   example_isolates %>% count_all(GEN)         # 1855
-#'  
+#'   example_isolates %>% count_all(GEN) # 1855
+#'
 #'   example_isolates %>% count_susceptible(AMC, GEN) # 1764
-#'   example_isolates %>% count_all(AMC, GEN)         # 1936
-#'  
+#'   example_isolates %>% count_all(AMC, GEN) # 1936
+#'
 #'   # Get number of S+I vs. R immediately of selected columns
 #'   example_isolates %>%
 #'     select(AMX, CIP) %>%
 #'     count_df(translate = FALSE)
-#'  
+#'
 #'   # It also supports grouping variables
 #'   example_isolates %>%
 #'     select(ward, AMX, CIP) %>%
@@ -116,10 +118,12 @@
 count_resistant <- function(..., only_all_tested = FALSE) {
   tryCatch(
     rsi_calc(...,
-             ab_result = "R",
-             only_all_tested = only_all_tested,
-             only_count = TRUE),
-    error = function(e) stop_(e$message, call = -5))
+      ab_result = "R",
+      only_all_tested = only_all_tested,
+      only_count = TRUE
+    ),
+    error = function(e) stop_(e$message, call = -5)
+  )
 }
 
 #' @rdname count
@@ -127,10 +131,12 @@ count_resistant <- function(..., only_all_tested = FALSE) {
 count_susceptible <- function(..., only_all_tested = FALSE) {
   tryCatch(
     rsi_calc(...,
-             ab_result = c("S", "I"),
-             only_all_tested = only_all_tested,
-             only_count = TRUE),
-    error = function(e) stop_(e$message, call = -5))
+      ab_result = c("S", "I"),
+      only_all_tested = only_all_tested,
+      only_count = TRUE
+    ),
+    error = function(e) stop_(e$message, call = -5)
+  )
 }
 
 #' @rdname count
@@ -138,10 +144,12 @@ count_susceptible <- function(..., only_all_tested = FALSE) {
 count_R <- function(..., only_all_tested = FALSE) {
   tryCatch(
     rsi_calc(...,
-             ab_result = "R",
-             only_all_tested = only_all_tested,
-             only_count = TRUE),
-    error = function(e) stop_(e$message, call = -5))
+      ab_result = "R",
+      only_all_tested = only_all_tested,
+      only_count = TRUE
+    ),
+    error = function(e) stop_(e$message, call = -5)
+  )
 }
 
 #' @rdname count
@@ -152,10 +160,12 @@ count_IR <- function(..., only_all_tested = FALSE) {
   }
   tryCatch(
     rsi_calc(...,
-             ab_result = c("I", "R"),
-             only_all_tested = only_all_tested,
-             only_count = TRUE),
-    error = function(e) stop_(e$message, call = -5))
+      ab_result = c("I", "R"),
+      only_all_tested = only_all_tested,
+      only_count = TRUE
+    ),
+    error = function(e) stop_(e$message, call = -5)
+  )
 }
 
 #' @rdname count
@@ -163,10 +173,12 @@ count_IR <- function(..., only_all_tested = FALSE) {
 count_I <- function(..., only_all_tested = FALSE) {
   tryCatch(
     rsi_calc(...,
-             ab_result = "I",
-             only_all_tested = only_all_tested,
-             only_count = TRUE),
-    error = function(e) stop_(e$message, call = -5))
+      ab_result = "I",
+      only_all_tested = only_all_tested,
+      only_count = TRUE
+    ),
+    error = function(e) stop_(e$message, call = -5)
+  )
 }
 
 #' @rdname count
@@ -174,10 +186,12 @@ count_I <- function(..., only_all_tested = FALSE) {
 count_SI <- function(..., only_all_tested = FALSE) {
   tryCatch(
     rsi_calc(...,
-             ab_result = c("S", "I"),
-             only_all_tested = only_all_tested,
-             only_count = TRUE),
-    error = function(e) stop_(e$message, call = -5))
+      ab_result = c("S", "I"),
+      only_all_tested = only_all_tested,
+      only_count = TRUE
+    ),
+    error = function(e) stop_(e$message, call = -5)
+  )
 }
 
 #' @rdname count
@@ -188,10 +202,12 @@ count_S <- function(..., only_all_tested = FALSE) {
   }
   tryCatch(
     rsi_calc(...,
-             ab_result = "S",
-             only_all_tested = only_all_tested,
-             only_count = TRUE),
-    error = function(e) stop_(e$message, call = -5))
+      ab_result = "S",
+      only_all_tested = only_all_tested,
+      only_count = TRUE
+    ),
+    error = function(e) stop_(e$message, call = -5)
+  )
 }
 
 #' @rdname count
@@ -199,10 +215,12 @@ count_S <- function(..., only_all_tested = FALSE) {
 count_all <- function(..., only_all_tested = FALSE) {
   tryCatch(
     rsi_calc(...,
-             ab_result = c("S", "I", "R"),
-             only_all_tested = only_all_tested,
-             only_count = TRUE),
-    error = function(e) stop_(e$message, call = -5))
+      ab_result = c("S", "I", "R"),
+      only_all_tested = only_all_tested,
+      only_count = TRUE
+    ),
+    error = function(e) stop_(e$message, call = -5)
+  )
 }
 
 #' @rdname count
@@ -217,12 +235,15 @@ count_df <- function(data,
                      combine_SI = TRUE,
                      combine_IR = FALSE) {
   tryCatch(
-    rsi_calc_df(type = "count",
-                data = data,
-                translate_ab = translate_ab,
-                language = language,
-                combine_SI = combine_SI,
-                combine_IR = combine_IR,
-                combine_SI_missing = missing(combine_SI)),
-    error = function(e) stop_(e$message, call = -5))
+    rsi_calc_df(
+      type = "count",
+      data = data,
+      translate_ab = translate_ab,
+      language = language,
+      combine_SI = combine_SI,
+      combine_IR = combine_IR,
+      combine_SI_missing = missing(combine_SI)
+    ),
+    error = function(e) stop_(e$message, call = -5)
+  )
 }

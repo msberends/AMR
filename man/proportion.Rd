@@ -144,7 +144,7 @@ This AMR package honours this (new) insight. Use \code{\link[=susceptibility]{su
 # run ?example_isolates for more info.
 
 # base R ------------------------------------------------------------
-resistance(example_isolates$AMX)     # determines \%R
+resistance(example_isolates$AMX) # determines \%R
 susceptibility(example_isolates$AMX) # determines \%S+I
 
 # be more specific
@@ -159,55 +159,65 @@ proportion_R(example_isolates$AMX)
 if (require("dplyr")) {
   example_isolates \%>\%
     group_by(ward) \%>\%
-    summarise(r = resistance(CIP),
-              n = n_rsi(CIP)) # n_rsi works like n_distinct in dplyr, see ?n_rsi
- 
+    summarise(
+      r = resistance(CIP),
+      n = n_rsi(CIP)
+    ) # n_rsi works like n_distinct in dplyr, see ?n_rsi
+
   example_isolates \%>\%
     group_by(ward) \%>\%
-    summarise(R  = resistance(CIP, as_percent = TRUE),
-              SI = susceptibility(CIP, as_percent = TRUE),
-              n1 = count_all(CIP),  # the actual total; sum of all three
-              n2 = n_rsi(CIP),      # same - analogous to n_distinct
-              total = n())          # NOT the number of tested isolates!
- 
+    summarise(
+      R = resistance(CIP, as_percent = TRUE),
+      SI = susceptibility(CIP, as_percent = TRUE),
+      n1 = count_all(CIP), # the actual total; sum of all three
+      n2 = n_rsi(CIP), # same - analogous to n_distinct
+      total = n()
+    ) # NOT the number of tested isolates!
+
   # Calculate co-resistance between amoxicillin/clav acid and gentamicin,
   # so we can see that combination therapy does a lot more than mono therapy:
-  example_isolates \%>\% susceptibility(AMC)  # \%SI = 76.3\%
-  example_isolates \%>\% count_all(AMC)       #   n = 1879
- 
-  example_isolates \%>\% susceptibility(GEN)  # \%SI = 75.4\%
-  example_isolates \%>\% count_all(GEN)       #   n = 1855
- 
+  example_isolates \%>\% susceptibility(AMC) # \%SI = 76.3\%
+  example_isolates \%>\% count_all(AMC) #   n = 1879
+
+  example_isolates \%>\% susceptibility(GEN) # \%SI = 75.4\%
+  example_isolates \%>\% count_all(GEN) #   n = 1855
+
   example_isolates \%>\% susceptibility(AMC, GEN) # \%SI = 94.1\%
-  example_isolates \%>\% count_all(AMC, GEN)      #   n = 1939
- 
- 
+  example_isolates \%>\% count_all(AMC, GEN) #   n = 1939
+
+
   # See Details on how `only_all_tested` works. Example:
   example_isolates \%>\%
-    summarise(numerator = count_susceptible(AMC, GEN),
-              denominator = count_all(AMC, GEN),
-              proportion = susceptibility(AMC, GEN))
- 
+    summarise(
+      numerator = count_susceptible(AMC, GEN),
+      denominator = count_all(AMC, GEN),
+      proportion = susceptibility(AMC, GEN)
+    )
+
   example_isolates \%>\%
-    summarise(numerator = count_susceptible(AMC, GEN, only_all_tested = TRUE),
-              denominator = count_all(AMC, GEN, only_all_tested = TRUE),
-              proportion = susceptibility(AMC, GEN, only_all_tested = TRUE))
- 
- 
+    summarise(
+      numerator = count_susceptible(AMC, GEN, only_all_tested = TRUE),
+      denominator = count_all(AMC, GEN, only_all_tested = TRUE),
+      proportion = susceptibility(AMC, GEN, only_all_tested = TRUE)
+    )
+
+
   example_isolates \%>\%
     group_by(ward) \%>\%
-    summarise(cipro_p = susceptibility(CIP, as_percent = TRUE),
-              cipro_n = count_all(CIP),
-              genta_p = susceptibility(GEN, as_percent = TRUE),
-              genta_n = count_all(GEN),
-              combination_p = susceptibility(CIP, GEN, as_percent = TRUE),
-              combination_n = count_all(CIP, GEN))
- 
+    summarise(
+      cipro_p = susceptibility(CIP, as_percent = TRUE),
+      cipro_n = count_all(CIP),
+      genta_p = susceptibility(GEN, as_percent = TRUE),
+      genta_n = count_all(GEN),
+      combination_p = susceptibility(CIP, GEN, as_percent = TRUE),
+      combination_n = count_all(CIP, GEN)
+    )
+
   # Get proportions S/I/R immediately of all rsi columns
   example_isolates \%>\%
     select(AMX, CIP) \%>\%
     proportion_df(translate = FALSE)
- 
+
   # It also supports grouping variables
   # (use rsi_df to also include the count)
   example_isolates \%>\%

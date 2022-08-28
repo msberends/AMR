@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -42,7 +42,7 @@
 #' - `iv_ddd`\cr Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for `r sum(!is.na(antibiotics$iv_ddd))` drugs
 #' - `iv_units`\cr Units of `iv_ddd`
 #' - `loinc`\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial agent. Use [ab_loinc()] to retrieve them quickly, see [ab_property()].
-#' 
+#'
 #' ## For the [antivirals] data set: a [tibble[tibble::tibble] with `r nrow(antivirals)` observations and `r ncol(antivirals)` variables:
 #' - `atc`\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC
 #' - `cid`\cr Compound ID as found in PubChem
@@ -56,7 +56,7 @@
 #' @details Properties that are based on an ATC code are only available when an ATC is available. These properties are: `atc_group1`, `atc_group2`, `oral_ddd`, `oral_units`, `iv_ddd` and `iv_units`.
 #'
 #' Synonyms (i.e. trade names) were derived from the Compound ID (`cid`) and consequently only available where a CID is available.
-#' 
+#'
 #' ## Direct download
 #' Like all data sets in this package, these data sets are publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #' @source World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): <https://www.whocc.no/atc_ddd_index/>
@@ -86,14 +86,14 @@
 #' - `source`\cr Either `r vector_or(microorganisms$source)` (see *Source*)
 #' - `prevalence`\cr Prevalence of the microorganism, see [as.mo()]
 #' - `snomed`\cr Systematized Nomenclature of Medicine (SNOMED) code of the microorganism, according to the `r SNOMED_VERSION$current_source` (see *Source*). Use [mo_snomed()] to retrieve it quickly, see [mo_property()].
-#' @details 
+#' @details
 #' Please note that entries are only based on the Catalogue of Life and the LPSN (see below). Since these sources incorporate entries based on (recent) publications in the International Journal of Systematic and Evolutionary Microbiology (IJSEM), it can happen that the year of publication is sometimes later than one might expect.
-#' 
+#'
 #' For example, *Staphylococcus pettenkoferi* was described for the first time in Diagnostic Microbiology and Infectious Disease in 2002 (\doi{10.1016/s0732-8893(02)00399-1}), but it was not before 2007 that a publication in IJSEM followed (\doi{10.1099/ijs.0.64381-0}). Consequently, the `AMR` package returns 2007 for `mo_year("S. pettenkoferi")`.
-#' 
+#'
 #' ## Manual additions
 #' For convenience, some entries were added manually:
-#' 
+#'
 #' - 11 entries of *Streptococcus* (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)
 #' - 2 entries of *Staphylococcus* (coagulase-negative (CoNS) and coagulase-positive (CoPS))
 #' - 3 entries of *Trichomonas* (*T. vaginalis*, and its family and genus)
@@ -103,27 +103,27 @@
 #' - 1 entry of *Moraxella* (*M. catarrhalis*), which was formally named *Branhamella catarrhalis* (Catlin, 1970) though this change was never accepted within the field of clinical microbiology
 #' - 5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)
 #' - 6 families under the Enterobacterales order, according to Adeolu *et al.* (2016, PMID 27620848), that are not (yet) in the Catalogue of Life
-#' 
+#'
 #' ## Direct download
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #' @section About the Records from LPSN (see *Source*):
 #' The List of Prokaryotic names with Standing in Nomenclature (LPSN) provides comprehensive information on the nomenclature of prokaryotes. LPSN is a free to use service founded by Jean P. Euzeby in 1997 and later on maintained by Aidan C. Parte.
-#' 
+#'
 #' As of February 2020, the regularly augmented LPSN database at DSMZ is the basis of the new LPSN service. The new database was implemented for the Type-Strain Genome Server and augmented in 2018 to store all kinds of nomenclatural information. Data from the previous version of LPSN and from the Prokaryotic Nomenclature Up-to-date (PNU) service were imported into the new system. PNU had been established in 1993 as a service of the Leibniz Institute DSMZ, and was curated by Norbert Weiss, Manfred Kracht and Dorothea Gleim.
-#' @source 
+#' @source
 #' `r gsub("{year}", CATALOGUE_OF_LIFE$year, CATALOGUE_OF_LIFE$version, fixed = TRUE)` as currently implemented in this `AMR` package:
-#' 
+#'
 #' * Annual Checklist (public online taxonomic database), <http://www.catalogueoflife.org>
-#' 
+#'
 #' List of Prokaryotic names with Standing in Nomenclature (`r CATALOGUE_OF_LIFE$yearmonth_LPSN`) as currently implemented in this `AMR` package:
-#' 
+#'
 #' * Parte, A.C., Sarda Carbasse, J., Meier-Kolthoff, J.P., Reimer, L.C. and Goker, M. (2020). List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ. International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \doi{10.1099/ijsem.0.004332}
 #' * Parte, A.C. (2018). LPSN - List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; \doi{10.1099/ijsem.0.002786}
 #' * Parte, A.C. (2014). LPSN - List of Prokaryotic names with Standing in Nomenclature. Nucleic Acids Research, 42, Issue D1, D613-D616; \doi{10.1093/nar/gkt1111}
 #' * Euzeby, J.P. (1997). List of Bacterial Names with Standing in Nomenclature: a Folder Available on the Internet. International Journal of Systematic Bacteriology, 47, 590-592; \doi{10.1099/00207713-47-2-590}
-#' 
+#'
 #' `r SNOMED_VERSION$current_source` as currently implemented in this `AMR` package:
-#' 
+#'
 #' * Retrieved from the `r SNOMED_VERSION$title`, OID `r SNOMED_VERSION$current_oid`, version `r SNOMED_VERSION$current_version`; url: <`r SNOMED_VERSION$url`>
 #' @seealso [as.mo()], [mo_property()], [microorganisms.codes], [intrinsic_resistant]
 #' @examples
@@ -139,10 +139,10 @@
 #' - `fullname_new`\cr New full taxonomic name of the microorganism
 #' - `ref`\cr Author(s) and year of concerning scientific publication
 #' - `prevalence`\cr Prevalence of the microorganism, see [as.mo()]
-#' @details 
+#' @details
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #' @source Catalogue of Life: Annual Checklist (public online taxonomic database), <http://www.catalogueoflife.org> (check included annual version with [catalogue_of_life_version()]).
-#' 
+#'
 #' Parte, A.C. (2018). LPSN - List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; \doi{10.1099/ijsem.0.002786}
 #' @seealso [as.mo()] [mo_property()] [microorganisms]
 #' @examples
@@ -155,7 +155,7 @@
 #' @format A [tibble[tibble::tibble] with `r format(nrow(microorganisms.codes), big.mark = ",")` observations and `r ncol(microorganisms.codes)` variables:
 #' - `code`\cr Commonly used code of a microorganism
 #' - `mo`\cr ID of the microorganism in the [microorganisms] data set
-#' @details 
+#' @details
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #' @inheritSection catalogue_of_life Catalogue of Life
 #' @seealso [as.mo()] [microorganisms]
@@ -174,7 +174,7 @@
 #' - `ward`\cr Ward type where the patient was admitted, either `r vector_or(example_isolates$ward)`
 #' - `mo`\cr ID of microorganism created with [as.mo()], see also the [microorganisms] data set
 #' - `PEN:RIF`\cr `r sum(vapply(FUN.VALUE = logical(1), example_isolates, is.rsi))` different antibiotics with class [`rsi`] (see [as.rsi()]); these column names occur in the [antibiotics] data set and can be translated with [set_ab_names()] or [ab_name()]
-#' @details 
+#' @details
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #' @examples
 #' example_isolates
@@ -189,7 +189,7 @@
 #' - `hospital`\cr ID of the hospital, from A to C
 #' - `bacteria`\cr info about microorganism that can be transformed with [as.mo()], see also [microorganisms]
 #' - `AMX:GEN`\cr 4 different antibiotics that have to be transformed with [as.rsi()]
-#' @details 
+#' @details
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #' @examples
 #' example_isolates_unclean
@@ -225,7 +225,7 @@
 #' - `Comment`\cr Other comments
 #' - `Date of data entry`\cr [Date] this data was entered in WHONET
 #' - `AMP_ND10:CIP_EE`\cr `r sum(vapply(FUN.VALUE = logical(1), WHONET, is.rsi))` different antibiotics. You can lookup the abbreviations in the [antibiotics] data set, or use e.g. [`ab_name("AMP")`][ab_name()] to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using [as.rsi()].
-#' @details 
+#' @details
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #' @examples
 #' WHONET
@@ -246,9 +246,9 @@
 #' - `breakpoint_S`\cr Lowest MIC value or highest number of millimetres that leads to "S"
 #' - `breakpoint_R`\cr Highest MIC value or lowest number of millimetres that leads to "R"
 #' - `uti`\cr A [logical] value (`TRUE`/`FALSE`) to indicate whether the rule applies to a urinary tract infection (UTI)
-#' @details 
+#' @details
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
-#' 
+#'
 #' They **allow for machine reading EUCAST and CLSI guidelines**, which is almost impossible with the MS Excel and PDF files distributed by EUCAST and CLSI.
 #' @seealso [intrinsic_resistant]
 #' @examples
@@ -261,12 +261,12 @@
 #' @format A [tibble[tibble::tibble] with `r format(nrow(intrinsic_resistant), big.mark = ",")` observations and `r ncol(intrinsic_resistant)` variables:
 #' - `mo`\cr Microorganism ID
 #' - `ab`\cr Antibiotic ID
-#' @details 
+#' @details
 #' This data set is based on `r format_eucast_version_nr(3.3)`.
-#' 
+#'
 #' ## Direct download
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
-#' 
+#'
 #' They **allow for machine reading EUCAST and CLSI guidelines**, which is almost impossible with the MS Excel and PDF files distributed by EUCAST and CLSI.
 #' @examples
 #' intrinsic_resistant
@@ -285,9 +285,9 @@
 #' - `notes`\cr Additional dosage notes
 #' - `original_txt`\cr Original text in the PDF file of EUCAST
 #' - `eucast_version`\cr Version number of the EUCAST Clinical Breakpoints guideline to which these dosages apply
-#' @details 
+#' @details
 #' This data set is based on `r format_eucast_version_nr(11.0)`.
-#' 
+#'
 #' ## Direct download
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #' @examples

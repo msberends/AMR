@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -23,17 +23,21 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-expect_equal(as.character(as.ab(c("J01FA01",
-                                  "J 01 FA 01",
-                                  "Erythromycin",
-                                  "eryt",
-                                  "   eryt 123",
-                                  "ERYT",
-                                  "ERY",
-                                  "erytromicine",
-                                  "Erythrocin",
-                                  "Romycin"))),
-             rep("ERY", 10))
+expect_equal(
+  as.character(as.ab(c(
+    "J01FA01",
+    "J 01 FA 01",
+    "Erythromycin",
+    "eryt",
+    "   eryt 123",
+    "ERYT",
+    "ERY",
+    "erytromicine",
+    "Erythrocin",
+    "Romycin"
+  ))),
+  rep("ERY", 10)
+)
 
 expect_identical(class(as.ab("amox")), c("ab", "character"))
 expect_identical(class(antibiotics$ab), c("ab", "character"))
@@ -47,17 +51,25 @@ expect_warning(as.ab(""))
 
 expect_stdout(print(as.ab("amox")))
 
-expect_equal(as.character(as.ab("Phloxapen")),
-             "FLC")
+expect_equal(
+  as.character(as.ab("Phloxapen")),
+  "FLC"
+)
 
-expect_equal(suppressWarnings(as.character(as.ab(c("Bacteria", "Bacterial")))),
-             c(NA, "TMP"))
+expect_equal(
+  suppressWarnings(as.character(as.ab(c("Bacteria", "Bacterial")))),
+  c(NA, "TMP")
+)
 
-expect_equal(as.character(as.ab("Amoxy + clavulaanzuur")),
-             "AMC")
+expect_equal(
+  as.character(as.ab("Amoxy + clavulaanzuur")),
+  "AMC"
+)
 
-expect_equal(as.character(as.ab(c("mreopenem", "co-maoxiclav"))),
-             c("MEM", "AMC"))
+expect_equal(
+  as.character(as.ab(c("mreopenem", "co-maoxiclav"))),
+  c("MEM", "AMC")
+)
 
 expect_message(as.ab("cipro mero"))
 

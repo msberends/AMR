@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -44,50 +44,52 @@
 availability <- function(tbl, width = NULL) {
   meet_criteria(tbl, allow_class = "data.frame")
   meet_criteria(width, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE, is_positive = TRUE, is_finite = TRUE)
-  
+
   tbl <- as.data.frame(tbl, stringsAsFactors = FALSE)
-  
+
   x <- vapply(FUN.VALUE = double(1), tbl, function(x) {
-    1 - sum(is.na(x)) / length(x) 
+    1 - sum(is.na(x)) / length(x)
   })
   n <- vapply(FUN.VALUE = double(1), tbl, function(x) length(x[!is.na(x)]))
   R <- vapply(FUN.VALUE = double(1), tbl, function(x) ifelse(is.rsi(x), resistance(x, minimum = 0), NA_real_))
   R_print <- character(length(R))
   R_print[!is.na(R)] <- percentage(R[!is.na(R)])
   R_print[is.na(R)] <- ""
-  
+
   if (is.null(width)) {
     width <- options()$width -
       (max(nchar(colnames(tbl))) +
-         # count col
-         8 +
-         # available % column
-         10 +
-         # resistant % column
-         10 +
-         # extra margin
-         5)
+        # count col
+        8 +
+        # available % column
+        10 +
+        # resistant % column
+        10 +
+        # extra margin
+        5)
     width <- width / 2
   }
-  
+
   if (length(R[is.na(R)]) == ncol(tbl)) {
     width <- width * 2 + 10
   }
-  
+
   x_chars_R <- strrep("#", round(width * R, digits = 2))
   x_chars_SI <- strrep("-", width - nchar(x_chars_R))
   vis_resistance <- paste0("|", x_chars_R, x_chars_SI, "|")
   vis_resistance[is.na(R)] <- ""
-  
+
   x_chars <- strrep("#", round(x, digits = 2) / (1 / width))
   x_chars_empty <- strrep("-", width - nchar(x_chars))
-  
-  df <- data.frame(count = n,
-                   available = percentage(x),
-                   visual_availabilty = paste0("|", x_chars, x_chars_empty, "|"),
-                   resistant = R_print,
-                   visual_resistance = vis_resistance,
-                   stringsAsFactors = FALSE)
+
+  df <- data.frame(
+    count = n,
+    available = percentage(x),
+    visual_availabilty = paste0("|", x_chars, x_chars_empty, "|"),
+    resistant = R_print,
+    visual_resistance = vis_resistance,
+    stringsAsFactors = FALSE
+  )
   if (length(R[is.na(R)]) == ncol(tbl)) {
     df[, 1:3, drop = FALSE]
   } else {

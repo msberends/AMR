@@ -136,19 +136,23 @@ All data sets in this \code{AMR} package (about microorganisms, antibiotics, R/S
 
 \examples{
 \donttest{
-a <- data.frame(mo = c("Staphylococcus aureus",
-                       "Enterococcus faecalis",
-                       "Escherichia coli",
-                       "Klebsiella pneumoniae",
-                       "Pseudomonas aeruginosa"),
-                VAN = "-",       # Vancomycin
-                AMX = "-",       # Amoxicillin
-                COL = "-",       # Colistin
-                CAZ = "-",       # Ceftazidime
-                CXM = "-",       # Cefuroxime
-                PEN = "S",       # Benzylpenicillin
-                FOX = "S",       # Cefoxitin
-                stringsAsFactors = FALSE)
+a <- data.frame(
+  mo = c(
+    "Staphylococcus aureus",
+    "Enterococcus faecalis",
+    "Escherichia coli",
+    "Klebsiella pneumoniae",
+    "Pseudomonas aeruginosa"
+  ),
+  VAN = "-", # Vancomycin
+  AMX = "-", # Amoxicillin
+  COL = "-", # Colistin
+  CAZ = "-", # Ceftazidime
+  CXM = "-", # Cefuroxime
+  PEN = "S", # Benzylpenicillin
+  FOX = "S", # Cefoxitin
+  stringsAsFactors = FALSE
+)
 
 head(a)
 

@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -76,16 +76,20 @@ expect_equal(nrow(example_isolates[all(c(carbapenems(), aminoglycosides()) == "R
 expect_equal(nrow(example_isolates[any(carbapenems() == "R"), penicillins()]), 55, tolerance = 0.5)
 expect_equal(ncol(example_isolates[any(carbapenems() == "R"), penicillins()]), 7, tolerance = 0.5)
 
-x <- data.frame(x = 0,
-                mo = 0,
-                gen = "S",
-                genta = "S",
-                J01GB03 = "S",
-                tobra = "S",
-                Tobracin = "S")
+x <- data.frame(
+  x = 0,
+  mo = 0,
+  gen = "S",
+  genta = "S",
+  J01GB03 = "S",
+  tobra = "S",
+  Tobracin = "S"
+)
 # should have the first hits
-expect_identical(colnames(x[, aminoglycosides()]),
-                 c("gen", "tobra"))
+expect_identical(
+  colnames(x[, aminoglycosides()]),
+  c("gen", "tobra")
+)
 
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_equal(example_isolates %>% select(administrable_per_os() & penicillins()) %>% ncol(), 5, tolerance = 0.5)

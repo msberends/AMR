@@ -39,9 +39,13 @@ These rules can be used to discard impossible bug-drug combinations in your data
 Sometimes, laboratory data can still contain such strains with ampicillin being susceptible to ampicillin. This could be because an antibiogram is available before an identification is available, and the antibiogram is then not re-interpreted based on the identification (namely, *Klebsiella*). EUCAST expert rules solve this, that can be applied using `eucast_rules()`:
 
 ```{r, warning = FALSE, message = FALSE}
-oops <- data.frame(mo = c("Klebsiella", 
-                          "Escherichia"),
-                   ampicillin = "S")
+oops <- data.frame(
+  mo = c(
+    "Klebsiella",
+    "Escherichia"
+  ),
+  ampicillin = "S"
+)
 oops
 
 eucast_rules(oops, info = FALSE)
@@ -50,29 +54,37 @@ eucast_rules(oops, info = FALSE)
 A more convenient function is `mo_is_intrinsic_resistant()` that uses the same guideline, but allows to check for one or more specific microorganisms or antibiotics:
 
 ```{r, warning = FALSE, message = FALSE}
-mo_is_intrinsic_resistant(c("Klebsiella", "Escherichia"),
-                          "ampicillin")
+mo_is_intrinsic_resistant(
+  c("Klebsiella", "Escherichia"),
+  "ampicillin"
+)
 
-mo_is_intrinsic_resistant("Klebsiella",
-                          c("ampicillin", "kanamycin"))
+mo_is_intrinsic_resistant(
+  "Klebsiella",
+  c("ampicillin", "kanamycin")
+)
 ```
 
 EUCAST rules can not only be used for correction, they can also be used for filling in known resistance and susceptibility based on results of other antimicrobials drugs. This process is called *interpretive reading*, is basically a form of imputation, and is part of the `eucast_rules()` function as well:
 
 ```{r, warning = FALSE, message = FALSE}
-data <- data.frame(mo = c("Staphylococcus aureus",
-                          "Enterococcus faecalis",
-                          "Escherichia coli",
-                          "Klebsiella pneumoniae",
-                          "Pseudomonas aeruginosa"),
-                   VAN = "-",       # Vancomycin
-                   AMX = "-",       # Amoxicillin
-                   COL = "-",       # Colistin
-                   CAZ = "-",       # Ceftazidime
-                   CXM = "-",       # Cefuroxime
-                   PEN = "S",       # Benzylenicillin
-                   FOX = "S",       # Cefoxitin
-                   stringsAsFactors = FALSE)
+data <- data.frame(
+  mo = c(
+    "Staphylococcus aureus",
+    "Enterococcus faecalis",
+    "Escherichia coli",
+    "Klebsiella pneumoniae",
+    "Pseudomonas aeruginosa"
+  ),
+  VAN = "-", # Vancomycin
+  AMX = "-", # Amoxicillin
+  COL = "-", # Colistin
+  CAZ = "-", # Ceftazidime
+  CXM = "-", # Cefuroxime
+  PEN = "S", # Benzylenicillin
+  FOX = "S", # Cefoxitin
+  stringsAsFactors = FALSE
+)
 ```
 ```{r, eval = FALSE}
 data

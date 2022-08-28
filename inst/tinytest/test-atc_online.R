@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -24,12 +24,11 @@
 # ==================================================================== #
 
 if (AMR:::pkg_is_available("curl", also_load = FALSE) &&
-    AMR:::pkg_is_available("rvest", also_load = FALSE) &&
-    AMR:::pkg_is_available("xml2", also_load = FALSE) &&
-    tryCatch(curl::has_internet(), error = function(e) FALSE)) {
+  AMR:::pkg_is_available("rvest", also_load = FALSE) &&
+  AMR:::pkg_is_available("xml2", also_load = FALSE) &&
+  tryCatch(curl::has_internet(), error = function(e) FALSE)) {
   expect_true(length(atc_online_groups(ab_atc("AMX"))) >= 1)
   expect_equal(atc_online_ddd(ab_atc("AMX"), administration = "O"), 1.5)
   expect_equal(atc_online_ddd(ab_atc("AMX"), administration = "P"), 3)
   expect_equal(atc_online_ddd_units("AMX", administration = "P"), "g")
-  
 }

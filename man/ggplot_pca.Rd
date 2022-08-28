@@ -114,24 +114,26 @@ The colours for labels and points can be changed by adding another scale layer f
 
 \donttest{
 if (require("dplyr")) {
-  # calculate the resistance per group first 
-  resistance_data <- example_isolates \%>\% 
-    group_by(order = mo_order(mo),       # group on anything, like order
-             genus = mo_genus(mo)) \%>\%   #   and genus as we do here;
-    filter(n() >= 30) \%>\%                # filter on only 30 results per group
-    summarise_if(is.rsi, resistance)     # then get resistance of all drugs
-    
+  # calculate the resistance per group first
+  resistance_data <- example_isolates \%>\%
+    group_by(
+      order = mo_order(mo), # group on anything, like order
+      genus = mo_genus(mo)
+    ) \%>\% #   and genus as we do here;
+    filter(n() >= 30) \%>\% # filter on only 30 results per group
+    summarise_if(is.rsi, resistance) # then get resistance of all drugs
+
   # now conduct PCA for certain antimicrobial agents
-  pca_result <- resistance_data \%>\%         
-    pca(AMC, CXM, CTX, CAZ, GEN, TOB, TMP, SXT) 
-    
+  pca_result <- resistance_data \%>\%
+    pca(AMC, CXM, CTX, CAZ, GEN, TOB, TMP, SXT)
+
   summary(pca_result)
-  
+
   # old base R plotting method:
   biplot(pca_result)
   # new ggplot2 plotting method using this package:
   ggplot_pca(pca_result)
-  
+
   if (require("ggplot2")) {
     ggplot_pca(pca_result) +
       scale_colour_viridis_d() +

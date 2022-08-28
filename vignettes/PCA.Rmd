@@ -39,12 +39,16 @@ glimpse(example_isolates)
 Now to transform this to a data set with only resistance percentages per taxonomic order and genus:
 
 ```{r, warning = FALSE}
-resistance_data <- example_isolates %>% 
-  group_by(order = mo_order(mo),       # group on anything, like order
-           genus = mo_genus(mo)) %>%   #  and genus as we do here
+resistance_data <- example_isolates %>%
+  group_by(
+    order = mo_order(mo), # group on anything, like order
+    genus = mo_genus(mo)
+  ) %>% #  and genus as we do here
   summarise_if(is.rsi, resistance) %>% # then get resistance of all drugs
-  select(order, genus, AMC, CXM, CTX, 
-         CAZ, GEN, TOB, TMP, SXT)      # and select only relevant columns
+  select(
+    order, genus, AMC, CXM, CTX,
+    CAZ, GEN, TOB, TMP, SXT
+  ) # and select only relevant columns
 
 head(resistance_data)
 ```

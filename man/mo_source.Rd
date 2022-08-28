@@ -51,7 +51,7 @@ We save it as \code{"home/me/ourcodes.xlsx"}. Now we have to set it as a source:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{set_mo_source("home/me/ourcodes.xlsx")
 #> NOTE: Created mo_source file '/Users/me/mo_source.rds' (0.3 kB) from
-#>       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns 
+#>       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns
 #>       "Organisation XYZ" and "mo"
 }\if{html}{\out{</div>}}
 
@@ -88,7 +88,7 @@ If we edit the Excel file by, let's say, adding row 4 like this:
 ...any new usage of an MO function in this package will update your data file:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{as.mo("lab_mo_ecoli")
-#> NOTE: Updated mo_source file '/Users/me/mo_source.rds' (0.3 kB) from 
+#> NOTE: Updated mo_source file '/Users/me/mo_source.rds' (0.3 kB) from
 #>       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns
 #>        "Organisation XYZ" and "mo"
 #> Class <mo>

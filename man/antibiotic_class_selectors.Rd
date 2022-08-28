@@ -217,101 +217,92 @@ if (require("dplyr")) {
 
   # get AMR for all aminoglycosides e.g., per ward:
   example_isolates \%>\%
-    group_by(ward) \%>\% 
+    group_by(ward) \%>\%
     summarise(across(aminoglycosides(), resistance))
-    
 }
 if (require("dplyr")) {
-    
+
   # You can combine selectors with '&' to be more specific:
   example_isolates \%>\%
     select(penicillins() & administrable_per_os())
-    
 }
 if (require("dplyr")) {
-  
+
   # get AMR for only drugs that matter - no intrinsic resistance:
   example_isolates \%>\%
-    filter(mo_genus() \%in\% c("Escherichia", "Klebsiella")) \%>\% 
-    group_by(ward) \%>\% 
+    filter(mo_genus() \%in\% c("Escherichia", "Klebsiella")) \%>\%
+    group_by(ward) \%>\%
     summarise(across(not_intrinsic_resistant(), resistance))
-    
 }
 if (require("dplyr")) {
-    
+
   # get susceptibility for antibiotics whose name contains "trim":
   example_isolates \%>\%
-    filter(first_isolate()) \%>\% 
-    group_by(ward) \%>\% 
+    filter(first_isolate()) \%>\%
+    group_by(ward) \%>\%
     summarise(across(ab_selector(name \%like\% "trim"), susceptibility))
-    
 }
 if (require("dplyr")) {
 
   # this will select columns 'IPM' (imipenem) and 'MEM' (meropenem):
-  example_isolates \%>\% 
+  example_isolates \%>\%
     select(carbapenems())
-    
-}
-if (require("dplyr")) {
-    
-  # this will select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB':
-  example_isolates \%>\% 
-    select(mo, aminoglycosides())
-    
-}
-if (require("dplyr")) {
-    
- # any() and all() work in dplyr's filter() too:
- example_isolates \%>\% 
-    filter(any(aminoglycosides() == "R"),
-           all(cephalosporins_2nd() == "R"))
-    
-}
-if (require("dplyr")) {
-    
- # also works with c():
- example_isolates \%>\% 
-    filter(any(c(carbapenems(), aminoglycosides()) == "R"))
-    
-}
-if (require("dplyr")) {
-    
- # not setting any/all will automatically apply all():
- example_isolates \%>\% 
-    filter(aminoglycosides() == "R")
-    
-}
-if (require("dplyr")) {
-    
-  # this will select columns 'mo' and all antimycobacterial drugs ('RIF'):
-  example_isolates \%>\% 
-    select(mo, ab_class("mycobact"))
-    
-}
-if (require("dplyr")) {
-    
-  # get bug/drug combinations for only glycopeptides in Gram-positives:
-  example_isolates \%>\% 
-    filter(mo_is_gram_positive()) \%>\% 
-    select(mo, glycopeptides()) \%>\% 
-    bug_drug_combinations() \%>\%
-    format()
-    
 }
 if (require("dplyr")) {
 
-  data.frame(some_column = "some_value",
-             J01CA01 = "S") \%>\%   # ATC code of ampicillin
-    select(penicillins())         # only the 'J01CA01' column will be selected
-    
+  # this will select columns 'mo', 'AMK', 'GEN', 'KAN' and 'TOB':
+  example_isolates \%>\%
+    select(mo, aminoglycosides())
+}
+if (require("dplyr")) {
+
+  # any() and all() work in dplyr's filter() too:
+  example_isolates \%>\%
+    filter(
+      any(aminoglycosides() == "R"),
+      all(cephalosporins_2nd() == "R")
+    )
+}
+if (require("dplyr")) {
+
+  # also works with c():
+  example_isolates \%>\%
+    filter(any(c(carbapenems(), aminoglycosides()) == "R"))
+}
+if (require("dplyr")) {
+
+  # not setting any/all will automatically apply all():
+  example_isolates \%>\%
+    filter(aminoglycosides() == "R")
+}
+if (require("dplyr")) {
+
+  # this will select columns 'mo' and all antimycobacterial drugs ('RIF'):
+  example_isolates \%>\%
+    select(mo, ab_class("mycobact"))
+}
+if (require("dplyr")) {
+
+  # get bug/drug combinations for only glycopeptides in Gram-positives:
+  example_isolates \%>\%
+    filter(mo_is_gram_positive()) \%>\%
+    select(mo, glycopeptides()) \%>\%
+    bug_drug_combinations() \%>\%
+    format()
+}
+if (require("dplyr")) {
+  data.frame(
+    some_column = "some_value",
+    J01CA01 = "S"
+  ) \%>\% # ATC code of ampicillin
+    select(penicillins()) # only the 'J01CA01' column will be selected
 }
 if (require("dplyr")) {
 
   # with recent versions of dplyr this is all equal:
   x <- example_isolates[carbapenems() == "R", ]
   y <- example_isolates \%>\% filter(carbapenems() == "R")
-  z <- example_isolates \%>\% filter(if_all(carbapenems(), ~.x == "R"))
+  z <- example_isolates \%>\% filter(if_all(carbapenems(), ~ .x == "R"))
   identical(x, y) && identical(y, z)
 }
 }

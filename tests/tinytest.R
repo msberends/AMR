@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -30,11 +30,13 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
   if (AMR:::pkg_is_available("tinytest")) {
     library(AMR)
     out <- test_package("AMR",
-                        testdir = ifelse(AMR:::dir.exists("inst/tinytest"),
-                                         "inst/tinytest",
-                                         "tinytest"),
-                        verbose = 99,
-                        color = FALSE)
+      testdir = ifelse(AMR:::dir.exists("inst/tinytest"),
+        "inst/tinytest",
+        "tinytest"
+      ),
+      verbose = 99,
+      color = FALSE
+    )
     cat("SUMMARY:\n")
     print(summary(out))
   }

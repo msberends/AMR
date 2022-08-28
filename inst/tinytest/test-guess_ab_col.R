@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -23,20 +23,36 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-expect_equal(guess_ab_col(example_isolates, "amox"),
-             "AMX")
-expect_equal(guess_ab_col(example_isolates, "amoxicillin"),
-             "AMX")
-expect_equal(guess_ab_col(example_isolates, "J01AA07"),
-             "TCY")
-expect_equal(guess_ab_col(example_isolates, "tetracycline"),
-             "TCY")
-expect_equal(guess_ab_col(example_isolates, "TETR"),
-             "TCY")
+expect_equal(
+  guess_ab_col(example_isolates, "amox"),
+  "AMX"
+)
+expect_equal(
+  guess_ab_col(example_isolates, "amoxicillin"),
+  "AMX"
+)
+expect_equal(
+  guess_ab_col(example_isolates, "J01AA07"),
+  "TCY"
+)
+expect_equal(
+  guess_ab_col(example_isolates, "tetracycline"),
+  "TCY"
+)
+expect_equal(
+  guess_ab_col(example_isolates, "TETR"),
+  "TCY"
+)
 
-df <- data.frame(AMP_ND10 = "R",
-                 AMC_ED20 = "S")
-expect_equal(guess_ab_col(df, "ampicillin"),
-             "AMP_ND10")
-expect_equal(guess_ab_col(df, "J01CR02"),
-             "AMC_ED20")
+df <- data.frame(
+  AMP_ND10 = "R",
+  AMC_ED20 = "S"
+)
+expect_equal(
+  guess_ab_col(df, "ampicillin"),
+  "AMP_ND10"
+)
+expect_equal(
+  guess_ab_col(df, "J01CR02"),
+  "AMC_ED20"
+)

@@ -177,22 +177,20 @@ if (require("dplyr")) {
   # filter on first isolates using dplyr:
   example_isolates \%>\%
     filter(first_isolate())
-    
 }
 if (require("dplyr")) {
- 
+
   # short-hand version:
   example_isolates \%>\%
     filter_first_isolate(info = FALSE)
-    
 }
 if (require("dplyr")) {
-    
- # flag the first isolates per group:
- example_isolates \%>\%
-   group_by(ward) \%>\%
-   mutate(first = first_isolate()) \%>\%
-   select(ward, date, patient, mo, first)
+
+  # flag the first isolates per group:
+  example_isolates \%>\%
+    group_by(ward) \%>\%
+    mutate(first = first_isolate()) \%>\%
+    select(ward, date, patient, mo, first)
 }
 }
 }

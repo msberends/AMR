@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -24,7 +24,7 @@
 # ==================================================================== #
 
 dots2vars <- function(...) {
-  # this function is to give more informative output about 
+  # this function is to give more informative output about
   # variable names in count_* and proportion_* functions
   dots <- substitute(list(...))
   as.character(dots)[2:length(dots)]
@@ -41,26 +41,30 @@ rsi_calc <- function(...,
   meet_criteria(as_percent, allow_class = "logical", has_length = 1, .call_depth = 1)
   meet_criteria(only_all_tested, allow_class = "logical", has_length = 1, .call_depth = 1)
   meet_criteria(only_count, allow_class = "logical", has_length = 1, .call_depth = 1)
-  
+
   data_vars <- dots2vars(...)
-  
-  dots_df <- switch(1, ...)
+
+  dots_df <- switch(1,
+    ...
+  )
   if (is.data.frame(dots_df)) {
     # make sure to remove all other classes like tibbles, data.tables, etc
     dots_df <- as.data.frame(dots_df, stringsAsFactors = FALSE)
   }
-  
+
   dots <- eval(substitute(alist(...)))
   stop_if(length(dots) == 0, "no variables selected", call = -2)
-  
+
   stop_if("also_single_tested" %in% names(dots),
-          "`also_single_tested` was replaced by `only_all_tested`.\n",
-          "Please read Details in the help page (`?proportion`) as this may have a considerable impact on your analysis.", call = -2)
+    "`also_single_tested` was replaced by `only_all_tested`.\n",
+    "Please read Details in the help page (`?proportion`) as this may have a considerable impact on your analysis.",
+    call = -2
+  )
   ndots <- length(dots)
-  
+
   if (is.data.frame(dots_df)) {
     # data.frame passed with other columns, like: example_isolates %pm>% proportion_S(AMC, GEN)
-    
+
     dots <- as.character(dots)
     # remove first element, it's the data.frame
     if (length(dots) == 1) {
@@ -69,14 +73,16 @@ rsi_calc <- function(...,
       dots <- dots[2:length(dots)]
     }
     if (length(dots) == 0 | all(dots == "df")) {
-     # for complete data.frames, like example_isolates %pm>% select(AMC, GEN) %pm>% proportion_S()
+      # for complete data.frames, like example_isolates %pm>% select(AMC, GEN) %pm>% proportion_S()
       # and the old rsi function, which has "df" as name of the first argument
       x <- dots_df
     } else {
       # get dots that are in column names already, and the ones that will be once evaluated using dots_df or global env
       # this is to support susceptibility(example_isolates, AMC, any_of(some_vector_with_AB_names))
-      dots <- c(dots[dots %in% colnames(dots_df)],
-                eval(parse(text = dots[!dots %in% colnames(dots_df)]), envir = dots_df, enclos = globalenv()))
+      dots <- c(
+        dots[dots %in% colnames(dots_df)],
+        eval(parse(text = dots[!dots %in% colnames(dots_df)]), envir = dots_df, enclos = globalenv())
+      )
       dots_not_exist <- dots[!dots %in% colnames(dots_df)]
       stop_if(length(dots_not_exist) > 0, "column(s) not found: ", vector_and(dots_not_exist, quotes = TRUE), call = -2)
       x <- dots_df[, dots, drop = FALSE]
@@ -93,7 +99,7 @@ rsi_calc <- function(...,
       x <- as.data.frame(list(...), stringsAsFactors = FALSE)
     }
   }
-  
+
   if (is.null(x)) {
     warning_("argument is NULL (check if columns exist): returning NA")
     if (as_percent == TRUE) {
@@ -102,11 +108,11 @@ rsi_calc <- function(...,
       return(NA_real_)
     }
   }
-  
+
   print_warning <- FALSE
-  
+
   ab_result <- as.rsi(ab_result)
-  
+
   if (is.data.frame(x)) {
     rsi_integrity_check <- character(0)
     for (i in seq_len(ncol(x))) {
@@ -121,13 +127,15 @@ rsi_calc <- function(...,
       # this will give a warning for invalid results, of all input columns (so only 1 warning)
       rsi_integrity_check <- as.rsi(rsi_integrity_check)
     }
-    
+
     x_transposed <- as.list(as.data.frame(t(x), stringsAsFactors = FALSE))
     if (only_all_tested == TRUE) {
       # no NAs in any column
-      y <- apply(X = as.data.frame(lapply(x, as.integer), stringsAsFactors = FALSE),
-                 MARGIN = 1,
-                 FUN = min)
+      y <- apply(
+        X = as.data.frame(lapply(x, as.integer), stringsAsFactors = FALSE),
+        MARGIN = 1,
+        FUN = min
+      )
       numerator <- sum(as.integer(y) %in% as.integer(ab_result), na.rm = TRUE)
       denominator <- sum(vapply(FUN.VALUE = logical(1), x_transposed, function(y) !(any(is.na(y)))))
     } else {
@@ -145,20 +153,21 @@ rsi_calc <- function(...,
     numerator <- sum(x %in% ab_result, na.rm = TRUE)
     denominator <- sum(x %in% levels(ab_result), na.rm = TRUE)
   }
-  
+
   if (print_warning == TRUE) {
     if (message_not_thrown_before("rsi_calc")) {
       warning_("Increase speed by transforming to class <rsi> on beforehand:\n",
-               "  your_data %>% mutate_if(is.rsi.eligible, as.rsi)\n",
-               "  your_data %>% mutate(across(where(is.rsi.eligible), as.rsi))",
-               call = FALSE)
+        "  your_data %>% mutate_if(is.rsi.eligible, as.rsi)\n",
+        "  your_data %>% mutate(across(where(is.rsi.eligible), as.rsi))",
+        call = FALSE
+      )
     }
   }
-  
+
   if (only_count == TRUE) {
     return(numerator)
   }
-  
+
   if (denominator < minimum) {
     if (data_vars != "") {
       data_vars <- paste(" for", data_vars)
@@ -182,16 +191,18 @@ rsi_calc <- function(...,
       }
     }
     warning_("Introducing NA: ",
-             ifelse(denominator == 0, "no", paste("only", denominator)),
-             " results available",
-             data_vars,
-             " (`minimum` = ", minimum, ").", call = FALSE)
+      ifelse(denominator == 0, "no", paste("only", denominator)),
+      " results available",
+      data_vars,
+      " (`minimum` = ", minimum, ").",
+      call = FALSE
+    )
     fraction <- NA_real_
   } else {
     fraction <- numerator / denominator
     fraction[is.nan(fraction)] <- NA_real_
   }
-  
+
   if (as_percent == TRUE) {
     percentage(fraction, digits = 1)
   } else {
@@ -216,16 +227,16 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   meet_criteria(as_percent, allow_class = "logical", has_length = 1, .call_depth = 1)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1, .call_depth = 1)
   meet_criteria(combine_SI_missing, allow_class = "logical", has_length = 1, .call_depth = 1)
-  
+
   check_dataset_integrity()
-  
+
   if (isTRUE(combine_IR) & isTRUE(combine_SI_missing)) {
     combine_SI <- FALSE
   }
   stop_if(isTRUE(combine_SI) & isTRUE(combine_IR), "either `combine_SI` or `combine_IR` can be TRUE, not both", call = -2)
-  
+
   translate_ab <- get_translate_ab(translate_ab)
-  
+
   data.bak <- data
   # select only groups and antibiotics
   if (is_null_or_grouped_tbl(data)) {
@@ -236,7 +247,7 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
     data_has_groups <- FALSE
     data <- data[, colnames(data)[vapply(FUN.VALUE = logical(1), data, is.rsi)], drop = FALSE]
   }
-  
+
   data <- as.data.frame(data, stringsAsFactors = FALSE)
   if (isTRUE(combine_SI) | isTRUE(combine_IR)) {
     for (i in seq_len(ncol(data))) {
@@ -250,13 +261,15 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
       }
     }
   }
-  
+
   sum_it <- function(.data) {
-    out <- data.frame(antibiotic = character(0),
-                      interpretation = character(0),
-                      value = double(0),
-                      isolates = integer(0),
-                      stringsAsFactors = FALSE)
+    out <- data.frame(
+      antibiotic = character(0),
+      interpretation = character(0),
+      value = double(0),
+      isolates = integer(0),
+      stringsAsFactors = FALSE
+    )
     if (data_has_groups) {
       group_values <- unique(.data[, which(colnames(.data) %in% groups), drop = FALSE])
       rownames(group_values) <- NULL
@@ -280,18 +293,22 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
         } else {
           col_results$value <- rep(NA_real_, NROW(col_results))
         }
-        out_new <- data.frame(antibiotic = ifelse(isFALSE(translate_ab),
-                                                  colnames(.data)[i],
-                                                  ab_property(colnames(.data)[i], property = translate_ab, language = language)),
-                              interpretation = col_results$interpretation,
-                              value = col_results$value,
-                              isolates = col_results$isolates,
-                              stringsAsFactors = FALSE)
+        out_new <- data.frame(
+          antibiotic = ifelse(isFALSE(translate_ab),
+            colnames(.data)[i],
+            ab_property(colnames(.data)[i], property = translate_ab, language = language)
+          ),
+          interpretation = col_results$interpretation,
+          value = col_results$value,
+          isolates = col_results$isolates,
+          stringsAsFactors = FALSE
+        )
         if (data_has_groups) {
           if (nrow(group_values) < nrow(out_new)) {
             # repeat group_values for the number of rows in out_new
             repeated <- rep(seq_len(nrow(group_values)),
-                            each = nrow(out_new) / nrow(group_values))
+              each = nrow(out_new) / nrow(group_values)
+            )
             group_values <- group_values[repeated, , drop = FALSE]
           }
           out_new <- cbind(group_values, out_new)
@@ -301,7 +318,7 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
     }
     out
   }
-  
+
   # based on pm_apply_grouped_function
   apply_group <- function(.data, fn, groups, drop = FALSE, ...) {
     grouped <- pm_split_into_groups(.data, groups, drop)
@@ -312,13 +329,13 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
     }
     res
   }
-  
+
   if (data_has_groups) {
     out <- apply_group(data, "sum_it", groups)
   } else {
     out <- sum_it(data)
   }
-  
+
   # apply factors for right sorting in interpretation
   if (isTRUE(combine_SI)) {
     out$interpretation <- factor(out$interpretation, levels = c("SI", "R"), ordered = TRUE)
@@ -329,21 +346,21 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
     # the same data structure as output, regardless of input
     out$interpretation <- factor(out$interpretation, levels = c("S", "I", "R"), ordered = TRUE)
   }
-  
+
   if (data_has_groups) {
     # ordering by the groups and two more: "antibiotic" and "interpretation"
-   out <-  pm_ungroup(out[do.call("order", out[, seq_len(length(groups) + 2), drop = FALSE]), , drop = FALSE])
+    out <- pm_ungroup(out[do.call("order", out[, seq_len(length(groups) + 2), drop = FALSE]), , drop = FALSE])
   } else {
     out <- out[order(out$antibiotic, out$interpretation), , drop = FALSE]
   }
-  
+
   if (type == "proportion") {
     out <- subset(out, select = -c(isolates))
   } else if (type == "count") {
     out$value <- out$isolates
     out <- subset(out, select = -c(isolates))
-  } 
-  
+  }
+
   rownames(out) <- NULL
   out <- as_original_data_class(out, class(data.bak))
   structure(out, class = c("rsi_df", class(out)))
@@ -358,9 +375,10 @@ get_translate_ab <- function(translate_ab) {
   } else {
     translate_ab <- tolower(translate_ab)
     stop_ifnot(translate_ab %in% colnames(AMR::antibiotics),
-               "invalid value for 'translate_ab', this must be a column name of the antibiotics data set\n",
-               "or TRUE (equals 'name') or FALSE to not translate at all.",
-               call = FALSE)
+      "invalid value for 'translate_ab', this must be a column name of the antibiotics data set\n",
+      "or TRUE (equals 'name') or FALSE to not translate at all.",
+      call = FALSE
+    )
     translate_ab
   }
 }

@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -40,7 +40,7 @@
 #' @inheritSection as.rsi Interpretation of R and S/I
 #' @details
 #' The function [resistance()] is equal to the function [proportion_R()]. The function [susceptibility()] is equal to the function [proportion_SI()].
-#'  
+#'
 #' **Remember that you should filter your data to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set.
 #'
 #' These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the [`count()`][AMR::count()] functions to count isolates. The function [susceptibility()] is essentially equal to `count_susceptible() / count_all()`. *Low counts can influence the outcome - the `proportion` functions may camouflage this, since they only return the proportion (albeit being dependent on the `minimum` argument).*
@@ -90,9 +90,9 @@
 #' @examples
 #' # example_isolates is a data set available in the AMR package.
 #' # run ?example_isolates for more info.
-#' 
+#'
 #' # base R ------------------------------------------------------------
-#' resistance(example_isolates$AMX)     # determines %R
+#' resistance(example_isolates$AMX) # determines %R
 #' susceptibility(example_isolates$AMX) # determines %S+I
 #'
 #' # be more specific
@@ -107,55 +107,65 @@
 #' if (require("dplyr")) {
 #'   example_isolates %>%
 #'     group_by(ward) %>%
-#'     summarise(r = resistance(CIP),
-#'               n = n_rsi(CIP)) # n_rsi works like n_distinct in dplyr, see ?n_rsi
-#'  
+#'     summarise(
+#'       r = resistance(CIP),
+#'       n = n_rsi(CIP)
+#'     ) # n_rsi works like n_distinct in dplyr, see ?n_rsi
+#'
 #'   example_isolates %>%
 #'     group_by(ward) %>%
-#'     summarise(R  = resistance(CIP, as_percent = TRUE),
-#'               SI = susceptibility(CIP, as_percent = TRUE),
-#'               n1 = count_all(CIP),  # the actual total; sum of all three
-#'               n2 = n_rsi(CIP),      # same - analogous to n_distinct
-#'               total = n())          # NOT the number of tested isolates!
-#'  
+#'     summarise(
+#'       R = resistance(CIP, as_percent = TRUE),
+#'       SI = susceptibility(CIP, as_percent = TRUE),
+#'       n1 = count_all(CIP), # the actual total; sum of all three
+#'       n2 = n_rsi(CIP), # same - analogous to n_distinct
+#'       total = n()
+#'     ) # NOT the number of tested isolates!
+#'
 #'   # Calculate co-resistance between amoxicillin/clav acid and gentamicin,
 #'   # so we can see that combination therapy does a lot more than mono therapy:
-#'   example_isolates %>% susceptibility(AMC)  # %SI = 76.3%
-#'   example_isolates %>% count_all(AMC)       #   n = 1879
-#'  
-#'   example_isolates %>% susceptibility(GEN)  # %SI = 75.4%
-#'   example_isolates %>% count_all(GEN)       #   n = 1855
-#'  
+#'   example_isolates %>% susceptibility(AMC) # %SI = 76.3%
+#'   example_isolates %>% count_all(AMC) #   n = 1879
+#'
+#'   example_isolates %>% susceptibility(GEN) # %SI = 75.4%
+#'   example_isolates %>% count_all(GEN) #   n = 1855
+#'
 #'   example_isolates %>% susceptibility(AMC, GEN) # %SI = 94.1%
-#'   example_isolates %>% count_all(AMC, GEN)      #   n = 1939
-#'  
-#'  
+#'   example_isolates %>% count_all(AMC, GEN) #   n = 1939
+#'
+#'
 #'   # See Details on how `only_all_tested` works. Example:
 #'   example_isolates %>%
-#'     summarise(numerator = count_susceptible(AMC, GEN),
-#'               denominator = count_all(AMC, GEN),
-#'               proportion = susceptibility(AMC, GEN))
-#'  
+#'     summarise(
+#'       numerator = count_susceptible(AMC, GEN),
+#'       denominator = count_all(AMC, GEN),
+#'       proportion = susceptibility(AMC, GEN)
+#'     )
+#'
 #'   example_isolates %>%
-#'     summarise(numerator = count_susceptible(AMC, GEN, only_all_tested = TRUE),
-#'               denominator = count_all(AMC, GEN, only_all_tested = TRUE),
-#'               proportion = susceptibility(AMC, GEN, only_all_tested = TRUE))
-#'  
-#'  
+#'     summarise(
+#'       numerator = count_susceptible(AMC, GEN, only_all_tested = TRUE),
+#'       denominator = count_all(AMC, GEN, only_all_tested = TRUE),
+#'       proportion = susceptibility(AMC, GEN, only_all_tested = TRUE)
+#'     )
+#'
+#'
 #'   example_isolates %>%
 #'     group_by(ward) %>%
-#'     summarise(cipro_p = susceptibility(CIP, as_percent = TRUE),
-#'               cipro_n = count_all(CIP),
-#'               genta_p = susceptibility(GEN, as_percent = TRUE),
-#'               genta_n = count_all(GEN),
-#'               combination_p = susceptibility(CIP, GEN, as_percent = TRUE),
-#'               combination_n = count_all(CIP, GEN))
-#'  
+#'     summarise(
+#'       cipro_p = susceptibility(CIP, as_percent = TRUE),
+#'       cipro_n = count_all(CIP),
+#'       genta_p = susceptibility(GEN, as_percent = TRUE),
+#'       genta_n = count_all(GEN),
+#'       combination_p = susceptibility(CIP, GEN, as_percent = TRUE),
+#'       combination_n = count_all(CIP, GEN)
+#'     )
+#'
 #'   # Get proportions S/I/R immediately of all rsi columns
 #'   example_isolates %>%
 #'     select(AMX, CIP) %>%
 #'     proportion_df(translate = FALSE)
-#'  
+#'
 #'   # It also supports grouping variables
 #'   # (use rsi_df to also include the count)
 #'   example_isolates %>%
@@ -170,12 +180,14 @@ resistance <- function(...,
                        only_all_tested = FALSE) {
   tryCatch(
     rsi_calc(...,
-             ab_result = "R",
-             minimum = minimum,
-             as_percent = as_percent,
-             only_all_tested = only_all_tested,
-             only_count = FALSE),
-    error = function(e) stop_(e$message, call = -5))
+      ab_result = "R",
+      minimum = minimum,
+      as_percent = as_percent,
+      only_all_tested = only_all_tested,
+      only_count = FALSE
+    ),
+    error = function(e) stop_(e$message, call = -5)
+  )
 }
 
 #' @rdname proportion
@@ -186,12 +198,14 @@ susceptibility <- function(...,
                            only_all_tested = FALSE) {
   tryCatch(
     rsi_calc(...,
-             ab_result = c("S", "I"),
-             minimum = minimum,
-             as_percent = as_percent,
-             only_all_tested = only_all_tested,
-             only_count = FALSE),
-    error = function(e) stop_(e$message, call = -5))
+      ab_result = c("S", "I"),
+      minimum = minimum,
+      as_percent = as_percent,
+      only_all_tested = only_all_tested,
+      only_count = FALSE
+    ),
+    error = function(e) stop_(e$message, call = -5)
+  )
 }
 
 #' @rdname proportion
@@ -202,12 +216,14 @@ proportion_R <- function(...,
                          only_all_tested = FALSE) {
   tryCatch(
     rsi_calc(...,
-             ab_result = "R",
-             minimum = minimum,
-             as_percent = as_percent,
-             only_all_tested = only_all_tested,
-             only_count = FALSE),
-    error = function(e) stop_(e$message, call = -5))
+      ab_result = "R",
+      minimum = minimum,
+      as_percent = as_percent,
+      only_all_tested = only_all_tested,
+      only_count = FALSE
+    ),
+    error = function(e) stop_(e$message, call = -5)
+  )
 }
 
 #' @rdname proportion
@@ -218,12 +234,14 @@ proportion_IR <- function(...,
                           only_all_tested = FALSE) {
   tryCatch(
     rsi_calc(...,
-             ab_result = c("I", "R"),
-             minimum = minimum,
-             as_percent = as_percent,
-             only_all_tested = only_all_tested,
-             only_count = FALSE),
-    error = function(e) stop_(e$message, call = -5))
+      ab_result = c("I", "R"),
+      minimum = minimum,
+      as_percent = as_percent,
+      only_all_tested = only_all_tested,
+      only_count = FALSE
+    ),
+    error = function(e) stop_(e$message, call = -5)
+  )
 }
 
 #' @rdname proportion
@@ -234,12 +252,14 @@ proportion_I <- function(...,
                          only_all_tested = FALSE) {
   tryCatch(
     rsi_calc(...,
-             ab_result = "I",
-             minimum = minimum,
-             as_percent = as_percent,
-             only_all_tested = only_all_tested,
-             only_count = FALSE),
-    error = function(e) stop_(e$message, call = -5))
+      ab_result = "I",
+      minimum = minimum,
+      as_percent = as_percent,
+      only_all_tested = only_all_tested,
+      only_count = FALSE
+    ),
+    error = function(e) stop_(e$message, call = -5)
+  )
 }
 
 #' @rdname proportion
@@ -250,12 +270,14 @@ proportion_SI <- function(...,
                           only_all_tested = FALSE) {
   tryCatch(
     rsi_calc(...,
-             ab_result = c("S", "I"),
-             minimum = minimum,
-             as_percent = as_percent,
-             only_all_tested = only_all_tested,
-             only_count = FALSE),
-    error = function(e) stop_(e$message, call = -5))
+      ab_result = c("S", "I"),
+      minimum = minimum,
+      as_percent = as_percent,
+      only_all_tested = only_all_tested,
+      only_count = FALSE
+    ),
+    error = function(e) stop_(e$message, call = -5)
+  )
 }
 
 #' @rdname proportion
@@ -266,12 +288,14 @@ proportion_S <- function(...,
                          only_all_tested = FALSE) {
   tryCatch(
     rsi_calc(...,
-             ab_result = "S",
-             minimum = minimum,
-             as_percent = as_percent,
-             only_all_tested = only_all_tested,
-             only_count = FALSE),
-    error = function(e) stop_(e$message, call = -5))
+      ab_result = "S",
+      minimum = minimum,
+      as_percent = as_percent,
+      only_all_tested = only_all_tested,
+      only_count = FALSE
+    ),
+    error = function(e) stop_(e$message, call = -5)
+  )
 }
 
 #' @rdname proportion
@@ -284,14 +308,17 @@ proportion_df <- function(data,
                           combine_SI = TRUE,
                           combine_IR = FALSE) {
   tryCatch(
-    rsi_calc_df(type = "proportion",
-                data = data,
-                translate_ab = translate_ab,
-                language = language,
-                minimum = minimum,
-                as_percent = as_percent,
-                combine_SI = combine_SI,
-                combine_IR = combine_IR,
-                combine_SI_missing = missing(combine_SI)),
-    error = function(e) stop_(e$message, call = -5))
+    rsi_calc_df(
+      type = "proportion",
+      data = data,
+      translate_ab = translate_ab,
+      language = language,
+      minimum = minimum,
+      as_percent = as_percent,
+      combine_SI = combine_SI,
+      combine_IR = combine_IR,
+      combine_SI_missing = missing(combine_SI)
+    ),
+    error = function(e) stop_(e$message, call = -5)
+  )
 }

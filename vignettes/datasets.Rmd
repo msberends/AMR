@@ -28,16 +28,20 @@ library(dplyr)
 options(knitr.kable.NA = "")
 
 structure_txt <- function(dataset) {
-  paste0("A data set with ",
-         format(nrow(dataset), big.mark = ","), " rows and ", 
-         ncol(dataset), " columns, containing the following column names:  \n",
-         AMR:::vector_or(colnames(dataset), quotes = "*", last_sep = " and ", sort = FALSE), ".")
+  paste0(
+    "A data set with ",
+    format(nrow(dataset), big.mark = ","), " rows and ",
+    ncol(dataset), " columns, containing the following column names:  \n",
+    AMR:::vector_or(colnames(dataset), quotes = "*", last_sep = " and ", sort = FALSE), "."
+  )
 }
 
 download_txt <- function(filename) {
-  msg <- paste0("It was last updated on ", 
-                trimws(format(file.mtime(paste0("../data/", filename, ".rda")), "%e %B %Y %H:%M:%S %Z", tz = "UTC")), 
-                ". Find more info about the structure of this data set [here](https://msberends.github.io/AMR/reference/", ifelse(filename == "antivirals", "antibiotics", filename), ".html).\n")
+  msg <- paste0(
+    "It was last updated on ",
+    trimws(format(file.mtime(paste0("../data/", filename, ".rda")), "%e %B %Y %H:%M:%S %Z", tz = "UTC")),
+    ". Find more info about the structure of this data set [here](https://msberends.github.io/AMR/reference/", ifelse(filename == "antivirals", "antibiotics", filename), ".html).\n"
+  )
   github_base <- "https://github.com/msberends/AMR/raw/main/data-raw/"
   filename <- paste0("../data-raw/", filename)
   rds <- paste0(filename, ".rds")
@@ -50,38 +54,44 @@ download_txt <- function(filename) {
   stata <- paste0(filename, ".dta")
   create_txt <- function(filename, type, software, exists) {
     if (isTRUE(exists)) {
-      paste0("* Download as [", software, "](", github_base, filename, ") (",
-             AMR:::formatted_filesize(filename), ")  \n")
+      paste0(
+        "* Download as [", software, "](", github_base, filename, ") (",
+        AMR:::formatted_filesize(filename), ")  \n"
+      )
     } else {
       paste0("* *(unavailable as ", software, ")*\n")
     }
   }
-  
-  if (any(file.exists(rds),
-          file.exists(txt),
-          file.exists(excel),
-          file.exists(feather),
-          file.exists(parquet),
-          file.exists(sas),
-          file.exists(spss),
-          file.exists(stata))) {
-    msg <- c(msg, "\n**Direct download links:**\n\n",
-             create_txt(rds, "rds", "original R Data Structure (RDS) file", file.exists(rds)),
-             create_txt(txt, "txt", "tab-separated text file", file.exists(txt)),
-             create_txt(excel, "xlsx", "Microsoft Excel workbook", file.exists(excel)),
-             create_txt(feather, "feather", "Apache Feather file", file.exists(feather)),
-             create_txt(parquet, "parquet", "Apache Parquet file", file.exists(parquet)),
-             create_txt(sas, "sas", "SAS data file", file.exists(sas)),
-             create_txt(spss, "sav", "IBM SPSS Statistics data file", file.exists(spss)),
-             create_txt(stata, "dta", "Stata DTA file", file.exists(stata)))
+
+  if (any(
+    file.exists(rds),
+    file.exists(txt),
+    file.exists(excel),
+    file.exists(feather),
+    file.exists(parquet),
+    file.exists(sas),
+    file.exists(spss),
+    file.exists(stata)
+  )) {
+    msg <- c(
+      msg, "\n**Direct download links:**\n\n",
+      create_txt(rds, "rds", "original R Data Structure (RDS) file", file.exists(rds)),
+      create_txt(txt, "txt", "tab-separated text file", file.exists(txt)),
+      create_txt(excel, "xlsx", "Microsoft Excel workbook", file.exists(excel)),
+      create_txt(feather, "feather", "Apache Feather file", file.exists(feather)),
+      create_txt(parquet, "parquet", "Apache Parquet file", file.exists(parquet)),
+      create_txt(sas, "sas", "SAS data file", file.exists(sas)),
+      create_txt(spss, "sav", "IBM SPSS Statistics data file", file.exists(spss)),
+      create_txt(stata, "dta", "Stata DTA file", file.exists(stata))
+    )
   }
   paste0(msg, collapse = "")
 }
 
 print_df <- function(x, rows = 6) {
-  x %>% 
-    as.data.frame(stringsAsFactors = FALSE) %>% 
-    head(n = rows) %>% 
+  x %>%
+    as.data.frame(stringsAsFactors = FALSE) %>%
+    head(n = rows) %>%
     mutate_all(function(x) {
       if (is.list(x)) {
         sapply(x, function(y) {
@@ -128,10 +138,10 @@ Our full taxonomy of microorganisms is based on the authoritative and comprehens
 Included (sub)species per taxonomic kingdom:
 
 ```{r, echo = FALSE}
-microorganisms %>% 
-  count(kingdom) %>% 
-  mutate(n = format(n, big.mark = ",")) %>% 
-  setNames(c("Kingdom", "Number of (sub)species")) %>% 
+microorganisms %>%
+  count(kingdom) %>%
+  mutate(n = format(n, big.mark = ",")) %>%
+  setNames(c("Kingdom", "Number of (sub)species")) %>%
   print_df()
 ```
 
@@ -139,7 +149,7 @@ Example rows when filtering on genus *Escherichia*:
 
 ```{r, echo = FALSE}
 microorganisms %>%
-  filter(genus == "Escherichia") %>% 
+  filter(genus == "Escherichia") %>%
   print_df()
 ```
 
@@ -166,7 +176,7 @@ Example rows when filtering on *Escherichia*:
 
 ```{r, echo = FALSE}
 microorganisms.old %>%
-  filter(fullname %like% "^Escherichia") %>% 
+  filter(fullname %like% "^Escherichia") %>%
   print_df()
 ```
 
@@ -191,7 +201,7 @@ This data set contains all EARS-Net and ATC codes gathered from WHO and WHONET, 
 
 ```{r, echo = FALSE}
 antibiotics %>%
-  filter(ab %in% colnames(example_isolates)) %>% 
+  filter(ab %in% colnames(example_isolates)) %>%
   print_df()
 ```
 
@@ -233,9 +243,9 @@ This data set contains interpretation rules for MIC values and disk diffusion di
 ### Example content
 
 ```{r, echo = FALSE}
-rsi_translation %>% 
-  mutate(mo_name = mo_name(mo, language = NULL), .after = mo) %>% 
-  mutate(ab_name = ab_name(ab, language = NULL), .after = ab) %>% 
+rsi_translation %>%
+  mutate(mo_name = mo_name(mo, language = NULL), .after = mo) %>%
+  mutate(ab_name = ab_name(ab, language = NULL), .after = ab) %>%
   print_df()
 ```
 
@@ -258,9 +268,11 @@ Example rows when filtering on *Enterobacter cloacae*:
 
 ```{r, echo = FALSE}
 intrinsic_resistant %>%
-  transmute(microorganism = mo_name(mo),
-            antibiotic = ab_name(ab)) %>% 
-  filter(microorganism == "Enterobacter cloacae") %>% 
+  transmute(
+    microorganism = mo_name(mo),
+    antibiotic = ab_name(ab)
+  ) %>%
+  filter(microorganism == "Enterobacter cloacae") %>%
   arrange(antibiotic) %>%
   print_df(rows = Inf)
 ```
@@ -283,7 +295,7 @@ Currently included dosages in the data set are meant for: `r AMR:::format_eucast
 ### Example content
 
 ```{r, echo = FALSE}
-dosage %>% 
+dosage %>%
   print_df()
 ```
 
@@ -303,7 +315,7 @@ This data set contains randomised fictitious data, but reflects reality and can 
 ### Example content
 
 ```{r, echo = FALSE}
-example_isolates %>% 
+example_isolates %>%
   print_df()
 ```
 
@@ -322,6 +334,6 @@ This data set contains randomised fictitious data, but reflects reality and can 
 ### Example content
 
 ```{r, echo = FALSE}
-example_isolates_unclean %>% 
+example_isolates_unclean %>%
   print_df()
 ```

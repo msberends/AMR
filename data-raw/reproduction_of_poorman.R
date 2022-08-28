@@ -25,26 +25,28 @@ sapply(files, function(file) {
   contents <<- c(contents, readLines(file))
   invisible()
 })
-contents <- c(intro,
-              copyright,
-              "",
-              contents)
+contents <- c(
+  intro,
+  copyright,
+  "",
+  contents
+)
 
 # remove lines starting with "#'" and NULL and write to file
 contents <- contents[!grepl("^(#'|NULL|\"_PACKAGE)", contents)]
 
 # now make it independent on UseMethod, since we will not export these functions
-
 contents <- gsub('UseMethod[(]"(.*?)"[)]',
-                 'if ("grouped_data" %in% class(.data)) {|||    \\1.grouped_data(.data, ...)|||  } else {|||    \\1.default(.data, ...)|||  }', 
-                 paste(contents, collapse = "|||"),
-                 perl = TRUE) %>%
+  'if ("grouped_data" %in% class(.data)) {|||    \\1.grouped_data(.data, ...)|||  } else {|||    \\1.default(.data, ...)|||  }',
+  paste(contents, collapse = "|||"),
+  perl = TRUE
+) %>%
   # add commit to intro part
   gsub("{commit}", commit, ., fixed = TRUE) %>%
   # add date to intro part
   gsub("{date}", format(Sys.Date(), "%e %B %Y"), ., fixed = TRUE) %>%
   strsplit(split = "|||", fixed = TRUE) %>%
-  unlist() %>% 
+  unlist() %>%
   # add "pm_" as prefix to all functions
   gsub("^([a-z_.]+) <- function", "pm_\\1 <- function", .)
 
@@ -56,7 +58,7 @@ for (i in seq_len(length(new_pm_names))) {
   contents <- gsub(paste0("( |\\[|\\()", new_pm_names[i], "($|[^a-z]|\\))"), paste0("\\1pm_", new_pm_names[i], "\\2"), contents)
 }
 
-# replace %>% with %pm>% 
+# replace %>% with %pm>%
 contents <- gsub("%>%", "%pm>%", contents, fixed = TRUE)
 # fix for new lines, since n() also existed
 contents <- gsub("\\pm_n", "\\n", contents, fixed = TRUE)
@@ -70,6 +72,8 @@ contents <- gsub("context", "pm_context", contents, fixed = TRUE)
 contents <- gsub("(pm_)+", "pm_", contents)
 # special case for pm_distinct(), we need '.keep_all' to work
 contents <- gsub("pm_distinct <- function(.data, ..., .keep_all = FALSE)", "pm_distinct <- function(.data, ...)", contents, fixed = TRUE)
+# pm_pull does not correct for tibbles, misses the drop argument
+contents[contents == ".data[, var]"] <- ".data[, var, drop = TRUE]"
 
 # who needs US spelling?
 contents <- contents[!grepl("summarize", contents)]

@@ -133,7 +133,7 @@ if (require("dplyr")) {
       # and first WEIGHTED isolates
       first_weighted = first_isolate(col_keyantimicrobials = "keyab")
     )
- 
+
   # Check the difference in this data set, 'weighted' results in more isolates:
   sum(my_patients$first_regular, na.rm = TRUE)
   sum(my_patients$first_weighted, na.rm = TRUE)

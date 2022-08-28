@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -38,46 +38,46 @@
 #' @param reference_data a [data.frame] to be used for interpretation, which defaults to the [rsi_translation] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [rsi_translation] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*
 #' @param ... for using on a [data.frame]: names of columns to apply [as.rsi()] on (supports tidy selection such as `column1:column4`). Otherwise: arguments passed on to methods.
-#' @details 
+#' @details
 #' ## How it Works
-#' 
+#'
 #' The [as.rsi()] function works in four ways:
-#' 
+#'
 #' 1. For **cleaning raw / untransformed data**. The data will be cleaned to only contain values S, I and R and will try its best to determine this with some intelligence. For example, mixed values with R/SI interpretations and MIC values such as `"<0.25; S"` will be coerced to `"S"`. Combined interpretations for multiple test methods (as seen in laboratory records) such as `"S; S"` will be coerced to `"S"`, but a value like `"S; I"` will return `NA` with a warning that the input is unclear.
-#' 
+#'
 #' 2. For **interpreting minimum inhibitory concentration (MIC) values** according to EUCAST or CLSI. You must clean your MIC values first using [as.mic()], that also gives your columns the new data class [`mic`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` argument.
-#'    * Using `dplyr`, R/SI interpretation can be done very easily with either: 
+#'    * Using `dplyr`, R/SI interpretation can be done very easily with either:
 #'      ```
 #'      your_data %>% mutate_if(is.mic, as.rsi)             # until dplyr 1.0.0
 #'      your_data %>% mutate(across(where(is.mic), as.rsi)) # since dplyr 1.0.0
 #'      ```
 #'    * Operators like "<=" will be stripped before interpretation. When using `conserve_capped_values = TRUE`, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (`conserve_capped_values = FALSE`) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
-#'      
+#'
 #' 3. For **interpreting disk diffusion diameters** according to EUCAST or CLSI. You must clean your disk zones first using [as.disk()], that also gives your columns the new data class [`disk`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` argument.
-#'    * Using `dplyr`, R/SI interpretation can be done very easily with either: 
+#'    * Using `dplyr`, R/SI interpretation can be done very easily with either:
 #'      ```
 #'      your_data %>% mutate_if(is.disk, as.rsi)             # until dplyr 1.0.0
 #'      your_data %>% mutate(across(where(is.disk), as.rsi)) # since dplyr 1.0.0
 #'      ```
-#' 
+#'
 #' 4. For **interpreting a complete data set**, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running `as.rsi(your_data)`.
-#' 
+#'
 #' ## Supported Guidelines
-#' 
-#' For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`). 
-#' 
+#'
+#' For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`).
+#'
 #' Thus, the `guideline` argument must be set to e.g., ``r paste0('"', subset(rsi_translation, guideline %like% "EUCAST")$guideline[1], '"')`` or ``r paste0('"', subset(rsi_translation, guideline %like% "CLSI")$guideline[1], '"')``. By simply using `"EUCAST"` (the default) or `"CLSI"` as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the `reference_data` argument. The `guideline` argument will then be ignored.
-#' 
+#'
 #' ## After Interpretation
-#' 
+#'
 #' After using [as.rsi()], you can use the [eucast_rules()] defined by EUCAST to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
-#' 
+#'
 #' ## Machine-Readable Interpretation Guidelines
-#' 
+#'
 #' The repository of this package [contains a machine-readable version](https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt) of all guidelines. This is a CSV file consisting of `r format(nrow(AMR::rsi_translation), big.mark = ",")` rows and `r ncol(AMR::rsi_translation)` columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. **This allows for easy implementation of these rules in laboratory information systems (LIS)**. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
 #'
 #' ## Other
-#' 
+#'
 #' The function [is.rsi()] detects if the input contains class `<rsi>`. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
 #'
 #' The function [is.rsi.eligible()] returns `TRUE` when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` argument. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
@@ -100,29 +100,35 @@
 #' @examples
 #' example_isolates
 #' summary(example_isolates) # see all R/SI results at a glance
-#' 
-#' # For INTERPRETING disk diffusion and MIC values -----------------------
-#'        
-#' # a whole data set, even with combined MIC values and disk zones
-#' df <- data.frame(microorganism = "Escherichia coli",
-#'                  AMP = as.mic(8),
-#'                  CIP = as.mic(0.256),
-#'                  GEN = as.disk(18),
-#'                  TOB = as.disk(16),
-#'                  NIT = as.mic(32),
-#'                  ERY = "R")
-#' as.rsi(df)
-#' 
-#' # for single values
-#' as.rsi(x = as.mic(2),
-#'        mo = as.mo("S. pneumoniae"),
-#'        ab = "AMP",
-#'        guideline = "EUCAST")
 #'
-#' as.rsi(x = as.disk(18),
-#'        mo = "Strep pneu",  # `mo` will be coerced with as.mo()
-#'        ab = "ampicillin",  # and `ab` with as.ab()
-#'        guideline = "EUCAST")
+#' # For INTERPRETING disk diffusion and MIC values -----------------------
+#'
+#' # a whole data set, even with combined MIC values and disk zones
+#' df <- data.frame(
+#'   microorganism = "Escherichia coli",
+#'   AMP = as.mic(8),
+#'   CIP = as.mic(0.256),
+#'   GEN = as.disk(18),
+#'   TOB = as.disk(16),
+#'   NIT = as.mic(32),
+#'   ERY = "R"
+#' )
+#' as.rsi(df)
+#'
+#' # for single values
+#' as.rsi(
+#'   x = as.mic(2),
+#'   mo = as.mo("S. pneumoniae"),
+#'   ab = "AMP",
+#'   guideline = "EUCAST"
+#' )
+#'
+#' as.rsi(
+#'   x = as.disk(18),
+#'   mo = "Strep pneu", # `mo` will be coerced with as.mo()
+#'   ab = "ampicillin", # and `ab` with as.ab()
+#'   guideline = "EUCAST"
+#' )
 #'
 #' \donttest{
 #' # the dplyr way
@@ -132,48 +138,51 @@
 #'   df %>% mutate(across(where(is.mic), as.rsi))
 #'   df %>% mutate_at(vars(AMP:TOB), as.rsi)
 #'   df %>% mutate(across(AMP:TOB, as.rsi))
-#'  
+#'
 #'   df %>%
 #'     mutate_at(vars(AMP:TOB), as.rsi, mo = .$microorganism)
-#'     
+#'
 #'   # to include information about urinary tract infections (UTI)
-#'   data.frame(mo = "E. coli",
-#'              NIT = c("<= 2", 32),
-#'              from_the_bladder = c(TRUE, FALSE)) %>%
+#'   data.frame(
+#'     mo = "E. coli",
+#'     NIT = c("<= 2", 32),
+#'     from_the_bladder = c(TRUE, FALSE)
+#'   ) %>%
 #'     as.rsi(uti = "from_the_bladder")
-#'     
-#'   data.frame(mo = "E. coli",
-#'              NIT = c("<= 2", 32),
-#'              specimen = c("urine", "blood")) %>%
+#'
+#'   data.frame(
+#'     mo = "E. coli",
+#'     NIT = c("<= 2", 32),
+#'     specimen = c("urine", "blood")
+#'   ) %>%
 #'     as.rsi() # automatically determines urine isolates
-#'   
+#'
 #'   df %>%
-#'     mutate_at(vars(AMP:NIT), as.rsi, mo = "E. coli", uti = TRUE)  
+#'     mutate_at(vars(AMP:NIT), as.rsi, mo = "E. coli", uti = TRUE)
 #' }
 #'
 #' # For CLEANING existing R/SI values ------------------------------------
-#' 
+#'
 #' as.rsi(c("S", "I", "R", "A", "B", "C"))
 #' as.rsi("<= 0.002; S") # will return "S"
-
 #' rsi_data <- as.rsi(c(rep("S", 474), rep("I", 36), rep("R", 370)))
 #' is.rsi(rsi_data)
-#' plot(rsi_data)    # for percentages
+#' plot(rsi_data) # for percentages
 #' barplot(rsi_data) # for frequencies
 #'
 #' # the dplyr way
 #' if (require("dplyr")) {
 #'   example_isolates %>%
 #'     mutate_at(vars(PEN:RIF), as.rsi)
-#'   # same:   
+#'   # same:
 #'   example_isolates %>%
 #'     as.rsi(PEN:RIF)
-#'  
+#'
 #'   # fastest way to transform all columns with already valid AMR results to class `rsi`:
 #'   example_isolates %>%
 #'     mutate_if(is.rsi.eligible, as.rsi)
-#'     
-#'   # since dplyr 1.0.0, this can also be: 
+#'
+#'   # since dplyr 1.0.0, this can also be:
 #'   # example_isolates %>%
 #'   #   mutate(across(where(is.rsi.eligible), as.rsi))
 #' }
@@ -186,7 +195,8 @@ as.rsi <- function(x, ...) {
 #' @details `NA_rsi_` is a missing value of the new `<rsi>` class, analogous to e.g. base \R's [`NA_character_`][base::NA].
 #' @export
 NA_rsi_ <- set_clean_class(factor(NA, levels = c("S", "I", "R"), ordered = TRUE),
-                           new_class =  c("rsi", "ordered", "factor"))
+  new_class = c("rsi", "ordered", "factor")
+)
 
 #' @rdname as.rsi
 #' @export
@@ -202,24 +212,26 @@ is.rsi <- function(x) {
 #' @export
 is.rsi.eligible <- function(x, threshold = 0.05) {
   meet_criteria(threshold, allow_class = "numeric", has_length = 1)
-  
+
   if (inherits(x, "data.frame")) {
     # iterate this function over all columns
     return(unname(vapply(FUN.VALUE = logical(1), x, is.rsi.eligible)))
   }
-  
+
   stop_if(NCOL(x) > 1, "`x` must be a one-dimensional vector.")
-  if (any(c("numeric",
-            "integer",
-            "mo",
-            "ab",
-            "Date",
-            "POSIXt",
-            "raw",
-            "hms",
-            "mic",
-            "disk")
-          %in% class(x))) {
+  if (any(c(
+    "numeric",
+    "integer",
+    "mo",
+    "ab",
+    "Date",
+    "POSIXt",
+    "raw",
+    "hms",
+    "mic",
+    "disk"
+  )
+  %in% class(x))) {
     # no transformation needed
     return(FALSE)
   } else if (all(x %in% c("R", "S", "I", NA)) & !all(is.na(x))) {
@@ -235,8 +247,10 @@ is.rsi.eligible <- function(x, threshold = 0.05) {
         ab <- suppressWarnings(as.ab(cur_col, fast_mode = TRUE, info = FALSE))
         if (!is.na(ab)) {
           # this is a valid antibiotic code
-          message_("Column '", font_bold(cur_col), "' is as.rsi()-eligible (despite only having empty values), since it seems to be ",
-                   ab_name(ab, language = NULL, tolower = TRUE), " (", ab, ")")
+          message_(
+            "Column '", font_bold(cur_col), "' is as.rsi()-eligible (despite only having empty values), since it seems to be ",
+            ab_name(ab, language = NULL, tolower = TRUE), " (", ab, ")"
+          )
           return(TRUE)
         }
       }
@@ -256,10 +270,10 @@ as.rsi.default <- function(x, ...) {
   if (is.rsi(x)) {
     return(x)
   }
-  
+
   x.bak <- x
   x <- as.character(x) # this is needed to prevent the vctrs pkg from throwing an error
-  
+
   if (inherits(x.bak, c("integer", "numeric", "double")) && all(x %in% c(1:3, NA))) {
     # support haven package for importing e.g., from SPSS - it adds the 'labels' attribute
     lbls <- attributes(x.bak)$labels
@@ -270,11 +284,9 @@ as.rsi.default <- function(x, ...) {
     } else {
       x[x.bak == 1] <- "S"
       x[x.bak == 2] <- "I"
-      x[x.bak == 3] <- "R"  
+      x[x.bak == 3] <- "R"
     }
-    
   } else if (!all(is.na(x)) && !identical(levels(x), c("R", "S", "I")) && !all(x %in% c("R", "S", "I", NA))) {
-    
     if (all(x %unlike% "(R|S|I)", na.rm = TRUE)) {
       # check if they are actually MICs or disks
       if (all_valid_mics(x)) {
@@ -283,20 +295,26 @@ as.rsi.default <- function(x, ...) {
         warning_("in `as.rsi()`: the input seems to contain disk diffusion values. You can transform them with `as.disk()` before running `as.rsi()` to interpret them.")
       }
     }
-    
+
     # trim leading and trailing spaces, new lines, etc.
     x <- trimws2(as.character(unlist(x)))
     x[x %in% c(NA, "", "-", "NULL")] <- NA_character_
     x.bak <- x
     na_before <- length(x[is.na(x)])
-    
+
     # correct for translations
-    trans_R <- unlist(TRANSLATIONS[which(TRANSLATIONS$pattern == "Resistant"),
-                                   LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED %in% colnames(TRANSLATIONS)]])
-    trans_S <- unlist(TRANSLATIONS[which(TRANSLATIONS$pattern == "Susceptible"),
-                                   LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED %in% colnames(TRANSLATIONS)]])
-    trans_I <- unlist(TRANSLATIONS[which(TRANSLATIONS$pattern %in% c("Incr. exposure", "Susceptible, incr. exp.", "Intermediate")),
-                                   LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED %in% colnames(TRANSLATIONS)]])
+    trans_R <- unlist(TRANSLATIONS[
+      which(TRANSLATIONS$pattern == "Resistant"),
+      LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED %in% colnames(TRANSLATIONS)]
+    ])
+    trans_S <- unlist(TRANSLATIONS[
+      which(TRANSLATIONS$pattern == "Susceptible"),
+      LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED %in% colnames(TRANSLATIONS)]
+    ])
+    trans_I <- unlist(TRANSLATIONS[
+      which(TRANSLATIONS$pattern %in% c("Incr. exposure", "Susceptible, incr. exp.", "Intermediate")),
+      LANGUAGES_SUPPORTED[LANGUAGES_SUPPORTED %in% colnames(TRANSLATIONS)]
+    ])
     x <- gsub(paste0(unique(trans_R[!is.na(trans_R)]), collapse = "|"), "R", x, ignore.case = TRUE)
     x <- gsub(paste0(unique(trans_S[!is.na(trans_S)]), collapse = "|"), "S", x, ignore.case = TRUE)
     x <- gsub(paste0(unique(trans_I[!is.na(trans_I)]), collapse = "|"), "I", x, ignore.case = TRUE)
@@ -320,7 +338,7 @@ as.rsi.default <- function(x, ...) {
     x <- gsub("^R+$", "R", x)
     x[!x %in% c("S", "I", "R")] <- NA_character_
     na_after <- length(x[is.na(x) | x == ""])
-    
+
     if (!isFALSE(list(...)$warn)) { # so as.rsi(..., warn = FALSE) will never throw a warning
       if (na_before != na_after) {
         list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ""] %pm>%
@@ -328,9 +346,11 @@ as.rsi.default <- function(x, ...) {
           sort() %pm>%
           vector_and(quotes = TRUE)
         warning_("in `as.rsi()`: ", na_after - na_before, " results truncated (",
-                 round(((na_after - na_before) / length(x)) * 100),
-                 "%) that were invalid antimicrobial interpretations: ",
-                 list_missing, call = FALSE)
+          round(((na_after - na_before) / length(x)) * 100),
+          "%) that were invalid antimicrobial interpretations: ",
+          list_missing,
+          call = FALSE
+        )
       }
       if (any(toupper(x.bak[!is.na(x.bak)]) == "U") && message_not_thrown_before("as.rsi", "U")) {
         warning_("in `as.rsi()`: 'U' was interpreted as 'S', following some laboratory systems")
@@ -343,63 +363,68 @@ as.rsi.default <- function(x, ...) {
       }
     }
   }
-  
+
   set_clean_class(factor(x, levels = c("S", "I", "R"), ordered = TRUE),
-                  new_class =  c("rsi", "ordered", "factor"))
+    new_class = c("rsi", "ordered", "factor")
+  )
 }
 
 #' @rdname as.rsi
 #' @export
 as.rsi.mic <- function(x,
-                       mo = NULL, 
-                       ab = deparse(substitute(x)), 
-                       guideline = "EUCAST", 
+                       mo = NULL,
+                       ab = deparse(substitute(x)),
+                       guideline = "EUCAST",
                        uti = FALSE,
                        conserve_capped_values = FALSE,
                        add_intrinsic_resistance = FALSE,
                        reference_data = AMR::rsi_translation,
                        ...) {
-  as_rsi_method(method_short = "mic",
-                method_long = "MIC values",
-                x = x,
-                mo = mo, 
-                ab = ab, 
-                guideline = guideline, 
-                uti = uti,
-                conserve_capped_values = conserve_capped_values, 
-                add_intrinsic_resistance = add_intrinsic_resistance,
-                reference_data = reference_data,
-                ...)
+  as_rsi_method(
+    method_short = "mic",
+    method_long = "MIC values",
+    x = x,
+    mo = mo,
+    ab = ab,
+    guideline = guideline,
+    uti = uti,
+    conserve_capped_values = conserve_capped_values,
+    add_intrinsic_resistance = add_intrinsic_resistance,
+    reference_data = reference_data,
+    ...
+  )
 }
 
 #' @rdname as.rsi
 #' @export
 as.rsi.disk <- function(x,
-                        mo = NULL, 
-                        ab = deparse(substitute(x)), 
-                        guideline = "EUCAST", 
+                        mo = NULL,
+                        ab = deparse(substitute(x)),
+                        guideline = "EUCAST",
                         uti = FALSE,
                         add_intrinsic_resistance = FALSE,
                         reference_data = AMR::rsi_translation,
                         ...) {
-  as_rsi_method(method_short = "disk",
-                method_long = "disk diffusion zones",
-                x = x,
-                mo = mo, 
-                ab = ab, 
-                guideline = guideline, 
-                uti = uti,
-                conserve_capped_values = FALSE, 
-                add_intrinsic_resistance = add_intrinsic_resistance,
-                reference_data = reference_data,
-                ...)
+  as_rsi_method(
+    method_short = "disk",
+    method_long = "disk diffusion zones",
+    x = x,
+    mo = mo,
+    ab = ab,
+    guideline = guideline,
+    uti = uti,
+    conserve_capped_values = FALSE,
+    add_intrinsic_resistance = add_intrinsic_resistance,
+    reference_data = reference_data,
+    ...
+  )
 }
 
 #' @rdname as.rsi
 #' @export
 as.rsi.data.frame <- function(x,
-                              ..., 
-                              col_mo = NULL, 
+                              ...,
+                              col_mo = NULL,
                               guideline = "EUCAST",
                               uti = NULL,
                               conserve_capped_values = FALSE,
@@ -412,7 +437,7 @@ as.rsi.data.frame <- function(x,
   meet_criteria(conserve_capped_values, allow_class = "logical", has_length = 1)
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
   meet_criteria(reference_data, allow_class = "data.frame")
-  
+
   x.bak <- x
   for (i in seq_len(ncol(x))) {
     # don't keep factors, overwriting them is hard
@@ -420,13 +445,13 @@ as.rsi.data.frame <- function(x,
       x[, i] <- as.character(x[, i, drop = TRUE])
     }
   }
-  
+
   # -- MO
   col_mo.bak <- col_mo
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo", info = FALSE)
   }
-  
+
   # -- UTIs
   col_uti <- uti
   if (is.null(col_uti)) {
@@ -442,8 +467,10 @@ as.rsi.data.frame <- function(x,
       }
     } else {
       # column found, transform to logical
-      stop_if(length(col_uti) != 1 | !col_uti %in% colnames(x),
-              "argument `uti` must be a [logical] vector, of must be a single column name of `x`")
+      stop_if(
+        length(col_uti) != 1 | !col_uti %in% colnames(x),
+        "argument `uti` must be a [logical] vector, of must be a single column name of `x`"
+      )
       uti <- as.logical(x[, col_uti, drop = TRUE])
     }
   } else {
@@ -457,17 +484,19 @@ as.rsi.data.frame <- function(x,
       } else {
         plural <- c("", "s", "a ")
       }
-      message_("Assuming value", plural[1], " ", 
-               vector_and(values, quotes = TRUE),
-               " in column '", font_bold(col_specimen),
-               "' reflect", plural[2], " ", plural[3], "urinary tract infection", plural[1],
-               ".\n  Use `as.rsi(uti = FALSE)` to prevent this.")
+      message_(
+        "Assuming value", plural[1], " ",
+        vector_and(values, quotes = TRUE),
+        " in column '", font_bold(col_specimen),
+        "' reflect", plural[2], " ", plural[3], "urinary tract infection", plural[1],
+        ".\n  Use `as.rsi(uti = FALSE)` to prevent this."
+      )
     } else {
       # no data about UTI's found
       uti <- FALSE
     }
   }
-  
+
   i <- 0
   if (tryCatch(length(list(...)) > 0, error = function(e) TRUE)) {
     sel <- colnames(pm_select(x, ...))
@@ -477,7 +506,7 @@ as.rsi.data.frame <- function(x,
   if (!is.null(col_mo)) {
     sel <- sel[sel != col_mo]
   }
-  
+
   ab_cols <- colnames(x)[vapply(FUN.VALUE = logical(1), x, function(y) {
     i <<- i + 1
     check <- is.mic(y) | is.disk(y)
@@ -500,9 +529,11 @@ as.rsi.data.frame <- function(x,
       return(FALSE)
     }
   })]
-  
-  stop_if(length(ab_cols) == 0,
-          "no columns with MIC values, disk zones or antibiotic column names found in this data set. Use as.mic() or as.disk() to transform antimicrobial columns.")
+
+  stop_if(
+    length(ab_cols) == 0,
+    "no columns with MIC values, disk zones or antibiotic column names found in this data set. Use as.mic() or as.disk() to transform antimicrobial columns."
+  )
   # set type per column
   types <- character(length(ab_cols))
   types[vapply(FUN.VALUE = logical(1), x.bak[, ab_cols, drop = FALSE], is.disk)] <- "disk"
@@ -519,33 +550,37 @@ as.rsi.data.frame <- function(x,
     }
     x_mo <- as.mo(x[, col_mo, drop = TRUE])
   }
-  
+
   for (i in seq_len(length(ab_cols))) {
     if (types[i] == "mic") {
-      x[, ab_cols[i]] <- as.rsi(x = x %pm>% 
-                                  pm_pull(ab_cols[i]) %pm>% 
-                                  as.character() %pm>%
-                                  as.mic(),
-                                mo = x_mo,
-                                ab = ab_cols[i],
-                                guideline = guideline,
-                                uti = uti,
-                                conserve_capped_values = conserve_capped_values,
-                                add_intrinsic_resistance = add_intrinsic_resistance,
-                                reference_data = reference_data,
-                                is_data.frame = TRUE)
+      x[, ab_cols[i]] <- as.rsi(
+        x = x %pm>%
+          pm_pull(ab_cols[i]) %pm>%
+          as.character() %pm>%
+          as.mic(),
+        mo = x_mo,
+        ab = ab_cols[i],
+        guideline = guideline,
+        uti = uti,
+        conserve_capped_values = conserve_capped_values,
+        add_intrinsic_resistance = add_intrinsic_resistance,
+        reference_data = reference_data,
+        is_data.frame = TRUE
+      )
     } else if (types[i] == "disk") {
-      x[, ab_cols[i]] <- as.rsi(x = x %pm>% 
-                                  pm_pull(ab_cols[i]) %pm>% 
-                                  as.character() %pm>%
-                                  as.disk(),
-                                mo = x_mo,
-                                ab = ab_cols[i],
-                                guideline = guideline,
-                                uti = uti,
-                                add_intrinsic_resistance = add_intrinsic_resistance,
-                                reference_data = reference_data,
-                                is_data.frame = TRUE)
+      x[, ab_cols[i]] <- as.rsi(
+        x = x %pm>%
+          pm_pull(ab_cols[i]) %pm>%
+          as.character() %pm>%
+          as.disk(),
+        mo = x_mo,
+        ab = ab_cols[i],
+        guideline = guideline,
+        uti = uti,
+        add_intrinsic_resistance = add_intrinsic_resistance,
+        reference_data = reference_data,
+        is_data.frame = TRUE
+      )
     } else if (types[i] == "rsi") {
       show_message <- FALSE
       ab <- ab_cols[i]
@@ -554,18 +589,20 @@ as.rsi.data.frame <- function(x,
         show_message <- TRUE
         # only print message if values are not already clean
         message_("=> Cleaning values in column '", font_bold(ab), "' (",
-                 ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
-                 ab_name(ab_coerced, tolower = TRUE), ")... ",
-                 appendLF = FALSE,
-                 as_note = FALSE)
+          ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
+          ab_name(ab_coerced, tolower = TRUE), ")... ",
+          appendLF = FALSE,
+          as_note = FALSE
+        )
       } else if (!is.rsi(x.bak[, ab_cols[i], drop = TRUE])) {
         show_message <- TRUE
         # only print message if class not already set
         message_("=> Assigning class <rsi> to already clean column '", font_bold(ab), "' (",
-                 ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
-                 ab_name(ab_coerced, tolower = TRUE), ")... ",
-                 appendLF = FALSE,
-                 as_note = FALSE)
+          ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
+          ab_name(ab_coerced, tolower = TRUE), ")... ",
+          appendLF = FALSE,
+          as_note = FALSE
+        )
       }
       x[, ab_cols[i]] <- as.rsi.default(x = as.character(x[, ab_cols[i], drop = TRUE]))
       if (show_message == TRUE) {
@@ -573,7 +610,7 @@ as.rsi.data.frame <- function(x,
       }
     }
   }
-  
+
   x
 }
 
@@ -589,11 +626,13 @@ get_guideline <- function(guideline, reference_data) {
     # like 'EUCAST2020', should be 'EUCAST 2020'
     guideline_param <- gsub("([a-z]+)([0-9]+)", "\\1 \\2", guideline_param, ignore.case = TRUE)
   }
-  
+
   stop_ifnot(guideline_param %in% reference_data$guideline,
-             "invalid guideline: '", guideline,
-             "'.\nValid guidelines are: ", vector_and(reference_data$guideline, quotes = TRUE, reverse = TRUE), call = FALSE)
-  
+    "invalid guideline: '", guideline,
+    "'.\nValid guidelines are: ", vector_and(reference_data$guideline, quotes = TRUE, reverse = TRUE),
+    call = FALSE
+  )
+
   guideline_param
 }
 
@@ -617,50 +656,60 @@ as_rsi_method <- function(method_short,
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
   meet_criteria(reference_data, allow_class = "data.frame")
   check_reference_data(reference_data)
-  
+
   # for dplyr's across()
   cur_column_dplyr <- import_fn("cur_column", "dplyr", error_on_fail = FALSE)
   if (!is.null(cur_column_dplyr) && tryCatch(is.data.frame(get_current_data("ab", call = 0)), error = function(e) FALSE)) {
     # try to get current column, which will only be available when in across()
     ab <- tryCatch(cur_column_dplyr(),
-                   error = function(e) ab)
+      error = function(e) ab
+    )
   }
-  
+
   # for auto-determining mo
   mo_var_found <- ""
   if (is.null(mo)) {
-    tryCatch({
-      df <- get_current_data(arg_name = "mo", call = -3) # will return an error if not found
-      mo <- NULL
-      try({
-        mo <- suppressMessages(search_type_in_df(df, "mo"))
-      }, silent = TRUE)
-      if (!is.null(df) && !is.null(mo) && is.data.frame(df)) {
-        mo_var_found <- paste0(" based on column '", font_bold(mo), "'")
-        mo <- df[, mo, drop = TRUE]
+    tryCatch(
+      {
+        df <- get_current_data(arg_name = "mo", call = -3) # will return an error if not found
+        mo <- NULL
+        try(
+          {
+            mo <- suppressMessages(search_type_in_df(df, "mo"))
+          },
+          silent = TRUE
+        )
+        if (!is.null(df) && !is.null(mo) && is.data.frame(df)) {
+          mo_var_found <- paste0(" based on column '", font_bold(mo), "'")
+          mo <- df[, mo, drop = TRUE]
+        }
+      },
+      error = function(e) {
+        mo <- NULL
       }
-    }, error = function(e) {
-      mo <- NULL
-    })
+    )
   }
   if (is.null(mo)) {
     stop_("No information was supplied about the microorganisms (missing argument `mo` and no column of class <mo> found). See ?as.rsi.\n\n",
-          "To transform certain columns with e.g. mutate(), use `data %>% mutate(across(..., as.rsi, mo = x))`, where x is your column with microorganisms.\n",
-          "To tranform all ", method_long, " in a data set, use `data %>% as.rsi()` or `data %>% mutate(across(where(is.", method_short, "), as.rsi))`.", call = FALSE)
+      "To transform certain columns with e.g. mutate(), use `data %>% mutate(across(..., as.rsi, mo = x))`, where x is your column with microorganisms.\n",
+      "To tranform all ", method_long, " in a data set, use `data %>% as.rsi()` or `data %>% mutate(across(where(is.", method_short, "), as.rsi))`.",
+      call = FALSE
+    )
   }
-  
+
   if (length(ab) == 1 && ab %like% paste0("as.", method_short)) {
-    stop_('No unambiguous name was supplied about the antibiotic (argument `ab`). See ?as.rsi.', call = FALSE)
+    stop_("No unambiguous name was supplied about the antibiotic (argument `ab`). See ?as.rsi.", call = FALSE)
   }
-  
+
   ab_coerced <- suppressWarnings(as.ab(ab))
   mo_coerced <- suppressWarnings(as.mo(mo))
   guideline_coerced <- get_guideline(guideline, reference_data)
   if (is.na(ab_coerced)) {
     message_("Returning NAs for unknown drug: '", font_bold(ab),
-             "'. Rename this column to a drug name or code, and check the output with `as.ab()`.", 
-             add_fn = font_red, 
-             as_note = FALSE)
+      "'. Rename this column to a drug name or code, and check the output with `as.ab()`.",
+      add_fn = font_red,
+      as_note = FALSE
+    )
     return(as.rsi(rep(NA, length(x))))
   }
   if (length(mo_coerced) == 1) {
@@ -669,30 +718,34 @@ as_rsi_method <- function(method_short,
   if (length(uti) == 1) {
     uti <- rep(uti, length(x))
   }
-  
+
   agent_formatted <- paste0("'", font_bold(ab), "'")
   agent_name <- ab_name(ab_coerced, tolower = TRUE, language = NULL)
   if (generalise_antibiotic_name(ab) != generalise_antibiotic_name(agent_name)) {
     agent_formatted <- paste0(agent_formatted, " (", ab_coerced, ", ", agent_name, ")")
   }
   message_("=> Interpreting ", method_long, " of ", ifelse(isTRUE(list(...)$is_data.frame), "column ", ""),
-           agent_formatted,
-           mo_var_found, 
-           " according to ", ifelse(identical(reference_data, AMR::rsi_translation),
-                                    font_bold(guideline_coerced),
-                                    "manually defined 'reference_data'"),
-           "... ",
-           appendLF = FALSE,
-           as_note = FALSE)
-  result <- exec_as.rsi(method = method_short,
-                        x = x,
-                        mo = mo_coerced,
-                        ab = ab_coerced,
-                        guideline = guideline_coerced,
-                        uti = uti,
-                        conserve_capped_values = conserve_capped_values,
-                        add_intrinsic_resistance = add_intrinsic_resistance,
-                        reference_data = reference_data) # exec_as.rsi will return message 'OK'
+    agent_formatted,
+    mo_var_found,
+    " according to ", ifelse(identical(reference_data, AMR::rsi_translation),
+      font_bold(guideline_coerced),
+      "manually defined 'reference_data'"
+    ),
+    "... ",
+    appendLF = FALSE,
+    as_note = FALSE
+  )
+  result <- exec_as.rsi(
+    method = method_short,
+    x = x,
+    mo = mo_coerced,
+    ab = ab_coerced,
+    guideline = guideline_coerced,
+    uti = uti,
+    conserve_capped_values = conserve_capped_values,
+    add_intrinsic_resistance = add_intrinsic_resistance,
+    reference_data = reference_data
+  ) # exec_as.rsi will return message 'OK'
   result
 }
 
@@ -702,25 +755,25 @@ exec_as.rsi <- function(method,
                         ab,
                         guideline,
                         uti,
-                        conserve_capped_values, 
+                        conserve_capped_values,
                         add_intrinsic_resistance,
                         reference_data) {
   metadata_mo <- get_mo_failures_uncertainties_renamed()
-  
+
   x_bak <- data.frame(x_mo = paste0(x, mo), stringsAsFactors = FALSE)
   df <- unique(data.frame(x, mo, x_mo = paste0(x, mo), stringsAsFactors = FALSE))
   x <- df$x
   mo <- df$mo
-  
+
   if (method == "mic") {
     x <- as.mic(x) # when as.rsi.mic is called directly
   } else if (method == "disk") {
     x <- as.disk(x) # when as.rsi.disk is called directly
   }
-  
+
   rise_warning <- FALSE
   method_param <- toupper(method)
-  
+
   genera <- mo_genus(mo, language = NULL)
   mo_genus <- as.mo(genera, language = NULL)
   mo_family <- as.mo(mo_family(mo, language = NULL))
@@ -736,16 +789,22 @@ exec_as.rsi <- function(method,
     mo_lancefield <- mo
   }
   mo_other <- as.mo(rep("UNKNOWN", length(mo)))
-  
+
   guideline_coerced <- get_guideline(guideline, reference_data)
   if (guideline_coerced != guideline) {
-    if (message_not_thrown_before("as.rsi", "msg1")) {
+    if (message_not_thrown_before("as.rsi", "guideline")) {
       message_("Using guideline ", font_bold(guideline_coerced), " as input for `guideline`.")
     }
   }
-  
+
   new_rsi <- rep(NA_character_, length(x))
   ab_param <- ab
+  if (ab_param == "AMX") {
+    ab_param <- "AMP"
+    if (message_not_thrown_before("as.rsi", "AMP_for_AMX")) {
+      message_("(using ampicillin rules)", appendLF = FALSE, as_note = FALSE)
+    }
+  }
   if (identical(reference_data, AMR::rsi_translation)) {
     trans <- reference_data %pm>%
       subset(guideline == guideline_coerced & method == method_param & ab == ab_param)
@@ -754,24 +813,24 @@ exec_as.rsi <- function(method,
       subset(method == method_param & ab == ab_param)
   }
   trans$lookup <- paste(trans$mo, trans$ab)
-  
-  lookup_mo <- paste(mo, ab)
-  lookup_genus <- paste(mo_genus, ab)
-  lookup_family <- paste(mo_family, ab)
-  lookup_order <- paste(mo_order, ab)
-  lookup_becker <- paste(mo_becker, ab)
-  lookup_lancefield <- paste(mo_lancefield, ab)
-  lookup_other <- paste(mo_other, ab)
-  
+
+  lookup_mo <- paste(mo, ab_param)
+  lookup_genus <- paste(mo_genus, ab_param)
+  lookup_family <- paste(mo_family, ab_param)
+  lookup_order <- paste(mo_order, ab_param)
+  lookup_becker <- paste(mo_becker, ab_param)
+  lookup_lancefield <- paste(mo_lancefield, ab_param)
+  lookup_other <- paste(mo_other, ab_param)
+
   any_is_intrinsic_resistant <- FALSE
-  
+
   for (i in seq_len(length(x))) {
-    is_intrinsic_r <- paste(mo[i], ab) %in% INTRINSIC_R
+    is_intrinsic_r <- paste(mo[i], ab_param) %in% INTRINSIC_R
     any_is_intrinsic_resistant <- any_is_intrinsic_resistant | is_intrinsic_r
-    
+
     if (isTRUE(add_intrinsic_resistance) & is_intrinsic_r) {
       if (guideline_coerced %unlike% "EUCAST") {
-        if (message_not_thrown_before("as.rsi", "msg2")) {
+        if (message_not_thrown_before("as.rsi", "intrinsic")) {
           warning_("in `as.rsi()`: using 'add_intrinsic_resistance' is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.")
         }
       } else {
@@ -779,85 +838,95 @@ exec_as.rsi <- function(method,
         next
       }
     }
-    
+
     get_record <- trans %pm>%
       # no subsetting to UTI here
-      subset(lookup %in% c(lookup_mo[i],
-                           lookup_genus[i],
-                           lookup_family[i],
-                           lookup_order[i],
-                           lookup_becker[i],
-                           lookup_lancefield[i],
-                           lookup_other[i]))
-    
-    if (any(get_record$uti == TRUE, na.rm = TRUE) && !any(uti == TRUE, na.rm = TRUE) && message_not_thrown_before("as.rsi", "msg3", ab)) {
-      warning_("in `as.rsi()`: interpretation of ", font_bold(ab_name(ab, tolower = TRUE)), " is only available for (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use argument `uti` to set which isolates are from urine. See ?as.rsi.")
+      subset(lookup %in% c(
+        lookup_mo[i],
+        lookup_genus[i],
+        lookup_family[i],
+        lookup_order[i],
+        lookup_becker[i],
+        lookup_lancefield[i],
+        lookup_other[i]
+      ))
+
+    if (any(get_record$uti == TRUE, na.rm = TRUE) && !any(uti == TRUE, na.rm = TRUE) && message_not_thrown_before("as.rsi", "uti", ab_param)) {
+      warning_("in `as.rsi()`: interpretation of ", font_bold(ab_name(ab_param, tolower = TRUE)), " is only available for (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use argument `uti` to set which isolates are from urine. See ?as.rsi.")
       rise_warning <- TRUE
     }
-    
+
     if (isTRUE(uti[i])) {
-      get_record <- get_record %pm>% 
+      get_record <- get_record %pm>%
         # be as specific as possible (i.e. prefer species over genus):
         # pm_desc(uti) = TRUE on top and FALSE on bottom
         pm_arrange(pm_desc(uti), rank_index) # 'uti' is a column in data set 'rsi_translation'
     } else {
-      get_record <- get_record %pm>% 
+      get_record <- get_record %pm>%
         pm_filter(uti == FALSE) %pm>% # 'uti' is a column in rsi_translation
         pm_arrange(rank_index)
     }
-  
+
     get_record <- get_record[1L, , drop = FALSE]
-    
+
     if (NROW(get_record) > 0) {
       if (is.na(x[i]) | (is.na(get_record$breakpoint_S) & is.na(get_record$breakpoint_R))) {
         new_rsi[i] <- NA_character_
       } else if (method == "mic") {
-        new_rsi[i] <- quick_case_when(isTRUE(conserve_capped_values) & isTRUE(x[i] %like% "^<[0-9]") ~ "S",
-                                      isTRUE(conserve_capped_values) & isTRUE(x[i] %like% "^>[0-9]") ~ "R",
-                                      # these basically call `<=.mic()` and `>=.mic()`:
-                                      isTRUE(x[i] <= get_record$breakpoint_S) ~ "S",
-                                      guideline_coerced %like% "EUCAST" & isTRUE(x[i] > get_record$breakpoint_R) ~ "R",
-                                      guideline_coerced %like% "CLSI" & isTRUE(x[i] >= get_record$breakpoint_R) ~ "R",
-                                      # return "I" when not match the bottom or top
-                                      !is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R) ~ "I",
-                                      # and NA otherwise
-                                      TRUE ~ NA_character_)
+        new_rsi[i] <- quick_case_when(
+          isTRUE(conserve_capped_values) & isTRUE(x[i] %like% "^<[0-9]") ~ "S",
+          isTRUE(conserve_capped_values) & isTRUE(x[i] %like% "^>[0-9]") ~ "R",
+          # these basically call `<=.mic()` and `>=.mic()`:
+          isTRUE(x[i] <= get_record$breakpoint_S) ~ "S",
+          guideline_coerced %like% "EUCAST" & isTRUE(x[i] > get_record$breakpoint_R) ~ "R",
+          guideline_coerced %like% "CLSI" & isTRUE(x[i] >= get_record$breakpoint_R) ~ "R",
+          # return "I" when not match the bottom or top
+          !is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R) ~ "I",
+          # and NA otherwise
+          TRUE ~ NA_character_
+        )
       } else if (method == "disk") {
-        new_rsi[i] <- quick_case_when(isTRUE(as.double(x[i]) >= as.double(get_record$breakpoint_S)) ~ "S",
-                                      guideline_coerced %like% "EUCAST" & isTRUE(as.double(x[i]) < as.double(get_record$breakpoint_R)) ~ "R",
-                                      guideline_coerced %like% "CLSI" & isTRUE(as.double(x[i]) <= as.double(get_record$breakpoint_R)) ~ "R",
-                                      # return "I" when not match the bottom or top
-                                      !is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R) ~ "I",
-                                      # and NA otherwise
-                                      TRUE ~ NA_character_)
+        new_rsi[i] <- quick_case_when(
+          isTRUE(as.double(x[i]) >= as.double(get_record$breakpoint_S)) ~ "S",
+          guideline_coerced %like% "EUCAST" & isTRUE(as.double(x[i]) < as.double(get_record$breakpoint_R)) ~ "R",
+          guideline_coerced %like% "CLSI" & isTRUE(as.double(x[i]) <= as.double(get_record$breakpoint_R)) ~ "R",
+          # return "I" when not match the bottom or top
+          !is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R) ~ "I",
+          # and NA otherwise
+          TRUE ~ NA_character_
+        )
       }
     }
   }
-  
+
   if (any_is_intrinsic_resistant & guideline_coerced %like% "EUCAST" & !isTRUE(add_intrinsic_resistance)) {
     # found some intrinsic resistance, but was not applied
-    if (message_not_thrown_before("as.rsi", "msg4")) {
+    if (message_not_thrown_before("as.rsi", "unapplied_instrinsic")) {
       warning_("in `as.rsi()`: found intrinsic resistance in some bug/drug combinations, although it was not applied.\nUse `as.rsi(..., add_intrinsic_resistance = TRUE)` to apply it.")
     }
     rise_warning <- TRUE
   }
-  
+
   new_rsi <- x_bak %pm>%
-    pm_left_join(data.frame(x_mo = paste0(x, mo), new_rsi,
-                            stringsAsFactors = FALSE),
-                 by = "x_mo") %pm>%
+    pm_left_join(data.frame(
+      x_mo = paste0(x, mo), new_rsi,
+      stringsAsFactors = FALSE
+    ),
+    by = "x_mo"
+    ) %pm>%
     pm_pull(new_rsi)
-  
+
   if (isTRUE(rise_warning)) {
     message_("WARNING.", add_fn = list(font_yellow, font_bold), as_note = FALSE)
   } else {
     message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
   }
-  
+
   load_mo_failures_uncertainties_renamed(metadata_mo)
-  
+
   set_clean_class(factor(new_rsi, levels = c("S", "I", "R"), ordered = TRUE),
-                  new_class =  c("rsi", "ordered", "factor"))
+    new_class = c("rsi", "ordered", "factor")
+  )
 }
 
 # will be exported using s3_register() in R/zzz.R
@@ -885,12 +954,14 @@ freq.rsi <- function(x, ...) {
   x_name <- gsub(".*[$]", "", x_name)
   if (x_name %in% c("x", ".")) {
     # try again going through system calls
-    x_name <- stats::na.omit(vapply(FUN.VALUE = character(1),
-                                    sys.calls(), 
-                                    function(call) {
-                                      call_txt <- as.character(call)
-                                      ifelse(call_txt[1] %like% "freq$", call_txt[length(call_txt)], character(0))
-                                    }))[1L]
+    x_name <- stats::na.omit(vapply(
+      FUN.VALUE = character(1),
+      sys.calls(),
+      function(call) {
+        call_txt <- as.character(call)
+        ifelse(call_txt[1] %like% "freq$", call_txt[length(call_txt)], character(0))
+      }
+    ))[1L]
   }
   ab <- suppressMessages(suppressWarnings(as.ab(x_name)))
   digits <- list(...)$digits
@@ -898,17 +969,25 @@ freq.rsi <- function(x, ...) {
     digits <- 2
   }
   if (!is.na(ab)) {
-    cleaner::freq.default(x = x, ...,
-                          .add_header = list(
-                            Drug = paste0(ab_name(ab, language = NULL), " (", ab, ", ", paste(ab_atc(ab), collapse = "/"), ")"),
-                            `Drug group` = ab_group(ab, language = NULL),
-                            `%SI` = trimws(percentage(susceptibility(x, minimum = 0, as_percent = FALSE),
-                                                      digits = digits))))
+    cleaner::freq.default(
+      x = x, ...,
+      .add_header = list(
+        Drug = paste0(ab_name(ab, language = NULL), " (", ab, ", ", paste(ab_atc(ab), collapse = "/"), ")"),
+        `Drug group` = ab_group(ab, language = NULL),
+        `%SI` = trimws(percentage(susceptibility(x, minimum = 0, as_percent = FALSE),
+          digits = digits
+        ))
+      )
+    )
   } else {
-    cleaner::freq.default(x = x, ...,
-                          .add_header = list(
-                            `%SI` = trimws(percentage(susceptibility(x, minimum = 0, as_percent = FALSE),
-                                                      digits = digits))))
+    cleaner::freq.default(
+      x = x, ...,
+      .add_header = list(
+        `%SI` = trimws(percentage(susceptibility(x, minimum = 0, as_percent = FALSE),
+          digits = digits
+        ))
+      )
+    )
   }
 }
 
@@ -922,24 +1001,26 @@ get_skimmers.rsi <- function(column) {
     calls_txt <- vapply(calls, function(x) paste(deparse(x), collapse = ""), FUN.VALUE = character(1))
     if (any(calls_txt %like% "skim_variable", na.rm = TRUE)) {
       ind <- which(calls_txt %like% "skim_variable")[1L]
-      vars <- tryCatch(eval(parse(text = ".data$skim_variable$rsi"), envir = frms[[ind]]), 
-                       error = function(e) NULL)
+      vars <- tryCatch(eval(parse(text = ".data$skim_variable$rsi"), envir = frms[[ind]]),
+        error = function(e) NULL
+      )
       tryCatch(ab_name(as.character(calls[[length(calls)]][[2]]), language = NULL),
-               error = function(e) NA_character_)
+        error = function(e) NA_character_
+      )
     } else {
       NA_character_
     }
   }
-  
+
   skimr::sfl(
     skim_type = "rsi",
     ab_name = name_call,
     count_R = count_R,
     count_S = count_susceptible,
     count_I = count_I,
-    prop_R = ~proportion_R(., minimum = 0),
-    prop_S = ~susceptibility(., minimum = 0),
-    prop_I = ~proportion_I(., minimum = 0)
+    prop_R = ~ proportion_R(., minimum = 0),
+    prop_S = ~ susceptibility(., minimum = 0),
+    prop_I = ~ proportion_I(., minimum = 0)
   )
 }
 

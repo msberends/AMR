@@ -143,14 +143,13 @@ At default, the names of antibiotics will be shown on the plots using \code{\lin
 \examples{
 \donttest{
 if (require("ggplot2") && require("dplyr")) {
- 
+
   # get antimicrobial results for drugs against a UTI:
   ggplot(example_isolates \%>\% select(AMX, NIT, FOS, TMP, CIP)) +
     geom_rsi()
-    
 }
 if (require("ggplot2") && require("dplyr")) {
- 
+
   # prettify the plot using some additional functions:
   df <- example_isolates \%>\% select(AMX, NIT, FOS, TMP, CIP)
   ggplot(df) +
@@ -159,35 +158,33 @@ if (require("ggplot2") && require("dplyr")) {
     scale_rsi_colours() +
     labels_rsi_count() +
     theme_rsi()
-    
 }
 if (require("ggplot2") && require("dplyr")) {
- 
+
   # or better yet, simplify this using the wrapper function - a single command:
   example_isolates \%>\%
     select(AMX, NIT, FOS, TMP, CIP) \%>\%
     ggplot_rsi()
-    
 }
 if (require("ggplot2") && require("dplyr")) {
- 
+
   # get only proportions and no counts:
   example_isolates \%>\%
     select(AMX, NIT, FOS, TMP, CIP) \%>\%
     ggplot_rsi(datalabels = FALSE)
-    
 }
 if (require("ggplot2") && require("dplyr")) {
- 
+
   # add other ggplot2 arguments as you like:
   example_isolates \%>\%
     select(AMX, NIT, FOS, TMP, CIP) \%>\%
-    ggplot_rsi(width = 0.5,
-               colour = "black",
-               size = 1,
-               linetype = 2,
-               alpha = 0.25)
-    
+    ggplot_rsi(
+      width = 0.5,
+      colour = "black",
+      size = 1,
+      linetype = 2,
+      alpha = 0.25
+    )
 }
 if (require("ggplot2") && require("dplyr")) {
 
@@ -195,55 +192,57 @@ if (require("ggplot2") && require("dplyr")) {
   example_isolates \%>\%
     select(AMX) \%>\%
     ggplot_rsi(colours = c(SI = "yellow"))
-    
 }
 if (require("ggplot2") && require("dplyr")) {
 
   # but you can also use the built-in colour-blind friendly colours for
   # your plots, where "S" is green, "I" is yellow and "R" is red:
-  data.frame(x = c("Value1", "Value2", "Value3"),
-             y = c(1, 2, 3),
-             z = c("Value4", "Value5", "Value6")) \%>\%
+  data.frame(
+    x = c("Value1", "Value2", "Value3"),
+    y = c(1, 2, 3),
+    z = c("Value4", "Value5", "Value6")
+  ) \%>\%
     ggplot() +
     geom_col(aes(x = x, y = y, fill = z)) +
     scale_rsi_colours(Value4 = "S", Value5 = "I", Value6 = "R")
-    
 }
 if (require("ggplot2") && require("dplyr")) {
-  
+
   # resistance of ciprofloxacine per age group
   example_isolates \%>\%
     mutate(first_isolate = first_isolate()) \%>\%
-    filter(first_isolate == TRUE,
-           mo == as.mo("Escherichia coli")) \%>\%
+    filter(
+      first_isolate == TRUE,
+      mo == as.mo("Escherichia coli")
+    ) \%>\%
     # age_groups() is also a function in this AMR package:
     group_by(age_group = age_groups(age)) \%>\%
     select(age_group, CIP) \%>\%
     ggplot_rsi(x = "age_group")
-    
 }
 if (require("ggplot2") && require("dplyr")) {
-  
+
   # a shorter version which also adjusts data label colours:
   example_isolates \%>\%
     select(AMX, NIT, FOS, TMP, CIP) \%>\%
     ggplot_rsi(colours = FALSE)
-    
 }
 if (require("ggplot2") && require("dplyr")) {
 
   # it also supports groups (don't forget to use the group var on `x` or `facet`):
   example_isolates \%>\%
-    filter(mo_is_gram_negative(), ward != "Outpatient") \%>\% 
+    filter(mo_is_gram_negative(), ward != "Outpatient") \%>\%
     # select only UTI-specific drugs
     select(ward, AMX, NIT, FOS, TMP, CIP) \%>\%
     group_by(ward) \%>\%
-    ggplot_rsi(x = "ward",
-               facet = "antibiotic",
-               nrow = 1,
-               title = "AMR of Anti-UTI Drugs Per Ward",
-               x.title = "Ward",
-               datalabels = FALSE)
+    ggplot_rsi(
+      x = "ward",
+      facet = "antibiotic",
+      nrow = 1,
+      title = "AMR of Anti-UTI Drugs Per Ward",
+      x.title = "Ward",
+      datalabels = FALSE
+    )
 }
 }
 }

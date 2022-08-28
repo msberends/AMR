@@ -263,11 +263,13 @@ mo_type("Klebsiella pneumoniae")
 mo_type("Klebsiella pneumoniae")
 
 mo_fullname("S. pyogenes",
-            Lancefield = TRUE,
-            language = "de")
+  Lancefield = TRUE,
+  language = "de"
+)
 mo_fullname("S. pyogenes",
-            Lancefield = TRUE,
-            language = "nl")
+  Lancefield = TRUE,
+  language = "nl"
+)
 
 
 # other --------------------------------------------------------------------
@@ -278,7 +280,7 @@ mo_is_yeast(c("Candida", "Trichophyton", "Klebsiella"))
 if (require("dplyr")) {
   example_isolates \%>\%
     filter(mo_is_gram_positive())
-    
+
   example_isolates \%>\%
     filter(mo_is_intrinsic_resistant(ab = "vanco"))
 }

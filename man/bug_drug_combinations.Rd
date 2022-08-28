@@ -70,12 +70,17 @@ head(x)
 format(x, translate_ab = "name (atc)")
 
 # Use FUN to change to transformation of microorganism codes
-bug_drug_combinations(example_isolates, 
-                      FUN = mo_gramstain)
-                           
 bug_drug_combinations(example_isolates,
-                      FUN = function(x) ifelse(x == as.mo("Escherichia coli"),
-                                               "E. coli",
-                                               "Others"))
+  FUN = mo_gramstain
+)
+
+bug_drug_combinations(example_isolates,
+  FUN = function(x) {
+    ifelse(x == as.mo("Escherichia coli"),
+      "E. coli",
+      "Others"
+    )
+  }
+)
 }
 }

@@ -91,14 +91,18 @@ quantile(mic_data)
 all(mic_data < 512)
 
 # interpret MIC values
-as.rsi(x = as.mic(2),
-       mo = as.mo("Streptococcus pneumoniae"),
-       ab = "AMX",
-       guideline = "EUCAST")
-as.rsi(x = as.mic(c(0.01, 2, 4, 8)),
-       mo = as.mo("Streptococcus pneumoniae"),
-       ab = "AMX",
-       guideline = "EUCAST")
+as.rsi(
+  x = as.mic(2),
+  mo = as.mo("Streptococcus pneumoniae"),
+  ab = "AMX",
+  guideline = "EUCAST"
+)
+as.rsi(
+  x = as.mic(c(0.01, 2, 4, 8)),
+  mo = as.mo("Streptococcus pneumoniae"),
+  ab = "AMX",
+  guideline = "EUCAST"
+)
 
 # plot MIC values, see ?plot
 plot(mic_data)

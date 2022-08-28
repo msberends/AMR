@@ -71,7 +71,7 @@ Abbreviations of return values when using \code{property = "U"} (unit):
 }
 \examples{
 \donttest{
-if (requireNamespace("curl") && requireNamespace("rvest") && requireNamespace("xml2")) { 
+if (requireNamespace("curl") && requireNamespace("rvest") && requireNamespace("xml2")) {
   # oral DDD (Defined Daily Dose) of amoxicillin
   atc_online_property("J01CA04", "DDD", "O")
   atc_online_ddd(ab_atc("amox"))

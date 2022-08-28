@@ -37,68 +37,72 @@ The \code{dplyr} package is not required for these functions to work, but these 
 # See ?example_isolates
 df <- example_isolates[sample(seq_len(2000), size = 200), ]
 
-get_episode(df$date, episode_days = 60)    # indices
+get_episode(df$date, episode_days = 60) # indices
 is_new_episode(df$date, episode_days = 60) # TRUE/FALSE
 
 # filter on results from the third 60-day episode only, using base R
 df[which(get_episode(df$date, 60) == 3), ]
 
 # the functions also work for less than a day, e.g. to include one per hour:
-get_episode(c(Sys.time(),
-              Sys.time() + 60 * 60),
-            episode_days = 1/24)
+get_episode(c(
+  Sys.time(),
+  Sys.time() + 60 * 60
+),
+episode_days = 1 / 24
+)
 
 \donttest{
 if (require("dplyr")) {
   # is_new_episode() can also be used in dplyr verbs to determine patient
   # episodes based on any (combination of) grouping variables:
   df \%>\%
-    mutate(condition = sample(x = c("A", "B", "C"), 
-                              size = 200,
-                              replace = TRUE)) \%>\% 
+    mutate(condition = sample(
+      x = c("A", "B", "C"),
+      size = 200,
+      replace = TRUE
+    )) \%>\%
     group_by(condition) \%>\%
     mutate(new_episode = is_new_episode(date, 365)) \%>\%
     select(patient, date, condition, new_episode)
-    
 }
 if (require("dplyr")) {
-    
   df \%>\%
     group_by(ward, patient) \%>\%
-    transmute(date, 
-              patient,
-              new_index = get_episode(date, 60),
-              new_logical = is_new_episode(date, 60))
-    
+    transmute(date,
+      patient,
+      new_index = get_episode(date, 60),
+      new_logical = is_new_episode(date, 60)
+    )
 }
 if (require("dplyr")) {
-  
   df \%>\%
-    group_by(ward) \%>\% 
-    summarise(n_patients = n_distinct(patient),
-              n_episodes_365 = sum(is_new_episode(date, episode_days = 365)),
-              n_episodes_60  = sum(is_new_episode(date, episode_days = 60)),
-              n_episodes_30  = sum(is_new_episode(date, episode_days = 30)))
-    
+    group_by(ward) \%>\%
+    summarise(
+      n_patients = n_distinct(patient),
+      n_episodes_365 = sum(is_new_episode(date, episode_days = 365)),
+      n_episodes_60 = sum(is_new_episode(date, episode_days = 60)),
+      n_episodes_30 = sum(is_new_episode(date, episode_days = 30))
+    )
 }
 if (require("dplyr")) {
-    
+
   # grouping on patients and microorganisms leads to the same
   # results as first_isolate() when using 'episode-based':
   x <- df \%>\%
-    filter_first_isolate(include_unknown = TRUE,
-                         method = "episode-based")
-    
+    filter_first_isolate(
+      include_unknown = TRUE,
+      method = "episode-based"
+    )
+
   y <- df \%>\%
     group_by(patient, mo) \%>\%
     filter(is_new_episode(date, 365)) \%>\%
     ungroup()
 
   identical(x, y)
-    
 }
 if (require("dplyr")) {
-  
+
   # but is_new_episode() has a lot more flexibility than first_isolate(),
   # since you can now group on anything that seems relevant:
   df \%>\%

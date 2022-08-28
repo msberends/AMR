@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -48,8 +48,8 @@
 #' @param base_textsize the text size for all plot elements except the labels and arrows
 #' @param ... arguments passed on to functions
 #' @source The [ggplot_pca()] function is based on the `ggbiplot()` function from the `ggbiplot` package by Vince Vu, as found on GitHub: <https://github.com/vqv/ggbiplot> (retrieved: 2 March 2020, their latest commit: [`7325e88`](https://github.com/vqv/ggbiplot/commit/7325e880485bea4c07465a0304c470608fffb5d9); 12 February 2015).
-#' 
-#' As per their GPL-2 licence that demands documentation of code changes, the changes made based on the source code were: 
+#'
+#' As per their GPL-2 licence that demands documentation of code changes, the changes made based on the source code were:
 #' 1. Rewritten code to remove the dependency on packages `plyr`, `scales` and `grid`
 #' 2. Parametrised more options, like arrow and ellipse settings
 #' 3. Hardened all input possibilities by defining the exact type of user input for every argument
@@ -59,30 +59,32 @@
 #' @details The colours for labels and points can be changed by adding another scale layer for colour, such as `scale_colour_viridis_d()` and `scale_colour_brewer()`.
 #' @rdname ggplot_pca
 #' @export
-#' @examples 
+#' @examples
 #' # `example_isolates` is a data set available in the AMR package.
 #' # See ?example_isolates.
 #'
 #' \donttest{
 #' if (require("dplyr")) {
-#'   # calculate the resistance per group first 
-#'   resistance_data <- example_isolates %>% 
-#'     group_by(order = mo_order(mo),       # group on anything, like order
-#'              genus = mo_genus(mo)) %>%   #   and genus as we do here;
-#'     filter(n() >= 30) %>%                # filter on only 30 results per group
-#'     summarise_if(is.rsi, resistance)     # then get resistance of all drugs
-#'     
+#'   # calculate the resistance per group first
+#'   resistance_data <- example_isolates %>%
+#'     group_by(
+#'       order = mo_order(mo), # group on anything, like order
+#'       genus = mo_genus(mo)
+#'     ) %>% #   and genus as we do here;
+#'     filter(n() >= 30) %>% # filter on only 30 results per group
+#'     summarise_if(is.rsi, resistance) # then get resistance of all drugs
+#'
 #'   # now conduct PCA for certain antimicrobial agents
-#'   pca_result <- resistance_data %>%         
-#'     pca(AMC, CXM, CTX, CAZ, GEN, TOB, TMP, SXT) 
-#'     
+#'   pca_result <- resistance_data %>%
+#'     pca(AMC, CXM, CTX, CAZ, GEN, TOB, TMP, SXT)
+#'
 #'   summary(pca_result)
-#'   
+#'
 #'   # old base R plotting method:
 #'   biplot(pca_result)
 #'   # new ggplot2 plotting method using this package:
 #'   ggplot_pca(pca_result)
-#'   
+#'
 #'   if (require("ggplot2")) {
 #'     ggplot_pca(pca_result) +
 #'       scale_colour_viridis_d() +
@@ -112,7 +114,6 @@ ggplot_pca <- function(x,
                        arrows_alpha = 0.75,
                        base_textsize = 10,
                        ...) {
-  
   stop_ifnot_installed("ggplot2")
   meet_criteria(x, allow_class = c("prcomp", "princomp", "PCA", "lda"))
   meet_criteria(choices, allow_class = c("numeric", "integer"), has_length = 2, is_positive = TRUE, is_finite = TRUE)
@@ -135,17 +136,19 @@ ggplot_pca <- function(x,
   meet_criteria(arrows_textangled, allow_class = "logical", has_length = 1)
   meet_criteria(arrows_alpha, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(base_textsize, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
-  
-  calculations <- pca_calculations(pca_model = x,
-                                   groups = groups, 
-                                   groups_missing = missing(groups),
-                                   labels = labels,
-                                   labels_missing = missing(labels),
-                                   choices = choices,
-                                   scale = scale,
-                                   pc.biplot = pc.biplot,
-                                   ellipse_prob = ellipse_prob,
-                                   labels_text_placement = labels_text_placement)
+
+  calculations <- pca_calculations(
+    pca_model = x,
+    groups = groups,
+    groups_missing = missing(groups),
+    labels = labels,
+    labels_missing = missing(labels),
+    choices = choices,
+    scale = scale,
+    pc.biplot = pc.biplot,
+    ellipse_prob = ellipse_prob,
+    labels_text_placement = labels_text_placement
+  )
   choices <- calculations$choices
   df.u <- calculations$df.u
   df.v <- calculations$df.v
@@ -153,111 +156,141 @@ ggplot_pca <- function(x,
   groups <- calculations$groups
   group_name <- calculations$group_name
   labels <- calculations$labels
-  
+
   # Append the proportion of explained variance to the axis labels
   if ((1 - as.integer(scale)) == 0) {
     u.axis.labs <- paste0("Standardised PC", choices)
   } else {
     u.axis.labs <- paste0("PC", choices)
   }
-  u.axis.labs <- paste0(u.axis.labs,
-                        paste0("\n(explained var: ", 
-                               percentage(x$sdev[choices] ^ 2 / sum(x$sdev ^ 2)),
-                               ")"))
-  
+  u.axis.labs <- paste0(
+    u.axis.labs,
+    paste0(
+      "\n(explained var: ",
+      percentage(x$sdev[choices]^2 / sum(x$sdev^2)),
+      ")"
+    )
+  )
+
   # Score Labels
   if (!is.null(labels)) {
     df.u$labels <- labels
   }
-  
+
   # Grouping variable
   if (!is.null(groups)) {
     df.u$groups <- groups
   }
-  
+
   # Base plot
-  g <- ggplot2::ggplot(data = df.u, 
-                       ggplot2::aes(x = xvar, y = yvar)) + 
-    ggplot2::xlab(u.axis.labs[1]) + 
-    ggplot2::ylab(u.axis.labs[2]) + 
-    ggplot2::expand_limits(x = c(-1.15, 1.15),
-                           y = c(-1.15, 1.15))
-  
+  g <- ggplot2::ggplot(
+    data = df.u,
+    ggplot2::aes(x = xvar, y = yvar)
+  ) +
+    ggplot2::xlab(u.axis.labs[1]) +
+    ggplot2::ylab(u.axis.labs[2]) +
+    ggplot2::expand_limits(
+      x = c(-1.15, 1.15),
+      y = c(-1.15, 1.15)
+    )
+
   # Draw either labels or points
   if (!is.null(df.u$labels)) {
     if (!is.null(df.u$groups)) {
       g <- g + ggplot2::geom_point(ggplot2::aes(colour = groups),
-                                   alpha = points_alpha, 
-                                   size = points_size) +
+        alpha = points_alpha,
+        size = points_size
+      ) +
         ggplot2::geom_text(ggplot2::aes(label = labels, colour = groups),
-                           nudge_y = -0.05,
-                           size = labels_textsize) +
+          nudge_y = -0.05,
+          size = labels_textsize
+        ) +
         ggplot2::labs(colour = group_name)
     } else {
-      g <- g + ggplot2::geom_point(alpha = points_alpha, 
-                                   size = points_size) +
+      g <- g + ggplot2::geom_point(
+        alpha = points_alpha,
+        size = points_size
+      ) +
         ggplot2::geom_text(ggplot2::aes(label = labels),
-                           nudge_y = -0.05,
-                           size = labels_textsize)      
+          nudge_y = -0.05,
+          size = labels_textsize
+        )
     }
   } else {
     if (!is.null(df.u$groups)) {
       g <- g + ggplot2::geom_point(ggplot2::aes(colour = groups),
-                                   alpha = points_alpha,
-                                   size = points_size) +
+        alpha = points_alpha,
+        size = points_size
+      ) +
         ggplot2::labs(colour = group_name)
     } else {
-      g <- g + ggplot2::geom_point(alpha = points_alpha,
-                                   size = points_size)      
+      g <- g + ggplot2::geom_point(
+        alpha = points_alpha,
+        size = points_size
+      )
     }
   }
-  
+
   # Overlay a concentration ellipse if there are groups
   if (!is.null(df.u$groups) & !is.null(ell) & isTRUE(ellipse)) {
-    g <- g + ggplot2::geom_path(data = ell, 
-                                ggplot2::aes(colour = groups, group = groups),
-                                size = ellipse_size,
-                                alpha = points_alpha)
+    g <- g + ggplot2::geom_path(
+      data = ell,
+      ggplot2::aes(colour = groups, group = groups),
+      size = ellipse_size,
+      alpha = points_alpha
+    )
   }
-  
+
   # Label the variable axes
   if (arrows == TRUE) {
-    g <- g + ggplot2::geom_segment(data = df.v,
-                                   ggplot2::aes(x = 0, y = 0, xend = xvar, yend = yvar),
-                                   arrow = ggplot2::arrow(length = ggplot2::unit(0.5, "picas"),
-                                                          angle = 20,
-                                                          ends = "last",
-                                                          type = "open"), 
-                                   colour = arrows_colour, 
-                                   size = arrows_size,
-                                   alpha = arrows_alpha)
+    g <- g + ggplot2::geom_segment(
+      data = df.v,
+      ggplot2::aes(x = 0, y = 0, xend = xvar, yend = yvar),
+      arrow = ggplot2::arrow(
+        length = ggplot2::unit(0.5, "picas"),
+        angle = 20,
+        ends = "last",
+        type = "open"
+      ),
+      colour = arrows_colour,
+      size = arrows_size,
+      alpha = arrows_alpha
+    )
     if (arrows_textangled == TRUE) {
-      g <- g + ggplot2::geom_text(data = df.v, 
-                                  ggplot2::aes(label = varname, x = xvar, y = yvar, angle = angle, hjust = hjust), 
-                                  colour = arrows_colour,
-                                  size = arrows_textsize,
-                                  alpha = arrows_alpha)
+      g <- g + ggplot2::geom_text(
+        data = df.v,
+        ggplot2::aes(label = varname, x = xvar, y = yvar, angle = angle, hjust = hjust),
+        colour = arrows_colour,
+        size = arrows_textsize,
+        alpha = arrows_alpha
+      )
     } else {
-      g <- g + ggplot2::geom_text(data = df.v, 
-                                  ggplot2::aes(label = varname, x = xvar, y = yvar, hjust = hjust), 
-                                  colour = arrows_colour,
-                                  size = arrows_textsize,
-                                  alpha = arrows_alpha)
+      g <- g + ggplot2::geom_text(
+        data = df.v,
+        ggplot2::aes(label = varname, x = xvar, y = yvar, hjust = hjust),
+        colour = arrows_colour,
+        size = arrows_textsize,
+        alpha = arrows_alpha
+      )
     }
   }
-  
+
   # Add caption label about total explained variance
-  g <- g + ggplot2::labs(caption = paste0("Total explained variance: ",
-                                          percentage(sum(x$sdev[choices] ^ 2 / sum(x$sdev ^ 2)))))
-  
+  g <- g + ggplot2::labs(caption = paste0(
+    "Total explained variance: ",
+    percentage(sum(x$sdev[choices]^2 / sum(x$sdev^2)))
+  ))
+
   # mark-up nicely
   g <- g + ggplot2::theme_minimal(base_size = base_textsize) +
-    ggplot2::theme(panel.grid.major = ggplot2::element_line(colour = "grey85"),
-                   panel.grid.minor = ggplot2::element_blank(),
-                   # centre title and subtitle
-                   plot.title = ggplot2::element_text(hjust = 0.5),
-                   plot.subtitle = ggplot2::element_text(hjust = 0.5))
-  
+    ggplot2::theme(
+      panel.grid.major = ggplot2::element_line(colour = "grey85"),
+      panel.grid.minor = ggplot2::element_blank(),
+      # centre title and subtitle
+      plot.title = ggplot2::element_text(hjust = 0.5),
+      plot.subtitle = ggplot2::element_text(hjust = 0.5)
+    )
+
   g
 }
 
@@ -272,17 +305,19 @@ pca_calculations <- function(pca_model,
                              pc.biplot = TRUE,
                              ellipse_prob = 0.68,
                              labels_text_placement = 1.5) {
-  
   non_numeric_cols <- attributes(pca_model)$non_numeric_cols
   if (groups_missing) {
     groups <- tryCatch(non_numeric_cols[[1]],
-                       error = function(e) NULL)
+      error = function(e) NULL
+    )
     group_name <- tryCatch(colnames(non_numeric_cols[1]),
-                           error = function(e) NULL)
+      error = function(e) NULL
+    )
   }
   if (labels_missing) {
     labels <- tryCatch(non_numeric_cols[[2]],
-                       error = function(e) NULL)
+      error = function(e) NULL
+    )
   }
   if (!is.null(groups) & is.null(labels)) {
     # turn them around
@@ -290,7 +325,7 @@ pca_calculations <- function(pca_model,
     groups <- NULL
     group_name <- NULL
   }
-  
+
   # Recover the SVD
   if (inherits(pca_model, "prcomp")) {
     nobs.factor <- sqrt(nrow(pca_model$x) - 1)
@@ -315,66 +350,72 @@ pca_calculations <- function(pca_model,
   } else {
     stop("Expected an object of class prcomp, princomp, PCA, or lda")
   }
-  
+
   # Scores
   choices <- pmin(choices, ncol(u))
   obs.scale <- 1 - as.integer(scale)
-  df.u <- as.data.frame(sweep(u[, choices], 2, d[choices] ^ obs.scale, FUN = "*"),
-                        stringsAsFactors = FALSE)
-  
+  df.u <- as.data.frame(sweep(u[, choices], 2, d[choices]^obs.scale, FUN = "*"),
+    stringsAsFactors = FALSE
+  )
+
   # Directions
-  v <- sweep(v, 2, d ^ as.integer(scale), FUN = "*")
+  v <- sweep(v, 2, d^as.integer(scale), FUN = "*")
   df.v <- as.data.frame(v[, choices],
-                        stringsAsFactors = FALSE)
-  
+    stringsAsFactors = FALSE
+  )
+
   names(df.u) <- c("xvar", "yvar")
   names(df.v) <- names(df.u)
-  
+
   if (isTRUE(pc.biplot)) {
     df.u <- df.u * nobs.factor
   }
-  
-  # Scale the radius of the correlation circle so that it corresponds to 
+
+  # Scale the radius of the correlation circle so that it corresponds to
   # a data ellipse for the standardized PC scores
   circle_prob <- 0.69
-  r <- sqrt(qchisq(circle_prob, df = 2)) * prod(colMeans(df.u ^ 2)) ^ (0.25)
-  
+  r <- sqrt(qchisq(circle_prob, df = 2)) * prod(colMeans(df.u^2))^(0.25)
+
   # Scale directions
-  v.scale <- rowSums(v ^ 2)
+  v.scale <- rowSums(v^2)
   df.v <- r * df.v / sqrt(max(v.scale))
-  
+
   # Grouping variable
   if (!is.null(groups)) {
     df.u$groups <- groups
   }
-  
+
   df.v$varname <- rownames(v)
-  
+
   # Variables for text label placement
   df.v$angle <- with(df.v, (180 / pi) * atan(yvar / xvar))
   df.v$hjust <- with(df.v, (1 - labels_text_placement * sign(xvar)) / 2)
-  
+
   if (!is.null(df.u$groups)) {
     theta <- c(seq(-pi, pi, length = 50), seq(pi, -pi, length = 50))
     circle <- cbind(cos(theta), sin(theta))
-    
+
     df.groups <- lapply(unique(df.u$groups), function(g, df = df.u) {
       x <- df[which(df$groups == g), , drop = FALSE]
       if (nrow(x) <= 2) {
-        return(data.frame(X1 = numeric(0),
-                          X2 = numeric(0),
-                          groups = character(0),
-                          stringsAsFactors = FALSE))
+        return(data.frame(
+          X1 = numeric(0),
+          X2 = numeric(0),
+          groups = character(0),
+          stringsAsFactors = FALSE
+        ))
       }
       sigma <- var(cbind(x$xvar, x$yvar))
       mu <- c(mean(x$xvar), mean(x$yvar))
       ed <- sqrt(qchisq(ellipse_prob, df = 2))
       data.frame(sweep(circle %*% chol(sigma) * ed,
-                       MARGIN = 2,
-                       STATS = mu, 
-                       FUN = "+"), 
-                 groups = x$groups[1],
-                 stringsAsFactors = FALSE)
+        MARGIN = 2,
+        STATS = mu,
+        FUN = "+"
+      ),
+      groups = x$groups[1],
+      stringsAsFactors = FALSE
+      )
     })
     ell <- do.call(rbind, df.groups)
     if (NROW(ell) == 0) {
@@ -385,13 +426,14 @@ pca_calculations <- function(pca_model,
   } else {
     ell <- NULL
   }
-  
-  list(choices = choices,
-       df.u = df.u,
-       df.v = df.v,
-       ell = ell,
-       groups = groups,
-       group_name = group_name,
-       labels = labels
+
+  list(
+    choices = choices,
+    df.u = df.u,
+    df.v = df.v,
+    ell = ell,
+    groups = groups,
+    group_name = group_name,
+    labels = labels
   )
 }

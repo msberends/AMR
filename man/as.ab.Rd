@@ -74,26 +74,25 @@ as.ab("   eryt 123")
 as.ab("ERYT")
 as.ab("ERY")
 as.ab("eritromicine") # spelled wrong, yet works
-as.ab("Erythrocin")   # trade name
-as.ab("Romycin")      # trade name
+as.ab("Erythrocin") # trade name
+as.ab("Romycin") # trade name
 
 # spelling from different languages and dyslexia are no problem
 ab_atc("ceftriaxon")
-ab_atc("cephtriaxone")     # small spelling error
-ab_atc("cephthriaxone")    # or a bit more severe
+ab_atc("cephtriaxone") # small spelling error
+ab_atc("cephthriaxone") # or a bit more severe
 ab_atc("seephthriaaksone") # and even this works
 
 # use ab_* functions to get a specific properties (see ?ab_property);
 # they use as.ab() internally:
-ab_name("J01FA01")    # "Erythromycin"
-ab_name("eryt")       # "Erythromycin"
+ab_name("J01FA01") # "Erythromycin"
+ab_name("eryt") # "Erythromycin"
 \donttest{
 if (require("dplyr")) {
 
   # you can quickly rename <rsi> columns using dplyr >= 1.0.0:
   example_isolates \%>\%
     rename_with(as.ab, where(is.rsi))
-   
 }
 }
 }

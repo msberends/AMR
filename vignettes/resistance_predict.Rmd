@@ -43,14 +43,18 @@ It is basically as easy as:
 resistance_predict(tbl = example_isolates, col_date = "date", col_ab = "TZP", model = "binomial")
 
 # or:
-example_isolates %>% 
-  resistance_predict(col_ab = "TZP",
-                     model  "binomial")
+example_isolates %>%
+  resistance_predict(
+    col_ab = "TZP",
+    model = "binomial"
+  )
 
 # to bind it to object 'predict_TZP' for example:
-predict_TZP <- example_isolates %>% 
-  resistance_predict(col_ab = "TZP",
-                     model = "binomial")
+predict_TZP <- example_isolates %>%
+  resistance_predict(
+    col_ab = "TZP",
+    model = "binomial"
+  )
 ```
 
 The function will look for a date column itself if `col_date` is not set.
@@ -58,7 +62,7 @@ The function will look for a date column itself if `col_date` is not set.
 When running any of these commands, a summary of the regression model will be printed unless using `resistance_predict(..., info = FALSE)`.
 
 ```{r, echo = FALSE, message = FALSE}
-predict_TZP <- example_isolates %>% 
+predict_TZP <- example_isolates %>%
   resistance_predict(col_ab = "TZP", model = "binomial")
 ```
 
@@ -92,7 +96,7 @@ Resistance is not easily predicted; if we look at vancomycin resistance in Gram-
 ```{r}
 example_isolates %>%
   filter(mo_gramstain(mo, language = NULL) == "Gram-positive") %>%
-  resistance_predict(col_ab = "VAN", year_min = 2010, info = FALSE, model = "binomial") %>% 
+  resistance_predict(col_ab = "VAN", year_min = 2010, info = FALSE, model = "binomial") %>%
   ggplot_rsi_predict()
 ```
 
@@ -113,7 +117,7 @@ For the vancomycin resistance in Gram-positive bacteria, a linear model might be
 ```{r}
 example_isolates %>%
   filter(mo_gramstain(mo, language = NULL) == "Gram-positive") %>%
-  resistance_predict(col_ab = "VAN", year_min = 2010, info = FALSE, model = "linear") %>% 
+  resistance_predict(col_ab = "VAN", year_min = 2010, info = FALSE, model = "linear") %>%
   ggplot_rsi_predict()
 ```
 

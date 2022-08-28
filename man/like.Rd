@@ -53,7 +53,7 @@ b \%like\% a
 
 # also supports multiple patterns
 a <- c("Test case", "Something different", "Yet another thing")
-b <- c(     "case",           "diff",      "yet")
+b <- c("case", "diff", "yet")
 a \%like\% b
 a \%unlike\% b
 

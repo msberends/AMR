@@ -48,8 +48,10 @@ All data sets in this \code{AMR} package (about microorganisms, antibiotics, R/S
 as.mo("E. coli")
 mo_uncertainties()
 
-mo_matching_score(x = "E. coli",
-                  n = c("Escherichia coli", "Entamoeba coli"))
+mo_matching_score(
+  x = "E. coli",
+  n = c("Escherichia coli", "Entamoeba coli")
+)
 }
 \author{
 Dr Matthijs Berends

@@ -109,19 +109,24 @@ It is possible to define antibiotic groups instead of single antibiotics for the
 }
 
 \examples{
-x <- custom_eucast_rules(AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
-                         AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I")
+x <- custom_eucast_rules(
+  AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
+  AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I"
+)
 x
 
 # run the custom rule set (verbose = TRUE will return a logbook instead of the data set):
 eucast_rules(example_isolates,
-             rules = "custom",
-             custom_rules = x,
-             info = FALSE,
-             verbose = TRUE)
-             
+  rules = "custom",
+  custom_rules = x,
+  info = FALSE,
+  verbose = TRUE
+)
+
 # combine rule sets
-x2 <- c(x,
-        custom_eucast_rules(TZP == "R" ~ carbapenems == "R"))
+x2 <- c(
+  x,
+  custom_eucast_rules(TZP == "R" ~ carbapenems == "R")
+)
 x2
 }

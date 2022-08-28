@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -34,10 +34,10 @@
 #
 # All functions are prefixed with 'pm_' to make it obvious that they are dplyr substitutes.
 #
-# All code below was released under MIT license, that permits 'free of charge, to any person obtaining a 
+# All code below was released under MIT license, that permits 'free of charge, to any person obtaining a
 # copy of the software and associated documentation files (the "Software"), to deal in the Software
 # without restriction, including without limitation the rights to use, copy, modify, merge, publish,
-# distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software 
+# distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software
 # is furnished to do so', given that a copyright notice is given in the software.
 #
 # Copyright notice on {date}, the day this code was downloaded, as found on

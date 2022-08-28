@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -33,9 +33,12 @@ expect_true(is.mic(as.mic(8)))
 
 expect_equal(as.double(as.mic(">=32")), 32)
 expect_equal(as.numeric(as.mic(">=32")), 32)
-expect_equal(as.integer(as.mic(">=32")), # should be factor level, not the MIC
-             as.integer(factor(as.character(">=32"),
-                               levels = levels(as.mic(">=32")))))
+expect_equal(
+  as.integer(as.mic(">=32")), # should be factor level, not the MIC
+  as.integer(factor(as.character(">=32"),
+    levels = levels(as.mic(">=32"))
+  ))
+)
 expect_equal(suppressWarnings(as.logical(as.mic("INVALID VALUE"))), NA)
 
 # all levels should be valid MICs
@@ -131,7 +134,7 @@ suppressWarnings(expect_identical(el1 + el2, el1_double + el2_double))
 suppressWarnings(expect_identical(el1 - el2, el1_double - el2_double))
 suppressWarnings(expect_identical(el1 * el2, el1_double * el2_double))
 suppressWarnings(expect_identical(el1 / el2, el1_double / el2_double))
-suppressWarnings(expect_identical(el1 ^ el2, el1_double ^ el2_double))
+suppressWarnings(expect_identical(el1^el2, el1_double^el2_double))
 suppressWarnings(expect_identical(el1 %% el2, el1_double %% el2_double))
 suppressWarnings(expect_identical(el1 %/% el2, el1_double %/% el2_double))
 suppressWarnings(expect_identical(el1 & el2, el1_double & el2_double))

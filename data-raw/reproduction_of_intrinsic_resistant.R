@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -32,19 +32,22 @@ for (i in seq_len(nrow(antibiotics))) {
 }
 
 int_resis <- eucast_rules(int_resis,
-                          eucast_rules_df = subset(AMR:::EUCAST_RULES_DF,
-                                                   is.na(have_these_values) & reference.version == 3.3),
-                          info = FALSE)
+  eucast_rules_df = subset(
+    AMR:::EUCAST_RULES_DF,
+    is.na(have_these_values) & reference.version == 3.3
+  ),
+  info = FALSE
+)
 
-int_resis2 <- int_resis[, sapply(int_resis, function(x) any(!is.rsi(x) | x == "R")), drop = FALSE] %>% 
+int_resis2 <- int_resis[, sapply(int_resis, function(x) any(!is.rsi(x) | x == "R")), drop = FALSE] %>%
   tidyr::pivot_longer(-mo) %>%
-  filter(value == "R") %>% 
+  filter(value == "R") %>%
   select(mo, ab = name)
 
 # remove lab drugs
 untreatable <- antibiotics[which(antibiotics$name %like% "-high|EDTA|polysorbate|macromethod|screening|/nacubactam"), "ab", drop = TRUE]
-int_resis2 <- int_resis2 %>% 
-  filter(!ab %in% untreatable) %>% 
+int_resis2 <- int_resis2 %>%
+  filter(!ab %in% untreatable) %>%
   arrange(mo, ab)
 
 intrinsic_resistant <- as.data.frame(int_resis2, stringsAsFactors = FALSE)

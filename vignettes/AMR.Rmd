@@ -48,13 +48,16 @@ For this tutorial, we will create fake demonstration data to work with.
 You can skip to [Cleaning the data](#cleaning-the-data) if you already have your own data ready. If you start your analysis, try to make the structure of your data generally look like this:
 
 ```{r example table, echo = FALSE, results = 'asis'}
-knitr::kable(data.frame(date = Sys.Date(),
-                        patient_id = c("abcd", "abcd", "efgh"),
-                        mo = "Escherichia coli", 
-                        AMX = c("S", "S", "R"),
-                        CIP = c("S", "R", "S"),
-                        stringsAsFactors = FALSE), 
-             align = "c")
+knitr::kable(data.frame(
+  date = Sys.Date(),
+  patient_id = c("abcd", "abcd", "efgh"),
+  mo = "Escherichia coli",
+  AMX = c("S", "S", "R"),
+  CIP = c("S", "R", "S"),
+  stringsAsFactors = FALSE
+),
+align = "c"
+)
 ``` 
 
 ## Needed R packages
@@ -87,9 +90,13 @@ patients <- unlist(lapply(LETTERS, paste0, 1:10))
 The `LETTERS` object is available in R - it's a vector with 26 characters: `A` to `Z`. The `patients` object we just created is now a vector of length `r length(patients)`, with values (patient IDs) varying from ``r patients[1]`` to ``r patients[length(patients)]``. Now we we also set the gender of our patients, by putting the ID and the gender in a table:
 
 ```{r create gender}
-patients_table <- data.frame(patient_id = patients,
-                             gender = c(rep("M", 135),
-                                        rep("F", 125)))
+patients_table <- data.frame(
+  patient_id = patients,
+  gender = c(
+    rep("M", 135),
+    rep("F", 125)
+  )
+)
 ```
 
 The first 135 patient IDs are now male, the other 125 are female.
@@ -107,8 +114,10 @@ This `dates` object now contains all days in our date range.
 For this tutorial, we will uses four different microorganisms: *Escherichia coli*, *Staphylococcus aureus*, *Streptococcus pneumoniae*, and *Klebsiella pneumoniae*:
 
 ```{r mo}
-bacteria <- c("Escherichia coli", "Staphylococcus aureus",
-              "Streptococcus pneumoniae", "Klebsiella pneumoniae")
+bacteria <- c(
+  "Escherichia coli", "Staphylococcus aureus",
+  "Streptococcus pneumoniae", "Klebsiella pneumoniae"
+)
 ```
 
 ## Put everything together
@@ -117,20 +126,27 @@ Using the `sample()` function, we can randomly select items from all objects we 
 
 ```{r merge data}
 sample_size <- 20000
-data <- data.frame(date = sample(dates, size = sample_size, replace = TRUE),
-                   patient_id = sample(patients, size = sample_size, replace = TRUE),
-                   hospital = sample(c("Hospital A",
-                                       "Hospital B",
-                                       "Hospital C",
-                                       "Hospital D"),
-                                     size = sample_size, replace = TRUE,
-                                     prob = c(0.30, 0.35, 0.15, 0.20)),
-                   bacteria = sample(bacteria, size = sample_size, replace = TRUE,
-                                     prob = c(0.50, 0.25, 0.15, 0.10)),
-                   AMX = random_rsi(sample_size, prob_RSI = c(0.35, 0.60, 0.05)),
-                   AMC = random_rsi(sample_size, prob_RSI = c(0.15, 0.75, 0.10)),
-                   CIP = random_rsi(sample_size, prob_RSI = c(0.20, 0.80, 0.00)),
-                   GEN = random_rsi(sample_size, prob_RSI = c(0.08, 0.92, 0.00)))
+data <- data.frame(
+  date = sample(dates, size = sample_size, replace = TRUE),
+  patient_id = sample(patients, size = sample_size, replace = TRUE),
+  hospital = sample(c(
+    "Hospital A",
+    "Hospital B",
+    "Hospital C",
+    "Hospital D"
+  ),
+  size = sample_size, replace = TRUE,
+  prob = c(0.30, 0.35, 0.15, 0.20)
+  ),
+  bacteria = sample(bacteria,
+    size = sample_size, replace = TRUE,
+    prob = c(0.50, 0.25, 0.15, 0.10)
+  ),
+  AMX = random_rsi(sample_size, prob_RSI = c(0.35, 0.60, 0.05)),
+  AMC = random_rsi(sample_size, prob_RSI = c(0.15, 0.75, 0.10)),
+  CIP = random_rsi(sample_size, prob_RSI = c(0.20, 0.80, 0.00)),
+  GEN = random_rsi(sample_size, prob_RSI = c(0.08, 0.92, 0.00))
+)
 ```
 
 Using the `left_join()` function from the `dplyr` package, we can 'map' the gender to the patient ID using the `patients_table` object we created earlier:
@@ -192,10 +208,12 @@ data <- eucast_rules(data, col_mo = "bacteria", rules = "all")
 Now that we have the microbial ID, we can add some taxonomic properties:
 
 ```{r new taxo}
-data <- data %>% 
-  mutate(gramstain = mo_gramstain(bacteria),
-         genus = mo_genus(bacteria),
-         species = mo_species(bacteria))
+data <- data %>%
+  mutate(
+    gramstain = mo_gramstain(bacteria),
+    genus = mo_genus(bacteria),
+    species = mo_species(bacteria)
+  )
 ```
 
 ## First isolates
@@ -213,21 +231,21 @@ This `AMR` package includes this methodology with the `first_isolate()` function
 The outcome of the function can easily be added to our data:
 
 ```{r 1st isolate}
-data <- data %>% 
+data <- data %>%
   mutate(first = first_isolate(info = TRUE))
 ```
 
 So only `r percentage(sum(data$first) / nrow(data))` is suitable for resistance analysis! We can now filter on it with the `filter()` function, also from the `dplyr` package:
 
 ```{r 1st isolate filter}
-data_1st <- data %>% 
+data_1st <- data %>%
   filter(first == TRUE)
 ```
 
 For future use, the above two syntaxes can be shortened:
 
 ```{r 1st isolate filter 2}
-data_1st <- data %>% 
+data_1st <- data %>%
   filter_first_isolate()
 ```
 
@@ -261,7 +279,7 @@ Or can be used like the `dplyr` way, which is easier readable:
 data_1st %>% freq(genus, species)
 ```
 ```{r freq 2b, results = 'asis', echo = FALSE}
-data_1st %>% 
+data_1st %>%
   freq(genus, species, header = TRUE)
 ```
 
@@ -270,45 +288,48 @@ data_1st %>%
 Using [tidyverse selections](https://tidyselect.r-lib.org/reference/language.html), you can also select or filter columns based on the antibiotic class they are in:
 
 ```{r bug_drg 2a, eval = FALSE}
-data_1st %>% 
+data_1st %>%
   filter(any(aminoglycosides() == "R"))
 ```
 
 ```{r bug_drg 2b, echo = FALSE, results = 'asis'}
-knitr::kable(data_1st %>% 
-               filter(any(aminoglycosides() == "R")) %>% 
-               head(),
-             align = "c")
+knitr::kable(data_1st %>%
+  filter(any(aminoglycosides() == "R")) %>%
+  head(),
+align = "c"
+)
 ```
 
 If you want to get a quick glance of the number of isolates in different bug/drug combinations, you can use the `bug_drug_combinations()` function:
 
 ```{r bug_drg 1a, eval = FALSE}
-data_1st %>% 
-  bug_drug_combinations() %>% 
+data_1st %>%
+  bug_drug_combinations() %>%
   head() # show first 6 rows
 ```
 
 ```{r bug_drg 1b, echo = FALSE, results = 'asis'}
-knitr::kable(data_1st %>% 
-               bug_drug_combinations() %>% 
-               head(),
-             align = "c")
+knitr::kable(data_1st %>%
+  bug_drug_combinations() %>%
+  head(),
+align = "c"
+)
 ```
 
 
 ```{r bug_drg 3a, eval = FALSE}
-data_1st %>% 
-  select(bacteria, aminoglycosides()) %>% 
+data_1st %>%
+  select(bacteria, aminoglycosides()) %>%
   bug_drug_combinations()
 ```
 
 
 ```{r bug_drg 3b, echo = FALSE, results = 'asis'}
-knitr::kable(data_1st %>% 
-               select(bacteria, aminoglycosides()) %>% 
-               bug_drug_combinations(),
-             align = "c")
+knitr::kable(data_1st %>%
+  select(bacteria, aminoglycosides()) %>%
+  bug_drug_combinations(),
+align = "c"
+)
 ```
 
 This will only give you the crude numbers in the data. To calculate antimicrobial resistance in a more sensible way, also by correcting for too few results, we use the `resistance()` and `susceptibility()` functions.
@@ -328,86 +349,98 @@ data_1st %>% resistance(AMX)
 Or can be used in conjunction with `group_by()` and `summarise()`, both from the `dplyr` package:
 
 ```{r, eval = FALSE}
-data_1st %>% 
-  group_by(hospital) %>% 
+data_1st %>%
+  group_by(hospital) %>%
   summarise(amoxicillin = resistance(AMX))
 ```
 ```{r, echo = FALSE}
-data_1st %>% 
-  group_by(hospital) %>% 
-  summarise(amoxicillin = resistance(AMX)) %>% 
+data_1st %>%
+  group_by(hospital) %>%
+  summarise(amoxicillin = resistance(AMX)) %>%
   knitr::kable(align = "c", big.mark = ",")
 ```
 
 Of course it would be very convenient to know the number of isolates responsible for the percentages. For that purpose the `n_rsi()` can be used, which works exactly like `n_distinct()` from the `dplyr` package. It counts all isolates available for every group (i.e. values S, I or R):
 
 ```{r, eval = FALSE}
-data_1st %>% 
-  group_by(hospital) %>% 
-  summarise(amoxicillin = resistance(AMX),
-            available = n_rsi(AMX))
+data_1st %>%
+  group_by(hospital) %>%
+  summarise(
+    amoxicillin = resistance(AMX),
+    available = n_rsi(AMX)
+  )
 ```
 ```{r, echo = FALSE}
-data_1st %>% 
-  group_by(hospital) %>% 
-  summarise(amoxicillin = resistance(AMX),
-            available = n_rsi(AMX)) %>% 
+data_1st %>%
+  group_by(hospital) %>%
+  summarise(
+    amoxicillin = resistance(AMX),
+    available = n_rsi(AMX)
+  ) %>%
   knitr::kable(align = "c", big.mark = ",")
 ```
 
 These functions can also be used to get the proportion of multiple antibiotics, to calculate empiric susceptibility of combination therapies very easily:
 
 ```{r, eval = FALSE}
-data_1st %>% 
-  group_by(genus) %>% 
-  summarise(amoxiclav = susceptibility(AMC),
-            gentamicin = susceptibility(GEN),
-            amoxiclav_genta = susceptibility(AMC, GEN))
+data_1st %>%
+  group_by(genus) %>%
+  summarise(
+    amoxiclav = susceptibility(AMC),
+    gentamicin = susceptibility(GEN),
+    amoxiclav_genta = susceptibility(AMC, GEN)
+  )
 ```
 ```{r, echo = FALSE}
-data_1st %>% 
-  group_by(genus) %>% 
-  summarise(amoxiclav = susceptibility(AMC),
-            gentamicin = susceptibility(GEN),
-            amoxiclav_genta = susceptibility(AMC, GEN)) %>% 
+data_1st %>%
+  group_by(genus) %>%
+  summarise(
+    amoxiclav = susceptibility(AMC),
+    gentamicin = susceptibility(GEN),
+    amoxiclav_genta = susceptibility(AMC, GEN)
+  ) %>%
   knitr::kable(align = "c", big.mark = ",")
 ```
 
 Or if you are curious for the resistance within certain antibiotic classes, use a antibiotic class selector such as `penicillins()`, which automatically will include the columns `AMX` and `AMC` of our data:
 
 ```{r, eval = FALSE}
-data_1st %>% 
+data_1st %>%
   # group by hospital
-  group_by(hospital) %>% 
+  group_by(hospital) %>%
   #                / -> select all penicillins in the data for calculation
   #                |              / -> use resistance() for all peni's per hospital
   #                |              |           / -> print as percentages
-  summarise(across(penicillins(), resistance, as_percent = TRUE)) %>% 
+  summarise(across(penicillins(), resistance, as_percent = TRUE)) %>%
   # format the antibiotic column names, using so-called snake case,
   # so 'Amoxicillin/clavulanic acid' becomes 'amoxicillin_clavulanic_acid'
   rename_with(set_ab_names, penicillins())
 ```
 ```{r, echo = FALSE, message = FALSE}
-data_1st %>% 
-  group_by(hospital) %>% 
-  summarise(across(penicillins(), resistance, as_percent = TRUE)) %>% 
-  rename_with(set_ab_names, penicillins()) %>% 
+data_1st %>%
+  group_by(hospital) %>%
+  summarise(across(penicillins(), resistance, as_percent = TRUE)) %>%
+  rename_with(set_ab_names, penicillins()) %>%
   knitr::kable(align = "lrr")
 ```
 
 To make a transition to the next part, let's see how differences in the previously calculated combination therapies could be plotted:
 
 ```{r plot 1}
-data_1st %>% 
-  group_by(genus) %>% 
-  summarise("1. Amoxi/clav" = susceptibility(AMC),
-            "2. Gentamicin" = susceptibility(GEN),
-            "3. Amoxi/clav + genta" = susceptibility(AMC, GEN)) %>% 
+data_1st %>%
+  group_by(genus) %>%
+  summarise(
+    "1. Amoxi/clav" = susceptibility(AMC),
+    "2. Gentamicin" = susceptibility(GEN),
+    "3. Amoxi/clav + genta" = susceptibility(AMC, GEN)
+  ) %>%
   # pivot_longer() from the tidyr package "lengthens" data:
-  tidyr::pivot_longer(-genus, names_to = "antibiotic") %>% 
-  ggplot(aes(x = genus,
-             y = value,
-             fill = antibiotic)) +
+  tidyr::pivot_longer(-genus, names_to = "antibiotic") %>%
+  ggplot(aes(
+    x = genus,
+    y = value,
+    fill = antibiotic
+  )) +
   geom_col(position = "dodge2")
 ```
 
@@ -416,14 +449,20 @@ data_1st %>%
 To show results in plots, most R users would nowadays use the `ggplot2` package. This package lets you create plots in layers. You can read more about it [on their website](https://ggplot2.tidyverse.org/). A quick example would look like these syntaxes:
 
 ```{r plot 2, eval = FALSE}
-ggplot(data = a_data_set,
-       mapping = aes(x = year,
-                     y = value)) +
+ggplot(
+  data = a_data_set,
+  mapping = aes(
+    x = year,
+    y = value
+  )
+) +
   geom_col() +
-  labs(title = "A title",
-       subtitle = "A subtitle",
-       x = "My X axis",
-       y = "My Y axis")
+  labs(
+    title = "A title",
+    subtitle = "A subtitle",
+    x = "My X axis",
+    y = "My Y axis"
+  )
 
 # or as short as:
 ggplot(a_data_set) +
@@ -443,11 +482,11 @@ If we group on e.g. the `genus` column and add some additional functions from ou
 
 ```{r plot 4}
 # group the data on `genus`
-ggplot(data_1st %>% group_by(genus)) + 
+ggplot(data_1st %>% group_by(genus)) +
   # create bars with genus on x axis
   # it looks for variables with class `rsi`,
   # of which we have 4 (earlier created with `as.rsi`)
-  geom_rsi(x = "genus") + 
+  geom_rsi(x = "genus") +
   # split plots on antibiotic
   facet_rsi(facet = "antibiotic") +
   # set colours to the R/SI interpretations (colour-blind friendly)
@@ -457,8 +496,10 @@ ggplot(data_1st %>% group_by(genus)) +
   # turn 90 degrees, to make it bars instead of columns
   coord_flip() +
   # add labels
-  labs(title = "Resistance per genus and antibiotic", 
-       subtitle = "(this is fake data)") +
+  labs(
+    title = "Resistance per genus and antibiotic",
+    subtitle = "(this is fake data)"
+  ) +
   # and print genus in italic to follow our convention
   # (is now y axis because we turned the plot)
   theme(axis.text.y = element_text(face = "italic"))
@@ -467,12 +508,14 @@ ggplot(data_1st %>% group_by(genus)) +
 To simplify this, we also created the `ggplot_rsi()` function, which combines almost all above functions:
 
 ```{r plot 5}
-data_1st %>% 
+data_1st %>%
   group_by(genus) %>%
-  ggplot_rsi(x = "genus",
-             facet = "antibiotic",
-             breaks = 0:4 * 25,
-             datalabels = FALSE) +
+  ggplot_rsi(
+    x = "genus",
+    facet = "antibiotic",
+    breaks = 0:4 * 25,
+    datalabels = FALSE
+  ) +
   coord_flip()
 ```
 
@@ -527,9 +570,10 @@ And when using the `ggplot2` package, but now choosing the latest implemented CL
 
 ```{r disk_plots_mo_ab, message = FALSE, warning = FALSE}
 autoplot(disk_values,
-       mo = "E. coli",
-       ab = "cipro",
-       guideline = "CLSI")
+  mo = "E. coli",
+  ab = "cipro",
+  guideline = "CLSI"
+)
 ```
 
 ## Independence test
@@ -544,13 +588,15 @@ library(tidyr)
 
 check_FOS <- example_isolates %>%
   filter(ward %in% c("A", "D")) %>% # filter on only hospitals A and D
-  select(ward, FOS) %>%             # select the hospitals and fosfomycin
-  group_by(ward) %>%                # group on the hospitals
-  count_df(combine_SI = TRUE) %>%          # count all isolates per group (ward)
-  pivot_wider(names_from = ward,    # transform output so A and D are columns
-              values_from = value) %>%     
-  select(A, D) %>%                         # and only select these columns
-  as.matrix()                              # transform to a good old matrix for fisher.test()
+  select(ward, FOS) %>% # select the hospitals and fosfomycin
+  group_by(ward) %>% # group on the hospitals
+  count_df(combine_SI = TRUE) %>% # count all isolates per group (ward)
+  pivot_wider(
+    names_from = ward, # transform output so A and D are columns
+    values_from = value
+  ) %>%
+  select(A, D) %>% # and only select these columns
+  as.matrix() # transform to a good old matrix for fisher.test()
 
 check_FOS
 ```
@@ -559,7 +605,7 @@ We can apply the test now with:
 
 ```{r}
 # do Fisher's Exact Test
-fisher.test(check_FOS)                            
+fisher.test(check_FOS)
 ```
 
 As can be seen, the p value is `r round(fisher.test(check_FOS)$p.value, 3)`, which means that the fosfomycin resistance found in isolates from patients in hospital A and D are really different.

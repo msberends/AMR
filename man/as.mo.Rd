@@ -188,9 +188,9 @@ as.mo("S aureus")
 as.mo("Staphylococcus aureus")
 as.mo("Staphylococcus aureus (MRSA)")
 as.mo("Zthafilokkoockus oureuz") # handles incorrect spelling
-as.mo("MRSA")    # Methicillin Resistant S. aureus
-as.mo("VISA")    # Vancomycin Intermediate S. aureus
-as.mo("VRSA")    # Vancomycin Resistant S. aureus
+as.mo("MRSA") # Methicillin Resistant S. aureus
+as.mo("VISA") # Vancomycin Intermediate S. aureus
+as.mo("VRSA") # Vancomycin Resistant S. aureus
 as.mo(115329001) # SNOMED CT code
 
 # Dyslexia is no problem - these all work:
@@ -203,15 +203,15 @@ as.mo("Streptococcus group A")
 as.mo("GAS") # Group A Streptococci
 as.mo("GBS") # Group B Streptococci
 
-as.mo("S. epidermidis")                 # will remain species: B_STPHY_EPDR
-as.mo("S. epidermidis", Becker = TRUE)  # will not remain species: B_STPHY_CONS
+as.mo("S. epidermidis") # will remain species: B_STPHY_EPDR
+as.mo("S. epidermidis", Becker = TRUE) # will not remain species: B_STPHY_CONS
 
-as.mo("S. pyogenes")                    # will remain species: B_STRPT_PYGN
+as.mo("S. pyogenes") # will remain species: B_STRPT_PYGN
 as.mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPT_GRPA
 
 # All mo_* functions use as.mo() internally too (see ?mo_property):
-mo_genus("E. coli")                           # returns "Escherichia"
-mo_gramstain("E. coli")                       # returns "Gram negative"
+mo_genus("E. coli") # returns "Escherichia"
+mo_gramstain("E. coli") # returns "Gram negative"
 mo_is_intrinsic_resistant("E. coli", "vanco") # returns TRUE
 }
 }

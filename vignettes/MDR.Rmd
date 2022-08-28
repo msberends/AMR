@@ -64,8 +64,10 @@ You can also use your own custom guideline. Custom guidelines can be set with th
 If you are familiar with `case_when()` of the `dplyr` package, you will recognise the input method to set your own rules. Rules must be set using what R considers to be the 'formula notation':
 
 ```{r}
-custom <- custom_mdro_guideline(CIP == "R" & age > 60 ~ "Elderly Type A",
-                                ERY == "R" & age > 60 ~ "Elderly Type B")
+custom <- custom_mdro_guideline(
+  CIP == "R" & age > 60 ~ "Elderly Type A",
+  ERY == "R" & age > 60 ~ "Elderly Type B"
+)
 ```
 
 If a row/an isolate matches the first rule, the value after the first `~` (in this case *'Elderly Type A'*) will be set as MDRO value. Otherwise, the second rule will be tried and so on. The maximum number of rules is unlimited. 
@@ -92,17 +94,17 @@ The `mdro()` function always returns an ordered `factor` for predefined guidelin
 The next example uses the `example_isolates` data set. This is a data set included with this package and contains full antibiograms of 2,000 microbial isolates. It reflects reality and can be used to practise AMR data analysis. If we test the MDR/XDR/PDR guideline on this data set, we get:
 
 ```{r, message = FALSE}
-library(dplyr)   # to support pipes: %>%
+library(dplyr) # to support pipes: %>%
 library(cleaner) # to create frequency tables
 ```
 ```{r, results = 'hide'}
-example_isolates %>% 
-  mdro() %>% 
+example_isolates %>%
+  mdro() %>%
   freq() # show frequency table of the result
 ```
 ```{r, echo = FALSE, results = 'asis', message = FALSE, warning = FALSE}
-example_isolates %>% 
-  mdro(info = FALSE) %>% 
+example_isolates %>%
+  mdro(info = FALSE) %>%
   freq() # show frequency table of the result
 ```
 
@@ -111,25 +113,29 @@ For another example, I will create a data set to determine multi-drug resistant 
 ```{r}
 # random_rsi() is a helper function to generate
 # a random vector with values S, I and R
-my_TB_data <- data.frame(rifampicin = random_rsi(5000),
-                         isoniazid = random_rsi(5000),
-                         gatifloxacin = random_rsi(5000),
-                         ethambutol = random_rsi(5000),
-                         pyrazinamide = random_rsi(5000),
-                         moxifloxacin = random_rsi(5000),
-                         kanamycin = random_rsi(5000))
+my_TB_data <- data.frame(
+  rifampicin = random_rsi(5000),
+  isoniazid = random_rsi(5000),
+  gatifloxacin = random_rsi(5000),
+  ethambutol = random_rsi(5000),
+  pyrazinamide = random_rsi(5000),
+  moxifloxacin = random_rsi(5000),
+  kanamycin = random_rsi(5000)
+)
 ```
 
 Because all column names are automatically verified for valid drug names or codes, this would have worked exactly the same way:
 
 ```{r, eval = FALSE}
-my_TB_data <- data.frame(RIF = random_rsi(5000),
-                         INH = random_rsi(5000),
-                         GAT = random_rsi(5000),
-                         ETH = random_rsi(5000),
-                         PZA = random_rsi(5000),
-                         MFX = random_rsi(5000),
-                         KAN = random_rsi(5000))
+my_TB_data <- data.frame(
+  RIF = random_rsi(5000),
+  INH = random_rsi(5000),
+  GAT = random_rsi(5000),
+  ETH = random_rsi(5000),
+  PZA = random_rsi(5000),
+  MFX = random_rsi(5000),
+  KAN = random_rsi(5000)
+)
 ```
 
 The data set now looks like this:

@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -64,30 +64,42 @@ for (i in seq_len(length(datasets))) {
 df <- AMR:::MO_lookup
 expect_true(nrow(df[which(df$prevalence == 1), , drop = FALSE]) < nrow(df[which(df$prevalence == 2), , drop = FALSE]))
 expect_true(nrow(df[which(df$prevalence == 2), , drop = FALSE]) < nrow(df[which(df$prevalence == 3), , drop = FALSE]))
-expect_true(all(c("mo", "fullname",
-                  "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies",
-                  "rank", "ref", "species_id", "source", "prevalence", "snomed",
-                  "kingdom_index", "fullname_lower", "g_species") %in% colnames(df)))
+expect_true(all(c(
+  "mo", "fullname",
+  "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies",
+  "rank", "ref", "species_id", "source", "prevalence", "snomed",
+  "kingdom_index", "fullname_lower", "g_species"
+) %in% colnames(df)))
 
-expect_true(all(c("fullname", "fullname_new", "ref", "prevalence",
-                  "fullname_lower", "g_species") %in% colnames(AMR:::MO.old_lookup)))
+expect_true(all(c(
+  "fullname", "fullname_new", "ref", "prevalence",
+  "fullname_lower", "g_species"
+) %in% colnames(AMR:::MO.old_lookup)))
 
 expect_inherits(AMR:::MO_CONS, "mo")
 
-expect_identical(class(catalogue_of_life_version()),
-                 c("catalogue_of_life_version", "list"))
+expect_identical(
+  class(catalogue_of_life_version()),
+  c("catalogue_of_life_version", "list")
+)
 
 expect_stdout(print(catalogue_of_life_version()))
 
-uncategorised <- subset(microorganisms,
-                        genus == "Staphylococcus" &
-                          !species %in% c("", "aureus") &
-                          !mo %in% c(AMR:::MO_CONS, AMR:::MO_COPS))
-expect_true(NROW(uncategorised) == 0, 
-            info = ifelse(NROW(uncategorised) == 0,
-                          "All staphylococcal species categorised as CoNS/CoPS.",
-                          paste0("Staphylococcal species not categorised as CoNS/CoPS: S. ",
-                                 uncategorised$species, " (", uncategorised$mo, ")")))
+uncategorised <- subset(
+  microorganisms,
+  genus == "Staphylococcus" &
+    !species %in% c("", "aureus") &
+    !mo %in% c(AMR:::MO_CONS, AMR:::MO_COPS)
+)
+expect_true(NROW(uncategorised) == 0,
+  info = ifelse(NROW(uncategorised) == 0,
+    "All staphylococcal species categorised as CoNS/CoPS.",
+    paste0(
+      "Staphylococcal species not categorised as CoNS/CoPS: S. ",
+      uncategorised$species, " (", uncategorised$mo, ")"
+    )
+  )
+)
 
 # THIS WILL CHECK NON-ASCII STRINGS IN ALL FILES:
 
@@ -119,5 +131,5 @@ expect_true(NROW(uncategorised) == 0,
 #     }
 #   )
 # }
-# x <- check_non_ascii() %>% 
+# x <- check_non_ascii() %>%
 #   filter(file %unlike% "^(data-raw|docs|git_)")

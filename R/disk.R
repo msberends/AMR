@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -36,33 +36,37 @@
 #' @seealso [as.rsi()]
 #' @examples
 #' # transform existing disk zones to the `disk` class (using base R)
-#' df <- data.frame(microorganism = "Escherichia coli",
-#'                  AMP = 20,
-#'                  CIP = 14,
-#'                  GEN = 18,
-#'                  TOB = 16)
+#' df <- data.frame(
+#'   microorganism = "Escherichia coli",
+#'   AMP = 20,
+#'   CIP = 14,
+#'   GEN = 18,
+#'   TOB = 16
+#' )
 #' df[, 2:5] <- lapply(df[, 2:5], as.disk)
 #' str(df)
-#' 
+#'
 #' \donttest{
 #' # transforming is easier with dplyr:
 #' if (require("dplyr")) {
 #'   df %>% mutate(across(AMP:TOB, as.disk))
 #' }
 #' }
-#' 
+#'
 #' # interpret disk values, see ?as.rsi
-#' as.rsi(x = as.disk(18),
-#'        mo = "Strep pneu",  # `mo` will be coerced with as.mo()
-#'        ab = "ampicillin",  # and `ab` with as.ab()
-#'        guideline = "EUCAST")
+#' as.rsi(
+#'   x = as.disk(18),
+#'   mo = "Strep pneu", # `mo` will be coerced with as.mo()
+#'   ab = "ampicillin", # and `ab` with as.ab()
+#'   guideline = "EUCAST"
+#' )
 #'
 #' # interpret whole data set, pretend to be all from urinary tract infections:
 #' as.rsi(df, uti = TRUE)
 as.disk <- function(x, na.rm = FALSE) {
   meet_criteria(x, allow_class = c("disk", "character", "numeric", "integer"), allow_NA = TRUE)
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)
-  
+
   if (!is.disk(x)) {
     x <- unlist(x)
     if (na.rm == TRUE) {
@@ -70,9 +74,9 @@ as.disk <- function(x, na.rm = FALSE) {
     }
     x[trimws(x) == ""] <- NA
     x.bak <- x
-    
+
     na_before <- length(x[is.na(x)])
-    
+
     # heavily based on cleaner::clean_double():
     clean_double2 <- function(x, remove = "[^0-9.,-]", fixed = FALSE) {
       x <- gsub(",", ".", x)
@@ -80,38 +84,44 @@ as.disk <- function(x, na.rm = FALSE) {
       x <- gsub("[,.]$", "", x)
       # only keep last dot/comma
       reverse <- function(x) vapply(FUN.VALUE = character(1), lapply(strsplit(x, NULL), rev), paste, collapse = "")
-      x <- sub("{{dot}}", ".", 
-               gsub(".", "",
-                    reverse(sub(".", "}}tod{{",
-                                reverse(x), 
-                                fixed = TRUE)),
-                    fixed = TRUE), 
-               fixed = TRUE)
+      x <- sub("{{dot}}", ".",
+        gsub(".", "",
+          reverse(sub(".", "}}tod{{",
+            reverse(x),
+            fixed = TRUE
+          )),
+          fixed = TRUE
+        ),
+        fixed = TRUE
+      )
       x_clean <- gsub(remove, "", x, ignore.case = TRUE, fixed = fixed)
       # remove everything that is not a number or dot
       as.double(gsub("[^0-9.]+", "", x_clean))
     }
-    
+
     # round up and make it an integer
     x <- as.integer(ceiling(clean_double2(x)))
-    
+
     # disks can never be less than 6 mm (size of smallest disk) or more than 50 mm
     x[x < 6 | x > 50] <- NA_integer_
     na_after <- length(x[is.na(x)])
-    
+
     if (na_before != na_after) {
       list_missing <- x.bak[is.na(x) & !is.na(x.bak)] %pm>%
         unique() %pm>%
         sort() %pm>%
         vector_and(quotes = TRUE)
-      warning_("in `as.disk()`: ", na_after - na_before, " results truncated (",
-               round(((na_after - na_before) / length(x)) * 100),
-               "%) that were invalid disk zones: ",
-               list_missing)
+      warning_(
+        "in `as.disk()`: ", na_after - na_before, " results truncated (",
+        round(((na_after - na_before) / length(x)) * 100),
+        "%) that were invalid disk zones: ",
+        list_missing
+      )
     }
   }
   set_clean_class(as.integer(x),
-                  new_class = c("disk", "integer"))
+    new_class = c("disk", "integer")
+  )
 }
 
 all_valid_disks <- function(x) {
@@ -119,7 +129,8 @@ all_valid_disks <- function(x) {
     return(FALSE)
   }
   x_disk <- tryCatch(suppressWarnings(as.disk(x[!is.na(x)])),
-                     error = function(e) NA)
+    error = function(e) NA
+  )
   !any(is.na(x_disk)) && !all(is.na(x))
 }
 
@@ -127,7 +138,8 @@ all_valid_disks <- function(x) {
 #' @details `NA_disk_` is a missing value of the new `<disk>` class.
 #' @export
 NA_disk_ <- set_clean_class(as.integer(NA_real_),
-                            new_class = c("disk", "integer"))
+  new_class = c("disk", "integer")
+)
 
 #' @rdname as.disk
 #' @export
@@ -218,10 +230,10 @@ rep.disk <- function(x, ...) {
 get_skimmers.disk <- function(column) {
   skimr::sfl(
     skim_type = "disk",
-    min = ~min(as.double(.), na.rm = TRUE),
-    max = ~max(as.double(.), na.rm = TRUE),
-    median = ~stats::median(as.double(.), na.rm = TRUE),
-    n_unique = ~length(unique(stats::na.omit(.))),
-    hist = ~skimr::inline_hist(stats::na.omit(as.double(.)))
+    min = ~ min(as.double(.), na.rm = TRUE),
+    max = ~ max(as.double(.), na.rm = TRUE),
+    median = ~ stats::median(as.double(.), na.rm = TRUE),
+    n_unique = ~ length(unique(stats::na.omit(.))),
+    hist = ~ skimr::inline_hist(stats::na.omit(as.double(.)))
   )
 }

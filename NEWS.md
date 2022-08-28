@@ -1,4 +1,4 @@
-# AMR 1.8.1.9032
+# AMR 1.8.1.9033
 
 ### New
 * EUCAST 2022 and CLSI 2022 guidelines have been added for `as.rsi()`. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.
@@ -25,6 +25,7 @@
 * New website to make use of the new Bootstrap 5 and pkgdown v2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions
 * Added Peter Dutey-Magni and Anton Mymrikov as contributors, to thank them for their valuable input
 * Set up Git Large File Storage (Git LFS) for the large SAS and SPSS file formats
+* All R and Rmd files in this project are now styled using the `styler` package
 
 
 # `AMR` 1.8.1

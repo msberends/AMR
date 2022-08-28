@@ -39,9 +39,9 @@ This package comes with an [example data set `WHONET`](https://msberends.github.
 First, load the relevant packages if you did not yet did this. I use the tidyverse for all of my analyses. All of them. If you don't know it yet, I suggest you read about it on their website: https://www.tidyverse.org/.
 
 ```{r, message = FALSE}
-library(dplyr)   # part of tidyverse
+library(dplyr) # part of tidyverse
 library(ggplot2) # part of tidyverse
-library(AMR)     # this package
+library(AMR) # this package
 library(cleaner) # to create frequency tables
 ```
 
@@ -54,7 +54,7 @@ We will have to transform some variables to simplify and automate the analysis:
 # transform variables
 data <- WHONET %>%
   # get microbial ID based on given organism
-  mutate(mo = as.mo(Organism)) %>% 
+  mutate(mo = as.mo(Organism)) %>%
   # transform everything from "AMP_ND10" to "CIP_EE" to the new `rsi` class
   mutate_at(vars(AMP_ND10:CIP_EE), as.rsi)
 ```
@@ -83,15 +83,16 @@ An easy `ggplot` will already give a lot of information, using the included `ggp
 data %>%
   group_by(Country) %>%
   select(Country, AMP_ND2, AMC_ED20, CAZ_ED10, CIP_ED5) %>%
-  ggplot_rsi(translate_ab = 'ab', facet = "Country", datalabels = FALSE)
+  ggplot_rsi(translate_ab = "ab", facet = "Country", datalabels = FALSE)
 ```
 
 ```{r, echo = FALSE}
 # on very old and some new releases of R, this may lead to an error
 tryCatch(data %>%
-           group_by(Country) %>%
-           select(Country, AMP_ND2, AMC_ED20, CAZ_ED10, CIP_ED5) %>%
-           ggplot_rsi(translate_ab = 'ab', facet = "Country", datalabels = FALSE) %>%
-           print(),
-         error = function(e) base::invisible())
+  group_by(Country) %>%
+  select(Country, AMP_ND2, AMC_ED20, CAZ_ED10, CIP_ED5) %>%
+  ggplot_rsi(translate_ab = "ab", facet = "Country", datalabels = FALSE) %>%
+  print(),
+error = function(e) base::invisible()
+)
 ```

@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -24,7 +24,7 @@
 # ==================================================================== #
 
 #' Retrieve Antimicrobial Drug Names and Doses from Clinical Text
-#' 
+#'
 #' Use this function on e.g. clinical texts from health care records. It returns a [list] with all antimicrobial drugs, doses and forms of administration found in the texts.
 #' @param text text to analyse
 #' @param type type of property to search for, either `"drug"`, `"dose"` or `"administration"`, see *Examples*
@@ -34,56 +34,62 @@
 #' @param info a [logical] to indicate whether a progress bar should be printed, defaults to `TRUE` only in interactive mode
 #' @param ... arguments passed on to [as.ab()]
 #' @details This function is also internally used by [as.ab()], although it then only searches for the first drug name and will throw a note if more drug names could have been returned. Note: the [as.ab()] function may use very long regular expression to match brand names of antimicrobial agents. This may fail on some systems.
-#' 
+#'
 #' ## Argument `type`
 #' At default, the function will search for antimicrobial drug names. All text elements will be searched for official names, ATC codes and brand names. As it uses [as.ab()] internally, it will correct for misspelling.
-#' 
+#'
 #' With `type = "dose"` (or similar, like "dosing", "doses"), all text elements will be searched for [numeric] values that are higher than 100 and do not resemble years. The output will be [numeric]. It supports any unit (g, mg, IE, etc.) and multiple values in one clinical text, see *Examples*.
-#' 
+#'
 #' With `type = "administration"` (or abbreviations, like "admin", "adm"), all text elements will be searched for a form of drug administration. It supports the following forms (including common abbreviations): buccal, implant, inhalation, instillation, intravenous, nasal, oral, parenteral, rectal, sublingual, transdermal and vaginal. Abbreviations for oral (such as 'po', 'per os') will become "oral", all values for intravenous (such as 'iv', 'intraven') will become "iv". It supports multiple values in one clinical text, see *Examples*.
-#' 
+#'
 #' ## Argument `collapse`
 #' Without using `collapse`, this function will return a [list]. This can be convenient to use e.g. inside a `mutate()`):\cr
-#' `df %>% mutate(abx = ab_from_text(clinical_text))` 
-#' 
+#' `df %>% mutate(abx = ab_from_text(clinical_text))`
+#'
 #' The returned AB codes can be transformed to official names, groups, etc. with all [`ab_*`][ab_property()] functions such as [ab_name()] and [ab_group()], or by using the `translate_ab` argument.
-#' 
+#'
 #' With using `collapse`, this function will return a [character]:\cr
-#' `df %>% mutate(abx = ab_from_text(clinical_text, collapse = "|"))` 
+#' `df %>% mutate(abx = ab_from_text(clinical_text, collapse = "|"))`
 #' @export
 #' @return A [list], or a  [character] if `collapse` is not `NULL`
-#' @examples 
-#' # mind the bad spelling of amoxicillin in this line, 
+#' @examples
+#' # mind the bad spelling of amoxicillin in this line,
 #' # straight from a true health care record:
 #' ab_from_text("28/03/2020 regular amoxicilliin 500mg po tds")
-#' 
+#'
 #' ab_from_text("500 mg amoxi po and 400mg cipro iv")
 #' ab_from_text("500 mg amoxi po and 400mg cipro iv", type = "dose")
 #' ab_from_text("500 mg amoxi po and 400mg cipro iv", type = "admin")
-#' 
+#'
 #' ab_from_text("500 mg amoxi po and 400mg cipro iv", collapse = ", ")
 #' \donttest{
 #' # if you want to know which antibiotic groups were administered, do e.g.:
 #' abx <- ab_from_text("500 mg amoxi po and 400mg cipro iv")
 #' ab_group(abx[[1]])
-#' 
+#'
 #' if (require("dplyr")) {
-#'   tibble(clinical_text = c("given 400mg cipro and 500 mg amox",
-#'                            "started on doxy iv today")) %>% 
-#'     mutate(abx_codes = ab_from_text(clinical_text),
-#'            abx_doses = ab_from_text(clinical_text, type = "doses"),
-#'            abx_admin = ab_from_text(clinical_text, type = "admin"),
-#'            abx_coll = ab_from_text(clinical_text, collapse = "|"),
-#'            abx_coll_names = ab_from_text(clinical_text,
-#'                                          collapse = "|",
-#'                                          translate_ab = "name"),
-#'            abx_coll_doses = ab_from_text(clinical_text,
-#'                                          type = "doses",
-#'                                          collapse = "|"),
-#'            abx_coll_admin = ab_from_text(clinical_text,
-#'                                          type = "admin",
-#'                                          collapse = "|"))
-#' 
+#'   tibble(clinical_text = c(
+#'     "given 400mg cipro and 500 mg amox",
+#'     "started on doxy iv today"
+#'   )) %>%
+#'     mutate(
+#'       abx_codes = ab_from_text(clinical_text),
+#'       abx_doses = ab_from_text(clinical_text, type = "doses"),
+#'       abx_admin = ab_from_text(clinical_text, type = "admin"),
+#'       abx_coll = ab_from_text(clinical_text, collapse = "|"),
+#'       abx_coll_names = ab_from_text(clinical_text,
+#'         collapse = "|",
+#'         translate_ab = "name"
+#'       ),
+#'       abx_coll_doses = ab_from_text(clinical_text,
+#'         type = "doses",
+#'         collapse = "|"
+#'       ),
+#'       abx_coll_admin = ab_from_text(clinical_text,
+#'         type = "admin",
+#'         collapse = "|"
+#'       )
+#'     )
 #' }
 #' }
 ab_from_text <- function(text,
@@ -96,7 +102,7 @@ ab_from_text <- function(text,
   if (missing(type)) {
     type <- type[1L]
   }
-  
+
   meet_criteria(text)
   meet_criteria(type, allow_class = "character", has_length = 1)
   meet_criteria(collapse, has_length = 1, allow_NULL = TRUE)
@@ -105,18 +111,17 @@ ab_from_text <- function(text,
   meet_criteria(info, allow_class = "logical", has_length = 1)
 
   type <- tolower(trimws(type))
-  
+
   text <- tolower(as.character(text))
   text_split_all <- strsplit(text, "[ ;.,:\\|]")
   progress <- progress_ticker(n = length(text_split_all), n_min = 5, print = info)
   on.exit(close(progress))
-  
+
   if (type %like% "(drug|ab|anti)") {
-    
     translate_ab <- get_translate_ab(translate_ab)
-    
-    if (isTRUE(thorough_search) | 
-        (isTRUE(is.null(thorough_search)) & max(vapply(FUN.VALUE = double(1), text_split_all, length), na.rm = TRUE) <= 3)) {
+
+    if (isTRUE(thorough_search) |
+      (isTRUE(is.null(thorough_search)) & max(vapply(FUN.VALUE = double(1), text_split_all, length), na.rm = TRUE) <= 3)) {
       text_split_all <- text_split_all[nchar(text_split_all) >= 4 & grepl("[a-z]+", text_split_all)]
       result <- lapply(text_split_all, function(text_split) {
         progress$tick()
@@ -124,7 +129,6 @@ ab_from_text <- function(text,
           out <- as.ab(text_split, ...)
         )
       })
-      
     } else {
       # no thorough search
       abbr <- unlist(antibiotics$abbreviations)
@@ -136,25 +140,30 @@ ab_from_text <- function(text,
       synonyms_part1 <- synonyms[seq_len(0.5 * length(synonyms))]
       synonyms_part2 <- synonyms[!synonyms %in% synonyms_part1]
       to_regex <- function(x) {
-        paste0("^(",
-               paste0(unique(gsub("[^a-z0-9]+", "", sort(tolower(x)))), collapse = "|"),
-               ").*")
+        paste0(
+          "^(",
+          paste0(unique(gsub("[^a-z0-9]+", "", sort(tolower(x)))), collapse = "|"),
+          ").*"
+        )
       }
       result <- lapply(text_split_all, function(text_split) {
         progress$tick()
         suppressWarnings(
-          out <- as.ab(unique(c(text_split[text_split %like_case% to_regex(abbr)],
-                                text_split[text_split %like_case% to_regex(names_atc)],
-                                text_split[text_split %like_case% to_regex(synonyms_part1)],
-                                text_split[text_split %like_case% to_regex(synonyms_part2)])
-          ),
-          ...)
+          out <- as.ab(
+            unique(c(
+              text_split[text_split %like_case% to_regex(abbr)],
+              text_split[text_split %like_case% to_regex(names_atc)],
+              text_split[text_split %like_case% to_regex(synonyms_part1)],
+              text_split[text_split %like_case% to_regex(synonyms_part2)]
+            )),
+            ...
+          )
         )
       })
     }
-    
+
     close(progress)
-    
+
     result <- lapply(result, function(out) {
       out <- out[!is.na(out)]
       if (length(out) == 0) {
@@ -165,27 +174,24 @@ ab_from_text <- function(text,
         }
         out
       }
-      
     })
-    
   } else if (type %like% "dos") {
     text_split_all <- strsplit(text, " ")
     result <- lapply(text_split_all, function(text_split) {
       text_split <- text_split[text_split %like% "^[0-9]{2,}(/[0-9]+)?[a-z]*$"]
       # only left part of "/", like 500 in  "500/125"
-      text_split <-  gsub("/.*", "", text_split)
+      text_split <- gsub("/.*", "", text_split)
       text_split <- gsub(",", ".", text_split, fixed = TRUE) # foreign system using comma as decimal sep
       text_split <- as.double(gsub("[^0-9.]", "", text_split))
       # minimal 100 units/mg and no years that unlikely doses
       text_split <- text_split[text_split >= 100 & !text_split %in% c(1951:1999, 2001:2049)]
-      
+
       if (length(text_split) > 0) {
         text_split
       } else {
         NA_real_
       }
     })
-    
   } else if (type %like% "adm") {
     result <- lapply(text_split_all, function(text_split) {
       text_split <- text_split[text_split %like% "(^iv$|intraven|^po$|per os|oral|implant|inhal|instill|nasal|paren|rectal|sublingual|buccal|trans.*dermal|vaginal)"]
@@ -197,11 +203,10 @@ ab_from_text <- function(text,
         NA_character_
       }
     })
-    
   } else {
     stop_("`type` must be either 'drug', 'dose' or 'administration'")
   }
-  
+
   # collapse text if needed
   if (!is.null(collapse)) {
     result <- vapply(FUN.VALUE = character(1), result, function(x) {
@@ -212,7 +217,6 @@ ab_from_text <- function(text,
       }
     })
   }
-  
+
   result
-  
 }

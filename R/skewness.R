@@ -9,7 +9,7 @@
 # (c) 2018-2022 Berends MS, Luz CF et al.                              #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       # 
+# Diagnostics & Advice, and University Medical Center Groningen.       #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -33,7 +33,7 @@
 #' @seealso [kurtosis()]
 #' @rdname skewness
 #' @export
-#' @examples 
+#' @examples
 #' skewness(runif(1000))
 skewness <- function(x, na.rm = FALSE) {
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)
@@ -50,7 +50,7 @@ skewness.default <- function(x, na.rm = FALSE) {
     x <- x[!is.na(x)]
   }
   n <- length(x)
-  (sum((x - mean(x))^3) / n) / (sum((x - mean(x)) ^ 2) / n) ^ (3 / 2)
+  (sum((x - mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^(3 / 2)
 }
 
 #' @method skewness matrix
