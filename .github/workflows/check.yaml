@@ -133,7 +133,7 @@ jobs:
           R_LIBS_USER_GH_ACTIONS: ${{ env.R_LIBS_USER }}
           R_RUN_TINYTEST: true
         run: |
-          R CMD check --no-manual --run-donttest --run-dontrun
+          R CMD check --no-manual --run-donttest --run-dontrun .
         shell: bash
 
       - name: Show unit tests output
