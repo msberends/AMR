@@ -135,6 +135,7 @@ jobs:
           R_RUN_TINYTEST: true
         run: |
           cd ..
+          ls -lh
           R CMD build AMR
           R CMD check --no-manual --run-donttest --run-dontrun AMR_*.tar.gz
         shell: bash
@@ -142,6 +143,8 @@ jobs:
       - name: Show unit tests output
         if: always()
         run: |
+          ls -lh
+          cd AMR
           find . -name 'tinytest.Rout*' -exec cat '{}' \; || true
         shell: bash
 

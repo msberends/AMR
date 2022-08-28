@@ -651,7 +651,7 @@ dataset_UTF8_to_ASCII <- function(df) {
       df[, i] <- col
     }
   }
-  tibble::as_tibble(df)
+  import_fn("as_tibble", "tibble")(df)
 }
 
 # for eucast_rules() and mdro(), creates markdown output with URLs and names

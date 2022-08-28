@@ -53,11 +53,13 @@ expect_false(any(is.na(as.disk(rsi_translation[which(rsi_translation$method == "
 # antibiotic names must always be coercible to their original AB code
 expect_identical(as.ab(antibiotics$name), antibiotics$ab)
 
-# there should be no diacritics (i.e. non ASCII) characters in the datasets (CRAN policy)
-datasets <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item", drop = TRUE]
-for (i in seq_len(length(datasets))) {
-  dataset <- get(datasets[i], envir = asNamespace("AMR"))
-  expect_identical(AMR:::dataset_UTF8_to_ASCII(dataset), dataset, info = datasets[i])
+if (AMR:::pkg_is_available("tibble", also_load = FALSE)) {
+  # there should be no diacritics (i.e. non ASCII) characters in the datasets (CRAN policy)
+  datasets <- data(package = "AMR", envir = asNamespace("AMR"))$results[, "Item", drop = TRUE]
+  for (i in seq_len(length(datasets))) {
+    dataset <- get(datasets[i], envir = asNamespace("AMR"))
+    expect_identical(AMR:::dataset_UTF8_to_ASCII(dataset), dataset, info = datasets[i])
+  }
 }
 
 df <- AMR:::MO_lookup
