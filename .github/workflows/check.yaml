@@ -124,11 +124,16 @@ jobs:
       - name: Run R CMD check
         if: always()
         env:
+          # see https://rstudio.github.io/r-manuals/r-ints/Tools.html for an overview
           _R_CHECK_CRAN_INCOMING_: false
-          _R_CHECK_FORCE_SUGGESTS_: false
           _R_CHECK_DEPENDS_ONLY_: true
           _R_CHECK_LENGTH_1_CONDITION_: verbose
           _R_CHECK_LENGTH_1_LOGIC2_: verbose
+          # no check for old R versions - these packages require higher R versions
+          _R_CHECK_RD_XREFS_: {{ matrix.config.r != '3.0' && matrix.config.r != '3.1' && matrix.config.r != '3.2' && matrix.config.r != '3.3' && matrix.config.r != '3.4' }}
+          _R_CHECK_FORCE_SUGGESTS_: false
+          R_CHECK_CONSTANTS: 5
+          R_JIT_STRATEGY: 3
           # during 'R CMD check', R_LIBS_USER will be overwritten, so:
           R_LIBS_USER_GH_ACTIONS: ${{ env.R_LIBS_USER }}
           # this is a required value to run the unit tests:
@@ -136,7 +141,7 @@ jobs:
         run: |
           cd ..
           R CMD build AMR
-          R CMD check --no-manual --run-donttest --run-dontrun AMR_*.tar.gz
+          R CMD check --as-cran --no-manual --run-donttest --run-dontrun AMR_*.tar.gz
         shell: bash
 
       - name: Show unit tests output
@@ -151,4 +156,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: artifacts-${{ matrix.config.os }}-r${{ matrix.config.r }}
-          path: ../AMR.Rcheck
+          path: ~/AMR.Rcheck
