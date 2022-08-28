@@ -494,4 +494,4 @@ invisible(capture.output(styler::style_dir(
 
 
 # Finished ----------------------------------------------------------------
-usethis::ui_info("All done")
+usethis::ui_done("All done")

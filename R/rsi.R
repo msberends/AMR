@@ -722,7 +722,12 @@ as_rsi_method <- function(method_short,
   agent_formatted <- paste0("'", font_bold(ab), "'")
   agent_name <- ab_name(ab_coerced, tolower = TRUE, language = NULL)
   if (generalise_antibiotic_name(ab) != generalise_antibiotic_name(agent_name)) {
-    agent_formatted <- paste0(agent_formatted, " (", ab_coerced, ", ", agent_name, ")")
+    agent_formatted <- paste0(
+      agent_formatted,
+      " (", ifelse(ab == ab_coerced, "",
+        paste0(ab_coerced, ", ")
+      ), agent_name, ")"
+    )
   }
   message_("=> Interpreting ", method_long, " of ", ifelse(isTRUE(list(...)$is_data.frame), "column ", ""),
     agent_formatted,
@@ -799,19 +804,31 @@ exec_as.rsi <- function(method,
 
   new_rsi <- rep(NA_character_, length(x))
   ab_param <- ab
-  if (ab_param == "AMX") {
-    ab_param <- "AMP"
-    if (message_not_thrown_before("as.rsi", "AMP_for_AMX")) {
-      message_("(using ampicillin rules)", appendLF = FALSE, as_note = FALSE)
-    }
-  }
+
   if (identical(reference_data, AMR::rsi_translation)) {
     trans <- reference_data %pm>%
       subset(guideline == guideline_coerced & method == method_param & ab == ab_param)
+    if (ab_param == "AMX" && nrow(trans) == 0) {
+      ab_param <- "AMP"
+      if (message_not_thrown_before("as.rsi", "AMP_for_AMX")) {
+        message_("(using ampicillin rules)", appendLF = FALSE, as_note = FALSE)
+      }
+      trans <- reference_data %pm>%
+        subset(guideline == guideline_coerced & method == method_param & ab == ab_param)
+    }
   } else {
     trans <- reference_data %pm>%
       subset(method == method_param & ab == ab_param)
   }
+
+  if (nrow(trans) == 0) {
+    message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
+    load_mo_failures_uncertainties_renamed(metadata_mo)
+    return(set_clean_class(factor(new_rsi, levels = c("S", "I", "R"), ordered = TRUE),
+      new_class = c("rsi", "ordered", "factor")
+    ))
+  }
+
   trans$lookup <- paste(trans$mo, trans$ab)
 
   lookup_mo <- paste(mo, ab_param)
