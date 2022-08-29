@@ -5,7 +5,7 @@
 \alias{example_isolates}
 \title{Data Set with 2,000 Example Isolates}
 \format{
-A [tibble\link[tibble:tibble]{tibble::tibble} with 2,000 observations and 46 variables:
+A \link[tibble:tibble]{tibble} with 2,000 observations and 46 variables:
 \itemize{
 \item \code{date}\cr Date of receipt at the laboratory
 \item \code{patient}\cr ID of the patient

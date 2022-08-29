@@ -1,4 +1,4 @@
-# AMR 1.8.1.9045
+# AMR 1.8.1.9046
 
 ### New
 * EUCAST 2022 and CLSI 2022 guidelines have been added for `as.rsi()`. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.

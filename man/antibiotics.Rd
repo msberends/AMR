@@ -6,7 +6,7 @@
 \alias{antivirals}
 \title{Data Sets with 566 Antimicrobial Drugs}
 \format{
-\subsection{For the \link{antibiotics} data set: a [tibble\link[tibble:tibble]{tibble::tibble} with 464 observations and 14 variables:}{
+\subsection{For the \link{antibiotics} data set: a \link[tibble:tibble]{tibble} with 464 observations and 14 variables:}{
 \itemize{
 \item \code{ab}\cr Antibiotic ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
 \item \code{cid}\cr Compound ID as found in PubChem
@@ -25,7 +25,7 @@
 }
 }
 
-\subsection{For the \link{antivirals} data set: a [tibble\link[tibble:tibble]{tibble::tibble} with 102 observations and 9 variables:}{
+\subsection{For the \link{antivirals} data set: a \link[tibble:tibble]{tibble} with 102 observations and 9 variables:}{
 \itemize{
 \item \code{atc}\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC
 \item \code{cid}\cr Compound ID as found in PubChem

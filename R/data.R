@@ -27,7 +27,7 @@
 #'
 #' Two data sets containing all antibiotics/antimycotics and antivirals. Use [as.ab()] or one of the [`ab_*`][ab_property()] functions to retrieve values from the [antibiotics] data set. Three identifiers are included in this data set: an antibiotic ID (`ab`, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (`atc`) as defined by the WHO, and a Compound ID (`cid`) as found in PubChem. Other properties in this data set are derived from one or more of these codes. Note that some drugs have multiple ATC codes.
 #' @format
-#' ## For the [antibiotics] data set: a [tibble[tibble::tibble] with `r nrow(antibiotics)` observations and `r ncol(antibiotics)` variables:
+#' ## For the [antibiotics] data set: a [tibble][tibble::tibble] with `r nrow(antibiotics)` observations and `r ncol(antibiotics)` variables:
 #' - `ab`\cr Antibiotic ID as used in this package (such as `AMC`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
 #' - `cid`\cr Compound ID as found in PubChem
 #' - `name`\cr Official name as used by WHONET/EARS-Net or the WHO
@@ -43,7 +43,7 @@
 #' - `iv_units`\cr Units of `iv_ddd`
 #' - `loinc`\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial agent. Use [ab_loinc()] to retrieve them quickly, see [ab_property()].
 #'
-#' ## For the [antivirals] data set: a [tibble[tibble::tibble] with `r nrow(antivirals)` observations and `r ncol(antivirals)` variables:
+#' ## For the [antivirals] data set: a [tibble][tibble::tibble] with `r nrow(antivirals)` observations and `r ncol(antivirals)` variables:
 #' - `atc`\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC
 #' - `cid`\cr Compound ID as found in PubChem
 #' - `name`\cr Official name as used by WHONET/EARS-Net or the WHO
@@ -76,7 +76,7 @@
 #'
 #' A data set containing the full microbial taxonomy (**last updated: `r CATALOGUE_OF_LIFE$yearmonth_LPSN`**) of `r nr2char(length(unique(microorganisms$kingdom[!microorganisms$kingdom %like% "unknown"])))` kingdoms from the Catalogue of Life (CoL) and the List of Prokaryotic names with Standing in Nomenclature (LPSN). MO codes can be looked up using [as.mo()].
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @format A [tibble[tibble::tibble] with `r format(nrow(microorganisms), big.mark = ",")` observations and `r ncol(microorganisms)` variables:
+#' @format A [tibble][tibble::tibble] with `r format(nrow(microorganisms), big.mark = ",")` observations and `r ncol(microorganisms)` variables:
 #' - `mo`\cr ID of microorganism as used by this package
 #' - `fullname`\cr Full name, like `"Escherichia coli"`
 #' - `kingdom`, `phylum`, `class`, `order`, `family`, `genus`, `species`, `subspecies`\cr Taxonomic rank of the microorganism
@@ -134,7 +134,7 @@
 #'
 #' A data set containing old (previously valid or accepted) taxonomic names according to the Catalogue of Life. This data set is used internally by [as.mo()].
 #' @inheritSection catalogue_of_life Catalogue of Life
-#' @format A [tibble[tibble::tibble] with `r format(nrow(microorganisms.old), big.mark = ",")` observations and `r ncol(microorganisms.old)` variables:
+#' @format A [tibble][tibble::tibble] with `r format(nrow(microorganisms.old), big.mark = ",")` observations and `r ncol(microorganisms.old)` variables:
 #' - `fullname`\cr Old full taxonomic name of the microorganism
 #' - `fullname_new`\cr New full taxonomic name of the microorganism
 #' - `ref`\cr Author(s) and year of concerning scientific publication
@@ -152,7 +152,7 @@
 #' Data Set with `r format(nrow(microorganisms.codes), big.mark = ",")` Common Microorganism Codes
 #'
 #' A data set containing commonly used codes for microorganisms, from laboratory systems and WHONET. Define your own with [set_mo_source()]. They will all be searched when using [as.mo()] and consequently all the [`mo_*`][mo_property()] functions.
-#' @format A [tibble[tibble::tibble] with `r format(nrow(microorganisms.codes), big.mark = ",")` observations and `r ncol(microorganisms.codes)` variables:
+#' @format A [tibble][tibble::tibble] with `r format(nrow(microorganisms.codes), big.mark = ",")` observations and `r ncol(microorganisms.codes)` variables:
 #' - `code`\cr Commonly used code of a microorganism
 #' - `mo`\cr ID of the microorganism in the [microorganisms] data set
 #' @details
@@ -166,7 +166,7 @@
 #' Data Set with `r format(nrow(example_isolates), big.mark = ",")` Example Isolates
 #'
 #' A data set containing `r format(nrow(example_isolates), big.mark = ",")` microbial isolates with their full antibiograms. This data set contains randomised fictitious data, but reflects reality and can be used to practise AMR data analysis. For examples, please read [the tutorial on our website](https://msberends.github.io/AMR/articles/AMR.html).
-#' @format A [tibble[tibble::tibble] with `r format(nrow(example_isolates), big.mark = ",")` observations and `r ncol(example_isolates)` variables:
+#' @format A [tibble][tibble::tibble] with `r format(nrow(example_isolates), big.mark = ",")` observations and `r ncol(example_isolates)` variables:
 #' - `date`\cr Date of receipt at the laboratory
 #' - `patient`\cr ID of the patient
 #' - `age`\cr Age of the patient
@@ -183,7 +183,7 @@
 #' Data Set with Unclean Data
 #'
 #' A data set containing `r format(nrow(example_isolates_unclean), big.mark = ",")` microbial isolates that are not cleaned up and consequently not ready for AMR data analysis. This data set can be used for practice.
-#' @format A [tibble[tibble::tibble] with `r format(nrow(example_isolates_unclean), big.mark = ",")` observations and `r ncol(example_isolates_unclean)` variables:
+#' @format A [tibble][tibble::tibble] with `r format(nrow(example_isolates_unclean), big.mark = ",")` observations and `r ncol(example_isolates_unclean)` variables:
 #' - `patient_id`\cr ID of the patient
 #' - `date`\cr date of receipt at the laboratory
 #' - `hospital`\cr ID of the hospital, from A to C
@@ -198,7 +198,7 @@
 #' Data Set with `r format(nrow(WHONET), big.mark = ",")` Isolates - WHONET Example
 #'
 #' This example data set has the exact same structure as an export file from WHONET. Such files can be used with this package, as this example data set shows. The antibiotic results are from our [example_isolates] data set. All patient names are created using online surname generators and are only in place for practice purposes.
-#' @format A [tibble[tibble::tibble] with `r format(nrow(WHONET), big.mark = ",")` observations and `r ncol(WHONET)` variables:
+#' @format A [tibble][tibble::tibble] with `r format(nrow(WHONET), big.mark = ",")` observations and `r ncol(WHONET)` variables:
 #' - `Identification number`\cr ID of the sample
 #' - `Specimen number`\cr ID of the specimen
 #' - `Organism`\cr Name of the microorganism. Before analysis, you should transform this to a valid microbial class, using [as.mo()].
@@ -234,7 +234,7 @@
 #' Data Set for R/SI Interpretation
 #'
 #' Data set containing reference data to interpret MIC and disk diffusion to R/SI values, according to international guidelines. Currently implemented guidelines are EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`). Use [as.rsi()] to transform MICs or disks measurements to R/SI values.
-#' @format A [tibble[tibble::tibble] with `r format(nrow(rsi_translation), big.mark = ",")` observations and `r ncol(rsi_translation)` variables:
+#' @format A [tibble][tibble::tibble] with `r format(nrow(rsi_translation), big.mark = ",")` observations and `r ncol(rsi_translation)` variables:
 #' - `guideline`\cr Name of the guideline
 #' - `method`\cr Either `r vector_or(rsi_translation$method)`
 #' - `site`\cr Body site, e.g. "Oral" or "Respiratory"
@@ -258,7 +258,7 @@
 #' Data Set with Bacterial Intrinsic Resistance
 #'
 #' Data set containing defined intrinsic resistance by EUCAST of all bug-drug combinations.
-#' @format A [tibble[tibble::tibble] with `r format(nrow(intrinsic_resistant), big.mark = ",")` observations and `r ncol(intrinsic_resistant)` variables:
+#' @format A [tibble][tibble::tibble] with `r format(nrow(intrinsic_resistant), big.mark = ",")` observations and `r ncol(intrinsic_resistant)` variables:
 #' - `mo`\cr Microorganism ID
 #' - `ab`\cr Antibiotic ID
 #' @details
@@ -275,7 +275,7 @@
 #' Data Set with Treatment Dosages as Defined by EUCAST
 #'
 #' EUCAST breakpoints used in this package are based on the dosages in this data set. They can be retrieved with [eucast_dosage()].
-#' @format A [tibble[tibble::tibble] with `r format(nrow(dosage), big.mark = ",")` observations and `r ncol(dosage)` variables:
+#' @format A [tibble][tibble::tibble] with `r format(nrow(dosage), big.mark = ",")` observations and `r ncol(dosage)` variables:
 #' - `ab`\cr Antibiotic ID as used in this package (such as `AMC`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
 #' - `name`\cr Official name of the antimicrobial agent as used by WHONET/EARS-Net or the WHO
 #' - `type`\cr Type of the dosage, either `r vector_or(dosage$type)`

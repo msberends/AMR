@@ -5,7 +5,7 @@
 \alias{rsi_translation}
 \title{Data Set for R/SI Interpretation}
 \format{
-A [tibble\link[tibble:tibble]{tibble::tibble} with 20,369 observations and 11 variables:
+A \link[tibble:tibble]{tibble} with 20,369 observations and 11 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
 \item \code{method}\cr Either "DISK" or "MIC"

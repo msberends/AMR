@@ -5,7 +5,7 @@
 \alias{microorganisms}
 \title{Data Set with 70,764 Microorganisms}
 \format{
-A [tibble\link[tibble:tibble]{tibble::tibble} with 70,764 observations and 16 variables:
+A \link[tibble:tibble]{tibble} with 70,764 observations and 16 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}

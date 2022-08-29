@@ -5,7 +5,7 @@
 \alias{microorganisms.old}
 \title{Data Set with Previously Accepted Taxonomic Names}
 \format{
-A [tibble\link[tibble:tibble]{tibble::tibble} with 14,338 observations and 4 variables:
+A \link[tibble:tibble]{tibble} with 14,338 observations and 4 variables:
 \itemize{
 \item \code{fullname}\cr Old full taxonomic name of the microorganism
 \item \code{fullname_new}\cr New full taxonomic name of the microorganism

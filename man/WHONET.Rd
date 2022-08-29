@@ -5,7 +5,7 @@
 \alias{WHONET}
 \title{Data Set with 500 Isolates - WHONET Example}
 \format{
-A [tibble\link[tibble:tibble]{tibble::tibble} with 500 observations and 53 variables:
+A \link[tibble:tibble]{tibble} with 500 observations and 53 variables:
 \itemize{
 \item \verb{Identification number}\cr ID of the sample
 \item \verb{Specimen number}\cr ID of the specimen

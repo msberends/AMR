@@ -65,7 +65,11 @@
 #' \donttest{
 #' if (require("ggplot2")) {
 #'   autoplot(some_mic_values)
+#' }
+#' if (require("ggplot2")) {
 #'   autoplot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
+#' }
+#' if (require("ggplot2")) {
 #'   autoplot(some_rsi_values)
 #' }
 #' }

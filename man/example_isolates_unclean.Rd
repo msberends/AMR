@@ -5,7 +5,7 @@
 \alias{example_isolates_unclean}
 \title{Data Set with Unclean Data}
 \format{
-A [tibble\link[tibble:tibble]{tibble::tibble} with 3,000 observations and 8 variables:
+A \link[tibble:tibble]{tibble} with 3,000 observations and 8 variables:
 \itemize{
 \item \code{patient_id}\cr ID of the patient
 \item \code{date}\cr date of receipt at the laboratory
