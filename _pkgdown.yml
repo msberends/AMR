@@ -168,6 +168,7 @@ reference:
     - "`ggplot_rsi`"
     - "`bug_drug_combinations`"
     - "`antibiotic_class_selectors`"
+    - "`mean_amr_distance`"
     - "`resistance_predict`"
     - "`guess_ab_col`"
 
