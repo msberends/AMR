@@ -23,76 +23,37 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-# These are all S3 implementations for the vctrs package,
-# that is used internally by tidyverse packages such as dplyr.
-# They are to convert AMR-specific classes to bare characters and integers.
-# All of them will be exported using s3_register() in R/zzz.R when loading the package.
+vctr_disk <- as.disk(c(20:25))
+vctr_mic <- as.mic(2^c(0:5))
+vctr_rsi <- as.rsi(c("S", "S", "I", "I", "R", "R"))
 
-# see https://github.com/tidyverse/dplyr/issues/5955 why this is required
+expect_identical(
+  mean_amr_distance(vctr_disk),
+  (as.double(vctr_disk) - mean(as.double(vctr_disk))) / sd(as.double(vctr_disk))
+)
 
-# S3: ab_selector
-vec_ptype2.character.ab_selector <- function(x, y, ...) {
-  x
-}
-vec_ptype2.ab_selector.character <- function(x, y, ...) {
-  y
-}
-vec_cast.character.ab_selector <- function(x, to, ...) {
-  unclass(x)
-}
+expect_identical(
+  mean_amr_distance(vctr_mic),
+  (log2(vctr_mic) - mean(log2(vctr_mic))) / sd(log2(vctr_mic))
+)
 
-# S3: ab_selector_any_all
-vec_ptype2.logical.ab_selector_any_all <- function(x, y, ...) {
-  x
-}
-vec_ptype2.ab_selector_any_all.logical <- function(x, y, ...) {
-  y
-}
-vec_cast.logical.ab_selector_any_all <- function(x, to, ...) {
-  unclass(x)
-}
+expect_identical(
+  mean_amr_distance(vctr_rsi, combine_SI = FALSE),
+  (c(1, 1, 2, 2, 3, 3) - mean(c(1, 1, 2, 2, 3, 3))) / sd(c(1, 1, 2, 2, 3, 3))
+)
+expect_identical(
+  mean_amr_distance(vctr_rsi, combine_SI = TRUE),
+  (c(1, 1, 1, 1, 3, 3) - mean(c(1, 1, 1, 1, 3, 3))) / sd(c(1, 1, 1, 1, 3, 3))
+)
 
-# S3: ab
-vec_ptype2.character.ab <- function(x, y, ...) {
-  x
-}
-vec_ptype2.ab.character <- function(x, y, ...) {
-  y
-}
-vec_cast.character.ab <- function(x, to, ...) {
-  unclass(x)
-}
+expect_equal(
+  mean_amr_distance(data.frame(vctr_mic, vctr_rsi, vctr_disk)),
+  c(-1.10603655, -0.74968823, -0.39333990, -0.03699158, 0.96485397, 1.32120229),
+  tolerance = 0.00001
+)
 
-# S3: mo
-vec_ptype2.character.mo <- function(x, y, ...) {
-  x
-}
-vec_ptype2.mo.character <- function(x, y, ...) {
-  y
-}
-vec_cast.character.mo <- function(x, to, ...) {
-  unclass(x)
-}
-
-# S3: disk
-vec_ptype2.integer.disk <- function(x, y, ...) {
-  x
-}
-vec_ptype2.disk.integer <- function(x, y, ...) {
-  y
-}
-vec_cast.integer.disk <- function(x, to, ...) {
-  unclass(x)
-}
-
-# S3: mic
-vec_cast.character.mic <- function(x, to, ...) {
-  as.character(x)
-}
-vec_cast.double.mic <- function(x, to, ...) {
-  # this calls as.double.mic()
-  as.double(x)
-}
-vec_math.mic <- function(.fn, x, ...) {
-  .fn(as.double(x), ...)
-}
+expect_equal(
+  mean_amr_distance(data.frame(vctr_mic, vctr_rsi, vctr_disk), 2:3),
+  c(-0.9909017, -0.7236405, -0.4563792, -0.1891180, 1.0463891, 1.3136503),
+  tolerance = 0.00001
+)

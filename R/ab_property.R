@@ -374,7 +374,12 @@ set_ab_names <- function(data, ..., property = "name", language = get_AMR_locale
 
   if (is.data.frame(data)) {
     if (tryCatch(length(list(...)) > 0, error = function(e) TRUE)) {
-      df <- pm_select(data, ...)
+      out <- tryCatch(suppressWarnings(c(...)), error = function(e) NULL)
+      if (!is.null(out)) {
+        df <- data[, out, drop = FALSE]
+      } else {
+        df <- pm_select(data, ...)
+      }
     } else {
       df <- data
     }

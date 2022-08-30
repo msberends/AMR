@@ -1,7 +1,8 @@
-# AMR 1.8.1.9046
+# AMR 1.8.1.9047
 
 ### New
 * EUCAST 2022 and CLSI 2022 guidelines have been added for `as.rsi()`. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.
+* Function to calculate the mean AMR distance: `mean_amr_distance()`. The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand.
 * Support for `data.frame`-enhancing R packages, more specifically: `data.table`, `tibble`, and `tsibble`. AMR package functions that have a data set as output (such as `rsi_df()` and `bug_drug_combinations()`), will now return the same data type as the input. Furthermore, all our data sets are now in `tibble` format.
 * Our data sets are now also continually exported to Apache Feather and Apache Parquet formats. You can find more info [in this article on our website](https://msberends.github.io/AMR/articles/datasets.html).
 * Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. We are very grateful for the valuable input by our colleagues from other countries. The `AMR` package is now available in 16 languages.

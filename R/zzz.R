@@ -96,6 +96,9 @@ if (utf8_supported && !is_latex) {
   s3_register("vctrs::vec_ptype2", "disk.integer")
   s3_register("vctrs::vec_ptype2", "integer.disk")
   s3_register("vctrs::vec_cast", "integer.disk")
+  s3_register("vctrs::vec_cast", "character.mic")
+  s3_register("vctrs::vec_cast", "double.mic")
+  s3_register("vctrs::vec_math", "mic")
 
   # if mo source exists, fire it up (see mo_source())
   try(
