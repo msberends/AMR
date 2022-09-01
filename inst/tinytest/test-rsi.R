@@ -123,6 +123,10 @@ expect_equal(
   c("S", "S", "I", "R", "R")
 )
 
+expect_true(is.data.frame(rsi_interpretation_history(clean = FALSE)))
+expect_true(is.data.frame(rsi_interpretation_history(clean = TRUE)))
+expect_true(is.null(rsi_interpretation_history()))
+
 # cutoffs at MIC = 8
 expect_equal(
   as.rsi(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020"),

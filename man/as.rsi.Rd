@@ -10,6 +10,7 @@
 \alias{as.rsi.mic}
 \alias{as.rsi.disk}
 \alias{as.rsi.data.frame}
+\alias{rsi_interpretation_history}
 \title{Interpret MIC and Disk Values, or Clean Raw R/SI Data}
 \format{
 An object of class \code{rsi} (inherits from \code{ordered}, \code{factor}) of length 1.
@@ -56,6 +57,8 @@ is.rsi.eligible(x, threshold = 0.05)
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::rsi_translation
 )
+
+rsi_interpretation_history(clean = FALSE)
 }
 \arguments{
 \item{x}{vector of values (for class \code{\link{mic}}: MIC values in mg/L, for class \code{\link{disk}}: a disk diffusion radius in millimetres)}
@@ -79,6 +82,8 @@ is.rsi.eligible(x, threshold = 0.05)
 \item{reference_data}{a \link{data.frame} to be used for interpretation, which defaults to the \link{rsi_translation} data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the \link{rsi_translation} data set (same column names and column types). Please note that the \code{guideline} argument will be ignored when \code{reference_data} is manually set.}
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
+
+\item{clean}{a \link{logical} to indicate whether previously stored results should be forgotten after returning the 'logbook' with results}
 }
 \value{
 Ordered \link{factor} with new class \verb{<rsi>}
@@ -111,6 +116,8 @@ your_data \%>\% mutate(across(where(is.disk), as.rsi)) # since dplyr 1.0.0
 }
 \item For \strong{interpreting a complete data set}, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running \code{as.rsi(your_data)}.
 }
+
+For points 2, 3 and 4: Use \code{\link[=rsi_interpretation_history]{rsi_interpretation_history()}} to retrieve a \link{data.frame} (or \link[tibble:tibble]{tibble} if the \code{tibble} package is installed) with all results of the last \code{\link[=as.rsi]{as.rsi()}} call.
 }
 
 \subsection{Supported Guidelines}{
@@ -172,10 +179,12 @@ df <- data.frame(
   CIP = as.mic(0.256),
   GEN = as.disk(18),
   TOB = as.disk(16),
-  NIT = as.mic(32),
   ERY = "R"
 )
 as.rsi(df)
+
+# return a 'logbook' about the results:
+rsi_interpretation_history()
 
 # for single values
 as.rsi(

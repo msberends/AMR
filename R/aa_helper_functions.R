@@ -1062,10 +1062,10 @@ has_colour <- function() {
     if ((cols <- Sys.getenv("RSTUDIO_CONSOLE_COLOR", "")) != "" && !is.na(as.double(cols))) {
       return(TRUE)
     }
-    tryCatch(get("isAvailable", envir = asNamespace("rstudioapi"))(), error = function(e) {
+    tryCatch(getExportedValue("isAvailable", ns = asNamespace("rstudioapi"))(), error = function(e) {
       return(FALSE)
     }) &&
-      tryCatch(get("hasFun", envir = asNamespace("rstudioapi"))("getConsoleHasColor"), error = function(e) {
+      tryCatch(getExportedValue("hasFun", ns = asNamespace("rstudioapi"))("getConsoleHasColor"), error = function(e) {
         return(FALSE)
       })
   }
@@ -1112,7 +1112,26 @@ try_colour <- function(..., before, after, collapse = " ") {
   }
 }
 font_black <- function(..., collapse = " ") {
-  try_colour(..., before = "\033[38;5;232m", after = "\033[39m", collapse = collapse)
+  before <- "\033[38;5;232m"
+  after <- "\033[39m"
+  theme_info <- import_fn("getThemeInfo", "rstudioapi", error_on_fail = FALSE)
+  if (!is.null(theme_info) && isTRUE(theme_info()$dark)) {
+    # white
+    before <- "\033[37m"
+    after <- "\033[39m"
+  }
+  try_colour(..., before = before, after = after, collapse = collapse)
+}
+font_white <- function(..., collapse = " ") {
+  before <- "\033[37m"
+  after <- "\033[39m"
+  theme_info <- import_fn("getThemeInfo", "rstudioapi", error_on_fail = FALSE)
+  if (!is.null(theme_info) && isTRUE(theme_info()$dark)) {
+    # black
+    before <- "\033[38;5;232m"
+    after <- "\033[39m"
+  }
+  try_colour(..., before = before, after = after, collapse = collapse)
 }
 font_blue <- function(..., collapse = " ") {
   try_colour(..., before = "\033[34m", after = "\033[39m", collapse = collapse)
@@ -1128,9 +1147,6 @@ font_red <- function(..., collapse = " ") {
 }
 font_silver <- function(..., collapse = " ") {
   try_colour(..., before = "\033[90m", after = "\033[39m", collapse = collapse)
-}
-font_white <- function(..., collapse = " ") {
-  try_colour(..., before = "\033[37m", after = "\033[39m", collapse = collapse)
 }
 font_yellow <- function(..., collapse = " ") {
   try_colour(..., before = "\033[33m", after = "\033[39m", collapse = collapse)

@@ -74,36 +74,15 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
 \strong{Note:} This function does not translate MIC values to RSI values. Use \code{\link[=as.rsi]{as.rsi()}} for that. \cr
 \strong{Note:} When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance. \cr
 
-The file containing all EUCAST rules is located here: \url{https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv}.  \strong{Note:} Old taxonomic names are replaced with the current taxonomy where applicable. For example, \emph{Ochrobactrum anthropi} was renamed to \emph{Brucella anthropi} in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The file used as input for this \code{AMR} package contains the taxonomy updated until \link[=catalogue_of_life]{5 October 2021}.
+The file containing all EUCAST rules is located here: \url{https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv}.  \strong{Note:} Old taxonomic names are replaced with the current taxonomy where applicable. For example, \emph{Ochrobactrum anthropi} was renamed to \emph{Brucella anthropi} in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The file used as input for this \code{AMR} package contains the taxonomy updated until \code{\link[=catalogue_of_life]{r CATALOGUE_OF_LIFE$yearmonth_LPSN}}.
 \subsection{Custom Rules}{
 
 Custom rules can be created using \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}, e.g.:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- custom_eucast_rules(AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
+\if{html}{\out{<div class="sourceCode {r}">}}\preformatted{x <- custom_eucast_rules(AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
                          AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I")
 
 eucast_rules(example_isolates, rules = "custom", custom_rules = x, info = FALSE)
-#> # A tibble: 2,000 x 46
-#>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  
-#>  * <date>     <chr>   <dbl> <chr>  <chr>    <mo>         <rsi> <rsi> <rsi> <rsi>
-#>  1 2002-01-02 A77334     65 F      Clinical B_ESCHR_COLI R     NA    NA    NA   
-#>  2 2002-01-03 A77334     65 F      Clinical B_ESCHR_COLI R     NA    NA    NA   
-#>  3 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   
-#>  4 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   
-#>  5 2002-01-13 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   
-#>  6 2002-01-13 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   
-#>  7 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R     NA    S     R    
-#>  8 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R     NA    S     R    
-#>  9 2002-01-16 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   
-#> 10 2002-01-17 858515     79 F      ICU      B_STPHY_EPDR R     NA    S     NA   
-#> # ... with 1,990 more rows, and 36 more variables: AMC <rsi>, AMP <rsi>,
-#> #   TZP <rsi>, CZO <rsi>, FEP <rsi>, CXM <rsi>, FOX <rsi>, CTX <rsi>,
-#> #   CAZ <rsi>, CRO <rsi>, GEN <rsi>, TOB <rsi>, AMK <rsi>, KAN <rsi>,
-#> #   TMP <rsi>, SXT <rsi>, NIT <rsi>, FOS <rsi>, LNZ <rsi>, CIP <rsi>,
-#> #   MFX <rsi>, VAN <rsi>, TEC <rsi>, TCY <rsi>, TGC <rsi>, DOX <rsi>,
-#> #   ERY <rsi>, CLI <rsi>, AZM <rsi>, IPM <rsi>, MEM <rsi>, MTR <rsi>,
-#> #   CHL <rsi>, COL <rsi>, MUP <rsi>, RIF <rsi>
-#> # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 }\if{html}{\out{</div>}}
 }
 

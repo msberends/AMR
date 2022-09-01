@@ -59,20 +59,24 @@ x <- random_mic(10)
 x
 mean_amr_distance(x)
 
-y <- data.frame(id = LETTERS[1:10],
-                amox = random_mic(10, ab = "amox", mo = "Escherichia coli"),
-                cipr = random_mic(10, ab = "cipr", mo = "Escherichia coli"),
-                gent = random_mic(10, ab = "gent", mo = "Escherichia coli"),
-                tobr = random_mic(10, ab = "tobr", mo = "Escherichia coli"))
+y <- data.frame(
+  id = LETTERS[1:10],
+  amox = random_mic(10, ab = "amox", mo = "Escherichia coli"),
+  cipr = random_mic(10, ab = "cipr", mo = "Escherichia coli"),
+  gent = random_mic(10, ab = "gent", mo = "Escherichia coli"),
+  tobr = random_mic(10, ab = "tobr", mo = "Escherichia coli")
+)
 y
 mean_amr_distance(y)
 y$amr_distance <- mean_amr_distance(y, where(is.mic))
 y[order(y$amr_distance), ]
 
 if (require("dplyr")) {
-  y \%>\% 
-    mutate(amr_distance = mean_amr_distance(., where(is.mic)),
-           check_id_C = distance_from_row(amr_distance, id == "C")) \%>\% 
+  y \%>\%
+    mutate(
+      amr_distance = mean_amr_distance(., where(is.mic)),
+      check_id_C = distance_from_row(amr_distance, id == "C")
+    ) \%>\%
     arrange(check_id_C)
 }
 if (require("dplyr")) {

@@ -33,6 +33,22 @@ pkg_env$mo_field_abbreviations <- c(
   "PRSP", "STEC", "UPEC", "VISA", "VISP", "VRE",
   "VRSA", "VRSP"
 )
+pkg_env$rsi_interpretation_history <- data.frame(
+  datetime = Sys.time()[0],
+  index = integer(0),
+  ab_input = character(0),
+  ab_considered = character(0),
+  mo_input = character(0),
+  mo_considered = character(0),
+  guideline = character(0),
+  ref_table = character(0),
+  method = character(0),
+  breakpoint_S = double(0),
+  breakpoint_R = double(0),
+  input = double(0),
+  interpretation = character(0),
+  stringsAsFactors = FALSE
+)
 
 # determine info icon for messages
 utf8_supported <- isTRUE(base::l10n_info()$`UTF-8`)
