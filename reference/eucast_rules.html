@@ -12,7 +12,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9047</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9049</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -229,36 +229,12 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p><strong>Note:</strong> This function does not translate MIC values to RSI values. Use <code><a href="as.rsi.html">as.rsi()</a></code> for that. <br><strong>Note:</strong> When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance. <br></p>
-<p>The file containing all EUCAST rules is located here: <a href="https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv" class="external-link">https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv</a>.  <strong>Note:</strong> Old taxonomic names are replaced with the current taxonomy where applicable. For example, <em>Ochrobactrum anthropi</em> was renamed to <em>Brucella anthropi</em> in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The file used as input for this <code>AMR</code> package contains the taxonomy updated until <a href="catalogue_of_life.html">5 October 2021</a>.</p><div class="section">
+<p>The file containing all EUCAST rules is located here: <a href="https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv" class="external-link">https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv</a>.  <strong>Note:</strong> Old taxonomic names are replaced with the current taxonomy where applicable. For example, <em>Ochrobactrum anthropi</em> was renamed to <em>Brucella anthropi</em> in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The file used as input for this <code>AMR</code> package contains the taxonomy updated until <code><a href="catalogue_of_life.html">r CATALOGUE_OF_LIFE$yearmonth_LPSN</a></code>.</p><div class="section">
 <h3 id="custom-rules">Custom Rules<a class="anchor" aria-label="anchor" href="#custom-rules"></a></h3>
 
 
 <p>Custom rules can be created using <code><a href="custom_eucast_rules.html">custom_eucast_rules()</a></code>, e.g.:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/custom_eucast_rules.html">custom_eucast_rules</a></span><span class="op">(</span><span class="va">AMC</span> <span class="op">==</span> <span class="st">"R"</span> <span class="op">&amp;</span> <span class="va">genus</span> <span class="op">==</span> <span class="st">"Klebsiella"</span> <span class="op">~</span> <span class="va">aminopenicillins</span> <span class="op">==</span> <span class="st">"R"</span>,</span>
-<span>                         <span class="va">AMC</span> <span class="op">==</span> <span class="st">"I"</span> <span class="op">&amp;</span> <span class="va">genus</span> <span class="op">==</span> <span class="st">"Klebsiella"</span> <span class="op">~</span> <span class="va">aminopenicillins</span> <span class="op">==</span> <span class="st">"I"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/eucast_rules.html">eucast_rules</a></span><span class="op">(</span><span class="va">example_isolates</span>, rules <span class="op">=</span> <span class="st">"custom"</span>, custom_rules <span class="op">=</span> <span class="va">x</span>, info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 2,000 x 46</span></span>
-<span><span class="co">#&gt;    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  </span></span>
-<span><span class="co">#&gt;  * &lt;date&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;mo&gt;         &lt;rsi&gt; &lt;rsi&gt; &lt;rsi&gt; &lt;rsi&gt;</span></span>
-<span><span class="co">#&gt;  1 2002-01-02 A77334     65 F      Clinical B_ESCHR_COLI R     NA    NA    NA   </span></span>
-<span><span class="co">#&gt;  2 2002-01-03 A77334     65 F      Clinical B_ESCHR_COLI R     NA    NA    NA   </span></span>
-<span><span class="co">#&gt;  3 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span></span>
-<span><span class="co">#&gt;  4 2002-01-07 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span></span>
-<span><span class="co">#&gt;  5 2002-01-13 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span></span>
-<span><span class="co">#&gt;  6 2002-01-13 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span></span>
-<span><span class="co">#&gt;  7 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R     NA    S     R    </span></span>
-<span><span class="co">#&gt;  8 2002-01-14 462729     78 M      Clinical B_STPHY_AURS R     NA    S     R    </span></span>
-<span><span class="co">#&gt;  9 2002-01-16 067927     45 F      ICU      B_STPHY_EPDR R     NA    R     NA   </span></span>
-<span><span class="co">#&gt; 10 2002-01-17 858515     79 F      ICU      B_STPHY_EPDR R     NA    S     NA   </span></span>
-<span><span class="co">#&gt; # ... with 1,990 more rows, and 36 more variables: AMC &lt;rsi&gt;, AMP &lt;rsi&gt;,</span></span>
-<span><span class="co">#&gt; #   TZP &lt;rsi&gt;, CZO &lt;rsi&gt;, FEP &lt;rsi&gt;, CXM &lt;rsi&gt;, FOX &lt;rsi&gt;, CTX &lt;rsi&gt;,</span></span>
-<span><span class="co">#&gt; #   CAZ &lt;rsi&gt;, CRO &lt;rsi&gt;, GEN &lt;rsi&gt;, TOB &lt;rsi&gt;, AMK &lt;rsi&gt;, KAN &lt;rsi&gt;,</span></span>
-<span><span class="co">#&gt; #   TMP &lt;rsi&gt;, SXT &lt;rsi&gt;, NIT &lt;rsi&gt;, FOS &lt;rsi&gt;, LNZ &lt;rsi&gt;, CIP &lt;rsi&gt;,</span></span>
-<span><span class="co">#&gt; #   MFX &lt;rsi&gt;, VAN &lt;rsi&gt;, TEC &lt;rsi&gt;, TCY &lt;rsi&gt;, TGC &lt;rsi&gt;, DOX &lt;rsi&gt;,</span></span>
-<span><span class="co">#&gt; #   ERY &lt;rsi&gt;, CLI &lt;rsi&gt;, AZM &lt;rsi&gt;, IPM &lt;rsi&gt;, MEM &lt;rsi&gt;, MTR &lt;rsi&gt;,</span></span>
-<span><span class="co">#&gt; #   CHL &lt;rsi&gt;, COL &lt;rsi&gt;, MUP &lt;rsi&gt;, RIF &lt;rsi&gt;</span></span>
-<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode {r}"><pre><code></code></pre><p></p></div>
 </div>
 
 <div class="section">

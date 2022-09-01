@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9047</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9049</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,17 +127,18 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.8.1.9047" id="amr-1819047">AMR 1.8.1.9047<a class="anchor" aria-label="anchor" href="#amr-1819047"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.8.1.9049" id="amr-1819049">AMR 1.8.1.9049<a class="anchor" aria-label="anchor" href="#amr-1819049"></a></h2>
 <div class="section level4">
-<h4 id="new-1-8-1-9047">New<a class="anchor" aria-label="anchor" href="#new-1-8-1-9047"></a></h4>
+<h4 id="new-1-8-1-9049">New<a class="anchor" aria-label="anchor" href="#new-1-8-1-9049"></a></h4>
 <ul><li>EUCAST 2022 and CLSI 2022 guidelines have been added for <code><a href="../reference/as.rsi.html">as.rsi()</a></code>. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.</li>
-<li>Function to calculate the mean AMR distance: <code><a href="../reference/mean_amr_distance.html">mean_amr_distance()</a></code>. The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand.</li>
+<li>Function <code><a href="../reference/mean_amr_distance.html">mean_amr_distance()</a></code> to calculate the mean AMR distance. The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand.</li>
+<li>Function <code><a href="../reference/as.rsi.html">rsi_interpretation_history()</a></code> to view the history of previous runs of <code><a href="../reference/as.rsi.html">as.rsi()</a></code>. This returns a ‘logbook’ with the selected guideline, reference table and specific interpretation of each row in a data set on which <code><a href="../reference/as.rsi.html">as.rsi()</a></code> was run.</li>
 <li>Support for <code>data.frame</code>-enhancing R packages, more specifically: <code>data.table</code>, <code>tibble</code>, and <code>tsibble</code>. AMR package functions that have a data set as output (such as <code><a href="../reference/proportion.html">rsi_df()</a></code> and <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code>), will now return the same data type as the input. Furthermore, all our data sets are now in <code>tibble</code> format.</li>
 <li>Our data sets are now also continually exported to Apache Feather and Apache Parquet formats. You can find more info <a href="https://msberends.github.io/AMR/articles/datasets.html">in this article on our website</a>.</li>
 <li>Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. We are very grateful for the valuable input by our colleagues from other countries. The <code>AMR</code> package is now available in 16 languages.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-1-8-1-9047">Changed<a class="anchor" aria-label="anchor" href="#changed-1-8-1-9047"></a></h4>
+<h4 id="changed-1-8-1-9049">Changed<a class="anchor" aria-label="anchor" href="#changed-1-8-1-9049"></a></h4>
 <ul><li>Fix for using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on certain EUCAST breakpoints for MIC values</li>
 <li>Fix for using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on <code>NA</code> values (e.g. <code>as.rsi(as.disk(NA), ...)</code>)</li>
 <li>Removed <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> for MIC values, since MIC are not integer values and running <code><a href="https://rdrr.io/r/base/table.html" class="external-link">table()</a></code> on MIC values consequently failed for not being able to retrieve the level position (as that’s how normally <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> on <code>factor</code>s work)</li>
@@ -158,9 +159,10 @@
 <li>Automatic language determination will give a note once a session</li>
 <li>For all interpretation guidelines using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on amoxicillin, the rules for ampicillin will be used if amoxicillin rules are not available</li>
 <li>Fix for using <code><a href="../reference/ab_property.html">ab_atc()</a></code> on non-existing ATC codes</li>
+<li>Black and white message texts are now reversed in colour if using an RStudio dark theme</li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-1-8-1-9047">Other<a class="anchor" aria-label="anchor" href="#other-1-8-1-9047"></a></h4>
+<h4 id="other-1-8-1-9049">Other<a class="anchor" aria-label="anchor" href="#other-1-8-1-9049"></a></h4>
 <ul><li>New website to make use of the new Bootstrap 5 and pkgdown v2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions</li>
 <li>Added Peter Dutey-Magni and Anton Mymrikov as contributors, to thank them for their valuable input</li>
 <li>Set up Git Large File Storage (Git LFS) for the large SAS and SPSS file formats</li>

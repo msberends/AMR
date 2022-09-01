@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9047</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9049</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -176,7 +176,9 @@
 <span>  conserve_capped_values <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  add_intrinsic_resistance <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  reference_data <span class="op">=</span> <span class="fu">AMR</span><span class="fu">::</span><span class="va"><a href="rsi_translation.html">rsi_translation</a></span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">rsi_interpretation_history</span><span class="op">(</span>clean <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -228,6 +230,10 @@
 <dt>col_mo</dt>
 <dd><p>column name of the IDs of the microorganisms (see <code><a href="as.mo.html">as.mo()</a></code>), defaults to the first column of class <code><a href="as.mo.html">mo</a></code>. Values will be coerced using <code><a href="as.mo.html">as.mo()</a></code>.</p></dd>
 
+
+<dt>clean</dt>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether previously stored results should be forgotten after returning the 'logbook' with results</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -255,7 +261,8 @@
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>your_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.disk), as.rsi)) <span class="co"># since dplyr 1.0.0</span></span></code></pre><p></p></div></li>
 </ul></li>
 <li><p>For <strong>interpreting a complete data set</strong>, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running <code>as.rsi(your_data)</code>.</p></li>
-</ol></div>
+</ol><p>For points 2, 3 and 4: Use <code>rsi_interpretation_history()</code> to retrieve a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> (or <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> if the <code>tibble</code> package is installed) with all results of the last <code>as.rsi()</code> call.</p>
+</div>
 
 <div class="section">
 <h3 id="supported-guidelines">Supported Guidelines<a class="anchor" aria-label="anchor" href="#supported-guidelines"></a></h3>
@@ -451,7 +458,6 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-in"><span>  CIP <span class="op">=</span> <span class="fu"><a href="as.mic.html">as.mic</a></span><span class="op">(</span><span class="fl">0.256</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  GEN <span class="op">=</span> <span class="fu"><a href="as.disk.html">as.disk</a></span><span class="op">(</span><span class="fl">18</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  TOB <span class="op">=</span> <span class="fu"><a href="as.disk.html">as.disk</a></span><span class="op">(</span><span class="fl">16</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  NIT <span class="op">=</span> <span class="fu"><a href="as.mic.html">as.mic</a></span><span class="op">(</span><span class="fl">32</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  ERY <span class="op">=</span> <span class="st">"R"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">as.rsi</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
@@ -464,26 +470,34 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of column 'GEN' (gentamicin) according</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    to EUCAST 2022...</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of gentamicin is only available for</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of column 'TOB' (tobramycin) according</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    to EUCAST 2022...</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of tobramycin is only available for</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of column 'NIT' (nitrofurantoin) according to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of nitrofurantoin is only available for</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Assigning class &lt;rsi&gt; to already clean column 'ERY' (erythromycin)...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      microorganism AMP CIP GEN TOB  NIT ERY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli   S   I   S   S &lt;NA&gt;   R</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      microorganism AMP CIP GEN TOB ERY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli   S   I   S   S   R</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># return a 'logbook' about the results:</span></span></span>
+<span class="r-in"><span><span class="fu">rsi_interpretation_history</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 50 × 13</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index ab_input   ab_consid…¹ mo_in…² mo_conside…³ guide…⁴</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2022-09-01 <span style="color: #949494;">13:35:41</span>     1 ampicillin AMP         Strep … B_STRPT_PNMN EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2022-09-01 <span style="color: #949494;">13:35:41</span>     1 AMP        AMP         Escher… B_ESCHR_COLI EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2022-09-01 <span style="color: #949494;">13:35:41</span>     1 CIP        CIP         Escher… B_ESCHR_COLI EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2022-09-01 <span style="color: #949494;">13:35:41</span>     1 GEN        GEN         Escher… B_ESCHR_COLI EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2022-09-01 <span style="color: #949494;">13:35:41</span>     1 TOB        TOB         Escher… B_ESCHR_COLI EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2022-09-01 <span style="color: #949494;">13:35:42</span>     1 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2022-09-01 <span style="color: #949494;">13:35:42</span>     1 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2022-09-01 <span style="color: #949494;">13:35:42</span>     2 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2022-09-01 <span style="color: #949494;">13:35:42</span>     3 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2022-09-01 <span style="color: #949494;">13:35:42</span>     4 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 40 more rows, 6 more variables: ref_table &lt;chr&gt;, method &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   breakpoint_S &lt;dbl&gt;, breakpoint_R &lt;dbl&gt;, input &lt;dbl&gt;, interpretation &lt;rsi&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   and abbreviated variable names ¹​ab_considered, ²​mo_input, ³​mo_considered,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ⁴​guideline</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># for single values</span></span></span>
 <span class="r-in"><span><span class="fu">as.rsi</span><span class="op">(</span></span></span>
@@ -506,8 +520,8 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-in"><span>  ab <span class="op">=</span> <span class="st">"ampicillin"</span>, <span class="co"># and `ab` with as.ab()</span></span></span>
 <span class="r-in"><span>  guideline <span class="op">=</span> <span class="st">"EUCAST"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'ampicillin' according to EUCAST</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'ampicillin' (AMP, ampicillin)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>    according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class &lt;rsi&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] R</span>
@@ -548,12 +562,6 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (ciprofloxacin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'NIT' (nitrofurantoin) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of nitrofurantoin is only available for</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
@@ -562,34 +570,16 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (gentamicin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of gentamicin is only available for</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'TOB' (tobramycin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of tobramycin is only available for</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'NIT' (nitrofurantoin) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of nitrofurantoin is only available for</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (ciprofloxacin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'NIT' (nitrofurantoin) based on column</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of nitrofurantoin is only available for</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
@@ -598,16 +588,10 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (gentamicin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of gentamicin is only available for</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'TOB' (tobramycin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of tobramycin is only available for</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
@@ -616,16 +600,10 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (gentamicin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of gentamicin is only available for</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'TOB' (tobramycin) based on column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    'microorganism' according to EUCAST 2022...</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of tobramycin is only available for</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) according to EUCAST</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
@@ -634,16 +612,10 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (gentamicin) according to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of gentamicin is only available for</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'TOB' (tobramycin) according to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: interpretation of tobramycin is only available for</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `uti` to set which isolates are from urine. See ?as.rsi.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Using column 'mo' as input for `col_mo`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Function `as.mo()` is uncertain about "E. coli" (assuming Escherichia</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   coli). Run `mo_uncertainties()` to review this.</span>
@@ -659,25 +631,8 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of column 'NIT' (nitrofurantoin) according to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Function `as.mo()` is uncertain about "E. coli" (assuming Escherichia</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   coli). Run `mo_uncertainties()` to review this.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) according to EUCAST</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'CIP' (ciprofloxacin) according to EUCAST</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (gentamicin) according to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'TOB' (tobramycin) according to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'NIT' (nitrofurantoin) according to EUCAST</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      microorganism AMP CIP GEN TOB NIT ERY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli   S   I   S   S   S   R</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in mutate_at(., vars(AMP:NIT), as.rsi, mo = "E. coli", uti = TRUE):</span> Can't subset columns that don't exist.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Column `NIT` doesn't exist.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># For CLEANING existing R/SI values ------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
