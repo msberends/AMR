@@ -115,7 +115,7 @@ All reference data (about microorganisms, antibiotics, R/SI interpretation, EUCA
 
 On this page, we explain how to download them and how the structure of the data sets look like. 
 
-## `microorganisms`: Microbial Taxonomy (currently accepted names)
+## `microorganisms`: Full Microbial Taxonomy
 
 `r structure_txt(microorganisms)`
 
@@ -127,11 +127,11 @@ This data set is in R available as `microorganisms`, after you load the `AMR` pa
 
 ### Source
 
-Our full taxonomy of microorganisms is based on the authoritative and comprehensive:
+This data set contains the full microbial taxonomy of `r nr2char(length(unique(AMR::microorganisms$kingdom[!AMR::microorganisms$kingdom %like% "unknown"])))` kingdoms from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF):
 
-* [Catalogue of Life](http://www.catalogueoflife.org) (included version: `r AMR:::CATALOGUE_OF_LIFE$year`)
-* [List of Prokaryotic names with Standing in Nomenclature](https://lpsn.dsmz.de) (LPSN, last updated: `r AMR:::CATALOGUE_OF_LIFE$yearmonth_LPSN`)
-* `r AMR:::SNOMED_VERSION$current_source`, retrieved from the [`r AMR:::SNOMED_VERSION$title`](`r AMR:::SNOMED_VERSION$url`), OID `r AMR:::SNOMED_VERSION$current_oid`, version `r AMR:::SNOMED_VERSION$current_version`
+* `r AMR:::TAXONOMY_VERSION$LPSN$citation` Accessed from <`r AMR:::TAXONOMY_VERSION$LPSN$url`> on `r documentation_date(AMR:::TAXONOMY_VERSION$LPSN$accessed_date)`.
+* `r AMR:::TAXONOMY_VERSION$GBIF$citation` Accessed from <`r AMR:::TAXONOMY_VERSION$GBIF$url`> on `r documentation_date(AMR:::TAXONOMY_VERSION$GBIF$accessed_date)`.
+* `r AMR:::TAXONOMY_VERSION$SNOMED$citation` URL: <`r AMR:::TAXONOMY_VERSION$SNOMED$url`>
 
 ### Example content
 
@@ -150,33 +150,6 @@ Example rows when filtering on genus *Escherichia*:
 ```{r, echo = FALSE}
 microorganisms %>%
   filter(genus == "Escherichia") %>%
-  print_df()
-```
-
-## `microorganisms.old`: Microbial Taxonomy (previously accepted names)
-
-`r structure_txt(microorganisms.old)`
-
-**Note:** remember that the 'ref' columns contains the scientific reference to the old taxonomic entries, i.e. of column *'fullname'*. For the scientific reference of the new names, i.e. of column *'fullname_new'*, see the `microorganisms` data set.
-
-This data set is in R available as `microorganisms.old`, after you load the `AMR` package.
-
-`r download_txt("microorganisms.old")`
-
-### Source
-
-This data set contains old, previously accepted taxonomic names. The data sources are the same as the `microorganisms` data set:
-
-* [Catalogue of Life](http://www.catalogueoflife.org) (included version: `r AMR:::CATALOGUE_OF_LIFE$year`)
-* [List of Prokaryotic names with Standing in Nomenclature](https://lpsn.dsmz.de) (LPSN, last updated: `r AMR:::CATALOGUE_OF_LIFE$yearmonth_LPSN`)
-
-### Example content
-
-Example rows when filtering on *Escherichia*:
-
-```{r, echo = FALSE}
-microorganisms.old %>%
-  filter(fullname %like% "^Escherichia") %>%
   print_df()
 ```
 

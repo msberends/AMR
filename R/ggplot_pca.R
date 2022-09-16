@@ -232,7 +232,7 @@ ggplot_pca <- function(x,
   }
 
   # Overlay a concentration ellipse if there are groups
-  if (!is.null(df.u$groups) & !is.null(ell) & isTRUE(ellipse)) {
+  if (!is.null(df.u$groups) && !is.null(ell) && isTRUE(ellipse)) {
     g <- g + ggplot2::geom_path(
       data = ell,
       ggplot2::aes(colour = groups, group = groups),
@@ -319,7 +319,7 @@ pca_calculations <- function(pca_model,
       error = function(e) NULL
     )
   }
-  if (!is.null(groups) & is.null(labels)) {
+  if (!is.null(groups) && is.null(labels)) {
     # turn them around
     labels <- groups
     groups <- NULL

@@ -87,7 +87,6 @@ random_rsi <- function(size = NULL, prob_RSI = c(0.33, 0.33, 0.33), ...) {
 }
 
 random_exec <- function(type, size, mo = NULL, ab = NULL) {
-  check_dataset_integrity()
   df <- rsi_translation %pm>%
     pm_filter(guideline %like% "EUCAST") %pm>%
     pm_arrange(pm_desc(guideline)) %pm>%

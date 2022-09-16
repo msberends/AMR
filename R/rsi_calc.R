@@ -72,7 +72,7 @@ rsi_calc <- function(...,
     } else {
       dots <- dots[2:length(dots)]
     }
-    if (length(dots) == 0 | all(dots == "df")) {
+    if (length(dots) == 0 || all(dots == "df")) {
       # for complete data.frames, like example_isolates %pm>% select(AMC, GEN) %pm>% proportion_S()
       # and the old rsi function, which has "df" as name of the first argument
       x <- dots_df
@@ -137,12 +137,12 @@ rsi_calc <- function(...,
         FUN = min
       )
       numerator <- sum(as.integer(y) %in% as.integer(ab_result), na.rm = TRUE)
-      denominator <- sum(vapply(FUN.VALUE = logical(1), x_transposed, function(y) !(any(is.na(y)))))
+      denominator <- sum(vapply(FUN.VALUE = logical(1), x_transposed, function(y) !(anyNA(y))))
     } else {
       # may contain NAs in any column
       other_values <- setdiff(c(NA, levels(ab_result)), ab_result)
       numerator <- sum(vapply(FUN.VALUE = logical(1), x_transposed, function(y) any(y %in% ab_result, na.rm = TRUE)))
-      denominator <- sum(vapply(FUN.VALUE = logical(1), x_transposed, function(y) !(all(y %in% other_values) & any(is.na(y)))))
+      denominator <- sum(vapply(FUN.VALUE = logical(1), x_transposed, function(y) !(all(y %in% other_values) & anyNA(y))))
     }
   } else {
     # x is not a data.frame
@@ -228,9 +228,7 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1, .call_depth = 1)
   meet_criteria(combine_SI_missing, allow_class = "logical", has_length = 1, .call_depth = 1)
 
-  check_dataset_integrity()
-
-  if (isTRUE(combine_IR) & isTRUE(combine_SI_missing)) {
+  if (isTRUE(combine_IR) && isTRUE(combine_SI_missing)) {
     combine_SI <- FALSE
   }
   stop_if(isTRUE(combine_SI) & isTRUE(combine_IR), "either `combine_SI` or `combine_IR` can be TRUE, not both", call = -2)
@@ -249,7 +247,7 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   }
 
   data <- as.data.frame(data, stringsAsFactors = FALSE)
-  if (isTRUE(combine_SI) | isTRUE(combine_IR)) {
+  if (isTRUE(combine_SI) || isTRUE(combine_IR)) {
     for (i in seq_len(ncol(data))) {
       if (is.rsi(data[, i, drop = TRUE])) {
         data[, i] <- as.character(data[, i, drop = TRUE])

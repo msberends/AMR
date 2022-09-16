@@ -6,6 +6,7 @@
 \alias{is.mo}
 \alias{mo_failures}
 \alias{mo_uncertainties}
+\alias{mo_reset_session}
 \alias{mo_renamed}
 \title{Transform Input to a Microorganism Code}
 \usage{
@@ -13,7 +14,9 @@ as.mo(
   x,
   Becker = FALSE,
   Lancefield = FALSE,
+  minimum_matching_score = NULL,
   allow_uncertain = TRUE,
+  keep_synonyms = FALSE,
   reference_df = get_mo_source(),
   ignore_pattern = getOption("AMR_ignore_pattern"),
   language = get_AMR_locale(),
@@ -27,6 +30,8 @@ mo_failures()
 
 mo_uncertainties()
 
+mo_reset_session()
+
 mo_renamed()
 }
 \arguments{
@@ -39,6 +44,8 @@ This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"}
 \item{Lancefield}{a \link{logical} to indicate whether a beta-haemolytic \emph{Streptococcus} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (4). These streptococci will be categorised in their first group, e.g. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L.
 
 This excludes enterococci at default (who are in group D), use \code{Lancefield = "all"} to also categorise all enterococci as group D.}
+
+\item{minimum_matching_score}{a numeric value to set as the lower limit for the \link[=mo_matching_score]{MO matching score}. When left blank, this will be determined automatically based on the character length of \code{x}, its \link[=microorganisms]{taxonomic kingdom} and \link[=mo_matching_score]{human pathogenicity}.}
 
 \item{allow_uncertain}{a number between \code{0} (or \code{"none"}) and \code{3} (or \code{"all"}), or \code{TRUE} (= \code{2}) or \code{FALSE} (= \code{0}) to indicate whether the input should be checked for less probable results, see \emph{Details}}
 
@@ -56,7 +63,7 @@ This excludes enterococci at default (who are in group D), use \code{Lancefield 
 A \link{character} \link{vector} with additional class \code{\link{mo}}
 }
 \description{
-Use this function to determine a valid microorganism code (\code{\link{mo}}). Determination is done using intelligent rules and the complete taxonomic kingdoms Bacteria, Chromista, Protozoa, Archaea and most microbial species from the kingdom Fungi (see \emph{Source}). The input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (such as \code{"S. aureus"}), an abbreviation known in the field (such as \code{"MRSA"}), or just a genus. See \emph{Examples}.
+Use this function to determine a valid microorganism code (\code{\link{mo}}). Determination is done using intelligent rules and the complete taxonomic kingdoms Animalia, Archaea, Bacteria, Plantae and Protozoa, and most microbial species from the kingdom Fungi (see \emph{Source}). The input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (such as \code{"S. aureus"}), an abbreviation known in the field (such as \code{"MRSA"}), or just a genus. See \emph{Examples}.
 }
 \details{
 \subsection{General Info}{
@@ -74,14 +81,14 @@ A microorganism (MO) code from this package (class: \code{\link{mo}}) is human r
   |   |    \\----> species, a 4-5 letter acronym
   |   \\----> genus, a 5-7 letter acronym
   \\----> taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria),
-                            C (Chromista), F (Fungi), P (Protozoa)
+                            F (Fungi), PL (Plantae), P (Protozoa)
 }\if{html}{\out{</div>}}
 
 Values that cannot be coerced will be considered 'unknown' and will get the MO code \code{UNKNOWN}.
 
 Use the \code{\link[=mo_property]{mo_*}} functions to get properties based on the returned code, see \emph{Examples}.
 
-The algorithm uses data from the Catalogue of Life (see below) and from one other source (see \link{microorganisms}).
+The algorithm uses data from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF) (see \link{microorganisms}).
 
 The \code{\link[=as.mo]{as.mo()}} function uses several coercion rules for fast and logical results. It assesses the input matching criteria in the following order:
 \enumerate{
@@ -122,19 +129,20 @@ There are three helper functions that can be run after using the \code{\link[=as
 
 \subsection{Microbial Prevalence of Pathogens in Humans}{
 
-The intelligent rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the \code{prevalence} columns in the \link{microorganisms} and \link{microorganisms.old} data sets. The grouping into human pathogenic prevalence is explained in the section \emph{Matching Score for Microorganisms} below.
+The coercion rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the \code{prevalence} columns in the \link{microorganisms} data set. The grouping into human pathogenic prevalence is explained in the section \emph{Matching Score for Microorganisms} below.
 }
 }
 \section{Source}{
 
 \enumerate{
-\item Becker K \emph{et al.} \strong{Coagulase-Negative Staphylococci}. 2014. Clin Microbiol Rev. 27(4): 870-926; \doi{10.1128/CMR.00109-13}
-\item Becker K \emph{et al.} \strong{Implications of identifying the recently defined members of the \emph{S. aureus} complex, \emph{S. argenteus} and \emph{S. schweitzeri}: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).} 2019. Clin Microbiol Infect; \doi{10.1016/j.cmi.2019.02.028}
-\item Becker K \emph{et al.} \strong{Emergence of coagulase-negative staphylococci} 2020. Expert Rev Anti Infect Ther. 18(4):349-366; \doi{10.1080/14787210.2020.1730813}
-\item Lancefield RC \strong{A serological differentiation of human and other groups of hemolytic streptococci}. 1933. J Exp Med. 57(4): 571-95; \doi{10.1084/jem.57.4.571}
-\item Catalogue of Life: 2019 Annual Checklist, \url{http://www.catalogueoflife.org}
-\item List of Prokaryotic names with Standing in Nomenclature (5 October 2021), \doi{10.1099/ijsem.0.004332}
-\item US Edition of SNOMED CT from 1 September 2020, retrieved from the Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS), OID 2.16.840.1.114222.4.11.1009, version 12; url: \url{https://phinvads.cdc.gov/vads/ViewValueSet.action?oid=2.16.840.1.114222.4.11.1009}
+\item Becker K. \emph{et al.} (2014). \strong{Coagulase-Negative Staphylococci.} \emph{Clin Microbiol Rev.} 27(4): 870-926; \doi{10.1128/CMR.00109-13}
+\item Becker K. \emph{et al.} (2019). \strong{Implications of identifying the recently defined members of the \emph{S. aureus} complex, \emph{S. argenteus} and \emph{S. schweitzeri}: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).} \emph{Clin Microbiol Infect}; \doi{10.1016/j.cmi.2019.02.028}
+\item Becker K. \emph{et al.} (2020). \strong{Emergence of coagulase-negative staphylococci} \emph{Expert Rev Anti Infect Ther.} 18(4):349-366; \doi{10.1080/14787210.2020.1730813}
+\item Lancefield R.C. (1933). \strong{A serological differentiation of human and other groups of hemolytic streptococci}. \emph{J Exp Med.} 57(4): 571-95; \doi{10.1084/jem.57.4.571}
+\item Berends M.S. \emph{et al.} (2022). \strong{Trends in Occurrence and Phenotypic Resistance of Coagulase-Negative Staphylococci (CoNS) Found in Human Blood in the Northern Netherlands between 2013 and 2019} \emph{Microorganisms} 10(9), 1801; \doi{10.3390/microorganisms10091801}
+\item Parte, A.C. \emph{et al.} (2020). \strong{List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.} International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \doi{10.1099/ijsem.0.004332}. Accessed from \url{https://lpsn.dsmz.de} on 12 September, 2022.
+\item GBIF Secretariat (November 26, 2021). GBIF Backbone Taxonomy. Checklist dataset \doi{10.15468/39omei}. Accessed from \url{https://www.gbif.org} on 12 September, 2022.
+\item Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value Set Name 'Microoganism', OID 2.16.840.1.114222.4.11.1009 (v12). URL: \url{https://phinvads.cdc.gov}
 }
 }
 
@@ -154,21 +162,17 @@ where:
 \item \ifelse{html}{\out{<i>k<sub>n</sub></i> is the taxonomic kingdom of <i>n</i>, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.}}{l_n is the taxonomic kingdom of \eqn{n}, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.}
 }
 
-The grouping into human pathogenic prevalence (\eqn{p}) is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence. \strong{Group 1} (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is \emph{Enterococcus}, \emph{Staphylococcus} or \emph{Streptococcus}. This group consequently contains all common Gram-negative bacteria, such as \emph{Pseudomonas} and \emph{Legionella} and all species within the order Enterobacterales. \strong{Group 2} consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is \emph{Absidia}, \emph{Acremonium}, \emph{Actinotignum}, \emph{Alternaria}, \emph{Anaerosalibacter}, \emph{Apophysomyces}, \emph{Arachnia}, \emph{Aspergillus}, \emph{Aureobacterium}, \emph{Aureobasidium}, \emph{Bacteroides}, \emph{Basidiobolus}, \emph{Beauveria}, \emph{Blastocystis}, \emph{Branhamella}, \emph{Calymmatobacterium}, \emph{Candida}, \emph{Capnocytophaga}, \emph{Catabacter}, \emph{Chaetomium}, \emph{Chryseobacterium}, \emph{Chryseomonas}, \emph{Chrysonilia}, \emph{Cladophialophora}, \emph{Cladosporium}, \emph{Conidiobolus}, \emph{Cryptococcus}, \emph{Curvularia}, \emph{Exophiala}, \emph{Exserohilum}, \emph{Flavobacterium}, \emph{Fonsecaea}, \emph{Fusarium}, \emph{Fusobacterium}, \emph{Hendersonula}, \emph{Hypomyces}, \emph{Koserella}, \emph{Lelliottia}, \emph{Leptosphaeria}, \emph{Leptotrichia}, \emph{Malassezia}, \emph{Malbranchea}, \emph{Mortierella}, \emph{Mucor}, \emph{Mycocentrospora}, \emph{Mycoplasma}, \emph{Nectria}, \emph{Ochroconis}, \emph{Oidiodendron}, \emph{Phoma}, \emph{Piedraia}, \emph{Pithomyces}, \emph{Pityrosporum}, \emph{Prevotella}, \emph{Pseudallescheria}, \emph{Rhizomucor}, \emph{Rhizopus}, \emph{Rhodotorula}, \emph{Scolecobasidium}, \emph{Scopulariopsis}, \emph{Scytalidium}, \emph{Sporobolomyces}, \emph{Stachybotrys}, \emph{Stomatococcus}, \emph{Treponema}, \emph{Trichoderma}, \emph{Trichophyton}, \emph{Trichosporon}, \emph{Tritirachium} or \emph{Ureaplasma}. \strong{Group 3} consists of all other microorganisms.
+The grouping into human pathogenic prevalence (\eqn{p}) is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence:
+
+\strong{Group 1} (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is \emph{Enterococcus}, \emph{Staphylococcus} or \emph{Streptococcus}. This group consequently contains all common Gram-negative bacteria, such as \emph{Pseudomonas} and \emph{Legionella} and all species within the order Enterobacterales.
+
+\strong{Group 2} consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is \emph{Absidia}, \emph{Acanthamoeba}, \emph{Acholeplasma}, \emph{Acremonium}, \emph{Actinotignum}, \emph{Aedes}, \emph{Alistipes}, \emph{Alloprevotella}, \emph{Alternaria}, \emph{Amoeba}, \emph{Anaerosalibacter}, \emph{Ancylostoma}, \emph{Angiostrongylus}, \emph{Anisakis}, \emph{Anopheles}, \emph{Apophysomyces}, \emph{Arachnia}, \emph{Aspergillus}, \emph{Aureobasidium}, \emph{Bacteroides}, \emph{Basidiobolus}, \emph{Beauveria}, \emph{Bergeyella}, \emph{Blastocystis}, \emph{Blastomyces}, \emph{Borrelia}, \emph{Brachyspira}, \emph{Branhamella}, \emph{Butyricimonas}, \emph{Candida}, \emph{Capillaria}, \emph{Capnocytophaga}, \emph{Catabacter}, \emph{Cetobacterium}, \emph{Chaetomium}, \emph{Chlamydia}, \emph{Chlamydophila}, \emph{Chryseobacterium}, \emph{Chrysonilia}, \emph{Cladophialophora}, \emph{Cladosporium}, \emph{Conidiobolus}, \emph{Contracaecum}, \emph{Cordylobia}, \emph{Cryptococcus}, \emph{Curvularia}, \emph{Deinococcus}, \emph{Demodex}, \emph{Dermatobia}, \emph{Dientamoeba}, \emph{Diphyllobothrium}, \emph{Dirofilaria}, \emph{Dysgonomonas}, \emph{Echinostoma}, \emph{Elizabethkingia}, \emph{Empedobacter}, \emph{Entamoeba}, \emph{Enterobius}, \emph{Exophiala}, \emph{Exserohilum}, \emph{Fasciola}, \emph{Flavobacterium}, \emph{Fonsecaea}, \emph{Fusarium}, \emph{Fusobacterium}, \emph{Giardia}, \emph{Haloarcula}, \emph{Halobacterium}, \emph{Halococcus}, \emph{Hendersonula}, \emph{Heterophyes}, \emph{Histomonas}, \emph{Histoplasma}, \emph{Hymenolepis}, \emph{Hypomyces}, \emph{Hysterothylacium}, \emph{Leishmania}, \emph{Lelliottia}, \emph{Leptosphaeria}, \emph{Leptotrichia}, \emph{Lucilia}, \emph{Lumbricus}, \emph{Malassezia}, \emph{Malbranchea}, \emph{Metagonimus}, \emph{Microsporidium}, \emph{Microsporum}, \emph{Mortierella}, \emph{Mucor}, \emph{Mycocentrospora}, \emph{Mycoplasma}, \emph{Myroides}, \emph{Necator}, \emph{Nectria}, \emph{Ochroconis}, \emph{Odoribacter}, \emph{Oesophagostomum}, \emph{Oidiodendron}, \emph{Opisthorchis}, \emph{Ornithobacterium}, \emph{Parabacteroides}, \emph{Pediculus}, \emph{Pedobacter}, \emph{Phlebotomus}, \emph{Phocaeicola}, \emph{Phocanema}, \emph{Phoma}, \emph{Piedraia}, \emph{Pithomyces}, \emph{Pityrosporum}, \emph{Porphyromonas}, \emph{Prevotella}, \emph{Pseudallescheria}, \emph{Pseudoterranova}, \emph{Pulex}, \emph{Rhizomucor}, \emph{Rhizopus}, \emph{Rhodotorula}, \emph{Riemerella}, \emph{Saccharomyces}, \emph{Sarcoptes}, \emph{Scolecobasidium}, \emph{Scopulariopsis}, \emph{Scytalidium}, \emph{Sphingobacterium}, \emph{Spirometra}, \emph{Spiroplasma}, \emph{Sporobolomyces}, \emph{Stachybotrys}, \emph{Streptobacillus}, \emph{Strongyloides}, \emph{Syngamus}, \emph{Taenia}, \emph{Tannerella}, \emph{Tenacibaculum}, \emph{Terrimonas}, \emph{Toxocara}, \emph{Treponema}, \emph{Trichinella}, \emph{Trichobilharzia}, \emph{Trichoderma}, \emph{Trichomonas}, \emph{Trichophyton}, \emph{Trichosporon}, \emph{Trichostrongylus}, \emph{Trichuris}, \emph{Tritirachium}, \emph{Trombicula}, \emph{Trypanosoma}, \emph{Tunga}, \emph{Ureaplasma}, \emph{Victivallis}, \emph{Wautersiella}, \emph{Weeksella} or \emph{Wuchereria}.
+
+\strong{Group 3} consists of all other microorganisms.
 
 All characters in \eqn{x} and \eqn{n} are ignored that are other than A-Z, a-z, 0-9, spaces and parentheses.
 
 All matches are sorted descending on their matching score and for all user input values, the top match will be returned. This will lead to the effect that e.g., \code{"E. coli"} will return the microbial ID of \emph{Escherichia coli} (\eqn{m = 0.688}, a highly prevalent microorganism found in humans) and not \emph{Entamoeba coli} (\eqn{m = 0.079}, a less prevalent microorganism in humans), although the latter would alphabetically come first.
-
-Since \code{AMR} version 1.8.1, common microorganism abbreviations are ignored in determining the matching score. These abbreviations are currently: AIEC, ATEC, BORSA, CRSM, DAEC, EAEC, EHEC, EIEC, EPEC, ETEC, GISA, MRPA, MRSA, MRSE, MSSA, MSSE, NMEC, PISP, PRSP, STEC, UPEC, VISA, VISP, VRE, VRSA and VRSP.
-}
-
-\section{Catalogue of Life}{
-
-\if{html}{\figure{logo_col.png}{options: height="40" style=margin-bottom:"5"} \cr}
-This package contains the complete taxonomic tree of almost all microorganisms (~71,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, \url{http://www.catalogueoflife.org}). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, \href{https://lpsn.dsmz.de}{lpsn.dsmz.de}). This supplementation is needed until the \href{https://github.com/CatalogueOfLife/general}{CoL+ project} is finished, which we await.
-
-\link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which versions of the CoL and LPSN were included in this package with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}.
 }
 
 \section{Reference Data Publicly Available}{
@@ -179,29 +183,31 @@ All data sets in this \code{AMR} package (about microorganisms, antibiotics, R/S
 \examples{
 \donttest{
 # These examples all return "B_STPHY_AURS", the ID of S. aureus:
-as.mo("sau") # WHONET code
-as.mo("stau")
-as.mo("STAU")
-as.mo("staaur")
-as.mo("S. aureus")
-as.mo("S aureus")
-as.mo("Staphylococcus aureus")
-as.mo("Staphylococcus aureus (MRSA)")
-as.mo("Zthafilokkoockus oureuz") # handles incorrect spelling
-as.mo("MRSA") # Methicillin Resistant S. aureus
-as.mo("VISA") # Vancomycin Intermediate S. aureus
-as.mo("VRSA") # Vancomycin Resistant S. aureus
-as.mo(115329001) # SNOMED CT code
+as.mo(c(
+  "sau", # WHONET code
+  "stau",
+  "STAU",
+  "staaur",
+  "S. aureus",
+  "S aureus",
+  "Staphylococcus aureus",
+  "Staphylococcus aureus (MRSA,",
+  "Zthafilokkoockus oureuz", # handles incorrect spelling
+  "MRSA", # Methicillin Resistant S. aureus
+  "VISA", # Vancomycin Intermediate S. aureus
+  "VRSA", # Vancomycin Resistant S. aureus
+  115329001
+)) # SNOMED CT code
 
 # Dyslexia is no problem - these all work:
-as.mo("Ureaplasma urealyticum")
-as.mo("Ureaplasma urealyticus")
-as.mo("Ureaplasmium urealytica")
-as.mo("Ureaplazma urealitycium")
+as.mo(c(
+  "Ureaplasma urealyticum",
+  "Ureaplasma urealyticus",
+  "Ureaplasmium urealytica",
+  "Ureaplazma urealitycium"
+))
 
 as.mo("Streptococcus group A")
-as.mo("GAS") # Group A Streptococci
-as.mo("GBS") # Group B Streptococci
 
 as.mo("S. epidermidis") # will remain species: B_STPHY_EPDR
 as.mo("S. epidermidis", Becker = TRUE) # will not remain species: B_STPHY_CONS
@@ -210,9 +216,9 @@ as.mo("S. pyogenes") # will remain species: B_STRPT_PYGN
 as.mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPT_GRPA
 
 # All mo_* functions use as.mo() internally too (see ?mo_property):
-mo_genus("E. coli") # returns "Escherichia"
-mo_gramstain("E. coli") # returns "Gram negative"
-mo_is_intrinsic_resistant("E. coli", "vanco") # returns TRUE
+mo_genus("Esch coli")
+mo_gramstain("E. coli")
+mo_is_intrinsic_resistant("E. coli", "vanco")
 }
 }
 \seealso{

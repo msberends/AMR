@@ -97,7 +97,7 @@ pca <- function(x,
         error = function(e) stop(e$message, call. = FALSE)
       )
       if (length(new_list[[i]]) == 1) {
-        if (is.character(new_list[[i]]) & new_list[[i]] %in% colnames(x)) {
+        if (is.character(new_list[[i]]) && new_list[[i]] %in% colnames(x)) {
           # this is to support quoted variables: df %pm>% pca("mycol1", "mycol2")
           new_list[[i]] <- x[, new_list[[i]]]
         } else {

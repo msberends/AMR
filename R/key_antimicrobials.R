@@ -175,8 +175,8 @@ key_antimicrobials <- function(x = NULL,
     values <- cols[names(cols) %in% values]
     values_new_length <- length(values)
 
-    if (values_new_length < values_old_length &
-      any(filter, na.rm = TRUE) &
+    if (values_new_length < values_old_length &&
+      any(filter, na.rm = TRUE) &&
       message_not_thrown_before("key_antimicrobials", name)) {
       warning_(
         "in `key_antimicrobials()`: ",
@@ -305,7 +305,7 @@ antimicrobials_equal <- function(y,
   stop_ifnot(length(y) == length(z), "length of `y` and `z` must be equal")
 
   key2rsi <- function(val) {
-    val <- strsplit(val, "")[[1L]]
+    val <- strsplit(val, "", fixed = TRUE)[[1L]]
     val.int <- rep(NA_real_, length(val))
     val.int[val == "S"] <- 1
     val.int[val == "I"] <- 2
@@ -347,8 +347,8 @@ antimicrobials_equal <- function(y,
       all(a == b, na.rm = TRUE)
     }
   }
-  out <- unlist(mapply(
-    FUN = determine_equality,
+  out <- unlist(Map(
+    f = determine_equality,
     y,
     z,
     MoreArgs = list(
@@ -356,7 +356,6 @@ antimicrobials_equal <- function(y,
       points_threshold = points_threshold,
       ignore_I = ignore_I
     ),
-    SIMPLIFY = FALSE,
     USE.NAMES = FALSE
   ))
   out[is.na(y) | is.na(z)] <- NA

@@ -132,18 +132,6 @@ resistance_predict <- function(x,
   x.bak <- x
   x <- as.data.frame(x, stringsAsFactors = FALSE)
 
-  dots <- unlist(list(...))
-  if (length(dots) != 0) {
-    # backwards compatibility with old arguments
-    dots.names <- names(dots)
-    if ("tbl" %in% dots.names) {
-      x <- dots[which(dots.names == "tbl")]
-    }
-    if ("I_as_R" %in% dots.names) {
-      warning_("in `resistance_predict()`: I_as_R is deprecated - use I_as_S instead.")
-    }
-  }
-
   # -- date
   if (is.null(col_date)) {
     col_date <- search_type_in_df(x = x, type = "date")
@@ -167,10 +155,10 @@ resistance_predict <- function(x,
   df[, col_ab] <- droplevels(as.rsi(df[, col_ab, drop = TRUE]))
   if (I_as_S == TRUE) {
     # then I as S
-    df[, col_ab] <- gsub("I", "S", df[, col_ab, drop = TRUE])
+    df[, col_ab] <- gsub("I", "S", df[, col_ab, drop = TRUE], fixed = TRUE)
   } else {
     # then I as R
-    df[, col_ab] <- gsub("I", "R", df[, col_ab, drop = TRUE])
+    df[, col_ab] <- gsub("I", "R", df[, col_ab, drop = TRUE], fixed = TRUE)
   }
   df[, col_ab] <- ifelse(is.na(df[, col_ab, drop = TRUE]), 0, df[, col_ab, drop = TRUE])
 
@@ -257,10 +245,10 @@ resistance_predict <- function(x,
     df_prediction$se_max <- as.integer(df_prediction$se_max)
   } else {
     # se_max not above 1
-    df_prediction$se_max <- ifelse(df_prediction$se_max > 1, 1, df_prediction$se_max)
+    df_prediction$se_max <- pmin(df_prediction$se_max, 1)
   }
   # se_min not below 0
-  df_prediction$se_min <- ifelse(df_prediction$se_min < 0, 0, df_prediction$se_min)
+  df_prediction$se_min <- pmax(df_prediction$se_min, 0)
 
   df_observations <- data.frame(
     year = df$year,
@@ -279,7 +267,7 @@ resistance_predict <- function(x,
     df_prediction$se_max <- ifelse(!is.na(df_prediction$observed), NA, df_prediction$se_max)
   }
 
-  df_prediction$value <- ifelse(df_prediction$value > 1, 1, ifelse(df_prediction$value < 0, 0, df_prediction$value))
+  df_prediction$value <- ifelse(df_prediction$value > 1, 1, pmax(df_prediction$value, 0))
   df_prediction <- df_prediction[order(df_prediction$year), , drop = FALSE]
 
   out <- as_original_data_class(df_prediction, class(x.bak))

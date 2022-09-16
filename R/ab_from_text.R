@@ -120,21 +120,21 @@ ab_from_text <- function(text,
   if (type %like% "(drug|ab|anti)") {
     translate_ab <- get_translate_ab(translate_ab)
 
-    if (isTRUE(thorough_search) |
-      (isTRUE(is.null(thorough_search)) & max(vapply(FUN.VALUE = double(1), text_split_all, length), na.rm = TRUE) <= 3)) {
+    if (isTRUE(thorough_search) ||
+      (isTRUE(is.null(thorough_search)) && max(vapply(FUN.VALUE = double(1), text_split_all, length), na.rm = TRUE) <= 3)) {
       text_split_all <- text_split_all[nchar(text_split_all) >= 4 & grepl("[a-z]+", text_split_all)]
       result <- lapply(text_split_all, function(text_split) {
         progress$tick()
         suppressWarnings(
-          out <- as.ab(text_split, ...)
+          as.ab(text_split, ...)
         )
       })
     } else {
       # no thorough search
-      abbr <- unlist(antibiotics$abbreviations)
+      abbr <- unlist(AMR::antibiotics$abbreviations)
       abbr <- abbr[nchar(abbr) >= 4]
-      names_atc <- substr(c(antibiotics$name, antibiotics$atc), 1, 5)
-      synonyms <- unlist(antibiotics$synonyms)
+      names_atc <- substr(c(AMR::antibiotics$name, AMR::antibiotics$atc), 1, 5)
+      synonyms <- unlist(AMR::antibiotics$synonyms)
       synonyms <- synonyms[nchar(synonyms) >= 4]
       # regular expression must not be too long, so split synonyms in two:
       synonyms_part1 <- synonyms[seq_len(0.5 * length(synonyms))]
@@ -149,7 +149,7 @@ ab_from_text <- function(text,
       result <- lapply(text_split_all, function(text_split) {
         progress$tick()
         suppressWarnings(
-          out <- as.ab(
+          as.ab(
             unique(c(
               text_split[text_split %like_case% to_regex(abbr)],
               text_split[text_split %like_case% to_regex(names_atc)],
@@ -176,7 +176,7 @@ ab_from_text <- function(text,
       }
     })
   } else if (type %like% "dos") {
-    text_split_all <- strsplit(text, " ")
+    text_split_all <- strsplit(text, " ", fixed = TRUE)
     result <- lapply(text_split_all, function(text_split) {
       text_split <- text_split[text_split %like% "^[0-9]{2,}(/[0-9]+)?[a-z]*$"]
       # only left part of "/", like 500 in  "500/125"

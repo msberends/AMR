@@ -79,7 +79,7 @@ as.disk <- function(x, na.rm = FALSE) {
 
     # heavily based on cleaner::clean_double():
     clean_double2 <- function(x, remove = "[^0-9.,-]", fixed = FALSE) {
-      x <- gsub(",", ".", x)
+      x <- gsub(",", ".", x, fixed = TRUE)
       # remove ending dot/comma
       x <- gsub("[,.]$", "", x)
       # only keep last dot/comma
@@ -131,7 +131,7 @@ all_valid_disks <- function(x) {
   x_disk <- tryCatch(suppressWarnings(as.disk(x[!is.na(x)])),
     error = function(e) NA
   )
-  !any(is.na(x_disk)) && !all(is.na(x))
+  !anyNA(x_disk) && !all(is.na(x))
 }
 
 #' @rdname as.disk

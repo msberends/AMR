@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms.codes}
 \alias{microorganisms.codes}
-\title{Data Set with 5,604 Common Microorganism Codes}
+\title{Data Set with 5,508 Common Microorganism Codes}
 \format{
-A \link[tibble:tibble]{tibble} with 5,604 observations and 2 variables:
+A \link[tibble:tibble]{tibble} with 5,508 observations and 2 variables:
 \itemize{
 \item \code{code}\cr Commonly used code of a microorganism
 \item \code{mo}\cr ID of the microorganism in the \link{microorganisms} data set
@@ -20,14 +20,6 @@ A data set containing commonly used codes for microorganisms, from laboratory sy
 \details{
 Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
-\section{Catalogue of Life}{
-
-\if{html}{\figure{logo_col.png}{options: height="40" style=margin-bottom:"5"} \cr}
-This package contains the complete taxonomic tree of almost all microorganisms (~71,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, \url{http://www.catalogueoflife.org}). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, \href{https://lpsn.dsmz.de}{lpsn.dsmz.de}). This supplementation is needed until the \href{https://github.com/CatalogueOfLife/general}{CoL+ project} is finished, which we await.
-
-\link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which versions of the CoL and LPSN were included in this package with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}.
-}
-
 \examples{
 microorganisms.codes
 }

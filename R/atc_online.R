@@ -94,9 +94,7 @@ atc_online_property <- function(atc_code,
   html_text <- import_fn("html_text", "rvest")
   read_html <- import_fn("read_html", "xml2")
 
-  check_dataset_integrity()
-
-  if (!all(atc_code %in% unlist(antibiotics$atc))) {
+  if (!all(atc_code %in% unlist(AMR::antibiotics$atc))) {
     atc_code <- as.character(ab_atc(atc_code, only_first = TRUE))
   }
 
@@ -183,7 +181,7 @@ atc_online_property <- function(atc_code,
         # ATC and name are only in first row
         returnvalue[i] <- out[1, property, drop = TRUE]
       } else {
-        if (!"adm.r" %in% colnames(out) | is.na(out[1, "adm.r", drop = TRUE])) {
+        if (!"adm.r" %in% colnames(out) || is.na(out[1, "adm.r", drop = TRUE])) {
           returnvalue[i] <- NA
           next
         } else {
@@ -197,7 +195,7 @@ atc_online_property <- function(atc_code,
     }
   }
 
-  if (property == "groups" & length(returnvalue) == 1) {
+  if (property == "groups" && length(returnvalue) == 1) {
     returnvalue <- returnvalue[[1]]
   }
 

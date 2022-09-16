@@ -52,5 +52,16 @@ jobs:
           extra-packages: any::lintr
 
       - name: Lint
-        run: lintr::lint_package(linters = lintr::with_defaults(line_length_linter = NULL, trailing_whitespace_linter = NULL, object_name_linter = NULL, cyclocomp_linter = NULL, object_length_linter = lintr::object_length_linter(length = 50L)), exclusions = list("R/aa_helper_pm_functions.R"))
+        run: |
+          # old: lintr::lint_package(linters = lintr::with_defaults(line_length_linter = NULL, trailing_whitespace_linter = NULL, object_name_linter = NULL, cyclocomp_linter = NULL, object_length_linter = lintr::object_length_linter(length = 50L)), exclusions = list("R/aa_helper_pm_functions.R"))
+          # now get ALL linters, not just default ones
+          linters <- ls(envir = asNamespace("lintr"), pattern = "_linter$")
+          # lose deprecated
+          linters <- linters[!grepl("^(closed_curly|open_curly|paren_brace|semicolon_terminator)_linter$", linters)]
+          # and the ones we find unnnecessary
+          linters <- linters[!grepl("^(extraction_operator|implicit_integer|line_length|object_name|nonportable_path)_linter$", linters)]
+          # put the functions in a list
+          linters <- lapply(linters, function(l) eval(parse(text = paste0("lintr::", l, "()")), envir = asNamespace("lintr")))
+          # run them all!
+          lintr::lint_package(linters = linters, exclusions = list("R/aa_helper_pm_functions.R"))
         shell: Rscript {0}

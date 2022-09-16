@@ -7,11 +7,11 @@ if command -v Rscript > /dev/null; then
   if [ "$(Rscript -e 'cat(all(c('"'pkgload'"', '"'devtools'"', '"'dplyr'"', '"'styler'"') %in% rownames(installed.packages())))')" = "TRUE" ]; then
     Rscript -e "source('data-raw/_pre_commit_hook.R')"
     currentpkg=`Rscript -e "cat(pkgload::pkg_name())"`
-    echo "-> Adding all files in folders 'data-raw', 'inst', 'man', and 'R' to this git commit"
+    echo "-> Adding all files in folders 'data-raw' and 'man' to this git commit"
     git add data-raw/*
-    git add inst/*
     git add man/*
-    git add R/*
+    # git add inst/*
+    # git add R/*
   else
     echo "- R package 'pkgload', 'devtools', 'dplyr', or 'styler' not installed!"
     currentpkg="your"

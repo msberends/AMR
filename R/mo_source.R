@@ -127,7 +127,7 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
 
   mo_source_destination <- path.expand(destination)
 
-  stop_ifnot(interactive(), "this function can only be used in interactive mode, since it must ask for the user's permission to write a file to their home folder.")
+  stop_ifnot(interactive(), "this function can only be used in interactive mode, since it must ask for the user's permission to write a file to their file system.")
 
   if (is.null(path) || path %in% c(FALSE, "")) {
     pkg_env$mo_source <- NULL
@@ -204,14 +204,14 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
       word_wrap(paste0(
         "This will write create the new file '",
         mo_source_destination,
-        "', for which your permission is needed."
+        "', for which your permission is required."
       )),
       "\n\n",
       word_wrap("Do you agree that this file will be created?")
     )
     showQuestion <- import_fn("showQuestion", "rstudioapi", error_on_fail = FALSE)
     if (!is.null(showQuestion)) {
-      q_continue <- showQuestion("Create new file in home directory", txt)
+      q_continue <- showQuestion("Create new file", txt)
     } else {
       q_continue <- utils::menu(choices = c("OK", "Cancel"), graphics = FALSE, title = txt)
     }
@@ -257,8 +257,6 @@ get_mo_source <- function(destination = getOption("AMR_mo_source", "~/mo_source.
 }
 
 check_validity_mo_source <- function(x, refer_to_name = "`reference_df`", stop_on_error = TRUE) {
-  check_dataset_integrity()
-
   if (paste(deparse(substitute(x)), collapse = "") == "get_mo_source()") {
     return(TRUE)
   }
@@ -286,9 +284,9 @@ check_validity_mo_source <- function(x, refer_to_name = "`reference_df`", stop_o
       return(FALSE)
     }
   }
-  if (!all(x$mo %in% c("", microorganisms$mo, microorganisms$fullname), na.rm = TRUE)) {
+  if (!all(x$mo %in% c("", AMR::microorganisms$mo, AMR::microorganisms$fullname), na.rm = TRUE)) {
     if (stop_on_error == TRUE) {
-      invalid <- x[which(!x$mo %in% c("", microorganisms$mo, microorganisms$fullname)), , drop = FALSE]
+      invalid <- x[which(!x$mo %in% c("", AMR::microorganisms$mo, AMR::microorganisms$fullname)), , drop = FALSE]
       if (nrow(invalid) > 1) {
         plural <- "s"
       } else {
@@ -303,14 +301,14 @@ check_validity_mo_source <- function(x, refer_to_name = "`reference_df`", stop_o
       return(FALSE)
     }
   }
-  if (colnames(x)[1] != "mo" & nrow(x) > length(unique(x[, 1, drop = TRUE]))) {
+  if (colnames(x)[1] != "mo" && nrow(x) > length(unique(x[, 1, drop = TRUE]))) {
     if (stop_on_error == TRUE) {
       stop_(refer_to_name, " contains duplicate values in column '", colnames(x)[1], "'", call = FALSE)
     } else {
       return(FALSE)
     }
   }
-  if (colnames(x)[2] != "mo" & nrow(x) > length(unique(x[, 2, drop = TRUE]))) {
+  if (colnames(x)[2] != "mo" && nrow(x) > length(unique(x[, 2, drop = TRUE]))) {
     if (stop_on_error == TRUE) {
       stop_(refer_to_name, " contains duplicate values in column '", colnames(x)[2], "'", call = FALSE)
     } else {

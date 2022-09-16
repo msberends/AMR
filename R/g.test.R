@@ -149,7 +149,7 @@ g.test <- function(x,
       paste(DNAME2, collapse = "\n")
     )
   }
-  if (any(x < 0) || any(is.na((x)))) { # this last one was anyNA, but only introduced in R 3.1.0
+  if (any(x < 0) || anyNA(x)) {
     stop("all entries of 'x' must be nonnegative and finite")
   }
   if ((n <- sum(x)) == 0) {

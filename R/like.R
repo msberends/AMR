@@ -102,14 +102,13 @@ like <- function(x, pattern, ignore.case = TRUE) {
       )
     }
     unlist(
-      mapply(
-        FUN = grepl,
+      Map(
+        f = grepl,
         x = x,
         pattern = pattern,
         fixed = fixed,
         perl = !fixed,
         MoreArgs = list(ignore.case = FALSE),
-        SIMPLIFY = FALSE,
         USE.NAMES = FALSE
       )
     )

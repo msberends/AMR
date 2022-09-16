@@ -207,11 +207,11 @@ print.custom_eucast_rules <- function(x, ...) {
     if (is.na(rule$result_value)) {
       val <- font_red("<NA>")
     } else if (rule$result_value == "R") {
-      val <- font_rsi_R_bg(font_black(" R "))
+      val <- font_red_bg(" R ")
     } else if (rule$result_value == "S") {
-      val <- font_rsi_S_bg(font_black(" S "))
+      val <- font_green_bg(" S ")
     } else {
-      val <- font_rsi_I_bg(font_black(" I "))
+      val <- font_orange_bg(" I ")
     }
     agents <- paste0(
       font_blue(ab_name(rule$result_group, language = NULL, tolower = TRUE),
@@ -248,9 +248,9 @@ format_custom_query_rule <- function(query, colours = has_colour()) {
   query <- gsub(" %in% ", font_black(" is one of "), query, fixed = TRUE)
   query <- gsub(" %like% ", font_black(" resembles "), query, fixed = TRUE)
   if (colours == TRUE) {
-    query <- gsub('"R"', font_rsi_R_bg(font_black(" R ")), query, fixed = TRUE)
-    query <- gsub('"S"', font_rsi_S_bg(font_black(" S ")), query, fixed = TRUE)
-    query <- gsub('"I"', font_rsi_I_bg(font_black(" I ")), query, fixed = TRUE)
+    query <- gsub('"R"', font_red_bg(" R "), query, fixed = TRUE)
+    query <- gsub('"S"', font_green_bg(" S "), query, fixed = TRUE)
+    query <- gsub('"I"', font_orange_bg(" I "), query, fixed = TRUE)
   }
   # replace the black colour 'stops' with blue colour 'starts'
   query <- gsub("\033[39m", "\033[34m", as.character(query), fixed = TRUE)

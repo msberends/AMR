@@ -32,7 +32,7 @@
 #' @param ... other arguments passed on to [as.mo()], such as 'allow_uncertain' and 'ignore_pattern'
 #' @param ab any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
 #' @param open browse the URL using [`browseURL()`][utils::browseURL()]
-#' @details All functions will return the most recently known taxonomic property according to the Catalogue of Life, except for [mo_ref()], [mo_authors()] and [mo_year()]. Please refer to this example, knowing that *Escherichia blattae* was renamed to *Shimwellia blattae* in 2010:
+#' @details All functions will return the most recently known taxonomic property [as included in this package][microorganisms], except for [mo_ref()], [mo_authors()] and [mo_year()]. Please refer to this example, knowing that *Escherichia blattae* was renamed to *Shimwellia blattae* in 2010:
 #' - `mo_name("Escherichia blattae")` will return `"Shimwellia blattae"` (with a message about the renaming)
 #' - `mo_ref("Escherichia blattae")` will return `"Burgess et al., 1973"` (with a message about the renaming)
 #' - `mo_ref("Shimwellia blattae")` will return `"Priest et al., 2010"` (without a message)
@@ -51,9 +51,8 @@
 #'
 #' The function [mo_url()] will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
 #'
-#' SNOMED codes - [mo_snomed()] - are from the `r SNOMED_VERSION$current_source`. See *Source* and the [microorganisms] data set for more info.
+#' SNOMED codes - [mo_snomed()] - are from the version of `r documentation_date(TAXONOMY_VERSION$SNOMED$accessed_date)`. See *Source* and the [microorganisms] data set for more info.
 #' @inheritSection mo_matching_score Matching Score for Microorganisms
-#' @inheritSection catalogue_of_life Catalogue of Life
 #' @inheritSection as.mo Source
 #' @rdname mo_property
 #' @name mo_property
@@ -175,7 +174,7 @@ mo_name <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_name")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   translate_into_language(mo_validate(x = x, property = "fullname", language = language, ...),
     language = language,
@@ -196,7 +195,7 @@ mo_shortname <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_shortname")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   x.mo <- as.mo(x, language = language, ...)
 
@@ -236,7 +235,7 @@ mo_subspecies <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_subspecies")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   translate_into_language(mo_validate(x = x, property = "subspecies", language = language, ...), language = language, only_unknown = TRUE)
 }
@@ -249,7 +248,7 @@ mo_species <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_species")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   translate_into_language(mo_validate(x = x, property = "species", language = language, ...), language = language, only_unknown = TRUE)
 }
@@ -262,7 +261,7 @@ mo_genus <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_genus")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   translate_into_language(mo_validate(x = x, property = "genus", language = language, ...), language = language, only_unknown = TRUE)
 }
@@ -275,7 +274,7 @@ mo_family <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_family")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   translate_into_language(mo_validate(x = x, property = "family", language = language, ...), language = language, only_unknown = TRUE)
 }
@@ -288,7 +287,7 @@ mo_order <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_order")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   translate_into_language(mo_validate(x = x, property = "order", language = language, ...), language = language, only_unknown = TRUE)
 }
@@ -301,7 +300,7 @@ mo_class <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_class")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   translate_into_language(mo_validate(x = x, property = "class", language = language, ...), language = language, only_unknown = TRUE)
 }
@@ -314,7 +313,7 @@ mo_phylum <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_phylum")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   translate_into_language(mo_validate(x = x, property = "phylum", language = language, ...), language = language, only_unknown = TRUE)
 }
@@ -327,7 +326,7 @@ mo_kingdom <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_kingdom")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   translate_into_language(mo_validate(x = x, property = "kingdom", language = language, ...), language = language, only_unknown = TRUE)
 }
@@ -344,7 +343,7 @@ mo_type <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_type")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   x.mo <- as.mo(x, language = language, ...)
   out <- mo_kingdom(x.mo, language = NULL)
@@ -360,24 +359,26 @@ mo_gramstain <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_gramstain")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
-  x.mo <- as.mo(x, language = language, ...)
+  # keep_synonyms = TRUE to prevent messages - they won't change Gram stain anyway
+  x.mo <- as.mo(x, language = language, keep_synonyms = TRUE, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
 
   x <- rep(NA_character_, length(x))
   # make all bacteria Gram negative
-  x[mo_kingdom(x.mo) == "Bacteria"] <- "Gram-negative"
+  x[mo_kingdom(x.mo, language = NULL, keep_synonyms = TRUE) == "Bacteria"] <- "Gram-negative"
   # overwrite these 4 phyla with Gram-positives
   # Source: https://itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=956097 (Cavalier-Smith, 2002)
-  x[(mo_phylum(x.mo) %in% c(
+  x[(mo_phylum(x.mo, language = NULL, keep_synonyms = TRUE) %in% c(
     "Actinobacteria",
     "Chloroflexi",
     "Firmicutes",
-    "Tenericutes"
+    "Tenericutes",
+    "Bacillota" # this one is new! It was renamed from Firmicutes by Gibbons et al., 2021
   ) &
     # but class Negativicutes (of phylum Firmicutes) are Gram-negative!
-    mo_class(x.mo) != "Negativicutes")
+    mo_class(x.mo, language = NULL, keep_synonyms = TRUE) != "Negativicutes")
   # and of course our own ID for Gram-positives
   | x.mo == "B_GRAMP"] <- "Gram-positive"
 
@@ -393,7 +394,7 @@ mo_is_gram_negative <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_is_gram_negative")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   x.mo <- as.mo(x, language = language, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
@@ -412,7 +413,7 @@ mo_is_gram_positive <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_is_gram_positive")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   x.mo <- as.mo(x, language = language, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
@@ -431,7 +432,7 @@ mo_is_yeast <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_is_yeast")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   x.mo <- as.mo(x, language = language, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
@@ -456,7 +457,7 @@ mo_is_intrinsic_resistant <- function(x, ab, language = get_AMR_locale(), ...) {
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(ab, allow_NA = FALSE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   x <- as.mo(x, language = language, ...)
   ab <- as.ab(ab, language = NULL, flag_multiple_results = FALSE, info = FALSE)
@@ -491,7 +492,7 @@ mo_snomed <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_snomed")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   mo_validate(x = x, property = "snomed", language = language, ...)
 }
@@ -504,7 +505,7 @@ mo_ref <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_ref")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   mo_validate(x = x, property = "ref", language = language, ...)
 }
@@ -517,7 +518,7 @@ mo_authors <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_authors")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   x <- mo_validate(x = x, property = "ref", language = language, ...)
   # remove last 4 digits and presumably the comma and space that preceed them
@@ -533,7 +534,7 @@ mo_year <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_year")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   x <- mo_validate(x = x, property = "ref", language = language, ...)
   # get last 4 digits
@@ -549,7 +550,7 @@ mo_lpsn <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_rank")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   mo_validate(x = x, property = "species_id", language = language, ...)
 }
@@ -562,7 +563,7 @@ mo_rank <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_rank")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   mo_validate(x = x, property = "rank", language = language, ...)
 }
@@ -575,7 +576,7 @@ mo_taxonomy <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_taxonomy")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   x <- as.mo(x, language = language, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
@@ -603,20 +604,22 @@ mo_synonyms <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_synonyms")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
-  x <- as.mo(x, language = language, ...)
+  x.mo <- as.mo(x, language = language, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
 
-  IDs <- mo_name(x = x, language = NULL)
-  syns <- lapply(IDs, function(newname) {
-    res <- sort(microorganisms.old[which(microorganisms.old$fullname_new == newname), "fullname", drop = TRUE])
-    if (length(res) == 0) {
+  syns <- lapply(x.mo, function(y) {
+    gbif <- AMR::microorganisms$gbif[match(y, AMR::microorganisms$mo)]
+    lpsn <- AMR::microorganisms$lpsn[match(y, AMR::microorganisms$mo)]
+    out <- AMR::microorganisms[which(AMR::microorganisms$lpsn_renamed_to %in% c(gbif, lpsn)), "fullname", drop = TRUE]
+    if (length(out) == 0) {
       NULL
     } else {
-      res
+      out
     }
   })
+
   if (length(syns) > 1) {
     names(syns) <- mo_name(x)
     result <- syns
@@ -636,7 +639,7 @@ mo_info <- function(x, language = get_AMR_locale(), ...) {
     x <- find_mo_col(fn = "mo_info")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   x <- as.mo(x, language = language, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
@@ -673,21 +676,23 @@ mo_url <- function(x, open = FALSE, language = get_AMR_locale(), ...) {
   }
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(open, allow_class = "logical", has_length = 1)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
+
+  stop("FIX mo_url")
 
   x.mo <- as.mo(x = x, language = language, ... = ...)
   metadata <- get_mo_failures_uncertainties_renamed()
-
-  df <- microorganisms[match(x.mo, microorganisms$mo), c("mo", "fullname", "source", "kingdom", "rank"), drop = FALSE]
-  df$url <- ifelse(df$source == "LPSN",
-    paste0(CATALOGUE_OF_LIFE$url_LPSN, "/species/", gsub(" ", "-", tolower(df$fullname), fixed = TRUE)),
-    paste0(CATALOGUE_OF_LIFE$url_CoL, "/data/search?type=EXACT&q=", gsub(" ", "%20", df$fullname, fixed = TRUE))
-  )
-
-  genera <- which(df$kingdom == "Bacteria" & df$rank == "genus")
-  df$url[genera] <- gsub("/species/", "/genus/", df$url[genera], fixed = TRUE)
-  subsp <- which(df$kingdom == "Bacteria" & df$rank %in% c("subsp.", "infraspecies"))
-  df$url[subsp] <- gsub("/species/", "/subspecies/", df$url[subsp], fixed = TRUE)
+  #
+  #   df <- AMR::microorganisms[match(x.mo, AMR::microorganisms$mo), c("mo", "fullname", "source", "kingdom", "rank"), drop = FALSE]
+  #   df$url <- ifelse(df$source == "LPSN",
+  #     paste0(CATALOGUE_OF_LIFE$url_LPSN, "/species/", gsub(" ", "-", tolower(df$fullname), fixed = TRUE)),
+  #     paste0(CATALOGUE_OF_LIFE$url_CoL, "/data/search?type=EXACT&q=", gsub(" ", "%20", df$fullname, fixed = TRUE))
+  #   )
+  #
+  #   genera <- which(df$kingdom == "Bacteria" & df$rank == "genus")
+  #   df$url[genera] <- gsub("/species/", "/genus/", df$url[genera], fixed = TRUE)
+  #   subsp <- which(df$kingdom == "Bacteria" & df$rank %in% c("subsp.", "infraspecies"))
+  #   df$url[subsp] <- gsub("/species/", "/subspecies/", df$url[subsp], fixed = TRUE)
 
   u <- df$url
   names(u) <- df$fullname
@@ -712,48 +717,51 @@ mo_property <- function(x, property = "fullname", language = get_AMR_locale(), .
     x <- find_mo_col(fn = "mo_property")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(property, allow_class = "character", has_length = 1, is_in = colnames(microorganisms))
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(property, allow_class = "character", has_length = 1, is_in = colnames(AMR::microorganisms))
+  language <- validate_language(language)
 
   translate_into_language(mo_validate(x = x, property = property, language = language, ...), language = language, only_unknown = TRUE)
 }
 
 mo_validate <- function(x, property, language, ...) {
-  check_dataset_integrity()
+
+  # try to catch an error when inputting an invalid argument
+  # so the 'call.' can be set to FALSE
+  tryCatch(x[1L] %in% AMR::microorganisms[1, property, drop = TRUE],
+    error = function(e) stop(e$message, call. = FALSE)
+  )
+
   dots <- list(...)
   Becker <- dots$Becker
-  if (is.null(Becker) | property %in% c("kingdom", "phylum", "class", "order", "family", "genus")) {
+  if (is.null(Becker) || property %in% c("kingdom", "phylum", "class", "order", "family", "genus")) {
     Becker <- FALSE
   }
   Lancefield <- dots$Lancefield
-  if (is.null(Lancefield) | property %in% c("kingdom", "phylum", "class", "order", "family", "genus")) {
+  if (is.null(Lancefield) || property %in% c("kingdom", "phylum", "class", "order", "family", "genus")) {
     Lancefield <- FALSE
   }
-  has_Becker_or_Lancefield <- Becker %in% c(TRUE, "all") | Lancefield %in% c(TRUE, "all")
+  keep_synonyms <- dots$keep_synonyms
+  has_Becker_or_Lancefield_or_synonyms <- !isFALSE(keep_synonyms) || Becker %in% c(TRUE, "all") || Lancefield %in% c(TRUE, "all")
 
-  if (tryCatch(all(x[!is.na(x)] %in% MO_lookup$mo) & !has_Becker_or_Lancefield, error = function(e) FALSE)) {
-    # special case for mo_* functions where class is already <mo>
-    x <- MO_lookup[match(x, MO_lookup$mo), property, drop = TRUE]
+  if (all(x %in% AMR::microorganisms$mo, na.rm = TRUE) && !has_Becker_or_Lancefield_or_synonyms) {
+    # do nothing, just don't run the other if-else's
+  } else if (all(x %in% AMR::microorganisms[[property]], na.rm = TRUE) && !has_Becker_or_Lancefield_or_synonyms) {
+    # no need to do anything, just return it
+    return(x)
   } else {
-    # try to catch an error when inputting an invalid argument
-    # so the 'call.' can be set to FALSE
-    tryCatch(x[1L] %in% MO_lookup[1, property, drop = TRUE],
-      error = function(e) stop(e$message, call. = FALSE)
-    )
-
-    if (!all(x[!is.na(x)] %in% MO_lookup[, property, drop = TRUE]) | has_Becker_or_Lancefield) {
-      x <- exec_as.mo(x, property = property, language = language, ...)
-    }
+    x <- as.mo(x, language = language, ...)
   }
+
+  # get property reeaaally fast using match()
+  x <- microorganisms[[property]][match(x, microorganisms$mo)]
 
   if (property == "mo") {
     return(set_clean_class(x, new_class = c("mo", "character")))
-  } else if (property == "species_id") {
-    return(as.double(x))
   } else if (property == "snomed") {
-    return(as.double(eval(parse(text = x))))
+    return(sort(as.character(eval(parse(text = x)))))
   } else {
-    return(x)
+    # everything else is character
+    return(as.character(x))
   }
 }
 

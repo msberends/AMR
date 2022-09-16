@@ -62,7 +62,7 @@ italicise_taxonomy <- function(string, type = c("markdown", "ansi")) {
     FUN.VALUE = character(1),
     string,
     function(s) {
-      s_split <- unlist(strsplit(s, " "))
+      s_split <- unlist(strsplit(s, " ", fixed = TRUE))
 
       search_strings <- gsub("[^a-zA-Z-]", "", s_split)
 

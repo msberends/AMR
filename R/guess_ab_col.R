@@ -59,7 +59,7 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE, only_r
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
 
-  if (is.null(x) & is.null(search_string)) {
+  if (is.null(x) && is.null(search_string)) {
     return(as.name("guess_ab_col"))
   } else {
     meet_criteria(search_string, allow_class = "character", has_length = 1, allow_NULL = FALSE)
@@ -205,7 +205,7 @@ get_column_abx <- function(x,
   dots <- dots[!vapply(FUN.VALUE = logical(1), dots, is.data.frame)]
   if (length(dots) > 0) {
     newnames <- suppressWarnings(as.ab(names(dots), info = FALSE))
-    if (any(is.na(newnames))) {
+    if (anyNA(newnames)) {
       if (info == TRUE) {
         message_(" WARNING", add_fn = list(font_yellow, font_bold), as_note = FALSE)
       }
@@ -236,7 +236,7 @@ get_column_abx <- function(x,
   }
 
   if (length(out) == 0) {
-    if (info == TRUE & all_okay == TRUE) {
+    if (info == TRUE && all_okay == TRUE) {
       message_("No columns found.")
     }
     pkg_env$get_column_abx.call <- unique_call_id(entire_session = FALSE, match_fn = fn)
@@ -262,7 +262,7 @@ get_column_abx <- function(x,
       message_(" WARNING.", add_fn = list(font_yellow, font_bold), as_note = FALSE)
     }
     for (i in seq_len(length(out))) {
-      if (verbose == TRUE & !names(out[i]) %in% names(duplicates)) {
+      if (verbose == TRUE && !names(out[i]) %in% names(duplicates)) {
         message_(
           "Using column '", font_bold(out[i]), "' as input for ", names(out)[i],
           " (", ab_name(names(out)[i], tolower = TRUE, language = NULL), ")."
@@ -300,7 +300,7 @@ get_column_abx <- function(x,
   }
   if (!is.null(soft_dependencies)) {
     soft_dependencies <- unique(soft_dependencies)
-    if (info == TRUE & !all(soft_dependencies %in% names(out))) {
+    if (info == TRUE && !all(soft_dependencies %in% names(out))) {
       # missing a soft dependency may lower the reliability
       missing <- soft_dependencies[!soft_dependencies %in% names(out)]
       missing_msg <- vector_and(paste0(
@@ -325,7 +325,7 @@ get_column_abx <- function(x,
 get_ab_from_namespace <- function(x, cols_ab) {
   # cols_ab comes from get_column_abx()
 
-  x <- trimws(unique(toupper(unlist(strsplit(x, ",")))))
+  x <- trimws(unique(toupper(unlist(strsplit(x, ",", fixed = TRUE)))))
   x_new <- character()
   for (val in x) {
     if (paste0("AB_", val) %in% ls(envir = asNamespace("AMR"))) {

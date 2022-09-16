@@ -34,7 +34,7 @@
 #' This package is fully independent of any other \R package and works on Windows, macOS and Linux with all versions of \R since R-3.0.0 (April 2013). It was designed to work in any setting, including those with very limited resources. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the University of Groningen, in collaboration with non-profit organisations Certe Medical Diagnostics and Advice and University Medical Center Groningen. This \R package is actively maintained and free software; you can freely use and distribute it for both personal and commercial (but not patent) purposes under the terms of the GNU General Public License version 2.0 (GPL-2), as published by the Free Software Foundation.
 #'
 #' This package can be used for:
-#' - Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the Catalogue of Life and List of Prokaryotic names with Standing in Nomenclature
+#' - Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF)
 #' - Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines
 #' - Retrieving antimicrobial drug names, doses and forms of administration from clinical health care records
 #' - Determining first isolates to be used for AMR data analysis

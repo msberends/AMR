@@ -986,9 +986,9 @@ pillar_shaft.rsi <- function(x, ...) {
     # colours will anyway not work when has_colour() == FALSE,
     # but then the indentation should also not be applied
     out[is.na(x)] <- font_grey(" NA")
-    out[x == "R"] <- font_rsi_R_bg(font_black("  R  "))
-    out[x == "S"] <- font_rsi_S_bg(font_black("  S  "))
-    out[x == "I"] <- font_rsi_I_bg(font_black("  I  "))
+    out[x == "R"] <- font_red_bg("  R  ")
+    out[x == "S"] <- font_green_bg("  S  ")
+    out[x == "I"] <- font_orange_bg("  I  ")
   }
   create_pillar_column(out, align = "left", width = 5)
 }

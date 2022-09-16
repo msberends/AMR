@@ -601,7 +601,7 @@ pm_near <- function(x, y, tol = .Machine$double.eps^0.5) {
 pm_pull <- function(.data, var = -1) {
   var_deparse <- pm_deparse_var(var)
   col_names <- colnames(.data)
-  if (!(var_deparse %in% col_names) & grepl("^[[:digit:]]+L|[[:digit:]]", var_deparse)) {
+  if (!(var_deparse %in% col_names) && grepl("^[[:digit:]]+L|[[:digit:]]", var_deparse)) {
     var <- as.integer(gsub("L", "", var_deparse))
     var <- pm_if_else(var < 1L, rev(col_names)[abs(var)], col_names[var])
   } else if (var_deparse %in% col_names) {

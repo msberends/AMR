@@ -174,18 +174,6 @@ first_isolate <- function(x = NULL,
                           include_unknown = FALSE,
                           include_untested_rsi = TRUE,
                           ...) {
-  dots <- unlist(list(...))
-  if (length(dots) != 0) {
-    # backwards compatibility with old arguments
-    dots.names <- names(dots)
-    if ("filter_specimen" %in% dots.names) {
-      specimen_group <- dots[which(dots.names == "filter_specimen")]
-    }
-    if ("col_keyantibiotics" %in% dots.names) {
-      col_keyantimicrobials <- dots[which(dots.names == "col_keyantibiotics")]
-    }
-  }
-
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
     # is also fix for using a grouped df as input (a dot as first argument)
@@ -248,10 +236,10 @@ first_isolate <- function(x = NULL,
     FUN = function(x) any(as.character(x[1:10000]) %in% c("R", "S", "I"), na.rm = TRUE),
     USE.NAMES = FALSE
   ))
-  if (method == "phenotype-based" & !any_col_contains_rsi) {
+  if (method == "phenotype-based" && !any_col_contains_rsi) {
     method <- "episode-based"
   }
-  if (info == TRUE & message_not_thrown_before("first_isolate", "method")) {
+  if (info == TRUE && message_not_thrown_before("first_isolate", "method")) {
     message_(paste0(
       "Determining first isolates ",
       ifelse(method %in% c("episode-based", "phenotype-based"),
@@ -288,14 +276,14 @@ first_isolate <- function(x = NULL,
   } else if (method == "episode-based") {
     col_keyantimicrobials <- NULL
   } else if (method == "phenotype-based") {
-    if (missing(type) & !is.null(col_keyantimicrobials)) {
+    if (missing(type) && !is.null(col_keyantimicrobials)) {
       # type = "points" is default, but not set explicitly, while col_keyantimicrobials is
       type <- "keyantimicrobials"
     }
     if (type == "points") {
       x$keyantimicrobials <- all_antimicrobials(x, only_rsi_columns = FALSE)
       col_keyantimicrobials <- "keyantimicrobials"
-    } else if (type == "keyantimicrobials" & is.null(col_keyantimicrobials)) {
+    } else if (type == "keyantimicrobials" && is.null(col_keyantimicrobials)) {
       col_keyantimicrobials <- search_type_in_df(x = x, type = "keyantimicrobials", info = info)
       if (is.null(col_keyantimicrobials)) {
         # still not found as a column, create it ourselves
@@ -325,7 +313,7 @@ first_isolate <- function(x = NULL,
   }
 
   # -- specimen
-  if (is.null(col_specimen) & !is.null(specimen_group)) {
+  if (is.null(col_specimen) && !is.null(specimen_group)) {
     col_specimen <- search_type_in_df(x = x, type = "specimen", info = info)
   }
 
@@ -361,7 +349,7 @@ first_isolate <- function(x = NULL,
     testcodes_exclude <- NULL
   }
   # remove testcodes
-  if (!is.null(testcodes_exclude) & info == TRUE & message_not_thrown_before("first_isolate", "excludingtestcodes")) {
+  if (!is.null(testcodes_exclude) && info == TRUE && message_not_thrown_before("first_isolate", "excludingtestcodes")) {
     message_("Excluding test codes: ", vector_and(testcodes_exclude, quotes = TRUE),
       add_fn = font_black,
       as_note = FALSE
@@ -375,7 +363,7 @@ first_isolate <- function(x = NULL,
   # filter on specimen group and keyantibiotics when they are filled in
   if (!is.null(specimen_group)) {
     check_columns_existance(col_specimen, x)
-    if (info == TRUE & message_not_thrown_before("first_isolate", "excludingspecimen")) {
+    if (info == TRUE && message_not_thrown_before("first_isolate", "excludingspecimen")) {
       message_("Excluding other than specimen group '", specimen_group, "'",
         add_fn = font_black,
         as_note = FALSE
@@ -418,7 +406,7 @@ first_isolate <- function(x = NULL,
   }
 
   # speed up - return immediately if obvious
-  if (abs(row.start) == Inf | abs(row.end) == Inf) {
+  if (abs(row.start) == Inf || abs(row.end) == Inf) {
     if (info == TRUE) {
       message_("=> Found ", font_bold("no isolates"),
         add_fn = font_black,
@@ -455,7 +443,7 @@ first_isolate <- function(x = NULL,
 
   # Analysis of first isolate ----
   if (!is.null(col_keyantimicrobials)) {
-    if (info == TRUE & message_not_thrown_before("first_isolate", "type")) {
+    if (info == TRUE && message_not_thrown_before("first_isolate", "type")) {
       if (type == "keyantimicrobials") {
         message_("Basing inclusion on key antimicrobials, ",
           ifelse(ignore_I == FALSE, "not ", ""),
@@ -474,11 +462,7 @@ first_isolate <- function(x = NULL,
     }
   }
 
-  x$other_pat_or_mo <- ifelse(x$newvar_patient_id == pm_lag(x$newvar_patient_id) &
-    x$newvar_genus_species == pm_lag(x$newvar_genus_species),
-  FALSE,
-  TRUE
-  )
+  x$other_pat_or_mo <- !(x$newvar_patient_id == pm_lag(x$newvar_patient_id) & x$newvar_genus_species == pm_lag(x$newvar_genus_species))
 
   x$episode_group <- paste(x$newvar_patient_id, x$newvar_genus_species)
   x$more_than_episode_ago <- unlist(lapply(split(
@@ -570,7 +554,7 @@ first_isolate <- function(x = NULL,
   }
 
   # handle empty microorganisms
-  if (any(x$newvar_mo == "UNKNOWN", na.rm = TRUE) & info == TRUE) {
+  if (any(x$newvar_mo == "UNKNOWN", na.rm = TRUE) && info == TRUE) {
     message_(
       ifelse(include_unknown == TRUE, "Included ", "Excluded "),
       format(sum(x$newvar_mo == "UNKNOWN", na.rm = TRUE),
@@ -582,7 +566,7 @@ first_isolate <- function(x = NULL,
   x[which(x$newvar_mo == "UNKNOWN"), "newvar_first_isolate"] <- include_unknown
 
   # exclude all NAs
-  if (any(is.na(x$newvar_mo)) & info == TRUE) {
+  if (anyNA(x$newvar_mo) && info == TRUE) {
     message_(
       "Excluded ", format(sum(is.na(x$newvar_mo), na.rm = TRUE),
         decimal.mark = decimal.mark, big.mark = big.mark

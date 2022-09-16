@@ -26,12 +26,18 @@
 # set up package environment, used by numerous AMR functions
 pkg_env <- new.env(hash = FALSE)
 pkg_env$mo_failed <- character(0)
-pkg_env$mo_field_abbreviations <- c(
-  "AIEC", "ATEC", "BORSA", "CRSM", "DAEC", "EAEC",
-  "EHEC", "EIEC", "EPEC", "ETEC", "GISA", "MRPA",
-  "MRSA", "MRSE", "MSSA", "MSSE", "NMEC", "PISP",
-  "PRSP", "STEC", "UPEC", "VISA", "VISP", "VRE",
-  "VRSA", "VRSP"
+pkg_env$mo_uncertainties <- data.frame(
+  uncertainty = integer(0),
+  input = character(0),
+  fullname = character(0),
+  mo = character(0),
+  candidates = character(0),
+  stringsAsFactors = FALSE
+)
+pkg_env$mo_previously_coerced <- data.frame(
+  x = character(0),
+  mo = character(0),
+  stringsAsFactors = FALSE
 )
 pkg_env$rsi_interpretation_history <- data.frame(
   datetime = Sys.time()[0],
@@ -62,7 +68,7 @@ if (utf8_supported && !is_latex) {
   pkg_env$info_icon <- "i"
 }
 
-.onLoad <- function(...) {
+.onLoad <- function(lib, pkg) {
   # Support for tibble headers (type_sum) and tibble columns content (pillar_shaft)
   # without the need to depend on other packages. This was suggested by the
   # developers of the vctrs package:
@@ -135,7 +141,6 @@ if (utf8_supported && !is_latex) {
   # they cannot be part of R/sysdata.rda since CRAN thinks it would make the package too large (+3 MB)
   assign(x = "AB_lookup", value = create_AB_lookup(), envir = asNamespace("AMR"))
   assign(x = "MO_lookup", value = create_MO_lookup(), envir = asNamespace("AMR"))
-  assign(x = "MO.old_lookup", value = create_MO.old_lookup(), envir = asNamespace("AMR"))
   # for mo_is_intrinsic_resistant() - saves a lot of time when executed on this vector
   assign(x = "INTRINSIC_R", value = create_intr_resistance(), envir = asNamespace("AMR"))
 }
@@ -157,30 +162,34 @@ create_MO_lookup <- function() {
   # all the rest
   MO_lookup[which(is.na(MO_lookup$kingdom_index)), "kingdom_index"] <- 5
 
-  # use this paste instead of `fullname` to work with Viridans Group Streptococci, etc.
-  if (length(MO_FULLNAME_LOWER) == nrow(MO_lookup)) {
-    MO_lookup$fullname_lower <- MO_FULLNAME_LOWER
-  } else {
-    MO_lookup$fullname_lower <- ""
-    warning("MO table updated - Run: source(\"data-raw/_pre_commit_hook.R\")", call. = FALSE)
-  }
+  # # use this paste instead of `fullname` to work with Viridans Group Streptococci, etc.
+  # if (length(MO_FULLNAME_LOWER) == nrow(MO_lookup)) {
+  #   MO_lookup$fullname_lower <- MO_FULLNAME_LOWER
+  # } else {
+  #   MO_lookup$fullname_lower <- ""
+  #   warning("MO table updated - Run: source(\"data-raw/_pre_commit_hook.R\")", call. = FALSE)
+  # }
 
-  # add a column with only "e coli" like combinations
-  MO_lookup$g_species <- gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO_lookup$fullname_lower, perl = TRUE)
+  MO_lookup$fullname_lower <- create_MO_fullname_lower()
+  MO_lookup$full_first <- substr(MO_lookup$fullname_lower, 1, 1)
+  MO_lookup$species_first <- substr(MO_lookup$species, 1, 1)
 
   # so arrange data on prevalence first, then kingdom, then full name
   MO_lookup[order(MO_lookup$prevalence, MO_lookup$kingdom_index, MO_lookup$fullname_lower), , drop = FALSE]
 }
 
-create_MO.old_lookup <- function() {
-  MO.old_lookup <- AMR::microorganisms.old
-  MO.old_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", tolower(trimws(MO.old_lookup$fullname))))
-
-  # add a column with only "e coli"-like combinations
-  MO.old_lookup$g_species <- trimws(gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO.old_lookup$fullname_lower))
-
-  # so arrange data on prevalence first, then full name
-  MO.old_lookup[order(MO.old_lookup$prevalence, MO.old_lookup$fullname_lower), , drop = FALSE]
+create_MO_fullname_lower <- function() {
+  MO_lookup <- AMR::microorganisms
+  # use this paste instead of `fullname` to work with Viridans Group Streptococci, etc.
+  MO_lookup$fullname_lower <- tolower(trimws(paste(
+    MO_lookup$genus,
+    MO_lookup$species,
+    MO_lookup$subspecies
+  )))
+  ind <- MO_lookup$genus == "" | grepl("^[(]unknown ", MO_lookup$fullname, perl = TRUE)
+  MO_lookup[ind, "fullname_lower"] <- tolower(MO_lookup[ind, "fullname", drop = TRUE])
+  MO_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", MO_lookup$fullname_lower, perl = TRUE))
+  MO_lookup$fullname_lower
 }
 
 create_intr_resistance <- function() {

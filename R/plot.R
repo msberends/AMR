@@ -97,7 +97,7 @@ plot.mic <- function(x,
   meet_criteria(ylab, allow_class = "character", has_length = 1)
   meet_criteria(xlab, allow_class = "character", has_length = 1)
   meet_criteria(colours_RSI, allow_class = "character", has_length = c(1, 3))
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
 
   # translate if not specifically set
@@ -188,7 +188,7 @@ barplot.mic <- function(height,
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
   meet_criteria(colours_RSI, allow_class = "character", has_length = c(1, 3))
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
 
   # translate if not specifically set
@@ -236,7 +236,7 @@ autoplot.mic <- function(object,
   meet_criteria(ylab, allow_class = "character", has_length = 1)
   meet_criteria(xlab, allow_class = "character", has_length = 1)
   meet_criteria(colours_RSI, allow_class = "character", has_length = c(1, 3))
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
 
   # translate if not specifically set
@@ -336,7 +336,7 @@ plot.disk <- function(x,
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
   meet_criteria(colours_RSI, allow_class = "character", has_length = c(1, 3))
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
 
   # translate if not specifically set
@@ -427,7 +427,7 @@ barplot.disk <- function(height,
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
   meet_criteria(colours_RSI, allow_class = "character", has_length = c(1, 3))
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
 
   # translate if not specifically set
@@ -475,7 +475,7 @@ autoplot.disk <- function(object,
   meet_criteria(ab, allow_class = c("ab", "character"), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
   meet_criteria(colours_RSI, allow_class = "character", has_length = c(1, 3))
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
 
   # translate if not specifically set
@@ -639,7 +639,7 @@ barplot.rsi <- function(height,
   meet_criteria(main, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(ylab, allow_class = "character", has_length = 1)
   meet_criteria(colours_RSI, allow_class = "character", has_length = c(1, 3))
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
   meet_criteria(expand, allow_class = "logical", has_length = 1)
 
   # translate if not specifically set
