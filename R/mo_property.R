@@ -678,24 +678,20 @@ mo_url <- function(x, open = FALSE, language = get_AMR_locale(), ...) {
   meet_criteria(open, allow_class = "logical", has_length = 1)
   language <- validate_language(language)
 
-  stop("FIX mo_url")
-
   x.mo <- as.mo(x = x, language = language, ... = ...)
   metadata <- get_mo_failures_uncertainties_renamed()
-  #
-  #   df <- AMR::microorganisms[match(x.mo, AMR::microorganisms$mo), c("mo", "fullname", "source", "kingdom", "rank"), drop = FALSE]
-  #   df$url <- ifelse(df$source == "LPSN",
-  #     paste0(CATALOGUE_OF_LIFE$url_LPSN, "/species/", gsub(" ", "-", tolower(df$fullname), fixed = TRUE)),
-  #     paste0(CATALOGUE_OF_LIFE$url_CoL, "/data/search?type=EXACT&q=", gsub(" ", "%20", df$fullname, fixed = TRUE))
-  #   )
-  #
-  #   genera <- which(df$kingdom == "Bacteria" & df$rank == "genus")
-  #   df$url[genera] <- gsub("/species/", "/genus/", df$url[genera], fixed = TRUE)
-  #   subsp <- which(df$kingdom == "Bacteria" & df$rank %in% c("subsp.", "infraspecies"))
-  #   df$url[subsp] <- gsub("/species/", "/subspecies/", df$url[subsp], fixed = TRUE)
 
-  u <- df$url
-  names(u) <- df$fullname
+  x.rank <- microorganisms$rank[match(x.mo, microorganisms$mo)]
+  x.name <- microorganisms$fullname[match(x.mo, microorganisms$mo)]
+  x.lpsn <- microorganisms$lpsn[match(x.mo, microorganisms$mo)]
+  x.gbif <- microorganisms$gbif[match(x.mo, microorganisms$mo)]
+
+  u <- character(length(x))
+  u[!is.na(x.gbif)] <- paste0(TAXONOMY_VERSION$GBIF$url, "/species/", x.gbif[!is.na(x.gbif)])
+  # overwrite with LPSN:
+  u[!is.na(x.lpsn)] <- paste0(TAXONOMY_VERSION$LPSN$url, "/", x.rank[!is.na(x.lpsn)], "/", gsub(" ", "-", tolower(x.name[!is.na(x.lpsn)]), fixed = TRUE))
+
+  names(u) <- x.name
 
   if (isTRUE(open)) {
     if (length(u) > 1) {

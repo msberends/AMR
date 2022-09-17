@@ -138,7 +138,6 @@ globalVariables(c(
   "se_max",
   "se_min",
   "species",
-  "species_id",
   "total",
   "txt",
   "type",
