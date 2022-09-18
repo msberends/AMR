@@ -23,13 +23,22 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
+# we use {tinytest} instead of {testthat} because it does not rely on recent R versions - we want to test on R >= 3.0.
+
 # test only on GitHub Actions and at home - not on CRAN as tests are lengthy
 if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
   # env var 'R_LIBS_USER' got overwritten during 'R CMD check' in GitHub Actions, so:
   .libPaths(c(Sys.getenv("R_LIBS_USER_GH_ACTIONS"), .libPaths()))
   if (AMR:::pkg_is_available("tinytest", also_load = TRUE)) {
     library(AMR)
+    # set language
     set_AMR_locale("English")
+    # get trimws() and strrep() if on old R
+    if (getRversion() < "3.3.0") {
+      trimws <- AMR:::trimws
+      strrep <- AMR:::strrep
+    }
+    # start the unit tests
     out <- test_package("AMR",
       testdir = ifelse(dir.exists("inst/tinytest"),
         "inst/tinytest",

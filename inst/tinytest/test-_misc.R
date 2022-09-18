@@ -31,11 +31,12 @@ expect_equal(AMR:::percentage(0.1234), "12.3%")
 expect_equal(AMR:::percentage(0.0054), "0.5%")
 expect_equal(AMR:::percentage(0.0055), "0.6%")
 
-expect_equal(AMR:::strrep("A", 5), "AAAAA")
-expect_equal(AMR:::strrep(c("A", "B"), c(5, 2)), c("AAAAA", "BB"))
-expect_equal(AMR:::trimws(" test "), "test")
-expect_equal(AMR:::trimws(" test ", "l"), "test ")
-expect_equal(AMR:::trimws(" test ", "r"), " test")
+# test functions on all R versions -  R < 3.3 did not contain these
+expect_equal(strrep("A", 5), "AAAAA")
+expect_equal(strrep(c("A", "B"), c(5, 2)), c("AAAAA", "BB"))
+expect_equal(trimws(" test "), "test")
+expect_equal(trimws(" test ", "l"), "test ")
+expect_equal(trimws(" test ", "r"), " test")
 
 expect_warning(AMR:::generate_warning_abs_missing(c("AMP", "AMX")))
 expect_warning(AMR:::generate_warning_abs_missing(c("AMP", "AMX"), any = TRUE))
