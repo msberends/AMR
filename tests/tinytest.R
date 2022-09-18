@@ -31,7 +31,7 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
     library(AMR)
     set_AMR_locale("English")
     out <- test_package("AMR",
-      testdir = ifelse(AMR:::dir.exists("inst/tinytest"),
+      testdir = ifelse(dir.exists("inst/tinytest"),
         "inst/tinytest",
         "tinytest"
       ),
