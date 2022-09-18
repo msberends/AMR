@@ -1489,4 +1489,8 @@ if (getRversion() < "4.0.0") {
   }
 }
 
+# for tinytest unit tests, that call AMR:::xxx():
+strrep <- strrep
+
+
 # nolint end
