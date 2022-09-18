@@ -23,8 +23,6 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-expect_true(AMR:::check_dataset_integrity()) # in misc.R
-
 # IDs should always be unique
 expect_identical(nrow(microorganisms), length(unique(microorganisms$mo)))
 expect_identical(class(microorganisms$mo), c("mo", "character"))
@@ -68,23 +66,11 @@ expect_true(nrow(df[which(df$prevalence == 2), , drop = FALSE]) < nrow(df[which(
 expect_true(all(c(
   "mo", "fullname",
   "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies",
-  "rank", "ref", "species_id", "source", "prevalence", "snomed",
+  "rank", "ref", "lpsn", "gbif", "status", "source", "prevalence", "snomed",
   "kingdom_index", "fullname_lower", "g_species"
 ) %in% colnames(df)))
 
-expect_true(all(c(
-  "fullname", "fullname_new", "ref", "prevalence",
-  "fullname_lower", "g_species"
-) %in% colnames(AMR:::MO.old_lookup)))
-
 expect_inherits(AMR:::MO_CONS, "mo")
-
-expect_identical(
-  class(catalogue_of_life_version()),
-  c("catalogue_of_life_version", "list")
-)
-
-expect_stdout(print(catalogue_of_life_version()))
 
 uncategorised <- subset(
   microorganisms,

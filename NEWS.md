@@ -1,4 +1,4 @@
-# AMR 1.8.1.9055
+# AMR 1.8.1.9056
 
 This version will eventually become v2.0! We're happy to reach a new major milestone soon!
 
@@ -49,7 +49,7 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * An enormous lot of code cleaning, fixing some small bugs on the way
 
 
-# `AMR` 1.8.1
+# AMR 1.8.1
 
 ### Changed
 * Fix for using `as.rsi()` on values containing capped values (such as `>=`), sometimes leading to `NA`
@@ -69,7 +69,7 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * Fix for size of some image elements, as requested by CRAN
 
 
-# `AMR` 1.8.0
+# AMR 1.8.0
 
 ### Breaking changes
 * Removed `p_symbol()` and all `filter_*()` functions (except for `filter_first_isolate()`), which were all deprecated in a previous package version
