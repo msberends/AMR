@@ -28,11 +28,11 @@
 #' Use these functions to return a specific property of a microorganism based on the latest accepted taxonomy. All input values will be evaluated internally with [as.mo()], which makes it possible to use microbial abbreviations, codes and names as input. See *Examples*.
 #' @param x any [character] (vector) that can be coerced to a valid microorganism code with [as.mo()]. Can be left blank for auto-guessing the column containing microorganism codes if used in a data set, see *Examples*.
 #' @param property one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`, or must be `"shortname"`
-#' @param language language of the returned text, defaults to system language (see [get_AMR_locale()]) and can be overwritten by setting the option `AMR_locale`, e.g. `options(AMR_locale = "de")`, see [translate]. Also used to translate text like "no growth". Use `language = NULL` or `language = ""` to prevent translation.
+#' @inheritParams as.mo
 #' @param ... other arguments passed on to [as.mo()], such as 'allow_uncertain' and 'ignore_pattern'
 #' @param ab any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
 #' @param open browse the URL using [`browseURL()`][utils::browseURL()]
-#' @details All functions will return the most recently known taxonomic property [as included in this package][microorganisms], except for [mo_ref()], [mo_authors()] and [mo_year()]. Please refer to this example, knowing that *Escherichia blattae* was renamed to *Shimwellia blattae* in 2010:
+#' @details All functions will, at default, keep old taxonomic properties. Please refer to this example, knowing that *Escherichia blattae* was renamed to *Shimwellia blattae* in 2010:
 #' - `mo_name("Escherichia blattae")` will return `"Shimwellia blattae"` (with a message about the renaming)
 #' - `mo_ref("Escherichia blattae")` will return `"Burgess et al., 1973"` (with a message about the renaming)
 #' - `mo_ref("Shimwellia blattae")` will return `"Priest et al., 2010"` (without a message)
@@ -168,15 +168,16 @@
 #' # SNOMED codes, and URL to the online database
 #' mo_info("Klebsiella pneumoniae")
 #' }
-mo_name <- function(x, language = get_AMR_locale(), ...) {
+mo_name <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_name")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  translate_into_language(mo_validate(x = x, property = "fullname", language = language, ...),
+  translate_into_language(mo_validate(x = x, property = "fullname", language = language, keep_synonyms = keep_synonyms, ...),
     language = language,
     only_unknown = FALSE,
     only_affect_mo_names = TRUE
@@ -189,15 +190,16 @@ mo_fullname <- mo_name
 
 #' @rdname mo_property
 #' @export
-mo_shortname <- function(x, language = get_AMR_locale(), ...) {
+mo_shortname <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_shortname")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  x.mo <- as.mo(x, language = language, ...)
+  x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
 
   metadata <- get_mo_failures_uncertainties_renamed()
 
@@ -207,8 +209,8 @@ mo_shortname <- function(x, language = get_AMR_locale(), ...) {
   }
 
   # get first char of genus and complete species in English
-  genera <- mo_genus(x.mo, language = NULL)
-  shortnames <- paste0(substr(genera, 1, 1), ". ", replace_empty(mo_species(x.mo, language = NULL)))
+  genera <- mo_genus(x.mo, language = NULL, keep_synonyms = keep_synonyms)
+  shortnames <- paste0(substr(genera, 1, 1), ". ", replace_empty(mo_species(x.mo, language = NULL, keep_synonyms = keep_synonyms)))
 
   # exceptions for where no species is known
   shortnames[shortnames %like% ".[.] spp[.]"] <- genera[shortnames %like% ".[.] spp[.]"]
@@ -229,106 +231,114 @@ mo_shortname <- function(x, language = get_AMR_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_subspecies <- function(x, language = get_AMR_locale(), ...) {
+mo_subspecies <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_subspecies")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  translate_into_language(mo_validate(x = x, property = "subspecies", language = language, ...), language = language, only_unknown = TRUE)
+  translate_into_language(mo_validate(x = x, property = "subspecies", language = language, keep_synonyms = keep_synonyms, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
-mo_species <- function(x, language = get_AMR_locale(), ...) {
+mo_species <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_species")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  translate_into_language(mo_validate(x = x, property = "species", language = language, ...), language = language, only_unknown = TRUE)
+  translate_into_language(mo_validate(x = x, property = "species", language = language, keep_synonyms = keep_synonyms, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
-mo_genus <- function(x, language = get_AMR_locale(), ...) {
+mo_genus <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_genus")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  translate_into_language(mo_validate(x = x, property = "genus", language = language, ...), language = language, only_unknown = TRUE)
+  translate_into_language(mo_validate(x = x, property = "genus", language = language, keep_synonyms = keep_synonyms, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
-mo_family <- function(x, language = get_AMR_locale(), ...) {
+mo_family <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_family")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  translate_into_language(mo_validate(x = x, property = "family", language = language, ...), language = language, only_unknown = TRUE)
+  translate_into_language(mo_validate(x = x, property = "family", language = language, keep_synonyms = keep_synonyms, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
-mo_order <- function(x, language = get_AMR_locale(), ...) {
+mo_order <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_order")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  translate_into_language(mo_validate(x = x, property = "order", language = language, ...), language = language, only_unknown = TRUE)
+  translate_into_language(mo_validate(x = x, property = "order", language = language, keep_synonyms = keep_synonyms, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
-mo_class <- function(x, language = get_AMR_locale(), ...) {
+mo_class <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_class")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  translate_into_language(mo_validate(x = x, property = "class", language = language, ...), language = language, only_unknown = TRUE)
+  translate_into_language(mo_validate(x = x, property = "class", language = language, keep_synonyms = keep_synonyms, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
-mo_phylum <- function(x, language = get_AMR_locale(), ...) {
+mo_phylum <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_phylum")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  translate_into_language(mo_validate(x = x, property = "phylum", language = language, ...), language = language, only_unknown = TRUE)
+  translate_into_language(mo_validate(x = x, property = "phylum", language = language, keep_synonyms = keep_synonyms, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
 #' @export
-mo_kingdom <- function(x, language = get_AMR_locale(), ...) {
+mo_kingdom <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_kingdom")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  translate_into_language(mo_validate(x = x, property = "kingdom", language = language, ...), language = language, only_unknown = TRUE)
+  translate_into_language(mo_validate(x = x, property = "kingdom", language = language, keep_synonyms = keep_synonyms, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
@@ -337,40 +347,41 @@ mo_domain <- mo_kingdom
 
 #' @rdname mo_property
 #' @export
-mo_type <- function(x, language = get_AMR_locale(), ...) {
+mo_type <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_type")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  x.mo <- as.mo(x, language = language, ...)
-  out <- mo_kingdom(x.mo, language = NULL)
-  out[which(mo_is_yeast(x.mo))] <- "Yeasts"
+  x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
+  out <- mo_kingdom(x.mo, language = NULL, keep_synonyms = keep_synonyms)
+  out[which(mo_is_yeast(x.mo, keep_synonyms = keep_synonyms))] <- "Yeasts"
   translate_into_language(out, language = language, only_unknown = FALSE)
 }
 
 #' @rdname mo_property
 #' @export
-mo_gramstain <- function(x, language = get_AMR_locale(), ...) {
+mo_gramstain <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_gramstain")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  # keep_synonyms = TRUE to prevent messages - they won't change Gram stain anyway
-  x.mo <- as.mo(x, language = language, keep_synonyms = TRUE, ...)
+  x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
 
   x <- rep(NA_character_, length(x))
   # make all bacteria Gram negative
-  x[mo_kingdom(x.mo, language = NULL, keep_synonyms = TRUE) == "Bacteria"] <- "Gram-negative"
+  x[mo_kingdom(x.mo, language = NULL, keep_synonyms = keep_synonyms) == "Bacteria"] <- "Gram-negative"
   # overwrite these 4 phyla with Gram-positives
   # Source: https://itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=956097 (Cavalier-Smith, 2002)
-  x[(mo_phylum(x.mo, language = NULL, keep_synonyms = TRUE) %in% c(
+  x[(mo_phylum(x.mo, language = NULL, keep_synonyms = keep_synonyms) %in% c(
     "Actinobacteria",
     "Chloroflexi",
     "Firmicutes",
@@ -378,7 +389,7 @@ mo_gramstain <- function(x, language = get_AMR_locale(), ...) {
     "Bacillota" # this one is new! It was renamed from Firmicutes by Gibbons et al., 2021
   ) &
     # but class Negativicutes (of phylum Firmicutes) are Gram-negative!
-    mo_class(x.mo, language = NULL, keep_synonyms = TRUE) != "Negativicutes")
+    mo_class(x.mo, language = NULL, keep_synonyms = keep_synonyms) != "Negativicutes")
   # and of course our own ID for Gram-positives
   | x.mo == "B_GRAMP"] <- "Gram-positive"
 
@@ -388,17 +399,18 @@ mo_gramstain <- function(x, language = get_AMR_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_is_gram_negative <- function(x, language = get_AMR_locale(), ...) {
+mo_is_gram_negative <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_is_gram_negative")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  x.mo <- as.mo(x, language = language, ...)
+  x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
-  grams <- mo_gramstain(x.mo, language = NULL)
+  grams <- mo_gramstain(x.mo, language = NULL, keep_synonyms = keep_synonyms)
   load_mo_failures_uncertainties_renamed(metadata)
   out <- grams == "Gram-negative" & !is.na(grams)
   out[x.mo %in% c(NA_character_, "UNKNOWN")] <- NA
@@ -407,17 +419,18 @@ mo_is_gram_negative <- function(x, language = get_AMR_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_is_gram_positive <- function(x, language = get_AMR_locale(), ...) {
+mo_is_gram_positive <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_is_gram_positive")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  x.mo <- as.mo(x, language = language, ...)
+  x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
-  grams <- mo_gramstain(x.mo, language = NULL)
+  grams <- mo_gramstain(x.mo, language = NULL, keep_synonyms = keep_synonyms)
   load_mo_failures_uncertainties_renamed(metadata)
   out <- grams == "Gram-positive" & !is.na(grams)
   out[x.mo %in% c(NA_character_, "UNKNOWN")] <- NA
@@ -426,19 +439,20 @@ mo_is_gram_positive <- function(x, language = get_AMR_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_is_yeast <- function(x, language = get_AMR_locale(), ...) {
+mo_is_yeast <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_is_yeast")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  x.mo <- as.mo(x, language = language, ...)
+  x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
 
-  x.kingdom <- mo_kingdom(x.mo, language = NULL)
-  x.class <- mo_class(x.mo, language = NULL)
+  x.kingdom <- mo_kingdom(x.mo, language = NULL, keep_synonyms = keep_synonyms)
+  x.class <- mo_class(x.mo, language = NULL, keep_synonyms = keep_synonyms)
 
   load_mo_failures_uncertainties_renamed(metadata)
 
@@ -450,7 +464,7 @@ mo_is_yeast <- function(x, language = get_AMR_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_is_intrinsic_resistant <- function(x, ab, language = get_AMR_locale(), ...) {
+mo_is_intrinsic_resistant <- function(x, ab, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_is_intrinsic_resistant")
@@ -458,8 +472,9 @@ mo_is_intrinsic_resistant <- function(x, ab, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(ab, allow_NA = FALSE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  x <- as.mo(x, language = language, ...)
+  x <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
   ab <- as.ab(ab, language = NULL, flag_multiple_results = FALSE, info = FALSE)
 
   if (length(x) == 1 & length(ab) > 1) {
@@ -486,41 +501,44 @@ mo_is_intrinsic_resistant <- function(x, ab, language = get_AMR_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_snomed <- function(x, language = get_AMR_locale(), ...) {
+mo_snomed <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_snomed")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  mo_validate(x = x, property = "snomed", language = language, ...)
+  mo_validate(x = x, property = "snomed", language = language, keep_synonyms = keep_synonyms, ...)
 }
 
 #' @rdname mo_property
 #' @export
-mo_ref <- function(x, language = get_AMR_locale(), ...) {
+mo_ref <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_ref")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  mo_validate(x = x, property = "ref", language = language, ...)
+  mo_validate(x = x, property = "ref", language = language, keep_synonyms = keep_synonyms, ...)
 }
 
 #' @rdname mo_property
 #' @export
-mo_authors <- function(x, language = get_AMR_locale(), ...) {
+mo_authors <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_authors")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  x <- mo_validate(x = x, property = "ref", language = language, ...)
+  x <- mo_validate(x = x, property = "ref", language = language, keep_synonyms = keep_synonyms, ...)
   # remove last 4 digits and presumably the comma and space that preceed them
   x[!is.na(x)] <- gsub(",? ?[0-9]{4}", "", x[!is.na(x)], perl = TRUE)
   suppressWarnings(x)
@@ -528,15 +546,16 @@ mo_authors <- function(x, language = get_AMR_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_year <- function(x, language = get_AMR_locale(), ...) {
+mo_year <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_year")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  x <- mo_validate(x = x, property = "ref", language = language, ...)
+  x <- mo_validate(x = x, property = "ref", language = language, keep_synonyms = keep_synonyms, ...)
   # get last 4 digits
   x[!is.na(x)] <- gsub(".*([0-9]{4})$", "\\1", x[!is.na(x)], perl = TRUE)
   suppressWarnings(as.integer(x))
@@ -544,52 +563,69 @@ mo_year <- function(x, language = get_AMR_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_lpsn <- function(x, language = get_AMR_locale(), ...) {
+mo_lpsn <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+  if (missing(x)) {
+    # this tries to find the data and an <mo> column
+    x <- find_mo_col(fn = "mo_lpsn")
+  }
+  meet_criteria(x, allow_NA = TRUE)
+  language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
+
+  mo_validate(x = x, property = "lpsn", language = language, keep_synonyms = keep_synonyms, ...)
+}
+
+#' @rdname mo_property
+#' @export
+mo_gbif <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+  if (missing(x)) {
+    # this tries to find the data and an <mo> column
+    x <- find_mo_col(fn = "mo_gbif")
+  }
+  meet_criteria(x, allow_NA = TRUE)
+  language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
+  
+  mo_validate(x = x, property = "gbif", language = language, keep_synonyms = keep_synonyms, ...)
+}
+
+#' @rdname mo_property
+#' @export
+mo_rank <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_rank")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  mo_validate(x = x, property = "species_id", language = language, ...)
+  mo_validate(x = x, property = "rank", language = language, keep_synonyms = keep_synonyms, ...)
 }
 
 #' @rdname mo_property
 #' @export
-mo_rank <- function(x, language = get_AMR_locale(), ...) {
-  if (missing(x)) {
-    # this tries to find the data and an <mo> column
-    x <- find_mo_col(fn = "mo_rank")
-  }
-  meet_criteria(x, allow_NA = TRUE)
-  language <- validate_language(language)
-
-  mo_validate(x = x, property = "rank", language = language, ...)
-}
-
-#' @rdname mo_property
-#' @export
-mo_taxonomy <- function(x, language = get_AMR_locale(), ...) {
+mo_taxonomy <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_taxonomy")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  x <- as.mo(x, language = language, ...)
+  x <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
 
   out <- list(
-    kingdom = mo_kingdom(x, language = language),
-    phylum = mo_phylum(x, language = language),
-    class = mo_class(x, language = language),
-    order = mo_order(x, language = language),
-    family = mo_family(x, language = language),
-    genus = mo_genus(x, language = language),
-    species = mo_species(x, language = language),
-    subspecies = mo_subspecies(x, language = language)
+    kingdom = mo_kingdom(x, language = language, keep_synonyms = keep_synonyms),
+    phylum = mo_phylum(x, language = language, keep_synonyms = keep_synonyms),
+    class = mo_class(x, language = language, keep_synonyms = keep_synonyms),
+    order = mo_order(x, language = language, keep_synonyms = keep_synonyms),
+    family = mo_family(x, language = language, keep_synonyms = keep_synonyms),
+    genus = mo_genus(x, language = language, keep_synonyms = keep_synonyms),
+    species = mo_species(x, language = language, keep_synonyms = keep_synonyms),
+    subspecies = mo_subspecies(x, language = language, keep_synonyms = keep_synonyms)
   )
 
   load_mo_failures_uncertainties_renamed(metadata)
@@ -598,21 +634,22 @@ mo_taxonomy <- function(x, language = get_AMR_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_synonyms <- function(x, language = get_AMR_locale(), ...) {
+mo_synonyms <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_synonyms")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  x.mo <- as.mo(x, language = language, ...)
+  x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
 
   syns <- lapply(x.mo, function(y) {
     gbif <- AMR::microorganisms$gbif[match(y, AMR::microorganisms$mo)]
     lpsn <- AMR::microorganisms$lpsn[match(y, AMR::microorganisms$mo)]
-    out <- AMR::microorganisms[which(AMR::microorganisms$lpsn_renamed_to %in% c(gbif, lpsn)), "fullname", drop = TRUE]
+    out <- AMR::microorganisms[which(AMR::microorganisms$lpsn_renamed_to %in% lpsn | AMR::microorganisms$gbif_renamed_to %in% gbif), "fullname", drop = TRUE]
     if (length(out) == 0) {
       NULL
     } else {
@@ -633,26 +670,27 @@ mo_synonyms <- function(x, language = get_AMR_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_info <- function(x, language = get_AMR_locale(), ...) {
+mo_info <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_info")
   }
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  x <- as.mo(x, language = language, ...)
+  x <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
   metadata <- get_mo_failures_uncertainties_renamed()
 
   info <- lapply(x, function(y) {
     c(
-      mo_taxonomy(y, language = language),
+      mo_taxonomy(y, language = language, keep_synonyms = keep_synonyms),
       list(
-        synonyms = mo_synonyms(y),
-        gramstain = mo_gramstain(y, language = language),
-        url = unname(mo_url(y, open = FALSE)),
-        ref = mo_ref(y),
-        snomed = unlist(mo_snomed(y))
+        synonyms = mo_synonyms(y, keep_synonyms = keep_synonyms),
+        gramstain = mo_gramstain(y, language = language, keep_synonyms = keep_synonyms),
+        url = unname(mo_url(y, open = FALSE, keep_synonyms = keep_synonyms)),
+        ref = mo_ref(y, keep_synonyms = keep_synonyms),
+        snomed = unlist(mo_snomed(y, keep_synonyms = keep_synonyms))
       )
     )
   })
@@ -669,7 +707,7 @@ mo_info <- function(x, language = get_AMR_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_url <- function(x, open = FALSE, language = get_AMR_locale(), ...) {
+mo_url <- function(x, open = FALSE, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_url")
@@ -677,14 +715,15 @@ mo_url <- function(x, open = FALSE, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(open, allow_class = "logical", has_length = 1)
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  x.mo <- as.mo(x = x, language = language, ... = ...)
+  x.mo <- as.mo(x = x, language = language, keep_synonyms = keep_synonyms, ... = ...)
   metadata <- get_mo_failures_uncertainties_renamed()
 
-  x.rank <- microorganisms$rank[match(x.mo, microorganisms$mo)]
-  x.name <- microorganisms$fullname[match(x.mo, microorganisms$mo)]
-  x.lpsn <- microorganisms$lpsn[match(x.mo, microorganisms$mo)]
-  x.gbif <- microorganisms$gbif[match(x.mo, microorganisms$mo)]
+  x.rank <- AMR::microorganisms$rank[match(x.mo, AMR::microorganisms$mo)]
+  x.name <- AMR::microorganisms$fullname[match(x.mo, AMR::microorganisms$mo)]
+  x.lpsn <- AMR::microorganisms$lpsn[match(x.mo, AMR::microorganisms$mo)]
+  x.gbif <- AMR::microorganisms$gbif[match(x.mo, AMR::microorganisms$mo)]
 
   u <- character(length(x))
   u[!is.na(x.gbif)] <- paste0(TAXONOMY_VERSION$GBIF$url, "/species/", x.gbif[!is.na(x.gbif)])
@@ -707,7 +746,7 @@ mo_url <- function(x, open = FALSE, language = get_AMR_locale(), ...) {
 
 #' @rdname mo_property
 #' @export
-mo_property <- function(x, property = "fullname", language = get_AMR_locale(), ...) {
+mo_property <- function(x, property = "fullname", language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_property")
@@ -715,11 +754,12 @@ mo_property <- function(x, property = "fullname", language = get_AMR_locale(), .
   meet_criteria(x, allow_NA = TRUE)
   meet_criteria(property, allow_class = "character", has_length = 1, is_in = colnames(AMR::microorganisms))
   language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  translate_into_language(mo_validate(x = x, property = property, language = language, ...), language = language, only_unknown = TRUE)
+  translate_into_language(mo_validate(x = x, property = property, language = language, keep_synonyms = keep_synonyms, ...), language = language, only_unknown = TRUE)
 }
 
-mo_validate <- function(x, property, language, ...) {
+mo_validate <- function(x, property, language, keep_synonyms = keep_synonyms, ...) {
 
   # try to catch an error when inputting an invalid argument
   # so the 'call.' can be set to FALSE
@@ -736,20 +776,20 @@ mo_validate <- function(x, property, language, ...) {
   if (is.null(Lancefield) || property %in% c("kingdom", "phylum", "class", "order", "family", "genus")) {
     Lancefield <- FALSE
   }
-  keep_synonyms <- dots$keep_synonyms
-  has_Becker_or_Lancefield_or_synonyms <- !isFALSE(keep_synonyms) || Becker %in% c(TRUE, "all") || Lancefield %in% c(TRUE, "all")
+  has_Becker_or_Lancefield <- Becker %in% c(TRUE, "all") || Lancefield %in% c(TRUE, "all")
 
-  if (all(x %in% AMR::microorganisms$mo, na.rm = TRUE) && !has_Becker_or_Lancefield_or_synonyms) {
+  if (all(x %in% AMR::microorganisms$mo, na.rm = TRUE) && !has_Becker_or_Lancefield && isTRUE(keep_synonyms)) {
     # do nothing, just don't run the other if-else's
-  } else if (all(x %in% AMR::microorganisms[[property]], na.rm = TRUE) && !has_Becker_or_Lancefield_or_synonyms) {
+  } else if (all(x %in% AMR::microorganisms[[property]], na.rm = TRUE) && !has_Becker_or_Lancefield && isTRUE(keep_synonyms)) {
     # no need to do anything, just return it
     return(x)
   } else {
-    x <- as.mo(x, language = language, ...)
+    x <- replace_old_mo_codes(x, property = property)
+    x <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
   }
 
   # get property reeaaally fast using match()
-  x <- microorganisms[[property]][match(x, microorganisms$mo)]
+  x <- AMR::microorganisms[[property]][match(x, AMR::microorganisms$mo)]
 
   if (property == "mo") {
     return(set_clean_class(x, new_class = c("mo", "character")))

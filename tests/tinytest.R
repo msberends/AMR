@@ -25,6 +25,9 @@
 
 # we use {tinytest} instead of {testthat} because it does not rely on recent R versions - we want to test on R >= 3.0.
 
+# Run them in RStudio using:
+# rstudioapi::jobRunScript("tests/tinytest.R", name = "Tinytest Unit Tests", workingDir = getwd(), exportEnv = "tinytest_results")
+
 # test only on GitHub Actions and at home - not on CRAN as tests are lengthy
 if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
   # env var 'R_LIBS_USER' got overwritten during 'R CMD check' in GitHub Actions, so:
@@ -51,3 +54,4 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
     print(summary(out))
   }
 }
+

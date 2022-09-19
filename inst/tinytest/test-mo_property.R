@@ -107,8 +107,8 @@ expect_identical(
   mo_lpsn("Escherichia coli")
 )
 
-expect_identical(suppressWarnings(mo_ref("Chlamydia psittaci")), "Page, 1968")
-expect_identical(mo_ref("Chlamydophila psittaci"), "Everett et al., 1999")
+expect_identical(mo_ref("Chlamydia psittaci"), "Garcia-Lopez et al., 2019")
+expect_identical(mo_ref("Chlamydophila psittaci", keep_synonyms = TRUE), "Everett et al., 1999")
 
 expect_true(112283007 %in% mo_snomed("Escherichia coli"))
 # old codes must throw a warning in mo_* family

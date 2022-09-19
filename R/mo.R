@@ -35,7 +35,7 @@
 #' This excludes enterococci at default (who are in group D), use `Lancefield = "all"` to also categorise all enterococci as group D.
 #' @param minimum_matching_score a numeric value to set as the lower limit for the [MO matching score][mo_matching_score()]. When left blank, this will be determined automatically based on the character length of `x`, its [taxonomic kingdom][microorganisms] and [human pathogenicity][mo_matching_score()].
 #' @param allow_uncertain a number between `0` (or `"none"`) and `3` (or `"all"`), or `TRUE` (= `2`) or `FALSE` (= `0`) to indicate whether the input should be checked for less probable results, see *Details*
-#' @param keep_synonyms a [logical] to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is `FALSE` to always return the currently accepted names.
+#' @param keep_synonyms a [logical] to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is `TRUE`, which will return a note if old taxonomic names are returned. The default can be set with `options(AMR_keep_synonyms = ...)`.
 #' @param reference_df a [data.frame] to be used for extra reference when translating `x` to a valid [`mo`]. See [set_mo_source()] and [get_mo_source()] to automate the usage of your own codes (e.g. used in your analysis or organisation).
 #' @param ignore_pattern a regular expression (case-insensitive) of which all matches in `x` must return `NA`. This can be convenient to exclude known non-relevant input and can also be set with the option `AMR_ignore_pattern`, e.g. `options(AMR_ignore_pattern = "(not reported|contaminated flora)")`.
 #' @param language language to translate text like "no growth", which defaults to the system language (see [get_AMR_locale()])
@@ -45,7 +45,7 @@
 #' @aliases mo
 #' @keywords mo Becker becker Lancefield lancefield guess
 #' @details
-#' ## General Info
+#' ### General Info
 #'
 #' A microorganism (MO) code from this package (class: [`mo`]) is human readable and typically looks like these examples:
 #' ```
@@ -77,7 +77,7 @@
 #'
 #' This will lead to the effect that e.g. `"E. coli"` (a microorganism highly prevalent in humans) will return the microbial ID of *Escherichia coli* and not *Entamoeba coli* (a microorganism less prevalent in humans), although the latter would alphabetically come first.
 #'
-#' ## Coping with Uncertain Results
+#' ### Coping with Uncertain Results
 #'
 #' In addition, the [as.mo()] function can differentiate four levels of uncertainty to guess valid results:
 #' - Uncertainty level 0: no additional rules are applied;
@@ -97,7 +97,7 @@
 #' - Use [mo_failures()] to get a [character] [vector] with all values that could not be coerced to a valid value.
 #' - Use [mo_renamed()] to get a [data.frame] with all values that could be coerced based on old, previously accepted taxonomic names.
 #'
-#' ## Microbial Prevalence of Pathogens in Humans
+#' ### Microbial Prevalence of Pathogens in Humans
 #'
 #' The coercion rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the `prevalence` columns in the [microorganisms] data set. The grouping into human pathogenic prevalence is explained in the section *Matching Score for Microorganisms* below.
 #' @inheritSection mo_matching_score Matching Score for Microorganisms
@@ -133,8 +133,8 @@
 #'   "MRSA", # Methicillin Resistant S. aureus
 #'   "VISA", # Vancomycin Intermediate S. aureus
 #'   "VRSA", # Vancomycin Resistant S. aureus
-#'   115329001
-#' )) # SNOMED CT code
+#'   115329001 # SNOMED CT code
+#' )) 
 #'
 #' # Dyslexia is no problem - these all work:
 #' as.mo(c(
@@ -153,25 +153,25 @@
 #' as.mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPT_GRPA
 #'
 #' # All mo_* functions use as.mo() internally too (see ?mo_property):
-#' mo_genus("Esch coli")
-#' mo_gramstain("E. coli")
-#' mo_is_intrinsic_resistant("E. coli", "vanco")
+#' mo_genus("E. coli")
+#' mo_gramstain("ESCO")
+#' mo_is_intrinsic_resistant("ESCCOL", ab = "vanco")
 #' }
 as.mo <- function(x,
                   Becker = FALSE,
                   Lancefield = FALSE,
                   minimum_matching_score = NULL,
                   allow_uncertain = TRUE,
-                  keep_synonyms = FALSE,
+                  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
                   reference_df = get_mo_source(),
-                  ignore_pattern = getOption("AMR_ignore_pattern"),
+                  ignore_pattern = getOption("AMR_ignore_pattern", NULL),
                   language = get_AMR_locale(),
                   info = interactive(),
                   ...) {
   meet_criteria(x, allow_class = c("mo", "data.frame", "list", "character", "numeric", "integer", "factor"), allow_NA = TRUE)
   meet_criteria(Becker, allow_class = c("logical", "character"), has_length = 1)
   meet_criteria(Lancefield, allow_class = c("logical", "character"), has_length = 1)
-  meet_criteria(keep_synonyms, allow_class = c("logical", "character"), has_length = 1)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
   meet_criteria(minimum_matching_score, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE)
   meet_criteria(reference_df, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(ignore_pattern, allow_class = "character", has_length = 1, allow_NULL = TRUE)
@@ -371,18 +371,18 @@ as.mo <- function(x,
   } # end of loop over all yet unknowns
 
   # Keep or replace synonyms ----
+  gbif_matches <- AMR::microorganisms$gbif_renamed_to[match(out, AMR::microorganisms$mo)]
+  lpsn_matches <- AMR::microorganisms$lpsn_renamed_to[match(out, AMR::microorganisms$mo)]
   if (isFALSE(keep_synonyms)) {
     out_old <- out
 
-    gbif_matches <- AMR::microorganisms$gbif_renamed_to[match(out, AMR::microorganisms$mo)]
     gbif_matches[!gbif_matches %in% AMR::microorganisms$gbif] <- NA
     out[which(!is.na(gbif_matches))] <- AMR::microorganisms$mo[match(gbif_matches[which(!is.na(gbif_matches))], AMR::microorganisms$gbif)]
 
-    lpsn_matches <- AMR::microorganisms$lpsn_renamed_to[match(out, AMR::microorganisms$mo)]
     lpsn_matches[!lpsn_matches %in% AMR::microorganisms$lpsn] <- NA
     out[which(!is.na(lpsn_matches))] <- AMR::microorganisms$mo[match(lpsn_matches[which(!is.na(lpsn_matches))], AMR::microorganisms$lpsn)]
 
-    if (isTRUE(info) && (any(!is.na(gbif_matches)) || any(!is.na(lpsn_matches))) && message_not_thrown_before("as.mo", gbif_matches[which(!is.na(gbif_matches))][1:5], lpsn_matches[which(!is.na(lpsn_matches))][1:5]) && length(c(lpsn_matches, gbif_matches)) > 0) {
+    if (isTRUE(info) && (any(!is.na(gbif_matches)) || any(!is.na(lpsn_matches))) && message_not_thrown_before("as.mo", gbif_matches[which(!is.na(gbif_matches))], lpsn_matches[which(!is.na(lpsn_matches))]) && length(c(lpsn_matches, gbif_matches)) > 0) {
       total_old <- out_old[which(!is.na(gbif_matches) | !is.na(lpsn_matches))]
       total_new <- out[which(!is.na(gbif_matches) | !is.na(lpsn_matches))]
 
@@ -401,13 +401,18 @@ as.mo <- function(x,
 
       message_(
         "The following microorganism", ifelse(length(total_old) > 1, "s were", " was"), " taxonomically renamed (use `keep_synonyms = TRUE` to leave uncorrected):\n",
-        paste0("  ", microorganisms$fullname[match(total_old, microorganisms$mo)],
+        paste0("  ", font_italic(microorganisms$fullname[match(total_old, microorganisms$mo)], collapse = NULL),
           refs_old,
-          " -> ", microorganisms$fullname[match(total_new, microorganisms$mo)],
+          " -> ", font_italic(microorganisms$fullname[match(total_new, microorganisms$mo)], collapse = NULL),
           refs_new,
           collapse = "\n"
         )
       )
+    }
+  } else {
+    # keep synonyms is TRUE, so check if any do have synonyms
+    if (any(!is.na(c(gbif_matches, lpsn_matches))) && message_not_thrown_before("as.mo", unique(c(gbif_matches, lpsn_matches)))) {
+      warning_("Function `as.mo()` returned some old taxonomic names. Use `as.mo(..., keep_synonyms = FALSE)` to clean the input to currently accepted taxonomic names, or set the R option `AMR_keep_synonyms` to `FALSE`.")
     }
   }
 
@@ -496,10 +501,10 @@ pillar_shaft.mo <- function(x, ...) {
     mo_cols <- NULL
   }
 
-  if (!all(x[!is.na(x)] %in% MO_lookup$mo) |
-    (!is.null(df) && !all(unlist(df[, which(mo_cols), drop = FALSE]) %in% MO_lookup$mo))) {
+  if (!all(x[!is.na(x)] %in% AMR::microorganisms$mo) |
+    (!is.null(df) && !all(unlist(df[, which(mo_cols), drop = FALSE]) %in% AMR::microorganisms$mo))) {
     # markup old mo codes
-    out[!x %in% MO_lookup$mo] <- font_italic(font_na(x[!x %in% MO_lookup$mo],
+    out[!x %in% AMR::microorganisms$mo] <- font_italic(font_na(x[!x %in% AMR::microorganisms$mo],
       collapse = NULL
     ),
     collapse = NULL
@@ -596,7 +601,7 @@ print.mo <- function(x, print.shortnames = FALSE, ...) {
   }
   x <- as.character(x)
   names(x) <- x_names
-  if (!all(x[!is.na(x)] %in% MO_lookup$mo)) {
+  if (!all(x[!is.na(x)] %in% AMR::microorganisms$mo)) {
     warning_(
       "Some MO codes are from a previous AMR package version. ",
       "Please update the MO codes with `as.mo()`."
@@ -629,7 +634,7 @@ summary.mo <- function(object, ...) {
 #' @export
 #' @noRd
 as.data.frame.mo <- function(x, ...) {
-  if (!all(x[!is.na(x)] %in% MO_lookup$mo)) {
+  if (!all(x[!is.na(x)] %in% AMR::microorganisms$mo)) {
     warning_(
       "The data contains old MO codes (from a previous AMR package version). ",
       "Please update your MO codes with `as.mo()`."
@@ -960,7 +965,7 @@ parse_and_convert <- function(x) {
 replace_old_mo_codes <- function(x, property) {
   # this function transform old MO codes to current codes, such as:
   # B_ESCH_COL (AMR v0.5.0) -> B_ESCHR_COLI
-  ind <- x %like_case% "^[A-Z]_[A-Z_]+$" & !x %in% MO_lookup$mo
+  ind <- x %like_case% "^[A-Z]_[A-Z_]+$" & !x %in% AMR::microorganisms$mo
   if (any(ind)) {
     # get the ones that match
     affected <- x[ind]

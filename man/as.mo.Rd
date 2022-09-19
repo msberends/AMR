@@ -198,8 +198,8 @@ as.mo(c(
   "MRSA", # Methicillin Resistant S. aureus
   "VISA", # Vancomycin Intermediate S. aureus
   "VRSA", # Vancomycin Resistant S. aureus
-  115329001
-)) # SNOMED CT code
+  115329001 # SNOMED CT code
+)) 
 
 # Dyslexia is no problem - these all work:
 as.mo(c(
@@ -218,9 +218,9 @@ as.mo("S. pyogenes") # will remain species: B_STRPT_PYGN
 as.mo("S. pyogenes", Lancefield = TRUE) # will not remain species: B_STRPT_GRPA
 
 # All mo_* functions use as.mo() internally too (see ?mo_property):
-mo_genus("Esch coli")
-mo_gramstain("E. coli")
-mo_is_intrinsic_resistant("E. coli", "vanco")
+mo_genus("E. coli")
+mo_gramstain("ESCO")
+mo_is_intrinsic_resistant("ESCCOL", ab = "vanco")
 }
 }
 \seealso{

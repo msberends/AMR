@@ -74,19 +74,18 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #'
 #' The file containing all EUCAST rules is located here: <https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv>.  **Note:** Old taxonomic names are replaced with the current taxonomy where applicable. For example, *Ochrobactrum anthropi* was renamed to *Brucella anthropi* in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The `AMR` package contains the full microbial taxonomy updated until `r documentation_date(max(TAXONOMY_VERSION$GBIF$accessed_date, TAXONOMY_VERSION$LPSN$accessed_date))`, see [microorganisms].
 #'
-#' ## Custom Rules
+#' ### Custom Rules
 #'
 #' Custom rules can be created using [custom_eucast_rules()], e.g.:
 #'
-#' ```{r}
+#' ```r
 #' x <- custom_eucast_rules(AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
 #'                          AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I")
 #'
-#' eucast_rules(example_isolates, rules = "custom", custom_rules = x, info = FALSE)
+#' eucast_rules(example_isolates, rules = "custom", custom_rules = x)
 #' ```
 #'
-#'
-#' ## 'Other' Rules
+#' ### 'Other' Rules
 #'
 #' Before further processing, two non-EUCAST rules about drug combinations can be applied to improve the efficacy of the EUCAST rules, and the reliability of your data (analysis). These rules are:
 #'
@@ -117,7 +116,6 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 11.0, 2021. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_11.0_Breakpoint_Tables.xlsx)
 #' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 12.0, 2022. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_12.0_Breakpoint_Tables.xlsx)
 #' @inheritSection AMR Reference Data Publicly Available
-
 #' @examples
 #' \donttest{
 #' a <- data.frame(

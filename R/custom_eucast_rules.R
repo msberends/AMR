@@ -35,38 +35,54 @@
 #'
 #' If you are familiar with the [`case_when()`][dplyr::case_when()] function of the `dplyr` package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation'. The rule itself is written *before* the tilde (`~`) and the consequence of the rule is written *after* the tilde:
 #'
-#' ```{r}
+#' ```r
 #' x <- custom_eucast_rules(TZP == "S" ~ aminopenicillins == "S",
 #'                          TZP == "R" ~ aminopenicillins == "R")
 #' ```
 #'
 #' These are two custom EUCAST rules: if TZP (piperacillin/tazobactam) is "S", all aminopenicillins (ampicillin and amoxicillin) must be made "S", and if TZP is "R", aminopenicillins must be made "R". These rules can also be printed to the console, so it is immediately clear how they work:
 #'
-#' ```{r}
+#' ```r
 #' x
+#' #> A set of custom EUCAST rules:
+#' #> 
+#' #>   1. If TZP is "S" then set to  S :
+#' #>      amoxicillin (AMX), ampicillin (AMP)
+#' #> 
+#' #>   2. If TZP is "R" then set to  R :
+#' #>      amoxicillin (AMX), ampicillin (AMP)
 #' ```
 #'
 #' The rules (the part *before* the tilde, in above example `TZP == "S"` and `TZP == "R"`) must be evaluable in your data set: it should be able to run as a filter in your data set without errors. This means for the above example that the column `TZP` must exist. We will create a sample data set and test the rules set:
 #'
-#' ```{r}
+#' ```r
 #' df <- data.frame(mo = c("Escherichia coli", "Klebsiella pneumoniae"),
 #'                  TZP = as.rsi("R"),
 #'                  ampi = as.rsi("S"),
 #'                  cipro = as.rsi("S"))
 #' df
-#'
+#' #>                      mo TZP ampi cipro
+#' #> 1      Escherichia coli   R    S     S
+#' #> 2 Klebsiella pneumoniae   R    S     S
+#' 
 #' eucast_rules(df, rules = "custom", custom_rules = x, info = FALSE)
+#' #>                      mo TZP ampi cipro
+#' #> 1      Escherichia coli   R    R     S
+#' #> 2 Klebsiella pneumoniae   R    R     S
 #' ```
 #'
 #' ### Using taxonomic properties in rules
 #'
 #' There is one exception in variables used for the rules: all column names of the [microorganisms] data set can also be used, but do not have to exist in the data set. These column names are: `r vector_and(colnames(microorganisms), sort = FALSE)`. Thus, this next example will work as well, despite the fact that the `df` data set does not contain a column `genus`:
 #'
-#' ```{r}
+#' ```r
 #' y <- custom_eucast_rules(TZP == "S" & genus == "Klebsiella" ~ aminopenicillins == "S",
 #'                          TZP == "R" & genus == "Klebsiella" ~ aminopenicillins == "R")
 #'
 #' eucast_rules(df, rules = "custom", custom_rules = y, info = FALSE)
+#' #>                      mo TZP ampi cipro
+#' #> 1      Escherichia coli   R    S     S
+#' #> 2 Klebsiella pneumoniae   R    R     S
 #' ```
 #'
 #' ### Usage of antibiotic group names
