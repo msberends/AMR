@@ -25,6 +25,7 @@
 \alias{mo_authors}
 \alias{mo_year}
 \alias{mo_lpsn}
+\alias{mo_gbif}
 \alias{mo_rank}
 \alias{mo_taxonomy}
 \alias{mo_synonyms}
@@ -32,68 +33,225 @@
 \alias{mo_url}
 \title{Get Properties of a Microorganism}
 \usage{
-mo_name(x, language = get_AMR_locale(), ...)
+mo_name(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_fullname(x, language = get_AMR_locale(), ...)
+mo_fullname(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_shortname(x, language = get_AMR_locale(), ...)
+mo_shortname(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_subspecies(x, language = get_AMR_locale(), ...)
+mo_subspecies(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_species(x, language = get_AMR_locale(), ...)
+mo_species(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_genus(x, language = get_AMR_locale(), ...)
+mo_genus(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_family(x, language = get_AMR_locale(), ...)
+mo_family(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_order(x, language = get_AMR_locale(), ...)
+mo_order(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_class(x, language = get_AMR_locale(), ...)
+mo_class(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_phylum(x, language = get_AMR_locale(), ...)
+mo_phylum(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_kingdom(x, language = get_AMR_locale(), ...)
+mo_kingdom(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_domain(x, language = get_AMR_locale(), ...)
+mo_domain(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_type(x, language = get_AMR_locale(), ...)
+mo_type(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_gramstain(x, language = get_AMR_locale(), ...)
+mo_gramstain(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_is_gram_negative(x, language = get_AMR_locale(), ...)
+mo_is_gram_negative(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_is_gram_positive(x, language = get_AMR_locale(), ...)
+mo_is_gram_positive(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_is_yeast(x, language = get_AMR_locale(), ...)
+mo_is_yeast(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_is_intrinsic_resistant(x, ab, language = get_AMR_locale(), ...)
+mo_is_intrinsic_resistant(
+  x,
+  ab,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_snomed(x, language = get_AMR_locale(), ...)
+mo_snomed(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_ref(x, language = get_AMR_locale(), ...)
+mo_ref(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_authors(x, language = get_AMR_locale(), ...)
+mo_authors(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_year(x, language = get_AMR_locale(), ...)
+mo_year(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_lpsn(x, language = get_AMR_locale(), ...)
+mo_lpsn(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_rank(x, language = get_AMR_locale(), ...)
+mo_gbif(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_taxonomy(x, language = get_AMR_locale(), ...)
+mo_rank(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_synonyms(x, language = get_AMR_locale(), ...)
+mo_taxonomy(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_info(x, language = get_AMR_locale(), ...)
+mo_synonyms(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_url(x, open = FALSE, language = get_AMR_locale(), ...)
+mo_info(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 
-mo_property(x, property = "fullname", language = get_AMR_locale(), ...)
+mo_url(
+  x,
+  open = FALSE,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
+
+mo_property(
+  x,
+  property = "fullname",
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
 }
 \arguments{
 \item{x}{any \link{character} (vector) that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}. Can be left blank for auto-guessing the column containing microorganism codes if used in a data set, see \emph{Examples}.}
 
-\item{language}{language of the returned text, defaults to system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can be overwritten by setting the option \code{AMR_locale}, e.g. \code{options(AMR_locale = "de")}, see \link{translate}. Also used to translate text like "no growth". Use \code{language = NULL} or \code{language = ""} to prevent translation.}
+\item{language}{language to translate text like "no growth", which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}})}
+
+\item{keep_synonyms}{a \link{logical} to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is \code{TRUE}, which will return a note if old taxonomic names are returned. The default can be set with \code{options(AMR_keep_synonyms = ...)}.}
 
 \item{...}{other arguments passed on to \code{\link[=as.mo]{as.mo()}}, such as 'allow_uncertain' and 'ignore_pattern'}
 
@@ -116,7 +274,7 @@ mo_property(x, property = "fullname", language = get_AMR_locale(), ...)
 Use these functions to return a specific property of a microorganism based on the latest accepted taxonomy. All input values will be evaluated internally with \code{\link[=as.mo]{as.mo()}}, which makes it possible to use microbial abbreviations, codes and names as input. See \emph{Examples}.
 }
 \details{
-All functions will return the most recently known taxonomic property \link[=microorganisms]{as included in this package}, except for \code{\link[=mo_ref]{mo_ref()}}, \code{\link[=mo_authors]{mo_authors()}} and \code{\link[=mo_year]{mo_year()}}. Please refer to this example, knowing that \emph{Escherichia blattae} was renamed to \emph{Shimwellia blattae} in 2010:
+All functions will, at default, keep old taxonomic properties. Please refer to this example, knowing that \emph{Escherichia blattae} was renamed to \emph{Shimwellia blattae} in 2010:
 \itemize{
 \item \code{mo_name("Escherichia blattae")} will return \code{"Shimwellia blattae"} (with a message about the renaming)
 \item \code{mo_ref("Escherichia blattae")} will return \code{"Burgess et al., 1973"} (with a message about the renaming)

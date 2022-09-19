@@ -476,10 +476,8 @@ invisible(capture.output(urlchecker::url_update()))
 
 
 # Document pkg ------------------------------------------------------------
-if (interactive()) {
-  usethis::ui_info("Documenting package")
-  suppressMessages(devtools::document(quiet = TRUE))
-}
+usethis::ui_info("Documenting package")
+suppressMessages(devtools::document(quiet = TRUE))
 
 
 # Style pkg ---------------------------------------------------------------

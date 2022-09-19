@@ -16,9 +16,9 @@ as.mo(
   Lancefield = FALSE,
   minimum_matching_score = NULL,
   allow_uncertain = TRUE,
-  keep_synonyms = FALSE,
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
   reference_df = get_mo_source(),
-  ignore_pattern = getOption("AMR_ignore_pattern"),
+  ignore_pattern = getOption("AMR_ignore_pattern", NULL),
   language = get_AMR_locale(),
   info = interactive(),
   ...
@@ -49,7 +49,7 @@ This excludes enterococci at default (who are in group D), use \code{Lancefield 
 
 \item{allow_uncertain}{a number between \code{0} (or \code{"none"}) and \code{3} (or \code{"all"}), or \code{TRUE} (= \code{2}) or \code{FALSE} (= \code{0}) to indicate whether the input should be checked for less probable results, see \emph{Details}}
 
-\item{keep_synonyms}{a \link{logical} to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is \code{FALSE} to always return the currently accepted names.}
+\item{keep_synonyms}{a \link{logical} to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is \code{TRUE}, which will return a note if old taxonomic names are returned. The default can be set with \code{options(AMR_keep_synonyms = ...)}.}
 
 \item{reference_df}{a \link{data.frame} to be used for extra reference when translating \code{x} to a valid \code{\link{mo}}. See \code{\link[=set_mo_source]{set_mo_source()}} and \code{\link[=get_mo_source]{get_mo_source()}} to automate the usage of your own codes (e.g. used in your analysis or organisation).}
 
