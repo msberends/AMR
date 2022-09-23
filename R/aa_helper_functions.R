@@ -1466,7 +1466,7 @@ if (getRversion() < "3.3.0") {
   }
 }
 
-if (getRversion() < "3.4.2") {
+if (getRversion() < "3.5.0") {
   isFALSE <- function(x) {
     is.logical(x) && length(x) == 1L && !is.na(x) && !x
   }

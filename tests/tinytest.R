@@ -49,7 +49,7 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
       strrep <- AMR:::strrep
       trimws <- AMR:::trimws
     }
-    if (getRversion() < "3.4.2") {
+    if (getRversion() < "3.5.0") {
       isFALSE <- AMR:::isFALSE
     }
     if (getRversion() < "3.6.0") {

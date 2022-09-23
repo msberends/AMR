@@ -25,7 +25,7 @@
 
 expect_equal(mo_kingdom("Escherichia coli"), "Bacteria")
 expect_equal(mo_kingdom("Escherichia coli"), mo_domain("Escherichia coli"))
-expect_equal(mo_phylum("Escherichia coli"), "Proteobacteria")
+expect_equal(mo_phylum("Escherichia coli"), "Pseudomonadota")
 expect_equal(mo_class("Escherichia coli"), "Gammaproteobacteria")
 expect_equal(mo_order("Escherichia coli"), "Enterobacterales")
 expect_equal(mo_family("Escherichia coli"), "Enterobacteriaceae")
@@ -64,7 +64,7 @@ expect_equal(mo_ref("Escherichia coli"), "Castellani et al., 1919")
 expect_equal(mo_authors("Escherichia coli"), "Castellani et al.")
 expect_equal(mo_year("Escherichia coli"), 1919)
 
-expect_true(mo_url("Candida albicans") %like% "catalogueoflife.org")
+expect_true(mo_url("Candida albicans") %like% "gbif.org")
 expect_true(mo_url("Escherichia coli") %like% "lpsn.dsmz.de")
 
 # test integrity
@@ -84,11 +84,12 @@ expect_stdout(print(mo_gramstain("Escherichia coli", language = "it")))
 expect_stdout(print(mo_gramstain("Escherichia coli", language = "fr")))
 
 expect_error(mo_gramstain("Escherichia coli", language = "UNKNOWN"))
-dutch <- mo_name(microorganisms$fullname, language = "nl") # should be transformable to English again
-expect_identical(mo_name(dutch, language = NULL), microorganisms$fullname) # gigantic test - will run ALL names
+dutch <- mo_name(microorganisms$fullname[which(microorganisms$fullname %unlike% "unknown|coagulase")], language = "nl") # should be transformable to English again
+expect_identical(mo_name(dutch, language = NULL),
+                 microorganisms$fullname[which(microorganisms$fullname %unlike% "unknown|coagulase")]) # gigantic test - will run ALL names
 
 # manual property function
-expect_error(mo_property("Escherichia coli", property = c("tsn", "fullname")))
+expect_error(mo_property("Escherichia coli", property = c("genus", "fullname")))
 expect_error(mo_property("Escherichia coli", property = "UNKNOWN"))
 expect_identical(
   mo_property("Escherichia coli", property = "fullname"),
