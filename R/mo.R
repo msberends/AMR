@@ -92,10 +92,7 @@
 #' - `"S. aureus - please mind: MRSA"`. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result *Staphylococcus aureus* (`B_STPHY_AURS`) needs review.
 #' - `"Fluoroquinolone-resistant Neisseria gonorrhoeae"`. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result *Neisseria gonorrhoeae* (`B_NESSR_GNRR`) needs review.
 #'
-#' There are three helper functions that can be run after using the [as.mo()] function:
-#' - Use [mo_uncertainties()] to get a [data.frame] that prints in a pretty format with all taxonomic names that were guessed. The output contains the matching score for all matches (see *Matching Score for Microorganisms* below).
-#' - Use [mo_failures()] to get a [character] [vector] with all values that could not be coerced to a valid value.
-#' - Use [mo_renamed()] to get a [data.frame] with all values that could be coerced based on old, previously accepted taxonomic names.
+#' Use [mo_uncertainties()] to get a [data.frame] that prints in a pretty format with all taxonomic names that were guessed. The output contains the matching score for all matches (see *Matching Score for Microorganisms* below).
 #'
 #' ### Microbial Prevalence of Pathogens in Humans
 #'
@@ -839,14 +836,14 @@ translate_allow_uncertain <- function(allow_uncertain) {
   allow_uncertain
 }
 
-get_mo_failures_uncertainties_renamed <- function() {
+get_mo_uncertainties <- function() {
   remember <- list(uncertainties = pkg_env$mo_uncertainties)
   # empty them, otherwise e.g. mo_shortname("Chlamydophila psittaci") will give 3 notes
   pkg_env$mo_uncertainties <- NULL
   remember
 }
 
-load_mo_failures_uncertainties_renamed <- function(metadata) {
+load_mo_uncertainties <- function(metadata) {
   pkg_env$mo_uncertainties <- metadata$uncertainties
 }
 

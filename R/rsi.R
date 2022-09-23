@@ -757,7 +757,7 @@ as_rsi_method <- function(method_short,
 
   method <- method_short
 
-  metadata_mo <- get_mo_failures_uncertainties_renamed()
+  metadata_mo <- get_mo_uncertainties()
 
   x_bak <- data.frame(x_mo = paste0(x, mo), stringsAsFactors = FALSE)
   df <- unique(data.frame(x, mo, x_mo = paste0(x, mo), stringsAsFactors = FALSE))
@@ -810,7 +810,7 @@ as_rsi_method <- function(method_short,
 
   if (nrow(trans) == 0) {
     message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
-    load_mo_failures_uncertainties_renamed(metadata_mo)
+    load_mo_uncertainties(metadata_mo)
     return(set_clean_class(factor(new_rsi, levels = c("S", "I", "R"), ordered = TRUE),
       new_class = c("rsi", "ordered", "factor")
     ))
@@ -947,7 +947,7 @@ as_rsi_method <- function(method_short,
     message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
   }
 
-  load_mo_failures_uncertainties_renamed(metadata_mo)
+  load_mo_uncertainties(metadata_mo)
 
   set_clean_class(factor(new_rsi, levels = c("S", "I", "R"), ordered = TRUE),
     new_class = c("rsi", "ordered", "factor")

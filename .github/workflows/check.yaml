@@ -37,7 +37,7 @@ name: R-code-check
 jobs:
   R-code-check:
     runs-on: ${{ matrix.config.os }}
-    
+
     continue-on-error: ${{ matrix.config.allowfail }}
 
     name: ${{ matrix.config.os }} (R-${{ matrix.config.r }})
@@ -72,14 +72,14 @@ jobs:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       RSPM: ${{ matrix.config.rspm }}
       R_REPOSITORIES: "https://cran.rstudio.com"
-    
+
     steps:
       - uses: actions/checkout@v3
 
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
-      
+
       - uses: r-lib/actions/setup-pandoc@v2
 
       - name: Install Linux dependencies
@@ -89,7 +89,7 @@ jobs:
         # as of May 2021: https://sysreqs.r-hub.io/pkg/AMR,R,cleaner,curl,dplyr,ggplot2,knitr,microbenchmark,pillar,readxl,rmarkdown,rstudioapi,rvest,skimr,tidyr,tinytest,xml2,backports,crayon,rlang,vctrs,evaluate,highr,markdown,stringr,yaml,xfun,cli,ellipsis,fansi,lifecycle,utf8,glue,mime,magrittr,stringi,generics,R6,tibble,tidyselect,pkgconfig,purrr,digest,gtable,isoband,MASS,mgcv,scales,withr,nlme,Matrix,farver,labeling,munsell,RColorBrewer,viridisLite,lattice,colorspace,gridtext,Rcpp,RCurl,png,jpeg,bitops,cellranger,progress,rematch,hms,prettyunits,htmltools,jsonlite,tinytex,base64enc,httr,selectr,openssl,askpass,sys,repr,cpp11
         run: |
           sudo apt install -y libssl-dev libxml2-dev libcurl4-openssl-dev
-      
+
       - name: Restore cached R packages
         # this step will add the step 'Post Restore cached R packages' on a succesful run
         uses: actions/cache@v2
@@ -102,7 +102,7 @@ jobs:
         run: |
           Rscript -e "source('data-raw/_install_deps.R')"
         shell: bash
-        
+
       - name: Show session info
         if: always()
         run: |
@@ -110,7 +110,7 @@ jobs:
           utils::sessionInfo()
           as.data.frame(utils::installed.packages())[, "Version", drop = FALSE]
         shell: Rscript {0}
-        
+
       - name: Remove vignettes on R without knitr support
         if: matrix.config.r == '3.0' || matrix.config.r == '3.1' || matrix.config.r == '3.2' || matrix.config.r == '3.3'
         # writing to DESCRIPTION2 and then moving to DESCRIPTION is required for R <= 3.3 as writeLines() cannot overwrite
@@ -150,6 +150,24 @@ jobs:
           cd ../AMR.Rcheck
           find . -name 'tinytest.Rout*' -exec cat '{}' \; || true
         shell: bash
+
+      - name: Show dir
+        continue-on-error: true
+        if: always()
+        run: |
+          echo ${GITHUB_WORKSPACE}
+          echo "---"
+          ls ${GITHUB_WORKSPACE}
+          echo "---"
+          ls ../${GITHUB_WORKSPACE}
+          echo "---"
+          ls ../${GITHUB_WORKSPACE}/AMR
+          echo "---"
+          ls ../${GITHUB_WORKSPACE}/AMR.Rcheck
+          echo "---"
+          ls ${GITHUB_WORKSPACE}/AMR
+          echo "---"
+          ls ${GITHUB_WORKSPACE}/AMR.Rcheck
 
       - name: Upload artifacts
         if: always()

@@ -201,7 +201,7 @@ mo_shortname <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
 
   x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
 
-  metadata <- get_mo_failures_uncertainties_renamed()
+  metadata <- get_mo_uncertainties()
 
   replace_empty <- function(x) {
     x[x == ""] <- "spp."
@@ -223,7 +223,7 @@ mo_shortname <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
   shortnames[shortnames %like% "unknown"] <- paste0("(", trimws(gsub("[^a-zA-Z -]", "", shortnames[shortnames %like% "unknown"], perl = TRUE)), ")")
 
   shortnames[is.na(x.mo)] <- NA_character_
-  load_mo_failures_uncertainties_renamed(metadata)
+  load_mo_uncertainties(metadata)
   translate_into_language(shortnames, language = language, only_unknown = FALSE, only_affect_mo_names = TRUE)
 }
 
@@ -374,7 +374,7 @@ mo_gramstain <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
   x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
-  metadata <- get_mo_failures_uncertainties_renamed()
+  metadata <- get_mo_uncertainties()
 
   x <- rep(NA_character_, length(x))
   # make all bacteria Gram negative
@@ -393,7 +393,7 @@ mo_gramstain <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
   # and of course our own ID for Gram-positives
   | x.mo == "B_GRAMP"] <- "Gram-positive"
 
-  load_mo_failures_uncertainties_renamed(metadata)
+  load_mo_uncertainties(metadata)
   translate_into_language(x, language = language, only_unknown = FALSE)
 }
 
@@ -409,9 +409,9 @@ mo_is_gram_negative <- function(x, language = get_AMR_locale(), keep_synonyms = 
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
   x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
-  metadata <- get_mo_failures_uncertainties_renamed()
+  metadata <- get_mo_uncertainties()
   grams <- mo_gramstain(x.mo, language = NULL, keep_synonyms = keep_synonyms)
-  load_mo_failures_uncertainties_renamed(metadata)
+  load_mo_uncertainties(metadata)
   out <- grams == "Gram-negative" & !is.na(grams)
   out[x.mo %in% c(NA_character_, "UNKNOWN")] <- NA
   out
@@ -429,9 +429,9 @@ mo_is_gram_positive <- function(x, language = get_AMR_locale(), keep_synonyms = 
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
   x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
-  metadata <- get_mo_failures_uncertainties_renamed()
+  metadata <- get_mo_uncertainties()
   grams <- mo_gramstain(x.mo, language = NULL, keep_synonyms = keep_synonyms)
-  load_mo_failures_uncertainties_renamed(metadata)
+  load_mo_uncertainties(metadata)
   out <- grams == "Gram-positive" & !is.na(grams)
   out[x.mo %in% c(NA_character_, "UNKNOWN")] <- NA
   out
@@ -449,12 +449,12 @@ mo_is_yeast <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
   x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
-  metadata <- get_mo_failures_uncertainties_renamed()
+  metadata <- get_mo_uncertainties()
 
   x.kingdom <- mo_kingdom(x.mo, language = NULL, keep_synonyms = keep_synonyms)
   x.class <- mo_class(x.mo, language = NULL, keep_synonyms = keep_synonyms)
 
-  load_mo_failures_uncertainties_renamed(metadata)
+  load_mo_uncertainties(metadata)
 
   out <- rep(FALSE, length(x))
   out[x.kingdom == "Fungi" & x.class == "Saccharomycetes"] <- TRUE
@@ -615,7 +615,7 @@ mo_taxonomy <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
   x <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
-  metadata <- get_mo_failures_uncertainties_renamed()
+  metadata <- get_mo_uncertainties()
 
   out <- list(
     kingdom = mo_kingdom(x, language = language, keep_synonyms = keep_synonyms),
@@ -628,7 +628,7 @@ mo_taxonomy <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
     subspecies = mo_subspecies(x, language = language, keep_synonyms = keep_synonyms)
   )
 
-  load_mo_failures_uncertainties_renamed(metadata)
+  load_mo_uncertainties(metadata)
   out
 }
 
@@ -644,7 +644,7 @@ mo_synonyms <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
   x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
-  metadata <- get_mo_failures_uncertainties_renamed()
+  metadata <- get_mo_uncertainties()
 
   syns <- lapply(x.mo, function(y) {
     gbif <- AMR::microorganisms$gbif[match(y, AMR::microorganisms$mo)]
@@ -664,7 +664,7 @@ mo_synonyms <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
     result <- unlist(syns)
   }
 
-  load_mo_failures_uncertainties_renamed(metadata)
+  load_mo_uncertainties(metadata)
   result
 }
 
@@ -680,7 +680,7 @@ mo_info <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
   x <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
-  metadata <- get_mo_failures_uncertainties_renamed()
+  metadata <- get_mo_uncertainties()
 
   info <- lapply(x, function(y) {
     c(
@@ -701,7 +701,7 @@ mo_info <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
     result <- info[[1L]]
   }
 
-  load_mo_failures_uncertainties_renamed(metadata)
+  load_mo_uncertainties(metadata)
   result
 }
 
@@ -718,7 +718,7 @@ mo_url <- function(x, open = FALSE, language = get_AMR_locale(), keep_synonyms =
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
   x.mo <- as.mo(x = x, language = language, keep_synonyms = keep_synonyms, ... = ...)
-  metadata <- get_mo_failures_uncertainties_renamed()
+  metadata <- get_mo_uncertainties()
 
   x.rank <- AMR::microorganisms$rank[match(x.mo, AMR::microorganisms$mo)]
   x.name <- AMR::microorganisms$fullname[match(x.mo, AMR::microorganisms$mo)]
@@ -739,7 +739,7 @@ mo_url <- function(x, open = FALSE, language = get_AMR_locale(), keep_synonyms =
     utils::browseURL(u[1L])
   }
 
-  load_mo_failures_uncertainties_renamed(metadata)
+  load_mo_uncertainties(metadata)
   u
 }
 
