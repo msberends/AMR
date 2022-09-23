@@ -24,23 +24,27 @@
 # ==================================================================== #
 
 # these are allowed MIC values and will become [factor] levels
-ops <- c("<", "<=", "", ">=", ">")
+operators <- c("<", "<=", "", ">=", ">")
 valid_mic_levels <- c(
   c(t(vapply(
-    FUN.VALUE = character(9), ops,
-    function(x) paste0(x, "0.00", 1:9)
+    FUN.VALUE = character(6), operators,
+    function(x) paste0(x, "0.000", c(1:4, 6, 8))
+  ))),
+  c(t(vapply(
+    FUN.VALUE = character(90), operators,
+    function(x) paste0(x, "0.00", c(1:9, 11:19, 21:29, 31:39, 41:49, 51:59, 61:69, 71:79, 81:89, 91:99))
   ))),
   unique(c(t(vapply(
-    FUN.VALUE = character(104), ops,
+    FUN.VALUE = character(106), operators,
     function(x) {
       paste0(x, sort(as.double(paste0(
         "0.0",
-        sort(c(1:99, 125, 128, 256, 512, 625))
+        sort(c(1:99, 125, 128, 156, 165, 256, 512, 625))
       ))))
     }
   )))),
   unique(c(t(vapply(
-    FUN.VALUE = character(103), ops,
+    FUN.VALUE = character(103), operators,
     function(x) {
       paste0(x, sort(as.double(paste0(
         "0.",
@@ -49,15 +53,15 @@ valid_mic_levels <- c(
     }
   )))),
   c(t(vapply(
-    FUN.VALUE = character(10), ops,
+    FUN.VALUE = character(10), operators,
     function(x) paste0(x, sort(c(1:9, 1.5)))
   ))),
   c(t(vapply(
-    FUN.VALUE = character(45), ops,
+    FUN.VALUE = character(45), operators,
     function(x) paste0(x, c(10:98)[9:98 %% 2 == TRUE])
   ))),
   c(t(vapply(
-    FUN.VALUE = character(17), ops,
+    FUN.VALUE = character(17), operators,
     function(x) paste0(x, sort(c(2^c(7:11), 192, 80 * c(2:12))))
   )))
 )
@@ -159,11 +163,15 @@ valid_mic_levels <- c(
 as.mic <- function(x, na.rm = FALSE) {
   meet_criteria(x, allow_class = c("mic", "character", "numeric", "integer", "factor"), allow_NA = TRUE)
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)
-
+  
   if (is.mic(x)) {
     x
   } else {
-    x <- as.character(unlist(x))
+    if (is.numeric(x)) {
+      x <- format(x, scientific = FALSE)
+    } else {
+      x <- as.character(unlist(x))
+    }
     if (na.rm == TRUE) {
       x <- x[!is.na(x)]
     }

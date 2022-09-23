@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data Set with 63,472 Microorganisms}
+\title{Data Set with 48,651 Microorganisms}
 \format{
-A \link[tibble:tibble]{tibble} with 63,472 observations and 22 variables:
+A \link[tibble:tibble]{tibble} with 48,651 observations and 22 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon.
@@ -35,7 +35,7 @@ A \link[tibble:tibble]{tibble} with 63,472 observations and 22 variables:
 microorganisms
 }
 \description{
-A data set containing the full microbial taxonomy (\strong{last updated: 12 September, 2022}) of six kingdoms from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF). This data set is the backbone of this \code{AMR} package. MO codes can be looked up using \code{\link[=as.mo]{as.mo()}}.
+A data set containing the full microbial taxonomy (\strong{last updated: 12 September, 2022}) of five kingdoms from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF). This data set is the backbone of this \code{AMR} package. MO codes can be looked up using \code{\link[=as.mo]{as.mo()}}.
 }
 \details{
 Please note that entries are only based on the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF) (see below). Since these sources incorporate entries based on (recent) publications in the International Journal of Systematic and Evolutionary Microbiology (IJSEM), it can happen that the year of publication is sometimes later than one might expect.
@@ -46,14 +46,14 @@ For example, \emph{Staphylococcus pettenkoferi} was described for the first time
 
 Included taxonomic data are:
 \itemize{
-\item All ~42,000 (sub)species from the kingdoms of Archaea, Bacteria and Protozoa
-\item All ~16,000 (sub)species from ~30 relevant orders of the kingdom of Fungi. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including relevant taxonomic orders, the most relevant fungi are covered (such as all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).
-\item All ~4,200 (sub)species from ~50 other relevant genera from the kingdom of Animalia (such as \emph{Strongyloides} and \emph{Taenia})
-\item All ~60 (sub)species from ~50 other relevant genera from the kingdom of Animalia (such as \emph{Strongyloides} and \emph{Taenia})
-\item All ~14,000 previously accepted names of all included (sub)species (these were taxonomically renamed)
+\item All ~34,000 (sub)species from the kingdoms of Archaea and Bacteria
+\item ~7,200 (sub)species from the kingdom of Fungi. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package. Only relevant fungi are covered (such as all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histoplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).
+\item ~4,900 (sub)species from the kingdom of Protozoa
+\item ~1,500 (sub)species from ~50 other relevant genera from the kingdom of Animalia (such as \emph{Strongyloides} and \emph{Taenia})
+\item All ~9,400 previously accepted names of all included (sub)species (these were taxonomically renamed)
 \item The complete taxonomic tree of all included (sub)species: from kingdom to subspecies
 \item The identifier of the parent taxons
-\item The responsible author(s) and year of scientific publication
+\item The year and first author of the related scientific publication
 }
 \subsection{Manual additions}{
 

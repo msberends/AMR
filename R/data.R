@@ -98,14 +98,14 @@
 #'
 #' @section Included Taxa:
 #' Included taxonomic data are:
-#' - All `r format_included_data_number(microorganisms[which(microorganisms$kingdom %in% c("Archeae", "Bacteria", "Protozoa")), , drop = FALSE])` (sub)species from the kingdoms of Archaea, Bacteria and Protozoa
-#' - All `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Fungi"), , drop = FALSE])` (sub)species from `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Fungi"), "order", drop = TRUE])` relevant orders of the kingdom of Fungi. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package and including everything would tremendously slow down our algorithms too. By only including relevant taxonomic orders, the most relevant fungi are covered (such as all species of *Aspergillus*, *Candida*, *Cryptococcus*, *Histplasma*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*).
-#' - All `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Animalia"), , drop = FALSE])` (sub)species from `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Animalia"), "genus", drop = TRUE])` other relevant genera from the kingdom of Animalia (such as *Strongyloides* and *Taenia*)
-#' - All `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Plantae"), , drop = FALSE])` (sub)species from `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Animalia"), "genus", drop = TRUE])` other relevant genera from the kingdom of Animalia (such as *Strongyloides* and *Taenia*)
+#' - All `r format_included_data_number(microorganisms[which(microorganisms$kingdom %in% c("Archeae", "Bacteria")), , drop = FALSE])` (sub)species from the kingdoms of Archaea and Bacteria
+#' - `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Fungi"), , drop = FALSE])` (sub)species from the kingdom of Fungi. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package. Only relevant fungi are covered (such as all species of *Aspergillus*, *Candida*, *Cryptococcus*, *Histoplasma*, *Pneumocystis*, *Saccharomyces* and *Trichophyton*).
+#' - `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Protozoa"), , drop = FALSE])` (sub)species from the kingdom of Protozoa
+#' - `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Animalia"), , drop = FALSE])` (sub)species from `r format_included_data_number(microorganisms[which(microorganisms$kingdom == "Animalia"), "genus", drop = TRUE])` other relevant genera from the kingdom of Animalia (such as *Strongyloides* and *Taenia*)
 #' - All `r format_included_data_number(microorganisms[which(microorganisms$status != "accepted"), , drop = FALSE])` previously accepted names of all included (sub)species (these were taxonomically renamed)
 #' - The complete taxonomic tree of all included (sub)species: from kingdom to subspecies
 #' - The identifier of the parent taxons
-#' - The responsible author(s) and year of scientific publication
+#' - The year and first author of the related scientific publication
 #'
 #' ## Manual additions
 #' For convenience, some entries were added manually:

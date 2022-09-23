@@ -8,7 +8,7 @@
 "EUCAST 2022"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2022"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2022"	"MIC"		"F_CRYPT_NFRM"	"Cryptococcus neoformans"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
-"EUCAST 2022"	"MIC"		"F_PICHI"	"Pichia"	3	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
+"EUCAST 2022"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2022"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"	"20-10"	19	19	FALSE
 "EUCAST 2022"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"	"20-10"	16	16	TRUE
 "EUCAST 2022"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"		8	8	FALSE
@@ -82,7 +82,7 @@
 "EUCAST 2022"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2022"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"ANI"	"Anidulafungin"	"Candida"		4	4	FALSE
 "EUCAST 2022"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
-"EUCAST 2022"	"MIC"		"F_PICHI"	"Pichia"	3	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
+"EUCAST 2022"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2022"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"	"30"	26	21	FALSE
 "EUCAST 2022"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"		1	4	FALSE
 "EUCAST 2022"	"DISK"		"B_PSDMN"	"Pseudomonas"	3	"ATM"	"Aztreonam"	"Pseudo"	"30"	50	18	FALSE
@@ -1068,7 +1068,7 @@
 "EUCAST 2021"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2021"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2021"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
-"EUCAST 2021"	"MIC"		"F_PICHI"	"Pichia"	3	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
+"EUCAST 2021"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2021"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"	"20-10"	19	19	FALSE
 "EUCAST 2021"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"	"20-10"	16	16	TRUE
 "EUCAST 2021"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"		8	8	FALSE
@@ -1140,7 +1140,7 @@
 "EUCAST 2021"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2021"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"ANI"	"Anidulafungin"	"Candida"		0.002	4	FALSE
 "EUCAST 2021"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
-"EUCAST 2021"	"MIC"		"F_PICHI"	"Pichia"	3	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
+"EUCAST 2021"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2021"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"	"30"	26	21	FALSE
 "EUCAST 2021"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"		1	4	FALSE
 "EUCAST 2021"	"DISK"		"B_PSDMN"	"Pseudomonas"	3	"ATM"	"Aztreonam"	"Pseudo"	"30"	50	18	FALSE
@@ -1957,7 +1957,7 @@
 "EUCAST 2020"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2020"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2020"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
-"EUCAST 2020"	"MIC"		"F_PICHI"	"Pichia"	3	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
+"EUCAST 2020"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2020"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"	"20-10"	19	19	FALSE
 "EUCAST 2020"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"	"20-10"	16	16	TRUE
 "EUCAST 2020"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"		8	8	FALSE
@@ -2027,7 +2027,7 @@
 "EUCAST 2020"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2020"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"ANI"	"Anidulafungin"	"Candida"		0.002	4	FALSE
 "EUCAST 2020"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
-"EUCAST 2020"	"MIC"		"F_PICHI"	"Pichia"	3	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
+"EUCAST 2020"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2020"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"	"30"	26	21	FALSE
 "EUCAST 2020"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"		1	4	FALSE
 "EUCAST 2020"	"DISK"		"B_PSDMN"	"Pseudomonas"	3	"ATM"	"Aztreonam"	"Pseudo"	"30"	50	18	FALSE
@@ -2765,7 +2765,7 @@
 "EUCAST 2019"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2019"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2019"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
-"EUCAST 2019"	"MIC"		"F_PICHI"	"Pichia"	3	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
+"EUCAST 2019"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2019"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"	"20-10"	19	19	FALSE
 "EUCAST 2019"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"	"20-10"	16	16	TRUE
 "EUCAST 2019"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"		8	8	FALSE
@@ -2824,7 +2824,7 @@
 "EUCAST 2019"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2019"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"ANI"	"Anidulafungin"	"Candida"		0.002	4	FALSE
 "EUCAST 2019"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
-"EUCAST 2019"	"MIC"		"F_PICHI"	"Pichia"	3	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
+"EUCAST 2019"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2019"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"	"30"	26	21	FALSE
 "EUCAST 2019"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"		1	4	FALSE
 "EUCAST 2019"	"DISK"		"B_PSDMN"	"Pseudomonas"	3	"ATM"	"Aztreonam"	"Pseudo"	"30"	18	18	FALSE
@@ -3506,7 +3506,7 @@
 "EUCAST 2018"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2018"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2018"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
-"EUCAST 2018"	"MIC"		"F_PICHI"	"Pichia"	3	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
+"EUCAST 2018"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2018"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"	"20-10"	19	19	FALSE
 "EUCAST 2018"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"	"20-10"	16	16	TRUE
 "EUCAST 2018"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"		8	8	FALSE
@@ -3562,7 +3562,7 @@
 "EUCAST 2018"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2018"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"ANI"	"Anidulafungin"	"Candida"		0.002	4	FALSE
 "EUCAST 2018"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
-"EUCAST 2018"	"MIC"		"F_PICHI"	"Pichia"	3	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
+"EUCAST 2018"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2018"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"	"30"	26	21	FALSE
 "EUCAST 2018"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"		1	4	FALSE
 "EUCAST 2018"	"DISK"		"B_PSDMN"	"Pseudomonas"	3	"ATM"	"Aztreonam"	"Pseudo"	"30"	50	16	FALSE
@@ -4231,7 +4231,7 @@
 "EUCAST 2017"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2017"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2017"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
-"EUCAST 2017"	"MIC"		"F_PICHI"	"Pichia"	3	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
+"EUCAST 2017"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2017"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"	"20-10"	19	19	FALSE
 "EUCAST 2017"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"	"20-10"	16	16	TRUE
 "EUCAST 2017"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"		8	8	FALSE
@@ -4287,7 +4287,7 @@
 "EUCAST 2017"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2017"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"ANI"	"Anidulafungin"	"Candida"		0.002	4	FALSE
 "EUCAST 2017"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
-"EUCAST 2017"	"MIC"		"F_PICHI"	"Pichia"	3	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
+"EUCAST 2017"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2017"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"	"30"	26	21	FALSE
 "EUCAST 2017"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"		1	4	FALSE
 "EUCAST 2017"	"DISK"		"B_PSDMN"	"Pseudomonas"	3	"ATM"	"Aztreonam"	"Pseudo"	"30"	50	16	FALSE
@@ -4946,7 +4946,7 @@
 "EUCAST 2016"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2016"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2016"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
-"EUCAST 2016"	"MIC"		"F_PICHI"	"Pichia"	3	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
+"EUCAST 2016"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2016"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"	"20-10"	19	19	FALSE
 "EUCAST 2016"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"	"20-10"	16	16	TRUE
 "EUCAST 2016"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"		8	8	FALSE
@@ -4999,7 +4999,7 @@
 "EUCAST 2016"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2016"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"ANI"	"Anidulafungin"	"Candida"		0.002	4	FALSE
 "EUCAST 2016"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
-"EUCAST 2016"	"MIC"		"F_PICHI"	"Pichia"	3	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
+"EUCAST 2016"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2016"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"	"30"	24	21	FALSE
 "EUCAST 2016"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"		1	4	FALSE
 "EUCAST 2016"	"DISK"		"B_PSDMN"	"Pseudomonas"	3	"ATM"	"Aztreonam"	"Pseudo"	"30"	50	16	FALSE
@@ -5597,7 +5597,7 @@
 "EUCAST 2015"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2015"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2015"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
-"EUCAST 2015"	"MIC"		"F_PICHI"	"Pichia"	3	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
+"EUCAST 2015"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2015"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"	"20-10"	19	19	FALSE
 "EUCAST 2015"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"	"20-10"	16	16	TRUE
 "EUCAST 2015"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"		8	8	FALSE
@@ -5650,7 +5650,7 @@
 "EUCAST 2015"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2015"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"ANI"	"Anidulafungin"	"Candida"		0.002	4	FALSE
 "EUCAST 2015"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
-"EUCAST 2015"	"MIC"		"F_PICHI"	"Pichia"	3	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
+"EUCAST 2015"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2015"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"	"30"	24	21	FALSE
 "EUCAST 2015"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"		1	4	FALSE
 "EUCAST 2015"	"DISK"		"B_PSDMN"	"Pseudomonas"	3	"ATM"	"Aztreonam"	"Pseudo"	"30"	50	16	FALSE
@@ -6224,7 +6224,7 @@
 "EUCAST 2014"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2014"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2014"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
-"EUCAST 2014"	"MIC"		"F_PICHI"	"Pichia"	3	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
+"EUCAST 2014"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2014"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"	"20-10"	19	19	FALSE
 "EUCAST 2014"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"	"20-10"	16	16	TRUE
 "EUCAST 2014"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"		8	8	FALSE
@@ -6277,7 +6277,7 @@
 "EUCAST 2014"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2014"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"ANI"	"Anidulafungin"	"Candida"		0.002	4	FALSE
 "EUCAST 2014"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
-"EUCAST 2014"	"MIC"		"F_PICHI"	"Pichia"	3	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
+"EUCAST 2014"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2014"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"	"30"	24	21	FALSE
 "EUCAST 2014"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"		1	4	FALSE
 "EUCAST 2014"	"DISK"		"B_PSDMN"	"Pseudomonas"	3	"ATM"	"Aztreonam"	"Pseudo"	"30"	50	16	FALSE
@@ -6846,7 +6846,7 @@
 "EUCAST 2013"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2013"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2013"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
-"EUCAST 2013"	"MIC"		"F_PICHI"	"Pichia"	3	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
+"EUCAST 2013"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"AMB"	"Amphotericin B"	"Candida"		1	1	FALSE
 "EUCAST 2013"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"	"20/10ug"	17	17	FALSE
 "EUCAST 2013"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Enterobacteriaceae"		8	8	FALSE
 "EUCAST 2013"	"MIC"		"B_ENTRC"	"Enterococcus"	3	"AMC"	"Amoxicillin/clavulanic acid"	"Enterococcus"		4	8	FALSE
@@ -6896,7 +6896,7 @@
 "EUCAST 2013"	"MIC"		"F_CANDD_ALBC"	"Candida albicans"	2	"ANI"	"Anidulafungin"	"Candida"		0.032	0.032	FALSE
 "EUCAST 2013"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2013"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
-"EUCAST 2013"	"MIC"		"F_PICHI"	"Pichia"	3	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
+"EUCAST 2013"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2013"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"	"30ug"	24	21	FALSE
 "EUCAST 2013"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"		1	4	FALSE
 "EUCAST 2013"	"DISK"		"B_PSDMN"	"Pseudomonas"	3	"ATM"	"Aztreonam"	"Pseud"	"30ug"	50	16	FALSE
@@ -8481,8 +8481,8 @@
 "CLSI 2022"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"ANI"	"Anidulafungin"	"Table 1"		0.25	1	FALSE
 "CLSI 2022"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"ANI"	"Anidulafungin"	"Table 1"		2	8	FALSE
 "CLSI 2022"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ANI"	"Anidulafungin"	"Table 1"		0.25	1	FALSE
-"CLSI 2022"	"MIC"		"F_MYRZY_GLLR"	"Meyerozyma guilliermondii"	2	"ANI"	"Anidulafungin"	"Table 1"		2	8	FALSE
-"CLSI 2022"	"MIC"		"F_PICHI"	"Pichia"	3	"ANI"	"Anidulafungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2022"	"MIC"		"F_MYRZY_GLLR"		2	"ANI"	"Anidulafungin"	"Table 1"		2	8	FALSE
+"CLSI 2022"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"ANI"	"Anidulafungin"	"Table 1"		0.25	1	FALSE
 "CLSI 2022"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Table 2A"	"30ug"	21	17	FALSE
 "CLSI 2022"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Table 2A"		4	16	FALSE
 "CLSI 2022"	"DISK"		"B_AERMN"	"Aeromonas"	3	"ATM"	"Aztreonam"	"M45 Table 2"	"30ug"	21	17	FALSE
@@ -8532,10 +8532,10 @@
 "CLSI 2022"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"CAS"	"Caspofungin"	"Table 1"		2	8	FALSE
 "CLSI 2022"	"DISK"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"CAS"	"Caspofungin"	"Table 1"		17	14	FALSE
 "CLSI 2022"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"CAS"	"Caspofungin"	"Table 1"		0.25	1	FALSE
-"CLSI 2022"	"DISK"		"F_MYRZY_GLLR"	"Meyerozyma guilliermondii"	2	"CAS"	"Caspofungin"	"Table 1"		13	10	FALSE
-"CLSI 2022"	"MIC"		"F_MYRZY_GLLR"	"Meyerozyma guilliermondii"	2	"CAS"	"Caspofungin"	"Table 1"		2	8	FALSE
-"CLSI 2022"	"DISK"		"F_PICHI"	"Pichia"	3	"CAS"	"Caspofungin"	"Table 1"		17	14	FALSE
-"CLSI 2022"	"MIC"		"F_PICHI"	"Pichia"	3	"CAS"	"Caspofungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2022"	"DISK"		"F_MYRZY_GLLR"		2	"CAS"	"Caspofungin"	"Table 1"		13	10	FALSE
+"CLSI 2022"	"MIC"		"F_MYRZY_GLLR"		2	"CAS"	"Caspofungin"	"Table 1"		2	8	FALSE
+"CLSI 2022"	"DISK"		"F_PICHI"	"Pithomyces djbhatii"	3	"CAS"	"Caspofungin"	"Table 1"		17	14	FALSE
+"CLSI 2022"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"CAS"	"Caspofungin"	"Table 1"		0.25	1	FALSE
 "CLSI 2022"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"CAT"	"Cefetamet"	"Table 2A"	"10ug"	18	14	FALSE
 "CLSI 2022"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"CAT"	"Cefetamet"	"Table 2A"		4	16	FALSE
 "CLSI 2022"	"DISK"		"B_HMPHL_INFL"	"Haemophilus influenzae"	2	"CAT"	"Cefetamet"	"Table 2E"	"10ug"	18	14	FALSE
@@ -9292,10 +9292,10 @@
 "CLSI 2022"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"MIF"	"Micafungin"	"Table 1"		2	8	FALSE
 "CLSI 2022"	"DISK"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"MIF"	"Micafungin"	"Table 1"		22	19	FALSE
 "CLSI 2022"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"MIF"	"Micafungin"	"Table 1"		0.25	1	FALSE
-"CLSI 2022"	"DISK"		"F_MYRZY_GLLR"	"Meyerozyma guilliermondii"	2	"MIF"	"Micafungin"	"Table 1"		16	13	FALSE
-"CLSI 2022"	"MIC"		"F_MYRZY_GLLR"	"Meyerozyma guilliermondii"	2	"MIF"	"Micafungin"	"Table 1"		2	8	FALSE
-"CLSI 2022"	"DISK"		"F_PICHI"	"Pichia"	3	"MIF"	"Micafungin"	"Table 1"		22	19	FALSE
-"CLSI 2022"	"MIC"		"F_PICHI"	"Pichia"	3	"MIF"	"Micafungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2022"	"DISK"		"F_MYRZY_GLLR"		2	"MIF"	"Micafungin"	"Table 1"		16	13	FALSE
+"CLSI 2022"	"MIC"		"F_MYRZY_GLLR"		2	"MIF"	"Micafungin"	"Table 1"		2	8	FALSE
+"CLSI 2022"	"DISK"		"F_PICHI"	"Pithomyces djbhatii"	3	"MIF"	"Micafungin"	"Table 1"		22	19	FALSE
+"CLSI 2022"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"MIF"	"Micafungin"	"Table 1"		0.25	1	FALSE
 "CLSI 2022"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"MNO"	"Minocycline"	"Table 2A"	"30ug"	16	12	FALSE
 "CLSI 2022"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"MNO"	"Minocycline"	"Table 2A"		4	16	FALSE
 "CLSI 2022"	"DISK"		"B_ACNTB"	"Acinetobacter"	3	"MNO"	"Minocycline"	"Table 2B-2"	"30ug"	16	12	FALSE
@@ -9679,8 +9679,8 @@
 "CLSI 2022"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"VOR"	"Voriconazole"	"Table 1"		0.125	1	FALSE
 "CLSI 2022"	"DISK"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"VOR"	"Voriconazole"	"Table 1"		17	14	FALSE
 "CLSI 2022"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"VOR"	"Voriconazole"	"Table 1"		0.125	1	FALSE
-"CLSI 2022"	"DISK"		"F_PICHI"	"Pichia"	3	"VOR"	"Voriconazole"	"Table 1"		15	12	FALSE
-"CLSI 2022"	"MIC"		"F_PICHI"	"Pichia"	3	"VOR"	"Voriconazole"	"Table 1"		0.5	2	FALSE
+"CLSI 2022"	"DISK"		"F_PICHI"	"Pithomyces djbhatii"	3	"VOR"	"Voriconazole"	"Table 1"		15	12	FALSE
+"CLSI 2022"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"VOR"	"Voriconazole"	"Table 1"		0.5	2	FALSE
 "CLSI 2021"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Table 2A"	"20ug/10ug"	18	13	FALSE
 "CLSI 2021"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Table 2A"		8	32	FALSE
 "CLSI 2021"	"DISK"		"B_AERMN"	"Aeromonas"	3	"AMC"	"Amoxicillin/clavulanic acid"	"M45 Table 2"	"20ug"	18	13	FALSE
@@ -9745,8 +9745,8 @@
 "CLSI 2021"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"ANI"	"Anidulafungin"	"Table 1"		0.25	1	FALSE
 "CLSI 2021"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"ANI"	"Anidulafungin"	"Table 1"		2	8	FALSE
 "CLSI 2021"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ANI"	"Anidulafungin"	"Table 1"		0.25	1	FALSE
-"CLSI 2021"	"MIC"		"F_MYRZY_GLLR"	"Meyerozyma guilliermondii"	2	"ANI"	"Anidulafungin"	"Table 1"		2	8	FALSE
-"CLSI 2021"	"MIC"		"F_PICHI"	"Pichia"	3	"ANI"	"Anidulafungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2021"	"MIC"		"F_MYRZY_GLLR"		2	"ANI"	"Anidulafungin"	"Table 1"		2	8	FALSE
+"CLSI 2021"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"ANI"	"Anidulafungin"	"Table 1"		0.25	1	FALSE
 "CLSI 2021"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Table 2A"	"30ug"	21	17	FALSE
 "CLSI 2021"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Table 2A"		4	16	FALSE
 "CLSI 2021"	"DISK"		"B_AERMN"	"Aeromonas"	3	"ATM"	"Aztreonam"	"M45 Table 2"	"30ug"	21	17	FALSE
@@ -9792,10 +9792,10 @@
 "CLSI 2021"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"CAS"	"Caspofungin"	"Table 1"		2	8	FALSE
 "CLSI 2021"	"DISK"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"CAS"	"Caspofungin"	"Table 1"		17	14	FALSE
 "CLSI 2021"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"CAS"	"Caspofungin"	"Table 1"		0.25	1	FALSE
-"CLSI 2021"	"DISK"		"F_MYRZY_GLLR"	"Meyerozyma guilliermondii"	2	"CAS"	"Caspofungin"	"Table 1"		13	10	FALSE
-"CLSI 2021"	"MIC"		"F_MYRZY_GLLR"	"Meyerozyma guilliermondii"	2	"CAS"	"Caspofungin"	"Table 1"		2	8	FALSE
-"CLSI 2021"	"DISK"		"F_PICHI"	"Pichia"	3	"CAS"	"Caspofungin"	"Table 1"		17	14	FALSE
-"CLSI 2021"	"MIC"		"F_PICHI"	"Pichia"	3	"CAS"	"Caspofungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"F_MYRZY_GLLR"		2	"CAS"	"Caspofungin"	"Table 1"		13	10	FALSE
+"CLSI 2021"	"MIC"		"F_MYRZY_GLLR"		2	"CAS"	"Caspofungin"	"Table 1"		2	8	FALSE
+"CLSI 2021"	"DISK"		"F_PICHI"	"Pithomyces djbhatii"	3	"CAS"	"Caspofungin"	"Table 1"		17	14	FALSE
+"CLSI 2021"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"CAS"	"Caspofungin"	"Table 1"		0.25	1	FALSE
 "CLSI 2021"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"CAT"	"Cefetamet"	"Table 2A"	"10ug"	18	14	FALSE
 "CLSI 2021"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"CAT"	"Cefetamet"	"Table 2A"		4	16	FALSE
 "CLSI 2021"	"DISK"		"B_HMPHL"	"Haemophilus"	3	"CAT"	"Cefetamet"	"Table 2E"	"10ug"	18	14	FALSE
@@ -10488,10 +10488,10 @@
 "CLSI 2021"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"MIF"	"Micafungin"	"Table 1"		2	8	FALSE
 "CLSI 2021"	"DISK"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"MIF"	"Micafungin"	"Table 1"		22	19	FALSE
 "CLSI 2021"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"MIF"	"Micafungin"	"Table 1"		0.25	1	FALSE
-"CLSI 2021"	"DISK"		"F_MYRZY_GLLR"	"Meyerozyma guilliermondii"	2	"MIF"	"Micafungin"	"Table 1"		16	13	FALSE
-"CLSI 2021"	"MIC"		"F_MYRZY_GLLR"	"Meyerozyma guilliermondii"	2	"MIF"	"Micafungin"	"Table 1"		2	8	FALSE
-"CLSI 2021"	"DISK"		"F_PICHI"	"Pichia"	3	"MIF"	"Micafungin"	"Table 1"		22	19	FALSE
-"CLSI 2021"	"MIC"		"F_PICHI"	"Pichia"	3	"MIF"	"Micafungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2021"	"DISK"		"F_MYRZY_GLLR"		2	"MIF"	"Micafungin"	"Table 1"		16	13	FALSE
+"CLSI 2021"	"MIC"		"F_MYRZY_GLLR"		2	"MIF"	"Micafungin"	"Table 1"		2	8	FALSE
+"CLSI 2021"	"DISK"		"F_PICHI"	"Pithomyces djbhatii"	3	"MIF"	"Micafungin"	"Table 1"		22	19	FALSE
+"CLSI 2021"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"MIF"	"Micafungin"	"Table 1"		0.25	1	FALSE
 "CLSI 2021"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"MNO"	"Minocycline"	"Table 2A"	"30ug"	16	12	FALSE
 "CLSI 2021"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"MNO"	"Minocycline"	"Table 2A"		4	16	FALSE
 "CLSI 2021"	"DISK"		"B_ACNTB"	"Acinetobacter"	3	"MNO"	"Minocycline"	"Table 2B-2"	"30ug"	16	12	FALSE
@@ -10861,8 +10861,8 @@
 "CLSI 2021"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"VOR"	"Voriconazole"	"Table 1"		0.125	1	FALSE
 "CLSI 2021"	"DISK"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"VOR"	"Voriconazole"	"Table 1"		17	14	FALSE
 "CLSI 2021"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"VOR"	"Voriconazole"	"Table 1"		0.125	1	FALSE
-"CLSI 2021"	"DISK"		"F_PICHI"	"Pichia"	3	"VOR"	"Voriconazole"	"Table 1"		15	12	FALSE
-"CLSI 2021"	"MIC"		"F_PICHI"	"Pichia"	3	"VOR"	"Voriconazole"	"Table 1"		0.5	2	FALSE
+"CLSI 2021"	"DISK"		"F_PICHI"	"Pithomyces djbhatii"	3	"VOR"	"Voriconazole"	"Table 1"		15	12	FALSE
+"CLSI 2021"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"VOR"	"Voriconazole"	"Table 1"		0.5	2	FALSE
 "CLSI 2020"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Table 2A"	"20ug/10ug"	18	13	FALSE
 "CLSI 2020"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"AMC"	"Amoxicillin/clavulanic acid"	"Table 2A"		8	32	FALSE
 "CLSI 2020"	"DISK"		"B_AERMN"	"Aeromonas"	3	"AMC"	"Amoxicillin/clavulanic acid"	"M45 Table 2"	"20ug"	18	13	FALSE
@@ -10927,8 +10927,8 @@
 "CLSI 2020"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"ANI"	"Anidulafungin"	"Table 1"		0.25	1	FALSE
 "CLSI 2020"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"ANI"	"Anidulafungin"	"Table 1"		2	8	FALSE
 "CLSI 2020"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ANI"	"Anidulafungin"	"Table 1"		0.25	1	FALSE
-"CLSI 2020"	"MIC"		"F_MYRZY_GLLR"	"Meyerozyma guilliermondii"	2	"ANI"	"Anidulafungin"	"Table 1"		2	8	FALSE
-"CLSI 2020"	"MIC"		"F_PICHI"	"Pichia"	3	"ANI"	"Anidulafungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2020"	"MIC"		"F_MYRZY_GLLR"		2	"ANI"	"Anidulafungin"	"Table 1"		2	8	FALSE
+"CLSI 2020"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"ANI"	"Anidulafungin"	"Table 1"		0.25	1	FALSE
 "CLSI 2020"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Table 2A"	"30ug"	21	17	FALSE
 "CLSI 2020"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Table 2A"		4	16	FALSE
 "CLSI 2020"	"DISK"		"B_AERMN"	"Aeromonas"	3	"ATM"	"Aztreonam"	"M45 Table 2"	"30ug"	21	17	FALSE
@@ -10971,10 +10971,10 @@
 "CLSI 2020"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"CAS"	"Caspofungin"	"Table 1"		2	8	FALSE
 "CLSI 2020"	"DISK"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"CAS"	"Caspofungin"	"Table 1"		17	14	FALSE
 "CLSI 2020"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"CAS"	"Caspofungin"	"Table 1"		0.25	1	FALSE
-"CLSI 2020"	"DISK"		"F_MYRZY_GLLR"	"Meyerozyma guilliermondii"	2	"CAS"	"Caspofungin"	"Table 1"		13	10	FALSE
-"CLSI 2020"	"MIC"		"F_MYRZY_GLLR"	"Meyerozyma guilliermondii"	2	"CAS"	"Caspofungin"	"Table 1"		2	8	FALSE
-"CLSI 2020"	"DISK"		"F_PICHI"	"Pichia"	3	"CAS"	"Caspofungin"	"Table 1"		17	14	FALSE
-"CLSI 2020"	"MIC"		"F_PICHI"	"Pichia"	3	"CAS"	"Caspofungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2020"	"DISK"		"F_MYRZY_GLLR"		2	"CAS"	"Caspofungin"	"Table 1"		13	10	FALSE
+"CLSI 2020"	"MIC"		"F_MYRZY_GLLR"		2	"CAS"	"Caspofungin"	"Table 1"		2	8	FALSE
+"CLSI 2020"	"DISK"		"F_PICHI"	"Pithomyces djbhatii"	3	"CAS"	"Caspofungin"	"Table 1"		17	14	FALSE
+"CLSI 2020"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"CAS"	"Caspofungin"	"Table 1"		0.25	1	FALSE
 "CLSI 2020"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"CAT"	"Cefetamet"	"Table 2A"	"10ug"	18	14	FALSE
 "CLSI 2020"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"CAT"	"Cefetamet"	"Table 2A"		4	16	FALSE
 "CLSI 2020"	"DISK"		"B_HMPHL"	"Haemophilus"	3	"CAT"	"Cefetamet"	"Table 2E"	"10ug"	18	14	FALSE
@@ -11658,10 +11658,10 @@
 "CLSI 2020"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"MIF"	"Micafungin"	"Table 1"		2	8	FALSE
 "CLSI 2020"	"DISK"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"MIF"	"Micafungin"	"Table 1"		22	19	FALSE
 "CLSI 2020"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"MIF"	"Micafungin"	"Table 1"		0.25	1	FALSE
-"CLSI 2020"	"DISK"		"F_MYRZY_GLLR"	"Meyerozyma guilliermondii"	2	"MIF"	"Micafungin"	"Table 1"		16	13	FALSE
-"CLSI 2020"	"MIC"		"F_MYRZY_GLLR"	"Meyerozyma guilliermondii"	2	"MIF"	"Micafungin"	"Table 1"		2	8	FALSE
-"CLSI 2020"	"DISK"		"F_PICHI"	"Pichia"	3	"MIF"	"Micafungin"	"Table 1"		22	19	FALSE
-"CLSI 2020"	"MIC"		"F_PICHI"	"Pichia"	3	"MIF"	"Micafungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2020"	"DISK"		"F_MYRZY_GLLR"		2	"MIF"	"Micafungin"	"Table 1"		16	13	FALSE
+"CLSI 2020"	"MIC"		"F_MYRZY_GLLR"		2	"MIF"	"Micafungin"	"Table 1"		2	8	FALSE
+"CLSI 2020"	"DISK"		"F_PICHI"	"Pithomyces djbhatii"	3	"MIF"	"Micafungin"	"Table 1"		22	19	FALSE
+"CLSI 2020"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"MIF"	"Micafungin"	"Table 1"		0.25	1	FALSE
 "CLSI 2020"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"MNO"	"Minocycline"	"Table 2A"	"30ug"	16	12	FALSE
 "CLSI 2020"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"MNO"	"Minocycline"	"Table 2A"		4	16	FALSE
 "CLSI 2020"	"DISK"		"B_ACNTB"	"Acinetobacter"	3	"MNO"	"Minocycline"	"Table 2B-2"	"30ug"	16	12	FALSE
@@ -12038,8 +12038,8 @@
 "CLSI 2020"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"VOR"	"Voriconazole"	"Table 1"		0.125	1	FALSE
 "CLSI 2020"	"DISK"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"VOR"	"Voriconazole"	"Table 1"		17	14	FALSE
 "CLSI 2020"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"VOR"	"Voriconazole"	"Table 1"		0.125	1	FALSE
-"CLSI 2020"	"DISK"		"F_PICHI"	"Pichia"	3	"VOR"	"Voriconazole"	"Table 1"		15	12	FALSE
-"CLSI 2020"	"MIC"		"F_PICHI"	"Pichia"	3	"VOR"	"Voriconazole"	"Table 1"		0.5	2	FALSE
+"CLSI 2020"	"DISK"		"F_PICHI"	"Pithomyces djbhatii"	3	"VOR"	"Voriconazole"	"Table 1"		15	12	FALSE
+"CLSI 2020"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"VOR"	"Voriconazole"	"Table 1"		0.5	2	FALSE
 "CLSI 2019"	"DISK"		"B_AERMN"	"Aeromonas"	3	"AMC"	"Amoxicillin/clavulanic acid"	"M45 Table 2"	"20ug"	18	13	FALSE
 "CLSI 2019"	"MIC"		"B_AGGRG"	"Aggregatibacter"	3	"AMC"	"Amoxicillin/clavulanic acid"	"M45 Table 9"		4	8	FALSE
 "CLSI 2019"	"MIC"		"B_BRKHL_PSDM"	"Burkholderia pseudomallei"	2	"AMC"	"Amoxicillin/clavulanic acid"	"M45 Table 21"		8	32	FALSE
@@ -12098,8 +12098,8 @@
 "CLSI 2019"	"MIC"		"F_CANDD_KRUS"	"Candida krusei"	2	"ANI"	"Anidulafungin"	"Table 1"		0.25	1	FALSE
 "CLSI 2019"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"ANI"	"Anidulafungin"	"Table 1"		2	8	FALSE
 "CLSI 2019"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ANI"	"Anidulafungin"	"Table 1"		0.25	1	FALSE
-"CLSI 2019"	"MIC"		"F_MYRZY_GLLR"	"Meyerozyma guilliermondii"	2	"ANI"	"Anidulafungin"	"Table 1"		2	8	FALSE
-"CLSI 2019"	"MIC"		"F_PICHI"	"Pichia"	3	"ANI"	"Anidulafungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2019"	"MIC"		"F_MYRZY_GLLR"		2	"ANI"	"Anidulafungin"	"Table 1"		2	8	FALSE
+"CLSI 2019"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"ANI"	"Anidulafungin"	"Table 1"		0.25	1	FALSE
 "CLSI 2019"	"DISK"		"B_AERMN"	"Aeromonas"	3	"ATM"	"Aztreonam"	"M45 Table 2"	"30ug"	21	17	FALSE
 "CLSI 2019"	"MIC"		"B_AERMN"	"Aeromonas"	3	"ATM"	"Aztreonam"	"M45 Table 3"		4	16	FALSE
 "CLSI 2019"	"MIC"		"B_GRAMN"	"(unknown Gram-negatives)"	2	"ATM"	"Aztreonam"	"Table 2B-5"		8	32	FALSE
@@ -12140,10 +12140,10 @@
 "CLSI 2019"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"CAS"	"Caspofungin"	"Table 1"		2	8	FALSE
 "CLSI 2019"	"DISK"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"CAS"	"Caspofungin"	"Table 1"		17	14	FALSE
 "CLSI 2019"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"CAS"	"Caspofungin"	"Table 1"		0.25	1	FALSE
-"CLSI 2019"	"DISK"		"F_MYRZY_GLLR"	"Meyerozyma guilliermondii"	2	"CAS"	"Caspofungin"	"Table 1"		13	10	FALSE
-"CLSI 2019"	"MIC"		"F_MYRZY_GLLR"	"Meyerozyma guilliermondii"	2	"CAS"	"Caspofungin"	"Table 1"		2	8	FALSE
-"CLSI 2019"	"DISK"		"F_PICHI"	"Pichia"	3	"CAS"	"Caspofungin"	"Table 1"		17	14	FALSE
-"CLSI 2019"	"MIC"		"F_PICHI"	"Pichia"	3	"CAS"	"Caspofungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2019"	"DISK"		"F_MYRZY_GLLR"		2	"CAS"	"Caspofungin"	"Table 1"		13	10	FALSE
+"CLSI 2019"	"MIC"		"F_MYRZY_GLLR"		2	"CAS"	"Caspofungin"	"Table 1"		2	8	FALSE
+"CLSI 2019"	"DISK"		"F_PICHI"	"Pithomyces djbhatii"	3	"CAS"	"Caspofungin"	"Table 1"		17	14	FALSE
+"CLSI 2019"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"CAS"	"Caspofungin"	"Table 1"		0.25	1	FALSE
 "CLSI 2019"	"DISK"		"B_HMPHL"	"Haemophilus"	3	"CAT"	"Cefetamet"	"Table 2E"	"10ug"	18	14	FALSE
 "CLSI 2019"	"MIC"		"B_HMPHL"	"Haemophilus"	3	"CAT"	"Cefetamet"	"Table 2E"		4	16	FALSE
 "CLSI 2019"	"DISK"		"B_ACNTB"	"Acinetobacter"	3	"CAZ"	"Ceftazidime"	"Table 2B-2"	"30ug"	18	14	FALSE
@@ -12740,10 +12740,10 @@
 "CLSI 2019"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"MIF"	"Micafungin"	"Table 1"		2	8	FALSE
 "CLSI 2019"	"DISK"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"MIF"	"Micafungin"	"Table 1"		22	19	FALSE
 "CLSI 2019"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"MIF"	"Micafungin"	"Table 1"		0.25	1	FALSE
-"CLSI 2019"	"DISK"		"F_MYRZY_GLLR"	"Meyerozyma guilliermondii"	2	"MIF"	"Micafungin"	"Table 1"		16	13	FALSE
-"CLSI 2019"	"MIC"		"F_MYRZY_GLLR"	"Meyerozyma guilliermondii"	2	"MIF"	"Micafungin"	"Table 1"		2	8	FALSE
-"CLSI 2019"	"DISK"		"F_PICHI"	"Pichia"	3	"MIF"	"Micafungin"	"Table 1"		22	19	FALSE
-"CLSI 2019"	"MIC"		"F_PICHI"	"Pichia"	3	"MIF"	"Micafungin"	"Table 1"		0.25	1	FALSE
+"CLSI 2019"	"DISK"		"F_MYRZY_GLLR"		2	"MIF"	"Micafungin"	"Table 1"		16	13	FALSE
+"CLSI 2019"	"MIC"		"F_MYRZY_GLLR"		2	"MIF"	"Micafungin"	"Table 1"		2	8	FALSE
+"CLSI 2019"	"DISK"		"F_PICHI"	"Pithomyces djbhatii"	3	"MIF"	"Micafungin"	"Table 1"		22	19	FALSE
+"CLSI 2019"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"MIF"	"Micafungin"	"Table 1"		0.25	1	FALSE
 "CLSI 2019"	"DISK"		"B_ACNTB"	"Acinetobacter"	3	"MNO"	"Minocycline"	"Table 2B-2"	"30ug"	16	12	FALSE
 "CLSI 2019"	"MIC"		"B_ACNTB"	"Acinetobacter"	3	"MNO"	"Minocycline"	"Table 2B-2"		4	16	FALSE
 "CLSI 2019"	"DISK"		"B_BRKHL_CEPC"	"Burkholderia cepacia"	2	"MNO"	"Minocycline"	"Table 2B-3"	"30ug"	19	14	FALSE
@@ -13074,8 +13074,8 @@
 "CLSI 2019"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"VOR"	"Voriconazole"	"Table 1"		0.125	1	FALSE
 "CLSI 2019"	"DISK"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"VOR"	"Voriconazole"	"Table 1"		17	14	FALSE
 "CLSI 2019"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"VOR"	"Voriconazole"	"Table 1"		0.125	1	FALSE
-"CLSI 2019"	"DISK"		"F_PICHI"	"Pichia"	3	"VOR"	"Voriconazole"	"Table 1"		15	12	FALSE
-"CLSI 2019"	"MIC"		"F_PICHI"	"Pichia"	3	"VOR"	"Voriconazole"	"Table 1"		0.5	2	FALSE
+"CLSI 2019"	"DISK"		"F_PICHI"	"Pithomyces djbhatii"	3	"VOR"	"Voriconazole"	"Table 1"		15	12	FALSE
+"CLSI 2019"	"MIC"		"F_PICHI"	"Pithomyces djbhatii"	3	"VOR"	"Voriconazole"	"Table 1"		0.5	2	FALSE
 "CLSI 2018"	"DISK"		"B_AERMN"	"Aeromonas"	3	"AMC"	"Amoxicillin/clavulanic acid"	"M45 Table 2"	"20ug"	18	13	FALSE
 "CLSI 2018"	"MIC"		"B_AERMN"	"Aeromonas"	3	"AMC"	"Amoxicillin/clavulanic acid"	"M45 Table 2"		8	32	FALSE
 "CLSI 2018"	"MIC"		"B_AGGRG"	"Aggregatibacter"	3	"AMC"	"Amoxicillin/clavulanic acid"	"M45 Table 7"		4	8	FALSE

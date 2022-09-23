@@ -997,13 +997,25 @@ taxonomy <- taxonomy %>%
   arrange(fullname) %>%
   distinct(fullname, .keep_all = TRUE)
 
+
+# Remove unwanted taxonomic entries from Protoza/Fungi --------------------
+
+# this must be done after the microbial ID generation, since it will otherwise generate a lot of different IDs
+taxonomy <- taxonomy %>% 
+  filter(
+    # Protozoa:
+    !(phylum %in% c("Choanozoa", "Mycetozoa") & prevalence == 3),
+    # Fungi:
+    !(phylum %in% c("Ascomycota", "Zygomycota", "Basidiomycota") & prevalence == 3),
+    !(genus %in% c("Phoma", "Leptosphaeria") & rank %in% c("species", "subspecies")), # only genus of this rare fungus, with resp. 1300 and 800 species
+    # (leave Alternaria in there, part of human mycobiome and opportunistic pathogen)
+    # Animalia:
+    !genus %in% c("Lucilia", "Lumbricus"),
+    !(genus %in% c("Aedes", "Anopheles") & rank %in% c("species", "subspecies")), # only genus of the many hundreds of mosquitoes species
+    kingdom != "Plantae") # this kingdom only contained Curvularia and Hymenolepis, which have coincidental twin names with Fungi
+
 message("\nCongratulations! The new taxonomic table will contain ", format(nrow(taxonomy), big.mark = ","), " rows.\n")
 
-# taxonomy <- taxonomy %>%
-#   bind_rows(taxonomy %>%
-#               filter(mo == "B_STRPT_GRPK") %>%
-#               mutate(mo = gsub("GRPK", "GRPL", as.character(mo)), fullname = "Streptococcus group L", species = "group L")) %>%
-#   arrange(fullname)
 
 # Add SNOMED CT -----------------------------------------------------------
 
@@ -1035,12 +1047,10 @@ snomed <- snomed %>%
   summarise(snomed = list(snomed))
 
 taxonomy <- taxonomy %>%
-  left_join(snomed, by = "fullname") %>%
-  # just to be sure:
-  AMR:::dataset_UTF8_to_ASCII()
+  left_join(snomed, by = "fullname")
 
 
-# Save to package ---------------------------------------------------------
+# Clean data set ----------------------------------------------------------
 
 # format to tibble and check again for invalid characters
 taxonomy <- taxonomy %>%
@@ -1050,19 +1060,25 @@ taxonomy <- taxonomy %>%
 # set class <mo>
 class(taxonomy$mo) <- c("mo", "character")
 
-
-# --- Moraxella catarrhalis was named Branhamella catarrhalis (Catlin, 1970), but this is unaccepted in clinical microbiology
+# Moraxella catarrhalis was named Branhamella catarrhalis (Catlin, 1970), but this is unaccepted in clinical microbiology
 # we keep them both
 taxonomy$status[which(taxonomy$fullname == "Moraxella catarrhalis")]
 taxonomy$lpsn_renamed_to[which(taxonomy$fullname == "Moraxella catarrhalis")]
 taxonomy$status[which(taxonomy$fullname == "Moraxella catarrhalis")] <- "accepted"
 taxonomy$lpsn_renamed_to[which(taxonomy$fullname == "Moraxella catarrhalis")] <- NA_character_
 
+taxonomy <- taxonomy %>% 
+  AMR:::dataset_UTF8_to_ASCII()
+
+
+# Save to package ---------------------------------------------------------
+
 microorganisms <- taxonomy
 usethis::use_data(microorganisms, overwrite = TRUE, version = 2, compress = "xz")
 rm(microorganisms)
 
 # DON'T FORGET TO UPDATE R/globals.R!
+
 
 # Test updates ------------------------------------------------------------
 

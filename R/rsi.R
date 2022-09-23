@@ -327,31 +327,35 @@ as.rsi.default <- function(x, ...) {
     # remove other invalid characters
     # set to capitals
     x <- toupper(x)
-    x <- gsub("[^RSIHDU]+", "", x, perl = TRUE)
+    x <- gsub("[^A-Z]+", "", x, perl = TRUE)
     # some labs now report "H" instead of "I" to not interfere with EUCAST prior to 2019
-    x <- gsub("^H$", "I", x, perl = TRUE)
+    x <- gsub("H", "I", x, fixed = TRUE)
     # and MIPS uses D for Dose-dependent (which is I, but it will throw a note)
-    x <- gsub("^D$", "I", x, perl = TRUE)
+    x <- gsub("D", "I", x, fixed = TRUE)
     # and MIPS uses U for "susceptible urine"
-    x <- gsub("^U$", "S", x, perl = TRUE)
+    x <- gsub("U", "S", x, fixed = TRUE)
     # in cases of "S;S" keep S, but in case of "S;I" make it NA
     x <- gsub("^S+$", "S", x)
     x <- gsub("^I+$", "I", x)
     x <- gsub("^R+$", "R", x)
     x[!x %in% c("S", "I", "R")] <- NA_character_
     na_after <- length(x[is.na(x) | x == ""])
-
+    
     if (!isFALSE(list(...)$warn)) { # so as.rsi(..., warn = FALSE) will never throw a warning
       if (na_before != na_after) {
         list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ""] %pm>%
           unique() %pm>%
           sort() %pm>%
           vector_and(quotes = TRUE)
-        warning_("in `as.rsi()`: ", na_after - na_before, " results truncated (",
-          round(((na_after - na_before) / length(x)) * 100),
-          "%) that were invalid antimicrobial interpretations: ",
-          list_missing,
-          call = FALSE
+        cur_col <- get_current_column()
+        warning_("in `as.rsi()`: ", na_after - na_before, " result",
+                 ifelse(na_after - na_before > 1, "s", ""),
+                 ifelse(is.null(cur_col), "", paste0(" in column '", cur_col, "'")),
+                 " truncated (",
+                 round(((na_after - na_before) / length(x)) * 100),
+                 "%) that were invalid antimicrobial interpretations: ",
+                 list_missing,
+                 call = FALSE
         )
       }
       if (any(toupper(x.bak[!is.na(x.bak)]) == "U") && message_not_thrown_before("as.rsi", "U")) {

@@ -177,7 +177,7 @@ MO_PREVALENT_GENERA <- c(
   "Microsporidium", "Microsporum", "Mortierella", "Mucor", "Mycocentrospora", "Mycoplasma", "Myroides", "Necator",
   "Nectria", "Ochroconis", "Odoribacter", "Oesophagostomum", "Oidiodendron", "Opisthorchis",
   "Ornithobacterium", "Parabacteroides", "Pediculus", "Pedobacter", "Phlebotomus", "Phocaeicola",
-  "Phocanema", "Phoma", "Piedraia", "Pithomyces", "Pityrosporum", "Porphyromonas", "Prevotella",
+  "Phocanema", "Phoma", "Piedraia", "Pithomyces", "Pityrosporum", "Pneumocystis", "Porphyromonas", "Prevotella",
   "Pseudallescheria", "Pseudoterranova", "Pulex", "Rhizomucor", "Rhizopus", "Rhodotorula", "Riemerella",
   "Saccharomyces", "Sarcoptes", "Scolecobasidium", "Scopulariopsis", "Scytalidium", "Sphingobacterium",
   "Spirometra", "Spiroplasma", "Sporobolomyces", "Stachybotrys", "Streptobacillus", "Strongyloides",

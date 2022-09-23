@@ -562,15 +562,22 @@ ab_select_exec <- function(function_name,
     message_("No antimicrobial agents found in the data.")
     return(NULL)
   }
-
-  if (is.null(ab_class_args)) {
-    # their upper case equivalent are vectors with class <ab>, created in data-raw/_pre_commit_hook.R
-    # carbapenems() gets its codes from AMR:::AB_CARBAPENEMS
-    abx <- get(paste0("AB_", toupper(function_name)), envir = asNamespace("AMR"))
-    ab_group <- function_name
+  
+  if (is.null(ab_class_args) || function_name %in% c("antifungals", "antimycobacterials")) {
+    ab_group <- NULL
+    if (function_name == "antifungals") {
+      abx <- antibiotics$ab[which(antibiotics$group == "Antifungals")]
+    } else if (function_name == "antimycobacterials") {
+      abx <- antibiotics$ab[which(antibiotics$group == "Antimycobacterials")]
+    } else {
+      # their upper case equivalent are vectors with class <ab>, created in data-raw/_pre_commit_hook.R
+      # carbapenems() gets its codes from AMR:::AB_CARBAPENEMS
+      abx <- get(paste0("AB_", toupper(function_name)), envir = asNamespace("AMR"))
+      ab_group <- function_name
+    }
     examples <- paste0(" (such as ", vector_or(ab_name(sample(abx, size = min(2, length(abx)), replace = FALSE),
-      tolower = TRUE,
-      language = NULL
+                                                       tolower = TRUE,
+                                                       language = NULL
     ),
     quotes = FALSE
     ), ")")
