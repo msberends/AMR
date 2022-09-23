@@ -307,8 +307,6 @@ expect_equal(
   rep("UNKNOWN", 3)
 )
 
-expect_null(mo_failures())
-
 expect_error(translate_allow_uncertain(5))
 
 # debug mode

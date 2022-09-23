@@ -38,11 +38,25 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
     set_AMR_locale("English")
     # get dir.exists(), trimws() and strrep() if on old R
     if (getRversion() < "3.2.0") {
+      anyNA <- AMR:::anyNA
       dir.exists <- AMR:::dir.exists
+      file.size <- AMR:::file.size
+      file.mtime <- AMR:::file.mtime
+      isNamespaceLoaded <- AMR:::isNamespaceLoaded
+      lengths <- AMR:::lengths
     }
     if (getRversion() < "3.3.0") {
-      trimws <- AMR:::trimws
       strrep <- AMR:::strrep
+      trimws <- AMR:::trimws
+    }
+    if (getRversion() < "3.4.2") {
+      isFALSE <- AMR:::isFALSE
+    }
+    if (getRversion() < "3.6.0") {
+      str2lang <- AMR:::str2lang
+    }
+    if (getRversion() < "4.0.0") {
+      deparse1 <- AMR:::deparse1
     }
     # start the unit tests
     out <- test_package("AMR",
