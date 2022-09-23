@@ -225,7 +225,6 @@ expect_equal(as.character(as.mo("g aponina")), "B_GMPHS_APNN")
 
 # check old names
 expect_equal(suppressMessages(as.character(as.mo("Escherichia blattae"))), "B_SHMWL_BLTT")
-print(mo_renamed())
 expect_equal(suppressMessages(as.character(as.mo(c("E. coli", "Chlamydo psittaci")))), c("B_ESCHR_COLI", "B_CHLMY_PSTT"))
 expect_equal(suppressMessages(mo_name("eubcom")), "Clostridium combesii")
 

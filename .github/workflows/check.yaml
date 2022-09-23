@@ -151,19 +151,9 @@ jobs:
           find . -name 'tinytest.Rout*' -exec cat '{}' \; || true
         shell: bash
 
-      - name: Show dir
-        continue-on-error: true
-        if: always()
-        run: |
-          echo ${GITHUB_WORKSPACE}
-          echo "---"
-          ls ${GITHUB_WORKSPACE}
-          echo "---"
-          ls ${GITHUB_WORKSPACE}.Rcheck
-
       - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v2
         with:
           name: artifacts-${{ matrix.config.os }}-r${{ matrix.config.r }}
-          path: /home/runner/work/AMR/AMR.Rcheck
+          path: ${GITHUB_WORKSPACE}.Rcheck

@@ -852,7 +852,7 @@ trimws2 <- function(x) {
 }
 
 parse_and_convert <- function(x) {
-  if (tryCatch(is.character(x) && Encoding(x) == "unknown", error = function(e) FALSE)) {
+  if (tryCatch(is.character(x) && all(Encoding(x) == "unknown", na.rm = TRUE), error = function(e) FALSE)) {
     return(x)
   }
   tryCatch(
