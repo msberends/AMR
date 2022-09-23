@@ -33,7 +33,7 @@ name: R-code-check-PR
 jobs:
   R-code-check-PR:
     # do not run if we are the authors - the other checks will already run
-    if: ${{ github.event.comment.author_association != 'MEMBER' && github.event.comment.author_association != 'OWNER' }}
+    if: ${{ github.event.comment.author_association }} != 'MEMBER' && ${{ github.event.comment.author_association }} != 'OWNER'
     
     runs-on: ${{ matrix.config.os }}
 

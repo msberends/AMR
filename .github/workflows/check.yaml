@@ -159,15 +159,7 @@ jobs:
           echo "---"
           ls ${GITHUB_WORKSPACE}
           echo "---"
-          ls ../${GITHUB_WORKSPACE}
-          echo "---"
-          ls ../${GITHUB_WORKSPACE}/AMR
-          echo "---"
-          ls ../${GITHUB_WORKSPACE}/AMR.Rcheck
-          echo "---"
-          ls ${GITHUB_WORKSPACE}/AMR
-          echo "---"
-          ls ${GITHUB_WORKSPACE}/AMR.Rcheck
+          ls ${GITHUB_WORKSPACE}.Rcheck
 
       - name: Upload artifacts
         if: always()

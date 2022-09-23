@@ -36,7 +36,10 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
     library(AMR)
     # set language
     set_AMR_locale("English")
-    # get trimws() and strrep() if on old R
+    # get dir.exists(), trimws() and strrep() if on old R
+    if (getRversion() < "3.2.0") {
+      dir.exists <- AMR:::dir.exists
+    }
     if (getRversion() < "3.3.0") {
       trimws <- AMR:::trimws
       strrep <- AMR:::strrep

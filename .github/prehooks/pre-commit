@@ -23,7 +23,7 @@ echo ""
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-echo ">> Updating semantic versioning and date..."
+echo "Updating semantic versioning and date..."
 
 # get tags from remote, and remove tags not on remote:
 git fetch origin --prune --prune-tags --quiet
@@ -31,7 +31,7 @@ currenttagfull=`git describe --tags --abbrev=0`
 currenttag=`git describe --tags --abbrev=0 | sed 's/v//'`
 if [ "$currenttag" = "" ]; then
   # there is no tag, so set tag to 0.0.1 and commit index to current count
-  echo ">>  - no git tags found, create one in this format: 'v(x).(y).(z)'!"
+  echo "- no git tags found, create one in this format: 'v(x).(y).(z)'!"
   currenttag="0.0.1"
   currentcommit=`git rev-list --count HEAD`
 else
@@ -41,18 +41,18 @@ else
     # tag is new, so this must become the version number
     currentversion="$currenttag"
   fi
-  echo ">>  - latest tag is '${currenttagfull}', with ${currentcommit} previous commits"
+  echo "- latest tag is '${currenttagfull}', with ${currentcommit} previous commits"
 fi
 if [ "$currentversion" = "" ]; then
   # combine tag (e.g. 1.2.3) and commit number (like 5) increased by 9000 to indicate beta version
   currentversion="$currenttag.$((currentcommit + 9001))" # results in e.g. 1.2.3.9005
 fi
-echo ">>  - ${currentpkg} pkg version set to ${currentversion}"
+echo "- ${currentpkg} pkg version set to ${currentversion}"
 
 # set version number and date to DESCRIPTION file
 sed -i -- "s/^Version: .*/Version: ${currentversion}/" DESCRIPTION
 sed -i -- "s/^Date: .*/Date: $(date '+%Y-%m-%d')/" DESCRIPTION
-echo ">>  - updated DESCRIPTION"
+echo "- updated DESCRIPTION"
 # remove leftover on macOS
 rm -f DESCRIPTION--
 # add to commit
@@ -64,12 +64,12 @@ if [ -e "NEWS.md" ]; then
     currentpkg=""
   fi
   sed -i -- "1s/.*/# ${currentpkg} ${currentversion}/" NEWS.md
-  echo ">>  - updated NEWS.md"
+  echo "- updated NEWS.md"
   # remove leftover on macOS
   rm -f NEWS.md--
   # add to commit
   git add NEWS.md
 else
-  echo ">>  - no NEWS.md found!"
+  echo "- no NEWS.md found!"
 fi
-echo ">>  "
+echo ""

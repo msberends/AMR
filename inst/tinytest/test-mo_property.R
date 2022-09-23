@@ -103,8 +103,12 @@ expect_identical(
   mo_species("Escherichia coli")
 )
 expect_identical(
-  mo_property("Escherichia coli", property = "species_id"),
+  mo_property("Escherichia coli", property = "lpsn"),
   mo_lpsn("Escherichia coli")
+)
+expect_identical(
+  mo_property("Escherichia coli", property = "gbif"),
+  mo_gbif("Escherichia coli")
 )
 
 expect_identical(mo_ref("Chlamydia psittaci"), "Garcia-Lopez et al., 2019")
