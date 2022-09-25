@@ -989,8 +989,8 @@ repair_reference_df <- function(reference_df) {
 }
 
 convert_colloquial_input <- function(x) {
-  x.bak <- trimws(x)
-  x <- trimws(tolower(x))
+  x.bak <- trimws2(x)
+  x <- trimws2(tolower(x))
   out <- rep(NA_character_, length(x))
   
   # Streptococci, like GBS = Group B Streptococci (B_STRPT_GRPB)
@@ -1019,13 +1019,20 @@ convert_colloquial_input <- function(x) {
   out[x %like_case% "gram[ -]?neg.*|negatie?[vf]"] <- "B_GRAMN"
   out[x %like_case% "gram[ -]?pos.*|positie?[vf]"] <- "B_GRAMP"
   
- # Salmonella city names, starting with capital species name - they are all S. enterica
+  # yeasts and fungi
+  out[x %like_case% "^yeast?"] <- "F_YEAST"
+  out[x %like_case% "^fung(us|i)"] <- "F_FUNGUS"
+  
+  # Salmonella city names, starting with capital species name - they are all S. enterica
   out[x.bak %like_case% "[sS]almonella [A-Z][a-z]+ ?.*" & x %unlike% "typhi"] <- "B_SLMNL_ENTR"
   
   # trivial names known to the field
   out[x %like_case% "meningo[ck]o[ck]"] <- "B_NESSR_MNNG"
   out[x %like_case% "gono[ck]o[ck]"] <- "B_NESSR_GNRR"
   out[x %like_case% "pneumo[ck]o[ck]"] <- "B_STRPT_PNMN"
- 
+  
+  # unexisting names (xxx and con are WHONET codes)
+  out[x %in% c("xxx", "con", "other", "none", "unknown") | x %like_case% "virus"] <- "UNKNOWN"
+  
   out
 }
