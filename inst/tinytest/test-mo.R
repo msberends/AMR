@@ -27,7 +27,7 @@ MOs <- subset(microorganisms, !is.na(mo) & nchar(mo) > 3)
 expect_identical(as.character(MOs$mo), as.character(as.mo(MOs$mo)))
 
 expect_identical(
-  as.character(as.mo(c("E. coli", "H. influenzae"))),
+  as.character(as.mo(c("E. coli", "H. influenzae"), keep_synonyms = FALSE)),
   c("B_ESCHR_COLI", "B_HMPHL_INFL")
 )
 
@@ -41,7 +41,7 @@ expect_equal(as.character(as.mo(" B_ESCHR_COLI ")), "B_ESCHR_COLI")
 expect_equal(as.character(as.mo("e coli")), "B_ESCHR_COLI") # not Campylobacter
 expect_equal(as.character(as.mo("klpn")), "B_KLBSL_PNMN")
 expect_equal(as.character(as.mo("Klebsiella")), "B_KLBSL")
-expect_equal(as.character(as.mo("K. pneu rhino")), "B_KLBSL_PNMN_RHNS") # K. pneumoniae subspp. rhinoscleromatis
+expect_equal(as.character(as.mo("K. pneumo rhino")), "B_KLBSL_PNMN_RHNS") # K. pneumoniae subspp. rhinoscleromatis
 expect_equal(as.character(as.mo("Bartonella")), "B_BRTNL")
 expect_equal(as.character(as.mo("C. difficile")), "B_CRDDS_DFFC")
 expect_equal(as.character(as.mo("L. pneumophila")), "B_LGNLL_PNMP")
@@ -284,12 +284,12 @@ expect_stdout(print(mo_uncertainties()))
 
 # Salmonella (City) are all actually Salmonella enterica spp (City)
 expect_equal(
-  suppressMessages(as.mo(c("Salmonella Goettingen", "Salmonella Typhimurium", "Salmonella Group A"))),
+  suppressMessages(as.mo(c("Salmonella Goettingen", "Salmonella Typhimurium", "Salmonella Group A"), keep_synonyms = FALSE)),
   as.mo(c("Salmonella enterica", "Salmonella enterica", "Salmonella"))
 )
 
 # no viruses
-expect_equal(as.character(as.mo("Virus")), NA_character_)
+expect_equal(as.mo("Virus"), as.mo("UNKNOWN"))
 
 # summary
 expect_equal(length(summary(example_isolates$mo)), 6)

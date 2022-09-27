@@ -232,6 +232,7 @@ as.mo <- function(x,
   if (any(is.na(out) & !is.na(x))) {
     # reset uncertainties
     pkg_env$mo_uncertainties <- pkg_env$mo_uncertainties[0, ]
+    pkg_env$mo_failures <- NULL
 
     # Laboratory systems: remove (translated) entries like "no growth", "not E. coli", etc.
     x[trimws2(x) %like% translate_into_language("no .*growth", language = language)] <- NA_character_
@@ -245,16 +246,25 @@ as.mo <- function(x,
     on.exit(close(progress))
 
     # run it
-    x_coerced <- lapply(x_unique, function(x_search) {
+    x_coerced <- vapply(FUN.VALUE = character(1), x_unique, function(x_search) {
       progress$tick()
 
-      x_out <- trimws(tolower(x_search))
+      # some required cleaning steps
+      x_out <- trimws(x_search)
+      x_out <- gsub("[^A-Za-z-]+", " ", x_out, perl = TRUE)
+      x_out <- gsub(" +", " ", x_out, perl = TRUE)
+      x_out <- gsub("(^| )(e?spp|e?ssp|e?ss|e?sp|e?subsp|sube?species|biovar|biotype|serovar|e?species)( |$)", "", x_out, ignore.case = TRUE, perl = TRUE)
+      x_search_cleaned <- x_out
+      x_out <- tolower(x_out)
+      
+      # take out the parts, split by space
       x_parts <- strsplit(gsub("-", " ", x_out, fixed = TRUE), " ", fixed = TRUE)[[1]]
-
+      
       # do a pre-match on first character (and if it contains a space, first chars of first two terms)
-      if (length(x_parts) == 2) {
+      if (length(x_parts) %in% c(2, 3)) {
+        # for genus + species + subspecies
         filtr <- which(MO_lookup$full_first == substr(x_parts[1], 1, 1) & MO_lookup$species_first == substr(x_parts[2], 1, 1))
-      } else if (length(x_parts) > 2) {
+      } else if (length(x_parts) > 3) {
         first_chars <- paste0("(^| )", "[", paste(substr(x_parts, 1, 1), collapse = ""), "]")
         filtr <- which(MO_lookup$full_first %like_case% first_chars)
       } else if (nchar(x_out) == 4) {
@@ -281,9 +291,9 @@ as.mo <- function(x,
       }
       pkg_env$mo_to_search <- mo_to_search
       # determine the matching score on the original search value
-      m <- mo_matching_score(x = x_search, n = mo_to_search)
+      m <- mo_matching_score(x = x_search_cleaned, n = mo_to_search)
       if (is.null(minimum_matching_score)) {
-        minimum_matching_score_current <- min(0.7, min(10, nchar(x_search)) * 0.08)
+        minimum_matching_score_current <- min(0.7, min(10, nchar(x_search_cleaned)) * 0.08)
         # correct back for prevalence
         minimum_matching_score_current <- minimum_matching_score_current / MO_lookup$prevalence[match(mo_to_search, MO_lookup$fullname)]
         # correct back for kingdom
@@ -291,17 +301,20 @@ as.mo <- function(x,
       } else {
         minimum_matching_score_current <- minimum_matching_score
       }
+      
       m[m < minimum_matching_score_current] <- NA_real_
+      
       top_hits <- mo_to_search[order(m, decreasing = TRUE, na.last = NA)] # na.last = NA will remove the NAs
       if (length(top_hits) == 0) {
-        warning_("No hits found for \"", x_search, "\" with minimum_matching_score = ", ifelse(is.null(minimum_matching_score), "NULL", minimum_matching_score), ". Try setting this value lower or even to 0.")
+        warning_("No hits found for \"", x_search, "\" with minimum_matching_score = ", ifelse(is.null(minimum_matching_score), paste0("NULL (=", round(min(minimum_matching_score_current, na.rm = TRUE), 3), ")"), minimum_matching_score), ". Try setting this value lower or even to 0.")
         result_mo <- NA_character_
       } else {
         result_mo <- MO_lookup$mo[match(top_hits[1], MO_lookup$fullname)]
         pkg_env$mo_uncertainties <- rbind(pkg_env$mo_uncertainties,
           data.frame(
             minimum_matching_score = ifelse(is.null(minimum_matching_score), "NULL", minimum_matching_score),
-            input = x_search,
+            original_input = x_search,
+            input = x_search_cleaned,
             fullname = top_hits[1],
             mo = result_mo,
             candidates = ifelse(length(top_hits) > 1, paste(top_hits[2:min(26, length(top_hits))], collapse = ", "), ""),
@@ -312,7 +325,7 @@ as.mo <- function(x,
         # save to package env to save time for next time
         pkg_env$mo_previously_coerced <- unique(rbind(pkg_env$mo_previously_coerced,
           data.frame(
-            x = x_search,
+            x = paste(x_search, min(minimum_matching_score_current, na.rm = TRUE)),
             mo = result_mo,
             stringsAsFactors = FALSE
           ),
@@ -320,30 +333,30 @@ as.mo <- function(x,
         ))
       }
       # the actual result:
-      result_mo
+      as.character(result_mo)
     })
 
     # remove progress bar from console
     close(progress)
     # expand from unique again
-    out[is.na(out)] <- unlist(x_coerced)[match(x[is.na(out)], x_unique)]
+    out[is.na(out)] <- x_coerced[match(x[is.na(out)], x_unique)]
 
     # Throw note about uncertainties ----
     if (isTRUE(info) && NROW(pkg_env$mo_uncertainties) > 0) {
-      if (message_not_thrown_before("as.mo", "uncertainties", pkg_env$mo_uncertainties$input)) {
+      if (message_not_thrown_before("as.mo", "uncertainties", pkg_env$mo_uncertainties$original_input)) {
         plural <- c("", "this")
-        if (length(pkg_env$mo_uncertainties$input) > 1) {
+        if (length(pkg_env$mo_uncertainties$original_input) > 1) {
           plural <- c("s", "these uncertainties")
         }
-        if (length(pkg_env$mo_uncertainties$input) <= 3) {
+        if (length(pkg_env$mo_uncertainties$original_input) <= 3) {
           examples <- vector_and(paste0(
-            '"', pkg_env$mo_uncertainties$input,
+            '"', pkg_env$mo_uncertainties$original_input,
             '" (assumed ', font_italic(pkg_env$mo_uncertainties$fullname, collapse = NULL), ")"
           ),
           quotes = FALSE
           )
         } else {
-          examples <- paste0(nr2char(length(pkg_env$mo_uncertainties$input)), " microorganism", plural[1])
+          examples <- paste0(nr2char(length(pkg_env$mo_uncertainties$original_input)), " microorganism", plural[1])
         }
         msg <- paste0(
           "Microorganism translation was uncertain for ", examples,
@@ -449,6 +462,10 @@ as.mo <- function(x,
     out[out %like_case% "^B_STRPT_SLVR(_|$)"] <- "B_STRPT_GRPK"
     # group L - only S. dysgalactiae which is also group C, so ignore it here
   }
+  
+  # All unknowns ----
+  out[is.na(out) & !is.na(x)] <- "UNKNOWN"
+  pkg_env$mo_failures <- unique(x[out == "UNKNOWN" & x != "UNKNOWN" & !is.na(x)])
 
   # Return class ----
   set_clean_class(out,
@@ -771,26 +788,21 @@ print.mo_uncertainties <- function(x, ...) {
     )
     score_formatted <- trimws(formatC(round(score, 3), format = "f", digits = 3))
     txt <- paste(txt,
-      paste0(
-        strwrap(
-          paste0(
-            '"', x[i, ]$input, '"',
-            " -> ",
-            paste0(
-              font_bold(font_italic(x[i, ]$fullname)),
-              ifelse(!is.na(x[i, ]$renamed_to), paste(", renamed to", font_italic(x[i, ]$renamed_to)), ""),
-              " (", x[i, ]$mo,
-              ", ", score_set_colour(score_formatted, score),
-              ") "
-            )
-          ),
-          width = 0.98 * getOption("width"),
-          exdent = nchar(x[i, ]$input) + 6
-        ),
-        collapse = "\n"
-      ),
-      candidates,
-      sep = "\n"
+                 paste0(
+                   paste0(
+                     '"', x[i, ]$original_input, '"',
+                     " -> ",
+                     paste0(
+                       font_bold(font_italic(x[i, ]$fullname)),
+                       ifelse(!is.na(x[i, ]$renamed_to), paste(", renamed to", font_italic(x[i, ]$renamed_to)), ""),
+                       " (", x[i, ]$mo, ", ", score_set_colour(score_formatted, score), ")"
+                     )
+                   ),
+                   collapse = "\n"
+                 ),
+                 ifelse(x[i, ]$original_input != x[i, ]$input, paste0(strrep(" ", nchar(x[i, ]$original_input) + 6), "Based on input \"", x[i, ]$input, "\""), ""),
+                 candidates,
+                 sep = "\n"
     )
     txt <- paste0(gsub("\n\n", "\n", txt), "\n\n")
   }
@@ -803,6 +815,7 @@ mo_reset_session <- function() {
   if (NROW(pkg_env$mo_previously_coerced) > 0) {
     message_("Reset ", NROW(pkg_env$mo_previously_coerced), " previously matched input values.")
     pkg_env$mo_previously_coerced <- pkg_env$mo_previously_coerced[0, , drop = FALSE]
+    pkg_env$mo_uncertainties <- pkg_env$mo_uncertainties[0, , drop = FALSE]
   } else {
     message_("No previously matched input values to reset.")
   }
@@ -847,13 +860,14 @@ load_mo_uncertainties <- function(metadata) {
   pkg_env$mo_uncertainties <- metadata$uncertainties
 }
 
-trimws2 <- function(x) {
-  trimws(gsub("[\\s]+", " ", x, perl = TRUE))
+trimws2 <- function(..., whitespace = "[\u0009\u000A\u000B\u000C\u000D\u0020\u0085\u00A0\u1680\u180E\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u200C\u200D\u2028\u2029\u202F\u205F\u2060\u3000\uFEFF]") {
+  # this is even faster than trimws() itself which sets " \t\n\r".
+  trimws(..., whitespace = whitespace)
 }
 
 parse_and_convert <- function(x) {
   if (tryCatch(is.character(x) && all(Encoding(x) == "unknown", na.rm = TRUE), error = function(e) FALSE)) {
-    return(x)
+    return(trimws2(x))
   }
   tryCatch(
     {
@@ -880,7 +894,7 @@ parse_and_convert <- function(x) {
     },
     error = function(e) stop(e$message, call. = FALSE)
   ) # this will also be thrown when running `as.mo(no_existing_object)`
-  parsed
+  trimws2(parsed)
 }
 
 replace_old_mo_codes <- function(x, property) {
@@ -1032,7 +1046,7 @@ convert_colloquial_input <- function(x) {
   out[x %like_case% "pneumo[ck]o[ck]"] <- "B_STRPT_PNMN"
   
   # unexisting names (xxx and con are WHONET codes)
-  out[x %in% c("xxx", "con", "other", "none", "unknown") | x %like_case% "virus"] <- "UNKNOWN"
+  out[x %in% c("con", "other", "none", "unknown") | x %like_case% "virus"] <- "UNKNOWN"
   
   out
 }

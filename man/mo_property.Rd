@@ -15,6 +15,7 @@
 \alias{mo_kingdom}
 \alias{mo_domain}
 \alias{mo_type}
+\alias{mo_status}
 \alias{mo_gramstain}
 \alias{mo_is_gram_negative}
 \alias{mo_is_gram_positive}
@@ -118,6 +119,13 @@ mo_domain(
 )
 
 mo_type(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  ...
+)
+
+mo_status(
   x,
   language = get_AMR_locale(),
   keep_synonyms = getOption("AMR_keep_synonyms", TRUE),

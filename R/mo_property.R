@@ -364,6 +364,20 @@ mo_type <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
 
 #' @rdname mo_property
 #' @export
+mo_status <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+  if (missing(x)) {
+    # this tries to find the data and an <mo> column
+    x <- find_mo_col(fn = "mo_status")
+  }
+  meet_criteria(x, allow_NA = TRUE)
+  language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
+  
+  translate_into_language(mo_validate(x = x, property = "status", language = language, keep_synonyms = keep_synonyms, ...), language = language, only_unknown = TRUE)
+}
+
+#' @rdname mo_property
+#' @export
 mo_gramstain <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
@@ -649,7 +663,7 @@ mo_synonyms <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
   syns <- lapply(x.mo, function(y) {
     gbif <- AMR::microorganisms$gbif[match(y, AMR::microorganisms$mo)]
     lpsn <- AMR::microorganisms$lpsn[match(y, AMR::microorganisms$mo)]
-    out <- AMR::microorganisms[which(AMR::microorganisms$lpsn_renamed_to %in% lpsn | AMR::microorganisms$gbif_renamed_to %in% gbif), "fullname", drop = TRUE]
+    out <- AMR::microorganisms[which(AMR::microorganisms$lpsn_renamed_to == lpsn | AMR::microorganisms$gbif_renamed_to == gbif), "fullname", drop = TRUE]
     if (length(out) == 0) {
       NULL
     } else {
@@ -686,6 +700,7 @@ mo_info <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
     c(
       mo_taxonomy(y, language = language, keep_synonyms = keep_synonyms),
       list(
+        status = mo_status(y, language = language, keep_synonyms = keep_synonyms),
         synonyms = mo_synonyms(y, keep_synonyms = keep_synonyms),
         gramstain = mo_gramstain(y, language = language, keep_synonyms = keep_synonyms),
         url = unname(mo_url(y, open = FALSE, keep_synonyms = keep_synonyms)),

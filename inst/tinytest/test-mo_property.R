@@ -75,13 +75,10 @@ expect_identical(MOs$fullname, mo_fullname(MOs$fullname, language = "en"))
 expect_equal(mo_type("Escherichia coli", language = "de"), "Bakterien")
 expect_equal(mo_gramstain("Escherichia coli", language = "nl"), "Gram-negatief")
 
-expect_stdout(print(mo_gramstain("Escherichia coli", language = "en")))
-expect_stdout(print(mo_gramstain("Escherichia coli", language = "de")))
-expect_stdout(print(mo_gramstain("Escherichia coli", language = "nl")))
-expect_stdout(print(mo_gramstain("Escherichia coli", language = "es")))
-expect_stdout(print(mo_gramstain("Escherichia coli", language = "pt")))
-expect_stdout(print(mo_gramstain("Escherichia coli", language = "it")))
-expect_stdout(print(mo_gramstain("Escherichia coli", language = "fr")))
+for (l in LANGUAGES_SUPPORTED) {
+  expect_stdout(print(mo_gramstain("Escherichia coli", language = l)))
+  print(mo_gramstain("Escherichia coli", language = l))
+}
 
 expect_error(mo_gramstain("Escherichia coli", language = "UNKNOWN"))
 dutch <- mo_name(microorganisms$fullname[which(microorganisms$fullname %unlike% "unknown|coagulase")], language = "nl") # should be transformable to English again

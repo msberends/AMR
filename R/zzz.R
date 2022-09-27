@@ -27,6 +27,7 @@
 pkg_env <- new.env(hash = FALSE)
 pkg_env$mo_uncertainties <- data.frame(
   uncertainty = integer(0),
+  original_input = character(0),
   input = character(0),
   fullname = character(0),
   mo = character(0),
