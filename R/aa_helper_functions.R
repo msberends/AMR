@@ -1459,6 +1459,13 @@ if (getRversion() < "3.3.0") {
       paste0(replicate(times, x), collapse = "")
     }, list(x = x, times = times), MoreArgs = list()), use.names = FALSE)
   }
+}
+
+if (getRversion() < "3.5.0") {
+  isFALSE <- function(x) {
+    is.logical(x) && length(x) == 1L && !is.na(x) && !x
+  }
+  # trims() was introduced in 3.3.0, but its argument `whitespace` only in 3.5.0
   trimws <- function(x, which = c("both", "left", "right"), whitespace = "[ \t\r\n]") {
     which <- match.arg(which)
     mysub <- function(re, x) sub(re, "", x, perl = TRUE)
@@ -1467,12 +1474,6 @@ if (getRversion() < "3.3.0") {
            right = mysub(paste0(whitespace, "+$"), x),
            both = mysub(paste0(whitespace, "+$"), mysub(paste0("^", whitespace, "+"), x))
     )
-  }
-}
-
-if (getRversion() < "3.5.0") {
-  isFALSE <- function(x) {
-    is.logical(x) && length(x) == 1L && !is.na(x) && !x
   }
 }
 

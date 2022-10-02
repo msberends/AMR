@@ -51,10 +51,10 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
     }
     if (getRversion() < "3.3.0") {
       strrep <- AMR:::strrep
-      trimws <- AMR:::trimws
     }
     if (getRversion() < "3.5.0") {
       isFALSE <- AMR:::isFALSE
+      trimws <- AMR:::trimws
     }
     if (getRversion() < "3.6.0") {
       str2lang <- AMR:::str2lang

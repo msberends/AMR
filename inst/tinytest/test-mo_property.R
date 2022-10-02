@@ -79,9 +79,9 @@ expect_identical(MOs$fullname, mo_fullname(MOs$fullname, language = "en"))
 expect_equal(mo_type("Escherichia coli", language = "de"), "Bakterien")
 expect_equal(mo_gramstain("Escherichia coli", language = "nl"), "Gram-negatief")
 
-for (l in LANGUAGES_SUPPORTED) {
-  expect_stdout(print(mo_gramstain("Escherichia coli", language = l)))
-  print(mo_gramstain("Escherichia coli", language = l))
+gr <- mo_gramstain("Escherichia coli", language = NULL)
+for (l in AMR:::LANGUAGES_SUPPORTED[-1]) {
+  expect_false(mo_gramstain("Escherichia coli", language = l) == gr, info = paste("Gram-stain in langauge", l))
 }
 
 expect_error(mo_gramstain("Escherichia coli", language = "UNKNOWN"))
