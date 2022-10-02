@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -34,6 +38,7 @@ pkg_env$mo_uncertainties <- data.frame(
   candidates = character(0),
   stringsAsFactors = FALSE
 )
+pkg_env$mo_renamed <- list()
 pkg_env$mo_previously_coerced <- data.frame(
   x = character(0),
   mo = character(0),
@@ -121,17 +126,12 @@ if (utf8_supported && !is_latex) {
   s3_register("vctrs::vec_cast", "character.mic")
   s3_register("vctrs::vec_cast", "double.mic")
   s3_register("vctrs::vec_math", "mic")
-
+  
   # if mo source exists, fire it up (see mo_source())
-  try(
-    {
-      if (file.exists(getOption("AMR_mo_source", "~/mo_source.rds"))) {
-        invisible(get_mo_source())
-      }
-    },
-    silent = TRUE
-  )
-
+  if (tryCatch(file.exists(getOption("AMR_mo_source", "~/mo_source.rds")), error = function(e) FALSE)) {
+    invisible(get_mo_source())
+  }
+  
   # be sure to print tibbles as tibbles
   if (pkg_is_available("tibble", also_load = FALSE)) {
     loadNamespace("tibble")

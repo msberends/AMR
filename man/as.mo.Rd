@@ -4,7 +4,9 @@
 \alias{as.mo}
 \alias{mo}
 \alias{is.mo}
+\alias{mo_failures}
 \alias{mo_uncertainties}
+\alias{mo_renamed}
 \alias{mo_reset_session}
 \title{Transform Input to a Microorganism Code}
 \usage{
@@ -24,7 +26,11 @@ as.mo(
 
 is.mo(x)
 
+mo_failures()
+
 mo_uncertainties()
+
+mo_renamed()
 
 mo_reset_session()
 }
@@ -115,7 +121,12 @@ With the default setting (\code{allow_uncertain = TRUE}, level 2), below example
 \item \code{"Fluoroquinolone-resistant Neisseria gonorrhoeae"}. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result \emph{Neisseria gonorrhoeae} (\code{B_NESSR_GNRR}) needs review.
 }
 
-Use \code{\link[=mo_uncertainties]{mo_uncertainties()}} to get a \link{data.frame} that prints in a pretty format with all taxonomic names that were guessed. The output contains the matching score for all matches (see \emph{Matching Score for Microorganisms} below).
+There are three helper functions that can be run after using the \code{\link[=as.mo]{as.mo()}} function:
+\itemize{
+\item Use \code{\link[=mo_uncertainties]{mo_uncertainties()}} to get a \link{data.frame} that prints in a pretty format with all taxonomic names that were guessed. The output contains the matching score for all matches (see \emph{Matching Score for Microorganisms} below).
+\item Use \code{\link[=mo_failures]{mo_failures()}} to get a \link{character} \link{vector} with all values that could not be coerced to a valid value.
+\item Use \code{\link[=mo_renamed]{mo_renamed()}} to get a \link{data.frame} with all values that could be coerced based on old, previously accepted taxonomic names.
+}
 }
 
 \subsection{Microbial Prevalence of Pathogens in Humans}{

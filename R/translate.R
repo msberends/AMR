@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -27,10 +31,10 @@
 #'
 #' For language-dependent output of AMR functions, like [mo_name()], [mo_gramstain()], [mo_type()] and [ab_name()].
 #' @param x text to translate
-#' @param language language to choose. Use one of these supported language names or ISO-639-1 codes: `r paste0('"', sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), '" ("' , LANGUAGES_SUPPORTED, '")', collapse = ", ")`.
-#' @details The currently `r length(LANGUAGES_SUPPORTED)` supported languages are `r vector_and(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), quotes = FALSE, sort = FALSE)`. All these languages have translations available for all antimicrobial agents and colloquial microorganism names.
+#' @param language language to choose. Use one of these supported language names or ISO-639-1 codes: `r vector_or(paste0(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), " (" , LANGUAGES_SUPPORTED, ")"), quotes = FALSE, sort = FALSE)`.
+#' @details The currently `r length(LANGUAGES_SUPPORTED)` supported languages are `r vector_or(paste0(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), " (" , LANGUAGES_SUPPORTED, ")"), quotes = FALSE, sort = FALSE)`. All these languages have translations available for all antimicrobial agents and colloquial microorganism names.
 #'
-#' **To silence language notes when this package loads** on a non-English operating system, please set the option `AMR_locale` in your `.Rprofile` file like this:
+#' **To silence language notes when this package loads** on a non-English operating system, you can set the option `AMR_locale` in your `.Rprofile` file like this:
 #'
 #' ```r
 #' # Open .Rprofile file

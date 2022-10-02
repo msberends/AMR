@@ -1,4 +1,4 @@
-# AMR 1.8.1.9070
+# AMR 1.8.2.9022
 
 This version will eventually become v2.0! We're happy to reach a new major milestone soon!
 
@@ -12,7 +12,7 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 
 ### New
 * EUCAST 2022 and CLSI 2022 guidelines have been added for `as.rsi()`. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.
-* All new algorithm for `as.mo()` (and thus internally all `mo_*()` functions) while still following our original set-up as described in our paper.
+* All new algorithm for `as.mo()` (and thus internally all `mo_*()` functions) while still following our original set-up as described in our paper (DOI 10.18637/jss.v104.i03).
   * A new argument `keep_synonyms` allows to *not* correct for updated taxonomy
   * It has increased tremendously in speed and returns generally more consequent results
   * Sequential coercion is now extremely fast as results are stored to the package environment, although coercion of unknown values must be run once per session. Previous results can be reset/removed with the new `mo_reset_session()` function.
@@ -42,11 +42,18 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * `mo_snomed()` now returns class `character`, not `numeric` anymore (to make long SNOMED codes readable)
 
 ### Other
-* New website to make use of the new Bootstrap 5 and pkgdown v2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions
+* New website to make use of the new Bootstrap 5 and pkgdown 2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions
 * Added Peter Dutey-Magni, Dmytro Mykhailenko and Anton Mymrikov as contributors, to thank them for their valuable input
 * All R and Rmd files in this project are now styled using the `styler` package
 * Set scalar conditional expressions (`&&` and `||`) where possible to comply with the upcoming R 4.3
 * An enormous lot of code cleaning, fixing some small bugs on the way
+
+
+# AMR 1.8.2
+
+This is a small intermediate update to include the reference to our publication in the Journal of Statistical Software, DOI 10.18637/jss.v104.i03.
+
+A major update will be released by the end of 2022 or early 2023 to include the most recent EUCAST and CLSI guidelines, updated microbial taxonomy, and support for 16 languages.
 
 
 # AMR 1.8.1

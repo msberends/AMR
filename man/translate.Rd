@@ -17,7 +17,7 @@ reset_AMR_locale()
 translate_AMR(x, language = get_AMR_locale())
 }
 \arguments{
-\item{language}{language to choose. Use one of these supported language names or ISO-639-1 codes: "English" ("en"), "Chinese" ("zh"), "Danish" ("da"), "Dutch" ("nl"), "French" ("fr"), "German" ("de"), "Greek" ("el"), "Italian" ("it"), "Japanese" ("ja"), "Polish" ("pl"), "Portuguese" ("pt"), "Russian" ("ru"), "Spanish" ("es"), "Swedish" ("sv"), "Turkish" ("tr"), "Ukrainian" ("uk").}
+\item{language}{language to choose. Use one of these supported language names or ISO-639-1 codes: English (en), Chinese (zh), Danish (da), Dutch (nl), French (fr), German (de), Greek (el), Italian (it), Japanese (ja), Polish (pl), Portuguese (pt), Russian (ru), Spanish (es), Swedish (sv), Turkish (tr) or Ukrainian (uk).}
 
 \item{x}{text to translate}
 }
@@ -25,9 +25,9 @@ translate_AMR(x, language = get_AMR_locale())
 For language-dependent output of AMR functions, like \code{\link[=mo_name]{mo_name()}}, \code{\link[=mo_gramstain]{mo_gramstain()}}, \code{\link[=mo_type]{mo_type()}} and \code{\link[=ab_name]{ab_name()}}.
 }
 \details{
-The currently 16 supported languages are English, Chinese, Danish, Dutch, French, German, Greek, Italian, Japanese, Polish, Portuguese, Russian, Spanish, Swedish, Turkish and Ukrainian. All these languages have translations available for all antimicrobial agents and colloquial microorganism names.
+The currently 16 supported languages are English (en), Chinese (zh), Danish (da), Dutch (nl), French (fr), German (de), Greek (el), Italian (it), Japanese (ja), Polish (pl), Portuguese (pt), Russian (ru), Spanish (es), Swedish (sv), Turkish (tr) or Ukrainian (uk). All these languages have translations available for all antimicrobial agents and colloquial microorganism names.
 
-\strong{To silence language notes when this package loads} on a non-English operating system, please set the option \code{AMR_locale} in your \code{.Rprofile} file like this:
+\strong{To silence language notes when this package loads} on a non-English operating system, you can set the option \code{AMR_locale} in your \code{.Rprofile} file like this:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{# Open .Rprofile file
 utils::file.edit("~/.Rprofile")

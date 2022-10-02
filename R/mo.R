@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -92,7 +96,10 @@
 #' - `"S. aureus - please mind: MRSA"`. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result *Staphylococcus aureus* (`B_STPHY_AURS`) needs review.
 #' - `"Fluoroquinolone-resistant Neisseria gonorrhoeae"`. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result *Neisseria gonorrhoeae* (`B_NESSR_GNRR`) needs review.
 #'
-#' Use [mo_uncertainties()] to get a [data.frame] that prints in a pretty format with all taxonomic names that were guessed. The output contains the matching score for all matches (see *Matching Score for Microorganisms* below).
+#' There are three helper functions that can be run after using the [as.mo()] function:
+#' - Use [mo_uncertainties()] to get a [data.frame] that prints in a pretty format with all taxonomic names that were guessed. The output contains the matching score for all matches (see *Matching Score for Microorganisms* below).
+#' - Use [mo_failures()] to get a [character] [vector] with all values that could not be coerced to a valid value.
+#' - Use [mo_renamed()] to get a [data.frame] with all values that could be coerced based on old, previously accepted taxonomic names.
 #'
 #' ### Microbial Prevalence of Pathogens in Humans
 #'
@@ -369,7 +376,12 @@ as.mo <- function(x,
 
   # Keep or replace synonyms ----
   gbif_matches <- AMR::microorganisms$gbif_renamed_to[match(out, AMR::microorganisms$mo)]
+  gbif_matches[!gbif_matches %in% AMR::microorganisms$gbif] <- NA
   lpsn_matches <- AMR::microorganisms$lpsn_renamed_to[match(out, AMR::microorganisms$mo)]
+  lpsn_matches[!lpsn_matches %in% AMR::microorganisms$lpsn] <- NA
+  pkg_env$mo_renamed <- list(old = out[!is.na(gbif_matches) | !is.na(lpsn_matches)],
+                             gbif_matches = gbif_matches[!is.na(gbif_matches) | !is.na(lpsn_matches)],
+                             lpsn_matches = lpsn_matches[!is.na(gbif_matches) | !is.na(lpsn_matches)])
   if (isFALSE(keep_synonyms)) {
     out_old <- out
 
@@ -379,33 +391,26 @@ as.mo <- function(x,
     lpsn_matches[!lpsn_matches %in% AMR::microorganisms$lpsn] <- NA
     out[which(!is.na(lpsn_matches))] <- AMR::microorganisms$mo[match(lpsn_matches[which(!is.na(lpsn_matches))], AMR::microorganisms$lpsn)]
 
-    if (isTRUE(info) && (any(!is.na(gbif_matches)) || any(!is.na(lpsn_matches))) && message_not_thrown_before("as.mo", gbif_matches[which(!is.na(gbif_matches))], lpsn_matches[which(!is.na(lpsn_matches))]) && length(c(lpsn_matches, gbif_matches)) > 0) {
-      total_old <- out_old[which(!is.na(gbif_matches) | !is.na(lpsn_matches))]
-      total_new <- out[which(!is.na(gbif_matches) | !is.na(lpsn_matches))]
-
-      total_new <- total_new[!duplicated(total_old)]
-      total_old <- total_old[!duplicated(total_old)]
-
-      total_new <- total_new[order(total_old)]
-      total_old <- total_old[order(total_old)]
-
-      refs_old <- microorganisms$ref[match(total_old, microorganisms$mo)]
-      refs_old[!is.na(refs_old)] <- paste0(" (", refs_old[!is.na(refs_old)], ")")
-      refs_old[is.na(refs_old)] <- ""
-      refs_new <- microorganisms$ref[match(total_new, microorganisms$mo)]
-      refs_new[!is.na(refs_new)] <- paste0(" (", refs_new[!is.na(refs_new)], ")")
-      refs_new[is.na(refs_new)] <- ""
-
-      message_(
-        "The following microorganism", ifelse(length(total_old) > 1, "s were", " was"), " taxonomically renamed (use `keep_synonyms = TRUE` to leave uncorrected):\n",
-        paste0("  ", font_italic(microorganisms$fullname[match(total_old, microorganisms$mo)], collapse = NULL),
-          refs_old,
-          " -> ", font_italic(microorganisms$fullname[match(total_new, microorganisms$mo)], collapse = NULL),
-          refs_new,
-          collapse = "\n"
-        )
-      )
-    }
+    # if (isTRUE(info) && (any(!is.na(gbif_matches)) || any(!is.na(lpsn_matches))) && message_not_thrown_before("as.mo", gbif_matches[which(!is.na(gbif_matches))], lpsn_matches[which(!is.na(lpsn_matches))]) && length(c(lpsn_matches, gbif_matches)) > 0) {
+    #   mo_old <- out_old[which(!is.na(gbif_matches) | !is.na(lpsn_matches))]
+    #   mo_new <- out[which(!is.na(gbif_matches) | !is.na(lpsn_matches))]
+    # 
+    #   mo_new <- mo_new[!duplicated(mo_old)]
+    #   mo_old <- mo_old[!duplicated(mo_old)]
+    # 
+    #   mo_new <- mo_new[order(mo_old)]
+    #   mo_old <- mo_old[order(mo_old)]
+    # 
+    #   ref_old <- microorganisms$ref[match(mo_old, microorganisms$mo)]
+    #   ref_old[!is.na(ref_old)] <- paste0(" (", ref_old[!is.na(ref_old)], ")")
+    #   ref_old[is.na(ref_old)] <- ""
+    #   ref_new <- microorganisms$ref[match(mo_new, microorganisms$mo)]
+    #   ref_new[!is.na(ref_new)] <- paste0(" (", ref_new[!is.na(ref_new)], ")")
+    #   ref_new[is.na(ref_new)] <- ""
+    #   
+    #   pkg_env$mo_renamed <- list(mo_old = mo_old, mo_new = mo_new)
+    #   print(mo_renamed(), extra_txt = " (use `keep_synonyms = TRUE` to leave uncorrected)")
+    # }
   } else if (is.null(getOption("AMR_keep_synonyms")) && any(!is.na(c(gbif_matches, lpsn_matches))) && message_not_thrown_before("as.mo", "keep_synonyms_warning", entire_session = TRUE)) {
     # keep synonyms is TRUE, so check if any do have synonyms
     warning_("Function `as.mo()` returned some old taxonomic names. Use `as.mo(..., keep_synonyms = FALSE)` to clean the input to currently accepted taxonomic names, or set the R option `AMR_keep_synonyms` to `FALSE`. This warning will be shown once per session.")
@@ -710,15 +715,14 @@ rep.mo <- function(x, ...) {
 
 #' @rdname as.mo
 #' @export
+mo_failures <- function() {
+  pkg_env$mo_failures
+}
+
+#' @rdname as.mo
+#' @export
 mo_uncertainties <- function() {
-  if (is.null(pkg_env$mo_uncertainties)) {
-    return(NULL)
-  }
-  set_clean_class(as.data.frame(pkg_env$mo_uncertainties,
-    stringsAsFactors = FALSE
-  ),
-  new_class = c("mo_uncertainties", "data.frame")
-  )
+  set_clean_class(pkg_env$mo_uncertainties, new_class = c("mo_uncertainties", "data.frame"))
 }
 
 #' @method print mo_uncertainties
@@ -726,8 +730,10 @@ mo_uncertainties <- function() {
 #' @noRd
 print.mo_uncertainties <- function(x, ...) {
   if (NROW(x) == 0) {
-    return(NULL)
+    cat(word_wrap("No uncertainties to show. Only uncertainties of the last call of `as.mo()` or any `mo_*()` function are stored.", add_fn = font_blue))
+    return(invisible(NULL))
   }
+  
   cat(word_wrap("Matching scores are based on pathogenicity in humans and the resemblance between the input and the full taxonomic name. See `?mo_matching_score`.\n\n", add_fn = font_blue))
   if (has_colour()) {
     cat(word_wrap("Colour keys: ",
@@ -807,6 +813,38 @@ print.mo_uncertainties <- function(x, ...) {
     txt <- paste0(gsub("\n\n", "\n", txt), "\n\n")
   }
   cat(txt)
+}
+
+
+#' @rdname as.mo
+#' @export
+mo_renamed <- function() {
+  set_clean_class(pkg_env$mo_renamed, new_class = c("mo_renamed", "list"))
+}
+
+#' @method print mo_renamed
+#' @export
+#' @noRd
+print.mo_renamed <- function(x, extra_txt = "", ...) {
+  if (length(x) == 0) {
+    cat(word_wrap("No renamed taxonomy to show. Only renamed taxonomy of the last call of `as.mo()` or any `mo_*()` function are stored.", add_fn = font_blue))
+    return(invisible(NULL))
+  }
+  
+  ref_old <- AMR::microorganisms$ref[match(x$mo_old, AMR::microorganisms$mo)]
+  ref_new <- AMR::microorganisms$ref[match(x$mo_new, AMR::microorganisms$mo)]
+  ref_old[!is.na(ref_old)] <- paste0(" (", gsub("et al.", font_italic("et al.", collapse = NULL), ref_old[!is.na(ref_old)], fixed = TRUE), ")")
+  ref_new[!is.na(ref_new)] <- paste0(" (", gsub("et al.", font_italic("et al.", collapse = NULL), ref_new[!is.na(ref_new)], fixed = TRUE), ")")
+
+  message_(
+    "The following microorganism", ifelse(length(x$mo_old) > 1, "s were", " was"), " taxonomically renamed", extra_txt, ":\n",
+    paste0("  \u2022 ", font_italic(AMR::microorganisms$fullname[match(x$mo_old, AMR::microorganisms$mo)], collapse = NULL),
+           ref_old,
+           " -> ", font_italic(AMR::microorganisms$fullname[match(x$mo_new, AMR::microorganisms$mo)], collapse = NULL),
+           ref_new,
+           collapse = "\n"
+    )
+  )
 }
 
 #' @rdname as.mo
