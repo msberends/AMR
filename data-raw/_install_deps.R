@@ -32,7 +32,7 @@ install.packages("data-raw/tinytest_1.3.1.tar.gz", dependencies = c("Depends", "
 install.packages(getwd(), repos = NULL, type = "source")
 
 pkg_suggests <- gsub(
-  "[^a-zA-Z0-9]+", "",
+  "[^a-zA-Z0-9.]+", "",
   unlist(strsplit(unlist(packageDescription("AMR",
     fields = c("Suggests", "Enhances", "LinkingTo")
   )),
