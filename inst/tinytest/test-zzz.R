@@ -32,7 +32,9 @@
 
 # functions used by import_fn()
 import_functions <- c(
+  "%chin%" = "data.table",
   "anti_join" = "dplyr",
+  "chmatch" = "data.table",
   "cur_column" = "dplyr",
   "full_join" = "dplyr",
   "has_internet" = "curl",

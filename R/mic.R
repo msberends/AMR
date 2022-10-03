@@ -179,7 +179,7 @@ as.mic <- function(x, na.rm = FALSE) {
     if (na.rm == TRUE) {
       x <- x[!is.na(x)]
     }
-    x[trimws(x) == ""] <- NA
+    x[trimws2(x) == ""] <- NA
     x.bak <- x
 
     # comma to period
@@ -214,7 +214,7 @@ as.mic <- function(x, na.rm = FALSE) {
     # never end with dot
     x <- gsub("[.]$", "", x, perl = TRUE)
     # trim it
-    x <- trimws(x)
+    x <- trimws2(x)
 
     ## previously unempty values now empty - should return a warning later on
     x[x.bak != "" & x == ""] <- "invalid"

@@ -329,7 +329,7 @@ get_column_abx <- function(x,
 get_ab_from_namespace <- function(x, cols_ab) {
   # cols_ab comes from get_column_abx()
 
-  x <- trimws(unique(toupper(unlist(strsplit(x, ",", fixed = TRUE)))))
+  x <- trimws2(unique(toupper(unlist(strsplit(x, ",", fixed = TRUE)))))
   x_new <- character()
   for (val in x) {
     if (paste0("AB_", val) %in% ls(envir = asNamespace("AMR"))) {

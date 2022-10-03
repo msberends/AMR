@@ -766,12 +766,12 @@ any.ab_selector_any_all <- function(..., na.rm = FALSE) {
 }
 
 is_any <- function(el1) {
-  syscalls <- paste0(trimws(deparse(sys.calls())), collapse = " ")
+  syscalls <- paste0(trimws2(deparse(sys.calls())), collapse = " ")
   el1 <- gsub("(.*),.*", "\\1", el1)
   syscalls %like% paste0("[^_a-zA-Z0-9]any\\(", "(c\\()?", el1)
 }
 is_all <- function(el1) {
-  syscalls <- paste0(trimws(deparse(sys.calls())), collapse = " ")
+  syscalls <- paste0(trimws2(deparse(sys.calls())), collapse = " ")
   el1 <- gsub("(.*),.*", "\\1", el1)
   syscalls %like% paste0("[^_a-zA-Z0-9]all\\(", "(c\\()?", el1)
 }

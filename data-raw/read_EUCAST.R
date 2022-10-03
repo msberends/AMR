@@ -107,8 +107,8 @@ read_EUCAST <- function(sheet, file, guideline_name) {
 
   get_mo <- function(x) {
     for (i in seq_len(length(x))) {
-      y <- trimws(unlist(strsplit(x[i], "(,|and)")))
-      y <- trimws(gsub("[(].*[)]", "", y))
+      y <- trimws2(unlist(strsplit(x[i], "(,|and)")))
+      y <- trimws2(gsub("[(].*[)]", "", y))
       y <- suppressWarnings(suppressMessages(as.mo(y, allow_uncertain = FALSE)))
       if (!is.null(mo_uncertainties())) uncertainties <<- add_uncertainties(uncertainties, mo_uncertainties())
       y <- y[!is.na(y) & y != "UNKNOWN"]

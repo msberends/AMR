@@ -114,7 +114,7 @@ ab_from_text <- function(text,
   meet_criteria(thorough_search, allow_class = "logical", has_length = 1, allow_NULL = TRUE)
   meet_criteria(info, allow_class = "logical", has_length = 1)
 
-  type <- tolower(trimws(type))
+  type <- tolower(trimws2(type))
 
   text <- tolower(as.character(text))
   text_split_all <- strsplit(text, "[ ;.,:\\|]")

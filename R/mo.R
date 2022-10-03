@@ -31,15 +31,15 @@
 #'
 #' Use this function to determine a valid microorganism code ([`mo`]). Determination is done using intelligent rules and the complete taxonomic kingdoms `r vector_and(unique(microorganisms$kingdom[which(!grepl("(unknown|Fungi)", microorganisms$kingdom))]), quotes = FALSE)`, and most microbial species from the kingdom Fungi (see *Source*). The input can be almost anything: a full name (like `"Staphylococcus aureus"`), an abbreviated name (such as `"S. aureus"`), an abbreviation known in the field (such as `"MRSA"`), or just a genus. See *Examples*.
 #' @param x a [character] vector or a [data.frame] with one or two columns
-#' @param Becker a [logical] to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker *et al.* (1,2,3).
+#' @param Becker a [logical] to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker *et al.* (see Source).
 #'
 #' This excludes *Staphylococcus aureus* at default, use `Becker = "all"` to also categorise *S. aureus* as "CoPS".
-#' @param Lancefield a [logical] to indicate whether a beta-haemolytic *Streptococcus* should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (4). These streptococci will be categorised in their first group, e.g. *Streptococcus dysgalactiae* will be group C, although officially it was also categorised into groups G and L.
+#' @param Lancefield a [logical] to indicate whether a beta-haemolytic *Streptococcus* should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (see Source). These streptococci will be categorised in their first group, e.g. *Streptococcus dysgalactiae* will be group C, although officially it was also categorised into groups G and L.
 #'
 #' This excludes enterococci at default (who are in group D), use `Lancefield = "all"` to also categorise all enterococci as group D.
 #' @param minimum_matching_score a numeric value to set as the lower limit for the [MO matching score][mo_matching_score()]. When left blank, this will be determined automatically based on the character length of `x`, its [taxonomic kingdom][microorganisms] and [human pathogenicity][mo_matching_score()].
 #' @param allow_uncertain a number between `0` (or `"none"`) and `3` (or `"all"`), or `TRUE` (= `2`) or `FALSE` (= `0`) to indicate whether the input should be checked for less probable results, see *Details*
-#' @param keep_synonyms a [logical] to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is `TRUE`, which will return a note if old taxonomic names are returned. The default can be set with `options(AMR_keep_synonyms = ...)`.
+#' @param keep_synonyms a [logical] to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is `FALSE`, which will return a note if old taxonomic names were processed. The default can be set with `options(AMR_keep_synonyms = TRUE)` or `options(AMR_keep_synonyms = FALSE)`.
 #' @param reference_df a [data.frame] to be used for extra reference when translating `x` to a valid [`mo`]. See [set_mo_source()] and [get_mo_source()] to automate the usage of your own codes (e.g. used in your analysis or organisation).
 #' @param ignore_pattern a regular expression (case-insensitive) of which all matches in `x` must return `NA`. This can be convenient to exclude known non-relevant input and can also be set with the option `AMR_ignore_pattern`, e.g. `options(AMR_ignore_pattern = "(not reported|contaminated flora)")`.
 #' @param language language to translate text like "no growth", which defaults to the system language (see [get_AMR_locale()])
@@ -83,18 +83,16 @@
 #'
 #' ### Coping with Uncertain Results
 #'
-#' In addition, the [as.mo()] function can differentiate four levels of uncertainty to guess valid results:
-#' - Uncertainty level 0: no additional rules are applied;
-#' - Uncertainty level 1: allow previously accepted (but now invalid) taxonomic names and minor spelling errors;
-#' - Uncertainty level 2: allow all of level 1, strip values between brackets, inverse the words of the input, strip off text elements from the end keeping at least two elements;
-#' - Uncertainty level 3: allow all of level 1 and 2, strip off text elements from the end, allow any part of a taxonomic name.
+#' Users can control the coercion rules by setting the `allow_uncertain` argument in the [as.mo()] function. The following values or levels can be used:
+#' 
+#' - `0`: no additional rules are applied;
+#' - `1`: allow previously accepted (but now invalid) taxonomic names
+#' - `2`: allow all of `1`, strip values between brackets, inverse the words of the input, strip off text elements from the end keeping at least two elements;
+#' - `3`: allow all of level `1` and `2`, strip off text elements from the end, allow any part of a taxonomic name;
+#' - `TRUE` (default): equivalent to `2`;
+#' - `FALSE`: equivalent to `0``.
 #'
-#' The level of uncertainty can be set using the argument `allow_uncertain`. The default is `allow_uncertain = TRUE`, which is equal to uncertainty level 2. Using `allow_uncertain = FALSE` is equal to uncertainty level 0 and will skip all rules. You can also use e.g. `as.mo(..., allow_uncertain = 1)` to only allow up to level 1 uncertainty.
-#'
-#' With the default setting (`allow_uncertain = TRUE`, level 2), below examples will lead to valid results:
-#' - `"Streptococcus group B (known as S. agalactiae)"`. The text between brackets will be removed and a warning will be thrown that the result *Streptococcus group B* (`B_STRPT_GRPB`) needs review.
-#' - `"S. aureus - please mind: MRSA"`. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result *Staphylococcus aureus* (`B_STPHY_AURS`) needs review.
-#' - `"Fluoroquinolone-resistant Neisseria gonorrhoeae"`. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result *Neisseria gonorrhoeae* (`B_NESSR_GNRR`) needs review.
+#' The default is `allow_uncertain = TRUE`, which is equal to uncertainty level 2. Using `allow_uncertain = FALSE` is equal to uncertainty level 0 and will skip all rules. You can also use e.g. `as.mo(..., allow_uncertain = 1)` to only allow up to level 1 uncertainty.
 #'
 #' There are three helper functions that can be run after using the [as.mo()] function:
 #' - Use [mo_uncertainties()] to get a [data.frame] that prints in a pretty format with all taxonomic names that were guessed. The output contains the matching score for all matches (see *Matching Score for Microorganisms* below).
@@ -105,16 +103,18 @@
 #'
 #' The coercion rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the `prevalence` columns in the [microorganisms] data set. The grouping into human pathogenic prevalence is explained in the section *Matching Score for Microorganisms* below.
 #' @inheritSection mo_matching_score Matching Score for Microorganisms
-#  (source as a section here, so it can be inherited by other man pages:)
+#' 
+#  (source as a section here, so it can be inherited by other man pages)
 #' @section Source:
-#' 1. Becker K. *et al.* (2014). **Coagulase-Negative Staphylococci.** *Clin Microbiol Rev.* 27(4): 870-926; \doi{10.1128/CMR.00109-13}
-#' 2. Becker K. *et al.* (2019). **Implications of identifying the recently defined members of the *S. aureus* complex, *S. argenteus* and *S. schweitzeri*: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).** *Clin Microbiol Infect*; \doi{10.1016/j.cmi.2019.02.028}
-#' 3. Becker K. *et al.* (2020). **Emergence of coagulase-negative staphylococci** *Expert Rev Anti Infect Ther.* 18(4):349-366; \doi{10.1080/14787210.2020.1730813}
-#' 4. Lancefield R.C. (1933). **A serological differentiation of human and other groups of hemolytic streptococci**. *J Exp Med.* 57(4): 571-95; \doi{10.1084/jem.57.4.571}
-#' 5. Berends M.S. *et al.* (2022). **Trends in Occurrence and Phenotypic Resistance of Coagulase-Negative Staphylococci (CoNS) Found in Human Blood in the Northern Netherlands between 2013 and 2019** *Microorganisms* 10(9), 1801; \doi{10.3390/microorganisms10091801}
-#' 6. `r TAXONOMY_VERSION$LPSN$citation` Accessed from <`r TAXONOMY_VERSION$LPSN$url`> on `r documentation_date(TAXONOMY_VERSION$LPSN$accessed_date)`.
-#' 7. `r TAXONOMY_VERSION$GBIF$citation` Accessed from <`r TAXONOMY_VERSION$GBIF$url`> on `r documentation_date(TAXONOMY_VERSION$GBIF$accessed_date)`.
-#' 8. `r TAXONOMY_VERSION$SNOMED$citation` URL: <`r TAXONOMY_VERSION$SNOMED$url`>
+#' 1. Berends MS *et al.* (2022). **AMR: An R Package for Working with Antimicrobial Resistance Data**. *Journal of Statistical Software*, 104(3), 1-31; \doi{10.18637/jss.v104.i03}
+#' 2. Becker K *et al.* (2014). **Coagulase-Negative Staphylococci.** *Clin Microbiol Rev.* 27(4): 870-926; \doi{10.1128/CMR.00109-13}
+#' 3. Becker K *et al.* (2019). **Implications of identifying the recently defined members of the *S. aureus* complex, *S. argenteus* and *S. schweitzeri*: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).** *Clin Microbiol Infect*; \doi{10.1016/j.cmi.2019.02.028}
+#' 4. Becker K *et al.* (2020). **Emergence of coagulase-negative staphylococci** *Expert Rev Anti Infect Ther.* 18(4):349-366; \doi{10.1080/14787210.2020.1730813}
+#' 5. Lancefield RC (1933). **A serological differentiation of human and other groups of hemolytic streptococci**. *J Exp Med.* 57(4): 571-95; \doi{10.1084/jem.57.4.571}
+#' 6. Berends MS *et al.* (2022). **Trends in Occurrence and Phenotypic Resistance of Coagulase-Negative Staphylococci (CoNS) Found in Human Blood in the Northern Netherlands between 2013 and 2019** *Microorganisms* 10(9), 1801; \doi{10.3390/microorganisms10091801}
+#' 7. `r TAXONOMY_VERSION$LPSN$citation` Accessed from <`r TAXONOMY_VERSION$LPSN$url`> on `r documentation_date(TAXONOMY_VERSION$LPSN$accessed_date)`.
+#' 8. `r TAXONOMY_VERSION$GBIF$citation` Accessed from <`r TAXONOMY_VERSION$GBIF$url`> on `r documentation_date(TAXONOMY_VERSION$GBIF$accessed_date)`.
+#' 9. `r TAXONOMY_VERSION$SNOMED$citation` URL: <`r TAXONOMY_VERSION$SNOMED$url`>
 #' @export
 #' @return A [character] [vector] with additional class [`mo`]
 #' @seealso [microorganisms] for the [data.frame] that is being used to determine ID's.
@@ -166,7 +166,7 @@ as.mo <- function(x,
                   Lancefield = FALSE,
                   minimum_matching_score = NULL,
                   allow_uncertain = TRUE,
-                  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+                  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
                   reference_df = get_mo_source(),
                   ignore_pattern = getOption("AMR_ignore_pattern", NULL),
                   language = get_AMR_locale(),
@@ -175,21 +175,31 @@ as.mo <- function(x,
   meet_criteria(x, allow_class = c("mo", "data.frame", "list", "character", "numeric", "integer", "factor"), allow_NA = TRUE)
   meet_criteria(Becker, allow_class = c("logical", "character"), has_length = 1)
   meet_criteria(Lancefield, allow_class = c("logical", "character"), has_length = 1)
+  meet_criteria(allow_uncertain, allow_class = c("logical", "numeric", "integer"), has_length = 1)
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
   meet_criteria(minimum_matching_score, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE)
   meet_criteria(reference_df, allow_class = "data.frame", allow_NULL = TRUE)
   meet_criteria(ignore_pattern, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   language <- validate_language(language)
   meet_criteria(info, allow_class = "logical", has_length = 1)
-
-  if (tryCatch(all(x[!is.na(x)] %in% AMR::microorganisms$mo) &
-    isFALSE(Becker) &
-    isTRUE(keep_synonyms) &&
+  
+  # set the microorganisms data set to use for all lookup
+  mo_data <- MO_lookup
+  
+  allow_uncertain <- translate_allow_uncertain(allow_uncertain)
+  if (allow_uncertain < 1) {
+    # do not allow old names
+    mo_data <- mo_data[which(mo_data$status == "accepted"), , drop = FALSE]
+  }
+  
+  if (tryCatch(all(x %in% c(mo_data$mo, NA)) &&
+    isFALSE(Becker) &&
     isFALSE(Lancefield), error = function(e) FALSE)) {
     # don't look into valid MO codes, just return them
     # is.mo() won't work - MO codes might change between package versions
     return(set_clean_class(x, new_class = c("mo", "character")))
   }
+  
 
   # start off with replaced language-specific non-ASCII characters with ASCII characters
   x <- parse_and_convert(x)
@@ -211,13 +221,13 @@ as.mo <- function(x,
     out[x %in% reference_df[[1]]] <- reference_df[[2]][match(x[x %in% reference_df[[1]]], reference_df[[1]])]
   }
   # From MO code ----
-  out[is.na(out) & x %in% AMR::microorganisms$mo] <- x[is.na(out) & x %in% AMR::microorganisms$mo]
+  out[is.na(out) & x %in% mo_data$mo] <- x[is.na(out) & x %in% mo_data$mo]
   # From full name ----
-  out[is.na(out) & x %in% AMR::microorganisms$fullname] <- AMR::microorganisms$mo[match(x[is.na(out) & x %in% AMR::microorganisms$fullname], AMR::microorganisms$fullname)]
+  out[is.na(out) & x %in% mo_data$fullname] <- mo_data$mo[match(x[is.na(out) & x %in% mo_data$fullname], mo_data$fullname)]
   # From known codes ----
   out[is.na(out) & x %in% AMR::microorganisms.codes$code] <- AMR::microorganisms.codes$mo[match(x[is.na(out) & x %in% AMR::microorganisms.codes$code], AMR::microorganisms.codes$code)]
   # From SNOMED ----
-  if (any(is.na(out) & x %in% unlist(microorganisms$snomed), na.rm = TRUE)) {
+  if (any(is.na(out) & !is.na(x)) && any(is.na(out) & x %in% unlist(microorganisms$snomed), na.rm = TRUE)) {
     # found this extremely fast gem here: https://stackoverflow.com/a/11002456/4575331
     out[is.na(out) & x %in% unlist(microorganisms$snomed)] <- microorganisms$mo[rep(seq_along(microorganisms$snomed), vapply(FUN.VALUE = double(1), microorganisms$snomed, length))[match(x[is.na(out) & x %in% unlist(microorganisms$snomed)], unlist(microorganisms$snomed))]]
   }
@@ -228,13 +238,13 @@ as.mo <- function(x,
   old <- out
   out[is.na(out) & x %in% pkg_env$mo_previously_coerced$x] <- pkg_env$mo_previously_coerced$mo[match(x[is.na(out) & x %in% pkg_env$mo_previously_coerced$x], pkg_env$mo_previously_coerced$x)]
   new <- out
-  if (isTRUE(info) && message_not_thrown_before("as.mo", old[seq_len(min(100, length(old)))], new[seq_len(min(100, length(new)))], entire_session = TRUE) && any(is.na(old) & !is.na(new), na.rm = TRUE)) {
+  if (isTRUE(info) && message_not_thrown_before("as.mo", old, new, entire_session = TRUE) && any(is.na(old) & !is.na(new), na.rm = TRUE)) {
     message_(
       "Returning previously coerced value", ifelse(sum(is.na(old) & !is.na(new)) > 1, "s", ""),
       " for ", vector_and(x[is.na(old) & !is.na(new)]), ". Run `mo_reset_session()` to reset this."
     )
   }
-
+  
   # For all other input ----
   if (any(is.na(out) & !is.na(x))) {
     # reset uncertainties
@@ -257,12 +267,19 @@ as.mo <- function(x,
       progress$tick()
 
       # some required cleaning steps
-      x_out <- trimws(x_search)
+      x_out <- trimws2(x_search)
       x_out <- gsub("[^A-Za-z-]+", " ", x_out, perl = TRUE)
       x_out <- gsub(" +", " ", x_out, perl = TRUE)
       x_out <- gsub("(^| )(e?spp|e?ssp|e?ss|e?sp|e?subsp|sube?species|biovar|biotype|serovar|e?species)( |$)", "", x_out, ignore.case = TRUE, perl = TRUE)
       x_search_cleaned <- x_out
       x_out <- tolower(x_out)
+      
+      if (allow_uncertain == 2) {
+        
+      }
+      if (allow_uncertain == 3) {
+        
+      }
       
       # take out the parts, split by space
       x_parts <- strsplit(gsub("-", " ", x_out, fixed = TRUE), " ", fixed = TRUE)[[1]]
@@ -270,16 +287,16 @@ as.mo <- function(x,
       # do a pre-match on first character (and if it contains a space, first chars of first two terms)
       if (length(x_parts) %in% c(2, 3)) {
         # for genus + species + subspecies
-        filtr <- which(MO_lookup$full_first == substr(x_parts[1], 1, 1) & MO_lookup$species_first == substr(x_parts[2], 1, 1))
+        filtr <- which(mo_data$full_first == substr(x_parts[1], 1, 1) & mo_data$species_first == substr(x_parts[2], 1, 1))
       } else if (length(x_parts) > 3) {
         first_chars <- paste0("(^| )", "[", paste(substr(x_parts, 1, 1), collapse = ""), "]")
-        filtr <- which(MO_lookup$full_first %like_case% first_chars)
+        filtr <- which(mo_data$full_first %like_case% first_chars)
       } else if (nchar(x_out) == 4) {
         # no space and 4 characters - probably a code such as STAU or ESCO!
         if (isTRUE(info)) {
           message_("Input \"", x_search, "\" is assumed to be a microorganism code - trying to match on ", vector_and(c(substr(x_out, 1, 2), substr(x_out, 3, 4)), sort = FALSE))
         }
-        filtr <- which(MO_lookup$fullname_lower %like_case% paste0("(^| )", substr(x_out, 1, 2), ".* ", substr(x_out, 3, 4)))
+        filtr <- which(mo_data$fullname_lower %like_case% paste0("(^| )", substr(x_out, 1, 2), ".* ", substr(x_out, 3, 4)))
       } else if (nchar(x_out) <= 6) {
         # no space and 5-6 characters - probably a code such as STAAUR or ESCCOL!
         first_part <- paste0(substr(x_out, 1, 2), "[a-z]*", substr(x_out, 3, 3))
@@ -287,14 +304,14 @@ as.mo <- function(x,
         if (isTRUE(info)) {
           message_("Input \"", x_search, "\" is assumed to be a microorganism code - trying to match on ", vector_and(c(gsub("[a-z]*", "(...)", first_part, fixed = TRUE), second_part), sort = FALSE))
         }
-        filtr <- which(MO_lookup$fullname_lower %like_case% paste0("(^| )", first_part, ".* ", second_part))
+        filtr <- which(mo_data$fullname_lower %like_case% paste0("(^| )", first_part, ".* ", second_part))
       } else {
-        filtr <- which(MO_lookup$full_first == substr(x_out, 1, 1))
+        filtr <- which(mo_data$full_first == substr(x_out, 1, 1))
       }
       if (length(filtr) == 0) {
-        mo_to_search <- MO_lookup$fullname
+        mo_to_search <- mo_data$fullname
       } else {
-        mo_to_search <- MO_lookup$fullname[filtr]
+        mo_to_search <- mo_data$fullname[filtr]
       }
       pkg_env$mo_to_search <- mo_to_search
       # determine the matching score on the original search value
@@ -383,35 +400,12 @@ as.mo <- function(x,
                              gbif_matches = gbif_matches[!is.na(gbif_matches) | !is.na(lpsn_matches)],
                              lpsn_matches = lpsn_matches[!is.na(gbif_matches) | !is.na(lpsn_matches)])
   if (isFALSE(keep_synonyms)) {
-    out_old <- out
-
-    gbif_matches[!gbif_matches %in% AMR::microorganisms$gbif] <- NA
     out[which(!is.na(gbif_matches))] <- AMR::microorganisms$mo[match(gbif_matches[which(!is.na(gbif_matches))], AMR::microorganisms$gbif)]
-
-    lpsn_matches[!lpsn_matches %in% AMR::microorganisms$lpsn] <- NA
     out[which(!is.na(lpsn_matches))] <- AMR::microorganisms$mo[match(lpsn_matches[which(!is.na(lpsn_matches))], AMR::microorganisms$lpsn)]
-
-    # if (isTRUE(info) && (any(!is.na(gbif_matches)) || any(!is.na(lpsn_matches))) && message_not_thrown_before("as.mo", gbif_matches[which(!is.na(gbif_matches))], lpsn_matches[which(!is.na(lpsn_matches))]) && length(c(lpsn_matches, gbif_matches)) > 0) {
-    #   mo_old <- out_old[which(!is.na(gbif_matches) | !is.na(lpsn_matches))]
-    #   mo_new <- out[which(!is.na(gbif_matches) | !is.na(lpsn_matches))]
-    # 
-    #   mo_new <- mo_new[!duplicated(mo_old)]
-    #   mo_old <- mo_old[!duplicated(mo_old)]
-    # 
-    #   mo_new <- mo_new[order(mo_old)]
-    #   mo_old <- mo_old[order(mo_old)]
-    # 
-    #   ref_old <- microorganisms$ref[match(mo_old, microorganisms$mo)]
-    #   ref_old[!is.na(ref_old)] <- paste0(" (", ref_old[!is.na(ref_old)], ")")
-    #   ref_old[is.na(ref_old)] <- ""
-    #   ref_new <- microorganisms$ref[match(mo_new, microorganisms$mo)]
-    #   ref_new[!is.na(ref_new)] <- paste0(" (", ref_new[!is.na(ref_new)], ")")
-    #   ref_new[is.na(ref_new)] <- ""
-    #   
-    #   pkg_env$mo_renamed <- list(mo_old = mo_old, mo_new = mo_new)
-    #   print(mo_renamed(), extra_txt = " (use `keep_synonyms = TRUE` to leave uncorrected)")
-    # }
-  } else if (is.null(getOption("AMR_keep_synonyms")) && any(!is.na(c(gbif_matches, lpsn_matches))) && message_not_thrown_before("as.mo", "keep_synonyms_warning", entire_session = TRUE)) {
+    if (isTRUE(info) && length(pkg_env$mo_renamed$old) > 0) {
+      print(mo_renamed(), extra_txt = " (use `keep_synonyms = TRUE` to leave uncorrected)")
+    }
+  } else if (is.null(getOption("AMR_keep_synonyms")) && length(pkg_env$mo_renamed$old) > 0 && message_not_thrown_before("as.mo", "keep_synonyms_warning", entire_session = TRUE)) {
     # keep synonyms is TRUE, so check if any do have synonyms
     warning_("Function `as.mo()` returned some old taxonomic names. Use `as.mo(..., keep_synonyms = FALSE)` to clean the input to currently accepted taxonomic names, or set the R option `AMR_keep_synonyms` to `FALSE`. This warning will be shown once per session.")
   }
@@ -505,7 +499,7 @@ pillar_shaft.mo <- function(x, ...) {
     mo_cols <- NULL
   }
 
-  if (!all(x[!is.na(x)] %in% AMR::microorganisms$mo) |
+  if (!all(x %in% c(AMR::microorganisms$mo, NA)) ||
     (!is.null(df) && !all(unlist(df[, which(mo_cols), drop = FALSE]) %in% AMR::microorganisms$mo))) {
     # markup old mo codes
     out[!x %in% AMR::microorganisms$mo] <- font_italic(font_na(x[!x %in% AMR::microorganisms$mo],
@@ -605,7 +599,7 @@ print.mo <- function(x, print.shortnames = FALSE, ...) {
   }
   x <- as.character(x)
   names(x) <- x_names
-  if (!all(x[!is.na(x)] %in% AMR::microorganisms$mo)) {
+  if (!all(x %in% c(AMR::microorganisms$mo, NA))) {
     warning_(
       "Some MO codes are from a previous AMR package version. ",
       "Please update the MO codes with `as.mo()`."
@@ -637,7 +631,7 @@ summary.mo <- function(object, ...) {
 #' @export
 #' @noRd
 as.data.frame.mo <- function(x, ...) {
-  if (!all(x[!is.na(x)] %in% AMR::microorganisms$mo)) {
+  if (!all(x %in% c(AMR::microorganisms$mo, NA))) {
     warning_(
       "The data contains old MO codes (from a previous AMR package version). ",
       "Please update your MO codes with `as.mo()`."
@@ -730,7 +724,7 @@ mo_uncertainties <- function() {
 #' @noRd
 print.mo_uncertainties <- function(x, ...) {
   if (NROW(x) == 0) {
-    cat(word_wrap("No uncertainties to show. Only uncertainties of the last call of `as.mo()` or any `mo_*()` function are stored.", add_fn = font_blue))
+    cat(word_wrap("No uncertainties to show. Only uncertainties of the last call of `as.mo()` or any `mo_*()` function are stored.\n", add_fn = font_blue))
     return(invisible(NULL))
   }
   
@@ -819,31 +813,47 @@ print.mo_uncertainties <- function(x, ...) {
 #' @rdname as.mo
 #' @export
 mo_renamed <- function() {
-  set_clean_class(pkg_env$mo_renamed, new_class = c("mo_renamed", "list"))
+  x <- pkg_env$mo_renamed
+  
+  x$new <- ifelse(is.na(x$lpsn_matches),
+                  AMR::microorganisms$mo[match(x$gbif_matches, AMR::microorganisms$gbif)],
+                  AMR::microorganisms$mo[match(x$lpsn_matches, AMR::microorganisms$lpsn)])
+  mo_old <- AMR::microorganisms$fullname[match(x$old, AMR::microorganisms$mo)]
+  mo_new <- AMR::microorganisms$fullname[match(x$new, AMR::microorganisms$mo)]
+  ref_old <- AMR::microorganisms$ref[match(x$old, AMR::microorganisms$mo)]
+  ref_new <- AMR::microorganisms$ref[match(x$new, AMR::microorganisms$mo)]
+  
+  df_renamed <- data.frame(old = mo_old,
+                           new = mo_new,
+                           ref_old = ref_old,
+                           ref_new = ref_new,
+                           stringsAsFactors = FALSE)
+  df_renamed <- unique(df_renamed)
+  df_renamed <- df_renamed[order(df_renamed$old), , drop = FALSE]
+  set_clean_class(df_renamed, new_class = c("mo_renamed", "data.frame"))
 }
 
 #' @method print mo_renamed
 #' @export
 #' @noRd
-print.mo_renamed <- function(x, extra_txt = "", ...) {
-  if (length(x) == 0) {
-    cat(word_wrap("No renamed taxonomy to show. Only renamed taxonomy of the last call of `as.mo()` or any `mo_*()` function are stored.", add_fn = font_blue))
+print.mo_renamed <- function(x, extra_txt = "", n = 25, ...) {
+  if (NROW(x) == 0) {
+    cat(word_wrap("No renamed taxonomy to show. Only renamed taxonomy of the last call of `as.mo()` or any `mo_*()` function are stored.\n", add_fn = font_blue))
     return(invisible(NULL))
   }
   
-  ref_old <- AMR::microorganisms$ref[match(x$mo_old, AMR::microorganisms$mo)]
-  ref_new <- AMR::microorganisms$ref[match(x$mo_new, AMR::microorganisms$mo)]
-  ref_old[!is.na(ref_old)] <- paste0(" (", gsub("et al.", font_italic("et al.", collapse = NULL), ref_old[!is.na(ref_old)], fixed = TRUE), ")")
-  ref_new[!is.na(ref_new)] <- paste0(" (", gsub("et al.", font_italic("et al.", collapse = NULL), ref_new[!is.na(ref_new)], fixed = TRUE), ")")
-
+  x$ref_old[!is.na(x$ref_old)] <- paste0(" (", gsub("et al.", font_italic("et al."), x$ref_old[!is.na(x$ref_old)], fixed = TRUE), ")")
+  x$ref_new[!is.na(x$ref_new)] <- paste0(" (", gsub("et al.", font_italic("et al."), x$ref_new[!is.na(x$ref_new)], fixed = TRUE), ")")
+  
+  rows <- seq_len(min(NROW(x), n))
+  
   message_(
-    "The following microorganism", ifelse(length(x$mo_old) > 1, "s were", " was"), " taxonomically renamed", extra_txt, ":\n",
-    paste0("  \u2022 ", font_italic(AMR::microorganisms$fullname[match(x$mo_old, AMR::microorganisms$mo)], collapse = NULL),
-           ref_old,
-           " -> ", font_italic(AMR::microorganisms$fullname[match(x$mo_new, AMR::microorganisms$mo)], collapse = NULL),
-           ref_new,
+    "The following microorganism", ifelse(NROW(x) > 1, "s were", " was"), " taxonomically renamed", extra_txt, ":\n",
+    paste0("  \u2022 ", font_italic(x$old[rows], collapse = NULL), x$ref_old[rows],
+           "  ->  ", font_italic(x$new[rows], collapse = NULL), x$ref_new[rows],
            collapse = "\n"
-    )
+    ),
+    ifelse(NROW(x) > n, paste0("\n\nOnly the first ", n, " (out of ", NROW(x), ") are shown. Run `print(mo_renamed(), n = ...)` to view more entries (might be slow), or save `mo_renamed()` to an object."), "")
   )
 }
 
@@ -898,11 +908,6 @@ load_mo_uncertainties <- function(metadata) {
   pkg_env$mo_uncertainties <- metadata$uncertainties
 }
 
-trimws2 <- function(..., whitespace = "[\u0009\u000A\u000B\u000C\u000D\u0020\u0085\u00A0\u1680\u180E\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u200C\u200D\u2028\u2029\u202F\u205F\u2060\u3000\uFEFF]") {
-  # this is even faster than trimws() itself which sets " \t\n\r".
-  trimws(..., whitespace = whitespace)
-}
-
 parse_and_convert <- function(x) {
   if (tryCatch(is.character(x) && all(Encoding(x) == "unknown", na.rm = TRUE), error = function(e) FALSE)) {
     return(trimws2(x))
@@ -927,7 +932,6 @@ parse_and_convert <- function(x) {
       parsed[is.na(parsed) & !is.na(x)] <- iconv(x[is.na(parsed) & !is.na(x)], from = "Latin1", to = "ASCII//TRANSLIT")
       parsed <- gsub('"', "", parsed, fixed = TRUE)
       parsed <- gsub(" +", " ", parsed, perl = TRUE)
-      parsed <- trimws(parsed)
       parsed
     },
     error = function(e) stop(e$message, call. = FALSE)

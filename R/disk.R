@@ -76,7 +76,7 @@ as.disk <- function(x, na.rm = FALSE) {
     if (na.rm == TRUE) {
       x <- x[!is.na(x)]
     }
-    x[trimws(x) == ""] <- NA
+    x[trimws2(x) == ""] <- NA
     x.bak <- x
 
     na_before <- length(x[is.na(x)])

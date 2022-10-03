@@ -989,7 +989,7 @@ unique_call_id <- function(entire_session = FALSE, match_fn = NULL) {
 message_not_thrown_before <- function(fn, ..., entire_session = FALSE) {
   # this is to prevent that messages/notes will be printed for every dplyr group or more than once per session
   # e.g. this would show a msg 4 times: example_isolates %>% group_by(ward) %>% filter(mo_is_gram_negative())
-  salt <- gsub("[^a-zA-Z0-9|_-]", "?", paste(c(...)[seq_len(min(50, length(c(...))))], sep = "|", collapse = "|"), perl = TRUE)
+  salt <- gsub("[^a-zA-Z0-9|_-]", "?", substr(paste(c(...), sep = "|", collapse = "|"), 1, 512), perl = TRUE)
   not_thrown_before <- is.null(pkg_env[[paste0("thrown_msg.", fn, ".", salt)]]) ||
     !identical(
       pkg_env[[paste0("thrown_msg.", fn, ".", salt)]],
@@ -1359,6 +1359,31 @@ time_start_tracking <- function() {
 
 time_track <- function(name = NULL) {
   paste("(until now:", trimws(round(as.double(Sys.time()) * 1000) - pkg_env$time_start), "ms)")
+}
+
+trimws2 <- function(..., whitespace = "[\u0009\u000A\u000B\u000C\u000D\u0020\u0085\u00A0\u1680\u180E\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u200C\u200D\u2028\u2029\u202F\u205F\u2060\u3000\uFEFF]") {
+  # this is even faster than trimws() itself which sets " \t\n\r".
+  trimws(..., whitespace = whitespace)
+}
+
+
+# Faster data.table implementations ----
+
+match <- function(x, ...) {
+  if (isTRUE(pkg_env$has_data.table) && is.character(x)) {
+    # data.table::chmatch() is 35% faster than base::match() for character
+    getExportedValue(name = "chmatch", ns = asNamespace("data.table"))(x, ...)
+  } else {
+    base::match(x, ...)
+  }
+}
+`%in%` <- function(x, ...) {
+  if (isTRUE(pkg_env$has_data.table) && is.character(x)) {
+    # data.table::`%chin%`() is 20% faster than base::`%in%`() for character
+    getExportedValue(name = "%chin%", ns = asNamespace("data.table"))(x, ...)
+  } else {
+    base::`%in%`(x, ...)
+  }
 }
 
 # nolint start

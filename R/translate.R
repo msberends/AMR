@@ -151,7 +151,7 @@ translate_AMR <- function(x, language = get_AMR_locale()) {
 
 
 validate_language <- function(language, extra_txt = character(0)) {
-  if (isTRUE(trimws(tolower(language[1])) %in% c("en", "english", "", "false", NA)) || length(language) == 0) {
+  if (isTRUE(trimws2(tolower(language[1])) %in% c("en", "english", "", "false", NA)) || length(language) == 0) {
     return("en")
   }
   lang <- find_language(language[1], fallback = FALSE)

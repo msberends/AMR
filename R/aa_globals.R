@@ -72,7 +72,7 @@ TAXONOMY_VERSION <- list(
   ),
   LPSN = list(
     accessed_date = as.Date("2022-09-12"),
-    citation = "Parte, A.C. *et al.* (2020). **List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.** International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \\doi{10.1099/ijsem.0.004332}.",
+    citation = "Parte, AC *et al.* (2020). **List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.** International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \\doi{10.1099/ijsem.0.004332}.",
     url = "https://lpsn.dsmz.de"
   ),
   SNOMED = list(

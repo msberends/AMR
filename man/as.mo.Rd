@@ -16,7 +16,7 @@ as.mo(
   Lancefield = FALSE,
   minimum_matching_score = NULL,
   allow_uncertain = TRUE,
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   reference_df = get_mo_source(),
   ignore_pattern = getOption("AMR_ignore_pattern", NULL),
   language = get_AMR_locale(),
@@ -37,11 +37,11 @@ mo_reset_session()
 \arguments{
 \item{x}{a \link{character} vector or a \link{data.frame} with one or two columns}
 
-\item{Becker}{a \link{logical} to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} (1,2,3).
+\item{Becker}{a \link{logical} to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker \emph{et al.} (see Source).
 
 This excludes \emph{Staphylococcus aureus} at default, use \code{Becker = "all"} to also categorise \emph{S. aureus} as "CoPS".}
 
-\item{Lancefield}{a \link{logical} to indicate whether a beta-haemolytic \emph{Streptococcus} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (4). These streptococci will be categorised in their first group, e.g. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L.
+\item{Lancefield}{a \link{logical} to indicate whether a beta-haemolytic \emph{Streptococcus} should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (see Source). These streptococci will be categorised in their first group, e.g. \emph{Streptococcus dysgalactiae} will be group C, although officially it was also categorised into groups G and L.
 
 This excludes enterococci at default (who are in group D), use \code{Lancefield = "all"} to also categorise all enterococci as group D.}
 
@@ -49,7 +49,7 @@ This excludes enterococci at default (who are in group D), use \code{Lancefield 
 
 \item{allow_uncertain}{a number between \code{0} (or \code{"none"}) and \code{3} (or \code{"all"}), or \code{TRUE} (= \code{2}) or \code{FALSE} (= \code{0}) to indicate whether the input should be checked for less probable results, see \emph{Details}}
 
-\item{keep_synonyms}{a \link{logical} to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is \code{TRUE}, which will return a note if old taxonomic names are returned. The default can be set with \code{options(AMR_keep_synonyms = ...)}.}
+\item{keep_synonyms}{a \link{logical} to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is \code{FALSE}, which will return a note if old taxonomic names were processed. The default can be set with \code{options(AMR_keep_synonyms = TRUE)} or \code{options(AMR_keep_synonyms = FALSE)}.}
 
 \item{reference_df}{a \link{data.frame} to be used for extra reference when translating \code{x} to a valid \code{\link{mo}}. See \code{\link[=set_mo_source]{set_mo_source()}} and \code{\link[=get_mo_source]{get_mo_source()}} to automate the usage of your own codes (e.g. used in your analysis or organisation).}
 
@@ -104,22 +104,17 @@ This will lead to the effect that e.g. \code{"E. coli"} (a microorganism highly 
 
 \subsection{Coping with Uncertain Results}{
 
-In addition, the \code{\link[=as.mo]{as.mo()}} function can differentiate four levels of uncertainty to guess valid results:
+Users can control the coercion rules by setting the \code{allow_uncertain} argument in the \code{\link[=as.mo]{as.mo()}} function. The following values or levels can be used:
 \itemize{
-\item Uncertainty level 0: no additional rules are applied;
-\item Uncertainty level 1: allow previously accepted (but now invalid) taxonomic names and minor spelling errors;
-\item Uncertainty level 2: allow all of level 1, strip values between brackets, inverse the words of the input, strip off text elements from the end keeping at least two elements;
-\item Uncertainty level 3: allow all of level 1 and 2, strip off text elements from the end, allow any part of a taxonomic name.
+\item \code{0}: no additional rules are applied;
+\item \code{1}: allow previously accepted (but now invalid) taxonomic names
+\item \code{2}: allow all of \code{1}, strip values between brackets, inverse the words of the input, strip off text elements from the end keeping at least two elements;
+\item \code{3}: allow all of level \code{1} and \code{2}, strip off text elements from the end, allow any part of a taxonomic name;
+\item \code{TRUE} (default): equivalent to \code{2};
+\item \code{FALSE}: equivalent to `0``.
 }
 
-The level of uncertainty can be set using the argument \code{allow_uncertain}. The default is \code{allow_uncertain = TRUE}, which is equal to uncertainty level 2. Using \code{allow_uncertain = FALSE} is equal to uncertainty level 0 and will skip all rules. You can also use e.g. \code{as.mo(..., allow_uncertain = 1)} to only allow up to level 1 uncertainty.
-
-With the default setting (\code{allow_uncertain = TRUE}, level 2), below examples will lead to valid results:
-\itemize{
-\item \code{"Streptococcus group B (known as S. agalactiae)"}. The text between brackets will be removed and a warning will be thrown that the result \emph{Streptococcus group B} (\code{B_STRPT_GRPB}) needs review.
-\item \code{"S. aureus - please mind: MRSA"}. The last word will be stripped, after which the function will try to find a match. If it does not, the second last word will be stripped, etc. Again, a warning will be thrown that the result \emph{Staphylococcus aureus} (\code{B_STPHY_AURS}) needs review.
-\item \code{"Fluoroquinolone-resistant Neisseria gonorrhoeae"}. The first word will be stripped, after which the function will try to find a match. A warning will be thrown that the result \emph{Neisseria gonorrhoeae} (\code{B_NESSR_GNRR}) needs review.
-}
+The default is \code{allow_uncertain = TRUE}, which is equal to uncertainty level 2. Using \code{allow_uncertain = FALSE} is equal to uncertainty level 0 and will skip all rules. You can also use e.g. \code{as.mo(..., allow_uncertain = 1)} to only allow up to level 1 uncertainty.
 
 There are three helper functions that can be run after using the \code{\link[=as.mo]{as.mo()}} function:
 \itemize{
@@ -137,12 +132,13 @@ The coercion rules consider the prevalence of microorganisms in humans grouped i
 \section{Source}{
 
 \enumerate{
-\item Becker K. \emph{et al.} (2014). \strong{Coagulase-Negative Staphylococci.} \emph{Clin Microbiol Rev.} 27(4): 870-926; \doi{10.1128/CMR.00109-13}
-\item Becker K. \emph{et al.} (2019). \strong{Implications of identifying the recently defined members of the \emph{S. aureus} complex, \emph{S. argenteus} and \emph{S. schweitzeri}: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).} \emph{Clin Microbiol Infect}; \doi{10.1016/j.cmi.2019.02.028}
-\item Becker K. \emph{et al.} (2020). \strong{Emergence of coagulase-negative staphylococci} \emph{Expert Rev Anti Infect Ther.} 18(4):349-366; \doi{10.1080/14787210.2020.1730813}
-\item Lancefield R.C. (1933). \strong{A serological differentiation of human and other groups of hemolytic streptococci}. \emph{J Exp Med.} 57(4): 571-95; \doi{10.1084/jem.57.4.571}
-\item Berends M.S. \emph{et al.} (2022). \strong{Trends in Occurrence and Phenotypic Resistance of Coagulase-Negative Staphylococci (CoNS) Found in Human Blood in the Northern Netherlands between 2013 and 2019} \emph{Microorganisms} 10(9), 1801; \doi{10.3390/microorganisms10091801}
-\item Parte, A.C. \emph{et al.} (2020). \strong{List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.} International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \doi{10.1099/ijsem.0.004332}. Accessed from \url{https://lpsn.dsmz.de} on 12 September, 2022.
+\item Berends MS \emph{et al.} (2022). \strong{AMR: An R Package for Working with Antimicrobial Resistance Data}. \emph{Journal of Statistical Software}, 104(3), 1-31; \doi{10.18637/jss.v104.i03}
+\item Becker K \emph{et al.} (2014). \strong{Coagulase-Negative Staphylococci.} \emph{Clin Microbiol Rev.} 27(4): 870-926; \doi{10.1128/CMR.00109-13}
+\item Becker K \emph{et al.} (2019). \strong{Implications of identifying the recently defined members of the \emph{S. aureus} complex, \emph{S. argenteus} and \emph{S. schweitzeri}: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).} \emph{Clin Microbiol Infect}; \doi{10.1016/j.cmi.2019.02.028}
+\item Becker K \emph{et al.} (2020). \strong{Emergence of coagulase-negative staphylococci} \emph{Expert Rev Anti Infect Ther.} 18(4):349-366; \doi{10.1080/14787210.2020.1730813}
+\item Lancefield RC (1933). \strong{A serological differentiation of human and other groups of hemolytic streptococci}. \emph{J Exp Med.} 57(4): 571-95; \doi{10.1084/jem.57.4.571}
+\item Berends MS \emph{et al.} (2022). \strong{Trends in Occurrence and Phenotypic Resistance of Coagulase-Negative Staphylococci (CoNS) Found in Human Blood in the Northern Netherlands between 2013 and 2019} \emph{Microorganisms} 10(9), 1801; \doi{10.3390/microorganisms10091801}
+\item Parte, AC \emph{et al.} (2020). \strong{List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.} International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \doi{10.1099/ijsem.0.004332}. Accessed from \url{https://lpsn.dsmz.de} on 12 September, 2022.
 \item GBIF Secretariat (November 26, 2021). GBIF Backbone Taxonomy. Checklist dataset \doi{10.15468/39omei}. Accessed from \url{https://www.gbif.org} on 12 September, 2022.
 \item Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value Set Name 'Microoganism', OID 2.16.840.1.114222.4.11.1009 (v12). URL: \url{https://phinvads.cdc.gov}
 }

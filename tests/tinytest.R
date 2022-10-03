@@ -40,7 +40,7 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
     library(AMR)
     # set language
     set_AMR_locale("English")
-    # get dir.exists(), trimws() and strrep() if on old R
+    # set some functions if on old R
     if (getRversion() < "3.2.0") {
       anyNA <- AMR:::anyNA
       dir.exists <- AMR:::dir.exists
@@ -54,6 +54,7 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
     }
     if (getRversion() < "3.5.0") {
       isFALSE <- AMR:::isFALSE
+      # trims() was introduced in 3.3.0, but its argument `whitespace` only in 3.5.0
       trimws <- AMR:::trimws
     }
     if (getRversion() < "3.6.0") {

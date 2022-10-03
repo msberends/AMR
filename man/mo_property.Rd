@@ -37,126 +37,126 @@
 mo_name(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_fullname(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_shortname(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_subspecies(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_species(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_genus(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_family(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_order(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_class(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_phylum(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_kingdom(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_domain(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_type(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_status(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_gramstain(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_is_gram_negative(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_is_gram_positive(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_is_yeast(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
@@ -164,77 +164,77 @@ mo_is_intrinsic_resistant(
   x,
   ab,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_snomed(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_ref(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_authors(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_year(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_lpsn(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_gbif(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_rank(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_taxonomy(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_synonyms(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
 mo_info(
   x,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
@@ -242,7 +242,7 @@ mo_url(
   x,
   open = FALSE,
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 
@@ -250,7 +250,7 @@ mo_property(
   x,
   property = "fullname",
   language = get_AMR_locale(),
-  keep_synonyms = getOption("AMR_keep_synonyms", TRUE),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   ...
 )
 }
@@ -259,7 +259,7 @@ mo_property(
 
 \item{language}{language to translate text like "no growth", which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}})}
 
-\item{keep_synonyms}{a \link{logical} to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is \code{TRUE}, which will return a note if old taxonomic names are returned. The default can be set with \code{options(AMR_keep_synonyms = ...)}.}
+\item{keep_synonyms}{a \link{logical} to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is \code{FALSE}, which will return a note if old taxonomic names were processed. The default can be set with \code{options(AMR_keep_synonyms = TRUE)} or \code{options(AMR_keep_synonyms = FALSE)}.}
 
 \item{...}{other arguments passed on to \code{\link[=as.mo]{as.mo()}}, such as 'allow_uncertain' and 'ignore_pattern'}
 
@@ -337,12 +337,13 @@ All matches are sorted descending on their matching score and for all user input
 \section{Source}{
 
 \enumerate{
-\item Becker K. \emph{et al.} (2014). \strong{Coagulase-Negative Staphylococci.} \emph{Clin Microbiol Rev.} 27(4): 870-926; \doi{10.1128/CMR.00109-13}
-\item Becker K. \emph{et al.} (2019). \strong{Implications of identifying the recently defined members of the \emph{S. aureus} complex, \emph{S. argenteus} and \emph{S. schweitzeri}: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).} \emph{Clin Microbiol Infect}; \doi{10.1016/j.cmi.2019.02.028}
-\item Becker K. \emph{et al.} (2020). \strong{Emergence of coagulase-negative staphylococci} \emph{Expert Rev Anti Infect Ther.} 18(4):349-366; \doi{10.1080/14787210.2020.1730813}
-\item Lancefield R.C. (1933). \strong{A serological differentiation of human and other groups of hemolytic streptococci}. \emph{J Exp Med.} 57(4): 571-95; \doi{10.1084/jem.57.4.571}
-\item Berends M.S. \emph{et al.} (2022). \strong{Trends in Occurrence and Phenotypic Resistance of Coagulase-Negative Staphylococci (CoNS) Found in Human Blood in the Northern Netherlands between 2013 and 2019} \emph{Microorganisms} 10(9), 1801; \doi{10.3390/microorganisms10091801}
-\item Parte, A.C. \emph{et al.} (2020). \strong{List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.} International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \doi{10.1099/ijsem.0.004332}. Accessed from \url{https://lpsn.dsmz.de} on 12 September, 2022.
+\item Berends MS \emph{et al.} (2022). \strong{AMR: An R Package for Working with Antimicrobial Resistance Data}. \emph{Journal of Statistical Software}, 104(3), 1-31; \doi{10.18637/jss.v104.i03}
+\item Becker K \emph{et al.} (2014). \strong{Coagulase-Negative Staphylococci.} \emph{Clin Microbiol Rev.} 27(4): 870-926; \doi{10.1128/CMR.00109-13}
+\item Becker K \emph{et al.} (2019). \strong{Implications of identifying the recently defined members of the \emph{S. aureus} complex, \emph{S. argenteus} and \emph{S. schweitzeri}: A position paper of members of the ESCMID Study Group for staphylococci and Staphylococcal Diseases (ESGS).} \emph{Clin Microbiol Infect}; \doi{10.1016/j.cmi.2019.02.028}
+\item Becker K \emph{et al.} (2020). \strong{Emergence of coagulase-negative staphylococci} \emph{Expert Rev Anti Infect Ther.} 18(4):349-366; \doi{10.1080/14787210.2020.1730813}
+\item Lancefield RC (1933). \strong{A serological differentiation of human and other groups of hemolytic streptococci}. \emph{J Exp Med.} 57(4): 571-95; \doi{10.1084/jem.57.4.571}
+\item Berends MS \emph{et al.} (2022). \strong{Trends in Occurrence and Phenotypic Resistance of Coagulase-Negative Staphylococci (CoNS) Found in Human Blood in the Northern Netherlands between 2013 and 2019} \emph{Microorganisms} 10(9), 1801; \doi{10.3390/microorganisms10091801}
+\item Parte, AC \emph{et al.} (2020). \strong{List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.} International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \doi{10.1099/ijsem.0.004332}. Accessed from \url{https://lpsn.dsmz.de} on 12 September, 2022.
 \item GBIF Secretariat (November 26, 2021). GBIF Backbone Taxonomy. Checklist dataset \doi{10.15468/39omei}. Accessed from \url{https://www.gbif.org} on 12 September, 2022.
 \item Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value Set Name 'Microoganism', OID 2.16.840.1.114222.4.11.1009 (v12). URL: \url{https://phinvads.cdc.gov}
 }

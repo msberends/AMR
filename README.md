@@ -2,10 +2,6 @@
 
 # `AMR` (for R)
 
-![R-code-check](https://github.com/msberends/AMR/workflows/R-code-check/badge.svg?branch=main)
-[![CodeFactor](https://www.codefactor.io/repository/github/msberends/amr/badge)](https://www.codefactor.io/repository/github/msberends/amr)
-[![Codecov](https://codecov.io/gh/msberends/AMR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/msberends/AMR?branch=main)
-
 <img src="https://msberends.github.io/AMR/AMR_intro.svg" align="center" height="300px" />
 
 This work was published in the Journal of Statistical Software (Volume 104(3); [DOI 10.18637/jss.v104.i03](https://doi.org/10.18637/jss.v104.i03)) and formed the basis of two PhD theses ([DOI 10.33612/diss.177417131](https://doi.org/10.33612/diss.177417131) and [DOI 10.33612/diss.192486375](https://doi.org/10.33612/diss.192486375)).

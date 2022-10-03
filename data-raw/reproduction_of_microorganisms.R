@@ -678,7 +678,7 @@ taxonomy <- taxonomy %>%
 
 # Add prevalence ----------------------------------------------------------
 
-# update prevalence based on taxonomy (our own JSS paper: Berends et al., 2022)
+# update prevalence based on taxonomy (our own JSS paper: Berends MS et al. (2022), DOI 10.18637/jss.v104.i03)
 taxonomy <- taxonomy %>%
   mutate(prevalence = case_when(
     class == "Gammaproteobacteria" |

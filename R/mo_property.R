@@ -172,7 +172,7 @@
 #' # SNOMED codes, and URL to the online database
 #' mo_info("Klebsiella pneumoniae")
 #' }
-mo_name <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_name <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_name")
@@ -194,7 +194,7 @@ mo_fullname <- mo_name
 
 #' @rdname mo_property
 #' @export
-mo_shortname <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_shortname <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_shortname")
@@ -224,7 +224,7 @@ mo_shortname <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
   # exceptions for streptococci: Group A Streptococcus -> GAS
   shortnames[shortnames %like% "S. group [ABCDFGHK]"] <- paste0("G", gsub("S. group ([ABCDFGHK])", "\\1", shortnames[shortnames %like% "S. group [ABCDFGHK]"], perl = TRUE), "S")
   # unknown species etc.
-  shortnames[shortnames %like% "unknown"] <- paste0("(", trimws(gsub("[^a-zA-Z -]", "", shortnames[shortnames %like% "unknown"], perl = TRUE)), ")")
+  shortnames[shortnames %like% "unknown"] <- paste0("(", trimws2(gsub("[^a-zA-Z -]", "", shortnames[shortnames %like% "unknown"], perl = TRUE)), ")")
 
   shortnames[is.na(x.mo)] <- NA_character_
   load_mo_uncertainties(metadata)
@@ -235,7 +235,7 @@ mo_shortname <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
 
 #' @rdname mo_property
 #' @export
-mo_subspecies <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_subspecies <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_subspecies")
@@ -249,7 +249,7 @@ mo_subspecies <- function(x, language = get_AMR_locale(), keep_synonyms = getOpt
 
 #' @rdname mo_property
 #' @export
-mo_species <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_species <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_species")
@@ -263,7 +263,7 @@ mo_species <- function(x, language = get_AMR_locale(), keep_synonyms = getOption
 
 #' @rdname mo_property
 #' @export
-mo_genus <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_genus <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_genus")
@@ -277,7 +277,7 @@ mo_genus <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("
 
 #' @rdname mo_property
 #' @export
-mo_family <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_family <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_family")
@@ -291,7 +291,7 @@ mo_family <- function(x, language = get_AMR_locale(), keep_synonyms = getOption(
 
 #' @rdname mo_property
 #' @export
-mo_order <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_order <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_order")
@@ -305,7 +305,7 @@ mo_order <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("
 
 #' @rdname mo_property
 #' @export
-mo_class <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_class <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_class")
@@ -319,7 +319,7 @@ mo_class <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("
 
 #' @rdname mo_property
 #' @export
-mo_phylum <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_phylum <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_phylum")
@@ -333,7 +333,7 @@ mo_phylum <- function(x, language = get_AMR_locale(), keep_synonyms = getOption(
 
 #' @rdname mo_property
 #' @export
-mo_kingdom <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_kingdom <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_kingdom")
@@ -351,7 +351,7 @@ mo_domain <- mo_kingdom
 
 #' @rdname mo_property
 #' @export
-mo_type <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_type <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_type")
@@ -368,7 +368,7 @@ mo_type <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
 
 #' @rdname mo_property
 #' @export
-mo_status <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_status <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_status")
@@ -382,7 +382,7 @@ mo_status <- function(x, language = get_AMR_locale(), keep_synonyms = getOption(
 
 #' @rdname mo_property
 #' @export
-mo_gramstain <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_gramstain <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_gramstain")
@@ -417,7 +417,7 @@ mo_gramstain <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
 
 #' @rdname mo_property
 #' @export
-mo_is_gram_negative <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_is_gram_negative <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_is_gram_negative")
@@ -437,7 +437,7 @@ mo_is_gram_negative <- function(x, language = get_AMR_locale(), keep_synonyms = 
 
 #' @rdname mo_property
 #' @export
-mo_is_gram_positive <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_is_gram_positive <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_is_gram_positive")
@@ -457,7 +457,7 @@ mo_is_gram_positive <- function(x, language = get_AMR_locale(), keep_synonyms = 
 
 #' @rdname mo_property
 #' @export
-mo_is_yeast <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_is_yeast <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_is_yeast")
@@ -482,7 +482,7 @@ mo_is_yeast <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
 
 #' @rdname mo_property
 #' @export
-mo_is_intrinsic_resistant <- function(x, ab, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_is_intrinsic_resistant <- function(x, ab, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_is_intrinsic_resistant")
@@ -519,7 +519,7 @@ mo_is_intrinsic_resistant <- function(x, ab, language = get_AMR_locale(), keep_s
 
 #' @rdname mo_property
 #' @export
-mo_snomed <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_snomed <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_snomed")
@@ -533,7 +533,7 @@ mo_snomed <- function(x, language = get_AMR_locale(), keep_synonyms = getOption(
 
 #' @rdname mo_property
 #' @export
-mo_ref <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_ref <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_ref")
@@ -547,7 +547,7 @@ mo_ref <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AM
 
 #' @rdname mo_property
 #' @export
-mo_authors <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_authors <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_authors")
@@ -564,7 +564,7 @@ mo_authors <- function(x, language = get_AMR_locale(), keep_synonyms = getOption
 
 #' @rdname mo_property
 #' @export
-mo_year <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_year <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_year")
@@ -581,7 +581,7 @@ mo_year <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
 
 #' @rdname mo_property
 #' @export
-mo_lpsn <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_lpsn <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_lpsn")
@@ -595,7 +595,7 @@ mo_lpsn <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
 
 #' @rdname mo_property
 #' @export
-mo_gbif <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_gbif <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_gbif")
@@ -609,7 +609,7 @@ mo_gbif <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
 
 #' @rdname mo_property
 #' @export
-mo_rank <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_rank <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_rank")
@@ -623,7 +623,7 @@ mo_rank <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
 
 #' @rdname mo_property
 #' @export
-mo_taxonomy <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_taxonomy <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_taxonomy")
@@ -652,7 +652,7 @@ mo_taxonomy <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
 
 #' @rdname mo_property
 #' @export
-mo_synonyms <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_synonyms <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_synonyms")
@@ -688,7 +688,7 @@ mo_synonyms <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
 
 #' @rdname mo_property
 #' @export
-mo_info <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_info <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_info")
@@ -726,7 +726,7 @@ mo_info <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
 
 #' @rdname mo_property
 #' @export
-mo_url <- function(x, open = FALSE, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_url <- function(x, open = FALSE, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_url")
@@ -765,7 +765,7 @@ mo_url <- function(x, open = FALSE, language = get_AMR_locale(), keep_synonyms =
 
 #' @rdname mo_property
 #' @export
-mo_property <- function(x, property = "fullname", language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", TRUE), ...) {
+mo_property <- function(x, property = "fullname", language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
   if (missing(x)) {
     # this tries to find the data and an <mo> column
     x <- find_mo_col(fn = "mo_property")
@@ -796,13 +796,17 @@ mo_validate <- function(x, property, language, keep_synonyms = keep_synonyms, ..
     Lancefield <- FALSE
   }
   has_Becker_or_Lancefield <- Becker %in% c(TRUE, "all") || Lancefield %in% c(TRUE, "all")
+  
+  # get microorganisms data set, but remove synonyms if keep_synonyms is FALSE
+  mo_data_check <- AMR::microorganisms[which(AMR::microorganisms$status %in% if (isTRUE(keep_synonyms)) c("synonym", "accepted") else "accepted"), , drop = FALSE]
 
-  if (all(x %in% AMR::microorganisms$mo, na.rm = TRUE) && !has_Becker_or_Lancefield && isTRUE(keep_synonyms)) {
+  if (all(x %in% c(mo_data_check$mo, NA)) && !has_Becker_or_Lancefield) {
     # do nothing, just don't run the other if-else's
-  } else if (all(x %in% AMR::microorganisms[[property]], na.rm = TRUE) && !has_Becker_or_Lancefield && isTRUE(keep_synonyms)) {
+  } else if (all(x %in% c(mo_data_check[[property]], NA)) && !has_Becker_or_Lancefield) {
     # no need to do anything, just return it
     return(x)
   } else {
+    # we need to get MO codes now
     x <- replace_old_mo_codes(x, property = property)
     x <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
   }

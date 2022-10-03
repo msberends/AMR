@@ -332,7 +332,7 @@ eucast_rules <- function(x,
     x <- x %pm>%
       strsplit(",") %pm>%
       unlist() %pm>%
-      trimws() %pm>%
+      trimws2() %pm>%
       vapply(FUN.VALUE = character(1), function(x) if (x %in% AMR::antibiotics$ab) ab_name(x, language = NULL, tolower = TRUE, fast_mode = TRUE) else x) %pm>%
       sort() %pm>%
       paste(collapse = ", ")
@@ -343,8 +343,8 @@ eucast_rules <- function(x,
     x
   }
   format_antibiotic_names <- function(ab_names, ab_results) {
-    ab_names <- trimws(unlist(strsplit(ab_names, ",")))
-    ab_results <- trimws(unlist(strsplit(ab_results, ",")))
+    ab_names <- trimws2(unlist(strsplit(ab_names, ",")))
+    ab_results <- trimws2(unlist(strsplit(ab_results, ",")))
     if (length(ab_results) == 1) {
       if (length(ab_names) == 1) {
         # like FOX S

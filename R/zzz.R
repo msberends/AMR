@@ -60,6 +60,7 @@ pkg_env$rsi_interpretation_history <- data.frame(
   interpretation = character(0),
   stringsAsFactors = FALSE
 )
+pkg_env$has_data.table <- pkg_is_available("data.table", also_load = FALSE)
 
 # determine info icon for messages
 utf8_supported <- isTRUE(base::l10n_info()$`UTF-8`)
