@@ -134,7 +134,7 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
   stop_ifnot(interactive(), "this function can only be used in interactive mode, since it must ask for the user's permission to write a file to their file system.")
 
   if (is.null(path) || path %in% c(FALSE, "")) {
-    pkg_env$mo_source <- NULL
+    AMR_env$mo_source <- NULL
     if (file.exists(mo_source_destination)) {
       unlink(mo_source_destination)
       message_("Removed mo_source file '", font_bold(mo_source_destination), "'",
@@ -227,7 +227,7 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
   attr(df, "mo_source_destination") <- mo_source_destination
   attr(df, "mo_source_timestamp") <- file.mtime(path)
   saveRDS(df, mo_source_destination)
-  pkg_env$mo_source <- df
+  AMR_env$mo_source <- df
   message_(
     action, " mo_source file '", font_bold(mo_source_destination),
     "' (", formatted_filesize(mo_source_destination),
@@ -247,24 +247,24 @@ get_mo_source <- function(destination = getOption("AMR_mo_source", "~/mo_source.
     }
     return(NULL)
   }
-  if (is.null(pkg_env$mo_source)) {
-    pkg_env$mo_source <- readRDS(path.expand(destination))
+  if (is.null(AMR_env$mo_source)) {
+    AMR_env$mo_source <- readRDS(path.expand(destination))
   }
 
-  old_time <- attributes(pkg_env$mo_source)$mo_source_timestamp
-  new_time <- file.mtime(attributes(pkg_env$mo_source)$mo_source_location)
+  old_time <- attributes(AMR_env$mo_source)$mo_source_timestamp
+  new_time <- file.mtime(attributes(AMR_env$mo_source)$mo_source_location)
   if (interactive() && !identical(old_time, new_time)) {
     # source file was updated, also update reference
-    set_mo_source(attributes(pkg_env$mo_source)$mo_source_location)
+    set_mo_source(attributes(AMR_env$mo_source)$mo_source_location)
   }
-  pkg_env$mo_source
+  AMR_env$mo_source
 }
 
 check_validity_mo_source <- function(x, refer_to_name = "`reference_df`", stop_on_error = TRUE) {
   if (paste(deparse(substitute(x)), collapse = "") == "get_mo_source()") {
     return(TRUE)
   }
-  if (is.null(pkg_env$mo_source) && (identical(x, get_mo_source()))) {
+  if (is.null(AMR_env$mo_source) && (identical(x, get_mo_source()))) {
     return(TRUE)
   }
   if (is.null(x)) {

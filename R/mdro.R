@@ -1955,14 +1955,14 @@ run_custom_mdro_guideline <- function(df, guideline, info) {
   for (i in seq_len(n_dots)) {
     qry <- tryCatch(eval(parse(text = guideline[[i]]$query), envir = df, enclos = parent.frame()),
       error = function(e) {
-        pkg_env$err_msg <- e$message
+        AMR_env$err_msg <- e$message
         return("error")
       }
     )
     if (identical(qry, "error")) {
       warning_("in `custom_mdro_guideline()`: rule ", i,
         " (`", as.character(guideline[[i]]$query), "`) was ignored because of this error message: ",
-        pkg_env$err_msg,
+        AMR_env$err_msg,
         call = FALSE,
         add_fn = font_red
       )

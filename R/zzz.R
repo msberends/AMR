@@ -28,23 +28,24 @@
 # ==================================================================== #
 
 # set up package environment, used by numerous AMR functions
-pkg_env <- new.env(hash = FALSE)
-pkg_env$mo_uncertainties <- data.frame(
-  uncertainty = integer(0),
+AMR_env <- new.env(hash = FALSE)
+AMR_env$mo_uncertainties <- data.frame(
   original_input = character(0),
   input = character(0),
   fullname = character(0),
   mo = character(0),
   candidates = character(0),
+  minimum_matching_score = integer(0),
+  keep_synonyms = logical(0),
   stringsAsFactors = FALSE
 )
-pkg_env$mo_renamed <- list()
-pkg_env$mo_previously_coerced <- data.frame(
+AMR_env$mo_renamed <- list()
+AMR_env$mo_previously_coerced <- data.frame(
   x = character(0),
   mo = character(0),
   stringsAsFactors = FALSE
 )
-pkg_env$rsi_interpretation_history <- data.frame(
+AMR_env$rsi_interpretation_history <- data.frame(
   datetime = Sys.time()[0],
   index = integer(0),
   ab_input = character(0),
@@ -60,7 +61,7 @@ pkg_env$rsi_interpretation_history <- data.frame(
   interpretation = character(0),
   stringsAsFactors = FALSE
 )
-pkg_env$has_data.table <- pkg_is_available("data.table", also_load = FALSE)
+AMR_env$has_data.table <- pkg_is_available("data.table", also_load = FALSE)
 
 # determine info icon for messages
 utf8_supported <- isTRUE(base::l10n_info()$`UTF-8`)
@@ -69,9 +70,9 @@ is_latex <- tryCatch(import_fn("is_latex_output", "knitr", error_on_fail = FALSE
 )
 if (utf8_supported && !is_latex) {
   # \u2139 is a symbol officially named 'information source'
-  pkg_env$info_icon <- "\u2139"
+  AMR_env$info_icon <- "\u2139"
 } else {
-  pkg_env$info_icon <- "i"
+  AMR_env$info_icon <- "i"
 }
 
 .onLoad <- function(lib, pkg) {

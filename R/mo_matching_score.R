@@ -79,7 +79,10 @@ mo_matching_score <- function(x, n) {
 
   # only keep one space
   x <- gsub(" +", " ", x)
-
+  
+  # start with a capital letter
+  substr(x, 1, 1) <- toupper(substr(x, 1, 1))
+  
   # n is always a taxonomically valid full name
   if (length(n) == 1) {
     n <- rep(n, length(x))

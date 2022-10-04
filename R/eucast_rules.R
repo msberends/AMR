@@ -1178,7 +1178,7 @@ eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 11.0)
   meet_criteria(administration, allow_class = "character", is_in = dosage$administration[!is.na(dosage$administration)], has_length = 1)
   meet_criteria(version_breakpoints, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_BREAKPOINTS)))
 
-  # show used version_breakpoints number once per session (pkg_env will reload every session)
+  # show used version_breakpoints number once per session (AMR_env will reload every session)
   if (message_not_thrown_before("eucast_dosage", "v", gsub("[^0-9]", "", version_breakpoints), entire_session = TRUE)) {
     message_(
       "Dosages for antimicrobial drugs, as meant for ",

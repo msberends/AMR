@@ -4,9 +4,9 @@
 \alias{as.mo}
 \alias{mo}
 \alias{is.mo}
-\alias{mo_failures}
 \alias{mo_uncertainties}
 \alias{mo_renamed}
+\alias{mo_failures}
 \alias{mo_reset_session}
 \alias{mo_cleaning_regex}
 \title{Transform Input to a Microorganism Code}
@@ -27,11 +27,11 @@ as.mo(
 
 is.mo(x)
 
-mo_failures()
-
 mo_uncertainties()
 
 mo_renamed()
+
+mo_failures()
 
 mo_reset_session()
 

@@ -409,7 +409,7 @@ word_wrap <- function(...,
   msg <- paste0(c(...), collapse = "")
   
   if (isTRUE(as_note)) {
-    msg <- paste0(pkg_env$info_icon, " ", gsub("^note:? ?", "", msg, ignore.case = TRUE))
+    msg <- paste0(AMR_env$info_icon, " ", gsub("^note:? ?", "", msg, ignore.case = TRUE))
   }
   
   if (msg %like% "\n") {
@@ -742,14 +742,14 @@ meet_criteria <- function(object,
   
   # if object is missing, or another error:
   tryCatch(invisible(object),
-           error = function(e) pkg_env$meet_criteria_error_txt <- e$message
+           error = function(e) AMR_env$meet_criteria_error_txt <- e$message
   )
-  if (!is.null(pkg_env$meet_criteria_error_txt)) {
-    error_txt <- pkg_env$meet_criteria_error_txt
-    pkg_env$meet_criteria_error_txt <- NULL
+  if (!is.null(AMR_env$meet_criteria_error_txt)) {
+    error_txt <- AMR_env$meet_criteria_error_txt
+    AMR_env$meet_criteria_error_txt <- NULL
     stop(error_txt, call. = FALSE) # don't use stop_() here, our pkg may not be loaded yet
   }
-  pkg_env$meet_criteria_error_txt <- NULL
+  AMR_env$meet_criteria_error_txt <- NULL
   
   if (is.null(object)) {
     stop_if(allow_NULL == FALSE, "argument `", obj_name, "` must not be NULL", call = call_depth)
@@ -990,9 +990,9 @@ message_not_thrown_before <- function(fn, ..., entire_session = FALSE) {
   # this is to prevent that messages/notes will be printed for every dplyr group or more than once per session
   # e.g. this would show a msg 4 times: example_isolates %>% group_by(ward) %>% filter(mo_is_gram_negative())
   salt <- gsub("[^a-zA-Z0-9|_-]", "?", substr(paste(c(...), sep = "|", collapse = "|"), 1, 512), perl = TRUE)
-  not_thrown_before <- is.null(pkg_env[[paste0("thrown_msg.", fn, ".", salt)]]) ||
+  not_thrown_before <- is.null(AMR_env[[paste0("thrown_msg.", fn, ".", salt)]]) ||
     !identical(
-      pkg_env[[paste0("thrown_msg.", fn, ".", salt)]],
+      AMR_env[[paste0("thrown_msg.", fn, ".", salt)]],
       unique_call_id(
         entire_session = entire_session,
         match_fn = fn
@@ -1003,7 +1003,7 @@ message_not_thrown_before <- function(fn, ..., entire_session = FALSE) {
     assign(
       x = paste0("thrown_msg.", fn, ".", salt),
       value = unique_call_id(entire_session = entire_session, match_fn = fn),
-      envir = pkg_env
+      envir = AMR_env
     )
   }
   not_thrown_before
@@ -1354,11 +1354,11 @@ percentage <- function(x, digits = NULL, ...) {
 }
 
 time_start_tracking <- function() {
-  pkg_env$time_start <- round(as.double(Sys.time()) * 1000)
+  AMR_env$time_start <- round(as.double(Sys.time()) * 1000)
 }
 
 time_track <- function(name = NULL) {
-  paste("(until now:", trimws(round(as.double(Sys.time()) * 1000) - pkg_env$time_start), "ms)")
+  paste("(until now:", trimws(round(as.double(Sys.time()) * 1000) - AMR_env$time_start), "ms)")
 }
 
 trimws2 <- function(..., whitespace = "[\u0009\u000A\u000B\u000C\u000D\u0020\u0085\u00A0\u1680\u180E\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u200C\u200D\u2028\u2029\u202F\u205F\u2060\u3000\uFEFF]") {
@@ -1370,19 +1370,19 @@ trimws2 <- function(..., whitespace = "[\u0009\u000A\u000B\u000C\u000D\u0020\u00
 # Faster data.table implementations ----
 
 match <- function(x, ...) {
-  if (isTRUE(pkg_env$has_data.table) && is.character(x)) {
+  if (isTRUE(AMR_env$has_data.table) && is.character(x)) {
     # data.table::chmatch() is 35% faster than base::match() for character
     getExportedValue(name = "chmatch", ns = asNamespace("data.table"))(x, ...)
   } else {
     base::match(x, ...)
   }
 }
-`%in%` <- function(x, ...) {
-  if (isTRUE(pkg_env$has_data.table) && is.character(x)) {
-    # data.table::`%chin%`() is 20% faster than base::`%in%`() for character
-    getExportedValue(name = "%chin%", ns = asNamespace("data.table"))(x, ...)
+`%in%` <- function(x, table) {
+  if (isTRUE(AMR_env$has_data.table) && is.character(x) && is.character(table)) {
+    # data.table::`%chin%`() is 20-50% faster than base::`%in%`() for character
+    getExportedValue(name = "%chin%", ns = asNamespace("data.table"))(x, table)
   } else {
-    base::`%in%`(x, ...)
+    base::`%in%`(x, table)
   }
 }
 

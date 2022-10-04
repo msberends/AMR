@@ -261,7 +261,7 @@ mo_property(
 
 \item{keep_synonyms}{a \link{logical} to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is \code{FALSE}, which will return a note if old taxonomic names were processed. The default can be set with \code{options(AMR_keep_synonyms = TRUE)} or \code{options(AMR_keep_synonyms = FALSE)}.}
 
-\item{...}{other arguments passed on to \code{\link[=as.mo]{as.mo()}}, such as 'allow_uncertain' and 'ignore_pattern'}
+\item{...}{other arguments passed on to \code{\link[=as.mo]{as.mo()}}, such as 'minimum_matching_score', 'ignore_pattern', and 'remove_from_input'}
 
 \item{ab}{any (vector of) text that can be coerced to a valid antibiotic code with \code{\link[=as.ab]{as.ab()}}}
 
@@ -285,8 +285,8 @@ Use these functions to return a specific property of a microorganism based on th
 All functions will, at default, keep old taxonomic properties. Please refer to this example, knowing that \emph{Escherichia blattae} was renamed to \emph{Shimwellia blattae} in 2010:
 \itemize{
 \item \code{mo_name("Escherichia blattae")} will return \code{"Shimwellia blattae"} (with a message about the renaming)
-\item \code{mo_ref("Escherichia blattae")} will return \code{"Burgess et al., 1973"} (with a message about the renaming)
-\item \code{mo_ref("Shimwellia blattae")} will return \code{"Priest et al., 2010"} (without a message)
+\item \code{mo_ref("Escherichia blattae", keep_synonyms = TRUE)} will return \code{"Burgess et al., 1973"} (with a warning about the renaming)
+\item \code{mo_ref("Shimwellia blattae", keep_synonyms = FALSE)} will return \code{"Priest et al., 2010"} (without a message)
 }
 
 The short name - \code{\link[=mo_shortname]{mo_shortname()}} - almost always returns the first character of the genus and the full species, like \code{"E. coli"}. Exceptions are abbreviations of staphylococci (such as \emph{"CoNS"}, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as \emph{"GBS"}, Group B Streptococci). Please bear in mind that e.g. \emph{E. coli} could mean \emph{Escherichia coli} (kingdom of Bacteria) as well as \emph{Entamoeba coli} (kingdom of Protozoa). Returning to the full name will be done using \code{\link[=as.mo]{as.mo()}} internally, giving priority to bacteria and human pathogens, i.e. \code{"E. coli"} will be considered \emph{Escherichia coli}. In other words, \code{mo_fullname(mo_shortname("Entamoeba coli"))} returns \code{"Escherichia coli"}.

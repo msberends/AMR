@@ -906,8 +906,8 @@ as_rsi_method <- function(method_short,
       }
 
       # write to verbose output
-      pkg_env$rsi_interpretation_history <- rbind(
-        pkg_env$rsi_interpretation_history,
+      AMR_env$rsi_interpretation_history <- rbind(
+        AMR_env$rsi_interpretation_history,
         data.frame(
           datetime = Sys.time(),
           index = i,
@@ -964,7 +964,7 @@ as_rsi_method <- function(method_short,
 rsi_interpretation_history <- function(clean = FALSE) {
   meet_criteria(clean, allow_class = "logical", has_length = 1)
 
-  out.bak <- pkg_env$rsi_interpretation_history
+  out.bak <- AMR_env$rsi_interpretation_history
   out <- out.bak
   if (NROW(out) == 0) {
     message_("No results to return. Run `as.rsi()` on MIC values or disk diffusion zones first to see a 'logbook' data set here.")
@@ -975,9 +975,9 @@ rsi_interpretation_history <- function(clean = FALSE) {
   out$interpretation <- as.rsi(out$interpretation)
   # keep stored for next use
   if (isTRUE(clean)) {
-    pkg_env$rsi_interpretation_history <- pkg_env$rsi_interpretation_history[0, , drop = FALSE]
+    AMR_env$rsi_interpretation_history <- AMR_env$rsi_interpretation_history[0, , drop = FALSE]
   } else {
-    pkg_env$rsi_interpretation_history <- out.bak
+    AMR_env$rsi_interpretation_history <- out.bak
   }
 
   if (pkg_is_available("tibble", also_load = FALSE)) {

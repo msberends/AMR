@@ -33,13 +33,13 @@
 #' @param x any [character] (vector) that can be coerced to a valid microorganism code with [as.mo()]. Can be left blank for auto-guessing the column containing microorganism codes if used in a data set, see *Examples*.
 #' @param property one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`, or must be `"shortname"`
 #' @inheritParams as.mo
-#' @param ... other arguments passed on to [as.mo()], such as 'allow_uncertain' and 'ignore_pattern'
+#' @param ... other arguments passed on to [as.mo()], such as 'minimum_matching_score', 'ignore_pattern', and 'remove_from_input'
 #' @param ab any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
 #' @param open browse the URL using [`browseURL()`][utils::browseURL()]
 #' @details All functions will, at default, keep old taxonomic properties. Please refer to this example, knowing that *Escherichia blattae* was renamed to *Shimwellia blattae* in 2010:
 #' - `mo_name("Escherichia blattae")` will return `"Shimwellia blattae"` (with a message about the renaming)
-#' - `mo_ref("Escherichia blattae")` will return `"Burgess et al., 1973"` (with a message about the renaming)
-#' - `mo_ref("Shimwellia blattae")` will return `"Priest et al., 2010"` (without a message)
+#' - `mo_ref("Escherichia blattae", keep_synonyms = TRUE)` will return `"Burgess et al., 1973"` (with a warning about the renaming)
+#' - `mo_ref("Shimwellia blattae", keep_synonyms = FALSE)` will return `"Priest et al., 2010"` (without a message)
 #'
 #' The short name - [mo_shortname()] - almost always returns the first character of the genus and the full species, like `"E. coli"`. Exceptions are abbreviations of staphylococci (such as *"CoNS"*, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as *"GBS"*, Group B Streptococci). Please bear in mind that e.g. *E. coli* could mean *Escherichia coli* (kingdom of Bacteria) as well as *Entamoeba coli* (kingdom of Protozoa). Returning to the full name will be done using [as.mo()] internally, giving priority to bacteria and human pathogens, i.e. `"E. coli"` will be considered *Escherichia coli*. In other words, `mo_fullname(mo_shortname("Entamoeba coli"))` returns `"Escherichia coli"`.
 #'
@@ -504,7 +504,7 @@ mo_is_intrinsic_resistant <- function(x, ab, language = get_AMR_locale(), keep_s
     stop_("length of `x` and `ab` must be equal, or one of them must be of length 1.")
   }
 
-  # show used version number once per session (pkg_env will reload every session)
+  # show used version number once per session (AMR_env will reload every session)
   if (message_not_thrown_before("mo_is_intrinsic_resistant", "version.mo", entire_session = TRUE)) {
     message_(
       "Determining intrinsic resistance based on ",

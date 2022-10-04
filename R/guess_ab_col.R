@@ -112,17 +112,17 @@ get_column_abx <- function(x,
       entire_session = FALSE,
       match_fn = fn
     ),
-    pkg_env$get_column_abx.call
+    AMR_env$get_column_abx.call
   )) {
     # so within the same call, within the same environment, we got here again.
     # but we could've come from another function within the same call, so now only check the columns that changed
 
     # first remove the columns that are not existing anymore
-    previous <- pkg_env$get_column_abx.out
+    previous <- AMR_env$get_column_abx.out
     current <- previous[previous %in% colnames(x)]
 
     # then compare columns in current call with columns in original call
-    new_cols <- colnames(x)[!colnames(x) %in% pkg_env$get_column_abx.checked_cols]
+    new_cols <- colnames(x)[!colnames(x) %in% AMR_env$get_column_abx.checked_cols]
     if (length(new_cols) > 0) {
       # these columns did not exist in the last call, so add them
       new_cols_rsi <- get_column_abx(x[, new_cols, drop = FALSE], reuse_previous_result = FALSE, info = FALSE, sort = FALSE)
@@ -132,11 +132,11 @@ get_column_abx <- function(x,
     }
 
     # update pkg environment to improve speed on next run
-    pkg_env$get_column_abx.out <- current
-    pkg_env$get_column_abx.checked_cols <- colnames(x)
+    AMR_env$get_column_abx.out <- current
+    AMR_env$get_column_abx.checked_cols <- colnames(x)
 
     # and return right values
-    return(pkg_env$get_column_abx.out)
+    return(AMR_env$get_column_abx.out)
   }
 
   meet_criteria(x, allow_class = "data.frame")
@@ -243,9 +243,9 @@ get_column_abx <- function(x,
     if (info == TRUE && all_okay == TRUE) {
       message_("No columns found.")
     }
-    pkg_env$get_column_abx.call <- unique_call_id(entire_session = FALSE, match_fn = fn)
-    pkg_env$get_column_abx.checked_cols <- colnames(x.bak)
-    pkg_env$get_column_abx.out <- out
+    AMR_env$get_column_abx.call <- unique_call_id(entire_session = FALSE, match_fn = fn)
+    AMR_env$get_column_abx.checked_cols <- colnames(x.bak)
+    AMR_env$get_column_abx.out <- out
     return(out)
   }
 
@@ -320,9 +320,9 @@ get_column_abx <- function(x,
     }
   }
 
-  pkg_env$get_column_abx.call <- unique_call_id(entire_session = FALSE, match_fn = fn)
-  pkg_env$get_column_abx.checked_cols <- colnames(x.bak)
-  pkg_env$get_column_abx.out <- out
+  AMR_env$get_column_abx.call <- unique_call_id(entire_session = FALSE, match_fn = fn)
+  AMR_env$get_column_abx.checked_cols <- colnames(x.bak)
+  AMR_env$get_column_abx.out <- out
   out
 }
 
