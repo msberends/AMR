@@ -1369,12 +1369,12 @@ trimws2 <- function(..., whitespace = "[\u0009\u000A\u000B\u000C\u000D\u0020\u00
 
 # Faster data.table implementations ----
 
-match <- function(x, ...) {
-  if (isTRUE(AMR_env$has_data.table) && is.character(x)) {
+match <- function(x, table, ...) {
+  if (isTRUE(AMR_env$has_data.table) && is.character(x) && is.character(table)) {
     # data.table::chmatch() is 35% faster than base::match() for character
-    getExportedValue(name = "chmatch", ns = asNamespace("data.table"))(x, ...)
+    getExportedValue(name = "chmatch", ns = asNamespace("data.table"))(x, table, ...)
   } else {
-    base::match(x, ...)
+    base::match(x, table, ...)
   }
 }
 `%in%` <- function(x, table) {
@@ -1490,16 +1490,6 @@ if (getRversion() < "3.5.0") {
   isFALSE <- function(x) {
     is.logical(x) && length(x) == 1L && !is.na(x) && !x
   }
-  # trims() was introduced in 3.3.0, but its argument `whitespace` only in 3.5.0
-  trimws <- function(x, which = c("both", "left", "right"), whitespace = "[ \t\r\n]") {
-    which <- match.arg(which)
-    mysub <- function(re, x) sub(re, "", x, perl = TRUE)
-    switch(which,
-      left = mysub(paste0("^", whitespace, "+"), x),
-      right = mysub(paste0(whitespace, "+$"), x),
-      both = mysub(paste0(whitespace, "+$"), mysub(paste0("^", whitespace, "+"), x))
-    )
-  }
 }
 
 if (getRversion() < "3.6.0") {
@@ -1508,6 +1498,16 @@ if (getRversion() < "3.6.0") {
     ex <- parse(text = s, keep.source = FALSE)
     stopifnot(length(ex) == 1L)
     ex[[1L]]
+  }
+  # trims() was introduced in 3.3.0, but its argument `whitespace` only in 3.6.0
+  trimws <- function(x, which = c("both", "left", "right"), whitespace = "[ \t\r\n]") {
+    which <- match.arg(which)
+    mysub <- function(re, x) sub(re, "", x, perl = TRUE)
+    switch(which,
+      left = mysub(paste0("^", whitespace, "+"), x),
+      right = mysub(paste0(whitespace, "+$"), x),
+      both = mysub(paste0(whitespace, "+$"), mysub(paste0("^", whitespace, "+"), x))
+    )
   }
 }
 

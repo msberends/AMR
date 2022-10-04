@@ -826,7 +826,6 @@ print.mo_uncertainties <- function(x, ...) {
           " -> ",
           paste0(
             font_bold(font_italic(x[i, ]$fullname)),
-            ifelse(!is.na(x[i, ]$renamed_to), paste(", renamed to", font_italic(x[i, ]$renamed_to)), ""),
             " (", x[i, ]$mo, ", ", score_set_colour(score_formatted, score), ")"
           )
         ),

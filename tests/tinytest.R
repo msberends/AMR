@@ -54,11 +54,11 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
     }
     if (getRversion() < "3.5.0") {
       isFALSE <- AMR:::isFALSE
-      # trims() was introduced in 3.3.0, but its argument `whitespace` only in 3.5.0
-      trimws <- AMR:::trimws
     }
     if (getRversion() < "3.6.0") {
       str2lang <- AMR:::str2lang
+      # trims() was introduced in 3.3.0, but its argument `whitespace` only in 3.6.0
+      trimws <- AMR:::trimws
     }
     if (getRversion() < "4.0.0") {
       deparse1 <- AMR:::deparse1
