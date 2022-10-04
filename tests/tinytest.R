@@ -76,4 +76,3 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
     print(summary(out))
   }
 }
-

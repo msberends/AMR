@@ -79,10 +79,10 @@ mo_matching_score <- function(x, n) {
 
   # only keep one space
   x <- gsub(" +", " ", x)
-  
-  # start with a capital letter
+
+  # force a capital letter, so this conversion will not count as a substitution
   substr(x, 1, 1) <- toupper(substr(x, 1, 1))
-  
+
   # n is always a taxonomically valid full name
   if (length(n) == 1) {
     n <- rep(n, length(x))
@@ -90,19 +90,20 @@ mo_matching_score <- function(x, n) {
   if (length(x) == 1) {
     x <- rep(x, length(n))
   }
-  
+
   # length of fullname
   l_n <- nchar(n)
   lev <- double(length = length(x))
   l_n.lev <- double(length = length(x))
   lev <- unlist(Map(f = function(a, b) {
-    as.double(utils::adist(a, b, 
-                           ignore.case = FALSE,
-                           fixed = TRUE,
-                           costs = c(insertions = 1, deletions = 2, substitutions = 2),
-                           counts = FALSE))
+    as.double(utils::adist(a, b,
+      ignore.case = FALSE,
+      fixed = TRUE,
+      costs = c(insertions = 1, deletions = 2, substitutions = 2),
+      counts = FALSE
+    ))
   }, x, n, USE.NAMES = FALSE))
-  
+
   l_n.lev[l_n < lev] <- l_n[l_n < lev]
   l_n.lev[lev < l_n] <- lev[lev < l_n]
   l_n.lev[lev == l_n] <- lev[lev == l_n]

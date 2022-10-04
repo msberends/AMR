@@ -1,4 +1,4 @@
-# AMR 1.8.2.9027
+# AMR 1.8.2.9028
 
 This version will eventually become v2.0! We're happy to reach a new major milestone soon!
 
@@ -9,11 +9,12 @@ This version will eventually become v2.0! We're happy to reach a new major miles
   * Chromista are almost never clinically relevant, thus lacking the secondary scope of this package
 * The `microorganisms` no longer relies on the Catalogue of Life, but now primarily on the List of Prokaryotic names with Standing in Nomenclature (LPSN) and is supplemented with the Global Biodiversity Information Facility (GBIF). The structure of this data set has changed to include separate LPSN and GBIF identifiers. Almost all previous MO codes were retained. It contains over 1,000 taxonomic names from 2022 already.
 * The `microorganisms.old` data set was removed, and all previously accepted names are now included in the `microorganisms` data set. A new column `status` contains `"accepted"` for currently accepted names and `"synonym"` for taxonomic synonyms; currently invalid names. All previously accepted names now have a microorganisms ID and - if available - an LPSN, GBIF and SNOMED CT identifier.
+* The `mo_matching_score()` now count deletions and substitutions as 2 instead of 1, which impacts the outcome of `as.mo()` and any `mo_*()` function
 
 ### New
 * EUCAST 2022 and CLSI 2022 guidelines have been added for `as.rsi()`. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.
 * All new algorithm for `as.mo()` (and thus internally all `mo_*()` functions) while still following our original set-up as described in our paper (DOI 10.18637/jss.v104.i03).
-  * A new argument `keep_synonyms` allows to *not* correct for updated taxonomy
+  * A new argument `keep_synonyms` allows to *not* correct for updated taxonomy, in favour of the now deleted argument `allow_uncertain`
   * It has increased tremendously in speed and returns generally more consequent results
   * Sequential coercion is now extremely fast as results are stored to the package environment, although coercion of unknown values must be run once per session. Previous results can be reset/removed with the new `mo_reset_session()` function.
 * Function `mean_amr_distance()` to calculate the mean AMR distance. The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand.

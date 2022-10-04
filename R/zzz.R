@@ -128,12 +128,12 @@ if (utf8_supported && !is_latex) {
   s3_register("vctrs::vec_cast", "character.mic")
   s3_register("vctrs::vec_cast", "double.mic")
   s3_register("vctrs::vec_math", "mic")
-  
+
   # if mo source exists, fire it up (see mo_source())
   if (tryCatch(file.exists(getOption("AMR_mo_source", "~/mo_source.rds")), error = function(e) FALSE)) {
     invisible(get_mo_source())
   }
-  
+
   # be sure to print tibbles as tibbles
   if (pkg_is_available("tibble", also_load = FALSE)) {
     loadNamespace("tibble")

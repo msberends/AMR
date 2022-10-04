@@ -124,11 +124,14 @@ set_AMR_locale <- function(language) {
   options(AMR_locale = language)
   if (interactive() || identical(Sys.getenv("IN_PKGDOWN"), "true")) {
     # show which language to use now
-    message_("Using ", LANGUAGES_SUPPORTED_NAMES[[language]]$exonym,
-             ifelse(language != "en",
-                    paste0(" (", LANGUAGES_SUPPORTED_NAMES[[language]]$endonym, ")"),
-                    ""), 
-             " for the AMR package for this session.")
+    message_(
+      "Using ", LANGUAGES_SUPPORTED_NAMES[[language]]$exonym,
+      ifelse(language != "en",
+        paste0(" (", LANGUAGES_SUPPORTED_NAMES[[language]]$endonym, ")"),
+        ""
+      ),
+      " for the AMR package for this session."
+    )
   }
 }
 

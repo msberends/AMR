@@ -104,7 +104,7 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
     MO_staph[which(MO_staph$species %in% c(
       "coagulase-negative", "argensis", "arlettae",
       "auricularis", "borealis", "caeli", "capitis", "caprae",
-      "carnosus", "casei", "chromogenes", "cohnii", "condimenti",
+      "carnosus", "casei", "caseolyticus", "chromogenes", "cohnii", "condimenti",
       "croceilyticus",
       "debuckii", "devriesei", "edaphicus", "epidermidis",
       "equorum", "felis", "fleurettii", "gallinarum",
@@ -118,7 +118,7 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
       "vitulinus", "vitulus", "warneri", "xylosus",
       "caledonicus", "canis",
       "durrellii", "lloydii",
-      "ratti", "taiwanensis"
+      "ratti", "taiwanensis", "veratri", "urealyticus"
     ) |
       # old, now renamed to S. schleiferi (but still as synonym in our data of course):
       (MO_staph$species == "schleiferi" & MO_staph$subspecies %in% c("schleiferi", ""))),

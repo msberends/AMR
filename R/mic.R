@@ -167,7 +167,7 @@ valid_mic_levels <- c(
 as.mic <- function(x, na.rm = FALSE) {
   meet_criteria(x, allow_class = c("mic", "character", "numeric", "integer", "factor"), allow_NA = TRUE)
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)
-  
+
   if (is.mic(x)) {
     x
   } else {

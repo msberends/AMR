@@ -376,7 +376,7 @@ mo_status <- function(x, language = get_AMR_locale(), keep_synonyms = getOption(
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
-  
+
   translate_into_language(mo_validate(x = x, property = "status", language = language, keep_synonyms = keep_synonyms, ...), language = language, only_unknown = TRUE)
 }
 
@@ -603,7 +603,7 @@ mo_gbif <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
-  
+
   mo_validate(x = x, property = "gbif", language = language, keep_synonyms = keep_synonyms, ...)
 }
 
@@ -796,7 +796,7 @@ mo_validate <- function(x, property, language, keep_synonyms = keep_synonyms, ..
     Lancefield <- FALSE
   }
   has_Becker_or_Lancefield <- Becker %in% c(TRUE, "all") || Lancefield %in% c(TRUE, "all")
-  
+
   # get microorganisms data set, but remove synonyms if keep_synonyms is FALSE
   mo_data_check <- AMR::microorganisms[which(AMR::microorganisms$status %in% if (isTRUE(keep_synonyms)) c("synonym", "accepted") else "accepted"), , drop = FALSE]
 

@@ -49,10 +49,10 @@
 #' ```r
 #' x
 #' #> A set of custom EUCAST rules:
-#' #> 
+#' #>
 #' #>   1. If TZP is "S" then set to  S :
 #' #>      amoxicillin (AMX), ampicillin (AMP)
-#' #> 
+#' #>
 #' #>   2. If TZP is "R" then set to  R :
 #' #>      amoxicillin (AMX), ampicillin (AMP)
 #' ```
@@ -68,7 +68,7 @@
 #' #>                      mo TZP ampi cipro
 #' #> 1      Escherichia coli   R    S     S
 #' #> 2 Klebsiella pneumoniae   R    S     S
-#' 
+#'
 #' eucast_rules(df, rules = "custom", custom_rules = x, info = FALSE)
 #' #>                      mo TZP ampi cipro
 #' #> 1      Escherichia coli   R    R     S

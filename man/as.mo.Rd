@@ -177,7 +177,7 @@ as.mo(c(
   "VISA", # Vancomycin Intermediate S. aureus
   "VRSA", # Vancomycin Resistant S. aureus
   115329001 # SNOMED CT code
-)) 
+))
 
 # Dyslexia is no problem - these all work:
 as.mo(c(

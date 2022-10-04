@@ -59,7 +59,7 @@ expect_inherits(mo_synonyms(c("Candida albicans", "Escherichia coli")), "list")
 expect_equal(names(mo_info("Escherichia coli")), c(
   "kingdom", "phylum", "class", "order",
   "family", "genus", "species", "subspecies",
-  "synonyms", "gramstain", "url", "ref",
+  "status", "synonyms", "gramstain", "url", "ref",
   "snomed"
 ))
 expect_inherits(mo_info(c("Escherichia coli", "Staphylococcus aureus")), "list")
@@ -73,7 +73,7 @@ expect_true(mo_url("Escherichia coli") %like% "lpsn.dsmz.de")
 
 # test integrity
 MOs <- microorganisms
-expect_identical(MOs$fullname, mo_fullname(MOs$fullname, language = "en"))
+expect_identical(MOs$fullname, mo_fullname(MOs$fullname, language = "en", keep_synonyms = TRUE))
 
 # check languages
 expect_equal(mo_type("Escherichia coli", language = "de"), "Bakterien")
@@ -81,13 +81,13 @@ expect_equal(mo_gramstain("Escherichia coli", language = "nl"), "Gram-negatief")
 
 gr <- mo_gramstain("Escherichia coli", language = NULL)
 for (l in AMR:::LANGUAGES_SUPPORTED[-1]) {
-  expect_false(mo_gramstain("Escherichia coli", language = l) == gr, info = paste("Gram-stain in langauge", l))
+  expect_false(mo_gramstain("Escherichia coli", language = l) == gr, info = paste("Gram-stain in language", l))
 }
 
 expect_error(mo_gramstain("Escherichia coli", language = "UNKNOWN"))
-dutch <- mo_name(microorganisms$fullname[which(microorganisms$fullname %unlike% "unknown|coagulase")], language = "nl") # should be transformable to English again
-expect_identical(mo_name(dutch, language = NULL),
-                 microorganisms$fullname[which(microorganisms$fullname %unlike% "unknown|coagulase")]) # gigantic test - will run ALL names
+dutch <- mo_name(microorganisms$fullname[which(microorganisms$fullname %unlike% "unknown|coagulase|Fungi")], language = "nl", keep_synonyms = TRUE) # should be transformable to English again
+expect_identical(mo_name(dutch, language = NULL, keep_synonyms = TRUE),
+                 microorganisms$fullname[which(microorganisms$fullname %unlike% "unknown|coagulase|Fungi")]) # gigantic test - will run ALL names
 
 # manual property function
 expect_error(mo_property("Escherichia coli", property = c("genus", "fullname")))

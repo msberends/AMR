@@ -68,10 +68,10 @@ df <- AMR:::MO_lookup
 expect_true(nrow(df[which(df$prevalence == 1), , drop = FALSE]) < nrow(df[which(df$prevalence == 2), , drop = FALSE]))
 expect_true(nrow(df[which(df$prevalence == 2), , drop = FALSE]) < nrow(df[which(df$prevalence == 3), , drop = FALSE]))
 expect_true(all(c(
-  "mo", "fullname",
-  "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies",
-  "rank", "ref", "lpsn", "gbif", "status", "source", "prevalence", "snomed",
-  "kingdom_index", "fullname_lower", "g_species"
+  "mo", "fullname", "status", "kingdom", "phylum", "class", "order", 
+  "family", "genus", "species", "subspecies", "rank", "ref", "source", 
+  "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", 
+  "snomed", "kingdom_index", "fullname_lower", "full_first", "species_first"
 ) %in% colnames(df)))
 
 expect_inherits(AMR:::MO_CONS, "mo")
@@ -87,7 +87,8 @@ expect_true(NROW(uncategorised) == 0,
     "All staphylococcal species categorised as CoNS/CoPS.",
     paste0(
       "Staphylococcal species not categorised as CoNS/CoPS: S. ",
-      uncategorised$species, " (", uncategorised$mo, ")"
+      uncategorised$species, " (", uncategorised$mo, ")",
+      collapse = "\n"
     )
   )
 )

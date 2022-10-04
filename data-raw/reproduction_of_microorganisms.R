@@ -1005,7 +1005,7 @@ taxonomy <- taxonomy %>%
 # Remove unwanted taxonomic entries from Protoza/Fungi --------------------
 
 # this must be done after the microbial ID generation, since it will otherwise generate a lot of different IDs
-taxonomy <- taxonomy %>% 
+taxonomy <- taxonomy %>%
   filter(
     # Protozoa:
     !(phylum %in% c("Choanozoa", "Mycetozoa") & prevalence == 3),
@@ -1016,7 +1016,8 @@ taxonomy <- taxonomy %>%
     # Animalia:
     !genus %in% c("Lucilia", "Lumbricus"),
     !(genus %in% c("Aedes", "Anopheles") & rank %in% c("species", "subspecies")), # only genus of the many hundreds of mosquitoes species
-    kingdom != "Plantae") # this kingdom only contained Curvularia and Hymenolepis, which have coincidental twin names with Fungi
+    kingdom != "Plantae"
+  ) # this kingdom only contained Curvularia and Hymenolepis, which have coincidental twin names with Fungi
 
 message("\nCongratulations! The new taxonomic table will contain ", format(nrow(taxonomy), big.mark = ","), " rows.\n")
 
@@ -1071,7 +1072,7 @@ taxonomy$lpsn_renamed_to[which(taxonomy$fullname == "Moraxella catarrhalis")]
 taxonomy$status[which(taxonomy$fullname == "Moraxella catarrhalis")] <- "accepted"
 taxonomy$lpsn_renamed_to[which(taxonomy$fullname == "Moraxella catarrhalis")] <- NA_character_
 
-taxonomy <- taxonomy %>% 
+taxonomy <- taxonomy %>%
   AMR:::dataset_UTF8_to_ASCII()
 
 

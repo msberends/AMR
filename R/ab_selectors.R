@@ -566,7 +566,7 @@ ab_select_exec <- function(function_name,
     message_("No antimicrobial agents found in the data.")
     return(NULL)
   }
-  
+
   if (is.null(ab_class_args) || isTRUE(function_name %in% c("antifungals", "antimycobacterials"))) {
     ab_group <- NULL
     if (isTRUE(function_name == "antifungals")) {
@@ -580,8 +580,8 @@ ab_select_exec <- function(function_name,
       ab_group <- function_name
     }
     examples <- paste0(" (such as ", vector_or(ab_name(sample(abx, size = min(2, length(abx)), replace = FALSE),
-                                                       tolower = TRUE,
-                                                       language = NULL
+      tolower = TRUE,
+      language = NULL
     ),
     quotes = FALSE
     ), ")")

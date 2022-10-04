@@ -344,7 +344,7 @@ as.rsi.default <- function(x, ...) {
     x <- gsub("^R+$", "R", x)
     x[!x %in% c("S", "I", "R")] <- NA_character_
     na_after <- length(x[is.na(x) | x == ""])
-    
+
     if (!isFALSE(list(...)$warn)) { # so as.rsi(..., warn = FALSE) will never throw a warning
       if (na_before != na_after) {
         list_missing <- x.bak[is.na(x) & !is.na(x.bak) & x.bak != ""] %pm>%
@@ -353,13 +353,13 @@ as.rsi.default <- function(x, ...) {
           vector_and(quotes = TRUE)
         cur_col <- get_current_column()
         warning_("in `as.rsi()`: ", na_after - na_before, " result",
-                 ifelse(na_after - na_before > 1, "s", ""),
-                 ifelse(is.null(cur_col), "", paste0(" in column '", cur_col, "'")),
-                 " truncated (",
-                 round(((na_after - na_before) / length(x)) * 100),
-                 "%) that were invalid antimicrobial interpretations: ",
-                 list_missing,
-                 call = FALSE
+          ifelse(na_after - na_before > 1, "s", ""),
+          ifelse(is.null(cur_col), "", paste0(" in column '", cur_col, "'")),
+          " truncated (",
+          round(((na_after - na_before) / length(x)) * 100),
+          "%) that were invalid antimicrobial interpretations: ",
+          list_missing,
+          call = FALSE
         )
       }
       if (any(toupper(x.bak[!is.na(x.bak)]) == "U") && message_not_thrown_before("as.rsi", "U")) {

@@ -32,10 +32,10 @@ These are two custom EUCAST rules: if TZP (piperacillin/tazobactam) is "S", all 
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{x
 #> A set of custom EUCAST rules:
-#> 
+#>
 #>   1. If TZP is "S" then set to  S :
 #>      amoxicillin (AMX), ampicillin (AMP)
-#> 
+#>
 #>   2. If TZP is "R" then set to  R :
 #>      amoxicillin (AMX), ampicillin (AMP)
 }\if{html}{\out{</div>}}
