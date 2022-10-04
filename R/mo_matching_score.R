@@ -33,6 +33,7 @@
 #' @author Dr. Matthijs Berends
 #' @param x Any user input value(s)
 #' @param n A full taxonomic name, that exists in [`microorganisms$fullname`][microorganisms]
+#' @note This algorithm was described in: Berends MS *et al.* (2022). **AMR: An R Package for Working with Antimicrobial Resistance Data**. *Journal of Statistical Software*, 104(3), 1-31; \doi{10.18637/jss.v104.i03}.
 #' @section Matching Score for Microorganisms:
 #' With ambiguous user input in [as.mo()] and all the [`mo_*`][mo_property()] functions, the returned results are chosen based on their matching score using [mo_matching_score()]. This matching score \eqn{m}, is calculated as:
 #'
@@ -43,7 +44,7 @@
 #' * \ifelse{html}{\out{<i>x</i> is the user input;}}{\eqn{x} is the user input;}
 #' * \ifelse{html}{\out{<i>n</i> is a taxonomic name (genus, species, and subspecies);}}{\eqn{n} is a taxonomic name (genus, species, and subspecies);}
 #' * \ifelse{html}{\out{<i>l<sub>n</sub></i> is the length of <i>n</i>;}}{l_n is the length of \eqn{n};}
-#' * \ifelse{html}{\out{<i>lev</i> is the <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein distance function</a>, which counts any insertion, deletion and substitution as 1 that is needed to change <i>x</i> into <i>n</i>;}}{lev is the Levenshtein distance function, which counts any insertion, deletion and substitution as 1 that is needed to change \eqn{x} into \eqn{n};}
+#' * \ifelse{html}{\out{<i>lev</i> is the <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein distance function</a> (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change <i>x</i> into <i>n</i>;}}{lev is the Levenshtein distance function (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change \eqn{x} into \eqn{n};}
 #' * \ifelse{html}{\out{<i>p<sub>n</sub></i> is the human pathogenic prevalence group of <i>n</i>, as described below;}}{p_n is the human pathogenic prevalence group of \eqn{n}, as described below;}
 #' * \ifelse{html}{\out{<i>k<sub>n</sub></i> is the taxonomic kingdom of <i>n</i>, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.}}{l_n is the taxonomic kingdom of \eqn{n}, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.}
 #'
@@ -86,19 +87,19 @@ mo_matching_score <- function(x, n) {
   if (length(x) == 1) {
     x <- rep(x, length(n))
   }
-
+  
   # length of fullname
   l_n <- nchar(n)
   lev <- double(length = length(x))
   l_n.lev <- double(length = length(x))
-  lev <- unlist(Map(
-    f = utils::adist,
-    x,
-    n,
-    ignore.case = FALSE,
-    USE.NAMES = FALSE,
-    fixed = TRUE
-  ))
+  lev <- unlist(Map(f = function(a, b) {
+    as.double(utils::adist(a, b, 
+                           ignore.case = FALSE,
+                           fixed = TRUE,
+                           costs = c(insertions = 1, deletions = 2, substitutions = 2),
+                           counts = FALSE))
+  }, x, n, USE.NAMES = FALSE))
+  
   l_n.lev[l_n < lev] <- l_n[l_n < lev]
   l_n.lev[lev < l_n] <- lev[lev < l_n]
   l_n.lev[lev == l_n] <- lev[lev == l_n]

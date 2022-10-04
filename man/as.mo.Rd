@@ -8,6 +8,7 @@
 \alias{mo_uncertainties}
 \alias{mo_renamed}
 \alias{mo_reset_session}
+\alias{mo_cleaning_regex}
 \title{Transform Input to a Microorganism Code}
 \usage{
 as.mo(
@@ -15,10 +16,10 @@ as.mo(
   Becker = FALSE,
   Lancefield = FALSE,
   minimum_matching_score = NULL,
-  allow_uncertain = TRUE,
   keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   reference_df = get_mo_source(),
   ignore_pattern = getOption("AMR_ignore_pattern", NULL),
+  remove_from_input = mo_cleaning_regex(),
   language = get_AMR_locale(),
   info = interactive(),
   ...
@@ -33,6 +34,8 @@ mo_uncertainties()
 mo_renamed()
 
 mo_reset_session()
+
+mo_cleaning_regex()
 }
 \arguments{
 \item{x}{a \link{character} vector or a \link{data.frame} with one or two columns}
@@ -47,13 +50,13 @@ This excludes enterococci at default (who are in group D), use \code{Lancefield 
 
 \item{minimum_matching_score}{a numeric value to set as the lower limit for the \link[=mo_matching_score]{MO matching score}. When left blank, this will be determined automatically based on the character length of \code{x}, its \link[=microorganisms]{taxonomic kingdom} and \link[=mo_matching_score]{human pathogenicity}.}
 
-\item{allow_uncertain}{a number between \code{0} (or \code{"none"}) and \code{3} (or \code{"all"}), or \code{TRUE} (= \code{2}) or \code{FALSE} (= \code{0}) to indicate whether the input should be checked for less probable results, see \emph{Details}}
-
 \item{keep_synonyms}{a \link{logical} to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is \code{FALSE}, which will return a note if old taxonomic names were processed. The default can be set with \code{options(AMR_keep_synonyms = TRUE)} or \code{options(AMR_keep_synonyms = FALSE)}.}
 
 \item{reference_df}{a \link{data.frame} to be used for extra reference when translating \code{x} to a valid \code{\link{mo}}. See \code{\link[=set_mo_source]{set_mo_source()}} and \code{\link[=get_mo_source]{get_mo_source()}} to automate the usage of your own codes (e.g. used in your analysis or organisation).}
 
-\item{ignore_pattern}{a regular expression (case-insensitive) of which all matches in \code{x} must return \code{NA}. This can be convenient to exclude known non-relevant input and can also be set with the option \code{AMR_ignore_pattern}, e.g. \code{options(AMR_ignore_pattern = "(not reported|contaminated flora)")}.}
+\item{ignore_pattern}{a \link[base:regex]{regular expression} (case-insensitive) of which all matches in \code{x} must return \code{NA}. This can be convenient to exclude known non-relevant input and can also be set with the option \code{AMR_ignore_pattern}, e.g. \code{options(AMR_ignore_pattern = "(not reported|contaminated flora)")}.}
+
+\item{remove_from_input}{a \link[base:regex]{regular expression} (case-insensitive) to clean the input of \code{x}. Everything matched in \code{x} will be removed. At default, this is the outcome of \code{\link[=mo_cleaning_regex]{mo_cleaning_regex()}}, which removes texts between brackets and texts such as "species" and "serovar".}
 
 \item{language}{language to translate text like "no growth", which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}})}
 
@@ -68,8 +71,6 @@ A \link{character} \link{vector} with additional class \code{\link{mo}}
 Use this function to determine a valid microorganism code (\code{\link{mo}}). Determination is done using intelligent rules and the complete taxonomic kingdoms Animalia, Archaea, Bacteria and Protozoa, and most microbial species from the kingdom Fungi (see \emph{Source}). The input can be almost anything: a full name (like \code{"Staphylococcus aureus"}), an abbreviated name (such as \code{"S. aureus"}), an abbreviation known in the field (such as \code{"MRSA"}), or just a genus. See \emph{Examples}.
 }
 \details{
-\subsection{General Info}{
-
 A microorganism (MO) code from this package (class: \code{\link{mo}}) is human readable and typically looks like these examples:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{  Code               Full name
@@ -79,42 +80,23 @@ A microorganism (MO) code from this package (class: \code{\link{mo}}) is human r
   B_KLBSL_PNMN_RHNS  Klebsiella pneumoniae rhinoscleromatis
   |   |    |    |
   |   |    |    |
-  |   |    |    \\---> subspecies, a 4-5 letter acronym
-  |   |    \\----> species, a 4-5 letter acronym
-  |   \\----> genus, a 5-7 letter acronym
+  |   |    |    \\---> subspecies, a 3-5 letter acronym
+  |   |    \\----> species, a 3-6 letter acronym
+  |   \\----> genus, a 4-8 letter acronym
   \\----> taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria),
                             F (Fungi), PL (Plantae), P (Protozoa)
 }\if{html}{\out{</div>}}
 
-Values that cannot be coerced will be considered 'unknown' and will get the MO code \code{UNKNOWN}.
+Values that cannot be coerced will be considered 'unknown' and will be returned as the MO code \code{UNKNOWN} with a warning.
 
 Use the \code{\link[=mo_property]{mo_*}} functions to get properties based on the returned code, see \emph{Examples}.
 
-The algorithm uses data from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF) (see \link{microorganisms}).
-
-The \code{\link[=as.mo]{as.mo()}} function uses several coercion rules for fast and logical results. It assesses the input matching criteria in the following order:
-\enumerate{
-\item Human pathogenic prevalence: the function  starts with more prevalent microorganisms, followed by less prevalent ones;
-\item Taxonomic kingdom: the function starts with determining Bacteria, then Fungi, then Protozoa, then others;
-\item Breakdown of input values to identify possible matches.
-}
-
-This will lead to the effect that e.g. \code{"E. coli"} (a microorganism highly prevalent in humans) will return the microbial ID of \emph{Escherichia coli} and not \emph{Entamoeba coli} (a microorganism less prevalent in humans), although the latter would alphabetically come first.
-}
-
+The \code{\link[=as.mo]{as.mo()}} function uses a novel \link[=mo_matching_score]{matching score algorithm} (see \emph{Matching Score for Microorganisms} below) to match input against the \link[=microoganisms]{available microbial taxonomy} in this package. This will lead to the effect that e.g. \code{"E. coli"} (a microorganism highly prevalent in humans) will return the microbial ID of \emph{Escherichia coli} and not \emph{Entamoeba coli} (a microorganism less prevalent in humans), although the latter would alphabetically come first. The algorithm uses data from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF) (see \link{microorganisms}).
 \subsection{Coping with Uncertain Results}{
 
-Users can control the coercion rules by setting the \code{allow_uncertain} argument in the \code{\link[=as.mo]{as.mo()}} function. The following values or levels can be used:
-\itemize{
-\item \code{0}: no additional rules are applied;
-\item \code{1}: allow previously accepted (but now invalid) taxonomic names
-\item \code{2}: allow all of \code{1}, strip values between brackets, inverse the words of the input, strip off text elements from the end keeping at least two elements;
-\item \code{3}: allow all of level \code{1} and \code{2}, strip off text elements from the end, allow any part of a taxonomic name;
-\item \code{TRUE} (default): equivalent to \code{2};
-\item \code{FALSE}: equivalent to `0``.
-}
+Results of non-exact taxonomic input are based on their \link[=mo_matching_score]{matching score}. The lowest allowed score can be set with the \code{minimum_matching_score} argument. At default this will be determined based on the character length of the input, and the \link[=microorganisms]{taxonomic kingdom} and \link[=mo_matching_score]{human pathogenicity} of the taxonomic outcome. If values are matched with uncertainty, a message will be shown to suggest the user to evaluate the results with \code{\link[=mo_uncertainties]{mo_uncertainties()}}, which returns a \link{data.frame} with all specifications.
 
-The default is \code{allow_uncertain = TRUE}, which is equal to uncertainty level 2. Using \code{allow_uncertain = FALSE} is equal to uncertainty level 0 and will skip all rules. You can also use e.g. \code{as.mo(..., allow_uncertain = 1)} to only allow up to level 1 uncertainty.
+To increase the quality of matching, the \code{remove_from_input} argument can be used to clean the input (i.e., \code{x}). This must be a \link[base:regex]{regular expression} that matches parts of the input that should be removed before the input is matched against the \link[=microoganisms]{available microbial taxonomy}. It will be matched Perl-compatible and case-insensitive. The default value of \code{remove_from_input} is the outcome of the helper function \code{\link[=mo_cleaning_regex]{mo_cleaning_regex()}}.
 
 There are three helper functions that can be run after using the \code{\link[=as.mo]{as.mo()}} function:
 \itemize{
@@ -155,7 +137,7 @@ where:
 \item \ifelse{html}{\out{<i>x</i> is the user input;}}{\eqn{x} is the user input;}
 \item \ifelse{html}{\out{<i>n</i> is a taxonomic name (genus, species, and subspecies);}}{\eqn{n} is a taxonomic name (genus, species, and subspecies);}
 \item \ifelse{html}{\out{<i>l<sub>n</sub></i> is the length of <i>n</i>;}}{l_n is the length of \eqn{n};}
-\item \ifelse{html}{\out{<i>lev</i> is the <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein distance function</a>, which counts any insertion, deletion and substitution as 1 that is needed to change <i>x</i> into <i>n</i>;}}{lev is the Levenshtein distance function, which counts any insertion, deletion and substitution as 1 that is needed to change \eqn{x} into \eqn{n};}
+\item \ifelse{html}{\out{<i>lev</i> is the <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein distance function</a> (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change <i>x</i> into <i>n</i>;}}{lev is the Levenshtein distance function (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change \eqn{x} into \eqn{n};}
 \item \ifelse{html}{\out{<i>p<sub>n</sub></i> is the human pathogenic prevalence group of <i>n</i>, as described below;}}{p_n is the human pathogenic prevalence group of \eqn{n}, as described below;}
 \item \ifelse{html}{\out{<i>k<sub>n</sub></i> is the taxonomic kingdom of <i>n</i>, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.}}{l_n is the taxonomic kingdom of \eqn{n}, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.}
 }
@@ -224,9 +206,3 @@ mo_is_intrinsic_resistant("ESCCOL", ab = "vanco")
 
 The \code{\link[=mo_property]{mo_*}} functions (such as \code{\link[=mo_genus]{mo_genus()}}, \code{\link[=mo_gramstain]{mo_gramstain()}}) to get properties based on the returned code.
 }
-\keyword{Becker}
-\keyword{Lancefield}
-\keyword{becker}
-\keyword{guess}
-\keyword{lancefield}
-\keyword{mo}

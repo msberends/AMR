@@ -38,19 +38,16 @@
 #'
 #' This excludes enterococci at default (who are in group D), use `Lancefield = "all"` to also categorise all enterococci as group D.
 #' @param minimum_matching_score a numeric value to set as the lower limit for the [MO matching score][mo_matching_score()]. When left blank, this will be determined automatically based on the character length of `x`, its [taxonomic kingdom][microorganisms] and [human pathogenicity][mo_matching_score()].
-#' @param allow_uncertain a number between `0` (or `"none"`) and `3` (or `"all"`), or `TRUE` (= `2`) or `FALSE` (= `0`) to indicate whether the input should be checked for less probable results, see *Details*
 #' @param keep_synonyms a [logical] to indicate if old, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. The default is `FALSE`, which will return a note if old taxonomic names were processed. The default can be set with `options(AMR_keep_synonyms = TRUE)` or `options(AMR_keep_synonyms = FALSE)`.
 #' @param reference_df a [data.frame] to be used for extra reference when translating `x` to a valid [`mo`]. See [set_mo_source()] and [get_mo_source()] to automate the usage of your own codes (e.g. used in your analysis or organisation).
-#' @param ignore_pattern a regular expression (case-insensitive) of which all matches in `x` must return `NA`. This can be convenient to exclude known non-relevant input and can also be set with the option `AMR_ignore_pattern`, e.g. `options(AMR_ignore_pattern = "(not reported|contaminated flora)")`.
+#' @param ignore_pattern a [regular expression][base::regex] (case-insensitive) of which all matches in `x` must return `NA`. This can be convenient to exclude known non-relevant input and can also be set with the option `AMR_ignore_pattern`, e.g. `options(AMR_ignore_pattern = "(not reported|contaminated flora)")`.
+#' @param remove_from_input a [regular expression][base::regex] (case-insensitive) to clean the input of `x`. Everything matched in `x` will be removed. At default, this is the outcome of [mo_cleaning_regex()], which removes texts between brackets and texts such as "species" and "serovar".
 #' @param language language to translate text like "no growth", which defaults to the system language (see [get_AMR_locale()])
 #' @param info a [logical] to indicate if a progress bar should be printed if more than 25 items are to be coerced, defaults to `TRUE` only in interactive mode
 #' @param ... other arguments passed on to functions
 #' @rdname as.mo
 #' @aliases mo
-#' @keywords mo Becker becker Lancefield lancefield guess
 #' @details
-#' ### General Info
-#'
 #' A microorganism (MO) code from this package (class: [`mo`]) is human readable and typically looks like these examples:
 #' ```
 #'   Code               Full name
@@ -60,39 +57,24 @@
 #'   B_KLBSL_PNMN_RHNS  Klebsiella pneumoniae rhinoscleromatis
 #'   |   |    |    |
 #'   |   |    |    |
-#'   |   |    |    \---> subspecies, a 4-5 letter acronym
-#'   |   |    \----> species, a 4-5 letter acronym
-#'   |   \----> genus, a 5-7 letter acronym
+#'   |   |    |    \---> subspecies, a 3-5 letter acronym
+#'   |   |    \----> species, a 3-6 letter acronym
+#'   |   \----> genus, a 4-8 letter acronym
 #'   \----> taxonomic kingdom: A (Archaea), AN (Animalia), B (Bacteria),
 #'                             F (Fungi), PL (Plantae), P (Protozoa)
 #' ```
 #'
-#' Values that cannot be coerced will be considered 'unknown' and will get the MO code `UNKNOWN`.
+#' Values that cannot be coerced will be considered 'unknown' and will be returned as the MO code `UNKNOWN` with a warning.
 #'
 #' Use the [`mo_*`][mo_property()] functions to get properties based on the returned code, see *Examples*.
-#'
-#' The algorithm uses data from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF) (see [microorganisms]).
-#'
-#' The [as.mo()] function uses several coercion rules for fast and logical results. It assesses the input matching criteria in the following order:
-#'
-#' 1. Human pathogenic prevalence: the function  starts with more prevalent microorganisms, followed by less prevalent ones;
-#' 2. Taxonomic kingdom: the function starts with determining Bacteria, then Fungi, then Protozoa, then others;
-#' 3. Breakdown of input values to identify possible matches.
-#'
-#' This will lead to the effect that e.g. `"E. coli"` (a microorganism highly prevalent in humans) will return the microbial ID of *Escherichia coli* and not *Entamoeba coli* (a microorganism less prevalent in humans), although the latter would alphabetically come first.
+#' 
+#' The [as.mo()] function uses a novel [matching score algorithm][mo_matching_score()] (see *Matching Score for Microorganisms* below) to match input against the [available microbial taxonomy][microoganisms] in this package. This will lead to the effect that e.g. `"E. coli"` (a microorganism highly prevalent in humans) will return the microbial ID of *Escherichia coli* and not *Entamoeba coli* (a microorganism less prevalent in humans), although the latter would alphabetically come first. The algorithm uses data from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF) (see [microorganisms]).
 #'
 #' ### Coping with Uncertain Results
 #'
-#' Users can control the coercion rules by setting the `allow_uncertain` argument in the [as.mo()] function. The following values or levels can be used:
+#' Results of non-exact taxonomic input are based on their [matching score][mo_matching_score()]. The lowest allowed score can be set with the `minimum_matching_score` argument. At default this will be determined based on the character length of the input, and the [taxonomic kingdom][microorganisms] and [human pathogenicity][mo_matching_score()] of the taxonomic outcome. If values are matched with uncertainty, a message will be shown to suggest the user to evaluate the results with [mo_uncertainties()], which returns a [data.frame] with all specifications.
 #' 
-#' - `0`: no additional rules are applied;
-#' - `1`: allow previously accepted (but now invalid) taxonomic names
-#' - `2`: allow all of `1`, strip values between brackets, inverse the words of the input, strip off text elements from the end keeping at least two elements;
-#' - `3`: allow all of level `1` and `2`, strip off text elements from the end, allow any part of a taxonomic name;
-#' - `TRUE` (default): equivalent to `2`;
-#' - `FALSE`: equivalent to `0``.
-#'
-#' The default is `allow_uncertain = TRUE`, which is equal to uncertainty level 2. Using `allow_uncertain = FALSE` is equal to uncertainty level 0 and will skip all rules. You can also use e.g. `as.mo(..., allow_uncertain = 1)` to only allow up to level 1 uncertainty.
+#' To increase the quality of matching, the `remove_from_input` argument can be used to clean the input (i.e., `x`). This must be a [regular expression][base::regex] that matches parts of the input that should be removed before the input is matched against the [available microbial taxonomy][microoganisms]. It will be matched Perl-compatible and case-insensitive. The default value of `remove_from_input` is the outcome of the helper function [mo_cleaning_regex()].
 #'
 #' There are three helper functions that can be run after using the [as.mo()] function:
 #' - Use [mo_uncertainties()] to get a [data.frame] that prints in a pretty format with all taxonomic names that were guessed. The output contains the matching score for all matches (see *Matching Score for Microorganisms* below).
@@ -165,17 +147,16 @@ as.mo <- function(x,
                   Becker = FALSE,
                   Lancefield = FALSE,
                   minimum_matching_score = NULL,
-                  allow_uncertain = TRUE,
                   keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
                   reference_df = get_mo_source(),
                   ignore_pattern = getOption("AMR_ignore_pattern", NULL),
+                  remove_from_input = mo_cleaning_regex(),
                   language = get_AMR_locale(),
                   info = interactive(),
                   ...) {
   meet_criteria(x, allow_class = c("mo", "data.frame", "list", "character", "numeric", "integer", "factor"), allow_NA = TRUE)
   meet_criteria(Becker, allow_class = c("logical", "character"), has_length = 1)
   meet_criteria(Lancefield, allow_class = c("logical", "character"), has_length = 1)
-  meet_criteria(allow_uncertain, allow_class = c("logical", "numeric", "integer"), has_length = 1)
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
   meet_criteria(minimum_matching_score, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE)
   meet_criteria(reference_df, allow_class = "data.frame", allow_NULL = TRUE)
@@ -183,16 +164,7 @@ as.mo <- function(x,
   language <- validate_language(language)
   meet_criteria(info, allow_class = "logical", has_length = 1)
   
-  # set the microorganisms data set to use for all lookup
-  mo_data <- MO_lookup
-  
-  allow_uncertain <- translate_allow_uncertain(allow_uncertain)
-  if (allow_uncertain < 1) {
-    # do not allow old names
-    mo_data <- mo_data[which(mo_data$status == "accepted"), , drop = FALSE]
-  }
-  
-  if (tryCatch(all(x %in% c(mo_data$mo, NA)) &&
+  if (tryCatch(all(x %in% c(MO_lookup$mo, NA)) &&
     isFALSE(Becker) &&
     isFALSE(Lancefield), error = function(e) FALSE)) {
     # don't look into valid MO codes, just return them
@@ -221,9 +193,9 @@ as.mo <- function(x,
     out[x %in% reference_df[[1]]] <- reference_df[[2]][match(x[x %in% reference_df[[1]]], reference_df[[1]])]
   }
   # From MO code ----
-  out[is.na(out) & x %in% mo_data$mo] <- x[is.na(out) & x %in% mo_data$mo]
+  out[is.na(out) & x %in% MO_lookup$mo] <- x[is.na(out) & x %in% MO_lookup$mo]
   # From full name ----
-  out[is.na(out) & x %in% mo_data$fullname] <- mo_data$mo[match(x[is.na(out) & x %in% mo_data$fullname], mo_data$fullname)]
+  out[is.na(out) & x %in% MO_lookup$fullname] <- MO_lookup$mo[match(x[is.na(out) & x %in% MO_lookup$fullname], MO_lookup$fullname)]
   # From known codes ----
   out[is.na(out) & x %in% AMR::microorganisms.codes$code] <- AMR::microorganisms.codes$mo[match(x[is.na(out) & x %in% AMR::microorganisms.codes$code], AMR::microorganisms.codes$code)]
   # From SNOMED ----
@@ -236,7 +208,7 @@ as.mo <- function(x,
   out[is.na(out)] <- convert_colloquial_input(x[is.na(out)])
   # From previous hits in this session ----
   old <- out
-  out[is.na(out) & x %in% pkg_env$mo_previously_coerced$x] <- pkg_env$mo_previously_coerced$mo[match(x[is.na(out) & x %in% pkg_env$mo_previously_coerced$x], pkg_env$mo_previously_coerced$x)]
+  out[is.na(out) & paste(x, minimum_matching_score) %in% pkg_env$mo_previously_coerced$x] <- pkg_env$mo_previously_coerced$mo[match(paste(x, minimum_matching_score)[is.na(out) & paste(x, minimum_matching_score) %in% pkg_env$mo_previously_coerced$x], pkg_env$mo_previously_coerced$x)]
   new <- out
   if (isTRUE(info) && message_not_thrown_before("as.mo", old, new, entire_session = TRUE) && any(is.na(old) & !is.na(new), na.rm = TRUE)) {
     message_(
@@ -266,20 +238,17 @@ as.mo <- function(x,
     x_coerced <- vapply(FUN.VALUE = character(1), x_unique, function(x_search) {
       progress$tick()
 
+      print(x_search)
+      
       # some required cleaning steps
       x_out <- trimws2(x_search)
-      x_out <- gsub("[^A-Za-z-]+", " ", x_out, perl = TRUE)
-      x_out <- gsub(" +", " ", x_out, perl = TRUE)
-      x_out <- gsub("(^| )(e?spp|e?ssp|e?ss|e?sp|e?subsp|sube?species|biovar|biotype|serovar|e?species)( |$)", "", x_out, ignore.case = TRUE, perl = TRUE)
+      # this applies the `remove_from_input` argument, which defaults to mo_cleaning_regex()
+      x_out <- gsub(remove_from_input, " ", x_out, ignore.case = TRUE, perl = TRUE)
+      x_out <- trimws2(gsub(" +", " ", x_out, perl = TRUE))
       x_search_cleaned <- x_out
       x_out <- tolower(x_out)
       
-      if (allow_uncertain == 2) {
-        
-      }
-      if (allow_uncertain == 3) {
-        
-      }
+      print(x_out)
       
       # take out the parts, split by space
       x_parts <- strsplit(gsub("-", " ", x_out, fixed = TRUE), " ", fixed = TRUE)[[1]]
@@ -287,16 +256,16 @@ as.mo <- function(x,
       # do a pre-match on first character (and if it contains a space, first chars of first two terms)
       if (length(x_parts) %in% c(2, 3)) {
         # for genus + species + subspecies
-        filtr <- which(mo_data$full_first == substr(x_parts[1], 1, 1) & mo_data$species_first == substr(x_parts[2], 1, 1))
+        filtr <- which(MO_lookup$full_first == substr(x_parts[1], 1, 1) & MO_lookup$species_first == substr(x_parts[2], 1, 1))
       } else if (length(x_parts) > 3) {
         first_chars <- paste0("(^| )", "[", paste(substr(x_parts, 1, 1), collapse = ""), "]")
-        filtr <- which(mo_data$full_first %like_case% first_chars)
+        filtr <- which(MO_lookup$full_first %like_case% first_chars)
       } else if (nchar(x_out) == 4) {
         # no space and 4 characters - probably a code such as STAU or ESCO!
         if (isTRUE(info)) {
           message_("Input \"", x_search, "\" is assumed to be a microorganism code - trying to match on ", vector_and(c(substr(x_out, 1, 2), substr(x_out, 3, 4)), sort = FALSE))
         }
-        filtr <- which(mo_data$fullname_lower %like_case% paste0("(^| )", substr(x_out, 1, 2), ".* ", substr(x_out, 3, 4)))
+        filtr <- which(MO_lookup$fullname_lower %like_case% paste0("(^| )", substr(x_out, 1, 2), ".* ", substr(x_out, 3, 4)))
       } else if (nchar(x_out) <= 6) {
         # no space and 5-6 characters - probably a code such as STAAUR or ESCCOL!
         first_part <- paste0(substr(x_out, 1, 2), "[a-z]*", substr(x_out, 3, 3))
@@ -304,20 +273,20 @@ as.mo <- function(x,
         if (isTRUE(info)) {
           message_("Input \"", x_search, "\" is assumed to be a microorganism code - trying to match on ", vector_and(c(gsub("[a-z]*", "(...)", first_part, fixed = TRUE), second_part), sort = FALSE))
         }
-        filtr <- which(mo_data$fullname_lower %like_case% paste0("(^| )", first_part, ".* ", second_part))
+        filtr <- which(MO_lookup$fullname_lower %like_case% paste0("(^| )", first_part, ".* ", second_part))
       } else {
-        filtr <- which(mo_data$full_first == substr(x_out, 1, 1))
+        filtr <- which(MO_lookup$full_first == substr(x_out, 1, 1))
       }
       if (length(filtr) == 0) {
-        mo_to_search <- mo_data$fullname
+        mo_to_search <- MO_lookup$fullname
       } else {
-        mo_to_search <- mo_data$fullname[filtr]
+        mo_to_search <- MO_lookup$fullname[filtr]
       }
       pkg_env$mo_to_search <- mo_to_search
       # determine the matching score on the original search value
       m <- mo_matching_score(x = x_search_cleaned, n = mo_to_search)
       if (is.null(minimum_matching_score)) {
-        minimum_matching_score_current <- min(0.7, min(10, nchar(x_search_cleaned)) * 0.08)
+        minimum_matching_score_current <- min(0.6, min(10, nchar(x_search_cleaned)) * 0.08)
         # correct back for prevalence
         minimum_matching_score_current <- minimum_matching_score_current / MO_lookup$prevalence[match(mo_to_search, MO_lookup$fullname)]
         # correct back for kingdom
@@ -325,7 +294,6 @@ as.mo <- function(x,
       } else {
         minimum_matching_score_current <- minimum_matching_score
       }
-      
       m[m < minimum_matching_score_current] <- NA_real_
       
       top_hits <- mo_to_search[order(m, decreasing = TRUE, na.last = NA)] # na.last = NA will remove the NAs
@@ -349,7 +317,7 @@ as.mo <- function(x,
         # save to package env to save time for next time
         pkg_env$mo_previously_coerced <- unique(rbind(pkg_env$mo_previously_coerced,
           data.frame(
-            x = paste(x_search, min(minimum_matching_score_current, na.rm = TRUE)),
+            x = paste(x_search, minimum_matching_score),
             mo = result_mo,
             stringsAsFactors = FALSE
           ),
@@ -728,7 +696,7 @@ print.mo_uncertainties <- function(x, ...) {
     return(invisible(NULL))
   }
   
-  cat(word_wrap("Matching scores are based on pathogenicity in humans and the resemblance between the input and the full taxonomic name. See `?mo_matching_score`.\n\n", add_fn = font_blue))
+  cat(word_wrap("Matching scores are based on the resemblance between the input and the full taxonomic name, and the pathogenicity in humans. See `?mo_matching_score`.\n\n", add_fn = font_blue))
   if (has_colour()) {
     cat(word_wrap("Colour keys: ",
       font_red_bg(" 0.000-0.499 "),
@@ -869,6 +837,18 @@ mo_reset_session <- function() {
   }
 }
 
+#' @rdname as.mo
+#' @export
+mo_cleaning_regex <- function() {
+  paste0(
+    "(",
+    "[^A-Za-z- \\(\\)\\[\\]{}]+",
+    "|",
+    "([({]|\\[).+([})]|\\])",
+    "|",
+    "(^| )(e?spp|e?ssp|e?ss|e?sp|e?subsp|sube?species|biovar|biotype|serovar|e?species)( |$))")
+}
+
 nr2char <- function(x) {
   if (x %in% c(1:10)) {
     v <- c(
@@ -879,22 +859,6 @@ nr2char <- function(x) {
   } else {
     x
   }
-}
-
-translate_allow_uncertain <- function(allow_uncertain) {
-  if (isTRUE(allow_uncertain)) {
-    # default to uncertainty level 2
-    allow_uncertain <- 2
-  } else {
-    allow_uncertain[tolower(allow_uncertain) == "none"] <- 0
-    allow_uncertain[tolower(allow_uncertain) == "all"] <- 3
-    allow_uncertain <- as.integer(allow_uncertain)
-    stop_ifnot(allow_uncertain %in% c(0:3),
-      '`allow_uncertain` must be a number between 0 (or "none") and 3 (or "all"), or TRUE (= 2) or FALSE (= 0)',
-      call = FALSE
-    )
-  }
-  allow_uncertain
 }
 
 get_mo_uncertainties <- function() {

@@ -782,7 +782,7 @@ mo_validate <- function(x, property, language, keep_synonyms = keep_synonyms, ..
 
   # try to catch an error when inputting an invalid argument
   # so the 'call.' can be set to FALSE
-  tryCatch(x[1L] %in% AMR::microorganisms[1, property, drop = TRUE],
+  tryCatch(x[1L] %in% unlist(AMR::microorganisms[1, property, drop = TRUE]),
     error = function(e) stop(e$message, call. = FALSE)
   )
 
@@ -802,7 +802,7 @@ mo_validate <- function(x, property, language, keep_synonyms = keep_synonyms, ..
 
   if (all(x %in% c(mo_data_check$mo, NA)) && !has_Becker_or_Lancefield) {
     # do nothing, just don't run the other if-else's
-  } else if (all(x %in% c(mo_data_check[[property]], NA)) && !has_Becker_or_Lancefield) {
+  } else if (all(x %in% c(unlist(mo_data_check[[property]]), NA)) && !has_Becker_or_Lancefield) {
     # no need to do anything, just return it
     return(x)
   } else {

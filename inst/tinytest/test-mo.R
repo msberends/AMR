@@ -232,14 +232,6 @@ expect_equal(suppressMessages(as.character(as.mo("Escherichia blattae"))), "B_SH
 expect_equal(suppressMessages(as.character(as.mo(c("E. coli", "Chlamydo psittaci")))), c("B_ESCHR_COLI", "B_CHLMY_PSTT"))
 expect_equal(suppressMessages(mo_name("eubcom")), "Clostridium combesii")
 
-# check uncertain names
-expect_equal(suppressMessages(as.character(as.mo("staaur extratest", allow_uncertain = TRUE))), "B_STPHY_AURS")
-expect_equal(suppressWarnings(as.character(as.mo("staaur extratest", allow_uncertain = FALSE))), "UNKNOWN")
-expect_message(as.mo("e coli extra_text", allow_uncertain = TRUE))
-expect_equal(suppressMessages(as.character(as.mo("unexisting aureus", allow_uncertain = 3))), "B_STPHY_AURS")
-expect_equal(suppressMessages(as.character(as.mo("unexisting staphy", allow_uncertain = 3))), "B_STPHY_COPS")
-expect_equal(suppressMessages(as.character(as.mo(c("s aure THISISATEST", "Staphylococcus aureus unexisting"), allow_uncertain = 3))), c("B_STPHY_AURS_AURS", "B_STPHY_AURS_AURS"))
-
 # predefined reference_df
 expect_equal(
   as.character(as.mo("TestingOwnID",
@@ -310,11 +302,6 @@ expect_equal(
   as.character(as.mo(c("other", "none", "unknown"))),
   rep("UNKNOWN", 3)
 )
-
-expect_error(translate_allow_uncertain(5))
-
-# debug mode
-expect_stdout(print(suppressMessages(suppressWarnings(as.mo("kshgcjkhsdgkshjdfsfvsdfv", debug = TRUE, allow_uncertain = 3)))))
 
 # ..coccus
 expect_equal(
