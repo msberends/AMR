@@ -61,11 +61,11 @@ pdf(NULL) # prevent Rplots.pdf being created
 expect_silent(barplot(as.mic(c(1, 2, 4, 8))))
 expect_silent(plot(as.mic(c(1, 2, 4, 8))))
 expect_silent(plot(as.mic(c(1, 2, 4, 8)), expand = FALSE))
-expect_silent(plot(as.mic(c(1, 2, 4, 8)), mo = "esco", ab = "cipr"))
+expect_silent(plot(as.mic(c(1, 2, 4, 8)), mo = "Escherichia coli", ab = "cipr"))
 if (AMR:::pkg_is_available("ggplot2")) {
   expect_inherits(autoplot(as.mic(c(1, 2, 4, 8))), "gg")
   expect_inherits(autoplot(as.mic(c(1, 2, 4, 8)), expand = FALSE), "gg")
-  expect_inherits(autoplot(as.mic(c(1, 2, 4, 8, 32)), mo = "esco", ab = "cipr"), "gg")
+  expect_inherits(autoplot(as.mic(c(1, 2, 4, 8, 32)), mo = "Escherichia coli", ab = "cipr"), "gg")
 }
 expect_stdout(print(as.mic(c(1, 2, 4, 8))))
 
