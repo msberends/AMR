@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -127,10 +131,10 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
 
   mo_source_destination <- path.expand(destination)
 
-  stop_ifnot(interactive(), "this function can only be used in interactive mode, since it must ask for the user's permission to write a file to their home folder.")
+  stop_ifnot(interactive(), "this function can only be used in interactive mode, since it must ask for the user's permission to write a file to their file system.")
 
   if (is.null(path) || path %in% c(FALSE, "")) {
-    pkg_env$mo_source <- NULL
+    AMR_env$mo_source <- NULL
     if (file.exists(mo_source_destination)) {
       unlink(mo_source_destination)
       message_("Removed mo_source file '", font_bold(mo_source_destination), "'",
@@ -204,14 +208,14 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
       word_wrap(paste0(
         "This will write create the new file '",
         mo_source_destination,
-        "', for which your permission is needed."
+        "', for which your permission is required."
       )),
       "\n\n",
       word_wrap("Do you agree that this file will be created?")
     )
     showQuestion <- import_fn("showQuestion", "rstudioapi", error_on_fail = FALSE)
     if (!is.null(showQuestion)) {
-      q_continue <- showQuestion("Create new file in home directory", txt)
+      q_continue <- showQuestion("Create new file", txt)
     } else {
       q_continue <- utils::menu(choices = c("OK", "Cancel"), graphics = FALSE, title = txt)
     }
@@ -223,7 +227,7 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
   attr(df, "mo_source_destination") <- mo_source_destination
   attr(df, "mo_source_timestamp") <- file.mtime(path)
   saveRDS(df, mo_source_destination)
-  pkg_env$mo_source <- df
+  AMR_env$mo_source <- df
   message_(
     action, " mo_source file '", font_bold(mo_source_destination),
     "' (", formatted_filesize(mo_source_destination),
@@ -243,26 +247,24 @@ get_mo_source <- function(destination = getOption("AMR_mo_source", "~/mo_source.
     }
     return(NULL)
   }
-  if (is.null(pkg_env$mo_source)) {
-    pkg_env$mo_source <- readRDS(path.expand(destination))
+  if (is.null(AMR_env$mo_source)) {
+    AMR_env$mo_source <- readRDS(path.expand(destination))
   }
 
-  old_time <- attributes(pkg_env$mo_source)$mo_source_timestamp
-  new_time <- file.mtime(attributes(pkg_env$mo_source)$mo_source_location)
+  old_time <- attributes(AMR_env$mo_source)$mo_source_timestamp
+  new_time <- file.mtime(attributes(AMR_env$mo_source)$mo_source_location)
   if (interactive() && !identical(old_time, new_time)) {
     # source file was updated, also update reference
-    set_mo_source(attributes(pkg_env$mo_source)$mo_source_location)
+    set_mo_source(attributes(AMR_env$mo_source)$mo_source_location)
   }
-  pkg_env$mo_source
+  AMR_env$mo_source
 }
 
 check_validity_mo_source <- function(x, refer_to_name = "`reference_df`", stop_on_error = TRUE) {
-  check_dataset_integrity()
-
   if (paste(deparse(substitute(x)), collapse = "") == "get_mo_source()") {
     return(TRUE)
   }
-  if (is.null(pkg_env$mo_source) && (identical(x, get_mo_source()))) {
+  if (is.null(AMR_env$mo_source) && (identical(x, get_mo_source()))) {
     return(TRUE)
   }
   if (is.null(x)) {
@@ -286,9 +288,9 @@ check_validity_mo_source <- function(x, refer_to_name = "`reference_df`", stop_o
       return(FALSE)
     }
   }
-  if (!all(x$mo %in% c("", microorganisms$mo, microorganisms$fullname), na.rm = TRUE)) {
+  if (!all(x$mo %in% c("", AMR::microorganisms$mo, AMR::microorganisms$fullname), na.rm = TRUE)) {
     if (stop_on_error == TRUE) {
-      invalid <- x[which(!x$mo %in% c("", microorganisms$mo, microorganisms$fullname)), , drop = FALSE]
+      invalid <- x[which(!x$mo %in% c("", AMR::microorganisms$mo, AMR::microorganisms$fullname)), , drop = FALSE]
       if (nrow(invalid) > 1) {
         plural <- "s"
       } else {
@@ -303,14 +305,14 @@ check_validity_mo_source <- function(x, refer_to_name = "`reference_df`", stop_o
       return(FALSE)
     }
   }
-  if (colnames(x)[1] != "mo" & nrow(x) > length(unique(x[, 1, drop = TRUE]))) {
+  if (colnames(x)[1] != "mo" && nrow(x) > length(unique(x[, 1, drop = TRUE]))) {
     if (stop_on_error == TRUE) {
       stop_(refer_to_name, " contains duplicate values in column '", colnames(x)[1], "'", call = FALSE)
     } else {
       return(FALSE)
     }
   }
-  if (colnames(x)[2] != "mo" & nrow(x) > length(unique(x[, 2, drop = TRUE]))) {
+  if (colnames(x)[2] != "mo" && nrow(x) > length(unique(x[, 2, drop = TRUE]))) {
     if (stop_on_error == TRUE) {
       stop_(refer_to_name, " contains duplicate values in column '", colnames(x)[2], "'", call = FALSE)
     } else {

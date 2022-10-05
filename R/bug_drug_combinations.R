@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -178,7 +182,7 @@ format.bug_drug_combinations <- function(x,
                                          ...) {
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(combine_IR, allow_class = "logical", has_length = 1)
@@ -196,10 +200,10 @@ format.bug_drug_combinations <- function(x,
     x <- data.frame(
       mo = gsub("(.*)%%(.*)", "\\1", names(idx)),
       ab = gsub("(.*)%%(.*)", "\\2", names(idx)),
-      S = sapply(idx, function(i) sum(x$S[i], na.rm = TRUE)),
-      I = sapply(idx, function(i) sum(x$I[i], na.rm = TRUE)),
-      R = sapply(idx, function(i) sum(x$R[i], na.rm = TRUE)),
-      total = sapply(idx, function(i) {
+      S = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$S[i], na.rm = TRUE)),
+      I = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$I[i], na.rm = TRUE)),
+      R = vapply(FUN.VALUE = double(1), idx, function(i) sum(x$R[i], na.rm = TRUE)),
+      total = vapply(FUN.VALUE = double(1), idx, function(i) {
         sum(x$S[i], na.rm = TRUE) +
           sum(x$I[i], na.rm = TRUE) +
           sum(x$R[i], na.rm = TRUE)
@@ -214,7 +218,7 @@ format.bug_drug_combinations <- function(x,
   if (remove_intrinsic_resistant == TRUE) {
     x <- subset(x, R != total)
   }
-  if (combine_SI == TRUE | combine_IR == FALSE) {
+  if (combine_SI == TRUE || combine_IR == FALSE) {
     x$isolates <- x$R
   } else {
     x$isolates <- x$R + x$I
@@ -224,13 +228,13 @@ format.bug_drug_combinations <- function(x,
     format <- tolower(format)
     ab_txt <- rep(format, length(ab))
     for (i in seq_len(length(ab_txt))) {
-      ab_txt[i] <- gsub("ab", as.character(as.ab(ab[i])), ab_txt[i])
-      ab_txt[i] <- gsub("cid", ab_cid(ab[i]), ab_txt[i])
-      ab_txt[i] <- gsub("group", ab_group(ab[i], language = language), ab_txt[i])
-      ab_txt[i] <- gsub("atc_group1", ab_atc_group1(ab[i], language = language), ab_txt[i])
-      ab_txt[i] <- gsub("atc_group2", ab_atc_group2(ab[i], language = language), ab_txt[i])
-      ab_txt[i] <- gsub("atc", ab_atc(ab[i], only_first = TRUE), ab_txt[i])
-      ab_txt[i] <- gsub("name", ab_name(ab[i], language = language), ab_txt[i])
+      ab_txt[i] <- gsub("ab", as.character(as.ab(ab[i])), ab_txt[i], fixed = TRUE)
+      ab_txt[i] <- gsub("cid", ab_cid(ab[i]), ab_txt[i], fixed = TRUE)
+      ab_txt[i] <- gsub("group", ab_group(ab[i], language = language), ab_txt[i], fixed = TRUE)
+      ab_txt[i] <- gsub("atc_group1", ab_atc_group1(ab[i], language = language), ab_txt[i], fixed = TRUE)
+      ab_txt[i] <- gsub("atc_group2", ab_atc_group2(ab[i], language = language), ab_txt[i], fixed = TRUE)
+      ab_txt[i] <- gsub("atc", ab_atc(ab[i], only_first = TRUE), ab_txt[i], fixed = TRUE)
+      ab_txt[i] <- gsub("name", ab_name(ab[i], language = language), ab_txt[i], fixed = TRUE)
       ab_txt[i]
     }
     ab_txt
@@ -317,7 +321,7 @@ format.bug_drug_combinations <- function(x,
   }
 
   if (remove_intrinsic_resistant == TRUE) {
-    y <- y[, !vapply(FUN.VALUE = logical(1), y, function(col) all(col %like% "100", na.rm = TRUE) & !any(is.na(col))), drop = FALSE]
+    y <- y[, !vapply(FUN.VALUE = logical(1), y, function(col) all(col %like% "100", na.rm = TRUE) & !anyNA(col)), drop = FALSE]
   }
 
   rownames(y) <- NULL

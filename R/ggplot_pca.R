@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -232,7 +236,7 @@ ggplot_pca <- function(x,
   }
 
   # Overlay a concentration ellipse if there are groups
-  if (!is.null(df.u$groups) & !is.null(ell) & isTRUE(ellipse)) {
+  if (!is.null(df.u$groups) && !is.null(ell) && isTRUE(ellipse)) {
     g <- g + ggplot2::geom_path(
       data = ell,
       ggplot2::aes(colour = groups, group = groups),
@@ -319,7 +323,7 @@ pca_calculations <- function(pca_model,
       error = function(e) NULL
     )
   }
-  if (!is.null(groups) & is.null(labels)) {
+  if (!is.null(groups) && is.null(labels)) {
     # turn them around
     labels <- groups
     groups <- NULL

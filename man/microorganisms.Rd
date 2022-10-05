@@ -3,64 +3,70 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data Set with 70,764 Microorganisms}
+\title{Data Set with 48,787 Microorganisms}
 \format{
-A \link[tibble:tibble]{tibble} with 70,764 observations and 16 variables:
+A \link[tibble:tibble]{tibble} with 48,787 observations and 22 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package
-\item \code{fullname}\cr Full name, like \code{"Escherichia coli"}
+\item \code{fullname}\cr Full name, like \code{"Escherichia coli"}. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon.
+\item \code{status} \cr Status of the taxon, either "accepted" or "synonym"
 \item \code{kingdom}, \code{phylum}, \code{class}, \code{order}, \code{family}, \code{genus}, \code{species}, \code{subspecies}\cr Taxonomic rank of the microorganism
-\item \code{rank}\cr Text of the taxonomic rank of the microorganism, like \code{"species"} or \code{"genus"}
-\item \code{ref}\cr Author(s) and year of concerning scientific publication
-\item \code{species_id}\cr ID of the species as used by the Catalogue of Life
-\item \code{source}\cr Either "CoL", "LPSN" or "manually added" (see \emph{Source})
+\item \code{rank}\cr Text of the taxonomic rank of the microorganism, such as \code{"species"} or \code{"genus"}
+\item \code{ref}\cr Author(s) and year of related scientific publication. This contains only the \emph{first surname} and year of the \emph{latest} authors, e.g. "Wallis \emph{et al.} 2006 \emph{emend.} Smith and Jones 2018" becomes "Smith \emph{et al.}, 2018". This field is directly retrieved from the source specified in the column \code{source}. Moreover, accents were removed to comply with CRAN that only allows ASCII characters, e.g. "Váňová" becomes "Vanova".
+\item \code{lpsn}\cr Identifier ('Record number') of the List of Prokaryotic names with Standing in Nomenclature (LPSN). This will be the first/highest LPSN identifier to keep one identifier per row. For example, \emph{Acetobacter ascendens} has LPSN Record number 7864 and 11011. Only the first is available in the \code{microorganisms} data set.
+\item \code{lpsn_parent}\cr LPSN identifier of the parent taxon
+\item \code{lpsn_renamed_to}\cr LPSN identifier of the currently valid taxon
+\item \code{gbif}\cr Identifier ('taxonID') of the Global Biodiversity Information Facility (GBIF)
+\item \code{gbif_parent}\cr GBIF identifier of the parent taxon
+\item \code{gbif_renamed_to}\cr GBIF identifier of the currently valid taxon
+\item \code{source}\cr Either "GBIF", "LPSN" or "manually added" (see \emph{Source})
 \item \code{prevalence}\cr Prevalence of the microorganism, see \code{\link[=as.mo]{as.mo()}}
-\item \code{snomed}\cr Systematized Nomenclature of Medicine (SNOMED) code of the microorganism, according to the US Edition of SNOMED CT from 1 September 2020 (see \emph{Source}). Use \code{\link[=mo_snomed]{mo_snomed()}} to retrieve it quickly, see \code{\link[=mo_property]{mo_property()}}.
+\item \code{snomed}\cr Systematized Nomenclature of Medicine (SNOMED) code of the microorganism, version of 1 July, 2021 (see \emph{Source}). Use \code{\link[=mo_snomed]{mo_snomed()}} to retrieve it quickly, see \code{\link[=mo_property]{mo_property()}}.
 }
 }
 \source{
-Catalogue of Life: 2019 Annual Checklist as currently implemented in this \code{AMR} package:
 \itemize{
-\item Annual Checklist (public online taxonomic database), \url{http://www.catalogueoflife.org}
-}
-
-List of Prokaryotic names with Standing in Nomenclature (5 October 2021) as currently implemented in this \code{AMR} package:
-\itemize{
-\item Parte, A.C., Sarda Carbasse, J., Meier-Kolthoff, J.P., Reimer, L.C. and Goker, M. (2020). List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ. International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \doi{10.1099/ijsem.0.004332}
-\item Parte, A.C. (2018). LPSN - List of Prokaryotic names with Standing in Nomenclature (bacterio.net), 20 years on. International Journal of Systematic and Evolutionary Microbiology, 68, 1825-1829; \doi{10.1099/ijsem.0.002786}
-\item Parte, A.C. (2014). LPSN - List of Prokaryotic names with Standing in Nomenclature. Nucleic Acids Research, 42, Issue D1, D613-D616; \doi{10.1093/nar/gkt1111}
-\item Euzeby, J.P. (1997). List of Bacterial Names with Standing in Nomenclature: a Folder Available on the Internet. International Journal of Systematic Bacteriology, 47, 590-592; \doi{10.1099/00207713-47-2-590}
-}
-
-US Edition of SNOMED CT from 1 September 2020 as currently implemented in this \code{AMR} package:
-\itemize{
-\item Retrieved from the Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS), OID 2.16.840.1.114222.4.11.1009, version 12; url: \url{https://phinvads.cdc.gov/vads/ViewValueSet.action?oid=2.16.840.1.114222.4.11.1009}
+\item Parte, AC \emph{et al.} (2020). \strong{List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.} International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \doi{10.1099/ijsem.0.004332}. Accessed from \url{https://lpsn.dsmz.de} on 12 September, 2022.
+\item GBIF Secretariat (November 26, 2021). GBIF Backbone Taxonomy. Checklist dataset \doi{10.15468/39omei}. Accessed from \url{https://www.gbif.org} on 12 September, 2022.
+\item Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value Set Name 'Microoganism', OID 2.16.840.1.114222.4.11.1009 (v12). URL: \url{https://phinvads.cdc.gov}
 }
 }
 \usage{
 microorganisms
 }
 \description{
-A data set containing the full microbial taxonomy (\strong{last updated: 5 October 2021}) of six kingdoms from the Catalogue of Life (CoL) and the List of Prokaryotic names with Standing in Nomenclature (LPSN). MO codes can be looked up using \code{\link[=as.mo]{as.mo()}}.
+A data set containing the full microbial taxonomy (\strong{last updated: 12 September, 2022}) of five kingdoms from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF). This data set is the backbone of this \code{AMR} package. MO codes can be looked up using \code{\link[=as.mo]{as.mo()}}.
 }
 \details{
-Please note that entries are only based on the Catalogue of Life and the LPSN (see below). Since these sources incorporate entries based on (recent) publications in the International Journal of Systematic and Evolutionary Microbiology (IJSEM), it can happen that the year of publication is sometimes later than one might expect.
+Please note that entries are only based on the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF) (see below). Since these sources incorporate entries based on (recent) publications in the International Journal of Systematic and Evolutionary Microbiology (IJSEM), it can happen that the year of publication is sometimes later than one might expect.
 
 For example, \emph{Staphylococcus pettenkoferi} was described for the first time in Diagnostic Microbiology and Infectious Disease in 2002 (\doi{10.1016/s0732-8893(02)00399-1}), but it was not before 2007 that a publication in IJSEM followed (\doi{10.1099/ijs.0.64381-0}). Consequently, the \code{AMR} package returns 2007 for \code{mo_year("S. pettenkoferi")}.
+}
+\section{Included Taxa}{
+
+Included taxonomic data are:
+\itemize{
+\item All ~34,000 (sub)species from the kingdoms of Archaea and Bacteria
+\item ~7,400 (sub)species from the kingdom of Fungi. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package. Only relevant fungi are covered (such as all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histoplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).
+\item ~4,900 (sub)species from the kingdom of Protozoa
+\item ~1,500 (sub)species from ~50 other relevant genera from the kingdom of Animalia (such as \emph{Strongyloides} and \emph{Taenia})
+\item All ~9,400 previously accepted names of all included (sub)species (these were taxonomically renamed)
+\item The complete taxonomic tree of all included (sub)species: from kingdom to subspecies
+\item The identifier of the parent taxons
+\item The year and first author of the related scientific publication
+}
 \subsection{Manual additions}{
 
 For convenience, some entries were added manually:
 \itemize{
 \item 11 entries of \emph{Streptococcus} (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)
 \item 2 entries of \emph{Staphylococcus} (coagulase-negative (CoNS) and coagulase-positive (CoPS))
-\item 3 entries of \emph{Trichomonas} (\emph{T. vaginalis}, and its family and genus)
-\item 4 entries of \emph{Toxoplasma} (\emph{T. gondii}, and its order, family and genus)
-\item 1 entry of \emph{Candida} (\emph{C.  krusei}), that is not (yet) in the Catalogue of Life
 \item 1 entry of \emph{Blastocystis} (\emph{B.  hominis}), although it officially does not exist (Noel \emph{et al.} 2005, PMID 15634993)
 \item 1 entry of \emph{Moraxella} (\emph{M. catarrhalis}), which was formally named \emph{Branhamella catarrhalis} (Catlin, 1970) though this change was never accepted within the field of clinical microbiology
 \item 5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)
-\item 6 families under the Enterobacterales order, according to Adeolu \emph{et al.} (2016, PMID 27620848), that are not (yet) in the Catalogue of Life
 }
+
+The syntax used to transform the original data to a cleansed \R format, can be found here: \url{https://github.com/msberends/AMR/blob/main/data-raw/reproduction_of_microorganisms.R}.
 }
 
 \subsection{Direct download}{
@@ -68,19 +74,12 @@ For convenience, some entries were added manually:
 Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 }
+
 \section{About the Records from LPSN (see \emph{Source})}{
 
+LPSN is the main source for bacteriological taxonomy of this \code{AMR} package.
+
 The List of Prokaryotic names with Standing in Nomenclature (LPSN) provides comprehensive information on the nomenclature of prokaryotes. LPSN is a free to use service founded by Jean P. Euzeby in 1997 and later on maintained by Aidan C. Parte.
-
-As of February 2020, the regularly augmented LPSN database at DSMZ is the basis of the new LPSN service. The new database was implemented for the Type-Strain Genome Server and augmented in 2018 to store all kinds of nomenclatural information. Data from the previous version of LPSN and from the Prokaryotic Nomenclature Up-to-date (PNU) service were imported into the new system. PNU had been established in 1993 as a service of the Leibniz Institute DSMZ, and was curated by Norbert Weiss, Manfred Kracht and Dorothea Gleim.
-}
-
-\section{Catalogue of Life}{
-
-\if{html}{\figure{logo_col.png}{options: height="40" style=margin-bottom:"5"} \cr}
-This package contains the complete taxonomic tree of almost all microorganisms (~71,000 species) from the authoritative and comprehensive Catalogue of Life (CoL, \url{http://www.catalogueoflife.org}). The CoL is the most comprehensive and authoritative global index of species currently available. Nonetheless, we supplemented the CoL data with data from the List of Prokaryotic names with Standing in Nomenclature (LPSN, \href{https://lpsn.dsmz.de}{lpsn.dsmz.de}). This supplementation is needed until the \href{https://github.com/CatalogueOfLife/general}{CoL+ project} is finished, which we await.
-
-\link[=catalogue_of_life]{Click here} for more information about the included taxa. Check which versions of the CoL and LPSN were included in this package with \code{\link[=catalogue_of_life_version]{catalogue_of_life_version()}}.
 }
 
 \examples{

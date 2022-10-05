@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -24,16 +28,24 @@
 # ==================================================================== #
 
 # set up package environment, used by numerous AMR functions
-pkg_env <- new.env(hash = FALSE)
-pkg_env$mo_failed <- character(0)
-pkg_env$mo_field_abbreviations <- c(
-  "AIEC", "ATEC", "BORSA", "CRSM", "DAEC", "EAEC",
-  "EHEC", "EIEC", "EPEC", "ETEC", "GISA", "MRPA",
-  "MRSA", "MRSE", "MSSA", "MSSE", "NMEC", "PISP",
-  "PRSP", "STEC", "UPEC", "VISA", "VISP", "VRE",
-  "VRSA", "VRSP"
+AMR_env <- new.env(hash = FALSE)
+AMR_env$mo_uncertainties <- data.frame(
+  original_input = character(0),
+  input = character(0),
+  fullname = character(0),
+  mo = character(0),
+  candidates = character(0),
+  minimum_matching_score = integer(0),
+  keep_synonyms = logical(0),
+  stringsAsFactors = FALSE
 )
-pkg_env$rsi_interpretation_history <- data.frame(
+AMR_env$mo_renamed <- list()
+AMR_env$mo_previously_coerced <- data.frame(
+  x = character(0),
+  mo = character(0),
+  stringsAsFactors = FALSE
+)
+AMR_env$rsi_interpretation_history <- data.frame(
   datetime = Sys.time()[0],
   index = integer(0),
   ab_input = character(0),
@@ -49,6 +61,7 @@ pkg_env$rsi_interpretation_history <- data.frame(
   interpretation = character(0),
   stringsAsFactors = FALSE
 )
+AMR_env$has_data.table <- pkg_is_available("data.table", also_load = FALSE)
 
 # determine info icon for messages
 utf8_supported <- isTRUE(base::l10n_info()$`UTF-8`)
@@ -57,12 +70,12 @@ is_latex <- tryCatch(import_fn("is_latex_output", "knitr", error_on_fail = FALSE
 )
 if (utf8_supported && !is_latex) {
   # \u2139 is a symbol officially named 'information source'
-  pkg_env$info_icon <- "\u2139"
+  AMR_env$info_icon <- "\u2139"
 } else {
-  pkg_env$info_icon <- "i"
+  AMR_env$info_icon <- "i"
 }
 
-.onLoad <- function(...) {
+.onLoad <- function(lib, pkg) {
   # Support for tibble headers (type_sum) and tibble columns content (pillar_shaft)
   # without the need to depend on other packages. This was suggested by the
   # developers of the vctrs package:
@@ -117,14 +130,9 @@ if (utf8_supported && !is_latex) {
   s3_register("vctrs::vec_math", "mic")
 
   # if mo source exists, fire it up (see mo_source())
-  try(
-    {
-      if (file.exists(getOption("AMR_mo_source", "~/mo_source.rds"))) {
-        invisible(get_mo_source())
-      }
-    },
-    silent = TRUE
-  )
+  if (tryCatch(file.exists(getOption("AMR_mo_source", "~/mo_source.rds")), error = function(e) FALSE)) {
+    invisible(get_mo_source())
+  }
 
   # be sure to print tibbles as tibbles
   if (pkg_is_available("tibble", also_load = FALSE)) {
@@ -135,7 +143,6 @@ if (utf8_supported && !is_latex) {
   # they cannot be part of R/sysdata.rda since CRAN thinks it would make the package too large (+3 MB)
   assign(x = "AB_lookup", value = create_AB_lookup(), envir = asNamespace("AMR"))
   assign(x = "MO_lookup", value = create_MO_lookup(), envir = asNamespace("AMR"))
-  assign(x = "MO.old_lookup", value = create_MO.old_lookup(), envir = asNamespace("AMR"))
   # for mo_is_intrinsic_resistant() - saves a lot of time when executed on this vector
   assign(x = "INTRINSIC_R", value = create_intr_resistance(), envir = asNamespace("AMR"))
 }
@@ -157,30 +164,34 @@ create_MO_lookup <- function() {
   # all the rest
   MO_lookup[which(is.na(MO_lookup$kingdom_index)), "kingdom_index"] <- 5
 
-  # use this paste instead of `fullname` to work with Viridans Group Streptococci, etc.
-  if (length(MO_FULLNAME_LOWER) == nrow(MO_lookup)) {
-    MO_lookup$fullname_lower <- MO_FULLNAME_LOWER
-  } else {
-    MO_lookup$fullname_lower <- ""
-    warning("MO table updated - Run: source(\"data-raw/_pre_commit_hook.R\")", call. = FALSE)
-  }
+  # # use this paste instead of `fullname` to work with Viridans Group Streptococci, etc.
+  # if (length(MO_FULLNAME_LOWER) == nrow(MO_lookup)) {
+  #   MO_lookup$fullname_lower <- MO_FULLNAME_LOWER
+  # } else {
+  #   MO_lookup$fullname_lower <- ""
+  #   warning("MO table updated - Run: source(\"data-raw/_pre_commit_hook.R\")", call. = FALSE)
+  # }
 
-  # add a column with only "e coli" like combinations
-  MO_lookup$g_species <- gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO_lookup$fullname_lower, perl = TRUE)
+  MO_lookup$fullname_lower <- create_MO_fullname_lower()
+  MO_lookup$full_first <- substr(MO_lookup$fullname_lower, 1, 1)
+  MO_lookup$species_first <- substr(MO_lookup$species, 1, 1)
 
   # so arrange data on prevalence first, then kingdom, then full name
   MO_lookup[order(MO_lookup$prevalence, MO_lookup$kingdom_index, MO_lookup$fullname_lower), , drop = FALSE]
 }
 
-create_MO.old_lookup <- function() {
-  MO.old_lookup <- AMR::microorganisms.old
-  MO.old_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", tolower(trimws(MO.old_lookup$fullname))))
-
-  # add a column with only "e coli"-like combinations
-  MO.old_lookup$g_species <- trimws(gsub("^([a-z])[a-z]+ ([a-z]+) ?.*", "\\1 \\2", MO.old_lookup$fullname_lower))
-
-  # so arrange data on prevalence first, then full name
-  MO.old_lookup[order(MO.old_lookup$prevalence, MO.old_lookup$fullname_lower), , drop = FALSE]
+create_MO_fullname_lower <- function() {
+  MO_lookup <- AMR::microorganisms
+  # use this paste instead of `fullname` to work with Viridans Group Streptococci, etc.
+  MO_lookup$fullname_lower <- tolower(trimws(paste(
+    MO_lookup$genus,
+    MO_lookup$species,
+    MO_lookup$subspecies
+  )))
+  ind <- MO_lookup$genus == "" | grepl("^[(]unknown ", MO_lookup$fullname, perl = TRUE)
+  MO_lookup[ind, "fullname_lower"] <- tolower(MO_lookup[ind, "fullname", drop = TRUE])
+  MO_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", MO_lookup$fullname_lower, perl = TRUE))
+  MO_lookup$fullname_lower
 }
 
 create_intr_resistance <- function() {

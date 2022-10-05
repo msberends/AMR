@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -22,8 +26,6 @@
 # Visit our website for the full manual and a complete tutorial about  #
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
-
-expect_true(AMR:::check_dataset_integrity()) # in misc.R
 
 # IDs should always be unique
 expect_identical(nrow(microorganisms), length(unique(microorganisms$mo)))
@@ -66,25 +68,13 @@ df <- AMR:::MO_lookup
 expect_true(nrow(df[which(df$prevalence == 1), , drop = FALSE]) < nrow(df[which(df$prevalence == 2), , drop = FALSE]))
 expect_true(nrow(df[which(df$prevalence == 2), , drop = FALSE]) < nrow(df[which(df$prevalence == 3), , drop = FALSE]))
 expect_true(all(c(
-  "mo", "fullname",
-  "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies",
-  "rank", "ref", "species_id", "source", "prevalence", "snomed",
-  "kingdom_index", "fullname_lower", "g_species"
+  "mo", "fullname", "status", "kingdom", "phylum", "class", "order", 
+  "family", "genus", "species", "subspecies", "rank", "ref", "source", 
+  "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence", 
+  "snomed", "kingdom_index", "fullname_lower", "full_first", "species_first"
 ) %in% colnames(df)))
 
-expect_true(all(c(
-  "fullname", "fullname_new", "ref", "prevalence",
-  "fullname_lower", "g_species"
-) %in% colnames(AMR:::MO.old_lookup)))
-
 expect_inherits(AMR:::MO_CONS, "mo")
-
-expect_identical(
-  class(catalogue_of_life_version()),
-  c("catalogue_of_life_version", "list")
-)
-
-expect_stdout(print(catalogue_of_life_version()))
 
 uncategorised <- subset(
   microorganisms,
@@ -97,7 +87,8 @@ expect_true(NROW(uncategorised) == 0,
     "All staphylococcal species categorised as CoNS/CoPS.",
     paste0(
       "Staphylococcal species not categorised as CoNS/CoPS: S. ",
-      uncategorised$species, " (", uncategorised$mo, ")"
+      uncategorised$species, " (", uncategorised$mo, ")",
+      collapse = "\n"
     )
   )
 )

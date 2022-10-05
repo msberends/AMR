@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -72,14 +76,14 @@ as.disk <- function(x, na.rm = FALSE) {
     if (na.rm == TRUE) {
       x <- x[!is.na(x)]
     }
-    x[trimws(x) == ""] <- NA
+    x[trimws2(x) == ""] <- NA
     x.bak <- x
 
     na_before <- length(x[is.na(x)])
 
     # heavily based on cleaner::clean_double():
     clean_double2 <- function(x, remove = "[^0-9.,-]", fixed = FALSE) {
-      x <- gsub(",", ".", x)
+      x <- gsub(",", ".", x, fixed = TRUE)
       # remove ending dot/comma
       x <- gsub("[,.]$", "", x)
       # only keep last dot/comma
@@ -131,7 +135,7 @@ all_valid_disks <- function(x) {
   x_disk <- tryCatch(suppressWarnings(as.disk(x[!is.na(x)])),
     error = function(e) NA
   )
-  !any(is.na(x_disk)) && !all(is.na(x))
+  !anyNA(x_disk) && !all(is.na(x))
 }
 
 #' @rdname as.disk

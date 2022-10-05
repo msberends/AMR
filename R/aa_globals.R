@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -60,21 +64,22 @@ EUCAST_VERSION_EXPERT_RULES <- list(
   )
 )
 
-SNOMED_VERSION <- list(
-  title = "Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS)",
-  current_source = "US Edition of SNOMED CT from 1 September 2020",
-  current_version = 12,
-  current_oid = "2.16.840.1.114222.4.11.1009",
-  value_set_name = "Microorganism",
-  url = "https://phinvads.cdc.gov/vads/ViewValueSet.action?oid=2.16.840.1.114222.4.11.1009"
-)
-
-CATALOGUE_OF_LIFE <- list(
-  year = 2019,
-  version = "Catalogue of Life: {year} Annual Checklist",
-  url_CoL = "http://www.catalogueoflife.org",
-  url_LPSN = "https://lpsn.dsmz.de",
-  yearmonth_LPSN = "5 October 2021"
+TAXONOMY_VERSION <- list(
+  GBIF = list(
+    accessed_date = as.Date("2022-09-12"),
+    citation = "GBIF Secretariat (November 26, 2021). GBIF Backbone Taxonomy. Checklist dataset \\doi{10.15468/39omei}.",
+    url = "https://www.gbif.org"
+  ),
+  LPSN = list(
+    accessed_date = as.Date("2022-09-12"),
+    citation = "Parte, AC *et al.* (2020). **List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.** International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \\doi{10.1099/ijsem.0.004332}.",
+    url = "https://lpsn.dsmz.de"
+  ),
+  SNOMED = list(
+    accessed_date = as.Date("2021-07-01"),
+    citation = "Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value Set Name 'Microoganism', OID 2.16.840.1.114222.4.11.1009 (v12).",
+    url = "https://phinvads.cdc.gov"
+  )
 )
 
 globalVariables(c(
@@ -117,7 +122,6 @@ globalVariables(c(
   "microorganism",
   "microorganisms",
   "microorganisms.codes",
-  "microorganisms.old",
   "mo",
   "name",
   "new",
@@ -138,7 +142,6 @@ globalVariables(c(
   "se_max",
   "se_min",
   "species",
-  "species_id",
   "total",
   "txt",
   "type",

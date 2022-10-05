@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -175,7 +179,7 @@ mdro <- function(x = NULL,
                  ...) {
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
-    # is also fix for using a grouped df as input (a dot as first argument)
+    # is also a fix for using a grouped df as input (i.e., a dot as first argument)
     x <- tryCatch(get_current_data(arg_name = "x", call = -2), error = function(e) x)
   }
   meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
@@ -190,15 +194,13 @@ mdro <- function(x = NULL,
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
 
-  check_dataset_integrity()
-
   info.bak <- info
   # don't thrown info's more than once per call
   if (isTRUE(info)) {
     info <- message_not_thrown_before("mdro")
   }
 
-  if (interactive() & verbose == TRUE & info == TRUE) {
+  if (interactive() && isTRUE(verbose) && isTRUE(info)) {
     txt <- paste0(
       "WARNING: In Verbose mode, the mdro() function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.",
       "\n\nThis may overwrite your existing data if you use e.g.:",
@@ -217,7 +219,7 @@ mdro <- function(x = NULL,
   }
 
   group_msg <- ""
-  if (info.bak == TRUE) {
+  if (isTRUE(info.bak)) {
     # print group name if used in dplyr::group_by()
     cur_group <- import_fn("cur_group", "dplyr", error_on_fail = FALSE)
     if (!is.null(cur_group)) {
@@ -255,7 +257,7 @@ mdro <- function(x = NULL,
   if (is.list(guideline)) {
     # Custom MDRO guideline ---------------------------------------------------
     stop_ifnot(inherits(guideline, "custom_mdro_guideline"), "use `custom_mdro_guideline()` to create custom guidelines")
-    if (info == TRUE) {
+    if (isTRUE(info)) {
       txt <- paste0(
         "Determining MDROs based on custom rules",
         ifelse(isTRUE(attributes(guideline)$as_factor),
@@ -268,7 +270,7 @@ mdro <- function(x = NULL,
       cat(txt, "\n", sep = "")
     }
     x <- run_custom_mdro_guideline(df = x, guideline = guideline, info = info)
-    if (info.bak == TRUE) {
+    if (isTRUE(info.bak)) {
       cat(group_msg)
       if (sum(!is.na(x$MDRO)) == 0) {
         cat(word_wrap(font_bold(paste0("=> Found 0 MDROs since no isolates are covered by the custom guideline"))))
@@ -282,7 +284,7 @@ mdro <- function(x = NULL,
         ))))
       }
     }
-    if (verbose == TRUE) {
+    if (isTRUE(verbose)) {
       return(x[, c(
         "row_number",
         "MDRO",
@@ -319,7 +321,7 @@ mdro <- function(x = NULL,
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo", info = info)
   }
-  if (is.null(col_mo) & guideline$code == "tb") {
+  if (is.null(col_mo) && guideline$code == "tb") {
     message_(
       "No column found as input for `col_mo`, ",
       font_bold(paste0("assuming all rows contain ", font_italic("Mycobacterium tuberculosis"), "."))
@@ -614,9 +616,9 @@ mdro <- function(x = NULL,
       ...
     )
   }
-  if (!"AMP" %in% names(cols_ab) & "AMX" %in% names(cols_ab)) {
+  if (!"AMP" %in% names(cols_ab) && "AMX" %in% names(cols_ab)) {
     # ampicillin column is missing, but amoxicillin is available
-    if (info == TRUE) {
+    if (isTRUE(info)) {
       message_("Using column '", cols_ab[names(cols_ab) == "AMX"], "' as input for ampicillin since many EUCAST rules depend on it.")
     }
     cols_ab <- c(cols_ab, c(AMP = unname(cols_ab[names(cols_ab) == "AMX"])))
@@ -767,14 +769,14 @@ mdro <- function(x = NULL,
   stop_if(guideline$code == "tb" & length(abx_tb) == 0, "no antimycobacterials found in data set")
   # nolint end
 
-  if (combine_SI == TRUE) {
+  if (isTRUE(combine_SI)) {
     search_result <- "R"
   } else {
     search_result <- c("R", "I")
   }
 
-  if (info == TRUE) {
-    if (combine_SI == TRUE) {
+  if (isTRUE(info)) {
+    if (isTRUE(combine_SI)) {
       cat(font_red("\nOnly results with 'R' are considered as resistance. Use `combine_SI = FALSE` to also consider 'I' as resistance.\n"))
     } else {
       cat(font_red("\nResults with 'R' or 'I' are considered as resistance. Use `combine_SI = TRUE` to only consider 'R' as resistance.\n"))
@@ -819,7 +821,7 @@ mdro <- function(x = NULL,
   trans_tbl <- function(to, rows, cols, any_all) {
     cols <- cols[!ab_missing(cols)]
     cols <- cols[!is.na(cols)]
-    if (length(rows) > 0 & length(cols) > 0) {
+    if (length(rows) > 0 && length(cols) > 0) {
       x[, cols] <- as.data.frame(lapply(
         x[, cols, drop = FALSE],
         function(col) as.rsi(col)
@@ -836,7 +838,7 @@ mdro <- function(x = NULL,
             function(y) y %in% search_result
           )
           paste(sort(c(
-            unlist(strsplit(x[row, "columns_nonsusceptible", drop = TRUE], ", ")),
+            unlist(strsplit(x[row, "columns_nonsusceptible", drop = TRUE], ", ", fixed = TRUE)),
             names(cols_nonsus)[cols_nonsus]
           )),
           collapse = ", "
@@ -871,7 +873,7 @@ mdro <- function(x = NULL,
   }
 
   trans_tbl2 <- function(txt, rows, lst) {
-    if (info == TRUE) {
+    if (isTRUE(info)) {
       message_(txt, "...", appendLF = FALSE, as_note = FALSE)
     }
     if (length(rows) > 0) {
@@ -896,7 +898,7 @@ mdro <- function(x = NULL,
         }
       )
 
-      if (verbose == TRUE) {
+      if (isTRUE(verbose)) {
         x[rows, "columns_nonsusceptible"] <<- vapply(
           FUN.VALUE = character(1),
           rows,
@@ -929,7 +931,7 @@ mdro <- function(x = NULL,
       x[which(row_filter), "classes_affected"] <<- 999
     }
 
-    if (info == TRUE) {
+    if (isTRUE(info)) {
       message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
     }
   }
@@ -951,21 +953,21 @@ mdro <- function(x = NULL,
     # (see header 'Approaches to Creating Definitions for MDR, XDR and PDR' in paper)
 
     # take amoxicillin if ampicillin is unavailable
-    if (is.na(AMP) & !is.na(AMX)) {
-      if (verbose == TRUE) {
+    if (is.na(AMP) && !is.na(AMX)) {
+      if (isTRUE(verbose)) {
         message_("Filling ampicillin (AMP) results with amoxicillin (AMX) results")
       }
       AMP <- AMX
     }
     # take ceftriaxone if cefotaxime is unavailable and vice versa
-    if (is.na(CRO) & !is.na(CTX)) {
-      if (verbose == TRUE) {
+    if (is.na(CRO) && !is.na(CTX)) {
+      if (isTRUE(verbose)) {
         message_("Filling ceftriaxone (CRO) results with cefotaxime (CTX) results")
       }
       CRO <- CTX
     }
-    if (is.na(CTX) & !is.na(CRO)) {
-      if (verbose == TRUE) {
+    if (is.na(CTX) && !is.na(CRO)) {
+      if (isTRUE(verbose)) {
         message_("Filling cefotaxime (CTX) results with ceftriaxone (CRO) results")
       }
       CTX <- CRO
@@ -1156,7 +1158,7 @@ mdro <- function(x = NULL,
     # now set MDROs:
     # MDR (=2): >=3 classes affected
     x[which(x$classes_affected >= 3), "MDRO"] <- 2
-    if (verbose == TRUE) {
+    if (isTRUE(verbose)) {
       x[which(x$classes_affected >= 3), "reason"] <- paste0(
         "at least 3 classes contain R",
         ifelse(!isTRUE(combine_SI), " or I", ""), ": ",
@@ -1167,7 +1169,7 @@ mdro <- function(x = NULL,
 
     # XDR (=3): all but <=2 classes affected
     x[which((x$classes_in_guideline - x$classes_affected) <= 2), "MDRO"] <- 3
-    if (verbose == TRUE) {
+    if (isTRUE(verbose)) {
       x[which(x$MDRO == 3), "reason"] <- paste0(
         "less than 3 classes remain susceptible (", x$classes_in_guideline[which((x$classes_in_guideline - x$classes_affected) <= 2)] - x$classes_affected[which(x$MDRO == 3)],
         " out of ", x$classes_in_guideline[which(x$MDRO == 3)], " classes)"
@@ -1176,7 +1178,7 @@ mdro <- function(x = NULL,
 
     # PDR (=4): all agents are R
     x[which(x$classes_affected == 999 & x$classes_in_guideline == x$classes_available), "MDRO"] <- 4
-    if (verbose == TRUE) {
+    if (isTRUE(verbose)) {
       x[which(x$MDRO == 4), "reason"] <- paste(
         "all antibiotics in all",
         x$classes_in_guideline[which(x$MDRO == 4)],
@@ -1187,7 +1189,7 @@ mdro <- function(x = NULL,
 
     # not enough classes available
     x[which(x$MDRO %in% c(1, 3) & x$classes_available < floor(x$classes_in_guideline * pct_required_classes)), "MDRO"] <- -1
-    if (verbose == TRUE) {
+    if (isTRUE(verbose)) {
       x[which(x$MDRO == -1), "reason"] <- paste0(
         "not enough classes available: ", x$classes_available[which(x$MDRO == -1)],
         " of required ", (floor(x$classes_in_guideline * pct_required_classes))[which(x$MDRO == -1)],
@@ -1615,10 +1617,10 @@ mdro <- function(x = NULL,
       "all"
     )
 
-    if (!ab_missing(MEM) & !ab_missing(IPM) &
-      !ab_missing(GEN) & !ab_missing(TOB) &
-      !ab_missing(CIP) &
-      !ab_missing(CAZ) &
+    if (!ab_missing(MEM) && !ab_missing(IPM) &&
+      !ab_missing(GEN) && !ab_missing(TOB) &&
+      !ab_missing(CIP) &&
+      !ab_missing(CAZ) &&
       !ab_missing(TZP)) {
       x$psae <- 0
       x[which(x[, MEM, drop = TRUE] == "R" | x[, IPM, drop = TRUE] == "R"), "psae"] <- 1 + x[which(x[, MEM, drop = TRUE] == "R" | x[, IPM, drop = TRUE] == "R"), "psae"]
@@ -1666,7 +1668,7 @@ mdro <- function(x = NULL,
     prepare_drug <- function(ab) {
       # returns vector values of drug
       # if `ab` is a column name, looks up the values in `x`
-      if (length(ab) == 1 & is.character(ab)) {
+      if (length(ab) == 1 && is.character(ab)) {
         if (ab %in% colnames(x)) {
           ab <- x[, ab, drop = TRUE]
         }
@@ -1727,7 +1729,7 @@ mdro <- function(x = NULL,
   }
 
   # some more info on negative results
-  if (verbose == TRUE) {
+  if (isTRUE(verbose)) {
     if (guideline$code == "cmi2012") {
       x[which(x$MDRO == 1 & !is.na(x$classes_affected)), "reason"] <- paste0(
         x$classes_affected[which(x$MDRO == 1 & !is.na(x$classes_affected))],
@@ -1742,14 +1744,14 @@ mdro <- function(x = NULL,
     }
   }
 
-  if (info.bak == TRUE) {
+  if (isTRUE(info.bak)) {
     cat(group_msg)
     if (sum(!is.na(x$MDRO)) == 0) {
       cat(font_bold(paste0("=> Found 0 MDROs since no isolates are covered by the guideline")))
     } else {
       cat(font_bold(paste0(
-        "=> Found ", sum(x$MDRO %in% c(2:5), na.rm = TRUE), " ", guideline$type, " out of ", sum(!is.na(x$MDRO)),
-        " isolates (", trimws(percentage(sum(x$MDRO %in% c(2:5), na.rm = TRUE) / sum(!is.na(x$MDRO)))), ")"
+        "=> Found ", sum(x$MDRO %in% 2:5, na.rm = TRUE), " ", guideline$type, " out of ", sum(!is.na(x$MDRO)),
+        " isolates (", trimws(percentage(sum(x$MDRO %in% 2:5, na.rm = TRUE) / sum(!is.na(x$MDRO)))), ")"
       )))
     }
   }
@@ -1819,7 +1821,7 @@ mdro <- function(x = NULL,
     )
   }
 
-  if (verbose == TRUE) {
+  if (isTRUE(verbose)) {
     colnames(x)[colnames(x) == col_mo] <- "microorganism"
     x$microorganism <- mo_name(x$microorganism, language = NULL)
     x[, c(
@@ -1953,14 +1955,14 @@ run_custom_mdro_guideline <- function(df, guideline, info) {
   for (i in seq_len(n_dots)) {
     qry <- tryCatch(eval(parse(text = guideline[[i]]$query), envir = df, enclos = parent.frame()),
       error = function(e) {
-        pkg_env$err_msg <- e$message
+        AMR_env$err_msg <- e$message
         return("error")
       }
     )
     if (identical(qry, "error")) {
       warning_("in `custom_mdro_guideline()`: rule ", i,
         " (`", as.character(guideline[[i]]$query), "`) was ignored because of this error message: ",
-        pkg_env$err_msg,
+        AMR_env$err_msg,
         call = FALSE,
         add_fn = font_red
       )
@@ -1974,7 +1976,7 @@ run_custom_mdro_guideline <- function(df, guideline, info) {
 
     new_mdros <- which(qry == TRUE & out == "")
 
-    if (info == TRUE) {
+    if (isTRUE(info)) {
       cat(word_wrap(
         "- Custom MDRO rule ", i, ": `", as.character(guideline[[i]]$query),
         "` (", length(new_mdros), " rows matched)"
@@ -1982,7 +1984,10 @@ run_custom_mdro_guideline <- function(df, guideline, info) {
     }
     val <- guideline[[i]]$value
     out[new_mdros] <- val
-    reasons[new_mdros] <- paste0("matched rule ", gsub("rule", "", names(guideline)[i]), ": ", as.character(guideline[[i]]$query))
+    reasons[new_mdros] <- paste0(
+      "matched rule ",
+      gsub("rule", "", names(guideline)[i], fixed = TRUE), ": ", as.character(guideline[[i]]$query)
+    )
   }
   out[out == ""] <- "Negative"
   reasons[out == "Negative"] <- "no rules matched"

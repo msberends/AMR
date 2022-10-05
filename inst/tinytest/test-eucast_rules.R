@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -36,8 +40,8 @@ expect_equal(
   )
 )
 MOs_mentioned <- unique(AMR:::EUCAST_RULES_DF$this_value)
-MOs_mentioned <- sort(AMR:::trimws(unlist(strsplit(MOs_mentioned[!AMR:::is_valid_regex(MOs_mentioned)], ",", fixed = TRUE))))
-MOs_test <- suppressWarnings(suppressMessages(mo_name(MOs_mentioned)))
+MOs_mentioned <- sort(trimws(unlist(strsplit(MOs_mentioned[!AMR:::is_valid_regex(MOs_mentioned)], ",", fixed = TRUE))))
+MOs_test <- suppressWarnings(suppressMessages(mo_name(MOs_mentioned, keep_synonyms = TRUE, language = NULL)))
 expect_true(length(MOs_mentioned[MOs_test != MOs_mentioned]) == 0)
 
 expect_error(suppressWarnings(eucast_rules(example_isolates, col_mo = "Non-existing")))

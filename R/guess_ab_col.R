@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -59,7 +63,7 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE, only_r
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
 
-  if (is.null(x) & is.null(search_string)) {
+  if (is.null(x) && is.null(search_string)) {
     return(as.name("guess_ab_col"))
   } else {
     meet_criteria(search_string, allow_class = "character", has_length = 1, allow_NULL = FALSE)
@@ -108,17 +112,17 @@ get_column_abx <- function(x,
       entire_session = FALSE,
       match_fn = fn
     ),
-    pkg_env$get_column_abx.call
+    AMR_env$get_column_abx.call
   )) {
     # so within the same call, within the same environment, we got here again.
     # but we could've come from another function within the same call, so now only check the columns that changed
 
     # first remove the columns that are not existing anymore
-    previous <- pkg_env$get_column_abx.out
+    previous <- AMR_env$get_column_abx.out
     current <- previous[previous %in% colnames(x)]
 
     # then compare columns in current call with columns in original call
-    new_cols <- colnames(x)[!colnames(x) %in% pkg_env$get_column_abx.checked_cols]
+    new_cols <- colnames(x)[!colnames(x) %in% AMR_env$get_column_abx.checked_cols]
     if (length(new_cols) > 0) {
       # these columns did not exist in the last call, so add them
       new_cols_rsi <- get_column_abx(x[, new_cols, drop = FALSE], reuse_previous_result = FALSE, info = FALSE, sort = FALSE)
@@ -128,11 +132,11 @@ get_column_abx <- function(x,
     }
 
     # update pkg environment to improve speed on next run
-    pkg_env$get_column_abx.out <- current
-    pkg_env$get_column_abx.checked_cols <- colnames(x)
+    AMR_env$get_column_abx.out <- current
+    AMR_env$get_column_abx.checked_cols <- colnames(x)
 
     # and return right values
-    return(pkg_env$get_column_abx.out)
+    return(AMR_env$get_column_abx.out)
   }
 
   meet_criteria(x, allow_class = "data.frame")
@@ -205,7 +209,7 @@ get_column_abx <- function(x,
   dots <- dots[!vapply(FUN.VALUE = logical(1), dots, is.data.frame)]
   if (length(dots) > 0) {
     newnames <- suppressWarnings(as.ab(names(dots), info = FALSE))
-    if (any(is.na(newnames))) {
+    if (anyNA(newnames)) {
       if (info == TRUE) {
         message_(" WARNING", add_fn = list(font_yellow, font_bold), as_note = FALSE)
       }
@@ -236,12 +240,12 @@ get_column_abx <- function(x,
   }
 
   if (length(out) == 0) {
-    if (info == TRUE & all_okay == TRUE) {
+    if (info == TRUE && all_okay == TRUE) {
       message_("No columns found.")
     }
-    pkg_env$get_column_abx.call <- unique_call_id(entire_session = FALSE, match_fn = fn)
-    pkg_env$get_column_abx.checked_cols <- colnames(x.bak)
-    pkg_env$get_column_abx.out <- out
+    AMR_env$get_column_abx.call <- unique_call_id(entire_session = FALSE, match_fn = fn)
+    AMR_env$get_column_abx.checked_cols <- colnames(x.bak)
+    AMR_env$get_column_abx.out <- out
     return(out)
   }
 
@@ -262,7 +266,7 @@ get_column_abx <- function(x,
       message_(" WARNING.", add_fn = list(font_yellow, font_bold), as_note = FALSE)
     }
     for (i in seq_len(length(out))) {
-      if (verbose == TRUE & !names(out[i]) %in% names(duplicates)) {
+      if (verbose == TRUE && !names(out[i]) %in% names(duplicates)) {
         message_(
           "Using column '", font_bold(out[i]), "' as input for ", names(out)[i],
           " (", ab_name(names(out)[i], tolower = TRUE, language = NULL), ")."
@@ -300,7 +304,7 @@ get_column_abx <- function(x,
   }
   if (!is.null(soft_dependencies)) {
     soft_dependencies <- unique(soft_dependencies)
-    if (info == TRUE & !all(soft_dependencies %in% names(out))) {
+    if (info == TRUE && !all(soft_dependencies %in% names(out))) {
       # missing a soft dependency may lower the reliability
       missing <- soft_dependencies[!soft_dependencies %in% names(out)]
       missing_msg <- vector_and(paste0(
@@ -316,16 +320,16 @@ get_column_abx <- function(x,
     }
   }
 
-  pkg_env$get_column_abx.call <- unique_call_id(entire_session = FALSE, match_fn = fn)
-  pkg_env$get_column_abx.checked_cols <- colnames(x.bak)
-  pkg_env$get_column_abx.out <- out
+  AMR_env$get_column_abx.call <- unique_call_id(entire_session = FALSE, match_fn = fn)
+  AMR_env$get_column_abx.checked_cols <- colnames(x.bak)
+  AMR_env$get_column_abx.out <- out
   out
 }
 
 get_ab_from_namespace <- function(x, cols_ab) {
   # cols_ab comes from get_column_abx()
 
-  x <- trimws(unique(toupper(unlist(strsplit(x, ",")))))
+  x <- trimws2(unique(toupper(unlist(strsplit(x, ",", fixed = TRUE)))))
   x_new <- character()
   for (val in x) {
     if (paste0("AB_", val) %in% ls(envir = asNamespace("AMR"))) {

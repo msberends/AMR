@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -125,7 +129,7 @@
 #' }
 ab_name <- function(x, language = get_AMR_locale(), tolower = FALSE, ...) {
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
   meet_criteria(tolower, allow_class = "logical", has_length = 1)
 
   x <- translate_into_language(ab_validate(x = x, property = "name", ...), language = language, only_affect_ab_names = TRUE)
@@ -168,7 +172,7 @@ ab_tradenames <- function(x, ...) {
 #' @export
 ab_group <- function(x, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
   translate_into_language(ab_validate(x = x, property = "group", ...), language = language, only_affect_ab_names = TRUE)
 }
 
@@ -208,7 +212,7 @@ ab_atc <- function(x, only_first = FALSE, ...) {
 #' @export
 ab_atc_group1 <- function(x, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
   translate_into_language(ab_validate(x = x, property = "atc_group1", ...), language = language, only_affect_ab_names = TRUE)
 }
 
@@ -216,7 +220,7 @@ ab_atc_group1 <- function(x, language = get_AMR_locale(), ...) {
 #' @export
 ab_atc_group2 <- function(x, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
   translate_into_language(ab_validate(x = x, property = "atc_group2", ...), language = language, only_affect_ab_names = TRUE)
 }
 
@@ -289,7 +293,7 @@ ab_ddd_units <- function(x, administration = "oral", ...) {
 #' @export
 ab_info <- function(x, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  language <- validate_language(language)
 
   x <- as.ab(x, ...)
   list(
@@ -334,7 +338,7 @@ ab_url <- function(x, open = FALSE, ...) {
   }
 
   if (open == TRUE) {
-    if (length(u) > 1 & !is.na(u[1L])) {
+    if (length(u) > 1 && !is.na(u[1L])) {
       warning_("in `ab_url()`: only the first URL will be opened, as `browseURL()` only suports one string.")
     }
     if (!is.na(u[1L])) {
@@ -348,7 +352,7 @@ ab_url <- function(x, open = FALSE, ...) {
 #' @export
 ab_property <- function(x, property = "name", language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(property, is_in = colnames(antibiotics), has_length = 1)
+  meet_criteria(property, is_in = colnames(AMR::antibiotics), has_length = 1)
   meet_criteria(language, is_in = c(LANGUAGES_SUPPORTED, ""), has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
   translate_into_language(ab_validate(x = x, property = property, ...), language = language)
 }
@@ -358,8 +362,8 @@ ab_property <- function(x, property = "name", language = get_AMR_locale(), ...) 
 #' @export
 set_ab_names <- function(data, ..., property = "name", language = get_AMR_locale(), snake_case = NULL) {
   meet_criteria(data, allow_class = c("data.frame", "character"))
-  meet_criteria(property, is_in = colnames(antibiotics), has_length = 1, ignore.case = TRUE)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(property, is_in = colnames(AMR::antibiotics), has_length = 1, ignore.case = TRUE)
+  language <- validate_language(language)
   meet_criteria(snake_case, allow_class = "logical", has_length = 1, allow_NULL = TRUE)
 
   x_deparsed <- deparse(substitute(data))
@@ -422,7 +426,7 @@ set_ab_names <- function(data, ..., property = "name", language = get_AMR_locale
     x <- tolower(gsub("[^a-zA-Z0-9]+", "_", x))
   }
 
-  if (any(duplicated(x))) {
+  if (anyDuplicated(x)) {
     # very hacky way of adding the index to each duplicate
     # so      "Amoxicillin", "Amoxicillin",   "Amoxicillin"
     # will be "Amoxicillin", "Amoxicillin_2", "Amoxicillin_3"
@@ -433,7 +437,7 @@ set_ab_names <- function(data, ..., property = "name", language = get_AMR_locale
         if (length(dups) > 1) {
           # there are duplicates
           dup_add_int <- dups[2:length(dups)]
-          x[dup_add_int] <<- paste0(x[dup_add_int], "_", c(2:length(dups)))
+          x[dup_add_int] <<- paste0(x[dup_add_int], "_", 2:length(dups))
         }
       }
     ))
@@ -448,15 +452,13 @@ set_ab_names <- function(data, ..., property = "name", language = get_AMR_locale
 }
 
 ab_validate <- function(x, property, ...) {
-  check_dataset_integrity()
-
   if (tryCatch(all(x[!is.na(x)] %in% AB_lookup$ab), error = function(e) FALSE)) {
     # special case for ab_* functions where class is already <ab>
     x <- AB_lookup[match(x, AB_lookup$ab), property, drop = TRUE]
   } else {
     # try to catch an error when inputting an invalid argument
     # so the 'call.' can be set to FALSE
-    tryCatch(x[1L] %in% antibiotics[1, property, drop = TRUE],
+    tryCatch(x[1L] %in% AMR::antibiotics[1, property, drop = TRUE],
       error = function(e) stop(e$message, call. = FALSE)
     )
 

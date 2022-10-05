@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -175,8 +179,8 @@ key_antimicrobials <- function(x = NULL,
     values <- cols[names(cols) %in% values]
     values_new_length <- length(values)
 
-    if (values_new_length < values_old_length &
-      any(filter, na.rm = TRUE) &
+    if (values_new_length < values_old_length &&
+      any(filter, na.rm = TRUE) &&
       message_not_thrown_before("key_antimicrobials", name)) {
       warning_(
         "in `key_antimicrobials()`: ",
@@ -305,7 +309,7 @@ antimicrobials_equal <- function(y,
   stop_ifnot(length(y) == length(z), "length of `y` and `z` must be equal")
 
   key2rsi <- function(val) {
-    val <- strsplit(val, "")[[1L]]
+    val <- strsplit(val, "", fixed = TRUE)[[1L]]
     val.int <- rep(NA_real_, length(val))
     val.int[val == "S"] <- 1
     val.int[val == "I"] <- 2
@@ -347,8 +351,8 @@ antimicrobials_equal <- function(y,
       all(a == b, na.rm = TRUE)
     }
   }
-  out <- unlist(mapply(
-    FUN = determine_equality,
+  out <- unlist(Map(
+    f = determine_equality,
     y,
     z,
     MoreArgs = list(
@@ -356,7 +360,6 @@ antimicrobials_equal <- function(y,
       points_threshold = points_threshold,
       ignore_I = ignore_I
     ),
-    SIMPLIFY = FALSE,
     USE.NAMES = FALSE
   ))
   out[is.na(y) | is.na(z)] <- NA

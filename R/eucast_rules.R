@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -46,14 +50,13 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
       ))
     }
   }
-
   vector_and(txt, quotes = FALSE)
 }
 
 #' Apply EUCAST Rules
 #'
 #' @description
-#' Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <https://eucast.org>), see *Source*. Use [eucast_dosage()] to get a [data.frame] with advised dosages of a certain bug-drug combination, which is based on the [dosage] data set.
+#' Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, <https://www.eucast.org>), see *Source*. Use [eucast_dosage()] to get a [data.frame] with advised dosages of a certain bug-drug combination, which is based on the [dosage] data set.
 #'
 #' To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see *Details*.
 #' @param x a data set with antibiotic columns, such as `amox`, `AMX` and `AMC`
@@ -73,21 +76,20 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' **Note:** This function does not translate MIC values to RSI values. Use [as.rsi()] for that. \cr
 #' **Note:** When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance. \cr
 #'
-#' The file containing all EUCAST rules is located here: <https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv>.  **Note:** Old taxonomic names are replaced with the current taxonomy where applicable. For example, *Ochrobactrum anthropi* was renamed to *Brucella anthropi* in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The file used as input for this `AMR` package contains the taxonomy updated until [`r CATALOGUE_OF_LIFE$yearmonth_LPSN`][catalogue_of_life()].
+#' The file containing all EUCAST rules is located here: <https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv>.  **Note:** Old taxonomic names are replaced with the current taxonomy where applicable. For example, *Ochrobactrum anthropi* was renamed to *Brucella anthropi* in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The `AMR` package contains the full microbial taxonomy updated until `r documentation_date(max(TAXONOMY_VERSION$GBIF$accessed_date, TAXONOMY_VERSION$LPSN$accessed_date))`, see [microorganisms].
 #'
-#' ## Custom Rules
+#' ### Custom Rules
 #'
 #' Custom rules can be created using [custom_eucast_rules()], e.g.:
 #'
-#' ```{r}
+#' ```r
 #' x <- custom_eucast_rules(AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
 #'                          AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I")
 #'
-#' eucast_rules(example_isolates, rules = "custom", custom_rules = x, info = FALSE)
+#' eucast_rules(example_isolates, rules = "custom", custom_rules = x)
 #' ```
 #'
-#'
-#' ## 'Other' Rules
+#' ### 'Other' Rules
 #'
 #' Before further processing, two non-EUCAST rules about drug combinations can be applied to improve the efficacy of the EUCAST rules, and the reliability of your data (analysis). These rules are:
 #'
@@ -118,7 +120,6 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 11.0, 2021. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_11.0_Breakpoint_Tables.xlsx)
 #' - EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 12.0, 2022. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_12.0_Breakpoint_Tables.xlsx)
 #' @inheritSection AMR Reference Data Publicly Available
-
 #' @examples
 #' \donttest{
 #' a <- data.frame(
@@ -198,8 +199,6 @@ eucast_rules <- function(x,
   if (length(x_deparsed) > 1 || any(x_deparsed %unlike% "[a-z]+")) {
     x_deparsed <- "your_data"
   }
-
-  check_dataset_integrity()
 
   breakpoints_info <- EUCAST_VERSION_BREAKPOINTS[[which(as.double(names(EUCAST_VERSION_BREAKPOINTS)) == version_breakpoints)]]
   expertrules_info <- EUCAST_VERSION_EXPERT_RULES[[which(as.double(names(EUCAST_VERSION_EXPERT_RULES)) == version_expertrules)]]
@@ -333,8 +332,8 @@ eucast_rules <- function(x,
     x <- x %pm>%
       strsplit(",") %pm>%
       unlist() %pm>%
-      trimws() %pm>%
-      vapply(FUN.VALUE = character(1), function(x) if (x %in% antibiotics$ab) ab_name(x, language = NULL, tolower = TRUE, fast_mode = TRUE) else x) %pm>%
+      trimws2() %pm>%
+      vapply(FUN.VALUE = character(1), function(x) if (x %in% AMR::antibiotics$ab) ab_name(x, language = NULL, tolower = TRUE, fast_mode = TRUE) else x) %pm>%
       sort() %pm>%
       paste(collapse = ", ")
     x <- gsub("_", " ", x, fixed = TRUE)
@@ -344,8 +343,8 @@ eucast_rules <- function(x,
     x
   }
   format_antibiotic_names <- function(ab_names, ab_results) {
-    ab_names <- trimws(unlist(strsplit(ab_names, ",")))
-    ab_results <- trimws(unlist(strsplit(ab_results, ",")))
+    ab_names <- trimws2(unlist(strsplit(ab_names, ",")))
+    ab_results <- trimws2(unlist(strsplit(ab_results, ",")))
     if (length(ab_results) == 1) {
       if (length(ab_names) == 1) {
         # like FOX S
@@ -423,13 +422,13 @@ eucast_rules <- function(x,
     # big speed gain! only analyse unique rows:
     pm_distinct(`.rowid`, .keep_all = TRUE) %pm>%
     as.data.frame(stringsAsFactors = FALSE)
-  x[, col_mo] <- as.mo(as.character(x[, col_mo, drop = TRUE]))
+  x[, col_mo] <- as.mo(as.character(x[, col_mo, drop = TRUE]), info = info)
   # rename col_mo to prevent interference with joined columns
   colnames(x)[colnames(x) == col_mo] <- ".col_mo"
   col_mo <- ".col_mo"
   # join to microorganisms data set
   x <- left_join_microorganisms(x, by = col_mo, suffix = c("_oldcols", ""))
-  x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL)
+  x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL, info = FALSE)
   x$genus_species <- trimws(paste(x$genus, x$species))
   if (info == TRUE & NROW(x) > 10000) {
     message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
@@ -437,11 +436,11 @@ eucast_rules <- function(x,
 
   if (any(x$genus == "Staphylococcus", na.rm = TRUE)) {
     all_staph <- MO_lookup[which(MO_lookup$genus == "Staphylococcus"), , drop = FALSE]
-    all_staph$CNS_CPS <- suppressWarnings(mo_name(all_staph$mo, Becker = "all", language = NULL))
+    all_staph$CNS_CPS <- suppressWarnings(mo_name(all_staph$mo, Becker = "all", language = NULL, info = FALSE))
   }
   if (any(x$genus == "Streptococcus", na.rm = TRUE)) {
     all_strep <- MO_lookup[which(MO_lookup$genus == "Streptococcus"), , drop = FALSE]
-    all_strep$Lancefield <- suppressWarnings(mo_name(all_strep$mo, Lancefield = TRUE, language = NULL))
+    all_strep$Lancefield <- suppressWarnings(mo_name(all_strep$mo, Lancefield = TRUE, language = NULL, info = FALSE))
   }
 
   n_added <- 0
@@ -461,10 +460,10 @@ eucast_rules <- function(x,
         ))
       ))
     }
-    ab_enzyme <- subset(antibiotics, name %like% "/")[, c("ab", "name"), drop = FALSE]
+    ab_enzyme <- subset(AMR::antibiotics, name %like% "/")[, c("ab", "name"), drop = FALSE]
     colnames(ab_enzyme) <- c("enzyme_ab", "enzyme_name")
     ab_enzyme$base_name <- gsub("^([a-zA-Z0-9]+).*", "\\1", ab_enzyme$enzyme_name)
-    ab_enzyme$base_ab <- antibiotics[match(ab_enzyme$base_name, antibiotics$name), "ab", drop = TRUE]
+    ab_enzyme$base_ab <- AMR::antibiotics[match(ab_enzyme$base_name, AMR::antibiotics$name), "ab", drop = TRUE]
     ab_enzyme <- subset(ab_enzyme, !is.na(base_ab))
     # make ampicillin and amoxicillin interchangable
     ampi <- subset(ab_enzyme, base_ab == "AMX")
@@ -1073,11 +1072,11 @@ edit_rsi <- function(x,
   )
 
   txt_error <- function() {
-    if (info == TRUE) cat("", font_red_bg(font_white(" ERROR ")), "\n\n")
+    if (info == TRUE) cat("", font_red_bg(" ERROR "), "\n\n")
   }
   txt_warning <- function() {
     if (warned == FALSE) {
-      if (info == TRUE) cat(" ", font_rsi_I_bg(" WARNING "), sep = "")
+      if (info == TRUE) cat(" ", font_orange_bg(" WARNING "), sep = "")
     }
     warned <<- TRUE
   }
@@ -1179,7 +1178,7 @@ eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 11.0)
   meet_criteria(administration, allow_class = "character", is_in = dosage$administration[!is.na(dosage$administration)], has_length = 1)
   meet_criteria(version_breakpoints, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_BREAKPOINTS)))
 
-  # show used version_breakpoints number once per session (pkg_env will reload every session)
+  # show used version_breakpoints number once per session (AMR_env will reload every session)
   if (message_not_thrown_before("eucast_dosage", "v", gsub("[^0-9]", "", version_breakpoints), entire_session = TRUE)) {
     message_(
       "Dosages for antimicrobial drugs, as meant for ",

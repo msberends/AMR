@@ -5,8 +5,12 @@
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -42,11 +46,11 @@ pdf(NULL) # prevent Rplots.pdf being created
 expect_silent(barplot(as.disk(c(10, 20, 40))))
 expect_silent(plot(as.disk(c(10, 20, 40))))
 expect_silent(plot(as.disk(c(10, 20, 40)), expand = FALSE))
-expect_silent(plot(as.disk(c(10, 20, 40)), mo = "esco", ab = "cipr"))
+expect_silent(plot(as.disk(c(10, 20, 40)), mo = "Escherichia coli", ab = "cipr"))
 if (AMR:::pkg_is_available("ggplot2")) {
   expect_inherits(autoplot(as.disk(c(10, 20, 40))), "gg")
   expect_inherits(autoplot(as.disk(c(10, 20, 40)), expand = FALSE), "gg")
-  expect_inherits(autoplot(as.disk(c(10, 20, 40)), mo = "esco", ab = "cipr"), "gg")
+  expect_inherits(autoplot(as.disk(c(10, 20, 40)), mo = "Escherichia coli", ab = "cipr"), "gg")
 }
 expect_stdout(print(as.disk(12)))
 

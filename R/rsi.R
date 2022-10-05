@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -160,7 +164,7 @@
 #'     as.rsi() # automatically determines urine isolates
 #'
 #'   df %>%
-#'     mutate_at(vars(AMP:NIT), as.rsi, mo = "E. coli", uti = TRUE)
+#'     mutate_at(vars(AMP:TOB), as.rsi, mo = "E. coli", uti = TRUE)
 #' }
 #'
 #' # For CLEANING existing R/SI values ------------------------------------
@@ -327,13 +331,13 @@ as.rsi.default <- function(x, ...) {
     # remove other invalid characters
     # set to capitals
     x <- toupper(x)
-    x <- gsub("[^RSIHDU]+", "", x, perl = TRUE)
+    x <- gsub("[^A-Z]+", "", x, perl = TRUE)
     # some labs now report "H" instead of "I" to not interfere with EUCAST prior to 2019
-    x <- gsub("^H$", "I", x, perl = TRUE)
+    x <- gsub("H", "I", x, fixed = TRUE)
     # and MIPS uses D for Dose-dependent (which is I, but it will throw a note)
-    x <- gsub("^D$", "I", x, perl = TRUE)
+    x <- gsub("D", "I", x, fixed = TRUE)
     # and MIPS uses U for "susceptible urine"
-    x <- gsub("^U$", "S", x, perl = TRUE)
+    x <- gsub("U", "S", x, fixed = TRUE)
     # in cases of "S;S" keep S, but in case of "S;I" make it NA
     x <- gsub("^S+$", "S", x)
     x <- gsub("^I+$", "I", x)
@@ -347,7 +351,11 @@ as.rsi.default <- function(x, ...) {
           unique() %pm>%
           sort() %pm>%
           vector_and(quotes = TRUE)
-        warning_("in `as.rsi()`: ", na_after - na_before, " results truncated (",
+        cur_col <- get_current_column()
+        warning_("in `as.rsi()`: ", na_after - na_before, " result",
+          ifelse(na_after - na_before > 1, "s", ""),
+          ifelse(is.null(cur_col), "", paste0(" in column '", cur_col, "'")),
+          " truncated (",
           round(((na_after - na_before) / length(x)) * 100),
           "%) that were invalid antimicrobial interpretations: ",
           list_missing,
@@ -753,7 +761,7 @@ as_rsi_method <- function(method_short,
 
   method <- method_short
 
-  metadata_mo <- get_mo_failures_uncertainties_renamed()
+  metadata_mo <- get_mo_uncertainties()
 
   x_bak <- data.frame(x_mo = paste0(x, mo), stringsAsFactors = FALSE)
   df <- unique(data.frame(x, mo, x_mo = paste0(x, mo), stringsAsFactors = FALSE))
@@ -806,7 +814,7 @@ as_rsi_method <- function(method_short,
 
   if (nrow(trans) == 0) {
     message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
-    load_mo_failures_uncertainties_renamed(metadata_mo)
+    load_mo_uncertainties(metadata_mo)
     return(set_clean_class(factor(new_rsi, levels = c("S", "I", "R"), ordered = TRUE),
       new_class = c("rsi", "ordered", "factor")
     ))
@@ -898,8 +906,8 @@ as_rsi_method <- function(method_short,
       }
 
       # write to verbose output
-      pkg_env$rsi_interpretation_history <- rbind(
-        pkg_env$rsi_interpretation_history,
+      AMR_env$rsi_interpretation_history <- rbind(
+        AMR_env$rsi_interpretation_history,
         data.frame(
           datetime = Sys.time(),
           index = i,
@@ -943,7 +951,7 @@ as_rsi_method <- function(method_short,
     message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
   }
 
-  load_mo_failures_uncertainties_renamed(metadata_mo)
+  load_mo_uncertainties(metadata_mo)
 
   set_clean_class(factor(new_rsi, levels = c("S", "I", "R"), ordered = TRUE),
     new_class = c("rsi", "ordered", "factor")
@@ -956,7 +964,7 @@ as_rsi_method <- function(method_short,
 rsi_interpretation_history <- function(clean = FALSE) {
   meet_criteria(clean, allow_class = "logical", has_length = 1)
 
-  out.bak <- pkg_env$rsi_interpretation_history
+  out.bak <- AMR_env$rsi_interpretation_history
   out <- out.bak
   if (NROW(out) == 0) {
     message_("No results to return. Run `as.rsi()` on MIC values or disk diffusion zones first to see a 'logbook' data set here.")
@@ -967,9 +975,9 @@ rsi_interpretation_history <- function(clean = FALSE) {
   out$interpretation <- as.rsi(out$interpretation)
   # keep stored for next use
   if (isTRUE(clean)) {
-    pkg_env$rsi_interpretation_history <- pkg_env$rsi_interpretation_history[0, , drop = FALSE]
+    AMR_env$rsi_interpretation_history <- AMR_env$rsi_interpretation_history[0, , drop = FALSE]
   } else {
-    pkg_env$rsi_interpretation_history <- out.bak
+    AMR_env$rsi_interpretation_history <- out.bak
   }
 
   if (pkg_is_available("tibble", also_load = FALSE)) {
@@ -986,9 +994,9 @@ pillar_shaft.rsi <- function(x, ...) {
     # colours will anyway not work when has_colour() == FALSE,
     # but then the indentation should also not be applied
     out[is.na(x)] <- font_grey(" NA")
-    out[x == "R"] <- font_rsi_R_bg(font_black("  R  "))
-    out[x == "S"] <- font_rsi_S_bg(font_black("  S  "))
-    out[x == "I"] <- font_rsi_I_bg(font_black("  I  "))
+    out[x == "R"] <- font_red_bg("  R  ")
+    out[x == "S"] <- font_green_bg("  S  ")
+    out[x == "I"] <- font_orange_bg("  I  ")
   }
   create_pillar_column(out, align = "left", width = 5)
 }

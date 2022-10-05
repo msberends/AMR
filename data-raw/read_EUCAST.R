@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -103,9 +107,9 @@ read_EUCAST <- function(sheet, file, guideline_name) {
 
   get_mo <- function(x) {
     for (i in seq_len(length(x))) {
-      y <- trimws(unlist(strsplit(x[i], "(,|and)")))
-      y <- trimws(gsub("[(].*[)]", "", y))
-      y <- suppressWarnings(suppressMessages(as.mo(y, allow_uncertain = FALSE)))
+      y <- trimws2(unlist(strsplit(x[i], "(,|and)")))
+      y <- trimws2(gsub("[(].*[)]", "", y))
+      y <- suppressWarnings(suppressMessages(as.mo(y)))
       if (!is.null(mo_uncertainties())) uncertainties <<- add_uncertainties(uncertainties, mo_uncertainties())
       y <- y[!is.na(y) & y != "UNKNOWN"]
       x[i] <- paste(y, collapse = "|")

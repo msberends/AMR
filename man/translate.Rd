@@ -17,7 +17,7 @@ reset_AMR_locale()
 translate_AMR(x, language = get_AMR_locale())
 }
 \arguments{
-\item{language}{language to choose. Use one of these supported language names or ISO-639-1 codes: "English" ("en"), "Chinese" ("zh"), "Danish" ("da"), "Dutch" ("nl"), "French" ("fr"), "German" ("de"), "Greek" ("el"), "Italian" ("it"), "Japanese" ("ja"), "Polish" ("pl"), "Portuguese" ("pt"), "Russian" ("ru"), "Spanish" ("es"), "Swedish" ("sv"), "Turkish" ("tr"), "Ukrainian" ("uk").}
+\item{language}{language to choose. Use one of these supported language names or ISO-639-1 codes: English (en), Chinese (zh), Danish (da), Dutch (nl), French (fr), German (de), Greek (el), Italian (it), Japanese (ja), Polish (pl), Portuguese (pt), Russian (ru), Spanish (es), Swedish (sv), Turkish (tr) or Ukrainian (uk).}
 
 \item{x}{text to translate}
 }
@@ -25,16 +25,29 @@ translate_AMR(x, language = get_AMR_locale())
 For language-dependent output of AMR functions, like \code{\link[=mo_name]{mo_name()}}, \code{\link[=mo_gramstain]{mo_gramstain()}}, \code{\link[=mo_type]{mo_type()}} and \code{\link[=ab_name]{ab_name()}}.
 }
 \details{
-The currently 16 supported languages are English, Chinese, Danish, Dutch, French, German, Greek, Italian, Japanese, Polish, Portuguese, Russian, Spanish, Swedish, Turkish and Ukrainian. All these languages have translations available for all antimicrobial agents and colloquial microorganism names.
+The currently 16 supported languages are English (en), Chinese (zh), Danish (da), Dutch (nl), French (fr), German (de), Greek (el), Italian (it), Japanese (ja), Polish (pl), Portuguese (pt), Russian (ru), Spanish (es), Swedish (sv), Turkish (tr) or Ukrainian (uk). All these languages have translations available for all antimicrobial agents and colloquial microorganism names.
+
+\strong{To silence language notes when this package loads} on a non-English operating system, you can set the option \code{AMR_locale} in your \code{.Rprofile} file like this:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Open .Rprofile file
+utils::file.edit("~/.Rprofile")
+
+# Add e.g. Italian support to that file using:
+options(AMR_locale = "Italian")
+# or using:
+AMR::set_AMR_locale("Italian")
+
+# And save the file!
+}\if{html}{\out{</div>}}
 
 Please read about adding or updating a language in \href{https://github.com/msberends/AMR/wiki/}{our Wiki}.
 \subsection{Changing the Default Language}{
 
 The system language will be used at default (as returned by \code{Sys.getenv("LANG")} or, if \code{LANG} is not set, \code{\link[=Sys.getlocale]{Sys.getlocale("LC_COLLATE")}}), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:
 \enumerate{
-\item Setting the R option \code{AMR_locale}, either by using \code{set_AMR_locale()} or by running e.g. \code{options(AMR_locale = "de")}.
+\item Setting the R option \code{AMR_locale}, either by using e.g. \code{set_AMR_locale("German")} or by running e.g. \code{options(AMR_locale = "German")}.
 
-Note that setting an \R option only works in the same session. Save the command \code{options(AMR_locale = "(your language)")} to your \code{.Rprofile} file to apply it for every session.
+Note that setting an \R option only works in the same session. Save the command \code{options(AMR_locale = "(your language)")} to your \code{.Rprofile} file to apply it for every session. Run \code{utils::file.edit("~/.Rprofile")} to edit your \code{.Rprofile} file.
 \item Setting the system variable \code{LANGUAGE} or \code{LANG}, e.g. by adding \code{LANGUAGE="de_DE.utf8"} to your \code{.Renviron} file in your home directory.
 }
 
@@ -44,16 +57,22 @@ Thus, if the R option \code{AMR_locale} is set, the system variables \code{LANGU
 \examples{
 # Current settings (based on system language)
 ab_name("Ciprofloxacin")
-mo_name("Coagulase-negative Staphylococcus")
+mo_name("Coagulase-negative Staphylococcus (CoNS)")
 
 # setting another language
-set_AMR_locale("Greek")
-ab_name("Ciprofloxacin")
-mo_name("Coagulase-negative Staphylococcus")
-
 set_AMR_locale("Spanish")
 ab_name("Ciprofloxacin")
-mo_name("Coagulase-negative Staphylococcus")
+mo_name("Coagulase-negative Staphylococcus (CoNS)")
+
+# setting yet another language
+set_AMR_locale("Greek")
+ab_name("Ciprofloxacin")
+mo_name("Coagulase-negative Staphylococcus (CoNS)")
+
+# setting yet another language
+set_AMR_locale("Ukrainian")
+ab_name("Ciprofloxacin")
+mo_name("Coagulase-negative Staphylococcus (CoNS)")
 
 # set_AMR_locale() understands endonyms, English exonyms, and ISO-639-1:
 set_AMR_locale("Deutsch")

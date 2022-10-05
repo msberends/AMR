@@ -32,8 +32,8 @@ biotype	TRUE	TRUE	FALSE	FALSE	生物型	biotype			Biotyp	βιότυπος	biotip
 vegetative	TRUE	TRUE	FALSE	FALSE	无性系	vegetativ	vegetatief	végétatif	vegetativ	βλαστικός	vegetativo	([[ ]*?)グループ	wegetatywna	vegetativo	вегетативный	vegetativo	vegetativ	vejetatif	вегетативний
 ([([ ]*?)group	TRUE	TRUE	FALSE	FALSE	([([]*?)组	\\1gruppe	\\1groep	\\1groupe	\\1Gruppe	([([ ]*?)ομάδα	\\1gruppo		([([ ]*?)grupa	\\1grupo	\\1группа	\\1grupo	\\1grupp	([([ ]*?)grup	\\1група
 ([([ ]*?)Group	TRUE	TRUE	FALSE	FALSE	([([]*?)组	\\1Gruppe	\\1Groep	\\1Groupe	\\1Gruppe	([([ ]*;)ομάδα	\\1Gruppo	ない	([([ ]*?)Grupa	\\1Grupo	\\1Группа	\\1Grupo	\\1Grupp	([([ ]*?)Grup	\\1Група
-no .*growth	TRUE	FALSE	FALSE	FALSE	无.*生长	ingen .*vækst	geen .*groei	pas .*croissance	keine? .*wachstum	όχι .*αύξηση	sem .*crescimento	中間体	brak .*wzrostu	sem .*crescimento	отсутствие.*роста	no .*crecimientonon	ingen .*tillväxt	büyüme yok	відсутність .*росту
-no|not	TRUE	FALSE	FALSE	FALSE	不|不	nej|ikke	geen|niet	non	keine?	no|not	sem	感受性の高い、被ばく量の増加	nie|nie	sem	нет?	no|sin	nej|inte	hayır|değil|hayir|degil	ні
+no .*growth	FALSE	FALSE	FALSE	FALSE	无.*生长	ingen .*vækst	geen .*groei	pas .*croissance	keine(|n|m|r|s)|nicht .*wachstum	όχι .*αύξηση	sem .*crescimento	中間体	brak .*wzrostu	sem .*crescimento	отсутствие.*роста	no .*crecimientonon	ingen .*tillväxt	büyüme yok	відсутність .*росту
+no|not	FALSE	FALSE	FALSE	FALSE	不|不	nej|ikke	geen|niet	non	keine?	no|not	sem	感受性の高い、被ばく量の増加	nie|nie	sem	нет?	no|sin	nej|inte	hayır|değil|hayir|degil	ні
 Intermediate	TRUE	FALSE	FALSE	FALSE	中级	Mellemliggende	Intermediair		Mittlere	Ενδιάμεση		影響を受けやすい。	Pośrednia			Intermedio		Orta seviye	Знижена чутливість
 Susceptible, incr. exp.	FALSE	TRUE	FALSE	FALSE	易感，暴露增加	Modtagelig, øget eksp.	Gevoelig bij verh. blootstelling		Empfindlich, erh Belastung	Ευάλωτος, αυξημένη έκθεση		影響を受けやすい	Podatne, zwiększone narażenie					Duyarlı, enk. maruziyet	Чутливий до підвищеної експозиції
 susceptible, incr. exp.	FALSE	TRUE	FALSE	FALSE	易感，接触增加	modtagelig, øget eksp.	gevoelig bij verh. blootstelling		empfindlich, erh Belastung	Ευαίσθητος, αυξημένη έκθεση		曝露量増加	podatny, zwiększone narażenie					duyarlı, enk. maruziyet	чутливий до підвищеної експозиції

@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -27,7 +31,7 @@ MOs <- subset(microorganisms, !is.na(mo) & nchar(mo) > 3)
 expect_identical(as.character(MOs$mo), as.character(as.mo(MOs$mo)))
 
 expect_identical(
-  as.character(as.mo(c("E. coli", "H. influenzae"))),
+  as.character(as.mo(c("E. coli", "H. influenzae"), keep_synonyms = FALSE)),
   c("B_ESCHR_COLI", "B_HMPHL_INFL")
 )
 
@@ -36,12 +40,12 @@ expect_equal(as.character(as.mo("Escherichia  coli")), "B_ESCHR_COLI")
 expect_equal(as.character(as.mo(112283007)), "B_ESCHR_COLI")
 expect_equal(as.character(as.mo("Escherichia  species")), "B_ESCHR")
 expect_equal(as.character(as.mo("Escherichia")), "B_ESCHR")
-expect_equal(as.character(as.mo("Esch spp.")), "B_ESCHR")
+expect_equal(as.character(as.mo("Eschr spp.")), "B_ESCHR")
 expect_equal(as.character(as.mo(" B_ESCHR_COLI ")), "B_ESCHR_COLI")
 expect_equal(as.character(as.mo("e coli")), "B_ESCHR_COLI") # not Campylobacter
 expect_equal(as.character(as.mo("klpn")), "B_KLBSL_PNMN")
 expect_equal(as.character(as.mo("Klebsiella")), "B_KLBSL")
-expect_equal(as.character(as.mo("K. pneu rhino")), "B_KLBSL_PNMN_RHNS") # K. pneumoniae subspp. rhinoscleromatis
+expect_equal(as.character(as.mo("K. pneumo rhino")), "B_KLBSL_PNMN_RHNS") # K. pneumoniae subspp. rhinoscleromatis
 expect_equal(as.character(as.mo("Bartonella")), "B_BRTNL")
 expect_equal(as.character(as.mo("C. difficile")), "B_CRDDS_DFFC")
 expect_equal(as.character(as.mo("L. pneumophila")), "B_LGNLL_PNMP")
@@ -49,9 +53,8 @@ expect_equal(as.character(as.mo("Strepto")), "B_STRPT")
 expect_equal(as.character(as.mo("Streptococcus")), "B_STRPT") # not Peptostreptoccus
 expect_equal(as.character(as.mo("Estreptococos grupo B")), "B_STRPT_GRPB")
 expect_equal(as.character(as.mo("Group B Streptococci")), "B_STRPT_GRPB")
-expect_equal(as.character(as.mo(c("mycobacterie", "mycobakterium"))), c("B_MYCBC", "B_MYCBC"))
 
-expect_equal(as.character(as.mo(c("GAS", "GBS", "a MGS", "haemoly strep"))), c("B_STRPT_GRPA", "B_STRPT_GRPB", "B_STRPT_MILL", "B_STRPT_HAEM"))
+expect_equal(as.character(as.mo(c("GAS", "GBS", "haemoly strep"))), c("B_STRPT_GRPA", "B_STRPT_GRPB", "B_STRPT_HAEM"))
 
 
 expect_equal(as.character(as.mo("S. pyo")), "B_STRPT_PYGN") # not Actinomyces pyogenes
@@ -86,14 +89,13 @@ expect_identical(
       "staaur",
       "S. aureus",
       "S aureus",
-      "Sthafilokkockus aureeuzz",
+      "Sthafilokkockus aureus",
       "Staphylococcus aureus",
       "MRSA",
-      "VISA",
-      "meth.-resis. S. aureus (MRSA)"
-    ))
+      "VISA"
+    ), minimum_matching_score = 0)
   )),
-  rep("B_STPHY_AURS", 10)
+  rep("B_STPHY_AURS", 9)
 )
 expect_identical(
   as.character(
@@ -144,8 +146,8 @@ expect_identical(as.character(as.mo("STCPYO", Lancefield = TRUE)), "B_STRPT_GRPA
 expect_identical(as.character(as.mo("S. agalactiae", Lancefield = FALSE)), "B_STRPT_AGLC")
 expect_identical(as.character(as.mo("S. agalactiae", Lancefield = TRUE)), "B_STRPT_GRPB") # group B
 expect_identical(as.character(suppressWarnings(as.mo("estreptococos grupo B"))), "B_STRPT_GRPB")
-expect_identical(as.character(as.mo("S. equisimilis", Lancefield = FALSE)), "B_STRPT_DYSG_EQSM")
-expect_identical(as.character(as.mo("S. equisimilis", Lancefield = TRUE)), "B_STRPT_GRPC") # group C
+expect_identical(as.character(as.mo("S. equi", Lancefield = FALSE)), "B_STRPT_EQUI")
+expect_identical(as.character(as.mo("S. equi", Lancefield = TRUE)), "B_STRPT_GRPC") # group C
 # Enterococci must only be influenced if Lancefield = "all"
 expect_identical(as.character(as.mo("E. faecium", Lancefield = FALSE)), "B_ENTRC_FACM")
 expect_identical(as.character(as.mo("E. faecium", Lancefield = TRUE)), "B_ENTRC_FACM")
@@ -209,33 +211,22 @@ expect_equal(
 
 # check empty values
 expect_equal(
-  as.character(suppressWarnings(as.mo(""))),
+  as.character(as.mo("")),
   NA_character_
 )
 
 # check less prevalent MOs
-expect_equal(as.character(as.mo("Gomphosphaeria aponina delicatula")), "B_GMPHS_APNN_DLCT")
-expect_equal(as.character(as.mo("Gomphosphaeria apo del")), "B_GMPHS_APNN_DLCT")
-expect_equal(as.character(as.mo("G apo deli")), "B_GMPHS_APNN_DLCT")
-expect_equal(as.character(as.mo("Gomphosphaeria  aponina")), "B_GMPHS_APNN")
-expect_equal(as.character(as.mo("Gomphosphaeria  species")), "B_GMPHS")
-expect_equal(as.character(as.mo("Gomphosphaeria")), "B_GMPHS")
-expect_equal(as.character(as.mo(" B_GMPHS_APNN ")), "B_GMPHS_APNN")
-expect_equal(as.character(as.mo("g aponina")), "B_GMPHS_APNN")
+expect_equal(as.character(as.mo("Actinosynnema pretiosum auranticum")), "B_ANNMA_PRTS_ARNT")
+expect_equal(as.character(as.mo("Actinosynnema preti aura")), "B_ANNMA_PRTS_ARNT")
+expect_equal(as.character(as.mo("A pre aur")), "B_ANNMA_PRTS_ARNT")
+expect_equal(as.character(as.mo("Actinosynnema  pretiosum")), "B_ANNMA_PRTS")
+expect_equal(as.character(as.mo("Actinosynnema")), "B_ANNMA")
+expect_equal(as.character(as.mo(" B_ANNMA_PRTS ")), "B_ANNMA_PRTS")
 
 # check old names
 expect_equal(suppressMessages(as.character(as.mo("Escherichia blattae"))), "B_SHMWL_BLTT")
-print(mo_renamed())
 expect_equal(suppressMessages(as.character(as.mo(c("E. coli", "Chlamydo psittaci")))), c("B_ESCHR_COLI", "B_CHLMY_PSTT"))
 expect_equal(suppressMessages(mo_name("eubcom")), "Clostridium combesii")
-
-# check uncertain names
-expect_equal(suppressMessages(as.character(as.mo("staaur extratest", allow_uncertain = TRUE))), "B_STPHY_AURS")
-expect_equal(suppressWarnings(as.character(as.mo("staaur extratest", allow_uncertain = FALSE))), "UNKNOWN")
-expect_message(as.mo("e coli extra_text", allow_uncertain = TRUE))
-expect_equal(suppressMessages(as.character(as.mo("unexisting aureus", allow_uncertain = 3))), "B_STPHY_AURS")
-expect_equal(suppressMessages(as.character(as.mo("unexisting staphy", allow_uncertain = 3))), "B_STPHY_COPS")
-expect_equal(suppressMessages(as.character(as.mo(c("s aure THISISATEST", "Staphylococcus aureus unexisting"), allow_uncertain = 3))), c("B_STPHY_AURS_AURS", "B_STPHY_AURS_AURS"))
 
 # predefined reference_df
 expect_equal(
@@ -255,7 +246,7 @@ expect_error(as.mo("E. coli", reference_df = data.frame(mycol = "TestingOwnID"))
 
 # combination of existing mo and other code
 expect_identical(
-  as.character(as.mo(c("B_ESCHR_COL", "ESCCOL"))),
+  suppressWarnings(as.character(as.mo(c("B_ESCHR_COL", "ESCCOL")))),
   c("B_ESCHR_COLI", "B_ESCHR_COLI")
 )
 
@@ -279,18 +270,18 @@ expect_equal(
   c("B_MCRBC_PRXY", "B_STRPT_SUIS", "B_RLTLL_TRRG")
 )
 expect_stdout(print(mo_uncertainties()))
-x <- as.mo("S. aur")
+x <- as.mo("Sta. aur")
 # many hits
 expect_stdout(print(mo_uncertainties()))
 
 # Salmonella (City) are all actually Salmonella enterica spp (City)
 expect_equal(
-  suppressMessages(as.mo(c("Salmonella Goettingen", "Salmonella Typhimurium", "Salmonella Group A"))),
+  suppressMessages(as.mo(c("Salmonella Goettingen", "Salmonella Typhimurium", "Salmonella Group A"), keep_synonyms = FALSE)),
   as.mo(c("Salmonella enterica", "Salmonella enterica", "Salmonella"))
 )
 
 # no viruses
-expect_equal(as.character(as.mo("Virus")), NA_character_)
+expect_equal(as.mo("Virus"), as.mo("UNKNOWN"))
 
 # summary
 expect_equal(length(summary(example_isolates$mo)), 6)
@@ -307,13 +298,6 @@ expect_equal(
   as.character(as.mo(c("other", "none", "unknown"))),
   rep("UNKNOWN", 3)
 )
-
-expect_null(mo_failures())
-
-expect_error(translate_allow_uncertain(5))
-
-# debug mode
-expect_stdout(print(suppressMessages(suppressWarnings(as.mo("kshgcjkhsdgkshjdfsfvsdfv", debug = TRUE, allow_uncertain = 3)))))
 
 # ..coccus
 expect_equal(

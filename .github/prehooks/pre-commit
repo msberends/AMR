@@ -1,5 +1,34 @@
 #!/bin/sh
 
+# ==================================================================== #
+# TITLE                                                                #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
+#                                                                      #
+# SOURCE                                                               #
+# https://github.com/msberends/AMR                                     #
+#                                                                      #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
+# Developed at the University of Groningen, the Netherlands, in        #
+# collaboration with non-profit organisations Certe Medical            #
+# Diagnostics & Advice, and University Medical Center Groningen.       #
+#                                                                      #
+# This R package is free software; you can freely use and distribute   #
+# it for both personal and commercial purposes under the terms of the  #
+# GNU General Public License version 2.0 (GNU GPL-2), as published by  #
+# the Free Software Foundation.                                        #
+# We created this package for both routine data analysis and academic  #
+# research and it was publicly released in the hope that it will be    #
+# useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
+#                                                                      #
+# Visit our website for the full manual and a complete tutorial about  #
+# how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
+# ==================================================================== #
+
 echo "Running pre-commit hook..."
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -7,11 +36,11 @@ if command -v Rscript > /dev/null; then
   if [ "$(Rscript -e 'cat(all(c('"'pkgload'"', '"'devtools'"', '"'dplyr'"', '"'styler'"') %in% rownames(installed.packages())))')" = "TRUE" ]; then
     Rscript -e "source('data-raw/_pre_commit_hook.R')"
     currentpkg=`Rscript -e "cat(pkgload::pkg_name())"`
-    echo "-> Adding all files in folders 'data-raw', 'inst', 'man', and 'R' to this git commit"
+    echo "-> Adding all files in 'data-raw' to this commit"
     git add data-raw/*
-    git add inst/*
     git add man/*
-    git add R/*
+    git add R/sysdata.rda
+    git add NAMESPACE
   else
     echo "- R package 'pkgload', 'devtools', 'dplyr', or 'styler' not installed!"
     currentpkg="your"
@@ -24,7 +53,7 @@ echo ""
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-echo ">> Updating semantic versioning and date..."
+echo "Updating semantic versioning and date..."
 
 # get tags from remote, and remove tags not on remote:
 git fetch origin --prune --prune-tags --quiet
@@ -32,7 +61,7 @@ currenttagfull=`git describe --tags --abbrev=0`
 currenttag=`git describe --tags --abbrev=0 | sed 's/v//'`
 if [ "$currenttag" = "" ]; then
   # there is no tag, so set tag to 0.0.1 and commit index to current count
-  echo ">>  - no git tags found, create one in this format: 'v(x).(y).(z)'!"
+  echo "- no git tags found, create one in this format: 'v(x).(y).(z)'!"
   currenttag="0.0.1"
   currentcommit=`git rev-list --count HEAD`
 else
@@ -42,18 +71,18 @@ else
     # tag is new, so this must become the version number
     currentversion="$currenttag"
   fi
-  echo ">>  - latest tag is '${currenttagfull}', with ${currentcommit} previous commits"
+  echo "- latest tag is '${currenttagfull}', with ${currentcommit} previous commits"
 fi
 if [ "$currentversion" = "" ]; then
   # combine tag (e.g. 1.2.3) and commit number (like 5) increased by 9000 to indicate beta version
   currentversion="$currenttag.$((currentcommit + 9001))" # results in e.g. 1.2.3.9005
 fi
-echo ">>  - ${currentpkg} pkg version set to ${currentversion}"
+echo "- ${currentpkg} pkg version set to ${currentversion}"
 
 # set version number and date to DESCRIPTION file
 sed -i -- "s/^Version: .*/Version: ${currentversion}/" DESCRIPTION
 sed -i -- "s/^Date: .*/Date: $(date '+%Y-%m-%d')/" DESCRIPTION
-echo ">>  - updated DESCRIPTION"
+echo "- updated DESCRIPTION"
 # remove leftover on macOS
 rm -f DESCRIPTION--
 # add to commit
@@ -65,12 +94,12 @@ if [ -e "NEWS.md" ]; then
     currentpkg=""
   fi
   sed -i -- "1s/.*/# ${currentpkg} ${currentversion}/" NEWS.md
-  echo ">>  - updated NEWS.md"
+  echo "- updated NEWS.md"
   # remove leftover on macOS
   rm -f NEWS.md--
   # add to commit
   git add NEWS.md
 else
-  echo ">>  - no NEWS.md found!"
+  echo "- no NEWS.md found!"
 fi
-echo ">>  "
+echo ""

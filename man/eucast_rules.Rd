@@ -66,7 +66,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 11)
 The input of \code{x}, possibly with edited values of antibiotics. Or, if \code{verbose = TRUE}, a \link{data.frame} with all original and new values of the affected bug-drug combinations.
 }
 \description{
-Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{https://eucast.org}), see \emph{Source}. Use \code{\link[=eucast_dosage]{eucast_dosage()}} to get a \link{data.frame} with advised dosages of a certain bug-drug combination, which is based on the \link{dosage} data set.
+Apply rules for clinical breakpoints and intrinsic resistance as defined by the European Committee on Antimicrobial Susceptibility Testing (EUCAST, \url{https://www.eucast.org}), see \emph{Source}. Use \code{\link[=eucast_dosage]{eucast_dosage()}} to get a \link{data.frame} with advised dosages of a certain bug-drug combination, which is based on the \link{dosage} data set.
 
 To improve the interpretation of the antibiogram before EUCAST rules are applied, some non-EUCAST rules can applied at default, see \emph{Details}.
 }
@@ -74,15 +74,15 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
 \strong{Note:} This function does not translate MIC values to RSI values. Use \code{\link[=as.rsi]{as.rsi()}} for that. \cr
 \strong{Note:} When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance. \cr
 
-The file containing all EUCAST rules is located here: \url{https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv}.  \strong{Note:} Old taxonomic names are replaced with the current taxonomy where applicable. For example, \emph{Ochrobactrum anthropi} was renamed to \emph{Brucella anthropi} in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The file used as input for this \code{AMR} package contains the taxonomy updated until \code{\link[=catalogue_of_life]{r CATALOGUE_OF_LIFE$yearmonth_LPSN}}.
+The file containing all EUCAST rules is located here: \url{https://github.com/msberends/AMR/blob/main/data-raw/eucast_rules.tsv}.  \strong{Note:} Old taxonomic names are replaced with the current taxonomy where applicable. For example, \emph{Ochrobactrum anthropi} was renamed to \emph{Brucella anthropi} in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The \code{AMR} package contains the full microbial taxonomy updated until 12 September, 2022, see \link{microorganisms}.
 \subsection{Custom Rules}{
 
 Custom rules can be created using \code{\link[=custom_eucast_rules]{custom_eucast_rules()}}, e.g.:
 
-\if{html}{\out{<div class="sourceCode {r}">}}\preformatted{x <- custom_eucast_rules(AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- custom_eucast_rules(AMC == "R" & genus == "Klebsiella" ~ aminopenicillins == "R",
                          AMC == "I" & genus == "Klebsiella" ~ aminopenicillins == "I")
 
-eucast_rules(example_isolates, rules = "custom", custom_rules = x, info = FALSE)
+eucast_rules(example_isolates, rules = "custom", custom_rules = x)
 }\if{html}{\out{</div>}}
 }
 

@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -100,7 +104,7 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
     MO_staph[which(MO_staph$species %in% c(
       "coagulase-negative", "argensis", "arlettae",
       "auricularis", "borealis", "caeli", "capitis", "caprae",
-      "carnosus", "casei", "chromogenes", "cohnii", "condimenti",
+      "carnosus", "casei", "caseolyticus", "chromogenes", "cohnii", "condimenti",
       "croceilyticus",
       "debuckii", "devriesei", "edaphicus", "epidermidis",
       "equorum", "felis", "fleurettii", "gallinarum",
@@ -113,8 +117,10 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
       "ureilyticus",
       "vitulinus", "vitulus", "warneri", "xylosus",
       "caledonicus", "canis",
-      "durrellii", "lloydii"
+      "durrellii", "lloydii",
+      "ratti", "taiwanensis", "veratri", "urealyticus"
     ) |
+      # old, now renamed to S. schleiferi (but still as synonym in our data of course):
       (MO_staph$species == "schleiferi" & MO_staph$subspecies %in% c("schleiferi", ""))),
     "mo",
     drop = TRUE
@@ -128,8 +134,10 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
       "hyicus", "intermedius",
       "pseudintermedius", "pseudointermedius",
       "schweitzeri", "simiae",
-      "roterodami"
+      "roterodami",
+      "singaporensis"
     ) |
+      # old, now renamed to S. coagulans (but still as synonym in our data of course):
       (MO_staph$species == "schleiferi" & MO_staph$subspecies == "coagulans")),
     "mo",
     drop = TRUE
@@ -151,31 +159,35 @@ create_MO_fullname_lower <- function() {
 }
 MO_CONS <- create_species_cons_cops("CoNS")
 MO_COPS <- create_species_cons_cops("CoPS")
-MO_STREP_ABCG <- as.mo(MO_lookup[which(MO_lookup$genus == "Streptococcus"), "mo", drop = TRUE], Lancefield = TRUE) %in% c("B_STRPT_GRPA", "B_STRPT_GRPB", "B_STRPT_GRPC", "B_STRPT_GRPG")
+MO_STREP_ABCG <- MO_lookup$mo[which(MO_lookup$genus == "Streptococcus" &
+  MO_lookup$species %in% c(
+    "pyogenes", "agalactiae", "dysgalactiae", "equi", "anginosus", "sanguinis", "salivarius",
+    "group A", "group B", "group C", "group D", "group F", "group G", "group H", "group K", "group L"
+  ))]
 MO_FULLNAME_LOWER <- create_MO_fullname_lower()
 MO_PREVALENT_GENERA <- c(
-  "Absidia", "Acholeplasma", "Acremonium", "Actinotignum", "Aedes", "Alistipes", "Alloprevotella",
-  "Alternaria", "Anaerosalibacter", "Ancylostoma", "Angiostrongylus", "Anisakis", "Anopheles",
+  "Absidia", "Acanthamoeba", "Acholeplasma", "Acremonium", "Actinotignum", "Aedes", "Alistipes", "Alloprevotella",
+  "Alternaria", "Amoeba", "Anaerosalibacter", "Ancylostoma", "Angiostrongylus", "Anisakis", "Anopheles",
   "Apophysomyces", "Arachnia", "Aspergillus", "Aureobasidium", "Bacteroides", "Basidiobolus",
   "Beauveria", "Bergeyella", "Blastocystis", "Blastomyces", "Borrelia", "Brachyspira", "Branhamella",
   "Butyricimonas", "Candida", "Capillaria", "Capnocytophaga", "Catabacter", "Cetobacterium", "Chaetomium",
   "Chlamydia", "Chlamydophila", "Chryseobacterium", "Chrysonilia", "Cladophialophora", "Cladosporium",
   "Conidiobolus", "Contracaecum", "Cordylobia", "Cryptococcus", "Curvularia", "Deinococcus", "Demodex",
-  "Dermatobia", "Diphyllobothrium", "Dirofilaria", "Dysgonomonas", "Echinostoma", "Elizabethkingia",
-  "Empedobacter", "Enterobius", "Exophiala", "Exserohilum", "Fasciola", "Flavobacterium", "Fonsecaea",
+  "Dermatobia", "Dientamoeba", "Diphyllobothrium", "Dirofilaria", "Dysgonomonas", "Echinostoma", "Elizabethkingia",
+  "Empedobacter", "Entamoeba", "Enterobius", "Exophiala", "Exserohilum", "Fasciola", "Flavobacterium", "Fonsecaea",
   "Fusarium", "Fusobacterium", "Giardia", "Haloarcula", "Halobacterium", "Halococcus", "Hendersonula",
-  "Heterophyes", "Histoplasma", "Hymenolepis", "Hypomyces", "Hysterothylacium", "Lelliottia",
-  "Leptosphaeria", "Leptotrichia", "Lucilia", "Lumbricus", "Malassezia", "Malbranchea", "Metagonimus",
-  "Microsporum", "Mortierella", "Mucor", "Mycocentrospora", "Mycoplasma", "Myroides", "Necator",
+  "Heterophyes", "Histomonas", "Histoplasma", "Hymenolepis", "Hypomyces", "Hysterothylacium", "Leishmania", "Lelliottia",
+  "Leptosphaeria", "Leptotrichia", "Lucilia", "Lumbricus", "Malassezia", "Malbranchea", "Metagonimus", "Meyerozyma",
+  "Microsporidium", "Microsporum", "Mortierella", "Mucor", "Mycocentrospora", "Mycoplasma", "Myroides", "Necator",
   "Nectria", "Ochroconis", "Odoribacter", "Oesophagostomum", "Oidiodendron", "Opisthorchis",
   "Ornithobacterium", "Parabacteroides", "Pediculus", "Pedobacter", "Phlebotomus", "Phocaeicola",
-  "Phocanema", "Phoma", "Piedraia", "Pithomyces", "Pityrosporum", "Porphyromonas", "Prevotella",
+  "Phocanema", "Phoma", "Pichia", "Piedraia", "Pithomyces", "Pityrosporum", "Pneumocystis", "Porphyromonas", "Prevotella",
   "Pseudallescheria", "Pseudoterranova", "Pulex", "Rhizomucor", "Rhizopus", "Rhodotorula", "Riemerella",
   "Saccharomyces", "Sarcoptes", "Scolecobasidium", "Scopulariopsis", "Scytalidium", "Sphingobacterium",
   "Spirometra", "Spiroplasma", "Sporobolomyces", "Stachybotrys", "Streptobacillus", "Strongyloides",
   "Syngamus", "Taenia", "Tannerella", "Tenacibaculum", "Terrimonas", "Toxocara", "Treponema", "Trichinella",
   "Trichobilharzia", "Trichoderma", "Trichomonas", "Trichophyton", "Trichosporon", "Trichostrongylus",
-  "Trichuris", "Tritirachium", "Trombicula", "Tunga", "Ureaplasma", "Victivallis", "Wautersiella",
+  "Trichuris", "Tritirachium", "Trypanosoma", "Trombicula", "Tunga", "Ureaplasma", "Victivallis", "Wautersiella",
   "Weeksella", "Wuchereria"
 )
 
@@ -281,7 +293,7 @@ create_AB_lookup <- function() {
 AB_LOOKUP <- create_AB_lookup()
 
 # Export to package as internal data ----
-usethis::ui_info(paste0("Saving {usethis::ui_value('sysdata.rda')} to {usethis::ui_value('R/')}"))
+usethis::ui_info(paste0("Updating internal package data"))
 suppressMessages(usethis::use_data(EUCAST_RULES_DF,
   TRANSLATIONS,
   LANGUAGES_SUPPORTED_NAMES,
@@ -360,7 +372,7 @@ changed_md5 <- function(object) {
 
 # give official names to ABs and MOs
 rsi <- rsi_translation %>%
-  mutate(mo_name = mo_name(mo, language = NULL), .after = mo) %>%
+  mutate(mo_name = mo_name(mo, language = NULL, keep_synonyms = TRUE, info = FALSE), .after = mo) %>%
   mutate(ab_name = ab_name(ab, language = NULL), .after = ab)
 if (changed_md5(rsi)) {
   usethis::ui_info(paste0("Saving {usethis::ui_value('rsi_translation')} to {usethis::ui_value('data-raw/')}"))
@@ -390,19 +402,6 @@ if (changed_md5(microorganisms)) {
   try(openxlsx::write.xlsx(mo, "data-raw/microorganisms.xlsx"), silent = TRUE)
   try(arrow::write_feather(microorganisms, "data-raw/microorganisms.feather"), silent = TRUE)
   try(arrow::write_parquet(microorganisms, "data-raw/microorganisms.parquet"), silent = TRUE)
-}
-
-if (changed_md5(microorganisms.old)) {
-  usethis::ui_info(paste0("Saving {usethis::ui_value('microorganisms.old')} to {usethis::ui_value('data-raw/')}"))
-  write_md5(microorganisms.old)
-  try(saveRDS(microorganisms.old, "data-raw/microorganisms.old.rds", version = 2, compress = "xz"), silent = TRUE)
-  try(write.table(microorganisms.old, "data-raw/microorganisms.old.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
-  try(haven::write_sas(microorganisms.old, "data-raw/microorganisms.old.sas"), silent = TRUE)
-  try(haven::write_sav(microorganisms.old, "data-raw/microorganisms.old.sav"), silent = TRUE)
-  try(haven::write_dta(microorganisms.old, "data-raw/microorganisms.old.dta"), silent = TRUE)
-  try(openxlsx::write.xlsx(microorganisms.old, "data-raw/microorganisms.old.xlsx"), silent = TRUE)
-  try(arrow::write_feather(microorganisms.old, "data-raw/microorganisms.old.feather"), silent = TRUE)
-  try(arrow::write_parquet(microorganisms.old, "data-raw/microorganisms.old.parquet"), silent = TRUE)
 }
 
 ab <- dplyr::mutate_if(antibiotics, ~ !is.numeric(.), as.character)
@@ -435,7 +434,7 @@ if (changed_md5(av)) {
 
 # give official names to ABs and MOs
 intrinsicR <- data.frame(
-  microorganism = mo_name(intrinsic_resistant$mo, language = NULL),
+  microorganism = mo_name(intrinsic_resistant$mo, language = NULL, keep_synonyms = TRUE, info = FALSE),
   antibiotic = ab_name(intrinsic_resistant$ab, language = NULL),
   stringsAsFactors = FALSE
 )
@@ -486,16 +485,14 @@ suppressMessages(devtools::document(quiet = TRUE))
 
 
 # Style pkg ---------------------------------------------------------------
-usethis::ui_info("Styling package")
-invisible(capture.output(styler::style_pkg(
-  style = styler::tidyverse_style,
-  filetype = c("R", "Rmd")
-)))
-invisible(capture.output(styler::style_dir(
-  path = "inst", # unit tests
-  style = styler::tidyverse_style,
-  filetype = c("R", "Rmd")
-)))
+if (interactive()) {
+  # only when sourcing this file ourselves
+  usethis::ui_info("Styling package")
+  styler::style_pkg(
+    style = styler::tidyverse_style,
+    filetype = c("R", "Rmd")
+  )
+}
 
 
 # Finished ----------------------------------------------------------------

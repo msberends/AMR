@@ -1,11 +1,10 @@
 Package: AMR
-Version: 1.8.1.9049
-Date: 2022-09-01
+Version: 1.8.2.9033
+Date: 2022-10-05
 Title: Antimicrobial Resistance Data Analysis
 Description: Functions to simplify and standardise antimicrobial resistance (AMR)
     data analysis and to work with microbial and antimicrobial properties by
-    using evidence-based methods and reliable reference data such as LPSN
-    <doi:10.1099/ijsem.0.004332>.
+    using evidence-based methods, as described in <doi:10.18637/jss.v104.i03>.
 Authors@R: c(
  person(family = "Berends",     c("Matthijs", "S."), role = c("aut", "cre"), comment = c(ORCID = "0000-0001-7620-1800"), email = "m.berends@certe.nl"),
  person(family = "Luz",         c("Christian", "F."), role = c("aut", "ctb"), comment = c(ORCID = "0000-0001-5809-5995")),
@@ -29,12 +28,14 @@ Authors@R: c(
 Depends: R (>= 3.0.0)
 Enhances:
   cleaner,
-  skimr,
   ggplot2,
+  janitor,
+  skimr,
   tibble,
   tidyselect
 Suggests: 
   curl,
+  data.table,
   dplyr,
   knitr,
   progress,

@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -31,11 +35,15 @@ expect_equal(AMR:::percentage(0.1234), "12.3%")
 expect_equal(AMR:::percentage(0.0054), "0.5%")
 expect_equal(AMR:::percentage(0.0055), "0.6%")
 
-expect_equal(AMR:::strrep("A", 5), "AAAAA")
-expect_equal(AMR:::strrep(c("A", "B"), c(5, 2)), c("AAAAA", "BB"))
-expect_equal(AMR:::trimws(" test "), "test")
-expect_equal(AMR:::trimws(" test ", "l"), "test ")
-expect_equal(AMR:::trimws(" test ", "r"), " test")
+# test functions on all R versions -  R < 3.3 did not contain these
+expect_equal(strrep("A", 5), "AAAAA")
+expect_equal(strrep(c("A", "B"), c(5, 2)), c("AAAAA", "BB"))
+expect_equal(trimws(" test "), "test")
+expect_equal(trimws(" test ", "l"), "test ")
+expect_equal(trimws(" test ", "r"), " test")
+expect_equal(AMR:::trimws2(" test "), "test")
+expect_equal(AMR:::trimws2(" test ", "l"), "test ")
+expect_equal(AMR:::trimws2(" test ", "r"), " test")
 
 expect_warning(AMR:::generate_warning_abs_missing(c("AMP", "AMX")))
 expect_warning(AMR:::generate_warning_abs_missing(c("AMP", "AMX"), any = TRUE))

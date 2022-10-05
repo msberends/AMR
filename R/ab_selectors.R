@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -420,8 +424,8 @@ administrable_per_os <- function(only_rsi_columns = FALSE, ...) {
     info = FALSE, only_rsi_columns = only_rsi_columns,
     sort = FALSE, fn = "administrable_per_os"
   )
-  agents_all <- antibiotics[which(!is.na(antibiotics$oral_ddd)), "ab", drop = TRUE]
-  agents <- antibiotics[which(antibiotics$ab %in% ab_in_data & !is.na(antibiotics$oral_ddd)), "ab", drop = TRUE]
+  agents_all <- AMR::antibiotics[which(!is.na(AMR::antibiotics$oral_ddd)), "ab", drop = TRUE]
+  agents <- AMR::antibiotics[which(AMR::antibiotics$ab %in% ab_in_data & !is.na(AMR::antibiotics$oral_ddd)), "ab", drop = TRUE]
   agents <- ab_in_data[ab_in_data %in% agents]
   message_agent_names(
     function_name = "administrable_per_os",
@@ -458,8 +462,8 @@ administrable_iv <- function(only_rsi_columns = FALSE, ...) {
     info = FALSE, only_rsi_columns = only_rsi_columns,
     sort = FALSE, fn = "administrable_iv"
   )
-  agents_all <- antibiotics[which(!is.na(antibiotics$iv_ddd)), "ab", drop = TRUE]
-  agents <- antibiotics[which(antibiotics$ab %in% ab_in_data & !is.na(antibiotics$iv_ddd)), "ab", drop = TRUE]
+  agents_all <- AMR::antibiotics[which(!is.na(AMR::antibiotics$iv_ddd)), "ab", drop = TRUE]
+  agents <- AMR::antibiotics[which(AMR::antibiotics$ab %in% ab_in_data & !is.na(AMR::antibiotics$iv_ddd)), "ab", drop = TRUE]
   agents <- ab_in_data[ab_in_data %in% agents]
   message_agent_names(
     function_name = "administrable_iv",
@@ -539,7 +543,7 @@ ab_select_exec <- function(function_name,
   )
   # untreatable drugs
   if (only_treatable == TRUE) {
-    untreatable <- antibiotics[which(antibiotics$name %like% "-high|EDTA|polysorbate|macromethod|screening|/nacubactam"), "ab", drop = TRUE]
+    untreatable <- AMR::antibiotics[which(AMR::antibiotics$name %like% "-high|EDTA|polysorbate|macromethod|screening|/nacubactam"), "ab", drop = TRUE]
     if (any(untreatable %in% names(ab_in_data))) {
       if (message_not_thrown_before(function_name, "ab_class", "untreatable", entire_session = TRUE)) {
         warning_(
@@ -563,11 +567,18 @@ ab_select_exec <- function(function_name,
     return(NULL)
   }
 
-  if (is.null(ab_class_args)) {
-    # their upper case equivalent are vectors with class <ab>, created in data-raw/_pre_commit_hook.R
-    # carbapenems() gets its codes from AMR:::AB_CARBAPENEMS
-    abx <- get(paste0("AB_", toupper(function_name)), envir = asNamespace("AMR"))
-    ab_group <- function_name
+  if (is.null(ab_class_args) || isTRUE(function_name %in% c("antifungals", "antimycobacterials"))) {
+    ab_group <- NULL
+    if (isTRUE(function_name == "antifungals")) {
+      abx <- antibiotics$ab[which(antibiotics$group == "Antifungals")]
+    } else if (isTRUE(function_name == "antimycobacterials")) {
+      abx <- antibiotics$ab[which(antibiotics$group == "Antimycobacterials")]
+    } else {
+      # their upper case equivalent are vectors with class <ab>, created in data-raw/_pre_commit_hook.R
+      # carbapenems() gets its codes from AMR:::AB_CARBAPENEMS
+      abx <- get(paste0("AB_", toupper(function_name)), envir = asNamespace("AMR"))
+      ab_group <- function_name
+    }
     examples <- paste0(" (such as ", vector_or(ab_name(sample(abx, size = min(2, length(abx)), replace = FALSE),
       tolower = TRUE,
       language = NULL
@@ -755,12 +766,12 @@ any.ab_selector_any_all <- function(..., na.rm = FALSE) {
 }
 
 is_any <- function(el1) {
-  syscalls <- paste0(trimws(deparse(sys.calls())), collapse = " ")
+  syscalls <- paste0(trimws2(deparse(sys.calls())), collapse = " ")
   el1 <- gsub("(.*),.*", "\\1", el1)
   syscalls %like% paste0("[^_a-zA-Z0-9]any\\(", "(c\\()?", el1)
 }
 is_all <- function(el1) {
-  syscalls <- paste0(trimws(deparse(sys.calls())), collapse = " ")
+  syscalls <- paste0(trimws2(deparse(sys.calls())), collapse = " ")
   el1 <- gsub("(.*),.*", "\\1", el1)
   syscalls %like% paste0("[^_a-zA-Z0-9]all\\(", "(c\\()?", el1)
 }
@@ -782,16 +793,16 @@ find_ab_names <- function(ab_group, n = 3) {
   ab_group <- gsub("[^a-zA-Z|0-9]", ".*", ab_group)
 
   # try popular first, they have DDDs
-  drugs <- antibiotics[which((!is.na(antibiotics$iv_ddd) | !is.na(antibiotics$oral_ddd)) &
-    antibiotics$name %unlike% " " &
-    antibiotics$group %like% ab_group &
-    antibiotics$ab %unlike% "[0-9]$"), ]$name
+  drugs <- AMR::antibiotics[which((!is.na(AMR::antibiotics$iv_ddd) | !is.na(AMR::antibiotics$oral_ddd)) &
+    AMR::antibiotics$name %unlike% " " &
+    AMR::antibiotics$group %like% ab_group &
+    AMR::antibiotics$ab %unlike% "[0-9]$"), ]$name
   if (length(drugs) < n) {
     # now try it all
-    drugs <- antibiotics[which((antibiotics$group %like% ab_group |
-      antibiotics$atc_group1 %like% ab_group |
-      antibiotics$atc_group2 %like% ab_group) &
-      antibiotics$ab %unlike% "[0-9]$"), ]$name
+    drugs <- antibiotics[which((AMR::antibiotics$group %like% ab_group |
+      AMR::antibiotics$atc_group1 %like% ab_group |
+      AMR::antibiotics$atc_group2 %like% ab_group) &
+      AMR::antibiotics$ab %unlike% "[0-9]$"), ]$name
   }
   if (length(drugs) == 0) {
     return("??")

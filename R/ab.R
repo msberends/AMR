@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -91,8 +95,6 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   meet_criteria(flag_multiple_results, allow_class = "logical", has_length = 1)
   meet_criteria(info, allow_class = "logical", has_length = 1)
 
-  check_dataset_integrity()
-
   if (is.ab(x)) {
     return(x)
   }
@@ -109,7 +111,6 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
   x_bak <- x
   x <- toupper(x)
-  x_nonNA <- x[!is.na(x)]
 
   # remove diacritics
   x <- iconv(x, from = "UTF-8", to = "ASCII//TRANSLIT")
@@ -128,7 +129,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   x_unknown_ATCs <- character(0)
 
   note_if_more_than_one_found <- function(found, index, from_text) {
-    if (initial_search == TRUE & isTRUE(length(from_text) > 1)) {
+    if (initial_search == TRUE && isTRUE(length(from_text) > 1)) {
       abnames <- ab_name(from_text, tolower = TRUE, initial_search = FALSE)
       if (ab_name(found[1L], language = NULL) %like% "(clavulanic acid|avibactam)") {
         abnames <- abnames[!abnames %in% c("clavulanic acid", "avibactam")]
@@ -165,7 +166,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   x_new[known_codes_cid] <- AB_lookup$ab[match(x[known_codes_cid], AB_lookup$cid)]
   already_known <- known_names | known_codes_ab | known_codes_atc | known_codes_cid
 
-  if (initial_search == TRUE & sum(already_known) < length(x)) {
+  if (initial_search == TRUE && sum(already_known) < length(x)) {
     progress <- progress_ticker(n = sum(!already_known), n_min = 25, print = info) # start if n >= 25
     on.exit(close(progress))
   }
@@ -175,10 +176,10 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       progress$tick()
     }
 
-    if (is.na(x[i]) | is.null(x[i])) {
+    if (is.na(x[i]) || is.null(x[i])) {
       next
     }
-    if (identical(x[i], "") |
+    if (identical(x[i], "") ||
       # prevent "bacteria" from coercing to TMP, since Bacterial is a brand name of it:
       identical(tolower(x[i]), "bacteria")) {
       x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
@@ -211,7 +212,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       AB_lookup$generalised_loinc,
       function(s) x[i] %in% s
     ))
-    found <- antibiotics$ab[loinc_found == TRUE]
+    found <- AMR::antibiotics$ab[loinc_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
@@ -222,7 +223,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       AB_lookup$generalised_synonyms,
       function(s) x[i] %in% s
     ))
-    found <- antibiotics$ab[synonym_found == TRUE]
+    found <- AMR::antibiotics$ab[synonym_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
@@ -232,9 +233,9 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     abbr_found <- unlist(lapply(
       AB_lookup$generalised_abbreviations,
       # require at least 2 characters for abbreviations
-      function(s) x[i] %in% s & nchar(x[i]) >= 2
+      function(s) x[i] %in% s && nchar(x[i]) >= 2
     ))
-    found <- antibiotics$ab[abbr_found == TRUE]
+    found <- AMR::antibiotics$ab[abbr_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
@@ -281,14 +282,14 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     }
 
     # try if name starts with it
-    found <- antibiotics[which(AB_lookup$generalised_name %like% paste0("^", x_spelling)), "ab", drop = TRUE]
+    found <- AMR::antibiotics[which(AB_lookup$generalised_name %like% paste0("^", x_spelling)), "ab", drop = TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
     # try if name ends with it
-    found <- antibiotics[which(AB_lookup$generalised_name %like% paste0(x_spelling, "$")), "ab", drop = TRUE]
-    if (nchar(x[i]) >= 4 & length(found) > 0) {
+    found <- AMR::antibiotics[which(AB_lookup$generalised_name %like% paste0(x_spelling, "$")), "ab", drop = TRUE]
+    if (nchar(x[i]) >= 4 && length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
@@ -298,7 +299,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       AB_lookup$generalised_synonyms,
       function(s) any(s %like% paste0("^", x_spelling))
     ))
-    found <- antibiotics$ab[synonym_found == TRUE]
+    found <- AMR::antibiotics$ab[synonym_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
@@ -312,16 +313,16 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       # try by removing all spaces
       if (x[i] %like% " ") {
         found <- suppressWarnings(as.ab(gsub(" +", "", x[i], perl = TRUE), initial_search = FALSE))
-        if (length(found) > 0 & !is.na(found)) {
+        if (length(found) > 0 && !is.na(found)) {
           x_new[i] <- note_if_more_than_one_found(found, i, from_text)
           next
         }
       }
 
       # try by removing all spaces and numbers
-      if (x[i] %like% " " | x[i] %like% "[0-9]") {
+      if (x[i] %like% " " || x[i] %like% "[0-9]") {
         found <- suppressWarnings(as.ab(gsub("[ 0-9]", "", x[i], perl = TRUE), initial_search = FALSE))
-        if (length(found) > 0 & !is.na(found)) {
+        if (length(found) > 0 && !is.na(found)) {
           x_new[i] <- note_if_more_than_one_found(found, i, from_text)
           next
         }
@@ -477,7 +478,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
   }
 
-  if (initial_search == TRUE & sum(already_known) < length(x)) {
+  if (initial_search == TRUE && sum(already_known) < length(x)) {
     close(progress)
   }
 
@@ -566,7 +567,7 @@ as.data.frame.ab <- function(x, ...) {
 "[<-.ab" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  return_after_integrity_check(y, "antimicrobial code", antibiotics$ab)
+  return_after_integrity_check(y, "antimicrobial code", AMR::antibiotics$ab)
 }
 #' @method [[<- ab
 #' @export
@@ -574,7 +575,7 @@ as.data.frame.ab <- function(x, ...) {
 "[[<-.ab" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  return_after_integrity_check(y, "antimicrobial code", antibiotics$ab)
+  return_after_integrity_check(y, "antimicrobial code", AMR::antibiotics$ab)
 }
 #' @method c ab
 #' @export
@@ -583,7 +584,7 @@ c.ab <- function(...) {
   x <- list(...)[[1L]]
   y <- NextMethod()
   attributes(y) <- attributes(x)
-  return_after_integrity_check(y, "antimicrobial code", antibiotics$ab)
+  return_after_integrity_check(y, "antimicrobial code", AMR::antibiotics$ab)
 }
 
 #' @method unique ab

@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -94,9 +98,7 @@ atc_online_property <- function(atc_code,
   html_text <- import_fn("html_text", "rvest")
   read_html <- import_fn("read_html", "xml2")
 
-  check_dataset_integrity()
-
-  if (!all(atc_code %in% unlist(antibiotics$atc))) {
+  if (!all(atc_code %in% unlist(AMR::antibiotics$atc))) {
     atc_code <- as.character(ab_atc(atc_code, only_first = TRUE))
   }
 
@@ -183,7 +185,7 @@ atc_online_property <- function(atc_code,
         # ATC and name are only in first row
         returnvalue[i] <- out[1, property, drop = TRUE]
       } else {
-        if (!"adm.r" %in% colnames(out) | is.na(out[1, "adm.r", drop = TRUE])) {
+        if (!"adm.r" %in% colnames(out) || is.na(out[1, "adm.r", drop = TRUE])) {
           returnvalue[i] <- NA
           next
         } else {
@@ -197,7 +199,7 @@ atc_online_property <- function(atc_code,
     }
   }
 
-  if (property == "groups" & length(returnvalue) == 1) {
+  if (property == "groups" && length(returnvalue) == 1) {
     returnvalue <- returnvalue[[1]]
   }
 

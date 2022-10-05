@@ -1,12 +1,28 @@
-# AMR 1.8.1.9049
+# AMR 1.8.2.9033
+
+This version will eventually become v2.0! We're happy to reach a new major milestone soon!
+
+### Breaking
+* Removed all species of the taxonomic kingdom Chromista from the package. This was done for multiple reasons:
+  * CRAN allows packages to be around 5 MB maximum, some packages are exempted but this package is not one of them
+  * Chromista are not relevant when it comes to antimicrobial resistance, thus lacking the primary scope of this package
+  * Chromista are almost never clinically relevant, thus lacking the secondary scope of this package
+* The `microorganisms` no longer relies on the Catalogue of Life, but now primarily on the List of Prokaryotic names with Standing in Nomenclature (LPSN) and is supplemented with the Global Biodiversity Information Facility (GBIF). The structure of this data set has changed to include separate LPSN and GBIF identifiers. Almost all previous MO codes were retained. It contains over 1,000 taxonomic names from 2022 already.
+* The `microorganisms.old` data set was removed, and all previously accepted names are now included in the `microorganisms` data set. A new column `status` contains `"accepted"` for currently accepted names and `"synonym"` for taxonomic synonyms; currently invalid names. All previously accepted names now have a microorganisms ID and - if available - an LPSN, GBIF and SNOMED CT identifier.
+* The `mo_matching_score()` now count deletions and substitutions as 2 instead of 1, which impacts the outcome of `as.mo()` and any `mo_*()` function
 
 ### New
 * EUCAST 2022 and CLSI 2022 guidelines have been added for `as.rsi()`. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.
+* All new algorithm for `as.mo()` (and thus internally all `mo_*()` functions) while still following our original set-up as described in our paper (DOI 10.18637/jss.v104.i03).
+  * A new argument `keep_synonyms` allows to *not* correct for updated taxonomy, in favour of the now deleted argument `allow_uncertain`
+  * It has increased tremendously in speed and returns generally more consequent results
+  * Sequential coercion is now extremely fast as results are stored to the package environment, although coercion of unknown values must be run once per session. Previous results can be reset/removed with the new `mo_reset_session()` function.
 * Function `mean_amr_distance()` to calculate the mean AMR distance. The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand.
 * Function `rsi_interpretation_history()` to view the history of previous runs of `as.rsi()`. This returns a 'logbook' with the selected guideline, reference table and specific interpretation of each row in a data set on which `as.rsi()` was run.
-* Support for `data.frame`-enhancing R packages, more specifically: `data.table`, `tibble`, and `tsibble`. AMR package functions that have a data set as output (such as `rsi_df()` and `bug_drug_combinations()`), will now return the same data type as the input. Furthermore, all our data sets are now in `tibble` format.
-* Our data sets are now also continually exported to Apache Feather and Apache Parquet formats. You can find more info [in this article on our website](https://msberends.github.io/AMR/articles/datasets.html).
+* Support for `data.frame`-enhancing R packages, more specifically: `data.table::data.table`, `janitor::tabyl`, `tibble::tibble`, and `tsibble::tsibble`. AMR package functions that have a data set as output (such as `rsi_df()` and `bug_drug_combinations()`), will now return the same data type as the input.
+* All data sets in this package are now exported as `tibble`, instead of base R `data.frame`s. Older R versions are still supported.
 * Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. We are very grateful for the valuable input by our colleagues from other countries. The `AMR` package is now available in 16 languages.
+* Our data sets are now also continually exported to Apache Feather and Apache Parquet formats. You can find more info [in this article on our website](https://msberends.github.io/AMR/articles/datasets.html).
 
 ### Changed
 * Fix for using `as.rsi()` on certain EUCAST breakpoints for MIC values
@@ -18,22 +34,30 @@
 * Using any `random_*()` function (such as `random_mic()`) is now possible by directly calling the package without loading it first: `AMR::random_mic(10)`
 * Added *Toxoplasma gondii* (`P_TXPL_GOND`) to the `microorganisms` data set, together with its genus, family, and order
 * Changed value in column `prevalence` of the `microorganisms` data set from 3 to 2 for these genera: *Acholeplasma*, *Alistipes*, *Alloprevotella*, *Bergeyella*, *Borrelia*, *Brachyspira*, *Butyricimonas*, *Cetobacterium*, *Chlamydia*, *Chlamydophila*, *Deinococcus*, *Dysgonomonas*, *Elizabethkingia*, *Empedobacter*, *Haloarcula*, *Halobacterium*, *Halococcus*, *Myroides*, *Odoribacter*, *Ornithobacterium*, *Parabacteroides*, *Pedobacter*, *Phocaeicola*, *Porphyromonas*, *Riemerella*, *Sphingobacterium*, *Streptobacillus*, *Tenacibaculum*, *Terrimonas*, *Victivallis*, *Wautersiella*, *Weeksella*
-* Fix for using the form `df[carbapenems() == "R", ]` using the latest `vctrs` package
+* Fix for using the form `df[carbapenems() == "R", ]` when using the latest `vctrs` package
 * Fix for using `info = FALSE` in `mdro()`
-* All data sets in this package are now exported as `tibble`, instead of base R `data.frame`s. Older R versions are still supported.
 * Automatic language determination will give a note once a session
 * For all interpretation guidelines using `as.rsi()` on amoxicillin, the rules for ampicillin will be used if amoxicillin rules are not available
 * Fix for using `ab_atc()` on non-existing ATC codes
 * Black and white message texts are now reversed in colour if using an RStudio dark theme
+* `mo_snomed()` now returns class `character`, not `numeric` anymore (to make long SNOMED codes readable)
 
 ### Other
-* New website to make use of the new Bootstrap 5 and pkgdown v2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions
-* Added Peter Dutey-Magni and Anton Mymrikov as contributors, to thank them for their valuable input
-* Set up Git Large File Storage (Git LFS) for the large SAS and SPSS file formats
+* New website to make use of the new Bootstrap 5 and pkgdown 2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions
+* Added Peter Dutey-Magni, Dmytro Mykhailenko and Anton Mymrikov as contributors, to thank them for their valuable input
 * All R and Rmd files in this project are now styled using the `styler` package
+* Set scalar conditional expressions (`&&` and `||`) where possible to comply with the upcoming R 4.3
+* An enormous lot of code cleaning, fixing some small bugs on the way
 
 
-# `AMR` 1.8.1
+# AMR 1.8.2
+
+This is a small intermediate update to include the reference to our publication in the Journal of Statistical Software, DOI 10.18637/jss.v104.i03.
+
+A major update will be released by the end of 2022 or early 2023 to include the most recent EUCAST and CLSI guidelines, updated microbial taxonomy, and support for 16 languages.
+
+
+# AMR 1.8.1
 
 ### Changed
 * Fix for using `as.rsi()` on values containing capped values (such as `>=`), sometimes leading to `NA`
@@ -53,7 +77,7 @@
 * Fix for size of some image elements, as requested by CRAN
 
 
-# `AMR` 1.8.0
+# AMR 1.8.0
 
 ### Breaking changes
 * Removed `p_symbol()` and all `filter_*()` functions (except for `filter_first_isolate()`), which were all deprecated in a previous package version

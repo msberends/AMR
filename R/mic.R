@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -24,23 +28,27 @@
 # ==================================================================== #
 
 # these are allowed MIC values and will become [factor] levels
-ops <- c("<", "<=", "", ">=", ">")
+operators <- c("<", "<=", "", ">=", ">")
 valid_mic_levels <- c(
   c(t(vapply(
-    FUN.VALUE = character(9), ops,
-    function(x) paste0(x, "0.00", 1:9)
+    FUN.VALUE = character(6), operators,
+    function(x) paste0(x, "0.000", c(1:4, 6, 8))
+  ))),
+  c(t(vapply(
+    FUN.VALUE = character(90), operators,
+    function(x) paste0(x, "0.00", c(1:9, 11:19, 21:29, 31:39, 41:49, 51:59, 61:69, 71:79, 81:89, 91:99))
   ))),
   unique(c(t(vapply(
-    FUN.VALUE = character(104), ops,
+    FUN.VALUE = character(106), operators,
     function(x) {
       paste0(x, sort(as.double(paste0(
         "0.0",
-        sort(c(1:99, 125, 128, 256, 512, 625))
+        sort(c(1:99, 125, 128, 156, 165, 256, 512, 625))
       ))))
     }
   )))),
   unique(c(t(vapply(
-    FUN.VALUE = character(103), ops,
+    FUN.VALUE = character(103), operators,
     function(x) {
       paste0(x, sort(as.double(paste0(
         "0.",
@@ -49,15 +57,15 @@ valid_mic_levels <- c(
     }
   )))),
   c(t(vapply(
-    FUN.VALUE = character(10), ops,
+    FUN.VALUE = character(10), operators,
     function(x) paste0(x, sort(c(1:9, 1.5)))
   ))),
   c(t(vapply(
-    FUN.VALUE = character(45), ops,
+    FUN.VALUE = character(45), operators,
     function(x) paste0(x, c(10:98)[9:98 %% 2 == TRUE])
   ))),
   c(t(vapply(
-    FUN.VALUE = character(17), ops,
+    FUN.VALUE = character(17), operators,
     function(x) paste0(x, sort(c(2^c(7:11), 192, 80 * c(2:12))))
   )))
 )
@@ -163,11 +171,15 @@ as.mic <- function(x, na.rm = FALSE) {
   if (is.mic(x)) {
     x
   } else {
-    x <- as.character(unlist(x))
+    if (is.numeric(x)) {
+      x <- format(x, scientific = FALSE)
+    } else {
+      x <- as.character(unlist(x))
+    }
     if (na.rm == TRUE) {
       x <- x[!is.na(x)]
     }
-    x[trimws(x) == ""] <- NA
+    x[trimws2(x) == ""] <- NA
     x.bak <- x
 
     # comma to period
@@ -202,7 +214,7 @@ as.mic <- function(x, na.rm = FALSE) {
     # never end with dot
     x <- gsub("[.]$", "", x, perl = TRUE)
     # trim it
-    x <- trimws(x)
+    x <- trimws2(x)
 
     ## previously unempty values now empty - should return a warning later on
     x[x.bak != "" & x == ""] <- "invalid"

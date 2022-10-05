@@ -23,3 +23,5 @@ PackageCheckArgs: --no-build-vignettes --as-cran
 PackageRoxygenize: rd,collate,namespace
 
 UseNativePipeOperator: No
+
+SpellingDictionary: en_GB

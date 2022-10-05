@@ -1,12 +1,16 @@
 # ==================================================================== #
 # TITLE                                                                #
-# Antimicrobial Resistance (AMR) Data Analysis for R                   #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
 #                                                                      #
 # SOURCE                                                               #
 # https://github.com/msberends/AMR                                     #
 #                                                                      #
-# LICENCE                                                              #
-# (c) 2018-2022 Berends MS, Luz CF et al.                              #
+# CITE AS                                                              #
+# Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C    #
+# (2022). AMR: An R Package for Working with Antimicrobial Resistance  #
+# Data. Journal of Statistical Software, 104(3), 1-31.                 #
+# doi:10.18637/jss.v104.i03                                            #
+#                                                                      #
 # Developed at the University of Groningen, the Netherlands, in        #
 # collaboration with non-profit organisations Certe Medical            #
 # Diagnostics & Advice, and University Medical Center Groningen.       #
@@ -35,38 +39,54 @@
 #'
 #' If you are familiar with the [`case_when()`][dplyr::case_when()] function of the `dplyr` package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation'. The rule itself is written *before* the tilde (`~`) and the consequence of the rule is written *after* the tilde:
 #'
-#' ```{r}
+#' ```r
 #' x <- custom_eucast_rules(TZP == "S" ~ aminopenicillins == "S",
 #'                          TZP == "R" ~ aminopenicillins == "R")
 #' ```
 #'
 #' These are two custom EUCAST rules: if TZP (piperacillin/tazobactam) is "S", all aminopenicillins (ampicillin and amoxicillin) must be made "S", and if TZP is "R", aminopenicillins must be made "R". These rules can also be printed to the console, so it is immediately clear how they work:
 #'
-#' ```{r}
+#' ```r
 #' x
+#' #> A set of custom EUCAST rules:
+#' #>
+#' #>   1. If TZP is "S" then set to  S :
+#' #>      amoxicillin (AMX), ampicillin (AMP)
+#' #>
+#' #>   2. If TZP is "R" then set to  R :
+#' #>      amoxicillin (AMX), ampicillin (AMP)
 #' ```
 #'
 #' The rules (the part *before* the tilde, in above example `TZP == "S"` and `TZP == "R"`) must be evaluable in your data set: it should be able to run as a filter in your data set without errors. This means for the above example that the column `TZP` must exist. We will create a sample data set and test the rules set:
 #'
-#' ```{r}
+#' ```r
 #' df <- data.frame(mo = c("Escherichia coli", "Klebsiella pneumoniae"),
 #'                  TZP = as.rsi("R"),
 #'                  ampi = as.rsi("S"),
 #'                  cipro = as.rsi("S"))
 #' df
+#' #>                      mo TZP ampi cipro
+#' #> 1      Escherichia coli   R    S     S
+#' #> 2 Klebsiella pneumoniae   R    S     S
 #'
 #' eucast_rules(df, rules = "custom", custom_rules = x, info = FALSE)
+#' #>                      mo TZP ampi cipro
+#' #> 1      Escherichia coli   R    R     S
+#' #> 2 Klebsiella pneumoniae   R    R     S
 #' ```
 #'
 #' ### Using taxonomic properties in rules
 #'
 #' There is one exception in variables used for the rules: all column names of the [microorganisms] data set can also be used, but do not have to exist in the data set. These column names are: `r vector_and(colnames(microorganisms), sort = FALSE)`. Thus, this next example will work as well, despite the fact that the `df` data set does not contain a column `genus`:
 #'
-#' ```{r}
+#' ```r
 #' y <- custom_eucast_rules(TZP == "S" & genus == "Klebsiella" ~ aminopenicillins == "S",
 #'                          TZP == "R" & genus == "Klebsiella" ~ aminopenicillins == "R")
 #'
 #' eucast_rules(df, rules = "custom", custom_rules = y, info = FALSE)
+#' #>                      mo TZP ampi cipro
+#' #> 1      Escherichia coli   R    S     S
+#' #> 2 Klebsiella pneumoniae   R    R     S
 #' ```
 #'
 #' ### Usage of antibiotic group names
@@ -207,11 +227,11 @@ print.custom_eucast_rules <- function(x, ...) {
     if (is.na(rule$result_value)) {
       val <- font_red("<NA>")
     } else if (rule$result_value == "R") {
-      val <- font_rsi_R_bg(font_black(" R "))
+      val <- font_red_bg(" R ")
     } else if (rule$result_value == "S") {
-      val <- font_rsi_S_bg(font_black(" S "))
+      val <- font_green_bg(" S ")
     } else {
-      val <- font_rsi_I_bg(font_black(" I "))
+      val <- font_orange_bg(" I ")
     }
     agents <- paste0(
       font_blue(ab_name(rule$result_group, language = NULL, tolower = TRUE),
@@ -248,9 +268,9 @@ format_custom_query_rule <- function(query, colours = has_colour()) {
   query <- gsub(" %in% ", font_black(" is one of "), query, fixed = TRUE)
   query <- gsub(" %like% ", font_black(" resembles "), query, fixed = TRUE)
   if (colours == TRUE) {
-    query <- gsub('"R"', font_rsi_R_bg(font_black(" R ")), query, fixed = TRUE)
-    query <- gsub('"S"', font_rsi_S_bg(font_black(" S ")), query, fixed = TRUE)
-    query <- gsub('"I"', font_rsi_I_bg(font_black(" I ")), query, fixed = TRUE)
+    query <- gsub('"R"', font_red_bg(" R "), query, fixed = TRUE)
+    query <- gsub('"S"', font_green_bg(" S "), query, fixed = TRUE)
+    query <- gsub('"I"', font_orange_bg(" I "), query, fixed = TRUE)
   }
   # replace the black colour 'stops' with blue colour 'starts'
   query <- gsub("\033[39m", "\033[34m", as.character(query), fixed = TRUE)
