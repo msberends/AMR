@@ -24,7 +24,7 @@
 <meta property="og:image" content="https://msberends.github.io/AMR/logo.svg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@msberends">
-<meta name="twitter:site" content="@univgroningen">
+<meta name="twitter:site" content="@msberends">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.1.9049</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -171,12 +171,13 @@
 <p>Note: to keep the package size as small as possible, we only included this vignette on CRAN. You can read more vignettes on our website about how to conduct AMR data analysis, determine MDROs, find explanation of EUCAST rules, and much more: <a href="https://msberends.github.io/AMR/articles/" class="uri">https://msberends.github.io/AMR/articles/</a>.</p>
 <hr>
 <p>The <code>AMR</code> package is a <a href="https://msberends.github.io/AMR/#copyright">free and open-source</a> R package with <a href="https://en.wikipedia.org/wiki/Dependency_hell" class="external-link">zero dependencies</a> to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. <strong>Our aim is to provide a standard</strong> for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting.</p>
-<p>After installing this package, R knows ~71,000 distinct microbial species and all ~570 antibiotic, antimycotic and antiviral drugs by name and code (including ATC, EARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data.</p>
+<p>This work was published in the Journal of Statistical Software (Volume 104(3); <a href="https://doi.org/10.18637/jss.v104.i03" class="external-link">DOI 10.18637/jss.v104.i03</a>) and formed the basis of two PhD theses (<a href="https://doi.org/10.33612/diss.177417131" class="external-link">DOI 10.33612/diss.177417131</a> and <a href="https://doi.org/10.33612/diss.192486375" class="external-link">DOI 10.33612/diss.192486375</a>).</p>
+<p>After installing this package, R knows ~49,000 distinct microbial species and all ~570 antibiotic, antimycotic and antiviral drugs by name and code (including ATC, EARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid R/SI and MIC values. It supports any data format, including WHONET/EARS-Net data.</p>
 <p>The <code>AMR</code> package is available in English, Chinese, Danish, Dutch, French, German, Greek, Italian, Japanese, Polish, Portuguese, Russian, Spanish, Swedish, Turkish and Ukrainian. Antimicrobial drug (group) names and colloquial microorganism names are provided in these languages.</p>
 <p>This package is fully independent of any other R package and works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). <strong>It was designed to work in any setting, including those with very limited resources</strong>. Since its first public release in early 2018, this package has been downloaded from more than 175 countries.</p>
 <p>This package can be used for:</p>
 <ul>
-<li>Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the Catalogue of Life and List of Prokaryotic names with Standing in Nomenclature</li>
+<li>Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF)</li>
 <li>Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines</li>
 <li>Retrieving antimicrobial drug names, doses and forms of administration from clinical health care records</li>
 <li>Determining first isolates to be used for AMR data analysis</li>
@@ -194,7 +195,7 @@
 <li>Principal component analysis for AMR</li>
 </ul>
 <p>All reference data sets (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) in this <code>AMR</code> package are publicly and freely available. We continually export our data sets to formats for use in R, SPSS, SAS, Stata and Excel. We also supply flat files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please find <a href="https://msberends.github.io/AMR/articles/datasets.html">all download links on our website</a>, which is automatically updated with every code change.</p>
-<p>This R package was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the <a href="https://www.rug.nl" class="external-link">University of Groningen</a>, in collaboration with non-profit organisations <a href="https://www.certe.nl" class="external-link">Certe Medical Diagnostics and Advice Foundation</a> and <a href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a>. This R package formed the basis of two PhD theses (<a href="https://doi.org/10.33612/diss.177417131" class="external-link">DOI 10.33612/diss.177417131</a> and <a href="https://doi.org/10.33612/diss.192486375" class="external-link">DOI 10.33612/diss.192486375</a>) but is actively and durably maintained (see <a href="https://msberends.github.io/AMR/news/index.html">changelog)</a>) by two public healthcare organisations in the Netherlands.</p>
+<p>This R package was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the <a href="https://www.rug.nl" class="external-link">University of Groningen</a>, in collaboration with non-profit organisations <a href="https://www.certe.nl" class="external-link">Certe Medical Diagnostics and Advice Foundation</a> and <a href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a>, and is being <a href="./news">actively and durably maintained</a> by two public healthcare organisations in the Netherlands.</p>
 <hr>
 <p><small> This AMR package for R is free, open-source software and licensed under the <a href="https://msberends.github.io/AMR/LICENSE-text.html">GNU General Public License v2.0 (GPL-2)</a>. These requirements are consequently legally binding: modifications must be released under the same license when distributing the package, changes made to the code must be documented, source code must be made available when the package is distributed, and a copy of the license and copyright notice must be included with the package. </small></p>
   </main>
@@ -209,7 +210,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p><a target="_blank" href="https://www.rug.nl" class="external-link"><img src="https://github.com/msberends/AMR/raw/main/pkgdown/logos/logo_rug.svg" style="max-width: 200px;"></a></p>
+<p><a target="_blank" href="https://www.rug.nl" class="external-link"><img src="https://github.com/msberends/AMR/raw/main/pkgdown/logos/logo_rug.svg" style="max-width: 150px;"></a></p>
 </div>
 
     </footer>

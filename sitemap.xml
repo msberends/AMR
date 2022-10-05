@@ -100,12 +100,6 @@
     <loc>https://msberends.github.io/AMR/reference/bug_drug_combinations.html</loc>
   </url>
   <url>
-    <loc>https://msberends.github.io/AMR/reference/catalogue_of_life.html</loc>
-  </url>
-  <url>
-    <loc>https://msberends.github.io/AMR/reference/catalogue_of_life_version.html</loc>
-  </url>
-  <url>
     <loc>https://msberends.github.io/AMR/reference/count.html</loc>
   </url>
   <url>
@@ -173,9 +167,6 @@
   </url>
   <url>
     <loc>https://msberends.github.io/AMR/reference/microorganisms.html</loc>
-  </url>
-  <url>
-    <loc>https://msberends.github.io/AMR/reference/microorganisms.old.html</loc>
   </url>
   <url>
     <loc>https://msberends.github.io/AMR/reference/mo_matching_score.html</loc>
