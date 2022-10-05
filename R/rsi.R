@@ -164,7 +164,7 @@
 #'     as.rsi() # automatically determines urine isolates
 #'
 #'   df %>%
-#'     mutate_at(vars(AMP:NIT), as.rsi, mo = "E. coli", uti = TRUE)
+#'     mutate_at(vars(AMP:TOB), as.rsi, mo = "E. coli", uti = TRUE)
 #' }
 #'
 #' # For CLEANING existing R/SI values ------------------------------------
