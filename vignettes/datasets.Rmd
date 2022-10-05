@@ -127,7 +127,7 @@ This data set is in R available as `microorganisms`, after you load the `AMR` pa
 
 ### Source
 
-This data set contains the full microbial taxonomy of `r nr2char(length(unique(AMR::microorganisms$kingdom[!AMR::microorganisms$kingdom %like% "unknown"])))` kingdoms from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF):
+This data set contains the full microbial taxonomy of `r AMR:::nr2char(length(unique(AMR::microorganisms$kingdom[!AMR::microorganisms$kingdom %like% "unknown"])))` kingdoms from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF):
 
 * `r AMR:::TAXONOMY_VERSION$LPSN$citation` Accessed from <`r AMR:::TAXONOMY_VERSION$LPSN$url`> on `r documentation_date(AMR:::TAXONOMY_VERSION$LPSN$accessed_date)`.
 * `r AMR:::TAXONOMY_VERSION$GBIF$citation` Accessed from <`r AMR:::TAXONOMY_VERSION$GBIF$url`> on `r documentation_date(AMR:::TAXONOMY_VERSION$GBIF$accessed_date)`.
