@@ -184,7 +184,6 @@ reference:
     - "`example_isolates`"
     - "`microorganisms`"
     - "`microorganisms.codes`"
-    - "`microorganisms.old`"
     - "`antibiotics`"
     - "`intrinsic_resistant`"
     - "`dosage`"
