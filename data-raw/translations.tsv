@@ -23,10 +23,10 @@ CoNS	FALSE	TRUE	FALSE	TRUE		KNS	CNS		KNS	CoNS		グラム陰性	CoNS		КОС	SCN	
 CoPS	FALSE	TRUE	FALSE	TRUE		KPS	CPS		KPS	CoPS		グラム陽性	CoPS		КПС	SCP	KPS	KPS	КПС
 Gram-negative	TRUE	TRUE	FALSE	FALSE	革兰氏阴性	Gram-negativ	Gram-negatief	Gram négatif	Gramnegativ	Αρνητικό κατά Gram	Gram negativo	^細菌$	Gram-ujemne	Gram negativo	Грамотрицательные	Gram negativo	Gram-negativ	Gram-negatif	Грамнегативні
 Gram-positive	TRUE	TRUE	FALSE	FALSE	革兰氏阳性	Gram-positiv	Gram-positief	Gram positif	Grampositiv	Θετικό κατά Gram	Gram positivo	^真菌$	Gram-dodatnie	Gram positivo	Грамположительные	Gram positivo	Gram-positiv	Gram-pozitif	Грампозитивні
-^Bacteria$	TRUE	TRUE	FALSE	FALSE	^细菌$	Bakterier	Bacteriën	Bactéries	Bakterien	^Βακτήρια$	Batteri	^酵母$	^Bakterie$	Bactérias	Бактерии	Bacterias	Bakterier	^Bakteri$	Бактерії
-^Fungi$	TRUE	TRUE	FALSE	FALSE	^真菌$	Støbeforme	Schimmels	Champignons	Pilze	^Μύκητες$	Funghi	^原生動物$	^Grzyby$	Fungos	Грибы	Hongos	Svampar	^Mantarlar$	Гриби
-^Yeasts$	TRUE	TRUE	FALSE	FALSE	^酵母菌$	Gær	Gisten	Levures	Hefen	^Ζυμομύκητες$	Lieviti	バイオグループ	^Drożdże$	Leveduras	Животные	Levaduras	Jästdjur	^Mayalar$	Дріжджі
-^Protozoa$	TRUE	TRUE	FALSE	FALSE	^原生动物$	Protozoer	Protozoën	Protozoaires	Protozoen	^Πρωτόζωα$	Protozoi	生物型	^Protozoa$	Protozoários	Протозоа	Protozoarios	Protozoer	^Protozoa$	Найпростіші
+^Bacteria$	TRUE	TRUE	FALSE	FALSE	细菌	Bakterier	Bacteriën	Bactéries	Bakterien	Βακτήρια	Batteri	酵母	Bakterie	Bactérias	Бактерии	Bacterias	Bakterier	Bakteri	Бактерії
+^Fungi$	TRUE	TRUE	FALSE	FALSE	真菌	Støbeforme	Schimmels	Champignons	Pilze	Μύκητες	Funghi	原生動物	Grzyby	Fungos	Грибы	Hongos	Svampar	Mantarlar	Гриби
+^Yeasts$	TRUE	TRUE	FALSE	FALSE	酵母菌	Gær	Gisten	Levures	Hefen	Ζυμομύκητες	Lieviti	バイオグループ	Drożdże	Leveduras	Животные	Levaduras	Jästdjur	Mayalar	Дріжджі
+^Protozoa$	TRUE	TRUE	FALSE	FALSE	^原生动物$	Protozoer	Protozoën	Protozoaires	Protozoen	Πρωτόζωα	Protozoi	生物型	Protozoa	Protozoários	Протозоа	Protozoarios	Protozoer	Protozoa	Найпростіші
 biogroup	TRUE	TRUE	FALSE	FALSE	生物群	biogruppe	biogroep	biogroupe	Biogruppe	βιοομάδα	biogruppo	植物型	biogrupa	biogrupo	биогруппа	biogrupo	biogrupp	biyogrup	біогрупа
 biotype	TRUE	TRUE	FALSE	FALSE	生物型	biotype			Biotyp	βιότυπος	biotipo	([([ ]*?))) グループ	biotyp	biótipo	биотип	biotipo	biotyp	biyotip	біотип
 vegetative	TRUE	TRUE	FALSE	FALSE	无性系	vegetativ	vegetatief	végétatif	vegetativ	βλαστικός	vegetativo	([[ ]*?)グループ	wegetatywna	vegetativo	вегетативный	vegetativo	vegetativ	vejetatif	вегетативний

@@ -400,10 +400,10 @@ mo_shortname("K. pneu rh")
 
 \donttest{
 # Becker classification, see ?as.mo ----------------------------------------
-mo_fullname("Staph. epi")
-mo_fullname("Staph. epi", Becker = TRUE)
-mo_shortname("Staph. epi")
-mo_shortname("Staph. epi", Becker = TRUE)
+mo_fullname("Staph. epidermidis")
+mo_fullname("Staph. epidermidis", Becker = TRUE)
+mo_shortname("Staph. epidermidis")
+mo_shortname("Staph. epidermidis", Becker = TRUE)
 
 # Lancefield classification, see ?as.mo ------------------------------------
 mo_fullname("S. pyo")
@@ -422,7 +422,8 @@ mo_gramstain("Klebsiella pneumoniae", language = "uk") # Ukrainian
 # mo_type is equal to mo_kingdom, but mo_kingdom will remain official
 mo_kingdom("Klebsiella pneumoniae")
 mo_type("Klebsiella pneumoniae")
-mo_type("Klebsiella pneumoniae", language = "nl")
+mo_kingdom("Klebsiella pneumoniae", language = "zh") # Chinese, no effect
+mo_type("Klebsiella pneumoniae", language = "zh")    # Chinese, translated
 
 mo_fullname("S. pyogenes", Lancefield = TRUE, language = "de")
 mo_fullname("S. pyogenes", Lancefield = TRUE, language = "uk")
@@ -436,12 +437,12 @@ mo_is_yeast(c("Candida", "Trichophyton", "Klebsiella"))
 if (require("dplyr")) {
   example_isolates \%>\%
     filter(mo_is_gram_positive()) \%>\% 
-    count(mo_genus(), count = TRUE)
+    count(mo_genus(), sort = TRUE)
 }
 if (require("dplyr")) {
   example_isolates \%>\%
     filter(mo_is_intrinsic_resistant(ab = "vanco")) \%>\% 
-    count(mo_genus(), count = TRUE)
+    count(mo_genus(), sort = TRUE)
 }
 
 
