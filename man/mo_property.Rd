@@ -383,6 +383,7 @@ mo_ref("Klebsiella pneumoniae")
 mo_authors("Klebsiella pneumoniae")
 mo_year("Klebsiella pneumoniae")
 mo_lpsn("Klebsiella pneumoniae")
+mo_gbif("Klebsiella pneumoniae")
 
 # abbreviations known in the field -----------------------------------------
 mo_genus("MRSA")
@@ -394,20 +395,15 @@ mo_genus("EHEC")
 mo_species("EHEC")
 
 # known subspecies ---------------------------------------------------------
-mo_name("doylei")
-mo_genus("doylei")
-mo_species("doylei")
-mo_subspecies("doylei")
-
 mo_fullname("K. pneu rh")
 mo_shortname("K. pneu rh")
 
 \donttest{
 # Becker classification, see ?as.mo ----------------------------------------
-mo_fullname("S. epi")
-mo_fullname("S. epi", Becker = TRUE)
-mo_shortname("S. epi")
-mo_shortname("S. epi", Becker = TRUE)
+mo_fullname("Staph. epi")
+mo_fullname("Staph. epi", Becker = TRUE)
+mo_shortname("Staph. epi")
+mo_shortname("Staph. epi", Becker = TRUE)
 
 # Lancefield classification, see ?as.mo ------------------------------------
 mo_fullname("S. pyo")
@@ -417,23 +413,19 @@ mo_shortname("S. pyo", Lancefield = TRUE)
 
 
 # language support  --------------------------------------------------------
-mo_gramstain("Klebsiella pneumoniae", language = "de")
-mo_gramstain("Klebsiella pneumoniae", language = "nl")
-mo_gramstain("Klebsiella pneumoniae", language = "es")
+mo_gramstain("Klebsiella pneumoniae", language = "de") # German
+mo_gramstain("Klebsiella pneumoniae", language = "nl") # Dutch
+mo_gramstain("Klebsiella pneumoniae", language = "es") # Spanish
+mo_gramstain("Klebsiella pneumoniae", language = "el") # Greek
+mo_gramstain("Klebsiella pneumoniae", language = "uk") # Ukrainian
 
 # mo_type is equal to mo_kingdom, but mo_kingdom will remain official
 mo_kingdom("Klebsiella pneumoniae")
 mo_type("Klebsiella pneumoniae")
-mo_type("Klebsiella pneumoniae")
+mo_type("Klebsiella pneumoniae", language = "nl")
 
-mo_fullname("S. pyogenes",
-  Lancefield = TRUE,
-  language = "de"
-)
-mo_fullname("S. pyogenes",
-  Lancefield = TRUE,
-  language = "nl"
-)
+mo_fullname("S. pyogenes", Lancefield = TRUE, language = "de")
+mo_fullname("S. pyogenes", Lancefield = TRUE, language = "uk")
 
 
 # other --------------------------------------------------------------------
@@ -443,10 +435,13 @@ mo_is_yeast(c("Candida", "Trichophyton", "Klebsiella"))
 # gram stains and intrinsic resistance can be used as a filter in dplyr verbs
 if (require("dplyr")) {
   example_isolates \%>\%
-    filter(mo_is_gram_positive())
-
+    filter(mo_is_gram_positive()) \%>\% 
+    count(mo_genus(), count = TRUE)
+}
+if (require("dplyr")) {
   example_isolates \%>\%
-    filter(mo_is_intrinsic_resistant(ab = "vanco"))
+    filter(mo_is_intrinsic_resistant(ab = "vanco")) \%>\% 
+    count(mo_genus(), count = TRUE)
 }
 
 

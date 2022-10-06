@@ -84,18 +84,20 @@ expect_equal(as.character(as.mo(c("Gram negative", "Gram positive"))), c("B_GRAM
 expect_identical(
   suppressWarnings(as.character(
     as.mo(c(
-      "stau",
+      "stau", # WHONET code
       "STAU",
       "staaur",
       "S. aureus",
       "S aureus",
-      "Sthafilokkockus aureus",
-      "Staphylococcus aureus",
-      "MRSA",
-      "VISA"
-    ), minimum_matching_score = 0)
+      "Sthafilokkockus aureus", # handles incorrect spelling
+      "Staphylococcus aureus (MRSA)",
+      "MRSA", # Methicillin Resistant S. aureus
+      "VISA", # Vancomycin Intermediate S. aureus
+      "VRSA", # Vancomycin Resistant S. aureus
+      115329001 # SNOMED CT code
+    ))
   )),
-  rep("B_STPHY_AURS", 9)
+  rep("B_STPHY_AURS", 11)
 )
 expect_identical(
   as.character(

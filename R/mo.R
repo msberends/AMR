@@ -113,9 +113,8 @@
 #'   "staaur",
 #'   "S. aureus",
 #'   "S aureus",
-#'   "Staphylococcus aureus",
-#'   "Staphylococcus aureus (MRSA,",
-#'   "Zthafilokkoockus oureuz", # handles incorrect spelling
+#'   "Sthafilokkockus aureus", # handles incorrect spelling
+#'   "Staphylococcus aureus (MRSA)",
 #'   "MRSA", # Methicillin Resistant S. aureus
 #'   "VISA", # Vancomycin Intermediate S. aureus
 #'   "VRSA", # Vancomycin Resistant S. aureus
@@ -822,6 +821,7 @@ print.mo_uncertainties <- function(x, ...) {
     txt <- paste(txt,
       paste0(
         paste0(
+          "", strrep(font_grey("-"), times = options()$width), "\n",
           '"', x[i, ]$original_input, '"',
           " -> ",
           paste0(
@@ -844,7 +844,10 @@ print.mo_uncertainties <- function(x, ...) {
       candidates,
       sep = "\n"
     )
-    txt <- paste0(gsub("\n\n", "\n", txt), "\n\n")
+    txt <- gsub("[\n]+", "\n", txt)
+    # remove first and last break
+    txt <- gsub("(^[\n]|[\n]$)", "", txt)
+    txt <- paste0("\n", txt, "\n")
   }
   cat(txt)
 }

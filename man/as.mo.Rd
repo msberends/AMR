@@ -170,9 +170,8 @@ as.mo(c(
   "staaur",
   "S. aureus",
   "S aureus",
-  "Staphylococcus aureus",
-  "Staphylococcus aureus (MRSA,",
-  "Zthafilokkoockus oureuz", # handles incorrect spelling
+  "Sthafilokkockus aureus", # handles incorrect spelling
+  "Staphylococcus aureus (MRSA)",
   "MRSA", # Methicillin Resistant S. aureus
   "VISA", # Vancomycin Intermediate S. aureus
   "VRSA", # Vancomycin Resistant S. aureus
