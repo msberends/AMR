@@ -16,9 +16,13 @@ clear_custom_antimicrobials()
 With \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} you can add your own manual antimicrobial codes to the \code{AMR} package.
 }
 \details{
-Due to how \R works, the \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} function has to be run in every \R session - added antimicrobials are not stored between sessions and are thus lost when \R is exited. It is possible to save the antimicrobial additions to your \code{.Rprofile} file to circumvent this, for example:
+Due to how \R works, the \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} function has to be run in every \R session - added antimicrobials are not stored between sessions and are thus lost when \R is exited. It is possible to save the antimicrobial additions to your \code{.Rprofile} file to circumvent this, although this requires to load the \code{AMR} package at every start-up:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(AMR)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Open .Rprofile file
+utils::file.edit("~/.Rprofile")
+
+# Add custom antibiotic codes:
+library(AMR)
 add_custom_antimicrobials(
   data.frame(ab = "TEST",
              name = "Test Antibiotic",
@@ -29,12 +33,12 @@ add_custom_antimicrobials(
 Use \code{\link[=clear_custom_antimicrobials]{clear_custom_antimicrobials()}} to clear the previously added antimicrobials.
 }
 \examples{
-\donttest{
+# returns NA and throws a warning (which is now suppressed):
+suppressWarnings(
+  as.ab("test")
+)
 
-# returns NA and throws a warning:
-as.ab("test")
-
-# now a manual entry - it will be considered by as.ab() and
+# now add a manual entry - it will be considered by as.ab() and
 # all ab_*() functions
 add_custom_antimicrobials(
   data.frame(ab = "TEST",
@@ -46,5 +50,6 @@ add_custom_antimicrobials(
 as.ab("test")
 ab_name("test")
 ab_group("test")
-}
+
+ab_info("test")
 }

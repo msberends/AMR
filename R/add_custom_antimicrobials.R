@@ -31,9 +31,13 @@
 #' 
 #' With [add_custom_antimicrobials()] you can add your own manual antimicrobial codes to the `AMR` package.
 #' @param x a [data.frame] resembling the [antibiotics] data set, at least containing columns "ab" and "name"
-#' @details Due to how \R works, the [add_custom_antimicrobials()] function has to be run in every \R session - added antimicrobials are not stored between sessions and are thus lost when \R is exited. It is possible to save the antimicrobial additions to your `.Rprofile` file to circumvent this, for example:
+#' @details Due to how \R works, the [add_custom_antimicrobials()] function has to be run in every \R session - added antimicrobials are not stored between sessions and are thus lost when \R is exited. It is possible to save the antimicrobial additions to your `.Rprofile` file to circumvent this, although this requires to load the `AMR` package at every start-up:
 #' 
 #' ```r
+#' # Open .Rprofile file
+#' utils::file.edit("~/.Rprofile")
+#'
+#' # Add custom antibiotic codes:
 #' library(AMR)
 #' add_custom_antimicrobials(
 #'   data.frame(ab = "TEST",
@@ -46,12 +50,12 @@
 #' @rdname add_custom_antimicrobials
 #' @export
 #' @examples 
-#' \donttest{
+#' # returns NA and throws a warning (which is now suppressed):
+#' suppressWarnings(
+#'   as.ab("test")
+#' )
 #' 
-#' # returns NA and throws a warning:
-#' as.ab("test")
-#' 
-#' # now a manual entry - it will be considered by as.ab() and
+#' # now add a manual entry - it will be considered by as.ab() and
 #' # all ab_*() functions
 #' add_custom_antimicrobials(
 #'   data.frame(ab = "TEST",
@@ -63,7 +67,8 @@
 #' as.ab("test")
 #' ab_name("test")
 #' ab_group("test")
-#' }
+#' 
+#' ab_info("test")
 add_custom_antimicrobials <- function(x) {
   meet_criteria(x, allow_class = "data.frame")
   stop_ifnot(all(c("ab", "name") %in% colnames(x)),
