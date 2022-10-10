@@ -12,7 +12,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9011</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -274,22 +274,24 @@
 
 <p>According to Hindler <em>et al.</em> (2007, <a href="https://doi.org/10.1086/511864" class="external-link">doi:10.1086/511864</a>
 ), there are different methods (algorithms) to select first isolates with increasing reliability: isolate-based, patient-based, episode-based and phenotype-based. All methods select on a combination of the taxonomic genus and species (not subspecies).</p>
-<p>All mentioned methods are covered in the <code>first_isolate()</code> function:</p><table class="table table"><tr><td><strong>Method</strong></td><td><strong>Function to apply</strong></td></tr><tr><td><strong>Isolate-based</strong></td><td><code>first_isolate(x, method = "isolate-based")</code></td></tr><tr><td><em>(= all isolates)</em></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td><strong>Patient-based</strong></td><td><code>first_isolate(x, method = "patient-based")</code></td></tr><tr><td><em>(= first isolate per patient)</em></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td><strong>Episode-based</strong></td><td><code>first_isolate(x, method = "episode-based")</code>, or:</td></tr><tr><td><em>(= first isolate per episode)</em></td><td></td></tr><tr><td>- 7-Day interval from initial isolate</td><td>- <code>first_isolate(x, method = "e", episode_days = 7)</code></td></tr><tr><td>- 30-Day interval from initial isolate</td><td>- <code>first_isolate(x, method = "e", episode_days = 30)</code></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td><strong>Phenotype-based</strong></td><td><code>first_isolate(x, method = "phenotype-based")</code>, or:</td></tr><tr><td><em>(= first isolate per phenotype)</em></td><td></td></tr><tr><td>- Major difference in any antimicrobial result</td><td>- <code>first_isolate(x, type = "points")</code></td></tr><tr><td>- Any difference in key antimicrobial results</td><td>- <code>first_isolate(x, type = "keyantimicrobials")</code></td></tr></table><div class="section">
-<h4 id="isolate-based">Isolate-based<a class="anchor" aria-label="anchor" href="#isolate-based"></a></h4>
+<p>All mentioned methods are covered in the <code>first_isolate()</code> function:</p><table class="table table"><tr><td><strong>Method</strong></td><td><strong>Function to apply</strong></td></tr><tr><td><strong>Isolate-based</strong></td><td><code>first_isolate(x, method = "isolate-based")</code></td></tr><tr><td><em>(= all isolates)</em></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td><strong>Patient-based</strong></td><td><code>first_isolate(x, method = "patient-based")</code></td></tr><tr><td><em>(= first isolate per patient)</em></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td><strong>Episode-based</strong></td><td><code>first_isolate(x, method = "episode-based")</code>, or:</td></tr><tr><td><em>(= first isolate per episode)</em></td><td></td></tr><tr><td>- 7-Day interval from initial isolate</td><td>- <code>first_isolate(x, method = "e", episode_days = 7)</code></td></tr><tr><td>- 30-Day interval from initial isolate</td><td>- <code>first_isolate(x, method = "e", episode_days = 30)</code></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td><strong>Phenotype-based</strong></td><td><code>first_isolate(x, method = "phenotype-based")</code>, or:</td></tr><tr><td><em>(= first isolate per phenotype)</em></td><td></td></tr><tr><td>- Major difference in any antimicrobial result</td><td>- <code>first_isolate(x, type = "points")</code></td></tr><tr><td>- Any difference in key antimicrobial results</td><td>- <code>first_isolate(x, type = "keyantimicrobials")</code></td></tr></table></div>
+
+<div class="section">
+<h3 id="isolate-based">Isolate-based<a class="anchor" aria-label="anchor" href="#isolate-based"></a></h3>
 
 
 <p>This method does not require any selection, as all isolates should be included. It does, however, respect all arguments set in the <code>first_isolate()</code> function. For example, the default setting for <code>include_unknown</code> (<code>FALSE</code>) will omit selection of rows without a microbial ID.</p>
 </div>
 
 <div class="section">
-<h4 id="patient-based">Patient-based<a class="anchor" aria-label="anchor" href="#patient-based"></a></h4>
+<h3 id="patient-based">Patient-based<a class="anchor" aria-label="anchor" href="#patient-based"></a></h3>
 
 
 <p>To include every genus-species combination per patient once, set the <code>episode_days</code> to <code>Inf</code>. Although often inappropriate, this method makes sure that no duplicate isolates are selected from the same patient. In a large longitudinal data set, this could mean that isolates are <em>excluded</em> that were found years after the initial isolate.</p>
 </div>
 
 <div class="section">
-<h4 id="episode-based">Episode-based<a class="anchor" aria-label="anchor" href="#episode-based"></a></h4>
+<h3 id="episode-based">Episode-based<a class="anchor" aria-label="anchor" href="#episode-based"></a></h3>
 
 
 <p>To include every genus-species combination per patient episode once, set the <code>episode_days</code> to a sensible number of days. Depending on the type of analysis, this could be 14, 30, 60 or 365. Short episodes are common for analysing specific hospital or ward data, long episodes are common for analysing regional and national data.</p>
@@ -297,7 +299,7 @@
 </div>
 
 <div class="section">
-<h4 id="phenotype-based">Phenotype-based<a class="anchor" aria-label="anchor" href="#phenotype-based"></a></h4>
+<h3 id="phenotype-based">Phenotype-based<a class="anchor" aria-label="anchor" href="#phenotype-based"></a></h3>
 
 
 <p>This is a more reliable method, since it also <em>weighs</em> the antibiogram (antimicrobial test results) yielding so-called 'first weighted isolates'. There are two different methods to weigh the antibiogram:</p><ol><li><p>Using <code>type = "points"</code> and argument <code>points_threshold</code> (default)</p>
@@ -307,9 +309,6 @@
 <p>This method only weighs specific antimicrobial agents, called <em>key antimicrobials</em>. Any difference from S to R (or vice versa) in these key antimicrobials will select an isolate as a first weighted isolate. With <code>ignore_I = FALSE</code>, also differences from I to S or R (or vice versa) will lead to this.</p>
 <p>Key antimicrobials are internally selected using the <code><a href="key_antimicrobials.html">key_antimicrobials()</a></code> function, but can also be added manually as a variable to the data and set in the <code>col_keyantimicrobials</code> argument. Another option is to pass the output of the <code><a href="key_antimicrobials.html">key_antimicrobials()</a></code> function directly to the <code>col_keyantimicrobials</code> argument.</p></li>
 </ol><p>The default method is phenotype-based (using <code>type = "points"</code>) and episode-based (using <code>episode_days = 365</code>). This makes sure that every genus-species combination is selected per patient once per year, while taking into account all antimicrobial test results. If no antimicrobial test results are available in the data set, only the episode-based method is applied at default.</p>
-</div>
-
-
 </div>
 
     </div>
