@@ -141,6 +141,7 @@ reference:
     - "`ab_property`"
     - "`ab_from_text`"
     - "`atc_online_property`"
+    - "`add_custom_antimicrobials`"
 
   - title: "Preparing data: antimicrobial resistance"
     desc: >
