@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9008</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -330,6 +330,8 @@
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">mo_current</span><span class="op">(</span><span class="va">x</span>, language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">mo_info</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -389,7 +391,7 @@
     
 
 <ul><li><p>An <a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a> in case of <code>mo_year()</code></p></li>
-<li><p>A <a href="https://rdrr.io/r/base/list.html" class="external-link">list</a> in case of <code>mo_taxonomy()</code> and <code>mo_info()</code></p></li>
+<li><p>A <a href="https://rdrr.io/r/base/list.html" class="external-link">list</a> in case of <code>mo_taxonomy()</code>, <code>mo_synonyms()</code> and <code>mo_info()</code></p></li>
 <li><p>A named <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> in case of <code>mo_url()</code></p></li>
 <li><p>A <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> in case of <code>mo_snomed()</code></p></li>
 <li><p>A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> in all other cases</p></li>
@@ -407,6 +409,7 @@
 <p>All output <a href="translate.html">will be translated</a> where possible.</p>
 <p>The function <code>mo_url()</code> will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.</p>
 <p>SNOMED codes - <code>mo_snomed()</code> - are from the version of 1 July, 2021. See <em>Source</em> and the <a href="microorganisms.html">microorganisms</a> data set for more info.</p>
+<p>Old taxonomic names (so-called 'synonyms') can be retrieved with <code>mo_synonyms()</code>, the current taxonomic name can be retrieved with <code>mo_current()</code>. Both functions return full names.</p>
     </div>
     <div class="section level2">
     <h2 id="matching-score-for-microorganisms">Matching Score for Microorganisms<a class="anchor" aria-label="anchor" href="#matching-score-for-microorganisms"></a></h2>
