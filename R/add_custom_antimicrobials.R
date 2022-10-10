@@ -27,9 +27,9 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Add Manual Antimicrobials to This Package
+#' Add Custom Antimicrobials to This Package
 #' 
-#' With [add_custom_antimicrobials()] you can add your own manual antimicrobial codes to the `AMR` package.
+#' With [add_custom_antimicrobials()] you can add your own custom antimicrobial codes to the `AMR` package.
 #' @param x a [data.frame] resembling the [antibiotics] data set, at least containing columns "ab" and "name"
 #' @details Due to how \R works, the [add_custom_antimicrobials()] function has to be run in every \R session - added antimicrobials are not stored between sessions and are thus lost when \R is exited. It is possible to save the antimicrobial additions to your `.Rprofile` file to circumvent this, although this requires to load the `AMR` package at every start-up:
 #' 
@@ -55,15 +55,17 @@
 #'   as.ab("test")
 #' )
 #' 
-#' # now add a manual entry - it will be considered by as.ab() and
+#' # now add a custom entry - it will be considered by as.ab() and
 #' # all ab_*() functions
 #' add_custom_antimicrobials(
 #'   data.frame(ab = "TEST",
 #'              name = "Test Antibiotic",
+#'              # you can add any property present in the
+#'              # 'antibiotics' data set, such as 'group':
 #'              group = "Test Group")
 #' )
 #' 
-#' "test" is now a new antibiotic:
+#' # "test" is now a new antibiotic:
 #' as.ab("test")
 #' ab_name("test")
 #' ab_group("test")
@@ -99,5 +101,5 @@ clear_custom_antimicrobials <- function() {
   assignInNamespace(x = "AB_lookup",
                     value = create_AB_lookup(),
                     ns = asNamespace("AMR"))
-  message_("Manual antimicrobials cleared.")
+  message_("Custom antimicrobials cleared.")
 }

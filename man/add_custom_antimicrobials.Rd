@@ -3,7 +3,7 @@
 \name{add_custom_antimicrobials}
 \alias{add_custom_antimicrobials}
 \alias{clear_custom_antimicrobials}
-\title{Add Manual Antimicrobials to This Package}
+\title{Add Custom Antimicrobials to This Package}
 \usage{
 add_custom_antimicrobials(x)
 
@@ -13,7 +13,7 @@ clear_custom_antimicrobials()
 \item{x}{a \link{data.frame} resembling the \link{antibiotics} data set, at least containing columns "ab" and "name"}
 }
 \description{
-With \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} you can add your own manual antimicrobial codes to the \code{AMR} package.
+With \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} you can add your own custom antimicrobial codes to the \code{AMR} package.
 }
 \details{
 Due to how \R works, the \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} function has to be run in every \R session - added antimicrobials are not stored between sessions and are thus lost when \R is exited. It is possible to save the antimicrobial additions to your \code{.Rprofile} file to circumvent this, although this requires to load the \code{AMR} package at every start-up:
@@ -38,15 +38,17 @@ suppressWarnings(
   as.ab("test")
 )
 
-# now add a manual entry - it will be considered by as.ab() and
+# now add a custom entry - it will be considered by as.ab() and
 # all ab_*() functions
 add_custom_antimicrobials(
   data.frame(ab = "TEST",
              name = "Test Antibiotic",
+             # you can add any property present in the
+             # 'antibiotics' data set, such as 'group':
              group = "Test Group")
 )
 
-"test" is now a new antibiotic:
+# "test" is now a new antibiotic:
 as.ab("test")
 ab_name("test")
 ab_group("test")
