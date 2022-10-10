@@ -30,6 +30,7 @@
 \alias{mo_rank}
 \alias{mo_taxonomy}
 \alias{mo_synonyms}
+\alias{mo_current}
 \alias{mo_info}
 \alias{mo_url}
 \title{Get Properties of a Microorganism}
@@ -231,6 +232,8 @@ mo_synonyms(
   ...
 )
 
+mo_current(x, language = get_AMR_locale(), ...)
+
 mo_info(
   x,
   language = get_AMR_locale(),
@@ -272,7 +275,7 @@ mo_property(
 \value{
 \itemize{
 \item An \link{integer} in case of \code{\link[=mo_year]{mo_year()}}
-\item A \link{list} in case of \code{\link[=mo_taxonomy]{mo_taxonomy()}} and \code{\link[=mo_info]{mo_info()}}
+\item A \link{list} in case of \code{\link[=mo_taxonomy]{mo_taxonomy()}}, \code{\link[=mo_synonyms]{mo_synonyms()}} and \code{\link[=mo_info]{mo_info()}}
 \item A named \link{character} in case of \code{\link[=mo_url]{mo_url()}}
 \item A \link{numeric} in case of \code{\link[=mo_snomed]{mo_snomed()}}
 \item A \link{character} in all other cases
@@ -304,6 +307,8 @@ All output \link[=translate]{will be translated} where possible.
 The function \code{\link[=mo_url]{mo_url()}} will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
 
 SNOMED codes - \code{\link[=mo_snomed]{mo_snomed()}} - are from the version of 1 July, 2021. See \emph{Source} and the \link{microorganisms} data set for more info.
+
+Old taxonomic names (so-called 'synonyms') can be retrieved with \code{\link[=mo_synonyms]{mo_synonyms()}}, the current taxonomic name can be retrieved with \code{\link[=mo_current]{mo_current()}}. Both functions return full names.
 }
 \section{Matching Score for Microorganisms}{
 

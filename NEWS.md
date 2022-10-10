@@ -1,4 +1,4 @@
-# AMR 1.8.2.9007
+# AMR 1.8.2.9008
 
 This version will eventually become v2.0! We're happy to reach a new major milestone soon!
 
@@ -19,6 +19,7 @@ This version will eventually become v2.0! We're happy to reach a new major miles
   * Sequential coercion is now extremely fast as results are stored to the package environment, although coercion of unknown values must be run once per session. Previous results can be reset/removed with the new `mo_reset_session()` function.
 * Function `mean_amr_distance()` to calculate the mean AMR distance. The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand.
 * Function `rsi_interpretation_history()` to view the history of previous runs of `as.rsi()`. This returns a 'logbook' with the selected guideline, reference table and specific interpretation of each row in a data set on which `as.rsi()` was run.
+* Function `mo_current()` to get the currently valid taxonomic name of a microorganism
 * Support for `data.frame`-enhancing R packages, more specifically: `data.table::data.table`, `janitor::tabyl`, `tibble::tibble`, and `tsibble::tsibble`. AMR package functions that have a data set as output (such as `rsi_df()` and `bug_drug_combinations()`), will now return the same data type as the input.
 * All data sets in this package are now exported as `tibble`, instead of base R `data.frame`s. Older R versions are still supported.
 * Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. We are very grateful for the valuable input by our colleagues from other countries. The `AMR` package is now available in 16 languages.

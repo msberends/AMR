@@ -56,13 +56,15 @@
 #' The function [mo_url()] will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
 #'
 #' SNOMED codes - [mo_snomed()] - are from the version of `r documentation_date(TAXONOMY_VERSION$SNOMED$accessed_date)`. See *Source* and the [microorganisms] data set for more info.
+#' 
+#' Old taxonomic names (so-called 'synonyms') can be retrieved with [mo_synonyms()], the current taxonomic name can be retrieved with [mo_current()]. Both functions return full names.
 #' @inheritSection mo_matching_score Matching Score for Microorganisms
 #' @inheritSection as.mo Source
 #' @rdname mo_property
 #' @name mo_property
 #' @return
 #' - An [integer] in case of [mo_year()]
-#' - A [list] in case of [mo_taxonomy()] and [mo_info()]
+#' - A [list] in case of [mo_taxonomy()], [mo_synonyms()] and [mo_info()]
 #' - A named [character] in case of [mo_url()]
 #' - A [numeric] in case of [mo_snomed()]
 #' - A [character] in all other cases
@@ -672,7 +674,7 @@ mo_synonyms <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
   })
 
   if (length(syns) > 1) {
-    names(syns) <- mo_name(x)
+    names(syns) <- mo_name(x, language = language)
     result <- syns
   } else {
     result <- unlist(syns)
@@ -680,6 +682,16 @@ mo_synonyms <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
 
   load_mo_uncertainties(metadata)
   result
+}
+
+#' @rdname mo_property
+#' @export
+mo_current <- function(x, language = get_AMR_locale(), ...) {
+  meet_criteria(x, allow_NA = TRUE)
+  language <- validate_language(language)
+  x.mo <- suppressWarnings(as.mo(x, keep_synonyms = TRUE, ...))
+  out <- synonym_mo_to_accepted_mo(x.mo, fill_in_accepted = TRUE)
+  mo_name(out, language = language)
 }
 
 #' @rdname mo_property

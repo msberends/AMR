@@ -1094,14 +1094,19 @@ load_mo_uncertainties <- function(metadata) {
   AMR_env$mo_uncertainties <- metadata$uncertainties
 }
 
-synonym_mo_to_accepted_mo <- function(x) {
+synonym_mo_to_accepted_mo <- function(x, fill_in_accepted = FALSE) {
   x_gbif <- AMR::microorganisms$gbif_renamed_to[match(x, AMR::microorganisms$mo)]
   x_lpsn <- AMR::microorganisms$lpsn_renamed_to[match(x, AMR::microorganisms$mo)]
   x_gbif[!x_gbif %in% AMR::microorganisms$gbif] <- NA
   x_lpsn[!x_lpsn %in% AMR::microorganisms$lpsn] <- NA
 
-  ifelse(is.na(x_lpsn),
+  out <- ifelse(is.na(x_lpsn),
     AMR::microorganisms$mo[match(x_gbif, AMR::microorganisms$gbif)],
     AMR::microorganisms$mo[match(x_lpsn, AMR::microorganisms$lpsn)]
   )
+  if (isTRUE(fill_in_accepted)) {
+    x_accepted <- which(AMR::microorganisms$status[match(x, AMR::microorganisms$mo)] == "accepted")
+    out[x_accepted] <- x[x_accepted]
+  }
+  out
 }

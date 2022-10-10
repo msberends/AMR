@@ -113,6 +113,11 @@ expect_identical(
   mo_gbif("Escherichia coli")
 )
 
+expect_true("Escherichia blattae" %in% mo_synonyms("Shimwellia blattae"))
+expect_true(is.list(mo_synonyms(rep("Shimwellia blattae", 2))))
+expect_identical(mo_current(c("Escherichia blattae", "Escherichia coli")),
+                 c("Shimwellia blattae", "Escherichia coli"))
+
 expect_identical(mo_ref("Chlamydia psittaci"), "Garcia-Lopez et al., 2019")
 expect_identical(mo_ref("Chlamydophila psittaci", keep_synonyms = TRUE), "Everett et al., 1999")
 
