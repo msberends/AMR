@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9012</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -146,8 +146,12 @@
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Due to how <span style="R">R</span> works, the <code>add_custom_antimicrobials()</code> function has to be run in every <span style="R">R</span> session - added antimicrobials are not stored between sessions and are thus lost when <span style="R">R</span> is exited. It is possible to save the antimicrobial additions to your <code>.Rprofile</code> file to circumvent this, for example:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span></span>
+    <p>Due to how <span style="R">R</span> works, the <code>add_custom_antimicrobials()</code> function has to be run in every <span style="R">R</span> session - added antimicrobials are not stored between sessions and are thus lost when <span style="R">R</span> is exited. It is possible to save the antimicrobial additions to your <code>.Rprofile</code> file to circumvent this, although this requires to load the <code>AMR</code> package at every start-up:</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="co"># Open .Rprofile file</span></span>
+<span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/file.edit.html" class="external-link">file.edit</a></span><span class="op">(</span><span class="st">"~/.Rprofile"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Add custom antibiotic codes:</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/add_custom_antimicrobials.html">add_custom_antimicrobials</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>ab <span class="op">=</span> <span class="st">"TEST"</span>,</span>
 <span>             name <span class="op">=</span> <span class="st">"Test Antibiotic"</span>,</span>
