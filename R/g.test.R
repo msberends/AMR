@@ -41,14 +41,14 @@
 #'
 #' In the goodness-of-fit case simulation is done by random sampling from the discrete distribution specified by `p`, each sample being of size `n = sum(x)`. This simulation is done in \R and may be slow.
 #'
-#' ## *G*-test Of Goodness-of-Fit (Likelihood Ratio Test)
+#' ### *G*-test Of Goodness-of-Fit (Likelihood Ratio Test)
 #' Use the *G*-test of goodness-of-fit when you have one nominal variable with two or more values (such as male and female, or red, pink and white flowers). You compare the observed counts of numbers of observations in each category with the expected counts, which you calculate using some kind of theoretical expectation (such as a 1:1 sex ratio or a 1:2:1 ratio in a genetic cross).
 #'
 #' If the expected number of observations in any category is too small, the *G*-test may give inaccurate results, and you should use an exact test instead ([fisher.test()]).
 #'
 #' The *G*-test of goodness-of-fit is an alternative to the chi-square test of goodness-of-fit ([chisq.test()]); each of these tests has some advantages and some disadvantages, and the results of the two tests are usually very similar.
 #'
-#' ## *G*-test of Independence
+#' ### *G*-test of Independence
 #' Use the *G*-test of independence when you have two nominal variables, each with two or more possible values. You want to know whether the proportions for one variable are different among values of the other variable.
 #'
 #' It is also possible to do a *G*-test of independence with more than two nominal variables. For example, Jackson et al. (2013) also had data for children under 3, so you could do an analysis of old vs. young, thigh vs. arm, and reaction vs. no reaction, all analyzed together.
@@ -57,7 +57,7 @@
 #'
 #' The *G*-test of independence is an alternative to the chi-square test of independence ([chisq.test()]), and they will give approximately the same results.
 #'
-#' ## How the Test Works
+#' ### How the Test Works
 #' Unlike the exact test of goodness-of-fit ([fisher.test()]), the *G*-test does not directly calculate the probability of obtaining the observed results or something more extreme. Instead, like almost all statistical tests, the *G*-test has an intermediate step; it uses the data to calculate a test statistic that measures how far the observed data are from the null expectation. You then use a mathematical relationship, in this case the chi-square distribution, to estimate the probability of obtaining that value of the test statistic.
 #'
 #' The *G*-test uses the log of the ratio of two likelihoods as the test statistic, which is why it is also called a likelihood ratio test or log-likelihood ratio test. The formula to calculate a *G*-statistic is:

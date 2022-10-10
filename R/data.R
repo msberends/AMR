@@ -31,7 +31,7 @@
 #'
 #' Two data sets containing all antibiotics/antimycotics and antivirals. Use [as.ab()] or one of the [`ab_*`][ab_property()] functions to retrieve values from the [antibiotics] data set. Three identifiers are included in this data set: an antibiotic ID (`ab`, primarily used in this package) as defined by WHONET/EARS-Net, an ATC code (`atc`) as defined by the WHO, and a Compound ID (`cid`) as found in PubChem. Other properties in this data set are derived from one or more of these codes. Note that some drugs have multiple ATC codes.
 #' @format
-#' ## For the [antibiotics] data set: a [tibble][tibble::tibble] with `r nrow(antibiotics)` observations and `r ncol(antibiotics)` variables:
+#' ### For the [antibiotics] data set: a [tibble][tibble::tibble] with `r nrow(antibiotics)` observations and `r ncol(antibiotics)` variables:
 #' - `ab`\cr Antibiotic ID as used in this package (such as `AMC`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
 #' - `cid`\cr Compound ID as found in PubChem
 #' - `name`\cr Official name as used by WHONET/EARS-Net or the WHO
@@ -47,7 +47,7 @@
 #' - `iv_units`\cr Units of `iv_ddd`
 #' - `loinc`\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial agent. Use [ab_loinc()] to retrieve them quickly, see [ab_property()].
 #'
-#' ## For the [antivirals] data set: a [tibble][tibble::tibble] with `r nrow(antivirals)` observations and `r ncol(antivirals)` variables:
+#' ### For the [antivirals] data set: a [tibble][tibble::tibble] with `r nrow(antivirals)` observations and `r ncol(antivirals)` variables:
 #' - `atc`\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC
 #' - `cid`\cr Compound ID as found in PubChem
 #' - `name`\cr Official name as used by WHONET/EARS-Net or the WHO
@@ -61,7 +61,7 @@
 #'
 #' Synonyms (i.e. trade names) were derived from the Compound ID (`cid`) and consequently only available where a CID is available.
 #'
-#' ## Direct download
+#' ### Direct download
 #' Like all data sets in this package, these data sets are publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #' @source World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): <https://www.whocc.no/atc_ddd_index/>
 #'
@@ -111,7 +111,7 @@
 #' - The identifier of the parent taxons
 #' - The year and first author of the related scientific publication
 #'
-#' ## Manual additions
+#' ### Manual additions
 #' For convenience, some entries were added manually:
 #'
 #' - 11 entries of *Streptococcus* (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)
@@ -122,7 +122,7 @@
 #'
 #' The syntax used to transform the original data to a cleansed \R format, can be found here: <https://github.com/msberends/AMR/blob/main/data-raw/reproduction_of_microorganisms.R>.
 #'
-#' ## Direct download
+#' ### Direct download
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #' @section About the Records from LPSN (see *Source*):
 #' LPSN is the main source for bacteriological taxonomy of this `AMR` package.
@@ -253,7 +253,7 @@
 #' @details
 #' This data set is based on `r format_eucast_version_nr(3.3)`.
 #'
-#' ## Direct download
+#' ### Direct download
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #'
 #' They **allow for machine reading EUCAST and CLSI guidelines**, which is almost impossible with the MS Excel and PDF files distributed by EUCAST and CLSI.
@@ -277,7 +277,7 @@
 #' @details
 #' This data set is based on `r format_eucast_version_nr(11.0)`.
 #'
-#' ## Direct download
+#' ### Direct download
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #' @examples
 #' dosage

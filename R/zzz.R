@@ -45,6 +45,11 @@ AMR_env$mo_previously_coerced <- data.frame(
   mo = character(0),
   stringsAsFactors = FALSE
 )
+AMR_env$ab_previously_coerced <- data.frame(
+  x = character(0),
+  ab = character(0),
+  stringsAsFactors = FALSE
+)
 AMR_env$rsi_interpretation_history <- data.frame(
   datetime = Sys.time()[0],
   index = integer(0),
@@ -145,6 +150,18 @@ if (utf8_supported && !is_latex) {
   assign(x = "MO_lookup", value = create_MO_lookup(), envir = asNamespace("AMR"))
   # for mo_is_intrinsic_resistant() - saves a lot of time when executed on this vector
   assign(x = "INTRINSIC_R", value = create_intr_resistance(), envir = asNamespace("AMR"))
+}
+
+.onAttach <- function(lib, pkg) {
+  if (interactive() && is.null(getOption("AMR_locale", default = NULL))) {
+    current_lang <- get_AMR_locale()
+    if (current_lang != "en") {
+      packageStartupMessage(word_wrap(
+        "Assuming the ", LANGUAGES_SUPPORTED_NAMES[[current_lang]]$exonym, " language (",
+        LANGUAGES_SUPPORTED_NAMES[[current_lang]]$endonym, ") for the AMR package. See `set_AMR_locale()` to change this or to silence this note.",
+        add_fn = list(font_blue), as_note = TRUE))
+    }
+  }
 }
 
 # Helper functions --------------------------------------------------------

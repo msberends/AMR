@@ -42,15 +42,13 @@
 #'
 #' # Add e.g. Italian support to that file using:
 #' options(AMR_locale = "Italian")
-#' # or using:
-#' AMR::set_AMR_locale("Italian")
-#'
-#' # And save the file!
 #' ```
+#' 
+#' And then save the file.
 #'
 #' Please read about adding or updating a language in [our Wiki](https://github.com/msberends/AMR/wiki/).
 #'
-#' ## Changing the Default Language
+#' ### Changing the Default Language
 #' The system language will be used at default (as returned by `Sys.getenv("LANG")` or, if `LANG` is not set, [`Sys.getlocale("LC_COLLATE")`][Sys.getlocale()]), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:
 #'
 #'   1. Setting the R option `AMR_locale`, either by using e.g. `set_AMR_locale("German")` or by running e.g. `options(AMR_locale = "German")`.
@@ -93,7 +91,6 @@ get_AMR_locale <- function() {
   if (!is.null(getOption("AMR_locale", default = NULL))) {
     return(validate_language(getOption("AMR_locale"), extra_txt = "set with `options(AMR_locale = ...)`"))
   }
-
   lang <- ""
   # now check the LANGUAGE system variable - return it if set
   if (!identical("", Sys.getenv("LANGUAGE"))) {
@@ -105,16 +102,7 @@ get_AMR_locale <- function() {
   if (lang == "") {
     lang <- Sys.getlocale("LC_COLLATE")
   }
-
-  lang <- find_language(lang)
-  if (lang != "en" && interactive() && message_not_thrown_before("get_AMR_locale", entire_session = TRUE)) {
-    message_(
-      "Assuming the ", LANGUAGES_SUPPORTED_NAMES[[lang]]$exonym, " language (",
-      LANGUAGES_SUPPORTED_NAMES[[lang]]$endonym, ") for the AMR package. Change this with `set_AMR_locale()`. ",
-      "This note will be shown once per session but can be silenced, see `?set_AMR_locale()`."
-    )
-  }
-  lang
+  find_language(lang)
 }
 
 #' @rdname translate

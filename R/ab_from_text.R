@@ -39,14 +39,14 @@
 #' @param ... arguments passed on to [as.ab()]
 #' @details This function is also internally used by [as.ab()], although it then only searches for the first drug name and will throw a note if more drug names could have been returned. Note: the [as.ab()] function may use very long regular expression to match brand names of antimicrobial agents. This may fail on some systems.
 #'
-#' ## Argument `type`
+#' ### Argument `type`
 #' At default, the function will search for antimicrobial drug names. All text elements will be searched for official names, ATC codes and brand names. As it uses [as.ab()] internally, it will correct for misspelling.
 #'
 #' With `type = "dose"` (or similar, like "dosing", "doses"), all text elements will be searched for [numeric] values that are higher than 100 and do not resemble years. The output will be [numeric]. It supports any unit (g, mg, IE, etc.) and multiple values in one clinical text, see *Examples*.
 #'
 #' With `type = "administration"` (or abbreviations, like "admin", "adm"), all text elements will be searched for a form of drug administration. It supports the following forms (including common abbreviations): buccal, implant, inhalation, instillation, intravenous, nasal, oral, parenteral, rectal, sublingual, transdermal and vaginal. Abbreviations for oral (such as 'po', 'per os') will become "oral", all values for intravenous (such as 'iv', 'intraven') will become "iv". It supports multiple values in one clinical text, see *Examples*.
 #'
-#' ## Argument `collapse`
+#' ### Argument `collapse`
 #' Without using `collapse`, this function will return a [list]. This can be convenient to use e.g. inside a `mutate()`):\cr
 #' `df %>% mutate(abx = ab_from_text(clinical_text))`
 #'

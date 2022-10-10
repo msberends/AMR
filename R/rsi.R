@@ -43,7 +43,7 @@
 #' @param threshold maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*
 #' @param ... for using on a [data.frame]: names of columns to apply [as.rsi()] on (supports tidy selection such as `column1:column4`). Otherwise: arguments passed on to methods.
 #' @details
-#' ## How it Works
+#' ### How it Works
 #'
 #' The [as.rsi()] function works in four ways:
 #'
@@ -66,21 +66,21 @@
 #'
 #' For points 2, 3 and 4: Use [rsi_interpretation_history()] to retrieve a [data.frame] (or [tibble][tibble::tibble()] if the `tibble` package is installed) with all results of the last [as.rsi()] call.
 #'
-#' ## Supported Guidelines
+#' ### Supported Guidelines
 #'
 #' For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`).
 #'
 #' Thus, the `guideline` argument must be set to e.g., ``r paste0('"', subset(rsi_translation, guideline %like% "EUCAST")$guideline[1], '"')`` or ``r paste0('"', subset(rsi_translation, guideline %like% "CLSI")$guideline[1], '"')``. By simply using `"EUCAST"` (the default) or `"CLSI"` as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the `reference_data` argument. The `guideline` argument will then be ignored.
 #'
-#' ## After Interpretation
+#' ### After Interpretation
 #'
 #' After using [as.rsi()], you can use the [eucast_rules()] defined by EUCAST to (1) apply inferred susceptibility and resistance based on results of other antimicrobials and (2) apply intrinsic resistance based on taxonomic properties of a microorganism.
 #'
-#' ## Machine-Readable Interpretation Guidelines
+#' ### Machine-Readable Interpretation Guidelines
 #'
 #' The repository of this package [contains a machine-readable version](https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt) of all guidelines. This is a CSV file consisting of `r format(nrow(AMR::rsi_translation), big.mark = ",")` rows and `r ncol(AMR::rsi_translation)` columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. **This allows for easy implementation of these rules in laboratory information systems (LIS)**. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
 #'
-#' ## Other
+#' ### Other
 #'
 #' The function [is.rsi()] detects if the input contains class `<rsi>`. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
 #'

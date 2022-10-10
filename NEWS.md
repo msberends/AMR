@@ -1,4 +1,4 @@
-# AMR 1.8.2.9008
+# AMR 1.8.2.9009
 
 This version will eventually become v2.0! We're happy to reach a new major milestone soon!
 
@@ -42,6 +42,7 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * Fix for using `ab_atc()` on non-existing ATC codes
 * Black and white message texts are now reversed in colour if using an RStudio dark theme
 * `mo_snomed()` now returns class `character`, not `numeric` anymore (to make long SNOMED codes readable)
+* Fix for using `as.ab()` on `NA` values
 
 ### Other
 * New website to make use of the new Bootstrap 5 and pkgdown 2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions

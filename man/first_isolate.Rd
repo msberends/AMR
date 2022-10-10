@@ -126,6 +126,8 @@ All mentioned methods are covered in the \code{\link[=first_isolate]{first_isola
    - Any difference in key antimicrobial results \tab - \code{first_isolate(x, type = "keyantimicrobials")} \cr
 }
 
+}
+
 \subsection{Isolate-based}{
 
 This method does not require any selection, as all isolates should be included. It does, however, respect all arguments set in the \code{\link[=first_isolate]{first_isolate()}} function. For example, the default setting for \code{include_unknown} (\code{FALSE}) will omit selection of rows without a microbial ID.
@@ -160,8 +162,6 @@ Key antimicrobials are internally selected using the \code{\link[=key_antimicrob
 }
 
 The default method is phenotype-based (using \code{type = "points"}) and episode-based (using \code{episode_days = 365}). This makes sure that every genus-species combination is selected per patient once per year, while taking into account all antimicrobial test results. If no antimicrobial test results are available in the data set, only the episode-based method is applied at default.
-}
-
 }
 }
 \examples{

@@ -34,11 +34,9 @@ utils::file.edit("~/.Rprofile")
 
 # Add e.g. Italian support to that file using:
 options(AMR_locale = "Italian")
-# or using:
-AMR::set_AMR_locale("Italian")
-
-# And save the file!
 }\if{html}{\out{</div>}}
+
+And then save the file.
 
 Please read about adding or updating a language in \href{https://github.com/msberends/AMR/wiki/}{our Wiki}.
 \subsection{Changing the Default Language}{

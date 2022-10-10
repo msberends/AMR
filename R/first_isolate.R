@@ -59,7 +59,7 @@
 #'
 #' All isolates with a microbial ID of `NA` will be excluded as first isolate.
 #'
-#' ## Different methods
+#' ### Different methods
 #'
 #' According to Hindler *et al.* (2007, \doi{10.1086/511864}), there are different methods (algorithms) to select first isolates with increasing reliability: isolate-based, patient-based, episode-based and phenotype-based. All methods select on a combination of the taxonomic genus and species (not subspecies).
 #'

@@ -135,7 +135,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
         abnames <- abnames[!abnames %in% c("clavulanic acid", "avibactam")]
       }
       if (length(abnames) > 1) {
-        message_(
+        warning_(
           "More than one result was found for item ", index, ": ",
           vector_and(abnames, quotes = FALSE)
         )
@@ -164,13 +164,19 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     USE.NAMES = FALSE
   )]
   x_new[known_codes_cid] <- AB_lookup$ab[match(x[known_codes_cid], AB_lookup$cid)]
-  already_known <- known_names | known_codes_ab | known_codes_atc | known_codes_cid
-
+  previously_coerced <- x %in% AMR_env$ab_previously_coerced$x
+  x_new[previously_coerced & is.na(x_new)] <- AMR_env$ab_previously_coerced$ab[match(x[is.na(x_new) & x %in% AMR_env$ab_previously_coerced$x], AMR_env$ab_previously_coerced$x)]
+  already_known <- known_names | known_codes_ab | known_codes_atc | known_codes_cid | previously_coerced
+  
+  # fix for NAs
+  x_new[is.na(x)] <- NA
+  already_known[is.na(x)] <- FALSE
+  
   if (initial_search == TRUE && sum(already_known) < length(x)) {
     progress <- progress_ticker(n = sum(!already_known), n_min = 25, print = info) # start if n >= 25
     on.exit(close(progress))
   }
-
+  
   for (i in which(!already_known)) {
     if (initial_search == TRUE) {
       progress$tick()
@@ -481,6 +487,16 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   if (initial_search == TRUE && sum(already_known) < length(x)) {
     close(progress)
   }
+  
+  # save to package env to save time for next time
+  AMR_env$ab_previously_coerced <- unique(rbind(AMR_env$ab_previously_coerced,
+                                                data.frame(
+                                                  x = x,
+                                                  ab = x_new,
+                                                  stringsAsFactors = FALSE
+                                                ),
+                                                stringsAsFactors = FALSE
+  ))
 
   # take failed ATC codes apart from rest
   if (length(x_unknown_ATCs) > 0 && fast_mode == FALSE) {
