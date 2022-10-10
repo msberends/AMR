@@ -48,6 +48,8 @@
 #' Use the [`ab_*`][ab_property()] functions to get properties based on the returned antibiotic ID, see *Examples*.
 #'
 #' Note: the [as.ab()] and [`ab_*`][ab_property()] functions may use very long regular expression to match brand names of antimicrobial agents. This may fail on some systems.
+#' 
+#' You can add your own manual codes to be considered by [as.ab()] and all [`ab_*`][ab_property()] functions, see [add_custom_antimicrobials()].
 #' @section Source:
 #' World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: \url{https://www.whocc.no/atc_ddd_index/}
 #'
@@ -218,7 +220,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       AB_lookup$generalised_loinc,
       function(s) x[i] %in% s
     ))
-    found <- AMR::antibiotics$ab[loinc_found == TRUE]
+    found <- AB_lookup$ab[loinc_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
@@ -229,7 +231,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       AB_lookup$generalised_synonyms,
       function(s) x[i] %in% s
     ))
-    found <- AMR::antibiotics$ab[synonym_found == TRUE]
+    found <- AB_lookup$ab[synonym_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
@@ -241,7 +243,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       # require at least 2 characters for abbreviations
       function(s) x[i] %in% s && nchar(x[i]) >= 2
     ))
-    found <- AMR::antibiotics$ab[abbr_found == TRUE]
+    found <- AB_lookup$ab[abbr_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
@@ -288,13 +290,13 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     }
 
     # try if name starts with it
-    found <- AMR::antibiotics[which(AB_lookup$generalised_name %like% paste0("^", x_spelling)), "ab", drop = TRUE]
+    found <- AB_lookup[which(AB_lookup$generalised_name %like% paste0("^", x_spelling)), "ab", drop = TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
     # try if name ends with it
-    found <- AMR::antibiotics[which(AB_lookup$generalised_name %like% paste0(x_spelling, "$")), "ab", drop = TRUE]
+    found <- AB_lookup[which(AB_lookup$generalised_name %like% paste0(x_spelling, "$")), "ab", drop = TRUE]
     if (nchar(x[i]) >= 4 && length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
@@ -305,7 +307,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       AB_lookup$generalised_synonyms,
       function(s) any(s %like% paste0("^", x_spelling))
     ))
-    found <- AMR::antibiotics$ab[synonym_found == TRUE]
+    found <- AB_lookup$ab[synonym_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
@@ -583,7 +585,7 @@ as.data.frame.ab <- function(x, ...) {
 "[<-.ab" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  return_after_integrity_check(y, "antimicrobial code", AMR::antibiotics$ab)
+  return_after_integrity_check(y, "antimicrobial code", AB_lookup$ab)
 }
 #' @method [[<- ab
 #' @export
@@ -591,7 +593,7 @@ as.data.frame.ab <- function(x, ...) {
 "[[<-.ab" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  return_after_integrity_check(y, "antimicrobial code", AMR::antibiotics$ab)
+  return_after_integrity_check(y, "antimicrobial code", AB_lookup$ab)
 }
 #' @method c ab
 #' @export
@@ -600,7 +602,7 @@ c.ab <- function(...) {
   x <- list(...)[[1L]]
   y <- NextMethod()
   attributes(y) <- attributes(x)
-  return_after_integrity_check(y, "antimicrobial code", AMR::antibiotics$ab)
+  return_after_integrity_check(y, "antimicrobial code", AB_lookup$ab)
 }
 
 #' @method unique ab

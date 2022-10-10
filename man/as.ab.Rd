@@ -39,6 +39,8 @@ All these properties will be searched for the user input. The \code{\link[=as.ab
 Use the \code{\link[=ab_property]{ab_*}} functions to get properties based on the returned antibiotic ID, see \emph{Examples}.
 
 Note: the \code{\link[=as.ab]{as.ab()}} and \code{\link[=ab_property]{ab_*}} functions may use very long regular expression to match brand names of antimicrobial agents. This may fail on some systems.
+
+You can add your own manual codes to be considered by \code{\link[=as.ab]{as.ab()}} and all \code{\link[=ab_property]{ab_*}} functions, see \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}}.
 }
 \section{Source}{
 
