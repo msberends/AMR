@@ -69,6 +69,25 @@
 #' ab_group("test")
 #' 
 #' ab_info("test")
+#' 
+#' 
+#' # Add Co-fluampicil, which is one of the many J01CR50 codes, see
+#' # https://www.whocc.no/ddd/list_of_ddds_combined_products/
+#' add_custom_antimicrobials(
+#'   data.frame(ab = "COFLU",
+#'              name = "Co-fluampicil",
+#'              atc = "J01CR50",
+#'              group = "Beta-lactams/penicillines")
+#' )
+#' ab_atc("Co-fluampicil")
+#' ab_name("J01CR50")
+#' 
+#' # even antibiotic selectors work
+#' x <- data.frame(random_column = "test",
+#'                coflu = as.rsi("S"),
+#'                ampicillin = as.rsi("R"))
+#' x
+#' x[, betalactams()]
 add_custom_antimicrobials <- function(x) {
   meet_criteria(x, allow_class = "data.frame")
   stop_ifnot(all(c("ab", "name") %in% colnames(x)),
@@ -79,18 +98,27 @@ add_custom_antimicrobials <- function(x) {
   x <- x[, colnames(AB_lookup)[colnames(AB_lookup) %in% colnames(x)], drop = FALSE]
   x$generalised_name <- generalise_antibiotic_name(x$name)
   x$generalised_all <- as.list(x$generalised_name)
+  if ("atc" %in% colnames(x)) {
+    x$atc <- as.list(x$atc)
+  }
+  if ("loinc" %in% colnames(x)) {
+    x$loinc <- as.list(x$loinc)
+  }
+  AMR_env$custom_ab_codes <- c(AMR_env$custom_ab_codes, x$ab)
   
   bind_rows <- import_fn("bind_rows", "dplyr", error_on_fail = FALSE)
   if (!is.null(bind_rows)) {
     new_df <- bind_rows(AB_lookup, x)
   } else {
-    new_df <- rbind(AB_lookup, x, stringsAsFactors = FALSE)
+    new_df <- tryCatch(rbind(AB_lookup, x, stringsAsFactors = FALSE),
+                       error = function(x) stop("Error while adding antimicrobials. Try installing the 'dplyr' package for extended support.", call. = FALSE))
   }
+  new_df <- unique(new_df)
   
   assignInNamespace(x = "AB_lookup",
                     value = new_df,
                     ns = asNamespace("AMR"))
-  message_("Added ", nr2char(nrow(x)), " record", ifelse(nrow(x) > 1, "s", ""), " to internal `antibiotics` data set.")
+  message_("Added ", nr2char(nrow(x)), " record", ifelse(nrow(x) > 1, "s", ""), " to the internal `antibiotics` data set.")
 }
 
 #' @rdname add_custom_antimicrobials
@@ -99,5 +127,6 @@ clear_custom_antimicrobials <- function() {
   assignInNamespace(x = "AB_lookup",
                     value = create_AB_lookup(),
                     ns = asNamespace("AMR"))
+  AMR_env$custom_ab_codes <- character(0)
   message_("Manual antimicrobials cleared.")
 }

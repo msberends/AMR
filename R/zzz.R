@@ -67,6 +67,7 @@ AMR_env$rsi_interpretation_history <- data.frame(
   stringsAsFactors = FALSE
 )
 AMR_env$has_data.table <- pkg_is_available("data.table", also_load = FALSE)
+AMR_env$custom_ab_codes <- character(0)
 
 # determine info icon for messages
 utf8_supported <- isTRUE(base::l10n_info()$`UTF-8`)

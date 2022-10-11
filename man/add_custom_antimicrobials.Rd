@@ -52,4 +52,23 @@ ab_name("test")
 ab_group("test")
 
 ab_info("test")
+
+
+# Add Co-fluampicil, which is one of the many J01CR50 codes, see
+# https://www.whocc.no/ddd/list_of_ddds_combined_products/
+add_custom_antimicrobials(
+  data.frame(ab = "COFLU",
+             name = "Co-fluampicil",
+             atc = "J01CR50",
+             group = "Beta-lactams/penicillines")
+)
+ab_atc("Co-fluampicil")
+ab_name("J01CR50")
+
+# even antibiotic selectors work
+x <- data.frame(random_column = "test",
+               coflu = as.rsi("S"),
+               ampicillin = as.rsi("R"))
+x
+x[, betalactams()]
 }
