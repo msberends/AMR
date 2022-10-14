@@ -325,19 +325,41 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2015-11-18</td>
-<td align="center">X2</td>
+<td align="center">2017-11-03</td>
+<td align="center">T2</td>
 <td align="center">Hospital A</td>
-<td align="center">Klebsiella pneumoniae</td>
-<td align="center">S</td>
+<td align="center">Escherichia coli</td>
+<td align="center">R</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">F</td>
 </tr>
 <tr class="even">
-<td align="center">2014-12-18</td>
-<td align="center">I9</td>
+<td align="center">2016-05-27</td>
+<td align="center">Z9</td>
+<td align="center">Hospital B</td>
+<td align="center">Staphylococcus aureus</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">F</td>
+</tr>
+<tr class="odd">
+<td align="center">2015-01-19</td>
+<td align="center">N8</td>
+<td align="center">Hospital C</td>
+<td align="center">Escherichia coli</td>
+<td align="center">I</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">F</td>
+</tr>
+<tr class="even">
+<td align="center">2017-03-31</td>
+<td align="center">G7</td>
 <td align="center">Hospital C</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
@@ -347,48 +369,26 @@
 <td align="center">M</td>
 </tr>
 <tr class="odd">
-<td align="center">2015-09-24</td>
-<td align="center">V4</td>
+<td align="center">2014-04-10</td>
+<td align="center">C6</td>
 <td align="center">Hospital A</td>
-<td align="center">Staphylococcus aureus</td>
+<td align="center">Streptococcus pneumoniae</td>
 <td align="center">S</td>
-<td align="center">R</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">F</td>
-</tr>
-<tr class="even">
-<td align="center">2012-11-26</td>
-<td align="center">E7</td>
-<td align="center">Hospital D</td>
-<td align="center">Escherichia coli</td>
-<td align="center">R</td>
-<td align="center">I</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">M</td>
-</tr>
-<tr class="odd">
-<td align="center">2010-08-28</td>
-<td align="center">A7</td>
-<td align="center">Hospital A</td>
-<td align="center">Escherichia coli</td>
-<td align="center">R</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">M</td>
 </tr>
 <tr class="even">
-<td align="center">2016-05-06</td>
-<td align="center">V5</td>
+<td align="center">2011-02-09</td>
+<td align="center">N4</td>
 <td align="center">Hospital A</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
-<td align="center">I</td>
-<td align="center">R</td>
 <td align="center">S</td>
-<td align="center">F</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">M</td>
 </tr>
 </tbody>
 </table>
@@ -422,16 +422,16 @@ Longest: 1</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">M</td>
-<td align="right">10,324</td>
-<td align="right">51.62%</td>
-<td align="right">10,324</td>
-<td align="right">51.62%</td>
+<td align="right">10,375</td>
+<td align="right">51.88%</td>
+<td align="right">10,375</td>
+<td align="right">51.88%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">F</td>
-<td align="right">9,676</td>
-<td align="right">48.38%</td>
+<td align="right">9,625</td>
+<td align="right">48.13%</td>
 <td align="right">20,000</td>
 <td align="right">100.00%</td>
 </tr>
@@ -488,9 +488,9 @@ Longest: 1</p>
 <span><span class="co"># Basing inclusion on all antimicrobial results, using a points threshold of</span></span>
 <span><span class="co"># 2</span></span>
 <span><span class="co"># Including isolates from ICU.</span></span>
-<span><span class="co"># =&gt; Found 10,765 'phenotype-based' first isolates (53.8% of total where a</span></span>
+<span><span class="co"># =&gt; Found 10,660 'phenotype-based' first isolates (53.3% of total where a</span></span>
 <span><span class="co">#    microbial ID was available)</span></span></code></pre></div>
-<p>So only 53.8% is suitable for resistance analysis! We can now filter on it with the <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> function, also from the <code>dplyr</code> package:</p>
+<p>So only 53.3% is suitable for resistance analysis! We can now filter on it with the <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> function, also from the <code>dplyr</code> package:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">first</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -499,7 +499,7 @@ Longest: 1</p>
 <code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/first_isolate.html">filter_first_isolate</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># Including isolates from ICU.</span></span></code></pre></div>
-<p>So we end up with 10,765 isolates for analysis. Now our data looks like:</p>
+<p>So we end up with 10,660 isolates for analysis. Now our data looks like:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data_1st</span><span class="op">)</span></span></code></pre></div>
 <table style="width:100%;" class="table">
@@ -537,25 +537,41 @@ Longest: 1</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="center">2015-11-18</td>
-<td align="center">X2</td>
-<td align="center">Hospital A</td>
-<td align="center">B_KLBSL_PNMN</td>
-<td align="center">R</td>
+<td align="left">2</td>
+<td align="center">2016-05-27</td>
+<td align="center">Z9</td>
+<td align="center">Hospital B</td>
+<td align="center">B_STPHY_AURS</td>
+<td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">S</td>
 <td align="center">F</td>
-<td align="center">Gram-negative</td>
-<td align="center">Klebsiella</td>
-<td align="center">pneumoniae</td>
+<td align="center">Gram-positive</td>
+<td align="center">Staphylococcus</td>
+<td align="center">aureus</td>
 <td align="center">TRUE</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="center">2014-12-18</td>
-<td align="center">I9</td>
+<td align="left">3</td>
+<td align="center">2015-01-19</td>
+<td align="center">N8</td>
+<td align="center">Hospital C</td>
+<td align="center">B_ESCHR_COLI</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">F</td>
+<td align="center">Gram-negative</td>
+<td align="center">Escherichia</td>
+<td align="center">coli</td>
+<td align="center">TRUE</td>
+</tr>
+<tr class="odd">
+<td align="left">4</td>
+<td align="center">2017-03-31</td>
+<td align="center">G7</td>
 <td align="center">Hospital C</td>
 <td align="center">B_ESCHR_COLI</td>
 <td align="center">S</td>
@@ -568,59 +584,27 @@ Longest: 1</p>
 <td align="center">coli</td>
 <td align="center">TRUE</td>
 </tr>
-<tr class="odd">
-<td align="left">3</td>
-<td align="center">2015-09-24</td>
-<td align="center">V4</td>
-<td align="center">Hospital A</td>
-<td align="center">B_STPHY_AURS</td>
-<td align="center">R</td>
-<td align="center">R</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">F</td>
-<td align="center">Gram-positive</td>
-<td align="center">Staphylococcus</td>
-<td align="center">aureus</td>
-<td align="center">TRUE</td>
-</tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="center">2012-11-26</td>
-<td align="center">E7</td>
-<td align="center">Hospital D</td>
-<td align="center">B_ESCHR_COLI</td>
+<td align="left">5</td>
+<td align="center">2014-04-10</td>
+<td align="center">C6</td>
+<td align="center">Hospital A</td>
+<td align="center">B_STRPT_PNMN</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">S</td>
 <td align="center">R</td>
-<td align="center">I</td>
-<td align="center">S</td>
-<td align="center">S</td>
 <td align="center">M</td>
-<td align="center">Gram-negative</td>
-<td align="center">Escherichia</td>
-<td align="center">coli</td>
+<td align="center">Gram-positive</td>
+<td align="center">Streptococcus</td>
+<td align="center">pneumoniae</td>
 <td align="center">TRUE</td>
 </tr>
 <tr class="odd">
 <td align="left">6</td>
-<td align="center">2016-05-06</td>
-<td align="center">V5</td>
+<td align="center">2011-02-09</td>
+<td align="center">N4</td>
 <td align="center">Hospital A</td>
-<td align="center">B_ESCHR_COLI</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">R</td>
-<td align="center">S</td>
-<td align="center">F</td>
-<td align="center">Gram-negative</td>
-<td align="center">Escherichia</td>
-<td align="center">coli</td>
-<td align="center">TRUE</td>
-</tr>
-<tr class="even">
-<td align="left">7</td>
-<td align="center">2011-03-21</td>
-<td align="center">N1</td>
-<td align="center">Hospital D</td>
 <td align="center">B_ESCHR_COLI</td>
 <td align="center">S</td>
 <td align="center">S</td>
@@ -630,6 +614,22 @@ Longest: 1</p>
 <td align="center">Gram-negative</td>
 <td align="center">Escherichia</td>
 <td align="center">coli</td>
+<td align="center">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="center">2010-07-27</td>
+<td align="center">E4</td>
+<td align="center">Hospital D</td>
+<td align="center">B_STPHY_AURS</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">R</td>
+<td align="center">S</td>
+<td align="center">M</td>
+<td align="center">Gram-positive</td>
+<td align="center">Staphylococcus</td>
+<td align="center">aureus</td>
 <td align="center">TRUE</td>
 </tr>
 </tbody>
@@ -653,8 +653,8 @@ Longest: 1</p>
 <code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/cleaner/man/freq.html" class="external-link">freq</a></span><span class="op">(</span><span class="va">genus</span>, <span class="va">species</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Frequency table</strong></p>
 <p>Class: character<br>
-Length: 10,765<br>
-Available: 10,765 (100.0%, NA: 0 = 0.0%)<br>
+Length: 10,660<br>
+Available: 10,660 (100.0%, NA: 0 = 0.0%)<br>
 Unique: 4</p>
 <p>Shortest: 16<br>
 Longest: 24</p>
@@ -671,33 +671,33 @@ Longest: 24</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Escherichia coli</td>
-<td align="right">4,655</td>
-<td align="right">43.24%</td>
-<td align="right">4,655</td>
-<td align="right">43.24%</td>
+<td align="right">4,666</td>
+<td align="right">43.77%</td>
+<td align="right">4,666</td>
+<td align="right">43.77%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Staphylococcus aureus</td>
-<td align="right">2,771</td>
-<td align="right">25.74%</td>
-<td align="right">7,426</td>
-<td align="right">68.98%</td>
+<td align="right">2,717</td>
+<td align="right">25.49%</td>
+<td align="right">7,383</td>
+<td align="right">69.26%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Streptococcus pneumoniae</td>
-<td align="right">2,156</td>
-<td align="right">20.03%</td>
-<td align="right">9,582</td>
-<td align="right">89.01%</td>
+<td align="right">2,101</td>
+<td align="right">19.71%</td>
+<td align="right">9,484</td>
+<td align="right">88.97%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Klebsiella pneumoniae</td>
-<td align="right">1,183</td>
-<td align="right">10.99%</td>
-<td align="right">10,765</td>
+<td align="right">1,176</td>
+<td align="right">11.03%</td>
+<td align="right">10,660</td>
 <td align="right">100.00%</td>
 </tr>
 </tbody>
@@ -716,14 +716,14 @@ Longest: 24</p>
 <col width="9%">
 <col width="9%">
 <col width="9%">
-<col width="10%">
+<col width="11%">
 <col width="3%">
 <col width="3%">
 <col width="3%">
 <col width="3%">
 <col width="6%">
 <col width="11%">
-<col width="12%">
+<col width="11%">
 <col width="9%">
 <col width="5%">
 </colgroup>
@@ -744,27 +744,27 @@ Longest: 24</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2016-02-22</td>
-<td align="center">Y6</td>
-<td align="center">Hospital D</td>
-<td align="center">B_STPHY_AURS</td>
-<td align="center">R</td>
-<td align="center">R</td>
+<td align="center">2014-04-10</td>
+<td align="center">C6</td>
+<td align="center">Hospital A</td>
+<td align="center">B_STRPT_PNMN</td>
+<td align="center">S</td>
+<td align="center">S</td>
 <td align="center">S</td>
 <td align="center">R</td>
-<td align="center">F</td>
+<td align="center">M</td>
 <td align="center">Gram-positive</td>
-<td align="center">Staphylococcus</td>
-<td align="center">aureus</td>
+<td align="center">Streptococcus</td>
+<td align="center">pneumoniae</td>
 <td align="center">TRUE</td>
 </tr>
 <tr class="even">
-<td align="center">2012-04-22</td>
-<td align="center">E8</td>
+<td align="center">2012-08-04</td>
+<td align="center">I5</td>
 <td align="center">Hospital D</td>
 <td align="center">B_ESCHR_COLI</td>
-<td align="center">S</td>
-<td align="center">S</td>
+<td align="center">R</td>
+<td align="center">R</td>
 <td align="center">R</td>
 <td align="center">R</td>
 <td align="center">M</td>
@@ -774,12 +774,42 @@ Longest: 24</p>
 <td align="center">TRUE</td>
 </tr>
 <tr class="odd">
-<td align="center">2010-08-20</td>
-<td align="center">F1</td>
+<td align="center">2012-11-28</td>
+<td align="center">Y4</td>
+<td align="center">Hospital A</td>
+<td align="center">B_ESCHR_COLI</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">R</td>
+<td align="center">R</td>
+<td align="center">F</td>
+<td align="center">Gram-negative</td>
+<td align="center">Escherichia</td>
+<td align="center">coli</td>
+<td align="center">TRUE</td>
+</tr>
+<tr class="even">
+<td align="center">2010-08-07</td>
+<td align="center">F10</td>
 <td align="center">Hospital B</td>
 <td align="center">B_STRPT_PNMN</td>
-<td align="center">I</td>
-<td align="center">I</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">S</td>
+<td align="center">R</td>
+<td align="center">M</td>
+<td align="center">Gram-positive</td>
+<td align="center">Streptococcus</td>
+<td align="center">pneumoniae</td>
+<td align="center">TRUE</td>
+</tr>
+<tr class="odd">
+<td align="center">2017-09-28</td>
+<td align="center">A7</td>
+<td align="center">Hospital C</td>
+<td align="center">B_STRPT_PNMN</td>
+<td align="center">R</td>
+<td align="center">R</td>
 <td align="center">S</td>
 <td align="center">R</td>
 <td align="center">M</td>
@@ -789,24 +819,9 @@ Longest: 24</p>
 <td align="center">TRUE</td>
 </tr>
 <tr class="even">
-<td align="center">2016-05-20</td>
-<td align="center">X2</td>
-<td align="center">Hospital A</td>
-<td align="center">B_STPHY_AURS</td>
-<td align="center">R</td>
-<td align="center">I</td>
-<td align="center">S</td>
-<td align="center">R</td>
-<td align="center">F</td>
-<td align="center">Gram-positive</td>
-<td align="center">Staphylococcus</td>
-<td align="center">aureus</td>
-<td align="center">TRUE</td>
-</tr>
-<tr class="odd">
-<td align="center">2017-02-25</td>
-<td align="center">Y7</td>
-<td align="center">Hospital A</td>
+<td align="center">2010-05-24</td>
+<td align="center">W9</td>
+<td align="center">Hospital B</td>
 <td align="center">B_STRPT_PNMN</td>
 <td align="center">S</td>
 <td align="center">S</td>
@@ -816,21 +831,6 @@ Longest: 24</p>
 <td align="center">Gram-positive</td>
 <td align="center">Streptococcus</td>
 <td align="center">pneumoniae</td>
-<td align="center">TRUE</td>
-</tr>
-<tr class="even">
-<td align="center">2016-01-31</td>
-<td align="center">Y4</td>
-<td align="center">Hospital C</td>
-<td align="center">B_ESCHR_COLI</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">S</td>
-<td align="center">R</td>
-<td align="center">F</td>
-<td align="center">Gram-negative</td>
-<td align="center">Escherichia</td>
-<td align="center">coli</td>
 <td align="center">TRUE</td>
 </tr>
 </tbody>
@@ -854,50 +854,50 @@ Longest: 24</p>
 <tr class="odd">
 <td align="center">E. coli</td>
 <td align="center">AMX</td>
-<td align="center">2244</td>
-<td align="center">103</td>
-<td align="center">2308</td>
-<td align="center">4655</td>
+<td align="center">2239</td>
+<td align="center">144</td>
+<td align="center">2283</td>
+<td align="center">4666</td>
 </tr>
 <tr class="even">
 <td align="center">E. coli</td>
 <td align="center">AMC</td>
-<td align="center">3412</td>
-<td align="center">156</td>
-<td align="center">1087</td>
-<td align="center">4655</td>
+<td align="center">3411</td>
+<td align="center">155</td>
+<td align="center">1100</td>
+<td align="center">4666</td>
 </tr>
 <tr class="odd">
 <td align="center">E. coli</td>
 <td align="center">CIP</td>
-<td align="center">3414</td>
+<td align="center">3389</td>
 <td align="center">0</td>
-<td align="center">1241</td>
-<td align="center">4655</td>
+<td align="center">1277</td>
+<td align="center">4666</td>
 </tr>
 <tr class="even">
 <td align="center">E. coli</td>
 <td align="center">GEN</td>
-<td align="center">4073</td>
+<td align="center">4077</td>
 <td align="center">0</td>
-<td align="center">582</td>
-<td align="center">4655</td>
+<td align="center">589</td>
+<td align="center">4666</td>
 </tr>
 <tr class="odd">
 <td align="center">K. pneumoniae</td>
 <td align="center">AMX</td>
 <td align="center">0</td>
 <td align="center">0</td>
-<td align="center">1183</td>
-<td align="center">1183</td>
+<td align="center">1176</td>
+<td align="center">1176</td>
 </tr>
 <tr class="even">
 <td align="center">K. pneumoniae</td>
 <td align="center">AMC</td>
-<td align="center">960</td>
-<td align="center">38</td>
-<td align="center">185</td>
-<td align="center">1183</td>
+<td align="center">910</td>
+<td align="center">50</td>
+<td align="center">216</td>
+<td align="center">1176</td>
 </tr>
 </tbody>
 </table>
@@ -920,34 +920,34 @@ Longest: 24</p>
 <tr class="odd">
 <td align="center">E. coli</td>
 <td align="center">GEN</td>
-<td align="center">4073</td>
+<td align="center">4077</td>
 <td align="center">0</td>
-<td align="center">582</td>
-<td align="center">4655</td>
+<td align="center">589</td>
+<td align="center">4666</td>
 </tr>
 <tr class="even">
 <td align="center">K. pneumoniae</td>
 <td align="center">GEN</td>
-<td align="center">1070</td>
+<td align="center">1045</td>
 <td align="center">0</td>
-<td align="center">113</td>
-<td align="center">1183</td>
+<td align="center">131</td>
+<td align="center">1176</td>
 </tr>
 <tr class="odd">
 <td align="center">S. aureus</td>
 <td align="center">GEN</td>
-<td align="center">2442</td>
+<td align="center">2422</td>
 <td align="center">0</td>
-<td align="center">329</td>
-<td align="center">2771</td>
+<td align="center">295</td>
+<td align="center">2717</td>
 </tr>
 <tr class="even">
 <td align="center">S. pneumoniae</td>
 <td align="center">GEN</td>
 <td align="center">0</td>
 <td align="center">0</td>
-<td align="center">2156</td>
-<td align="center">2156</td>
+<td align="center">2101</td>
+<td align="center">2101</td>
 </tr>
 </tbody>
 </table>
@@ -961,7 +961,7 @@ Longest: 24</p>
 <p>As per the EUCAST guideline of 2019, we calculate resistance as the proportion of R (<code><a href="../reference/proportion.html">proportion_R()</a></code>, equal to <code><a href="../reference/proportion.html">resistance()</a></code>) and susceptibility as the proportion of S and I (<code><a href="../reference/proportion.html">proportion_SI()</a></code>, equal to <code><a href="../reference/proportion.html">susceptibility()</a></code>). These functions can be used on their own:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/proportion.html">resistance</a></span><span class="op">(</span><span class="va">AMX</span><span class="op">)</span></span>
-<span><span class="co"># [1] 0.5452856</span></span></code></pre></div>
+<span><span class="co"># [1] 0.5409006</span></span></code></pre></div>
 <p>Or can be used in conjunction with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code>, both from the <code>dplyr</code> package:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -975,19 +975,19 @@ Longest: 24</p>
 <tbody>
 <tr class="odd">
 <td align="center">Hospital A</td>
-<td align="center">0.5467334</td>
+<td align="center">0.5371953</td>
 </tr>
 <tr class="even">
 <td align="center">Hospital B</td>
-<td align="center">0.5472356</td>
+<td align="center">0.5490456</td>
 </tr>
 <tr class="odd">
 <td align="center">Hospital C</td>
-<td align="center">0.5282083</td>
+<td align="center">0.5335844</td>
 </tr>
 <tr class="even">
 <td align="center">Hospital D</td>
-<td align="center">0.5523125</td>
+<td align="center">0.5374532</td>
 </tr>
 </tbody>
 </table>
@@ -1008,23 +1008,23 @@ Longest: 24</p>
 <tbody>
 <tr class="odd">
 <td align="center">Hospital A</td>
-<td align="center">0.5467334</td>
-<td align="center">3199</td>
+<td align="center">0.5371953</td>
+<td align="center">3159</td>
 </tr>
 <tr class="even">
 <td align="center">Hospital B</td>
-<td align="center">0.5472356</td>
-<td align="center">3726</td>
+<td align="center">0.5490456</td>
+<td align="center">3772</td>
 </tr>
 <tr class="odd">
 <td align="center">Hospital C</td>
-<td align="center">0.5282083</td>
-<td align="center">1613</td>
+<td align="center">0.5335844</td>
+<td align="center">1593</td>
 </tr>
 <tr class="even">
 <td align="center">Hospital D</td>
-<td align="center">0.5523125</td>
-<td align="center">2227</td>
+<td align="center">0.5374532</td>
+<td align="center">2136</td>
 </tr>
 </tbody>
 </table>
@@ -1047,27 +1047,27 @@ Longest: 24</p>
 <tbody>
 <tr class="odd">
 <td align="center">Escherichia</td>
-<td align="center">0.7664876</td>
-<td align="center">0.8749731</td>
-<td align="center">0.9735768</td>
+<td align="center">0.7642520</td>
+<td align="center">0.8737677</td>
+<td align="center">0.9747107</td>
 </tr>
 <tr class="even">
 <td align="center">Klebsiella</td>
-<td align="center">0.8436179</td>
-<td align="center">0.9044801</td>
-<td align="center">0.9873204</td>
+<td align="center">0.8163265</td>
+<td align="center">0.8886054</td>
+<td align="center">0.9855442</td>
 </tr>
 <tr class="odd">
 <td align="center">Staphylococcus</td>
-<td align="center">0.7971851</td>
-<td align="center">0.8812703</td>
-<td align="center">0.9765428</td>
+<td align="center">0.7935223</td>
+<td align="center">0.8914244</td>
+<td align="center">0.9775488</td>
 </tr>
 <tr class="even">
 <td align="center">Streptococcus</td>
-<td align="center">0.5343228</td>
+<td align="center">0.5316516</td>
 <td align="center">0.0000000</td>
-<td align="center">0.5343228</td>
+<td align="center">0.5316516</td>
 </tr>
 </tbody>
 </table>
@@ -1092,23 +1092,23 @@ Longest: 24</p>
 <tbody>
 <tr class="odd">
 <td align="left">Hospital A</td>
-<td align="right">54.7%</td>
-<td align="right">27.4%</td>
+<td align="right">53.7%</td>
+<td align="right">27.5%</td>
 </tr>
 <tr class="even">
 <td align="left">Hospital B</td>
-<td align="right">54.7%</td>
-<td align="right">26.0%</td>
+<td align="right">54.9%</td>
+<td align="right">27.3%</td>
 </tr>
 <tr class="odd">
 <td align="left">Hospital C</td>
-<td align="right">52.8%</td>
-<td align="right">24.9%</td>
+<td align="right">53.4%</td>
+<td align="right">26.0%</td>
 </tr>
 <tr class="even">
 <td align="left">Hospital D</td>
-<td align="right">55.2%</td>
-<td align="right">26.5%</td>
+<td align="right">53.7%</td>
+<td align="right">25.7%</td>
 </tr>
 </tbody>
 </table>
@@ -1206,17 +1206,17 @@ Longest: 24</p>
 <code class="sourceCode R"><span><span class="va">mic_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/random.html">random_mic</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span><span class="va">mic_values</span></span>
 <span><span class="co"># Class &lt;mic&gt;</span></span>
-<span><span class="co">#   [1] 32      &lt;=0.001 0.025   &lt;=0.001 4       0.125   0.01    0.002   32     </span></span>
-<span><span class="co">#  [10] 16      64      4       &lt;=0.001 0.01    16      0.01    64      64     </span></span>
-<span><span class="co">#  [19] 256     0.0625  0.002   0.005   0.125   0.025   32      128     0.5    </span></span>
-<span><span class="co">#  [28] 16      0.5     32      0.005   32      0.01    2       0.125   128    </span></span>
-<span><span class="co">#  [37] 64      8       0.002   0.01    2       &lt;=0.001 0.005   64      0.0625 </span></span>
-<span><span class="co">#  [46] &lt;=0.001 8       0.5     64      32      0.5     0.005   0.01    &lt;=0.001</span></span>
-<span><span class="co">#  [55] 16      0.5     8       0.0625  0.125   128     16      0.5     0.002  </span></span>
-<span><span class="co">#  [64] 16      8       128     128     4       256     0.5     8       4      </span></span>
-<span><span class="co">#  [73] 16      0.025   2       1       16      0.005   0.01    16      1      </span></span>
-<span><span class="co">#  [82] 0.25    0.01    0.002   0.0625  0.005   128     64      128     8      </span></span>
-<span><span class="co">#  [91] 0.002   1       8       8       0.25    0.125   16      2       0.5    </span></span>
+<span><span class="co">#   [1] 64      4       0.25    64      256     4       128     0.125   64     </span></span>
+<span><span class="co">#  [10] 64      4       4       8       16      32      2       0.005   0.002  </span></span>
+<span><span class="co">#  [19] 4       256     0.25    0.5     2       &lt;=0.001 0.025   0.0625  32     </span></span>
+<span><span class="co">#  [28] 1       128     0.005   0.0625  0.25    2       0.002   8       1      </span></span>
+<span><span class="co">#  [37] 16      0.125   8       1       32      16      1       16      8      </span></span>
+<span><span class="co">#  [46] 16      0.005   0.5     128     &lt;=0.001 32      2       0.0625  0.5    </span></span>
+<span><span class="co">#  [55] 2       64      128     4       0.5     16      0.0625  0.0625  0.002  </span></span>
+<span><span class="co">#  [64] 0.25    0.025   4       16      32      0.0625  0.0625  0.5     0.5    </span></span>
+<span><span class="co">#  [73] 0.002   32      16      0.005   1       0.25    256     0.25    0.025  </span></span>
+<span><span class="co">#  [82] 128     8       0.25    0.0625  1       256     16      0.5     0.125  </span></span>
+<span><span class="co">#  [91] 0.005   2       0.002   128     0.5     32      0.0625  0.025   0.125  </span></span>
 <span><span class="co"># [100] 256</span></span></code></pre></div>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># base R:</span></span>
@@ -1244,10 +1244,10 @@ Longest: 24</p>
 <code class="sourceCode R"><span><span class="va">disk_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/random.html">random_disk</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">100</span>, mo <span class="op">=</span> <span class="st">"E. coli"</span>, ab <span class="op">=</span> <span class="st">"cipro"</span><span class="op">)</span></span>
 <span><span class="va">disk_values</span></span>
 <span><span class="co"># Class &lt;disk&gt;</span></span>
-<span><span class="co">#   [1] 29 31 21 24 20 24 29 22 21 20 19 25 17 30 30 28 25 27 23 20 18 22 31 25 24</span></span>
-<span><span class="co">#  [26] 29 25 21 29 20 22 23 27 30 23 22 30 22 18 20 23 27 25 23 21 21 24 21 29 26</span></span>
-<span><span class="co">#  [51] 21 26 26 24 30 24 30 25 23 30 20 29 22 17 20 18 21 22 27 29 30 30 30 21 30</span></span>
-<span><span class="co">#  [76] 26 19 28 26 22 25 19 21 23 29 17 23 23 24 26 28 17 17 30 23 29 31 19 19 31</span></span></code></pre></div>
+<span><span class="co">#   [1] 23 29 23 29 18 26 17 23 28 31 21 24 18 17 25 26 24 18 25 18 28 18 30 20 28</span></span>
+<span><span class="co">#  [26] 24 28 21 31 25 29 21 19 18 18 20 31 18 28 31 17 24 21 18 31 21 26 22 27 18</span></span>
+<span><span class="co">#  [51] 29 29 19 31 17 20 30 21 21 26 30 25 31 26 26 29 29 29 20 21 23 18 27 25 28</span></span>
+<span><span class="co">#  [76] 29 28 20 20 26 17 20 24 21 28 28 28 31 21 20 21 17 28 24 23 29 22 23 30 29</span></span></code></pre></div>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># base R:</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">disk_values</span>, mo <span class="op">=</span> <span class="st">"E. coli"</span>, ab <span class="op">=</span> <span class="st">"cipro"</span><span class="op">)</span></span></code></pre></div>
