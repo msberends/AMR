@@ -145,22 +145,22 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
   }
 }
 create_MO_fullname_lower <- function() {
-  MO_lookup <- AMR::microorganisms
+  AMR_env$MO_lookup <- AMR::microorganisms
   # use this paste instead of `fullname` to work with Viridans Group Streptococci, etc.
-  MO_lookup$fullname_lower <- tolower(trimws(paste(
-    MO_lookup$genus,
-    MO_lookup$species,
-    MO_lookup$subspecies
+  AMR_env$MO_lookup$fullname_lower <- tolower(trimws(paste(
+    AMR_env$MO_lookup$genus,
+    AMR_env$MO_lookup$species,
+    AMR_env$MO_lookup$subspecies
   )))
-  ind <- MO_lookup$genus == "" | grepl("^[(]unknown ", MO_lookup$fullname, perl = TRUE)
-  MO_lookup[ind, "fullname_lower"] <- tolower(MO_lookup[ind, "fullname", drop = TRUE])
-  MO_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", MO_lookup$fullname_lower, perl = TRUE))
-  MO_lookup$fullname_lower
+  ind <- AMR_env$MO_lookup$genus == "" | grepl("^[(]unknown ", AMR_env$MO_lookup$fullname, perl = TRUE)
+  AMR_env$MO_lookup[ind, "fullname_lower"] <- tolower(AMR_env$MO_lookup[ind, "fullname", drop = TRUE])
+  AMR_env$MO_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", AMR_env$MO_lookup$fullname_lower, perl = TRUE))
+  AMR_env$MO_lookup$fullname_lower
 }
 MO_CONS <- create_species_cons_cops("CoNS")
 MO_COPS <- create_species_cons_cops("CoPS")
-MO_STREP_ABCG <- MO_lookup$mo[which(MO_lookup$genus == "Streptococcus" &
-  MO_lookup$species %in% c(
+MO_STREP_ABCG <- AMR_env$MO_lookup$mo[which(AMR_env$MO_lookup$genus == "Streptococcus" &
+  AMR_env$MO_lookup$species %in% c(
     "pyogenes", "agalactiae", "dysgalactiae", "equi", "anginosus", "sanguinis", "salivarius",
     "group A", "group B", "group C", "group D", "group F", "group G", "group H", "group K", "group L"
   ))]
@@ -198,10 +198,10 @@ AB_AMINOGLYCOSIDES <- antibiotics %>%
   filter(group %like% "aminoglycoside") %>%
   pull(ab)
 AB_AMINOPENICILLINS <- as.ab(c("AMP", "AMX"))
-AB_ANTIFUNGALS <- AB_lookup %>%
+AB_ANTIFUNGALS <- AMR_env$AB_lookup %>%
   filter(group %like% "antifungal") %>%
   pull(ab)
-AB_ANTIMYCOBACTERIALS <- AB_lookup %>%
+AB_ANTIMYCOBACTERIALS <- AMR_env$AB_lookup %>%
   filter(group %like% "antimycobacterial") %>%
   pull(ab)
 AB_CARBAPENEMS <- antibiotics %>%
@@ -268,16 +268,16 @@ AB_BETALACTAMS <- c(AB_PENICILLINS, AB_CEPHALOSPORINS, AB_CARBAPENEMS)
 DEFINED_AB_GROUPS <- ls(envir = globalenv())
 DEFINED_AB_GROUPS <- DEFINED_AB_GROUPS[!DEFINED_AB_GROUPS %in% globalenv_before_ab]
 create_AB_lookup <- function() {
-  AB_lookup <- AMR::antibiotics
-  AB_lookup$generalised_name <- generalise_antibiotic_name(AB_lookup$name)
-  AB_lookup$generalised_synonyms <- lapply(AB_lookup$synonyms, generalise_antibiotic_name)
-  AB_lookup$generalised_abbreviations <- lapply(AB_lookup$abbreviations, generalise_antibiotic_name)
-  AB_lookup$generalised_loinc <- lapply(AB_lookup$loinc, generalise_antibiotic_name)
-  AB_lookup$generalised_all <- unname(lapply(
-    as.list(as.data.frame(t(AB_lookup[,
+  AMR_env$AB_lookup <- AMR::antibiotics
+  AMR_env$AB_lookup$generalised_name <- generalise_antibiotic_name(AMR_env$AB_lookup$name)
+  AMR_env$AB_lookup$generalised_synonyms <- lapply(AMR_env$AB_lookup$synonyms, generalise_antibiotic_name)
+  AMR_env$AB_lookup$generalised_abbreviations <- lapply(AMR_env$AB_lookup$abbreviations, generalise_antibiotic_name)
+  AMR_env$AB_lookup$generalised_loinc <- lapply(AMR_env$AB_lookup$loinc, generalise_antibiotic_name)
+  AMR_env$AB_lookup$generalised_all <- unname(lapply(
+    as.list(as.data.frame(t(AMR_env$AB_lookup[,
       c(
         "ab", "atc", "cid", "name",
-        colnames(AB_lookup)[colnames(AB_lookup) %like% "generalised"]
+        colnames(AMR_env$AB_lookup)[colnames(AMR_env$AB_lookup) %like% "generalised"]
       ),
       drop = FALSE
     ]),
@@ -288,7 +288,7 @@ create_AB_lookup <- function() {
       x[x != ""]
     }
   ))
-  AB_lookup[, colnames(AB_lookup)[colnames(AB_lookup) %like% "^generalised"]]
+  AMR_env$AB_lookup[, colnames(AMR_env$AB_lookup)[colnames(AMR_env$AB_lookup) %like% "^generalised"]]
 }
 AB_LOOKUP <- create_AB_lookup()
 

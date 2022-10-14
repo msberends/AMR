@@ -145,7 +145,7 @@ join_microorganisms <- function(type, x, by, suffix, ...) {
     }
     message_('Joining, by = "', by, '"', add_fn = font_black, as_note = FALSE) # message same as dplyr::join functions
   }
-  if (!all(x[, by, drop = TRUE] %in% MO_lookup$mo, na.rm = TRUE)) {
+  if (!all(x[, by, drop = TRUE] %in% AMR_env$MO_lookup$mo, na.rm = TRUE)) {
     x$join.mo <- as.mo(x[, by, drop = TRUE])
     by <- c("join.mo" = "mo")
   } else {

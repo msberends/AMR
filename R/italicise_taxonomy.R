@@ -71,7 +71,7 @@ italicise_taxonomy <- function(string, type = c("markdown", "ansi")) {
       search_strings <- gsub("[^a-zA-Z-]", "", s_split)
 
       ind_species <- search_strings != "" &
-        search_strings %in% MO_lookup[which(MO_lookup$rank %in% c(
+        search_strings %in% AMR_env$MO_lookup[which(AMR_env$MO_lookup$rank %in% c(
           "family",
           "genus",
           "species",
@@ -85,7 +85,7 @@ italicise_taxonomy <- function(string, type = c("markdown", "ansi")) {
 
       ind_fullname <- search_strings != "" &
         search_strings %in% c(
-          MO_lookup[which(MO_lookup$rank %in% c(
+          AMR_env$MO_lookup[which(AMR_env$MO_lookup$rank %in% c(
             "family",
             "genus",
             "species",
@@ -96,7 +96,7 @@ italicise_taxonomy <- function(string, type = c("markdown", "ansi")) {
           "fullname",
           drop = TRUE
           ],
-          MO_lookup[which(MO_lookup$rank %in% c(
+          AMR_env$MO_lookup[which(AMR_env$MO_lookup$rank %in% c(
             "family",
             "genus",
             "species",

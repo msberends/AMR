@@ -326,7 +326,7 @@ mdro <- function(x = NULL,
       "No column found as input for `col_mo`, ",
       font_bold(paste0("assuming all rows contain ", font_italic("Mycobacterium tuberculosis"), "."))
     )
-    x$mo <- as.mo("Mycobacterium tuberculosis") # consider overkill at all times: MO_lookup[which(MO_lookup$fullname == "Mycobacterium tuberculosis"), "mo", drop = TRUE]
+    x$mo <- as.mo("Mycobacterium tuberculosis") # consider overkill at all times: AMR_env$MO_lookup[which(AMR_env$MO_lookup$fullname == "Mycobacterium tuberculosis"), "mo", drop = TRUE]
     col_mo <- "mo"
   }
   stop_if(is.null(col_mo), "`col_mo` must be set")

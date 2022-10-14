@@ -100,7 +100,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   if (is.ab(x)) {
     return(x)
   }
-  if (all(x %in% c(AB_lookup$ab, NA))) {
+  if (all(x %in% c(AMR_env$AB_lookup$ab, NA))) {
     # all valid AB codes, but not yet right class
     return(set_clean_class(x,
       new_class = c("ab", "character")
@@ -147,25 +147,25 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   }
 
   # Fill in names, AB codes, CID codes and ATC codes directly (`x` is already clean and uppercase)
-  known_names <- x %in% AB_lookup$generalised_name
-  x_new[known_names] <- AB_lookup$ab[match(x[known_names], AB_lookup$generalised_name)]
-  known_codes_ab <- x %in% AB_lookup$ab
-  known_codes_atc <- vapply(FUN.VALUE = logical(1), x, function(x_) x_ %in% unlist(AB_lookup$atc), USE.NAMES = FALSE)
-  known_codes_cid <- x %in% AB_lookup$cid
-  x_new[known_codes_ab] <- AB_lookup$ab[match(x[known_codes_ab], AB_lookup$ab)]
-  x_new[known_codes_atc] <- AB_lookup$ab[vapply(
+  known_names <- x %in% AMR_env$AB_lookup$generalised_name
+  x_new[known_names] <- AMR_env$AB_lookup$ab[match(x[known_names], AMR_env$AB_lookup$generalised_name)]
+  known_codes_ab <- x %in% AMR_env$AB_lookup$ab
+  known_codes_atc <- vapply(FUN.VALUE = logical(1), x, function(x_) x_ %in% unlist(AMR_env$AB_lookup$atc), USE.NAMES = FALSE)
+  known_codes_cid <- x %in% AMR_env$AB_lookup$cid
+  x_new[known_codes_ab] <- AMR_env$AB_lookup$ab[match(x[known_codes_ab], AMR_env$AB_lookup$ab)]
+  x_new[known_codes_atc] <- AMR_env$AB_lookup$ab[vapply(
     FUN.VALUE = integer(1),
     x[known_codes_atc],
     function(x_) {
       which(vapply(
         FUN.VALUE = logical(1),
-        AB_lookup$atc,
+        AMR_env$AB_lookup$atc,
         function(atc) x_ %in% atc
       ))[1L]
     },
     USE.NAMES = FALSE
   )]
-  x_new[known_codes_cid] <- AB_lookup$ab[match(x[known_codes_cid], AB_lookup$cid)]
+  x_new[known_codes_cid] <- AMR_env$AB_lookup$ab[match(x[known_codes_cid], AMR_env$AB_lookup$cid)]
   previously_coerced <- x %in% AMR_env$ab_previously_coerced$x
   x_new[previously_coerced & is.na(x_new)] <- AMR_env$ab_previously_coerced$ab[match(x[is.na(x_new) & x %in% AMR_env$ab_previously_coerced$x], AMR_env$ab_previously_coerced$x)]
   already_known <- known_names | known_codes_ab | known_codes_atc | known_codes_cid | previously_coerced
@@ -217,10 +217,10 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
     # exact LOINC code
     loinc_found <- unlist(lapply(
-      AB_lookup$generalised_loinc,
+      AMR_env$AB_lookup$generalised_loinc,
       function(s) x[i] %in% s
     ))
-    found <- AB_lookup$ab[loinc_found == TRUE]
+    found <- AMR_env$AB_lookup$ab[loinc_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
@@ -228,10 +228,10 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
     # exact synonym
     synonym_found <- unlist(lapply(
-      AB_lookup$generalised_synonyms,
+      AMR_env$AB_lookup$generalised_synonyms,
       function(s) x[i] %in% s
     ))
-    found <- AB_lookup$ab[synonym_found == TRUE]
+    found <- AMR_env$AB_lookup$ab[synonym_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
@@ -239,11 +239,11 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
     # exact abbreviation
     abbr_found <- unlist(lapply(
-      AB_lookup$generalised_abbreviations,
+      AMR_env$AB_lookup$generalised_abbreviations,
       # require at least 2 characters for abbreviations
       function(s) x[i] %in% s && nchar(x[i]) >= 2
     ))
-    found <- AB_lookup$ab[abbr_found == TRUE]
+    found <- AMR_env$AB_lookup$ab[abbr_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
@@ -251,9 +251,9 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
     # length of input is quite long, and Levenshtein distance is only max 2
     if (nchar(x[i]) >= 10) {
-      levenshtein <- as.double(utils::adist(x[i], AB_lookup$generalised_name))
+      levenshtein <- as.double(utils::adist(x[i], AMR_env$AB_lookup$generalised_name))
       if (any(levenshtein <= 2)) {
-        found <- AB_lookup$ab[which(levenshtein <= 2)]
+        found <- AMR_env$AB_lookup$ab[which(levenshtein <= 2)]
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next
       }
@@ -290,13 +290,13 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     }
 
     # try if name starts with it
-    found <- AB_lookup[which(AB_lookup$generalised_name %like% paste0("^", x_spelling)), "ab", drop = TRUE]
+    found <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$generalised_name %like% paste0("^", x_spelling)), "ab", drop = TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
     # try if name ends with it
-    found <- AB_lookup[which(AB_lookup$generalised_name %like% paste0(x_spelling, "$")), "ab", drop = TRUE]
+    found <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$generalised_name %like% paste0(x_spelling, "$")), "ab", drop = TRUE]
     if (nchar(x[i]) >= 4 && length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
@@ -304,10 +304,10 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
     # and try if any synonym starts with it
     synonym_found <- unlist(lapply(
-      AB_lookup$generalised_synonyms,
+      AMR_env$AB_lookup$generalised_synonyms,
       function(s) any(s %like% paste0("^", x_spelling))
     ))
-    found <- AB_lookup$ab[synonym_found == TRUE]
+    found <- AMR_env$AB_lookup$ab[synonym_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
@@ -585,7 +585,7 @@ as.data.frame.ab <- function(x, ...) {
 "[<-.ab" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  return_after_integrity_check(y, "antimicrobial code", AB_lookup$ab)
+  return_after_integrity_check(y, "antimicrobial code", AMR_env$AB_lookup$ab)
 }
 #' @method [[<- ab
 #' @export
@@ -593,7 +593,7 @@ as.data.frame.ab <- function(x, ...) {
 "[[<-.ab" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  return_after_integrity_check(y, "antimicrobial code", AB_lookup$ab)
+  return_after_integrity_check(y, "antimicrobial code", AMR_env$AB_lookup$ab)
 }
 #' @method c ab
 #' @export
@@ -602,7 +602,7 @@ c.ab <- function(...) {
   x <- list(...)[[1L]]
   y <- NextMethod()
   attributes(y) <- attributes(x)
-  return_after_integrity_check(y, "antimicrobial code", AB_lookup$ab)
+  return_after_integrity_check(y, "antimicrobial code", AMR_env$AB_lookup$ab)
 }
 
 #' @method unique ab

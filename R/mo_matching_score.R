@@ -109,9 +109,9 @@ mo_matching_score <- function(x, n) {
   l_n.lev[lev == l_n] <- lev[lev == l_n]
 
   # human pathogenic prevalence (1 to 3), see ?as.mo
-  p_n <- MO_lookup[match(n, MO_lookup$fullname), "prevalence", drop = TRUE]
+  p_n <- AMR_env$MO_lookup[match(n, AMR_env$MO_lookup$fullname), "prevalence", drop = TRUE]
   # kingdom index (Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5)
-  k_n <- MO_lookup[match(n, MO_lookup$fullname), "kingdom_index", drop = TRUE]
+  k_n <- AMR_env$MO_lookup[match(n, AMR_env$MO_lookup$fullname), "kingdom_index", drop = TRUE]
 
   # matching score:
   (l_n - 0.5 * l_n.lev) / (l_n * p_n * k_n)

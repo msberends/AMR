@@ -435,11 +435,11 @@ eucast_rules <- function(x,
   }
 
   if (any(x$genus == "Staphylococcus", na.rm = TRUE)) {
-    all_staph <- MO_lookup[which(MO_lookup$genus == "Staphylococcus"), , drop = FALSE]
+    all_staph <- AMR_env$MO_lookup[which(AMR_env$MO_lookup$genus == "Staphylococcus"), , drop = FALSE]
     all_staph$CNS_CPS <- suppressWarnings(mo_name(all_staph$mo, Becker = "all", language = NULL, info = FALSE))
   }
   if (any(x$genus == "Streptococcus", na.rm = TRUE)) {
-    all_strep <- MO_lookup[which(MO_lookup$genus == "Streptococcus"), , drop = FALSE]
+    all_strep <- AMR_env$MO_lookup[which(AMR_env$MO_lookup$genus == "Streptococcus"), , drop = FALSE]
     all_strep$Lancefield <- suppressWarnings(mo_name(all_strep$mo, Lancefield = TRUE, language = NULL, info = FALSE))
   }
 

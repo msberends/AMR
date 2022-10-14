@@ -216,7 +216,7 @@ ab_selector <- function(filter,
     sort = FALSE, fn = "ab_selector"
   )
   call <- substitute(filter)
-  agents <- tryCatch(AB_lookup[which(eval(call, envir = AB_lookup)), "ab", drop = TRUE],
+  agents <- tryCatch(AMR_env$AB_lookup[which(eval(call, envir = AMR_env$AB_lookup)), "ab", drop = TRUE],
     error = function(e) stop_(e$message, call = -5)
   )
   agents <- ab_in_data[ab_in_data %in% agents]
@@ -424,8 +424,8 @@ administrable_per_os <- function(only_rsi_columns = FALSE, ...) {
     info = FALSE, only_rsi_columns = only_rsi_columns,
     sort = FALSE, fn = "administrable_per_os"
   )
-  agents_all <- AB_lookup[which(!is.na(AB_lookup$oral_ddd)), "ab", drop = TRUE]
-  agents <- AB_lookup[which(AB_lookup$ab %in% ab_in_data & !is.na(AB_lookup$oral_ddd)), "ab", drop = TRUE]
+  agents_all <- AMR_env$AB_lookup[which(!is.na(AMR_env$AB_lookup$oral_ddd)), "ab", drop = TRUE]
+  agents <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$ab %in% ab_in_data & !is.na(AMR_env$AB_lookup$oral_ddd)), "ab", drop = TRUE]
   agents <- ab_in_data[ab_in_data %in% agents]
   message_agent_names(
     function_name = "administrable_per_os",
@@ -462,8 +462,8 @@ administrable_iv <- function(only_rsi_columns = FALSE, ...) {
     info = FALSE, only_rsi_columns = only_rsi_columns,
     sort = FALSE, fn = "administrable_iv"
   )
-  agents_all <- AB_lookup[which(!is.na(AB_lookup$iv_ddd)), "ab", drop = TRUE]
-  agents <- AB_lookup[which(AB_lookup$ab %in% ab_in_data & !is.na(AB_lookup$iv_ddd)), "ab", drop = TRUE]
+  agents_all <- AMR_env$AB_lookup[which(!is.na(AMR_env$AB_lookup$iv_ddd)), "ab", drop = TRUE]
+  agents <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$ab %in% ab_in_data & !is.na(AMR_env$AB_lookup$iv_ddd)), "ab", drop = TRUE]
   agents <- ab_in_data[ab_in_data %in% agents]
   message_agent_names(
     function_name = "administrable_iv",
@@ -544,7 +544,7 @@ ab_select_exec <- function(function_name,
   
   # untreatable drugs
   if (only_treatable == TRUE) {
-    untreatable <- AB_lookup[which(AB_lookup$name %like% "-high|EDTA|polysorbate|macromethod|screening|/nacubactam"), "ab", drop = TRUE]
+    untreatable <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$name %like% "-high|EDTA|polysorbate|macromethod|screening|/nacubactam"), "ab", drop = TRUE]
     if (any(untreatable %in% names(ab_in_data))) {
       if (message_not_thrown_before(function_name, "ab_class", "untreatable", entire_session = TRUE)) {
         warning_(
@@ -571,16 +571,16 @@ ab_select_exec <- function(function_name,
   if (is.null(ab_class_args) || isTRUE(function_name %in% c("antifungals", "antimycobacterials"))) {
     ab_group <- NULL
     if (isTRUE(function_name == "antifungals")) {
-      abx <- AB_lookup$ab[which(AB_lookup$group == "Antifungals")]
+      abx <- AMR_env$AB_lookup$ab[which(AMR_env$AB_lookup$group == "Antifungals")]
     } else if (isTRUE(function_name == "antimycobacterials")) {
-      abx <- AB_lookup$ab[which(AB_lookup$group == "Antimycobacterials")]
+      abx <- AMR_env$AB_lookup$ab[which(AMR_env$AB_lookup$group == "Antimycobacterials")]
     } else {
       # their upper case equivalent are vectors with class <ab>, created in data-raw/_pre_commit_hook.R
       # carbapenems() gets its codes from AMR:::AB_CARBAPENEMS
       abx <- get(paste0("AB_", toupper(function_name)), envir = asNamespace("AMR"))
       # manually added codes from add_custom_antimicrobials() must also be supported
       if (length(AMR_env$custom_ab_codes) > 0) {
-        custom_ab <- AB_lookup[which(AB_lookup$ab %in% AMR_env$custom_ab_codes), ]
+        custom_ab <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$ab %in% AMR_env$custom_ab_codes), ]
         check_string <- paste0(custom_ab$group, custom_ab$atc_group1, custom_ab$atc_group2)
         if (function_name == "betalactams") {
           find_group <- "beta-lactams"
@@ -602,7 +602,7 @@ ab_select_exec <- function(function_name,
   } else {
     # this for the 'manual' ab_class() function
     abx <- subset(
-      AB_lookup,
+      AMR_env$AB_lookup,
       group %like% ab_class_args |
         atc_group1 %like% ab_class_args |
         atc_group2 %like% ab_class_args
@@ -792,7 +792,7 @@ is_all <- function(el1) {
 
 find_ab_group <- function(ab_class_args) {
   ab_class_args <- gsub("[^a-zA-Z0-9]", ".*", ab_class_args)
-  AB_lookup %pm>%
+  AMR_env$AB_lookup %pm>%
     subset(group %like% ab_class_args |
       atc_group1 %like% ab_class_args |
       atc_group2 %like% ab_class_args) %pm>%
@@ -807,16 +807,16 @@ find_ab_names <- function(ab_group, n = 3) {
   ab_group <- gsub("[^a-zA-Z|0-9]", ".*", ab_group)
 
   # try popular first, they have DDDs
-  drugs <- AB_lookup[which((!is.na(AB_lookup$iv_ddd) | !is.na(AB_lookup$oral_ddd)) &
-    AB_lookup$name %unlike% " " &
-    AB_lookup$group %like% ab_group &
-    AB_lookup$ab %unlike% "[0-9]$"), ]$name
+  drugs <- AMR_env$AB_lookup[which((!is.na(AMR_env$AB_lookup$iv_ddd) | !is.na(AMR_env$AB_lookup$oral_ddd)) &
+    AMR_env$AB_lookup$name %unlike% " " &
+    AMR_env$AB_lookup$group %like% ab_group &
+    AMR_env$AB_lookup$ab %unlike% "[0-9]$"), ]$name
   if (length(drugs) < n) {
     # now try it all
-    drugs <- AB_lookup[which((AB_lookup$group %like% ab_group |
-      AB_lookup$atc_group1 %like% ab_group |
-      AB_lookup$atc_group2 %like% ab_group) &
-      AB_lookup$ab %unlike% "[0-9]$"), ]$name
+    drugs <- AMR_env$AB_lookup[which((AMR_env$AB_lookup$group %like% ab_group |
+      AMR_env$AB_lookup$atc_group1 %like% ab_group |
+      AMR_env$AB_lookup$atc_group2 %like% ab_group) &
+      AMR_env$AB_lookup$ab %unlike% "[0-9]$"), ]$name
   }
   if (length(drugs) == 0) {
     return("??")

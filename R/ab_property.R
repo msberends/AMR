@@ -452,22 +452,22 @@ set_ab_names <- function(data, ..., property = "name", language = get_AMR_locale
 }
 
 ab_validate <- function(x, property, ...) {
-  if (tryCatch(all(x[!is.na(x)] %in% AB_lookup$ab), error = function(e) FALSE)) {
+  if (tryCatch(all(x[!is.na(x)] %in% AMR_env$AB_lookup$ab), error = function(e) FALSE)) {
     # special case for ab_* functions where class is already <ab>
-    x <- AB_lookup[match(x, AB_lookup$ab), property, drop = TRUE]
+    x <- AMR_env$AB_lookup[match(x, AMR_env$AB_lookup$ab), property, drop = TRUE]
   } else {
     # try to catch an error when inputting an invalid argument
     # so the 'call.' can be set to FALSE
-    tryCatch(x[1L] %in% AB_lookup[1, property, drop = TRUE],
+    tryCatch(x[1L] %in% AMR_env$AB_lookup[1, property, drop = TRUE],
       error = function(e) stop(e$message, call. = FALSE)
     )
 
-    if (!all(x %in% AB_lookup[, property, drop = TRUE])) {
+    if (!all(x %in% AMR_env$AB_lookup[, property, drop = TRUE])) {
       x <- as.ab(x, ...)
-      if (all(is.na(x)) && is.list(AB_lookup[, property, drop = TRUE])) {
+      if (all(is.na(x)) && is.list(AMR_env$AB_lookup[, property, drop = TRUE])) {
         x <- rep(NA_character_, length(x))
       } else {
-        x <- AB_lookup[match(x, AB_lookup$ab), property, drop = TRUE]
+        x <- AMR_env$AB_lookup[match(x, AMR_env$AB_lookup$ab), property, drop = TRUE]
       }
     }
   }

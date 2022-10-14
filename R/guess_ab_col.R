@@ -173,7 +173,7 @@ get_column_abx <- function(x,
   # only check columns that are a valid AB code, ATC code, name, abbreviation or synonym,
   # or already have the <rsi> class (as.rsi)
   # and that they have no more than 50% invalid values
-  vectr_antibiotics <- unlist(AB_lookup$generalised_all)
+  vectr_antibiotics <- unlist(AMR_env$AB_lookup$generalised_all)
   vectr_antibiotics <- vectr_antibiotics[!is.na(vectr_antibiotics) & nchar(vectr_antibiotics) >= 3]
   x_columns <- vapply(
     FUN.VALUE = character(1),
@@ -335,7 +335,7 @@ get_ab_from_namespace <- function(x, cols_ab) {
     if (paste0("AB_", val) %in% ls(envir = asNamespace("AMR"))) {
       # antibiotic group names, as defined in data-raw/_pre_commit_hook.R, such as `AB_CARBAPENEMS`
       val <- eval(parse(text = paste0("AB_", val)), envir = asNamespace("AMR"))
-    } else if (val %in% AB_lookup$ab) {
+    } else if (val %in% AMR_env$AB_lookup$ab) {
       # separate drugs, such as `AMX`
       val <- as.ab(val)
     } else {

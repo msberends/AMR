@@ -69,8 +69,8 @@ ab_name("J01CR50")
 
 # even antibiotic selectors work
 x <- data.frame(random_column = "test",
-               coflu = as.rsi("S"),
-               ampicillin = as.rsi("R"))
+                coflu = as.rsi("S"),
+                ampicillin = as.rsi("R"))
 x
 x[, betalactams()]
 }

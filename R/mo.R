@@ -163,7 +163,7 @@ as.mo <- function(x,
   language <- validate_language(language)
   meet_criteria(info, allow_class = "logical", has_length = 1)
 
-  if (tryCatch(all(x %in% c(MO_lookup$mo, NA)) &&
+  if (tryCatch(all(x %in% c(AMR_env$MO_lookup$mo, NA)) &&
     isFALSE(Becker) &&
     isFALSE(Lancefield), error = function(e) FALSE)) {
     # don't look into valid MO codes, just return them
@@ -194,9 +194,9 @@ as.mo <- function(x,
     out[x %in% reference_df[[1]]] <- reference_df[[2]][match(x[x %in% reference_df[[1]]], reference_df[[1]])]
   }
   # From MO code ----
-  out[is.na(out) & x %in% MO_lookup$mo] <- x[is.na(out) & x %in% MO_lookup$mo]
+  out[is.na(out) & x %in% AMR_env$MO_lookup$mo] <- x[is.na(out) & x %in% AMR_env$MO_lookup$mo]
   # From full name ----
-  out[is.na(out) & x_lower %in% MO_lookup$fullname_lower] <- MO_lookup$mo[match(x_lower[is.na(out) & x_lower %in% MO_lookup$fullname_lower], MO_lookup$fullname_lower)]
+  out[is.na(out) & x_lower %in% AMR_env$MO_lookup$fullname_lower] <- AMR_env$MO_lookup$mo[match(x_lower[is.na(out) & x_lower %in% AMR_env$MO_lookup$fullname_lower], AMR_env$MO_lookup$fullname_lower)]
   # one exception: "Fungi" matches the kingdom, but instead it should return the 'unknown' code for fungi
   out[out == "F_[KNG]_FUNGI"] <- "F_FUNGUS"
   # From known codes ----
@@ -204,7 +204,7 @@ as.mo <- function(x,
   # From SNOMED ----
   if (any(is.na(out) & !is.na(x)) && any(is.na(out) & x %in% unlist(microorganisms$snomed), na.rm = TRUE)) {
     # found this extremely fast gem here: https://stackoverflow.com/a/11002456/4575331
-    out[is.na(out) & x %in% unlist(microorganisms$snomed)] <- microorganisms$mo[rep(seq_along(microorganisms$snomed), vapply(FUN.VALUE = double(1), microorganisms$snomed, length))[match(x[is.na(out) & x %in% unlist(microorganisms$snomed)], unlist(microorganisms$snomed))]]
+    out[is.na(out) & x %in% unlist(AMR::microorganisms$snomed)] <- AMR::microorganisms$mo[rep(seq_along(AMR::microorganisms$snomed), vapply(FUN.VALUE = double(1), AMR::microorganisms$snomed, length))[match(x[is.na(out) & x %in% unlist(AMR::microorganisms$snomed)], unlist(AMR::microorganisms$snomed))]]
   }
   # From other familiar output ----
   # such as Salmonella groups, colloquial names, etc.
@@ -261,16 +261,16 @@ as.mo <- function(x,
       # do a pre-match on first character (and if it contains a space, first chars of first two terms)
       if (length(x_parts) %in% c(2, 3)) {
         # for genus + species + subspecies
-        filtr <- which(MO_lookup$full_first == substr(x_parts[1], 1, 1) & MO_lookup$species_first == substr(x_parts[2], 1, 1))
+        filtr <- which(AMR_env$MO_lookup$full_first == substr(x_parts[1], 1, 1) & AMR_env$MO_lookup$species_first == substr(x_parts[2], 1, 1))
       } else if (length(x_parts) > 3) {
         first_chars <- paste0("(^| )", "[", paste(substr(x_parts, 1, 1), collapse = ""), "]")
-        filtr <- which(MO_lookup$full_first %like_case% first_chars)
+        filtr <- which(AMR_env$MO_lookup$full_first %like_case% first_chars)
       } else if (nchar(x_out) == 4) {
         # no space and 4 characters - probably a code such as STAU or ESCO!
         if (isTRUE(info)) {
           message_("Input \"", x_search, "\" is assumed to be a microorganism code - trying to match on ", vector_and(c(substr(x_out, 1, 2), substr(x_out, 3, 4)), sort = FALSE))
         }
-        filtr <- which(MO_lookup$fullname_lower %like_case% paste0("(^| )", substr(x_out, 1, 2), ".* ", substr(x_out, 3, 4)))
+        filtr <- which(AMR_env$MO_lookup$fullname_lower %like_case% paste0("(^| )", substr(x_out, 1, 2), ".* ", substr(x_out, 3, 4)))
       } else if (nchar(x_out) <= 6) {
         # no space and 5-6 characters - probably a code such as STAAUR or ESCCOL!
         first_part <- paste0(substr(x_out, 1, 2), "[a-z]*", substr(x_out, 3, 3))
@@ -278,14 +278,14 @@ as.mo <- function(x,
         if (isTRUE(info)) {
           message_("Input \"", x_search, "\" is assumed to be a microorganism code - trying to match on ", vector_and(c(gsub("[a-z]*", "(...)", first_part, fixed = TRUE), second_part), sort = FALSE))
         }
-        filtr <- which(MO_lookup$fullname_lower %like_case% paste0("(^| )", first_part, ".* ", second_part))
+        filtr <- which(AMR_env$MO_lookup$fullname_lower %like_case% paste0("(^| )", first_part, ".* ", second_part))
       } else {
-        filtr <- which(MO_lookup$full_first == substr(x_out, 1, 1))
+        filtr <- which(AMR_env$MO_lookup$full_first == substr(x_out, 1, 1))
       }
       if (length(filtr) == 0) {
-        mo_to_search <- MO_lookup$fullname
+        mo_to_search <- AMR_env$MO_lookup$fullname
       } else {
-        mo_to_search <- MO_lookup$fullname[filtr]
+        mo_to_search <- AMR_env$MO_lookup$fullname[filtr]
       }
       AMR_env$mo_to_search <- mo_to_search
       # determine the matching score on the original search value
@@ -293,9 +293,9 @@ as.mo <- function(x,
       if (is.null(minimum_matching_score)) {
         minimum_matching_score_current <- min(0.6, min(10, nchar(x_search_cleaned)) * 0.08)
         # correct back for prevalence
-        minimum_matching_score_current <- minimum_matching_score_current / MO_lookup$prevalence[match(mo_to_search, MO_lookup$fullname)]
+        minimum_matching_score_current <- minimum_matching_score_current / AMR_env$MO_lookup$prevalence[match(mo_to_search, AMR_env$MO_lookup$fullname)]
         # correct back for kingdom
-        minimum_matching_score_current <- minimum_matching_score_current / MO_lookup$kingdom_index[match(mo_to_search, MO_lookup$fullname)]
+        minimum_matching_score_current <- minimum_matching_score_current / AMR_env$MO_lookup$kingdom_index[match(mo_to_search, AMR_env$MO_lookup$fullname)]
       } else {
         minimum_matching_score_current <- minimum_matching_score
       }
@@ -306,7 +306,7 @@ as.mo <- function(x,
         warning_("No hits found for \"", x_search, "\" with minimum_matching_score = ", ifelse(is.null(minimum_matching_score), paste0("NULL (=", round(min(minimum_matching_score_current, na.rm = TRUE), 3), ")"), minimum_matching_score), ". Try setting this value lower or even to 0.")
         result_mo <- NA_character_
       } else {
-        result_mo <- MO_lookup$mo[match(top_hits[1], MO_lookup$fullname)]
+        result_mo <- AMR_env$MO_lookup$mo[match(top_hits[1], AMR_env$MO_lookup$fullname)]
         AMR_env$mo_uncertainties <- rbind(AMR_env$mo_uncertainties,
           data.frame(
             original_input = x_search,
@@ -997,8 +997,8 @@ replace_old_mo_codes <- function(x, property) {
         name <- tolower(paste0(name, ".*", collapse = ""))
         name <- gsub(" .*", " ", name, fixed = TRUE)
         name <- paste0("^", name)
-        results <- MO_lookup$mo[MO_lookup$kingdom %like_case% kingdom &
-          MO_lookup$fullname_lower %like_case% name]
+        results <- AMR_env$MO_lookup$mo[AMR_env$MO_lookup$kingdom %like_case% kingdom &
+          AMR_env$MO_lookup$fullname_lower %like_case% name]
         if (length(results) > 1) {
           all_direct_matches <<- FALSE
         }
