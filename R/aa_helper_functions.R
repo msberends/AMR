@@ -345,23 +345,17 @@ is_valid_regex <- function(x) {
 }
 
 stop_ifnot_installed <- function(package) {
-  # no "utils::installed.packages()" since it requires non-staged install since R 3.6.0
-  # https://developer.r-project.org/Blog/public/2019/02/14/staged-install/index.html
-  vapply(FUN.VALUE = character(1), package, function(pkg) {
-    tryCatch(get(".packageName", envir = asNamespace(pkg)),
-      error = function(e) {
-        if (pkg == "rstudioapi") {
-          stop("This function only works in RStudio when using R >= 3.2.", call. = FALSE)
-        } else if (pkg != "base") {
-          stop("This requires the '", pkg, "' package.",
-            "\nTry to install it with: install.packages(\"", pkg, "\")",
-            call. = FALSE
-          )
-        }
-      }
-    )
-  })
-  return(invisible())
+  installed <- vapply(FUN.VALUE = logical(1), package, requireNamespace, quietly = TRUE)
+  if (any(!installed) && any(package == "rstudioapi")) {
+    stop("This function only works in RStudio when using R >= 3.2.", call. = FALSE)
+  } else if (any(!installed)) {
+    stop("This requires the ", vector_and(package[!installed]), " package.",
+         "\nTry to install with install.packages().",
+         call. = FALSE
+        )
+  } else {
+    return(invisible())
+  }
 }
 
 pkg_is_available <- function(pkg, also_load = TRUE, min_version = NULL) {
