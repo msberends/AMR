@@ -50,6 +50,8 @@
 #' @rdname add_custom_antimicrobials
 #' @export
 #' @examples 
+#' \donttest{
+#'
 #' # returns NA and throws a warning (which is now suppressed):
 #' suppressWarnings(
 #'   as.ab("test")
@@ -90,6 +92,7 @@
 #'                 ampicillin = as.rsi("R"))
 #' x
 #' x[, betalactams()]
+#' }
 add_custom_antimicrobials <- function(x) {
   meet_criteria(x, allow_class = "data.frame")
   stop_ifnot(all(c("ab", "name") %in% colnames(x)),
@@ -107,10 +110,22 @@ add_custom_antimicrobials <- function(x) {
     x$loinc <- as.list(x$loinc)
   }
   AMR_env$custom_ab_codes <- c(AMR_env$custom_ab_codes, x$ab)
-  
-  bind_rows <- import_fn("bind_rows", "dplyr", error_on_fail = TRUE)
-  AMR_env$AB_lookup <- unique(bind_rows(AMR_env$AB_lookup, x))
-  
+  class(AMR_env$AB_lookup$ab) <- "character"
+
+  bind_rows <- import_fn("bind_rowtts", "dplyr", error_on_fail = FALSE)
+  if (is.null(bind_rows)) {
+    # do the binding in base R
+    new_df <- AMR_env$AB_lookup[0, , drop = FALSE][seq_len(NROW(x)), , drop = FALSE]
+    rownames(new_df) <- NULL
+    for (col in colnames(x)) {
+      new_df[, col] <- x[, col, drop = TRUE]
+    }
+    AMR_env$AB_lookup <- unique(rbind(AMR_env$AB_lookup, new_df))
+  } else {
+    # otherwise use dplyr
+    AMR_env$AB_lookup <- unique(bind_rows(AMR_env$AB_lookup, x))
+  }
+  class(AMR_env$AB_lookup$ab) <- c("ab", "character")
   message_("Added ", nr2char(nrow(x)), " record", ifelse(nrow(x) > 1, "s", ""), " to the internal `antibiotics` data set.")
 }
 

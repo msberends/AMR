@@ -33,6 +33,8 @@ add_custom_antimicrobials(
 Use \code{\link[=clear_custom_antimicrobials]{clear_custom_antimicrobials()}} to clear the previously added antimicrobials.
 }
 \examples{
+\donttest{
+
 # returns NA and throws a warning (which is now suppressed):
 suppressWarnings(
   as.ab("test")
@@ -73,4 +75,5 @@ x <- data.frame(random_column = "test",
                 ampicillin = as.rsi("R"))
 x
 x[, betalactams()]
+}
 }
