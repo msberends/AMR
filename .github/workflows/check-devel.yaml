@@ -36,7 +36,7 @@ on:
   schedule:
     # run a schedule everyday at 1 AM.
     # this is to check that all dependencies are still available (see R/zzz.R)
-    cron:  '0 1 * * *'
+    - cron:  '0 1 * * *'
 
 name: check-devel
 

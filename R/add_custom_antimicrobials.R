@@ -124,7 +124,7 @@ add_custom_antimicrobials <- function(x) {
     }
     for (col in colnames(x)) {
       # assign new values
-      new_df[, col] <-  x[, col, drop = TRUE]
+      new_df[, col] <- x[, col, drop = TRUE]
     }
     AMR_env$AB_lookup <- unique(rbind(AMR_env$AB_lookup, new_df))
   } else {
