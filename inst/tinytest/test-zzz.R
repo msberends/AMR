@@ -34,6 +34,7 @@
 import_functions <- c(
   "%chin%" = "data.table",
   "anti_join" = "dplyr",
+  "bind_rows" = "dplyr",
   "chmatch" = "data.table",
   "cur_column" = "dplyr",
   "full_join" = "dplyr",
@@ -54,8 +55,8 @@ import_functions <- c(
   "semi_join" = "dplyr",
   "showQuestion" = "rstudioapi"
 )
-# functions that are called directly
 
+# functions that are called directly with ::
 call_functions <- c(
   # cleaner
   "freq.default" = "cleaner",
@@ -104,6 +105,7 @@ extended_functions <- c(
   "get_skimmers" = "skimr",
   "type_sum" = "tibble",
   "vec_cast" = "vctrs",
+  "vec_math" = "vctrs",
   "vec_ptype2" = "vctrs"
 )
 
