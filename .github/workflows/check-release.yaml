@@ -154,7 +154,7 @@ jobs:
 
       - name: Upload artifacts
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: artifacts-${{ matrix.config.os }}-r${{ matrix.config.r }}
-          path: ${GITHUB_WORKSPACE}.Rcheck
+          path: ${{ github.workspace }}.Rcheck
