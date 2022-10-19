@@ -51,7 +51,6 @@ expect_stdout(print(data.frame(a = as.ab("amox"))))
 
 expect_warning(as.ab("J00AA00")) # ATC not yet available in data set
 expect_warning(as.ab("UNKNOWN"))
-expect_warning(as.ab(""))
 
 expect_stdout(print(as.ab("amox")))
 
@@ -75,7 +74,7 @@ expect_equal(
   c("MEM", "AMC")
 )
 
-expect_message(as.ab("cipro mero"))
+expect_warning(as.ab("cipro mero"))
 
 # based on Levenshtein distance
 expect_identical(ab_name("ceftazidim/avibactam", language = NULL), "Ceftazidime/avibactam")
@@ -86,6 +85,7 @@ expect_inherits(x[1], "ab")
 expect_inherits(x[[1]], "ab")
 expect_inherits(c(x[1], x[9]), "ab")
 expect_inherits(unique(x[1], x[9]), "ab")
+expect_inherits(rep(x[1], x[9]), "ab")
 expect_warning(x[1] <- "invalid code")
 expect_warning(x[[1]] <- "invalid code")
 expect_warning(c(x[1], "test"))

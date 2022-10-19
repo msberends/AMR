@@ -440,7 +440,7 @@ as.mo <- function(x,
 
   # All unknowns ----
   out[is.na(out) & !is.na(x)] <- "UNKNOWN"
-  AMR_env$mo_failures <- unique(x[out == "UNKNOWN" & x != "UNKNOWN" & !is.na(x)])
+  AMR_env$mo_failures <- unique(x[out == "UNKNOWN" & !x %in% c("UNKNOWN", "con") & !x %like_case% "^[(]unknown [a-z]+[)]$" & !is.na(x)])
   if (length(AMR_env$mo_failures) > 0) {
     warning_("The following input could not be coerced and was returned as \"UNKNOWN\": ", vector_and(AMR_env$mo_failures, quotes = TRUE), ".\nYou can retrieve this list with `mo_failures()`.")
   }

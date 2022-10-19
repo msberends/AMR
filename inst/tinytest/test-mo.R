@@ -283,7 +283,7 @@ expect_equal(
 )
 
 # no viruses
-expect_equal(as.mo("Virus"), as.mo("UNKNOWN"))
+expect_equal(suppressWarnings(as.mo("Virus")), as.mo("UNKNOWN"))
 
 # summary
 expect_equal(length(summary(example_isolates$mo)), 6)
