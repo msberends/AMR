@@ -37,7 +37,7 @@
 #' @param gram_negative names of antibiotic agents for **Gram-positives**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default agents.
 #' @param gram_positive names of antibiotic agents for **Gram-negatives**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default agents.
 #' @param antifungal names of antifungal agents for **fungi**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default agents.
-#' @param only_rsi_columns a [logical] to indicate whether only columns must be included that were transformed to class `<rsi>` (see [as.rsi()]) on beforehand (defaults to `FALSE`)
+#' @param only_rsi_columns a [logical] to indicate whether only columns must be included that were transformed to class `rsi` (see [as.rsi()]) on beforehand (defaults to `FALSE`)
 #' @param ... ignored, only in place to allow future extensions
 #' @details
 #' The [key_antimicrobials()] and [all_antimicrobials()] functions are context-aware. This means that the `x` argument can be left blank if used inside a [data.frame] call, see *Examples*.

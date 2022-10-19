@@ -139,7 +139,7 @@ all_valid_disks <- function(x) {
 }
 
 #' @rdname as.disk
-#' @details `NA_disk_` is a missing value of the new `<disk>` class.
+#' @details `NA_disk_` is a missing value of the new `disk` class.
 #' @export
 NA_disk_ <- set_clean_class(as.integer(NA_real_),
   new_class = c("disk", "integer")
@@ -167,7 +167,7 @@ type_sum.disk <- function(x, ...) {
 #' @export
 #' @noRd
 print.disk <- function(x, ...) {
-  cat("Class <disk>\n")
+  cat("Class 'disk'\n")
   print(as.integer(x), quote = FALSE)
 }
 

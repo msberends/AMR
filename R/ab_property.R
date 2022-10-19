@@ -453,7 +453,7 @@ set_ab_names <- function(data, ..., property = "name", language = get_AMR_locale
 
 ab_validate <- function(x, property, ...) {
   if (tryCatch(all(x[!is.na(x)] %in% AMR_env$AB_lookup$ab), error = function(e) FALSE)) {
-    # special case for ab_* functions where class is already <ab>
+    # special case for ab_* functions where class is already 'ab'
     x <- AMR_env$AB_lookup[match(x, AMR_env$AB_lookup$ab), property, drop = TRUE]
   } else {
     # try to catch an error when inputting an invalid argument

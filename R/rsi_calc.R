@@ -120,7 +120,7 @@ rsi_calc <- function(...,
   if (is.data.frame(x)) {
     rsi_integrity_check <- character(0)
     for (i in seq_len(ncol(x))) {
-      # check integrity of columns: force <rsi> class
+      # check integrity of columns: force 'rsi' class
       if (!is.rsi(x[, i, drop = TRUE])) {
         rsi_integrity_check <- c(rsi_integrity_check, as.character(x[, i, drop = TRUE]))
         x[, i] <- suppressWarnings(as.rsi(x[, i, drop = TRUE])) # warning will be given later
@@ -160,7 +160,7 @@ rsi_calc <- function(...,
 
   if (print_warning == TRUE) {
     if (message_not_thrown_before("rsi_calc")) {
-      warning_("Increase speed by transforming to class <rsi> on beforehand:\n",
+      warning_("Increase speed by transforming to class 'rsi' on beforehand:\n",
         "  your_data %>% mutate_if(is.rsi.eligible, as.rsi)\n",
         "  your_data %>% mutate(across(where(is.rsi.eligible), as.rsi))",
         call = FALSE
@@ -344,7 +344,7 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   } else if (isTRUE(combine_IR)) {
     out$interpretation <- factor(out$interpretation, levels = c("S", "IR"), ordered = TRUE)
   } else {
-    # don't use as.rsi() here, as it would add the class <rsi> and we would like
+    # don't use as.rsi() here, as it would add the class 'rsi' and we would like
     # the same data structure as output, regardless of input
     out$interpretation <- factor(out$interpretation, levels = c("S", "I", "R"), ordered = TRUE)
   }

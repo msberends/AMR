@@ -22,7 +22,7 @@ is.mic(x)
 
 \item{na.rm}{a \link{logical} indicating whether missing values should be removed}
 
-\item{as.mic}{a \link{logical} to indicate whether the \verb{<mic>} class should be kept, defaults to \code{FALSE}}
+\item{as.mic}{a \link{logical} to indicate whether the \code{mic} class should be kept, defaults to \code{FALSE}}
 
 \item{...}{arguments passed on to methods}
 }
@@ -39,7 +39,7 @@ This class for MIC values is a quite a special data type: formally it is an orde
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{x <- random_mic(10)
 x
-#> Class <mic>
+#> Class 'mic'
 #>  [1] 16     1      8      8      64     >=128  0.0625 32     32     16
 
 is.factor(x)
@@ -55,7 +55,7 @@ median(x)
 This makes it possible to maintain operators that often come with MIC values, such ">=" and "<=", even when filtering using \link{numeric} values in data analysis, e.g.:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{x[x > 4]
-#> Class <mic>
+#> Class 'mic'
 #> [1] 16    8     8     64    >=128 32    32    16
 
 df <- data.frame(x, hospital = "A")
@@ -73,9 +73,9 @@ The following \link[=groupGeneric]{generic functions} are implemented for the MI
 
 Using \code{\link[=as.double]{as.double()}} or \code{\link[=as.numeric]{as.numeric()}} on MIC values will remove the operators and return a numeric vector. Do \strong{not} use \code{\link[=as.integer]{as.integer()}} on MIC values as by the \R convention on \link{factor}s, it will return the index of the factor levels (which is often useless for regular users).
 
-Use \code{\link[=droplevels]{droplevels()}} to drop unused levels. At default, it will return a plain factor. Use \code{droplevels(..., as.mic = TRUE)} to maintain the \verb{<mic>} class.
+Use \code{\link[=droplevels]{droplevels()}} to drop unused levels. At default, it will return a plain factor. Use \code{droplevels(..., as.mic = TRUE)} to maintain the \code{mic} class.
 
-\code{NA_mic_} is a missing value of the new \verb{<mic>} class, analogous to e.g. base \R's \code{\link[base:NA]{NA_character_}}.
+\code{NA_mic_} is a missing value of the new \code{mic} class, analogous to e.g. base \R's \code{\link[base:NA]{NA_character_}}.
 }
 \examples{
 mic_data <- as.mic(c(">=32", "1.0", "1", "1.00", 8, "<=0.128", "8", "16", "16"))

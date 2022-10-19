@@ -32,7 +32,7 @@
 #' These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class or group, without the need to define the columns or antibiotic abbreviations. In short, if you have a column name that resembles an antimicrobial agent, it will be picked up by any of these functions that matches its pharmaceutical class: "cefazolin", "CZO" and "J01DB04" will all be picked up by [cephalosporins()].
 #' @param ab_class an antimicrobial class or a part of it, such as `"carba"` and `"carbapenems"`. The columns `group`, `atc_group1` and `atc_group2` of the [antibiotics] data set will be searched (case-insensitive) for this value.
 #' @param filter an [expression] to be evaluated in the [antibiotics] data set, such as `name %like% "trim"`
-#' @param only_rsi_columns a [logical] to indicate whether only columns of class `<rsi>` must be selected (defaults to `FALSE`), see [as.rsi()]
+#' @param only_rsi_columns a [logical] to indicate whether only columns of class `rsi` must be selected (defaults to `FALSE`), see [as.rsi()]
 #' @param only_treatable a [logical] to indicate whether agents that are only for laboratory tests should be excluded (defaults to `TRUE`), such as gentamicin-high (`GEH`) and imipenem/EDTA (`IPE`)
 #' @param ... ignored, only in place to allow future extensions
 #' @details
@@ -575,7 +575,7 @@ ab_select_exec <- function(function_name,
     } else if (isTRUE(function_name == "antimycobacterials")) {
       abx <- AMR_env$AB_lookup$ab[which(AMR_env$AB_lookup$group == "Antimycobacterials")]
     } else {
-      # their upper case equivalent are vectors with class <ab>, created in data-raw/_pre_commit_hook.R
+      # their upper case equivalent are vectors with class 'ab', created in data-raw/_pre_commit_hook.R
       # carbapenems() gets its codes from AMR:::AB_CARBAPENEMS
       abx <- get(paste0("AB_", toupper(function_name)), envir = asNamespace("AMR"))
       # manually added codes from add_custom_antimicrobials() must also be supported

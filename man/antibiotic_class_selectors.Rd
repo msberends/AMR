@@ -102,7 +102,7 @@ not_intrinsic_resistant(
 \arguments{
 \item{ab_class}{an antimicrobial class or a part of it, such as \code{"carba"} and \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched (case-insensitive) for this value.}
 
-\item{only_rsi_columns}{a \link{logical} to indicate whether only columns of class \verb{<rsi>} must be selected (defaults to \code{FALSE}), see \code{\link[=as.rsi]{as.rsi()}}}
+\item{only_rsi_columns}{a \link{logical} to indicate whether only columns of class \code{rsi} must be selected (defaults to \code{FALSE}), see \code{\link[=as.rsi]{as.rsi()}}}
 
 \item{only_treatable}{a \link{logical} to indicate whether agents that are only for laboratory tests should be excluded (defaults to \code{TRUE}), such as gentamicin-high (\code{GEH}) and imipenem/EDTA (\code{IPE})}
 

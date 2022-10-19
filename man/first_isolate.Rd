@@ -82,7 +82,7 @@ filter_first_isolate(
 
 \item{include_unknown}{a \link{logical} to indicate whether 'unknown' microorganisms should be included too, i.e. microbial code \code{"UNKNOWN"}, which defaults to \code{FALSE}. For WHONET users, this means that all records with organism code \code{"con"} (\emph{contamination}) will be excluded at default. Isolates with a microbial ID of \code{NA} will always be excluded as first isolate.}
 
-\item{include_untested_rsi}{a \link{logical} to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use \code{include_untested_rsi = FALSE} to always return \code{FALSE} for such rows. This checks the data set for columns of class \verb{<rsi>} and consequently requires transforming columns with antibiotic results using \code{\link[=as.rsi]{as.rsi()}} first.}
+\item{include_untested_rsi}{a \link{logical} to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use \code{include_untested_rsi = FALSE} to always return \code{FALSE} for such rows. This checks the data set for columns of class \code{rsi} and consequently requires transforming columns with antibiotic results using \code{\link[=as.rsi]{as.rsi()}} first.}
 
 \item{...}{arguments passed on to \code{\link[=first_isolate]{first_isolate()}} when using \code{\link[=filter_first_isolate]{filter_first_isolate()}}, otherwise arguments passed on to \code{\link[=key_antimicrobials]{key_antimicrobials()}} (such as \code{universal}, \code{gram_negative}, \code{gram_positive})}
 }

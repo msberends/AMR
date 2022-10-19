@@ -84,7 +84,7 @@ valid_mic_levels <- c(
 #' ```
 #' x <- random_mic(10)
 #' x
-#' #> Class <mic>
+#' #> Class 'mic'
 #' #>  [1] 16     1      8      8      64     >=128  0.0625 32     32     16
 #'
 #' is.factor(x)
@@ -101,7 +101,7 @@ valid_mic_levels <- c(
 #'
 #' ```
 #' x[x > 4]
-#' #> Class <mic>
+#' #> Class 'mic'
 #' #> [1] 16    8     8     64    >=128 32    32    16
 #'
 #' df <- data.frame(x, hospital = "A")
@@ -119,7 +119,7 @@ valid_mic_levels <- c(
 #'
 #' Using [as.double()] or [as.numeric()] on MIC values will remove the operators and return a numeric vector. Do **not** use [as.integer()] on MIC values as by the \R convention on [factor]s, it will return the index of the factor levels (which is often useless for regular users).
 #'
-#' Use [droplevels()] to drop unused levels. At default, it will return a plain factor. Use `droplevels(..., as.mic = TRUE)` to maintain the `<mic>` class.
+#' Use [droplevels()] to drop unused levels. At default, it will return a plain factor. Use `droplevels(..., as.mic = TRUE)` to maintain the `mic` class.
 #' @return Ordered [factor] with additional class [`mic`], that in mathematical operations acts as decimal numbers. Bare in mind that the outcome of any mathematical operation on MICs will return a [numeric] value.
 #' @aliases mic
 #' @export
@@ -253,7 +253,7 @@ all_valid_mics <- function(x) {
 }
 
 #' @rdname as.mic
-#' @details `NA_mic_` is a missing value of the new `<mic>` class, analogous to e.g. base \R's [`NA_character_`][base::NA].
+#' @details `NA_mic_` is a missing value of the new `mic` class, analogous to e.g. base \R's [`NA_character_`][base::NA].
 #' @format NULL
 #' @export
 NA_mic_ <- set_clean_class(factor(NA, levels = valid_mic_levels, ordered = TRUE),
@@ -282,7 +282,7 @@ as.numeric.mic <- function(x, ...) {
 
 #' @rdname as.mic
 #' @method droplevels mic
-#' @param as.mic a [logical] to indicate whether the `<mic>` class should be kept, defaults to `FALSE`
+#' @param as.mic a [logical] to indicate whether the `mic` class should be kept, defaults to `FALSE`
 #' @export
 droplevels.mic <- function(x, as.mic = FALSE, ...) {
   x <- droplevels.factor(x, ...)
@@ -313,7 +313,7 @@ type_sum.mic <- function(x, ...) {
 #' @export
 #' @noRd
 print.mic <- function(x, ...) {
-  cat("Class <mic>",
+  cat("Class 'mic'",
     ifelse(length(levels(x)) < length(valid_mic_levels), font_red(" with dropped levels"), ""),
     "\n",
     sep = ""

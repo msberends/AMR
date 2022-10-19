@@ -58,7 +58,7 @@ eucast_exceptional_phenotypes(x = NULL, only_rsi_columns = FALSE, ...)
 
 \item{verbose}{a \link{logical} to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.}
 
-\item{only_rsi_columns}{a \link{logical} to indicate whether only antibiotic columns must be detected that were transformed to class \verb{<rsi>} (see \code{\link[=as.rsi]{as.rsi()}}) on beforehand (defaults to \code{FALSE})}
+\item{only_rsi_columns}{a \link{logical} to indicate whether only antibiotic columns must be detected that were transformed to class \code{rsi} (see \code{\link[=as.rsi]{as.rsi()}}) on beforehand (defaults to \code{FALSE})}
 
 \item{...}{in case of \code{\link[=custom_mdro_guideline]{custom_mdro_guideline()}}: a set of rules, see section \emph{Using Custom Guidelines} below. Otherwise: column name of an antibiotic, see section \emph{Antibiotics} below.}
 

@@ -84,12 +84,13 @@
 #' # they use as.ab() internally:
 #' ab_name("J01FA01") # "Erythromycin"
 #' ab_name("eryt") # "Erythromycin"
+#' 
 #' \donttest{
 #' if (require("dplyr")) {
 #'
-#'   # you can quickly rename <rsi> columns using dplyr >= 1.0.0:
+#'   # you can quickly rename 'rsi' columns using set_ab_names() with dplyr:
 #'   example_isolates %>%
-#'     rename_with(as.ab, where(is.rsi))
+#'     set_ab_names(where(is.rsi), property = "atc")
 #' }
 #' }
 as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
@@ -548,7 +549,7 @@ type_sum.ab <- function(x, ...) {
 #' @export
 #' @noRd
 print.ab <- function(x, ...) {
-  cat("Class <ab>\n")
+  cat("Class 'ab'\n")
   print(as.character(x), quote = FALSE)
 }
 

@@ -60,7 +60,7 @@ It has now created a file \code{"~/mo_source.rds"} with the contents of our Exce
 And now we can use it in our functions:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{as.mo("lab_mo_ecoli")
-#> Class <mo>
+#> Class 'mo'
 #> [1] B_ESCHR_COLI
 
 mo_genus("lab_mo_kpneumoniae")
@@ -70,7 +70,7 @@ mo_genus("lab_mo_kpneumoniae")
 as.mo(c("Escherichia coli", "E. coli", "lab_mo_ecoli"))
 #> NOTE: Translation to one microorganism was guessed with uncertainty.
 #>       Use mo_uncertainties() to review it.
-#> Class <mo>
+#> Class 'mo'
 #> [1] B_ESCHR_COLI B_ESCHR_COLI B_ESCHR_COLI
 }\if{html}{\out{</div>}}
 
@@ -91,7 +91,7 @@ If we edit the Excel file by, let's say, adding row 4 like this:
 #> NOTE: Updated mo_source file '/Users/me/mo_source.rds' (0.3 kB) from
 #>       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns
 #>        "Organisation XYZ" and "mo"
-#> Class <mo>
+#> Class 'mo'
 #> [1] B_ESCHR_COLI
 
 mo_genus("lab_Staph_aureus")

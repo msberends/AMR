@@ -45,7 +45,7 @@ antimicrobials_equal(
 
 \item{antifungal}{names of antifungal agents for \strong{fungi}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default agents.}
 
-\item{only_rsi_columns}{a \link{logical} to indicate whether only columns must be included that were transformed to class \verb{<rsi>} (see \code{\link[=as.rsi]{as.rsi()}}) on beforehand (defaults to \code{FALSE})}
+\item{only_rsi_columns}{a \link{logical} to indicate whether only columns must be included that were transformed to class \code{rsi} (see \code{\link[=as.rsi]{as.rsi()}}) on beforehand (defaults to \code{FALSE})}
 
 \item{...}{ignored, only in place to allow future extensions}
 

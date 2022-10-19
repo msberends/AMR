@@ -75,7 +75,7 @@
 #'
 #' ```
 #' as.mo("lab_mo_ecoli")
-#' #> Class <mo>
+#' #> Class 'mo'
 #' #> [1] B_ESCHR_COLI
 #'
 #' mo_genus("lab_mo_kpneumoniae")
@@ -85,7 +85,7 @@
 #' as.mo(c("Escherichia coli", "E. coli", "lab_mo_ecoli"))
 #' #> NOTE: Translation to one microorganism was guessed with uncertainty.
 #' #>       Use mo_uncertainties() to review it.
-#' #> Class <mo>
+#' #> Class 'mo'
 #' #> [1] B_ESCHR_COLI B_ESCHR_COLI B_ESCHR_COLI
 #' ```
 #'
@@ -108,7 +108,7 @@
 #' #> NOTE: Updated mo_source file '/Users/me/mo_source.rds' (0.3 kB) from
 #' #>       '/Users/me/Documents/ourcodes.xlsx' (9 kB), columns
 #' #>        "Organisation XYZ" and "mo"
-#' #> Class <mo>
+#' #> Class 'mo'
 #' #> [1] B_ESCHR_COLI
 #'
 #' mo_genus("lab_Staph_aureus")

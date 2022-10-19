@@ -82,7 +82,7 @@
 #'
 #' ### Other
 #'
-#' The function [is.rsi()] detects if the input contains class `<rsi>`. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
+#' The function [is.rsi()] detects if the input contains class `rsi`. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
 #'
 #' The function [is.rsi.eligible()] returns `TRUE` when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` argument. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
 #' @section Interpretation of R and S/I:
@@ -96,7 +96,7 @@
 #'   A microorganism is categorised as *Susceptible, Increased exposure* when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.
 #'
 #' This AMR package honours this (new) insight. Use [susceptibility()] (equal to [proportion_SI()]) to determine antimicrobial susceptibility and [count_susceptible()] (equal to [count_SI()]) to count susceptible isolates.
-#' @return Ordered [factor] with new class `<rsi>`
+#' @return Ordered [factor] with new class `rsi`
 #' @aliases rsi
 #' @export
 #' @seealso [as.mic()], [as.disk()], [as.mo()]
@@ -198,7 +198,7 @@ as.rsi <- function(x, ...) {
 }
 
 #' @rdname as.rsi
-#' @details `NA_rsi_` is a missing value of the new `<rsi>` class, analogous to e.g. base \R's [`NA_character_`][base::NA].
+#' @details `NA_rsi_` is a missing value of the new `rsi` class, analogous to e.g. base \R's [`NA_character_`][base::NA].
 #' @export
 NA_rsi_ <- set_clean_class(factor(NA, levels = c("S", "I", "R"), ordered = TRUE),
   new_class = c("rsi", "ordered", "factor")
@@ -609,7 +609,7 @@ as.rsi.data.frame <- function(x,
       } else if (!is.rsi(x.bak[, ab_cols[i], drop = TRUE])) {
         show_message <- TRUE
         # only print message if class not already set
-        message_("=> Assigning class <rsi> to already clean column '", font_bold(ab), "' (",
+        message_("=> Assigning class 'rsi' to already clean column '", font_bold(ab), "' (",
           ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
           ab_name(ab_coerced, tolower = TRUE), ")... ",
           appendLF = FALSE,
@@ -702,7 +702,7 @@ as_rsi_method <- function(method_short,
     )
   }
   if (is.null(mo)) {
-    stop_("No information was supplied about the microorganisms (missing argument `mo` and no column of class <mo> found). See ?as.rsi.\n\n",
+    stop_("No information was supplied about the microorganisms (missing argument `mo` and no column of class 'mo' found). See ?as.rsi.\n\n",
       "To transform certain columns with e.g. mutate(), use `data %>% mutate(across(..., as.rsi, mo = x))`, where x is your column with microorganisms.\n",
       "To tranform all ", method_long, " in a data set, use `data %>% as.rsi()` or `data %>% mutate(across(where(is.", method_short, "), as.rsi))`.",
       call = FALSE
@@ -1086,7 +1086,7 @@ get_skimmers.rsi <- function(column) {
 #' @export
 #' @noRd
 print.rsi <- function(x, ...) {
-  cat("Class <rsi>\n")
+  cat("Class 'rsi'\n")
   print(as.character(x), quote = FALSE)
 }
 

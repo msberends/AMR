@@ -31,7 +31,7 @@ This transforms a vector to a new class \code{\link{disk}}, which is a disk diff
 \details{
 Interpret disk values as RSI values with \code{\link[=as.rsi]{as.rsi()}}. It supports guidelines from EUCAST and CLSI.
 
-\code{NA_disk_} is a missing value of the new \verb{<disk>} class.
+\code{NA_disk_} is a missing value of the new \code{disk} class.
 }
 \examples{
 # transform existing disk zones to the `disk` class (using base R)

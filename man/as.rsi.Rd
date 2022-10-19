@@ -86,7 +86,7 @@ rsi_interpretation_history(clean = FALSE)
 \item{clean}{a \link{logical} to indicate whether previously stored results should be forgotten after returning the 'logbook' with results}
 }
 \value{
-Ordered \link{factor} with new class \verb{<rsi>}
+Ordered \link{factor} with new class \code{rsi}
 }
 \description{
 Interpret minimum inhibitory concentration (MIC) values and disk diffusion diameters according to EUCAST or CLSI, or clean up existing R/SI values. This transforms the input to a new class \code{\link{rsi}}, which is an ordered \link{factor} with levels \verb{S < I < R}.
@@ -139,12 +139,12 @@ The repository of this package \href{https://github.com/msberends/AMR/blob/main/
 
 \subsection{Other}{
 
-The function \code{\link[=is.rsi]{is.rsi()}} detects if the input contains class \verb{<rsi>}. If the input is a \link{data.frame}, it iterates over all columns and returns a \link{logical} vector.
+The function \code{\link[=is.rsi]{is.rsi()}} detects if the input contains class \code{rsi}. If the input is a \link{data.frame}, it iterates over all columns and returns a \link{logical} vector.
 
 The function \code{\link[=is.rsi.eligible]{is.rsi.eligible()}} returns \code{TRUE} when a columns contains at most 5\% invalid antimicrobial interpretations (not S and/or I and/or R), and \code{FALSE} otherwise. The threshold of 5\% can be set with the \code{threshold} argument. If the input is a \link{data.frame}, it iterates over all columns and returns a \link{logical} vector.
 }
 
-\code{NA_rsi_} is a missing value of the new \verb{<rsi>} class, analogous to e.g. base \R's \code{\link[base:NA]{NA_character_}}.
+\code{NA_rsi_} is a missing value of the new \code{rsi} class, analogous to e.g. base \R's \code{\link[base:NA]{NA_character_}}.
 }
 \section{Interpretation of R and S/I}{
 

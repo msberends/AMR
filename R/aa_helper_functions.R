@@ -226,7 +226,7 @@ search_type_in_df <- function(x, type, info = TRUE) {
   # -- mo
   if (type == "mo") {
     if (any(vapply(FUN.VALUE = logical(1), x, is.mo))) {
-      # take first <mo> column
+      # take first 'mo' column
       found <- colnames(x)[vapply(FUN.VALUE = logical(1), x, is.mo)]
     } else if ("mo" %in% colnames_formatted &&
       suppressWarnings(all(x$mo %in% c(NA, AMR::microorganisms$mo)))) {
@@ -664,7 +664,7 @@ vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_ca
     return(paste0(quotes, v, quotes))
   }
   if (identical(v, c("I", "R", "S"))) {
-    # class <rsi> should be sorted like this
+    # class 'rsi' should be sorted like this
     v <- c("R", "S", "I")
   }
   # all commas except for last item, so will become '"val1", "val2", "val3" or "val4"'
@@ -1434,7 +1434,7 @@ s3_register <- function(generic, class, method = NULL) {
 # see here for the full list: https://github.com/r-lib/backports
 if (getRversion() < "3.1.0") {
   # R-3.0 does not contain these functions, set them here to prevent installation failure
-  # (required for extension of the <mic> class)
+  # (required for extension of the 'mic' class)
   cospi <- function(...) 1
   sinpi <- function(...) 1
   tanpi <- function(...) 1

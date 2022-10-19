@@ -297,7 +297,7 @@ expect_equal(as.character(as.mo("con")), "UNKNOWN")
 expect_equal(as.character(as.mo("xxx")), NA_character_)
 expect_equal(as.character(as.mo(c("xxx", "con", "eco"))), c(NA_character_, "UNKNOWN", "B_ESCHR_COLI"))
 expect_equal(
-  as.character(as.mo(c("other", "none", "unknown"))),
+  as.character(suppressWarnings(as.mo(c("other", "none", "unknown")))),
   rep("UNKNOWN", 3)
 )
 

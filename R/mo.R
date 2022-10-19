@@ -408,7 +408,7 @@ as.mo <- function(x,
       }
     }
 
-    # 'MO_CONS' and 'MO_COPS' are <mo> vectors created in R/_pre_commit_hook.R
+    # 'MO_CONS' and 'MO_COPS' are 'mo' vectors created in R/_pre_commit_hook.R
     out[out %in% MO_CONS] <- "B_STPHY_CONS"
     out[out %in% MO_COPS] <- "B_STPHY_COPS"
     if (Becker == "all") {
@@ -635,7 +635,7 @@ get_skimmers.mo <- function(column) {
 #' @export
 #' @noRd
 print.mo <- function(x, print.shortnames = FALSE, ...) {
-  cat("Class <mo>\n")
+  cat("Class 'mo'\n")
   x_names <- names(x)
   if (is.null(x_names) & print.shortnames == TRUE) {
     x_names <- tryCatch(mo_shortname(x, ...), error = function(e) NULL)

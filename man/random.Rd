@@ -25,7 +25,7 @@ random_rsi(size = NULL, prob_RSI = c(0.33, 0.33, 0.33), ...)
 \item{prob_RSI}{a vector of length 3: the probabilities for "R" (1st value), "S" (2nd value) and "I" (3rd value)}
 }
 \value{
-class \verb{<mic>} for \code{\link[=random_mic]{random_mic()}} (see \code{\link[=as.mic]{as.mic()}}) and class \verb{<disk>} for \code{\link[=random_disk]{random_disk()}} (see \code{\link[=as.disk]{as.disk()}})
+class \code{mic} for \code{\link[=random_mic]{random_mic()}} (see \code{\link[=as.mic]{as.mic()}}) and class \code{disk} for \code{\link[=random_disk]{random_disk()}} (see \code{\link[=as.disk]{as.disk()}})
 }
 \description{
 These functions can be used for generating random MIC values and disk diffusion diameters, for AMR data analysis practice. By providing a microorganism and antimicrobial agent, the generated results will reflect reality as much as possible.

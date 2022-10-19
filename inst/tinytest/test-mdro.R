@@ -281,6 +281,6 @@ expect_warning(mdro(example_isolates,
 
 # print groups
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
-  expect_stdout(x <- mdro(example_isolates %>% group_by(ward), info = TRUE))
+  expect_stdout(x <- mdro(example_isolates %>% group_by(ward), info = TRUE, pct_required_classes = 0))
   expect_stdout(x <- mdro(example_isolates %>% group_by(ward), guideline = custom, info = TRUE))
 }

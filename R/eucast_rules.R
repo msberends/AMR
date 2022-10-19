@@ -69,7 +69,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @param ... column name of an antibiotic, see section *Antibiotics* below
 #' @param ab any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
 #' @param administration route of administration, either `r vector_or(dosage$administration)`
-#' @param only_rsi_columns a [logical] to indicate whether only antibiotic columns must be detected that were transformed to class `<rsi>` (see [as.rsi()]) on beforehand (defaults to `FALSE`)
+#' @param only_rsi_columns a [logical] to indicate whether only antibiotic columns must be detected that were transformed to class `rsi` (see [as.rsi()]) on beforehand (defaults to `FALSE`)
 #' @param custom_rules custom rules to apply, created with [custom_eucast_rules()]
 #' @inheritParams first_isolate
 #' @details
@@ -1023,7 +1023,7 @@ eucast_rules <- function(x,
     warn_lacking_rsi_class <- warn_lacking_rsi_class[order(colnames(x.bak))]
     warn_lacking_rsi_class <- warn_lacking_rsi_class[!is.na(warn_lacking_rsi_class)]
     warning_(
-      "in `eucast_rules()`: not all columns with antimicrobial results are of class <rsi>. Transform them on beforehand, with e.g.:\n",
+      "in `eucast_rules()`: not all columns with antimicrobial results are of class 'rsi'. Transform them on beforehand, with e.g.:\n",
       "  - ", x_deparsed, " %>% as.rsi(", ifelse(length(warn_lacking_rsi_class) == 1,
         warn_lacking_rsi_class,
         paste0(warn_lacking_rsi_class[1], ":", warn_lacking_rsi_class[length(warn_lacking_rsi_class)])

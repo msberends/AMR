@@ -1941,9 +1941,9 @@ print.custom_mdro_guideline <- function(x, ...) {
   cat("  ", i + 1, ". ", font_bold("Otherwise: "), font_red(paste0("Negative")), "\n", sep = "")
   cat("\nUnmatched rows will return ", font_red("NA"), ".\n", sep = "")
   if (isTRUE(attributes(x)$as_factor)) {
-    cat("Results will be of class <factor>, with ordered levels: ", paste0(attributes(x)$values, collapse = " < "), "\n", sep = "")
+    cat("Results will be of class 'factor', with ordered levels: ", paste0(attributes(x)$values, collapse = " < "), "\n", sep = "")
   } else {
-    cat("Results will be of class <character>.\n")
+    cat("Results will be of class 'character'.\n")
   }
 }
 

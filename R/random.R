@@ -38,7 +38,7 @@
 #' @details The base \R function [sample()] is used for generating values.
 #'
 #' Generated values are based on the EUCAST `r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))` guideline as implemented in the [rsi_translation] data set. To create specific generated values per bug or drug, set the `mo` and/or `ab` argument.
-#' @return class `<mic>` for [random_mic()] (see [as.mic()]) and class `<disk>` for [random_disk()] (see [as.disk()])
+#' @return class `mic` for [random_mic()] (see [as.mic()]) and class `disk` for [random_disk()] (see [as.disk()])
 #' @name random
 #' @rdname random
 #' @export
