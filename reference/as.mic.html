@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9022</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9023</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -154,7 +154,7 @@
 
 
 <dt>as.mic</dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the <code>&lt;mic&gt;</code> class should be kept, defaults to <code>FALSE</code></p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the <code>mic</code> class should be kept, defaults to <code>FALSE</code></p></dd>
 
 
 <dt>...</dt>
@@ -173,7 +173,7 @@
 <p>This class for MIC values is a quite a special data type: formally it is an ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a> with valid MIC values as <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a> levels (to make sure only valid MIC values are retained), but for any mathematical operation it acts as decimal numbers:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">random_mic</span>(<span class="dv">10</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>x</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Class &lt;mic&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Class 'mic'</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 16     1      8      8      64     &gt;=128  0.0625 32     32     16</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">is.factor</span>(x)</span>
@@ -186,7 +186,7 @@
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 26</span></span></code></pre><p></p></div>
 <p>This makes it possible to maintain operators that often come with MIC values, such "&gt;=" and "&lt;=", even when filtering using <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> values in data analysis, e.g.:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x[x <span class="sc">&gt;</span> <span class="dv">4</span>]</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Class &lt;mic&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Class 'mic'</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 16    8     8     64    &gt;=128 32    32    16</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x, <span class="at">hospital =</span> <span class="st">"A"</span>)</span>
@@ -200,8 +200,8 @@
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10    16        A</span></span></code></pre><p></p></div>
 <p>The following <a href="https://rdrr.io/r/base/groupGeneric.html" class="external-link">generic functions</a> are implemented for the MIC class: <code>!</code>, <code>!=</code>, <code>%%</code>, <code>%/%</code>, <code>&amp;</code>, <code>*</code>, <code>+</code>, <code>-</code>, <code>/</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>==</code>, <code>&gt;</code>, <code>&gt;=</code>, <code>^</code>, <code>|</code>, <code><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs()</a></code>, <code><a href="https://rdrr.io/r/base/Trig.html" class="external-link">acos()</a></code>, <code><a href="https://rdrr.io/r/base/Hyperbolic.html" class="external-link">acosh()</a></code>, <code><a href="https://rdrr.io/r/base/all.html" class="external-link">all()</a></code>, <code><a href="https://rdrr.io/r/base/any.html" class="external-link">any()</a></code>, <code><a href="https://rdrr.io/r/base/Trig.html" class="external-link">asin()</a></code>, <code><a href="https://rdrr.io/r/base/Hyperbolic.html" class="external-link">asinh()</a></code>, <code><a href="https://rdrr.io/r/base/Trig.html" class="external-link">atan()</a></code>, <code><a href="https://rdrr.io/r/base/Hyperbolic.html" class="external-link">atanh()</a></code>, <code><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling()</a></code>, <code><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos()</a></code>, <code><a href="https://rdrr.io/r/base/Hyperbolic.html" class="external-link">cosh()</a></code>, <code><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cospi()</a></code>, <code><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cummax()</a></code>, <code><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cummin()</a></code>, <code><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumprod()</a></code>, <code><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum()</a></code>, <code><a href="https://rdrr.io/r/base/Special.html" class="external-link">digamma()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">expm1()</a></code>, <code><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor()</a></code>, <code><a href="https://rdrr.io/r/base/Special.html" class="external-link">gamma()</a></code>, <code><a href="https://rdrr.io/r/base/Special.html" class="external-link">lgamma()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log1p()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log2()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max()</a></code>, <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min()</a></code>, <code><a href="https://rdrr.io/r/base/prod.html" class="external-link">prod()</a></code>, <code><a href="https://rdrr.io/r/base/range.html" class="external-link">range()</a></code>, <code><a href="https://rdrr.io/r/base/Round.html" class="external-link">round()</a></code>, <code><a href="https://rdrr.io/r/base/sign.html" class="external-link">sign()</a></code>, <code><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif()</a></code>, <code><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sin()</a></code>, <code><a href="https://rdrr.io/r/base/Hyperbolic.html" class="external-link">sinh()</a></code>, <code><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sinpi()</a></code>, <code><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt()</a></code>, <code><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum()</a></code>, <code><a href="https://rdrr.io/r/base/Trig.html" class="external-link">tan()</a></code>, <code><a href="https://rdrr.io/r/base/Hyperbolic.html" class="external-link">tanh()</a></code>, <code><a href="https://rdrr.io/r/base/Trig.html" class="external-link">tanpi()</a></code>, <code><a href="https://rdrr.io/r/base/Special.html" class="external-link">trigamma()</a></code> and <code><a href="https://rdrr.io/r/base/Round.html" class="external-link">trunc()</a></code>. Some functions of the <code>stats</code> package are also implemented: <code><a href="https://rdrr.io/r/stats/median.html" class="external-link">median()</a></code>, <code><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile()</a></code>, <code><a href="https://rdrr.io/r/stats/mad.html" class="external-link">mad()</a></code>, <code><a href="https://rdrr.io/r/stats/IQR.html" class="external-link">IQR()</a></code>, <code><a href="https://rdrr.io/r/stats/fivenum.html" class="external-link">fivenum()</a></code>. Also, <code><a href="https://rdrr.io/r/grDevices/boxplot.stats.html" class="external-link">boxplot.stats()</a></code> is supported. Since <code><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd()</a></code> and <code><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var()</a></code> are non-generic functions, these could not be extended. Use <code><a href="https://rdrr.io/r/stats/mad.html" class="external-link">mad()</a></code> as an alternative, or use e.g. <code>sd(as.numeric(x))</code> where <code>x</code> is your vector of MIC values.</p>
 <p>Using <code><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double()</a></code> or <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric()</a></code> on MIC values will remove the operators and return a numeric vector. Do <strong>not</strong> use <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> on MIC values as by the <span style="R">R</span> convention on <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a>s, it will return the index of the factor levels (which is often useless for regular users).</p>
-<p>Use <code><a href="https://rdrr.io/r/base/droplevels.html" class="external-link">droplevels()</a></code> to drop unused levels. At default, it will return a plain factor. Use <code>droplevels(..., as.mic = TRUE)</code> to maintain the <code>&lt;mic&gt;</code> class.</p>
-<p><code>NA_mic_</code> is a missing value of the new <code>&lt;mic&gt;</code> class, analogous to e.g. base <span style="R">R</span>'s <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">NA_character_</a></code>.</p>
+<p>Use <code><a href="https://rdrr.io/r/base/droplevels.html" class="external-link">droplevels()</a></code> to drop unused levels. At default, it will return a plain factor. Use <code>droplevels(..., as.mic = TRUE)</code> to maintain the <code>mic</code> class.</p>
+<p><code>NA_mic_</code> is a missing value of the new <code>mic</code> class, analogous to e.g. base <span style="R">R</span>'s <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">NA_character_</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -212,14 +212,14 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">mic_data</span> <span class="op">&lt;-</span> <span class="fu">as.mic</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&gt;=32"</span>, <span class="st">"1.0"</span>, <span class="st">"1"</span>, <span class="st">"1.00"</span>, <span class="fl">8</span>, <span class="st">"&lt;=0.128"</span>, <span class="st">"8"</span>, <span class="st">"16"</span>, <span class="st">"16"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mic_data</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class &lt;mic&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'mic'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] &gt;=32    1       1       1       8       &lt;=0.128 8       16      16     </span>
 <span class="r-in"><span><span class="fu">is.mic</span><span class="op">(</span><span class="va">mic_data</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># this can also coerce combined MIC/RSI values:</span></span></span>
 <span class="r-in"><span><span class="fu">as.mic</span><span class="op">(</span><span class="st">"&lt;=0.002; S"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class &lt;mic&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'mic'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] &lt;=0.002</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># mathematical processing treats MICs as numeric values</span></span></span>
@@ -241,7 +241,7 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMX' (amoxicillin) according to EUCAST</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class &lt;rsi&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'rsi'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] R</span>
 <span class="r-in"><span><span class="fu"><a href="as.rsi.html">as.rsi</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  x <span class="op">=</span> <span class="fu">as.mic</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span>,</span></span>
@@ -252,7 +252,7 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMX' (amoxicillin) according to EUCAST</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class &lt;rsi&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'rsi'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] S R R R</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># plot MIC values, see ?plot</span></span></span>

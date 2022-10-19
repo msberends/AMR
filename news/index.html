@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9022</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9023</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,10 +127,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.8.2.9022" id="amr-1829022">AMR 1.8.2.9022<a class="anchor" aria-label="anchor" href="#amr-1829022"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.8.2.9023" id="amr-1829023">AMR 1.8.2.9023<a class="anchor" aria-label="anchor" href="#amr-1829023"></a></h2>
 <p>This version will eventually become v2.0! We’re happy to reach a new major milestone soon!</p>
 <div class="section level4">
-<h4 id="breaking-1-8-2-9022">Breaking<a class="anchor" aria-label="anchor" href="#breaking-1-8-2-9022"></a></h4>
+<h4 id="breaking-1-8-2-9023">Breaking<a class="anchor" aria-label="anchor" href="#breaking-1-8-2-9023"></a></h4>
 <ul><li>Removed all species of the taxonomic kingdom Chromista from the package. This was done for multiple reasons:<ul><li>CRAN allows packages to be around 5 MB maximum, some packages are exempted but this package is not one of them</li>
 <li>Chromista are not relevant when it comes to antimicrobial resistance, thus lacking the primary scope of this package</li>
 <li>Chromista are almost never clinically relevant, thus lacking the secondary scope of this package</li>
@@ -140,7 +140,7 @@
 <li>The <code><a href="../reference/mo_matching_score.html">mo_matching_score()</a></code> now count deletions and substitutions as 2 instead of 1, which impacts the outcome of <code><a href="../reference/as.mo.html">as.mo()</a></code> and any <code>mo_*()</code> function</li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-1-8-2-9022">New<a class="anchor" aria-label="anchor" href="#new-1-8-2-9022"></a></h4>
+<h4 id="new-1-8-2-9023">New<a class="anchor" aria-label="anchor" href="#new-1-8-2-9023"></a></h4>
 <ul><li>EUCAST 2022 and CLSI 2022 guidelines have been added for <code><a href="../reference/as.rsi.html">as.rsi()</a></code>. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.</li>
 <li>All new algorithm for <code><a href="../reference/as.mo.html">as.mo()</a></code> (and thus internally all <code>mo_*()</code> functions) while still following our original set-up as described in our paper (DOI 10.18637/jss.v104.i03).<ul><li>A new argument <code>keep_synonyms</code> allows to <em>not</em> correct for updated taxonomy, in favour of the now deleted argument <code>allow_uncertain</code>
 </li>
@@ -157,7 +157,7 @@
 <li>Our data sets are now also continually exported to Apache Feather and Apache Parquet formats. You can find more info <a href="https://msberends.github.io/AMR/articles/datasets.html">in this article on our website</a>.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-1-8-2-9022">Changed<a class="anchor" aria-label="anchor" href="#changed-1-8-2-9022"></a></h4>
+<h4 id="changed-1-8-2-9023">Changed<a class="anchor" aria-label="anchor" href="#changed-1-8-2-9023"></a></h4>
 <ul><li>Fix for using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on certain EUCAST breakpoints for MIC values</li>
 <li>Fix for using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on <code>NA</code> values (e.g. <code>as.rsi(as.disk(NA), ...)</code>)</li>
 <li>Removed <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> for MIC values, since MIC are not integer values and running <code><a href="https://rdrr.io/r/base/table.html" class="external-link">table()</a></code> on MIC values consequently failed for not being able to retrieve the level position (as that’s how normally <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> on <code>factor</code>s work)</li>
@@ -183,7 +183,7 @@
 <li>Fix for using <code><a href="../reference/as.ab.html">as.ab()</a></code> on <code>NA</code> values</li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-1-8-2-9022">Other<a class="anchor" aria-label="anchor" href="#other-1-8-2-9022"></a></h4>
+<h4 id="other-1-8-2-9023">Other<a class="anchor" aria-label="anchor" href="#other-1-8-2-9023"></a></h4>
 <ul><li>New website to make use of the new Bootstrap 5 and pkgdown 2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions</li>
 <li>Added Peter Dutey-Magni, Dmytro Mykhailenko and Anton Mymrikov as contributors, to thank them for their valuable input</li>
 <li>All R and Rmd files in this project are now styled using the <code>styler</code> package</li>

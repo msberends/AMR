@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9022</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9023</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -239,7 +239,7 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>Ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a> with new class <code>&lt;rsi&gt;</code></p>
+<p>Ordered <a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a> with new class <code>rsi</code></p>
 
 
     </div>
@@ -290,11 +290,11 @@
 <h3 id="other">Other<a class="anchor" aria-label="anchor" href="#other"></a></h3>
 
 
-<p>The function <code>is.rsi()</code> detects if the input contains class <code>&lt;rsi&gt;</code>. If the input is a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>, it iterates over all columns and returns a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> vector.</p>
+<p>The function <code>is.rsi()</code> detects if the input contains class <code>rsi</code>. If the input is a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>, it iterates over all columns and returns a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> vector.</p>
 <p>The function <code>is.rsi.eligible()</code> returns <code>TRUE</code> when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and <code>FALSE</code> otherwise. The threshold of 5% can be set with the <code>threshold</code> argument. If the input is a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>, it iterates over all columns and returns a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> vector.</p>
 </div>
 
-<p><code>NA_rsi_</code> is a missing value of the new <code>&lt;rsi&gt;</code> class, analogous to e.g. base <span style="R">R</span>'s <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">NA_character_</a></code>.</p>
+<p><code>NA_rsi_</code> is a missing value of the new <code>rsi</code> class, analogous to e.g. base <span style="R">R</span>'s <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">NA_character_</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="interpretation-of-r-and-s-i">Interpretation of R and S/I<a class="anchor" aria-label="anchor" href="#interpretation-of-r-and-s-i"></a></h2>
@@ -474,7 +474,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of column 'TOB' (tobramycin) according</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Assigning class &lt;rsi&gt; to already clean column 'ERY' (erythromycin)...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Assigning class 'rsi' to already clean column 'ERY' (erythromycin)...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      microorganism AMP CIP GEN TOB ERY</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli   S   I   S   S   R</span>
@@ -484,16 +484,16 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 50 × 13</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index ab_input   ab_consid…¹ mo_in…² mo_conside…³ guide…⁴</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2022-10-19 <span style="color: #949494;">06:34:24</span>     1 ampicillin AMP         Strep … B_STRPT_PNMN EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2022-10-19 <span style="color: #949494;">06:34:24</span>     1 AMP        AMP         Escher… B_ESCHR_COLI EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2022-10-19 <span style="color: #949494;">06:34:24</span>     1 CIP        CIP         Escher… B_ESCHR_COLI EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2022-10-19 <span style="color: #949494;">06:34:24</span>     1 GEN        GEN         Escher… B_ESCHR_COLI EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2022-10-19 <span style="color: #949494;">06:34:24</span>     1 TOB        TOB         Escher… B_ESCHR_COLI EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2022-10-19 <span style="color: #949494;">06:34:25</span>     1 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2022-10-19 <span style="color: #949494;">06:34:25</span>     1 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2022-10-19 <span style="color: #949494;">06:34:25</span>     2 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2022-10-19 <span style="color: #949494;">06:34:25</span>     3 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2022-10-19 <span style="color: #949494;">06:34:25</span>     4 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2022-10-19 <span style="color: #949494;">09:56:17</span>     1 ampicillin AMP         Strep … B_STRPT_PNMN EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2022-10-19 <span style="color: #949494;">09:56:17</span>     1 AMP        AMP         Escher… B_ESCHR_COLI EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2022-10-19 <span style="color: #949494;">09:56:17</span>     1 CIP        CIP         Escher… B_ESCHR_COLI EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2022-10-19 <span style="color: #949494;">09:56:18</span>     1 GEN        GEN         Escher… B_ESCHR_COLI EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2022-10-19 <span style="color: #949494;">09:56:18</span>     1 TOB        TOB         Escher… B_ESCHR_COLI EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2022-10-19 <span style="color: #949494;">09:56:18</span>     1 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2022-10-19 <span style="color: #949494;">09:56:19</span>     1 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2022-10-19 <span style="color: #949494;">09:56:19</span>     2 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2022-10-19 <span style="color: #949494;">09:56:19</span>     3 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2022-10-19 <span style="color: #949494;">09:56:19</span>     4 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 40 more rows, 6 more variables: ref_table &lt;chr&gt;, method &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   breakpoint_S &lt;dbl&gt;, breakpoint_R &lt;dbl&gt;, input &lt;dbl&gt;, interpretation &lt;rsi&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   and abbreviated variable names ¹​ab_considered, ²​mo_input, ³​mo_considered,</span></span>
@@ -509,7 +509,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) according to EUCAST</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class &lt;rsi&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'rsi'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] R</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as.rsi</span><span class="op">(</span></span></span>
@@ -521,7 +521,7 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'ampicillin' (AMP, ampicillin)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    according to EUCAST 2022...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class &lt;rsi&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'rsi'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] R</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
@@ -645,10 +645,10 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-in"><span><span class="fu">as.rsi</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S"</span>, <span class="st">"I"</span>, <span class="st">"R"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: 3 results in column '24' truncated (50%) that were invalid</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> antimicrobial interpretations: "A", "B" and "C"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class &lt;rsi&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'rsi'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] S    I    R    &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;</span>
 <span class="r-in"><span><span class="fu">as.rsi</span><span class="op">(</span><span class="st">"&lt;= 0.002; S"</span><span class="op">)</span> <span class="co"># will return "S"</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class &lt;rsi&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'rsi'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] S</span>
 <span class="r-in"><span><span class="va">rsi_data</span> <span class="op">&lt;-</span> <span class="fu">as.rsi</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"S"</span>, <span class="fl">474</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"I"</span>, <span class="fl">36</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"R"</span>, <span class="fl">370</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">is.rsi</span><span class="op">(</span><span class="va">rsi_data</span><span class="op">)</span></span></span>
