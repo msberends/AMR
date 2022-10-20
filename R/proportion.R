@@ -39,11 +39,15 @@
 #' @param data a [data.frame] containing columns with class [`rsi`] (see [as.rsi()])
 #' @param translate_ab a column name of the [antibiotics] data set to translate the antibiotic abbreviations to, using [ab_property()]
 #' @inheritParams ab_property
-#' @param combine_SI a [logical] to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the argument `combine_IR`, but this now follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is `TRUE`.
-#' @param combine_IR a [logical] to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see argument `combine_SI`.
+#' @param combine_SI a [logical] to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant), defaults to `TRUE`
+#' @param ab_result antibiotic results to test against, must be one of more values of "R", "S", "I"
+#' @param confidence_level the confidence level for the returned confidence interval. For the calculation, the number of S or SI isolates, and R isolates are compared with the total number of available isolates with R, S, or I by using [binom.test()], i.e., the Clopper-Pearson method.
+#' @param side the side of the confidence interval to return. Defaults to `"both"` for a length 2 vector, but can also be (abbreviated as) `"min"`/`"left"`/`"lower"`/`"less"` or `"max"`/`"right"`/`"higher"`/`"greater"`.
 #' @inheritSection as.rsi Interpretation of R and S/I
 #' @details
 #' The function [resistance()] is equal to the function [proportion_R()]. The function [susceptibility()] is equal to the function [proportion_SI()].
+#' 
+#' Use [rsi_confidence_interval()] to calculate the confidence interval, which relies on [binom.test()], i.e., the Clopper-Pearson method. This function returns a vector of length 2 at default for antimicrobial *resistance*. Change the `side` argument to "left"/"min" or "right"/"max" to return a single value, and change the `ab_result` argument to e.g. `c("S", "I")` to test for antimicrobial *susceptibility*, see Examples.
 #'
 #' **Remember that you should filter your data to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set.
 #'
@@ -84,7 +88,7 @@
 #' ```
 #'
 #' Using `only_all_tested` has no impact when only using one antibiotic as input.
-#' @source **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition**, 2014, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
+#' @source **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition**, 2022, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
 #' @seealso [AMR::count()] to count resistant and susceptible isolates.
 #' @return A [double] or, when `as_percent = TRUE`, a [character].
 #' @rdname proportion
@@ -96,8 +100,16 @@
 #' # run ?example_isolates for more info.
 #'
 #' # base R ------------------------------------------------------------
-#' resistance(example_isolates$AMX) # determines %R
-#' susceptibility(example_isolates$AMX) # determines %S+I
+#' # determines %R
+#' resistance(example_isolates$AMX)
+#' rsi_confidence_interval(example_isolates$AMX)
+#' rsi_confidence_interval(example_isolates$AMX,
+#'                         confidence_level = 0.975)
+#' 
+#' # determines %S+I:
+#' susceptibility(example_isolates$AMX)
+#' rsi_confidence_interval(example_isolates$AMX,
+#'                         ab_result = c("S", "I"))
 #'
 #' # be more specific
 #' proportion_S(example_isolates$AMX)
@@ -109,13 +121,28 @@
 #' # dplyr -------------------------------------------------------------
 #' \donttest{
 #' if (require("dplyr")) {
+#' 
 #'   example_isolates %>%
 #'     group_by(ward) %>%
 #'     summarise(
 #'       r = resistance(CIP),
 #'       n = n_rsi(CIP)
 #'     ) # n_rsi works like n_distinct in dplyr, see ?n_rsi
-#'
+#'     
+#' }
+#' if (require("dplyr")) {
+#' 
+#'   example_isolates %>%
+#'     group_by(ward) %>%
+#'     summarise(
+#'       cipro_R = resistance(CIP),
+#'       ci_min = rsi_confidence_interval(CIP, side = "min"),
+#'       ci_max = rsi_confidence_interval(CIP, side = "max"),
+#'     )
+#'     
+#' }
+#' if (require("dplyr")) {
+#' 
 #'   example_isolates %>%
 #'     group_by(ward) %>%
 #'     summarise(
@@ -190,7 +217,7 @@ resistance <- function(...,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(e$message, call = -5)
+    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
@@ -208,8 +235,65 @@ susceptibility <- function(...,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(e$message, call = -5)
+    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
+}
+
+#' @rdname proportion
+#' @export
+rsi_confidence_interval <- function(...,
+                                    ab_result = "R",
+                                    minimum = 30,
+                                    as_percent = FALSE,
+                                    only_all_tested = FALSE,
+                                    confidence_level = 0.95,
+                                    side = "both") {
+  meet_criteria(ab_result, allow_class = c("character", "rsi"), has_length = c(1, 2, 3), is_in = c("R", "S", "I"))
+  meet_criteria(confidence_level, allow_class = "numeric", is_positive = TRUE, has_length = 1)
+  meet_criteria(side, allow_class = "character", has_length = 1, is_in = c("both", "b", "left", "l", "lower", "lowest", "less", "min", "right", "r", "higher", "highest", "greater", "g", "max"))
+  x <- tryCatch(
+    rsi_calc(...,
+             ab_result = ab_result,
+             only_all_tested = only_all_tested,
+             only_count = TRUE
+    ),
+    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
+  )
+  n <- tryCatch(
+    rsi_calc(...,
+             ab_result = c("S", "I", "R"),
+             only_all_tested = only_all_tested,
+             only_count = TRUE
+    ),
+    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
+  )
+  
+  if (n < minimum) {
+    warning_("Introducing NA: ",
+             ifelse(n == 0, "no", paste("only", n)),
+             " results available for `rsi_confidence_interval()` (`minimum` = ", minimum, ").",
+             call = FALSE
+    )
+    if (as_percent == TRUE) {
+      return(NA_character_)
+    } else {
+      return(NA_real_)
+    }
+  }
+  
+  out <- stats::binom.test(x = x, n = n, conf.level = confidence_level)$conf.int
+  out <- set_clean_class(out, "double")
+  
+  if (side %in% c("left", "l", "lower", "lowest", "less", "min")) {
+    out <- out[1]
+  } else if (side %in% c("right", "r", "higher", "highest", "greater", "g", "max")) {
+    out <- out[2]
+  }
+  if (as_percent == TRUE) {
+    percentage(out, digits = 1)
+  } else {
+    out
+  }
 }
 
 #' @rdname proportion
@@ -226,7 +310,7 @@ proportion_R <- function(...,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(e$message, call = -5)
+    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
@@ -244,7 +328,7 @@ proportion_IR <- function(...,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(e$message, call = -5)
+    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
@@ -262,7 +346,7 @@ proportion_I <- function(...,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(e$message, call = -5)
+    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
@@ -280,7 +364,7 @@ proportion_SI <- function(...,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(e$message, call = -5)
+    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
@@ -298,7 +382,7 @@ proportion_S <- function(...,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(e$message, call = -5)
+    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
@@ -310,7 +394,7 @@ proportion_df <- function(data,
                           minimum = 30,
                           as_percent = FALSE,
                           combine_SI = TRUE,
-                          combine_IR = FALSE) {
+                          confidence_level = 0.95) {
   tryCatch(
     rsi_calc_df(
       type = "proportion",
@@ -320,9 +404,8 @@ proportion_df <- function(data,
       minimum = minimum,
       as_percent = as_percent,
       combine_SI = combine_SI,
-      combine_IR = combine_IR,
-      combine_SI_missing = missing(combine_SI)
+      confidence_level = confidence_level
     ),
-    error = function(e) stop_(e$message, call = -5)
+    error = function(e) stop_(gsub("in rsi_calc_df(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }

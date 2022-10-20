@@ -5,6 +5,7 @@
 \alias{resistance}
 \alias{portion}
 \alias{susceptibility}
+\alias{rsi_confidence_interval}
 \alias{proportion_R}
 \alias{proportion_IR}
 \alias{proportion_I}
@@ -14,12 +15,22 @@
 \alias{rsi_df}
 \title{Calculate Microbial Resistance}
 \source{
-\strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
+\strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition}, 2022, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 }
 \usage{
 resistance(..., minimum = 30, as_percent = FALSE, only_all_tested = FALSE)
 
 susceptibility(..., minimum = 30, as_percent = FALSE, only_all_tested = FALSE)
+
+rsi_confidence_interval(
+  ...,
+  ab_result = "R",
+  minimum = 30,
+  as_percent = FALSE,
+  only_all_tested = FALSE,
+  confidence_level = 0.95,
+  side = "both"
+)
 
 proportion_R(..., minimum = 30, as_percent = FALSE, only_all_tested = FALSE)
 
@@ -38,7 +49,7 @@ proportion_df(
   minimum = 30,
   as_percent = FALSE,
   combine_SI = TRUE,
-  combine_IR = FALSE
+  confidence_level = 0.95
 )
 
 rsi_df(
@@ -48,7 +59,7 @@ rsi_df(
   minimum = 30,
   as_percent = FALSE,
   combine_SI = TRUE,
-  combine_IR = FALSE
+  confidence_level = 0.95
 )
 }
 \arguments{
@@ -60,15 +71,19 @@ rsi_df(
 
 \item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}): a \link{logical} to indicate that isolates must be tested for all antibiotics, see section \emph{Combination Therapy} below}
 
+\item{ab_result}{antibiotic results to test against, must be one of more values of "R", "S", "I"}
+
+\item{confidence_level}{the confidence level for the returned confidence interval. For the calculation, the number of S or SI isolates, and R isolates are compared with the total number of available isolates with R, S, or I by using \code{\link[=binom.test]{binom.test()}}, i.e., the Clopper-Pearson method.}
+
+\item{side}{the side of the confidence interval to return. Defaults to \code{"both"} for a length 2 vector, but can also be (abbreviated as) \code{"min"}/\code{"left"}/\code{"lower"}/\code{"less"} or \code{"max"}/\code{"right"}/\code{"higher"}/\code{"greater"}.}
+
 \item{data}{a \link{data.frame} containing columns with class \code{\link{rsi}} (see \code{\link[=as.rsi]{as.rsi()}})}
 
 \item{translate_ab}{a column name of the \link{antibiotics} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
 
 \item{language}{language of the returned text, defaults to system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
-\item{combine_SI}{a \link{logical} to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the argument \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is \code{TRUE}.}
-
-\item{combine_IR}{a \link{logical} to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see argument \code{combine_SI}.}
+\item{combine_SI}{a \link{logical} to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant), defaults to \code{TRUE}}
 }
 \value{
 A \link{double} or, when \code{as_percent = TRUE}, a \link{character}.
@@ -80,6 +95,8 @@ These functions can be used to calculate the (co-)resistance or susceptibility o
 }
 \details{
 The function \code{\link[=resistance]{resistance()}} is equal to the function \code{\link[=proportion_R]{proportion_R()}}. The function \code{\link[=susceptibility]{susceptibility()}} is equal to the function \code{\link[=proportion_SI]{proportion_SI()}}.
+
+Use \code{\link[=rsi_confidence_interval]{rsi_confidence_interval()}} to calculate the confidence interval, which relies on \code{\link[=binom.test]{binom.test()}}, i.e., the Clopper-Pearson method. This function returns a vector of length 2 at default for antimicrobial \emph{resistance}. Change the \code{side} argument to "left"/"min" or "right"/"max" to return a single value, and change the \code{ab_result} argument to e.g. \code{c("S", "I")} to test for antimicrobial \emph{susceptibility}, see Examples.
 
 \strong{Remember that you should filter your data to let it contain only first isolates!} This is needed to exclude duplicates and to reduce selection bias. Use \code{\link[=first_isolate]{first_isolate()}} to determine them in your data set.
 
@@ -144,8 +161,16 @@ This AMR package honours this (new) insight. Use \code{\link[=susceptibility]{su
 # run ?example_isolates for more info.
 
 # base R ------------------------------------------------------------
-resistance(example_isolates$AMX) # determines \%R
-susceptibility(example_isolates$AMX) # determines \%S+I
+# determines \%R
+resistance(example_isolates$AMX)
+rsi_confidence_interval(example_isolates$AMX)
+rsi_confidence_interval(example_isolates$AMX,
+                        confidence_level = 0.975)
+
+# determines \%S+I:
+susceptibility(example_isolates$AMX)
+rsi_confidence_interval(example_isolates$AMX,
+                        ab_result = c("S", "I"))
 
 # be more specific
 proportion_S(example_isolates$AMX)
@@ -157,12 +182,27 @@ proportion_R(example_isolates$AMX)
 # dplyr -------------------------------------------------------------
 \donttest{
 if (require("dplyr")) {
+
   example_isolates \%>\%
     group_by(ward) \%>\%
     summarise(
       r = resistance(CIP),
       n = n_rsi(CIP)
     ) # n_rsi works like n_distinct in dplyr, see ?n_rsi
+    
+}
+if (require("dplyr")) {
+
+  example_isolates \%>\%
+    group_by(ward) \%>\%
+    summarise(
+      cipro_R = resistance(CIP),
+      ci_min = rsi_confidence_interval(CIP, side = "min"),
+      ci_max = rsi_confidence_interval(CIP, side = "max"),
+    )
+    
+}
+if (require("dplyr")) {
 
   example_isolates \%>\%
     group_by(ward) \%>\%

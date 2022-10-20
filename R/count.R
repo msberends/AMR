@@ -126,7 +126,7 @@ count_resistant <- function(..., only_all_tested = FALSE) {
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
-    error = function(e) stop_(e$message, call = -5)
+    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
@@ -139,7 +139,7 @@ count_susceptible <- function(..., only_all_tested = FALSE) {
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
-    error = function(e) stop_(e$message, call = -5)
+    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
@@ -152,7 +152,7 @@ count_R <- function(..., only_all_tested = FALSE) {
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
-    error = function(e) stop_(e$message, call = -5)
+    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
@@ -168,7 +168,7 @@ count_IR <- function(..., only_all_tested = FALSE) {
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
-    error = function(e) stop_(e$message, call = -5)
+    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
@@ -181,7 +181,7 @@ count_I <- function(..., only_all_tested = FALSE) {
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
-    error = function(e) stop_(e$message, call = -5)
+    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
@@ -194,7 +194,7 @@ count_SI <- function(..., only_all_tested = FALSE) {
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
-    error = function(e) stop_(e$message, call = -5)
+    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
@@ -210,7 +210,7 @@ count_S <- function(..., only_all_tested = FALSE) {
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
-    error = function(e) stop_(e$message, call = -5)
+    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
@@ -223,7 +223,7 @@ count_all <- function(..., only_all_tested = FALSE) {
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
-    error = function(e) stop_(e$message, call = -5)
+    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
@@ -236,8 +236,7 @@ n_rsi <- count_all
 count_df <- function(data,
                      translate_ab = "name",
                      language = get_AMR_locale(),
-                     combine_SI = TRUE,
-                     combine_IR = FALSE) {
+                     combine_SI = TRUE) {
   tryCatch(
     rsi_calc_df(
       type = "count",
@@ -245,9 +244,8 @@ count_df <- function(data,
       translate_ab = translate_ab,
       language = language,
       combine_SI = combine_SI,
-      combine_IR = combine_IR,
-      combine_SI_missing = missing(combine_SI)
+      confidence_level = 0.95 # doesn't matter, will be removed
     ),
-    error = function(e) stop_(e$message, call = -5)
+    error = function(e) stop_(gsub("in rsi_calc_df(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }

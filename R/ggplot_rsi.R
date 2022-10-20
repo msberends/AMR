@@ -183,7 +183,6 @@ ggplot_rsi <- function(data,
                        limits = NULL,
                        translate_ab = "name",
                        combine_SI = TRUE,
-                       combine_IR = FALSE,
                        minimum = 30,
                        language = get_AMR_locale(),
                        nrow = NULL,
@@ -213,7 +212,6 @@ ggplot_rsi <- function(data,
   meet_criteria(limits, allow_class = c("numeric", "integer"), has_length = 2, allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
-  meet_criteria(combine_IR, allow_class = "logical", has_length = 1)
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE)
   language <- validate_language(language)
   meet_criteria(nrow, allow_class = c("numeric", "integer"), has_length = 1, allow_NULL = TRUE, is_positive = TRUE, is_finite = TRUE)
@@ -254,7 +252,7 @@ ggplot_rsi <- function(data,
     geom_rsi(
       position = position, x = x, fill = fill, translate_ab = translate_ab,
       minimum = minimum, language = language,
-      combine_SI = combine_SI, combine_IR = combine_IR, ...
+      combine_SI = combine_SI, ...
     ) +
     theme_rsi()
 
@@ -275,7 +273,6 @@ ggplot_rsi <- function(data,
       minimum = minimum,
       language = language,
       combine_SI = combine_SI,
-      combine_IR = combine_IR,
       datalabels.size = datalabels.size,
       datalabels.colour = datalabels.colour
     )
@@ -305,7 +302,6 @@ geom_rsi <- function(position = NULL,
                      minimum = 30,
                      language = get_AMR_locale(),
                      combine_SI = TRUE,
-                     combine_IR = FALSE,
                      ...) {
   x <- x[1]
   stop_ifnot_installed("ggplot2")
@@ -317,7 +313,6 @@ geom_rsi <- function(position = NULL,
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE)
   language <- validate_language(language)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
-  meet_criteria(combine_IR, allow_class = "logical", has_length = 1)
 
   y <- "value"
   if (missing(position) || is.null(position)) {
@@ -350,8 +345,7 @@ geom_rsi <- function(position = NULL,
         translate_ab = translate_ab,
         language = language,
         minimum = minimum,
-        combine_SI = combine_SI,
-        combine_IR = combine_IR
+        combine_SI = combine_SI
       )
     },
     mapping = ggplot2::aes_string(x = x, y = y, fill = fill),
@@ -496,7 +490,6 @@ labels_rsi_count <- function(position = NULL,
                              minimum = 30,
                              language = get_AMR_locale(),
                              combine_SI = TRUE,
-                             combine_IR = FALSE,
                              datalabels.size = 3,
                              datalabels.colour = "grey15") {
   stop_ifnot_installed("ggplot2")
@@ -506,7 +499,6 @@ labels_rsi_count <- function(position = NULL,
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE)
   language <- validate_language(language)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
-  meet_criteria(combine_IR, allow_class = "logical", has_length = 1)
   meet_criteria(datalabels.size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(datalabels.colour, allow_class = "character", has_length = 1)
 
@@ -533,7 +525,6 @@ labels_rsi_count <- function(position = NULL,
         data = x,
         translate_ab = translate_ab,
         combine_SI = combine_SI,
-        combine_IR = combine_IR,
         minimum = minimum,
         language = language
       )

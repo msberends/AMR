@@ -20,7 +20,6 @@ ggplot_rsi(
   limits = NULL,
   translate_ab = "name",
   combine_SI = TRUE,
-  combine_IR = FALSE,
   minimum = 30,
   language = get_AMR_locale(),
   nrow = NULL,
@@ -45,7 +44,6 @@ geom_rsi(
   minimum = 30,
   language = get_AMR_locale(),
   combine_SI = TRUE,
-  combine_IR = FALSE,
   ...
 )
 
@@ -64,7 +62,6 @@ labels_rsi_count(
   minimum = 30,
   language = get_AMR_locale(),
   combine_SI = TRUE,
-  combine_IR = FALSE,
   datalabels.size = 3,
   datalabels.colour = "grey15"
 )
@@ -86,9 +83,7 @@ labels_rsi_count(
 
 \item{translate_ab}{a column name of the \link{antibiotics} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
 
-\item{combine_SI}{a \link{logical} to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the argument \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is \code{TRUE}.}
-
-\item{combine_IR}{a \link{logical} to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see argument \code{combine_SI}.}
+\item{combine_SI}{a \link{logical} to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant), defaults to \code{TRUE}}
 
 \item{minimum}{the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
 

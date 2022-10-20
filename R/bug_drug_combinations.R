@@ -31,7 +31,7 @@
 #'
 #' Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use [format()] on the result to prettify it to a publishable/printable format, see *Examples*.
 #' @inheritParams eucast_rules
-#' @param combine_IR a [logical] to indicate whether values R and I should be summed
+#' @param combine_SI a [logical] to indicate whether values S and I should be summed, so resistance will be based on only R, defaults to `TRUE`
 #' @param add_ab_group a [logical] to indicate where the group of the antimicrobials must be included as a first column
 #' @param remove_intrinsic_resistant [logical] to indicate that rows and columns with 100% resistance for all tested antimicrobials must be removed from the table
 #' @param FUN the function to call on the `mo` column to transform the microorganism codes, defaults to [mo_shortname()]
@@ -39,11 +39,11 @@
 #' @param ... arguments passed on to `FUN`
 #' @inheritParams rsi_df
 #' @inheritParams base::formatC
-#' @details The function [format()] calculates the resistance per bug-drug combination. Use `combine_IR = FALSE` (default) to test R vs. S+I and `combine_IR = TRUE` to test R+I vs. S.
+#' @details The function [format()] calculates the resistance per bug-drug combination. Use `combine_SI = TRUE` (default) to test R vs. S+I and `combine_SI = FALSE` to test R+I vs. S.
 #' @export
 #' @rdname bug_drug_combinations
 #' @return The function [bug_drug_combinations()] returns a [data.frame] with columns "mo", "ab", "S", "I", "R" and "total".
-#' @source \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
+#' @source \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition}, 2022, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
 #' @examples
 #' \donttest{
 #' x <- bug_drug_combinations(example_isolates)
@@ -174,7 +174,6 @@ format.bug_drug_combinations <- function(x,
                                          language = get_AMR_locale(),
                                          minimum = 30,
                                          combine_SI = TRUE,
-                                         combine_IR = FALSE,
                                          add_ab_group = TRUE,
                                          remove_intrinsic_resistant = FALSE,
                                          decimal.mark = getOption("OutDec"),
@@ -185,7 +184,6 @@ format.bug_drug_combinations <- function(x,
   language <- validate_language(language)
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
-  meet_criteria(combine_IR, allow_class = "logical", has_length = 1)
   meet_criteria(add_ab_group, allow_class = "logical", has_length = 1)
   meet_criteria(remove_intrinsic_resistant, allow_class = "logical", has_length = 1)
   meet_criteria(decimal.mark, allow_class = "character", has_length = 1)
@@ -218,7 +216,7 @@ format.bug_drug_combinations <- function(x,
   if (remove_intrinsic_resistant == TRUE) {
     x <- subset(x, R != total)
   }
-  if (combine_SI == TRUE || combine_IR == FALSE) {
+  if (combine_SI == TRUE) {
     x$isolates <- x$R
   } else {
     x$isolates <- x$R + x$I

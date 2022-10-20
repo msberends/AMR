@@ -35,16 +35,18 @@ rsi_df <- function(data,
                    minimum = 30,
                    as_percent = FALSE,
                    combine_SI = TRUE,
-                   combine_IR = FALSE) {
-  rsi_calc_df(
-    type = "both",
-    data = data,
-    translate_ab = translate_ab,
-    language = language,
-    minimum = minimum,
-    as_percent = as_percent,
-    combine_SI = combine_SI,
-    combine_IR = combine_IR,
-    combine_SI_missing = missing(combine_SI)
+                   confidence_level = 0.95) {
+  tryCatch(
+    rsi_calc_df(
+      type = "both",
+      data = data,
+      translate_ab = translate_ab,
+      language = language,
+      minimum = minimum,
+      as_percent = as_percent,
+      combine_SI = combine_SI,
+      confidence_level = confidence_level
+    ),
+    error = function(e) stop_(gsub("in rsi_calc_df(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }

@@ -473,9 +473,10 @@ word_wrap <- function(...,
 
   # clean introduced whitespace between fullstops
   msg <- gsub("[.] +[.]", "..", msg)
-  # remove extra space that was introduced (case: "Smith et al., 2022")
+  # remove extra space that was introduced (e.g. "Smith et al., 2022")
   msg <- gsub(". ,", ".,", msg, fixed = TRUE)
-
+  msg <- gsub("[ ,", "[,", msg, fixed = TRUE)
+  
   msg
 }
 
@@ -854,7 +855,8 @@ get_current_data <- function(arg_name, call) {
   }
   # try dplyr::cur_data_all() first to support dplyr groups
   # only useful for e.g. dplyr::filter(), dplyr::mutate() and dplyr::summarise()
-  # not useful (throws error) with e.g. dplyr::select() - but that will be caught later in this function
+  # not useful (throws error) with e.g. dplyr::select(), dplyr::across(), or dplyr::vars(),
+  # but that will be caught later on in this function
   cur_data_all <- import_fn("cur_data_all", "dplyr", error_on_fail = FALSE)
   if (!is.null(cur_data_all)) {
     out <- tryCatch(cur_data_all(), error = function(e) NULL)
@@ -862,12 +864,12 @@ get_current_data <- function(arg_name, call) {
       return(out)
     }
   }
-
+  
   # try a manual (base R) method, by going over all underlying environments with sys.frames()
   for (env in sys.frames()) {
     if (!is.null(env$`.Generic`)) {
       # don't check `".Generic" %in% names(env)`, because in R < 3.2, `names(env)` is always NULL
-
+      
       if (valid_df(env$`.data`)) {
         # an element `.data` will be in the environment when using `dplyr::select()`
         # (but not when using `dplyr::filter()`, `dplyr::mutate()` or `dplyr::summarise()`)
@@ -879,9 +881,14 @@ get_current_data <- function(arg_name, call) {
         # an element `x` will be in the environment for only cols, e.g. `example_isolates[, carbapenems()]`
         return(env$x)
       }
+      
+    } else if (!is.null(names(env)) && all(c(".tbl", ".vars", ".env") %in% names(env), na.rm = TRUE) && valid_df(env$`.tbl`)) {
+      # an element `.tbl` will be in the environment when using `dplyr::vars()`
+      # (e.g. in `dplyr::summarise_at()` or `dplyr::mutate_at()`)
+      return(env$`.tbl`)
     }
   }
-
+  
   # no data.frame found, so an error  must be returned:
   if (is.na(arg_name)) {
     if (isTRUE(is.numeric(call))) {

@@ -5,7 +5,7 @@
 \alias{format.bug_drug_combinations}
 \title{Determine Bug-Drug Combinations}
 \source{
-\strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition}, 2014, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
+\strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition}, 2022, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 }
 \usage{
 bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname, ...)
@@ -16,7 +16,6 @@ bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname, ...)
   language = get_AMR_locale(),
   minimum = 30,
   combine_SI = TRUE,
-  combine_IR = FALSE,
   add_ab_group = TRUE,
   remove_intrinsic_resistant = FALSE,
   decimal.mark = getOption("OutDec"),
@@ -39,9 +38,7 @@ bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname, ...)
 
 \item{minimum}{the minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
 
-\item{combine_SI}{a \link{logical} to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the argument \code{combine_IR}, but this now follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is \code{TRUE}.}
-
-\item{combine_IR}{a \link{logical} to indicate whether values R and I should be summed}
+\item{combine_SI}{a \link{logical} to indicate whether values S and I should be summed, so resistance will be based on only R, defaults to \code{TRUE}}
 
 \item{add_ab_group}{a \link{logical} to indicate where the group of the antimicrobials must be included as a first column}
 
@@ -61,7 +58,7 @@ The function \code{\link[=bug_drug_combinations]{bug_drug_combinations()}} retur
 Determine antimicrobial resistance (AMR) of all bug-drug combinations in your data set where at least 30 (default) isolates are available per species. Use \code{\link[=format]{format()}} on the result to prettify it to a publishable/printable format, see \emph{Examples}.
 }
 \details{
-The function \code{\link[=format]{format()}} calculates the resistance per bug-drug combination. Use \code{combine_IR = FALSE} (default) to test R vs. S+I and \code{combine_IR = TRUE} to test R+I vs. S.
+The function \code{\link[=format]{format()}} calculates the resistance per bug-drug combination. Use \code{combine_SI = TRUE} (default) to test R vs. S+I and \code{combine_SI = FALSE} to test R+I vs. S.
 }
 \examples{
 \donttest{

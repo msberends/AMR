@@ -40,11 +40,11 @@ rsi_calc <- function(...,
                      as_percent = FALSE,
                      only_all_tested = FALSE,
                      only_count = FALSE) {
-  meet_criteria(ab_result, allow_class = c("character", "numeric", "integer"), has_length = c(1, 2, 3), .call_depth = 1)
-  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE, .call_depth = 1)
-  meet_criteria(as_percent, allow_class = "logical", has_length = 1, .call_depth = 1)
-  meet_criteria(only_all_tested, allow_class = "logical", has_length = 1, .call_depth = 1)
-  meet_criteria(only_count, allow_class = "logical", has_length = 1, .call_depth = 1)
+  meet_criteria(ab_result, allow_class = c("character", "numeric", "integer"), has_length = c(1, 2, 3))
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE)
+  meet_criteria(as_percent, allow_class = "logical", has_length = 1)
+  meet_criteria(only_all_tested, allow_class = "logical", has_length = 1)
+  meet_criteria(only_count, allow_class = "logical", has_length = 1)
 
   data_vars <- dots2vars(...)
 
@@ -221,21 +221,15 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
                         minimum = 30,
                         as_percent = FALSE,
                         combine_SI = TRUE,
-                        combine_IR = FALSE,
-                        combine_SI_missing = FALSE) {
-  meet_criteria(type, is_in = c("proportion", "count", "both"), has_length = 1, .call_depth = 1)
-  meet_criteria(data, allow_class = "data.frame", contains_column_class = "rsi", .call_depth = 1)
-  meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE, .call_depth = 1)
-  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE, .call_depth = 1)
-  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE, .call_depth = 1)
-  meet_criteria(as_percent, allow_class = "logical", has_length = 1, .call_depth = 1)
-  meet_criteria(combine_SI, allow_class = "logical", has_length = 1, .call_depth = 1)
-  meet_criteria(combine_SI_missing, allow_class = "logical", has_length = 1, .call_depth = 1)
-
-  if (isTRUE(combine_IR) && isTRUE(combine_SI_missing)) {
-    combine_SI <- FALSE
-  }
-  stop_if(isTRUE(combine_SI) & isTRUE(combine_IR), "either `combine_SI` or `combine_IR` can be TRUE, not both", call = -2)
+                        confidence_level = 0.95) {
+  meet_criteria(type, is_in = c("proportion", "count", "both"), has_length = 1)
+  meet_criteria(data, allow_class = "data.frame", contains_column_class = "rsi")
+  meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
+  meet_criteria(language, has_length = 1, is_in = c(LANGUAGES_SUPPORTED, ""), allow_NULL = TRUE, allow_NA = TRUE)
+  meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE)
+  meet_criteria(as_percent, allow_class = "logical", has_length = 1)
+  meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
+  meet_criteria(confidence_level, allow_class = "numeric", has_length = 1)
 
   translate_ab <- get_translate_ab(translate_ab)
 
@@ -251,24 +245,22 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   }
 
   data <- as.data.frame(data, stringsAsFactors = FALSE)
-  if (isTRUE(combine_SI) || isTRUE(combine_IR)) {
+  if (isTRUE(combine_SI)) {
     for (i in seq_len(ncol(data))) {
       if (is.rsi(data[, i, drop = TRUE])) {
         data[, i] <- as.character(data[, i, drop = TRUE])
-        if (isTRUE(combine_SI)) {
-          data[, i] <- gsub("(I|S)", "SI", data[, i, drop = TRUE])
-        } else if (isTRUE(combine_IR)) {
-          data[, i] <- gsub("(I|R)", "IR", data[, i, drop = TRUE])
-        }
+        data[, i] <- gsub("(I|S)", "SI", data[, i, drop = TRUE])
       }
     }
   }
-
+  
   sum_it <- function(.data) {
     out <- data.frame(
       antibiotic = character(0),
       interpretation = character(0),
       value = double(0),
+      ci_min = double(0),
+      ci_max = double(0),
       isolates = integer(0),
       stringsAsFactors = FALSE
     )
@@ -281,19 +273,27 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
       values <- .data[, i, drop = TRUE]
       if (isTRUE(combine_SI)) {
         values <- factor(values, levels = c("SI", "R"), ordered = TRUE)
-      } else if (isTRUE(combine_IR)) {
-        values <- factor(values, levels = c("S", "IR"), ordered = TRUE)
       } else {
         values <- factor(values, levels = c("S", "I", "R"), ordered = TRUE)
       }
       col_results <- as.data.frame(as.matrix(table(values)), stringsAsFactors = FALSE)
       col_results$interpretation <- rownames(col_results)
       col_results$isolates <- col_results[, 1, drop = TRUE]
+      ddf <<- col_results
       if (NROW(col_results) > 0 && sum(col_results$isolates, na.rm = TRUE) > 0) {
         if (sum(col_results$isolates, na.rm = TRUE) >= minimum) {
           col_results$value <- col_results$isolates / sum(col_results$isolates, na.rm = TRUE)
+          ci <- lapply(col_results$isolates,
+                       function(x) stats::binom.test(x = x,
+                                                     n = sum(col_results$isolates, na.rm = TRUE),
+                                                     conf.level = confidence_level)$conf.int)
+          col_results$ci_min <- vapply(FUN.VALUE = double(1), ci, `[`, 1)
+          col_results$ci_max <- vapply(FUN.VALUE = double(1), ci, `[`, 2)
         } else {
           col_results$value <- rep(NA_real_, NROW(col_results))
+          # confidence intervals also to NA
+          col_results$ci_min <- col_results$value
+          col_results$ci_max <- col_results$value
         }
         out_new <- data.frame(
           antibiotic = ifelse(isFALSE(translate_ab),
@@ -302,6 +302,8 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
           ),
           interpretation = col_results$interpretation,
           value = col_results$value,
+          ci_min = col_results$ci_min,
+          ci_max = col_results$ci_max,
           isolates = col_results$isolates,
           stringsAsFactors = FALSE
         )
@@ -341,8 +343,6 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   # apply factors for right sorting in interpretation
   if (isTRUE(combine_SI)) {
     out$interpretation <- factor(out$interpretation, levels = c("SI", "R"), ordered = TRUE)
-  } else if (isTRUE(combine_IR)) {
-    out$interpretation <- factor(out$interpretation, levels = c("S", "IR"), ordered = TRUE)
   } else {
     # don't use as.rsi() here, as it would add the class 'rsi' and we would like
     # the same data structure as output, regardless of input
@@ -357,10 +357,13 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   }
 
   if (type == "proportion") {
+    # remove number of isolates
     out <- subset(out, select = -c(isolates))
   } else if (type == "count") {
+    # set value to be number of isolates
     out$value <- out$isolates
-    out <- subset(out, select = -c(isolates))
+    # remove redundant columns
+    out <- subset(out, select = -c(ci_min, ci_max, isolates))
   }
 
   rownames(out) <- NULL

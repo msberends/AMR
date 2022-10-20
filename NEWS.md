@@ -1,4 +1,4 @@
-# AMR 1.8.2.9023
+# AMR 1.8.2.9024
 
 This version will eventually become v2.0! We're happy to reach a new major milestone soon!
 
@@ -9,7 +9,8 @@ This version will eventually become v2.0! We're happy to reach a new major miles
   * Chromista are almost never clinically relevant, thus lacking the secondary scope of this package
 * The `microorganisms` no longer relies on the Catalogue of Life, but now primarily on the List of Prokaryotic names with Standing in Nomenclature (LPSN) and is supplemented with the Global Biodiversity Information Facility (GBIF). The structure of this data set has changed to include separate LPSN and GBIF identifiers. Almost all previous MO codes were retained. It contains over 1,000 taxonomic names from 2022 already.
 * The `microorganisms.old` data set was removed, and all previously accepted names are now included in the `microorganisms` data set. A new column `status` contains `"accepted"` for currently accepted names and `"synonym"` for taxonomic synonyms; currently invalid names. All previously accepted names now have a microorganisms ID and - if available - an LPSN, GBIF and SNOMED CT identifier.
-* The `mo_matching_score()` now count deletions and substitutions as 2 instead of 1, which impacts the outcome of `as.mo()` and any `mo_*()` function
+* The MO matching score algorithm (`mo_matching_score()`) now counts deletions and substitutions as 2 instead of 1, which impacts the outcome of `as.mo()` and any `mo_*()` function
+* Argument `combine_IR` has been removed from this package (affecting all `count_df()`, `proportion_df()` and `rsi_all()`), since it was replaced with `combine_SI` three years ago
 
 ### New
 * EUCAST 2022 and CLSI 2022 guidelines have been added for `as.rsi()`. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.
@@ -23,8 +24,10 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * Function `add_custom_antimicrobials()` to add custom antimicrobial codes and names to the `AMR` package
 * Support for `data.frame`-enhancing R packages, more specifically: `data.table::data.table`, `janitor::tabyl`, `tibble::tibble`, and `tsibble::tsibble`. AMR package functions that have a data set as output (such as `rsi_df()` and `bug_drug_combinations()`), will now return the same data type as the input.
 * All data sets in this package are now exported as `tibble`, instead of base R `data.frame`s. Older R versions are still supported.
-* Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. We are very grateful for the valuable input by our colleagues from other countries. The `AMR` package is now available in 16 languages.
+* Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. We are very grateful for the valuable input by our colleagues from other countries. The `AMR` package is now available in 16 languages. The automatic language determination will give a note at start-up on systems in supported languages.
 * Our data sets are now also continually exported to Apache Feather and Apache Parquet formats. You can find more info [in this article on our website](https://msberends.github.io/AMR/articles/datasets.html).
+* Added confidence intervals in AMR calculation. This is now included in `rsi_df()` and `proportion_df()` and manually available as `rsi_confidence_interval()`
+* Support for using antibiotic selectors in `dplyr::vars()`, such as in: `... %>% summarise_at(vars(aminoglycosides()), resistance)`
 
 ### Changed
 * Fix for using `as.rsi()` on certain EUCAST breakpoints for MIC values
@@ -38,7 +41,6 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * Changed value in column `prevalence` of the `microorganisms` data set from 3 to 2 for these genera: *Acholeplasma*, *Alistipes*, *Alloprevotella*, *Bergeyella*, *Borrelia*, *Brachyspira*, *Butyricimonas*, *Cetobacterium*, *Chlamydia*, *Chlamydophila*, *Deinococcus*, *Dysgonomonas*, *Elizabethkingia*, *Empedobacter*, *Haloarcula*, *Halobacterium*, *Halococcus*, *Myroides*, *Odoribacter*, *Ornithobacterium*, *Parabacteroides*, *Pedobacter*, *Phocaeicola*, *Porphyromonas*, *Riemerella*, *Sphingobacterium*, *Streptobacillus*, *Tenacibaculum*, *Terrimonas*, *Victivallis*, *Wautersiella*, *Weeksella*
 * Fix for using the form `df[carbapenems() == "R", ]` when using the latest `vctrs` package
 * Fix for using `info = FALSE` in `mdro()`
-* Automatic language determination will give a note once a session
 * For all interpretation guidelines using `as.rsi()` on amoxicillin, the rules for ampicillin will be used if amoxicillin rules are not available
 * Fix for using `ab_atc()` on non-existing ATC codes
 * Black and white message texts are now reversed in colour if using an RStudio dark theme
