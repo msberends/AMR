@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9023</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9024</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -142,7 +142,6 @@
 <span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  minimum <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  combine_IR <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  add_ab_group <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  remove_intrinsic_resistant <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  decimal.mark <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"OutDec"</span><span class="op">)</span>,</span>
@@ -153,7 +152,7 @@
 
     <div class="section level2">
     <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
-    <p><strong>M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 4th Edition</strong>, 2014, <em>Clinical and Laboratory Standards Institute (CLSI)</em>. <a href="https://clsi.org/standards/products/microbiology/documents/m39/" class="external-link">https://clsi.org/standards/products/microbiology/documents/m39/</a>.</p>
+    <p><strong>M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition</strong>, 2022, <em>Clinical and Laboratory Standards Institute (CLSI)</em>. <a href="https://clsi.org/standards/products/microbiology/documents/m39/" class="external-link">https://clsi.org/standards/products/microbiology/documents/m39/</a>.</p>
     </div>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
@@ -186,11 +185,7 @@
 
 
 <dt>combine_SI</dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the argument <code>combine_IR</code>, but this now follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is <code>TRUE</code>.</p></dd>
-
-
-<dt>combine_IR</dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether values R and I should be summed</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether values S and I should be summed, so resistance will be based on only R, defaults to <code>TRUE</code></p></dd>
 
 
 <dt>add_ab_group</dt>
@@ -220,7 +215,7 @@
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The function <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code> calculates the resistance per bug-drug combination. Use <code>combine_IR = FALSE</code> (default) to test R vs. S+I and <code>combine_IR = TRUE</code> to test R+I vs. S.</p>
+    <p>The function <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code> calculates the resistance per bug-drug combination. Use <code>combine_SI = TRUE</code> (default) to test R vs. S+I and <code>combine_SI = FALSE</code> to test R+I vs. S.</p>
     </div>
 
     <div class="section level2">

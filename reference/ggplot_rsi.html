@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9023</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9024</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -143,7 +143,6 @@
 <span>  limits <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  translate_ab <span class="op">=</span> <span class="st">"name"</span>,</span>
 <span>  combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  combine_IR <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  minimum <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  nrow <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -168,7 +167,6 @@
 <span>  minimum <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  combine_IR <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -187,7 +185,6 @@
 <span>  minimum <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  combine_IR <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  datalabels.size <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  datalabels.colour <span class="op">=</span> <span class="st">"grey15"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -228,11 +225,7 @@
 
 
 <dt>combine_SI</dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant). This used to be the argument <code>combine_IR</code>, but this now follows the redefinition by EUCAST about the interpretation of I (increased exposure) in 2019, see section 'Interpretation of S, I and R' below. Default is <code>TRUE</code>.</p></dd>
-
-
-<dt>combine_IR</dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all values of I and R must be merged into one, so the output only consists of S vs. I+R (susceptible vs. non-susceptible). This is outdated, see argument <code>combine_SI</code>.</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant), defaults to <code>TRUE</code></p></dd>
 
 
 <dt>minimum</dt>
