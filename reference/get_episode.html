@@ -177,42 +177,42 @@
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">2000</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>, <span class="op">]</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">get_episode</span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">date</span>, episode_days <span class="op">=</span> <span class="fl">60</span><span class="op">)</span> <span class="co"># indices</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 38 54 24  6  7 33 20 44 53 63 25 55 56 49 61 62  9  8 45  9 36 17 37  2 50</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [26] 35 20 13 11 23 63 59 61 43 59 41 25 22 12 46 18 62 57 17 27  8 36 29 24 41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [51] 58 35 61 48 12 18  3 31 20 41 56  9 56 51 64 16  1 36 40 50 53 19 25 36 12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [76] 20  9 18 36 62 29 51 45 12 10 23 40  3 38  5 15  7 17 21  3 63 38 40  7 14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [101] 63  7 17 15 51 17 62  2 61 12 52 32 46 32 27  4 13 61 19 37 41 38 51 22 50</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [126] 41 14 12 29 64 58 52 57 46 57 33 56 16 34 26  5 34 17 42 63 61 22 58 20 44</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [151] 25 38 25 17 12 22 56 28 13 34  3 47 25 63 16  1  5  1 22 39 31 14 31 51 30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [176]  1 61 46  6 27 19  1 56 40 30 20 10 57 60 18 24 60 30 22 47 23 62 26 62  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 51  1 30 33 57 38 63 41 55 28 20 27 45 11 12 55 39  3 21 59 25 21  9  2 42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [26]  5 49 24 11 32 51 28 21 38 57 36 11 54 24 36 60  6 50 31 60 47 43 20 54 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [51] 40 35 12 62 31 42 41 37  9 20  1  2 34 48 46 45 51 36 59 45 62 28 54 26  2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [76] 44 49 28 19 17 10 62 40  6  8 38 51 32  5 37 46  7 61 51 38 27 52 33 58 39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [101] 38  1 41  7 48 43  9 17 14 31 16 60 19 54 54 28 24 31 54 35 54  3  6 15 18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [126] 48 34 34 60 29 41 12 19 57 54 50 45 17 56 62 10 28 13 28  4 33 53 54 47 22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [151] 56 31  9 49 40 61 33 11 50 27 23 24 44 15  4  8 30 48 28 61 62  3 40 60 26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [176] 21 26 25  4 13 10  3  8 54 63 48 64 64 44 42 47 58 53 14  8 52 22 13 17 23</span>
 <span class="r-in"><span><span class="fu">is_new_episode</span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">date</span>, episode_days <span class="op">=</span> <span class="fl">60</span><span class="op">)</span> <span class="co"># TRUE/FALSE</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [13] FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [25] FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [37]  TRUE FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [49] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [61] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [85] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [97] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [109] FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [121] FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [133] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [145] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [157] FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [169] FALSE  TRUE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [181] FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [193] FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [13]  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [25] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [37]  TRUE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [49] FALSE  TRUE FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [61] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [73] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [85] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [97]  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [109]  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [121] FALSE  TRUE FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [133] FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [145] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [157] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [169] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [181] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [193]  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># filter on results from the third 60-day episode only, using base R</span></span></span>
 <span class="r-in"><span><span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu">get_episode</span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">date</span>, <span class="fl">60</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span><span class="op">)</span>, <span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 46</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   date       patient   age gender ward      mo           PEN   OXA   FLC   AMX  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2002-08-19 A49852     70 M      Clinical  B_ESCHR_COLI R     NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2002-07-16 241328     78 M      Outpatie… B_STPHY_CONS R     NA    S     R    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2002-06-23 798871     82 M      Clinical  B_ENTRC_FCLS NA    NA    NA    NA   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2002-06-22 FD8039     75 F      ICU       B_ESCHR_COLI R     NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2002-10-11 974319     78 M      Outpatie… B_STPHY_EPDR S     NA    S     NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2002-08-31 149442     80 F      ICU       B_STPHY_AURS R     NA    S     R    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2002-10-18 E55128     57 F      ICU       B_STPHY_AURS R     NA    S     R    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2002-09-23 F35553     51 M      ICU       B_STPHY_AURS S     NA    S     NA   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 36 more variables: AMC &lt;rsi&gt;, AMP &lt;rsi&gt;, TZP &lt;rsi&gt;, CZO &lt;rsi&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   FEP &lt;rsi&gt;, CXM &lt;rsi&gt;, FOX &lt;rsi&gt;, CTX &lt;rsi&gt;, CAZ &lt;rsi&gt;, CRO &lt;rsi&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   GEN &lt;rsi&gt;, TOB &lt;rsi&gt;, AMK &lt;rsi&gt;, KAN &lt;rsi&gt;, TMP &lt;rsi&gt;, SXT &lt;rsi&gt;,</span></span>
@@ -248,16 +248,16 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   condition [3]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    patient date       condition new_episode</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 687590  2011-10-29 C         FALSE      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> C54153  2015-08-09 A         FALSE      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 1710B8  2008-01-22 B         FALSE      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 914520  2003-07-11 B         FALSE      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 999565  2003-10-09 B         FALSE      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 953526  2010-04-23 A         FALSE      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 418311  2006-11-10 C         FALSE      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 298662  2013-03-12 B         TRUE       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2C8499  2015-05-22 B         FALSE      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> F67215  2017-08-15 B         FALSE      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> D53062  2014-07-28 B         FALSE      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 495616  2002-01-17 C         TRUE       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 534816  2008-10-28 A         TRUE       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> D30712  2009-04-10 B         FALSE      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 092034  2016-08-07 C         FALSE      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 080086  2010-08-08 A         FALSE      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 470001  2017-10-04 C         FALSE      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> F15984  2011-04-01 B         FALSE      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> D41749  2015-12-15 A         FALSE      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 945BD5  2008-05-06 A         FALSE      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 190 more rows</span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
@@ -269,19 +269,19 @@
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 200 × 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   ward, patient [189]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    ward     date       patient new_index new_logical</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Clinical 2011-10-29 687590          1 TRUE       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Clinical 2015-08-09 C54153          1 TRUE       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Clinical 2008-01-22 1710B8          1 TRUE       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> ICU      2003-07-11 914520          1 TRUE       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Clinical 2003-10-09 999565          1 TRUE       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ICU      2010-04-23 953526          1 TRUE       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ICU      2006-11-10 418311          1 TRUE       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Clinical 2013-03-12 298662          1 TRUE       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> ICU      2015-05-22 2C8499          1 TRUE       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Clinical 2017-08-15 F67215          1 TRUE       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   ward, patient [185]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    ward       date       patient new_index new_logical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Clinical   2014-07-28 D53062          1 TRUE       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Clinical   2002-01-17 495616          1 TRUE       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Clinical   2008-10-28 534816          1 TRUE       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Clinical   2009-04-10 D30712          1 TRUE       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Clinical   2016-08-07 092034          1 TRUE       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Clinical   2010-08-08 080086          1 TRUE       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Clinical   2017-10-04 470001          1 TRUE       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Outpatient 2011-04-01 F15984          1 TRUE       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Clinical   2015-12-15 D41749          1 TRUE       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Clinical   2008-05-06 945BD5          1 TRUE       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 190 more rows</span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
@@ -296,9 +296,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ward       n_patients n_episodes_365 n_episodes_60 n_episodes_30</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical          119             14            48            72</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU                59             14            37            42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outpatient         11              8             9            11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical          116             14            53            71</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU                52             11            32            40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outpatient         17             10            16            17</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># grouping on patients and microorganisms leads to the same</span></span></span>
@@ -328,19 +328,19 @@
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_data.html" class="external-link">group_vars</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>, <span class="va">flag_episode</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 200 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   patient, mo, ward [193]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    patient mo           ward     flag_episode</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 687590  B_STPHY_CONS Clinical TRUE        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> C54153  B_STPHY_EPDR Clinical TRUE        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 1710B8  B_PROTS_MRBL Clinical TRUE        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 914520  B_STPHY_CONS ICU      TRUE        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 999565  B_STPHY_CONS Clinical TRUE        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 953526  B_STPHY_CONS ICU      TRUE        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 418311  B_STPHY_CONS ICU      TRUE        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 298662  B_ESCHR_COLI Clinical TRUE        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2C8499  B_ESCHR_COLI ICU      TRUE        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> F67215  B_STPHY_EPDR Clinical TRUE        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   patient, mo, ward [190]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    patient mo            ward       flag_episode</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> D53062  B_HMPHL_INFL  Clinical   TRUE        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 495616  B_STPHY_EPDR  Clinical   TRUE        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 534816  F_CANDD_ALBC  Clinical   TRUE        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> D30712  B_STRPT_PNMN  Clinical   TRUE        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 092034  B_ESCHR_COLI  Clinical   TRUE        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 080086  B_STPHY_CONS  Clinical   TRUE        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 470001  B_KLBSL_PNMN  Clinical   TRUE        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> F15984  B_STPHY_CONS  Outpatient TRUE        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> D41749  B_ESCHR_COLI  Clinical   TRUE        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 945BD5  B_ENTRBC_CLOC Clinical   TRUE        </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 190 more rows</span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
