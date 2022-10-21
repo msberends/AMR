@@ -1,4 +1,4 @@
-# AMR 1.8.2.9027
+# AMR 1.8.2.9028
 
 This version will eventually become v2.0! We're happy to reach a new major milestone soon!
 
@@ -27,7 +27,7 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. We are very grateful for the valuable input by our colleagues from other countries. The `AMR` package is now available in 16 languages. The automatic language determination will give a note at start-up on systems in supported languages.
 * Our data sets are now also continually exported to Apache Feather and Apache Parquet formats. You can find more info [in this article on our website](https://msberends.github.io/AMR/articles/datasets.html).
 * Added confidence intervals in AMR calculation. This is now included in `rsi_df()` and `proportion_df()` and manually available as `rsi_confidence_interval()`
-* Support for using antibiotic selectors in scoped `dplyr` verbs (worh or without `vars()`), such as in: `... %>% summarise_at(aminoglycosides(), resistance)`
+* Support for using antibiotic selectors in scoped `dplyr` verbs (with or without `vars()`), such as in: `... %>% summarise_at(aminoglycosides(), resistance)`, see `resistance()`
 
 ### Changed
 * Fix for using `as.rsi()` on certain EUCAST breakpoints for MIC values

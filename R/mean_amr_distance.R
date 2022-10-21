@@ -41,7 +41,7 @@
 #'
 #' For data sets, the mean AMR distance will be calculated per variable, after which the mean of all columns will returned per row (using [rowMeans()]), see *Examples*.
 #'
-#' Use [distance_from_row()] to subtract distances from the distance of one row, see *Examples*.
+#' Use [mean_distance_from_row()] to subtract distances from the distance of one row, see *Examples*.
 #' @section Interpretation:
 #' Isolates with distances less than 0.01 difference from each other should be considered similar. Differences lower than 0.025 should be considered suspicious.
 #' @export
@@ -66,7 +66,7 @@
 #'   y %>%
 #'     mutate(
 #'       amr_distance = mean_amr_distance(., where(is.mic)),
-#'       check_id_C = distance_from_row(amr_distance, id == "C")
+#'       check_id_C = mean_distance_from_row(amr_distance, id == "C")
 #'     ) %>%
 #'     arrange(check_id_C)
 #' }
@@ -104,7 +104,7 @@ mean_amr_distance.disk <- function(x, ...) {
 
 #' @rdname mean_amr_distance
 #' @export
-mean_amr_distance.rsi <- function(x, combine_SI = TRUE, ...) {
+mean_amr_distance.rsi <- function(x, ..., combine_SI = TRUE) {
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1, .call_depth = -1)
   if (isTRUE(combine_SI)) {
     x[x == "I"] <- "S"
@@ -157,7 +157,7 @@ mean_amr_distance.data.frame <- function(x, ..., combine_SI = TRUE) {
 #' @param mean_distance the outcome of [mean_amr_distance()]
 #' @param row an index, such as a row number
 #' @export
-distance_from_row <- function(mean_distance, row) {
+mean_distance_from_row <- function(mean_distance, row) {
   meet_criteria(mean_distance, allow_class = c("double", "numeric"), is_finite = TRUE)
   meet_criteria(row, allow_class = c("logical", "double", "numeric"))
   if (is.logical(row)) {
