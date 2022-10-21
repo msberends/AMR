@@ -882,9 +882,9 @@ get_current_data <- function(arg_name, call) {
         return(env$x)
       }
       
-    } else if (!is.null(names(env)) && all(c(".tbl", ".vars", ".env") %in% names(env), na.rm = TRUE) && valid_df(env$`.tbl`)) {
-      # an element `.tbl` will be in the environment when using `dplyr::vars()`
-      # (e.g. in `dplyr::summarise_at()` or `dplyr::mutate_at()`)
+    } else if (!is.null(names(env)) && all(c(".tbl", ".vars", ".cols") %in% names(env), na.rm = TRUE) && valid_df(env$`.tbl`)) {
+      # an element `.tbl` will be in the environment when using scoped dplyr variants, with or without `dplyr::vars()`
+      # (e.g. `dplyr::summarise_at()` or `dplyr::mutate_at()`)
       return(env$`.tbl`)
     }
   }
