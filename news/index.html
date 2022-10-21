@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9029</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9031</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,10 +127,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.8.2.9029" id="amr-1829029">AMR 1.8.2.9029<a class="anchor" aria-label="anchor" href="#amr-1829029"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.8.2.9031" id="amr-1829031">AMR 1.8.2.9031<a class="anchor" aria-label="anchor" href="#amr-1829031"></a></h2>
 <p>This version will eventually become v2.0! We’re happy to reach a new major milestone soon!</p>
 <div class="section level4">
-<h4 id="breaking-1-8-2-9029">Breaking<a class="anchor" aria-label="anchor" href="#breaking-1-8-2-9029"></a></h4>
+<h4 id="breaking-1-8-2-9031">Breaking<a class="anchor" aria-label="anchor" href="#breaking-1-8-2-9031"></a></h4>
 <ul><li>Removed all species of the taxonomic kingdom Chromista from the package. This was done for multiple reasons:<ul><li>CRAN allows packages to be around 5 MB maximum, some packages are exempted but this package is not one of them</li>
 <li>Chromista are not relevant when it comes to antimicrobial resistance, thus lacking the primary scope of this package</li>
 <li>Chromista are almost never clinically relevant, thus lacking the secondary scope of this package</li>
@@ -138,31 +138,31 @@
 <li>The <code>microorganisms</code> no longer relies on the Catalogue of Life, but now primarily on the List of Prokaryotic names with Standing in Nomenclature (LPSN) and is supplemented with the Global Biodiversity Information Facility (GBIF). The structure of this data set has changed to include separate LPSN and GBIF identifiers. Almost all previous MO codes were retained. It contains over 1,000 taxonomic names from 2022 already.</li>
 <li>The <code>microorganisms.old</code> data set was removed, and all previously accepted names are now included in the <code>microorganisms</code> data set. A new column <code>status</code> contains <code>"accepted"</code> for currently accepted names and <code>"synonym"</code> for taxonomic synonyms; currently invalid names. All previously accepted names now have a microorganisms ID and - if available - an LPSN, GBIF and SNOMED CT identifier.</li>
 <li>The MO matching score algorithm (<code><a href="../reference/mo_matching_score.html">mo_matching_score()</a></code>) now counts deletions and substitutions as 2 instead of 1, which impacts the outcome of <code><a href="../reference/as.mo.html">as.mo()</a></code> and any <code>mo_*()</code> function</li>
-<li>Argument <code>combine_IR</code> has been removed from this package (affecting all <code><a href="../reference/count.html">count_df()</a></code>, <code><a href="../reference/proportion.html">proportion_df()</a></code> and <code>rsi_all()</code>), since it was replaced with <code>combine_SI</code> three years ago</li>
+<li>Argument <code>combine_IR</code> has been removed from this package (affecting functions <code><a href="../reference/count.html">count_df()</a></code>, <code><a href="../reference/proportion.html">proportion_df()</a></code>, and <code><a href="../reference/proportion.html">rsi_df()</a></code> and some plotting functions), since it was replaced with <code>combine_SI</code> three years ago</li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-1-8-2-9029">New<a class="anchor" aria-label="anchor" href="#new-1-8-2-9029"></a></h4>
+<h4 id="new-1-8-2-9031">New<a class="anchor" aria-label="anchor" href="#new-1-8-2-9031"></a></h4>
 <ul><li>EUCAST 2022 and CLSI 2022 guidelines have been added for <code><a href="../reference/as.rsi.html">as.rsi()</a></code>. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.</li>
 <li>All new algorithm for <code><a href="../reference/as.mo.html">as.mo()</a></code> (and thus internally all <code>mo_*()</code> functions) while still following our original set-up as described in our paper (DOI 10.18637/jss.v104.i03).<ul><li>A new argument <code>keep_synonyms</code> allows to <em>not</em> correct for updated taxonomy, in favour of the now deleted argument <code>allow_uncertain</code>
 </li>
 <li>It has increased tremendously in speed and returns generally more consequent results</li>
 <li>Sequential coercion is now extremely fast as results are stored to the package environment, although coercion of unknown values must be run once per session. Previous results can be reset/removed with the new <code><a href="../reference/as.mo.html">mo_reset_session()</a></code> function.</li>
 </ul></li>
+<li>Function <code><a href="../reference/proportion.html">rsi_confidence_interval()</a></code> to add confidence intervals in AMR calculation. This is also included in <code><a href="../reference/proportion.html">rsi_df()</a></code> and <code><a href="../reference/proportion.html">proportion_df()</a></code>
+</li>
 <li>Function <code><a href="../reference/mean_amr_distance.html">mean_amr_distance()</a></code> to calculate the mean AMR distance. The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand.</li>
 <li>Function <code><a href="../reference/as.rsi.html">rsi_interpretation_history()</a></code> to view the history of previous runs of <code><a href="../reference/as.rsi.html">as.rsi()</a></code>. This returns a ‘logbook’ with the selected guideline, reference table and specific interpretation of each row in a data set on which <code><a href="../reference/as.rsi.html">as.rsi()</a></code> was run.</li>
 <li>Function <code><a href="../reference/mo_property.html">mo_current()</a></code> to get the currently valid taxonomic name of a microorganism</li>
 <li>Function <code><a href="../reference/add_custom_antimicrobials.html">add_custom_antimicrobials()</a></code> to add custom antimicrobial codes and names to the <code>AMR</code> package</li>
-<li>Support for <code>data.frame</code>-enhancing R packages, more specifically: <code><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table</a></code>, <code><a href="https://rdrr.io/pkg/janitor/man/tabyl.html" class="external-link">janitor::tabyl</a></code>, <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble</a></code>, and <code>tsibble::tsibble</code>. AMR package functions that have a data set as output (such as <code><a href="../reference/proportion.html">rsi_df()</a></code> and <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code>), will now return the same data type as the input.</li>
+<li>Support for <code>data.frame</code>-enhancing R packages, more specifically: <code><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table::data.table</a></code>, <code><a href="https://rdrr.io/pkg/janitor/man/tabyl.html" class="external-link">janitor::tabyl</a></code>, <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble</a></code>, and <code><a href="https://tsibble.tidyverts.org/reference/tsibble.html" class="external-link">tsibble::tsibble</a></code>. AMR package functions that have a data set as output (such as <code><a href="../reference/proportion.html">rsi_df()</a></code> and <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code>), will now return the same data type as the input.</li>
 <li>All data sets in this package are now exported as <code>tibble</code>, instead of base R <code>data.frame</code>s. Older R versions are still supported.</li>
 <li>Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. We are very grateful for the valuable input by our colleagues from other countries. The <code>AMR</code> package is now available in 16 languages. The automatic language determination will give a note at start-up on systems in supported languages.</li>
 <li>Our data sets are now also continually exported to Apache Feather and Apache Parquet formats. You can find more info <a href="https://msberends.github.io/AMR/articles/datasets.html">in this article on our website</a>.</li>
-<li>Added confidence intervals in AMR calculation. This is now included in <code><a href="../reference/proportion.html">rsi_df()</a></code> and <code><a href="../reference/proportion.html">proportion_df()</a></code> and manually available as <code><a href="../reference/proportion.html">rsi_confidence_interval()</a></code>
-</li>
 <li>Support for using antibiotic selectors in scoped <code>dplyr</code> verbs (with or without <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code>), such as in: <code>... %&gt;% summarise_at(aminoglycosides(), resistance)</code>, see <code><a href="../reference/proportion.html">resistance()</a></code>
 </li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-1-8-2-9029">Changed<a class="anchor" aria-label="anchor" href="#changed-1-8-2-9029"></a></h4>
+<h4 id="changed-1-8-2-9031">Changed<a class="anchor" aria-label="anchor" href="#changed-1-8-2-9031"></a></h4>
 <ul><li>Fix for using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on certain EUCAST breakpoints for MIC values</li>
 <li>Fix for using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on <code>NA</code> values (e.g. <code>as.rsi(as.disk(NA), ...)</code>)</li>
 <li>Removed <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> for MIC values, since MIC are not integer values and running <code><a href="https://rdrr.io/r/base/table.html" class="external-link">table()</a></code> on MIC values consequently failed for not being able to retrieve the level position (as that’s how normally <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> on <code>factor</code>s work)</li>
@@ -187,9 +187,9 @@
 <li>Fix for using <code><a href="../reference/as.ab.html">as.ab()</a></code> on <code>NA</code> values</li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-1-8-2-9029">Other<a class="anchor" aria-label="anchor" href="#other-1-8-2-9029"></a></h4>
+<h4 id="other-1-8-2-9031">Other<a class="anchor" aria-label="anchor" href="#other-1-8-2-9031"></a></h4>
 <ul><li>New website to make use of the new Bootstrap 5 and pkgdown 2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions</li>
-<li>Added Peter Dutey-Magni, Dmytro Mykhailenko and Anton Mymrikov as contributors, to thank them for their valuable input</li>
+<li>Added Peter Dutey-Magni, Dmytro Mykhailenko, Anton Mymrikov, and Jonas Salm as contributors, to thank them for their valuable input</li>
 <li>All R and Rmd files in this project are now styled using the <code>styler</code> package</li>
 <li>Set scalar conditional expressions (<code>&amp;&amp;</code> and <code>||</code>) where possible to comply with the upcoming R 4.3</li>
 <li>An enormous lot of code cleaning, fixing some small bugs on the way</li>
