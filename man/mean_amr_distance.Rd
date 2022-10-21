@@ -7,7 +7,7 @@
 \alias{mean_amr_distance.disk}
 \alias{mean_amr_distance.rsi}
 \alias{mean_amr_distance.data.frame}
-\alias{mean_distance_from_row}
+\alias{amr_distance_from_row}
 \title{Mean AMR Distance}
 \usage{
 mean_amr_distance(x, ...)
@@ -22,7 +22,7 @@ mean_amr_distance(x, ...)
 
 \method{mean_amr_distance}{data.frame}(x, ..., combine_SI = TRUE)
 
-mean_distance_from_row(mean_distance, row)
+amr_distance_from_row(amr_distance, row)
 }
 \arguments{
 \item{x}{a vector of class \link[=as.rsi]{rsi}, \link[=as.rsi]{rsi} or \link[=as.rsi]{rsi}, or a \link{data.frame} containing columns of any of these classes}
@@ -31,7 +31,7 @@ mean_distance_from_row(mean_distance, row)
 
 \item{combine_SI}{a \link{logical} to indicate whether all values of S and I must be merged into one, so the input only consists of S+I vs. R (susceptible vs. resistant), defaults to \code{TRUE}}
 
-\item{mean_distance}{the outcome of \code{\link[=mean_amr_distance]{mean_amr_distance()}}}
+\item{amr_distance}{the outcome of \code{\link[=mean_amr_distance]{mean_amr_distance()}}}
 
 \item{row}{an index, such as a row number}
 }
@@ -47,7 +47,7 @@ R/SI values (see \code{\link[=as.rsi]{as.rsi()}}) are transformed using \code{"S
 
 For data sets, the mean AMR distance will be calculated per variable, after which the mean of all columns will returned per row (using \code{\link[=rowMeans]{rowMeans()}}), see \emph{Examples}.
 
-Use \code{\link[=mean_distance_from_row]{mean_distance_from_row()}} to subtract distances from the distance of one row, see \emph{Examples}.
+Use \code{\link[=amr_distance_from_row]{amr_distance_from_row()}} to subtract distances from the distance of one row, see \emph{Examples}.
 }
 \section{Interpretation}{
 
@@ -75,7 +75,7 @@ if (require("dplyr")) {
   y \%>\%
     mutate(
       amr_distance = mean_amr_distance(., where(is.mic)),
-      check_id_C = mean_distance_from_row(amr_distance, id == "C")
+      check_id_C = amr_distance_from_row(amr_distance, id == "C")
     ) \%>\%
     arrange(check_id_C)
 }
