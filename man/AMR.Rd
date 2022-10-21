@@ -94,6 +94,7 @@ Other contributors:
   \item Dmytro Mykhailenko [contributor]
   \item Anton Mymrikov [contributor]
   \item Sofia Ny (\href{https://orcid.org/0000-0002-2017-1363}{ORCID}) [contributor]
+  \item Jonas Salm [contributor]
   \item Rogier P. Schade [contributor]
   \item Bhanu N. M. Sinha (\href{https://orcid.org/0000-0003-1634-0010}{ORCID}) [thesis advisor]
   \item Anthony Underwood (\href{https://orcid.org/0000-0002-8547-4277}{ORCID}) [contributor]

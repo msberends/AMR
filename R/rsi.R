@@ -719,8 +719,9 @@ as_rsi_method <- function(method_short,
     mo.bak <- list(...)$mo.bak
   } else {
     mo.bak <- mo
-    mo <- suppressWarnings(as.mo(mo))
   }
+  # be sure to take current taxonomy, as the rsi_translation data set only contains current taxonomy
+  mo <- suppressWarnings(suppressMessages(as.mo(mo, keep_synonyms = FALSE)))
   guideline_coerced <- get_guideline(guideline, reference_data)
   if (is.na(ab)) {
     message_("Returning NAs for unknown drug: '", font_bold(ab.bak),

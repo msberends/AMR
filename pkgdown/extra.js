@@ -31,8 +31,9 @@
 
 $(document).ready(function() {
 
-  // Replace 'Developers' with 'Maintainers' on the main page
+  // Replace 'Developers' with 'Maintainers' on the main page, and "Contributors" on the Authors page
   $(".developers h2").text("Maintainers");
+  $(".citation h2").text("Contributors");
 
   // replace \donttest and \dontrun texts in Examples
   if ($("#ref-examples ~ div pre").length > 0) {
@@ -52,18 +53,18 @@ $(document).ready(function() {
     if (typeof(x) != "undefined") {
       x = x.replace(/Author, maintainer/g, "Principle developer");
       x = x.replace(/Author, contributor/g, "Contributing maintainer");
-      x = x.replace(/Author, thesis advisor/g, "Doctoral advisor");
-      x = x.replace(/Thesis advisor/g, "Doctoral advisor");
-      // authors
-      x = x.replace("Alex", "Prof. Dr. Alex");
+      x = x.replace(/Thesis advisor/g, "(former) Doctoral advisor");
+      // contributors
+      x = x.replace("Alex", "Prof. Alex");
       x = x.replace("Anthony", "Dr. Anthony");
       x = x.replace("Bart", "Dr. Bart");
-      x = x.replace("Bhanu", "Prof. Dr. Bhanu");
-      x = x.replace("Casper", "Prof. Dr. Casper");
+      x = x.replace("Bhanu", "Prof. Bhanu");
+      x = x.replace("Casper", "Prof. Casper");
       x = x.replace("Christian", "Dr. Christian");
       x = x.replace("Corinna", "Dr. Corinna");
       x = x.replace("Dennis", "Dr. Dennis");
       x = x.replace("Gwen", "Dr. Gwen");
+      x = x.replace("Jonas", "Dr. Jonas");
       x = x.replace("Judith", "Dr. Judith");
       x = x.replace("Matthijs", "Dr. Matthijs");
       x = x.replace("Peter", "Dr. Peter");
