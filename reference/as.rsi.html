@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9032</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9033</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -186,6 +186,12 @@
     <p>An object of class <code>rsi</code> (inherits from <code>ordered</code>, <code>factor</code>) of length 1.</p>
     </div>
     <div class="section level2">
+    <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
+    <p>For interpretations of minimum inhibitory concentration (MIC) values and disk diffusion diameters:</p><ul><li><p><strong>M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data</strong>, 2013-2022, <em>Clinical and Laboratory Standards Institute</em> (CLSI). <a href="https://clsi.org/standards/products/microbiology/documents/m39/" class="external-link">https://clsi.org/standards/products/microbiology/documents/m39/</a>.</p></li>
+<li><p><strong>M100 Performance Standard for Antimicrobial Susceptibility Testing</strong>, 2013-2022, <em>Clinical and Laboratory Standards Institute</em> (CLSI). <a href="https://clsi.org/standards/products/microbiology/documents/m100/" class="external-link">https://clsi.org/standards/products/microbiology/documents/m100/</a>.</p></li>
+<li><p><strong>Breakpoint tables for interpretation of MICs and zone diameters</strong>, 2013-2022, <em>European Committee on Antimicrobial Susceptibility Testing</em> (EUCAST). <a href="https://www.eucast.org/clinical_breakpoints" class="external-link">https://www.eucast.org/clinical_breakpoints</a>.</p></li>
+</ul></div>
+    <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>vector of values (for class <code><a href="as.mic.html">mic</a></code>: MIC values in mg/L, for class <code><a href="as.disk.html">disk</a></code>: a disk diffusion radius in millimetres)</p></dd>
@@ -208,7 +214,7 @@
 
 
 <dt>guideline</dt>
-<dd><p>defaults to EUCAST 2022 (the latest implemented EUCAST guideline in the <a href="rsi_translation.html">rsi_translation</a> data set), supports EUCAST (2011-2022) and CLSI (2011-2022), see <em>Details</em></p></dd>
+<dd><p>defaults to EUCAST 2022 (the latest implemented EUCAST guideline in the <a href="rsi_translation.html">rsi_translation</a> data set), supports EUCAST (2013-2022) and CLSI (2013-2022), see <em>Details</em></p></dd>
 
 
 <dt>uti</dt>
@@ -268,7 +274,7 @@
 <h3 id="supported-guidelines">Supported Guidelines<a class="anchor" aria-label="anchor" href="#supported-guidelines"></a></h3>
 
 
-<p>For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (2011-2022) and CLSI (2011-2022).</p>
+<p>For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (2013-2022) and CLSI (2013-2022).</p>
 <p>Thus, the <code>guideline</code> argument must be set to e.g., <code>"EUCAST 2022"</code> or <code>"CLSI 2022"</code>. By simply using <code>"EUCAST"</code> (the default) or <code>"CLSI"</code> as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the <code>reference_data</code> argument. The <code>guideline</code> argument will then be ignored.</p>
 </div>
 
@@ -283,7 +289,7 @@
 <h3 id="machine-readable-interpretation-guidelines">Machine-Readable Interpretation Guidelines<a class="anchor" aria-label="anchor" href="#machine-readable-interpretation-guidelines"></a></h3>
 
 
-<p>The repository of this package <a href="https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt" class="external-link">contains a machine-readable version</a> of all guidelines. This is a CSV file consisting of 20,369 rows and 11 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. <strong>This allows for easy implementation of these rules in laboratory information systems (LIS)</strong>. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.</p>
+<p>The repository of this package <a href="https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt" class="external-link">contains a machine-readable version</a> of all guidelines. This is a CSV file consisting of 18,308 rows and 11 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. <strong>This allows for easy implementation of these rules in laboratory information systems (LIS)</strong>. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.</p>
 </div>
 
 <div class="section">
@@ -484,16 +490,16 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 50 × 13</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    datetime            index ab_input   ab_consid…¹ mo_in…² mo_conside…³ guide…⁴</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2022-10-22 <span style="color: #949494;">08:23:30</span>     1 ampicillin AMP         Strep … B_STRPT_PNMN EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2022-10-22 <span style="color: #949494;">08:23:30</span>     1 AMP        AMP         Escher… B_ESCHR_COLI EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2022-10-22 <span style="color: #949494;">08:23:31</span>     1 CIP        CIP         Escher… B_ESCHR_COLI EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2022-10-22 <span style="color: #949494;">08:23:31</span>     1 GEN        GEN         Escher… B_ESCHR_COLI EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2022-10-22 <span style="color: #949494;">08:23:31</span>     1 TOB        TOB         Escher… B_ESCHR_COLI EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2022-10-22 <span style="color: #949494;">08:23:31</span>     1 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2022-10-22 <span style="color: #949494;">08:23:32</span>     1 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2022-10-22 <span style="color: #949494;">08:23:32</span>     2 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2022-10-22 <span style="color: #949494;">08:23:32</span>     3 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2022-10-22 <span style="color: #949494;">08:23:32</span>     4 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2022-10-22 <span style="color: #949494;">20:06:45</span>     1 ampicillin AMP         Strep … B_STRPT_PNMN EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2022-10-22 <span style="color: #949494;">20:06:46</span>     1 AMP        AMP         Escher… B_ESCHR_COLI EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2022-10-22 <span style="color: #949494;">20:06:46</span>     1 CIP        CIP         Escher… B_ESCHR_COLI EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2022-10-22 <span style="color: #949494;">20:06:46</span>     1 GEN        GEN         Escher… B_ESCHR_COLI EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2022-10-22 <span style="color: #949494;">20:06:46</span>     1 TOB        TOB         Escher… B_ESCHR_COLI EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2022-10-22 <span style="color: #949494;">20:06:47</span>     1 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2022-10-22 <span style="color: #949494;">20:06:47</span>     1 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2022-10-22 <span style="color: #949494;">20:06:47</span>     2 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2022-10-22 <span style="color: #949494;">20:06:47</span>     3 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2022-10-22 <span style="color: #949494;">20:06:47</span>     4 AMX        AMX         B_STRP… B_STRPT_PNMN EUCAST…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 40 more rows, 6 more variables: ref_table &lt;chr&gt;, method &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   breakpoint_S &lt;dbl&gt;, breakpoint_R &lt;dbl&gt;, input &lt;dbl&gt;, interpretation &lt;rsi&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   and abbreviated variable names ¹​ab_considered, ²​mo_input, ³​mo_considered,</span></span>
@@ -508,7 +514,8 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting MIC values of 'AMP' (ampicillin) according to EUCAST</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: assuming site 'Non-meningitis' for Streptococcus pneumoniae</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'rsi'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] R</span>
 <span class="r-in"><span></span></span>
@@ -633,10 +640,12 @@ A microorganism is categorised as <em>Susceptible, Increased exposure</em> when 
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'GEN' (gentamicin) according to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: assuming site 'UTI' for Enterobacterales</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> =&gt; Interpreting disk diffusion zones of 'TOB' (tobramycin) according to</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>    EUCAST 2022...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  OK.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>in `as.rsi()`: assuming site 'UTI' for Enterobacterales</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      microorganism AMP CIP GEN TOB ERY</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli   S   I   S   S   R</span>
 <span class="r-in"><span></span></span>
