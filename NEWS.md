@@ -1,4 +1,4 @@
-# AMR 1.8.2.9032
+# AMR 1.8.2.9033
 
 This version will eventually become v2.0! We're happy to reach a new major milestone soon!
 
@@ -11,13 +11,15 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * The `microorganisms.old` data set was removed, and all previously accepted names are now included in the `microorganisms` data set. A new column `status` contains `"accepted"` for currently accepted names and `"synonym"` for taxonomic synonyms; currently invalid names. All previously accepted names now have a microorganisms ID and - if available - an LPSN, GBIF and SNOMED CT identifier.
 * The MO matching score algorithm (`mo_matching_score()`) now counts deletions and substitutions as 2 instead of 1, which impacts the outcome of `as.mo()` and any `mo_*()` function
 * Argument `combine_IR` has been removed from this package (affecting functions `count_df()`, `proportion_df()`, and `rsi_df()` and some plotting functions), since it was replaced with `combine_SI` three years ago
+* Removal of interpretation guidelines older than 10 years, the oldest now included guidelines of EUCAST and CLSI are from 2013
 
 ### New
 * EUCAST 2022 and CLSI 2022 guidelines have been added for `as.rsi()`. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.
-* All new algorithm for `as.mo()` (and thus internally all `mo_*()` functions) while still following our original set-up as described in our paper (DOI 10.18637/jss.v104.i03).
+* All new algorithm for `as.mo()` (and thus all `mo_*()` functions) while still following our original set-up as described in our paper (DOI 10.18637/jss.v104.i03).
   * A new argument `keep_synonyms` allows to *not* correct for updated taxonomy, in favour of the now deleted argument `allow_uncertain`
   * It has increased tremendously in speed and returns generally more consequent results
   * Sequential coercion is now extremely fast as results are stored to the package environment, although coercion of unknown values must be run once per session. Previous results can be reset/removed with the new `mo_reset_session()` function.
+* Support for microorganism codes of the ASIan Antimicrobial Resistance Surveillance Network (ASIARS-Net) 
 * Function `rsi_confidence_interval()` to add confidence intervals in AMR calculation. This is also included in `rsi_df()` and `proportion_df()`
 * Function `mean_amr_distance()` to calculate the mean AMR distance. The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand.
 * Function `rsi_interpretation_history()` to view the history of previous runs of `as.rsi()`. This returns a 'logbook' with the selected guideline, reference table and specific interpretation of each row in a data set on which `as.rsi()` was run.
@@ -28,6 +30,7 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. We are very grateful for the valuable input by our colleagues from other countries. The `AMR` package is now available in 16 languages. The automatic language determination will give a note at start-up on systems in supported languages.
 * Our data sets are now also continually exported to Apache Feather and Apache Parquet formats. You can find more info [in this article on our website](https://msberends.github.io/AMR/articles/datasets.html).
 * Support for using antibiotic selectors in scoped `dplyr` verbs (with or without `vars()`), such as in: `... %>% summarise_at(aminoglycosides(), resistance)`, see `resistance()`
+* Support for antimicrobial interpretation of anaerobic bacteria, by adding a 'placeholder' code `B_ANAER` to the `microorganisms` data set and add the breakpoints of anaerobics to the `rsi_interpretation` data set, which is used by `as.rsi()` when interpreting MIC and disk diffusion values
 
 ### Changed
 * Fix for using `as.rsi()` on certain EUCAST breakpoints for MIC values
@@ -46,6 +49,8 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * Black and white message texts are now reversed in colour if using an RStudio dark theme
 * `mo_snomed()` now returns class `character`, not `numeric` anymore (to make long SNOMED codes readable)
 * Fix for using `as.ab()` on `NA` values
+* Updated support for all WHONET 2022 microorganism codes 
+* Antimicrobial interpretation 'SDD' (susceptible dose-dependent, coined by CLSI) will be interpreted as 'I' to comply with EUCAST's 'I' in `as.rsi()`
 
 ### Other
 * New website to make use of the new Bootstrap 5 and pkgdown 2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions

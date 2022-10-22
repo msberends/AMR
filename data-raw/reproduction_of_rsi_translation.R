@@ -35,144 +35,156 @@ library(readr)
 library(tidyr)
 library(AMR)
 
-# Install the WHONET software on Windows (http://www.whonet.org/software.html),
-# and copy the folder C:\WHONET\Codes to data-raw/WHONET/Codes
-DRGLST <- read_tsv("data-raw/WHONET/Codes/DRGLST.txt", na = c("", "NA", "-"), show_col_types = FALSE)
-DRGLST1 <- read_tsv("data-raw/WHONET/Codes/DRGLST1.txt", na = c("", "NA", "-"), show_col_types = FALSE)
-ORGLIST <- read_tsv("data-raw/WHONET/Codes/ORGLIST.txt", na = c("", "NA", "-"), show_col_types = FALSE)
+# Install the WHONET 2022 software on Windows (http://www.whonet.org/software.html),
+# and copy the folder C:\WHONET\Resources to the data-raw/WHONET/ folder
 
-# create data set for generic rules (i.e., AB-specific but not MO-specific)
-rsi_generic <- DRGLST %>%
-  filter(CLSI == "X" | EUCST == "X") %>%
-  select(ab = ANTIBIOTIC, disk_dose = POTENCY, matches("^(CLSI|EUCST)[0-9]")) %>%
-  mutate(
-    ab = as.ab(ab),
-    across(matches("(CLSI|EUCST)"), as.double)
-  ) %>%
-  pivot_longer(-c(ab, disk_dose), names_to = "method") %>%
-  separate(method, into = c("guideline", "method"), sep = "_") %>%
-  mutate(method = ifelse(method %like% "D",
-    gsub("D", "DISK_", method, fixed = TRUE),
-    gsub("M", "MIC_", method, fixed = TRUE)
-  )) %>%
-  separate(method, into = c("method", "rsi"), sep = "_") %>%
-  # I is in the middle, so we only need R and S (saves data)
-  filter(rsi %in% c("R", "S")) %>%
-  pivot_wider(names_from = rsi, values_from = value) %>%
-  transmute(
-    guideline = gsub("([0-9]+)$", " 20\\1", gsub("EUCST", "EUCAST", guideline)),
-    method,
-    site = NA_character_,
-    mo = as.mo("UNKNOWN"),
-    ab,
-    ref_tbl = "Generic rules",
-    disk_dose,
-    breakpoint_S = S,
-    breakpoint_R = R,
-    uti = FALSE
-  ) %>%
-  filter(!(is.na(breakpoint_S) & is.na(breakpoint_R)), !is.na(mo), !is.na(ab))
-rsi_generic
+# Load source data ----
+whonet_organisms <- read_tsv("data-raw/WHONET/Resources/Organisms.txt", na = c("", "NA", "-"), show_col_types = FALSE) %>% 
+  # remove old taxonomic names
+  filter(TAXONOMIC_STATUS == "C") %>% 
+  transmute(ORGANISM_CODE = tolower(WHONET_ORG_CODE), ORGANISM) %>% 
+  # what's wrong here? 'sau' is both S. areus and S. aureus sp. aureus
+  mutate(ORGANISM = if_else(ORGANISM_CODE == "sau", "Staphylococcus aureus", ORGANISM),
+         ORGANISM = if_else(ORGANISM_CODE == "pam", "Pasteurella multocida", ORGANISM))
+whonet_breakpoints <- read_tsv("data-raw/WHONET/Resources/Breakpoints.txt", na = c("", "NA", "-"), show_col_types = FALSE) %>% 
+  filter(BREAKPOINT_TYPE == "Human", GUIDELINES %in% c("CLSI", "EUCAST"))
+whonet_antibiotics <- read_tsv("data-raw/WHONET/Resources/Antibiotics.txt", na = c("", "NA", "-"), show_col_types = FALSE) %>%
+  arrange(WHONET_ABX_CODE) %>%
+  distinct(WHONET_ABX_CODE, .keep_all = TRUE)
 
-# create data set for AB-specific and MO-specific rules
-rsi_specific <- DRGLST1 %>%
-  # only support guidelines for humans (for now)
-  filter(
-    HOST == "Human" & SITE_INF %unlike% "canine|feline",
-    # only CLSI and EUCAST
-    GUIDELINES %like% "(CLSI|EUCST)"
-  ) %>%
-  # get microorganism names from another WHONET table
-  mutate(ORG_CODE = tolower(ORG_CODE)) %>%
-  left_join(ORGLIST %>%
-    transmute(
-      ORG_CODE = tolower(ORG),
-      SCT_TEXT = case_when(
-        is.na(SCT_TEXT) & is.na(ORGANISM) ~ ORG_CODE,
-        is.na(SCT_TEXT) ~ ORGANISM,
-        TRUE ~ SCT_TEXT
-      )
-    ) %>%
-    # WHO for 'Generic'
-    bind_rows(tibble(ORG_CODE = "gen", SCT_TEXT = "Unknown")) %>%
-    # WHO for 'Enterobacterales'
-    bind_rows(tibble(ORG_CODE = "ebc", SCT_TEXT = "Enterobacterales"))) %>%
-  # still some manual cleaning required
-  filter(!SCT_TEXT %in% c("Anaerobic Actinomycetes")) %>%
-  transmute(
-    guideline = gsub("([0-9]+)$", " 20\\1", gsub("EUCST", "EUCAST", GUIDELINES)),
-    method = toupper(TESTMETHOD),
-    site = SITE_INF,
-    mo = as.mo(SCT_TEXT),
-    ab = as.ab(WHON5_CODE),
-    ref_tbl = REF_TABLE,
-    disk_dose = POTENCY,
-    breakpoint_S = as.double(ifelse(method == "DISK", DISK_S, MIC_S)),
-    breakpoint_R = as.double(ifelse(method == "DISK", DISK_R, MIC_R)),
-    uti = site %like% "(UTI|urinary|urine)"
-  ) %>%
-  filter(!(is.na(breakpoint_S) & is.na(breakpoint_R)), !is.na(mo), !is.na(ab))
-rsi_specific
 
-rsi_translation <- rsi_generic %>%
-  bind_rows(rsi_specific) %>%
-  # add the taxonomic rank index, used for sorting (so subspecies match first, order matches last)
-  mutate(
-    rank_index = case_when(
-      mo_rank(mo) %like% "(infra|sub)" ~ 1,
-      mo_rank(mo) == "species" ~ 2,
-      mo_rank(mo) == "genus" ~ 3,
-      mo_rank(mo) == "family" ~ 4,
-      mo_rank(mo) == "order" ~ 5,
-      TRUE ~ 6
-    ),
-    .after = mo
-  ) %>%
+# Transform data ----
+
+whonet_organisms <- whonet_organisms %>% 
+  bind_rows(data.frame(ORGANISM_CODE = c("ebc", "cof"),
+                       ORGANISM = c("Enterobacterales", "Campylobacter")))
+
+breakpoints <- whonet_breakpoints %>% 
+  mutate(ORGANISM_CODE = tolower(ORGANISM_CODE)) %>% 
+  left_join(whonet_organisms) %>%
+  filter(ORGANISM %unlike% "(^cdc |Gram.*variable|virus)")
+# this ones lack a MO name, they will become "UNKNOWN":
+breakpoints %>% filter(is.na(ORGANISM)) %>% pull(ORGANISM_CODE) %>% unique()
+
+
+# Generate new lookup table for microorganisms ----
+
+new_mo_codes <- breakpoints %>%
+  distinct(ORGANISM_CODE, ORGANISM) %>% 
+  mutate(ORGANISM = ORGANISM %>% 
+           gsub("Issatchenkia orientalis", "Candida krusei", .) %>% 
+           gsub(", nutritionally variant", "", .) %>% 
+           gsub(", toxin-.*producing", "", .)) %>% 
+  mutate(mo = as.mo(ORGANISM, language = NULL, keep_synonyms = FALSE),
+         mo_name = mo_name(mo, language = NULL))
+
+
+# Update microorganisms.codes with the latest WHONET codes ----
+
+# these will be changed :
+new_mo_codes %>% mutate(code = toupper(ORGANISM_CODE)) %>% rename(mo_new = mo) %>% left_join(microorganisms.codes) %>% filter(mo != mo_new)
+
+microorganisms.codes <- microorganisms.codes %>% 
+  filter(!code %in% toupper(new_mo_codes$ORGANISM_CODE)) %>% 
+  bind_rows(new_mo_codes %>% transmute(code = toupper(ORGANISM_CODE), mo = mo) %>% filter(!is.na(mo))) %>% 
+  arrange(code) %>% 
+  as_tibble()
+usethis::use_data(microorganisms.codes, overwrite = TRUE, compress = "xz", version = 2)
+rm(microorganisms.codes)
+devtools::load_all()
+
+# update ASIARS-Net?
+asiarsnet <- read_tsv("data-raw/WHONET/Codes/ASIARS_Net_Organisms_ForwardLookup.txt")
+asiarsnet <- asiarsnet %>%
+  mutate(WHONET_Code = toupper(WHONET_Code)) %>%
+  left_join(whonet_organisms %>% mutate(WHONET_Code = toupper(ORGANISM_CODE))) %>% 
+  mutate(mo1 = as.mo(ORGANISM_CODE),
+         mo2 = as.mo(ORGANISM)) %>% 
+  mutate(mo = if_else(mo2 == "UNKNOWN" | is.na(mo2), mo1, mo2)) %>% 
+  filter(!is.na(mo))
+insert1 <- asiarsnet %>% transmute(code = WHONET_Code, mo)
+insert2 <- asiarsnet %>% transmute(code = as.character(ASIARS_Net_Code), mo)
+# these will be updated
+bind_rows(insert1, insert2) %>% rename(mo_new = mo) %>% left_join(microorganisms.codes) %>% filter(mo != mo_new)
+microorganisms.codes <- microorganisms.codes %>% 
+  filter(!code %in% c(insert1$code, insert2$code)) %>% 
+  bind_rows(insert1, insert2) %>% 
+  arrange(code)
+
+
+# Create new breakpoint table ----
+
+breakpoints_new <- breakpoints %>% 
+  # only last 10 years
+  filter(YEAR > as.double(format(Sys.Date(), "%Y")) - 10) %>% 
+  # "all" and "gen" (general) must become UNKNOWNs:
+  mutate(ORGANISM_CODE = if_else(ORGANISM_CODE %in% c("all", "gen"), "UNKNOWN", ORGANISM_CODE)) %>% 
+  transmute(guideline = paste(GUIDELINES, YEAR),
+            method = TEST_METHOD,
+            site = gsub("Urinary tract infection", "UTI", SITE_OF_INFECTION),
+            mo = as.mo(ORGANISM_CODE, keep_synonyms = FALSE),
+            rank_index = case_when(
+              mo_rank(mo) %like% "(infra|sub)" ~ 1,
+              mo_rank(mo) == "species" ~ 2,
+              mo_rank(mo) == "genus" ~ 3,
+              mo_rank(mo) == "family" ~ 4,
+              mo_rank(mo) == "order" ~ 5,
+              TRUE ~ 6
+            ),
+            ab = as.ab(WHONET_ABX_CODE),
+            ref_tbl = REFERENCE_TABLE,
+            disk_dose = POTENCY,
+            # keep disks within 6-50 mm
+            breakpoint_S = if_else(method == "DISK", S %>% pmax(6) %>% pmin(50), S),
+            breakpoint_R = if_else(method == "DISK", R %>% pmax(6) %>% pmin(50), R),
+            uti = SITE_OF_INFECTION %like% "(UTI|urinary|urine)") %>% 
+  # Greek symbols and EM dash symbols are not allowed by CRAN, so replace them with ASCII:
+  mutate(disk_dose = disk_dose %>% 
+           gsub("μ", "u", ., fixed = TRUE) %>% 
+           gsub("–", "-", ., fixed = TRUE)) %>% 
   arrange(desc(guideline), ab, mo, method) %>%
-  distinct(guideline, ab, mo, method, site, .keep_all = TRUE) %>%
-  as.data.frame(stringsAsFactors = FALSE)
+  filter(!(is.na(breakpoint_S) & is.na(breakpoint_R)) & !is.na(mo) & !is.na(ab)) %>% 
+  distinct(guideline, ab, mo, method, site, breakpoint_S, .keep_all = TRUE)
 
-# disks MUST be 6-50 mm, so correct where that is wrong:
-rsi_translation[which(rsi_translation$method == "DISK" &
-  (is.na(rsi_translation$breakpoint_S) | rsi_translation$breakpoint_S > 50)), "breakpoint_S"] <- 50
-rsi_translation[which(rsi_translation$method == "DISK" &
-  (is.na(rsi_translation$breakpoint_R) | rsi_translation$breakpoint_R < 6)), "breakpoint_R"] <- 6
+# clean disk zones and MICs
+breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_S"] <- as.double(as.disk(breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_S", drop = TRUE]))
+breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_R"] <- as.double(as.disk(breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_R", drop = TRUE]))
+
+# WHONET has no >1024 but instead uses 1025, 513, etc, so as.mic() cannot be used to clean.
+# instead, clean based on MIC factor levels 
 m <- unique(as.double(as.mic(levels(as.mic(1)))))
-rsi_translation[which(rsi_translation$method == "MIC" &
-  is.na(rsi_translation$breakpoint_S)), "breakpoint_S"] <- min(m)
-rsi_translation[which(rsi_translation$method == "MIC" &
-  is.na(rsi_translation$breakpoint_R)), "breakpoint_R"] <- max(m)
-
-# WHONET has no >1024 but instead uses 1025, 513, etc, so raise these one higher valid MIC factor level:
-rsi_translation[which(rsi_translation$breakpoint_R == 129), "breakpoint_R"] <- m[which(m == 128) + 1]
-rsi_translation[which(rsi_translation$breakpoint_R == 257), "breakpoint_R"] <- m[which(m == 256) + 1]
-rsi_translation[which(rsi_translation$breakpoint_R == 513), "breakpoint_R"] <- m[which(m == 512) + 1]
-rsi_translation[which(rsi_translation$breakpoint_R == 1025), "breakpoint_R"] <- m[which(m == 1024) + 1]
+breakpoints_new[which(breakpoints_new$method == "MIC" &
+                        is.na(breakpoints_new$breakpoint_S)), "breakpoint_S"] <- min(m)
+breakpoints_new[which(breakpoints_new$method == "MIC" &
+                        is.na(breakpoints_new$breakpoint_R)), "breakpoint_R"] <- max(m)
+# raise these one higher valid MIC factor level:
+breakpoints_new[which(breakpoints_new$breakpoint_R == 129), "breakpoint_R"] <- m[which(m == 128) + 1]
+breakpoints_new[which(breakpoints_new$breakpoint_R == 257), "breakpoint_R"] <- m[which(m == 256) + 1]
+breakpoints_new[which(breakpoints_new$breakpoint_R == 513), "breakpoint_R"] <- m[which(m == 512) + 1]
+breakpoints_new[which(breakpoints_new$breakpoint_R == 1025), "breakpoint_R"] <- m[which(m == 1024) + 1]
 
 # WHONET adds one log2 level to the R breakpoint for their software, e.g. in AMC in Enterobacterales:
 # EUCAST 2021 guideline: S <= 8 and R > 8
 #           WHONET file: S <= 8 and R >= 16
+breakpoints_new %>% filter(guideline == "EUCAST 2022", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
 # this will make an MIC of 12 I, which should be R, so:
-eucast_mics <- which(rsi_translation$guideline %like% "EUCAST" &
-  rsi_translation$method == "MIC" &
-  log2(as.double(rsi_translation$breakpoint_R)) - log2(as.double(rsi_translation$breakpoint_S)) != 0 &
-  !is.na(rsi_translation$breakpoint_R))
-old_R <- rsi_translation[eucast_mics, "breakpoint_R", drop = TRUE]
-old_S <- rsi_translation[eucast_mics, "breakpoint_S", drop = TRUE]
-new_R <- 2^(log2(old_R) - 1)
-new_R[new_R < old_S | is.na(as.mic(new_R))] <- old_S[new_R < old_S | is.na(as.mic(new_R))]
-rsi_translation[eucast_mics, "breakpoint_R"] <- new_R
-eucast_disks <- which(rsi_translation$guideline %like% "EUCAST" &
-  rsi_translation$method == "DISK" &
-  rsi_translation$breakpoint_S - rsi_translation$breakpoint_R != 0 &
-  !is.na(rsi_translation$breakpoint_R))
-rsi_translation[eucast_disks, "breakpoint_R"] <- rsi_translation[eucast_disks, "breakpoint_R", drop = TRUE] + 1
+breakpoints_new <- breakpoints_new %>%
+  mutate(breakpoint_R = ifelse(guideline %like% "EUCAST" & method == "MIC" & log2(breakpoint_R) - log2(breakpoint_S) != 0,
+                               pmax(breakpoint_S, breakpoint_R / 2),
+                               breakpoint_R))
+# fix disks as well
+breakpoints_new <- breakpoints_new %>%
+  mutate(breakpoint_R = ifelse(guideline %like% "EUCAST" & method == "DISK" & breakpoint_S - breakpoint_R != 0,
+                               breakpoint_R + 1,
+                               breakpoint_R))
+# check again
+breakpoints_new %>% filter(guideline == "EUCAST 2022", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
+# compare with current version
+rsi_translation %>% filter(guideline == "EUCAST 2022", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
 
-# Greek symbols and EM dash symbols are not allowed by CRAN, so replace them with ASCII:
-rsi_translation$disk_dose <- gsub("μ", "u", rsi_translation$disk_dose, fixed = TRUE)
-rsi_translation$disk_dose <- gsub("–", "-", rsi_translation$disk_dose, fixed = TRUE)
+# Save to package ----
 
-# save to package
+rsi_translation <- breakpoints_new
 usethis::use_data(rsi_translation, overwrite = TRUE, compress = "xz")
 rm(rsi_translation)
 devtools::load_all(".")

@@ -1083,8 +1083,7 @@ try_colour <- function(..., before, after, collapse = " ") {
 font_black <- function(..., collapse = " ") {
   before <- "\033[38;5;232m"
   after <- "\033[39m"
-  theme_info <- import_fn("getThemeInfo", "rstudioapi", error_on_fail = FALSE)
-  if (!is.null(theme_info) && isTRUE(theme_info()$dark)) {
+  if (isTRUE(AMR_env$is_dark_theme)) {
     # white
     before <- "\033[37m"
     after <- "\033[39m"
@@ -1094,8 +1093,7 @@ font_black <- function(..., collapse = " ") {
 font_white <- function(..., collapse = " ") {
   before <- "\033[37m"
   after <- "\033[39m"
-  theme_info <- import_fn("getThemeInfo", "rstudioapi", error_on_fail = FALSE)
-  if (!is.null(theme_info) && isTRUE(theme_info()$dark)) {
+  if (isTRUE(AMR_env$is_dark_theme)) {
     # black
     before <- "\033[38;5;232m"
     after <- "\033[39m"
@@ -1191,7 +1189,7 @@ progress_ticker <- function(n = 1, n_min = 0, print = TRUE, ...) {
       # so we use progress::progress_bar
       # a close() method was also added, see below this function
       pb <- progress_bar$new(
-        format = "(:spin) [:bar] :percent (:current/:total,:eta)",
+        format = "[:bar] :percent (:current/:total,:eta)",
         total = n
       )
     } else {

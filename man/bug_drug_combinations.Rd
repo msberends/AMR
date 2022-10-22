@@ -4,9 +4,6 @@
 \alias{bug_drug_combinations}
 \alias{format.bug_drug_combinations}
 \title{Determine Bug-Drug Combinations}
-\source{
-\strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition}, 2022, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
-}
 \usage{
 bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname, ...)
 

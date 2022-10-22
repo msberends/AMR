@@ -39,7 +39,7 @@ This package is fully independent of any other \R package and works on Windows, 
 This package can be used for:
 \itemize{
 \item Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF)
-\item Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines
+\item Interpreting raw MIC and disk diffusion values, based on any CLSI or EUCAST guideline from the last 10 years
 \item Retrieving antimicrobial drug names, doses and forms of administration from clinical health care records
 \item Determining first isolates to be used for AMR data analysis
 \item Calculating antimicrobial resistance

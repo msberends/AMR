@@ -236,6 +236,8 @@ as.mo <- function(x,
     # set up progress bar
     progress <- progress_ticker(n = length(x_unique), n_min = 10, print = info)
     on.exit(close(progress))
+    
+    msg <- character(0)
 
     # run it
     x_coerced <- vapply(FUN.VALUE = character(1), x_unique, function(x_search) {
@@ -249,11 +251,15 @@ as.mo <- function(x,
       x_search_cleaned <- x_out
       x_out <- tolower(x_out)
 
+      # first check if cleaning led to an exact result, case-insensitive
+      if (x_out %in% AMR_env$MO_lookup$fullname_lower) {
+        return(as.character(AMR_env$MO_lookup$mo[match(x_out, AMR_env$MO_lookup$fullname_lower)]))
+      }
+
       # input must not be too short
       if (nchar(x_out) < 3) {
         return("UNKNOWN")
       }
-
 
       # take out the parts, split by space
       x_parts <- strsplit(gsub("-", " ", x_out, fixed = TRUE), " ", fixed = TRUE)[[1]]
@@ -267,17 +273,13 @@ as.mo <- function(x,
         filtr <- which(AMR_env$MO_lookup$full_first %like_case% first_chars)
       } else if (nchar(x_out) == 4) {
         # no space and 4 characters - probably a code such as STAU or ESCO!
-        if (isTRUE(info)) {
-          message_("Input \"", x_search, "\" is assumed to be a microorganism code - trying to match on ", vector_and(c(substr(x_out, 1, 2), substr(x_out, 3, 4)), sort = FALSE))
-        }
+        msg <- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on ", vector_and(c(substr(x_out, 1, 2), substr(x_out, 3, 4)), sort = FALSE)))
         filtr <- which(AMR_env$MO_lookup$fullname_lower %like_case% paste0("(^| )", substr(x_out, 1, 2), ".* ", substr(x_out, 3, 4)))
       } else if (nchar(x_out) <= 6) {
         # no space and 5-6 characters - probably a code such as STAAUR or ESCCOL!
         first_part <- paste0(substr(x_out, 1, 2), "[a-z]*", substr(x_out, 3, 3))
         second_part <- substr(x_out, 4, nchar(x_out))
-        if (isTRUE(info)) {
-          message_("Input \"", x_search, "\" is assumed to be a microorganism code - trying to match on ", vector_and(c(gsub("[a-z]*", "(...)", first_part, fixed = TRUE), second_part), sort = FALSE))
-        }
+        msg <- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on ", vector_and(c(gsub("[a-z]*", "(...)", first_part, fixed = TRUE), second_part), sort = FALSE)))
         filtr <- which(AMR_env$MO_lookup$fullname_lower %like_case% paste0("(^| )", first_part, ".* ", second_part))
       } else {
         filtr <- which(AMR_env$MO_lookup$full_first == substr(x_out, 1, 1))
@@ -287,6 +289,7 @@ as.mo <- function(x,
       } else {
         mo_to_search <- AMR_env$MO_lookup$fullname[filtr]
       }
+      
       AMR_env$mo_to_search <- mo_to_search
       # determine the matching score on the original search value
       m <- mo_matching_score(x = x_search_cleaned, n = mo_to_search)
@@ -303,7 +306,7 @@ as.mo <- function(x,
 
       top_hits <- mo_to_search[order(m, decreasing = TRUE, na.last = NA)] # na.last = NA will remove the NAs
       if (length(top_hits) == 0) {
-        warning_("No hits found for \"", x_search, "\" with minimum_matching_score = ", ifelse(is.null(minimum_matching_score), paste0("NULL (=", round(min(minimum_matching_score_current, na.rm = TRUE), 3), ")"), minimum_matching_score), ". Try setting this value lower or even to 0.")
+        warning_("No hits found for \"", x_search, "\" with minimum_matching_score = ", ifelse(is.null(minimum_matching_score), paste0("NULL (=", round(min(minimum_matching_score_current, na.rm = TRUE), 3), ")"), minimum_matching_score), ". Try setting this value lower or even to 0.", call = FALSE)
         result_mo <- NA_character_
       } else {
         result_mo <- AMR_env$MO_lookup$mo[match(top_hits[1], AMR_env$MO_lookup$fullname)]
@@ -356,15 +359,18 @@ as.mo <- function(x,
         } else {
           examples <- paste0(nr2char(length(AMR_env$mo_uncertainties$original_input)), " microorganism", plural[1])
         }
-        msg <- paste0(
+        msg <- c(msg, paste0(
           "Microorganism translation was uncertain for ", examples,
           ". Run `mo_uncertainties()` to review ", plural[2], "."
-        )
-        message_(msg)
+        ))
+        
+        for (m in msg) {
+          message_(m)  
+        }
       }
     }
   } # end of loop over all yet unknowns
-
+  
   # Keep or replace synonyms ----
   gbif_matches <- AMR::microorganisms$gbif_renamed_to[match(out, AMR::microorganisms$mo)]
   gbif_matches[!gbif_matches %in% AMR::microorganisms$gbif] <- NA
@@ -383,7 +389,7 @@ as.mo <- function(x,
     }
   } else if (is.null(getOption("AMR_keep_synonyms")) && length(AMR_env$mo_renamed$old) > 0 && message_not_thrown_before("as.mo", "keep_synonyms_warning", entire_session = TRUE)) {
     # keep synonyms is TRUE, so check if any do have synonyms
-    warning_("Function `as.mo()` returned ", nr2char(length(unique(AMR_env$mo_renamed$old))), " old taxonomic name", ifelse(length(unique(AMR_env$mo_renamed$old)) > 1, "s", ""), ". Use `as.mo(..., keep_synonyms = FALSE)` to clean the input to currently accepted taxonomic names, or set the R option `AMR_keep_synonyms` to `FALSE`. This warning will be shown once per session.")
+    warning_("Function `as.mo()` returned ", nr2char(length(unique(AMR_env$mo_renamed$old))), " old taxonomic name", ifelse(length(unique(AMR_env$mo_renamed$old)) > 1, "s", ""), ". Use `as.mo(..., keep_synonyms = FALSE)` to clean the input to currently accepted taxonomic names, or set the R option `AMR_keep_synonyms` to `FALSE`. This warning will be shown once per session.", call = FALSE)
   }
 
   # Apply Becker ----
@@ -403,7 +409,7 @@ as.mo <- function(x,
         warning_("in `as.mo()`: Becker ", font_italic("et al."), " (2014, 2019, 2020) does not contain these species named after their publication: ",
           vector_and(font_italic(gsub("Staphylococcus", "S.", post_Becker, fixed = TRUE), collapse = NULL), quotes = FALSE),
           ". Categorisation to CoNS/CoPS was taken from the original scientific publication(s).",
-          immediate = TRUE
+          immediate = TRUE, call = FALSE
         )
       }
     }
@@ -442,7 +448,7 @@ as.mo <- function(x,
   out[is.na(out) & !is.na(x)] <- "UNKNOWN"
   AMR_env$mo_failures <- unique(x[out == "UNKNOWN" & !x %in% c("UNKNOWN", "con") & !x %like_case% "^[(]unknown [a-z]+[)]$" & !is.na(x)])
   if (length(AMR_env$mo_failures) > 0) {
-    warning_("The following input could not be coerced and was returned as \"UNKNOWN\": ", vector_and(AMR_env$mo_failures, quotes = TRUE), ".\nYou can retrieve this list with `mo_failures()`.")
+    warning_("The following input could not be coerced and was returned as \"UNKNOWN\": ", vector_and(AMR_env$mo_failures, quotes = TRUE), ".\nYou can retrieve this list with `mo_failures()`.", call = FALSE)
   }
 
   # Return class ----
@@ -542,10 +548,11 @@ pillar_shaft.mo <- function(x, ...) {
     mo_cols <- NULL
   }
 
-  if (!all(x %in% c(AMR::microorganisms$mo, NA)) ||
-    (!is.null(df) && !all(unlist(df[, which(mo_cols), drop = FALSE]) %in% AMR::microorganisms$mo))) {
+  all_mos <- c(AMR::microorganisms$mo, NA)
+  if (!all(x %in% all_mos) ||
+    (!is.null(df) && !all(unlist(df[, which(mo_cols), drop = FALSE]) %in% all_mos))) {
     # markup old mo codes
-    out[!x %in% AMR::microorganisms$mo] <- font_italic(font_na(x[!x %in% AMR::microorganisms$mo],
+    out[!x %in% all_mos] <- font_italic(font_na(x[!x %in% all_mos],
       collapse = NULL
     ),
     collapse = NULL
@@ -558,7 +565,7 @@ pillar_shaft.mo <- function(x, ...) {
     }
     warning_(
       col, " contains old MO codes (from a previous AMR package version). ",
-      "Please update your MO codes with `as.mo()`."
+      "Please update your MO codes with `as.mo()`.", call = FALSE
     )
   }
 
@@ -645,7 +652,7 @@ print.mo <- function(x, print.shortnames = FALSE, ...) {
   if (!all(x %in% c(AMR::microorganisms$mo, NA))) {
     warning_(
       "Some MO codes are from a previous AMR package version. ",
-      "Please update the MO codes with `as.mo()`."
+      "Please update the MO codes with `as.mo()`.", call = FALSE
     )
   }
   print.default(x, quote = FALSE)
@@ -911,11 +918,12 @@ convert_colloquial_input <- function(x) {
   # CoNS/CoPS in different languages (support for German, Dutch, Spanish, Portuguese)
   out[x %like_case% "([ck]oagulas[ea].negatie?[vf]|^[ck]o?ns[^a-z]*$)"] <- "B_STPHY_CONS"
   out[x %like_case% "([ck]oagulas[ea].positie?[vf]|^[ck]o?ps[^a-z]*$)"] <- "B_STPHY_COPS"
-
+  
   # Gram stains
-  out[x %like_case% "gram[ -]?neg.*|negatie?[vf]"] <- "B_GRAMN"
-  out[x %like_case% "gram[ -]?pos.*|positie?[vf]"] <- "B_GRAMP"
-
+  out[x %like_case% "gram[ -]?neg.*"] <- "B_GRAMN"
+  out[x %like_case% "gram[ -]?pos.*"] <- "B_GRAMP"
+  out[is.na(out) & x %like_case% "anaerob[a-z]+ (micro)?.*organism"] <- "B_ANAER"
+  
   # yeasts and fungi
   out[x %like_case% "^yeast?"] <- "F_YEAST"
   out[x %like_case% "^fung(us|i)"] <- "F_FUNGUS"
@@ -931,6 +939,10 @@ convert_colloquial_input <- function(x) {
 
   # unexisting names (xxx and con are WHONET codes)
   out[x %in% c("con", "other", "none", "unknown") | x %like_case% "virus"] <- "UNKNOWN"
+
+  # WHONET has a lot of E. coli and Vibrio cholerae names
+  out[x %like_case% "escherichia coli"] <- "B_ESCHR_COLI"
+  out[x %like_case% "vibrio cholerae"] <- "B_VIBRI_CHLR"
 
   out
 }

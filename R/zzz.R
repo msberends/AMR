@@ -68,6 +68,7 @@ AMR_env$rsi_interpretation_history <- data.frame(
 )
 AMR_env$has_data.table <- pkg_is_available("data.table", also_load = FALSE)
 AMR_env$custom_ab_codes <- character(0)
+AMR_env$is_dark_theme <- tryCatch(isTRUE(getExportedValue("getThemeInfo", ns = asNamespace("rstudioapi"))()$dark), error = function(e) FALSE)
 
 # determine info icon for messages
 utf8_supported <- isTRUE(base::l10n_info()$`UTF-8`)

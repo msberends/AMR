@@ -42,7 +42,7 @@
 #'
 #' This package can be used for:
 #' - Reference for the taxonomy of microorganisms, since the package contains all microbial (sub)species from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF)
-#' - Interpreting raw MIC and disk diffusion values, based on the latest CLSI or EUCAST guidelines
+#' - Interpreting raw MIC and disk diffusion values, based on any CLSI or EUCAST guideline from the last 10 years
 #' - Retrieving antimicrobial drug names, doses and forms of administration from clinical health care records
 #' - Determining first isolates to be used for AMR data analysis
 #' - Calculating antimicrobial resistance

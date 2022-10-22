@@ -33,7 +33,7 @@ Ordered \link{factor} with additional class \code{\link{mic}}, that in mathemati
 This transforms vectors to a new class \code{\link{mic}}, which treats the input as decimal numbers, while maintaining operators (such as ">=") and only allowing valid MIC values known to the field of (medical) microbiology.
 }
 \details{
-To interpret MIC values as RSI values, use \code{\link[=as.rsi]{as.rsi()}} on MIC values. It supports guidelines from EUCAST (2011-2022) and CLSI (2011-2022).
+To interpret MIC values as RSI values, use \code{\link[=as.rsi]{as.rsi()}} on MIC values. It supports guidelines from EUCAST (2013-2022) and CLSI (2013-2022).
 
 This class for MIC values is a quite a special data type: formally it is an ordered \link{factor} with valid MIC values as \link{factor} levels (to make sure only valid MIC values are retained), but for any mathematical operation it acts as decimal numbers:
 

@@ -43,7 +43,6 @@
 #' @export
 #' @rdname bug_drug_combinations
 #' @return The function [bug_drug_combinations()] returns a [data.frame] with columns "mo", "ab", "S", "I", "R" and "total".
-#' @source \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition}, 2022, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
 #' @examples
 #' \donttest{
 #' x <- bug_drug_combinations(example_isolates)

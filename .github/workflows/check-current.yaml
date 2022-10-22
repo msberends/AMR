@@ -52,9 +52,12 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest,   r: 'devel',   allowfail: true}
-          - {os: ubuntu-latest,  r: 'devel',   allowfail: true}
-          - {os: windows-latest, r: 'devel',   allowfail: true}
+          - {os: macOS-latest,   r: 'devel',   allowfail: false}
+          - {os: macOS-latest,   r: 'release', allowfail: false}
+          - {os: ubuntu-latest,  r: 'devel',   allowfail: false}
+          - {os: ubuntu-latest,  r: 'release', allowfail: false}
+          - {os: windows-latest, r: 'devel',   allowfail: false}
+          - {os: windows-latest, r: 'release', allowfail: false}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}

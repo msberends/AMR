@@ -5,7 +5,7 @@
 \alias{rsi_translation}
 \title{Data Set for R/SI Interpretation}
 \format{
-A \link[tibble:tibble]{tibble} with 20,369 observations and 11 variables:
+A \link[tibble:tibble]{tibble} with 18,308 observations and 11 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
 \item \code{method}\cr Either "DISK" or "MIC"
@@ -24,7 +24,7 @@ A \link[tibble:tibble]{tibble} with 20,369 observations and 11 variables:
 rsi_translation
 }
 \description{
-Data set containing reference data to interpret MIC and disk diffusion to R/SI values, according to international guidelines. Currently implemented guidelines are EUCAST (2011-2022) and CLSI (2011-2022). Use \code{\link[=as.rsi]{as.rsi()}} to transform MICs or disks measurements to R/SI values.
+Data set containing reference data to interpret MIC and disk diffusion to R/SI values, according to international guidelines. Currently implemented guidelines are EUCAST (2013-2022) and CLSI (2013-2022). Use \code{\link[=as.rsi]{as.rsi()}} to transform MICs or disks measurements to R/SI values.
 }
 \details{
 Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.

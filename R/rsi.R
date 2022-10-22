@@ -100,6 +100,12 @@
 #' @aliases rsi
 #' @export
 #' @seealso [as.mic()], [as.disk()], [as.mo()]
+#' @source
+#' For interpretations of minimum inhibitory concentration (MIC) values and disk diffusion diameters:
+#' 
+#' - **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data**, `r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`, *Clinical and Laboratory Standards Institute* (CLSI). <https://clsi.org/standards/products/microbiology/documents/m39/>.
+#' - **M100 Performance Standard for Antimicrobial Susceptibility Testing**, `r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`, *Clinical and Laboratory Standards Institute* (CLSI). <https://clsi.org/standards/products/microbiology/documents/m100/>.
+#' - **Breakpoint tables for interpretation of MICs and zone diameters**, `r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`, *European Committee on Antimicrobial Susceptibility Testing* (EUCAST). <https://www.eucast.org/clinical_breakpoints>.
 #' @inheritSection AMR Reference Data Publicly Available
 #' @examples
 #' example_isolates
@@ -332,11 +338,13 @@ as.rsi.default <- function(x, ...) {
     # set to capitals
     x <- toupper(x)
     x <- gsub("[^A-Z]+", "", x, perl = TRUE)
+    # CLSI uses SDD for "susceptible dose-dependent"
+    x <- gsub("SDD", "I", x, fixed = TRUE)
     # some labs now report "H" instead of "I" to not interfere with EUCAST prior to 2019
     x <- gsub("H", "I", x, fixed = TRUE)
-    # and MIPS uses D for Dose-dependent (which is I, but it will throw a note)
+    # MIPS uses D for Dose-dependent (which is I, but it will throw a note)
     x <- gsub("D", "I", x, fixed = TRUE)
-    # and MIPS uses U for "susceptible urine"
+    # MIPS uses U for "susceptible urine"
     x <- gsub("U", "S", x, fixed = TRUE)
     # in cases of "S;S" keep S, but in case of "S;I" make it NA
     x <- gsub("^S+$", "S", x)
@@ -367,6 +375,9 @@ as.rsi.default <- function(x, ...) {
       }
       if (any(toupper(x.bak[!is.na(x.bak)]) == "D") && message_not_thrown_before("as.rsi", "D")) {
         warning_("in `as.rsi()`: 'D' (dose-dependent) was interpreted as 'I', following some laboratory systems")
+      }
+      if (any(toupper(x.bak[!is.na(x.bak)]) == "SDD") && message_not_thrown_before("as.rsi", "SDD")) {
+        warning_("in `as.rsi()`: 'SDD' (susceptible dose-dependent, coined by CLSI) was interpreted as 'I' to comply with EUCAST's 'I'")
       }
       if (any(toupper(x.bak[!is.na(x.bak)]) == "H") && message_not_thrown_before("as.rsi", "H")) {
         warning_("in `as.rsi()`: 'H' was interpreted as 'I', following some laboratory systems")
@@ -875,9 +886,17 @@ as_rsi_method <- function(method_short,
         pm_filter(uti == FALSE) %pm>% # 'uti' is a column in rsi_translation
         pm_arrange(rank_index)
     }
-
+    
+    records_same_mo <- get_record[get_record$mo == get_record[1, "mo", drop = TRUE], , drop = FALSE]
+    if (message_not_thrown_before("as.rsi", "site", records_same_mo$mo[1]) && nrow(records_same_mo) > 1 && length(unique(records_same_mo$site)) > 1) {
+      warning_("in `as.rsi()`: assuming site '",
+               get_record[1L, "site", drop = FALSE], "' for ",
+               font_italic(suppressMessages(suppressWarnings(mo_name(records_same_mo$mo[1], language = NULL, keep_synonyms = FALSE)))),
+               call = FALSE)
+      rise_warning <- TRUE
+    }
     get_record <- get_record[1L, , drop = FALSE]
-
+    
     if (NROW(get_record) > 0) {
       if (is.na(x[i]) | (is.na(get_record$breakpoint_S) & is.na(get_record$breakpoint_R))) {
         new_rsi[i] <- NA_character_

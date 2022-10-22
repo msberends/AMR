@@ -253,7 +253,7 @@ print.custom_eucast_rules <- function(x, ...) {
 }
 
 format_custom_query_rule <- function(query, colours = has_colour()) {
-  # font_black() is very expensive in RStudio because it checks if the theme is dark, so do it once:
+  # font_black() is a bit expensive so do it once:
   txt <- font_black("{text}")
   query <- gsub(" & ", sub("{text}", font_bold(" and "), txt, fixed = TRUE), query, fixed = TRUE)
   query <- gsub(" | ", sub("{text}", " or ", txt, fixed = TRUE), query, fixed = TRUE)
