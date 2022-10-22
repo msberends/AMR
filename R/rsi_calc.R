@@ -279,7 +279,6 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
       col_results <- as.data.frame(as.matrix(table(values)), stringsAsFactors = FALSE)
       col_results$interpretation <- rownames(col_results)
       col_results$isolates <- col_results[, 1, drop = TRUE]
-      ddf <<- col_results
       if (NROW(col_results) > 0 && sum(col_results$isolates, na.rm = TRUE) > 0) {
         if (sum(col_results$isolates, na.rm = TRUE) >= minimum) {
           col_results$value <- col_results$isolates / sum(col_results$isolates, na.rm = TRUE)

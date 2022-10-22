@@ -34,7 +34,6 @@
 import_functions <- c(
   "%chin%" = "data.table",
   "anti_join" = "dplyr",
-  "bind_rows" = "dplyr",
   "chmatch" = "data.table",
   "cur_column" = "dplyr",
   "full_join" = "dplyr",

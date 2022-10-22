@@ -94,6 +94,8 @@ globalVariables(c(
   "atc_group1",
   "atc_group2",
   "base_ab",
+  "ci_min",
+  "ci_max",
   "code",
   "cols",
   "count",

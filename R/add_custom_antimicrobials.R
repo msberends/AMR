@@ -111,26 +111,19 @@ add_custom_antimicrobials <- function(x) {
   }
   AMR_env$custom_ab_codes <- c(AMR_env$custom_ab_codes, x$ab)
   class(AMR_env$AB_lookup$ab) <- "character"
-
-  bind_rows <- import_fn("bind_rows", "dplyr", error_on_fail = FALSE)
-  if (is.null(bind_rows)) {
-    # do the binding in base R
-    new_df <- AMR_env$AB_lookup[0, , drop = FALSE][seq_len(NROW(x)), , drop = FALSE]
-    rownames(new_df) <- NULL
-    list_cols <- vapply(FUN.VALUE = logical(1), new_df, is.list)
-    for (l in which(list_cols)) {
-      # prevent binding NULLs in lists, replace with NA
-      new_df[, l] <- as.list(NA_character_)
-    }
-    for (col in colnames(x)) {
-      # assign new values
-      new_df[, col] <- x[, col, drop = TRUE]
-    }
-    AMR_env$AB_lookup <- unique(rbind(AMR_env$AB_lookup, new_df))
-  } else {
-    # otherwise use dplyr
-    AMR_env$AB_lookup <- unique(bind_rows(AMR_env$AB_lookup, x))
+  
+  new_df <- AMR_env$AB_lookup[0, , drop = FALSE][seq_len(NROW(x)), , drop = FALSE]
+  rownames(new_df) <- NULL
+  list_cols <- vapply(FUN.VALUE = logical(1), new_df, is.list)
+  for (l in which(list_cols)) {
+    # prevent binding NULLs in lists, replace with NA
+    new_df[, l] <- as.list(NA_character_)
   }
+  for (col in colnames(x)) {
+    # assign new values
+    new_df[, col] <- x[, col, drop = TRUE]
+  }
+  AMR_env$AB_lookup <- unique(rbind(AMR_env$AB_lookup, new_df))
   class(AMR_env$AB_lookup$ab) <- c("ab", "character")
   message_("Added ", nr2char(nrow(x)), " record", ifelse(nrow(x) > 1, "s", ""), " to the internal `antibiotics` data set.")
 }
