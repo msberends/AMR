@@ -391,7 +391,6 @@ if (changed_md5(microorganisms)) {
   usethis::ui_info(paste0("Saving {usethis::ui_value('microorganisms')} to {usethis::ui_value('data-raw/')}"))
   write_md5(microorganisms)
   try(saveRDS(microorganisms, "data-raw/microorganisms.rds", version = 2, compress = "xz"), silent = TRUE)
-  try(write.table(mo, "data-raw/microorganisms.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
   max_50_snomed <- sapply(microorganisms$snomed, function(x) paste(x[seq_len(min(50, length(x), na.rm = TRUE))], collapse = " "))
   mo <- microorganisms
   mo$snomed <- max_50_snomed
@@ -400,6 +399,8 @@ if (changed_md5(microorganisms)) {
   try(haven::write_sav(mo, "data-raw/microorganisms.sav"), silent = TRUE)
   try(haven::write_dta(mo, "data-raw/microorganisms.dta"), silent = TRUE)
   try(openxlsx::write.xlsx(mo, "data-raw/microorganisms.xlsx"), silent = TRUE)
+  mo_all_snomed <- microorganisms %>% mutate_if(is.list, function(x) sapply(x, paste, collapse = ","))
+  try(write.table(mo_all_snomed, "data-raw/microorganisms.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
   try(arrow::write_feather(microorganisms, "data-raw/microorganisms.feather"), silent = TRUE)
   try(arrow::write_parquet(microorganisms, "data-raw/microorganisms.parquet"), silent = TRUE)
 }

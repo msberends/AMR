@@ -125,6 +125,8 @@ This data set is in R available as `microorganisms`, after you load the `AMR` pa
 
 **NOTE: The exported files for Excel, SAS, SPSS and Stata contain only the first 50 SNOMED codes per record, as their file size would otherwise exceed 100 MB; the file size limit of GitHub.** Advice? Use R instead.
 
+The tab-separated text file contains all SNOMED codes as comma separated values.
+
 ### Source
 
 This data set contains the full microbial taxonomy of `r AMR:::nr2char(length(unique(AMR::microorganisms$kingdom[!AMR::microorganisms$kingdom %like% "unknown"])))` kingdoms from the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF):

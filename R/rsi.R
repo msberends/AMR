@@ -622,7 +622,7 @@ as.rsi.data.frame <- function(x,
         # only print message if class not already set
         message_("=> Assigning class 'rsi' to already clean column '", font_bold(ab), "' (",
           ifelse(ab_coerced != toupper(ab), paste0(ab_coerced, ", "), ""),
-          ab_name(ab_coerced, tolower = TRUE), ")... ",
+          ab_name(ab_coerced, tolower = TRUE, language = NULL), ")... ",
           appendLF = FALSE,
           as_note = FALSE
         )
@@ -872,12 +872,13 @@ as_rsi_method <- function(method_short,
         lookup_lancefield[i],
         lookup_other[i]
       ))
-
+    
     if (NROW(get_record) == 0) {
       warning_("No ", method_param, " breakpoints available for ",
                font_italic(suppressMessages(suppressWarnings(mo_shortname(mo[i], language = NULL, keep_synonyms = FALSE)))),
                paste0(" / "),
-               suppressMessages(suppressWarnings(ab_name(ab, language = NULL, tolower = TRUE))))
+               suppressMessages(suppressWarnings(ab_name(ab_param, language = NULL, tolower = TRUE))),
+               " (", ab_param, ")")
       rise_warning <- TRUE
       next
     }
@@ -899,18 +900,18 @@ as_rsi_method <- function(method_short,
       # uti not set as TRUE, but there are only a UTI breakpoints available, so throw warning
       warning_("in `as.rsi()`: interpretation of ", font_bold(ab_name(ab_param, tolower = TRUE)), " is only available for (uncomplicated) urinary tract infections (UTI) for some microorganisms, thus assuming `uti = TRUE`. See ?as.rsi.")
       rise_warning <- TRUE
-    } else if (nrow(records_same_mo) > 1 && length(unique(records_same_mo$site)) > 1 && uti[i] == FALSE && all(c(TRUE, FALSE) %in% records_same_mo$uti, na.rm = TRUE) && message_not_thrown_before("as.rsi", "siteUTI", records_same_mo$mo[1], records_same_mo$ab[1])) {
+    } else if (nrow(records_same_mo) > 1 && length(unique(records_same_mo$site)) > 1 && is.na(uti[i]) && all(c(TRUE, FALSE) %in% records_same_mo$uti, na.rm = TRUE) && message_not_thrown_before("as.rsi", "siteUTI", records_same_mo$mo[1], ab_param)) {
       # uti not set and both UTI and non-UTI breakpoints available, so throw warning
       warning_("in `as.rsi()`: breakpoints for UTI ", font_underline("and"), " non-UTI available for ",
                font_italic(suppressMessages(suppressWarnings(mo_shortname(records_same_mo$mo[1], language = NULL, keep_synonyms = FALSE)))),
-               paste0(" / "),
-               suppressMessages(suppressWarnings(ab_name(records_same_mo$ab[1], language = NULL, tolower = TRUE))),
-               paste0(" - assuming non-UTI. Use argument `uti` to set which isolates are from urine. See ?as.rsi. '"),
+               " / ",
+               suppressMessages(suppressWarnings(ab_name(ab_param, language = NULL, tolower = TRUE))),
+               " (", ab_param, ") - assuming non-UTI. Use argument `uti` to set which isolates are from urine. See ?as.rsi.",
                call = FALSE)
       get_record <- get_record %pm>%
         pm_filter(uti == FALSE)
       rise_warning <- TRUE
-    } else if (nrow(records_same_mo) > 1 && length(unique(records_same_mo$site)) > 1 && all(records_same_mo$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.rsi", "site", records_same_mo$mo[1], records_same_mo$ab[1])) {
+    } else if (nrow(records_same_mo) > 1 && length(unique(records_same_mo$site)) > 1 && all(records_same_mo$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.rsi", "siteOther", records_same_mo$mo[1], ab_param)) {
       # breakpoints for multiple body sites available, so throw warning
       site <- get_record[1L, "site", drop = FALSE]
       if (is.na(site)) {
