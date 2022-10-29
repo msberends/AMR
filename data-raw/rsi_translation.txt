@@ -91,7 +91,7 @@
 "EUCAST 2022"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2022"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"	"30ug"	26	21	FALSE
 "EUCAST 2022"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"		1	4	FALSE
-"EUCAST 2022"	"DISK"		"B_AERMN"	"Aeromonas"	3	"ATM"	"Aztreonam"	"Aeromonas"	"30µg"	29	26	FALSE
+"EUCAST 2022"	"DISK"		"B_AERMN"	"Aeromonas"	3	"ATM"	"Aztreonam"	"Aeromonas"	"30ug"	29	26	FALSE
 "EUCAST 2022"	"MIC"		"B_AERMN"	"Aeromonas"	3	"ATM"	"Aztreonam"	"Aeromonas"	"30ug"	1	4	FALSE
 "EUCAST 2022"	"DISK"		"B_PSDMN"	"Pseudomonas"	3	"ATM"	"Aztreonam"	"Pseudo"	"30ug"	50	18	FALSE
 "EUCAST 2022"	"MIC"		"B_PSDMN"	"Pseudomonas"	3	"ATM"	"Aztreonam"	"Pseudo"		0.001	16	FALSE
@@ -1218,7 +1218,7 @@
 "EUCAST 2021"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2021"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"	"30ug"	26	21	FALSE
 "EUCAST 2021"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"		1	4	FALSE
-"EUCAST 2021"	"DISK"		"B_AERMN"	"Aeromonas"	3	"ATM"	"Aztreonam"	"Aeromonas"	"30µg"	29	26	FALSE
+"EUCAST 2021"	"DISK"		"B_AERMN"	"Aeromonas"	3	"ATM"	"Aztreonam"	"Aeromonas"	"30ug"	29	26	FALSE
 "EUCAST 2021"	"MIC"		"B_AERMN"	"Aeromonas"	3	"ATM"	"Aztreonam"	"Aeromonas"	"30ug"	1	4	FALSE
 "EUCAST 2021"	"DISK"		"B_PSDMN"	"Pseudomonas"	3	"ATM"	"Aztreonam"	"Pseudo"	"30ug"	50	18	FALSE
 "EUCAST 2021"	"MIC"		"B_PSDMN"	"Pseudomonas"	3	"ATM"	"Aztreonam"	"Pseudo"		0.001	16	FALSE
@@ -2143,7 +2143,7 @@
 "EUCAST 2020"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2020"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"	"30ug"	26	21	FALSE
 "EUCAST 2020"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"		1	4	FALSE
-"EUCAST 2020"	"DISK"		"B_AERMN"	"Aeromonas"	3	"ATM"	"Aztreonam"	"Aeromonas"	"30µg"	29	26	FALSE
+"EUCAST 2020"	"DISK"		"B_AERMN"	"Aeromonas"	3	"ATM"	"Aztreonam"	"Aeromonas"	"30ug"	29	26	FALSE
 "EUCAST 2020"	"MIC"		"B_AERMN"	"Aeromonas"	3	"ATM"	"Aztreonam"	"Aeromonas"	"30ug"	1	4	FALSE
 "EUCAST 2020"	"DISK"		"B_PSDMN"	"Pseudomonas"	3	"ATM"	"Aztreonam"	"Pseudo"	"30ug"	50	18	FALSE
 "EUCAST 2020"	"MIC"		"B_PSDMN"	"Pseudomonas"	3	"ATM"	"Aztreonam"	"Pseudo"		0.001	16	FALSE
@@ -2973,7 +2973,7 @@
 "EUCAST 2019"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2019"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"	"30ug"	26	21	FALSE
 "EUCAST 2019"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"		1	4	FALSE
-"EUCAST 2019"	"DISK"		"B_AERMN"	"Aeromonas"	3	"ATM"	"Aztreonam"	"Aeromonas"	"30µg"	29	26	FALSE
+"EUCAST 2019"	"DISK"		"B_AERMN"	"Aeromonas"	3	"ATM"	"Aztreonam"	"Aeromonas"	"30ug"	29	26	FALSE
 "EUCAST 2019"	"MIC"		"B_AERMN"	"Aeromonas"	3	"ATM"	"Aztreonam"	"Aeromonas"	"30ug"	1	4	FALSE
 "EUCAST 2019"	"DISK"		"B_PSDMN"	"Pseudomonas"	3	"ATM"	"Aztreonam"	"Pseudo"	"30ug"	18	18	FALSE
 "EUCAST 2019"	"MIC"		"B_PSDMN"	"Pseudomonas"	3	"ATM"	"Aztreonam"	"Pseudo"		16	16	FALSE
@@ -3742,7 +3742,7 @@
 "EUCAST 2018"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ANI"	"Anidulafungin"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2018"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"	"30ug"	26	21	FALSE
 "EUCAST 2018"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"ATM"	"Aztreonam"	"Enterobacteriaceae"		1	4	FALSE
-"EUCAST 2018"	"DISK"		"B_AERMN"	"Aeromonas"	3	"ATM"	"Aztreonam"	"Aeromonas"	"30µg"	29	26	FALSE
+"EUCAST 2018"	"DISK"		"B_AERMN"	"Aeromonas"	3	"ATM"	"Aztreonam"	"Aeromonas"	"30ug"	29	26	FALSE
 "EUCAST 2018"	"MIC"		"B_AERMN"	"Aeromonas"	3	"ATM"	"Aztreonam"	"Aeromonas"	"30ug"	1	4	FALSE
 "EUCAST 2018"	"DISK"		"B_PSDMN"	"Pseudomonas"	3	"ATM"	"Aztreonam"	"Pseudo"	"30ug"	50	16	FALSE
 "EUCAST 2018"	"MIC"		"B_PSDMN"	"Pseudomonas"	3	"ATM"	"Aztreonam"	"Pseudo"		1	16	FALSE

@@ -731,8 +731,9 @@ antibiotics <- antibiotics %>%
 
 # update ATC codes from WHOCC website -------------------------------------
 
-# last time checked: 2021-08-16
+# last time checked: 2022-10-29
 
+library(rvest)
 updated_atc <- as.list(antibiotics$atc)
 
 get_atcs <- function(ab_name, url = "https://www.whocc.no/atc_ddd_index/") {
@@ -781,7 +782,7 @@ antibiotics$atc <- updated_atc
 
 # update DDDs from WHOCC website ------------------------------------------
 
-# last time checked: 2021-08-19
+# last time checked: 2022-10-29
 ddd_oral <- rep(NA_real_, nrow(antibiotics))
 ddd_oral_units <- rep(NA_character_, nrow(antibiotics))
 ddd_iv <- rep(NA_real_, nrow(antibiotics))
@@ -823,7 +824,7 @@ antibiotics$iv_units <- ddd_iv_units
 # Wrap up -----------------------------------------------------------------
 
 # set as data.frame again
-antibiotics <- as.data.frame(antibiotics, stringsAsFactors = FALSE)
+antibiotics <- dataset_UTF8_to_ASCII(as.data.frame(antibiotics, stringsAsFactors = FALSE))
 class(antibiotics$ab) <- c("ab", "character")
 antibiotics <- dplyr::arrange(antibiotics, name)
 

@@ -17,7 +17,7 @@
 \item \code{atc_group2}\cr Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like \code{"Macrolides"}
 \item \code{abbr}\cr List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)
 \item \code{synonyms}\cr Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID
-\item \code{oral_ddd}\cr Defined Daily Dose (DDD), oral treatment, currently available for 170 drugs
+\item \code{oral_ddd}\cr Defined Daily Dose (DDD), oral treatment, currently available for 171 drugs
 \item \code{oral_units}\cr Units of \code{oral_ddd}
 \item \code{iv_ddd}\cr Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for 145 drugs
 \item \code{iv_units}\cr Units of \code{iv_ddd}

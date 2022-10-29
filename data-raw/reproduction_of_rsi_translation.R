@@ -141,6 +141,7 @@ breakpoints_new <- breakpoints %>%
   # Greek symbols and EM dash symbols are not allowed by CRAN, so replace them with ASCII:
   mutate(disk_dose = disk_dose %>% 
            gsub("μ", "u", ., fixed = TRUE) %>% 
+           gsub("µ", "u", ., fixed = TRUE) %>%  # this is another micro sign, although we cannot see it
            gsub("–", "-", ., fixed = TRUE)) %>% 
   arrange(desc(guideline), ab, mo, method) %>%
   filter(!(is.na(breakpoint_S) & is.na(breakpoint_R)) & !is.na(mo) & !is.na(ab)) %>% 
@@ -188,6 +189,6 @@ rsi_translation %>% filter(guideline == "EUCAST 2022", ab == "AMC", mo == "B_[OR
 # Save to package ----
 
 rsi_translation <- breakpoints_new
-usethis::use_data(rsi_translation, overwrite = TRUE, compress = "xz")
+usethis::use_data(rsi_translation, overwrite = TRUE, compress = "xz", version = 2)
 rm(rsi_translation)
 devtools::load_all(".")

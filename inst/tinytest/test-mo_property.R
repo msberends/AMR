@@ -86,9 +86,9 @@ for (l in AMR:::LANGUAGES_SUPPORTED[-1]) {
 
 # test languages
 expect_error(mo_gramstain("Escherichia coli", language = "UNKNOWN"))
-dutch <- suppressWarnings(mo_name(microorganisms$fullname[which(microorganisms$fullname %unlike% "unknown|coagulase|Fungi")], language = "nl", keep_synonyms = TRUE)) # should be transformable to English again
+dutch <- suppressWarnings(mo_name(microorganisms$fullname[which(microorganisms$fullname %unlike% "unknown|coagulase|Fungi|[(]class[)]")], language = "nl", keep_synonyms = TRUE)) # should be transformable to English again
 expect_identical(suppressWarnings(mo_name(dutch, language = NULL, keep_synonyms = TRUE)),
-                 microorganisms$fullname[which(microorganisms$fullname %unlike% "unknown|coagulase|Fungi")]) # gigantic test - will run ALL names
+                 microorganisms$fullname[which(microorganisms$fullname %unlike% "unknown|coagulase|Fungi|[(]class[)]")]) # gigantic test - will run ALL names
 
 # manual property function
 expect_error(mo_property("Escherichia coli", property = c("genus", "fullname")))
