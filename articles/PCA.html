@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9033</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9034</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -168,7 +168,8 @@
 
     
     
-<p><strong>NOTE: This page will be updated soon, as the pca() function is currently being developed.</strong></p>
+<p><strong>NOTE: This page will be updated soon, as the pca() function
+is currently being developed.</strong></p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -176,7 +177,8 @@
 <div class="section level2">
 <h2 id="transforming">Transforming<a class="anchor" aria-label="anchor" href="#transforming"></a>
 </h2>
-<p>For PCA, we need to transform our AMR data first. This is what the <code>example_isolates</code> data set in this package looks like:</p>
+<p>For PCA, we need to transform our AMR data first. This is what the
+<code>example_isolates</code> data set in this package looks like:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
@@ -229,7 +231,8 @@
 <span><span class="co"># $ COL     <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> NA, NA, R, R, R, R, R, R, R, R, R, R, NA, NA, NA, R, R, R, R, …</span></span>
 <span><span class="co"># $ MUP     <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
 <span><span class="co"># $ RIF     <span style="color: #949494; font-style: italic;">&lt;rsi&gt;</span> R, R, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, R, R, R, R, R, N…</span></span></code></pre></div>
-<p>Now to transform this to a data set with only resistance percentages per taxonomic order and genus:</p>
+<p>Now to transform this to a data set with only resistance percentages
+per taxonomic order and genus:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">resistance_data</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span></span>
@@ -257,12 +260,15 @@
 <div class="section level2">
 <h2 id="perform-principal-component-analysis">Perform principal component analysis<a class="anchor" aria-label="anchor" href="#perform-principal-component-analysis"></a>
 </h2>
-<p>The new <code><a href="../reference/pca.html">pca()</a></code> function will automatically filter on rows that contain numeric values in all selected variables, so we now only need to do:</p>
+<p>The new <code><a href="../reference/pca.html">pca()</a></code> function will automatically filter on rows
+that contain numeric values in all selected variables, so we now only
+need to do:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pca_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pca.html">pca</a></span><span class="op">(</span><span class="va">resistance_data</span><span class="op">)</span></span>
 <span><span class="co"># ℹ Columns selected for PCA: "AMC", "CAZ", "CTX", "CXM", "GEN", "SXT", "TMP"</span></span>
 <span><span class="co">#   and "TOB". Total observations available: 7.</span></span></code></pre></div>
-<p>The result can be reviewed with the good old <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function:</p>
+<p>The result can be reviewed with the good old <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>
+function:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pca_result</span><span class="op">)</span></span>
 <span><span class="co"># Groups (n=4, named as 'order'):</span></span>
@@ -274,7 +280,11 @@
 <span><span class="co"># Cumulative Proportion  0.5799 0.9330 0.9801 0.99446 0.99988 1.00000 1.000e+00</span></span></code></pre></div>
 <pre><code><span><span class="co"># Groups (n=4, named as 'order'):</span></span>
 <span><span class="co"># [1] "Caryophanales"    "Enterobacterales" "Lactobacillales"  "Pseudomonadales"</span></span></code></pre>
-<p>Good news. The first two components explain a total of 93.3% of the variance (see the PC1 and PC2 values of the <em>Proportion of Variance</em>. We can create a so-called biplot with the base R <code><a href="https://rdrr.io/r/stats/biplot.html" class="external-link">biplot()</a></code> function, to see which antimicrobial resistance per drug explain the difference per microorganism.</p>
+<p>Good news. The first two components explain a total of 93.3% of the
+variance (see the PC1 and PC2 values of the <em>Proportion of
+Variance</em>. We can create a so-called biplot with the base R
+<code><a href="https://rdrr.io/r/stats/biplot.html" class="external-link">biplot()</a></code> function, to see which antimicrobial resistance
+per drug explain the difference per microorganism.</p>
 </div>
 <div class="section level2">
 <h2 id="plotting-the-results">Plotting the results<a class="anchor" aria-label="anchor" href="#plotting-the-results"></a>
@@ -282,7 +292,9 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/biplot.html" class="external-link">biplot</a></span><span class="op">(</span><span class="va">pca_result</span><span class="op">)</span></span></code></pre></div>
 <p><img src="PCA_files/figure-html/unnamed-chunk-5-1.png" width="750"></p>
-<p>But we can’t see the explanation of the points. Perhaps this works better with our new <code><a href="../reference/ggplot_pca.html">ggplot_pca()</a></code> function, that automatically adds the right labels and even groups:</p>
+<p>But we can’t see the explanation of the points. Perhaps this works
+better with our new <code><a href="../reference/ggplot_pca.html">ggplot_pca()</a></code> function, that
+automatically adds the right labels and even groups:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggplot_pca.html">ggplot_pca</a></span><span class="op">(</span><span class="va">pca_result</span><span class="op">)</span></span></code></pre></div>
 <p><img src="PCA_files/figure-html/unnamed-chunk-6-1.png" width="750"></p>
