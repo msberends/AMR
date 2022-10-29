@@ -37,7 +37,7 @@ is.rsi.eligible(x, threshold = 0.05)
   mo = NULL,
   ab = deparse(substitute(x)),
   guideline = "EUCAST",
-  uti = FALSE,
+  uti = NULL,
   conserve_capped_values = FALSE,
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::rsi_translation,
@@ -49,7 +49,7 @@ is.rsi.eligible(x, threshold = 0.05)
   mo = NULL,
   ab = deparse(substitute(x)),
   guideline = "EUCAST",
-  uti = FALSE,
+  uti = NULL,
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::rsi_translation,
   ...

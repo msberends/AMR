@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data Set with 48,788 Microorganisms}
+\title{Data Set with 48,883 Microorganisms}
 \format{
-A \link[tibble:tibble]{tibble} with 48,788 observations and 22 variables:
+A \link[tibble:tibble]{tibble} with 48,883 observations and 22 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon.
@@ -48,7 +48,7 @@ Included taxonomic data are:
 \itemize{
 \item All ~34,000 (sub)species from the kingdoms of Archaea and Bacteria
 \item ~7,400 (sub)species from the kingdom of Fungi. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package. Only relevant fungi are covered (such as all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histoplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).
-\item ~4,900 (sub)species from the kingdom of Protozoa
+\item ~5,000 (sub)species from the kingdom of Protozoa
 \item ~1,500 (sub)species from ~50 other relevant genera from the kingdom of Animalia (such as \emph{Strongyloides} and \emph{Taenia})
 \item All ~9,400 previously accepted names of all included (sub)species (these were taxonomically renamed)
 \item The complete taxonomic tree of all included (sub)species: from kingdom to subspecies
@@ -63,7 +63,7 @@ For convenience, some entries were added manually:
 \item 2 entries of \emph{Staphylococcus} (coagulase-negative (CoNS) and coagulase-positive (CoPS))
 \item 1 entry of \emph{Blastocystis} (\emph{B.  hominis}), although it officially does not exist (Noel \emph{et al.} 2005, PMID 15634993)
 \item 1 entry of \emph{Moraxella} (\emph{M. catarrhalis}), which was formally named \emph{Branhamella catarrhalis} (Catlin, 1970) though this change was never accepted within the field of clinical microbiology
-\item 5 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast and unknown fungus)
+\item 6 other 'undefined' entries (unknown, unknown Gram negatives, unknown Gram positives, unknown yeast, unknown fungus, and unknown anaerobic bacteria)
 }
 
 The syntax used to transform the original data to a cleansed \R format, can be found here: \url{https://github.com/msberends/AMR/blob/main/data-raw/reproduction_of_microorganisms.R}.

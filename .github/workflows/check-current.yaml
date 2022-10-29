@@ -38,7 +38,7 @@ on:
     # this is to check that all dependencies are still available (see R/zzz.R)
     - cron:  '0 1 * * *'
 
-name: check-devel
+name: check-current
 
 jobs:
   R-code-check:

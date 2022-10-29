@@ -1,4 +1,4 @@
-# AMR 1.8.2.9033
+# AMR 1.8.2.9034
 
 This version will eventually become v2.0! We're happy to reach a new major milestone soon!
 
@@ -35,6 +35,7 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 ### Changed
 * Fix for using `as.rsi()` on certain EUCAST breakpoints for MIC values
 * Fix for using `as.rsi()` on `NA` values (e.g. `as.rsi(as.disk(NA), ...)`)
+* Fix for using `as.rsi()` on drug-drug combinations with multiple breakpoints for different body sites
 * Removed `as.integer()` for MIC values, since MIC are not integer values and running `table()` on MIC values  consequently failed for not being able to retrieve the level position (as that's how normally `as.integer()` on `factor`s work)
 * `droplevels()` on MIC will now return a common `factor` at default and will lose the `<mic>` class. Use `droplevels(..., as.mic = TRUE)` to keep the `<mic>` class.
 * Small fix for using `ab_from_text()`
@@ -51,6 +52,7 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * Fix for using `as.ab()` on `NA` values
 * Updated support for all WHONET 2022 microorganism codes 
 * Antimicrobial interpretation 'SDD' (susceptible dose-dependent, coined by CLSI) will be interpreted as 'I' to comply with EUCAST's 'I' in `as.rsi()`
+* Fix for `mo_shortname()` in case of higher taxonomic ranks (order, class, phylum)
 
 ### Other
 * New website to make use of the new Bootstrap 5 and pkgdown 2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions

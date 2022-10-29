@@ -592,17 +592,60 @@ for (i in 2:6) {
       status = "accepted",
       source = "manually added"
     ) %>%
-    filter(!paste(kingdom, .[[ncol(.) - 4]], rank) %in% paste(taxonomy$kingdom, taxonomy[[i + 1]], taxonomy$rank)) %>%
+    filter(!paste(kingdom, .[[ncol(.) - 4]], rank) %in% paste(taxonomy$kingdom, taxonomy[[i + 1]], taxonomy$rank))# %>%
     # get GBIF identifier where available
-    left_join(current_gbif %>%
-      select(kingdom, all_of(i_name), rank = taxonRank, ref = scientificNameAuthorship, gbif = taxonID, gbif_parent = parentNameUsageID),
-    by = c("kingdom", "rank", i_name)
-    ) %>%
-    mutate(source = ifelse(!is.na(gbif), "GBIF", source))
+    # left_join(current_gbif %>%
+    #   select(kingdom, all_of(i_name), rank = taxonRank, ref = scientificNameAuthorship, gbif = taxonID, gbif_parent = parentNameUsageID),
+    # by = c("kingdom", "rank", i_name)
+    # ) %>%
+    # mutate(source = ifelse(!is.na(gbif), "GBIF", source))
   message("n = ", nrow(to_add))
   taxonomy <- taxonomy %>%
     bind_rows(to_add)
 }
+
+# FIX LATER: added missings after finding out still some taxonomic levels were missing
+# this should not be needed - it was the only part that was required after last update
+# can now be removed? Check with next update!
+new_df <- AMR::microorganisms[0, ]
+for (tax in c("phylum", "class", "order", "family", "genus")) {
+  print(tax)
+  out <- AMR::microorganisms %>% pull(tax) %>% unique()
+  missing <- vapply(FUN.VALUE = logical(1), out, function(x) length(which(AMR::microorganisms[[tax]] == x & AMR::microorganisms$rank == tax)) == 0)
+  missing <- names(missing)[which(missing == TRUE & names(missing) != "" & names(missing) %unlike% "unknown")]
+  out <- microorganisms %>%
+    filter(.[[tax]] %in% missing) %>%
+    distinct(.[[tax]], .keep_all = TRUE) %>%
+    mutate_at(vars((which(colnames(.) == tax) + 1):subspecies), ~"") %>%
+    mutate_at(vars(lpsn:gbif_renamed_to), ~NA_character_) %>%
+    mutate(rank = tax,
+           ref = NA_character_,
+           status = "accepted",
+           fullname = .[[tax]],
+           source = "manually added",
+           snomed = rep(list(character(0)), nrow(.)))
+  new_df <- bind_rows(new_df, out)
+  if (".[[tax]]" %in% colnames(new_df)) {
+    new_df <- new_df %>% select(-`.[[tax]]`)
+  }
+}
+new_df <- new_df %>% 
+  mutate(mo = as.character(mo))
+
+new_mo <- new_df %>%
+  filter(rank == "family") %>%
+  mutate(
+    mo_rank_new8 = abbreviate_mo(family, minlength = 8, prefix = "[FAM]_"),
+    mo_rank_new9 = abbreviate_mo(family, minlength = 9, prefix = "[FAM]_"),
+    mo_rank_new = mo_rank_new8,
+    mo_duplicated = duplicated(mo_rank_new),
+    mo_rank_new = ifelse(mo_duplicated, mo_rank_new9, mo_rank_new),
+    mo_duplicated = duplicated(mo_rank_new)
+  ) %>%
+  transmute(fullname, mo_rank_new = paste0(gsub("_.*", "_", as.character(mo)), mo_rank_new))
+any(new_mo$mo_rank_new %in% microorganisms$mo)
+new_df[which(new_df$fullname %in% new_mo$fullname), "mo"] <- new_mo$mo_rank_new
+  
 
 # species (requires combination with genus)
 taxonomy <- taxonomy %>%
@@ -998,8 +1041,15 @@ taxonomy <- taxonomy %>%
     .before = 1
   ) %>%
   select(!starts_with("mo_")) %>%
-  arrange(fullname) %>%
+  arrange(fullname) 
+
+# now check these - e.g. Nitrospira is the name of a genus AND its class
+taxonomy %>% filter(fullname %in% .[duplicated(fullname), "fullname", drop = TRUE])
+taxonomy <- taxonomy %>% 
   distinct(fullname, .keep_all = TRUE)
+
+# This must not exist:
+taxonomy %>% filter(mo %like% "__")
 
 
 # Remove unwanted taxonomic entries from Protoza/Fungi --------------------
@@ -1027,7 +1077,7 @@ message("\nCongratulations! The new taxonomic table will contain ", format(nrow(
 # we will use Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS)
 # as a source, which copies directly from the latest US SNOMED CT version
 # - go to https://phinvads.cdc.gov/vads/ViewValueSet.action?oid=2.16.840.1.114222.4.11.1009
-# - check that current online version is higher than SNOMED_VERSION$current_version
+# - check that current online version is higher than TAXONOMY_VERSION$SNOMED
 # - if so, click on 'Download Value Set', choose 'TXT'
 snomed <- vroom("data-raw/SNOMED_PHVS_Microorganism_CDC_V12.txt", skip = 3) %>%
   select(1:2) %>%

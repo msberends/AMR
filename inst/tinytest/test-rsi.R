@@ -103,7 +103,7 @@ if (AMR:::pkg_is_available("skimr", min_version = "2.0.0")) {
 expect_equal(as.rsi(c("", "-", NA, "NULL")), c(NA_rsi_, NA_rsi_, NA_rsi_, NA_rsi_))
 
 # S. pneumoniae/ampicillin in EUCAST 2020: 0.5-2 ug/ml (R is only > 2)
-expect_equal(
+expect_equal(suppressMessages(
   as.character(
     as.rsi(
       x = as.mic(c(0.125, 0.5, 1, 2, 4)),
@@ -111,11 +111,11 @@ expect_equal(
       ab = "AMP",
       guideline = "EUCAST 2020"
     )
-  ),
+  )),
   c("S", "S", "I", "I", "R")
 )
 # S. pneumoniae/amoxicillin in CLSI 2019: 2-8 ug/ml (R is 8 and > 8)
-expect_equal(
+expect_equal(suppressMessages(
   as.character(
     as.rsi(
       x = as.mic(c(1, 2, 4, 8, 16)),
@@ -123,7 +123,7 @@ expect_equal(
       ab = "AMX",
       guideline = "CLSI 2019"
     )
-  ),
+  )),
   c("S", "S", "I", "R", "R")
 )
 
@@ -133,11 +133,11 @@ expect_true(is.null(rsi_interpretation_history()))
 
 # cutoffs at MIC = 8
 expect_equal(
-  as.rsi(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020"),
+  suppressMessages(as.rsi(as.mic(2), "E. coli", "ampicillin", guideline = "EUCAST 2020")),
   as.rsi("S")
 )
 expect_equal(
-  as.rsi(as.mic(32), "E. coli", "ampicillin", guideline = "EUCAST 2020"),
+  suppressMessages(as.rsi(as.mic(32), "E. coli", "ampicillin", guideline = "EUCAST 2020")),
   as.rsi("R")
 )
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {

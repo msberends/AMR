@@ -31,6 +31,8 @@ This transforms a vector to a new class \code{\link{disk}}, which is a disk diff
 \details{
 Interpret disk values as RSI values with \code{\link[=as.rsi]{as.rsi()}}. It supports guidelines from EUCAST and CLSI.
 
+Disk diffusion growth zone sizes must be between 6 and 50 millimetres. Values higher than 50 but lower than 100 will be maximised to 50. All others input values outside the 6-50 range will return \code{NA}.
+
 \code{NA_disk_} is a missing value of the new \code{disk} class.
 }
 \examples{

@@ -37,6 +37,7 @@ library(AMR)
 
 # Install the WHONET 2022 software on Windows (http://www.whonet.org/software.html),
 # and copy the folder C:\WHONET\Resources to the data-raw/WHONET/ folder
+# (for ASIARS-Net update, also copy C:\WHONET\Codes to the data-raw/WHONET/ folder)
 
 # Load source data ----
 whonet_organisms <- read_tsv("data-raw/WHONET/Resources/Organisms.txt", na = c("", "NA", "-"), show_col_types = FALSE) %>% 
@@ -134,9 +135,8 @@ breakpoints_new <- breakpoints %>%
             ab = as.ab(WHONET_ABX_CODE),
             ref_tbl = REFERENCE_TABLE,
             disk_dose = POTENCY,
-            # keep disks within 6-50 mm
-            breakpoint_S = if_else(method == "DISK", S %>% pmax(6) %>% pmin(50), S),
-            breakpoint_R = if_else(method == "DISK", R %>% pmax(6) %>% pmin(50), R),
+            breakpoint_S = S,
+            breakpoint_R = R,
             uti = SITE_OF_INFECTION %like% "(UTI|urinary|urine)") %>% 
   # Greek symbols and EM dash symbols are not allowed by CRAN, so replace them with ASCII:
   mutate(disk_dose = disk_dose %>% 
@@ -177,6 +177,9 @@ breakpoints_new <- breakpoints_new %>%
   mutate(breakpoint_R = ifelse(guideline %like% "EUCAST" & method == "DISK" & breakpoint_S - breakpoint_R != 0,
                                breakpoint_R + 1,
                                breakpoint_R))
+# fix missing R breakpoint where there is an S breakpoint
+breakpoints_new[which(is.na(breakpoints_new$breakpoint_R)), "breakpoint_R"] <- breakpoints_new[which(is.na(breakpoints_new$breakpoint_R)), "breakpoint_S"]
+
 # check again
 breakpoints_new %>% filter(guideline == "EUCAST 2022", ab == "AMC", mo == "B_[ORD]_ENTRBCTR", method == "MIC")
 # compare with current version

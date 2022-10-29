@@ -396,7 +396,7 @@ as.rsi.mic <- function(x,
                        mo = NULL,
                        ab = deparse(substitute(x)),
                        guideline = "EUCAST",
-                       uti = FALSE,
+                       uti = NULL,
                        conserve_capped_values = FALSE,
                        add_intrinsic_resistance = FALSE,
                        reference_data = AMR::rsi_translation,
@@ -422,7 +422,7 @@ as.rsi.disk <- function(x,
                         mo = NULL,
                         ab = deparse(substitute(x)),
                         guideline = "EUCAST",
-                        uti = FALSE,
+                        uti = NULL,
                         add_intrinsic_resistance = FALSE,
                         reference_data = AMR::rsi_translation,
                         ...) {
@@ -454,7 +454,7 @@ as.rsi.data.frame <- function(x,
   meet_criteria(x, allow_class = "data.frame") # will also check for dimensions > 0
   meet_criteria(col_mo, allow_class = "character", is_in = colnames(x), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character", has_length = 1)
-  meet_criteria(uti, allow_class = c("logical", "character"), allow_NULL = TRUE)
+  meet_criteria(uti, allow_class = c("logical", "character"), allow_NULL = TRUE, allow_NA = TRUE)
   meet_criteria(conserve_capped_values, allow_class = "logical", has_length = 1)
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
   meet_criteria(reference_data, allow_class = "data.frame")
@@ -495,7 +495,7 @@ as.rsi.data.frame <- function(x,
       uti <- as.logical(x[, col_uti, drop = TRUE])
     }
   } else {
-    # look for specimen column and make logicals of the urines
+    # col_uti is still NULL - look for specimen column and make logicals of the urines
     col_specimen <- suppressMessages(search_type_in_df(x = x, type = "specimen"))
     if (!is.null(col_specimen)) {
       uti <- x[, col_specimen, drop = TRUE] %like% "urin"
@@ -514,7 +514,7 @@ as.rsi.data.frame <- function(x,
       )
     } else {
       # no data about UTI's found
-      uti <- FALSE
+      uti <- NULL
     }
   }
 
@@ -672,9 +672,9 @@ as_rsi_method <- function(method_short,
                           ...) {
   meet_criteria(x, allow_NA = TRUE, .call_depth = -2)
   meet_criteria(mo, allow_class = c("mo", "character"), allow_NULL = TRUE, .call_depth = -2)
-  meet_criteria(ab, allow_class = c("ab", "character"), .call_depth = -2)
+  meet_criteria(ab, allow_class = c("ab", "character"), has_length = 1, .call_depth = -2)
   meet_criteria(guideline, allow_class = "character", has_length = 1, .call_depth = -2)
-  meet_criteria(uti, allow_class = "logical", has_length = c(1, length(x)), .call_depth = -2)
+  meet_criteria(uti, allow_class = "logical", has_length = c(1, length(x)), allow_NULL = TRUE, allow_NA = TRUE, .call_depth = -2)
   meet_criteria(conserve_capped_values, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(reference_data, allow_class = "data.frame", .call_depth = -2)
@@ -744,6 +744,9 @@ as_rsi_method <- function(method_short,
   }
   if (length(mo) == 1) {
     mo <- rep(mo, length(x))
+  }
+  if (is.null(uti)) {
+    uti <- NA
   }
   if (length(uti) == 1) {
     uti <- rep(uti, length(x))
@@ -860,7 +863,6 @@ as_rsi_method <- function(method_short,
     }
 
     get_record <- trans %pm>%
-      # no subsetting to UTI here
       subset(lookup %in% c(
         lookup_mo[i],
         lookup_genus[i],
@@ -871,33 +873,63 @@ as_rsi_method <- function(method_short,
         lookup_other[i]
       ))
 
-    if (any(nrow(get_record) == 1 && get_record$uti == TRUE, na.rm = TRUE) && !any(uti == TRUE, na.rm = TRUE) && message_not_thrown_before("as.rsi", "uti", ab_param)) {
-      warning_("in `as.rsi()`: interpretation of ", font_bold(ab_name(ab_param, tolower = TRUE)), " is only available for (uncomplicated) urinary tract infections (UTI) for some microorganisms. Use argument `uti` to set which isolates are from urine. See ?as.rsi.")
+    if (NROW(get_record) == 0) {
+      warning_("No ", method_param, " breakpoints available for ",
+               font_italic(suppressMessages(suppressWarnings(mo_shortname(mo[i], language = NULL, keep_synonyms = FALSE)))),
+               paste0(" / "),
+               suppressMessages(suppressWarnings(ab_name(ab, language = NULL, tolower = TRUE))))
       rise_warning <- TRUE
+      next
     }
-
+    
     if (isTRUE(uti[i])) {
       get_record <- get_record %pm>%
         # be as specific as possible (i.e. prefer species over genus):
-        # pm_desc(uti) = TRUE on top and FALSE on bottom
-        pm_arrange(pm_desc(uti), rank_index) # 'uti' is a column in data set 'rsi_translation'
+        # the below `pm_desc(uti)` will put `TRUE` on top and FALSE on bottom
+        pm_arrange(rank_index, pm_desc(uti)) # 'uti' is a column in data set 'rsi_translation'
     } else {
       get_record <- get_record %pm>%
-        pm_filter(uti == FALSE) %pm>% # 'uti' is a column in rsi_translation
-        pm_arrange(rank_index)
+        # sort UTI = FALSE first, then UTI = TRUE
+        pm_arrange(rank_index, uti)
     }
     
+    # warning section
     records_same_mo <- get_record[get_record$mo == get_record[1, "mo", drop = TRUE], , drop = FALSE]
-    if (message_not_thrown_before("as.rsi", "site", records_same_mo$mo[1]) && nrow(records_same_mo) > 1 && length(unique(records_same_mo$site)) > 1) {
-      warning_("in `as.rsi()`: assuming site '",
-               get_record[1L, "site", drop = FALSE], "' for ",
-               font_italic(suppressMessages(suppressWarnings(mo_name(records_same_mo$mo[1], language = NULL, keep_synonyms = FALSE)))),
+    if (nrow(get_record) == 1 && all(get_record$uti == TRUE) && uti[i] %in% c(FALSE, NA) && message_not_thrown_before("as.rsi", "uti", ab_param)) {
+      # uti not set as TRUE, but there are only a UTI breakpoints available, so throw warning
+      warning_("in `as.rsi()`: interpretation of ", font_bold(ab_name(ab_param, tolower = TRUE)), " is only available for (uncomplicated) urinary tract infections (UTI) for some microorganisms, thus assuming `uti = TRUE`. See ?as.rsi.")
+      rise_warning <- TRUE
+    } else if (nrow(records_same_mo) > 1 && length(unique(records_same_mo$site)) > 1 && uti[i] == FALSE && all(c(TRUE, FALSE) %in% records_same_mo$uti, na.rm = TRUE) && message_not_thrown_before("as.rsi", "siteUTI", records_same_mo$mo[1], records_same_mo$ab[1])) {
+      # uti not set and both UTI and non-UTI breakpoints available, so throw warning
+      warning_("in `as.rsi()`: breakpoints for UTI ", font_underline("and"), " non-UTI available for ",
+               font_italic(suppressMessages(suppressWarnings(mo_shortname(records_same_mo$mo[1], language = NULL, keep_synonyms = FALSE)))),
+               paste0(" / "),
+               suppressMessages(suppressWarnings(ab_name(records_same_mo$ab[1], language = NULL, tolower = TRUE))),
+               paste0(" - assuming non-UTI. Use argument `uti` to set which isolates are from urine. See ?as.rsi. '"),
+               call = FALSE)
+      get_record <- get_record %pm>%
+        pm_filter(uti == FALSE)
+      rise_warning <- TRUE
+    } else if (nrow(records_same_mo) > 1 && length(unique(records_same_mo$site)) > 1 && all(records_same_mo$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.rsi", "site", records_same_mo$mo[1], records_same_mo$ab[1])) {
+      # breakpoints for multiple body sites available, so throw warning
+      site <- get_record[1L, "site", drop = FALSE]
+      if (is.na(site)) {
+        site <- paste0("an unspecified body site")
+      } else {
+        site <- paste0("body site '", get_record[1L, "site", drop = FALSE], "'")
+      }
+      warning_("in `as.rsi()`: breakpoints available for ",
+               font_italic(suppressMessages(suppressWarnings(mo_shortname(records_same_mo$mo[1], language = NULL, keep_synonyms = FALSE)))),
+               paste0(" / "),
+               suppressMessages(suppressWarnings(ab_name(records_same_mo$ab[1], language = NULL, tolower = TRUE))),
+               paste0(" - assuming ", site),
                call = FALSE)
       rise_warning <- TRUE
     }
-    get_record <- get_record[1L, , drop = FALSE]
     
     if (NROW(get_record) > 0) {
+      # get the best hit: the top one
+      get_record <- get_record[1L, , drop = FALSE]
       if (is.na(x[i]) | (is.na(get_record$breakpoint_S) & is.na(get_record$breakpoint_R))) {
         new_rsi[i] <- NA_character_
       } else if (method == "mic") {

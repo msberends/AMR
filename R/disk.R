@@ -34,6 +34,8 @@
 #' @param x vector
 #' @param na.rm a [logical] indicating whether missing values should be removed
 #' @details Interpret disk values as RSI values with [as.rsi()]. It supports guidelines from EUCAST and CLSI.
+#' 
+#' Disk diffusion growth zone sizes must be between 6 and 50 millimetres. Values higher than 50 but lower than 100 will be maximised to 50. All others input values outside the 6-50 range will return `NA`.
 #' @return An [integer] with additional class [`disk`]
 #' @aliases disk
 #' @export
@@ -107,7 +109,8 @@ as.disk <- function(x, na.rm = FALSE) {
     x <- as.integer(ceiling(clean_double2(x)))
 
     # disks can never be less than 6 mm (size of smallest disk) or more than 50 mm
-    x[x < 6 | x > 50] <- NA_integer_
+    x[x < 6 | x > 99] <- NA_integer_
+    x[x > 50] <- 50L
     na_after <- length(x[is.na(x)])
 
     if (na_before != na_after) {
