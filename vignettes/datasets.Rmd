@@ -123,9 +123,9 @@ This data set is in R available as `microorganisms`, after you load the `AMR` pa
 
 `r download_txt("microorganisms")`
 
-**NOTE: The exported files for Excel, SAS, SPSS and Stata contain only the first 50 SNOMED codes per record, as their file size would otherwise exceed 100 MB; the file size limit of GitHub.** Advice? Use R instead.
+**NOTE: The exported files for SAS, SPSS and Stata contain only the first 50 SNOMED codes per record, as their file size would otherwise exceed 100 MB; the file size limit of GitHub.** Advice? Use R instead.
 
-The tab-separated text file contains all SNOMED codes as comma separated values.
+The tab-separated text file and Microsoft Excel workbook both contain all SNOMED codes as comma separated values.
 
 ### Source
 
@@ -164,6 +164,8 @@ This data set is in R available as `antibiotics`, after you load the `AMR` packa
 
 `r download_txt("antibiotics")`
 
+The tab-separated text file and Microsoft Excel workbook, and SAS, SPSS and Stata files all contain the ATC codes, common abbreviations, trade names and LOINC codes as comma separated values.
+
 ### Source
 
 This data set contains all EARS-Net and ATC codes gathered from WHO and WHONET, and all compound IDs from PubChem. It also contains all brand names (synonyms) as found on PubChem and Defined Daily Doses (DDDs) for oral and parenteral administration.
@@ -188,6 +190,8 @@ antibiotics %>%
 This data set is in R available as `antivirals`, after you load the `AMR` package.
 
 `r download_txt("antivirals")`
+
+The tab-separated text file and Microsoft Excel workbook, and SAS, SPSS and Stata files all contain the trade names as comma separated values.
 
 ### Source
 
