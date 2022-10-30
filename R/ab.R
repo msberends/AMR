@@ -492,14 +492,17 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   }
 
   # save to package env to save time for next time
-  AMR_env$ab_previously_coerced <- unique(rbind(AMR_env$ab_previously_coerced,
-    data.frame(
-      x = x,
-      ab = x_new,
+  if (initial_search == TRUE) {
+    AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[which(!AMR_env$ab_previously_coerced$x %in% x), , drop = FALSE]
+    AMR_env$ab_previously_coerced <- unique(rbind(AMR_env$ab_previously_coerced,
+      data.frame(
+        x = x,
+        ab = x_new,
+        stringsAsFactors = FALSE
+      ),
       stringsAsFactors = FALSE
-    ),
-    stringsAsFactors = FALSE
-  ))
+    ))
+  }
 
   # take failed ATC codes apart from rest
   if (length(x_unknown_ATCs) > 0 && fast_mode == FALSE) {
@@ -509,7 +512,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     )
   }
   x_unknown <- x_unknown[!x_unknown %in% x_unknown_ATCs]
-
+  x_unknown <- c(x_unknown,
+                 AMR_env$ab_previously_coerced$x[which(AMR_env$ab_previously_coerced$x %in% x & is.na(AMR_env$ab_previously_coerced$ab))])
   if (length(x_unknown) > 0 && fast_mode == FALSE) {
     warning_(
       "in `as.ab()`: these values could not be coerced to a valid antimicrobial ID: ",

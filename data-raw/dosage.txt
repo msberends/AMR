@@ -51,8 +51,8 @@
 "CXM"	"Cefuroxime"	"high_dosage"	"0.5 g"	2	"oral"	""	"0.5 g x 2 oral"	11
 "CXM"	"Cefuroxime"	"standard_dosage"	"0.25 g"	2	"oral"	""	"0.25 g x 2 oral"	11
 "CXM"	"Cefuroxime"	"uncomplicated_uti"	"0.25 g"	2	"oral"	""	"0.25 g x 2 oral"	11
-"LEX"	"Cephalexin"	"standard_dosage"	"0.25-1 g"	2	"oral"	""	"0.25-1 g x 2-3 oral"	11
-"LEX"	"Cephalexin"	"uncomplicated_uti"	"0.25-1 g"	2	"oral"	""	"0.25-1 g x 2-3 oral"	11
+"LEX"	"Cefalexin"	"standard_dosage"	"0.25-1 g"	2	"oral"	""	"0.25-1 g x 2-3 oral"	11
+"LEX"	"Cefalexin"	"uncomplicated_uti"	"0.25-1 g"	2	"oral"	""	"0.25-1 g x 2-3 oral"	11
 "CHL"	"Chloramphenicol"	"high_dosage"	"2 g"	4	"iv"	""	"2 g x 4 iv"	11
 "CHL"	"Chloramphenicol"	"standard_dosage"	"1 g"	4	"iv"	""	"1 g x 4 iv"	11
 "CHL"	"Chloramphenicol"	"high_dosage"	"2 g"	4	"oral"	""	"2 g x 4 oral"	11

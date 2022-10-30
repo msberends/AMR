@@ -513,8 +513,9 @@ mo_is_intrinsic_resistant <- function(x, ab, language = get_AMR_locale(), keep_s
     )
   }
 
-  # runs against internal vector: INTRINSIC_R (see zzz.R)
-  paste(x, ab) %in% INTRINSIC_R
+  # runs against internal vector: intrinsic_resistant (see zzz.R)
+  add_intrinsic_resistance_to_AMR_env()
+  paste(x, ab) %in% AMR_env$intrinsic_resistant
 }
 
 #' @rdname mo_property

@@ -27,17 +27,17 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-expect_warning(as.ab("test"))
-expect_identical(as.character(suppressWarnings(as.ab("test"))), NA_character_)
+expect_warning(as.ab("testab"))
+expect_identical(as.character(suppressWarnings(as.ab("testab"))), NA_character_)
 
 suppressMessages(
   add_custom_antimicrobials(
-    data.frame(ab = "TEST",
+    data.frame(ab = "TESTAB",
                name = "Test Antibiotic",
                group = "Test Group")
   )
 )
 
-expect_identical(as.character(as.ab("test")), "TEST")
-expect_identical(ab_name("test"), "Test Antibiotic")
-expect_identical(ab_group("test"), "Test Group")
+expect_identical(as.character(as.ab("testab")), "TESTAB")
+expect_identical(ab_name("testab"), "Test Antibiotic")
+expect_identical(ab_group("testab"), "Test Group")

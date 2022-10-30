@@ -40,7 +40,7 @@
 #' # Add custom antibiotic codes:
 #' library(AMR)
 #' add_custom_antimicrobials(
-#'   data.frame(ab = "TEST",
+#'   data.frame(ab = "TESTAB",
 #'              name = "Test Antibiotic",
 #'              group = "Test Group")
 #' )
@@ -54,14 +54,14 @@
 #'
 #' # returns NA and throws a warning (which is now suppressed):
 #' suppressWarnings(
-#'   as.ab("test")
+#'   as.ab("testab")
 #' )
 #'
 #' # now add a custom entry - it will be considered by as.ab() and
 #' # all ab_*() functions
 #' add_custom_antimicrobials(
 #'   data.frame(
-#'     ab = "TEST",
+#'     ab = "TESTAB",
 #'     name = "Test Antibiotic",
 #'     # you can add any property present in the
 #'     # 'antibiotics' data set, such as 'group':
@@ -69,12 +69,12 @@
 #'   )
 #' )
 #'
-#' # "test" is now a new antibiotic:
-#' as.ab("test")
-#' ab_name("test")
-#' ab_group("test")
+#' # "testab" is now a new antibiotic:
+#' as.ab("testab")
+#' ab_name("testab")
+#' ab_group("testab")
 #'
-#' ab_info("test")
+#' ab_info("testab")
 #'
 #'
 #' # Add Co-fluampicil, which is one of the many J01CR50 codes, see
@@ -92,7 +92,7 @@
 #'
 #' # even antibiotic selectors work
 #' x <- data.frame(
-#'   random_column = "test",
+#'   random_column = "some value",
 #'   coflu = as.rsi("S"),
 #'   ampicillin = as.rsi("R")
 #' )

@@ -66,9 +66,8 @@ AMR_env$rsi_interpretation_history <- data.frame(
   interpretation = character(0),
   stringsAsFactors = FALSE
 )
-AMR_env$has_data.table <- pkg_is_available("data.table", also_load = FALSE)
 AMR_env$custom_ab_codes <- character(0)
-AMR_env$is_dark_theme <- tryCatch(isTRUE(getExportedValue("getThemeInfo", ns = asNamespace("rstudioapi"))()$dark), error = function(e) FALSE)
+AMR_env$is_dark_theme <- NULL
 
 # determine info icon for messages
 utf8_supported <- isTRUE(base::l10n_info()$`UTF-8`)
@@ -150,8 +149,6 @@ if (utf8_supported && !is_latex) {
   # they cannot be part of R/sysdata.rda since CRAN thinks it would make the package too large (+3 MB)
   AMR_env$AB_lookup <- create_AB_lookup()
   AMR_env$MO_lookup <- create_MO_lookup()
-  # for mo_is_intrinsic_resistant() - saves a lot of time when executed on this vector
-  assign(x = "INTRINSIC_R", value = create_intr_resistance(), envir = asNamespace("AMR"))
 }
 
 .onAttach <- function(lib, pkg) {
@@ -184,37 +181,16 @@ create_MO_lookup <- function() {
   # all the rest
   MO_lookup[which(is.na(MO_lookup$kingdom_index)), "kingdom_index"] <- 5
 
-  # # use this paste instead of `fullname` to work with Viridans Group Streptococci, etc.
-  # if (length(MO_FULLNAME_LOWER) == nrow(MO_lookup)) {
-  #   MO_lookup$fullname_lower <- MO_FULLNAME_LOWER
-  # } else {
-  #   MO_lookup$fullname_lower <- ""
-  #   warning("MO table updated - Run: source(\"data-raw/_pre_commit_hook.R\")", call. = FALSE)
-  # }
-
-  MO_lookup$fullname_lower <- create_MO_fullname_lower()
+  MO_lookup$fullname_lower <- MO_FULLNAME_LOWER
   MO_lookup$full_first <- substr(MO_lookup$fullname_lower, 1, 1)
   MO_lookup$species_first <- substr(MO_lookup$species, 1, 1)
 
-  # so arrange data on prevalence first, then kingdom, then full name
-  MO_lookup[order(MO_lookup$prevalence, MO_lookup$kingdom_index, MO_lookup$fullname_lower), , drop = FALSE]
+  MO_lookup
 }
 
-create_MO_fullname_lower <- function() {
-  MO_lookup <- AMR::microorganisms
-  # use this paste instead of `fullname` to work with Viridans Group Streptococci, etc.
-  MO_lookup$fullname_lower <- tolower(trimws(paste(
-    MO_lookup$genus,
-    MO_lookup$species,
-    MO_lookup$subspecies
-  )))
-  ind <- MO_lookup$genus == "" | grepl("^[(]unknown ", MO_lookup$fullname, perl = TRUE)
-  MO_lookup[ind, "fullname_lower"] <- tolower(MO_lookup[ind, "fullname", drop = TRUE])
-  MO_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", MO_lookup$fullname_lower, perl = TRUE))
-  MO_lookup$fullname_lower
-}
-
-create_intr_resistance <- function() {
+add_intrinsic_resistance_to_AMR_env <- function() {
   # for mo_is_intrinsic_resistant() - saves a lot of time when executed on this vector
-  paste(AMR::intrinsic_resistant$mo, AMR::intrinsic_resistant$ab)
+  if (is.null(AMR_env$intrinsic_resistant)) {
+    AMR_env$intrinsic_resistant <- paste(AMR::intrinsic_resistant$mo, AMR::intrinsic_resistant$ab)
+  }
 }

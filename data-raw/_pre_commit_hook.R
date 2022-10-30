@@ -488,14 +488,14 @@ suppressMessages(devtools::document(quiet = TRUE))
 
 
 # Style pkg ---------------------------------------------------------------
-if (interactive()) {
-  # only when sourcing this file ourselves
-  usethis::ui_info("Styling package")
-  styler::style_pkg(
-    style = styler::tidyverse_style,
-    filetype = c("R", "Rmd")
-  )
-}
+# if (interactive()) {
+#   # only when sourcing this file ourselves
+#   usethis::ui_info("Styling package")
+#   styler::style_pkg(
+#     style = styler::tidyverse_style,
+#     filetype = c("R", "Rmd")
+#   )
+# }
 
 
 # Finished ----------------------------------------------------------------

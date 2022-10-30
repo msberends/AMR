@@ -1079,10 +1079,16 @@ try_colour <- function(..., before, after, collapse = " ") {
     txt
   }
 }
+is_dark <- function() {
+  if (is.null(AMR_env$is_dark_theme)) {
+    AMR_env$is_dark_theme <- tryCatch(isTRUE(getExportedValue("getThemeInfo", ns = asNamespace("rstudioapi"))()$dark), error = function(e) FALSE)
+  }
+  isTRUE(AMR_env$is_dark_theme)
+}
 font_black <- function(..., collapse = " ") {
   before <- "\033[38;5;232m"
   after <- "\033[39m"
-  if (isTRUE(AMR_env$is_dark_theme)) {
+  if (is_dark()) {
     # white
     before <- "\033[37m"
     after <- "\033[39m"
@@ -1092,7 +1098,7 @@ font_black <- function(..., collapse = " ") {
 font_white <- function(..., collapse = " ") {
   before <- "\033[37m"
   after <- "\033[39m"
-  if (isTRUE(AMR_env$is_dark_theme)) {
+  if (is_dark()) {
     # black
     before <- "\033[38;5;232m"
     after <- "\033[39m"
@@ -1371,17 +1377,19 @@ trimws2 <- function(..., whitespace = "[\u0009\u000A\u000B\u000C\u000D\u0020\u00
 # Faster data.table implementations ----
 
 match <- function(x, table, ...) {
-  if (isTRUE(AMR_env$has_data.table) && is.character(x) && is.character(table)) {
+  chmatch <- import_fn("chmatch", "data.table", error_on_fail = FALSE)
+  if (!is.null(chmatch) && is.character(x) && is.character(table)) {
     # data.table::chmatch() is 35% faster than base::match() for character
-    getExportedValue(name = "chmatch", ns = asNamespace("data.table"))(x, table, ...)
+    chmatch(x, table, ...)
   } else {
     base::match(x, table, ...)
   }
 }
 `%in%` <- function(x, table) {
-  if (isTRUE(AMR_env$has_data.table) && is.character(x) && is.character(table)) {
+  chin <- import_fn("%chin%", "data.table", error_on_fail = FALSE)
+  if (!is.null(chin) && is.character(x) && is.character(table)) {
     # data.table::`%chin%`() is 20-50% faster than base::`%in%`() for character
-    getExportedValue(name = "%chin%", ns = asNamespace("data.table"))(x, table)
+    chin(x, table)
   } else {
     base::`%in%`(x, table)
   }

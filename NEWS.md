@@ -1,4 +1,4 @@
-# AMR 1.8.2.9038
+# AMR 1.8.2.9039
 
 This version will eventually become v2.0! We're happy to reach a new major milestone soon!
 
@@ -42,7 +42,7 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * Fix for using `as.rsi()` on `NA` values (e.g. `as.rsi(as.disk(NA), ...)`)
 * Fix for using `as.rsi()` on drug-drug combinations with multiple breakpoints for different body sites
 * Removed `as.integer()` for MIC values, since MIC are not integer values and running `table()` on MIC values  consequently failed for not being able to retrieve the level position (as that's how normally `as.integer()` on `factor`s work)
-* `droplevels()` on MIC will now return a common `factor` at default and will lose the `<mic>` class. Use `droplevels(..., as.mic = TRUE)` to keep the `<mic>` class.
+* `droplevels()` on MIC will now return a common `factor` at default and will lose the `mic` class. Use `droplevels(..., as.mic = TRUE)` to keep the `mic` class.
 * Small fix for using `ab_from_text()`
 * Fixes for reading in text files using `set_mo_source()`, which now also allows the source file to contain valid taxonomic names instead of only valid microorganism ID of this package
 * Using any `random_*()` function (such as `random_mic()`) is now possible by directly calling the package without loading it first: `AMR::random_mic(10)`

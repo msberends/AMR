@@ -848,7 +848,8 @@ as_rsi_method <- function(method_short,
   any_is_intrinsic_resistant <- FALSE
 
   for (i in seq_len(length(x))) {
-    is_intrinsic_r <- paste(mo[i], ab_param) %in% INTRINSIC_R
+    add_intrinsic_resistance_to_AMR_env()
+    is_intrinsic_r <- paste(mo[i], ab_param) %in% AMR_env$intrinsic_resistant
     any_is_intrinsic_resistant <- any_is_intrinsic_resistant | is_intrinsic_r
 
     if (isTRUE(add_intrinsic_resistance) & is_intrinsic_r) {
