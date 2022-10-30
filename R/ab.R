@@ -48,7 +48,7 @@
 #' Use the [`ab_*`][ab_property()] functions to get properties based on the returned antibiotic ID, see *Examples*.
 #'
 #' Note: the [as.ab()] and [`ab_*`][ab_property()] functions may use very long regular expression to match brand names of antimicrobial agents. This may fail on some systems.
-#' 
+#'
 #' You can add your own manual codes to be considered by [as.ab()] and all [`ab_*`][ab_property()] functions, see [add_custom_antimicrobials()].
 #' @section Source:
 #' World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: \url{https://www.whocc.no/atc_ddd_index/}
@@ -84,7 +84,7 @@
 #' # they use as.ab() internally:
 #' ab_name("J01FA01") # "Erythromycin"
 #' ab_name("eryt") # "Erythromycin"
-#' 
+#'
 #' \donttest{
 #' if (require("dplyr")) {
 #'
@@ -170,16 +170,16 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   previously_coerced <- x %in% AMR_env$ab_previously_coerced$x
   x_new[previously_coerced & is.na(x_new)] <- AMR_env$ab_previously_coerced$ab[match(x[is.na(x_new) & x %in% AMR_env$ab_previously_coerced$x], AMR_env$ab_previously_coerced$x)]
   already_known <- known_names | known_codes_ab | known_codes_atc | known_codes_cid | previously_coerced
-  
+
   # fix for NAs
   x_new[is.na(x)] <- NA
   already_known[is.na(x)] <- FALSE
-  
+
   if (initial_search == TRUE && sum(already_known) < length(x)) {
     progress <- progress_ticker(n = sum(!already_known), n_min = 25, print = info) # start if n >= 25
     on.exit(close(progress))
   }
-  
+
   for (i in which(!already_known)) {
     if (initial_search == TRUE) {
       progress$tick()
@@ -490,15 +490,15 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   if (initial_search == TRUE && sum(already_known) < length(x)) {
     close(progress)
   }
-  
+
   # save to package env to save time for next time
   AMR_env$ab_previously_coerced <- unique(rbind(AMR_env$ab_previously_coerced,
-                                                data.frame(
-                                                  x = x,
-                                                  ab = x_new,
-                                                  stringsAsFactors = FALSE
-                                                ),
-                                                stringsAsFactors = FALSE
+    data.frame(
+      x = x,
+      ab = x_new,
+      stringsAsFactors = FALSE
+    ),
+    stringsAsFactors = FALSE
   ))
 
   # take failed ATC codes apart from rest

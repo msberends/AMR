@@ -43,7 +43,7 @@
 #' # Add e.g. Italian support to that file using:
 #' options(AMR_locale = "Italian")
 #' ```
-#' 
+#'
 #' And then save the file.
 #'
 #' Please read about adding or updating a language in [our Wiki](https://github.com/msberends/AMR/wiki/).

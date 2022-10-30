@@ -236,7 +236,7 @@ as.mo <- function(x,
     # set up progress bar
     progress <- progress_ticker(n = length(x_unique), n_min = 10, print = info)
     on.exit(close(progress))
-    
+
     msg <- character(0)
 
     # run it
@@ -289,7 +289,7 @@ as.mo <- function(x,
       } else {
         mo_to_search <- AMR_env$MO_lookup$fullname[filtr]
       }
-      
+
       AMR_env$mo_to_search <- mo_to_search
       # determine the matching score on the original search value
       m <- mo_matching_score(x = x_search_cleaned, n = mo_to_search)
@@ -363,14 +363,14 @@ as.mo <- function(x,
           "Microorganism translation was uncertain for ", examples,
           ". Run `mo_uncertainties()` to review ", plural[2], "."
         ))
-        
+
         for (m in msg) {
-          message_(m)  
+          message_(m)
         }
       }
     }
   } # end of loop over all yet unknowns
-  
+
   # Keep or replace synonyms ----
   gbif_matches <- AMR::microorganisms$gbif_renamed_to[match(out, AMR::microorganisms$mo)]
   gbif_matches[!gbif_matches %in% AMR::microorganisms$gbif] <- NA
@@ -565,7 +565,8 @@ pillar_shaft.mo <- function(x, ...) {
     }
     warning_(
       col, " contains old MO codes (from a previous AMR package version). ",
-      "Please update your MO codes with `as.mo()`.", call = FALSE
+      "Please update your MO codes with `as.mo()`.",
+      call = FALSE
     )
   }
 
@@ -652,7 +653,8 @@ print.mo <- function(x, print.shortnames = FALSE, ...) {
   if (!all(x %in% c(AMR::microorganisms$mo, NA))) {
     warning_(
       "Some MO codes are from a previous AMR package version. ",
-      "Please update the MO codes with `as.mo()`.", call = FALSE
+      "Please update the MO codes with `as.mo()`.",
+      call = FALSE
     )
   }
   print.default(x, quote = FALSE)
@@ -918,12 +920,12 @@ convert_colloquial_input <- function(x) {
   # CoNS/CoPS in different languages (support for German, Dutch, Spanish, Portuguese)
   out[x %like_case% "([ck]oagulas[ea].negatie?[vf]|^[ck]o?ns[^a-z]*$)"] <- "B_STPHY_CONS"
   out[x %like_case% "([ck]oagulas[ea].positie?[vf]|^[ck]o?ps[^a-z]*$)"] <- "B_STPHY_COPS"
-  
+
   # Gram stains
   out[x %like_case% "gram[ -]?neg.*"] <- "B_GRAMN"
   out[x %like_case% "gram[ -]?pos.*"] <- "B_GRAMP"
   out[is.na(out) & x %like_case% "anaerob[a-z]+ (micro)?.*organism"] <- "B_ANAER"
-  
+
   # yeasts and fungi
   out[x %like_case% "^yeast?"] <- "F_YEAST"
   out[x %like_case% "^fung(us|i)"] <- "F_FUNGUS"

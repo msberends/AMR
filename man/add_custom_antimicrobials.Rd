@@ -43,11 +43,13 @@ suppressWarnings(
 # now add a custom entry - it will be considered by as.ab() and
 # all ab_*() functions
 add_custom_antimicrobials(
-  data.frame(ab = "TEST",
-             name = "Test Antibiotic",
-             # you can add any property present in the
-             # 'antibiotics' data set, such as 'group':
-             group = "Test Group")
+  data.frame(
+    ab = "TEST",
+    name = "Test Antibiotic",
+    # you can add any property present in the
+    # 'antibiotics' data set, such as 'group':
+    group = "Test Group"
+  )
 )
 
 # "test" is now a new antibiotic:
@@ -61,18 +63,22 @@ ab_info("test")
 # Add Co-fluampicil, which is one of the many J01CR50 codes, see
 # https://www.whocc.no/ddd/list_of_ddds_combined_products/
 add_custom_antimicrobials(
-  data.frame(ab = "COFLU",
-             name = "Co-fluampicil",
-             atc = "J01CR50",
-             group = "Beta-lactams/penicillines")
+  data.frame(
+    ab = "COFLU",
+    name = "Co-fluampicil",
+    atc = "J01CR50",
+    group = "Beta-lactams/penicillines"
+  )
 )
 ab_atc("Co-fluampicil")
 ab_name("J01CR50")
 
 # even antibiotic selectors work
-x <- data.frame(random_column = "test",
-                coflu = as.rsi("S"),
-                ampicillin = as.rsi("R"))
+x <- data.frame(
+  random_column = "test",
+  coflu = as.rsi("S"),
+  ampicillin = as.rsi("R")
+)
 x
 x[, betalactams()]
 }

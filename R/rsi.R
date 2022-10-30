@@ -102,7 +102,7 @@
 #' @seealso [as.mic()], [as.disk()], [as.mo()]
 #' @source
 #' For interpretations of minimum inhibitory concentration (MIC) values and disk diffusion diameters:
-#' 
+#'
 #' - **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data**, `r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`, *Clinical and Laboratory Standards Institute* (CLSI). <https://clsi.org/standards/products/microbiology/documents/m39/>.
 #' - **M100 Performance Standard for Antimicrobial Susceptibility Testing**, `r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`, *Clinical and Laboratory Standards Institute* (CLSI). <https://clsi.org/standards/products/microbiology/documents/m100/>.
 #' - **Breakpoint tables for interpretation of MICs and zone diameters**, `r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`, *European Committee on Antimicrobial Susceptibility Testing* (EUCAST). <https://www.eucast.org/clinical_breakpoints>.
@@ -872,17 +872,19 @@ as_rsi_method <- function(method_short,
         lookup_lancefield[i],
         lookup_other[i]
       ))
-    
+
     if (NROW(get_record) == 0) {
-      warning_("No ", method_param, " breakpoints available for ",
-               font_italic(suppressMessages(suppressWarnings(mo_shortname(mo[i], language = NULL, keep_synonyms = FALSE)))),
-               paste0(" / "),
-               suppressMessages(suppressWarnings(ab_name(ab_param, language = NULL, tolower = TRUE))),
-               " (", ab_param, ")")
+      warning_(
+        "No ", method_param, " breakpoints available for ",
+        font_italic(suppressMessages(suppressWarnings(mo_shortname(mo[i], language = NULL, keep_synonyms = FALSE)))),
+        paste0(" / "),
+        suppressMessages(suppressWarnings(ab_name(ab_param, language = NULL, tolower = TRUE))),
+        " (", ab_param, ")"
+      )
       rise_warning <- TRUE
       next
     }
-    
+
     if (isTRUE(uti[i])) {
       get_record <- get_record %pm>%
         # be as specific as possible (i.e. prefer species over genus):
@@ -893,7 +895,7 @@ as_rsi_method <- function(method_short,
         # sort UTI = FALSE first, then UTI = TRUE
         pm_arrange(rank_index, uti)
     }
-    
+
     # warning section
     records_same_mo <- get_record[get_record$mo == get_record[1, "mo", drop = TRUE], , drop = FALSE]
     if (nrow(get_record) == 1 && all(get_record$uti == TRUE) && uti[i] %in% c(FALSE, NA) && message_not_thrown_before("as.rsi", "uti", ab_param)) {
@@ -903,11 +905,12 @@ as_rsi_method <- function(method_short,
     } else if (nrow(records_same_mo) > 1 && length(unique(records_same_mo$site)) > 1 && is.na(uti[i]) && all(c(TRUE, FALSE) %in% records_same_mo$uti, na.rm = TRUE) && message_not_thrown_before("as.rsi", "siteUTI", records_same_mo$mo[1], ab_param)) {
       # uti not set and both UTI and non-UTI breakpoints available, so throw warning
       warning_("in `as.rsi()`: breakpoints for UTI ", font_underline("and"), " non-UTI available for ",
-               font_italic(suppressMessages(suppressWarnings(mo_shortname(records_same_mo$mo[1], language = NULL, keep_synonyms = FALSE)))),
-               " / ",
-               suppressMessages(suppressWarnings(ab_name(ab_param, language = NULL, tolower = TRUE))),
-               " (", ab_param, ") - assuming non-UTI. Use argument `uti` to set which isolates are from urine. See ?as.rsi.",
-               call = FALSE)
+        font_italic(suppressMessages(suppressWarnings(mo_shortname(records_same_mo$mo[1], language = NULL, keep_synonyms = FALSE)))),
+        " / ",
+        suppressMessages(suppressWarnings(ab_name(ab_param, language = NULL, tolower = TRUE))),
+        " (", ab_param, ") - assuming non-UTI. Use argument `uti` to set which isolates are from urine. See ?as.rsi.",
+        call = FALSE
+      )
       get_record <- get_record %pm>%
         pm_filter(uti == FALSE)
       rise_warning <- TRUE
@@ -920,14 +923,15 @@ as_rsi_method <- function(method_short,
         site <- paste0("body site '", get_record[1L, "site", drop = FALSE], "'")
       }
       warning_("in `as.rsi()`: breakpoints available for ",
-               font_italic(suppressMessages(suppressWarnings(mo_shortname(records_same_mo$mo[1], language = NULL, keep_synonyms = FALSE)))),
-               paste0(" / "),
-               suppressMessages(suppressWarnings(ab_name(records_same_mo$ab[1], language = NULL, tolower = TRUE))),
-               paste0(" - assuming ", site),
-               call = FALSE)
+        font_italic(suppressMessages(suppressWarnings(mo_shortname(records_same_mo$mo[1], language = NULL, keep_synonyms = FALSE)))),
+        paste0(" / "),
+        suppressMessages(suppressWarnings(ab_name(records_same_mo$ab[1], language = NULL, tolower = TRUE))),
+        paste0(" - assuming ", site),
+        call = FALSE
+      )
       rise_warning <- TRUE
     }
-    
+
     if (NROW(get_record) > 0) {
       # get the best hit: the top one
       get_record <- get_record[1L, , drop = FALSE]

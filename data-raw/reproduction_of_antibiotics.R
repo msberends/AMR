@@ -187,12 +187,14 @@ abx2 <- abx2 %>%
 
 abx2$abbr <- lapply(as.list(abx2$abbr), function(x) unlist(strsplit(x, "|", fixed = TRUE)))
 
+# Update Compound IDs and Trade Names ----
+
 # vector with official names, returns vector with CIDs
 get_CID <- function(ab) {
   CID <- rep(NA_integer_, length(ab))
   p <- progress_ticker(n = length(ab), min_time = 0)
   for (i in 1:length(ab)) {
-    p$tick()$print()
+    p$tick()
 
     CID[i] <- tryCatch(
       data.table::fread(paste0(
@@ -236,18 +238,20 @@ get_CID <- function(ab) {
   CID
 }
 
-# get CIDs (2-3 min)
-CIDs <- get_CID(abx2$name)
+# get CIDs (4-5 min)
+CIDs <- get_CID(antibiotics$name)
+# take missing from previously found CIDs
+CIDs[is.na(CIDs) & !is.na(antibiotics$cid)] <- antibiotics$cid[is.na(CIDs) & !is.na(antibiotics$cid)]
 # These could not be found:
-abx2[is.na(CIDs), ] %>% View()
+antibiotics[is.na(CIDs), ] %>% View()
 
 # returns list with synonyms (brand names), with CIDs as names
 get_synonyms <- function(CID, clean = TRUE) {
   synonyms <- rep(NA_character_, length(CID))
-  # p <- progress_ticker(n = length(CID), min_time = 0)
+  p <- progress_ticker(n = length(CID), min_time = 0)
 
   for (i in 1:length(CID)) {
-    # p$tick()$print()
+    p$tick()
 
     synonyms_txt <- ""
 
@@ -284,7 +288,7 @@ get_synonyms <- function(CID, clean = TRUE) {
       synonyms_txt <- gsub("Co-", "Co", synonyms_txt, fixed = TRUE)
       # only length 6 to 20 and no txt with reading marks or numbers and must start with capital letter (= brand)
       synonyms_txt <- synonyms_txt[nchar(synonyms_txt) %in% c(6:20) &
-        !grepl("[-&{},_0-9/]", synonyms_txt) &
+        !grepl("[-&{},_0-9/:]", synonyms_txt) &
         grepl("^[A-Z]", synonyms_txt, ignore.case = FALSE)]
       synonyms_txt <- unlist(strsplit(synonyms_txt, ";", fixed = TRUE))
     }
@@ -295,18 +299,24 @@ get_synonyms <- function(CID, clean = TRUE) {
   synonyms
 }
 
-# get brand names from PubChem (2-3 min)
+# get brand names from PubChem (3-4 min)
 synonyms <- get_synonyms(CIDs)
-synonyms <- lapply(
-  synonyms,
-  function(x) {
-    if (length(x) == 0 | all(is.na(x))) {
-      ""
-    } else {
-      x
-    }
+synonyms.bak <- synonyms
+# add existing ones (will be cleaned later)
+for (i in seq_len(length(synonyms))) {
+  old <- antibiotics$synonyms[[i]]
+  if (old %like% "^c[()]") {
+    old <- eval(parse(text = old))
   }
-)
+  synonyms[[i]] <- c(synonyms[[i]], old)
+}
+
+antibiotics$synonyms <- synonyms
+
+# now go to end of this file
+
+
+# -----
 
 # add them to data set
 antibiotics <- abx2 %>%
@@ -830,13 +840,16 @@ antibiotics <- dplyr::arrange(antibiotics, name)
 
 # make all abbreviations and synonyms lower case, unique and alphabetically sorted ----
 for (i in 1:nrow(antibiotics)) {
-  abb <- as.character(sort(unique(tolower(antibiotics[i, "abbreviations"][[1]]))))
-  syn <- as.character(sort(unique(tolower(antibiotics[i, "synonyms"][[1]]))))
-  antibiotics[i, "abbreviations"][[1]] <- ifelse(length(abb[!abb == ""]) == 0, list(""), list(abb))
-  antibiotics[i, "synonyms"][[1]] <- ifelse(length(syn[!syn == ""]) == 0, list(""), list(syn))
+  abb <- as.character(sort(unique(tolower(antibiotics[i, "abbreviations", drop = TRUE][[1]]))))
+  abb <- abb[abb != "" & abb %unlike% ":"]
+  syn <- as.character(sort(unique(tolower(antibiotics[i, "synonyms", drop = TRUE][[1]]))))
+  syn <- syn[syn != "" & syn %unlike% ":"]
+  antibiotics[i, "abbreviations"][[1]] <- ifelse(length(abb) == 0, list(""), list(abb))
+  antibiotics[i, "synonyms"][[1]] <- ifelse(length(syn) == 0, list(""), list(syn))
   if ("loinc" %in% colnames(antibiotics)) {
-    loinc <- as.character(sort(unique(tolower(antibiotics[i, "loinc"][[1]]))))
-    antibiotics[i, "loinc"][[1]] <- ifelse(length(syn[!syn == ""]) == 0, list(""), list(loinc))
+    loinc <- as.character(sort(unique(tolower(antibiotics[i, "loinc", drop = TRUE][[1]]))))
+    loinc <- loinc[loinc != ""]
+    antibiotics[i, "loinc"][[1]] <- ifelse(length(loinc) == 0, list(""), list(loinc))
   }
 }
 

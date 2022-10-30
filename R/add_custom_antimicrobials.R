@@ -28,11 +28,11 @@
 # ==================================================================== #
 
 #' Add Custom Antimicrobials to This Package
-#' 
+#'
 #' With [add_custom_antimicrobials()] you can add your own custom antimicrobial codes to the `AMR` package.
 #' @param x a [data.frame] resembling the [antibiotics] data set, at least containing columns "ab" and "name"
 #' @details Due to how \R works, the [add_custom_antimicrobials()] function has to be run in every \R session - added antimicrobials are not stored between sessions and are thus lost when \R is exited. It is possible to save the antimicrobial additions to your `.Rprofile` file to circumvent this, although this requires to load the `AMR` package at every start-up:
-#' 
+#'
 #' ```r
 #' # Open .Rprofile file
 #' utils::file.edit("~/.Rprofile")
@@ -45,61 +45,71 @@
 #'              group = "Test Group")
 #' )
 #' ```
-#' 
+#'
 #' Use [clear_custom_antimicrobials()] to clear the previously added antimicrobials.
 #' @rdname add_custom_antimicrobials
 #' @export
-#' @examples 
+#' @examples
 #' \donttest{
 #'
 #' # returns NA and throws a warning (which is now suppressed):
 #' suppressWarnings(
 #'   as.ab("test")
 #' )
-#' 
+#'
 #' # now add a custom entry - it will be considered by as.ab() and
 #' # all ab_*() functions
 #' add_custom_antimicrobials(
-#'   data.frame(ab = "TEST",
-#'              name = "Test Antibiotic",
-#'              # you can add any property present in the
-#'              # 'antibiotics' data set, such as 'group':
-#'              group = "Test Group")
+#'   data.frame(
+#'     ab = "TEST",
+#'     name = "Test Antibiotic",
+#'     # you can add any property present in the
+#'     # 'antibiotics' data set, such as 'group':
+#'     group = "Test Group"
+#'   )
 #' )
-#' 
+#'
 #' # "test" is now a new antibiotic:
 #' as.ab("test")
 #' ab_name("test")
 #' ab_group("test")
-#' 
+#'
 #' ab_info("test")
-#' 
-#' 
+#'
+#'
 #' # Add Co-fluampicil, which is one of the many J01CR50 codes, see
 #' # https://www.whocc.no/ddd/list_of_ddds_combined_products/
 #' add_custom_antimicrobials(
-#'   data.frame(ab = "COFLU",
-#'              name = "Co-fluampicil",
-#'              atc = "J01CR50",
-#'              group = "Beta-lactams/penicillines")
+#'   data.frame(
+#'     ab = "COFLU",
+#'     name = "Co-fluampicil",
+#'     atc = "J01CR50",
+#'     group = "Beta-lactams/penicillines"
+#'   )
 #' )
 #' ab_atc("Co-fluampicil")
 #' ab_name("J01CR50")
-#' 
+#'
 #' # even antibiotic selectors work
-#' x <- data.frame(random_column = "test",
-#'                 coflu = as.rsi("S"),
-#'                 ampicillin = as.rsi("R"))
+#' x <- data.frame(
+#'   random_column = "test",
+#'   coflu = as.rsi("S"),
+#'   ampicillin = as.rsi("R")
+#' )
 #' x
 #' x[, betalactams()]
 #' }
 add_custom_antimicrobials <- function(x) {
   meet_criteria(x, allow_class = "data.frame")
-  stop_ifnot(all(c("ab", "name") %in% colnames(x)),
-             "`x` must contain columns \"ab\" and \"name\".")
-  stop_if(any(x$ab %in% AMR_env$AB_lookup$ab),
-          "Antimicrobial code(s) ", vector_and(x$ab[x$ab %in% AMR_env$AB_lookup$ab]), " already exist in the internal `antibiotics` data set.")
-  
+  stop_ifnot(
+    all(c("ab", "name") %in% colnames(x)),
+    "`x` must contain columns \"ab\" and \"name\"."
+  )
+  stop_if(
+    any(x$ab %in% AMR_env$AB_lookup$ab),
+    "Antimicrobial code(s) ", vector_and(x$ab[x$ab %in% AMR_env$AB_lookup$ab]), " already exist in the internal `antibiotics` data set."
+  )
+
   x <- x[, colnames(AMR_env$AB_lookup)[colnames(AMR_env$AB_lookup) %in% colnames(x)], drop = FALSE]
   x$generalised_name <- generalise_antibiotic_name(x$name)
   x$generalised_all <- as.list(x$generalised_name)
@@ -111,7 +121,7 @@ add_custom_antimicrobials <- function(x) {
   }
   AMR_env$custom_ab_codes <- c(AMR_env$custom_ab_codes, x$ab)
   class(AMR_env$AB_lookup$ab) <- "character"
-  
+
   new_df <- AMR_env$AB_lookup[0, , drop = FALSE][seq_len(NROW(x)), , drop = FALSE]
   rownames(new_df) <- NULL
   list_cols <- vapply(FUN.VALUE = logical(1), new_df, is.list)

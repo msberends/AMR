@@ -59,13 +59,17 @@
 #' - `iv_units`\cr Units of `iv_ddd`
 #' @details Properties that are based on an ATC code are only available when an ATC is available. These properties are: `atc_group1`, `atc_group2`, `oral_ddd`, `oral_units`, `iv_ddd` and `iv_units`.
 #'
-#' Synonyms (i.e. trade names) were derived from the Compound ID (`cid`) and consequently only available where a CID is available.
+#' Synonyms (i.e. trade names) were derived from the PubChem Compound ID (column `cid`) and consequently only available where a CID is available.
 #'
 #' ### Direct download
 #' Like all data sets in this package, these data sets are publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
-#' @source World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): <https://www.whocc.no/atc_ddd_index/>
+#' @source 
+#' 
+#' * World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): <https://www.whocc.no/atc_ddd_index/>
+#' 
+#' * `r TAXONOMY_VERSION$LOINC$citation` Accessed from <`r TAXONOMY_VERSION$LOINC$url`> on `r documentation_date(TAXONOMY_VERSION$LOINC$accessed_date)`.
 #'
-#' European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm>
+#' * European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm>
 #' @inheritSection WHOCC WHOCC
 #' @seealso [microorganisms], [intrinsic_resistant]
 #' @examples

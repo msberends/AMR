@@ -1,4 +1,4 @@
-# AMR 1.8.2.9037
+# AMR 1.8.2.9038
 
 This version will eventually become v2.0! We're happy to reach a new major milestone soon!
 
@@ -31,6 +31,11 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * Our data sets are now also continually exported to Apache Feather and Apache Parquet formats. You can find more info [in this article on our website](https://msberends.github.io/AMR/articles/datasets.html).
 * Support for using antibiotic selectors in scoped `dplyr` verbs (with or without `vars()`), such as in: `... %>% summarise_at(aminoglycosides(), resistance)`, see `resistance()`
 * Support for antimicrobial interpretation of anaerobic bacteria, by adding a 'placeholder' code `B_ANAER` to the `microorganisms` data set and add the breakpoints of anaerobics to the `rsi_interpretation` data set, which is used by `as.rsi()` when interpreting MIC and disk diffusion values
+* New and updated entries for the `antibiotics` data set
+  * The following 20 antibiotics have been added (also includes the [new J01RA ATC group](https://www.whocc.no/atc_ddd_index/?code=J01RA&showdescription=no)): azithromycin/fluconazole/secnidazole (AFC), cefepime/amikacin (CFA), cefixime/ornidazole (CEO), ceftriaxone/beta-lactamase inhibitor (CEB), ciprofloxacin/metronidazole (CIM), ciprofloxacin/ornidazole (CIO), ciprofloxacin/tinidazole (CIT), furazidin (FUR), isoniazid/sulfamethoxazole/trimethoprim/pyridoxine (IST), lascufloxacin (LSC), levofloxacin/ornidazole (LEO), nemonoxacin (NEM), norfloxacin/metronidazole (NME), norfloxacin/tinidazole (NTI), ofloxacin/ornidazole (OOR), oteseconazole (OTE), rifampicin/ethambutol/isoniazid (REI), sarecycline (SRC), tetracycline/oleandomycin (TOL), and thioacetazone (TAT)
+  * Added some missing ATC codes
+  * Updated DDDs and PubChem Compound IDs
+  * Updated some antibiotic name spelling, now used by WHOCC (such as cephalexin -> cefalexin, and phenethicillin -> pheneticillin)
 
 ### Changed
 * Fix for using `as.rsi()` on certain EUCAST breakpoints for MIC values
@@ -53,7 +58,6 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * Updated support for all WHONET 2022 microorganism codes 
 * Antimicrobial interpretation 'SDD' (susceptible dose-dependent, coined by CLSI) will be interpreted as 'I' to comply with EUCAST's 'I' in `as.rsi()`
 * Fix for `mo_shortname()` in case of higher taxonomic ranks (order, class, phylum)
-* Updated DDDs and ATCs for the `antibiotics` data set - ATC codes J04AB06 (enviomycin) and D06AX14 (ozenoxacin) were added
 
 ### Other
 * New website to make use of the new Bootstrap 5 and pkgdown 2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions

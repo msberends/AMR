@@ -559,8 +559,8 @@
 "EUCAST 2022"	"DISK"		"B_STPHY_AURS"	"Staphylococcus aureus"	2	"KAN"	"Kanamycin"	"Staphs"	"30ug"	18	18	FALSE
 "EUCAST 2022"	"DISK"		"B_STPHY_CONS"	"Coagulase-negative Staphylococcus (CoNS)"	2	"KAN"	"Kanamycin"	"Staphs"	"30ug"	22	22	FALSE
 "EUCAST 2022"	"DISK"		"B_STPHY_COPS"	"Coagulase-positive Staphylococcus (CoPS)"	2	"KAN"	"Kanamycin"	"Staphs"	"30ug"	18	18	FALSE
-"EUCAST 2022"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cephalexin"	"Enterobacteriaceae"	"30ug"	14	14	TRUE
-"EUCAST 2022"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cephalexin"	"Enterobacteriaceae"		16	16	TRUE
+"EUCAST 2022"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cefalexin"	"Enterobacteriaceae"	"30ug"	14	14	TRUE
+"EUCAST 2022"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cefalexin"	"Enterobacteriaceae"		16	16	TRUE
 "EUCAST 2022"	"DISK"		"B_STPHY_AURS"	"Staphylococcus aureus"	2	"LMU"	"Lefamulin"	"Staphs"	"5ug"	23	23	FALSE
 "EUCAST 2022"	"MIC"		"B_STPHY_AURS"	"Staphylococcus aureus"	2	"LMU"	"Lefamulin"	"Staphs"		0.25	0.25	FALSE
 "EUCAST 2022"	"DISK"		"B_STPHY_COPS"	"Coagulase-positive Staphylococcus (CoPS)"	2	"LMU"	"Lefamulin"	"Staphs"	"5ug"	23	23	FALSE
@@ -1601,8 +1601,8 @@
 "EUCAST 2021"	"MIC"		"B_STPHY"	"Staphylococcus"	3	"KAN"	"Kanamycin"	"Staphs"		8	8	FALSE
 "EUCAST 2021"	"DISK"		"B_STPHY_CONS"	"Coagulase-negative Staphylococcus (CoNS)"	2	"KAN"	"Kanamycin"	"Staphs"	"30ug"	22	22	FALSE
 "EUCAST 2021"	"DISK"		"B_STPHY_COPS"	"Coagulase-positive Staphylococcus (CoPS)"	2	"KAN"	"Kanamycin"	"Staphs"	"30ug"	18	18	FALSE
-"EUCAST 2021"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cephalexin"	"Enterobacteriaceae"	"30ug"	14	14	TRUE
-"EUCAST 2021"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cephalexin"	"Enterobacteriaceae"		16	16	TRUE
+"EUCAST 2021"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cefalexin"	"Enterobacteriaceae"	"30ug"	14	14	TRUE
+"EUCAST 2021"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cefalexin"	"Enterobacteriaceae"		16	16	TRUE
 "EUCAST 2021"	"DISK"		"B_STPHY_COPS"	"Coagulase-positive Staphylococcus (CoPS)"	2	"LMU"	"Lefamulin"	"Staphs"	"5ug"	23	23	FALSE
 "EUCAST 2021"	"MIC"		"B_STPHY_COPS"	"Coagulase-positive Staphylococcus (CoPS)"	2	"LMU"	"Lefamulin"	"Staphs"		0.25	0.25	FALSE
 "EUCAST 2021"	"DISK"		"B_STRPT_PNMN"	"Streptococcus pneumoniae"	2	"LMU"	"Lefamulin"	"S. pneumoniae"	"5ug"	12	12	FALSE
@@ -2497,8 +2497,8 @@
 "EUCAST 2020"	"MIC"		"B_STPHY"	"Staphylococcus"	3	"KAN"	"Kanamycin"	"Staphs"		8	8	FALSE
 "EUCAST 2020"	"DISK"		"B_STPHY_AURS"	"Staphylococcus aureus"	2	"KAN"	"Kanamycin"	"Staphs"	"30ug"	18	18	FALSE
 "EUCAST 2020"	"DISK"		"B_STPHY_CONS"	"Coagulase-negative Staphylococcus (CoNS)"	2	"KAN"	"Kanamycin"	"Staphs"	"30ug"	22	22	FALSE
-"EUCAST 2020"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cephalexin"	"Enterobacteriaceae"	"30ug"	14	14	TRUE
-"EUCAST 2020"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cephalexin"	"Enterobacteriaceae"		16	16	TRUE
+"EUCAST 2020"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cefalexin"	"Enterobacteriaceae"	"30ug"	14	14	TRUE
+"EUCAST 2020"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cefalexin"	"Enterobacteriaceae"		16	16	TRUE
 "EUCAST 2020"	"DISK"		"B_CRYNB"	"Corynebacterium"	3	"LNZ"	"Linezolid"	"Corynebacterium spp."	"10ug"	25	25	FALSE
 "EUCAST 2020"	"MIC"		"B_CRYNB"	"Corynebacterium"	3	"LNZ"	"Linezolid"	"Corynebacterium spp."		2	2	FALSE
 "EUCAST 2020"	"DISK"		"B_ENTRC"	"Enterococcus"	3	"LNZ"	"Linezolid"	"Enterococcus"	"10ug"	20	20	FALSE
@@ -3292,8 +3292,8 @@
 "EUCAST 2019"	"MIC"		"B_STPHY"	"Staphylococcus"	3	"KAN"	"Kanamycin"	"Staphs"		8	8	FALSE
 "EUCAST 2019"	"DISK"		"B_STPHY_AURS"	"Staphylococcus aureus"	2	"KAN"	"Kanamycin"	"Staphs"	"30ug"	18	18	FALSE
 "EUCAST 2019"	"DISK"		"B_STPHY_CONS"	"Coagulase-negative Staphylococcus (CoNS)"	2	"KAN"	"Kanamycin"	"Staphs"	"30ug"	22	22	FALSE
-"EUCAST 2019"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cephalexin"	"Enterobacteriaceae"	"30ug"	14	14	TRUE
-"EUCAST 2019"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cephalexin"	"Enterobacteriaceae"		16	16	TRUE
+"EUCAST 2019"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cefalexin"	"Enterobacteriaceae"	"30ug"	14	14	TRUE
+"EUCAST 2019"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cefalexin"	"Enterobacteriaceae"		16	16	TRUE
 "EUCAST 2019"	"DISK"		"B_CRYNB"	"Corynebacterium"	3	"LNZ"	"Linezolid"	"Corynebacterium spp."	"10ug"	25	25	FALSE
 "EUCAST 2019"	"MIC"		"B_CRYNB"	"Corynebacterium"	3	"LNZ"	"Linezolid"	"Corynebacterium spp."		2	2	FALSE
 "EUCAST 2019"	"DISK"		"B_ENTRC"	"Enterococcus"	3	"LNZ"	"Linezolid"	"Enterococcus"	"10ug"	19	19	FALSE
@@ -4058,8 +4058,8 @@
 "EUCAST 2018"	"MIC"		"B_STPHY"	"Staphylococcus"	3	"KAN"	"Kanamycin"	"Staphs"		8	8	FALSE
 "EUCAST 2018"	"DISK"		"B_STPHY_AURS"	"Staphylococcus aureus"	2	"KAN"	"Kanamycin"	"Staphs"	"30ug"	18	18	FALSE
 "EUCAST 2018"	"DISK"		"B_STPHY_CONS"	"Coagulase-negative Staphylococcus (CoNS)"	2	"KAN"	"Kanamycin"	"Staphs"	"30ug"	22	22	FALSE
-"EUCAST 2018"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cephalexin"	"Enterobacteriaceae"	"30ug"	14	14	TRUE
-"EUCAST 2018"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cephalexin"	"Enterobacteriaceae"		16	16	TRUE
+"EUCAST 2018"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cefalexin"	"Enterobacteriaceae"	"30ug"	14	14	TRUE
+"EUCAST 2018"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cefalexin"	"Enterobacteriaceae"		16	16	TRUE
 "EUCAST 2018"	"DISK"		"B_CRYNB"	"Corynebacterium"	3	"LNZ"	"Linezolid"	"Corynebacterium spp."	"10ug"	25	25	FALSE
 "EUCAST 2018"	"MIC"		"B_CRYNB"	"Corynebacterium"	3	"LNZ"	"Linezolid"	"Corynebacterium spp."		2	2	FALSE
 "EUCAST 2018"	"DISK"		"B_ENTRC"	"Enterococcus"	3	"LNZ"	"Linezolid"	"Enterococcus"	"10ug"	19	19	FALSE
@@ -4807,8 +4807,8 @@
 "EUCAST 2017"	"MIC"		"B_STPHY"	"Staphylococcus"	3	"KAN"	"Kanamycin"	"Staphs"		8	8	FALSE
 "EUCAST 2017"	"DISK"		"B_STPHY_AURS"	"Staphylococcus aureus"	2	"KAN"	"Kanamycin"	"Staphs"	"30ug"	18	18	FALSE
 "EUCAST 2017"	"DISK"		"B_STPHY_CONS"	"Coagulase-negative Staphylococcus (CoNS)"	2	"KAN"	"Kanamycin"	"Staphs"	"30ug"	22	22	FALSE
-"EUCAST 2017"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cephalexin"	"Enterobacteriaceae"	"30ug"	14	14	TRUE
-"EUCAST 2017"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cephalexin"	"Enterobacteriaceae"		16	16	TRUE
+"EUCAST 2017"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cefalexin"	"Enterobacteriaceae"	"30ug"	14	14	TRUE
+"EUCAST 2017"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cefalexin"	"Enterobacteriaceae"		16	16	TRUE
 "EUCAST 2017"	"DISK"		"B_CRYNB"	"Corynebacterium"	3	"LNZ"	"Linezolid"	"Corynebacterium spp."	"10ug"	25	25	FALSE
 "EUCAST 2017"	"MIC"		"B_CRYNB"	"Corynebacterium"	3	"LNZ"	"Linezolid"	"Corynebacterium spp."		2	2	FALSE
 "EUCAST 2017"	"DISK"		"B_ENTRC"	"Enterococcus"	3	"LNZ"	"Linezolid"	"Enterococcus"	"10ug"	19	19	FALSE
@@ -5524,8 +5524,8 @@
 "EUCAST 2016"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ITR"	"Itraconazole"	"Candida"		0.125	0.125	FALSE
 "EUCAST 2016"	"DISK"		"B_STPHY"	"Staphylococcus"	3	"KAN"	"Kanamycin"	"Staphs"	"30ug"	18	18	FALSE
 "EUCAST 2016"	"MIC"		"B_STPHY"	"Staphylococcus"	3	"KAN"	"Kanamycin"	"Staphs"		8	8	FALSE
-"EUCAST 2016"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cephalexin"	"Enterobacteriaceae"	"30ug"	14	14	TRUE
-"EUCAST 2016"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cephalexin"	"Enterobacteriaceae"		16	16	TRUE
+"EUCAST 2016"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cefalexin"	"Enterobacteriaceae"	"30ug"	14	14	TRUE
+"EUCAST 2016"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cefalexin"	"Enterobacteriaceae"		16	16	TRUE
 "EUCAST 2016"	"DISK"		"B_CRYNB"	"Corynebacterium"	3	"LNZ"	"Linezolid"	"Corynebacterium spp."	"10ug"	25	25	FALSE
 "EUCAST 2016"	"MIC"		"B_CRYNB"	"Corynebacterium"	3	"LNZ"	"Linezolid"	"Corynebacterium spp."		2	2	FALSE
 "EUCAST 2016"	"DISK"		"B_ENTRC"	"Enterococcus"	3	"LNZ"	"Linezolid"	"Enterococcus"	"10ug"	19	19	FALSE
@@ -6194,8 +6194,8 @@
 "EUCAST 2015"	"MIC"		"F_CANDD_ALBC"	"Candida albicans"	2	"ITR"	"Itraconazole"	"Candida"		0.064	0.064	FALSE
 "EUCAST 2015"	"MIC"		"F_CANDD_PRPS"	"Candida parapsilosis"	2	"ITR"	"Itraconazole"	"Candida"		0.125	0.125	FALSE
 "EUCAST 2015"	"MIC"		"F_CANDD_TRPC"	"Candida tropicalis"	2	"ITR"	"Itraconazole"	"Candida"		0.125	0.125	FALSE
-"EUCAST 2015"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cephalexin"	"Enterobacteriaceae"	"30ug"	14	14	TRUE
-"EUCAST 2015"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cephalexin"	"Enterobacteriaceae"		16	16	TRUE
+"EUCAST 2015"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cefalexin"	"Enterobacteriaceae"	"30ug"	14	14	TRUE
+"EUCAST 2015"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cefalexin"	"Enterobacteriaceae"		16	16	TRUE
 "EUCAST 2015"	"DISK"		"B_CRYNB"	"Corynebacterium"	3	"LNZ"	"Linezolid"	"Corynebacterium spp."	"10ug"	25	25	FALSE
 "EUCAST 2015"	"MIC"		"B_CRYNB"	"Corynebacterium"	3	"LNZ"	"Linezolid"	"Corynebacterium spp."		2	2	FALSE
 "EUCAST 2015"	"DISK"		"B_ENTRC"	"Enterococcus"	3	"LNZ"	"Linezolid"	"Enterococcus"	"10ug"	19	19	FALSE
@@ -6849,8 +6849,8 @@
 "EUCAST 2014"	"MIC"		"B_STRPT_PNMN"	"Streptococcus pneumoniae"	2	"IPM"	"Imipenem"	"Pneumo"		2	2	FALSE
 "EUCAST 2014"	"MIC"		"B_STRPT_VIRI"	"Viridans Group Streptococcus (VGS)"	2	"IPM"	"Imipenem"	"Viridans strept"		2	2	FALSE
 "EUCAST 2014"	"MIC"		"UNKNOWN"	"(unknown name)"	6	"IPM"	"Imipenem"	"PK/PD"		2	8	FALSE
-"EUCAST 2014"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cephalexin"	"Enterobacteriaceae"	"30ug"	14	14	TRUE
-"EUCAST 2014"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cephalexin"	"Enterobacteriaceae"		16	16	TRUE
+"EUCAST 2014"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cefalexin"	"Enterobacteriaceae"	"30ug"	14	14	TRUE
+"EUCAST 2014"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cefalexin"	"Enterobacteriaceae"		16	16	TRUE
 "EUCAST 2014"	"DISK"		"B_CRYNB"	"Corynebacterium"	3	"LNZ"	"Linezolid"	"Corynebacterium spp."	"10ug"	25	25	FALSE
 "EUCAST 2014"	"MIC"		"B_CRYNB"	"Corynebacterium"	3	"LNZ"	"Linezolid"	"Corynebacterium spp."		2	2	FALSE
 "EUCAST 2014"	"DISK"		"B_ENTRC"	"Enterococcus"	3	"LNZ"	"Linezolid"	"Enterococcus"	"10ug"	19	19	FALSE
@@ -7499,8 +7499,8 @@
 "EUCAST 2013"	"MIC"		"B_STRPT_VIRI"	"Viridans Group Streptococcus (VGS)"	2	"IPM"	"Imipenem"	"Viridans strept"		2	2	FALSE
 "EUCAST 2013"	"MIC"		"UNKNOWN"	"(unknown name)"	6	"IPM"	"Imipenem"			2	8	FALSE
 "EUCAST 2013"	"MIC"		"F_ASPRG"	"Aspergillus"	3	"ITR"	"Itraconazole"	"Aspergillus"		1	2	FALSE
-"EUCAST 2013"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cephalexin"	"Enterobacteriaceae"	"30ug"	14	14	TRUE
-"EUCAST 2013"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cephalexin"	"Enterobacteriaceae"		16	16	TRUE
+"EUCAST 2013"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cefalexin"	"Enterobacteriaceae"	"30ug"	14	14	TRUE
+"EUCAST 2013"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"LEX"	"Cefalexin"	"Enterobacteriaceae"		16	16	TRUE
 "EUCAST 2013"	"DISK"		"B_ENTRC"	"Enterococcus"	3	"LNZ"	"Linezolid"	"Enterococcus"	"10ug"	19	19	FALSE
 "EUCAST 2013"	"MIC"		"B_ENTRC"	"Enterococcus"	3	"LNZ"	"Linezolid"	"Enterococcus"		4	4	FALSE
 "EUCAST 2013"	"DISK"		"B_STPHY"	"Staphylococcus"	3	"LNZ"	"Linezolid"	"Staphs"	"10ug"	19	19	FALSE

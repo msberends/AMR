@@ -46,7 +46,7 @@
 #' @inheritSection as.rsi Interpretation of R and S/I
 #' @details
 #' The function [resistance()] is equal to the function [proportion_R()]. The function [susceptibility()] is equal to the function [proportion_SI()].
-#' 
+#'
 #' Use [rsi_confidence_interval()] to calculate the confidence interval, which relies on [binom.test()], i.e., the Clopper-Pearson method. This function returns a vector of length 2 at default for antimicrobial *resistance*. Change the `side` argument to "left"/"min" or "right"/"max" to return a single value, and change the `ab_result` argument to e.g. `c("S", "I")` to test for antimicrobial *susceptibility*, see Examples.
 #'
 #' **Remember that you should filter your data to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set.
@@ -104,12 +104,14 @@
 #' resistance(example_isolates$AMX)
 #' rsi_confidence_interval(example_isolates$AMX)
 #' rsi_confidence_interval(example_isolates$AMX,
-#'                         confidence_level = 0.975)
-#' 
+#'   confidence_level = 0.975
+#' )
+#'
 #' # determines %S+I:
 #' susceptibility(example_isolates$AMX)
 #' rsi_confidence_interval(example_isolates$AMX,
-#'                         ab_result = c("S", "I"))
+#'   ab_result = c("S", "I")
+#' )
 #'
 #' # be more specific
 #' proportion_S(example_isolates$AMX)
@@ -121,17 +123,14 @@
 #' # dplyr -------------------------------------------------------------
 #' \donttest{
 #' if (require("dplyr")) {
-#' 
 #'   example_isolates %>%
 #'     group_by(ward) %>%
 #'     summarise(
 #'       r = resistance(CIP),
 #'       n = n_rsi(CIP)
 #'     ) # n_rsi works like n_distinct in dplyr, see ?n_rsi
-#'     
 #' }
 #' if (require("dplyr")) {
-#' 
 #'   example_isolates %>%
 #'     group_by(ward) %>%
 #'     summarise(
@@ -139,10 +138,9 @@
 #'       ci_min = rsi_confidence_interval(CIP, side = "min"),
 #'       ci_max = rsi_confidence_interval(CIP, side = "max"),
 #'     )
-#'     
 #' }
 #' if (require("dplyr")) {
-#' 
+#'
 #'   # scoped dplyr verbs with antibiotic selectors
 #'   # (you could also use across() of course)
 #'   example_isolates %>%
@@ -151,10 +149,8 @@
 #'       c(aminoglycosides(), carbapenems()),
 #'       resistance
 #'     )
-#' 
 #' }
 #' if (require("dplyr")) {
-#' 
 #'   example_isolates %>%
 #'     group_by(ward) %>%
 #'     summarise(
@@ -265,26 +261,26 @@ rsi_confidence_interval <- function(...,
   meet_criteria(side, allow_class = "character", has_length = 1, is_in = c("both", "b", "left", "l", "lower", "lowest", "less", "min", "right", "r", "higher", "highest", "greater", "g", "max"))
   x <- tryCatch(
     rsi_calc(...,
-             ab_result = ab_result,
-             only_all_tested = only_all_tested,
-             only_count = TRUE
+      ab_result = ab_result,
+      only_all_tested = only_all_tested,
+      only_count = TRUE
     ),
     error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
   n <- tryCatch(
     rsi_calc(...,
-             ab_result = c("S", "I", "R"),
-             only_all_tested = only_all_tested,
-             only_count = TRUE
+      ab_result = c("S", "I", "R"),
+      only_all_tested = only_all_tested,
+      only_count = TRUE
     ),
     error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
-  
+
   if (n < minimum) {
     warning_("Introducing NA: ",
-             ifelse(n == 0, "no", paste("only", n)),
-             " results available for `rsi_confidence_interval()` (`minimum` = ", minimum, ").",
-             call = FALSE
+      ifelse(n == 0, "no", paste("only", n)),
+      " results available for `rsi_confidence_interval()` (`minimum` = ", minimum, ").",
+      call = FALSE
     )
     if (as_percent == TRUE) {
       return(NA_character_)
@@ -292,10 +288,10 @@ rsi_confidence_interval <- function(...,
       return(NA_real_)
     }
   }
-  
+
   out <- stats::binom.test(x = x, n = n, conf.level = confidence_level)$conf.int
   out <- set_clean_class(out, "double")
-  
+
   if (side %in% c("left", "l", "lower", "lowest", "less", "min")) {
     out <- out[1]
   } else if (side %in% c("right", "r", "higher", "highest", "greater", "g", "max")) {

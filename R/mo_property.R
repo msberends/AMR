@@ -56,7 +56,7 @@
 #' The function [mo_url()] will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
 #'
 #' SNOMED codes - [mo_snomed()] - are from the version of `r documentation_date(TAXONOMY_VERSION$SNOMED$accessed_date)`. See *Source* and the [microorganisms] data set for more info.
-#' 
+#'
 #' Old taxonomic names (so-called 'synonyms') can be retrieved with [mo_synonyms()], the current taxonomic name can be retrieved with [mo_current()]. Both functions return full names.
 #' @inheritSection mo_matching_score Matching Score for Microorganisms
 #' @inheritSection as.mo Source
@@ -140,7 +140,7 @@
 #' mo_kingdom("Klebsiella pneumoniae")
 #' mo_type("Klebsiella pneumoniae")
 #' mo_kingdom("Klebsiella pneumoniae", language = "zh") # Chinese, no effect
-#' mo_type("Klebsiella pneumoniae", language = "zh")    # Chinese, translated
+#' mo_type("Klebsiella pneumoniae", language = "zh") # Chinese, translated
 #'
 #' mo_fullname("S. pyogenes", Lancefield = TRUE, language = "de")
 #' mo_fullname("S. pyogenes", Lancefield = TRUE, language = "uk")
@@ -153,12 +153,12 @@
 #' # gram stains and intrinsic resistance can be used as a filter in dplyr verbs
 #' if (require("dplyr")) {
 #'   example_isolates %>%
-#'     filter(mo_is_gram_positive()) %>% 
+#'     filter(mo_is_gram_positive()) %>%
 #'     count(mo_genus(), sort = TRUE)
 #' }
 #' if (require("dplyr")) {
 #'   example_isolates %>%
-#'     filter(mo_is_intrinsic_resistant(ab = "vanco")) %>% 
+#'     filter(mo_is_intrinsic_resistant(ab = "vanco")) %>%
 #'     count(mo_genus(), sort = TRUE)
 #' }
 #'
@@ -225,7 +225,7 @@ mo_shortname <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
   shortnames[shortnames %like% "unknown"] <- paste0("(", trimws2(gsub("[^a-zA-Z -]", "", shortnames[shortnames %like% "unknown"], perl = TRUE)), ")")
 
   shortnames[mo_rank(x.mo) %in% c("kingdom", "phylum", "class", "order", "family")] <- mo_name(x.mo, language = NULL, keep_synonyms = keep_synonyms)
-  
+
   shortnames[is.na(x.mo)] <- NA_character_
   load_mo_uncertainties(metadata)
   translate_into_language(shortnames, language = language, only_unknown = FALSE, only_affect_mo_names = TRUE)

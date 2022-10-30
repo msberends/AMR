@@ -541,7 +541,7 @@ ab_select_exec <- function(function_name,
     info = FALSE, only_rsi_columns = only_rsi_columns,
     sort = FALSE, fn = function_name
   )
-  
+
   # untreatable drugs
   if (only_treatable == TRUE) {
     untreatable <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$name %like% "-high|EDTA|polysorbate|macromethod|screening|/nacubactam"), "ab", drop = TRUE]

@@ -4,9 +4,9 @@
 \name{antibiotics}
 \alias{antibiotics}
 \alias{antivirals}
-\title{Data Sets with 566 Antimicrobial Drugs}
+\title{Data Sets with 586 Antimicrobial Drugs}
 \format{
-\subsection{For the \link{antibiotics} data set: a \link[tibble:tibble]{tibble} with 464 observations and 14 variables:}{
+\subsection{For the \link{antibiotics} data set: a \link[tibble:tibble]{tibble} with 484 observations and 14 variables:}{
 \itemize{
 \item \code{ab}\cr Antibiotic ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
 \item \code{cid}\cr Compound ID as found in PubChem
@@ -17,9 +17,9 @@
 \item \code{atc_group2}\cr Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like \code{"Macrolides"}
 \item \code{abbr}\cr List of abbreviations as used in many countries, also for antibiotic susceptibility testing (AST)
 \item \code{synonyms}\cr Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID
-\item \code{oral_ddd}\cr Defined Daily Dose (DDD), oral treatment, currently available for 171 drugs
+\item \code{oral_ddd}\cr Defined Daily Dose (DDD), oral treatment, currently available for 174 drugs
 \item \code{oral_units}\cr Units of \code{oral_ddd}
-\item \code{iv_ddd}\cr Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for 145 drugs
+\item \code{iv_ddd}\cr Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for 146 drugs
 \item \code{iv_units}\cr Units of \code{iv_ddd}
 \item \code{loinc}\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial agent. Use \code{\link[=ab_loinc]{ab_loinc()}} to retrieve them quickly, see \code{\link[=ab_property]{ab_property()}}.
 }
@@ -42,9 +42,11 @@
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 102 rows and 9 columns.
 }
 \source{
-World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): \url{https://www.whocc.no/atc_ddd_index/}
-
-European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm}
+\itemize{
+\item World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology (WHOCC): \url{https://www.whocc.no/atc_ddd_index/}
+\item Logical Observation Identifiers Names and Codes (LOINC), Version 2.73 (8 August, 2022). Accessed from \url{https://loinc.org} on 30 October, 2022.
+\item European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm}
+}
 }
 \usage{
 antibiotics
@@ -57,7 +59,7 @@ Two data sets containing all antibiotics/antimycotics and antivirals. Use \code{
 \details{
 Properties that are based on an ATC code are only available when an ATC is available. These properties are: \code{atc_group1}, \code{atc_group2}, \code{oral_ddd}, \code{oral_units}, \code{iv_ddd} and \code{iv_units}.
 
-Synonyms (i.e. trade names) were derived from the Compound ID (\code{cid}) and consequently only available where a CID is available.
+Synonyms (i.e. trade names) were derived from the PubChem Compound ID (column \code{cid}) and consequently only available where a CID is available.
 \subsection{Direct download}{
 
 Like all data sets in this package, these data sets are publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.

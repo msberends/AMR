@@ -27,12 +27,12 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-# last updated: 20 January 2020 - Loinc_2.67
+# last updated: 30 October 2022 - Loinc_2.73
 
 # Steps to reproduce:
 # 1. Create a fake account at https://loinc.org (sad you have to create one...)
-# 2. Download the CSV from https://loinc.org/download/loinc-table-file-csv/ (Loinc_2.67_Text_2.67.zip)
-# 3. Read Loinc.csv that's in this zip file
+# 2. Download the CSV from https://loinc.org/download/loinc-complete/ (Loinc_2.67_Text_2.67.zip)
+# 3. Read Loinc.csv that's in zip folder LoincTable
 loinc_df <- read.csv("data-raw/Loinc.csv",
   row.names = NULL,
   stringsAsFactors = FALSE
@@ -51,6 +51,7 @@ ab_names <- antibiotics %>%
 
 antibiotics$loinc <- as.list(rep(NA_character_, nrow(antibiotics)))
 for (i in seq_len(nrow(antibiotics))) {
+  message(i)
   loinc_ab <- loinc_df %>%
     filter(COMPONENT %like% paste0("^", antibiotics$name[i])) %>%
     pull(LOINC_NUM)
@@ -63,6 +64,8 @@ for (i in 1:nrow(antibiotics)) {
   loinc <- as.character(sort(unique(tolower(antibiotics[i, "loinc"][[1]]))))
   antibiotics[i, "loinc"][[1]] <- ifelse(length(syn[!syn == ""]) == 0, list(""), list(loinc))
 }
+
+# remember to update R/aa_globals.R for the documentation
 
 dim(antibiotics) # for R/data.R
 usethis::use_data(antibiotics, overwrite = TRUE)

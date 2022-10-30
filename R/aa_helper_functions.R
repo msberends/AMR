@@ -350,9 +350,9 @@ stop_ifnot_installed <- function(package) {
     stop("This function only works in RStudio when using R >= 3.2.", call. = FALSE)
   } else if (any(!installed)) {
     stop("This requires the ", vector_and(package[!installed]), " package.",
-         "\nTry to install with install.packages().",
-         call. = FALSE
-        )
+      "\nTry to install with install.packages().",
+      call. = FALSE
+    )
   } else {
     return(invisible())
   }
@@ -476,7 +476,7 @@ word_wrap <- function(...,
   # remove extra space that was introduced (e.g. "Smith et al., 2022")
   msg <- gsub(". ,", ".,", msg, fixed = TRUE)
   msg <- gsub("[ ,", "[,", msg, fixed = TRUE)
-  
+
   msg
 }
 
@@ -864,12 +864,12 @@ get_current_data <- function(arg_name, call) {
       return(out)
     }
   }
-  
+
   # try a manual (base R) method, by going over all underlying environments with sys.frames()
   for (env in sys.frames()) {
     if (!is.null(env$`.Generic`)) {
       # don't check `".Generic" %in% names(env)`, because in R < 3.2, `names(env)` is always NULL
-      
+
       if (valid_df(env$`.data`)) {
         # an element `.data` will be in the environment when using `dplyr::select()`
         # (but not when using `dplyr::filter()`, `dplyr::mutate()` or `dplyr::summarise()`)
@@ -881,14 +881,13 @@ get_current_data <- function(arg_name, call) {
         # an element `x` will be in the environment for only cols, e.g. `example_isolates[, carbapenems()]`
         return(env$x)
       }
-      
     } else if (!is.null(names(env)) && all(c(".tbl", ".vars", ".cols") %in% names(env), na.rm = TRUE) && valid_df(env$`.tbl`)) {
       # an element `.tbl` will be in the environment when using scoped dplyr variants, with or without `dplyr::vars()`
       # (e.g. `dplyr::summarise_at()` or `dplyr::mutate_at()`)
       return(env$`.tbl`)
     }
   }
-  
+
   # no data.frame found, so an error  must be returned:
   if (is.na(arg_name)) {
     if (isTRUE(is.numeric(call))) {

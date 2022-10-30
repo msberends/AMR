@@ -428,7 +428,7 @@ mo_gramstain("Klebsiella pneumoniae", language = "uk") # Ukrainian
 mo_kingdom("Klebsiella pneumoniae")
 mo_type("Klebsiella pneumoniae")
 mo_kingdom("Klebsiella pneumoniae", language = "zh") # Chinese, no effect
-mo_type("Klebsiella pneumoniae", language = "zh")    # Chinese, translated
+mo_type("Klebsiella pneumoniae", language = "zh") # Chinese, translated
 
 mo_fullname("S. pyogenes", Lancefield = TRUE, language = "de")
 mo_fullname("S. pyogenes", Lancefield = TRUE, language = "uk")
@@ -441,12 +441,12 @@ mo_is_yeast(c("Candida", "Trichophyton", "Klebsiella"))
 # gram stains and intrinsic resistance can be used as a filter in dplyr verbs
 if (require("dplyr")) {
   example_isolates \%>\%
-    filter(mo_is_gram_positive()) \%>\% 
+    filter(mo_is_gram_positive()) \%>\%
     count(mo_genus(), sort = TRUE)
 }
 if (require("dplyr")) {
   example_isolates \%>\%
-    filter(mo_is_intrinsic_resistant(ab = "vanco")) \%>\% 
+    filter(mo_is_intrinsic_resistant(ab = "vanco")) \%>\%
     count(mo_genus(), sort = TRUE)
 }
 

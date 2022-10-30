@@ -165,12 +165,14 @@ This AMR package honours this (new) insight. Use \code{\link[=susceptibility]{su
 resistance(example_isolates$AMX)
 rsi_confidence_interval(example_isolates$AMX)
 rsi_confidence_interval(example_isolates$AMX,
-                        confidence_level = 0.975)
+  confidence_level = 0.975
+)
 
 # determines \%S+I:
 susceptibility(example_isolates$AMX)
 rsi_confidence_interval(example_isolates$AMX,
-                        ab_result = c("S", "I"))
+  ab_result = c("S", "I")
+)
 
 # be more specific
 proportion_S(example_isolates$AMX)
@@ -182,17 +184,14 @@ proportion_R(example_isolates$AMX)
 # dplyr -------------------------------------------------------------
 \donttest{
 if (require("dplyr")) {
-
   example_isolates \%>\%
     group_by(ward) \%>\%
     summarise(
       r = resistance(CIP),
       n = n_rsi(CIP)
     ) # n_rsi works like n_distinct in dplyr, see ?n_rsi
-    
 }
 if (require("dplyr")) {
-
   example_isolates \%>\%
     group_by(ward) \%>\%
     summarise(
@@ -200,7 +199,6 @@ if (require("dplyr")) {
       ci_min = rsi_confidence_interval(CIP, side = "min"),
       ci_max = rsi_confidence_interval(CIP, side = "max"),
     )
-    
 }
 if (require("dplyr")) {
 
@@ -212,10 +210,8 @@ if (require("dplyr")) {
       c(aminoglycosides(), carbapenems()),
       resistance
     )
-
 }
 if (require("dplyr")) {
-
   example_isolates \%>\%
     group_by(ward) \%>\%
     summarise(

@@ -161,7 +161,8 @@ if (utf8_supported && !is_latex) {
       packageStartupMessage(word_wrap(
         "Assuming the ", LANGUAGES_SUPPORTED_NAMES[[current_lang]]$exonym, " language (",
         LANGUAGES_SUPPORTED_NAMES[[current_lang]]$endonym, ") for the AMR package. See `set_AMR_locale()` to change this or to silence this note.",
-        add_fn = list(font_blue), as_note = TRUE))
+        add_fn = list(font_blue), as_note = TRUE
+      ))
     }
   }
 }

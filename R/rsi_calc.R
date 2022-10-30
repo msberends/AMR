@@ -253,7 +253,7 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
       }
     }
   }
-  
+
   sum_it <- function(.data) {
     out <- data.frame(
       antibiotic = character(0),
@@ -282,10 +282,16 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
       if (NROW(col_results) > 0 && sum(col_results$isolates, na.rm = TRUE) > 0) {
         if (sum(col_results$isolates, na.rm = TRUE) >= minimum) {
           col_results$value <- col_results$isolates / sum(col_results$isolates, na.rm = TRUE)
-          ci <- lapply(col_results$isolates,
-                       function(x) stats::binom.test(x = x,
-                                                     n = sum(col_results$isolates, na.rm = TRUE),
-                                                     conf.level = confidence_level)$conf.int)
+          ci <- lapply(
+            col_results$isolates,
+            function(x) {
+              stats::binom.test(
+                x = x,
+                n = sum(col_results$isolates, na.rm = TRUE),
+                conf.level = confidence_level
+              )$conf.int
+            }
+          )
           col_results$ci_min <- vapply(FUN.VALUE = double(1), ci, `[`, 1)
           col_results$ci_max <- vapply(FUN.VALUE = double(1), ci, `[`, 2)
         } else {
