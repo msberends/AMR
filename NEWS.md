@@ -1,4 +1,4 @@
-# AMR 1.8.2.9039
+# AMR 1.8.2.9040
 
 This version will eventually become v2.0! We're happy to reach a new major milestone soon!
 
@@ -15,32 +15,35 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 
 ### New
 * EUCAST 2022 and CLSI 2022 guidelines have been added for `as.rsi()`. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.
+* Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. We are very grateful for the valuable input by our colleagues from other countries. The `AMR` package is now available in 16 languages. The automatic language determination will give a note at start-up on systems in supported languages.
 * All new algorithm for `as.mo()` (and thus all `mo_*()` functions) while still following our original set-up as described in our paper (DOI 10.18637/jss.v104.i03).
   * A new argument `keep_synonyms` allows to *not* correct for updated taxonomy, in favour of the now deleted argument `allow_uncertain`
   * It has increased tremendously in speed and returns generally more consequent results
   * Sequential coercion is now extremely fast as results are stored to the package environment, although coercion of unknown values must be run once per session. Previous results can be reset/removed with the new `mo_reset_session()` function.
-* Support for microorganism codes of the ASIan Antimicrobial Resistance Surveillance Network (ASIARS-Net) 
-* Function `rsi_confidence_interval()` to add confidence intervals in AMR calculation. This is also included in `rsi_df()` and `proportion_df()`
-* Function `mean_amr_distance()` to calculate the mean AMR distance. The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand.
-* Function `rsi_interpretation_history()` to view the history of previous runs of `as.rsi()`. This returns a 'logbook' with the selected guideline, reference table and specific interpretation of each row in a data set on which `as.rsi()` was run.
-* Function `mo_current()` to get the currently valid taxonomic name of a microorganism
-* Function `add_custom_antimicrobials()` to add custom antimicrobial codes and names to the `AMR` package
-* Support for `data.frame`-enhancing R packages, more specifically: `data.table::data.table`, `janitor::tabyl`, `tibble::tibble`, and `tsibble::tsibble`. AMR package functions that have a data set as output (such as `rsi_df()` and `bug_drug_combinations()`), will now return the same data type as the input.
-* All data sets in this package are now exported as `tibble`, instead of base R `data.frame`s. Older R versions are still supported.
-* Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. We are very grateful for the valuable input by our colleagues from other countries. The `AMR` package is now available in 16 languages. The automatic language determination will give a note at start-up on systems in supported languages.
-* Our data sets are now also continually exported to Apache Feather and Apache Parquet formats. You can find more info [in this article on our website](https://msberends.github.io/AMR/articles/datasets.html).
-* Support for using antibiotic selectors in scoped `dplyr` verbs (with or without `vars()`), such as in: `... %>% summarise_at(aminoglycosides(), resistance)`, see `resistance()`
-* Support for antimicrobial interpretation of anaerobic bacteria, by adding a 'placeholder' code `B_ANAER` to the `microorganisms` data set and add the breakpoints of anaerobics to the `rsi_interpretation` data set, which is used by `as.rsi()` when interpreting MIC and disk diffusion values
+  * Support for microorganism codes of the ASIan Antimicrobial Resistance Surveillance Network (ASIARS-Net)
+  
+* New functions!
+  * Function `rsi_confidence_interval()` to add confidence intervals in AMR calculation. This is also included in `rsi_df()` and `proportion_df()`
+  * Function `mean_amr_distance()` to calculate the mean AMR distance. The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand.
+  * Function `rsi_interpretation_history()` to view the history of previous runs of `as.rsi()`. This returns a 'logbook' with the selected guideline, reference table and specific interpretation of each row in a data set on which `as.rsi()` was run.
+  * Function `mo_current()` to get the currently valid taxonomic name of a microorganism
+  * Function `add_custom_antimicrobials()` to add custom antimicrobial codes and names to the `AMR` package
 * New and updated entries for the `antibiotics` data set
   * The following 20 antibiotics have been added (also includes the [new J01RA ATC group](https://www.whocc.no/atc_ddd_index/?code=J01RA&showdescription=no)): azithromycin/fluconazole/secnidazole (AFC), cefepime/amikacin (CFA), cefixime/ornidazole (CEO), ceftriaxone/beta-lactamase inhibitor (CEB), ciprofloxacin/metronidazole (CIM), ciprofloxacin/ornidazole (CIO), ciprofloxacin/tinidazole (CIT), furazidin (FUR), isoniazid/sulfamethoxazole/trimethoprim/pyridoxine (IST), lascufloxacin (LSC), levofloxacin/ornidazole (LEO), nemonoxacin (NEM), norfloxacin/metronidazole (NME), norfloxacin/tinidazole (NTI), ofloxacin/ornidazole (OOR), oteseconazole (OTE), rifampicin/ethambutol/isoniazid (REI), sarecycline (SRC), tetracycline/oleandomycin (TOL), and thioacetazone (TAT)
   * Added some missing ATC codes
   * Updated DDDs and PubChem Compound IDs
   * Updated some antibiotic name spelling, now used by WHOCC (such as cephalexin -> cefalexin, and phenethicillin -> pheneticillin)
+  * Antibiotic code "CEI" for ceftolozane/tazobactam has been replaced with "CZT" to comply with EARS-Net and WHONET 2022. The old code will still work in all cases when using `as.ab()` or any of the `ab_*()` functions.
+  * Support for antimicrobial interpretation of anaerobic bacteria, by adding a 'placeholder' code `B_ANAER` to the `microorganisms` data set and add the breakpoints of anaerobics to the `rsi_interpretation` data set, which is used by `as.rsi()` when interpreting MIC and disk diffusion values
+* Support for `data.frame`-enhancing R packages, more specifically: `data.table::data.table`, `janitor::tabyl`, `tibble::tibble`, and `tsibble::tsibble`. AMR package functions that have a data set as output (such as `rsi_df()` and `bug_drug_combinations()`), will now return the same data type as the input.
+* All data sets in this package are now exported as `tibble`, instead of base R `data.frame`s. Older R versions are still supported.
+* Our data sets are now also continually exported to Apache Feather and Apache Parquet formats. You can find more info [in this article on our website](https://msberends.github.io/AMR/articles/datasets.html).
+* Support for using antibiotic selectors in scoped `dplyr` verbs (with or without `vars()`), such as in: `... %>% summarise_at(aminoglycosides(), resistance)`, see `resistance()`
 
 ### Changed
 * Fix for using `as.rsi()` on certain EUCAST breakpoints for MIC values
 * Fix for using `as.rsi()` on `NA` values (e.g. `as.rsi(as.disk(NA), ...)`)
-* Fix for using `as.rsi()` on drug-drug combinations with multiple breakpoints for different body sites
+* Fix for using `as.rsi()` on bug-drug combinations with multiple breakpoints for different body sites
 * Removed `as.integer()` for MIC values, since MIC are not integer values and running `table()` on MIC values  consequently failed for not being able to retrieve the level position (as that's how normally `as.integer()` on `factor`s work)
 * `droplevels()` on MIC will now return a common `factor` at default and will lose the `mic` class. Use `droplevels(..., as.mic = TRUE)` to keep the `mic` class.
 * Small fix for using `ab_from_text()`
@@ -48,7 +51,7 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * Using any `random_*()` function (such as `random_mic()`) is now possible by directly calling the package without loading it first: `AMR::random_mic(10)`
 * Added *Toxoplasma gondii* (`P_TXPL_GOND`) to the `microorganisms` data set, together with its genus, family, and order
 * Changed value in column `prevalence` of the `microorganisms` data set from 3 to 2 for these genera: *Acholeplasma*, *Alistipes*, *Alloprevotella*, *Bergeyella*, *Borrelia*, *Brachyspira*, *Butyricimonas*, *Cetobacterium*, *Chlamydia*, *Chlamydophila*, *Deinococcus*, *Dysgonomonas*, *Elizabethkingia*, *Empedobacter*, *Haloarcula*, *Halobacterium*, *Halococcus*, *Myroides*, *Odoribacter*, *Ornithobacterium*, *Parabacteroides*, *Pedobacter*, *Phocaeicola*, *Porphyromonas*, *Riemerella*, *Sphingobacterium*, *Streptobacillus*, *Tenacibaculum*, *Terrimonas*, *Victivallis*, *Wautersiella*, *Weeksella*
-* Fix for using the form `df[carbapenems() == "R", ]` when using the latest `vctrs` package
+* Extended support for the `vctrs` package, used internally by the tidyverse. This allows to change values of class `mic`, `disk`, `rsi`, `mo` and `ab` in tibbles, and to use antibiotic selectors for selecting/filtering, e.g. `df[carbapenems() == "R", ]`
 * Fix for using `info = FALSE` in `mdro()`
 * For all interpretation guidelines using `as.rsi()` on amoxicillin, the rules for ampicillin will be used if amoxicillin rules are not available
 * Fix for using `ab_atc()` on non-existing ATC codes

@@ -64,7 +64,10 @@ vec_ptype2.ab.character <- function(x, y, ...) {
   y
 }
 vec_cast.character.ab <- function(x, to, ...) {
-  unclass(x)
+  as.character(x)
+}
+vec_cast.ab.character <- function(x, to, ...) {
+  return_after_integrity_check(x, "antimicrobial code", as.character(AMR_env$AB_lookup$ab))
 }
 
 # S3: mo
@@ -75,7 +78,10 @@ vec_ptype2.mo.character <- function(x, y, ...) {
   y
 }
 vec_cast.character.mo <- function(x, to, ...) {
-  unclass(x)
+  as.character(x)
+}
+vec_cast.mo.character <- function(x, to, ...) {
+  return_after_integrity_check(x, "microorganism code", as.character(AMR::microorganisms$mo))
 }
 
 # S3: disk
@@ -88,15 +94,49 @@ vec_ptype2.disk.integer <- function(x, y, ...) {
 vec_cast.integer.disk <- function(x, to, ...) {
   unclass(x)
 }
+vec_cast.disk.integer <- function(x, to, ...) {
+  as.disk(x)
+}
+vec_cast.double.disk <- function(x, to, ...) {
+  unclass(x)
+}
+vec_cast.disk.double <- function(x, to, ...) {
+  as.disk(x)
+}
+vec_cast.character.disk <- function(x, to, ...) {
+  unclass(x)
+}
+vec_cast.disk.character <- function(x, to, ...) {
+  as.disk(x)
+}
 
 # S3: mic
 vec_cast.character.mic <- function(x, to, ...) {
   as.character(x)
 }
 vec_cast.double.mic <- function(x, to, ...) {
-  # this calls as.double.mic()
   as.double(x)
+}
+vec_cast.mic.double <- function(x, to, ...) {
+  as.mic(x)
+}
+vec_cast.mic.character <- function(x, to, ...) {
+  as.mic(x)
 }
 vec_math.mic <- function(.fn, x, ...) {
   .fn(as.double(x), ...)
+}
+
+# S3: rsi
+vec_ptype2.character.rsi <- function(x, y, ...) {
+  x
+}
+vec_ptype2.rsi.character <- function(x, y, ...) {
+  y
+}
+vec_cast.character.rsi <- function(x, to, ...) {
+  as.character(x)
+}
+vec_cast.rsi.character <- function(x, to, ...) {
+  as.rsi(x)
 }

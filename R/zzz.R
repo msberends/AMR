@@ -116,24 +116,44 @@ if (utf8_supported && !is_latex) {
   s3_register("ggplot2::fortify", "mic")
   s3_register("ggplot2::fortify", "disk")
   # Support vctrs package for use in e.g. dplyr verbs
-  s3_register("vctrs::vec_ptype2", "ab.character")
-  s3_register("vctrs::vec_ptype2", "character.ab")
-  s3_register("vctrs::vec_cast", "character.ab")
-  s3_register("vctrs::vec_ptype2", "mo.character")
-  s3_register("vctrs::vec_ptype2", "character.mo")
-  s3_register("vctrs::vec_cast", "character.mo")
-  s3_register("vctrs::vec_ptype2", "ab_selector.character")
+  # S3: ab_selector
   s3_register("vctrs::vec_ptype2", "character.ab_selector")
+  s3_register("vctrs::vec_ptype2", "ab_selector.character")
   s3_register("vctrs::vec_cast", "character.ab_selector")
-  s3_register("vctrs::vec_ptype2", "ab_selector_any_all.logical")
+  # S3: ab_selector_any_all
   s3_register("vctrs::vec_ptype2", "logical.ab_selector_any_all")
+  s3_register("vctrs::vec_ptype2", "ab_selector_any_all.logical")
   s3_register("vctrs::vec_cast", "logical.ab_selector_any_all")
-  s3_register("vctrs::vec_ptype2", "disk.integer")
+  # S3: ab
+  s3_register("vctrs::vec_ptype2", "character.ab")
+  s3_register("vctrs::vec_ptype2", "ab.character")
+  s3_register("vctrs::vec_cast", "character.ab")
+  s3_register("vctrs::vec_cast", "ab.character")
+  # S3: mo
+  s3_register("vctrs::vec_ptype2", "character.mo")
+  s3_register("vctrs::vec_ptype2", "mo.character")
+  s3_register("vctrs::vec_cast", "character.mo")
+  s3_register("vctrs::vec_cast", "mo.character")
+  # S3: disk
   s3_register("vctrs::vec_ptype2", "integer.disk")
+  s3_register("vctrs::vec_ptype2", "disk.integer")
   s3_register("vctrs::vec_cast", "integer.disk")
+  s3_register("vctrs::vec_cast", "disk.integer")
+  s3_register("vctrs::vec_cast", "double.disk")
+  s3_register("vctrs::vec_cast", "disk.double")
+  s3_register("vctrs::vec_cast", "character.disk")
+  s3_register("vctrs::vec_cast", "disk.character")
+  # S3: mic
   s3_register("vctrs::vec_cast", "character.mic")
   s3_register("vctrs::vec_cast", "double.mic")
+  s3_register("vctrs::vec_cast", "mic.character")
+  s3_register("vctrs::vec_cast", "mic.double")
   s3_register("vctrs::vec_math", "mic")
+  # S3: rsi
+  s3_register("vctrs::vec_ptype2", "character.rsi")
+  s3_register("vctrs::vec_ptype2", "rsi.character")
+  s3_register("vctrs::vec_cast", "character.rsi")
+  s3_register("vctrs::vec_cast", "rsi.character")
 
   # if mo source exists, fire it up (see mo_source())
   if (tryCatch(file.exists(getOption("AMR_mo_source", "~/mo_source.rds")), error = function(e) FALSE)) {
