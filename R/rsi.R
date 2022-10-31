@@ -629,7 +629,7 @@ as.rsi.data.frame <- function(x,
       }
       x[, ab_cols[i]] <- as.rsi.default(x = as.character(x[, ab_cols[i], drop = TRUE]))
       if (show_message == TRUE) {
-        message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
+        message_(" OK.", add_fn = list(font_green), as_note = FALSE)
       }
     }
   }
@@ -790,6 +790,7 @@ as_rsi_method <- function(method_short,
   }
 
   rise_warning <- FALSE
+  rise_note <- FALSE
   method_param <- toupper(method)
 
   genera <- mo_genus(mo, language = NULL)
@@ -828,7 +829,7 @@ as_rsi_method <- function(method_short,
   }
 
   if (nrow(trans) == 0) {
-    message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
+    message_(" OK.", add_fn = list(font_green), as_note = FALSE)
     load_mo_uncertainties(metadata_mo)
     return(set_clean_class(factor(new_rsi, levels = c("S", "I", "R"), ordered = TRUE),
       new_class = c("rsi", "ordered", "factor")
@@ -875,14 +876,18 @@ as_rsi_method <- function(method_short,
       ))
 
     if (NROW(get_record) == 0) {
-      warning_(
-        "No ", method_param, " breakpoints available for ",
-        font_italic(suppressMessages(suppressWarnings(mo_shortname(mo[i], language = NULL, keep_synonyms = FALSE)))),
-        paste0(" / "),
+      if (mo_rank(mo[i]) %in% c("kingdom", "phylum", "class", "order")) {
+        mo_formatted <- suppressMessages(suppressWarnings(mo_shortname(mo[i], language = NULL, keep_synonyms = FALSE)))
+      } else {
+        mo_formatted <- font_italic(suppressMessages(suppressWarnings(mo_shortname(mo[i], language = NULL, keep_synonyms = FALSE))))
+      }
+      message_(font_green(font_bold(" NOTE.\n")),
+        font_black("No ", method_param, " breakpoints available for ", mo_formatted,
+        " / ",
         suppressMessages(suppressWarnings(ab_name(ab_param, language = NULL, tolower = TRUE))),
-        " (", ab_param, ")"
+        " (", ab_param, ")", collapse = NULL)
       )
-      rise_warning <- TRUE
+      rise_note <- TRUE
       next
     }
 
@@ -905,13 +910,19 @@ as_rsi_method <- function(method_short,
       rise_warning <- TRUE
     } else if (nrow(records_same_mo) > 1 && length(unique(records_same_mo$site)) > 1 && is.na(uti[i]) && all(c(TRUE, FALSE) %in% records_same_mo$uti, na.rm = TRUE) && message_not_thrown_before("as.rsi", "siteUTI", records_same_mo$mo[1], ab_param)) {
       # uti not set and both UTI and non-UTI breakpoints available, so throw warning
-      warning_("in `as.rsi()`: breakpoints for UTI ", font_underline("and"), " non-UTI available for ",
-        font_italic(suppressMessages(suppressWarnings(mo_shortname(records_same_mo$mo[1], language = NULL, keep_synonyms = FALSE)))),
+      if (mo_rank(mo[i]) %in% c("kingdom", "phylum", "class", "order")) {
+        mo_formatted <- suppressMessages(suppressWarnings(mo_shortname(mo[i], language = NULL, keep_synonyms = FALSE)))
+      } else {
+        mo_formatted <- font_italic(suppressMessages(suppressWarnings(mo_shortname(mo[i], language = NULL, keep_synonyms = FALSE))))
+      }
+      message_(font_green(font_bold(" NOTE.\n")),
+        font_black("Breakpoints for UTI ", font_underline("and"), " non-UTI available for ", mo_formatted,
         " / ",
         suppressMessages(suppressWarnings(ab_name(ab_param, language = NULL, tolower = TRUE))),
-        " (", ab_param, ") - assuming non-UTI. Use argument `uti` to set which isolates are from urine. See ?as.rsi.",
-        call = FALSE
+        " (", ab_param, ") - assuming non-UTI. Use argument `uti` to set which isolates are from urine. See ?as.rsi.", collapse = NULL),
+        as_note = FALSE
       )
+      rise_note <- TRUE
       get_record <- get_record %pm>%
         pm_filter(uti == FALSE)
       rise_warning <- TRUE
@@ -923,14 +934,19 @@ as_rsi_method <- function(method_short,
       } else {
         site <- paste0("body site '", get_record[1L, "site", drop = FALSE], "'")
       }
-      warning_("in `as.rsi()`: breakpoints available for ",
-        font_italic(suppressMessages(suppressWarnings(mo_shortname(records_same_mo$mo[1], language = NULL, keep_synonyms = FALSE)))),
-        paste0(" / "),
+      if (mo_rank(mo[i]) %in% c("kingdom", "phylum", "class", "order")) {
+        mo_formatted <- suppressMessages(suppressWarnings(mo_shortname(mo[i], language = NULL, keep_synonyms = FALSE)))
+      } else {
+        mo_formatted <- font_italic(suppressMessages(suppressWarnings(mo_shortname(mo[i], language = NULL, keep_synonyms = FALSE))))
+      }
+      message_(font_green(font_bold(" NOTE.\n")),
+        font_black("Breakpoints available for ", mo_formatted,
+        " / ",
         suppressMessages(suppressWarnings(ab_name(records_same_mo$ab[1], language = NULL, tolower = TRUE))),
-        paste0(" - assuming ", site),
-        call = FALSE
+        paste0(" - assuming ", site), collapse = NULL),
+        as_note = FALSE
       )
-      rise_warning <- TRUE
+      rise_note <- TRUE
     }
 
     if (NROW(get_record) > 0) {
@@ -1002,13 +1018,16 @@ as_rsi_method <- function(method_short,
     by = "x_mo"
     ) %pm>%
     pm_pull(new_rsi)
-
-  if (isTRUE(rise_warning)) {
-    message_("WARNING.", add_fn = list(font_yellow, font_bold), as_note = FALSE)
-  } else {
-    message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
+  
+  if (!isTRUE(rise_note)) {
+    # notes already a have green "NOTE" text by this point
+    if (isTRUE(rise_warning)) {
+      message_(" WARNING.", add_fn = list(font_yellow, font_bold), as_note = FALSE)
+    } else {
+      message_(" OK.", add_fn = list(font_green), as_note = FALSE)
+    }
   }
-
+  
   load_mo_uncertainties(metadata_mo)
 
   set_clean_class(factor(new_rsi, levels = c("S", "I", "R"), ordered = TRUE),

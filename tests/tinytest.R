@@ -30,10 +30,11 @@
 # we use {tinytest} instead of {testthat} because it does not rely on recent R versions - we want to test on R >= 3.0.
 
 # Run them in RStudio using:
-# rstudioapi::jobRunScript("tests/tinytest.R", name = "Tinytest Unit Tests", workingDir = getwd(), exportEnv = "tinytest_results")
+# rstudioapi::jobRunScript("tests/tinytest.R", name = "AMR Unit Tests", workingDir = getwd(), exportEnv = "tinytest_results")
 
-# test only on GitHub Actions and at home - not on CRAN as tests are lengthy
-if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
+# test only on GitHub Actions and at using RStudio jobs - not on CRAN as tests are lengthy
+if (tryCatch(isTRUE(AMR:::import_fn("isJob", "rstudioapi")()), error = function(e) FALSE) ||
+    identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
   # env var 'R_LIBS_USER' got overwritten during 'R CMD check' in GitHub Actions, so:
   .libPaths(c(Sys.getenv("R_LIBS_USER_GH_ACTIONS"), .libPaths()))
   if (AMR:::pkg_is_available("tinytest", also_load = TRUE)) {

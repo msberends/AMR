@@ -1130,7 +1130,7 @@ font_grey <- function(..., collapse = " ") {
   try_colour(..., before = "\033[38;5;249m", after = "\033[39m", collapse = collapse)
 }
 font_grey_bg <- function(..., collapse = " ") {
-  if (tryCatch(import_fn("getThemeInfo", "rstudioapi", error_on_fail = FALSE)()$dark, error = function(e) FALSE)) {
+  if (is_dark()) {
     # similar to HTML #444444
     try_colour(..., before = "\033[48;5;238m", after = "\033[49m", collapse = collapse)
   } else {
@@ -1360,19 +1360,10 @@ percentage <- function(x, digits = NULL, ...) {
   )
 }
 
-time_start_tracking <- function() {
-  AMR_env$time_start <- round(as.double(Sys.time()) * 1000)
-}
-
-time_track <- function(name = NULL) {
-  paste("(until now:", trimws(round(as.double(Sys.time()) * 1000) - AMR_env$time_start), "ms)")
-}
-
 trimws2 <- function(..., whitespace = "[\u0009\u000A\u000B\u000C\u000D\u0020\u0085\u00A0\u1680\u180E\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u200C\u200D\u2028\u2029\u202F\u205F\u2060\u3000\uFEFF]") {
   # this is even faster than trimws() itself which sets " \t\n\r".
   trimws(..., whitespace = whitespace)
 }
-
 
 # Faster data.table implementations ----
 

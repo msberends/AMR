@@ -28,7 +28,7 @@
 # ==================================================================== #
 
 # extra tests for {vctrs} pkg support
-if (pkg_is_available("dplyr", also_load = FALSE)) {
+if (AMR:::pkg_is_available("dplyr", also_load = FALSE)) {
   test <- dplyr::tibble(ab = as.ab("CIP"),
                         mo = as.mo("Escherichia coli"),
                         mic = as.mic(2),
