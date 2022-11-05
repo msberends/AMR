@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9042</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9043</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,10 +127,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.8.2.9042" id="amr-1829042">AMR 1.8.2.9042<a class="anchor" aria-label="anchor" href="#amr-1829042"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.8.2.9043" id="amr-1829043">AMR 1.8.2.9043<a class="anchor" aria-label="anchor" href="#amr-1829043"></a></h2>
 <p>This version will eventually become v2.0! We’re happy to reach a new major milestone soon!</p>
 <div class="section level4">
-<h4 id="breaking-1-8-2-9042">Breaking<a class="anchor" aria-label="anchor" href="#breaking-1-8-2-9042"></a></h4>
+<h4 id="breaking-1-8-2-9043">Breaking<a class="anchor" aria-label="anchor" href="#breaking-1-8-2-9043"></a></h4>
 <ul><li>Removed all species of the taxonomic kingdom Chromista from the package. This was done for multiple reasons:
 <ul><li>CRAN allows packages to be around 5 MB maximum, some packages are exempted but this package is not one of them</li>
 <li>Chromista are not relevant when it comes to antimicrobial resistance, thus lacking the primary scope of this package</li>
@@ -143,7 +143,7 @@
 <li>Removal of interpretation guidelines older than 10 years, the oldest now included guidelines of EUCAST and CLSI are from 2013</li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-1-8-2-9042">New<a class="anchor" aria-label="anchor" href="#new-1-8-2-9042"></a></h4>
+<h4 id="new-1-8-2-9043">New<a class="anchor" aria-label="anchor" href="#new-1-8-2-9043"></a></h4>
 <ul><li>EUCAST 2022 and CLSI 2022 guidelines have been added for <code><a href="../reference/as.rsi.html">as.rsi()</a></code>. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.</li>
 <li>Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. We are very grateful for the valuable input by our colleagues from other countries. The <code>AMR</code> package is now available in 16 languages. The automatic language determination will give a note at start-up on systems in supported languages.</li>
 <li>All new algorithm for <code><a href="../reference/as.mo.html">as.mo()</a></code> (and thus all <code>mo_*()</code> functions) while still following our original set-up as described in our paper (DOI 10.18637/jss.v104.i03).
@@ -176,7 +176,7 @@
 </li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-1-8-2-9042">Changed<a class="anchor" aria-label="anchor" href="#changed-1-8-2-9042"></a></h4>
+<h4 id="changed-1-8-2-9043">Changed<a class="anchor" aria-label="anchor" href="#changed-1-8-2-9043"></a></h4>
 <ul><li>Fix for using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on certain EUCAST breakpoints for MIC values</li>
 <li>Fix for using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on <code>NA</code> values (e.g. <code>as.rsi(as.disk(NA), ...)</code>)</li>
 <li>Fix for using <code><a href="../reference/as.rsi.html">as.rsi()</a></code> on bug-drug combinations with multiple breakpoints for different body sites</li>
@@ -207,7 +207,7 @@
 <li>Fix for <code><a href="../reference/mo_property.html">mo_shortname()</a></code> in case of higher taxonomic ranks (order, class, phylum)</li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-1-8-2-9042">Other<a class="anchor" aria-label="anchor" href="#other-1-8-2-9042"></a></h4>
+<h4 id="other-1-8-2-9043">Other<a class="anchor" aria-label="anchor" href="#other-1-8-2-9043"></a></h4>
 <ul><li>New website to make use of the new Bootstrap 5 and pkgdown 2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions</li>
 <li>Added Peter Dutey-Magni, Dmytro Mykhailenko, Anton Mymrikov, and Jonas Salm as contributors, to thank them for their valuable input</li>
 <li>All R and Rmd files in this project are now styled using the <code>styler</code> package</li>
