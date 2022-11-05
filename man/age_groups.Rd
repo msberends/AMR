@@ -56,7 +56,7 @@ age_groups(ages, "children")
 
 \donttest{
 # resistance of ciprofloxacin per age group
-if (require("dplyr")) {
+if (require("dplyr") && require("ggplot2")) {
   example_isolates \%>\%
     filter_first_isolate() \%>\%
     filter(mo == as.mo("Escherichia coli")) \%>\%

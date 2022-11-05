@@ -143,7 +143,6 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
 #' @return Ordered [factor]
 #' @seealso To determine ages, based on one or more reference dates, use the [age()] function.
 #' @export
-
 #' @examples
 #' ages <- c(3, 8, 16, 54, 31, 76, 101, 43, 21)
 #'
@@ -167,7 +166,7 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
 #'
 #' \donttest{
 #' # resistance of ciprofloxacin per age group
-#' if (require("dplyr")) {
+#' if (require("dplyr") && require("ggplot2")) {
 #'   example_isolates %>%
 #'     filter_first_isolate() %>%
 #'     filter(mo == as.mo("Escherichia coli")) %>%
