@@ -131,10 +131,12 @@ if (require("dplyr")) {
 
   # old base R plotting method:
   biplot(pca_result)
-  # new ggplot2 plotting method using this package:
-  ggplot_pca(pca_result)
 
+  # new ggplot2 plotting method using this package:
   if (require("ggplot2")) {
+    ggplot_pca(pca_result)
+
+    # still extendible with any ggplot2 function
     ggplot_pca(pca_result) +
       scale_colour_viridis_d() +
       labs(title = "Title here")
