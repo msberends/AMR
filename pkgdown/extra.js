@@ -33,7 +33,7 @@ $(document).ready(function() {
 
   // Replace 'Developers' with 'Maintainers' on the main page, and "Contributors" on the Authors page
   $(".developers h2").text("Maintainers");
-  $(".citation h2").text("Contributors");
+  $(".citation h2:first").text("All contributors");
 
   // replace \donttest and \dontrun texts in Examples
   if ($("#ref-examples ~ div pre").length > 0) {
