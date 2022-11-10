@@ -57,6 +57,7 @@ $(document).ready(function() {
       // contributors
       x = x.replace("Alex", "Prof. Alex");
       x = x.replace("Anthony", "Dr. Anthony");
+      x = x.replace("Annick", "Dr. Annick");
       x = x.replace("Bart", "Dr. Bart");
       x = x.replace("Bhanu", "Prof. Bhanu");
       x = x.replace("Casper", "Prof. Casper");
