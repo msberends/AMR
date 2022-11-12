@@ -53,44 +53,33 @@
 #' @inheritSection AMR Reference Data Publicly Available
 #' @examples
 #' # all properties:
-#' av_name("AMX") # "Amoxicillin"
-#' av_atc("AMX") # "J01CA04" (ATC code from the WHO)
-#' av_cid("AMX") # 33613 (Compound ID from PubChem)
-#' av_synonyms("AMX") # a list with brand names of amoxicillin
-#' av_tradenames("AMX") # same
-#' av_group("AMX") # "Beta-lactams/penicillins"
-#' av_atc_group1("AMX") # "Beta-lactam antibacterials, penicillins"
-#' av_atc_group2("AMX") # "Penicillins with extended spectrum"
-#' av_url("AMX") # link to the official WHO page
+#' av_name("ACI")
+#' av_atc("ACI")
+#' av_cid("ACI")
+#' av_synonyms("ACI")
+#' av_tradenames("ACI")
+#' av_group("ACI")
+#' av_url("ACI")
 #'
 #' # smart lowercase tranformation
-#' av_name(x = c("AMC", "PLB")) # "Amoxicillin/clavulanic acid" "Polymyxin B"
-#' av_name(
-#'   x = c("AMC", "PLB"),
-#'   tolower = TRUE
-#' ) # "amoxicillin/clavulanic acid" "polymyxin B"
+#' av_name(x = c("ACI", "VALA"))
+#' av_name(x = c("ACI", "VALA"), tolower = TRUE)
 #'
 #' # defined daily doses (DDD)
-#' av_ddd("AMX", "oral") #  1.5
-#' av_ddd_units("AMX", "oral") # "g"
-#' av_ddd("AMX", "iv") #  3
-#' av_ddd_units("AMX", "iv") # "g"
+#' av_ddd("ACI", "oral")
+#' av_ddd_units("ACI", "oral")
+#' av_ddd("ACI", "iv")
+#' av_ddd_units("ACI", "iv")
 #'
-#' av_info("AMX") # all properties as a list
+#' av_info("ACI") # all properties as a list
 #'
 #' # all av_* functions use as.av() internally, so you can go from 'any' to 'any':
-#' av_atc("AMP") # ATC code of AMP (ampicillin)
-#' av_group("J01CA01") # Drug group of ampicillins ATC code
-#' av_loinc("ampicillin") # LOINC codes of ampicillin
-#' av_name("21066-6") # "Ampicillin" (using LOINC)
-#' av_name(6249) # "Ampicillin" (using CID)
-#' av_name("J01CA01") # "Ampicillin" (using ATC)
-#'
-#' # spelling from different languages and dyslexia are no problem
-#' av_atc("ceftriaxon")
-#' av_atc("cephtriaxone")
-#' av_atc("cephthriaxone")
-#' av_atc("seephthriaaksone")
+#' av_atc("ACI")
+#' av_group("J05AB01")
+#' av_loinc("abacavir")
+#' av_name("29113-8")
+#' av_name(135398513)
+#' av_name("J05AB01")
 av_name <- function(x, language = get_AMR_locale(), tolower = FALSE, ...) {
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
@@ -137,7 +126,7 @@ av_tradenames <- function(x, ...) {
 av_group <- function(x, language = get_AMR_locale(), ...) {
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
-  translate_into_language(av_validate(x = x, property = "group", ...), language = language, only_affect_ab_names = TRUE)
+  translate_into_language(av_validate(x = x, property = "atc_group", ...), language = language, only_affect_ab_names = TRUE)
 }
 
 #' @rdname av_property
