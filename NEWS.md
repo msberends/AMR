@@ -12,6 +12,7 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * The MO matching score algorithm (`mo_matching_score()`) now counts deletions and substitutions as 2 instead of 1, which impacts the outcome of `as.mo()` and any `mo_*()` function
 * **Argument `combine_IR` has been removed** from this package (affecting functions `count_df()`, `proportion_df()`, and `rsi_df()` and some plotting functions), since it was replaced with `combine_SI` three years ago
 * Interpretation **guidelines older than 10 years were removed**, the oldest now included guidelines of EUCAST and CLSI are from 2013
+* Using `units` in `ab_ddd(..., units = "...")` had been deprecated and is now not supported anymore. Use `ab_ddd_units()` instead.
 
 ### New
 * **EUCAST 2022 and CLSI 2022 guidelines** have been added for `as.rsi()`. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.

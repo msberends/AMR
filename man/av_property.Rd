@@ -8,7 +8,6 @@
 \alias{av_tradenames}
 \alias{av_group}
 \alias{av_atc}
-\alias{ATC}
 \alias{av_loinc}
 \alias{av_ddd}
 \alias{av_ddd_units}
@@ -26,7 +25,7 @@ av_tradenames(x, ...)
 
 av_group(x, language = get_AMR_locale(), ...)
 
-av_atc(x, only_first = FALSE, ...)
+av_atc(x, ...)
 
 av_loinc(x, ...)
 

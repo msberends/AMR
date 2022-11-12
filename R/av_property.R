@@ -130,35 +130,11 @@ av_group <- function(x, language = get_AMR_locale(), ...) {
 }
 
 #' @rdname av_property
-#' @aliases ATC
 #' @export
-av_atc <- function(x, only_first = FALSE, ...) {
+av_atc <- function(x, ...) {
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(only_first, allow_class = "logical", has_length = 1)
-  
-  atcs <- av_validate(x = x, property = "atc", ...)
-  
-  if (only_first == TRUE) {
-    atcs <- vapply(
-      FUN.VALUE = character(1),
-      # get only the first ATC code
-      atcs,
-      function(x) {
-        # try to get the J-group
-        if (any(x %like% "^J")) {
-          x[x %like% "^J"][1L]
-        } else {
-          as.character(x[1L])
-        }
-      }
-    )
-  } else if (length(atcs) == 1) {
-    atcs <- unname(unlist(atcs))
-  } else {
-    names(atcs) <- x
-  }
-  
-  atcs
+  # ATCs in the antivirals data set are not a list
+  av_validate(x = x, property = "atc", ...)
 }
 
 #' @rdname av_property
@@ -181,20 +157,7 @@ av_ddd <- function(x, administration = "oral", ...) {
   meet_criteria(administration, is_in = c("oral", "iv"), has_length = 1)
   
   x <- as.av(x, ...)
-  ddd_prop <- administration
-  # old behaviour
-  units <- list(...)$units
-  if (!is.null(units) && isTRUE(units)) {
-    if (message_not_thrown_before("av_ddd", entire_session = TRUE)) {
-      warning_(
-        "in `av_ddd()`: using `av_ddd(..., units = TRUE)` is deprecated, use `av_ddd_units()` to retrieve units instead.",
-        "This warning will be shown once per session."
-      )
-    }
-    ddd_prop <- paste0(ddd_prop, "_units")
-  } else {
-    ddd_prop <- paste0(ddd_prop, "_ddd")
-  }
+  ddd_prop <- paste0(administration, "_ddd")
   out <- av_validate(x = x, property = ddd_prop)
   
   if (any(av_name(x, language = NULL) %like% "/" & is.na(out))) {
@@ -214,16 +177,17 @@ av_ddd_units <- function(x, administration = "oral", ...) {
   meet_criteria(administration, is_in = c("oral", "iv"), has_length = 1)
   
   x <- as.av(x, ...)
-  if (any(av_name(x, language = NULL) %like% "/")) {
+  ddd_prop <- paste0(administration, "_units")
+  out <- av_validate(x = x, property = ddd_prop)
+  
+  if (any(av_name(x, language = NULL) %like% "/" & is.na(out))) {
     warning_(
-      "in `av_ddd_units()`: DDDs of combined products are available for different dose combinations and not (yet) part of the AMR package.",
+      "in `av_ddd_units()`: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
       "Please refer to the WHOCC website:\n",
       "www.whocc.no/ddd/list_of_ddds_combined_products/"
     )
   }
-  
-  ddd_prop <- paste0(administration, "_units")
-  av_validate(x = x, property = ddd_prop)
+  out
 }
 
 #' @rdname av_property
