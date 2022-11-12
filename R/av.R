@@ -27,29 +27,27 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Transform Input to an Antibiotic ID
+#' Transform Input to an Antiviral Agent ID
 #'
-#' Use this function to determine the antibiotic code of one or more antibiotics. The data set [antibiotics] will be searched for abbreviations, official names and synonyms (brand names).
-#' @param x a [character] vector to determine to antibiotic ID
-#' @param flag_multiple_results a [logical] to indicate whether a note should be printed to the console that probably more than one antibiotic code or name can be retrieved from a single input value.
+#' Use this function to determine the antiviral agent code of one or more antiviral agents. The data set [antivirals] will be searched for abbreviations, official names and synonyms (brand names).
+#' @param x a [character] vector to determine to antiviral agent ID
+#' @param flag_multiple_results a [logical] to indicate whether a note should be printed to the console that probably more than one antiviral agent code or name can be retrieved from a single input value.
 #' @param info a [logical] to indicate whether a progress bar should be printed, defaults to `TRUE` only in interactive mode
 #' @param ... arguments passed on to internal functions
-#' @rdname as.ab
+#' @rdname as.av
 #' @inheritSection WHOCC WHOCC
-#' @details All entries in the [antibiotics] data set have three different identifiers: a human readable EARS-Net code (column `ab`, used by ECDC and WHONET), an ATC code (column `atc`, used by WHO), and a CID code (column `cid`, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem. Not that some drugs contain multiple ATC codes.
+#' @details All entries in the [antivirals] data set have three different identifiers: a human readable EARS-Net code (column `ab`, used by ECDC and WHONET), an ATC code (column `atc`, used by WHO), and a CID code (column `cid`, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem. Not that some drugs contain multiple ATC codes.
 #'
-#' All these properties will be searched for the user input. The [as.ab()] can correct for different forms of misspelling:
+#' All these properties will be searched for the user input. The [as.av()] can correct for different forms of misspelling:
 #'
-#'  * Wrong spelling of drug names (such as "tobramicin" or "gentamycin"), which corrects for most audible similarities such as f/ph, x/ks, c/z/s, t/th, etc.
+#'  * Wrong spelling of drug names (such as "acyclovir"), which corrects for most audible similarities such as f/ph, x/ks, c/z/s, t/th, etc.
 #'  * Too few or too many vowels or consonants
-#'  * Switching two characters (such as "mreopenem", often the case in clinical data, when doctors typed too fast)
+#'  * Switching two characters (such as "aycclovir", often the case in clinical data, when doctors typed too fast)
 #'  * Digitalised paper records, leaving artefacts like 0/o/O (zero and O's), B/8, n/r, etc.
 #'
-#' Use the [`ab_*`][ab_property()] functions to get properties based on the returned antibiotic ID, see *Examples*.
+#' Use the [`av_*`][av_property()] functions to get properties based on the returned antiviral agent ID, see *Examples*.
 #'
-#' Note: the [as.ab()] and [`ab_*`][ab_property()] functions may use very long regular expression to match brand names of antimicrobial agents. This may fail on some systems.
-#'
-#' You can add your own manual codes to be considered by [as.ab()] and all [`ab_*`][ab_property()] functions, see [add_custom_antimicrobials()].
+#' Note: the [as.av()] and [`av_*`][av_property()] functions may use very long regular expression to match brand names of antimicrobial agents. This may fail on some systems.
 #' @section Source:
 #' World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: \url{https://www.whocc.no/atc_ddd_index/}
 #'
@@ -57,54 +55,40 @@
 #' @aliases ab
 #' @return A [character] [vector] with additional class [`ab`]
 #' @seealso
-#' * [antibiotics] for the [data.frame] that is being used to determine ATCs
-#' * [ab_from_text()] for a function to retrieve antimicrobial drugs from clinical text (from health care records)
+#' * [antivirals] for the [data.frame] that is being used to determine ATCs
+#' * [av_from_text()] for a function to retrieve antimicrobial drugs from clinical text (from health care records)
 #' @inheritSection AMR Reference Data Publicly Available
 #' @export
 #' @examples
-#' # these examples all return "ERY", the ID of erythromycin:
-#' as.ab("J01FA01")
-#' as.ab("J 01 FA 01")
-#' as.ab("Erythromycin")
-#' as.ab("eryt")
-#' as.ab("   eryt 123")
-#' as.ab("ERYT")
-#' as.ab("ERY")
-#' as.ab("eritromicine") # spelled wrong, yet works
-#' as.ab("Erythrocin") # trade name
-#' as.ab("Romycin") # trade name
+#' # these examples all return "ACI", the ID of aciclovir:
+#' as.av("J05AB01")
+#' as.av("J 05 AB 01")
+#' as.av("Aciclovir")
+#' as.av("aciclo")
+#' as.av("   aciclo 123")
+#' as.av("ACICL")
+#' as.av("ACI")
+#' as.av("Virorax") # trade name
+#' as.av("Zovirax") # trade name
 #'
-#' # spelling from different languages and dyslexia are no problem
-#' ab_atc("ceftriaxon")
-#' ab_atc("cephtriaxone") # small spelling error
-#' ab_atc("cephthriaxone") # or a bit more severe
-#' ab_atc("seephthriaaksone") # and even this works
+#' as.av("acyklofir") # severe spelling error, yet works
 #'
-#' # use ab_* functions to get a specific properties (see ?ab_property);
-#' # they use as.ab() internally:
-#' ab_name("J01FA01")
-#' ab_name("eryt")
-#'
-#' \donttest{
-#' if (require("dplyr")) {
-#'
-#'   # you can quickly rename 'rsi' columns using set_ab_names() with dplyr:
-#'   example_isolates %>%
-#'     set_ab_names(where(is.rsi), property = "atc")
-#' }
-#' }
-as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
+#' # use av_* functions to get a specific properties (see ?av_property);
+#' # they use as.av() internally:
+#' av_name("J05AB01")
+#' av_name("acicl")
+as.av <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   meet_criteria(x, allow_class = c("character", "numeric", "integer", "factor"), allow_NA = TRUE)
   meet_criteria(flag_multiple_results, allow_class = "logical", has_length = 1)
   meet_criteria(info, allow_class = "logical", has_length = 1)
 
-  if (is.ab(x)) {
+  if (is.av(x)) {
     return(x)
   }
-  if (all(x %in% c(AMR_env$AB_lookup$ab, NA))) {
+  if (all(x %in% c(AMR_env$AV_lookup$av, NA))) {
     # all valid AB codes, but not yet right class
     return(set_clean_class(x,
-      new_class = c("ab", "character")
+      new_class = c("av", "character")
     ))
   }
 
@@ -119,8 +103,6 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   x <- iconv(x, from = "UTF-8", to = "ASCII//TRANSLIT")
   x <- gsub('"', "", x, fixed = TRUE)
   x <- gsub("(specimen|specimen date|specimen_date|spec_date|gender|^dates?$)", "", x, ignore.case = TRUE, perl = TRUE)
-  # penicillin is a special case: we call it so, but then mean benzylpenicillin
-  x[x %like_case% "^PENICILLIN" & x %unlike_case% "[ /+-]"] <- "benzylpenicillin"
   x_bak_clean <- x
   if (already_regex == FALSE) {
     x_bak_clean <- generalise_antibiotic_name(x_bak_clean)
@@ -133,14 +115,14 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
   note_if_more_than_one_found <- function(found, index, from_text) {
     if (initial_search == TRUE && isTRUE(length(from_text) > 1)) {
-      abnames <- ab_name(from_text, tolower = TRUE, initial_search = FALSE)
-      if (ab_name(found[1L], language = NULL) %like% "(clavulanic acid|avibactam)") {
-        abnames <- abnames[!abnames %in% c("clavulanic acid", "avibactam")]
+      avnames <- av_name(from_text, tolower = TRUE, initial_search = FALSE)
+      if (av_name(found[1L], language = NULL) %like% "(clavulanic acid|avibactam)") {
+        avnames <- avnames[!avnames %in% c("clavulanic acid", "avibactam")]
       }
-      if (length(abnames) > 1) {
+      if (length(avnames) > 1) {
         warning_(
           "More than one result was found for item ", index, ": ",
-          vector_and(abnames, quotes = FALSE)
+          vector_and(avnames, quotes = FALSE)
         )
       }
     }
@@ -148,28 +130,28 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   }
 
   # Fill in names, AB codes, CID codes and ATC codes directly (`x` is already clean and uppercase)
-  known_names <- x %in% AMR_env$AB_lookup$generalised_name
-  x_new[known_names] <- AMR_env$AB_lookup$ab[match(x[known_names], AMR_env$AB_lookup$generalised_name)]
-  known_codes_ab <- x %in% AMR_env$AB_lookup$ab
-  known_codes_atc <- vapply(FUN.VALUE = logical(1), x, function(x_) x_ %in% unlist(AMR_env$AB_lookup$atc), USE.NAMES = FALSE)
-  known_codes_cid <- x %in% AMR_env$AB_lookup$cid
-  x_new[known_codes_ab] <- AMR_env$AB_lookup$ab[match(x[known_codes_ab], AMR_env$AB_lookup$ab)]
-  x_new[known_codes_atc] <- AMR_env$AB_lookup$ab[vapply(
+  known_names <- x %in% AMR_env$AV_lookup$generalised_name
+  x_new[known_names] <- AMR_env$AV_lookup$av[match(x[known_names], AMR_env$AV_lookup$generalised_name)]
+  known_codes_av <- x %in% AMR_env$AV_lookup$av
+  known_codes_atc <- vapply(FUN.VALUE = logical(1), x, function(x_) x_ %in% unlist(AMR_env$AV_lookup$atc), USE.NAMES = FALSE)
+  known_codes_cid <- x %in% AMR_env$AV_lookup$cid
+  x_new[known_codes_av] <- AMR_env$AV_lookup$av[match(x[known_codes_av], AMR_env$AV_lookup$av)]
+  x_new[known_codes_atc] <- AMR_env$AV_lookup$av[vapply(
     FUN.VALUE = integer(1),
     x[known_codes_atc],
     function(x_) {
       which(vapply(
         FUN.VALUE = logical(1),
-        AMR_env$AB_lookup$atc,
+        AMR_env$AV_lookup$atc,
         function(atc) x_ %in% atc
       ))[1L]
     },
     USE.NAMES = FALSE
   )]
-  x_new[known_codes_cid] <- AMR_env$AB_lookup$ab[match(x[known_codes_cid], AMR_env$AB_lookup$cid)]
-  previously_coerced <- x %in% AMR_env$ab_previously_coerced$x
-  x_new[previously_coerced & is.na(x_new)] <- AMR_env$ab_previously_coerced$ab[match(x[is.na(x_new) & x %in% AMR_env$ab_previously_coerced$x], AMR_env$ab_previously_coerced$x)]
-  already_known <- known_names | known_codes_ab | known_codes_atc | known_codes_cid | previously_coerced
+  x_new[known_codes_cid] <- AMR_env$AV_lookup$av[match(x[known_codes_cid], AMR_env$AV_lookup$cid)]
+  previously_coerced <- x %in% AMR_env$av_previously_coerced$x
+  x_new[previously_coerced & is.na(x_new)] <- AMR_env$av_previously_coerced$av[match(x[is.na(x_new) & x %in% AMR_env$av_previously_coerced$x], AMR_env$av_previously_coerced$x)]
+  already_known <- known_names | known_codes_av | known_codes_atc | known_codes_cid | previously_coerced
 
   # fix for NAs
   x_new[is.na(x)] <- NA
@@ -203,7 +185,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     }
 
     if (fast_mode == FALSE && flag_multiple_results == TRUE && x[i] %like% "[ ]") {
-      from_text <- tryCatch(suppressWarnings(ab_from_text(x[i], initial_search = FALSE, translate_ab = FALSE)[[1]]),
+      from_text <- tryCatch(suppressWarnings(av_from_text(x[i], initial_search = FALSE, translate_av = FALSE)[[1]]),
         error = function(e) character(0)
       )
     } else {
@@ -218,10 +200,10 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
     # exact LOINC code
     loinc_found <- unlist(lapply(
-      AMR_env$AB_lookup$generalised_loinc,
+      AMR_env$AV_lookup$generalised_loinc,
       function(s) x[i] %in% s
     ))
-    found <- AMR_env$AB_lookup$ab[loinc_found == TRUE]
+    found <- AMR_env$AV_lookup$av[loinc_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
@@ -229,22 +211,10 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
     # exact synonym
     synonym_found <- unlist(lapply(
-      AMR_env$AB_lookup$generalised_synonyms,
+      AMR_env$AV_lookup$generalised_synonyms,
       function(s) x[i] %in% s
     ))
-    found <- AMR_env$AB_lookup$ab[synonym_found == TRUE]
-    if (length(found) > 0) {
-      x_new[i] <- note_if_more_than_one_found(found, i, from_text)
-      next
-    }
-
-    # exact abbreviation
-    abbr_found <- unlist(lapply(
-      AMR_env$AB_lookup$generalised_abbreviations,
-      # require at least 2 characters for abbreviations
-      function(s) x[i] %in% s && nchar(x[i]) >= 2
-    ))
-    found <- AMR_env$AB_lookup$ab[abbr_found == TRUE]
+    found <- AMR_env$AV_lookup$av[synonym_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
@@ -252,9 +222,9 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
     # length of input is quite long, and Levenshtein distance is only max 2
     if (nchar(x[i]) >= 10) {
-      levenshtein <- as.double(utils::adist(x[i], AMR_env$AB_lookup$generalised_name))
+      levenshtein <- as.double(utils::adist(x[i], AMR_env$AV_lookup$generalised_name))
       if (any(levenshtein <= 2)) {
-        found <- AMR_env$AB_lookup$ab[which(levenshtein <= 2)]
+        found <- AMR_env$AV_lookup$av[which(levenshtein <= 2)]
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next
       }
@@ -291,13 +261,13 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     }
 
     # try if name starts with it
-    found <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$generalised_name %like% paste0("^", x_spelling)), "ab", drop = TRUE]
+    found <- AMR_env$AV_lookup[which(AMR_env$AV_lookup$generalised_name %like% paste0("^", x_spelling)), "av", drop = TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
     # try if name ends with it
-    found <- AMR_env$AB_lookup[which(AMR_env$AB_lookup$generalised_name %like% paste0(x_spelling, "$")), "ab", drop = TRUE]
+    found <- AMR_env$AV_lookup[which(AMR_env$AV_lookup$generalised_name %like% paste0(x_spelling, "$")), "av", drop = TRUE]
     if (nchar(x[i]) >= 4 && length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
@@ -305,10 +275,10 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
     # and try if any synonym starts with it
     synonym_found <- unlist(lapply(
-      AMR_env$AB_lookup$generalised_synonyms,
+      AMR_env$AV_lookup$generalised_synonyms,
       function(s) any(s %like% paste0("^", x_spelling))
     ))
-    found <- AMR_env$AB_lookup$ab[synonym_found == TRUE]
+    found <- AMR_env$AV_lookup$av[synonym_found == TRUE]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
@@ -321,7 +291,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
       # try by removing all spaces
       if (x[i] %like% " ") {
-        found <- suppressWarnings(as.ab(gsub(" +", "", x[i], perl = TRUE), initial_search = FALSE))
+        found <- suppressWarnings(as.av(gsub(" +", "", x[i], perl = TRUE), initial_search = FALSE))
         if (length(found) > 0 && !is.na(found)) {
           x_new[i] <- note_if_more_than_one_found(found, i, from_text)
           next
@@ -330,7 +300,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
       # try by removing all spaces and numbers
       if (x[i] %like% " " || x[i] %like% "[0-9]") {
-        found <- suppressWarnings(as.ab(gsub("[ 0-9]", "", x[i], perl = TRUE), initial_search = FALSE))
+        found <- suppressWarnings(as.av(gsub("[ 0-9]", "", x[i], perl = TRUE), initial_search = FALSE))
         if (length(found) > 0 && !is.na(found)) {
           x_new[i] <- note_if_more_than_one_found(found, i, from_text)
           next
@@ -355,7 +325,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       )[[1]],
       collapse = "/"
       )
-      x_translated_guess <- suppressWarnings(as.ab(x_translated, initial_search = FALSE))
+      x_translated_guess <- suppressWarnings(as.av(x_translated, initial_search = FALSE))
       if (!is.na(x_translated_guess)) {
         x_new[i] <- x_translated_guess
         next
@@ -366,7 +336,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
         strsplit(x_translated, "[^A-Z0-9 ]"),
         function(y) {
           for (i in seq_len(length(y))) {
-            y_name <- suppressWarnings(ab_name(y[i], language = NULL, initial_search = FALSE))
+            y_name <- suppressWarnings(av_name(y[i], language = NULL, initial_search = FALSE))
             y[i] <- ifelse(!is.na(y_name),
               y_name,
               y[i]
@@ -377,7 +347,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       )[[1]],
       collapse = "/"
       )
-      x_translated_guess <- suppressWarnings(as.ab(x_translated, initial_search = FALSE))
+      x_translated_guess <- suppressWarnings(as.av(x_translated, initial_search = FALSE))
       if (!is.na(x_translated_guess)) {
         x_new[i] <- x_translated_guess
         next
@@ -385,7 +355,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
       # try by removing all trailing capitals
       if (x[i] %like_case% "[a-z]+[A-Z]+$") {
-        found <- suppressWarnings(as.ab(gsub("[A-Z]+$", "", x[i], perl = TRUE), initial_search = FALSE))
+        found <- suppressWarnings(as.av(gsub("[A-Z]+$", "", x[i], perl = TRUE), initial_search = FALSE))
         if (!is.na(found)) {
           x_new[i] <- note_if_more_than_one_found(found, i, from_text)
           next
@@ -393,18 +363,18 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       }
 
       # keep only letters
-      found <- suppressWarnings(as.ab(gsub("[^A-Z]", "", x[i], perl = TRUE), initial_search = FALSE))
+      found <- suppressWarnings(as.av(gsub("[^A-Z]", "", x[i], perl = TRUE), initial_search = FALSE))
       if (!is.na(found)) {
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next
       }
 
-      # try from a bigger text, like from a health care record, see ?ab_from_text
+      # try from a bigger text, like from a health care record, see ?av_from_text
       # already calculated above if flag_multiple_results = TRUE
       if (flag_multiple_results == TRUE) {
         found <- from_text[1L]
       } else {
-        found <- tryCatch(suppressWarnings(ab_from_text(x[i], initial_search = FALSE, translate_ab = FALSE)[[1]][1L]),
+        found <- tryCatch(suppressWarnings(av_from_text(x[i], initial_search = FALSE, translate_av = FALSE)[[1]][1L]),
           error = function(e) NA_character_
         )
       }
@@ -414,12 +384,12 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       }
 
       # first 5 except for cephalosporins, then first 7 (those cephalosporins all start quite the same!)
-      found <- suppressWarnings(as.ab(substr(x[i], 1, 5), initial_search = FALSE))
-      if (!is.na(found) && ab_group(found, initial_search = FALSE) %unlike% "cephalosporins") {
+      found <- suppressWarnings(as.av(substr(x[i], 1, 5), initial_search = FALSE))
+      if (!is.na(found) && av_group(found, initial_search = FALSE) %unlike% "cephalosporins") {
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next
       }
-      found <- suppressWarnings(as.ab(substr(x[i], 1, 7), initial_search = FALSE))
+      found <- suppressWarnings(as.av(substr(x[i], 1, 7), initial_search = FALSE))
       if (!is.na(found)) {
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next
@@ -427,7 +397,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
       # make all consonants facultative
       search_str <- gsub("([BCDFGHJKLMNPQRSTVWXZ])", "\\1*", x[i], perl = TRUE)
-      found <- suppressWarnings(as.ab(search_str, initial_search = FALSE, already_regex = TRUE))
+      found <- suppressWarnings(as.av(search_str, initial_search = FALSE, already_regex = TRUE))
       # keep at least 4 normal characters
       if (nchar(gsub(".\\*", "", search_str, perl = TRUE)) < 4) {
         found <- NA
@@ -439,7 +409,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
       # make all vowels facultative
       search_str <- gsub("([AEIOUY])", "\\1*", x[i], perl = TRUE)
-      found <- suppressWarnings(as.ab(search_str, initial_search = FALSE, already_regex = TRUE))
+      found <- suppressWarnings(as.av(search_str, initial_search = FALSE, already_regex = TRUE))
       # keep at least 5 normal characters
       if (nchar(gsub(".\\*", "", search_str, perl = TRUE)) < 5) {
         found <- NA
@@ -455,7 +425,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
       x_spelling <- gsub("I+", "[AEIOU]+", x_spelling, fixed = TRUE)
       x_spelling <- gsub("O+", "[AEIOU]+", x_spelling, fixed = TRUE)
       x_spelling <- gsub("U+", "[AEIOU]+", x_spelling, fixed = TRUE)
-      found <- suppressWarnings(as.ab(x_spelling, initial_search = FALSE, already_regex = TRUE))
+      found <- suppressWarnings(as.av(x_spelling, initial_search = FALSE, already_regex = TRUE))
       if (!is.na(found)) {
         x_new[i] <- note_if_more_than_one_found(found, i, from_text)
         next
@@ -472,7 +442,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
           # ending part:
           substr(x[i], j + 2, nchar(x[i]))
         )
-        found <- suppressWarnings(as.ab(x_switched, initial_search = FALSE))
+        found <- suppressWarnings(as.av(x_switched, initial_search = FALSE))
         if (!is.na(found)) {
           break
         }
@@ -493,11 +463,11 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
   # save to package env to save time for next time
   if (initial_search == TRUE) {
-    AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[which(!AMR_env$ab_previously_coerced$x %in% x), , drop = FALSE]
-    AMR_env$ab_previously_coerced <- unique(rbind(AMR_env$ab_previously_coerced,
+    AMR_env$av_previously_coerced <- AMR_env$av_previously_coerced[which(!AMR_env$av_previously_coerced$x %in% x), , drop = FALSE]
+    AMR_env$av_previously_coerced <- unique(rbind(AMR_env$av_previously_coerced,
       data.frame(
         x = x,
-        ab = x_new,
+        av = x_new,
         x_bak = x_bak[match(x, x_bak_clean)],
         stringsAsFactors = FALSE
       ),
@@ -508,16 +478,16 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   # take failed ATC codes apart from rest
   if (length(x_unknown_ATCs) > 0 && fast_mode == FALSE) {
     warning_(
-      "in `as.ab()`: these ATC codes are not (yet) in the antibiotics data set: ",
+      "in `as.av()`: these ATC codes are not (yet) in the antivirals data set: ",
       vector_and(x_unknown_ATCs), "."
     )
   }
   x_unknown <- x_unknown[!x_unknown %in% x_unknown_ATCs]
   x_unknown <- c(x_unknown,
-                 AMR_env$ab_previously_coerced$x_bak[which(AMR_env$ab_previously_coerced$x %in% x & is.na(AMR_env$ab_previously_coerced$ab))])
+                 AMR_env$av_previously_coerced$x_bak[which(AMR_env$av_previously_coerced$x %in% x & is.na(AMR_env$av_previously_coerced$av))])
   if (length(x_unknown) > 0 && fast_mode == FALSE) {
     warning_(
-      "in `as.ab()`: these values could not be coerced to a valid antimicrobial ID: ",
+      "in `as.av()`: these values could not be coerced to a valid antiviral agent ID: ",
       vector_and(x_unknown), "."
     )
   }
@@ -528,142 +498,120 @@ as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   }
 
   set_clean_class(x_result,
-    new_class = c("ab", "character")
+    new_class = c("av", "character")
   )
 }
 
-#' @rdname as.ab
+#' @rdname as.av
 #' @export
-is.ab <- function(x) {
-  inherits(x, "ab")
+is.av <- function(x) {
+  inherits(x, "av")
 }
 
 # will be exported using s3_register() in R/zzz.R
-pillar_shaft.ab <- function(x, ...) {
+pillar_shaft.av <- function(x, ...) {
   out <- trimws(format(x))
   out[is.na(x)] <- font_na(NA)
   create_pillar_column(out, align = "left", min_width = 4)
 }
 
 # will be exported using s3_register() in R/zzz.R
-type_sum.ab <- function(x, ...) {
-  "ab"
+type_sum.av <- function(x, ...) {
+  "av"
 }
 
-#' @method print ab
+#' @method print av
 #' @export
 #' @noRd
-print.ab <- function(x, ...) {
-  cat("Class 'ab'\n")
+print.av <- function(x, ...) {
+  cat("Class 'av'\n")
   print(as.character(x), quote = FALSE)
 }
 
-#' @method as.data.frame ab
+#' @method as.data.frame av
 #' @export
 #' @noRd
-as.data.frame.ab <- function(x, ...) {
+as.data.frame.av <- function(x, ...) {
   nm <- deparse1(substitute(x))
   if (!"nm" %in% names(list(...))) {
-    as.data.frame.vector(as.ab(x), ..., nm = nm)
+    as.data.frame.vector(as.av(x), ..., nm = nm)
   } else {
-    as.data.frame.vector(as.ab(x), ...)
+    as.data.frame.vector(as.av(x), ...)
   }
 }
-#' @method [ ab
+#' @method [ av
 #' @export
 #' @noRd
-"[.ab" <- function(x, ...) {
+"[.av" <- function(x, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(x)
   y
 }
-#' @method [[ ab
+#' @method [[ av
 #' @export
 #' @noRd
-"[[.ab" <- function(x, ...) {
+"[[.av" <- function(x, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(x)
   y
 }
-#' @method [<- ab
+#' @method [<- av
 #' @export
 #' @noRd
-"[<-.ab" <- function(i, j, ..., value) {
+"[<-.av" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  return_after_integrity_check(y, "antimicrobial code", AMR_env$AB_lookup$ab)
+  return_after_integrity_check(y, "antimicrobial code", AMR_env$AV_lookup$av)
 }
-#' @method [[<- ab
+#' @method [[<- av
 #' @export
 #' @noRd
-"[[<-.ab" <- function(i, j, ..., value) {
+"[[<-.av" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  return_after_integrity_check(y, "antimicrobial code", AMR_env$AB_lookup$ab)
+  return_after_integrity_check(y, "antimicrobial code", AMR_env$AV_lookup$av)
 }
-#' @method c ab
+#' @method c av
 #' @export
 #' @noRd
-c.ab <- function(...) {
+c.av <- function(...) {
   x <- list(...)[[1L]]
   y <- NextMethod()
   attributes(y) <- attributes(x)
-  return_after_integrity_check(y, "antimicrobial code", AMR_env$AB_lookup$ab)
+  return_after_integrity_check(y, "antimicrobial code", AMR_env$AV_lookup$av)
 }
 
-#' @method unique ab
+#' @method unique av
 #' @export
 #' @noRd
-unique.ab <- function(x, incomparables = FALSE, ...) {
+unique.av <- function(x, incomparables = FALSE, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(x)
   y
 }
 
-#' @method rep ab
+#' @method rep av
 #' @export
 #' @noRd
-rep.ab <- function(x, ...) {
+rep.av <- function(x, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(x)
   y
 }
 
-generalise_antibiotic_name <- function(x) {
-  x <- toupper(x)
-  # remove suffices
-  x <- gsub("_(MIC|RSI|DIS[CK])$", "", x, perl = TRUE)
-  # remove disk concentrations, like LVX_NM -> LVX
-  x <- gsub("_[A-Z]{2}[0-9_.]{0,3}$", "", x, perl = TRUE)
-  # remove part between brackets if that's followed by another string
-  x <- gsub("(.*)+ [(].*[)]", "\\1", x)
-  # keep only max 1 space
-  x <- trimws2(gsub(" +", " ", x, perl = TRUE))
-  # non-character, space or number should be a slash
-  x <- gsub("[^A-Z0-9 -]", "/", x, perl = TRUE)
-  # spaces around non-characters must be removed: amox + clav -> amox/clav
-  x <- gsub("(.*[A-Z0-9]) ([^A-Z0-9].*)", "\\1\\2", x, perl = TRUE)
-  x <- gsub("(.*[^A-Z0-9]) ([A-Z0-9].*)", "\\1\\2", x, perl = TRUE)
-  # remove hyphen after a starting "co"
-  x <- gsub("^CO-", "CO", x, perl = TRUE)
-  # replace operators with a space
-  x <- gsub("(/| AND | WITH | W/|[+]|[-])+", " ", x, perl = TRUE)
-  x
-}
-
-get_translate_ab <- function(translate_ab) {
-  translate_ab <- as.character(translate_ab)[1L]
-  if (translate_ab %in% c("TRUE", "official")) {
+get_translate_av <- function(translate_av) {
+  translate_av <- as.character(translate_av)[1L]
+  if (translate_av %in% c("TRUE", "official")) {
     return("name")
-  } else if (translate_ab %in% c(NA_character_, "FALSE")) {
+  } else if (translate_av %in% c(NA_character_, "FALSE")) {
     return(FALSE)
   } else {
-    translate_ab <- tolower(translate_ab)
-    stop_ifnot(translate_ab %in% colnames(AMR::antibiotics),
-               "invalid value for 'translate_ab', this must be a column name of the antibiotics data set\n",
+    translate_av <- tolower(translate_av)
+    stop_ifnot(translate_av %in% colnames(AMR::antivirals),
+               "invalid value for 'translate_av', this must be a column name of the antivirals data set\n",
                "or TRUE (equals 'name') or FALSE to not translate at all.",
                call = FALSE
     )
-    translate_ab
+    translate_av
   }
 }

@@ -192,7 +192,7 @@ abx2$abbr <- lapply(as.list(abx2$abbr), function(x) unlist(strsplit(x, "|", fixe
 # vector with official names, returns vector with CIDs
 get_CID <- function(ab) {
   CID <- rep(NA_integer_, length(ab))
-  p <- progress_ticker(n = length(ab), min_time = 0)
+  p <- AMR:::progress_ticker(n = length(ab), min_time = 0)
   for (i in 1:length(ab)) {
     p$tick()
 
@@ -248,7 +248,7 @@ antibiotics[is.na(CIDs), ] %>% View()
 # returns list with synonyms (brand names), with CIDs as names
 get_synonyms <- function(CID, clean = TRUE) {
   synonyms <- rep(NA_character_, length(CID))
-  p <- progress_ticker(n = length(CID), min_time = 0)
+  p <- AMR:::progress_ticker(n = length(CID), min_time = 0)
 
   for (i in 1:length(CID)) {
     p$tick()

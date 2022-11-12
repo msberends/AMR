@@ -1,4 +1,4 @@
-# AMR 1.8.2.9047
+# AMR 1.8.2.9049
 
 This version will eventually become v2.0! We're happy to reach a new major milestone soon!
 
@@ -8,36 +8,39 @@ This version will eventually become v2.0! We're happy to reach a new major miles
   * Chromista are not relevant when it comes to antimicrobial resistance, thus lacking the primary scope of this package
   * Chromista are almost never clinically relevant, thus lacking the secondary scope of this package
 * The `microorganisms` no longer relies on the Catalogue of Life, but now primarily on the List of Prokaryotic names with Standing in Nomenclature (LPSN) and is supplemented with the Global Biodiversity Information Facility (GBIF). The structure of this data set has changed to include separate LPSN and GBIF identifiers. Almost all previous MO codes were retained. It contains over 1,000 taxonomic names from 2022 already.
-* The `microorganisms.old` data set was removed, and all previously accepted names are now included in the `microorganisms` data set. A new column `status` contains `"accepted"` for currently accepted names and `"synonym"` for taxonomic synonyms; currently invalid names. All previously accepted names now have a microorganisms ID and - if available - an LPSN, GBIF and SNOMED CT identifier.
+* **The `microorganisms.old` data set was removed**, and all previously accepted names are now included in the `microorganisms` data set. A new column `status` contains `"accepted"` for currently accepted names and `"synonym"` for taxonomic synonyms; currently invalid names. All previously accepted names now have a microorganisms ID and - if available - an LPSN, GBIF and SNOMED CT identifier.
 * The MO matching score algorithm (`mo_matching_score()`) now counts deletions and substitutions as 2 instead of 1, which impacts the outcome of `as.mo()` and any `mo_*()` function
-* Argument `combine_IR` has been removed from this package (affecting functions `count_df()`, `proportion_df()`, and `rsi_df()` and some plotting functions), since it was replaced with `combine_SI` three years ago
-* Removal of interpretation guidelines older than 10 years, the oldest now included guidelines of EUCAST and CLSI are from 2013
+* **Argument `combine_IR` has been removed** from this package (affecting functions `count_df()`, `proportion_df()`, and `rsi_df()` and some plotting functions), since it was replaced with `combine_SI` three years ago
+* Interpretation **guidelines older than 10 years were removed**, the oldest now included guidelines of EUCAST and CLSI are from 2013
 
 ### New
-* EUCAST 2022 and CLSI 2022 guidelines have been added for `as.rsi()`. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.
+* **EUCAST 2022 and CLSI 2022 guidelines** have been added for `as.rsi()`. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.
 * Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. We are very grateful for the valuable input by our colleagues from other countries. The `AMR` package is now available in 16 languages. The automatic language determination will give a note at start-up on systems in supported languages.
-* All new algorithm for `as.mo()` (and thus all `mo_*()` functions) while still following our original set-up as described in our paper (DOI 10.18637/jss.v104.i03).
+* **All new algorithm for `as.mo()`** (and thus all `mo_*()` functions) while still following our original set-up as described in our recently submitted JSS paper (DOI [10.18637/jss.v104.i03](https://doi.org/10.18637/jss.v104.i03)).
   * A new argument `keep_synonyms` allows to *not* correct for updated taxonomy, in favour of the now deleted argument `allow_uncertain`
   * It has increased tremendously in speed and returns generally more consequent results
   * Sequential coercion is now extremely fast as results are stored to the package environment, although coercion of unknown values must be run once per session. Previous results can be reset/removed with the new `mo_reset_session()` function.
   * Support for microorganism codes of the ASIan Antimicrobial Resistance Surveillance Network (ASIARS-Net)
-  
-* New functions!
+* **Extensive support for antiviral agents!** For the first time, the `AMR` package has extensive support for antiviral drugs and to work with their names, codes and other data in any way.
+  * The `antivirals` data set has been extended with 18 new drugs (also from the [new J05AJ ATC group](https://www.whocc.no/atc_ddd_index/?code=J05AJ&showdescription=no)) and now also contains antiviral identifiers and LOINC codes
+  * A new data type `av` (*antivirals*) has been added, which is functionally similar to `ab` for antibiotics
+  * Functions `as.av()`, `av_name()`, `av_atc()`, `av_synonyms()`, `av_from_text()` have all been added as siblings to their `ab_*()` equivalents
+* **Other new functions!**
   * Function `rsi_confidence_interval()` to add confidence intervals in AMR calculation. This is also included in `rsi_df()` and `proportion_df()`
   * Function `mean_amr_distance()` to calculate the mean AMR distance. The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand.
   * Function `rsi_interpretation_history()` to view the history of previous runs of `as.rsi()`. This returns a 'logbook' with the selected guideline, reference table and specific interpretation of each row in a data set on which `as.rsi()` was run.
   * Function `mo_current()` to get the currently valid taxonomic name of a microorganism
   * Function `add_custom_antimicrobials()` to add custom antimicrobial codes and names to the `AMR` package
 * New and updated entries for the `antibiotics` data set
-  * The following 20 antibiotics have been added (also includes the [new J01RA ATC group](https://www.whocc.no/atc_ddd_index/?code=J01RA&showdescription=no)): azithromycin/fluconazole/secnidazole (AFC), cefepime/amikacin (CFA), cefixime/ornidazole (CEO), ceftriaxone/beta-lactamase inhibitor (CEB), ciprofloxacin/metronidazole (CIM), ciprofloxacin/ornidazole (CIO), ciprofloxacin/tinidazole (CIT), furazidin (FUR), isoniazid/sulfamethoxazole/trimethoprim/pyridoxine (IST), lascufloxacin (LSC), levofloxacin/ornidazole (LEO), nemonoxacin (NEM), norfloxacin/metronidazole (NME), norfloxacin/tinidazole (NTI), ofloxacin/ornidazole (OOR), oteseconazole (OTE), rifampicin/ethambutol/isoniazid (REI), sarecycline (SRC), tetracycline/oleandomycin (TOL), and thioacetazone (TAT)
+  * The following **20 antibiotics have been added** (also includes the [new J01RA ATC group](https://www.whocc.no/atc_ddd_index/?code=J01RA&showdescription=no)): azithromycin/fluconazole/secnidazole (AFC), cefepime/amikacin (CFA), cefixime/ornidazole (CEO), ceftriaxone/beta-lactamase inhibitor (CEB), ciprofloxacin/metronidazole (CIM), ciprofloxacin/ornidazole (CIO), ciprofloxacin/tinidazole (CIT), furazidin (FUR), isoniazid/sulfamethoxazole/trimethoprim/pyridoxine (IST), lascufloxacin (LSC), levofloxacin/ornidazole (LEO), nemonoxacin (NEM), norfloxacin/metronidazole (NME), norfloxacin/tinidazole (NTI), ofloxacin/ornidazole (OOR), oteseconazole (OTE), rifampicin/ethambutol/isoniazid (REI), sarecycline (SRC), tetracycline/oleandomycin (TOL), and thioacetazone (TAT)
   * Added some missing ATC codes
   * Updated DDDs and PubChem Compound IDs
   * Updated some antibiotic name spelling, now used by WHOCC (such as cephalexin -> cefalexin, and phenethicillin -> pheneticillin)
   * Antibiotic code "CEI" for ceftolozane/tazobactam has been replaced with "CZT" to comply with EARS-Net and WHONET 2022. The old code will still work in all cases when using `as.ab()` or any of the `ab_*()` functions.
   * Support for antimicrobial interpretation of anaerobic bacteria, by adding a 'placeholder' code `B_ANAER` to the `microorganisms` data set and add the breakpoints of anaerobics to the `rsi_interpretation` data set, which is used by `as.rsi()` when interpreting MIC and disk diffusion values
 * Support for `data.frame`-enhancing R packages, more specifically: `data.table::data.table`, `janitor::tabyl`, `tibble::tibble`, and `tsibble::tsibble`. AMR package functions that have a data set as output (such as `rsi_df()` and `bug_drug_combinations()`), will now return the same data type as the input.
-* All data sets in this package are now exported as `tibble`, instead of base R `data.frame`s. Older R versions are still supported.
-* Our data sets are now also continually exported to Apache Feather and Apache Parquet formats. You can find more info [in this article on our website](https://msberends.github.io/AMR/articles/datasets.html).
+* All data sets in this package are **now exported as `tibble`**, instead of base R `data.frame`s. Older R versions are still supported.
+* Our data sets are now also continually exported to **Apache Feather and Apache Parquet formats**. You can find more info [in this article on our website](https://msberends.github.io/AMR/articles/datasets.html).
 * Support for using antibiotic selectors in scoped `dplyr` verbs (with or without `vars()`), such as in: `... %>% summarise_at(aminoglycosides(), resistance)`, see `resistance()`
 
 ### Changed

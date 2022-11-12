@@ -267,17 +267,19 @@ AB_BETALACTAMS <- c(AB_PENICILLINS, AB_CEPHALOSPORINS, AB_CARBAPENEMS)
 # this will be used for documentation:
 DEFINED_AB_GROUPS <- ls(envir = globalenv())
 DEFINED_AB_GROUPS <- DEFINED_AB_GROUPS[!DEFINED_AB_GROUPS %in% globalenv_before_ab]
-create_AB_lookup <- function() {
-  AMR_env$AB_lookup <- AMR::antibiotics
-  AMR_env$AB_lookup$generalised_name <- generalise_antibiotic_name(AMR_env$AB_lookup$name)
-  AMR_env$AB_lookup$generalised_synonyms <- lapply(AMR_env$AB_lookup$synonyms, generalise_antibiotic_name)
-  AMR_env$AB_lookup$generalised_abbreviations <- lapply(AMR_env$AB_lookup$abbreviations, generalise_antibiotic_name)
-  AMR_env$AB_lookup$generalised_loinc <- lapply(AMR_env$AB_lookup$loinc, generalise_antibiotic_name)
-  AMR_env$AB_lookup$generalised_all <- unname(lapply(
-    as.list(as.data.frame(t(AMR_env$AB_lookup[,
+create_AB_AV_lookup <- function(df) {
+  new_df <- df
+  new_df$generalised_name <- generalise_antibiotic_name(new_df$name)
+  new_df$generalised_synonyms <- lapply(new_df$synonyms, generalise_antibiotic_name)
+  if ("abbreviations" %in% colnames(df)) {
+    new_df$generalised_abbreviations <- lapply(new_df$abbreviations, generalise_antibiotic_name)
+  }
+  new_df$generalised_loinc <- lapply(new_df$loinc, generalise_antibiotic_name)
+  new_df$generalised_all <- unname(lapply(
+    as.list(as.data.frame(t(new_df[,
       c(
-        "ab", "atc", "cid", "name",
-        colnames(AMR_env$AB_lookup)[colnames(AMR_env$AB_lookup) %like% "generalised"]
+        colnames(new_df)[colnames(new_df) %in% c("ab", "av", "atc", "cid", "name")],
+        colnames(new_df)[colnames(new_df) %like% "generalised"]
       ),
       drop = FALSE
     ]),
@@ -288,9 +290,10 @@ create_AB_lookup <- function() {
       x[x != ""]
     }
   ))
-  AMR_env$AB_lookup[, colnames(AMR_env$AB_lookup)[colnames(AMR_env$AB_lookup) %like% "^generalised"]]
+  new_df[, colnames(new_df)[colnames(new_df) %like% "^generalised"]]
 }
-AB_LOOKUP <- create_AB_lookup()
+AB_LOOKUP <- create_AB_AV_lookup(AMR::antibiotics)
+AV_LOOKUP <- create_AB_AV_lookup(AMR::antivirals)
 
 # Export to package as internal data ----
 usethis::ui_info(paste0("Updating internal package data"))
@@ -304,6 +307,7 @@ suppressMessages(usethis::use_data(EUCAST_RULES_DF,
   MO_FULLNAME_LOWER,
   MO_PREVALENT_GENERA,
   AB_LOOKUP,
+  AV_LOOKUP,
   AB_AMINOGLYCOSIDES,
   AB_AMINOPENICILLINS,
   AB_ANTIFUNGALS,

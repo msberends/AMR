@@ -48,15 +48,17 @@
 #' - `loinc`\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial agent. Use [ab_loinc()] to retrieve them quickly, see [ab_property()].
 #'
 #' ### For the [antivirals] data set: a [tibble][tibble::tibble] with `r nrow(antivirals)` observations and `r ncol(antivirals)` variables:
+#' - `av`\cr Antibiotic ID as used in this package (such as `AMC`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
+#' - `name`\cr Official name as used by WHONET/EARS-Net or the WHO
 #' - `atc`\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC
 #' - `cid`\cr Compound ID as found in PubChem
-#' - `name`\cr Official name as used by WHONET/EARS-Net or the WHO
 #' - `atc_group`\cr Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC
 #' - `synonyms`\cr Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID
 #' - `oral_ddd`\cr Defined Daily Dose (DDD), oral treatment
 #' - `oral_units`\cr Units of `oral_ddd`
 #' - `iv_ddd`\cr Defined Daily Dose (DDD), parenteral treatment
 #' - `iv_units`\cr Units of `iv_ddd`
+#' - `loinc`\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial agent.
 #' @details Properties that are based on an ATC code are only available when an ATC is available. These properties are: `atc_group1`, `atc_group2`, `oral_ddd`, `oral_units`, `iv_ddd` and `iv_units`.
 #'
 #' Synonyms (i.e. trade names) were derived from the PubChem Compound ID (column `cid`) and consequently only available where a CID is available.

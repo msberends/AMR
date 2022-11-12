@@ -4,7 +4,7 @@
 \name{antibiotics}
 \alias{antibiotics}
 \alias{antivirals}
-\title{Data Sets with 585 Antimicrobial Drugs}
+\title{Data Sets with 603 Antimicrobial Drugs}
 \format{
 \subsection{For the \link{antibiotics} data set: a \link[tibble:tibble]{tibble} with 483 observations and 14 variables:}{
 \itemize{
@@ -25,21 +25,23 @@
 }
 }
 
-\subsection{For the \link{antivirals} data set: a \link[tibble:tibble]{tibble} with 102 observations and 9 variables:}{
+\subsection{For the \link{antivirals} data set: a \link[tibble:tibble]{tibble} with 120 observations and 11 variables:}{
 \itemize{
+\item \code{av}\cr Antibiotic ID as used in this package (such as \code{AMC}), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
+\item \code{name}\cr Official name as used by WHONET/EARS-Net or the WHO
 \item \code{atc}\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC
 \item \code{cid}\cr Compound ID as found in PubChem
-\item \code{name}\cr Official name as used by WHONET/EARS-Net or the WHO
 \item \code{atc_group}\cr Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC
 \item \code{synonyms}\cr Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID
 \item \code{oral_ddd}\cr Defined Daily Dose (DDD), oral treatment
 \item \code{oral_units}\cr Units of \code{oral_ddd}
 \item \code{iv_ddd}\cr Defined Daily Dose (DDD), parenteral treatment
 \item \code{iv_units}\cr Units of \code{iv_ddd}
+\item \code{loinc}\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial agent.
 }
 }
 
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 102 rows and 9 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 120 rows and 11 columns.
 }
 \source{
 \itemize{

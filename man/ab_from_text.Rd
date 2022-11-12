@@ -60,7 +60,7 @@ With using \code{collapse}, this function will return a \link{character}:\cr
 \examples{
 # mind the bad spelling of amoxicillin in this line,
 # straight from a true health care record:
-ab_from_text("28/03/2020 regular amoxicilliin 500mg po tds")
+ab_from_text("28/03/2020 regular amoxicilliin 500mg po tid")
 
 ab_from_text("500 mg amoxi po and 400mg cipro iv")
 ab_from_text("500 mg amoxi po and 400mg cipro iv", type = "dose")

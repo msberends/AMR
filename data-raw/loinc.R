@@ -62,7 +62,7 @@ for (i in seq_len(nrow(antibiotics))) {
 # sort and fix for empty values
 for (i in 1:nrow(antibiotics)) {
   loinc <- as.character(sort(unique(tolower(antibiotics[i, "loinc"][[1]]))))
-  antibiotics[i, "loinc"][[1]] <- ifelse(length(syn[!syn == ""]) == 0, list(""), list(loinc))
+  antibiotics[i, "loinc"][[1]] <- ifelse(length(loinc[!loinc == ""]) == 0, list(""), list(loinc))
 }
 
 # remember to update R/aa_globals.R for the documentation

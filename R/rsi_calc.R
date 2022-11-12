@@ -375,20 +375,3 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   out <- as_original_data_class(out, class(data.bak))
   structure(out, class = c("rsi_df", class(out)))
 }
-
-get_translate_ab <- function(translate_ab) {
-  translate_ab <- as.character(translate_ab)[1L]
-  if (translate_ab %in% c("TRUE", "official")) {
-    return("name")
-  } else if (translate_ab %in% c(NA_character_, "FALSE")) {
-    return(FALSE)
-  } else {
-    translate_ab <- tolower(translate_ab)
-    stop_ifnot(translate_ab %in% colnames(AMR::antibiotics),
-      "invalid value for 'translate_ab', this must be a column name of the antibiotics data set\n",
-      "or TRUE (equals 'name') or FALSE to not translate at all.",
-      call = FALSE
-    )
-    translate_ab
-  }
-}
