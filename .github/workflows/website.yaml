@@ -48,6 +48,11 @@ jobs:
           # this is to keep timestamps, the default fetch-depth: 1 gets the timestamps of the moment of cloning
           fetch-depth: 0
 
+      - name: Preserve timestamps
+        run: |
+          sudo apt install git-restore-mtime
+          git restore-mtime
+
       - uses: r-lib/actions/setup-pandoc@v2
 
       - name: Set up R
