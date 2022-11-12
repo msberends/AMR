@@ -40,7 +40,7 @@ expect_identical(
   as.av("Aciclovir")
 )
 expect_identical(
-  av_from_text("28/03/2020 regular aciclovir 500mg po tds", translate_ab = TRUE)[[1]],
+  av_from_text("28/03/2020 regular aciclovir 500mg po tds", translate_av = TRUE)[[1]],
   "Aciclovir"
 )
 expect_identical(
