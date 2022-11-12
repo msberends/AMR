@@ -506,6 +506,7 @@ is.av <- function(x) {
 # will be exported using s3_register() in R/zzz.R
 pillar_shaft.av <- function(x, ...) {
   out <- trimws(format(x))
+  out[!is.na(x)] <- gsub("+", font_subtle("+"), out[!is.na(x)], fixed = TRUE)
   out[is.na(x)] <- font_na(NA)
   create_pillar_column(out, align = "left", min_width = 4)
 }
@@ -556,7 +557,7 @@ as.data.frame.av <- function(x, ...) {
 "[<-.av" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  return_after_integrity_check(y, "antimicrobial code", AMR_env$AV_lookup$av)
+  return_after_integrity_check(y, "antiviral agent code", AMR_env$AV_lookup$av)
 }
 #' @method [[<- av
 #' @export
@@ -564,7 +565,7 @@ as.data.frame.av <- function(x, ...) {
 "[[<-.av" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  return_after_integrity_check(y, "antimicrobial code", AMR_env$AV_lookup$av)
+  return_after_integrity_check(y, "antiviral agent code", AMR_env$AV_lookup$av)
 }
 #' @method c av
 #' @export
@@ -573,7 +574,7 @@ c.av <- function(...) {
   x <- list(...)[[1L]]
   y <- NextMethod()
   attributes(y) <- attributes(x)
-  return_after_integrity_check(y, "antimicrobial code", AMR_env$AV_lookup$av)
+  return_after_integrity_check(y, "antiviral agent code", AMR_env$AV_lookup$av)
 }
 
 #' @method unique av

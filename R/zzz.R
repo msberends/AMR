@@ -50,6 +50,11 @@ AMR_env$ab_previously_coerced <- data.frame(
   ab = character(0),
   stringsAsFactors = FALSE
 )
+AMR_env$av_previously_coerced <- data.frame(
+  x = character(0),
+  av = character(0),
+  stringsAsFactors = FALSE
+)
 AMR_env$rsi_interpretation_history <- data.frame(
   datetime = Sys.time()[0],
   index = integer(0),
@@ -87,11 +92,13 @@ if (utf8_supported && !is_latex) {
   # developers of the vctrs package:
   # https://github.com/r-lib/vctrs/blob/05968ce8e669f73213e3e894b5f4424af4f46316/R/register-s3.R
   s3_register("pillar::pillar_shaft", "ab")
+  s3_register("pillar::pillar_shaft", "av")
   s3_register("pillar::pillar_shaft", "mo")
   s3_register("pillar::pillar_shaft", "rsi")
   s3_register("pillar::pillar_shaft", "mic")
   s3_register("pillar::pillar_shaft", "disk")
   s3_register("tibble::type_sum", "ab")
+  s3_register("tibble::type_sum", "av")
   s3_register("tibble::type_sum", "mo")
   s3_register("tibble::type_sum", "rsi")
   s3_register("tibble::type_sum", "mic")
@@ -129,6 +136,11 @@ if (utf8_supported && !is_latex) {
   s3_register("vctrs::vec_ptype2", "ab.character")
   s3_register("vctrs::vec_cast", "character.ab")
   s3_register("vctrs::vec_cast", "ab.character")
+  # S3: av
+  s3_register("vctrs::vec_ptype2", "character.av")
+  s3_register("vctrs::vec_ptype2", "av.character")
+  s3_register("vctrs::vec_cast", "character.av")
+  s3_register("vctrs::vec_cast", "av.character")
   # S3: mo
   s3_register("vctrs::vec_ptype2", "character.mo")
   s3_register("vctrs::vec_ptype2", "mo.character")
