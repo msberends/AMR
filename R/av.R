@@ -27,11 +27,11 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Transform Input to an Antiviral Agent ID
+#' Transform Input to an Antiviral Drug ID
 #'
-#' Use this function to determine the antiviral agent code of one or more antiviral agents. The data set [antivirals] will be searched for abbreviations, official names and synonyms (brand names).
-#' @param x a [character] vector to determine to antiviral agent ID
-#' @param flag_multiple_results a [logical] to indicate whether a note should be printed to the console that probably more than one antiviral agent code or name can be retrieved from a single input value.
+#' Use this function to determine the antiviral drug code of one or more antiviral drugs. The data set [antivirals] will be searched for abbreviations, official names and synonyms (brand names).
+#' @param x a [character] vector to determine to antiviral drug ID
+#' @param flag_multiple_results a [logical] to indicate whether a note should be printed to the console that probably more than one antiviral drug code or name can be retrieved from a single input value.
 #' @param info a [logical] to indicate whether a progress bar should be printed, defaults to `TRUE` only in interactive mode
 #' @param ... arguments passed on to internal functions
 #' @rdname as.av
@@ -45,9 +45,9 @@
 #'  * Switching two characters (such as "aycclovir", often the case in clinical data, when doctors typed too fast)
 #'  * Digitalised paper records, leaving artefacts like 0/o/O (zero and O's), B/8, n/r, etc.
 #'
-#' Use the [`av_*`][av_property()] functions to get properties based on the returned antiviral agent ID, see *Examples*.
+#' Use the [`av_*`][av_property()] functions to get properties based on the returned antiviral drug ID, see *Examples*.
 #'
-#' Note: the [as.av()] and [`av_*`][av_property()] functions may use very long regular expression to match brand names of antimicrobial agents. This may fail on some systems.
+#' Note: the [as.av()] and [`av_*`][av_property()] functions may use very long regular expression to match brand names of antimicrobial drugs. This may fail on some systems.
 #' @section Source:
 #' World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: \url{https://www.whocc.no/atc_ddd_index/}
 #'
@@ -482,7 +482,7 @@ as.av <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
                  AMR_env$av_previously_coerced$x_bak[which(AMR_env$av_previously_coerced$x %in% x & is.na(AMR_env$av_previously_coerced$av))])
   if (length(x_unknown) > 0 && fast_mode == FALSE) {
     warning_(
-      "in `as.av()`: these values could not be coerced to a valid antiviral agent ID: ",
+      "in `as.av()`: these values could not be coerced to a valid antiviral drug ID: ",
       vector_and(x_unknown), "."
     )
   }
@@ -557,7 +557,7 @@ as.data.frame.av <- function(x, ...) {
 "[<-.av" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  return_after_integrity_check(y, "antiviral agent code", AMR_env$AV_lookup$av)
+  return_after_integrity_check(y, "antiviral drug code", AMR_env$AV_lookup$av)
 }
 #' @method [[<- av
 #' @export
@@ -565,7 +565,7 @@ as.data.frame.av <- function(x, ...) {
 "[[<-.av" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  return_after_integrity_check(y, "antiviral agent code", AMR_env$AV_lookup$av)
+  return_after_integrity_check(y, "antiviral drug code", AMR_env$AV_lookup$av)
 }
 #' @method c av
 #' @export
@@ -574,7 +574,7 @@ c.av <- function(...) {
   x <- list(...)[[1L]]
   y <- NextMethod()
   attributes(y) <- attributes(x)
-  return_after_integrity_check(y, "antiviral agent code", AMR_env$AV_lookup$av)
+  return_after_integrity_check(y, "antiviral drug code", AMR_env$AV_lookup$av)
 }
 
 #' @method unique av

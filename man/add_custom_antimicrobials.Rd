@@ -13,7 +13,7 @@ clear_custom_antimicrobials()
 \item{x}{a \link{data.frame} resembling the \link{antibiotics} data set, at least containing columns "ab" and "name"}
 }
 \description{
-With \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} you can add your own custom antimicrobial codes to the \code{AMR} package.
+With \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} you can add your own custom antimicrobial drug codes to the \code{AMR} package.
 }
 \details{
 Due to how \R works, the \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} function has to be run in every \R session - added antimicrobials are not stored between sessions and are thus lost when \R is exited. It is possible to save the antimicrobial additions to your \code{.Rprofile} file to circumvent this, although this requires to load the \code{AMR} package at every start-up:
@@ -21,7 +21,7 @@ Due to how \R works, the \code{\link[=add_custom_antimicrobials]{add_custom_anti
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{# Open .Rprofile file
 utils::file.edit("~/.Rprofile")
 
-# Add custom antibiotic codes:
+# Add custom antibiotic drug codes:
 library(AMR)
 add_custom_antimicrobials(
   data.frame(ab = "TESTAB",

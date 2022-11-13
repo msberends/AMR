@@ -29,7 +29,7 @@
 
 #' Add Custom Antimicrobials to This Package
 #'
-#' With [add_custom_antimicrobials()] you can add your own custom antimicrobial codes to the `AMR` package.
+#' With [add_custom_antimicrobials()] you can add your own custom antimicrobial drug codes to the `AMR` package.
 #' @param x a [data.frame] resembling the [antibiotics] data set, at least containing columns "ab" and "name"
 #' @details Due to how \R works, the [add_custom_antimicrobials()] function has to be run in every \R session - added antimicrobials are not stored between sessions and are thus lost when \R is exited. It is possible to save the antimicrobial additions to your `.Rprofile` file to circumvent this, although this requires to load the `AMR` package at every start-up:
 #'
@@ -37,7 +37,7 @@
 #' # Open .Rprofile file
 #' utils::file.edit("~/.Rprofile")
 #'
-#' # Add custom antibiotic codes:
+#' # Add custom antibiotic drug codes:
 #' library(AMR)
 #' add_custom_antimicrobials(
 #'   data.frame(ab = "TESTAB",
@@ -107,7 +107,7 @@ add_custom_antimicrobials <- function(x) {
   )
   stop_if(
     any(x$ab %in% AMR_env$AB_lookup$ab),
-    "Antimicrobial code(s) ", vector_and(x$ab[x$ab %in% AMR_env$AB_lookup$ab]), " already exist in the internal `antibiotics` data set."
+    "Antimicrobial drug code(s) ", vector_and(x$ab[x$ab %in% AMR_env$AB_lookup$ab]), " already exist in the internal `antibiotics` data set."
   )
 
   x <- x[, colnames(AMR_env$AB_lookup)[colnames(AMR_env$AB_lookup) %in% colnames(x)], drop = FALSE]

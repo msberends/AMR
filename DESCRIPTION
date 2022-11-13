@@ -1,5 +1,5 @@
 Package: AMR
-Version: 1.8.2.9049
+Version: 1.8.2.9050
 Date: 2022-11-13
 Title: Antimicrobial Resistance Data Analysis
 Description: Functions to simplify and standardise antimicrobial resistance (AMR)
@@ -52,5 +52,5 @@ BugReports: https://github.com/msberends/AMR/issues
 License: GPL-2 | file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.2
 Roxygen: list(markdown = TRUE)

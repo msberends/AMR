@@ -37,13 +37,13 @@ antimicrobials_equal(
 
 \item{col_mo}{column name of the IDs of the microorganisms (see \code{\link[=as.mo]{as.mo()}}), defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
-\item{universal}{names of \strong{broad-spectrum} antimicrobial agents, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default agents.}
+\item{universal}{names of \strong{broad-spectrum} antimicrobial drugs, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antimicrobial drugs}
 
-\item{gram_negative}{names of antibiotic agents for \strong{Gram-positives}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default agents.}
+\item{gram_negative}{names of antibiotic drugs for \strong{Gram-positives}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antibiotic drugs}
 
-\item{gram_positive}{names of antibiotic agents for \strong{Gram-negatives}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default agents.}
+\item{gram_positive}{names of antibiotic drugs for \strong{Gram-negatives}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antibiotic drugs}
 
-\item{antifungal}{names of antifungal agents for \strong{fungi}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default agents.}
+\item{antifungal}{names of antifungal drugs for \strong{fungi}, case-insensitive. Set to \code{NULL} to ignore. See \emph{Details} for the default antifungal drugs}
 
 \item{only_rsi_columns}{a \link{logical} to indicate whether only columns must be included that were transformed to class \code{rsi} (see \code{\link[=as.rsi]{as.rsi()}}) on beforehand (defaults to \code{FALSE})}
 
@@ -63,11 +63,11 @@ These functions can be used to determine first weighted isolates by considering 
 \details{
 The \code{\link[=key_antimicrobials]{key_antimicrobials()}} and \code{\link[=all_antimicrobials]{all_antimicrobials()}} functions are context-aware. This means that the \code{x} argument can be left blank if used inside a \link{data.frame} call, see \emph{Examples}.
 
-The function \code{\link[=key_antimicrobials]{key_antimicrobials()}} returns a \link{character} vector with 12 antimicrobial results for every isolate. The function \code{\link[=all_antimicrobials]{all_antimicrobials()}} returns a \link{character} vector with all antimicrobial results for every isolate. These vectors can then be compared using \code{\link[=antimicrobials_equal]{antimicrobials_equal()}}, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (\code{"."}) by \code{\link[=key_antimicrobials]{key_antimicrobials()}} and ignored by \code{\link[=antimicrobials_equal]{antimicrobials_equal()}}.
+The function \code{\link[=key_antimicrobials]{key_antimicrobials()}} returns a \link{character} vector with 12 antimicrobial results for every isolate. The function \code{\link[=all_antimicrobials]{all_antimicrobials()}} returns a \link{character} vector with all antimicrobial drug results for every isolate. These vectors can then be compared using \code{\link[=antimicrobials_equal]{antimicrobials_equal()}}, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (\code{"."}) by \code{\link[=key_antimicrobials]{key_antimicrobials()}} and ignored by \code{\link[=antimicrobials_equal]{antimicrobials_equal()}}.
 
 Please see the \code{\link[=first_isolate]{first_isolate()}} function how these important functions enable the 'phenotype-based' method for determination of first isolates.
 
-The default antimicrobial agents used for \strong{all rows} (set in \code{universal}) are:
+The default antimicrobial drugs used for \strong{all rows} (set in \code{universal}) are:
 \itemize{
 \item Ampicillin
 \item Amoxicillin/clavulanic acid
@@ -77,7 +77,7 @@ The default antimicrobial agents used for \strong{all rows} (set in \code{univer
 \item Trimethoprim/sulfamethoxazole
 }
 
-The default antimicrobial agents used for \strong{Gram-negative bacteria} (set in \code{gram_negative}) are:
+The default antimicrobial drugs used for \strong{Gram-negative bacteria} (set in \code{gram_negative}) are:
 \itemize{
 \item Cefotaxime
 \item Ceftazidime
@@ -87,7 +87,7 @@ The default antimicrobial agents used for \strong{Gram-negative bacteria} (set i
 \item Tobramycin
 }
 
-The default antimicrobial agents used for \strong{Gram-positive bacteria} (set in \code{gram_positive}) are:
+The default antimicrobial drugs used for \strong{Gram-positive bacteria} (set in \code{gram_positive}) are:
 \itemize{
 \item Erythromycin
 \item Oxacillin
@@ -97,7 +97,7 @@ The default antimicrobial agents used for \strong{Gram-positive bacteria} (set i
 \item Vancomycin
 }
 
-The default antimicrobial agents used for \strong{fungi} (set in \code{antifungal}) are:
+The default antimicrobial drugs used for \strong{fungi} (set in \code{antifungal}) are:
 \itemize{
 \item Anidulafungin
 \item Caspofungin

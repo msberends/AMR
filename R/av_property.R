@@ -27,10 +27,10 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Get Properties of an Antiviral Agent
+#' Get Properties of an Antiviral Drug
 #'
-#' Use these functions to return a specific property of an antiviral agent from the [antivirals] data set. All input values will be evaluated internally with [as.av()].
-#' @param x any (vector of) text that can be coerced to a valid antiviral agent code with [as.av()]
+#' Use these functions to return a specific property of an antiviral drug from the [antivirals] data set. All input values will be evaluated internally with [as.av()].
+#' @param x any (vector of) text that can be coerced to a valid antiviral drug code with [as.av()]
 #' @param tolower a [logical] to indicate whether the first [character] of every output should be transformed to a lower case [character].
 #' @param property one of the column names of one of the [antivirals] data set: `vector_or(colnames(antivirals), sort = FALSE)`.
 #' @param language language of the returned text, defaults to system language (see [get_AMR_locale()]) and can also be set with `getOption("AMR_locale")`. Use `language = NULL` or `language = ""` to prevent translation.

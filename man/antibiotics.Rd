@@ -21,7 +21,7 @@
 \item \code{oral_units}\cr Units of \code{oral_ddd}
 \item \code{iv_ddd}\cr Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for 146 drugs
 \item \code{iv_units}\cr Units of \code{iv_ddd}
-\item \code{loinc}\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial agent. Use \code{\link[=ab_loinc]{ab_loinc()}} to retrieve them quickly, see \code{\link[=ab_property]{ab_property()}}.
+\item \code{loinc}\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial drug. Use \code{\link[=ab_loinc]{ab_loinc()}} to retrieve them quickly, see \code{\link[=ab_property]{ab_property()}}.
 }
 }
 
@@ -37,7 +37,7 @@
 \item \code{oral_units}\cr Units of \code{oral_ddd}
 \item \code{iv_ddd}\cr Defined Daily Dose (DDD), parenteral treatment
 \item \code{iv_units}\cr Units of \code{iv_ddd}
-\item \code{loinc}\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial agent.
+\item \code{loinc}\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial drug.
 }
 }
 

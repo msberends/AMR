@@ -74,7 +74,7 @@ eucast_rules(df, rules = "custom", custom_rules = y, info = FALSE)
 
 \subsection{Usage of antibiotic group names}{
 
-It is possible to define antibiotic groups instead of single antibiotics for the rule consequence, the part \emph{after} the tilde. In above examples, the antibiotic group \code{aminopenicillins} is used to include ampicillin and amoxicillin. The following groups are allowed (case-insensitive). Within parentheses are the agents that will be matched when running the rule.
+It is possible to define antibiotic groups instead of single antibiotics for the rule consequence, the part \emph{after} the tilde. In above examples, the antibiotic group \code{aminopenicillins} is used to include ampicillin and amoxicillin. The following groups are allowed (case-insensitive). Within parentheses are the drugs that will be matched when running the rule.
 \itemize{
 \item "aminoglycosides"\cr(amikacin, amikacin/fosfomycin, amphotericin B-high, apramycin, arbekacin, astromicin, bekanamycin, dibekacin, framycetin, gentamicin, gentamicin-high, habekacin, hygromycin, isepamicin, kanamycin, kanamycin-high, kanamycin/cephalexin, micronomicin, neomycin, netilmicin, pentisomicin, plazomicin, propikacin, ribostamycin, sisomicin, streptoduocin, streptomycin, streptomycin-high, tobramycin and tobramycin-high)
 \item "aminopenicillins"\cr(amoxicillin and ampicillin)

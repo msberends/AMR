@@ -36,7 +36,7 @@ A \link{list}, or a  \link{character} if \code{collapse} is not \code{NULL}
 Use this function on e.g. clinical texts from health care records. It returns a \link{list} with all antiviral drugs, doses and forms of administration found in the texts.
 }
 \details{
-This function is also internally used by \code{\link[=as.av]{as.av()}}, although it then only searches for the first drug name and will throw a note if more drug names could have been returned. Note: the \code{\link[=as.av]{as.av()}} function may use very long regular expression to match brand names of antiviral agents. This may fail on some systems.
+This function is also internally used by \code{\link[=as.av]{as.av()}}, although it then only searches for the first drug name and will throw a note if more drug names could have been returned. Note: the \code{\link[=as.av]{as.av()}} function may use very long regular expression to match brand names of antiviral drugs. This may fail on some systems.
 \subsection{Argument \code{type}}{
 
 At default, the function will search for antiviral drug names. All text elements will be searched for official names, ATC codes and brand names. As it uses \code{\link[=as.av]{as.av()}} internally, it will correct for misspelling.

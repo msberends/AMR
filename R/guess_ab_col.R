@@ -339,7 +339,7 @@ get_ab_from_namespace <- function(x, cols_ab) {
       # separate drugs, such as `AMX`
       val <- as.ab(val)
     } else {
-      stop_("unknown antimicrobial agent (group): ", val, call = FALSE)
+      stop_("unknown antimicrobial drug (group): ", val, call = FALSE)
     }
     x_new <- c(x_new, val)
   }

@@ -33,20 +33,20 @@
 #' @param x a [data.frame] with antibiotics columns, like `AMX` or `amox`. Can be left blank to determine automatically
 #' @param y,z [character] vectors to compare
 #' @inheritParams first_isolate
-#' @param universal names of **broad-spectrum** antimicrobial agents, case-insensitive. Set to `NULL` to ignore. See *Details* for the default agents.
-#' @param gram_negative names of antibiotic agents for **Gram-positives**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default agents.
-#' @param gram_positive names of antibiotic agents for **Gram-negatives**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default agents.
-#' @param antifungal names of antifungal agents for **fungi**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default agents.
+#' @param universal names of **broad-spectrum** antimicrobial drugs, case-insensitive. Set to `NULL` to ignore. See *Details* for the default antimicrobial drugs
+#' @param gram_negative names of antibiotic drugs for **Gram-positives**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default antibiotic drugs
+#' @param gram_positive names of antibiotic drugs for **Gram-negatives**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default antibiotic drugs
+#' @param antifungal names of antifungal drugs for **fungi**, case-insensitive. Set to `NULL` to ignore. See *Details* for the default antifungal drugs
 #' @param only_rsi_columns a [logical] to indicate whether only columns must be included that were transformed to class `rsi` (see [as.rsi()]) on beforehand (defaults to `FALSE`)
 #' @param ... ignored, only in place to allow future extensions
 #' @details
 #' The [key_antimicrobials()] and [all_antimicrobials()] functions are context-aware. This means that the `x` argument can be left blank if used inside a [data.frame] call, see *Examples*.
 #'
-#' The function [key_antimicrobials()] returns a [character] vector with 12 antimicrobial results for every isolate. The function [all_antimicrobials()] returns a [character] vector with all antimicrobial results for every isolate. These vectors can then be compared using [antimicrobials_equal()], to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (`"."`) by [key_antimicrobials()] and ignored by [antimicrobials_equal()].
+#' The function [key_antimicrobials()] returns a [character] vector with 12 antimicrobial results for every isolate. The function [all_antimicrobials()] returns a [character] vector with all antimicrobial drug results for every isolate. These vectors can then be compared using [antimicrobials_equal()], to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (`"."`) by [key_antimicrobials()] and ignored by [antimicrobials_equal()].
 #'
 #' Please see the [first_isolate()] function how these important functions enable the 'phenotype-based' method for determination of first isolates.
 #'
-#' The default antimicrobial agents used for **all rows** (set in `universal`) are:
+#' The default antimicrobial drugs used for **all rows** (set in `universal`) are:
 #'
 #' - Ampicillin
 #' - Amoxicillin/clavulanic acid
@@ -55,7 +55,7 @@
 #' - Piperacillin/tazobactam
 #' - Trimethoprim/sulfamethoxazole
 #'
-#' The default antimicrobial agents used for **Gram-negative bacteria** (set in `gram_negative`) are:
+#' The default antimicrobial drugs used for **Gram-negative bacteria** (set in `gram_negative`) are:
 #'
 #' - Cefotaxime
 #' - Ceftazidime
@@ -64,7 +64,7 @@
 #' - Meropenem
 #' - Tobramycin
 #'
-#' The default antimicrobial agents used for **Gram-positive bacteria** (set in `gram_positive`) are:
+#' The default antimicrobial drugs used for **Gram-positive bacteria** (set in `gram_positive`) are:
 #'
 #' - Erythromycin
 #' - Oxacillin
@@ -74,7 +74,7 @@
 #' - Vancomycin
 #'
 #'
-#' The default antimicrobial agents used for **fungi** (set in `antifungal`) are:
+#' The default antimicrobial drugs used for **fungi** (set in `antifungal`) are:
 #'
 #' - Anidulafungin
 #' - Caspofungin

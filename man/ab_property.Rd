@@ -56,7 +56,7 @@ set_ab_names(
 )
 }
 \arguments{
-\item{x}{any (vector of) text that can be coerced to a valid antibiotic code with \code{\link[=as.ab]{as.ab()}}}
+\item{x}{any (vector of) text that can be coerced to a valid antibiotic drug code with \code{\link[=as.ab]{as.ab()}}}
 
 \item{language}{language of the returned text, defaults to system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 

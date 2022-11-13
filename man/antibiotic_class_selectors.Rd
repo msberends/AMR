@@ -104,7 +104,7 @@ not_intrinsic_resistant(
 
 \item{only_rsi_columns}{a \link{logical} to indicate whether only columns of class \code{rsi} must be selected (defaults to \code{FALSE}), see \code{\link[=as.rsi]{as.rsi()}}}
 
-\item{only_treatable}{a \link{logical} to indicate whether agents that are only for laboratory tests should be excluded (defaults to \code{TRUE}), such as gentamicin-high (\code{GEH}) and imipenem/EDTA (\code{IPE})}
+\item{only_treatable}{a \link{logical} to indicate whether antimicrobial drugs should be excluded that are only for laboratory tests (defaults to \code{TRUE}), such as gentamicin-high (\code{GEH}) and imipenem/EDTA (\code{IPE})}
 
 \item{...}{ignored, only in place to allow future extensions}
 
@@ -118,7 +118,7 @@ not_intrinsic_resistant(
 (internally) a \link{character} vector of column names, with additional class \code{"ab_selector"}
 }
 \description{
-These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class or group, without the need to define the columns or antibiotic abbreviations. In short, if you have a column name that resembles an antimicrobial agent, it will be picked up by any of these functions that matches its pharmaceutical class: "cefazolin", "CZO" and "J01DB04" will all be picked up by \code{\link[=cephalosporins]{cephalosporins()}}.
+These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class or group, without the need to define the columns or antibiotic abbreviations. In short, if you have a column name that resembles an antimicrobial drug, it will be picked up by any of these functions that matches its pharmaceutical class: "cefazolin", "CZO" and "J01DB04" will all be picked up by \code{\link[=cephalosporins]{cephalosporins()}}.
 }
 \details{
 These functions can be used in data set calls for selecting columns and filtering rows. They are heavily inspired by the \link[tidyselect:language]{Tidyverse selection helpers} such as \code{\link[tidyselect:everything]{everything()}}, but also work in base \R and not only in \code{dplyr} verbs. Nonetheless, they are very convenient to use with \code{dplyr} functions such as \code{\link[dplyr:select]{select()}}, \code{\link[dplyr:filter]{filter()}} and \code{\link[dplyr:summarise]{summarise()}}, see \emph{Examples}.

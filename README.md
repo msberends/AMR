@@ -1,8 +1,8 @@
-% AMR (for R)
-
 # `AMR` (for R)
 
-<img src="https://msberends.github.io/AMR/AMR_intro.svg" align="center" height="300px" />
+<a href="https://msberends.github.io/AMR/"><img src="https://msberends.github.io/AMR/AMR_intro.svg" align="center"></a>
+
+----
 
 This work was published in the Journal of Statistical Software (Volume 104(3); [DOI 10.18637/jss.v104.i03](https://doi.org/10.18637/jss.v104.i03)) and formed the basis of two PhD theses ([DOI 10.33612/diss.177417131](https://doi.org/10.33612/diss.177417131) and [DOI 10.33612/diss.192486375](https://doi.org/10.33612/diss.192486375)).
 

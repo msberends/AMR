@@ -99,7 +99,7 @@
 
 \item{mo}{any (vector of) text that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
 
-\item{ab}{any (vector of) text that can be coerced to a valid antimicrobial code with \code{\link[=as.ab]{as.ab()}}}
+\item{ab}{any (vector of) text that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}}
 
 \item{guideline}{interpretation guideline to use, defaults to the latest included EUCAST guideline, see \emph{Details}}
 

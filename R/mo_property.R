@@ -34,7 +34,7 @@
 #' @param property one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, quotes = TRUE)`, or must be `"shortname"`
 #' @inheritParams as.mo
 #' @param ... other arguments passed on to [as.mo()], such as 'minimum_matching_score', 'ignore_pattern', and 'remove_from_input'
-#' @param ab any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
+#' @param ab any (vector of) text that can be coerced to a valid antibiotic drug code with [as.ab()]
 #' @param open browse the URL using [`browseURL()`][utils::browseURL()]
 #' @details All functions will, at default, keep old taxonomic properties. Please refer to this example, knowing that *Escherichia blattae* was renamed to *Shimwellia blattae* in 2010:
 #' - `mo_name("Escherichia blattae")` will return `"Shimwellia blattae"` (with a message about the renaming)

@@ -151,12 +151,12 @@ This is a more reliable method, since it also \emph{weighs} the antibiogram (ant
 \enumerate{
 \item Using \code{type = "points"} and argument \code{points_threshold} (default)
 
-This method weighs \emph{all} antimicrobial agents available in the data set. Any difference from I to S or R (or vice versa) counts as \code{0.5} points, a difference from S to R (or vice versa) counts as \code{1} point. When the sum of points exceeds \code{points_threshold}, which defaults to \code{2}, an isolate will be selected as a first weighted isolate.
+This method weighs \emph{all} antimicrobial drugs available in the data set. Any difference from I to S or R (or vice versa) counts as \code{0.5} points, a difference from S to R (or vice versa) counts as \code{1} point. When the sum of points exceeds \code{points_threshold}, which defaults to \code{2}, an isolate will be selected as a first weighted isolate.
 
 All antimicrobials are internally selected using the \code{\link[=all_antimicrobials]{all_antimicrobials()}} function. The output of this function does not need to be passed to the \code{\link[=first_isolate]{first_isolate()}} function.
 \item Using \code{type = "keyantimicrobials"} and argument \code{ignore_I}
 
-This method only weighs specific antimicrobial agents, called \emph{key antimicrobials}. Any difference from S to R (or vice versa) in these key antimicrobials will select an isolate as a first weighted isolate. With \code{ignore_I = FALSE}, also differences from I to S or R (or vice versa) will lead to this.
+This method only weighs specific antimicrobial drugs, called \emph{key antimicrobials}. Any difference from S to R (or vice versa) in these key antimicrobials will select an isolate as a first weighted isolate. With \code{ignore_I = FALSE}, also differences from I to S or R (or vice versa) will lead to this.
 
 Key antimicrobials are internally selected using the \code{\link[=key_antimicrobials]{key_antimicrobials()}} function, but can also be added manually as a variable to the data and set in the \code{col_keyantimicrobials} argument. Another option is to pass the output of the \code{\link[=key_antimicrobials]{key_antimicrobials()}} function directly to the \code{col_keyantimicrobials} argument.
 }

@@ -30,7 +30,7 @@
 #' Get Properties of an Antibiotic
 #'
 #' Use these functions to return a specific property of an antibiotic from the [antibiotics] data set. All input values will be evaluated internally with [as.ab()].
-#' @param x any (vector of) text that can be coerced to a valid antibiotic code with [as.ab()]
+#' @param x any (vector of) text that can be coerced to a valid antibiotic drug code with [as.ab()]
 #' @param tolower a [logical] to indicate whether the first [character] of every output should be transformed to a lower case [character]. This will lead to e.g. "polymyxin B" and not "polymyxin b".
 #' @param property one of the column names of one of the [antibiotics] data set: `vector_or(colnames(antibiotics), sort = FALSE)`.
 #' @param language language of the returned text, defaults to system language (see [get_AMR_locale()]) and can also be set with `getOption("AMR_locale")`. Use `language = NULL` or `language = ""` to prevent translation.
@@ -378,7 +378,7 @@ set_ab_names <- function(data, ..., property = "name", language = get_AMR_locale
       return(data)
     }
   } else {
-    # quickly get antibiotic codes
+    # quickly get antibiotic drug codes
     vars_ab <- as.ab(data, fast_mode = TRUE)
     vars <- data[!is.na(vars_ab)]
   }

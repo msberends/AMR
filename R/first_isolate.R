@@ -107,14 +107,14 @@
 #'
 #' 1. Using `type = "points"` and argument `points_threshold` (default)
 #'
-#'    This method weighs *all* antimicrobial agents available in the data set. Any difference from I to S or R (or vice versa) counts as `0.5` points, a difference from S to R (or vice versa) counts as `1` point. When the sum of points exceeds `points_threshold`, which defaults to `2`, an isolate will be selected as a first weighted isolate.
+#'    This method weighs *all* antimicrobial drugs available in the data set. Any difference from I to S or R (or vice versa) counts as `0.5` points, a difference from S to R (or vice versa) counts as `1` point. When the sum of points exceeds `points_threshold`, which defaults to `2`, an isolate will be selected as a first weighted isolate.
 #'
 #'    All antimicrobials are internally selected using the [all_antimicrobials()] function. The output of this function does not need to be passed to the [first_isolate()] function.
 #'
 #'
 #' 2. Using `type = "keyantimicrobials"` and argument `ignore_I`
 #'
-#'    This method only weighs specific antimicrobial agents, called *key antimicrobials*. Any difference from S to R (or vice versa) in these key antimicrobials will select an isolate as a first weighted isolate. With `ignore_I = FALSE`, also differences from I to S or R (or vice versa) will lead to this.
+#'    This method only weighs specific antimicrobial drugs, called *key antimicrobials*. Any difference from S to R (or vice versa) in these key antimicrobials will select an isolate as a first weighted isolate. With `ignore_I = FALSE`, also differences from I to S or R (or vice versa) will lead to this.
 #'
 #'    Key antimicrobials are internally selected using the [key_antimicrobials()] function, but can also be added manually as a variable to the data and set in the `col_keyantimicrobials` argument. Another option is to pass the output of the [key_antimicrobials()] function directly to the `col_keyantimicrobials` argument.
 #'

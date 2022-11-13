@@ -18,7 +18,7 @@ random_rsi(size = NULL, prob_RSI = c(0.33, 0.33, 0.33), ...)
 
 \item{mo}{any \link{character} that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}}
 
-\item{ab}{any \link{character} that can be coerced to a valid antimicrobial agent code with \code{\link[=as.ab]{as.ab()}}}
+\item{ab}{any \link{character} that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}}
 
 \item{...}{ignored, only in place to allow future extensions}
 
@@ -28,7 +28,7 @@ random_rsi(size = NULL, prob_RSI = c(0.33, 0.33, 0.33), ...)
 class \code{mic} for \code{\link[=random_mic]{random_mic()}} (see \code{\link[=as.mic]{as.mic()}}) and class \code{disk} for \code{\link[=random_disk]{random_disk()}} (see \code{\link[=as.disk]{as.disk()}})
 }
 \description{
-These functions can be used for generating random MIC values and disk diffusion diameters, for AMR data analysis practice. By providing a microorganism and antimicrobial agent, the generated results will reflect reality as much as possible.
+These functions can be used for generating random MIC values and disk diffusion diameters, for AMR data analysis practice. By providing a microorganism and antimicrobial drug, the generated results will reflect reality as much as possible.
 }
 \details{
 The base \R function \code{\link[=sample]{sample()}} is used for generating values.

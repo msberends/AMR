@@ -918,7 +918,7 @@ mdro <- function(x = NULL,
           )
         }
       )
-      # for PDR; all agents are R (or I if combine_SI = FALSE)
+      # for PDR; all drugs are R (or I if combine_SI = FALSE)
       x_transposed <- as.list(as.data.frame(t(x[rows, lst_vector, drop = FALSE]),
         stringsAsFactors = FALSE
       ))
@@ -1171,7 +1171,7 @@ mdro <- function(x = NULL,
       )
     }
 
-    # PDR (=4): all agents are R
+    # PDR (=4): all drugs are R
     x[which(x$classes_affected == 999 & x$classes_in_guideline == x$classes_available), "MDRO"] <- 4
     if (isTRUE(verbose)) {
       x[which(x$MDRO == 4), "reason"] <- paste(

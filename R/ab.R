@@ -29,9 +29,9 @@
 
 #' Transform Input to an Antibiotic ID
 #'
-#' Use this function to determine the antibiotic code of one or more antibiotics. The data set [antibiotics] will be searched for abbreviations, official names and synonyms (brand names).
+#' Use this function to determine the antibiotic drug code of one or more antibiotics. The data set [antibiotics] will be searched for abbreviations, official names and synonyms (brand names).
 #' @param x a [character] vector to determine to antibiotic ID
-#' @param flag_multiple_results a [logical] to indicate whether a note should be printed to the console that probably more than one antibiotic code or name can be retrieved from a single input value.
+#' @param flag_multiple_results a [logical] to indicate whether a note should be printed to the console that probably more than one antibiotic drug code or name can be retrieved from a single input value.
 #' @param info a [logical] to indicate whether a progress bar should be printed, defaults to `TRUE` only in interactive mode
 #' @param ... arguments passed on to internal functions
 #' @rdname as.ab
@@ -47,7 +47,7 @@
 #'
 #' Use the [`ab_*`][ab_property()] functions to get properties based on the returned antibiotic ID, see *Examples*.
 #'
-#' Note: the [as.ab()] and [`ab_*`][ab_property()] functions may use very long regular expression to match brand names of antimicrobial agents. This may fail on some systems.
+#' Note: the [as.ab()] and [`ab_*`][ab_property()] functions may use very long regular expression to match brand names of antimicrobial drugs. This may fail on some systems.
 #'
 #' You can add your own manual codes to be considered by [as.ab()] and all [`ab_*`][ab_property()] functions, see [add_custom_antimicrobials()].
 #' @section Source:
@@ -591,7 +591,7 @@ as.data.frame.ab <- function(x, ...) {
 "[<-.ab" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  return_after_integrity_check(y, "antimicrobial code", AMR_env$AB_lookup$ab)
+  return_after_integrity_check(y, "antimicrobial drug code", AMR_env$AB_lookup$ab)
 }
 #' @method [[<- ab
 #' @export
@@ -599,7 +599,7 @@ as.data.frame.ab <- function(x, ...) {
 "[[<-.ab" <- function(i, j, ..., value) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
-  return_after_integrity_check(y, "antimicrobial code", AMR_env$AB_lookup$ab)
+  return_after_integrity_check(y, "antimicrobial drug code", AMR_env$AB_lookup$ab)
 }
 #' @method c ab
 #' @export
@@ -608,7 +608,7 @@ c.ab <- function(...) {
   x <- list(...)[[1L]]
   y <- NextMethod()
   attributes(y) <- attributes(x)
-  return_after_integrity_check(y, "antimicrobial code", AMR_env$AB_lookup$ab)
+  return_after_integrity_check(y, "antimicrobial drug code", AMR_env$AB_lookup$ab)
 }
 
 #' @method unique ab

@@ -32,7 +32,7 @@
 #' For language-dependent output of AMR functions, like [mo_name()], [mo_gramstain()], [mo_type()] and [ab_name()].
 #' @param x text to translate
 #' @param language language to choose. Use one of these supported language names or ISO-639-1 codes: `r vector_or(paste0(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), " (" , LANGUAGES_SUPPORTED, ")"), quotes = FALSE, sort = FALSE)`.
-#' @details The currently `r length(LANGUAGES_SUPPORTED)` supported languages are `r vector_or(paste0(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), " (" , LANGUAGES_SUPPORTED, ")"), quotes = FALSE, sort = FALSE)`. All these languages have translations available for all antimicrobial agents and colloquial microorganism names.
+#' @details The currently `r length(LANGUAGES_SUPPORTED)` supported languages are `r vector_or(paste0(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), " (" , LANGUAGES_SUPPORTED, ")"), quotes = FALSE, sort = FALSE)`. All these languages have translations available for all antimicrobial drugs and colloquial microorganism names.
 #'
 #' **To silence language notes when this package loads** on a non-English operating system, you can set the option `AMR_locale` in your `.Rprofile` file like this:
 #'

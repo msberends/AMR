@@ -1,5 +1,19 @@
 # The `AMR` Package for R <a href="https://msberends.github.io/AMR/"><img src="./logo.svg" align="right" height="139" /></a>
 
+* Works on Windows, macOS and Linux with **all versions of R** since R-3.0
+* Provides the **full microbiological taxonomy** and data on **all antimicrobial drugs**
+* Applies all recent **CLSI and EUCAST clinical breakpoints** for MICs and disk zones
+* Corrects for duplicate isolates, **calculates and predicts AMR** per antibiotic class
+* Integrates with **WHONET**, ATC, **EARS-Net**, PubChem, **LOINC** and **SNOMED CT**
+* Completely **dependency-free**, highly suitable for places with **limited resources**
+
+<div style="display: flex;">
+<p style="text-align:left; width: 50%;"><small><a href="https://msberends.github.io/AMR/">https://msberends.github.io/AMR</a></small></p>
+<p style="text-align:right; width: 50%;"><small><a href="https://doi.org/10.18637/jss.v104.i03">https://doi.org/10.18637/jss.v104.i03</a></small></p>
+</div>
+
+----
+
 ### Introduction
 
 The `AMR` package is a [free and open-source](#copyright) R package with [zero dependencies](https://en.wikipedia.org/wiki/Dependency_hell) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. 

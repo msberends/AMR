@@ -33,7 +33,7 @@
 
 #' @param x,object values created with [as.mic()], [as.disk()] or [as.rsi()] (or their `random_*` variants, such as [random_mic()])
 #' @param mo any (vector of) text that can be coerced to a valid microorganism code with [as.mo()]
-#' @param ab any (vector of) text that can be coerced to a valid antimicrobial code with [as.ab()]
+#' @param ab any (vector of) text that can be coerced to a valid antimicrobial drug code with [as.ab()]
 #' @param guideline interpretation guideline to use, defaults to the latest included EUCAST guideline, see *Details*
 #' @param main,title title of the plot
 #' @param xlab,ylab axis title

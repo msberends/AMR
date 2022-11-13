@@ -45,7 +45,7 @@
 #' - `oral_units`\cr Units of `oral_ddd`
 #' - `iv_ddd`\cr Defined Daily Dose (DDD), parenteral (intravenous) treatment, currently available for `r sum(!is.na(antibiotics$iv_ddd))` drugs
 #' - `iv_units`\cr Units of `iv_ddd`
-#' - `loinc`\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial agent. Use [ab_loinc()] to retrieve them quickly, see [ab_property()].
+#' - `loinc`\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial drug. Use [ab_loinc()] to retrieve them quickly, see [ab_property()].
 #'
 #' ### For the [antivirals] data set: a [tibble][tibble::tibble] with `r nrow(antivirals)` observations and `r ncol(antivirals)` variables:
 #' - `av`\cr Antibiotic ID as used in this package (such as `AMC`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
@@ -58,7 +58,7 @@
 #' - `oral_units`\cr Units of `oral_ddd`
 #' - `iv_ddd`\cr Defined Daily Dose (DDD), parenteral treatment
 #' - `iv_units`\cr Units of `iv_ddd`
-#' - `loinc`\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial agent.
+#' - `loinc`\cr All LOINC codes (Logical Observation Identifiers Names and Codes) associated with the name of the antimicrobial drug.
 #' @details Properties that are based on an ATC code are only available when an ATC is available. These properties are: `atc_group1`, `atc_group2`, `oral_ddd`, `oral_units`, `iv_ddd` and `iv_units`.
 #'
 #' Synonyms (i.e. trade names) were derived from the PubChem Compound ID (column `cid`) and consequently only available where a CID is available.
@@ -272,7 +272,7 @@
 #' EUCAST breakpoints used in this package are based on the dosages in this data set. They can be retrieved with [eucast_dosage()].
 #' @format A [tibble][tibble::tibble] with `r format(nrow(dosage), big.mark = ",")` observations and `r ncol(dosage)` variables:
 #' - `ab`\cr Antibiotic ID as used in this package (such as `AMC`), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
-#' - `name`\cr Official name of the antimicrobial agent as used by WHONET/EARS-Net or the WHO
+#' - `name`\cr Official name of the antimicrobial drug as used by WHONET/EARS-Net or the WHO
 #' - `type`\cr Type of the dosage, either `r vector_or(dosage$type)`
 #' - `dose`\cr Dose, such as "2 g" or "25 mg/kg"
 #' - `dose_times`\cr Number of times a dose must be administered

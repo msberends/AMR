@@ -13,7 +13,7 @@
 \alias{av_ddd_units}
 \alias{av_info}
 \alias{av_url}
-\title{Get Properties of an Antiviral Agent}
+\title{Get Properties of an Antiviral Drug}
 \usage{
 av_name(x, language = get_AMR_locale(), tolower = FALSE, ...)
 
@@ -40,7 +40,7 @@ av_url(x, open = FALSE, ...)
 av_property(x, property = "name", language = get_AMR_locale(), ...)
 }
 \arguments{
-\item{x}{any (vector of) text that can be coerced to a valid antiviral agent code with \code{\link[=as.av]{as.av()}}}
+\item{x}{any (vector of) text that can be coerced to a valid antiviral drug code with \code{\link[=as.av]{as.av()}}}
 
 \item{language}{language of the returned text, defaults to system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with \code{getOption("AMR_locale")}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
@@ -63,7 +63,7 @@ av_property(x, property = "name", language = get_AMR_locale(), ...)
 }
 }
 \description{
-Use these functions to return a specific property of an antiviral agent from the \link{antivirals} data set. All input values will be evaluated internally with \code{\link[=as.av]{as.av()}}.
+Use these functions to return a specific property of an antiviral drug from the \link{antivirals} data set. All input values will be evaluated internally with \code{\link[=as.av]{as.av()}}.
 }
 \details{
 All output \link[=translate]{will be translated} where possible.

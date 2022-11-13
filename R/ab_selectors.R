@@ -29,11 +29,11 @@
 
 #' Antibiotic Selectors
 #'
-#' These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class or group, without the need to define the columns or antibiotic abbreviations. In short, if you have a column name that resembles an antimicrobial agent, it will be picked up by any of these functions that matches its pharmaceutical class: "cefazolin", "CZO" and "J01DB04" will all be picked up by [cephalosporins()].
+#' These functions allow for filtering rows and selecting columns based on antibiotic test results that are of a specific antibiotic class or group, without the need to define the columns or antibiotic abbreviations. In short, if you have a column name that resembles an antimicrobial drug, it will be picked up by any of these functions that matches its pharmaceutical class: "cefazolin", "CZO" and "J01DB04" will all be picked up by [cephalosporins()].
 #' @param ab_class an antimicrobial class or a part of it, such as `"carba"` and `"carbapenems"`. The columns `group`, `atc_group1` and `atc_group2` of the [antibiotics] data set will be searched (case-insensitive) for this value.
 #' @param filter an [expression] to be evaluated in the [antibiotics] data set, such as `name %like% "trim"`
 #' @param only_rsi_columns a [logical] to indicate whether only columns of class `rsi` must be selected (defaults to `FALSE`), see [as.rsi()]
-#' @param only_treatable a [logical] to indicate whether agents that are only for laboratory tests should be excluded (defaults to `TRUE`), such as gentamicin-high (`GEH`) and imipenem/EDTA (`IPE`)
+#' @param only_treatable a [logical] to indicate whether antimicrobial drugs should be excluded that are only for laboratory tests (defaults to `TRUE`), such as gentamicin-high (`GEH`) and imipenem/EDTA (`IPE`)
 #' @param ... ignored, only in place to allow future extensions
 #' @details
 #' These functions can be used in data set calls for selecting columns and filtering rows. They are heavily inspired by the [Tidyverse selection helpers][tidyselect::language] such as [`everything()`][tidyselect::everything()], but also work in base \R and not only in `dplyr` verbs. Nonetheless, they are very convenient to use with `dplyr` functions such as [`select()`][dplyr::select()], [`filter()`][dplyr::filter()] and [`summarise()`][dplyr::summarise()], see *Examples*.
@@ -548,7 +548,7 @@ ab_select_exec <- function(function_name,
     if (any(untreatable %in% names(ab_in_data))) {
       if (message_not_thrown_before(function_name, "ab_class", "untreatable", entire_session = TRUE)) {
         warning_(
-          "in `", function_name, "()`: some agents were ignored since they cannot be used for treating patients: ",
+          "in `", function_name, "()`: some drugs were ignored since they cannot be used for treating patients: ",
           vector_and(ab_name(names(ab_in_data)[names(ab_in_data) %in% untreatable],
             language = NULL,
             tolower = TRUE
@@ -564,7 +564,7 @@ ab_select_exec <- function(function_name,
   }
 
   if (length(ab_in_data) == 0) {
-    message_("No antimicrobial agents found in the data.")
+    message_("No antimicrobial drugs found in the data.")
     return(NULL)
   }
 
@@ -833,13 +833,13 @@ message_agent_names <- function(function_name, agents, ab_group = NULL, examples
   if (message_not_thrown_before(function_name, sort(agents))) {
     if (length(agents) == 0) {
       if (is.null(ab_group)) {
-        message_("For `", function_name, "()` no antimicrobial agents found", examples, ".")
+        message_("For `", function_name, "()` no antimicrobial drugs found", examples, ".")
       } else if (ab_group == "administrable_per_os") {
-        message_("No orally administrable agents found", examples, ".")
+        message_("No orally administrable drugs found", examples, ".")
       } else if (ab_group == "administrable_iv") {
-        message_("No IV administrable agents found", examples, ".")
+        message_("No IV administrable drugs found", examples, ".")
       } else {
-        message_("No antimicrobial agents of class '", ab_group, "' found", examples, ".")
+        message_("No antimicrobial drugs of class '", ab_group, "' found", examples, ".")
       }
     } else {
       agents_formatted <- paste0("'", font_bold(agents, collapse = NULL), "'")

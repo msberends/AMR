@@ -123,7 +123,7 @@ if (require("dplyr")) {
     filter(n() >= 30) \%>\% # filter on only 30 results per group
     summarise_if(is.rsi, resistance) # then get resistance of all drugs
 
-  # now conduct PCA for certain antimicrobial agents
+  # now conduct PCA for certain antimicrobial drugs
   pca_result <- resistance_data \%>\%
     pca(AMC, CXM, CTX, CAZ, GEN, TOB, TMP, SXT)
 

@@ -33,7 +33,7 @@
 #' @rdname as.rsi
 #' @param x vector of values (for class [`mic`]: MIC values in mg/L, for class [`disk`]: a disk diffusion radius in millimetres)
 #' @param mo any (vector of) text that can be coerced to valid microorganism codes with [as.mo()], can be left empty to determine it automatically
-#' @param ab any (vector of) text that can be coerced to a valid antimicrobial code with [as.ab()]
+#' @param ab any (vector of) text that can be coerced to a valid antimicrobial drug code with [as.ab()]
 #' @param uti (Urinary Tract Infection) A vector with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.rsi()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See *Examples*.
 #' @inheritParams first_isolate
 #' @param guideline defaults to EUCAST `r  max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))` (the latest implemented EUCAST guideline in the [rsi_translation] data set), supports EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`), see *Details*
@@ -78,7 +78,7 @@
 #'
 #' ### Machine-Readable Interpretation Guidelines
 #'
-#' The repository of this package [contains a machine-readable version](https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt) of all guidelines. This is a CSV file consisting of `r format(nrow(AMR::rsi_translation), big.mark = ",")` rows and `r ncol(AMR::rsi_translation)` columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. **This allows for easy implementation of these rules in laboratory information systems (LIS)**. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
+#' The repository of this package [contains a machine-readable version](https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt) of all guidelines. This is a CSV file consisting of `r format(nrow(AMR::rsi_translation), big.mark = ",")` rows and `r ncol(AMR::rsi_translation)` columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. **This allows for easy implementation of these rules in laboratory information systems (LIS)**. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
 #'
 #' ### Other
 #'
@@ -95,7 +95,7 @@
 #' - **I = Susceptible, Increased exposure**\cr
 #'   A microorganism is categorised as *Susceptible, Increased exposure* when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.
 #'
-#' This AMR package honours this (new) insight. Use [susceptibility()] (equal to [proportion_SI()]) to determine antimicrobial susceptibility and [count_susceptible()] (equal to [count_SI()]) to count susceptible isolates.
+#' This AMR package honours this insight. Use [susceptibility()] (equal to [proportion_SI()]) to determine antimicrobial susceptibility and [count_susceptible()] (equal to [count_SI()]) to count susceptible isolates.
 #' @return Ordered [factor] with new class `rsi`
 #' @aliases rsi
 #' @export
@@ -258,7 +258,7 @@ is.rsi.eligible <- function(x, threshold = 0.05) {
       if (!is.null(cur_col)) {
         ab <- suppressWarnings(as.ab(cur_col, fast_mode = TRUE, info = FALSE))
         if (!is.na(ab)) {
-          # this is a valid antibiotic code
+          # this is a valid antibiotic drug code
           message_(
             "Column '", font_bold(cur_col), "' is as.rsi()-eligible (despite only having empty values), since it seems to be ",
             ab_name(ab, language = NULL, tolower = TRUE), " (", ab, ")"

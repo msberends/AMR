@@ -13,7 +13,7 @@ is.ab(x)
 \arguments{
 \item{x}{a \link{character} vector to determine to antibiotic ID}
 
-\item{flag_multiple_results}{a \link{logical} to indicate whether a note should be printed to the console that probably more than one antibiotic code or name can be retrieved from a single input value.}
+\item{flag_multiple_results}{a \link{logical} to indicate whether a note should be printed to the console that probably more than one antibiotic drug code or name can be retrieved from a single input value.}
 
 \item{info}{a \link{logical} to indicate whether a progress bar should be printed, defaults to \code{TRUE} only in interactive mode}
 
@@ -23,7 +23,7 @@ is.ab(x)
 A \link{character} \link{vector} with additional class \code{\link{ab}}
 }
 \description{
-Use this function to determine the antibiotic code of one or more antibiotics. The data set \link{antibiotics} will be searched for abbreviations, official names and synonyms (brand names).
+Use this function to determine the antibiotic drug code of one or more antibiotics. The data set \link{antibiotics} will be searched for abbreviations, official names and synonyms (brand names).
 }
 \details{
 All entries in the \link{antibiotics} data set have three different identifiers: a human readable EARS-Net code (column \code{ab}, used by ECDC and WHONET), an ATC code (column \code{atc}, used by WHO), and a CID code (column \code{cid}, Compound ID, used by PubChem). The data set contains more than 5,000 official brand names from many different countries, as found in PubChem. Not that some drugs contain multiple ATC codes.
@@ -38,7 +38,7 @@ All these properties will be searched for the user input. The \code{\link[=as.ab
 
 Use the \code{\link[=ab_property]{ab_*}} functions to get properties based on the returned antibiotic ID, see \emph{Examples}.
 
-Note: the \code{\link[=as.ab]{as.ab()}} and \code{\link[=ab_property]{ab_*}} functions may use very long regular expression to match brand names of antimicrobial agents. This may fail on some systems.
+Note: the \code{\link[=as.ab]{as.ab()}} and \code{\link[=ab_property]{ab_*}} functions may use very long regular expression to match brand names of antimicrobial drugs. This may fail on some systems.
 
 You can add your own manual codes to be considered by \code{\link[=as.ab]{as.ab()}} and all \code{\link[=ab_property]{ab_*}} functions, see \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}}.
 }

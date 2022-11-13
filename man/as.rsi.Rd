@@ -77,7 +77,7 @@ rsi_interpretation_history(clean = FALSE)
 
 \item{mo}{any (vector of) text that can be coerced to valid microorganism codes with \code{\link[=as.mo]{as.mo()}}, can be left empty to determine it automatically}
 
-\item{ab}{any (vector of) text that can be coerced to a valid antimicrobial code with \code{\link[=as.ab]{as.ab()}}}
+\item{ab}{any (vector of) text that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}}
 
 \item{guideline}{defaults to EUCAST 2022 (the latest implemented EUCAST guideline in the \link{rsi_translation} data set), supports EUCAST (2013-2022) and CLSI (2013-2022), see \emph{Details}}
 
@@ -142,7 +142,7 @@ After using \code{\link[=as.rsi]{as.rsi()}}, you can use the \code{\link[=eucast
 
 \subsection{Machine-Readable Interpretation Guidelines}{
 
-The repository of this package \href{https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt}{contains a machine-readable version} of all guidelines. This is a CSV file consisting of 18,308 rows and 11 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial agent and the microorganism. \strong{This allows for easy implementation of these rules in laboratory information systems (LIS)}. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
+The repository of this package \href{https://github.com/msberends/AMR/blob/main/data-raw/rsi_translation.txt}{contains a machine-readable version} of all guidelines. This is a CSV file consisting of 18,308 rows and 11 columns. This file is machine-readable, since it contains one row for every unique combination of the test method (MIC or disk diffusion), the antimicrobial drug and the microorganism. \strong{This allows for easy implementation of these rules in laboratory information systems (LIS)}. Note that it only contains interpretation guidelines for humans - interpretation guidelines from CLSI for animals were removed.
 }
 
 \subsection{Other}{
@@ -166,7 +166,7 @@ A microorganism is categorised as \emph{Susceptible, standard dosing regimen}, w
 A microorganism is categorised as \emph{Susceptible, Increased exposure} when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.
 }
 
-This AMR package honours this (new) insight. Use \code{\link[=susceptibility]{susceptibility()}} (equal to \code{\link[=proportion_SI]{proportion_SI()}}) to determine antimicrobial susceptibility and \code{\link[=count_susceptible]{count_susceptible()}} (equal to \code{\link[=count_SI]{count_SI()}}) to count susceptible isolates.
+This AMR package honours this insight. Use \code{\link[=susceptibility]{susceptibility()}} (equal to \code{\link[=proportion_SI]{proportion_SI()}}) to determine antimicrobial susceptibility and \code{\link[=count_susceptible]{count_susceptible()}} (equal to \code{\link[=count_SI]{count_SI()}}) to count susceptible isolates.
 }
 
 \section{Reference Data Publicly Available}{

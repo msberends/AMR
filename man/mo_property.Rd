@@ -266,7 +266,7 @@ mo_property(
 
 \item{...}{other arguments passed on to \code{\link[=as.mo]{as.mo()}}, such as 'minimum_matching_score', 'ignore_pattern', and 'remove_from_input'}
 
-\item{ab}{any (vector of) text that can be coerced to a valid antibiotic code with \code{\link[=as.ab]{as.ab()}}}
+\item{ab}{any (vector of) text that can be coerced to a valid antibiotic drug code with \code{\link[=as.ab]{as.ab()}}}
 
 \item{open}{browse the URL using \code{\link[utils:browseURL]{browseURL()}}}
 

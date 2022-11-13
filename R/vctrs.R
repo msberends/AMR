@@ -67,7 +67,7 @@ vec_cast.character.ab <- function(x, to, ...) {
   as.character(x)
 }
 vec_cast.ab.character <- function(x, to, ...) {
-  return_after_integrity_check(x, "antimicrobial code", as.character(AMR_env$AB_lookup$ab))
+  return_after_integrity_check(x, "antimicrobial drug code", as.character(AMR_env$AB_lookup$ab))
 }
 
 # S3: av
@@ -81,7 +81,7 @@ vec_cast.character.av <- function(x, to, ...) {
   as.character(x)
 }
 vec_cast.av.character <- function(x, to, ...) {
-  return_after_integrity_check(x, "antiviral agent code", as.character(AMR_env$AV_lookup$av))
+  return_after_integrity_check(x, "antiviral drug code", as.character(AMR_env$AV_lookup$av))
 }
 
 # S3: mo
