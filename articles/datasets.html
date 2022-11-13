@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9047</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9049</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -111,6 +111,11 @@
        
       Get properties of an antibiotic
     </a>
+    <a class="dropdown-item" href="../reference/av_property.html">
+      <span class="fa fa-capsules"></span>
+       
+      Get properties of an antiviral agent
+    </a>
   </div>
 </li>
 <li class="nav-item">
@@ -161,7 +166,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Data sets for download / own use</h1>
             
-            <h4 data-toc-skip class="date">12 November 2022</h4>
+            <h4 data-toc-skip class="date">13 November 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/HEAD/vignettes/datasets.Rmd" class="external-link"><code>vignettes/datasets.Rmd</code></a></small>
       <div class="d-none name"><code>datasets.Rmd</code></div>
@@ -480,8 +485,8 @@ Set Name ‘Microoganism’, OID 2.16.840.1.114222.4.11.1009 (v12). URL: <a href
 </div>
 </div>
 <div class="section level2">
-<h2 id="antibiotics-antibiotic-agents">
-<code>antibiotics</code>: Antibiotic Agents<a class="anchor" aria-label="anchor" href="#antibiotics-antibiotic-agents"></a>
+<h2 id="antibiotics-antibiotic-antifungal-drugs">
+<code>antibiotics</code>: Antibiotic (+Antifungal) Drugs<a class="anchor" aria-label="anchor" href="#antibiotics-antibiotic-antifungal-drugs"></a>
 </h2>
 <p>A data set with 483 rows and 14 columns, containing the following
 column names:<br><em>ab</em>, <em>cid</em>, <em>name</em>, <em>group</em>, <em>atc</em>,
@@ -537,6 +542,8 @@ WHO CC website for personal use)</li>
 <li><a href="https://pubchem.ncbi.nlm.nih.gov" class="external-link">PubChem by the US
 National Library of Medicine</a></li>
 <li><a href="https://whonet.org" class="external-link">WHONET software 2019</a></li>
+<li><a href="https://loinc.org" class="external-link">LOINC (Logical Observation Identifiers
+Names and Codes)</a></li>
 </ul>
 </div>
 <div class="section level3">
@@ -678,46 +685,47 @@ inhibitors</td>
 </div>
 </div>
 <div class="section level2">
-<h2 id="antivirals-antiviral-agents">
-<code>antivirals</code>: Antiviral Agents<a class="anchor" aria-label="anchor" href="#antivirals-antiviral-agents"></a>
+<h2 id="antivirals-antiviral-drugs">
+<code>antivirals</code>: Antiviral Drugs<a class="anchor" aria-label="anchor" href="#antivirals-antiviral-drugs"></a>
 </h2>
-<p>A data set with 102 rows and 9 columns, containing the following
-column names:<br><em>atc</em>, <em>cid</em>, <em>name</em>, <em>atc_group</em>,
-<em>synonyms</em>, <em>oral_ddd</em>, <em>oral_units</em>,
-<em>iv_ddd</em> and <em>iv_units</em>.</p>
+<p>A data set with 120 rows and 11 columns, containing the following
+column names:<br><em>av</em>, <em>name</em>, <em>atc</em>, <em>cid</em>,
+<em>atc_group</em>, <em>synonyms</em>, <em>oral_ddd</em>,
+<em>oral_units</em>, <em>iv_ddd</em>, <em>iv_units</em> and
+<em>loinc</em>.</p>
 <p>This data set is in R available as <code>antivirals</code>, after you
 load the <code>AMR</code> package.</p>
-<p>It was last updated on 27 August 2022 18:49:37 UTC. Find more info
+<p>It was last updated on 13 November 2022 07:46:10 UTC. Find more info
 about the structure of this data set <a href="https://msberends.github.io/AMR/reference/antibiotics.html">here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antivirals.rds" class="external-link">original
-R Data Structure (RDS) file</a> (4 kB)<br>
+R Data Structure (RDS) file</a> (5 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antivirals.txt" class="external-link">tab-separated
-text file</a> (14 kB)<br>
+text file</a> (16 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antivirals.xlsx" class="external-link">Microsoft
-Excel workbook</a> (13 kB)<br>
+Excel workbook</a> (16 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antivirals.feather" class="external-link">Apache
-Feather file</a> (12 kB)<br>
+Feather file</a> (15 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antivirals.parquet" class="external-link">Apache
-Parquet file</a> (10 kB)<br>
+Parquet file</a> (13 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antivirals.sas" class="external-link">SAS
-data file</a> (80 kB)<br>
+data file</a> (84 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antivirals.sav" class="external-link">IBM
-SPSS Statistics data file</a> (27 kB)<br>
+SPSS Statistics data file</a> (30 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/../data-raw/antivirals.dta" class="external-link">Stata
-DTA file</a> (67 kB)</li>
+DTA file</a> (73 kB)</li>
 </ul>
 <p>The tab-separated text file and Microsoft Excel workbook, and SAS,
-SPSS and Stata files all contain the trade names as comma separated
-values.</p>
+SPSS and Stata files all contain the trade names and LOINC codes as
+comma separated values.</p>
 <div class="section level3">
 <h3 id="source-2">Source<a class="anchor" aria-label="anchor" href="#source-2"></a>
 </h3>
@@ -733,6 +741,8 @@ not be used for commercial purposes, but is freely available from the
 WHO CC website for personal use)</li>
 <li><a href="https://pubchem.ncbi.nlm.nih.gov" class="external-link">PubChem by the US
 National Library of Medicine</a></li>
+<li><a href="https://loinc.org" class="external-link">LOINC (Logical Observation Identifiers
+Names and Codes)</a></li>
 </ul>
 </div>
 <div class="section level3">
@@ -740,95 +750,111 @@ National Library of Medicine</a></li>
 </h3>
 <table class="table">
 <colgroup>
-<col width="4%">
-<col width="5%">
-<col width="9%">
-<col width="32%">
-<col width="30%">
-<col width="4%">
-<col width="5%">
+<col width="2%">
+<col width="8%">
 <col width="3%">
 <col width="4%">
+<col width="28%">
+<col width="23%">
+<col width="4%">
+<col width="4%">
+<col width="3%">
+<col width="4%">
+<col width="13%">
 </colgroup>
 <thead><tr class="header">
+<th align="center">av</th>
+<th align="center">name</th>
 <th align="center">atc</th>
 <th align="center">cid</th>
-<th align="center">name</th>
 <th align="center">atc_group</th>
 <th align="center">synonyms</th>
 <th align="center">oral_ddd</th>
 <th align="center">oral_units</th>
 <th align="center">iv_ddd</th>
 <th align="center">iv_units</th>
+<th align="center">loinc</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
+<td align="center">ABA</td>
+<td align="center">Abacavir</td>
 <td align="center">J05AF06</td>
 <td align="center">441300</td>
-<td align="center">Abacavir</td>
 <td align="center">Nucleoside and nucleotide reverse transcriptase
 inhibitors</td>
-<td align="center">Abacavir, Abacavir sulfate, Ziagen</td>
+<td align="center">abacavir sulfate, avacavir, ziagen</td>
 <td align="center">0.6</td>
 <td align="center">g</td>
 <td align="center"></td>
 <td align="center"></td>
+<td align="center">29113-8, 78772-1, 78773-9, …</td>
 </tr>
 <tr class="even">
+<td align="center">ACI</td>
+<td align="center">Aciclovir</td>
 <td align="center">J05AB01</td>
 <td align="center">135398513</td>
-<td align="center">Aciclovir</td>
 <td align="center">Nucleosides and nucleotides excl. reverse
 transcriptase inhibitors</td>
-<td align="center">Acicloftal, Aciclovier, Aciclovir, …</td>
+<td align="center">acicloftal, aciclovier, aciclovirum, …</td>
 <td align="center">4.0</td>
 <td align="center">g</td>
 <td align="center">4</td>
 <td align="center">g</td>
+<td align="center"></td>
 </tr>
 <tr class="odd">
+<td align="center">ADD</td>
+<td align="center">Adefovir dipivoxil</td>
 <td align="center">J05AF08</td>
 <td align="center">60871</td>
-<td align="center">Adefovir dipivoxil</td>
 <td align="center">Nucleoside and nucleotide reverse transcriptase
 inhibitors</td>
-<td align="center">Adefovir di ester, Adefovir dipivoxil, Adefovir
-Dipivoxil, …</td>
+<td align="center">adefovir di, adefovir di ester, adefovir dipivoxyl,
+…</td>
 <td align="center">10.0</td>
 <td align="center">mg</td>
 <td align="center"></td>
 <td align="center"></td>
+<td align="center"></td>
 </tr>
 <tr class="even">
-<td align="center">J05AE05</td>
-<td align="center">65016</td>
-<td align="center">Amprenavir</td>
-<td align="center">Protease inhibitors</td>
-<td align="center">Agenerase, Amprenavir, Amprenavirum, …</td>
-<td align="center">1.2</td>
+<td align="center">AME</td>
+<td align="center">Amenamevir</td>
+<td align="center">J05AX26</td>
+<td align="center">11397521</td>
+<td align="center">Other antivirals</td>
+<td align="center">amenalief</td>
+<td align="center">0.4</td>
 <td align="center">g</td>
+<td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
-<td align="center">J05AP06</td>
-<td align="center">16076883</td>
-<td align="center">Asunaprevir</td>
-<td align="center">Antivirals for treatment of HCV infections</td>
-<td align="center">Asunaprevir, Sunvepra</td>
+<td align="center">AMP</td>
+<td align="center">Amprenavir</td>
+<td align="center">J05AE05</td>
+<td align="center">65016</td>
+<td align="center">Protease inhibitors</td>
+<td align="center">agenerase, carbamate, prozei</td>
+<td align="center">1.2</td>
+<td align="center">g</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
+<td align="center">29114-6, 31028-4, 78791-1</td>
 </tr>
 <tr class="even">
-<td align="center">J05AE08</td>
-<td align="center">148192</td>
-<td align="center">Atazanavir</td>
-<td align="center">Protease inhibitors</td>
-<td align="center">Atazanavir, Atazanavir Base, Latazanavir, …</td>
-<td align="center">0.3</td>
+<td align="center">ASU</td>
+<td align="center">Asunaprevir</td>
+<td align="center">J05AP06</td>
+<td align="center">16076883</td>
+<td align="center">Antivirals for treatment of HCV infections</td>
+<td align="center">sunvepra, sunvepratrade</td>
+<td align="center">0.2</td>
 <td align="center">g</td>
+<td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
 </tr>

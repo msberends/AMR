@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9047</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9049</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,6 +81,11 @@
       <span class="fa fa-capsules"></span>
        
       Get properties of an antibiotic
+    </a>
+    <a class="dropdown-item" href="../reference/av_property.html">
+      <span class="fa fa-capsules"></span>
+       
+      Get properties of an antiviral agent
     </a>
   </div>
 </li>
@@ -300,7 +305,33 @@
         </dt>
         <dd>Guess Antibiotic Column</dd>
       </dl></div><div class="section level2">
-      <h2 id="background-information-on-included-data">Background information on included data<a class="anchor" aria-label="anchor" href="#background-information-on-included-data"></a></h2>
+      <h2 id="other-antiviral-drugs">Other: antiviral drugs<a class="anchor" aria-label="anchor" href="#other-antiviral-drugs"></a></h2>
+      
+      <p class="section-desc"></p><p>This package also provides extensive support for antiviral agents, even though it is not the primary scope of this package. Working with data containing information about antiviral drugs was never easier. Use these functions to get valid properties of antiviral drugs from any input or to clean your input. You can even retrieve drug names and doses from clinical text records, using <code><a href="../reference/av_from_text.html">av_from_text()</a></code>.</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="as.av.html">as.av()</a></code> <code><a href="as.av.html">is.av()</a></code> 
+        </dt>
+        <dd>Transform Input to an Antiviral Agent ID</dd>
+      </dl><dl><dt>
+          
+          <code><a href="av_property.html">av_name()</a></code> <code><a href="av_property.html">av_cid()</a></code> <code><a href="av_property.html">av_synonyms()</a></code> <code><a href="av_property.html">av_tradenames()</a></code> <code><a href="av_property.html">av_group()</a></code> <code><a href="av_property.html">av_atc()</a></code> <code><a href="av_property.html">av_loinc()</a></code> <code><a href="av_property.html">av_ddd()</a></code> <code><a href="av_property.html">av_ddd_units()</a></code> <code><a href="av_property.html">av_info()</a></code> <code><a href="av_property.html">av_url()</a></code> <code><a href="av_property.html">av_property()</a></code> 
+        </dt>
+        <dd>Get Properties of an Antiviral Agent</dd>
+      </dl><dl><dt>
+          
+          <code><a href="av_from_text.html">av_from_text()</a></code> 
+        </dt>
+        <dd>Retrieve Antiviral Drug Names and Doses from Clinical Text</dd>
+      </dl></div><div class="section level2">
+      <h2 id="other-background-information-on-included-data">Other: background information on included data<a class="anchor" aria-label="anchor" href="#other-background-information-on-included-data"></a></h2>
       
       <p class="section-desc"></p><p>Some pages about our package and its external sources. Be sure to read our <a href="./../articles/index.html">How To’s</a> for more information about how to work with functions in this package.</p>
 
@@ -334,7 +365,7 @@
           
           <code><a href="antibiotics.html">antibiotics</a></code> <code><a href="antibiotics.html">antivirals</a></code> 
         </dt>
-        <dd>Data Sets with 585 Antimicrobial Drugs</dd>
+        <dd>Data Sets with 603 Antimicrobial Drugs</dd>
       </dl><dl><dt>
           
           <code><a href="intrinsic_resistant.html">intrinsic_resistant</a></code> 
