@@ -156,7 +156,7 @@ microorganisms %>%
 ```
 
 
-## `antibiotics`: Antibiotic Agents
+## `antibiotics`: Antibiotic (+Antifungal) Drugs
 
 `r structure_txt(antibiotics)`
 
@@ -173,6 +173,7 @@ This data set contains all EARS-Net and ATC codes gathered from WHO and WHONET, 
 * [ATC/DDD index from WHO Collaborating Centre for Drug Statistics Methodology](https://www.whocc.no/atc_ddd_index/) (note: this may not be used for commercial purposes, but is freely available from the WHO CC website for personal use)
 * [PubChem by the US National Library of Medicine](https://pubchem.ncbi.nlm.nih.gov)
 * [WHONET software 2019](https://whonet.org)
+* [LOINC (Logical Observation Identifiers Names and Codes](https://loinc.org)
 
 ### Example content
 
@@ -183,7 +184,7 @@ antibiotics %>%
 ```
 
 
-## `antivirals`: Antiviral Agents
+## `antivirals`: Antiviral Drugs
 
 `r structure_txt(antivirals)`
 
@@ -191,7 +192,7 @@ This data set is in R available as `antivirals`, after you load the `AMR` packag
 
 `r download_txt("antivirals")`
 
-The tab-separated text file and Microsoft Excel workbook, and SAS, SPSS and Stata files all contain the trade names as comma separated values.
+The tab-separated text file and Microsoft Excel workbook, and SAS, SPSS and Stata files all contain the trade names and LOINC codes as comma separated values.
 
 ### Source
 
@@ -199,6 +200,7 @@ This data set contains all ATC codes gathered from WHO and all compound IDs from
 
 * [ATC/DDD index from WHO Collaborating Centre for Drug Statistics Methodology](https://www.whocc.no/atc_ddd_index/) (note: this may not be used for commercial purposes, but is freely available from the WHO CC website for personal use)
 * [PubChem by the US National Library of Medicine](https://pubchem.ncbi.nlm.nih.gov)
+* [LOINC (Logical Observation Identifiers Names and Codes](https://loinc.org)
 
 ### Example content
 
