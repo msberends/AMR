@@ -27,46 +27,38 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-# last updated: 30 October 2022 - Loinc_2.73
+expect_identical(av_name("ACI", language = NULL), "Aciclovir")
+expect_identical(av_atc("ACI"), "J05AB01")
+expect_identical(av_cid("ACI"), as.integer(135398513))
 
-# Steps to reproduce:
-# 1. Create a fake account at https://loinc.org (sad you have to create one...)
-# 2. Download the CSV from https://loinc.org/download/loinc-complete/ (Loinc_2.67_Text_2.67.zip)
-# 3. Read Loinc.csv that's in zip folder LoincTable
-loinc_df <- read.csv("data-raw/Loinc.csv",
-  row.names = NULL,
-  stringsAsFactors = FALSE
+expect_inherits(av_tradenames("ACI"), "character")
+expect_inherits(av_tradenames(c("ACI", "ACI")), "list")
+
+expect_identical(av_group("ACI", language = NULL),"Nucleosides and nucleotides excl. reverse transcriptase inhibitors")
+
+expect_identical(av_name(135398513, language = NULL), "Aciclovir")
+expect_identical(av_name("J05AB01", language = NULL), "Aciclovir")
+
+expect_identical(av_ddd("ACI", "oral"), 4)
+expect_identical(av_ddd_units("ACI", "iv"), "g")
+expect_identical(av_ddd("ACI", "iv"), 4)
+
+expect_identical(
+  av_name(x = c("ACI", "VALA"), tolower = TRUE, language = NULL),
+  c("aciclovir", "valaciclovir")
 )
 
-# 4. Clean and add
-library(dplyr)
-library(cleaner)
-library(AMR)
-loinc_df %>% freq(CLASS) # to find the drugs
-loinc_df <- loinc_df %>% filter(CLASS == "DRUG/TOX")
-ab_names <- antibiotics %>%
-  pull(name) %>%
-  paste0(collapse = "|") %>%
-  paste0("(", ., ")")
+expect_inherits(av_info("ACI"), "list")
 
-antibiotics$loinc <- as.list(rep(NA_character_, nrow(antibiotics)))
-for (i in seq_len(nrow(antibiotics))) {
-  message(i)
-  loinc_ab <- loinc_df %>%
-    filter(COMPONENT %like% paste0("^", antibiotics$name[i])) %>%
-    pull(LOINC_NUM)
-  if (length(loinc_ab) > 0) {
-    antibiotics$loinc[i] <- list(loinc_ab)
-  }
-}
-# sort and fix for empty values
-for (i in 1:nrow(antibiotics)) {
-  loinc <- as.character(sort(unique(tolower(antibiotics[i, "loinc"][[1]]))))
-  antibiotics[i, "loinc"][[1]] <- ifelse(length(loinc[!loinc == ""]) == 0, list(""), list(loinc))
-}
+expect_error(av_property("acic", "invalid property"))
+expect_error(av_name("acic", language = "INVALID"))
+expect_stdout(print(av_name("acic", language = NULL)))
 
-# remember to update R/aa_globals.R for the documentation
+expect_equal(av_name("29113-8", language = NULL), "Abacavir")
+expect_equal(
+  av_loinc("Abacavir"),
+  c("29113-8", "78772-1", "78773-9", "79134-3", "80118-3")
+)
 
-dim(antibiotics) # for R/data.R
-usethis::use_data(antibiotics, overwrite = TRUE)
-rm(antibiotics)
+expect_true(av_url("ACI") %like% "whocc.no")
+expect_warning(av_url("ASP"))

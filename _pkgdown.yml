@@ -102,9 +102,9 @@ navbar:
       - text: "Get properties of an antibiotic"
         icon: "fa-capsules"
         href: "reference/ab_property.html" # reference instead of an article
-      # - text: "Other: benchmarks"
-      #   icon: "fa-shipping-fast"
-      #   href: "articles/benchmarks.html"
+      - text: "Get properties of an antiviral agent"
+        icon: "fa-capsules"
+        href: "reference/av_property.html" # reference instead of an article
     - text: "Manual"
       icon: "fa-book-open"
       href: "reference/index.html"
@@ -175,8 +175,19 @@ reference:
     - "`mean_amr_distance`"
     - "`resistance_predict`"
     - "`guess_ab_col`"
+    
+  - title: "Other: antiviral drugs"
+    desc: >
+      This package also provides extensive support for antiviral agents, even though it is not the primary
+      scope of this package. Working with data containing information about antiviral drugs was never easier.
+      Use these functions to get valid properties of antiviral drugs from any input or to clean your input.
+      You can even retrieve drug names and doses from clinical text records, using `av_from_text()`.
+    contents:
+    - "`as.av`"
+    - "`av_property`"
+    - "`av_from_text`"
 
-  - title: "Background information on included data"
+  - title: "Other: background information on included data"
     desc: >
       Some pages about our package and its external sources. Be sure to read our [How To's](./../articles/index.html)
       for more information about how to work with functions in this package.

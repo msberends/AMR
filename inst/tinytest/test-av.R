@@ -27,46 +27,54 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-# last updated: 30 October 2022 - Loinc_2.73
-
-# Steps to reproduce:
-# 1. Create a fake account at https://loinc.org (sad you have to create one...)
-# 2. Download the CSV from https://loinc.org/download/loinc-complete/ (Loinc_2.67_Text_2.67.zip)
-# 3. Read Loinc.csv that's in zip folder LoincTable
-loinc_df <- read.csv("data-raw/Loinc.csv",
-  row.names = NULL,
-  stringsAsFactors = FALSE
+expect_equal(
+  as.character(as.av(c(
+    "J05AB01",
+    "J 05 AB 01",
+    "Aciclovir",
+    "aciclo",
+    "   aciclo 123",
+    "ACICL",
+    "ACI",
+    "Virorax",
+    "Zovirax"
+  ))),
+  rep("ACI", 9)
 )
 
-# 4. Clean and add
-library(dplyr)
-library(cleaner)
-library(AMR)
-loinc_df %>% freq(CLASS) # to find the drugs
-loinc_df <- loinc_df %>% filter(CLASS == "DRUG/TOX")
-ab_names <- antibiotics %>%
-  pull(name) %>%
-  paste0(collapse = "|") %>%
-  paste0("(", ., ")")
+expect_identical(class(as.av("acic")), c("av", "character"))
+expect_identical(class(antivirals$av), c("av", "character"))
+expect_true(is.av(as.av("acic")))
+expect_stdout(print(as.av("acic")))
+expect_stdout(print(data.frame(a = as.av("acic"))))
 
-antibiotics$loinc <- as.list(rep(NA_character_, nrow(antibiotics)))
-for (i in seq_len(nrow(antibiotics))) {
-  message(i)
-  loinc_ab <- loinc_df %>%
-    filter(COMPONENT %like% paste0("^", antibiotics$name[i])) %>%
-    pull(LOINC_NUM)
-  if (length(loinc_ab) > 0) {
-    antibiotics$loinc[i] <- list(loinc_ab)
-  }
-}
-# sort and fix for empty values
-for (i in 1:nrow(antibiotics)) {
-  loinc <- as.character(sort(unique(tolower(antibiotics[i, "loinc"][[1]]))))
-  antibiotics[i, "loinc"][[1]] <- ifelse(length(loinc[!loinc == ""]) == 0, list(""), list(loinc))
-}
+expect_warning(as.av("J00AA00")) # ATC not yet available in data set
+expect_warning(as.av("UNKNOWN"))
 
-# remember to update R/aa_globals.R for the documentation
+expect_stdout(print(as.av("acic")))
 
-dim(antibiotics) # for R/data.R
-usethis::use_data(antibiotics, overwrite = TRUE)
-rm(antibiotics)
+expect_equal(
+  as.character(as.av("zovirax")),
+  "ACI"
+)
+
+expect_equal(
+  as.character(as.av(c("Abacaivr", "Celvudine"))),
+  c("ABA", "CLE")
+)
+
+expect_warning(as.av("Abacavir Clevudine"))
+
+# based on Levenshtein distance
+expect_identical(av_name("adevofir dypifo", language = NULL), "Adefovir dipivoxil")
+
+# assigning and subsetting
+x <- antivirals$av
+expect_inherits(x[1], "av")
+expect_inherits(x[[1]], "av")
+expect_inherits(c(x[1], x[9]), "av")
+expect_inherits(unique(x[1], x[9]), "av")
+expect_inherits(rep(x[1], 2), "av")
+expect_warning(x[1] <- "invalid code")
+expect_warning(x[[1]] <- "invalid code")
+expect_warning(c(x[1], "test"))

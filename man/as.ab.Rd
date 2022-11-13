@@ -87,8 +87,8 @@ ab_atc("seephthriaaksone") # and even this works
 
 # use ab_* functions to get a specific properties (see ?ab_property);
 # they use as.ab() internally:
-ab_name("J01FA01") # "Erythromycin"
-ab_name("eryt") # "Erythromycin"
+ab_name("J01FA01")
+ab_name("eryt")
 
 \donttest{
 if (require("dplyr")) {

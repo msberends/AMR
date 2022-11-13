@@ -248,11 +248,6 @@ mdro <- function(x = NULL,
     pct_required_classes <- pct_required_classes / 100
   }
 
-  if (!is.null(list(...)$country)) {
-    warning_("in `mdro()`: using `country` is deprecated, use `guideline` instead. See ?mdro")
-    guideline <- list(...)$country
-  }
-
   guideline.bak <- guideline
   if (is.list(guideline)) {
     # Custom MDRO guideline ---------------------------------------------------

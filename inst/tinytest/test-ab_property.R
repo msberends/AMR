@@ -45,10 +45,8 @@ expect_identical(ab_name(21319, language = NULL), "Flucloxacillin")
 expect_identical(ab_name("J01CF05", language = NULL), "Flucloxacillin")
 
 expect_identical(ab_ddd("AMX", "oral"), 1.5)
-expect_warning(ab_ddd("AMX", "oral", units = TRUE)) # old behaviour
 expect_identical(ab_ddd_units("AMX", "iv"), "g")
 expect_identical(ab_ddd("AMX", "iv"), 3)
-expect_identical(ab_ddd_units("AMX", "iv"), "g")
 
 expect_identical(ab_name(x = c("AMC", "PLB"), language = NULL), c("Amoxicillin/clavulanic acid", "Polymyxin B"))
 expect_identical(

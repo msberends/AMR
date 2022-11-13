@@ -27,14 +27,18 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-# get all data from the WHOCC website
+library(dplyr)
+library(tidyr)
+library(rvest)
 
+# get all data from the WHOCC website
 get_atc_table <- function(atc_group) {
   # give as input J0XXX, like atc_group = "J05AB"
   downloaded <- read_html(paste0("https://www.whocc.no/atc_ddd_index/?code=", atc_group, "&showdescription=no"))
   table_title <- downloaded %>%
-    html_nodes(paste0('a[href="./?code=', atc_group, '"]')) %>%
+    html_nodes(paste0('a[href^="./?code=', atc_group, '&"]')) %>%
     html_text()
+  table_title <- table_title[tolower(table_title) != "show text from guidelines"][1]
   table_content <- downloaded %>%
     html_nodes("table") %>%
     html_table(header = TRUE) %>%
@@ -59,12 +63,13 @@ get_atc_table <- function(atc_group) {
 }
 
 # these are the relevant groups for input: https://www.whocc.no/atc_ddd_index/?code=J05A (J05 only contains J05A)
-atc_groups <- c("J05AA", "J05AB", "J05AC", "J05AD", "J05AE", "J05AF", "J05AG", "J05AH", "J05AP", "J05AR", "J05AX")
+atc_groups <- c("J05AA", "J05AB", "J05AC", "J05AD", "J05AE", "J05AF", "J05AG", "J05AH", "J05AJ", "J05AP", "J05AR", "J05AX")
 
 # get the first
 antivirals <- get_atc_table(atc_groups[1])
 # bind all others to it
 for (i in 2:length(atc_groups)) {
+  message(atc_groups[i], "...")
   antivirals <- rbind(antivirals, get_atc_table(atc_groups[i]))
 }
 
@@ -73,7 +78,8 @@ antivirals <- antivirals %>%
   arrange(name) %>%
   as.data.frame(stringsAsFactors = FALSE)
 
-# add PubChem Compound ID (cid) and their trade names - functions are in file to create `antibiotics` data set
+# add PubChem Compound ID (cid) and their trade names
+# see `data-raw/reproduction_of_antibiotics` for get_CID() and get_synonyms()
 CIDs <- get_CID(antivirals$name)
 # these could not be found:
 antivirals[is.na(CIDs), ] %>% View()
@@ -92,7 +98,7 @@ synonyms <- lapply(
 
 antivirals <- antivirals %>%
   transmute(atc,
-    cid = CIDs,
+    cid = as.double(CIDs),
     name,
     atc_group,
     synonyms = unname(synonyms),
@@ -100,7 +106,79 @@ antivirals <- antivirals %>%
     oral_units,
     iv_ddd,
     iv_units
-  )
+  ) %>% 
+  AMR:::dataset_UTF8_to_ASCII()
+
+av_codes <- tibble(name = antivirals$name %>%
+                     strsplit("(, | and )") %>%
+                     unlist() %>%
+                     unique() %>%
+                     sort()) %>% 
+  mutate(av_1st = toupper(abbreviate(name, minlength = 3, use.classes = FALSE))) %>% 
+  filter(!name %in% c("acid", "dipivoxil", "disoproxil", "marboxil", "alafenamide"))
+
+replace_with_av_code <- function(name) {
+  unname(av_codes$av_1st[match(name, av_codes$name)])
+}
+
+names_codes <- antivirals %>% 
+  separate(name,
+           into = paste0("name", c(1:7)),
+           sep = "(, | and )",
+           remove = FALSE,
+           fill = "right") %>%
+  # remove empty columns
+  select(!where(function(x) all(is.na(x)))) %>% 
+  mutate_at(vars(matches("name[1-9]")), replace_with_av_code) %>% 
+  unite(av, matches("name[1-9]"), sep = "+", na.rm = TRUE) %>% 
+  mutate(name = gsub("(, | and )", "/", name))
+substr(names_codes$name, 1, 1) <- toupper(substr(names_codes$name, 1, 1))
+
+antivirals <- bind_cols(
+  names_codes %>% select(av, name),
+  antivirals %>% select(-name)
+)
+class(antivirals$av) <- c("av", "character")
+antivirals <- antivirals %>% AMR:::dataset_UTF8_to_ASCII()
+
+# add loinc, see 'data-raw/loinc.R'
+loinc_df <- read.csv("data-raw/Loinc.csv",
+                     row.names = NULL,
+                     stringsAsFactors = FALSE)
+
+loinc_df <- loinc_df %>% filter(CLASS == "DRUG/TOX")
+av_names <- antivirals %>%
+  pull(name) %>%
+  paste0(collapse = "|") %>%
+  paste0("(", ., ")")
+
+antivirals$loinc <- as.list(rep(NA_character_, nrow(antivirals)))
+for (i in seq_len(nrow(antivirals))) {
+  message(i)
+  loinc_ab <- loinc_df %>%
+    filter(COMPONENT %like% paste0("^", antivirals$name[i])) %>%
+    pull(LOINC_NUM)
+  if (length(loinc_ab) > 0) {
+    antivirals$loinc[i] <- list(loinc_ab)
+  }
+}
+# sort and fix for empty values
+for (i in 1:nrow(antivirals)) {
+  loinc <- as.character(sort(unique(tolower(antivirals[i, "loinc", drop = TRUE][[1]]))))
+  antivirals[i, "loinc"][[1]] <- ifelse(length(loinc[!loinc == ""]) == 0, list(""), list(loinc))
+}
+
+# de-duplicate synonyms
+for (i in 1:nrow(antivirals)) {
+  syn <- as.character(sort(unique(tolower(antivirals[i, "synonyms", drop = TRUE][[1]]))))
+  syn <- syn[!syn %in% tolower(antivirals[i, "name", drop = TRUE])]
+  antivirals[i, "synonyms"][[1]] <- ifelse(length(syn[!syn == ""]) == 0, list(""), list(syn))
+}
+
+antivirals <- antivirals %>% AMR:::dataset_UTF8_to_ASCII()
+
+# check it
+antivirals
 
 # save it
-usethis::use_data(antivirals, overwrite = TRUE)
+usethis::use_data(antivirals, overwrite = TRUE, internal = FALSE, compress = "xz", version = 2)

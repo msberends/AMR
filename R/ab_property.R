@@ -59,38 +59,35 @@
 #' @inheritSection AMR Reference Data Publicly Available
 #' @examples
 #' # all properties:
-#' ab_name("AMX") # "Amoxicillin"
-#' ab_atc("AMX") # "J01CA04" (ATC code from the WHO)
-#' ab_cid("AMX") # 33613 (Compound ID from PubChem)
-#' ab_synonyms("AMX") # a list with brand names of amoxicillin
-#' ab_tradenames("AMX") # same
-#' ab_group("AMX") # "Beta-lactams/penicillins"
-#' ab_atc_group1("AMX") # "Beta-lactam antibacterials, penicillins"
-#' ab_atc_group2("AMX") # "Penicillins with extended spectrum"
-#' ab_url("AMX") # link to the official WHO page
+#' ab_name("AMX")
+#' ab_atc("AMX")
+#' ab_cid("AMX")
+#' ab_synonyms("AMX")
+#' ab_tradenames("AMX")
+#' ab_group("AMX")
+#' ab_atc_group1("AMX")
+#' ab_atc_group2("AMX")
+#' ab_url("AMX")
 #'
 #' # smart lowercase tranformation
-#' ab_name(x = c("AMC", "PLB")) # "Amoxicillin/clavulanic acid" "Polymyxin B"
-#' ab_name(
-#'   x = c("AMC", "PLB"),
-#'   tolower = TRUE
-#' ) # "amoxicillin/clavulanic acid" "polymyxin B"
+#' ab_name(x = c("AMC", "PLB"))
+#' ab_name(x = c("AMC", "PLB"), tolower = TRUE)
 #'
 #' # defined daily doses (DDD)
-#' ab_ddd("AMX", "oral") #  1.5
-#' ab_ddd_units("AMX", "oral") # "g"
-#' ab_ddd("AMX", "iv") #  3
-#' ab_ddd_units("AMX", "iv") # "g"
+#' ab_ddd("AMX", "oral")
+#' ab_ddd_units("AMX", "oral")
+#' ab_ddd("AMX", "iv")
+#' ab_ddd_units("AMX", "iv")
 #'
 #' ab_info("AMX") # all properties as a list
 #'
 #' # all ab_* functions use as.ab() internally, so you can go from 'any' to 'any':
-#' ab_atc("AMP") # ATC code of AMP (ampicillin)
-#' ab_group("J01CA01") # Drug group of ampicillins ATC code
-#' ab_loinc("ampicillin") # LOINC codes of ampicillin
-#' ab_name("21066-6") # "Ampicillin" (using LOINC)
-#' ab_name(6249) # "Ampicillin" (using CID)
-#' ab_name("J01CA01") # "Ampicillin" (using ATC)
+#' ab_atc("AMP")
+#' ab_group("J01CA01")
+#' ab_loinc("ampicillin")
+#' ab_name("21066-6")
+#' ab_name(6249)
+#' ab_name("J01CA01")
 #'
 #' # spelling from different languages and dyslexia are no problem
 #' ab_atc("ceftriaxon")
@@ -244,20 +241,7 @@ ab_ddd <- function(x, administration = "oral", ...) {
   meet_criteria(administration, is_in = c("oral", "iv"), has_length = 1)
 
   x <- as.ab(x, ...)
-  ddd_prop <- administration
-  # old behaviour
-  units <- list(...)$units
-  if (!is.null(units) && isTRUE(units)) {
-    if (message_not_thrown_before("ab_ddd", entire_session = TRUE)) {
-      warning_(
-        "in `ab_ddd()`: using `ab_ddd(..., units = TRUE)` is deprecated, use `ab_ddd_units()` to retrieve units instead.",
-        "This warning will be shown once per session."
-      )
-    }
-    ddd_prop <- paste0(ddd_prop, "_units")
-  } else {
-    ddd_prop <- paste0(ddd_prop, "_ddd")
-  }
+  ddd_prop <- paste0(administration, "_ddd")
   out <- ab_validate(x = x, property = ddd_prop)
 
   if (any(ab_name(x, language = NULL) %like% "/" & is.na(out))) {
@@ -277,16 +261,17 @@ ab_ddd_units <- function(x, administration = "oral", ...) {
   meet_criteria(administration, is_in = c("oral", "iv"), has_length = 1)
 
   x <- as.ab(x, ...)
-  if (any(ab_name(x, language = NULL) %like% "/")) {
+  ddd_prop <- paste0(administration, "_units")
+  out <- ab_validate(x = x, property = ddd_prop)
+
+  if (any(ab_name(x, language = NULL) %like% "/" & is.na(out))) {
     warning_(
-      "in `ab_ddd_units()`: DDDs of combined products are available for different dose combinations and not (yet) part of the AMR package.",
+      "in `ab_ddd_units()`: DDDs of some combined products are available for different dose combinations and not (yet) part of the AMR package.",
       "Please refer to the WHOCC website:\n",
       "www.whocc.no/ddd/list_of_ddds_combined_products/"
     )
   }
-
-  ddd_prop <- paste0(administration, "_units")
-  ab_validate(x = x, property = ddd_prop)
+  out
 }
 
 #' @rdname ab_property

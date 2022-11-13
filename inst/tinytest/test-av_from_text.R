@@ -27,46 +27,32 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-# last updated: 30 October 2022 - Loinc_2.73
-
-# Steps to reproduce:
-# 1. Create a fake account at https://loinc.org (sad you have to create one...)
-# 2. Download the CSV from https://loinc.org/download/loinc-complete/ (Loinc_2.67_Text_2.67.zip)
-# 3. Read Loinc.csv that's in zip folder LoincTable
-loinc_df <- read.csv("data-raw/Loinc.csv",
-  row.names = NULL,
-  stringsAsFactors = FALSE
+expect_identical(
+  av_from_text("28/03/2020 regular aciclovir 500mg po tds")[[1]],
+  as.av("Aciclovir")
+)
+expect_identical(
+  av_from_text("28/03/2020 regular aciclovir 500mg po tds", thorough_search = TRUE)[[1]],
+  as.av("Aciclovir")
+)
+expect_identical(
+  av_from_text("28/03/2020 regular aciclovir 500mg po tds", thorough_search = FALSE)[[1]],
+  as.av("Aciclovir")
+)
+expect_identical(
+  av_from_text("28/03/2020 regular aciclovir 500mg po tds", translate_av = TRUE)[[1]],
+  "Aciclovir"
+)
+expect_identical(
+  av_from_text("administered aciclo and valaciclo", collapse = ", ")[[1]],
+  "ACI, VALA"
 )
 
-# 4. Clean and add
-library(dplyr)
-library(cleaner)
-library(AMR)
-loinc_df %>% freq(CLASS) # to find the drugs
-loinc_df <- loinc_df %>% filter(CLASS == "DRUG/TOX")
-ab_names <- antibiotics %>%
-  pull(name) %>%
-  paste0(collapse = "|") %>%
-  paste0("(", ., ")")
-
-antibiotics$loinc <- as.list(rep(NA_character_, nrow(antibiotics)))
-for (i in seq_len(nrow(antibiotics))) {
-  message(i)
-  loinc_ab <- loinc_df %>%
-    filter(COMPONENT %like% paste0("^", antibiotics$name[i])) %>%
-    pull(LOINC_NUM)
-  if (length(loinc_ab) > 0) {
-    antibiotics$loinc[i] <- list(loinc_ab)
-  }
-}
-# sort and fix for empty values
-for (i in 1:nrow(antibiotics)) {
-  loinc <- as.character(sort(unique(tolower(antibiotics[i, "loinc"][[1]]))))
-  antibiotics[i, "loinc"][[1]] <- ifelse(length(loinc[!loinc == ""]) == 0, list(""), list(loinc))
-}
-
-# remember to update R/aa_globals.R for the documentation
-
-dim(antibiotics) # for R/data.R
-usethis::use_data(antibiotics, overwrite = TRUE)
-rm(antibiotics)
+expect_identical(
+  av_from_text("28/03/2020 regular aciclo 500mg po tds", type = "dose")[[1]],
+  500
+)
+expect_identical(
+  av_from_text("28/03/2020 regular aciclo 500mg po tds", type = "admin")[[1]],
+  "oral"
+)
