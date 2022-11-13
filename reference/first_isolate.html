@@ -12,7 +12,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9049</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9050</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -308,10 +308,10 @@
 
 
 <p>This is a more reliable method, since it also <em>weighs</em> the antibiogram (antimicrobial test results) yielding so-called 'first weighted isolates'. There are two different methods to weigh the antibiogram:</p><ol><li><p>Using <code>type = "points"</code> and argument <code>points_threshold</code> (default)</p>
-<p>This method weighs <em>all</em> antimicrobial agents available in the data set. Any difference from I to S or R (or vice versa) counts as <code>0.5</code> points, a difference from S to R (or vice versa) counts as <code>1</code> point. When the sum of points exceeds <code>points_threshold</code>, which defaults to <code>2</code>, an isolate will be selected as a first weighted isolate.</p>
+<p>This method weighs <em>all</em> antimicrobial drugs available in the data set. Any difference from I to S or R (or vice versa) counts as <code>0.5</code> points, a difference from S to R (or vice versa) counts as <code>1</code> point. When the sum of points exceeds <code>points_threshold</code>, which defaults to <code>2</code>, an isolate will be selected as a first weighted isolate.</p>
 <p>All antimicrobials are internally selected using the <code><a href="key_antimicrobials.html">all_antimicrobials()</a></code> function. The output of this function does not need to be passed to the <code>first_isolate()</code> function.</p></li>
 <li><p>Using <code>type = "keyantimicrobials"</code> and argument <code>ignore_I</code></p>
-<p>This method only weighs specific antimicrobial agents, called <em>key antimicrobials</em>. Any difference from S to R (or vice versa) in these key antimicrobials will select an isolate as a first weighted isolate. With <code>ignore_I = FALSE</code>, also differences from I to S or R (or vice versa) will lead to this.</p>
+<p>This method only weighs specific antimicrobial drugs, called <em>key antimicrobials</em>. Any difference from S to R (or vice versa) in these key antimicrobials will select an isolate as a first weighted isolate. With <code>ignore_I = FALSE</code>, also differences from I to S or R (or vice versa) will lead to this.</p>
 <p>Key antimicrobials are internally selected using the <code><a href="key_antimicrobials.html">key_antimicrobials()</a></code> function, but can also be added manually as a variable to the data and set in the <code>col_keyantimicrobials</code> argument. Another option is to pass the output of the <code><a href="key_antimicrobials.html">key_antimicrobials()</a></code> function directly to the <code>col_keyantimicrobials</code> argument.</p></li>
 </ol><p>The default method is phenotype-based (using <code>type = "points"</code>) and episode-based (using <code>episode_days = 365</code>). This makes sure that every genus-species combination is selected per patient once per year, while taking into account all antimicrobial test results. If no antimicrobial test results are available in the data set, only the episode-based method is applied at default.</p>
 </div>

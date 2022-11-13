@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9049</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9050</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -176,19 +176,19 @@
 
 
 <dt>universal</dt>
-<dd><p>names of <strong>broad-spectrum</strong> antimicrobial agents, case-insensitive. Set to <code>NULL</code> to ignore. See <em>Details</em> for the default agents.</p></dd>
+<dd><p>names of <strong>broad-spectrum</strong> antimicrobial drugs, case-insensitive. Set to <code>NULL</code> to ignore. See <em>Details</em> for the default antimicrobial drugs</p></dd>
 
 
 <dt>gram_negative</dt>
-<dd><p>names of antibiotic agents for <strong>Gram-positives</strong>, case-insensitive. Set to <code>NULL</code> to ignore. See <em>Details</em> for the default agents.</p></dd>
+<dd><p>names of antibiotic drugs for <strong>Gram-positives</strong>, case-insensitive. Set to <code>NULL</code> to ignore. See <em>Details</em> for the default antibiotic drugs</p></dd>
 
 
 <dt>gram_positive</dt>
-<dd><p>names of antibiotic agents for <strong>Gram-negatives</strong>, case-insensitive. Set to <code>NULL</code> to ignore. See <em>Details</em> for the default agents.</p></dd>
+<dd><p>names of antibiotic drugs for <strong>Gram-negatives</strong>, case-insensitive. Set to <code>NULL</code> to ignore. See <em>Details</em> for the default antibiotic drugs</p></dd>
 
 
 <dt>antifungal</dt>
-<dd><p>names of antifungal agents for <strong>fungi</strong>, case-insensitive. Set to <code>NULL</code> to ignore. See <em>Details</em> for the default agents.</p></dd>
+<dd><p>names of antifungal drugs for <strong>fungi</strong>, case-insensitive. Set to <code>NULL</code> to ignore. See <em>Details</em> for the default antifungal drugs</p></dd>
 
 
 <dt>only_rsi_columns</dt>
@@ -218,27 +218,27 @@
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The <code>key_antimicrobials()</code> and <code>all_antimicrobials()</code> functions are context-aware. This means that the <code>x</code> argument can be left blank if used inside a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> call, see <em>Examples</em>.</p>
-<p>The function <code>key_antimicrobials()</code> returns a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector with 12 antimicrobial results for every isolate. The function <code>all_antimicrobials()</code> returns a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector with all antimicrobial results for every isolate. These vectors can then be compared using <code>antimicrobials_equal()</code>, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (<code>"."</code>) by <code>key_antimicrobials()</code> and ignored by <code>antimicrobials_equal()</code>.</p>
+<p>The function <code>key_antimicrobials()</code> returns a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector with 12 antimicrobial results for every isolate. The function <code>all_antimicrobials()</code> returns a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector with all antimicrobial drug results for every isolate. These vectors can then be compared using <code>antimicrobials_equal()</code>, to check if two isolates have generally the same antibiogram. Missing and invalid values are replaced with a dot (<code>"."</code>) by <code>key_antimicrobials()</code> and ignored by <code>antimicrobials_equal()</code>.</p>
 <p>Please see the <code><a href="first_isolate.html">first_isolate()</a></code> function how these important functions enable the 'phenotype-based' method for determination of first isolates.</p>
-<p>The default antimicrobial agents used for <strong>all rows</strong> (set in <code>universal</code>) are:</p><ul><li><p>Ampicillin</p></li>
+<p>The default antimicrobial drugs used for <strong>all rows</strong> (set in <code>universal</code>) are:</p><ul><li><p>Ampicillin</p></li>
 <li><p>Amoxicillin/clavulanic acid</p></li>
 <li><p>Cefuroxime</p></li>
 <li><p>Ciprofloxacin</p></li>
 <li><p>Piperacillin/tazobactam</p></li>
 <li><p>Trimethoprim/sulfamethoxazole</p></li>
-</ul><p>The default antimicrobial agents used for <strong>Gram-negative bacteria</strong> (set in <code>gram_negative</code>) are:</p><ul><li><p>Cefotaxime</p></li>
+</ul><p>The default antimicrobial drugs used for <strong>Gram-negative bacteria</strong> (set in <code>gram_negative</code>) are:</p><ul><li><p>Cefotaxime</p></li>
 <li><p>Ceftazidime</p></li>
 <li><p>Colistin</p></li>
 <li><p>Gentamicin</p></li>
 <li><p>Meropenem</p></li>
 <li><p>Tobramycin</p></li>
-</ul><p>The default antimicrobial agents used for <strong>Gram-positive bacteria</strong> (set in <code>gram_positive</code>) are:</p><ul><li><p>Erythromycin</p></li>
+</ul><p>The default antimicrobial drugs used for <strong>Gram-positive bacteria</strong> (set in <code>gram_positive</code>) are:</p><ul><li><p>Erythromycin</p></li>
 <li><p>Oxacillin</p></li>
 <li><p>Rifampin</p></li>
 <li><p>Teicoplanin</p></li>
 <li><p>Tetracycline</p></li>
 <li><p>Vancomycin</p></li>
-</ul><p>The default antimicrobial agents used for <strong>fungi</strong> (set in <code>antifungal</code>) are:</p><ul><li><p>Anidulafungin</p></li>
+</ul><p>The default antimicrobial drugs used for <strong>fungi</strong> (set in <code>antifungal</code>) are:</p><ul><li><p>Anidulafungin</p></li>
 <li><p>Caspofungin</p></li>
 <li><p>Fluconazole</p></li>
 <li><p>Miconazole</p></li>
