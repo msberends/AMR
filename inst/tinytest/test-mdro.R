@@ -27,8 +27,6 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-expect_error(suppressWarnings(mdro(example_isolates, country = "invalid", col_mo = "mo", info = TRUE)))
-expect_error(suppressWarnings(mdro(example_isolates, country = "fr", info = TRUE)))
 expect_error(mdro(example_isolates, guideline = c("BRMO", "MRGN"), info = TRUE))
 expect_error(mdro(example_isolates, col_mo = "invalid", info = TRUE))
 

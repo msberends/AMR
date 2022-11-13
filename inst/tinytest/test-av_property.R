@@ -40,7 +40,6 @@ expect_identical(av_name(135398513, language = NULL), "Aciclovir")
 expect_identical(av_name("J05AB01", language = NULL), "Aciclovir")
 
 expect_identical(av_ddd("ACI", "oral"), 4)
-expect_warning(av_ddd("ACI", "oral", units = TRUE)) # old behaviour
 expect_identical(av_ddd_units("ACI", "iv"), "g")
 expect_identical(av_ddd("ACI", "iv"), 4)
 
