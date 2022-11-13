@@ -2,7 +2,7 @@
 % Please edit documentation in R/av.R
 \name{as.av}
 \alias{as.av}
-\alias{ab}
+\alias{av}
 \alias{is.av}
 \title{Transform Input to an Antiviral Agent ID}
 \usage{
