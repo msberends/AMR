@@ -853,7 +853,7 @@ as_rsi_method <- function(method_short,
     is_intrinsic_r <- paste(mo[i], ab_param) %in% AMR_env$intrinsic_resistant
     any_is_intrinsic_resistant <- any_is_intrinsic_resistant | is_intrinsic_r
 
-    if (isTRUE(add_intrinsic_resistance) & is_intrinsic_r) {
+    if (isTRUE(add_intrinsic_resistance) && isTRUE(is_intrinsic_r)) {
       if (guideline_coerced %unlike% "EUCAST") {
         if (message_not_thrown_before("as.rsi", "intrinsic")) {
           warning_("in `as.rsi()`: using 'add_intrinsic_resistance' is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.")
@@ -985,17 +985,16 @@ as_rsi_method <- function(method_short,
         data.frame(
           datetime = Sys.time(),
           index = i,
-          ab_input = ab.bak[1],
-          ab_considered = ab[1],
-          mo_input = mo.bak[1],
-          mo_considered = mo[1],
+          ab_userinput = ab.bak[1],
+          ab_actual = ab[1],
+          mo_userinput = mo.bak[1],
+          mo_actual = mo[1],
           guideline = guideline_coerced,
           ref_table = get_record[, "ref_tbl", drop = TRUE],
           method = method,
-          breakpoint_S = get_record[, "breakpoint_S", drop = TRUE],
-          breakpoint_R = get_record[, "breakpoint_R", drop = TRUE],
           input = as.double(x[i]),
-          interpretation = new_rsi[i],
+          outcome = new_rsi[i],
+          breakpoint_S_R = paste0(get_record[, "breakpoint_S", drop = TRUE], "-", get_record[, "breakpoint_R", drop = TRUE]),
           stringsAsFactors = FALSE
         )
       )
@@ -1045,11 +1044,11 @@ rsi_interpretation_history <- function(clean = FALSE) {
   out <- out.bak
   if (NROW(out) == 0) {
     message_("No results to return. Run `as.rsi()` on MIC values or disk diffusion zones first to see a 'logbook' data set here.")
-    return(NULL)
+    return(invisible(NULL))
   }
-  out$ab_considered <- as.ab(out$ab_considered)
-  out$mo_considered <- as.mo(out$mo_considered)
-  out$interpretation <- as.rsi(out$interpretation)
+  out$ab_actual <- as.ab(out$ab_actual)
+  out$mo_actual <- as.mo(out$mo_actual)
+  out$outcome <- as.rsi(out$outcome)
   # keep stored for next use
   if (isTRUE(clean)) {
     AMR_env$rsi_interpretation_history <- AMR_env$rsi_interpretation_history[0, , drop = FALSE]

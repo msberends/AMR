@@ -114,7 +114,7 @@ as.av <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   x_unknown_ATCs <- character(0)
 
   note_if_more_than_one_found <- function(found, index, from_text) {
-    if (initial_search == TRUE && isTRUE(length(from_text) > 1)) {
+    if (isTRUE(initial_search) && isTRUE(length(from_text) > 1)) {
       avnames <- av_name(from_text, tolower = TRUE, initial_search = FALSE)
       if (av_name(found[1L], language = NULL) %like% "(clavulanic acid|avibactam)") {
         avnames <- avnames[!avnames %in% c("clavulanic acid", "avibactam")]
@@ -157,13 +157,13 @@ as.av <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
   x_new[is.na(x)] <- NA
   already_known[is.na(x)] <- FALSE
 
-  if (initial_search == TRUE && sum(already_known) < length(x)) {
+  if (isTRUE(initial_search) && sum(already_known) < length(x)) {
     progress <- progress_ticker(n = sum(!already_known), n_min = 25, print = info) # start if n >= 25
     on.exit(close(progress))
   }
 
   for (i in which(!already_known)) {
-    if (initial_search == TRUE) {
+    if (isTRUE(initial_search)) {
       progress$tick()
     }
 
@@ -286,7 +286,7 @@ as.av <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
 
     # INITIAL SEARCH - More uncertain results ----
 
-    if (initial_search == TRUE && fast_mode == FALSE) {
+    if (isTRUE(initial_search) && fast_mode == FALSE) {
       # only run on first try
 
       # try by removing all spaces
@@ -452,12 +452,12 @@ as.av <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
     x_unknown <- c(x_unknown, x_bak[x[i] == x_bak_clean][1])
   }
 
-  if (initial_search == TRUE && sum(already_known) < length(x)) {
+  if (isTRUE(initial_search) && sum(already_known) < length(x)) {
     close(progress)
   }
 
   # save to package env to save time for next time
-  if (initial_search == TRUE) {
+  if (isTRUE(initial_search)) {
     AMR_env$av_previously_coerced <- AMR_env$av_previously_coerced[which(!AMR_env$av_previously_coerced$x %in% x), , drop = FALSE]
     AMR_env$av_previously_coerced <- unique(rbind(AMR_env$av_previously_coerced,
       data.frame(

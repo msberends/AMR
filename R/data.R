@@ -281,7 +281,7 @@
 #' - `original_txt`\cr Original text in the PDF file of EUCAST
 #' - `eucast_version`\cr Version number of the EUCAST Clinical Breakpoints guideline to which these dosages apply
 #' @details
-#' This data set is based on `r format_eucast_version_nr(11.0)`.
+#' This data set is based on `r format_eucast_version_nr(12.0)` and `r format_eucast_version_nr(11.0)`.
 #'
 #' ### Direct download
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).

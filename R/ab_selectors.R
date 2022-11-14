@@ -685,7 +685,7 @@ all.ab_selector_any_all <- function(..., na.rm = FALSE) {
   # e.g., example_isolates %>% filter(all(carbapenems() == "R"))
   # so just return the vector as is, only correcting for na.rm
   out <- unclass(c(...))
-  if (na.rm == TRUE) {
+  if (isTRUE(na.rm)) {
     out <- out[!is.na(out)]
   }
   out
@@ -699,7 +699,7 @@ any.ab_selector_any_all <- function(..., na.rm = FALSE) {
   # e.g., example_isolates %>% filter(any(carbapenems() == "R"))
   # so just return the vector as is, only correcting for na.rm
   out <- unclass(c(...))
-  if (na.rm == TRUE) {
+  if (isTRUE(na.rm)) {
     out <- out[!is.na(out)]
   }
   out

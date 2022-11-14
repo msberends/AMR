@@ -197,7 +197,7 @@ resistance_predict <- function(x,
   if (model %in% c("binomial", "binom", "logit")) {
     model <- "binomial"
     model_lm <- with(df, glm(df_matrix ~ year, family = binomial))
-    if (info == TRUE) {
+    if (isTRUE(info)) {
       cat("\nLogistic regression model (logit) with binomial distribution")
       cat("\n------------------------------------------------------------\n")
       print(summary(model_lm))
@@ -209,7 +209,7 @@ resistance_predict <- function(x,
   } else if (model %in% c("loglin", "poisson")) {
     model <- "poisson"
     model_lm <- with(df, glm(R ~ year, family = poisson))
-    if (info == TRUE) {
+    if (isTRUE(info)) {
       cat("\nLog-linear regression model (loglin) with poisson distribution")
       cat("\n--------------------------------------------------------------\n")
       print(summary(model_lm))
@@ -221,7 +221,7 @@ resistance_predict <- function(x,
   } else if (model %in% c("lin", "linear")) {
     model <- "linear"
     model_lm <- with(df, lm((R / (R + S)) ~ year))
-    if (info == TRUE) {
+    if (isTRUE(info)) {
       cat("\nLinear regression model")
       cat("\n-----------------------\n")
       print(summary(model_lm))

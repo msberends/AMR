@@ -1,4 +1,4 @@
-# AMR 1.8.2.9050
+# AMR 1.8.2.9051
 
 This version will eventually become v2.0! We're happy to reach a new major milestone soon!
 
@@ -15,7 +15,7 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * Using `units` in `ab_ddd(..., units = "...")` had been deprecated and is now not supported anymore. Use `ab_ddd_units()` instead.
 
 ### New
-* **EUCAST 2022 and CLSI 2022 guidelines** have been added for `as.rsi()`. EUCAST 2022 is now the new default guideline for all MIC and disks diffusion interpretations.
+* **EUCAST 2022 and CLSI 2022 guidelines** have been added for `as.rsi()`. EUCAST 2022 (v12.0) is now the new default guideline for all MIC and disks diffusion interpretations, and for `eucast_rules()` to apply EUCAST Expert Rules.
 * Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. We are very grateful for the valuable input by our colleagues from other countries. The `AMR` package is now available in 16 languages. The automatic language determination will give a note at start-up on systems in supported languages.
 * **All new algorithm for `as.mo()`** (and thus all `mo_*()` functions) while still following our original set-up as described in our recently submitted JSS paper (DOI [10.18637/jss.v104.i03](https://doi.org/10.18637/jss.v104.i03)).
   * A new argument `keep_synonyms` allows to *not* correct for updated taxonomy, in favour of the now deleted argument `allow_uncertain`

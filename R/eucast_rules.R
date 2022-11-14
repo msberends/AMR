@@ -165,7 +165,7 @@ eucast_rules <- function(x,
                          info = interactive(),
                          rules = getOption("AMR_eucastrules", default = c("breakpoints", "expert")),
                          verbose = FALSE,
-                         version_breakpoints = 11.0,
+                         version_breakpoints = 12.0,
                          version_expertrules = 3.3,
                          ampc_cephalosporin_resistance = NA,
                          only_rsi_columns = FALSE,
@@ -182,13 +182,13 @@ eucast_rules <- function(x,
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   meet_criteria(custom_rules, allow_class = "custom_eucast_rules", allow_NULL = TRUE)
 
-  if ("custom" %in% rules & is.null(custom_rules)) {
+  if ("custom" %in% rules && is.null(custom_rules)) {
     warning_("in `eucast_rules()`: no custom rules were set with the `custom_rules` argument",
       immediate = TRUE
     )
     rules <- rules[rules != "custom"]
     if (length(rules) == 0) {
-      if (info == TRUE) {
+      if (isTRUE(info)) {
         message_("No other rules were set, returning original data", add_fn = font_red, as_note = FALSE)
       }
       return(x)
@@ -204,11 +204,11 @@ eucast_rules <- function(x,
   expertrules_info <- EUCAST_VERSION_EXPERT_RULES[[which(as.double(names(EUCAST_VERSION_EXPERT_RULES)) == version_expertrules)]]
 
   # support old setting (until AMR v1.3.0)
-  if (missing(rules) & !is.null(getOption("AMR.eucast_rules", default = NULL))) {
+  if (missing(rules) && !is.null(getOption("AMR.eucast_rules", default = NULL))) {
     rules <- getOption("AMR.eucast_rules")
   }
 
-  if (interactive() & verbose == TRUE & info == TRUE) {
+  if (interactive() && isTRUE(verbose) && isTRUE(info)) {
     txt <- paste0(
       "WARNING: In Verbose mode, the eucast_rules() function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way.",
       "\n\nThis may overwrite your existing data if you use e.g.:",
@@ -247,9 +247,9 @@ eucast_rules <- function(x,
         cat(font_subtle(" (no changes)\n"))
       } else {
         # opening
-        if (n_added > 0 & n_changed == 0) {
+        if (n_added > 0 && n_changed == 0) {
           cat(font_green(" ("))
-        } else if (n_added == 0 & n_changed > 0) {
+        } else if (n_added == 0 && n_changed > 0) {
           cat(font_blue(" ("))
         } else {
           cat(font_grey(" ("))
@@ -263,7 +263,7 @@ eucast_rules <- function(x,
           }
         }
         # separator
-        if (n_added > 0 & n_changed > 0) {
+        if (n_added > 0 && n_changed > 0) {
           cat(font_grey(", "))
         }
         # changes
@@ -275,9 +275,9 @@ eucast_rules <- function(x,
           }
         }
         # closing
-        if (n_added > 0 & n_changed == 0) {
+        if (n_added > 0 && n_changed == 0) {
           cat(font_green(")\n"))
-        } else if (n_added == 0 & n_changed > 0) {
+        } else if (n_added == 0 && n_changed > 0) {
           cat(font_blue(")\n"))
         } else {
           cat(font_grey(")\n"))
@@ -314,16 +314,16 @@ eucast_rules <- function(x,
     ...
   )
 
-  if (!"AMP" %in% names(cols_ab) & "AMX" %in% names(cols_ab)) {
+  if (!"AMP" %in% names(cols_ab) && "AMX" %in% names(cols_ab)) {
     # ampicillin column is missing, but amoxicillin is available
-    if (info == TRUE) {
+    if (isTRUE(info)) {
       message_("Using column '", cols_ab[names(cols_ab) == "AMX"], "' as input for ampicillin since many EUCAST rules depend on it.")
     }
     cols_ab <- c(cols_ab, c(AMP = unname(cols_ab[names(cols_ab) == "AMX"])))
   }
 
   # data preparation ----
-  if (info == TRUE & NROW(x) > 10000) {
+  if (isTRUE(info) && NROW(x) > 10000) {
     message_("Preparing data...", appendLF = FALSE, as_note = FALSE)
   }
 
@@ -430,7 +430,7 @@ eucast_rules <- function(x,
   x <- left_join_microorganisms(x, by = col_mo, suffix = c("_oldcols", ""))
   x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL, info = FALSE)
   x$genus_species <- trimws(paste(x$genus, x$species))
-  if (info == TRUE & NROW(x) > 10000) {
+  if (isTRUE(info) && NROW(x) > 10000) {
     message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
   }
 
@@ -448,7 +448,7 @@ eucast_rules <- function(x,
 
   # Other rules: enzyme inhibitors ------------------------------------------
   if (any(c("all", "other") %in% rules)) {
-    if (info == TRUE) {
+    if (isTRUE(info)) {
       cat("\n")
       cat(word_wrap(
         font_bold(paste0(
@@ -487,7 +487,7 @@ eucast_rules <- function(x,
           ab_enzyme$base_name[i], " ('", font_bold(col_base), "') = R if ",
           tolower(ab_enzyme$enzyme_name[i]), " ('", font_bold(col_enzyme), "') = R"
         )
-        if (info == TRUE) {
+        if (isTRUE(info)) {
           cat(word_wrap(rule_current,
             width = getOption("width") - 30,
             extra_indent = 6
@@ -514,7 +514,7 @@ eucast_rules <- function(x,
         x <- run_changes$output
         warn_lacking_rsi_class <- c(warn_lacking_rsi_class, run_changes$rsi_warn)
         # Print number of new changes
-        if (info == TRUE) {
+        if (isTRUE(info)) {
           # print only on last one of rules in this group
           txt_ok(n_added = n_added, n_changed = n_changed, warned = warned)
           # and reset counters
@@ -528,7 +528,7 @@ eucast_rules <- function(x,
           tolower(ab_enzyme$base_name[i]), " ('", font_bold(col_base), "') = S"
         )
 
-        if (info == TRUE) {
+        if (isTRUE(info)) {
           cat(word_wrap(rule_current,
             width = getOption("width") - 30,
             extra_indent = 6
@@ -555,7 +555,7 @@ eucast_rules <- function(x,
         x <- run_changes$output
         warn_lacking_rsi_class <- c(warn_lacking_rsi_class, run_changes$rsi_warn)
         # Print number of new changes
-        if (info == TRUE) {
+        if (isTRUE(info)) {
           # print only on last one of rules in this group
           txt_ok(n_added = n_added, n_changed = n_changed, warned = warned)
           # and reset counters
@@ -565,14 +565,14 @@ eucast_rules <- function(x,
       }
     }
   } else {
-    if (info == TRUE) {
+    if (isTRUE(info)) {
       cat("\n")
       message_("Skipping inheritance rules defined by this AMR package, such as setting trimethoprim (TMP) = R where trimethoprim/sulfamethoxazole (SXT) = R. Add \"other\" or \"all\" to the `rules` argument to apply those rules.")
     }
   }
 
-  if (!any(c("all", "custom") %in% rules) & !is.null(custom_rules)) {
-    if (info == TRUE) {
+  if (!any(c("all", "custom") %in% rules) && !is.null(custom_rules)) {
+    if (isTRUE(info)) {
       message_("Skipping custom EUCAST rules, since the `rules` argument does not contain \"custom\".")
     }
     custom_rules <- NULL
@@ -626,14 +626,14 @@ eucast_rules <- function(x,
     rule_group_previous <- eucast_rules_df[max(1, i - 1), "reference.rule_group", drop = TRUE]
     rule_group_current <- eucast_rules_df[i, "reference.rule_group", drop = TRUE]
     # don't apply rules if user doesn't want to apply them
-    if (rule_group_current %like% "breakpoint" & !any(c("all", "breakpoints") %in% rules)) {
+    if (rule_group_current %like% "breakpoint" && !any(c("all", "breakpoints") %in% rules)) {
       next
     }
-    if (rule_group_current %like% "expert" & !any(c("all", "expert") %in% rules)) {
+    if (rule_group_current %like% "expert" && !any(c("all", "expert") %in% rules)) {
       next
     }
 
-    if (isFALSE(info) | isFALSE(verbose)) {
+    if (isFALSE(info) || isFALSE(verbose)) {
       rule_text <- ""
     } else {
       if (is.na(eucast_rules_df[i, "and_these_antibiotics", drop = TRUE])) {
@@ -657,9 +657,9 @@ eucast_rules <- function(x,
       rule_next <- ""
     }
 
-    if (info == TRUE) {
+    if (isTRUE(info)) {
       # Print EUCAST intro ------------------------------------------------------
-      if (rule_group_current %unlike% "other" & eucast_notification_shown == FALSE) {
+      if (rule_group_current %unlike% "other" && eucast_notification_shown == FALSE) {
         cat(
           paste0(
             "\n", font_grey(strrep("-", 0.95 * options()$width)), "\n",
@@ -781,7 +781,7 @@ eucast_rules <- function(x,
       )
     } else {
       source_antibiotics <- get_ab_from_namespace(source_antibiotics, cols_ab)
-      if (length(source_value) == 1 & length(source_antibiotics) > 1) {
+      if (length(source_value) == 1 && length(source_antibiotics) > 1) {
         source_value <- rep(source_value, length(source_antibiotics))
       }
       if (length(source_antibiotics) == 0) {
@@ -838,7 +838,7 @@ eucast_rules <- function(x,
     x <- run_changes$output
     warn_lacking_rsi_class <- c(warn_lacking_rsi_class, run_changes$rsi_warn)
     # Print number of new changes ---------------------------------------------
-    if (info == TRUE & rule_next != rule_current) {
+    if (isTRUE(info) && rule_next != rule_current) {
       # print only on last one of rules in this group
       txt_ok(n_added = n_added, n_changed = n_changed, warned = warned)
       # and reset counters
@@ -849,7 +849,7 @@ eucast_rules <- function(x,
 
   # Apply custom rules ----
   if (!is.null(custom_rules)) {
-    if (info == TRUE) {
+    if (isTRUE(info)) {
       cat("\n")
       cat(font_bold("Custom EUCAST rules, set by user"), "\n")
     }
@@ -868,7 +868,7 @@ eucast_rules <- function(x,
         format_custom_query_rule(rule$query, colours = FALSE), ": ",
         get_antibiotic_names(cols)
       )
-      if (info == TRUE) {
+      if (isTRUE(info)) {
         # print rule
         cat(italicise_taxonomy(word_wrap(format_custom_query_rule(rule$query, colours = FALSE),
           width = getOption("width") - 30,
@@ -904,7 +904,7 @@ eucast_rules <- function(x,
       x <- run_changes$output
       warn_lacking_rsi_class <- c(warn_lacking_rsi_class, run_changes$rsi_warn)
       # Print number of new changes ---------------------------------------------
-      if (info == TRUE & rule_next != rule_current) {
+      if (isTRUE(info) && rule_next != rule_current) {
         # print only on last one of rules in this group
         txt_ok(n_added = n_added, n_changed = n_changed, warned = warned)
         # and reset counters
@@ -915,7 +915,7 @@ eucast_rules <- function(x,
   }
 
   # Print overview ----------------------------------------------------------
-  if (info == TRUE | verbose == TRUE) {
+  if (isTRUE(info) || isTRUE(verbose)) {
     verbose_info <- x.bak %pm>%
       pm_mutate(row = pm_row_number()) %pm>%
       pm_select(`.rowid`, row) %pm>%
@@ -929,8 +929,8 @@ eucast_rules <- function(x,
     rownames(verbose_info) <- NULL
   }
 
-  if (info == TRUE) {
-    if (verbose == TRUE) {
+  if (isTRUE(info)) {
+    if (isTRUE(verbose)) {
       wouldve <- "would have "
     } else {
       wouldve <- ""
@@ -1010,9 +1010,9 @@ eucast_rules <- function(x,
 
     cat(paste0(font_grey(strrep("-", 0.95 * options()$width)), "\n"))
 
-    if (verbose == FALSE & total_n_added + total_n_changed > 0) {
+    if (isFALSE(verbose) && total_n_added + total_n_changed > 0) {
       cat("\n", word_wrap("Use ", font_bold("eucast_rules(..., verbose = TRUE)"), " (on your original data) to get a data.frame with all specified edits instead."), "\n\n", sep = "")
-    } else if (verbose == TRUE) {
+    } else if (isTRUE(verbose)) {
       cat("\n", word_wrap("Used 'Verbose mode' (", font_bold("verbose = TRUE"), "), which returns a data.frame with all specified edits.\nUse ", font_bold("verbose = FALSE"), " to apply the rules on your data."), "\n\n", sep = "")
     }
   }
@@ -1034,7 +1034,7 @@ eucast_rules <- function(x,
   }
 
   # Return data set ---------------------------------------------------------
-  if (verbose == TRUE) {
+  if (isTRUE(verbose)) {
     as_original_data_class(verbose_info, old_attributes$class)
   } else {
     # x was analysed with only unique rows, so join everything together again
@@ -1072,16 +1072,16 @@ edit_rsi <- function(x,
   )
 
   txt_error <- function() {
-    if (info == TRUE) cat("", font_red_bg(" ERROR "), "\n\n")
+    if (isTRUE(info)) cat("", font_red_bg(" ERROR "), "\n\n")
   }
   txt_warning <- function() {
     if (warned == FALSE) {
-      if (info == TRUE) cat(" ", font_orange_bg(" WARNING "), sep = "")
+      if (isTRUE(info)) cat(" ", font_orange_bg(" WARNING "), sep = "")
     }
     warned <<- TRUE
   }
 
-  if (length(rows) > 0 & length(cols) > 0) {
+  if (length(rows) > 0 && length(cols) > 0) {
     new_edits <- x
     if (any(!vapply(FUN.VALUE = logical(1), x[, cols, drop = FALSE], is.rsi), na.rm = TRUE)) {
       track_changes$rsi_warn <- cols[!vapply(FUN.VALUE = logical(1), x[, cols, drop = FALSE], is.rsi)]
@@ -1127,7 +1127,7 @@ edit_rsi <- function(x,
     )
 
     track_changes$output <- new_edits
-    if ((info == TRUE | verbose == TRUE) && !isTRUE(all.equal(x, track_changes$output))) {
+    if ((isTRUE(info) || isTRUE(verbose)) && !isTRUE(all.equal(x, track_changes$output))) {
       get_original_rows <- function(rowids) {
         as.integer(rownames(original_data[which(original_data$.rowid %in% rowids), , drop = FALSE]))
       }
@@ -1173,7 +1173,7 @@ edit_rsi <- function(x,
 
 #' @rdname eucast_rules
 #' @export
-eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 11.0) {
+eucast_dosage <- function(ab, administration = "iv", version_breakpoints = 12.0) {
   meet_criteria(ab, allow_class = c("character", "numeric", "integer", "factor"))
   meet_criteria(administration, allow_class = "character", is_in = dosage$administration[!is.na(dosage$administration)], has_length = 1)
   meet_criteria(version_breakpoints, allow_class = c("numeric", "integer"), has_length = 1, is_in = as.double(names(EUCAST_VERSION_BREAKPOINTS)))

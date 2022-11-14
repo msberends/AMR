@@ -52,7 +52,7 @@ kurtosis.default <- function(x, na.rm = FALSE, excess = FALSE) {
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)
   meet_criteria(excess, allow_class = "logical", has_length = 1)
   x <- as.vector(x)
-  if (na.rm == TRUE) {
+  if (isTRUE(na.rm)) {
     x <- x[!is.na(x)]
   }
   n <- length(x)

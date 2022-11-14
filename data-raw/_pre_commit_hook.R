@@ -42,7 +42,7 @@ old_globalenv <- ls(envir = globalenv())
 # See 'data-raw/eucast_rules.tsv' for the EUCAST reference file
 EUCAST_RULES_DF <- utils::read.delim(
   file = "data-raw/eucast_rules.tsv",
-  skip = 10,
+  skip = 9,
   sep = "\t",
   stringsAsFactors = FALSE,
   header = TRUE,

@@ -176,7 +176,7 @@ as.mic <- function(x, na.rm = FALSE) {
     } else {
       x <- as.character(unlist(x))
     }
-    if (na.rm == TRUE) {
+    if (isTRUE(na.rm)) {
       x <- x[!is.na(x)]
     }
     x[trimws2(x) == ""] <- NA

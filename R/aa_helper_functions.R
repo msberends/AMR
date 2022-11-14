@@ -304,7 +304,7 @@ search_type_in_df <- function(x, type, info = TRUE) {
 
   found <- found[1]
 
-  if (!is.null(found) && info == TRUE) {
+  if (!is.null(found) && isTRUE(info)) {
     if (message_not_thrown_before("search_in_type", type)) {
       msg <- paste0("Using column '", font_bold(found), "' as input for `col_", type, "`.")
       if (type %in% c("keyantibiotics", "keyantimicrobials", "specimen")) {

@@ -77,7 +77,7 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE, only_r
   ab_result <- unname(all_found[names(all_found) == search_string.ab])
 
   if (length(ab_result) == 0) {
-    if (verbose == TRUE) {
+    if (isTRUE(verbose)) {
       message_("No column found as input for ", search_string,
         " (", ab_name(search_string, language = NULL, tolower = TRUE), ").",
         add_fn = font_black,
@@ -86,7 +86,7 @@ guess_ab_col <- function(x = NULL, search_string = NULL, verbose = FALSE, only_r
     }
     return(NULL)
   } else {
-    if (verbose == TRUE) {
+    if (isTRUE(verbose)) {
       message_(
         "Using column '", font_bold(ab_result), "' as input for ", search_string,
         " (", ab_name(search_string, language = NULL, tolower = TRUE), ")."
@@ -147,7 +147,7 @@ get_column_abx <- function(x,
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
   meet_criteria(sort, allow_class = "logical", has_length = 1)
 
-  if (info == TRUE) {
+  if (isTRUE(info)) {
     message_("Auto-guessing columns suitable for analysis", appendLF = FALSE, as_note = FALSE)
   }
 
@@ -159,14 +159,14 @@ get_column_abx <- function(x,
 
   if (NROW(x) > 10000) {
     # only test maximum of 10,000 values per column
-    if (info == TRUE) {
+    if (isTRUE(info)) {
       message_(" (using only ", font_bold("the first 10,000 rows"), ")...",
         appendLF = FALSE,
         as_note = FALSE
       )
     }
     x <- x[1:10000, , drop = FALSE]
-  } else if (info == TRUE) {
+  } else if (isTRUE(info)) {
     message_("...", appendLF = FALSE, as_note = FALSE)
   }
 
@@ -210,7 +210,7 @@ get_column_abx <- function(x,
   if (length(dots) > 0) {
     newnames <- suppressWarnings(as.ab(names(dots), info = FALSE))
     if (anyNA(newnames)) {
-      if (info == TRUE) {
+      if (isTRUE(info)) {
         message_(" WARNING", add_fn = list(font_yellow, font_bold), as_note = FALSE)
       }
       warning_("Invalid antibiotic reference(s): ", vector_and(names(dots)[is.na(newnames)], quotes = FALSE),
@@ -221,7 +221,7 @@ get_column_abx <- function(x,
     }
     unexisting_cols <- which(!vapply(FUN.VALUE = logical(1), dots, function(col) all(col %in% x_columns)))
     if (length(unexisting_cols) > 0) {
-      if (info == TRUE) {
+      if (isTRUE(info)) {
         message_(" ERROR", add_fn = list(font_red, font_bold), as_note = FALSE)
       }
       stop_("Column(s) not found: ", vector_and(unlist(dots[[unexisting_cols]]), quotes = FALSE),
@@ -240,7 +240,7 @@ get_column_abx <- function(x,
   }
 
   if (length(out) == 0) {
-    if (info == TRUE && all_okay == TRUE) {
+    if (isTRUE(info) && all_okay == TRUE) {
       message_("No columns found.")
     }
     AMR_env$get_column_abx.call <- unique_call_id(entire_session = FALSE, match_fn = fn)
@@ -259,14 +259,14 @@ get_column_abx <- function(x,
     all_okay <- FALSE
   }
 
-  if (info == TRUE) {
+  if (isTRUE(info)) {
     if (all_okay == TRUE) {
       message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
     } else {
       message_(" WARNING.", add_fn = list(font_yellow, font_bold), as_note = FALSE)
     }
     for (i in seq_len(length(out))) {
-      if (verbose == TRUE && !names(out[i]) %in% names(duplicates)) {
+      if (isTRUE(verbose) && !names(out[i]) %in% names(duplicates)) {
         message_(
           "Using column '", font_bold(out[i]), "' as input for ", names(out)[i],
           " (", ab_name(names(out)[i], tolower = TRUE, language = NULL), ")."
@@ -304,7 +304,7 @@ get_column_abx <- function(x,
   }
   if (!is.null(soft_dependencies)) {
     soft_dependencies <- unique(soft_dependencies)
-    if (info == TRUE && !all(soft_dependencies %in% names(out))) {
+    if (isTRUE(info) && !all(soft_dependencies %in% names(out))) {
       # missing a soft dependency may lower the reliability
       missing <- soft_dependencies[!soft_dependencies %in% names(out)]
       missing_msg <- vector_and(paste0(

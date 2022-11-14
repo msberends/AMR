@@ -25,7 +25,7 @@ eucast_rules(
   info = interactive(),
   rules = getOption("AMR_eucastrules", default = c("breakpoints", "expert")),
   verbose = FALSE,
-  version_breakpoints = 11,
+  version_breakpoints = 12,
   version_expertrules = 3.3,
   ampc_cephalosporin_resistance = NA,
   only_rsi_columns = FALSE,
@@ -33,7 +33,7 @@ eucast_rules(
   ...
 )
 
-eucast_dosage(ab, administration = "iv", version_breakpoints = 11)
+eucast_dosage(ab, administration = "iv", version_breakpoints = 12)
 }
 \arguments{
 \item{x}{a data set with antibiotic columns, such as \code{amox}, \code{AMX} and \code{AMC}}
@@ -46,7 +46,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 11)
 
 \item{verbose}{a \link{logical} to turn Verbose mode on and off (default is off). In Verbose mode, the function does not apply rules to the data, but instead returns a data set in logbook form with extensive info about which rows and columns would be effected and in which way. Using Verbose mode takes a lot more time.}
 
-\item{version_breakpoints}{the version number to use for the EUCAST Clinical Breakpoints guideline. Can be either "11.0" or "10.0".}
+\item{version_breakpoints}{the version number to use for the EUCAST Clinical Breakpoints guideline. Can be either "12.0", "11.0" or "10.0".}
 
 \item{version_expertrules}{the version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be either "3.3", "3.2" or "3.1".}
 

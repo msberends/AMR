@@ -33,12 +33,12 @@ library(cleaner)
 
 # URL:
 # https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/Dosages_v_11.0_Breakpoint_Tables.pdf
-# download the PDF file, open in Acrobat Pro and export as Excel workbook
-breakpoints_version <- 11
+# download the PDF file, open in Adobe Acrobat and export as Excel workbook
+breakpoints_version <- 12
 
-dosage_source <- read_excel("data-raw/Dosages_v_11.0_Breakpoint_Tables.xlsx", skip = 5, na = "None") %>%
+dosage_source <- read_excel("data-raw/Dosages_v_12.0_Breakpoint_Tables.xlsx", skip = 4, na = "None") %>%
   format_names(snake_case = TRUE, penicillins = "drug") %>%
-  filter(!tolower(standard_dosage) %in% c("standard dosage_source", "under review")) %>%
+  filter(!tolower(standard_dosage) %in% c("standard dosage", "standard dosage_source", "under review")) %>%
   filter(!is.na(standard_dosage)) %>%
   # keep only one drug in the table
   arrange(desc(drug)) %>%
@@ -125,7 +125,7 @@ get_dosage_lst <- function(col_data) {
 standard <- get_dosage_lst(dosage_source$standard_dosage)
 high <- get_dosage_lst(dosage_source$high_dosage)
 uti <- get_dosage_lst(dosage_source$uncomplicated_uti)
-dosage <- bind_rows(
+dosage_new <- bind_rows(
   # standard dose
   data.frame(
     ab = dosage_source$ab,
@@ -171,6 +171,9 @@ dosage <- bind_rows(
   arrange(name, administration, type) %>%
   filter(!is.na(dose), dose != ".") %>%
   as.data.frame(stringsAsFactors = FALSE)
-rownames(dosage) <- NULL
+rownames(dosage_new) <- NULL
+
+dosage <- bind_rows(dosage_new, AMR::dosage) %>% 
+  dataset_UTF8_to_ASCII()
 
 usethis::use_data(dosage, internal = FALSE, overwrite = TRUE, version = 2)

@@ -243,7 +243,7 @@ first_isolate <- function(x = NULL,
   if (method == "phenotype-based" && !any_col_contains_rsi) {
     method <- "episode-based"
   }
-  if (info == TRUE && message_not_thrown_before("first_isolate", "method")) {
+  if (isTRUE(info) && message_not_thrown_before("first_isolate", "method")) {
     message_(paste0(
       "Determining first isolates ",
       ifelse(method %in% c("episode-based", "phenotype-based"),
@@ -353,7 +353,7 @@ first_isolate <- function(x = NULL,
     testcodes_exclude <- NULL
   }
   # remove testcodes
-  if (!is.null(testcodes_exclude) && info == TRUE && message_not_thrown_before("first_isolate", "excludingtestcodes")) {
+  if (!is.null(testcodes_exclude) && isTRUE(info) && message_not_thrown_before("first_isolate", "excludingtestcodes")) {
     message_("Excluding test codes: ", vector_and(testcodes_exclude, quotes = TRUE),
       add_fn = font_black,
       as_note = FALSE
@@ -367,7 +367,7 @@ first_isolate <- function(x = NULL,
   # filter on specimen group and keyantibiotics when they are filled in
   if (!is.null(specimen_group)) {
     check_columns_existance(col_specimen, x)
-    if (info == TRUE && message_not_thrown_before("first_isolate", "excludingspecimen")) {
+    if (isTRUE(info) && message_not_thrown_before("first_isolate", "excludingspecimen")) {
       message_("Excluding other than specimen group '", specimen_group, "'",
         add_fn = font_black,
         as_note = FALSE
@@ -411,7 +411,7 @@ first_isolate <- function(x = NULL,
 
   # speed up - return immediately if obvious
   if (abs(row.start) == Inf || abs(row.end) == Inf) {
-    if (info == TRUE) {
+    if (isTRUE(info)) {
       message_("=> Found ", font_bold("no isolates"),
         add_fn = font_black,
         as_note = FALSE
@@ -420,7 +420,7 @@ first_isolate <- function(x = NULL,
     return(rep(FALSE, nrow(x)))
   }
   if (row.start == row.end) {
-    if (info == TRUE) {
+    if (isTRUE(info)) {
       message_("=> Found ", font_bold("1 first isolate"), ", as the data only contained 1 row",
         add_fn = font_black,
         as_note = FALSE
@@ -429,7 +429,7 @@ first_isolate <- function(x = NULL,
     return(TRUE)
   }
   if (length(c(row.start:row.end)) == pm_n_distinct(x[c(row.start:row.end), col_mo, drop = TRUE])) {
-    if (info == TRUE) {
+    if (isTRUE(info)) {
       message_("=> Found ", font_bold(paste(length(c(row.start:row.end)), "first isolates")),
         ", as all isolates were different microbial species",
         add_fn = font_black,
@@ -447,7 +447,7 @@ first_isolate <- function(x = NULL,
 
   # Analysis of first isolate ----
   if (!is.null(col_keyantimicrobials)) {
-    if (info == TRUE && message_not_thrown_before("first_isolate", "type")) {
+    if (isTRUE(info) && message_not_thrown_before("first_isolate", "type")) {
       if (type == "keyantimicrobials") {
         message_("Basing inclusion on key antimicrobials, ",
           ifelse(ignore_I == FALSE, "not ", ""),
@@ -533,7 +533,7 @@ first_isolate <- function(x = NULL,
   decimal.mark <- getOption("OutDec")
   big.mark <- ifelse(decimal.mark != ",", ",", ".")
 
-  if (info == TRUE) {
+  if (isTRUE(info)) {
     # print group name if used in dplyr::group_by()
     cur_group <- import_fn("cur_group", "dplyr", error_on_fail = FALSE)
     if (!is.null(cur_group)) {
@@ -558,7 +558,7 @@ first_isolate <- function(x = NULL,
   }
 
   # handle empty microorganisms
-  if (any(x$newvar_mo == "UNKNOWN", na.rm = TRUE) && info == TRUE) {
+  if (any(x$newvar_mo == "UNKNOWN", na.rm = TRUE) && isTRUE(info)) {
     message_(
       ifelse(include_unknown == TRUE, "Included ", "Excluded "),
       format(sum(x$newvar_mo == "UNKNOWN", na.rm = TRUE),
@@ -570,7 +570,7 @@ first_isolate <- function(x = NULL,
   x[which(x$newvar_mo == "UNKNOWN"), "newvar_first_isolate"] <- include_unknown
 
   # exclude all NAs
-  if (anyNA(x$newvar_mo) && info == TRUE) {
+  if (anyNA(x$newvar_mo) && isTRUE(info)) {
     message_(
       "Excluded ", format(sum(is.na(x$newvar_mo), na.rm = TRUE),
         decimal.mark = decimal.mark, big.mark = big.mark
@@ -594,7 +594,7 @@ first_isolate <- function(x = NULL,
   x <- x[order(x$newvar_row_index), , drop = FALSE]
   rownames(x) <- NULL
 
-  if (info == TRUE) {
+  if (isTRUE(info)) {
     n_found <- sum(x$newvar_first_isolate, na.rm = TRUE)
     p_found_total <- percentage(n_found / nrow(x[which(!is.na(x$newvar_mo)), , drop = FALSE]), digits = 1)
     p_found_scope <- percentage(n_found / scope.size, digits = 1)
