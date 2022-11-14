@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9050</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9051</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -143,7 +143,7 @@
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 169 observations and 9 variables:</p><ul><li><p><code>ab</code><br> Antibiotic ID as used in this package (such as <code>AMC</code>), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available</p></li>
+    <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 336 observations and 9 variables:</p><ul><li><p><code>ab</code><br> Antibiotic ID as used in this package (such as <code>AMC</code>), using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available</p></li>
 <li><p><code>name</code><br> Official name of the antimicrobial drug as used by WHONET/EARS-Net or the WHO</p></li>
 <li><p><code>type</code><br> Type of the dosage, either "high_dosage", "standard_dosage" or "uncomplicated_uti"</p></li>
 <li><p><code>dose</code><br> Dose, such as "2 g" or "25 mg/kg"</p></li>
@@ -155,7 +155,7 @@
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This data set is based on <a href="https://www.eucast.org/clinical_breakpoints/" class="external-link">'EUCAST Clinical Breakpoint Tables' v11.0</a> (2021).</p><div class="section">
+    <p>This data set is based on <a href="https://www.eucast.org/clinical_breakpoints/" class="external-link">'EUCAST Clinical Breakpoint Tables' v12.0</a> (2022) and <a href="https://www.eucast.org/clinical_breakpoints/" class="external-link">'EUCAST Clinical Breakpoint Tables' v11.0</a> (2021).</p><div class="section">
 <h3 id="direct-download">Direct download<a class="anchor" aria-label="anchor" href="#direct-download"></a></h3>
 
 
@@ -167,20 +167,20 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dosage</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 169 × 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 336 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    ab   name                   type  dose  dose_…¹ admin…² notes origi…³ eucas…⁴</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> AMK  Amikacin               stan… 25-3…       1 iv      <span style="color: #949494;">""</span>    25-30 …      11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> AMX  Amoxicillin            high… 2 g         6 iv      <span style="color: #949494;">""</span>    2 g x …      11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> AMX  Amoxicillin            stan… 1 g         3 iv      <span style="color: #949494;">""</span>    1 g x …      11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> AMX  Amoxicillin            high… 0.75…       3 oral    <span style="color: #949494;">""</span>    0.75-1…      11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> AMX  Amoxicillin            stan… 0.5 g       3 oral    <span style="color: #949494;">""</span>    0.5 g …      11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> AMX  Amoxicillin            unco… 0.5 g       3 oral    <span style="color: #949494;">""</span>    0.5 g …      11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> AMC  Amoxicillin/clavulani… high… 2 g …       3 iv      <span style="color: #949494;">""</span>    (2 g a…      11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> AMC  Amoxicillin/clavulani… stan… 1 g …       3 iv      <span style="color: #949494;">""</span>    (1 g a…      11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> AMC  Amoxicillin/clavulani… high… 0.87…       3 oral    <span style="color: #949494;">""</span>    (0.875…      11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> AMC  Amoxicillin/clavulani… stan… 0.5 …       3 oral    <span style="color: #949494;">""</span>    (0.5 g…      11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 159 more rows, and abbreviated variable names ¹​dose_times,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> AMK  Amikacin               stan… 25-3…       1 iv      <span style="color: #949494;">""</span>    25-30 …      12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> AMX  Amoxicillin            high… 2 g         6 iv      <span style="color: #949494;">""</span>    2 g x …      12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> AMX  Amoxicillin            stan… 1 g         3 iv      <span style="color: #949494;">""</span>    1 g x …      12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> AMX  Amoxicillin            high… 0.75…       3 oral    <span style="color: #949494;">""</span>    0.75-1…      12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> AMX  Amoxicillin            stan… 0.5 g       3 oral    <span style="color: #949494;">""</span>    0.5 g …      12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> AMX  Amoxicillin            unco… 0.5 g       3 oral    <span style="color: #949494;">""</span>    0.5 g …      12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> AMC  Amoxicillin/clavulani… high… 2 g …       3 iv      <span style="color: #949494;">""</span>    (2 g a…      12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> AMC  Amoxicillin/clavulani… stan… 1 g …       3 iv      <span style="color: #949494;">""</span>    (1 g a…      12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> AMC  Amoxicillin/clavulani… high… 0.87…       3 oral    <span style="color: #949494;">""</span>    (0.875…      12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> AMC  Amoxicillin/clavulani… stan… 0.5 …       3 oral    <span style="color: #949494;">""</span>    (0.5 g…      12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 326 more rows, and abbreviated variable names ¹​dose_times,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​administration, ³​original_txt, ⁴​eucast_version</span></span>
 </code></pre></div>
     </div>

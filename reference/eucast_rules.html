@@ -12,7 +12,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9050</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9051</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -147,7 +147,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
 <span>  info <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_eucastrules"</span>, default <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"breakpoints"</span>, <span class="st">"expert"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  version_breakpoints <span class="op">=</span> <span class="fl">11</span>,</span>
+<span>  version_breakpoints <span class="op">=</span> <span class="fl">12</span>,</span>
 <span>  version_expertrules <span class="op">=</span> <span class="fl">3.3</span>,</span>
 <span>  ampc_cephalosporin_resistance <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  only_rsi_columns <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -155,7 +155,7 @@ To improve the interpretation of the antibiogram before EUCAST rules are applied
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">eucast_dosage</span><span class="op">(</span><span class="va">ab</span>, administration <span class="op">=</span> <span class="st">"iv"</span>, version_breakpoints <span class="op">=</span> <span class="fl">11</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">eucast_dosage</span><span class="op">(</span><span class="va">ab</span>, administration <span class="op">=</span> <span class="st">"iv"</span>, version_breakpoints <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -194,7 +194,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 
 
 <dt>version_breakpoints</dt>
-<dd><p>the version number to use for the EUCAST Clinical Breakpoints guideline. Can be either "11.0" or "10.0".</p></dd>
+<dd><p>the version number to use for the EUCAST Clinical Breakpoints guideline. Can be either "12.0", "11.0" or "10.0".</p></dd>
 
 
 <dt>version_expertrules</dt>
@@ -311,7 +311,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       mo VAN AMX COL CAZ CXM PEN FOX</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  Staphylococcus aureus   -   S   R   R   S   S   S</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  Staphylococcus aureus   -   S   R   S   S   S   S</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  Enterococcus faecalis   -   -   R   R   R   S   R</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3       Escherichia coli   R   -   -   -   -   R   S</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4  Klebsiella pneumoniae   R   R   -   -   -   R   S</span>
@@ -330,20 +330,20 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <span class="r-out co"><span class="r-pr">#&gt;</span>   row col           mo_fullname old new rule   rule_group</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   1 AMX Staphylococcus aureus   -   S       Breakpoints</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2   1 CXM Staphylococcus aureus   -   S       Breakpoints</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   1 CAZ Staphylococcus aureus   -   R      Expert Rules</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   1 COL Staphylococcus aureus   -   R      Expert Rules</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   2 CAZ Enterococcus faecalis   -   R      Expert Rules</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   2 COL Enterococcus faecalis   -   R      Expert Rules</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   1 CAZ Staphylococcus aureus   R   S      Expert Rules</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   1 CAZ Staphylococcus aureus   -   R      Expert Rules</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   1 COL Staphylococcus aureus   -   R      Expert Rules</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   2 CAZ Enterococcus faecalis   -   R      Expert Rules</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                 rule_name</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                                          Staphylococcus</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                                          Staphylococcus</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Table 4: Intrinsic resistance in gram-positive bacteria</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                          Expert Rules on Staphylococcus</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 Table 4: Intrinsic resistance in gram-positive bacteria</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 Table 4: Intrinsic resistance in gram-positive bacteria</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 Table 4: Intrinsic resistance in gram-positive bacteria</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                 rule_source</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                           'EUCAST Clinical Breakpoint Tables' v11.0, 2021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                                           'EUCAST Clinical Breakpoint Tables' v11.0, 2021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                           'EUCAST Clinical Breakpoint Tables' v12.0, 2022</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                                           'EUCAST Clinical Breakpoint Tables' v12.0, 2022</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3, 2021</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3, 2021</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3, 2021</span>
@@ -354,7 +354,7 @@ Leclercq et al. <strong>EUCAST expert rules in antimicrobial susceptibility test
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">eucast_dosage</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tobra"</span>, <span class="st">"genta"</span>, <span class="st">"cipro"</span><span class="op">)</span>, <span class="st">"iv"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Dosages for antimicrobial drugs, as meant for 'EUCAST Clinical Breakpoint</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   Tables' v11.0 (2021). This note will be shown once per session.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Tables' v12.0 (2022). This note will be shown once per session.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ab   name          standard_dosage  high_dosage </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span>
