@@ -285,7 +285,7 @@ as.rsi.default <- function(x, ...) {
 
   x.bak <- x
   x <- as.character(x) # this is needed to prevent the vctrs pkg from throwing an error
-
+  
   if (inherits(x.bak, c("integer", "numeric", "double")) && all(x %in% c(1:3, NA))) {
     # support haven package for importing e.g., from SPSS - it adds the 'labels' attribute
     lbls <- attributes(x.bak)$labels
@@ -298,6 +298,10 @@ as.rsi.default <- function(x, ...) {
       x[x.bak == 2] <- "I"
       x[x.bak == 3] <- "R"
     }
+  } else if (inherits(x.bak, "character") && all(x %in% c("1", "2", "3", "S", "I", "R", NA_character_))) {
+    x[x.bak == "1"] <- "S"
+    x[x.bak == "2"] <- "I"
+    x[x.bak == "3"] <- "R"
   } else if (!all(is.na(x)) && !identical(levels(x), c("R", "S", "I")) && !all(x %in% c("R", "S", "I", NA))) {
     if (all(x %unlike% "(R|S|I)", na.rm = TRUE)) {
       # check if they are actually MICs or disks
@@ -312,6 +316,7 @@ as.rsi.default <- function(x, ...) {
     x <- trimws2(as.character(unlist(x)))
     x[x %in% c(NA, "", "-", "NULL")] <- NA_character_
     x.bak <- x
+    
     na_before <- length(x[is.na(x)])
 
     # correct for translations

@@ -81,6 +81,12 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_equal(sum(is.rsi(example_isolates)), 40)
 
   expect_stdout(print(tibble(ab = as.rsi("S"))))
+  
+  expect_true(example_isolates %>% 
+                select(AMC, MEM) %>% 
+                mutate(MEM = as.rsi(ifelse(AMC == "S", "S", MEM))) %>% 
+                pull(MEM) %>% 
+                is.rsi())
 }
 if (AMR:::pkg_is_available("skimr", min_version = "2.0.0")) {
   expect_inherits(

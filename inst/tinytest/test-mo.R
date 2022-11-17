@@ -80,6 +80,8 @@ expect_equal(as.character(as.mo("streptococcus milleri")), "B_STRPT_MILL")
 
 expect_equal(as.character(as.mo(c("Gram negative", "Gram positive"))), c("B_GRAMN", "B_GRAMP"))
 
+expect_warning(as.mo("Acinetobacter calcoaceticus/baumannii complex"))
+
 # prevalent MO
 expect_identical(
   suppressWarnings(as.character(

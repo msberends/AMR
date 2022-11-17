@@ -180,6 +180,10 @@ as.mo <- function(x,
   x <- replace_ignore_pattern(x, ignore_pattern)
 
   x_lower <- tolower(x)
+  
+  if (any(trimws2(x_lower) %like_case% "complex$", na.rm = TRUE)) {
+    warning_("in `as.mo()`: translation of complexes is not supported at the moment - the input text 'complex' was ignored.", call = FALSE)
+  }
 
   # WHONET: xxx = no growth
   x[x_lower %in% c("", "xxx", "na", "nan")] <- NA_character_
@@ -521,7 +525,7 @@ mo_cleaning_regex <- function() {
     "|",
     "([({]|\\[).+([})]|\\])",
     "|",
-    "(^| )(e?spp|e?ssp|e?ss|e?sp|e?subsp|sube?species|biovar|biotype|serovar|e?species)[.]*( |$))"
+    "(^| )(e?spp|e?ssp|e?ss|e?sp|e?subsp|sube?species|biovar|biotype|serovar|serogr.?up|e?species|complex)[.]*( |$))"
   )
 }
 

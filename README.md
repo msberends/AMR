@@ -1,6 +1,6 @@
 # `AMR` (for R)
 
-<a href="https://msberends.github.io/AMR/"><img src="https://msberends.github.io/AMR/AMR_intro.svg" align="center"></a>
+<a href="https://msberends.github.io/AMR/"><img src="https://msberends.github.io/AMR/AMR_intro.png" align="center"></a>
 
 ----
 
