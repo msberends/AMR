@@ -36,7 +36,7 @@ is.rsi.eligible(x, threshold = 0.05)
   x,
   mo = NULL,
   ab = deparse(substitute(x)),
-  guideline = "EUCAST",
+  guideline = getOption("AMR_guideline", "EUCAST"),
   uti = NULL,
   conserve_capped_values = FALSE,
   add_intrinsic_resistance = FALSE,
@@ -48,7 +48,7 @@ is.rsi.eligible(x, threshold = 0.05)
   x,
   mo = NULL,
   ab = deparse(substitute(x)),
-  guideline = "EUCAST",
+  guideline = getOption("AMR_guideline", "EUCAST"),
   uti = NULL,
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::rsi_translation,
@@ -59,7 +59,7 @@ is.rsi.eligible(x, threshold = 0.05)
   x,
   ...,
   col_mo = NULL,
-  guideline = "EUCAST",
+  guideline = getOption("AMR_guideline", "EUCAST"),
   uti = NULL,
   conserve_capped_values = FALSE,
   add_intrinsic_resistance = FALSE,
@@ -79,7 +79,7 @@ rsi_interpretation_history(clean = FALSE)
 
 \item{ab}{any (vector of) text that can be coerced to a valid antimicrobial drug code with \code{\link[=as.ab]{as.ab()}}}
 
-\item{guideline}{defaults to EUCAST 2022 (the latest implemented EUCAST guideline in the \link{rsi_translation} data set), supports EUCAST (2013-2022) and CLSI (2013-2022), see \emph{Details}}
+\item{guideline}{defaults to EUCAST 2022 (the latest implemented EUCAST guideline in the \link{rsi_translation} data set), but can be set with the \link[=options]{option} \code{AMR_guideline}. Supports EUCAST (2013-2022) and CLSI (2013-2022), see \emph{Details}.}
 
 \item{uti}{(Urinary Tract Infection) A vector with \link{logical}s (\code{TRUE} or \code{FALSE}) to specify whether a UTI specific interpretation from the guideline should be chosen. For using \code{\link[=as.rsi]{as.rsi()}} on a \link{data.frame}, this can also be a column containing \link{logical}s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See \emph{Examples}.}
 
@@ -109,8 +109,8 @@ The \code{\link[=as.rsi]{as.rsi()}} function works in four ways:
 \itemize{
 \item Using \code{dplyr}, R/SI interpretation can be done very easily with either:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{your_data \%>\% mutate_if(is.mic, as.rsi)             # until dplyr 1.0.0
-your_data \%>\% mutate(across(where(is.mic), as.rsi)) # since dplyr 1.0.0
+\if{html}{\out{<div class="sourceCode">}}\preformatted{your_data \%>\% mutate_if(is.mic, as.rsi)
+your_data \%>\% mutate(across(where(is.mic), as.rsi))
 }\if{html}{\out{</div>}}
 \item Operators like "<=" will be stripped before interpretation. When using \code{conserve_capped_values = TRUE}, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (\code{conserve_capped_values = FALSE}) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
 }
@@ -118,8 +118,8 @@ your_data \%>\% mutate(across(where(is.mic), as.rsi)) # since dplyr 1.0.0
 \itemize{
 \item Using \code{dplyr}, R/SI interpretation can be done very easily with either:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{your_data \%>\% mutate_if(is.disk, as.rsi)             # until dplyr 1.0.0
-your_data \%>\% mutate(across(where(is.disk), as.rsi)) # since dplyr 1.0.0
+\if{html}{\out{<div class="sourceCode">}}\preformatted{your_data \%>\% mutate_if(is.disk, as.rsi)
+your_data \%>\% mutate(across(where(is.disk), as.rsi))
 }\if{html}{\out{</div>}}
 }
 \item For \strong{interpreting a complete data set}, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running \code{as.rsi(your_data)}.
@@ -133,6 +133,15 @@ For points 2, 3 and 4: Use \code{\link[=rsi_interpretation_history]{rsi_interpre
 For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (2013-2022) and CLSI (2013-2022).
 
 Thus, the \code{guideline} argument must be set to e.g., \code{"EUCAST 2022"} or \code{"CLSI 2022"}. By simply using \code{"EUCAST"} (the default) or \code{"CLSI"} as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the \code{reference_data} argument. The \code{guideline} argument will then be ignored.
+
+You can set the default guideline with the \code{AMR_guideline} \link[=options]{option} (e.g. in your \code{.Rprofile} file), such as:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{  options(AMR_guideline = "CLSI")
+  options(AMR_guideline = "CLSI 2018")
+  options(AMR_guideline = "EUCAST 2020")
+  # or to reset:
+  options(AMR_guideline = NULL)
+}\if{html}{\out{</div>}}
 }
 
 \subsection{After Interpretation}{

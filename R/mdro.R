@@ -193,13 +193,17 @@ mdro <- function(x = NULL,
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
   meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
-
+  
+  if (!any(is.rsi.eligible(x))) {
+    stop_("There were no possible R/SI columns found in the data set. Transform columns with `as.rsi()` for valid antimicrobial interpretations.")
+  }
+  
   info.bak <- info
   # don't thrown info's more than once per call
   if (isTRUE(info)) {
     info <- message_not_thrown_before("mdro")
   }
-
+  
   if (interactive() && isTRUE(verbose) && isTRUE(info)) {
     txt <- paste0(
       "WARNING: In Verbose mode, the mdro() function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.",
@@ -217,7 +221,7 @@ mdro <- function(x = NULL,
       return(x)
     }
   }
-
+  
   group_msg <- ""
   if (isTRUE(info.bak)) {
     # print group name if used in dplyr::group_by()
@@ -239,15 +243,15 @@ mdro <- function(x = NULL,
       }
     }
   }
-
+  
   # force regular [data.frame], not a tibble or data.table
   x <- as.data.frame(x, stringsAsFactors = FALSE)
-
+  
   if (pct_required_classes > 1) {
     # allow pct_required_classes = 75 -> pct_required_classes = 0.75
     pct_required_classes <- pct_required_classes / 100
   }
-
+  
   guideline.bak <- guideline
   if (is.list(guideline)) {
     # Custom MDRO guideline ---------------------------------------------------
@@ -256,8 +260,8 @@ mdro <- function(x = NULL,
       txt <- paste0(
         "Determining MDROs based on custom rules",
         ifelse(isTRUE(attributes(guideline)$as_factor),
-          paste0(", resulting in factor levels: ", paste0(attributes(guideline)$values, collapse = " < ")),
-          ""
+               paste0(", resulting in factor levels: ", paste0(attributes(guideline)$values, collapse = " < ")),
+               ""
         ),
         "."
       )
@@ -310,7 +314,7 @@ mdro <- function(x = NULL,
     "invalid guideline: ", guideline.bak
   )
   guideline <- list(code = guideline)
-
+  
   # try to find columns based on type
   # -- mo
   if (is.null(col_mo)) {
@@ -325,55 +329,55 @@ mdro <- function(x = NULL,
     col_mo <- "mo"
   }
   stop_if(is.null(col_mo), "`col_mo` must be set")
-
+  
   if (guideline$code == "cmi2012") {
     guideline$name <- "Multidrug-resistant, extensively drug-resistant and pandrug-resistant bacteria: an international expert proposal for interim standard definitions for acquired resistance."
     guideline$author <- "Magiorakos AP, Srinivasan A, Carey RB, ..., Vatopoulos A, Weber JT, Monnet DL"
     guideline$version <- NA
-    guideline$source_url <- "Clinical Microbiology and Infection 18:3, 2012; doi: 10.1111/j.1469-0691.2011.03570.x"
+    guideline$source_url <- paste0("Clinical Microbiology and Infection 18:3, 2012; ", font_url("https://doi.org/10.1111/j.1469-0691.2011.03570.x", "doi: 10.1111/j.1469-0691.2011.03570.x"))
     guideline$type <- "MDRs/XDRs/PDRs"
   } else if (guideline$code == "eucast3.1") {
     guideline$name <- "EUCAST Expert Rules, \"Intrinsic Resistance and Exceptional Phenotypes Tables\""
     guideline$author <- "EUCAST (European Committee on Antimicrobial Susceptibility Testing)"
     guideline$version <- "3.1, 2016"
-    guideline$source_url <- "https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf"
+    guideline$source_url <- font_url("https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf", "Direct download")
     guideline$type <- "EUCAST Exceptional Phenotypes"
   } else if (guideline$code == "eucast3.2") {
     guideline$name <- "EUCAST Expert Rules, \"Intrinsic Resistance and Unusual Phenotypes\""
     guideline$author <- "EUCAST (European Committee on Antimicrobial Susceptibility Testing)"
     guideline$version <- "3.2, February 2020"
-    guideline$source_url <- "https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf"
+    guideline$source_url <- font_url("https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf", "Direct download")
     guideline$type <- "EUCAST Unusual Phenotypes"
   } else if (guideline$code == "eucast3.3") {
     guideline$name <- "EUCAST Expert Rules, \"Intrinsic Resistance and Unusual Phenotypes\""
     guideline$author <- "EUCAST (European Committee on Antimicrobial Susceptibility Testing)"
     guideline$version <- "3.3, October 2021"
-    guideline$source_url <- "https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2021/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.3_20211018.pdf"
+    guideline$source_url <- font_url("https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2021/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.3_20211018.pdf", "Direct download")
     guideline$type <- "EUCAST Unusual Phenotypes"
   } else if (guideline$code == "tb") {
     guideline$name <- "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis"
     guideline$author <- "WHO (World Health Organization)"
     guideline$version <- "WHO/HTM/TB/2014.11, 2014"
-    guideline$source_url <- "https://www.who.int/publications/i/item/9789241548809"
+    guideline$source_url <- font_url("https://www.who.int/publications/i/item/9789241548809", "Direct download")
     guideline$type <- "MDR-TB's"
-
+    
     # support per country:
   } else if (guideline$code == "mrgn") {
     guideline$name <- "Cross-border comparison of the Dutch and German guidelines on multidrug-resistant Gram-negative microorganisms"
     guideline$author <- "M\u00fcller J, Voss A, K\u00f6ck R, ..., Kern WV, Wendt C, Friedrich AW"
     guideline$version <- NA
-    guideline$source_url <- "Antimicrobial Resistance and Infection Control 4:7, 2015; doi: 10.1186/s13756-015-0047-6"
+    guideline$source_url <- paste0("Antimicrobial Resistance and Infection Control 4:7, 2015; ", font_url("https://doi.org/10.1186/s13756-015-0047-6", "doi: 10.1186/s13756-015-0047-6"))
     guideline$type <- "MRGNs"
   } else if (guideline$code == "brmo") {
     guideline$name <- "WIP-Richtlijn Bijzonder Resistente Micro-organismen (BRMO)"
     guideline$author <- "RIVM (Rijksinstituut voor de Volksgezondheid)"
     guideline$version <- "Revision as of December 2017"
-    guideline$source_url <- "https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH"
+    guideline$source_url <- font_url("https://www.rivm.nl/Documenten_en_publicaties/Professioneel_Praktisch/Richtlijnen/Infectieziekten/WIP_Richtlijnen/WIP_Richtlijnen/Ziekenhuizen/WIP_richtlijn_BRMO_Bijzonder_Resistente_Micro_Organismen_ZKH", "Direct download")
     guideline$type <- "BRMOs"
   } else {
     stop("This guideline is currently unsupported: ", guideline$code, call. = FALSE)
   }
-
+  
   if (guideline$code == "cmi2012") {
     cols_ab <- get_column_abx(
       x = x,
@@ -618,7 +622,7 @@ mdro <- function(x = NULL,
     }
     cols_ab <- c(cols_ab, c(AMP = unname(cols_ab[names(cols_ab) == "AMX"])))
   }
-
+  
   # nolint start
   AMC <- cols_ab["AMC"]
   AMK <- cols_ab["AMK"]
@@ -763,13 +767,13 @@ mdro <- function(x = NULL,
   abx_tb <- abx_tb[!is.na(abx_tb)]
   stop_if(guideline$code == "tb" & length(abx_tb) == 0, "no antimycobacterials found in data set")
   # nolint end
-
+  
   if (isTRUE(combine_SI)) {
     search_result <- "R"
   } else {
     search_result <- c("R", "I")
   }
-
+  
   if (isTRUE(info)) {
     if (isTRUE(combine_SI)) {
       cat(font_red("\nOnly results with 'R' are considered as resistance. Use `combine_SI = FALSE` to also consider 'I' as resistance.\n"))
@@ -777,18 +781,18 @@ mdro <- function(x = NULL,
       cat(font_red("\nResults with 'R' or 'I' are considered as resistance. Use `combine_SI = TRUE` to only consider 'R' as resistance.\n"))
     }
     cat("\n", word_wrap("Determining multidrug-resistant organisms (MDRO), according to:"), "\n",
-      word_wrap(paste0(font_bold("Guideline: "), font_italic(guideline$name)), extra_indent = 11, as_note = FALSE), "\n",
-      word_wrap(paste0(font_bold("Author(s): "), guideline$author), extra_indent = 11, as_note = FALSE), "\n",
-      ifelse(!is.na(guideline$version),
-        paste0(word_wrap(paste0(font_bold("Version:   "), guideline$version), extra_indent = 11, as_note = FALSE), "\n"),
-        ""
-      ),
-      paste0(font_bold("Source:    "), guideline$source_url),
-      "\n\n",
-      sep = ""
+        word_wrap(paste0(font_bold("Guideline: "), font_italic(guideline$name)), extra_indent = 11, as_note = FALSE), "\n",
+        word_wrap(paste0(font_bold("Author(s): "), guideline$author), extra_indent = 11, as_note = FALSE), "\n",
+        ifelse(!is.na(guideline$version),
+               paste0(word_wrap(paste0(font_bold("Version:   "), guideline$version), extra_indent = 11, as_note = FALSE), "\n"),
+               ""
+        ),
+        paste0(font_bold("Source:    "), guideline$source_url),
+        "\n\n",
+        sep = ""
     )
   }
-
+  
   ab_missing <- function(ab) {
     isTRUE(ab %in% c(NULL, NA)) | length(ab) == 0
   }
@@ -800,7 +804,7 @@ mdro <- function(x = NULL,
     out[is.na(out)] <- FALSE
     out
   }
-
+  
   # antibiotic classes
   # nolint start
   aminoglycosides <- c(TOB, GEN)
@@ -811,7 +815,7 @@ mdro <- function(x = NULL,
   carbapenems <- c(DOR, ETP, IPM, MEM, MEV)
   fluoroquinolones <- c(CIP, ENX, FLE, GAT, GEM, GRX, LVX, LOM, MFX, NOR, OFX, PAZ, PEF, PRU, RFL, SPX, TMX, TVA)
   # nolint end
-
+  
   # helper function for editing the table
   trans_tbl <- function(to, rows, cols, any_all) {
     cols <- cols[!ab_missing(cols)]
@@ -840,14 +844,14 @@ mdro <- function(x = NULL,
           )
         }
       )
-
+      
       if (any_all == "any") {
         search_function <- any
       } else if (any_all == "all") {
         search_function <- all
       }
       x_transposed <- as.list(as.data.frame(t(x[, cols, drop = FALSE]),
-        stringsAsFactors = FALSE
+                                            stringsAsFactors = FALSE
       ))
       rows_affected <- vapply(
         FUN.VALUE = logical(1),
@@ -866,7 +870,7 @@ mdro <- function(x = NULL,
       )
     }
   }
-
+  
   trans_tbl2 <- function(txt, rows, lst) {
     if (isTRUE(info)) {
       message_(txt, "...", appendLF = FALSE, as_note = FALSE)
@@ -874,6 +878,9 @@ mdro <- function(x = NULL,
     if (length(rows) > 0) {
       # function specific for the CMI paper of 2012 (Magiorakos et al.)
       lst_vector <- unlist(lst)[!is.na(unlist(lst))]
+      # keep only unique ones:
+      lst_vector <- lst_vector[!duplicated(paste(lst_vector, names(lst_vector)))]
+      
       x[, lst_vector] <- as.data.frame(lapply(
         x[, lst_vector, drop = FALSE],
         function(col) as.rsi(col)
@@ -892,7 +899,7 @@ mdro <- function(x = NULL,
           ))
         }
       )
-
+      
       if (isTRUE(verbose)) {
         x[rows, "columns_nonsusceptible"] <<- vapply(
           FUN.VALUE = character(1),
@@ -920,17 +927,17 @@ mdro <- function(x = NULL,
       )
       # for PDR; all drugs are R (or I if combine_SI = FALSE)
       x_transposed <- as.list(as.data.frame(t(x[rows, lst_vector, drop = FALSE]),
-        stringsAsFactors = FALSE
+                                            stringsAsFactors = FALSE
       ))
       row_filter <- vapply(FUN.VALUE = logical(1), x_transposed, function(y) all(y %in% search_result, na.rm = TRUE))
       x[which(row_filter), "classes_affected"] <<- 999
     }
-
+    
     if (isTRUE(info)) {
       message_(" OK.", add_fn = list(font_green, font_bold), as_note = FALSE)
     }
   }
-
+  
   x[, col_mo] <- as.mo(as.character(x[, col_mo, drop = TRUE]))
   # rename col_mo to prevent interference with joined columns
   colnames(x)[colnames(x) == col_mo] <- ".col_mo"
@@ -941,12 +948,12 @@ mdro <- function(x = NULL,
   x$row_number <- seq_len(nrow(x))
   x$reason <- paste0("not covered by ", toupper(guideline$code), " guideline")
   x$columns_nonsusceptible <- ""
-
+  
   if (guideline$code == "cmi2012") {
     # CMI, 2012 ---------------------------------------------------------------
     # Non-susceptible = R and I
     # (see header 'Approaches to Creating Definitions for MDR, XDR and PDR' in paper)
-
+    
     # take amoxicillin if ampicillin is unavailable
     if (is.na(AMP) && !is.na(AMX)) {
       if (isTRUE(verbose)) {
@@ -967,87 +974,87 @@ mdro <- function(x = NULL,
       }
       CTX <- CRO
     }
-
+    
     # intrinsic resistant must not be considered for the determination of MDR,
     # so let's just remove them, meticulously following the paper
     x[which(x$genus == "Enterococcus" & x$species == "faecium"), ab_NA(IPM)] <- NA
     x[which(x$genus == "Enterococcus" & x$species == "faecalis"), ab_NA(QDA)] <- NA
     x[which((x$genus == "Providencia" & x$species == "rettgeri") |
-      (x$genus == "Providencia" & x$species == "stuartii")), ab_NA(c(GEN, TOB, NET))] <- NA
+              (x$genus == "Providencia" & x$species == "stuartii")), ab_NA(c(GEN, TOB, NET))] <- NA
     x[which(x$genus == "Escherichia" & x$species == "hermannii"), ab_NA(c(TCC, TZP))] <- NA
     x[which((x$genus == "Citrobacter" & x$species == "freundii") |
-      (x$genus == "Enterobacter" & x$species == "aerogenes") |
-      (x$genus == "Klebsiella" & x$species == "aerogenes") # new name (2017)
-    | (x$genus == "Enterobacter" & x$species == "cloacae") |
-      (x$genus == "Hafnia" & x$species == "alvei") |
-      (x$genus == "Morganella" & x$species == "morganii") |
-      (x$genus == "Proteus" & x$species == "penneri") |
-      (x$genus == "Proteus" & x$species == "vulgaris") |
-      (x$genus == "Serratia" & x$species == "marcescens")), ab_NA(CZO)] <- NA
+              (x$genus == "Enterobacter" & x$species == "aerogenes") |
+              (x$genus == "Klebsiella" & x$species == "aerogenes") # new name (2017)
+            | (x$genus == "Enterobacter" & x$species == "cloacae") |
+              (x$genus == "Hafnia" & x$species == "alvei") |
+              (x$genus == "Morganella" & x$species == "morganii") |
+              (x$genus == "Proteus" & x$species == "penneri") |
+              (x$genus == "Proteus" & x$species == "vulgaris") |
+              (x$genus == "Serratia" & x$species == "marcescens")), ab_NA(CZO)] <- NA
     x[which((x$genus == "Morganella" & x$species == "morganii") |
-      (x$genus == "Proteus" & x$species == "penneri") |
-      (x$genus == "Proteus" & x$species == "vulgaris") |
-      (x$genus == "Serratia" & x$species == "marcescens")), ab_NA(CXM)] <- NA
+              (x$genus == "Proteus" & x$species == "penneri") |
+              (x$genus == "Proteus" & x$species == "vulgaris") |
+              (x$genus == "Serratia" & x$species == "marcescens")), ab_NA(CXM)] <- NA
     x[which((x$genus == "Morganella" & x$species == "morganii") |
-      (x$genus == "Proteus" & x$species == "mirabilis") |
-      (x$genus == "Proteus" & x$species == "penneri") |
-      (x$genus == "Proteus" & x$species == "vulgaris") |
-      (x$genus == "Providencia" & x$species == "rettgeri") |
-      (x$genus == "Providencia" & x$species == "stuartii")), ab_NA(TGC)] <- NA
+              (x$genus == "Proteus" & x$species == "mirabilis") |
+              (x$genus == "Proteus" & x$species == "penneri") |
+              (x$genus == "Proteus" & x$species == "vulgaris") |
+              (x$genus == "Providencia" & x$species == "rettgeri") |
+              (x$genus == "Providencia" & x$species == "stuartii")), ab_NA(TGC)] <- NA
     x[which((x$genus == "Citrobacter" & x$species == "koseri") |
-      (x$genus == "Citrobacter" & x$species == "freundii") |
-      (x$genus == "Enterobacter" & x$species == "aerogenes") |
-      (x$genus == "Klebsiella" & x$species == "aerogenes") # new name (2017)
-    | (x$genus == "Enterobacter" & x$species == "cloacae") |
-      (x$genus == "Escherichia" & x$species == "hermannii") |
-      (x$genus == "Hafnia" & x$species == "alvei") |
-      (x$genus == "Klebsiella") |
-      (x$genus == "Morganella" & x$species == "morganii") |
-      (x$genus == "Proteus" & x$species == "penneri") |
-      (x$genus == "Proteus" & x$species == "vulgaris") |
-      (x$genus == "Providencia" & x$species == "rettgeri") |
-      (x$genus == "Providencia" & x$species == "stuartii") |
-      (x$genus == "Serratia" & x$species == "marcescens")), ab_NA(AMP)] <- NA
+              (x$genus == "Citrobacter" & x$species == "freundii") |
+              (x$genus == "Enterobacter" & x$species == "aerogenes") |
+              (x$genus == "Klebsiella" & x$species == "aerogenes") # new name (2017)
+            | (x$genus == "Enterobacter" & x$species == "cloacae") |
+              (x$genus == "Escherichia" & x$species == "hermannii") |
+              (x$genus == "Hafnia" & x$species == "alvei") |
+              (x$genus == "Klebsiella") |
+              (x$genus == "Morganella" & x$species == "morganii") |
+              (x$genus == "Proteus" & x$species == "penneri") |
+              (x$genus == "Proteus" & x$species == "vulgaris") |
+              (x$genus == "Providencia" & x$species == "rettgeri") |
+              (x$genus == "Providencia" & x$species == "stuartii") |
+              (x$genus == "Serratia" & x$species == "marcescens")), ab_NA(AMP)] <- NA
     x[which((x$genus == "Citrobacter" & x$species == "freundii") |
-      (x$genus == "Enterobacter" & x$species == "aerogenes") |
-      (x$genus == "Klebsiella" & x$species == "aerogenes") # new name (2017)
-    | (x$genus == "Enterobacter" & x$species == "cloacae") |
-      (x$genus == "Hafnia" & x$species == "alvei") |
-      (x$genus == "Morganella" & x$species == "morganii") |
-      (x$genus == "Providencia" & x$species == "rettgeri") |
-      (x$genus == "Providencia" & x$species == "stuartii") |
-      (x$genus == "Serratia" & x$species == "marcescens")), ab_NA(AMC)] <- NA
+              (x$genus == "Enterobacter" & x$species == "aerogenes") |
+              (x$genus == "Klebsiella" & x$species == "aerogenes") # new name (2017)
+            | (x$genus == "Enterobacter" & x$species == "cloacae") |
+              (x$genus == "Hafnia" & x$species == "alvei") |
+              (x$genus == "Morganella" & x$species == "morganii") |
+              (x$genus == "Providencia" & x$species == "rettgeri") |
+              (x$genus == "Providencia" & x$species == "stuartii") |
+              (x$genus == "Serratia" & x$species == "marcescens")), ab_NA(AMC)] <- NA
     x[which((x$genus == "Citrobacter" & x$species == "freundii") |
-      (x$genus == "Citrobacter" & x$species == "koseri") |
-      (x$genus == "Enterobacter" & x$species == "aerogenes") |
-      (x$genus == "Klebsiella" & x$species == "aerogenes") # new name (2017)
-    | (x$genus == "Enterobacter" & x$species == "cloacae") |
-      (x$genus == "Hafnia" & x$species == "alvei") |
-      (x$genus == "Providencia" & x$species == "rettgeri") |
-      (x$genus == "Serratia" & x$species == "marcescens")), ab_NA(SAM)] <- NA
+              (x$genus == "Citrobacter" & x$species == "koseri") |
+              (x$genus == "Enterobacter" & x$species == "aerogenes") |
+              (x$genus == "Klebsiella" & x$species == "aerogenes") # new name (2017)
+            | (x$genus == "Enterobacter" & x$species == "cloacae") |
+              (x$genus == "Hafnia" & x$species == "alvei") |
+              (x$genus == "Providencia" & x$species == "rettgeri") |
+              (x$genus == "Serratia" & x$species == "marcescens")), ab_NA(SAM)] <- NA
     x[which((x$genus == "Morganella" & x$species == "morganii") |
-      (x$genus == "Proteus" & x$species == "mirabilis") |
-      (x$genus == "Proteus" & x$species == "penneri") |
-      (x$genus == "Proteus" & x$species == "vulgaris") |
-      (x$genus == "Providencia" & x$species == "rettgeri") |
-      (x$genus == "Providencia" & x$species == "stuartii") |
-      (x$genus == "Serratia" & x$species == "marcescens")), ab_NA(COL)] <- NA
+              (x$genus == "Proteus" & x$species == "mirabilis") |
+              (x$genus == "Proteus" & x$species == "penneri") |
+              (x$genus == "Proteus" & x$species == "vulgaris") |
+              (x$genus == "Providencia" & x$species == "rettgeri") |
+              (x$genus == "Providencia" & x$species == "stuartii") |
+              (x$genus == "Serratia" & x$species == "marcescens")), ab_NA(COL)] <- NA
     x[which((x$genus == "Morganella" & x$species == "morganii") |
-      (x$genus == "Proteus" & x$species == "mirabilis") |
-      (x$genus == "Proteus" & x$species == "penneri") |
-      (x$genus == "Proteus" & x$species == "vulgaris") |
-      (x$genus == "Providencia" & x$species == "rettgeri") |
-      (x$genus == "Providencia" & x$species == "stuartii")), ab_NA(TCY)] <- NA
+              (x$genus == "Proteus" & x$species == "mirabilis") |
+              (x$genus == "Proteus" & x$species == "penneri") |
+              (x$genus == "Proteus" & x$species == "vulgaris") |
+              (x$genus == "Providencia" & x$species == "rettgeri") |
+              (x$genus == "Providencia" & x$species == "stuartii")), ab_NA(TCY)] <- NA
     x[which((x$genus == "Morganella" & x$species == "morganii") |
-      (x$genus == "Proteus" & x$species == "penneri") |
-      (x$genus == "Proteus" & x$species == "vulgaris") |
-      (x$genus == "Providencia" & x$species == "rettgeri") |
-      (x$genus == "Providencia" & x$species == "stuartii")), ab_NA(c(DOX, MNO))] <- NA
-
+              (x$genus == "Proteus" & x$species == "penneri") |
+              (x$genus == "Proteus" & x$species == "vulgaris") |
+              (x$genus == "Providencia" & x$species == "rettgeri") |
+              (x$genus == "Providencia" & x$species == "stuartii")), ab_NA(c(DOX, MNO))] <- NA
+    
     x$classes_in_guideline <- NA_integer_
     x$classes_available <- NA_integer_
     x$classes_affected <- NA_integer_
-
+    
     # now add the MDR levels to the data
     trans_tbl(
       2,
@@ -1149,7 +1156,7 @@ mdro <- function(x = NULL,
         c(TCY, DOX, MNO)
       )
     )
-
+    
     # now set MDROs:
     # MDR (=2): >=3 classes affected
     x[which(x$classes_affected >= 3), "MDRO"] <- 2
@@ -1161,7 +1168,7 @@ mdro <- function(x = NULL,
         " out of ", x$classes_available[which(x$classes_affected >= 3)], " available classes"
       )
     }
-
+    
     # XDR (=3): all but <=2 classes affected
     x[which((x$classes_in_guideline - x$classes_affected) <= 2), "MDRO"] <- 3
     if (isTRUE(verbose)) {
@@ -1170,7 +1177,7 @@ mdro <- function(x = NULL,
         " out of ", x$classes_in_guideline[which(x$MDRO == 3)], " classes)"
       )
     }
-
+    
     # PDR (=4): all drugs are R
     x[which(x$classes_affected == 999 & x$classes_in_guideline == x$classes_available), "MDRO"] <- 4
     if (isTRUE(verbose)) {
@@ -1181,7 +1188,7 @@ mdro <- function(x = NULL,
         ifelse(!isTRUE(combine_SI), " or I", "")
       )
     }
-
+    
     # not enough classes available
     x[which(x$MDRO %in% c(1, 3) & x$classes_available < floor(x$classes_in_guideline * pct_required_classes)), "MDRO"] <- -1
     if (isTRUE(verbose)) {
@@ -1191,18 +1198,18 @@ mdro <- function(x = NULL,
         " (~", percentage(pct_required_classes), " of ", x$classes_in_guideline[which(x$MDRO == -1)], ")"
       )
     }
-
+    
     # add antibiotic names of resistant ones to verbose output
   }
-
+  
   if (guideline$code == "eucast3.1") {
     # EUCAST 3.1 --------------------------------------------------------------
     # Table 5
     trans_tbl(
       3,
       which(x$order == "Enterobacterales" |
-        (x$genus == "Pseudomonas" & x$species == "aeruginosa") |
-        x$genus == "Acinetobacter"),
+              (x$genus == "Pseudomonas" & x$species == "aeruginosa") |
+              x$genus == "Acinetobacter"),
       COL,
       "all"
     )
@@ -1287,17 +1294,17 @@ mdro <- function(x = NULL,
       "any"
     )
   }
-
+  
   if (guideline$code == "eucast3.2") {
     # EUCAST 3.2 --------------------------------------------------------------
     # Table 6
     trans_tbl(
       3,
       which((x$order == "Enterobacterales" &
-        !x$family == "Morganellaceae" &
-        !(x$genus == "Serratia" & x$species == "marcescens")) |
-        (x$genus == "Pseudomonas" & x$species == "aeruginosa") |
-        x$genus == "Acinetobacter"),
+               !x$family == "Morganellaceae" &
+               !(x$genus == "Serratia" & x$species == "marcescens")) |
+              (x$genus == "Pseudomonas" & x$species == "aeruginosa") |
+              x$genus == "Acinetobacter"),
       COL,
       "all"
     )
@@ -1388,7 +1395,7 @@ mdro <- function(x = NULL,
       "any"
     )
   }
-
+  
   if (guideline$code == "eucast3.3") {
     # EUCAST 3.3 --------------------------------------------------------------
     # note: this guideline is equal to EUCAST 3.2 - no MDRO insights changed
@@ -1396,10 +1403,10 @@ mdro <- function(x = NULL,
     trans_tbl(
       3,
       which((x$order == "Enterobacterales" &
-        !x$family == "Morganellaceae" &
-        !(x$genus == "Serratia" & x$species == "marcescens")) |
-        (x$genus == "Pseudomonas" & x$species == "aeruginosa") |
-        x$genus == "Acinetobacter"),
+               !x$family == "Morganellaceae" &
+               !(x$genus == "Serratia" & x$species == "marcescens")) |
+              (x$genus == "Pseudomonas" & x$species == "aeruginosa") |
+              x$genus == "Acinetobacter"),
       COL,
       "all"
     )
@@ -1490,72 +1497,72 @@ mdro <- function(x = NULL,
       "any"
     )
   }
-
+  
   if (guideline$code == "mrgn") {
     # Germany -----------------------------------------------------------------
-
+    
     # Table 1
     trans_tbl(
       2, # 3MRGN
       which((x$order == "Enterobacterales" | # following in fact the old Enterobacteriaceae classification
-        (x$genus == "Acinetobacter" & x$species == "baumannii")) &
-        try_ab(x[, PIP, drop = TRUE] == "R") &
-        (try_ab(x[, CTX, drop = TRUE] == "R") | try_ab(x[, CAZ, drop = TRUE] == "R")) &
-        (try_ab(x[, IPM, drop = TRUE] != "R") | try_ab(x[, MEM, drop = TRUE] != "R")) &
-        try_ab(x[, CIP, drop = TRUE] == "R")),
+               (x$genus == "Acinetobacter" & x$species == "baumannii")) &
+              try_ab(x[, PIP, drop = TRUE] == "R") &
+              (try_ab(x[, CTX, drop = TRUE] == "R") | try_ab(x[, CAZ, drop = TRUE] == "R")) &
+              (try_ab(x[, IPM, drop = TRUE] != "R") | try_ab(x[, MEM, drop = TRUE] != "R")) &
+              try_ab(x[, CIP, drop = TRUE] == "R")),
       c(PIP, CTX, CAZ, IPM, MEM, CIP),
       "any"
     )
-
+    
     trans_tbl(
       3, # 4MRGN, overwrites 3MRGN if applicable
       which((x$order == "Enterobacterales" | # following in fact the old Enterobacteriaceae classification
-        (x$genus == "Acinetobacter" & x$species == "baumannii")) &
-        try_ab(x[, PIP, drop = TRUE] == "R") &
-        (try_ab(x[, CTX, drop = TRUE] == "R") | try_ab(x[, CAZ, drop = TRUE] == "R")) &
-        (try_ab(x[, IPM, drop = TRUE] == "R") | try_ab(x[, MEM, drop = TRUE] == "R")) &
-        try_ab(x[, CIP, drop = TRUE] == "R")),
+               (x$genus == "Acinetobacter" & x$species == "baumannii")) &
+              try_ab(x[, PIP, drop = TRUE] == "R") &
+              (try_ab(x[, CTX, drop = TRUE] == "R") | try_ab(x[, CAZ, drop = TRUE] == "R")) &
+              (try_ab(x[, IPM, drop = TRUE] == "R") | try_ab(x[, MEM, drop = TRUE] == "R")) &
+              try_ab(x[, CIP, drop = TRUE] == "R")),
       c(PIP, CTX, CAZ, IPM, MEM, CIP),
       "any"
     )
-
+    
     trans_tbl(
       3, # 4MRGN, overwrites 3MRGN if applicable
       which((x$order == "Enterobacterales" | # following in fact the old Enterobacteriaceae classification
-        (x$genus == "Acinetobacter" & x$species == "baumannii")) &
-        (try_ab(x[, IPM, drop = TRUE] == "R") | try_ab(x[, MEM, drop = TRUE] == "R"))),
+               (x$genus == "Acinetobacter" & x$species == "baumannii")) &
+              (try_ab(x[, IPM, drop = TRUE] == "R") | try_ab(x[, MEM, drop = TRUE] == "R"))),
       c(IPM, MEM),
       "any"
     )
-
+    
     trans_tbl(
       2, # 3MRGN, if only 1 group is S
       which(x$genus == "Pseudomonas" & x$species == "aeruginosa" &
-        try_ab(x[, PIP, drop = TRUE] == "S") +
-          try_ab(x[, CTX, drop = TRUE] == "S") +
-          try_ab(x[, CAZ, drop = TRUE] == "S") +
-          try_ab(x[, IPM, drop = TRUE] == "S") +
-          try_ab(x[, MEM, drop = TRUE] == "S") +
-          try_ab(x[, CIP, drop = TRUE] == "S") == 1),
+              try_ab(x[, PIP, drop = TRUE] == "S") +
+              try_ab(x[, CTX, drop = TRUE] == "S") +
+              try_ab(x[, CAZ, drop = TRUE] == "S") +
+              try_ab(x[, IPM, drop = TRUE] == "S") +
+              try_ab(x[, MEM, drop = TRUE] == "S") +
+              try_ab(x[, CIP, drop = TRUE] == "S") == 1),
       c(PIP, CTX, CAZ, IPM, MEM, CIP),
       "any"
     )
-
+    
     trans_tbl(
       3, # 4MRGN otherwise
       which((x$genus == "Pseudomonas" & x$species == "aeruginosa") &
-        try_ab(x[, PIP, drop = TRUE] == "R") &
-        (try_ab(x[, CTX, drop = TRUE] == "R") | try_ab(x[, CAZ, drop = TRUE] == "R")) &
-        (try_ab(x[, IPM, drop = TRUE] == "R") | try_ab(x[, MEM, drop = TRUE] == "R")) &
-        try_ab(x[, CIP, drop = TRUE] == "R")),
+              try_ab(x[, PIP, drop = TRUE] == "R") &
+              (try_ab(x[, CTX, drop = TRUE] == "R") | try_ab(x[, CAZ, drop = TRUE] == "R")) &
+              (try_ab(x[, IPM, drop = TRUE] == "R") | try_ab(x[, MEM, drop = TRUE] == "R")) &
+              try_ab(x[, CIP, drop = TRUE] == "R")),
       c(PIP, CTX, CAZ, IPM, MEM, CIP),
       "any"
     )
-
+    
     x[which(x$MDRO == 2), "reason"] <- "3MRGN"
     x[which(x$MDRO == 3), "reason"] <- "4MRGN"
   }
-
+  
   if (guideline$code == "brmo") {
     # Netherlands -------------------------------------------------------------
     aminoglycosides <- aminoglycosides[!is.na(aminoglycosides)]
@@ -1568,7 +1575,7 @@ mdro <- function(x = NULL,
     if (length(ESBLs) != 2) {
       ESBLs <- character(0)
     }
-
+    
     # Table 1
     trans_tbl(
       3,
@@ -1576,21 +1583,21 @@ mdro <- function(x = NULL,
       c(aminoglycosides, fluoroquinolones),
       "all"
     )
-
+    
     trans_tbl(
       2,
       which(x$order == "Enterobacterales"), # following in fact the old Enterobacteriaceae classification
       carbapenems,
       "any"
     )
-
+    
     trans_tbl(
       2,
       which(x$order == "Enterobacterales"), # following in fact the old Enterobacteriaceae classification
       ESBLs,
       "all"
     )
-
+    
     # Table 2
     trans_tbl(
       2,
@@ -1604,19 +1611,19 @@ mdro <- function(x = NULL,
       c(aminoglycosides, fluoroquinolones),
       "all"
     )
-
+    
     trans_tbl(
       3,
       which(x$genus == "Stenotrophomonas" & x$species == "maltophilia"),
       SXT,
       "all"
     )
-
+    
     if (!ab_missing(MEM) && !ab_missing(IPM) &&
-      !ab_missing(GEN) && !ab_missing(TOB) &&
-      !ab_missing(CIP) &&
-      !ab_missing(CAZ) &&
-      !ab_missing(TZP)) {
+        !ab_missing(GEN) && !ab_missing(TOB) &&
+        !ab_missing(CIP) &&
+        !ab_missing(CAZ) &&
+        !ab_missing(TZP)) {
       x$psae <- 0
       x[which(x[, MEM, drop = TRUE] == "R" | x[, IPM, drop = TRUE] == "R"), "psae"] <- 1 + x[which(x[, MEM, drop = TRUE] == "R" | x[, IPM, drop = TRUE] == "R"), "psae"]
       x[which(x[, GEN, drop = TRUE] == "R" & x[, TOB, drop = TRUE] == "R"), "psae"] <- 1 + x[which(x[, GEN, drop = TRUE] == "R" & x[, TOB, drop = TRUE] == "R"), "psae"]
@@ -1636,7 +1643,7 @@ mdro <- function(x = NULL,
       x$genus == "Pseudomonas" & x$species == "aeruginosa" &
         x$psae >= 3
     ), "reason"] <- paste0("at least 3 classes contain R", ifelse(!isTRUE(combine_SI), " or I", ""))
-
+    
     # Table 3
     trans_tbl(
       3,
@@ -1657,7 +1664,7 @@ mdro <- function(x = NULL,
       "all"
     )
   }
-
+  
   if (guideline$code == "tb") {
     # Tuberculosis ------------------------------------------------------------
     prepare_drug <- function(ab) {
@@ -1694,7 +1701,7 @@ mdro <- function(x = NULL,
         ab != "R"
       }
     }
-
+    
     x$mono_count <- 0
     x[drug_is_R(INH), "mono_count"] <- x[drug_is_R(INH), "mono_count", drop = TRUE] + 1
     x[drug_is_R(RIF), "mono_count"] <- x[drug_is_R(RIF), "mono_count", drop = TRUE] + 1
@@ -1702,7 +1709,7 @@ mdro <- function(x = NULL,
     x[drug_is_R(PZA), "mono_count"] <- x[drug_is_R(PZA), "mono_count", drop = TRUE] + 1
     x[drug_is_R(RIB), "mono_count"] <- x[drug_is_R(RIB), "mono_count", drop = TRUE] + 1
     x[drug_is_R(RFP), "mono_count"] <- x[drug_is_R(RFP), "mono_count", drop = TRUE] + 1
-
+    
     x$mono <- x$mono_count > 0
     x$poly <- x$mono_count > 1 & drug_is_not_R(RIF) & drug_is_not_R(INH)
     x$mdr <- drug_is_R(RIF) & drug_is_R(INH)
@@ -1710,19 +1717,19 @@ mdro <- function(x = NULL,
     x$second <- drug_is_R(CAP) | drug_is_R(KAN) | drug_is_R(AMK)
     x$xdr <- x$mdr & x$xdr & x$second
     x$MDRO <- ifelse(x$xdr, 5,
-      ifelse(x$mdr, 4,
-        ifelse(x$poly, 3,
-          ifelse(x$mono, 2,
-            1
-          )
-        )
-      )
+                     ifelse(x$mdr, 4,
+                            ifelse(x$poly, 3,
+                                   ifelse(x$mono, 2,
+                                          1
+                                   )
+                            )
+                     )
     )
     # keep all real TB, make other species NA
     x$MDRO <- ifelse(x$fullname == "Mycobacterium tuberculosis", x$MDRO, NA_real_)
     x$reason <- "PDR/MDR/XDR criteria were met"
   }
-
+  
   # some more info on negative results
   if (isTRUE(verbose)) {
     if (guideline$code == "cmi2012") {
@@ -1738,7 +1745,7 @@ mdro <- function(x = NULL,
       x[which(x$MDRO == 1), "reason"] <- "too few antibiotics are R"
     }
   }
-
+  
   if (isTRUE(info.bak)) {
     cat(group_msg)
     if (sum(!is.na(x$MDRO)) == 0) {
@@ -1750,11 +1757,11 @@ mdro <- function(x = NULL,
       )))
     }
   }
-
+  
   # Fill in blanks ----
   # for rows that have no results
   x_transposed <- as.list(as.data.frame(t(x[, cols_ab, drop = FALSE]),
-    stringsAsFactors = FALSE
+                                        stringsAsFactors = FALSE
   ))
   rows_empty <- which(vapply(
     FUN.VALUE = logical(1),
@@ -1768,7 +1775,7 @@ mdro <- function(x = NULL,
   } else {
     cat("\n")
   }
-
+  
   # Results ----
   if (guideline$code == "cmi2012") {
     if (any(x$MDRO == -1, na.rm = TRUE)) {
@@ -1815,7 +1822,7 @@ mdro <- function(x = NULL,
       ordered = TRUE
     )
   }
-
+  
   if (isTRUE(verbose)) {
     colnames(x)[colnames(x) == col_mo] <- "microorganism"
     x$microorganism <- mo_name(x$microorganism, language = NULL)
@@ -1837,9 +1844,9 @@ mdro <- function(x = NULL,
 #' @export
 custom_mdro_guideline <- function(..., as_factor = TRUE) {
   meet_criteria(as_factor, allow_class = "logical", has_length = 1)
-
+  
   dots <- tryCatch(list(...),
-    error = function(e) "error"
+                   error = function(e) "error"
   )
   stop_if(
     identical(dots, "error"),
@@ -1853,7 +1860,7 @@ custom_mdro_guideline <- function(..., as_factor = TRUE) {
       inherits(dots[[i]], "formula"),
       "rule ", i, " must be a valid formula input (e.g., using '~'), see `?mdro`"
     )
-
+    
     # Query
     qry <- dots[[i]][[2]]
     if (inherits(qry, "call")) {
@@ -1869,14 +1876,14 @@ custom_mdro_guideline <- function(..., as_factor = TRUE) {
     qry <- gsub(" *([&|+-/*^><==]+) *", " \\1 ", qry)
     qry <- gsub("'", "\"", qry, fixed = TRUE)
     out[[i]]$query <- as.expression(qry)
-
+    
     # Value
     val <- tryCatch(eval(dots[[i]][[3]]), error = function(e) NULL)
     stop_if(is.null(val), "rule ", i, " must return a valid value, it now returns an error: ", tryCatch(eval(dots[[i]][[3]]), error = function(e) e$message))
     stop_if(length(val) > 1, "rule ", i, " must return a value of length 1, not ", length(val))
     out[[i]]$value <- as.character(val)
   }
-
+  
   names(out) <- paste0("rule", seq_len(n_dots))
   out <- set_clean_class(out, new_class = c("custom_mdro_guideline", "list"))
   attr(out, "values") <- unname(c("Negative", vapply(FUN.VALUE = character(1), unclass(out), function(x) x$value)))
@@ -1898,8 +1905,8 @@ c.custom_mdro_guideline <- function(x, ..., as_factor = NULL) {
   }
   for (g in list(...)) {
     stop_ifnot(inherits(g, "custom_mdro_guideline"),
-      "for combining custom MDRO guidelines, all rules must be created with `custom_mdro_guideline()`",
-      call = FALSE
+               "for combining custom MDRO guidelines, all rules must be created with `custom_mdro_guideline()`",
+               call = FALSE
     )
     vals <- attributes(x)$values
     if (!all(attributes(g)$values %in% vals)) {
@@ -1949,28 +1956,28 @@ run_custom_mdro_guideline <- function(df, guideline, info) {
   reasons <- character(length = NROW(df))
   for (i in seq_len(n_dots)) {
     qry <- tryCatch(eval(parse(text = guideline[[i]]$query), envir = df, enclos = parent.frame()),
-      error = function(e) {
-        AMR_env$err_msg <- e$message
-        return("error")
-      }
+                    error = function(e) {
+                      AMR_env$err_msg <- e$message
+                      return("error")
+                    }
     )
     if (identical(qry, "error")) {
       warning_("in `custom_mdro_guideline()`: rule ", i,
-        " (`", as.character(guideline[[i]]$query), "`) was ignored because of this error message: ",
-        AMR_env$err_msg,
-        call = FALSE,
-        add_fn = font_red
+               " (`", as.character(guideline[[i]]$query), "`) was ignored because of this error message: ",
+               AMR_env$err_msg,
+               call = FALSE,
+               add_fn = font_red
       )
       next
     }
     stop_ifnot(is.logical(qry), "in custom_mdro_guideline(): rule ", i, " (`", guideline[[i]]$query,
-      "`) must return `TRUE` or `FALSE`, not ",
-      format_class(class(qry), plural = FALSE),
-      call = FALSE
+               "`) must return `TRUE` or `FALSE`, not ",
+               format_class(class(qry), plural = FALSE),
+               call = FALSE
     )
-
+    
     new_mdros <- which(qry == TRUE & out == "")
-
+    
     if (isTRUE(info)) {
       cat(word_wrap(
         "- Custom MDRO rule ", i, ": `", as.character(guideline[[i]]$query),
@@ -1986,11 +1993,11 @@ run_custom_mdro_guideline <- function(df, guideline, info) {
   }
   out[out == ""] <- "Negative"
   reasons[out == "Negative"] <- "no rules matched"
-
+  
   if (isTRUE(attributes(guideline)$as_factor)) {
     out <- factor(out, levels = attributes(guideline)$values, ordered = TRUE)
   }
-
+  
   columns_nonsusceptible <- as.data.frame(t(df[, is.rsi(df), drop = FALSE] == "R"))
   columns_nonsusceptible <- vapply(
     FUN.VALUE = character(1),
@@ -1998,7 +2005,7 @@ run_custom_mdro_guideline <- function(df, guideline, info) {
     function(x) paste0(rownames(columns_nonsusceptible)[which(x)], collapse = " ")
   )
   columns_nonsusceptible[is.na(out)] <- NA_character_
-
+  
   data.frame(
     row_number = seq_len(NROW(df)),
     MDRO = out,

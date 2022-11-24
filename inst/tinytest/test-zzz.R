@@ -102,7 +102,7 @@ extended_functions <- c(
   "autoplot" = "ggplot2",
   "pillar_shaft" = "pillar",
   "get_skimmers" = "skimr",
-  "type_sum" = "tibble",
+  "type_sum" = "pillar",
   "vec_cast" = "vctrs",
   "vec_math" = "vctrs",
   "vec_ptype2" = "vctrs"

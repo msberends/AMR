@@ -1,4 +1,4 @@
-# AMR 1.8.2.9052
+# AMR 1.8.2.9053
 
 This version will eventually become v2.0! We're happy to reach a new major milestone soon!
 
@@ -45,13 +45,17 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * Support for using antibiotic selectors in scoped `dplyr` verbs (with or without `vars()`), such as in: `... %>% summarise_at(aminoglycosides(), resistance)`, see `resistance()`
 
 ### Changed
-* Fix for using `as.rsi()` on certain EUCAST breakpoints for MIC values
-* Fix for using `as.rsi()` on `NA` values (e.g. `as.rsi(as.disk(NA), ...)`)
-* Fix for using `as.rsi()` on bug-drug combinations with multiple breakpoints for different body sites
-* Removed `as.integer()` for MIC values, since MIC are not integer values and running `table()` on MIC values  consequently failed for not being able to retrieve the level position (as that's how normally `as.integer()` on `factor`s work)
+* Fixes and changes for using `as.rsi()`:
+  * On certain EUCAST breakpoints for MIC values
+  * On `NA` values (e.g. `as.rsi(as.disk(NA), ...)`)
+  * On bug-drug combinations with multiple breakpoints for different body sites
+  * Interpretation from MIC and disk zones is now more informative about availability of breakpoints and more robust
+  * The default guideline (EUCAST) can now be changed with `options(AMR_guideline = "...")`
+* Removed the `as.integer()` method for MIC values, since MIC are not integer values and running `table()` on MIC values consequently failed for not being able to retrieve the level position (as that's how normally `as.integer()` on `factor`s work)
 * `droplevels()` on MIC will now return a common `factor` at default and will lose the `mic` class. Use `droplevels(..., as.mic = TRUE)` to keep the `mic` class.
 * Small fix for using `ab_from_text()`
 * Fixes for reading in text files using `set_mo_source()`, which now also allows the source file to contain valid taxonomic names instead of only valid microorganism ID of this package
+* Fixed a bug for `mdro()` when using similar column names with the Magiorakos guideline
 * Using any `random_*()` function (such as `random_mic()`) is now possible by directly calling the package without loading it first: `AMR::random_mic(10)`
 * Added *Toxoplasma gondii* (`P_TXPL_GOND`) to the `microorganisms` data set, together with its genus, family, and order
 * Changed value in column `prevalence` of the `microorganisms` data set from 3 to 2 for these genera: *Acholeplasma*, *Alistipes*, *Alloprevotella*, *Bergeyella*, *Borrelia*, *Brachyspira*, *Butyricimonas*, *Cetobacterium*, *Chlamydia*, *Chlamydophila*, *Deinococcus*, *Dysgonomonas*, *Elizabethkingia*, *Empedobacter*, *Haloarcula*, *Halobacterium*, *Halococcus*, *Myroides*, *Odoribacter*, *Ornithobacterium*, *Parabacteroides*, *Pedobacter*, *Phocaeicola*, *Porphyromonas*, *Riemerella*, *Sphingobacterium*, *Streptobacillus*, *Tenacibaculum*, *Terrimonas*, *Victivallis*, *Wautersiella*, *Weeksella*

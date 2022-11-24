@@ -82,8 +82,10 @@ is_latex <- tryCatch(import_fn("is_latex_output", "knitr", error_on_fail = FALSE
 if (utf8_supported && !is_latex) {
   # \u2139 is a symbol officially named 'information source'
   AMR_env$info_icon <- "\u2139"
+  AMR_env$bullet_icon <- "\u2022"
 } else {
   AMR_env$info_icon <- "i"
+  AMR_env$bullet_icon <- "*"
 }
 
 .onLoad <- function(lib, pkg) {
@@ -97,12 +99,12 @@ if (utf8_supported && !is_latex) {
   s3_register("pillar::pillar_shaft", "rsi")
   s3_register("pillar::pillar_shaft", "mic")
   s3_register("pillar::pillar_shaft", "disk")
-  s3_register("tibble::type_sum", "ab")
-  s3_register("tibble::type_sum", "av")
-  s3_register("tibble::type_sum", "mo")
-  s3_register("tibble::type_sum", "rsi")
-  s3_register("tibble::type_sum", "mic")
-  s3_register("tibble::type_sum", "disk")
+  s3_register("pillar::type_sum", "ab")
+  s3_register("pillar::type_sum", "av")
+  s3_register("pillar::type_sum", "mo")
+  s3_register("pillar::type_sum", "rsi")
+  s3_register("pillar::type_sum", "mic")
+  s3_register("pillar::type_sum", "disk")
   # Support for frequency tables from the cleaner package
   s3_register("cleaner::freq", "mo")
   s3_register("cleaner::freq", "rsi")

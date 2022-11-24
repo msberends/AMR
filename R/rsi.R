@@ -36,7 +36,7 @@
 #' @param ab any (vector of) text that can be coerced to a valid antimicrobial drug code with [as.ab()]
 #' @param uti (Urinary Tract Infection) A vector with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.rsi()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See *Examples*.
 #' @inheritParams first_isolate
-#' @param guideline defaults to EUCAST `r  max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))` (the latest implemented EUCAST guideline in the [rsi_translation] data set), supports EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`), see *Details*
+#' @param guideline defaults to EUCAST `r  max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))` (the latest implemented EUCAST guideline in the [rsi_translation] data set), but can be set with the [option][options()] `AMR_guideline`. Supports EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`), see *Details*.
 #' @param conserve_capped_values a [logical] to indicate that MIC values starting with `">"` (but not `">="`) must always return "R" , and that MIC values starting with `"<"` (but not `"<="`) must always return "S"
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.3)`.
 #' @param reference_data a [data.frame] to be used for interpretation, which defaults to the [rsi_translation] data set. Changing this argument allows for using own interpretation guidelines. This argument must contain a data set that is equal in structure to the [rsi_translation] data set (same column names and column types). Please note that the `guideline` argument will be ignored when `reference_data` is manually set.
@@ -52,15 +52,15 @@
 #' 2. For **interpreting minimum inhibitory concentration (MIC) values** according to EUCAST or CLSI. You must clean your MIC values first using [as.mic()], that also gives your columns the new data class [`mic`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` argument.
 #'    * Using `dplyr`, R/SI interpretation can be done very easily with either:
 #'      ```
-#'      your_data %>% mutate_if(is.mic, as.rsi)             # until dplyr 1.0.0
-#'      your_data %>% mutate(across(where(is.mic), as.rsi)) # since dplyr 1.0.0
+#'      your_data %>% mutate_if(is.mic, as.rsi)
+#'      your_data %>% mutate(across(where(is.mic), as.rsi))
 #'      ```
 #'    * Operators like "<=" will be stripped before interpretation. When using `conserve_capped_values = TRUE`, an MIC value of e.g. ">2" will always return "R", even if the breakpoint according to the chosen guideline is ">=4". This is to prevent that capped values from raw laboratory data would not be treated conservatively. The default behaviour (`conserve_capped_values = FALSE`) considers ">2" to be lower than ">=4" and might in this case return "S" or "I".
 #' 3. For **interpreting disk diffusion diameters** according to EUCAST or CLSI. You must clean your disk zones first using [as.disk()], that also gives your columns the new data class [`disk`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` argument.
 #'    * Using `dplyr`, R/SI interpretation can be done very easily with either:
 #'      ```
-#'      your_data %>% mutate_if(is.disk, as.rsi)             # until dplyr 1.0.0
-#'      your_data %>% mutate(across(where(is.disk), as.rsi)) # since dplyr 1.0.0
+#'      your_data %>% mutate_if(is.disk, as.rsi)
+#'      your_data %>% mutate(across(where(is.disk), as.rsi))
 #'      ```
 #' 4. For **interpreting a complete data set**, with automatic determination of MIC values, disk diffusion diameters, microorganism names or codes, and antimicrobial test results. This is done very simply by running `as.rsi(your_data)`.
 #'
@@ -71,6 +71,16 @@
 #' For interpreting MIC values as well as disk diffusion diameters, currently implemented guidelines are EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`).
 #'
 #' Thus, the `guideline` argument must be set to e.g., ``r paste0('"', subset(rsi_translation, guideline %like% "EUCAST")$guideline[1], '"')`` or ``r paste0('"', subset(rsi_translation, guideline %like% "CLSI")$guideline[1], '"')``. By simply using `"EUCAST"` (the default) or `"CLSI"` as input, the latest included version of that guideline will automatically be selected. You can set your own data set using the `reference_data` argument. The `guideline` argument will then be ignored.
+#' 
+#' You can set the default guideline with the `AMR_guideline` [option][options()] (e.g. in your `.Rprofile` file), such as:
+#' 
+#' ```
+#'   options(AMR_guideline = "CLSI")
+#'   options(AMR_guideline = "CLSI 2018")
+#'   options(AMR_guideline = "EUCAST 2020")
+#'   # or to reset:
+#'   options(AMR_guideline = NULL)
+#' ```
 #'
 #' ### After Interpretation
 #'
@@ -400,7 +410,7 @@ as.rsi.default <- function(x, ...) {
 as.rsi.mic <- function(x,
                        mo = NULL,
                        ab = deparse(substitute(x)),
-                       guideline = "EUCAST",
+                       guideline = getOption("AMR_guideline", "EUCAST"),
                        uti = NULL,
                        conserve_capped_values = FALSE,
                        add_intrinsic_resistance = FALSE,
@@ -426,7 +436,7 @@ as.rsi.mic <- function(x,
 as.rsi.disk <- function(x,
                         mo = NULL,
                         ab = deparse(substitute(x)),
-                        guideline = "EUCAST",
+                        guideline = getOption("AMR_guideline", "EUCAST"),
                         uti = NULL,
                         add_intrinsic_resistance = FALSE,
                         reference_data = AMR::rsi_translation,
@@ -451,7 +461,7 @@ as.rsi.disk <- function(x,
 as.rsi.data.frame <- function(x,
                               ...,
                               col_mo = NULL,
-                              guideline = "EUCAST",
+                              guideline = getOption("AMR_guideline", "EUCAST"),
                               uti = NULL,
                               conserve_capped_values = FALSE,
                               add_intrinsic_resistance = FALSE,
@@ -720,7 +730,7 @@ as_rsi_method <- function(method_short,
   if (is.null(mo)) {
     stop_("No information was supplied about the microorganisms (missing argument `mo` and no column of class 'mo' found). See ?as.rsi.\n\n",
       "To transform certain columns with e.g. mutate(), use `data %>% mutate(across(..., as.rsi, mo = x))`, where x is your column with microorganisms.\n",
-      "To tranform all ", method_long, " in a data set, use `data %>% as.rsi()` or `data %>% mutate(across(where(is.", method_short, "), as.rsi))`.",
+      "To tranform all ", method_long, " in a data set, use `data %>% as.rsi()` or `data %>% mutate_if(is.", method_short, ", as.rsi)`.",
       call = FALSE
     )
   }
@@ -737,7 +747,7 @@ as_rsi_method <- function(method_short,
     mo.bak <- mo
   }
   # be sure to take current taxonomy, as the rsi_translation data set only contains current taxonomy
-  mo <- suppressWarnings(suppressMessages(as.mo(mo, keep_synonyms = FALSE)))
+  mo <- suppressWarnings(suppressMessages(as.mo(mo, keep_synonyms = FALSE, inf0 = FALSE)))
   guideline_coerced <- get_guideline(guideline, reference_data)
   if (is.na(ab)) {
     message_("Returning NAs for unknown drug: '", font_bold(ab.bak),
@@ -756,10 +766,21 @@ as_rsi_method <- function(method_short,
   if (length(uti) == 1) {
     uti <- rep(uti, length(x))
   }
-
+  
+  if (isTRUE(add_intrinsic_resistance) && guideline_coerced %unlike% "EUCAST") {
+    if (message_not_thrown_before("as.rsi", "intrinsic")) {
+      warning_("in `as.rsi()`: using 'add_intrinsic_resistance' is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.")
+    }
+  }
+  
   agent_formatted <- paste0("'", font_bold(ab.bak), "'")
   agent_name <- ab_name(ab, tolower = TRUE, language = NULL)
-  if (generalise_antibiotic_name(ab) != generalise_antibiotic_name(agent_name)) {
+  if (generalise_antibiotic_name(ab.bak) == generalise_antibiotic_name(agent_name)) {
+    agent_formatted <- paste0(
+      agent_formatted,
+      " (", ab, ")"
+    )
+  } else if (generalise_antibiotic_name(ab) != generalise_antibiotic_name(agent_name)) {
     agent_formatted <- paste0(
       agent_formatted,
       " (", ifelse(ab.bak == ab, "",
@@ -778,265 +799,208 @@ as_rsi_method <- function(method_short,
     appendLF = FALSE,
     as_note = FALSE
   )
+  
+  msg_note <- function(messages) {
+    for (i in seq_len(length(messages))) {
+      messages[i] <- word_wrap(extra_indent = 5, messages[i])
+    }
+    message(font_green(font_bold(" * NOTE *\n")),
+            paste0("   ", font_black(AMR_env$bullet_icon)," ", font_black(messages, collapse = NULL) , collapse = "\n"))
+  }
 
   method <- method_short
 
   metadata_mo <- get_mo_uncertainties()
 
-  x_bak <- data.frame(x_mo = paste0(x, mo), stringsAsFactors = FALSE)
-  df <- unique(data.frame(x, mo, x_mo = paste0(x, mo), stringsAsFactors = FALSE))
-  x <- df$x
-  mo <- df$mo
-
+  df <- data.frame(values = x,
+                   mo = mo,
+                   result = NA_rsi_,
+                   uti = uti,
+                   stringsAsFactors = FALSE)
   if (method == "mic") {
-    x <- as.mic(x) # when as.rsi.mic is called directly
+    # when as.rsi.mic is called directly
+    df$values <- as.mic(df$values) 
   } else if (method == "disk") {
-    x <- as.disk(x) # when as.rsi.disk is called directly
+    # when as.rsi.disk is called directly
+    df$values <- as.disk(df$values)
   }
 
   rise_warning <- FALSE
   rise_note <- FALSE
-  method_param <- toupper(method)
-
-  genera <- mo_genus(mo, language = NULL)
-  mo_genus <- as.mo(genera, language = NULL)
-  mo_family <- as.mo(mo_family(mo, language = NULL))
-  mo_order <- as.mo(mo_order(mo, language = NULL))
-  if (any(genera == "Staphylococcus", na.rm = TRUE)) {
-    mo_becker <- as.mo(mo, Becker = TRUE)
-  } else {
-    mo_becker <- mo
-  }
-  if (any(genera == "Streptococcus", na.rm = TRUE)) {
-    mo_lancefield <- as.mo(mo, Lancefield = TRUE)
-  } else {
-    mo_lancefield <- mo
-  }
-  mo_other <- as.mo(rep("UNKNOWN", length(mo)))
-
-  new_rsi <- rep(NA_character_, length(x))
-  ab_param <- ab
-
+  method_coerced <- toupper(method)
+  ab_coerced <- ab
+  mo_coerced <- mo
+  
   if (identical(reference_data, AMR::rsi_translation)) {
-    trans <- reference_data %pm>%
-      subset(guideline == guideline_coerced & method == method_param & ab == ab_param)
-    if (ab_param == "AMX" && nrow(trans) == 0) {
-      ab_param <- "AMP"
-      if (message_not_thrown_before("as.rsi", "AMP_for_AMX")) {
-        message_("(using ampicillin rules)", appendLF = FALSE, as_note = FALSE)
-      }
-      trans <- reference_data %pm>%
-        subset(guideline == guideline_coerced & method == method_param & ab == ab_param)
+    breakpoints <- reference_data %pm>%
+      subset(guideline == guideline_coerced & method == method_coerced & ab == ab_coerced)
+    if (ab_coerced == "AMX" && nrow(breakpoints) == 0) {
+      ab_coerced <- "AMP"
+      breakpoints <- reference_data %pm>%
+        subset(guideline == guideline_coerced & method == method_coerced & ab == ab_coerced)
     }
   } else {
-    trans <- reference_data %pm>%
-      subset(method == method_param & ab == ab_param)
+    breakpoints <- reference_data %pm>%
+      subset(method == method_coerced & ab == ab_coerced)
   }
-
-  if (nrow(trans) == 0) {
-    message_(" OK.", add_fn = list(font_green), as_note = FALSE)
+  
+  msgs <- character(0)
+  if (nrow(breakpoints) == 0) {
+    # apparently no breakpoints found
+    msg_note(paste0("No ", method_coerced, " breakpoints available for ",
+                    suppressMessages(suppressWarnings(ab_name(ab_coerced, language = NULL, tolower = TRUE))),
+                    " (", ab_coerced, ")"))
     load_mo_uncertainties(metadata_mo)
-    return(set_clean_class(factor(new_rsi, levels = c("S", "I", "R"), ordered = TRUE),
-      new_class = c("rsi", "ordered", "factor")
-    ))
+    return(rep(NA_rsi_, nrow(df)))
   }
-
-  trans$lookup <- paste(trans$mo, trans$ab)
-
-  lookup_mo <- paste(mo, ab_param)
-  lookup_genus <- paste(mo_genus, ab_param)
-  lookup_family <- paste(mo_family, ab_param)
-  lookup_order <- paste(mo_order, ab_param)
-  lookup_becker <- paste(mo_becker, ab_param)
-  lookup_lancefield <- paste(mo_lancefield, ab_param)
-  lookup_other <- paste(mo_other, ab_param)
-
-  any_is_intrinsic_resistant <- FALSE
-
-  for (i in seq_len(length(x))) {
+  
+  if (guideline_coerced %like% "EUCAST") {
+    any_is_intrinsic_resistant <- FALSE
     add_intrinsic_resistance_to_AMR_env()
-    is_intrinsic_r <- paste(mo[i], ab_param) %in% AMR_env$intrinsic_resistant
-    any_is_intrinsic_resistant <- any_is_intrinsic_resistant | is_intrinsic_r
-
-    if (isTRUE(add_intrinsic_resistance) && isTRUE(is_intrinsic_r)) {
-      if (guideline_coerced %unlike% "EUCAST") {
-        if (message_not_thrown_before("as.rsi", "intrinsic")) {
-          warning_("in `as.rsi()`: using 'add_intrinsic_resistance' is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.")
-        }
-      } else {
-        new_rsi[i] <- "R"
-        next
-      }
+  }
+  
+  # run the rules
+  for (mo_unique in unique(df$mo)) {
+    
+    rows <- which(df$mo == mo_unique)
+    values <- df[rows, "values", drop = TRUE]
+    uti <- df[rows, "uti", drop = TRUE]
+    new_rsi <- rep(NA_rsi_, length(rows))
+    
+    # find different mo properties
+    mo_current_genus <- as.mo(mo_genus(mo_unique, language = NULL))
+    mo_current_family <- as.mo(mo_family(mo_unique, language = NULL))
+    mo_current_order <- as.mo(mo_order(mo_unique, language = NULL))
+    mo_current_class <- as.mo(mo_class(mo_unique, language = NULL))
+    if (mo_genus(mo_unique, language = NULL) == "Staphylococcus") {
+      mo_current_becker <- as.mo(mo_unique, Becker = TRUE)
+    } else {
+      mo_current_becker <- mo_unique
     }
-
-    get_record <- trans %pm>%
-      subset(lookup %in% c(
-        lookup_mo[i],
-        lookup_genus[i],
-        lookup_family[i],
-        lookup_order[i],
-        lookup_becker[i],
-        lookup_lancefield[i],
-        lookup_other[i]
-      ))
-
-    if (NROW(get_record) == 0) {
-      if (mo_rank(mo[i]) %in% c("kingdom", "phylum", "class", "order")) {
-        mo_formatted <- suppressMessages(suppressWarnings(mo_shortname(mo[i], language = NULL, keep_synonyms = FALSE)))
-      } else {
-        mo_formatted <- font_italic(suppressMessages(suppressWarnings(mo_shortname(mo[i], language = NULL, keep_synonyms = FALSE))))
-      }
-      message_(font_green(font_bold(" NOTE.\n")),
-        font_black("No ", method_param, " breakpoints available for ", mo_formatted,
-        " / ",
-        suppressMessages(suppressWarnings(ab_name(ab_param, language = NULL, tolower = TRUE))),
-        " (", ab_param, ")", collapse = NULL)
-      )
-      rise_note <- TRUE
-      next
+    if (mo_genus(mo_unique, language = NULL) == "Streptococcus") {
+      mo_current_lancefield <- as.mo(mo_unique, Lancefield = TRUE)
+    } else {
+      mo_current_lancefield <- mo_unique
     }
-
-    if (isTRUE(uti[i])) {
-      get_record <- get_record %pm>%
+    mo_current_other <- as.mo("UNKNOWN")
+    # formatted for notes
+    mo_formatted <- suppressMessages(suppressWarnings(mo_fullname(mo_unique, language = NULL, keep_synonyms = FALSE)))
+    if (!mo_rank(mo_unique) %in% c("kingdom", "phylum", "class", "order")) {
+      mo_formatted <- font_italic(mo_formatted)
+    }
+    ab_formatted <- paste0(suppressMessages(suppressWarnings(ab_name(ab_coerced, language = NULL, tolower = TRUE))), 
+                           " (", ab_coerced, ")")
+    
+    # gather all available breakpoints for current MO and sort on taxonomic rank 
+    # (this will prefer species breakpoints over order breakpoints)
+    breakpoints_current <- breakpoints %pm>%
+      subset(mo %in% c(mo_current_genus, mo_current_family,
+                       mo_current_order, mo_current_class,
+                       mo_current_becker, mo_current_lancefield,
+                       mo_current_other))
+    
+    if (any(df[rows, "uti", drop = TRUE], na.rm = TRUE)) {
+      breakpoints_current <- breakpoints_current %pm>%
         # be as specific as possible (i.e. prefer species over genus):
         # the below `pm_desc(uti)` will put `TRUE` on top and FALSE on bottom
         pm_arrange(rank_index, pm_desc(uti)) # 'uti' is a column in data set 'rsi_translation'
     } else {
-      get_record <- get_record %pm>%
+      breakpoints_current <- breakpoints_current %pm>%
         # sort UTI = FALSE first, then UTI = TRUE
         pm_arrange(rank_index, uti)
     }
-
-    # warning section
-    records_same_mo <- get_record[get_record$mo == get_record[1, "mo", drop = TRUE], , drop = FALSE]
-    if (nrow(get_record) == 1 && all(get_record$uti == TRUE) && uti[i] %in% c(FALSE, NA) && message_not_thrown_before("as.rsi", "uti", ab_param)) {
-      # uti not set as TRUE, but there are only a UTI breakpoints available, so throw warning
-      warning_("in `as.rsi()`: interpretation of ", font_bold(ab_name(ab_param, tolower = TRUE)), " is only available for (uncomplicated) urinary tract infections (UTI) for some microorganisms, thus assuming `uti = TRUE`. See ?as.rsi.")
+    
+    # throw notes for different body sites
+    if (nrow(breakpoints_current) == 1 && all(breakpoints_current$uti == TRUE) && any(uti %in% c(FALSE, NA)) && message_not_thrown_before("as.rsi", "uti", ab_coerced)) {
+      # only UTI breakpoints available
+      warning_("in `as.rsi()`: interpretation of ", font_bold(ab_formatted), " is only available for (uncomplicated) urinary tract infections (UTI) for some microorganisms, thus assuming `uti = TRUE`. See `?as.rsi`.")
       rise_warning <- TRUE
-    } else if (nrow(records_same_mo) > 1 && length(unique(records_same_mo$site)) > 1 && is.na(uti[i]) && all(c(TRUE, FALSE) %in% records_same_mo$uti, na.rm = TRUE) && message_not_thrown_before("as.rsi", "siteUTI", records_same_mo$mo[1], ab_param)) {
-      # uti not set and both UTI and non-UTI breakpoints available, so throw warning
-      if (mo_rank(mo[i]) %in% c("kingdom", "phylum", "class", "order")) {
-        mo_formatted <- suppressMessages(suppressWarnings(mo_shortname(mo[i], language = NULL, keep_synonyms = FALSE)))
-      } else {
-        mo_formatted <- font_italic(suppressMessages(suppressWarnings(mo_shortname(mo[i], language = NULL, keep_synonyms = FALSE))))
-      }
-      message_(font_green(font_bold(" NOTE.\n")),
-        font_black("Breakpoints for UTI ", font_underline("and"), " non-UTI available for ", mo_formatted,
-        " / ",
-        suppressMessages(suppressWarnings(ab_name(ab_param, language = NULL, tolower = TRUE))),
-        " (", ab_param, ") - assuming non-UTI. Use argument `uti` to set which isolates are from urine. See ?as.rsi.", collapse = NULL),
-        as_note = FALSE
-      )
-      rise_note <- TRUE
-      get_record <- get_record %pm>%
+    } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && any(is.na(uti)) && all(c(TRUE, FALSE) %in% breakpoints_current$uti, na.rm = TRUE) && message_not_thrown_before("as.rsi", "siteUTI", mo_unique, ab_coerced)) {
+      # both UTI and Non-UTI breakpoints available
+      msgs <- c(msgs, paste0("Breakpoints for UTI ", font_underline("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming non-UTI. Use argument `uti` to set which isolates are from urine. See `?as.rsi`."))
+      breakpoints_current <- breakpoints_current %pm>%
         pm_filter(uti == FALSE)
-      rise_warning <- TRUE
-    } else if (nrow(records_same_mo) > 1 && length(unique(records_same_mo$site)) > 1 && all(records_same_mo$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.rsi", "siteOther", records_same_mo$mo[1], ab_param)) {
-      # breakpoints for multiple body sites available, so throw warning
-      site <- get_record[1L, "site", drop = FALSE]
+    } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && all(breakpoints_current$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.rsi", "siteOther", mo_unique, ab_coerced)) {
+      # breakpoints for multiple body sites available
+      site <- breakpoints_current[1L, "site", drop = FALSE] # this is the one we'll take
       if (is.na(site)) {
         site <- paste0("an unspecified body site")
       } else {
-        site <- paste0("body site '", get_record[1L, "site", drop = FALSE], "'")
+        site <- paste0("body site '", site, "'")
       }
-      if (mo_rank(mo[i]) %in% c("kingdom", "phylum", "class", "order")) {
-        mo_formatted <- suppressMessages(suppressWarnings(mo_shortname(mo[i], language = NULL, keep_synonyms = FALSE)))
-      } else {
-        mo_formatted <- font_italic(suppressMessages(suppressWarnings(mo_shortname(mo[i], language = NULL, keep_synonyms = FALSE))))
-      }
-      message_(font_green(font_bold(" NOTE.\n")),
-        font_black("Breakpoints available for ", mo_formatted,
-        " / ",
-        suppressMessages(suppressWarnings(ab_name(records_same_mo$ab[1], language = NULL, tolower = TRUE))),
-        paste0(" - assuming ", site), collapse = NULL),
-        as_note = FALSE
-      )
-      rise_note <- TRUE
+      msgs <- c(msgs, paste0("Multiple breakpoints available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, "."))
     }
-
-    if (NROW(get_record) > 0) {
-      # get the best hit: the top one
-      get_record <- get_record[1L, , drop = FALSE]
-      if (is.na(x[i]) | (is.na(get_record$breakpoint_S) & is.na(get_record$breakpoint_R))) {
-        new_rsi[i] <- NA_character_
-      } else if (method == "mic") {
-        new_rsi[i] <- quick_case_when(
-          isTRUE(conserve_capped_values) & isTRUE(x[i] %like% "^<[0-9]") ~ "S",
-          isTRUE(conserve_capped_values) & isTRUE(x[i] %like% "^>[0-9]") ~ "R",
-          # these basically call `<=.mic()` and `>=.mic()`:
-          isTRUE(x[i] <= get_record$breakpoint_S) ~ "S",
-          guideline_coerced %like% "EUCAST" & isTRUE(x[i] > get_record$breakpoint_R) ~ "R",
-          guideline_coerced %like% "CLSI" & isTRUE(x[i] >= get_record$breakpoint_R) ~ "R",
-          # return "I" when not match the bottom or top
-          !is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R) ~ "I",
+    
+    # first check if mo is intrinsic resistant
+    if (isTRUE(add_intrinsic_resistance) && guideline_coerced %like% "EUCAST" && paste(mo_unique, ab_coerced) %in% AMR_env$intrinsic_resistant) {
+      msgs <- c(msgs, paste0("Intrinsic resistance applied for ", ab_formatted, " in ", mo_formatted, ""))
+      new_rsi <- rep(as.rsi("R"), length(rows))
+      
+    } else {
+      # then run the rules
+      breakpoints_current <- breakpoints_current[1L, , drop = FALSE]
+      
+      if (method == "mic") {
+        new_rsi <- quick_case_when(
+          is.na(values) ~ NA_rsi_,
+          values <= breakpoints_current$breakpoint_S ~ as.rsi("S"),
+          guideline_coerced %like% "EUCAST" & values > breakpoints_current$breakpoint_R ~ as.rsi("R"),
+          guideline_coerced %like% "CLSI" & values >= breakpoints_current$breakpoint_R ~ as.rsi("R"),
+          # return "I" when breakpoints are in the middle
+          !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) ~ as.rsi("I"),
           # and NA otherwise
-          TRUE ~ NA_character_
+          TRUE ~ NA_rsi_
         )
+        
       } else if (method == "disk") {
-        new_rsi[i] <- quick_case_when(
-          isTRUE(as.double(x[i]) >= as.double(get_record$breakpoint_S)) ~ "S",
-          guideline_coerced %like% "EUCAST" & isTRUE(as.double(x[i]) < as.double(get_record$breakpoint_R)) ~ "R",
-          guideline_coerced %like% "CLSI" & isTRUE(as.double(x[i]) <= as.double(get_record$breakpoint_R)) ~ "R",
-          # return "I" when not match the bottom or top
-          !is.na(get_record$breakpoint_S) & !is.na(get_record$breakpoint_R) ~ "I",
+        new_rsi <- quick_case_when(
+          is.na(values) ~ NA_rsi_,
+          as.double(values) >= as.double(breakpoints_current$breakpoint_S) ~ as.rsi("S"),
+          guideline_coerced %like% "EUCAST" & as.double(values) < as.double(breakpoints_current$breakpoint_R) ~ as.rsi("R"),
+          guideline_coerced %like% "CLSI" & as.double(values) <= as.double(breakpoints_current$breakpoint_R) ~ as.rsi("R"),
+          # return "I" when breakpoints are in the middle
+          !is.na(breakpoints_current$breakpoint_S) & !is.na(breakpoints_current$breakpoint_R) ~ as.rsi("I"),
           # and NA otherwise
-          TRUE ~ NA_character_
+          TRUE ~ NA_rsi_
         )
       }
 
       # write to verbose output
       AMR_env$rsi_interpretation_history <- rbind(
         AMR_env$rsi_interpretation_history,
+        # recycling 1 to 2 rows does not seem to work, which is why rep() was added
         data.frame(
-          datetime = Sys.time(),
-          index = i,
-          ab_userinput = ab.bak[1],
-          ab_actual = ab[1],
-          mo_userinput = mo.bak[1],
-          mo_actual = mo[1],
-          guideline = guideline_coerced,
-          ref_table = get_record[, "ref_tbl", drop = TRUE],
-          method = method,
-          input = as.double(x[i]),
-          outcome = new_rsi[i],
-          breakpoint_S_R = paste0(get_record[, "breakpoint_S", drop = TRUE], "-", get_record[, "breakpoint_R", drop = TRUE]),
+          datetime = rep(Sys.time(), length(rows)),
+          index = rows,
+          ab_input = rep(ab.bak, length(rows)),
+          ab_guideline = rep(ab_coerced, length(rows)),
+          mo_input = rep(mo.bak[match(mo_unique, df$mo)][1], length(rows)),
+          mo_guideline = rep(breakpoints_current[, "mo", drop = TRUE], length(rows)),
+          guideline = rep(guideline_coerced, length(rows)),
+          ref_table = rep(breakpoints_current[, "ref_tbl", drop = TRUE], length(rows)),
+          method = rep(method_coerced, length(rows)),
+          input = as.double(values),
+          outcome = as.rsi(new_rsi),
+          breakpoint_S_R = rep(paste0(breakpoints_current[, "breakpoint_S", drop = TRUE], "-", breakpoints_current[, "breakpoint_R", drop = TRUE]), length(rows)),
           stringsAsFactors = FALSE
         )
       )
     }
+    
+    df[rows, "result"] <- new_rsi
   }
-
-  if (any_is_intrinsic_resistant & guideline_coerced %like% "EUCAST" & !isTRUE(add_intrinsic_resistance)) {
-    # found some intrinsic resistance, but was not applied
-    if (message_not_thrown_before("as.rsi", "unapplied_instrinsic")) {
-      warning_("in `as.rsi()`: found intrinsic resistance in some bug/drug combinations, although it was not applied.\nUse `as.rsi(..., add_intrinsic_resistance = TRUE)` to apply it.")
-    }
-    rise_warning <- TRUE
-  }
-
-  new_rsi <- x_bak %pm>%
-    pm_left_join(data.frame(
-      x_mo = paste0(x, mo), new_rsi,
-      stringsAsFactors = FALSE
-    ),
-    by = "x_mo"
-    ) %pm>%
-    pm_pull(new_rsi)
   
-  if (!isTRUE(rise_note)) {
-    # notes already a have green "NOTE" text by this point
-    if (isTRUE(rise_warning)) {
-      message_(" WARNING.", add_fn = list(font_yellow, font_bold), as_note = FALSE)
-    } else {
-      message_(" OK.", add_fn = list(font_green), as_note = FALSE)
-    }
+  if (isTRUE(rise_warning)) {
+    message(font_yellow(font_bold(" * WARNING *")))
+  } else if (length(msgs) == 0) {
+    message(font_green(" OK."))
+  } else {
+    msg_note(sort(msgs))
   }
   
   load_mo_uncertainties(metadata_mo)
-
-  set_clean_class(factor(new_rsi, levels = c("S", "I", "R"), ordered = TRUE),
-    new_class = c("rsi", "ordered", "factor")
-  )
+  
+  df$result
 }
 
 #' @rdname as.rsi
@@ -1051,8 +1015,8 @@ rsi_interpretation_history <- function(clean = FALSE) {
     message_("No results to return. Run `as.rsi()` on MIC values or disk diffusion zones first to see a 'logbook' data set here.")
     return(invisible(NULL))
   }
-  out$ab_actual <- as.ab(out$ab_actual)
-  out$mo_actual <- as.mo(out$mo_actual)
+  out$ab_guideline <- as.ab(out$ab_guideline)
+  out$mo_guideline <- as.mo(out$mo_guideline)
   out$outcome <- as.rsi(out$outcome)
   # keep stored for next use
   if (isTRUE(clean)) {
@@ -1074,7 +1038,7 @@ pillar_shaft.rsi <- function(x, ...) {
   if (has_colour()) {
     # colours will anyway not work when has_colour() == FALSE,
     # but then the indentation should also not be applied
-    out[is.na(x)] <- font_grey(" NA")
+    out[is.na(x)] <- font_grey("  NA")
     out[x == "R"] <- font_red_bg("  R  ")
     out[x == "S"] <- font_green_bg("  S  ")
     out[x == "I"] <- font_orange_bg("  I  ")

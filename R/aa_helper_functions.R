@@ -469,7 +469,7 @@ word_wrap <- function(...,
   }
 
   # format backticks
-  msg <- gsub("(`.+?`)", font_grey_bg("\\1"), msg)
+  msg <- gsub("`(.+?)`", font_grey_bg("\\1"), msg)
 
   # clean introduced whitespace between fullstops
   msg <- gsub("[.] +[.]", "..", msg)
@@ -968,7 +968,7 @@ unique_call_id <- function(entire_session = FALSE, match_fn = NULL) {
   if (!isTRUE(in_test)) {
     for (i in seq_len(length(calls))) {
       call_clean <- gsub("[^a-zA-Z0-9_().-]", "", as.character(calls[[i]]), perl = TRUE)
-      if (any(call_clean %like% paste0(match_fn, "\\("), na.rm = TRUE)) {
+      if (match_fn %in% call_clean || any(call_clean %like% paste0(match_fn, "\\("), na.rm = TRUE)) {
         return(c(
           envir = gsub("<environment: (.*)>", "\\1", utils::capture.output(sys.frames()[[1]]), perl = TRUE),
           call = paste0(deparse(calls[[i]]), collapse = "")
@@ -1171,9 +1171,19 @@ font_italic <- function(..., collapse = " ") {
 font_underline <- function(..., collapse = " ") {
   try_colour(..., before = "\033[4m", after = "\033[24m", collapse = collapse)
 }
+font_url <- function(url, txt = url) {
+  if (tryCatch(isTRUE(getExportedValue("ansi_has_hyperlink_support", ns = asNamespace("cli"))()), error = function(e) FALSE)) {
+    paste0("\033]8;;", url, "\a", txt, "\033]8;;\a")
+  } else {
+    url
+  }
+}
 font_stripstyle <- function(x) {
+  # remove URLs
+  x <- gsub("\033]8;;(.*?)\a.*?\033]8;;\a", "\\1", x)
   # from crayon:::ansi_regex
-  gsub("(?:(?:\\x{001b}\\[)|\\x{009b})(?:(?:[0-9]{1,3})?(?:(?:;[0-9]{0,3})*)?[A-M|f-m])|\\x{001b}[A-M]", "", x, perl = TRUE)
+  x <- gsub("(?:(?:\\x{001b}\\[)|\\x{009b})(?:(?:[0-9]{1,3})?(?:(?:;[0-9]{0,3})*)?[A-M|f-m])|\\x{001b}[A-M]", "", x, perl = TRUE)
+  x
 }
 
 progress_ticker <- function(n = 1, n_min = 0, print = TRUE, ...) {

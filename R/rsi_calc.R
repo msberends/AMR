@@ -161,8 +161,7 @@ rsi_calc <- function(...,
   if (print_warning == TRUE) {
     if (message_not_thrown_before("rsi_calc")) {
       warning_("Increase speed by transforming to class 'rsi' on beforehand:\n",
-        "  your_data %>% mutate_if(is.rsi.eligible, as.rsi)\n",
-        "  your_data %>% mutate(across(where(is.rsi.eligible), as.rsi))",
+        "  your_data %>% mutate_if(is.rsi.eligible, as.rsi)",
         call = FALSE
       )
     }

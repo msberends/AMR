@@ -181,8 +181,9 @@ as.mo <- function(x,
 
   x_lower <- tolower(x)
   
-  if (any(trimws2(x_lower) %like_case% "complex$", na.rm = TRUE)) {
-    warning_("in `as.mo()`: translation of complexes is not supported at the moment - the input text 'complex' was ignored.", call = FALSE)
+  complexes <- x[trimws2(x_lower) %like_case% "complex$"]
+  if (length(complexes) > 0) {
+    warning_("in `as.mo()`: translation of complexes is not supported at the moment - the input text 'complex' was ignored in ", length(complexes), " cases.", call = FALSE)
   }
 
   # WHONET: xxx = no growth
@@ -935,6 +936,7 @@ convert_colloquial_input <- function(x) {
   out[x %like_case% "^fung(us|i)"] <- "F_FUNGUS"
 
   # Salmonella city names, starting with capital species name - they are all S. enterica
+  out[x.bak %like_case% "[sS]almonella " & x %like% "paratyphi"] <- "B_SLMNL_ENTR"
   out[x.bak %like_case% "[sS]almonella [A-Z][a-z]+ ?.*" & x %unlike% "typhi"] <- "B_SLMNL_ENTR"
   out[x %like_case% "salmonella group"] <- "B_SLMNL"
 
