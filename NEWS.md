@@ -1,4 +1,4 @@
-# AMR 1.8.2.9053
+# AMR 1.8.2.9054
 
 This version will eventually become v2.0! We're happy to reach a new major milestone soon!
 
@@ -69,6 +69,7 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * Updated support for all WHONET 2022 microorganism codes 
 * Antimicrobial interpretation 'SDD' (susceptible dose-dependent, coined by CLSI) will be interpreted as 'I' to comply with EUCAST's 'I' in `as.rsi()`
 * Fix for `mo_shortname()` in case of higher taxonomic ranks (order, class, phylum)
+* Cleaning columns with `as.rsi()`, `as.mic()`, or `as.disk()` will now show the column name in the warning for invalid results
 
 ### Other
 * New website to make use of the new Bootstrap 5 and pkgdown 2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions

@@ -118,11 +118,15 @@ as.disk <- function(x, na.rm = FALSE) {
         unique() %pm>%
         sort() %pm>%
         vector_and(quotes = TRUE)
-      warning_(
-        "in `as.disk()`: ", na_after - na_before, " results truncated (",
-        round(((na_after - na_before) / length(x)) * 100),
-        "%) that were invalid disk zones: ",
-        list_missing
+      cur_col <- get_current_column()
+      warning_("in `as.disk()`: ", na_after - na_before, " result",
+               ifelse(na_after - na_before > 1, "s", ""),
+               ifelse(is.null(cur_col), "", paste0(" in column '", cur_col, "'")),
+               " truncated (",
+               round(((na_after - na_before) / length(x)) * 100),
+               "%) that were invalid disk zones: ",
+               list_missing,
+               call = FALSE
       )
     }
   }
