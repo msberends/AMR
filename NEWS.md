@@ -1,4 +1,4 @@
-# AMR 1.8.2.9056
+# AMR 1.8.2.9057
 
 This version will eventually become v2.0! We're happy to reach a new major milestone soon!
 
@@ -44,14 +44,15 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * Our data sets are now also continually exported to **Apache Feather and Apache Parquet formats**. You can find more info [in this article on our website](https://msberends.github.io/AMR/articles/datasets.html).
 * Support for using antibiotic selectors in scoped `dplyr` verbs (with or without `vars()`), such as in: `... %>% summarise_at(aminoglycosides(), resistance)`, see `resistance()`
 
-### Changed
-* Fixes and changes for using `as.rsi()`:
-  * On certain EUCAST breakpoints for MIC values
-  * On `NA` values (e.g. `as.rsi(as.disk(NA), ...)`)
-  * On bug-drug combinations with multiple breakpoints for different body sites
+### Changes
+* For `as.rsi()`:
+  * Fixed certain EUCAST breakpoints for MIC values
+  * Allow `NA` values (e.g. `as.rsi(as.disk(NA), ...)`)
+  * Fix for bug-drug combinations with multiple breakpoints for different body sites
   * Interpretation from MIC and disk zones is now more informative about availability of breakpoints and more robust
   * The default guideline (EUCAST) can now be changed with `options(AMR_guideline = "...")`
 * Removed the `as.integer()` method for MIC values, since MIC are not integer values and running `table()` on MIC values consequently failed for not being able to retrieve the level position (as that's how normally `as.integer()` on `factor`s work)
+* Fixed determination of Gram stains (`mo_gramstain()`), since the taxonomic phyla Actinobacteria, Chloroflexi, Firmicutes, and Tenericutes have been renamed to respectively Actinomycetota, Chloroflexota, Bacillota, and Mycoplasmatota in 2021
 * `droplevels()` on MIC will now return a common `factor` at default and will lose the `mic` class. Use `droplevels(..., as.mic = TRUE)` to keep the `mic` class.
 * Small fix for using `ab_from_text()`
 * Fixes for reading in text files using `set_mo_source()`, which now also allows the source file to contain valid taxonomic names instead of only valid microorganism ID of this package
