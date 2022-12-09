@@ -90,6 +90,7 @@
 #' reset_AMR_locale()
 #' ab_name("amoxi/clav")
 get_AMR_locale <- function() {
+  # a message for this will be thrown in translate_into_language() if outcome is non-English
   if (!is.null(getOption("AMR_locale", default = NULL))) {
     return(validate_language(getOption("AMR_locale"), extra_txt = "set with `options(AMR_locale = ...)`"))
   }
@@ -144,8 +145,10 @@ translate_AMR <- function(x, language = get_AMR_locale()) {
 
 
 validate_language <- function(language, extra_txt = character(0)) {
-  if (isTRUE(trimws2(tolower(language[1])) %in% c("en", "english", "", "false", NA)) || length(language) == 0) {
+  if (length(language) == 0 || isTRUE(trimws2(tolower(language[1])) %in% c("en", "english", "", "false", NA))) {
     return("en")
+  } else if (language[1] %in% LANGUAGES_SUPPORTED) {
+    return(language[1])
   }
   lang <- find_language(language[1], fallback = FALSE)
   stop_ifnot(length(lang) > 0 && lang %in% LANGUAGES_SUPPORTED,
@@ -189,7 +192,10 @@ translate_into_language <- function(from,
                                     only_unknown = FALSE,
                                     only_affect_ab_names = FALSE,
                                     only_affect_mo_names = FALSE) {
-  if (is.null(language) || language[1] %in% c("en", "", NA)) {
+  # get ISO-639-1 of language
+  lang <- validate_language(language)
+  if (lang == "en") {
+    # don' translate
     return(from)
   }
 
@@ -198,8 +204,6 @@ translate_into_language <- function(from,
   from_unique <- unique(from)
   from_unique_translated <- from_unique
 
-  # get ISO-639-1 of language
-  lang <- validate_language(language)
   # only keep lines where translation is available for this language
   df_trans <- df_trans[which(!is.na(df_trans[, lang, drop = TRUE])), , drop = FALSE]
   # and where the original string is not equal to the string in the target language
@@ -251,7 +255,17 @@ translate_into_language <- function(from,
 
   # force UTF-8 for diacritics
   from_unique_translated <- enc2utf8(from_unique_translated)
-
+  
   # a kind of left join to get all results back
-  from_unique_translated[match(from.bak, from_unique)]
+  out <- from_unique_translated[match(from.bak, from_unique)]
+  
+  if (!identical(from.bak, out) && message_not_thrown_before("translation", entire_session = TRUE) && interactive()) {
+    message(word_wrap(
+      "Assuming the ", LANGUAGES_SUPPORTED_NAMES[[lang]]$exonym, " language (",
+      LANGUAGES_SUPPORTED_NAMES[[lang]]$endonym, ") for the AMR package. See `set_AMR_locale()` to change this or to silence this once-per-session note.",
+      add_fn = list(font_blue), as_note = TRUE
+    ))
+  }
+  
+  out
 }
