@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9054</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9057</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -132,10 +132,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.8.2.9054" id="amr-1829054">AMR 1.8.2.9054<a class="anchor" aria-label="anchor" href="#amr-1829054"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.8.2.9057" id="amr-1829057">AMR 1.8.2.9057<a class="anchor" aria-label="anchor" href="#amr-1829057"></a></h2>
 <p>This version will eventually become v2.0! We’re happy to reach a new major milestone soon!</p>
 <div class="section level4">
-<h4 id="breaking-1-8-2-9054">Breaking<a class="anchor" aria-label="anchor" href="#breaking-1-8-2-9054"></a></h4>
+<h4 id="breaking-1-8-2-9057">Breaking<a class="anchor" aria-label="anchor" href="#breaking-1-8-2-9057"></a></h4>
 <ul><li>Removed all species of the taxonomic kingdom Chromista from the package. This was done for multiple reasons:
 <ul><li>CRAN allows packages to be around 5 MB maximum, some packages are exempted but this package is not one of them</li>
 <li>Chromista are not relevant when it comes to antimicrobial resistance, thus lacking the primary scope of this package</li>
@@ -151,7 +151,7 @@
 <li>Using <code>units</code> in <code>ab_ddd(..., units = "...")</code> had been deprecated and is now not supported anymore. Use <code><a href="../reference/ab_property.html">ab_ddd_units()</a></code> instead.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-1-8-2-9054">New<a class="anchor" aria-label="anchor" href="#new-1-8-2-9054"></a></h4>
+<h4 id="new-1-8-2-9057">New<a class="anchor" aria-label="anchor" href="#new-1-8-2-9057"></a></h4>
 <ul><li>
 <strong>EUCAST 2022 and CLSI 2022 guidelines</strong> have been added for <code><a href="../reference/as.rsi.html">as.rsi()</a></code>. EUCAST 2022 (v12.0) is now the new default guideline for all MIC and disks diffusion interpretations, and for <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> to apply EUCAST Expert Rules.</li>
 <li>Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. We are very grateful for the valuable input by our colleagues from other countries. The <code>AMR</code> package is now available in 16 languages. The automatic language determination will give a note at start-up on systems in supported languages.</li>
@@ -193,16 +193,17 @@
 </li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-1-8-2-9054">Changed<a class="anchor" aria-label="anchor" href="#changed-1-8-2-9054"></a></h4>
-<ul><li>Fixes and changes for using <code><a href="../reference/as.rsi.html">as.rsi()</a></code>:
-<ul><li>On certain EUCAST breakpoints for MIC values</li>
-<li>On <code>NA</code> values (e.g. <code>as.rsi(as.disk(NA), ...)</code>)</li>
-<li>On bug-drug combinations with multiple breakpoints for different body sites</li>
+<h4 id="changes-1-8-2-9057">Changes<a class="anchor" aria-label="anchor" href="#changes-1-8-2-9057"></a></h4>
+<ul><li>For <code><a href="../reference/as.rsi.html">as.rsi()</a></code>:
+<ul><li>Fixed certain EUCAST breakpoints for MIC values</li>
+<li>Allow <code>NA</code> values (e.g. <code>as.rsi(as.disk(NA), ...)</code>)</li>
+<li>Fix for bug-drug combinations with multiple breakpoints for different body sites</li>
 <li>Interpretation from MIC and disk zones is now more informative about availability of breakpoints and more robust</li>
 <li>The default guideline (EUCAST) can now be changed with <code>options(AMR_guideline = "...")</code>
 </li>
 </ul></li>
 <li>Removed the <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> method for MIC values, since MIC are not integer values and running <code><a href="https://rdrr.io/r/base/table.html" class="external-link">table()</a></code> on MIC values consequently failed for not being able to retrieve the level position (as that’s how normally <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> on <code>factor</code>s work)</li>
+<li>Fixed determination of Gram stains (<code><a href="../reference/mo_property.html">mo_gramstain()</a></code>), since the taxonomic phyla Actinobacteria, Chloroflexi, Firmicutes, and Tenericutes have been renamed to respectively Actinomycetota, Chloroflexota, Bacillota, and Mycoplasmatota in 2021</li>
 <li>
 <code><a href="https://rdrr.io/r/base/droplevels.html" class="external-link">droplevels()</a></code> on MIC will now return a common <code>factor</code> at default and will lose the <code>mic</code> class. Use <code>droplevels(..., as.mic = TRUE)</code> to keep the <code>mic</code> class.</li>
 <li>Small fix for using <code><a href="../reference/ab_from_text.html">ab_from_text()</a></code>
@@ -231,7 +232,7 @@
 <li>Cleaning columns with <code><a href="../reference/as.rsi.html">as.rsi()</a></code>, <code><a href="../reference/as.mic.html">as.mic()</a></code>, or <code><a href="../reference/as.disk.html">as.disk()</a></code> will now show the column name in the warning for invalid results</li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-1-8-2-9054">Other<a class="anchor" aria-label="anchor" href="#other-1-8-2-9054"></a></h4>
+<h4 id="other-1-8-2-9057">Other<a class="anchor" aria-label="anchor" href="#other-1-8-2-9057"></a></h4>
 <ul><li>New website to make use of the new Bootstrap 5 and pkgdown 2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions</li>
 <li>Added Peter Dutey-Magni, Dmytro Mykhailenko, Anton Mymrikov, and Jonas Salm as contributors, to thank them for their valuable input</li>
 <li>All R and Rmd files in this project are now styled using the <code>styler</code> package</li>
