@@ -733,11 +733,14 @@ taxonomy <- taxonomy %>%
     ~ 1,
     kingdom %in% c("Archaea", "Bacteria", "Chromista", "Fungi") &
       (phylum %in% c(
-        "Proteobacteria",
-        "Firmicutes",
-        "Bacillota", # this one is new - this was renamed from Firmicutes by Gibbons et al., 2021
-        "Actinobacteria",
-        "Sarcomastigophora"
+        "Sarcomastigophora",
+        "Firmicutes", # old, now Bacillota
+        "Bacillota",
+        "Proteobacteria", # old, now Pseudomonadota
+        "Pseudomonadota",
+        "Actinobacteria", # old, now Actinomycetota
+        "Actinomycetota"
+        
       ) |
         genus %in% MO_PREVALENT_GENERA)
     ~ 2,

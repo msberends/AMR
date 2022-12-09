@@ -37,19 +37,19 @@
 #' @param ab any (vector of) text that can be coerced to a valid antibiotic drug code with [as.ab()]
 #' @param open browse the URL using [`browseURL()`][utils::browseURL()]
 #' @details All functions will, at default, keep old taxonomic properties. Please refer to this example, knowing that *Escherichia blattae* was renamed to *Shimwellia blattae* in 2010:
-#' - `mo_name("Escherichia blattae")` will return `"Shimwellia blattae"` (with a message about the renaming)
-#' - `mo_ref("Escherichia blattae", keep_synonyms = TRUE)` will return `"Burgess et al., 1973"` (with a warning about the renaming)
-#' - `mo_ref("Shimwellia blattae", keep_synonyms = FALSE)` will return `"Priest et al., 2010"` (without a message)
+#' - `mo_name("Escherichia blattae")` will return `"Shimwellia blattae"` (with a note about the renaming)
+#' - `mo_ref("Escherichia blattae", keep_synonyms = TRUE)` will return `"Burgess et al., 1973"` (without a note)
+#' - `mo_ref("Shimwellia blattae", keep_synonyms = FALSE)` will return `"Priest et al., 2010"` (without a note)
 #'
 #' The short name - [mo_shortname()] - almost always returns the first character of the genus and the full species, like `"E. coli"`. Exceptions are abbreviations of staphylococci (such as *"CoNS"*, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as *"GBS"*, Group B Streptococci). Please bear in mind that e.g. *E. coli* could mean *Escherichia coli* (kingdom of Bacteria) as well as *Entamoeba coli* (kingdom of Protozoa). Returning to the full name will be done using [as.mo()] internally, giving priority to bacteria and human pathogens, i.e. `"E. coli"` will be considered *Escherichia coli*. In other words, `mo_fullname(mo_shortname("Entamoeba coli"))` returns `"Escherichia coli"`.
 #'
 #' Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions [mo_kingdom()] and [mo_domain()] return the exact same results.
 #'
-#' The Gram stain - [mo_gramstain()] - will be determined based on the taxonomic kingdom and phylum. Originally, Cavalier-Smith defined the so-called subkingdoms Negibacteria and Posibacteria (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318/)), and only considered these phyla as Posibacteria: Actinobacteria, Chloroflexi, Firmicutes, and Tenericutes. All of these phyla were renamed to Actinomycetota, Chloroflexota, Bacillota, and Mycoplasmatota (2021, [PMID 34694987](https://pubmed.ncbi.nlm.nih.gov/34694987/)). Bacteria in these phyla are considered Gram-positive in this `AMR` package, except for members of the class Negativicutes (within phylum Bacillota) which are Gram-negative. All other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`. Functions [mo_is_gram_negative()] and [mo_is_gram_positive()] always return `TRUE` or `FALSE` (or `NA` when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
+#' Determination of the Gram stain - [mo_gramstain()] - will be based on the taxonomic kingdom and phylum. Originally, Cavalier-Smith defined the so-called subkingdoms Negibacteria and Posibacteria (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318/)), and only considered these phyla as Posibacteria: Actinobacteria, Chloroflexi, Firmicutes, and Tenericutes. These phyla were renamed to Actinomycetota, Chloroflexota, Bacillota, and Mycoplasmatota (2021, [PMID 34694987](https://pubmed.ncbi.nlm.nih.gov/34694987/)). Bacteria in these phyla are considered Gram-positive in this `AMR` package, except for members of the class Negativicutes (within phylum Bacillota) which are Gram-negative. All other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`. Functions [mo_is_gram_negative()] and [mo_is_gram_positive()] always return `TRUE` or `FALSE` (or `NA` when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
 #'
 #' Determination of yeasts - [mo_is_yeast()] - will be based on the taxonomic kingdom and class. *Budding yeasts* are fungi of the phylum Ascomycota, class Saccharomycetes (also called Hemiascomycetes). *True yeasts* are aggregated into the underlying order Saccharomycetales. Thus, for all microorganisms that are member of the taxonomic class Saccharomycetes, the function will return `TRUE`. It returns `FALSE` otherwise (or `NA` when the input is `NA` or the MO code is `UNKNOWN`).
 #'
-#' Intrinsic resistance - [mo_is_intrinsic_resistant()] - will be determined based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(3.3)`. The [mo_is_intrinsic_resistant()] functions can be vectorised over arguments `x` (input for microorganisms) and over `ab` (input for antibiotics).
+#' Determination of intrinsic resistance - [mo_is_intrinsic_resistant()] - will be based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(3.3)`. The [mo_is_intrinsic_resistant()] function can be vectorised over both argument `x` (input for microorganisms) and `ab` (input for antibiotics).
 #'
 #' All output [will be translated][translate] where possible.
 #'
@@ -347,7 +347,13 @@ mo_kingdom <- function(x, language = get_AMR_locale(), keep_synonyms = getOption
 
 #' @rdname mo_property
 #' @export
-mo_domain <- mo_kingdom
+mo_domain <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
+  if (missing(x)) {
+    # this tries to find the data and an 'mo' column
+    x <- find_mo_col(fn = "mo_domain")
+  }
+  mo_kingdom(x = x, language = language, keep_synonyms = keep_synonyms, ...)
+}
 
 #' @rdname mo_property
 #' @export

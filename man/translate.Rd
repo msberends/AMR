@@ -76,7 +76,9 @@ mo_name("Coagulase-negative Staphylococcus (CoNS)")
 set_AMR_locale("Deutsch")
 set_AMR_locale("German")
 set_AMR_locale("de")
+ab_name("amoxi/clav")
 
 # reset to system default
 reset_AMR_locale()
+ab_name("amoxi/clav")
 }

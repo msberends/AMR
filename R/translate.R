@@ -84,9 +84,11 @@
 #' set_AMR_locale("Deutsch")
 #' set_AMR_locale("German")
 #' set_AMR_locale("de")
+#' ab_name("amoxi/clav")
 #'
 #' # reset to system default
 #' reset_AMR_locale()
+#' ab_name("amoxi/clav")
 get_AMR_locale <- function() {
   if (!is.null(getOption("AMR_locale", default = NULL))) {
     return(validate_language(getOption("AMR_locale"), extra_txt = "set with `options(AMR_locale = ...)`"))
