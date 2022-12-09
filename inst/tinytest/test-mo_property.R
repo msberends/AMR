@@ -44,6 +44,43 @@ expect_equal(mo_shortname("Staphylococcus aureus", Becker = "all", language = "e
 expect_equal(mo_shortname("Streptococcus agalactiae"), "S. agalactiae")
 expect_equal(mo_shortname("Streptococcus agalactiae", Lancefield = TRUE), "GBS")
 
+# check gram stain determination, to prevent we lag after a taxonomic renaming
+current_grampos_phyla <- c(
+  "Actinomycetota", # since 2021, old name was Actinobacteria
+  "Chloroflexota", # since 2021, old name was Chloroflexi
+  "Bacillota", # since 2021, old name was Firmicutes
+  "Mycoplasmatota" # since 2021, old name was Tenericutes
+)
+expect_true(all(current_grampos_phyla %in% microorganisms$phylum, na.rm = TRUE))
+current_grampos_classes <- c(
+  "",
+  "Acidimicrobiia",
+  "Actinomycetes",
+  "Anaerolineae",
+  "Ardenticatenia",
+  "Bacilli",
+  "Caldilineae",
+  "Chloroflexia",
+  "Clostridia",
+  "Coriobacteriia",
+  "Culicoidibacteria",
+  "Dehalococcoidia",
+  "Erysipelotrichia",
+  "Ktedonobacteria",
+  "Limnochordia",
+  "Mollicutes",
+  "Negativicutes",
+  "Nitriliruptoria",
+  "Rubrobacteria",
+  "Tepidiformia",
+  "Thermoflexia",
+  "Thermoleophilia",
+  "Thermolithobacteria",
+  "Tissierellia"
+)
+expect_identical(sort(unique(microorganisms[which(microorganisms$phylum %in% current_grampos_phyla), "class", drop = TRUE])),
+                 current_grampos_classes)
+
 expect_equal(mo_species("Escherichia coli"), "coli")
 expect_equal(mo_subspecies("Escherichia coli"), "")
 expect_equal(mo_type("Escherichia coli", language = "en"), "Bacteria")
@@ -72,8 +109,7 @@ expect_true(mo_url("Candida albicans") %like% "gbif.org")
 expect_true(mo_url("Escherichia coli") %like% "lpsn.dsmz.de")
 
 # test integrity
-MOs <- microorganisms
-expect_identical(MOs$fullname, mo_fullname(MOs$fullname, language = "en", keep_synonyms = TRUE))
+expect_identical(microorganisms$fullname, mo_fullname(microorganisms$fullname, language = "en", keep_synonyms = TRUE))
 
 # check languages
 expect_equal(mo_type("Escherichia coli", language = "de"), "Bakterien")
