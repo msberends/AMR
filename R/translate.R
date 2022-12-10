@@ -34,13 +34,13 @@
 #' @param language language to choose. Use one of these supported language names or ISO-639-1 codes: `r vector_or(paste0(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), " (" , LANGUAGES_SUPPORTED, ")"), quotes = FALSE, sort = FALSE)`.
 #' @details The currently `r length(LANGUAGES_SUPPORTED)` supported languages are `r vector_or(paste0(sapply(LANGUAGES_SUPPORTED_NAMES, function(x) x[[1]]), " (" , LANGUAGES_SUPPORTED, ")"), quotes = FALSE, sort = FALSE)`. All these languages have translations available for all antimicrobial drugs and colloquial microorganism names.
 #'
-#' **To silence language notes when this package loads** on a non-English operating system, you can set the option `AMR_locale` in your `.Rprofile` file like this:
+#' To permanently silence the once-per-session language notes on a non-English operating system, you can set the option `AMR_locale` in your `.Rprofile` file like this:
 #'
 #' ```r
 #' # Open .Rprofile file
 #' utils::file.edit("~/.Rprofile")
 #'
-#' # Add e.g. Italian support to that file using:
+#' # Then add e.g. Italian support to that file using:
 #' options(AMR_locale = "Italian")
 #' ```
 #'
@@ -84,11 +84,11 @@
 #' set_AMR_locale("Deutsch")
 #' set_AMR_locale("German")
 #' set_AMR_locale("de")
-#' ab_name("amoxi/clav")
+#' ab_name("amox/clav")
 #'
 #' # reset to system default
 #' reset_AMR_locale()
-#' ab_name("amoxi/clav")
+#' ab_name("amox/clav")
 get_AMR_locale <- function() {
   # a message for this will be thrown in translate_into_language() if outcome is non-English
   if (!is.null(getOption("AMR_locale", default = NULL))) {

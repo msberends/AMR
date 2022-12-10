@@ -27,12 +27,12 @@ For language-dependent output of AMR functions, like \code{\link[=mo_name]{mo_na
 \details{
 The currently 16 supported languages are English (en), Chinese (zh), Danish (da), Dutch (nl), French (fr), German (de), Greek (el), Italian (it), Japanese (ja), Polish (pl), Portuguese (pt), Russian (ru), Spanish (es), Swedish (sv), Turkish (tr) or Ukrainian (uk). All these languages have translations available for all antimicrobial drugs and colloquial microorganism names.
 
-\strong{To silence language notes when this package loads} on a non-English operating system, you can set the option \code{AMR_locale} in your \code{.Rprofile} file like this:
+To permanently silence the once-per-session language notes on a non-English operating system, you can set the option \code{AMR_locale} in your \code{.Rprofile} file like this:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{# Open .Rprofile file
 utils::file.edit("~/.Rprofile")
 
-# Add e.g. Italian support to that file using:
+# Then add e.g. Italian support to that file using:
 options(AMR_locale = "Italian")
 }\if{html}{\out{</div>}}
 
@@ -76,9 +76,9 @@ mo_name("Coagulase-negative Staphylococcus (CoNS)")
 set_AMR_locale("Deutsch")
 set_AMR_locale("German")
 set_AMR_locale("de")
-ab_name("amoxi/clav")
+ab_name("amox/clav")
 
 # reset to system default
 reset_AMR_locale()
-ab_name("amoxi/clav")
+ab_name("amox/clav")
 }

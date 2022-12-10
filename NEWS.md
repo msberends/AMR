@@ -1,9 +1,9 @@
-# AMR 1.8.2.9059
+# AMR 1.8.2.9060
 
 This version will eventually become v2.0! We're happy to reach a new major milestone soon!
 
 ### Breaking
-* Removed all species of the taxonomic kingdom Chromista from the package. This was done for multiple reasons:
+* **Removed all species of the taxonomic kingdom Chromista** from the package. This was done for multiple reasons:
   * CRAN allows packages to be around 5 MB maximum, some packages are exempted but this package is not one of them
   * Chromista are not relevant when it comes to antimicrobial resistance, thus lacking the primary scope of this package
   * Chromista are almost never clinically relevant, thus lacking the secondary scope of this package
@@ -16,8 +16,8 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 
 ### New
 * **EUCAST 2022 and CLSI 2022 guidelines** have been added for `as.rsi()`. EUCAST 2022 (v12.0) is now the new default guideline for all MIC and disks diffusion interpretations, and for `eucast_rules()` to apply EUCAST Expert Rules.
-* Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. We are very grateful for the valuable input by our colleagues from other countries. The `AMR` package is now available in 16 languages. The automatic language determination will give a note at start-up on systems in supported languages.
-* **All new algorithm for `as.mo()`** (and thus all `mo_*()` functions) while still following our original set-up as described in our recently submitted JSS paper (DOI [10.18637/jss.v104.i03](https://doi.org/10.18637/jss.v104.i03)).
+* Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. We are very grateful for the valuable input by our colleagues from other countries. The `AMR` package is now available in 16 languages. The automatic language determination will give a note on systems in supported languages.
+* **All new algorithm for `as.mo()`** (and thus all `mo_*()` functions) while still following our original set-up as described in our recently published JSS paper (DOI [10.18637/jss.v104.i03](https://doi.org/10.18637/jss.v104.i03)).
   * A new argument `keep_synonyms` allows to *not* correct for updated taxonomy, in favour of the now deleted argument `allow_uncertain`
   * It has increased tremendously in speed and returns generally more consequent results
   * Sequential coercion is now extremely fast as results are stored to the package environment, although coercion of unknown values must be run once per session. Previous results can be reset/removed with the new `mo_reset_session()` function.
