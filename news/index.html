@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9061</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9062</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -132,10 +132,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.8.2.9061" id="amr-1829061">AMR 1.8.2.9061<a class="anchor" aria-label="anchor" href="#amr-1829061"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.8.2.9062" id="amr-1829062">AMR 1.8.2.9062<a class="anchor" aria-label="anchor" href="#amr-1829062"></a></h2>
 <p>This version will eventually become v2.0! We’re happy to reach a new major milestone soon!</p>
 <div class="section level4">
-<h4 id="breaking-1-8-2-9061">Breaking<a class="anchor" aria-label="anchor" href="#breaking-1-8-2-9061"></a></h4>
+<h4 id="breaking-1-8-2-9062">Breaking<a class="anchor" aria-label="anchor" href="#breaking-1-8-2-9062"></a></h4>
 <ul><li>
 <strong>Removed all species of the taxonomic kingdom Chromista</strong> from the package. This was done for multiple reasons:
 <ul><li>CRAN allows packages to be around 5 MB maximum, some packages are exempted but this package is not one of them</li>
@@ -152,7 +152,7 @@
 <li>Using <code>units</code> in <code>ab_ddd(..., units = "...")</code> had been deprecated and is now not supported anymore. Use <code><a href="../reference/ab_property.html">ab_ddd_units()</a></code> instead.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-1-8-2-9061">New<a class="anchor" aria-label="anchor" href="#new-1-8-2-9061"></a></h4>
+<h4 id="new-1-8-2-9062">New<a class="anchor" aria-label="anchor" href="#new-1-8-2-9062"></a></h4>
 <ul><li>
 <strong>EUCAST 2022 and CLSI 2022 guidelines</strong> have been added for <code><a href="../reference/as.rsi.html">as.rsi()</a></code>. EUCAST 2022 (v12.0) is now the new default guideline for all MIC and disks diffusion interpretations, and for <code><a href="../reference/eucast_rules.html">eucast_rules()</a></code> to apply EUCAST Expert Rules.</li>
 <li>Support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. We are very grateful for the valuable input by our colleagues from other countries. The <code>AMR</code> package is now available in 16 languages. The automatic language determination will give a note on systems in supported languages.</li>
@@ -194,8 +194,9 @@
 </li>
 </ul></div>
 <div class="section level4">
-<h4 id="changes-1-8-2-9061">Changes<a class="anchor" aria-label="anchor" href="#changes-1-8-2-9061"></a></h4>
-<ul><li>For <code><a href="../reference/as.rsi.html">as.rsi()</a></code>:
+<h4 id="changes-1-8-2-9062">Changes<a class="anchor" aria-label="anchor" href="#changes-1-8-2-9062"></a></h4>
+<ul><li>Updated the microbiological taxonomy using the latest GBIF backbone (November 2022) and latest LPSN records (11 December 2022)</li>
+<li>For <code><a href="../reference/as.rsi.html">as.rsi()</a></code>:
 <ul><li>Fixed certain EUCAST breakpoints for MIC values</li>
 <li>Allow <code>NA</code> values (e.g. <code>as.rsi(as.disk(NA), ...)</code>)</li>
 <li>Fix for bug-drug combinations with multiple breakpoints for different body sites</li>
@@ -233,7 +234,7 @@
 <li>Cleaning columns with <code><a href="../reference/as.rsi.html">as.rsi()</a></code>, <code><a href="../reference/as.mic.html">as.mic()</a></code>, or <code><a href="../reference/as.disk.html">as.disk()</a></code> will now show the column name in the warning for invalid results</li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-1-8-2-9061">Other<a class="anchor" aria-label="anchor" href="#other-1-8-2-9061"></a></h4>
+<h4 id="other-1-8-2-9062">Other<a class="anchor" aria-label="anchor" href="#other-1-8-2-9062"></a></h4>
 <ul><li>New website to make use of the new Bootstrap 5 and pkgdown 2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions</li>
 <li>Added Peter Dutey-Magni, Dmytro Mykhailenko, Anton Mymrikov, and Jonas Salm as contributors, to thank them for their valuable input</li>
 <li>All R and Rmd files in this project are now styled using the <code>styler</code> package</li>
