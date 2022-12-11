@@ -52,7 +52,7 @@
 #'
 #' **Group 1** (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is *Enterococcus*, *Staphylococcus* or *Streptococcus*. This group consequently contains all common Gram-negative bacteria, such as *Pseudomonas* and *Legionella* and all species within the order Enterobacterales.
 #'
-#' **Group 2** consists of all microorganisms where the taxonomic phylum is Proteobacteria, Firmicutes, Actinobacteria or Sarcomastigophora, or where the taxonomic genus is `r vector_or(MO_PREVALENT_GENERA, quotes = "*")`.
+#' **Group 2** consists of all microorganisms where the taxonomic phylum is Pseudomonadota (previously named Proteobacteria), Bacillota (previously named Firmicutes), Actinomycetota (previously named Actinobacteria) or Sarcomastigophora, or where the taxonomic genus is `r vector_or(MO_PREVALENT_GENERA, quotes = "*")`.
 #'
 #' **Group 3** consists of all other microorganisms.
 #'

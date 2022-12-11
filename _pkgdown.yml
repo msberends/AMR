@@ -56,8 +56,8 @@ footer:
     left: [devtext]
     right: [logo]
   components:
-    devtext: '<code>AMR</code> (for R). Developed at the <a target="_blank" href="https://www.rug.nl">University of Groningen</a> in collaboration with non-profit organisations<br><a target="_blank" href="https://www.certe.nl">Certe Medical Diagnostics and Advice Foundation</a> and <a target="_blank" href="https://www.umcg.nl">University Medical Center Groningen</a>.'
-    logo: '<a target="_blank" href="https://www.rug.nl"><img src="https://github.com/msberends/AMR/raw/main/pkgdown/logos/logo_rug.svg" style="max-width: 150px;"></a>'
+    devtext: '<code>AMR</code> (for R). Free and open-source, licenced under the <a target="_blank" href="https://github.com/msberends/AMR/blob/main/LICENSE">GNU General Public License version 2.0 (GPL-2)</a>.<br>Developed at the <a target="_blank" href="https://www.rug.nl">University of Groningen</a> and <a target="_blank" href="https://www.umcg.nl">University Medical Center Groningen</a> in The Netherlands.'
+    logo: '<a target="_blank" href="https://www.rug.nl"><img src="https://github.com/msberends/AMR/raw/main/pkgdown/logos/logo_rug.svg" style="max-width: 150px;"></a><a target="_blank" href="https://www.umcg.nl"><img src="https://github.com/msberends/AMR/raw/main/pkgdown/logos/logo_umcg.svg" style="max-width: 150px;"></a>'
 
 home:
   sidebar:

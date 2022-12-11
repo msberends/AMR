@@ -171,7 +171,7 @@ MO_PREVALENT_GENERA <- c(
   "Apophysomyces", "Arachnia", "Aspergillus", "Aureobasidium", "Bacteroides", "Basidiobolus",
   "Beauveria", "Bergeyella", "Blastocystis", "Blastomyces", "Borrelia", "Brachyspira", "Branhamella",
   "Butyricimonas", "Candida", "Capillaria", "Capnocytophaga", "Catabacter", "Cetobacterium", "Chaetomium",
-  "Chlamydia", "Chlamydophila", "Chryseobacterium", "Chrysonilia", "Cladophialophora", "Cladosporium",
+  "Chlamydia", "Chlamydophila", "Christensenella", "Chryseobacterium", "Chrysonilia", "Cladophialophora", "Cladosporium",
   "Conidiobolus", "Contracaecum", "Cordylobia", "Cryptococcus", "Curvularia", "Deinococcus", "Demodex",
   "Dermatobia", "Dientamoeba", "Diphyllobothrium", "Dirofilaria", "Dysgonomonas", "Echinostoma", "Elizabethkingia",
   "Empedobacter", "Entamoeba", "Enterobius", "Exophiala", "Exserohilum", "Fasciola", "Flavobacterium", "Fonsecaea",

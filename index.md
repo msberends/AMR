@@ -188,12 +188,12 @@ To find out how to conduct AMR data analysis, please [continue reading here to g
 
 ### Partners
 
-The development of this package is part of, related to, or made possible by:
+The development of this package is part of, related to, or made possible by the following non-profit organisations and initiatives:
 
 <div align="center">
   <a href="https://www.rug.nl" title="University of Groningen"><img src="./logo_rug.svg" style="max-width: 200px;"></a>
-  <a href="https://www.umcg.nl" title="University Medical Center Groningen"><img src="./logo_umcg.png" style="max-width: 200px;"></a>
-  <a href="https://www.certe.nl" title="Certe Medical Diagnostics and Advice Foundation"><img src="./logo_certe.png" style="max-width: 200px;"></a>
+  <a href="https://www.umcg.nl" title="University Medical Center Groningen"><img src="./logo_umcg.svg" style="max-width: 200px;"></a>
+  <a href="https://www.certe.nl" title="Certe Medical Diagnostics and Advice Foundation"><img src="./logo_certe.svg" style="max-width: 200px;"></a>
   <a href="https://www.deutschland-nederland.eu" title="EurHealth-1-Health"><img src="./logo_eh1h.png" style="max-width: 200px;"></a>
   <a href="https://www.deutschland-nederland.eu" title="INTERREG"><img src="./logo_interreg.png" style="max-width: 200px;"></a>
 </div>

@@ -740,7 +740,6 @@ taxonomy <- taxonomy %>%
         "Pseudomonadota",
         "Actinobacteria", # old, now Actinomycetota
         "Actinomycetota"
-        
       ) |
         genus %in% MO_PREVALENT_GENERA)
     ~ 2,
