@@ -72,12 +72,12 @@ EUCAST_VERSION_EXPERT_RULES <- list(
 
 TAXONOMY_VERSION <- list(
   GBIF = list(
-    accessed_date = as.Date("2022-09-12"),
-    citation = "GBIF Secretariat (November 26, 2021). GBIF Backbone Taxonomy. Checklist dataset \\doi{10.15468/39omei}.",
+    accessed_date = as.Date("2022-12-11"),
+    citation = "GBIF Secretariat (2022). GBIF Backbone Taxonomy. Checklist dataset \\doi{10.15468/39omei}.",
     url = "https://www.gbif.org"
   ),
   LPSN = list(
-    accessed_date = as.Date("2022-09-12"),
+    accessed_date = as.Date("2022-12-11"),
     citation = "Parte, AC *et al.* (2020). **List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.** International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \\doi{10.1099/ijsem.0.004332}.",
     url = "https://lpsn.dsmz.de"
   ),

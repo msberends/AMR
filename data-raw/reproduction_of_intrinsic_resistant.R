@@ -50,13 +50,17 @@ int_resis2 <- int_resis[, sapply(int_resis, function(x) any(!is.rsi(x) | x == "R
 
 # remove lab drugs
 untreatable <- antibiotics[which(antibiotics$name %like% "-high|EDTA|polysorbate|macromethod|screening|/nacubactam"), "ab", drop = TRUE]
-int_resis2 <- int_resis2 %>%
-  filter(!ab %in% untreatable) %>%
-  arrange(mo, ab)
+# takes ages with filter()..., weird
+int_resis3 <- int_resis2[which(!int_resis2$ab %in% untreatable), ]
+class(int_resis3$ab) <- c("ab", "character")
+int_resis3
 
-intrinsic_resistant <- as.data.frame(int_resis2, stringsAsFactors = FALSE)
+all(int_resis3$mo %in% microorganisms$mo)
+all(int_resis3$ab %in% antibiotics$ab)
+
+intrinsic_resistant <- df_remove_nonASCII(int_resis3)
 usethis::use_data(intrinsic_resistant, internal = FALSE, overwrite = TRUE, version = 2, compress = "xz")
 rm(intrinsic_resistant)
 
 # AFTER THIS:
-# DO NOT FORGET TO UPDATE THE VERSION NUMBER IN mo_is_intrinsic_resistant()
+# DO NOT FORGET TO UPDATE THE VERSION NUMBER IN mo_is_intrinsic_resistant() AND R/data.R

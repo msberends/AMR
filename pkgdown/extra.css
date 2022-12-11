@@ -29,6 +29,18 @@
 # ==================================================================== #
 */
 
+/* fix some footer issues with the logos */
+@media (min-width: 576px) {
+  footer .pkgdown-footer-right {
+    width: 300px;
+  }
+}
+@media (max-width: 575.98px) {
+  footer .pkgdown-footer-right {
+    text-align: center;
+  }
+}
+
 /* replace 'Developers' with 'Maintainers' */
 .developers h2 {
   display: none;

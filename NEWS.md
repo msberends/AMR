@@ -1,4 +1,4 @@
-# AMR 1.8.2.9061
+# AMR 1.8.2.9062
 
 This version will eventually become v2.0! We're happy to reach a new major milestone soon!
 
@@ -45,6 +45,7 @@ This version will eventually become v2.0! We're happy to reach a new major miles
 * Support for using antibiotic selectors in scoped `dplyr` verbs (with or without `vars()`), such as in: `... %>% summarise_at(aminoglycosides(), resistance)`, see `resistance()`
 
 ### Changes
+* Updated the microbiological taxonomy using the latest GBIF backbone (November 2022) and latest LPSN records (11 December 2022)
 * For `as.rsi()`:
   * Fixed certain EUCAST breakpoints for MIC values
   * Allow `NA` values (e.g. `as.rsi(as.disk(NA), ...)`)

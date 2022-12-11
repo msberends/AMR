@@ -206,8 +206,13 @@ create_MO_lookup <- function() {
   MO_lookup[which(MO_lookup$kingdom == "Archaea"), "kingdom_index"] <- 4
   # all the rest
   MO_lookup[which(is.na(MO_lookup$kingdom_index)), "kingdom_index"] <- 5
-
-  MO_lookup$fullname_lower <- MO_FULLNAME_LOWER
+  
+  if (length(MO_FULLNAME_LOWER) != nrow(MO_lookup)) {
+    packageStartupMessage("fullname_lower not same size - applied tolower(), update sysdata.rda!")
+    MO_lookup$fullname_lower <- tolower(MO_lookup$fullname)
+  } else {
+    MO_lookup$fullname_lower <- MO_FULLNAME_LOWER
+  }
   MO_lookup$full_first <- substr(MO_lookup$fullname_lower, 1, 1)
   MO_lookup$species_first <- substr(MO_lookup$species, 1, 1)
 
