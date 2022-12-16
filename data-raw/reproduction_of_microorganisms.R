@@ -50,8 +50,7 @@ library(dplyr)
 library(vroom) # to import files
 library(rvest) # to scape LPSN website
 library(progress) # to show progress bars
-library(AMR)
-# also requires 'rvest' and 'progress' packages
+devtools::load_all(".") # load AMR package
 
 # Helper functions --------------------------------------------------------
 
@@ -538,6 +537,16 @@ taxonomy <- taxonomy %>%
   arrange(fullname) %>%
   filter(fullname != "")
 
+# get missing entries from existing microorganisms data set
+taxonomy <- taxonomy %>%
+  bind_rows(AMR::microorganisms %>%
+              select(all_of(colnames(taxonomy))) %>% 
+              filter(!paste(kingdom, fullname) %in% paste(taxonomy$kingdom, taxonomy$fullname),
+                     # these will be added later:
+                     source != "manually added")) %>%
+  arrange(fullname) %>%
+  filter(fullname != "")
+
 # fix rank
 table(taxonomy$rank, useNA = "always")
 taxonomy <- taxonomy %>%
@@ -554,26 +563,13 @@ taxonomy <- taxonomy %>%
   ))
 table(taxonomy$rank, useNA = "always")
 
-# get the latest upper taxonomy from LPSN to update the GBIF data
-# (e.g., phylum above class "Bacilli" was still "Firmicutes", should be "Bacillota" in 2022)
-for (k in unique(taxonomy$kingdom[taxonomy$kingdom != ""])) {
-  message("Fixing GBIF taxonomy for kingdom ", k, "...")
-  for (g in unique(taxonomy$genus[taxonomy$genus != "" & taxonomy$kingdom == k & taxonomy$source == "LPSN"])) {
-    taxonomy$family[which(taxonomy$genus == g & taxonomy$kingdom == k)] <- taxonomy$family[which(taxonomy$genus == g & taxonomy$kingdom == k & taxonomy$source == "LPSN")][1]
-  }
-  for (f in unique(taxonomy$family[taxonomy$family != "" & taxonomy$kingdom == k & taxonomy$source == "LPSN"])) {
-    taxonomy$order[which(taxonomy$family == f & taxonomy$kingdom == k)] <- taxonomy$order[which(taxonomy$family == f & taxonomy$kingdom == k & taxonomy$source == "LPSN")][1]
-  }
-  for (o in unique(taxonomy$order[taxonomy$order != "" & taxonomy$kingdom == k & taxonomy$source == "LPSN"])) {
-    taxonomy$class[which(taxonomy$order == o & taxonomy$kingdom == k)] <- taxonomy$class[which(taxonomy$order == o & taxonomy$kingdom == k & taxonomy$source == "LPSN")][1]
-  }
-  for (cc in unique(taxonomy$class[taxonomy$class != "" & taxonomy$kingdom == k & taxonomy$source == "LPSN"])) {
-    taxonomy$phylum[which(taxonomy$class == cc & taxonomy$kingdom == k)] <- taxonomy$phylum[which(taxonomy$class == cc & taxonomy$kingdom == k & taxonomy$source == "LPSN")][1]
-  }
-}
+
+# Save intermediate results (0) -------------------------------------------
+
+saveRDS(taxonomy, "data-raw/taxonomy0.rds")
 
 
-# Add missing taxonomic entries -------------------------------------------
+# Add missing and fix old taxonomic entries -------------------------------
 
 # this part will make sure that the whole taxonomy of every included species exists, so no missing genera, classes, etc.
 
@@ -639,19 +635,6 @@ taxonomy_all_missing %>% View()
 taxonomy <- taxonomy %>%
   bind_rows(taxonomy_all_missing)
 
-# we need to fix parent GBIF identifiers
-taxonomy$gbif_parent[taxonomy$rank == "phylum" & !is.na(taxonomy$gbif)] <- taxonomy$gbif[match(taxonomy$kingdom[taxonomy$rank == "phylum" & !is.na(taxonomy$gbif)], taxonomy$fullname)]
-taxonomy$gbif_parent[taxonomy$rank == "class" & !is.na(taxonomy$gbif)] <- taxonomy$gbif[match(taxonomy$phylum[taxonomy$rank == "class" & !is.na(taxonomy$gbif)], taxonomy$fullname)]
-taxonomy$gbif_parent[taxonomy$rank == "order" & !is.na(taxonomy$gbif)] <- taxonomy$gbif[match(taxonomy$class[taxonomy$rank == "order" & !is.na(taxonomy$gbif)], taxonomy$fullname)]
-taxonomy$gbif_parent[taxonomy$rank == "family" & !is.na(taxonomy$gbif)] <- taxonomy$gbif[match(taxonomy$order[taxonomy$rank == "family" & !is.na(taxonomy$gbif)], taxonomy$fullname)]
-taxonomy$gbif_parent[taxonomy$rank == "genus" & !is.na(taxonomy$gbif)] <- taxonomy$gbif[match(taxonomy$family[taxonomy$rank == "genus" & !is.na(taxonomy$gbif)], taxonomy$fullname)]
-taxonomy$gbif_parent[taxonomy$rank == "species" & !is.na(taxonomy$gbif)] <- taxonomy$gbif[match(taxonomy$genus[taxonomy$rank == "species" & !is.na(taxonomy$gbif)], taxonomy$fullname)]
-taxonomy$gbif_parent[taxonomy$rank == "subspecies" & !is.na(taxonomy$gbif)] <- taxonomy$gbif[match(paste(taxonomy$genus[taxonomy$rank == "subspecies" & !is.na(taxonomy$gbif)], taxonomy$species[taxonomy$rank == "subspecies" & !is.na(taxonomy$gbif)]), taxonomy$fullname)]
-
-# these still have no record in our data set:
-all(taxonomy$lpsn_parent %in% taxonomy$lpsn)
-all(taxonomy$gbif_parent %in% taxonomy$gbif)
-
 # fix for duplicate fullnames within a kingdom (such as Nitrospira which is the name of the genus AND its class)
 taxonomy <- taxonomy %>% 
   mutate(rank_index = case_when(rank == "subspecies" ~ 1,
@@ -666,7 +649,7 @@ taxonomy <- taxonomy %>%
   group_by(kingdom, fullname) %>% 
   mutate(fullname = if_else(row_number() > 1, fullname_rank, fullname)) %>% 
   ungroup() %>% 
-  select(-fullname_rank) %>% 
+  select(-fullname_rank, -rank_index) %>% 
   arrange(fullname)
 
 # now also add missing species (requires combination with genus)
@@ -699,7 +682,7 @@ taxonomy <- taxonomy %>%
   filter(kingdom != "")
 
 
-# Save intermediate results -----------------------------------------------
+# Save intermediate results (1) -------------------------------------------
 
 saveRDS(taxonomy, "data-raw/taxonomy1.rds")
 
@@ -709,6 +692,9 @@ saveRDS(taxonomy, "data-raw/taxonomy1.rds")
 manually_added <- AMR::microorganisms %>%
   filter(source == "manually added", !paste(kingdom, fullname) %in% paste(taxonomy$kingdom, taxonomy$fullname)) %>%
   select(fullname:subspecies, ref, source, rank)
+
+manually_added <- manually_added %>% 
+  bind_rows(salmonellae)
 
 # get latest taxonomy for those entries
 for (g in unique(manually_added$genus[manually_added$genus != "" & manually_added$genus %in% taxonomy$genus])) {
@@ -723,14 +709,19 @@ for (o in unique(manually_added$order[manually_added$order != "" & manually_adde
 for (cc in unique(manually_added$class[manually_added$class != "" & manually_added$class %in% taxonomy$class])) {
   manually_added$phylum[which(manually_added$class == cc)] <- taxonomy$phylum[which(taxonomy$class == cc & is.na(taxonomy$lpsn))][1]
 }
+for (p in unique(manually_added$phylum[manually_added$phylum != "" & manually_added$phylum %in% taxonomy$phylum])) {
+  manually_added$kingdom[which(manually_added$phylum == p)] <- taxonomy$kingdom[which(taxonomy$phylum == p & is.na(taxonomy$lpsn))][1]
+}
 
 manually_added <- manually_added %>%
   mutate(
     status = "accepted",
     rank = ifelse(fullname %like% "unknown", "(unknown rank)", rank)
   )
+manually_added
 
 taxonomy <- taxonomy %>%
+  # here also the 'unknowns' are added, such as "(unknown fungus)"
   bind_rows(manually_added) %>%
   arrange(fullname)
 
@@ -741,6 +732,49 @@ table(taxonomy$rank, useNA = "always")
 
 taxonomy <- taxonomy %>%
   mutate(ref = get_author_year(ref))
+
+
+# Get the latest upper taxonomy from LPSN for non-LPSN data ---------------
+
+# (e.g., phylum above class "Bacilli" was still "Firmicutes", should be "Bacillota" in 2022)
+for (k in unique(taxonomy$kingdom[taxonomy$kingdom != ""])) {
+  message("Fixing GBIF taxonomy for kingdom ", k, ".", appendLF = FALSE)
+  i <- 0
+  for (g in unique(taxonomy$genus[taxonomy$genus != "" & taxonomy$kingdom == k & taxonomy$source == "LPSN"])) {
+    i <- i + 1
+    if (i %% 50 == 0) message(".", appendLF = FALSE)
+    taxonomy$family[which(taxonomy$genus == g & taxonomy$kingdom == k)] <- taxonomy$family[which(taxonomy$genus == g & taxonomy$kingdom == k & taxonomy$source == "LPSN")][1]
+  }
+  for (f in unique(taxonomy$family[taxonomy$family != "" & taxonomy$kingdom == k & taxonomy$source == "LPSN"])) {
+    i <- i + 1
+    if (i %% 50 == 0) message(".", appendLF = FALSE)
+    taxonomy$order[which(taxonomy$family == f & taxonomy$kingdom == k)] <- taxonomy$order[which(taxonomy$family == f & taxonomy$kingdom == k & taxonomy$source == "LPSN")][1]
+  }
+  for (o in unique(taxonomy$order[taxonomy$order != "" & taxonomy$kingdom == k & taxonomy$source == "LPSN"])) {
+    i <- i + 1
+    if (i %% 50 == 0) message(".", appendLF = FALSE)
+    taxonomy$class[which(taxonomy$order == o & taxonomy$kingdom == k)] <- taxonomy$class[which(taxonomy$order == o & taxonomy$kingdom == k & taxonomy$source == "LPSN")][1]
+  }
+  for (cc in unique(taxonomy$class[taxonomy$class != "" & taxonomy$kingdom == k & taxonomy$source == "LPSN"])) {
+    i <- i + 1
+    if (i %% 50 == 0) message(".", appendLF = FALSE)
+    taxonomy$phylum[which(taxonomy$class == cc & taxonomy$kingdom == k)] <- taxonomy$phylum[which(taxonomy$class == cc & taxonomy$kingdom == k & taxonomy$source == "LPSN")][1]
+  }
+  message("OK.")
+}
+
+# we need to fix parent GBIF identifiers
+taxonomy$gbif_parent[taxonomy$rank == "phylum" & !is.na(taxonomy$gbif)] <- taxonomy$gbif[match(taxonomy$kingdom[taxonomy$rank == "phylum" & !is.na(taxonomy$gbif)], taxonomy$fullname)]
+taxonomy$gbif_parent[taxonomy$rank == "class" & !is.na(taxonomy$gbif)] <- taxonomy$gbif[match(taxonomy$phylum[taxonomy$rank == "class" & !is.na(taxonomy$gbif)], taxonomy$fullname)]
+taxonomy$gbif_parent[taxonomy$rank == "order" & !is.na(taxonomy$gbif)] <- taxonomy$gbif[match(taxonomy$class[taxonomy$rank == "order" & !is.na(taxonomy$gbif)], taxonomy$fullname)]
+taxonomy$gbif_parent[taxonomy$rank == "family" & !is.na(taxonomy$gbif)] <- taxonomy$gbif[match(taxonomy$order[taxonomy$rank == "family" & !is.na(taxonomy$gbif)], taxonomy$fullname)]
+taxonomy$gbif_parent[taxonomy$rank == "genus" & !is.na(taxonomy$gbif)] <- taxonomy$gbif[match(taxonomy$family[taxonomy$rank == "genus" & !is.na(taxonomy$gbif)], taxonomy$fullname)]
+taxonomy$gbif_parent[taxonomy$rank == "species" & !is.na(taxonomy$gbif)] <- taxonomy$gbif[match(taxonomy$genus[taxonomy$rank == "species" & !is.na(taxonomy$gbif)], taxonomy$fullname)]
+taxonomy$gbif_parent[taxonomy$rank == "subspecies" & !is.na(taxonomy$gbif)] <- taxonomy$gbif[match(paste(taxonomy$genus[taxonomy$rank == "subspecies" & !is.na(taxonomy$gbif)], taxonomy$species[taxonomy$rank == "subspecies" & !is.na(taxonomy$gbif)]), taxonomy$fullname)]
+
+# these still have no record in our data set:
+all(taxonomy$lpsn_parent %in% taxonomy$lpsn)
+all(taxonomy$gbif_parent %in% taxonomy$gbif)
 
 
 # Add prevalence ----------------------------------------------------------
@@ -768,43 +802,6 @@ taxonomy <- taxonomy %>%
 table(taxonomy$prevalence, useNA = "always")
 # (a lot will be removed further below)
 
-
-# Add old entries that must be kept ---------------------------------------
-
-# these are bacteria now removed, but have an renamed-to identifier to a current record, so add them
-old_to_keep <- microorganisms %>%
-  filter(!paste(kingdom, fullname) %in% paste(taxonomy$kingdom, taxonomy$fullname),
-         kingdom == "Bacteria",
-         (gbif_renamed_to %in% taxonomy$gbif & !is.na(gbif_renamed_to)) | (lpsn_renamed_to %in% taxonomy$lpsn & !is.na(lpsn_renamed_to)),
-         rank %in% c("genus", "species", "subspecies")) %>% 
-  select(-mo, -snomed)
-
-taxonomy <- taxonomy %>% 
-  bind_rows(old_to_keep) %>% 
-  arrange(fullname)
-
-# and these had prevalence = 1, why do they miss now?
-old_to_keep2 <- microorganisms %>%
-  filter(!paste(kingdom, fullname) %in% paste(taxonomy$kingdom, taxonomy$fullname),
-         prevalence == 1,
-         !is.na(gbif_parent) & gbif_parent %in% taxonomy$gbif,
-         rank %in% c("genus", "species", "subspecies")) %>% 
-  select(-mo, -snomed)
-
-taxonomy <- taxonomy %>% 
-  bind_rows(old_to_keep2) %>% 
-  arrange(fullname)
-
-# strangly, Trichomonas is no longer in GBIF?
-old_to_keep3 <- microorganisms %>%
-  filter(fullname %like% "^trichomona") %>% 
-  select(-mo, -snomed)
-
-taxonomy <- taxonomy %>% 
-  filter(!fullname %in% old_to_keep3$fullname) %>% 
-  bind_rows(old_to_keep3) %>% 
-  arrange(fullname)
-
 # fix rank
 taxonomy <- taxonomy %>%
   mutate(rank = case_when(
@@ -818,6 +815,11 @@ taxonomy <- taxonomy %>%
     kingdom != "" ~ "kingdom",
     TRUE ~ NA_character_
   ))
+
+
+# Save intermediate results (2) -------------------------------------------
+
+saveRDS(taxonomy, "data-raw/taxonomy2.rds")
 
 
 # Add microbial IDs -------------------------------------------------------
@@ -995,7 +997,7 @@ mo_genus <- mo_genus %>%
 mo_species <- taxonomy %>%
   filter(rank == "species") %>%
   distinct(kingdom, genus, species) %>%
-  left_join(microorganisms %>%
+  left_join(AMR::microorganisms %>%
               filter(rank == "species") %>%
               transmute(mo_species_old = gsub("^[A-Z]+_[A-Z]+_", "", as.character(mo)), kingdom, genus, species) %>%
               filter(mo_species_old %unlike% "-") %>%
@@ -1043,7 +1045,7 @@ mo_species <- mo_species %>%
 mo_subspecies <- taxonomy %>%
   filter(rank == "subspecies") %>%
   distinct(kingdom, genus, species, subspecies) %>%
-  left_join(microorganisms %>%
+  left_join(AMR::microorganisms %>%
               filter(rank %in% c("subspecies", "subsp.", "infraspecies")) %>%
               transmute(mo_subspecies_old = gsub("^[A-Z]+_[A-Z]+_[A-Z]+_", "", as.character(mo)), kingdom, genus, species, subspecies) %>%
               filter(mo_subspecies_old %unlike% "-") %>%
@@ -1138,13 +1140,31 @@ taxonomy <- taxonomy %>%
 taxonomy %>% filter(mo %like% "__") %>% View()
 taxonomy <- taxonomy %>% filter(mo %unlike% "__")
 
-# this must be empty of course
-taxonomy %>% filter(mo %in% .[duplicated(mo), "mo", drop = TRUE]) %>% View()
+
+# Some integrity checks ---------------------------------------------------
+
+# are mo codes unique?
+taxonomy %>% filter(mo %in% .[duplicated(mo), "mo", drop = TRUE])
 taxonomy <- taxonomy %>% distinct(mo, .keep_all = TRUE)
 
-# Save intermediate results -----------------------------------------------
+# are fullnames unique?
+taxonomy %>% filter(fullname %in% .[duplicated(fullname), "fullname", drop = TRUE])
 
-saveRDS(taxonomy, "data-raw/taxonomy2.rds")
+# are all GBIFs available?
+taxonomy %>% filter(!gbif_parent %in% gbif) %>% count(rank)
+# try to find the right gbif IDs
+taxonomy$gbif_parent[which(!taxonomy$gbif_parent %in% taxonomy$gbif & taxonomy$rank == "species")] <- taxonomy$gbif[match(taxonomy$genus[which(!taxonomy$gbif_parent %in% taxonomy$gbif & taxonomy$rank == "species")], taxonomy$genus)]
+taxonomy$gbif_parent[which(!taxonomy$gbif_parent %in% taxonomy$gbif & taxonomy$rank == "class")] <- taxonomy$gbif[match(taxonomy$phylum[which(!taxonomy$gbif_parent %in% taxonomy$gbif & taxonomy$rank == "class")], taxonomy$phylum)]
+taxonomy %>% filter(!gbif_parent %in% gbif) %>% count(rank)
+
+# are all LPSNs available?
+taxonomy %>% filter(!lpsn_parent %in% lpsn) %>% count(rank)
+# make GBIF refer to newest renaming according to LPSN
+taxonomy$gbif_renamed_to[which(!is.na(taxonomy$gbif_renamed_to) & !is.na(taxonomy$lpsn_renamed_to))] <- taxonomy$gbif[match(taxonomy$lpsn_renamed_to[which(!is.na(taxonomy$gbif_renamed_to) & !is.na(taxonomy$lpsn_renamed_to))], taxonomy$lpsn)]
+
+# Save intermediate results (3) -------------------------------------------
+
+saveRDS(taxonomy, "data-raw/taxonomy3.rds")
 
 
 # Remove unwanted taxonomic entries from Protoza/Fungi --------------------
@@ -1176,13 +1196,13 @@ taxonomy <- taxonomy %>%
 
 
 message("\nCongratulations! The new taxonomic table will contain ", format(nrow(taxonomy), big.mark = ","), " rows.\n",
-        "This was ", format(nrow(microorganisms), big.mark = ","), " rows.\n")
+        "This was ", format(nrow(AMR::microorganisms), big.mark = ","), " rows.\n")
 
 # these are the new ones:
-taxonomy %>% filter(!paste(kingdom, fullname) %in% paste(microorganisms$kingdom, microorganisms$fullname)) %>% View()
+taxonomy %>% filter(!paste(kingdom, fullname) %in% paste(AMR::microorganisms$kingdom, AMR::microorganisms$fullname)) %>% View()
 # these were removed:
-microorganisms %>% filter(!paste(kingdom, fullname) %in% paste(taxonomy$kingdom, taxonomy$fullname)) %>% View()
-microorganisms %>% filter(!fullname %in% taxonomy$fullname) %>% View()
+AMR::microorganisms %>% filter(!paste(kingdom, fullname) %in% paste(taxonomy$kingdom, taxonomy$fullname)) %>% View()
+AMR::microorganisms %>% filter(!fullname %in% taxonomy$fullname) %>% View()
 
 
 # Add SNOMED CT -----------------------------------------------------------

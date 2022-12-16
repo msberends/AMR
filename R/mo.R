@@ -429,10 +429,12 @@ as.mo <- function(x,
 
   # Apply Lancefield ----
   if (isTRUE(Lancefield) || Lancefield == "all") {
+    # (using `%like_case%` to also match subspecies)
+    
     # group A - S. pyogenes
-    out[out == "B_STRPT_PYGN"] <- "B_STRPT_GRPA"
+    out[out %like_case% "^B_STRPT_PYGN(_|$)"] <- "B_STRPT_GRPA"
     # group B - S. agalactiae
-    out[out == "B_STRPT_AGLC"] <- "B_STRPT_GRPB"
+    out[out %like_case% "^B_STRPT_AGLC(_|$)"] <- "B_STRPT_GRPB"
     # group C - all subspecies within S. dysgalactiae and S. equi (such as S. equi zooepidemicus)
     out[out %like_case% "^B_STRPT_(DYSG|EQUI)(_|$)"] <- "B_STRPT_GRPC"
     if (Lancefield == "all") {
@@ -441,12 +443,13 @@ as.mo <- function(x,
     }
     # group F - S. anginosus, incl. S. anginosus anginosus and S. anginosus whileyi
     out[out %like_case% "^B_STRPT_ANGN(_|$)"] <- "B_STRPT_GRPF"
-    # group G - only S. dysgalactiae which is also group C, so ignore it here
+    # group G - S. dysgalactiae and S. canis (though dysgalactiae is also group C and will be matched there)
+    out[out %like_case% "^B_STRPT_(DYSG|CANS)(_|$)"] <- "B_STRPT_GRPG"
     # group H - S. sanguinis
-    out[out == "B_STRPT_SNGN"] <- "B_STRPT_GRPH"
+    out[out %like_case% "^B_STRPT_SNGN(_|$)"] <- "B_STRPT_GRPH"
     # group K - S. salivarius, incl. S. salivarius salivariuss and S. salivarius thermophilus
     out[out %like_case% "^B_STRPT_SLVR(_|$)"] <- "B_STRPT_GRPK"
-    # group L - only S. dysgalactiae which is also group C, so ignore it here
+    # group L - only S. dysgalactiae which is also group C & G, so ignore it here
   }
 
   # All unknowns ----

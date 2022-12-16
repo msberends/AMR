@@ -120,6 +120,7 @@
 #' ### Manual additions
 #' For convenience, some entries were added manually:
 #'
+#' - `r format_included_data_number(which(microorganisms$genus == "Salmonella" & microorganisms$species == "enterica" & microorganisms$source == "manually added"))` entries for the city-like serovars of *Salmonellae*
 #' - 11 entries of *Streptococcus* (beta-haemolytic: groups A, B, C, D, F, G, H, K and unspecified; other: viridans, milleri)
 #' - 2 entries of *Staphylococcus* (coagulase-negative (CoNS) and coagulase-positive (CoPS))
 #' - 1 entry of *Blastocystis* (*B.  hominis*), although it officially does not exist (Noel *et al.* 2005, PMID 15634993)
@@ -140,6 +141,8 @@
 #' * `r TAXONOMY_VERSION$GBIF$citation` Accessed from <`r TAXONOMY_VERSION$GBIF$url`> on `r documentation_date(TAXONOMY_VERSION$GBIF$accessed_date)`.
 #'
 #' * `r TAXONOMY_VERSION$SNOMED$citation` URL: <`r TAXONOMY_VERSION$SNOMED$url`>
+#' 
+#' * Grimont *et al.*. Antigenic Formulae of the Salmonella Serovars, 2007, 9th Edition. WHO Collaborating Centre for Reference and Research on *Salmonella* (WHOCC-SALM).
 #' @seealso [as.mo()], [mo_property()], [microorganisms.codes], [intrinsic_resistant]
 #' @examples
 #' microorganisms

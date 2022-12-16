@@ -5,7 +5,7 @@
 \alias{intrinsic_resistant}
 \title{Data Set with Bacterial Intrinsic Resistance}
 \format{
-A \link[tibble:tibble]{tibble} with 206,832 observations and 2 variables:
+A \link[tibble:tibble]{tibble} with 134,634 observations and 2 variables:
 \itemize{
 \item \code{mo}\cr Microorganism ID
 \item \code{ab}\cr Antibiotic ID

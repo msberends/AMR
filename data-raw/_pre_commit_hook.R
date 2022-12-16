@@ -161,8 +161,8 @@ MO_CONS <- create_species_cons_cops("CoNS")
 MO_COPS <- create_species_cons_cops("CoPS")
 MO_STREP_ABCG <- AMR_env$MO_lookup$mo[which(AMR_env$MO_lookup$genus == "Streptococcus" &
   AMR_env$MO_lookup$species %in% c(
-    "pyogenes", "agalactiae", "dysgalactiae", "equi", "anginosus", "sanguinis", "salivarius",
-    "group A", "group B", "group C", "group D", "group F", "group G", "group H", "group K", "group L"
+    "pyogenes", "agalactiae", "dysgalactiae", "equi", "canis",
+    "group A", "group B", "group C", "group G"
   ))]
 MO_FULLNAME_LOWER <- create_MO_fullname_lower()
 MO_PREVALENT_GENERA <- c(
