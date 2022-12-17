@@ -1,10 +1,10 @@
-# AMR 1.8.2.9063
+# AMR 1.8.2.9064
 
 *(this beta version will eventually become v2.0! We're happy to reach a new major milestone soon!)*
 
 This is a new major release of the AMR package, with great new additions but also some breaking changes for current users. These are all listed below.
 
-**TL;DR**
+**[TL;DR](https://en.wikipedia.org/wiki/TL;DR)**
 
 * Microbiological taxonomy (`microorganisms` data set) updated to 2022 and now based on LPSN and GBIF
 * Much increased algorithms to translate user input to valid taxonomy
@@ -13,9 +13,9 @@ This is a new major release of the AMR package, with great new additions but als
 * Extended support for antiviral agents (`antivirals` data set), with many new functions
 * Now available in 16 languages
 * Many new interesting functions, such as `rsi_confidence_interval()` and `mean_amr_distance()`
-* Hundreds of bug fixes
+* Many small bug fixes
 
-### New
+## New
 
 #### Interpretation of MIC and disk diffusion values
 
@@ -30,9 +30,11 @@ We added support for the following languages: Chinese, Greek, Japanese, Polish, 
 We are very grateful for the valuable input by our colleagues from other countries. The `AMR` package is now available in 16 languages and according to download stats used in almost all countries in the world!
 
 #### Microbiological taxonomy
+
 The `microorganisms` no longer relies on the Catalogue of Life, but on the List of Prokaryotic names with Standing in Nomenclature (LPSN) and is supplemented with the 'backbone taxonomy' from the Global Biodiversity Information Facility (GBIF). The structure of this data set has changed to include separate LPSN and GBIF identifiers. Almost all previous MO codes were retained. It contains over 1,400 taxonomic names from 2022.
 
 We also made the following changes regarding the included taxonomy or microorganisms functions:
+
 * Updated full microbiological taxonomy according to the latest daily LPSN data set (December 2022) and latest yearly GBIF taxonomy backbone (November 2022)
 * Support for all 1,515 city-like serovars of *Salmonella*, such as *Salmonella* Goldcoast. Formally, these are serovars belonging to the *S. enterica* species, but they are reported with only the name of the genus and the city. For this reason, the serovars are in the `subspecies` column of the `microorganisms` data set and "enterica" is in the `species` column, but the full name does not contain the species name (*enterica*).
 * All new algorithm for `as.mo()` (and thus all `mo_*()` functions) while still following our original set-up as described in our recently published JSS paper (DOI [10.18637/jss.v104.i03](https://doi.org/10.18637/jss.v104.i03)).
@@ -52,6 +54,7 @@ We also made the following changes regarding the included taxonomy or microorgan
 The new function `add_custom_antimicrobials()` allows users to add custom antimicrobial codes and names to the `AMR` package.
 
 The `antibiotics` data set was greatly updated:
+
   * The following 20 antibiotics have been added (also includes the [new J01RA ATC group](https://www.whocc.no/atc_ddd_index/?code=J01RA&showdescription=no)): azithromycin/fluconazole/secnidazole (AFC), cefepime/amikacin (CFA), cefixime/ornidazole (CEO), ceftriaxone/beta-lactamase inhibitor (CEB), ciprofloxacin/metronidazole (CIM), ciprofloxacin/ornidazole (CIO), ciprofloxacin/tinidazole (CIT), furazidin (FUR), isoniazid/sulfamethoxazole/trimethoprim/pyridoxine (IST), lascufloxacin (LSC), levofloxacin/ornidazole (LEO), nemonoxacin (NEM), norfloxacin/metronidazole (NME), norfloxacin/tinidazole (NTI), ofloxacin/ornidazole (OOR), oteseconazole (OTE), rifampicin/ethambutol/isoniazid (REI), sarecycline (SRC), tetracycline/oleandomycin (TOL), and thioacetazone (TAT)
   * Added some missing ATC codes
   * Updated DDDs and PubChem Compound IDs
@@ -77,7 +80,7 @@ We now added extensive support for antiviral agents! For the first time, the `AM
 * Function `mo_current()` to get the currently valid taxonomic name of a microorganism
 * Function `add_custom_antimicrobials()` to add custom antimicrobial codes and names to the `AMR` package
 
-### Changes
+## Changes
 
 * Argument `combine_IR` has been removed from this package (affecting functions `count_df()`, `proportion_df()`, and `rsi_df()` and some plotting functions), since it was replaced with `combine_SI` three years ago
 * Using `units` in `ab_ddd(..., units = "...")` had been deprecated for some time and is now not supported anymore. Use `ab_ddd_units()` instead.
@@ -108,7 +111,8 @@ We now added extensive support for antiviral agents! For the first time, the `AM
 * Fix for `mo_shortname()` in case of higher taxonomic ranks (order, class, phylum)
 * Cleaning columns with `as.rsi()`, `as.mic()`, or `as.disk()` will now show the column name in the warning for invalid results
 
-### Other
+## Other
+
 * New website to make use of the new Bootstrap 5 and pkgdown 2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions
 * Added Peter Dutey-Magni, Dmytro Mykhailenko, Anton Mymrikov, and Jonas Salm as contributors, to thank them for their valuable input
 * All R and Rmd files in this project are now styled using the `styler` package
@@ -116,109 +120,6 @@ We now added extensive support for antiviral agents! For the first time, the `AM
 * An enormous lot of code cleaning, fixing some small bugs on the way
 
 
-# AMR 1.8.2
-
-This is a small intermediate update to include the reference to our publication in the Journal of Statistical Software, DOI 10.18637/jss.v104.i03.
-
-A major update will be released by the end of 2022 or early 2023 to include the most recent EUCAST and CLSI guidelines, updated microbial taxonomy, and support for 16 languages.
-
-
-# AMR 1.8.1
-
-### Changed
-* Fix for using `as.rsi()` on values containing capped values (such as `>=`), sometimes leading to `NA`
-* Support for antibiotic interpretations of the MIPS laboratory system: `"U"` for S ('susceptible urine'), `"D"` for I ('susceptible dose-dependent')
-* Improved algorithm of `as.mo()`, especially for ignoring non-taxonomic text, such as:
-  ```r
-  mo_name("methicillin-resistant S. aureus (MRSA)")
-  #> [1] "Staphylococcus aureus"
-  ```
-* More informative warning messages
-* Added 192 as valid MIC
-* Updated MIC printing in tibbles
-* Increased speed for loading the package
-
-### Other
-* Fix for unit testing on R 3.3
-* Fix for size of some image elements, as requested by CRAN
-
-
-# AMR 1.8.0
-
-### Breaking changes
-* Removed `p_symbol()` and all `filter_*()` functions (except for `filter_first_isolate()`), which were all deprecated in a previous package version
-* Removed the `key_antibiotics()` and `key_antibiotics_equal()` functions, which were deprecated and superseded by `key_antimicrobials()` and `antimicrobials_equal()`
-* Removed all previously implemented `ggplot2::ggplot()` generics for classes `<mic>`, `<disk>`, `<rsi>` and `<resistance_predict>` as they did not follow the `ggplot2` logic. They were replaced with `ggplot2::autoplot()` generics.
-* Renamed function `get_locale()` to `get_AMR_locale()` to prevent conflicts with other packages
-
-### New
-* Support for the CLSI 2021 guideline for interpreting MIC/disk diffusion values, which are incorporated in the `rsi_translation` data set. This data set now more strictly follows the WHONET software as well.
-* Support for EUCAST Intrinsic Resistance and Unusual Phenotypes v3.3 (October 2021). This is now the default EUCAST guideline in the package (all older guidelines are still available) for `eucast_rules()`, `mo_is_intrinsic_resistant()` and `mdro()`. The `intrinsic_resistant` data set was also updated accordingly.
-* Support for all antimicrobial drug (group) names and colloquial microorganism names in Danish, Dutch, English, French, German, Italian, Portuguese, Russian, Spanish and Swedish
-* Function `set_ab_names()` to rename data set columns that resemble antimicrobial drugs. This allows for quickly renaming columns to official names, ATC codes, etc. Its second argument can be a tidyverse way of selecting:
-  ```r
-  example_isolates %>% set_ab_names(where(is.rsi))
-  example_isolates %>% set_ab_names(AMC:GEN, property = "atc")
-  ```
-* Function `mo_lpsn()` to retrieve the [LPSN](https://lpsn.dsmz.de) record ID
-* Function `ab_ddd_units()` to get units of DDDs (daily defined doses), deprecating the use of `ab_ddd(..., units = TRUE)` to be more consistent in data types of function output
-
-### Changed
-* Updated the bacterial taxonomy to 5 October 2021 (according to [LPSN](https://lpsn.dsmz.de)), including all 11 new staphylococcal species named since 1 January last year
-* The `antibiotics` data set now contains **all ATC codes** that are available through the [WHOCC website](https://www.whocc.no), regardless of drugs being present in more than one ATC group. This means that:
-  * Some drugs now contain multiple ATC codes (e.g., metronidazole contains 5)
-  * `antibiotics$atc` is now a `list` containing `character` vectors, and this `atc` column was moved to the 5th position of the `antibiotics` data set
-  * `ab_atc()` does not always return a character vector of length 1, and returns a `list` if the input is larger than length 1
-  * `ab_info()` has a slightly different output
-  * Some DDDs (daily defined doses) were added or updated according to newly included ATC codes
-* Antibiotic selectors
-  * They now also work in R-3.0 and R-3.1, supporting every version of R since 2013 like the rest of the package
-  * Added more selectors for antibiotic classes: `aminopenicillins()`, `antifungals()`, `antimycobacterials()`, `lincosamides()`, `lipoglycopeptides()`, `polymyxins()`, `quinolones()`, `streptogramins()`, `trimethoprims()` and `ureidopenicillins()`
-  * Added specific selectors for certain types for treatment: `administrable_per_os()` and `administrable_iv()`, which are based on available Defined Daily Doses (DDDs), as defined by the WHOCC. These are ideal for e.g. analysing pathogens in primary care where IV treatment is not an option. They can be combined with other AB selectors, e.g. to select penicillins that are only administrable per os (i.e., orally):
-    ```r
-    example_isolates[, penicillins() & administrable_per_os()]          # base R
-    example_isolates %>% select(penicillins() & administrable_per_os()) # dplyr
-    ```
-  * Added the selector `ab_selector()`, which accepts a filter to be used internally on the `antibiotics` data set, yielding great flexibility on drug properties, such as selecting antibiotic columns with an oral DDD of at least 1 gram:
-    ```r
-    example_isolates[, ab_selector(oral_ddd > 1 & oral_units == "g")]          # base R
-    example_isolates %>% select(ab_selector(oral_ddd > 1 & oral_units == "g")) # dplyr
-    ```
-  * Added the selector `not_intrinsic_resistant()`, which only keeps antibiotic columns that are not intrinsic resistant for all microorganisms in a data set, based on the latest EUCAST guideline on intrinsic resistance. For example, if a data set contains only microorganism codes or names of *E. coli* and *K. pneumoniae* and contains a column "vancomycin", this column will be removed (or rather, unselected) using this function.
-  * Added argument `only_treatable`, which defaults to `TRUE` and will exclude drugs that are only for laboratory tests and not for treating patients (such as imipenem/EDTA and gentamicin-high)
-  * Fix for using selectors multiple times in one call (e.g., using them in `dplyr::filter()` and immediately after in `dplyr::select()`)
-  * Fix for using having multiple columns that are coerced to the same antibiotic agent
-  * Fixed for using `all()` or `any()` on antibiotic selectors in an R Markdown file
-* Added the following antimicrobial agents that are now covered by the WHO: aztreonam/nacubactam (ANC), cefepime/nacubactam (FNC), exebacase (EXE), ozenoxacin (OZN), zoliflodacin (ZFD), manogepix (MGX), ibrexafungerp (IBX), and rezafungin (RZF). None of these agents have an ATC code yet.
-* Fixed the Gram stain (`mo_gramstain()`) determination of the taxonomic class Negativicutes within the phylum of Firmicutes - they were considered Gram-positives because of their phylum but are actually Gram-negative. This impacts 137 taxonomic species, genera and families, such as *Negativicoccus* and *Veillonella*.
-* Dramatic speed improvement for `first_isolate()`
-* Fix to prevent introducing `NA`s for old MO codes when running `as.mo()` on them
-* Added more informative error messages when any of the `proportion_*()` and `count_*()` functions fail
-* When printing a tibble with any old MO code, a warning will be thrown that old codes should be updated using `as.mo()`
-* Improved automatic column selector when `col_*` arguments are left blank, e.g. in `first_isolate()`
-* The right input types for `random_mic()`, `random_disk()` and `random_rsi()` are now enforced
-* `as.rsi()` has an improved algorithm and can now also correct for textual input (such as "Susceptible", "Resistant") in all supported languages
-* `as.mic()` has an improved algorithm
-* When warnings are thrown because of too few isolates in any `count_*()`, `proportion_*()` function (or `resistant()` or `susceptible()`), the `dplyr` group will be shown, if available
-* Fix for legends created with `scale_rsi_colours()` when using `ggplot2` v3.3.4 or higher (this is ggplot2 bug 4511, soon to be fixed)
-* Fix for minor translation errors
-* Fix for the MIC interpretation of *Morganellaceae* (such as *Morganella* and *Proteus*) when using the EUCAST 2021 guideline
-* Improved algorithm of `as.mo()`
-* Improved algorithm for generating random MICs with `random_mic()`
-* Improved plot legends for MICs and disk diffusion values
-* Improved speed of `as.ab()` and all `ab_*()` functions
-* Added `fortify()` extensions for plotting methods
-* `NA` values of the classes `<mic>`, `<disk>` and `<rsi>` are now exported objects of this package, e.g. `NA_mic_` is an `NA` of class `mic` (just like the base R `NA_character_` is an `NA` of class `character`)
-* The `proportion_df()`, `count_df()` and `rsi_df()` functions now return with the additional S3 class 'rsi_df' so they can be extended by other packages
-* The `mdro()` function now returns `NA` for all rows that have no test results
-* The `species_id` column in the `microorganisms` data set now only contains LPSN record numbers. For this reason, this column is now numeric instead of a character, and `mo_url()` has been updated to reflect this change.
-* Fixed a small bug in the functions `get_episode()` and `is_new_episode()`
-* `get_episode()` and `is_new_episode()` can now cope with `NA`s
-
-### Other
-* This package is now being maintained by two epidemiologists and a data scientist from two different non-profit healthcare organisations.
-
-
 # AMR older versions
 
-For the changelog of older versions, please see [our archive](https://github.com/msberends/AMR/blob/v1.8.0/NEWS.md).
+For the changelog of versions prior to AMR v2.0, please see [our archive](https://github.com/msberends/AMR/blob/v1.8.2/NEWS.md).

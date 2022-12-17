@@ -662,7 +662,7 @@ eucast_rules <- function(x,
       if (rule_group_current %unlike% "other" && eucast_notification_shown == FALSE) {
         cat(
           paste0(
-            "\n", font_grey(strrep("-", 0.95 * options()$width)), "\n",
+            "\n", font_grey(strrep("-", 0.95 * getOption("width", 100))), "\n",
             word_wrap("Rules by the ", font_bold("European Committee on Antimicrobial Susceptibility Testing (EUCAST)")), "\n",
             font_blue("https://eucast.org/"), "\n"
           )
@@ -936,7 +936,7 @@ eucast_rules <- function(x,
       wouldve <- ""
     }
 
-    cat(paste0("\n", font_grey(strrep("-", 0.95 * options()$width)), "\n"))
+    cat(paste0("\n", font_grey(strrep("-", 0.95 * getOption("width", 100))), "\n"))
     cat(word_wrap(paste0(
       "The rules ", paste0(wouldve, "affected "),
       font_bold(
@@ -1008,7 +1008,7 @@ eucast_rules <- function(x,
       cat("\n")
     }
 
-    cat(paste0(font_grey(strrep("-", 0.95 * options()$width)), "\n"))
+    cat(paste0(font_grey(strrep("-", 0.95 * getOption("width", 100))), "\n"))
 
     if (isFALSE(verbose) && total_n_added + total_n_changed > 0) {
       cat("\n", word_wrap("Use ", font_bold("eucast_rules(..., verbose = TRUE)"), " (on your original data) to get a data.frame with all specified edits instead."), "\n\n", sep = "")

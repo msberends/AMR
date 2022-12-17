@@ -214,8 +214,8 @@ create_MO_lookup <- function() {
     MO_lookup$fullname_lower <- MO_FULLNAME_LOWER
   }
   MO_lookup$full_first <- substr(MO_lookup$fullname_lower, 1, 1)
-  MO_lookup$species_first <- substr(MO_lookup$species, 1, 1)
-
+  MO_lookup$species_first <- tolower(substr(MO_lookup$species, 1, 1)) # tolower for groups (Streptococcus, Salmonella)
+  MO_lookup$subspecies_first <- tolower(substr(MO_lookup$subspecies, 1, 1)) # tolower for Salmonella serovars
   MO_lookup
 }
 

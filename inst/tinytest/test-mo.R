@@ -127,8 +127,8 @@ expect_identical(as.character(as.mo("  ")), NA_character_)
 expect_warning(as.mo("ab"))
 
 expect_equal(
-  suppressWarnings(as.character(as.mo(c("Qq species", "", "CRSM", "K. pneu rhino", "esco")))),
-  c("UNKNOWN", NA_character_, "B_STNTR_MLTP", "B_KLBSL_PNMN_RHNS", "B_ESCHR_COLI")
+  suppressWarnings(as.character(as.mo(c("Qq species", "", "MRSA", "K. pneu rhino", "esco")))),
+  c("UNKNOWN", NA_character_, "B_STPHY_AURS", "B_KLBSL_PNMN_RHNS", "B_ESCHR_COLI")
 )
 
 # check for Becker classification

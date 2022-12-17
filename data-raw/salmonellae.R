@@ -1564,6 +1564,10 @@ salmonellae <- tibble(
   gbif_parent =  9701185
 )
 
+salmonellae <- salmonellae %>% 
+  # remove e.g. Salmonella Enteritidis if Salmonella enteritidis already existed
+  filter(!tolower(fullname) %in% tolower(AMR::microorganisms$fullname))
+
 groups <- c("Paratyphi A",
             "Paratyphi B",
             "Paratyphi C",

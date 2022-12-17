@@ -268,11 +268,11 @@ as.mo <- function(x,
 
       # take out the parts, split by space
       x_parts <- strsplit(gsub("-", " ", x_out, fixed = TRUE), " ", fixed = TRUE)[[1]]
-
+      
       # do a pre-match on first character (and if it contains a space, first chars of first two terms)
       if (length(x_parts) %in% c(2, 3)) {
         # for genus + species + subspecies
-        filtr <- which(AMR_env$MO_lookup$full_first == substr(x_parts[1], 1, 1) & AMR_env$MO_lookup$species_first == substr(x_parts[2], 1, 1))
+        filtr <- which(AMR_env$MO_lookup$full_first == substr(x_parts[1], 1, 1) & (AMR_env$MO_lookup$species_first == substr(x_parts[2], 1, 1) | AMR_env$MO_lookup$subspecies_first == substr(x_parts[2], 1, 1)))
       } else if (length(x_parts) > 3) {
         first_chars <- paste0("(^| )", "[", paste(substr(x_parts, 1, 1), collapse = ""), "]")
         filtr <- which(AMR_env$MO_lookup$full_first %like_case% first_chars)
@@ -307,9 +307,13 @@ as.mo <- function(x,
       } else {
         minimum_matching_score_current <- minimum_matching_score
       }
-      m[m < minimum_matching_score_current] <- NA_real_
-
-      top_hits <- mo_to_search[order(m, decreasing = TRUE, na.last = NA)] # na.last = NA will remove the NAs
+      
+      if (sum(m >= minimum_matching_score_current) > 10) {
+        # at least 10 are left over, make the ones under `m` NA
+        m[m < minimum_matching_score_current] <- NA_real_  
+      }
+      
+      top_hits <- mo_to_search[order(m, decreasing = TRUE, na.last = NA)] # na.last = NA will remove the NAs  
       if (length(top_hits) == 0) {
         warning_("No hits found for \"", x_search, "\" with minimum_matching_score = ", ifelse(is.null(minimum_matching_score), paste0("NULL (=", round(min(minimum_matching_score_current, na.rm = TRUE), 3), ")"), minimum_matching_score), ". Try setting this value lower or even to 0.", call = FALSE)
         result_mo <- NA_character_
@@ -357,7 +361,7 @@ as.mo <- function(x,
         if (length(AMR_env$mo_uncertainties$original_input) <= 3) {
           examples <- vector_and(paste0(
             '"', AMR_env$mo_uncertainties$original_input,
-            '" (assumed ', font_italic(AMR_env$mo_uncertainties$fullname, collapse = NULL), ")"
+            '" (assumed ', italicise(AMR_env$mo_uncertainties$fullname), ")"
           ),
           quotes = FALSE
           )
@@ -377,10 +381,12 @@ as.mo <- function(x,
   } # end of loop over all yet unknowns
 
   # Keep or replace synonyms ----
-  gbif_matches <- AMR::microorganisms$gbif_renamed_to[match(out, AMR::microorganisms$mo)]
-  gbif_matches[!gbif_matches %in% AMR::microorganisms$gbif] <- NA
   lpsn_matches <- AMR::microorganisms$lpsn_renamed_to[match(out, AMR::microorganisms$mo)]
   lpsn_matches[!lpsn_matches %in% AMR::microorganisms$lpsn] <- NA
+  # GBIF only for non-bacteria, since we use LPSN as primary source for bacteria
+  # (example is Strep anginosus, renamed according to GBIF, not according to LPSN)
+  gbif_matches <- AMR::microorganisms$gbif_renamed_to[AMR::microorganisms$kingdom != "Bacteria"][match(out, AMR::microorganisms$mo[AMR::microorganisms$kingdom != "Bacteria"])]
+  gbif_matches[!gbif_matches %in% AMR::microorganisms$gbif] <- NA
   AMR_env$mo_renamed <- list(
     old = out[!is.na(gbif_matches) | !is.na(lpsn_matches)],
     gbif_matches = gbif_matches[!is.na(gbif_matches) | !is.na(lpsn_matches)],
@@ -795,7 +801,7 @@ print.mo_uncertainties <- function(x, ...) {
     text[scores < 0.5] <- font_red_bg(text[scores < 0.5], collapse = NULL)
     text
   }
-
+  
   txt <- ""
   for (i in seq_len(nrow(x))) {
     if (x[i, ]$candidates != "") {
@@ -803,7 +809,7 @@ print.mo_uncertainties <- function(x, ...) {
       scores <- mo_matching_score(x = x[i, ]$input, n = candidates)
       n_candidates <- length(candidates)
 
-      candidates_formatted <- font_italic(candidates, collapse = NULL)
+      candidates_formatted <- italicise(candidates)
       scores_formatted <- trimws(formatC(round(scores, 3), format = "f", digits = 3))
       scores_formatted <- score_set_colour(scores_formatted, scores)
 
@@ -824,7 +830,8 @@ print.mo_uncertainties <- function(x, ...) {
           ""
         )
       ),
-      extra_indent = nchar("Also matched: ")
+      extra_indent = nchar("Also matched: "),
+      width = 0.9 * getOption("width", 100)
       )
     } else {
       candidates <- ""
@@ -838,11 +845,11 @@ print.mo_uncertainties <- function(x, ...) {
     txt <- paste(txt,
       paste0(
         paste0(
-          "", strrep(font_grey("-"), times = options()$width), "\n",
+          "", strrep(font_grey("-"), times = getOption("width", 100)), "\n",
           '"', x[i, ]$original_input, '"',
           " -> ",
           paste0(
-            font_bold(font_italic(x[i, ]$fullname)),
+            font_bold(italicise(x[i, ]$fullname)),
             " (", x[i, ]$mo, ", ", score_set_colour(score_formatted, score), ")"
           )
         ),
@@ -887,7 +894,7 @@ print.mo_renamed <- function(x, extra_txt = "", n = 25, ...) {
 
   message_(
     "The following microorganism", ifelse(NROW(x) > 1, "s were", " was"), " taxonomically renamed", extra_txt, ":\n",
-    paste0("  \u2022 ", font_italic(x$old[rows], collapse = NULL), x$ref_old[rows],
+    paste0("  ", AMR_env$bullet_icon, " ", font_italic(x$old[rows], collapse = NULL), x$ref_old[rows],
       "  ->  ", font_italic(x$new[rows], collapse = NULL), x$ref_new[rows],
       collapse = "\n"
     ),
@@ -924,6 +931,18 @@ convert_colloquial_input <- function(x) {
   out[x %like_case% "mil+er+i gr"] <- "B_STRPT_MILL"
   out[x %like_case% "((strepto|^s).* viridans|^vgs[^a-z]*$)"] <- "B_STRPT_VIRI"
   out[x %like_case% "(viridans.* (strepto|^s).*|^vgs[^a-z]*$)"] <- "B_STRPT_VIRI"
+  
+  # Salmonella in different languages, like "Salmonella grupo B"
+  out[x %like_case% "salmonella.* [bcd]$"] <- gsub(".*salmonella.* ([bcd])$",
+                                                               "B_SLMNL_GRP\\U\\1",
+                                                               x[x %like_case% "salmonella.* [bcd]$"],
+                                                               perl = TRUE
+  )
+  out[x %like_case% "group [bcd] salmonella"] <- gsub(".*group ([bcd]) salmonella*",
+                                                                  "B_SLMNL_GRP\\U\\1",
+                                                                  x[x %like_case% "group [bcd] salmonella"],
+                                                                  perl = TRUE
+  )
 
   # CoNS/CoPS in different languages (support for German, Dutch, Spanish, Portuguese)
   out[x %like_case% "([ck]oagulas[ea].negatie?[vf]|^[ck]o?ns[^a-z]*$)"] <- "B_STPHY_CONS"
@@ -931,17 +950,14 @@ convert_colloquial_input <- function(x) {
 
   # Gram stains
   out[x %like_case% "gram[ -]?neg.*"] <- "B_GRAMN"
+  out[x %like_case% "( |^)gram[-]( |$)"] <- "B_GRAMN"
   out[x %like_case% "gram[ -]?pos.*"] <- "B_GRAMP"
+  out[x %like_case% "( |^)gram[+]( |$)"] <- "B_GRAMP"
   out[is.na(out) & x %like_case% "anaerob[a-z]+ (micro)?.*organism"] <- "B_ANAER"
 
   # yeasts and fungi
   out[x %like_case% "^yeast?"] <- "F_YEAST"
   out[x %like_case% "^fung(us|i)"] <- "F_FUNGUS"
-
-  # Salmonella city names, starting with capital species name - they are all S. enterica
-  out[x.bak %like_case% "[sS]almonella " & x %like% "paratyphi"] <- "B_SLMNL_ENTR"
-  out[x.bak %like_case% "[sS]almonella [A-Z][a-z]+ ?.*" & x %unlike% "typhi"] <- "B_SLMNL_ENTR"
-  out[x %like_case% "salmonella group"] <- "B_SLMNL"
 
   # trivial names known to the field
   out[x %like_case% "meningo[ck]o[ck]"] <- "B_NESSR_MNNG"
@@ -955,6 +971,15 @@ convert_colloquial_input <- function(x) {
   out[x %like_case% "escherichia coli"] <- "B_ESCHR_COLI"
   out[x %like_case% "vibrio cholerae"] <- "B_VIBRI_CHLR"
 
+  out
+}
+
+italicise <- function(x) {
+  out <- font_italic(x, collapse = NULL)
+  out[x %like_case% "Salmonella [A-Z]"] <- paste(font_italic("Salmonella"), 
+                                                 gsub("Salmonella ", "", x[x %like_case% "Salmonella [A-Z]"]))
+  out[x %like_case% "Streptococcus [A-Z]"] <- paste(font_italic("Streptococcus"), 
+                                                    gsub("Streptococcus ", "", x[x %like_case% "Streptococcus [A-Z]"]))
   out
 }
 

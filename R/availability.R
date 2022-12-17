@@ -61,7 +61,7 @@ availability <- function(tbl, width = NULL) {
   R_print[is.na(R)] <- ""
 
   if (is.null(width)) {
-    width <- options()$width -
+    width <- getOption("width", 100) -
       (max(nchar(colnames(tbl))) +
         # count col
         8 +

@@ -763,8 +763,8 @@
 "EUCAST 2022"	"MIC"	"UTI"	"B_ESCHR_COLI"	"Escherichia coli"	2	"NIT"	"Nitrofurantoin"	"Enterobacteriaceae"		64	64	TRUE
 "EUCAST 2022"	"MIC"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"NIT"	"Nitrofurantoin"	"Staphs"		64	64	TRUE
 "EUCAST 2022"	"DISK"	"UTI"	"B_STPHY_SPRP_SPRP"	"Staphylococcus saprophyticus saprophyticus"	1	"NIT"	"Nitrofurantoin"	"Staphs"	"100ug"	13	13	TRUE
-"EUCAST 2022"	"DISK"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"	"100ug"	15	15	TRUE
-"EUCAST 2022"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"		64	64	TRUE
+"EUCAST 2022"	"DISK"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"	"100ug"	15	15	TRUE
+"EUCAST 2022"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"		64	64	TRUE
 "EUCAST 2022"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"NOR"	"Norfloxacin"	"Enterobacteriaceae"	"10ug"	22	22	TRUE
 "EUCAST 2022"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"NOR"	"Norfloxacin"	"Enterobacteriaceae"		0.5	0.5	TRUE
 "EUCAST 2022"	"DISK"		"B_AERCC"	"Aerococcus"	3	"NOR"	"Norfloxacin"	"Aerococcus"	"10ug"	17	17	FALSE
@@ -1039,7 +1039,7 @@
 "EUCAST 2022"	"MIC"	"UTI"	"B_ENTRC"	"Enterococcus"	3	"TMP"	"Trimethoprim"	"Enterococcus"		0.032	1	TRUE
 "EUCAST 2022"	"DISK"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"TMP"	"Trimethoprim"	"Staphs"	"5ug"	14	14	TRUE
 "EUCAST 2022"	"MIC"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"TMP"	"Trimethoprim"	"Staphs"		4	4	TRUE
-"EUCAST 2022"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"TMP"	"Trimethoprim"	"Strep A, B, C, G"		2	2	TRUE
+"EUCAST 2022"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"TMP"	"Trimethoprim"	"Strep A, B, C, G"		2	2	TRUE
 "EUCAST 2022"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"	"10ug"	16	16	FALSE
 "EUCAST 2022"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"	"10ug"	16	16	TRUE
 "EUCAST 2022"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"		2	2	FALSE
@@ -1756,8 +1756,8 @@
 "EUCAST 2021"	"MIC"	"UTI"	"B_ESCHR_COLI"	"Escherichia coli"	2	"NIT"	"Nitrofurantoin"	"Enterobacteriaceae"		64	64	TRUE
 "EUCAST 2021"	"MIC"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"NIT"	"Nitrofurantoin"	"Staphs"		64	64	TRUE
 "EUCAST 2021"	"DISK"	"UTI"	"B_STPHY_SPRP_SPRP"	"Staphylococcus saprophyticus saprophyticus"	1	"NIT"	"Nitrofurantoin"	"Staphs"	"100ug"	13	13	TRUE
-"EUCAST 2021"	"DISK"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"	"100ug"	15	15	TRUE
-"EUCAST 2021"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"		64	64	TRUE
+"EUCAST 2021"	"DISK"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"	"100ug"	15	15	TRUE
+"EUCAST 2021"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"		64	64	TRUE
 "EUCAST 2021"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"NOR"	"Norfloxacin"	"Enterobacteriaceae"	"10ug"	22	22	TRUE
 "EUCAST 2021"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"NOR"	"Norfloxacin"	"Enterobacteriaceae"		0.5	0.5	TRUE
 "EUCAST 2021"	"DISK"		"B_AERCC"	"Aerococcus"	3	"NOR"	"Norfloxacin"	"Aerococcus"	"10ug"	17	17	FALSE
@@ -1995,7 +1995,7 @@
 "EUCAST 2021"	"MIC"	"UTI"	"B_ENTRC"	"Enterococcus"	3	"TMP"	"Trimethoprim"	"Enterococcus"		0.032	1	TRUE
 "EUCAST 2021"	"DISK"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"TMP"	"Trimethoprim"	"Staphs"	"5ug"	14	14	TRUE
 "EUCAST 2021"	"MIC"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"TMP"	"Trimethoprim"	"Staphs"		4	4	TRUE
-"EUCAST 2021"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"TMP"	"Trimethoprim"	"Strep A, B, C, G"		2	2	TRUE
+"EUCAST 2021"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"TMP"	"Trimethoprim"	"Strep A, B, C, G"		2	2	TRUE
 "EUCAST 2021"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"	"10ug"	16	16	FALSE
 "EUCAST 2021"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"	"10ug"	16	16	TRUE
 "EUCAST 2021"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"		2	2	FALSE
@@ -2622,8 +2622,8 @@
 "EUCAST 2020"	"MIC"	"UTI"	"B_ESCHR_COLI"	"Escherichia coli"	2	"NIT"	"Nitrofurantoin"	"Enterobacteriaceae"		64	64	TRUE
 "EUCAST 2020"	"MIC"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"NIT"	"Nitrofurantoin"	"Staphs"		64	64	TRUE
 "EUCAST 2020"	"DISK"	"UTI"	"B_STPHY_SPRP_SPRP"	"Staphylococcus saprophyticus saprophyticus"	1	"NIT"	"Nitrofurantoin"	"Staphs"	"100ug"	13	13	TRUE
-"EUCAST 2020"	"DISK"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"	"100ug"	15	15	TRUE
-"EUCAST 2020"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"		64	64	TRUE
+"EUCAST 2020"	"DISK"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"	"100ug"	15	15	TRUE
+"EUCAST 2020"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"		64	64	TRUE
 "EUCAST 2020"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"NOR"	"Norfloxacin"	"Enterobacteriaceae"	"10ug"	22	22	TRUE
 "EUCAST 2020"	"MIC"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"NOR"	"Norfloxacin"	"Enterobacteriaceae"		0.5	0.5	TRUE
 "EUCAST 2020"	"DISK"		"B_AERCC"	"Aerococcus"	3	"NOR"	"Norfloxacin"	"Aerococcus"	"10ug"	17	17	FALSE
@@ -2841,7 +2841,7 @@
 "EUCAST 2020"	"MIC"	"UTI"	"B_ENTRC"	"Enterococcus"	3	"TMP"	"Trimethoprim"	"Enterococcus"		0.032	1	TRUE
 "EUCAST 2020"	"DISK"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"TMP"	"Trimethoprim"	"Staphs"	"5ug"	14	14	TRUE
 "EUCAST 2020"	"MIC"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"TMP"	"Trimethoprim"	"Staphs"		4	4	TRUE
-"EUCAST 2020"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"TMP"	"Trimethoprim"	"Strep A, B, C, G"		2	2	TRUE
+"EUCAST 2020"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"TMP"	"Trimethoprim"	"Strep A, B, C, G"		2	2	TRUE
 "EUCAST 2020"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"	"10ug"	17	17	FALSE
 "EUCAST 2020"	"DISK"	"UTI"	"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"	"10ug"	17	17	TRUE
 "EUCAST 2020"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"		2	2	FALSE
@@ -3421,8 +3421,8 @@
 "EUCAST 2019"	"MIC"	"UTI"	"B_ENTRC_FCLS"	"Enterococcus faecalis"	2	"NIT"	"Nitrofurantoin"	"Enterococcus"		64	64	TRUE
 "EUCAST 2019"	"MIC"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"NIT"	"Nitrofurantoin"	"Staphs"		64	64	TRUE
 "EUCAST 2019"	"DISK"	"UTI"	"B_STPHY_SPRP_SPRP"	"Staphylococcus saprophyticus saprophyticus"	1	"NIT"	"Nitrofurantoin"	"Staphs"	"100ug"	13	13	TRUE
-"EUCAST 2019"	"DISK"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"	"100ug"	15	15	TRUE
-"EUCAST 2019"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"		64	64	TRUE
+"EUCAST 2019"	"DISK"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"	"100ug"	15	15	TRUE
+"EUCAST 2019"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"		64	64	TRUE
 "EUCAST 2019"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"NOR"	"Norfloxacin"	"Enterobacteriaceae"	"10ug"	22	19	FALSE
 "EUCAST 2019"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"NOR"	"Norfloxacin"	"Enterobacteriaceae"		0.5	1	FALSE
 "EUCAST 2019"	"DISK"		"B_AERCC"	"Aerococcus"	3	"NOR"	"Norfloxacin"	"Aerococcus"	"10ug"	17	17	FALSE
@@ -3627,7 +3627,7 @@
 "EUCAST 2019"	"MIC"	"UTI"	"B_ENTRC"	"Enterococcus"	3	"TMP"	"Trimethoprim"	"Enterococcus"		0.032	1	TRUE
 "EUCAST 2019"	"DISK"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"TMP"	"Trimethoprim"	"Staphs"	"5ug"	17	14	TRUE
 "EUCAST 2019"	"MIC"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"TMP"	"Trimethoprim"	"Staphs"		2	4	TRUE
-"EUCAST 2019"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"TMP"	"Trimethoprim"	"Strep A, B, C, G"		2	2	TRUE
+"EUCAST 2019"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"TMP"	"Trimethoprim"	"Strep A, B, C, G"		2	2	TRUE
 "EUCAST 2019"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"	"10ug"	17	14	FALSE
 "EUCAST 2019"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"		2	4	FALSE
 "EUCAST 2019"	"DISK"		"B_ACNTB"	"Acinetobacter"	3	"TOB"	"Tobramycin"	"Acinetobacter spp."	"10ug"	17	17	FALSE
@@ -4184,8 +4184,8 @@
 "EUCAST 2018"	"MIC"	"UTI"	"B_ENTRC_FCLS"	"Enterococcus faecalis"	2	"NIT"	"Nitrofurantoin"	"Enterococcus"		64	64	TRUE
 "EUCAST 2018"	"MIC"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"NIT"	"Nitrofurantoin"	"Staphs"		64	64	TRUE
 "EUCAST 2018"	"DISK"	"UTI"	"B_STPHY_SPRP_SPRP"	"Staphylococcus saprophyticus saprophyticus"	1	"NIT"	"Nitrofurantoin"	"Staphs"	"100ug"	13	13	TRUE
-"EUCAST 2018"	"DISK"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"	"100ug"	15	15	TRUE
-"EUCAST 2018"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"		64	64	TRUE
+"EUCAST 2018"	"DISK"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"	"100ug"	15	15	TRUE
+"EUCAST 2018"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"		64	64	TRUE
 "EUCAST 2018"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"NOR"	"Norfloxacin"	"Enterobacteriaceae"	"10ug"	22	19	FALSE
 "EUCAST 2018"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"NOR"	"Norfloxacin"	"Enterobacteriaceae"		0.5	1	FALSE
 "EUCAST 2018"	"DISK"		"B_AERCC"	"Aerococcus"	3	"NOR"	"Norfloxacin"	"Aerococcus"	"10ug"	17	17	FALSE
@@ -4389,7 +4389,7 @@
 "EUCAST 2018"	"MIC"	"UTI"	"B_ENTRC"	"Enterococcus"	3	"TMP"	"Trimethoprim"	"Enterococcus"		0.032	1	TRUE
 "EUCAST 2018"	"DISK"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"TMP"	"Trimethoprim"	"Staphs"	"5ug"	17	14	TRUE
 "EUCAST 2018"	"MIC"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"TMP"	"Trimethoprim"	"Staphs"		2	4	TRUE
-"EUCAST 2018"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"TMP"	"Trimethoprim"	"Strep A, B, C, G"		2	2	TRUE
+"EUCAST 2018"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"TMP"	"Trimethoprim"	"Strep A, B, C, G"		2	2	TRUE
 "EUCAST 2018"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"	"10ug"	17	14	FALSE
 "EUCAST 2018"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"		2	4	FALSE
 "EUCAST 2018"	"DISK"		"B_ACNTB"	"Acinetobacter"	3	"TOB"	"Tobramycin"	"Acinetobacter spp."	"10ug"	17	17	FALSE
@@ -4931,8 +4931,8 @@
 "EUCAST 2017"	"MIC"	"UTI"	"B_ENTRC_FCLS"	"Enterococcus faecalis"	2	"NIT"	"Nitrofurantoin"	"Enterococcus"		64	64	TRUE
 "EUCAST 2017"	"MIC"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"NIT"	"Nitrofurantoin"	"Staphs"		64	64	TRUE
 "EUCAST 2017"	"DISK"	"UTI"	"B_STPHY_SPRP_SPRP"	"Staphylococcus saprophyticus saprophyticus"	1	"NIT"	"Nitrofurantoin"	"Staphs"	"100ug"	13	13	TRUE
-"EUCAST 2017"	"DISK"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"	"100ug"	15	15	TRUE
-"EUCAST 2017"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"		64	64	TRUE
+"EUCAST 2017"	"DISK"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"	"100ug"	15	15	TRUE
+"EUCAST 2017"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"		64	64	TRUE
 "EUCAST 2017"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"NOR"	"Norfloxacin"	"Enterobacteriaceae"	"10ug"	22	19	FALSE
 "EUCAST 2017"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"NOR"	"Norfloxacin"	"Enterobacteriaceae"		0.5	1	FALSE
 "EUCAST 2017"	"DISK"		"B_AERCC"	"Aerococcus"	3	"NOR"	"Norfloxacin"	"Aerococcus"	"10ug"	17	17	FALSE
@@ -5136,7 +5136,7 @@
 "EUCAST 2017"	"MIC"	"UTI"	"B_ENTRC"	"Enterococcus"	3	"TMP"	"Trimethoprim"	"Enterococcus"		0.032	1	TRUE
 "EUCAST 2017"	"DISK"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"TMP"	"Trimethoprim"	"Staphs"	"5ug"	17	14	TRUE
 "EUCAST 2017"	"MIC"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"TMP"	"Trimethoprim"	"Staphs"		2	4	TRUE
-"EUCAST 2017"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"TMP"	"Trimethoprim"	"Strep A, B, C, G"		2	2	TRUE
+"EUCAST 2017"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"TMP"	"Trimethoprim"	"Strep A, B, C, G"		2	2	TRUE
 "EUCAST 2017"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"	"10ug"	17	14	FALSE
 "EUCAST 2017"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"		2	4	FALSE
 "EUCAST 2017"	"DISK"		"B_ACNTB"	"Acinetobacter"	3	"TOB"	"Tobramycin"	"Acinetobacter spp."	"10ug"	17	17	FALSE
@@ -5637,8 +5637,8 @@
 "EUCAST 2016"	"MIC"	"UTI"	"B_ENTRC_FCLS"	"Enterococcus faecalis"	2	"NIT"	"Nitrofurantoin"	"Enterococcus"		64	64	TRUE
 "EUCAST 2016"	"DISK"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"NIT"	"Nitrofurantoin"	"Staphs"	"100ug"	13	13	TRUE
 "EUCAST 2016"	"MIC"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"NIT"	"Nitrofurantoin"	"Staphs"		64	64	TRUE
-"EUCAST 2016"	"DISK"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"	"100ug"	15	15	TRUE
-"EUCAST 2016"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"		64	64	TRUE
+"EUCAST 2016"	"DISK"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"	"100ug"	15	15	TRUE
+"EUCAST 2016"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"		64	64	TRUE
 "EUCAST 2016"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"NOR"	"Norfloxacin"	"Enterobacteriaceae"	"10ug"	22	19	FALSE
 "EUCAST 2016"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"NOR"	"Norfloxacin"	"Enterobacteriaceae"		0.5	1	FALSE
 "EUCAST 2016"	"DISK"	"Screen"	"B_ENTRC"	"Enterococcus"	3	"NOR"	"Norfloxacin"	"Enterococcus"	"10ug"	12	12	FALSE
@@ -5822,7 +5822,7 @@
 "EUCAST 2016"	"MIC"	"UTI"	"B_ENTRC"	"Enterococcus"	3	"TMP"	"Trimethoprim"	"Enterococcus"		0.032	1	TRUE
 "EUCAST 2016"	"DISK"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"TMP"	"Trimethoprim"	"Staphs"	"5ug"	17	14	TRUE
 "EUCAST 2016"	"MIC"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"TMP"	"Trimethoprim"	"Staphs"		2	4	TRUE
-"EUCAST 2016"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"TMP"	"Trimethoprim"	"Strep A, B, C, G"		2	2	TRUE
+"EUCAST 2016"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"TMP"	"Trimethoprim"	"Strep A, B, C, G"		2	2	TRUE
 "EUCAST 2016"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"	"10ug"	17	14	FALSE
 "EUCAST 2016"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"		2	4	FALSE
 "EUCAST 2016"	"DISK"		"B_ACNTB"	"Acinetobacter"	3	"TOB"	"Tobramycin"	"Acinetobacter spp."	"10ug"	17	17	FALSE
@@ -6306,8 +6306,8 @@
 "EUCAST 2015"	"MIC"	"UTI"	"B_ENTRC_FCLS"	"Enterococcus faecalis"	2	"NIT"	"Nitrofurantoin"	"Enterococcus"		64	64	TRUE
 "EUCAST 2015"	"DISK"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"NIT"	"Nitrofurantoin"	"Staphs"	"100ug"	13	13	TRUE
 "EUCAST 2015"	"MIC"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"NIT"	"Nitrofurantoin"	"Staphs"		64	64	TRUE
-"EUCAST 2015"	"DISK"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"	"100ug"	15	15	TRUE
-"EUCAST 2015"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"		64	64	TRUE
+"EUCAST 2015"	"DISK"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"	"100ug"	15	15	TRUE
+"EUCAST 2015"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"		64	64	TRUE
 "EUCAST 2015"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"NOR"	"Norfloxacin"	"Enterobacteriaceae"	"10ug"	22	19	FALSE
 "EUCAST 2015"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"NOR"	"Norfloxacin"	"Enterobacteriaceae"		0.5	1	FALSE
 "EUCAST 2015"	"DISK"	"Screen"	"B_ENTRC"	"Enterococcus"	3	"NOR"	"Norfloxacin"	"Enterococcus"	"10ug"	12	12	FALSE
@@ -6484,7 +6484,7 @@
 "EUCAST 2015"	"MIC"	"UTI"	"B_ENTRC"	"Enterococcus"	3	"TMP"	"Trimethoprim"	"Enterococcus"		0.032	1	TRUE
 "EUCAST 2015"	"DISK"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"TMP"	"Trimethoprim"	"Staphs"	"5ug"	17	14	TRUE
 "EUCAST 2015"	"MIC"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"TMP"	"Trimethoprim"	"Staphs"		2	4	TRUE
-"EUCAST 2015"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"TMP"	"Trimethoprim"	"Strep A, B, C, G"		2	2	TRUE
+"EUCAST 2015"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"TMP"	"Trimethoprim"	"Strep A, B, C, G"		2	2	TRUE
 "EUCAST 2015"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"	"10ug"	17	14	FALSE
 "EUCAST 2015"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"		2	4	FALSE
 "EUCAST 2015"	"DISK"		"B_ACNTB"	"Acinetobacter"	3	"TOB"	"Tobramycin"	"Acinetobacter spp."	"10ug"	17	17	FALSE
@@ -6961,8 +6961,8 @@
 "EUCAST 2014"	"MIC"	"UTI"	"B_ENTRC_FCLS"	"Enterococcus faecalis"	2	"NIT"	"Nitrofurantoin"	"Enterococcus"		64	64	TRUE
 "EUCAST 2014"	"DISK"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"NIT"	"Nitrofurantoin"	"Staphs"	"100ug"	13	13	TRUE
 "EUCAST 2014"	"MIC"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"NIT"	"Nitrofurantoin"	"Staphs"		64	64	TRUE
-"EUCAST 2014"	"DISK"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"	"100ug"	15	15	TRUE
-"EUCAST 2014"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"		64	64	TRUE
+"EUCAST 2014"	"DISK"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"	"100ug"	15	15	TRUE
+"EUCAST 2014"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"NIT"	"Nitrofurantoin"	"Strep A, B, C, G"		64	64	TRUE
 "EUCAST 2014"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"NOR"	"Norfloxacin"	"Enterobacteriaceae"	"10ug"	22	19	FALSE
 "EUCAST 2014"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"NOR"	"Norfloxacin"	"Enterobacteriaceae"		0.5	1	FALSE
 "EUCAST 2014"	"DISK"	"Screen"	"B_ENTRC"	"Enterococcus"	3	"NOR"	"Norfloxacin"	"Enterococcus"	"10ug"	12	12	FALSE
@@ -7139,7 +7139,7 @@
 "EUCAST 2014"	"MIC"	"UTI"	"B_ENTRC"	"Enterococcus"	3	"TMP"	"Trimethoprim"	"Enterococcus"		0.032	1	TRUE
 "EUCAST 2014"	"DISK"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"TMP"	"Trimethoprim"	"Staphs"	"5ug"	17	14	TRUE
 "EUCAST 2014"	"MIC"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"TMP"	"Trimethoprim"	"Staphs"		2	4	TRUE
-"EUCAST 2014"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"TMP"	"Trimethoprim"	"Strep A, B, C, G"		2	2	TRUE
+"EUCAST 2014"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"TMP"	"Trimethoprim"	"Strep A, B, C, G"		2	2	TRUE
 "EUCAST 2014"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"	"10ug"	17	14	FALSE
 "EUCAST 2014"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"		2	4	FALSE
 "EUCAST 2014"	"DISK"		"B_ACNTB"	"Acinetobacter"	3	"TOB"	"Tobramycin"	"Acinetobacter spp."	"10ug"	17	17	FALSE
@@ -7607,8 +7607,8 @@
 "EUCAST 2013"	"MIC"	"UTI"	"B_ENTRC_FCLS"	"Enterococcus faecalis"	2	"NIT"	"Nitrofurantoin"	"Enterococcus"		64	64	TRUE
 "EUCAST 2013"	"DISK"	"UTI"	"B_STPHY_SPRP_SPRP"	"Staphylococcus saprophyticus saprophyticus"	1	"NIT"	"Nitrofurantoin"	"Staphs"	"100ug"	13	13	TRUE
 "EUCAST 2013"	"MIC"	"UTI"	"B_STPHY_SPRP_SPRP"	"Staphylococcus saprophyticus saprophyticus"	1	"NIT"	"Nitrofurantoin"	"Staphs"		64	64	TRUE
-"EUCAST 2013"	"DISK"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"NIT"	"Nitrofurantoin"	"Strept A,B,C,G"	"100ug"	15	15	TRUE
-"EUCAST 2013"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"NIT"	"Nitrofurantoin"	"Strept A,B,C,G"		64	64	TRUE
+"EUCAST 2013"	"DISK"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"NIT"	"Nitrofurantoin"	"Strept A,B,C,G"	"100ug"	15	15	TRUE
+"EUCAST 2013"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"NIT"	"Nitrofurantoin"	"Strept A,B,C,G"		64	64	TRUE
 "EUCAST 2013"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"NOR"	"Norfloxacin"	"Enterobacteriaceae"	"10ug"	22	19	FALSE
 "EUCAST 2013"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"NOR"	"Norfloxacin"	"Enterobacteriaceae"		0.5	1	FALSE
 "EUCAST 2013"	"DISK"		"B_STPHY"	"Staphylococcus"	3	"NOR"	"Norfloxacin"	"Staphs"	"10ug"	17	17	FALSE
@@ -7780,7 +7780,7 @@
 "EUCAST 2013"	"MIC"	"UTI"	"B_ENTRC"	"Enterococcus"	3	"TMP"	"Trimethoprim"	"Enterococcus"		0.032	1	TRUE
 "EUCAST 2013"	"DISK"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"TMP"	"Trimethoprim"	"Staphs"	"5ug"	17	14	TRUE
 "EUCAST 2013"	"MIC"	"UTI"	"B_STPHY"	"Staphylococcus"	3	"TMP"	"Trimethoprim"	"Staphs"		2	4	TRUE
-"EUCAST 2013"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus group B"	2	"TMP"	"Trimethoprim"	"Strept A,B,C,G"		2	2	TRUE
+"EUCAST 2013"	"MIC"	"UTI"	"B_STRPT_GRPB"	"Streptococcus Group B"	2	"TMP"	"Trimethoprim"	"Strept A,B,C,G"		2	2	TRUE
 "EUCAST 2013"	"DISK"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"	"10ug"	17	14	FALSE
 "EUCAST 2013"	"MIC"		"B_[ORD]_ENTRBCTR"	"Enterobacterales"	5	"TOB"	"Tobramycin"	"Enterobacteriaceae"		2	4	FALSE
 "EUCAST 2013"	"DISK"		"B_ACNTB"	"Acinetobacter"	3	"TOB"	"Tobramycin"	"Acinetob"	"10ug"	17	17	FALSE

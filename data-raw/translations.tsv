@@ -19,6 +19,7 @@ unknown species	TRUE	TRUE	FALSE	TRUE	未知种	ukendt art	onbekende soort	espèc
 unknown subspecies	TRUE	TRUE	FALSE	TRUE	未知亚种	ukendt underart	onbekende ondersoort	sous-espèce inconnue	unbekannte Unterart	άγνωστο υποείδος	sottospecie sconosciute	亜種不明	nieznany podgatunek	subespécies desconhecida	неизвестный подвид	subespecie desconocida	okänd underart	bilinmeyen alt türler	невідомий підвид
 unknown rank	TRUE	TRUE	FALSE	TRUE	未知等级	ukendt rang	onbekende rang	rang inconnu	unbekannter Rang	άγνωστη τάξη	grado sconosciuto	未知ランク	nieznany stopień	classificação desconhecido	неизвестный ранг	rango desconocido	okänd rang	bilinmeyen rütbe	невідомий ранг
  group 	TRUE	TRUE	FALSE	TRUE	 组 	 gruppe 	 groep 	 groupe 	 Gruppe 	 ομάδα 	 gruppo 	 グループ	 grupa 	 grupo 	 группа 	 grupo 	 grupp 	 Grup 	 група
+ Group 	TRUE	TRUE	FALSE	TRUE	 组 	 Gruppe 	 groep 	 groupe 	 Gruppe 	 Ομάδα 	 Gruppo 	 グループ	 Grupa 	 Grupo 	 Группа 	 Grupo 	 Grupp 	 Grup 	 Група
 CoNS	FALSE	TRUE	FALSE	TRUE		KNS	CNS		KNS	CoNS		グラム陰性	CoNS		КОС	SCN	KNS	KNS	КНС
 CoPS	FALSE	TRUE	FALSE	TRUE		KPS	CPS		KPS	CoPS		グラム陽性	CoPS		КПС	SCP	KPS	KPS	КПС
 Gram-negative	TRUE	TRUE	FALSE	FALSE	革兰氏阴性	Gram-negativ	Gram-negatief	Gram négatif	Gramnegativ	Αρνητικό κατά Gram	Gram negativo	^細菌$	Gram-ujemne	Gram negativo	Грамотрицательные	Gram negativo	Gram-negativ	Gram-negatif	Грамнегативні

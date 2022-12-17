@@ -155,6 +155,8 @@ create_MO_fullname_lower <- function() {
   ind <- AMR_env$MO_lookup$genus == "" | grepl("^[(]unknown ", AMR_env$MO_lookup$fullname, perl = TRUE)
   AMR_env$MO_lookup[ind, "fullname_lower"] <- tolower(AMR_env$MO_lookup[ind, "fullname", drop = TRUE])
   AMR_env$MO_lookup$fullname_lower <- trimws(gsub("[^.a-z0-9/ \\-]+", "", AMR_env$MO_lookup$fullname_lower, perl = TRUE))
+  # special for Salmonella - they have cities as subspecies but not the species (enterica) in the fullname:
+  AMR_env$MO_lookup$fullname_lower[which(AMR_env$MO_lookup$subspecies %like_case% "^[A-Z]")] <- gsub(" enterica ", " ", AMR_env$MO_lookup$fullname_lower[which(AMR_env$MO_lookup$subspecies %like_case% "^[A-Z]")], fixed = TRUE)
   AMR_env$MO_lookup$fullname_lower
 }
 MO_CONS <- create_species_cons_cops("CoNS")
