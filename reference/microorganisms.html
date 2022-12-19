@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9064</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9065</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -156,7 +156,8 @@
 <li><p><code>gbif_parent</code><br> GBIF identifier of the parent taxon</p></li>
 <li><p><code>gbif_renamed_to</code><br> GBIF identifier of the currently valid taxon</p></li>
 <li><p><code>source</code><br> Either "GBIF", "LPSN" or "manually added" (see <em>Source</em>)</p></li>
-<li><p><code>prevalence</code><br> Prevalence of the microorganism, see <code><a href="as.mo.html">as.mo()</a></code></p></li>
+<li><p><code>prevalence</code><br> Prevalence of the microorganism according to Bartlett <em>et al.</em> (2022, <a href="https://doi.org/10.1099/mic.0.001269" class="external-link">doi:10.1099/mic.0.001269</a>
+), see <code><a href="mo_matching_score.html">mo_matching_score()</a></code> for the full explanation</p></li>
 <li><p><code>snomed</code><br> Systematized Nomenclature of Medicine (SNOMED) code of the microorganism, version of 1 July, 2021 (see <em>Source</em>). Use <code><a href="mo_property.html">mo_snomed()</a></code> to retrieve it quickly, see <code><a href="mo_property.html">mo_property()</a></code>.</p></li>
 </ul></div>
     <div class="section level2">
@@ -167,7 +168,8 @@
 <li><p>GBIF Secretariat (2022). GBIF Backbone Taxonomy. Checklist dataset <a href="https://doi.org/10.15468/39omei" class="external-link">doi:10.15468/39omei</a>
 . Accessed from <a href="https://www.gbif.org" class="external-link">https://www.gbif.org</a> on 11 December, 2022.</p></li>
 <li><p>Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value Set Name 'Microoganism', OID 2.16.840.1.114222.4.11.1009 (v12). URL: <a href="https://phinvads.cdc.gov" class="external-link">https://phinvads.cdc.gov</a></p></li>
-<li><p>Grimont <em>et al.</em>. Antigenic Formulae of the Salmonella Serovars, 2007, 9th Edition. WHO Collaborating Centre for Reference and Research on <em>Salmonella</em> (WHOCC-SALM).</p></li>
+<li><p>Grimont <em>et al.</em> (2007). Antigenic Formulae of the Salmonella Serovars, 9th Edition. WHO Collaborating Centre for Reference and Research on <em>Salmonella</em> (WHOCC-SALM).</p></li>
+<li><p>Bartlett <em>et al.</em> (2022). <strong>A comprehensive list of bacterial pathogens infecting humans</strong> <em>Microbiology</em> 168:001269; <a href="https://doi.org/10.1099/mic.0.001269" class="external-link">doi:10.1099/mic.0.001269</a></p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
