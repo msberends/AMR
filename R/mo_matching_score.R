@@ -33,7 +33,9 @@
 #' @author Dr. Matthijs Berends
 #' @param x Any user input value(s)
 #' @param n A full taxonomic name, that exists in [`microorganisms$fullname`][microorganisms]
-#' @note This algorithm was described in: Berends MS *et al.* (2022). **AMR: An R Package for Working with Antimicrobial Resistance Data**. *Journal of Statistical Software*, 104(3), 1-31; \doi{10.18637/jss.v104.i03}.
+#' @note This algorithm was originally described in: Berends MS *et al.* (2022). **AMR: An R Package for Working with Antimicrobial Resistance Data**. *Journal of Statistical Software*, 104(3), 1-31; \doi{10.18637/jss.v104.i03}.
+#' 
+#' Later, the work of Bartlett A *et al.* about bacterial pathogens infecting humans (2022, \doi{10.1099/mic.0.001269}) was incorporated.
 #' @section Matching Score for Microorganisms:
 #' With ambiguous user input in [as.mo()] and all the [`mo_*`][mo_property()] functions, the returned results are chosen based on their matching score using [mo_matching_score()]. This matching score \eqn{m}, is calculated as:
 #'
@@ -48,15 +50,18 @@
 #' * \ifelse{html}{\out{<i>p<sub>n</sub></i> is the human pathogenic prevalence group of <i>n</i>, as described below;}}{p_n is the human pathogenic prevalence group of \eqn{n}, as described below;}
 #' * \ifelse{html}{\out{<i>k<sub>n</sub></i> is the taxonomic kingdom of <i>n</i>, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.}}{l_n is the taxonomic kingdom of \eqn{n}, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.}
 #'
-#' The grouping into human pathogenic prevalence (\eqn{p}) is based on experience from several microbiological laboratories in the Netherlands in conjunction with international reports on pathogen prevalence:
+#' The grouping into human pathogenic prevalence (\eqn{p}) is based on recent work from Bartlett *et al.* (2022, \doi{10.1099/mic.0.001269}) who extensively studied medical-scientific literature to categorise all bacterial species into these groups:
+#' 
+#' - **Established**, if a taxonomic species has infected at least three persons in three or more references. These records have `prevalence = 1.0` in the [microorganisms] data set.
+#' - **Putative**, if a taxonomic species has fewer than three known cases. These records have `prevalence = 2.0` in the [microorganisms] data set.
+#' 
+#' Furthermore,
+#' 
+#' - Any *other* bacterial genus, species or subspecies of which the genus is present in the two aforementioned groups, has `prevalence = 2.5` in the [microorganisms] data set. 
+#' - Any *non-bacterial* genus, species or subspecies of which the genus is present in the following list, also has `prevalence = 2.5` in the [microorganisms] data set: `r vector_or(MO_PREVALENT_GENERA, quotes = "*")`.
+#' - All other records have `prevalence = 3.0` in the [microorganisms] data set.
 #'
-#' **Group 1** (most prevalent microorganisms) consists of all microorganisms where the taxonomic class is Gammaproteobacteria or where the taxonomic genus is *Enterococcus*, *Staphylococcus* or *Streptococcus*. This group consequently contains all common Gram-negative bacteria, such as *Pseudomonas* and *Legionella* and all species within the order Enterobacterales.
-#'
-#' **Group 2** consists of all microorganisms where the taxonomic phylum is Pseudomonadota (previously named Proteobacteria), Bacillota (previously named Firmicutes), Actinomycetota (previously named Actinobacteria) or Sarcomastigophora, or where the taxonomic genus is `r vector_or(MO_PREVALENT_GENERA, quotes = "*")`.
-#'
-#' **Group 3** consists of all other microorganisms.
-#'
-#' All characters in \eqn{x} and \eqn{n} are ignored that are other than A-Z, a-z, 0-9, spaces and parentheses.
+#' When calculating the matching score, all characters in \eqn{x} and \eqn{n} are ignored that are other than A-Z, a-z, 0-9, spaces and parentheses.
 #'
 #' All matches are sorted descending on their matching score and for all user input values, the top match will be returned. This will lead to the effect that e.g., `"E. coli"` will return the microbial ID of *Escherichia coli* (\eqn{m = `r round(mo_matching_score("E. coli", "Escherichia coli"), 3)`}, a highly prevalent microorganism found in humans) and not *Entamoeba coli* (\eqn{m = `r round(mo_matching_score("E. coli", "Entamoeba coli"), 3)`}, a less prevalent microorganism in humans), although the latter would alphabetically come first.
 #' @export
@@ -82,7 +87,7 @@ mo_matching_score <- function(x, n) {
 
   # force a capital letter, so this conversion will not count as a substitution
   substr(x, 1, 1) <- toupper(substr(x, 1, 1))
-
+  
   # n is always a taxonomically valid full name
   if (length(n) == 1) {
     n <- rep(n, length(x))
@@ -90,11 +95,12 @@ mo_matching_score <- function(x, n) {
   if (length(x) == 1) {
     x <- rep(x, length(n))
   }
-
+  
   # length of fullname
   l_n <- nchar(n)
   lev <- double(length = length(x))
   l_n.lev <- double(length = length(x))
+  # get Levenshtein distance
   lev <- unlist(Map(f = function(a, b) {
     as.double(utils::adist(a, b,
       ignore.case = FALSE,
@@ -112,7 +118,7 @@ mo_matching_score <- function(x, n) {
   p_n <- AMR_env$MO_lookup[match(n, AMR_env$MO_lookup$fullname), "prevalence", drop = TRUE]
   # kingdom index (Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5)
   k_n <- AMR_env$MO_lookup[match(n, AMR_env$MO_lookup$fullname), "kingdom_index", drop = TRUE]
-
+  
   # matching score:
   (l_n - 0.5 * l_n.lev) / (l_n * p_n * k_n)
 }

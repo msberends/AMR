@@ -1289,7 +1289,7 @@ mdro <- function(x = NULL,
     )
     trans_tbl(
       3,
-      which(x$genus == "Clostridium" & x$species == "difficile"),
+      which(x$genus %in% c("Clostridium", "Clostridioides") & x$species == "difficile"),
       c(MTR, VAN),
       "any"
     )
@@ -1390,7 +1390,7 @@ mdro <- function(x = NULL,
     )
     trans_tbl(
       3,
-      which(x$genus == "Clostridium" & x$species == "difficile"),
+      which(x$genus %in% c("Clostridium", "Clostridioides") & x$species == "difficile"),
       c(MTR, VAN, FDX),
       "any"
     )
@@ -1492,7 +1492,7 @@ mdro <- function(x = NULL,
     )
     trans_tbl(
       3,
-      which(x$genus == "Clostridium" & x$species == "difficile"),
+      which(x$genus %in% c("Clostridium", "Clostridioides") & x$species == "difficile"),
       c(MTR, VAN, FDX),
       "any"
     )

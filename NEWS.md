@@ -1,4 +1,4 @@
-# AMR 1.8.2.9064
+# AMR 1.8.2.9065
 
 *(this beta version will eventually become v2.0! We're happy to reach a new major milestone soon!)*
 
@@ -7,7 +7,7 @@ This is a new major release of the AMR package, with great new additions but als
 **[TL;DR](https://en.wikipedia.org/wiki/TL;DR)**
 
 * Microbiological taxonomy (`microorganisms` data set) updated to 2022 and now based on LPSN and GBIF
-* Much increased algorithms to translate user input to valid taxonomy
+* Much increased algorithms to translate user input to valid taxonomy, e.g. by using [recent scientific work](https://doi.org/10.1099/mic.0.001269) about per-species human pathogenicity
 * Clinical breakpoints added for EUCAST 2022 and CLSI 2022
 * 20 new antibiotics added and updated all DDDs and ATC codes
 * Extended support for antiviral agents (`antivirals` data set), with many new functions
@@ -32,6 +32,8 @@ We are very grateful for the valuable input by our colleagues from other countri
 #### Microbiological taxonomy
 
 The `microorganisms` no longer relies on the Catalogue of Life, but on the List of Prokaryotic names with Standing in Nomenclature (LPSN) and is supplemented with the 'backbone taxonomy' from the Global Biodiversity Information Facility (GBIF). The structure of this data set has changed to include separate LPSN and GBIF identifiers. Almost all previous MO codes were retained. It contains over 1,400 taxonomic names from 2022.
+
+We previously relied on our own experience to categorise species into pathogenic groups, but we were very happy to encounter the very recent work of Bartlett *et al.* (2022, DOI [10.1099/mic.0.001269](https://doi.org/10.1099/mic.0.001269)) who extensively studied medical-scientific literature to categorise all bacterial species into groups. See `mo_matching_score()` on how their work was incorporated into the `prevalence` column of the `microorganisms` data set. Using their results, the `as.mo()` and all `mo_*()` functions are now much better capable of converting user input to valid taxonomic records.
 
 We also made the following changes regarding the included taxonomy or microorganisms functions:
 

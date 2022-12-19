@@ -69,9 +69,9 @@ genus_species	is	Moraxella catarrhalis	ERY	S	AZM, CLR, RXT	S	Moraxella catarrhal
 genus_species	is	Moraxella catarrhalis	ERY	I	AZM, CLR, RXT	I	Moraxella catarrhalis	Breakpoints	10	
 genus_species	is	Moraxella catarrhalis	ERY	R	AZM, CLR, RXT	R	Moraxella catarrhalis	Breakpoints	10	
 genus_species	is	Moraxella catarrhalis	TCY	S	DOX, MNO	S	Moraxella catarrhalis	Breakpoints	10	
-genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	S	AMP, AMX, PIP, TZP, TIC	S	Anaerobic Gram-positives	Breakpoints	10	
-genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	I	AMP, AMX, PIP, TZP, TIC	I	Anaerobic Gram-positives	Breakpoints	10	
-genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	R	AMP, AMX, PIP, TZP, TIC	R	Anaerobic Gram-positives	Breakpoints	10	
+genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Clostridioides, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	S	AMP, AMX, PIP, TZP, TIC	S	Anaerobic Gram-positives	Breakpoints	10	
+genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Clostridioides, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	I	AMP, AMX, PIP, TZP, TIC	I	Anaerobic Gram-positives	Breakpoints	10	
+genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Clostridioides, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	R	AMP, AMX, PIP, TZP, TIC	R	Anaerobic Gram-positives	Breakpoints	10	
 genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	S	AMP, AMX, PIP, TZP, TIC	S	Anaerobic Gram-negatives	Breakpoints	10	
 genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	I	AMP, AMX, PIP, TZP, TIC	I	Anaerobic Gram-negatives	Breakpoints	10	
 genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	R	AMP, AMX, PIP, TZP, TIC	R	Anaerobic Gram-negatives	Breakpoints	10	
@@ -175,9 +175,9 @@ genus_species	is	Moraxella catarrhalis	ERY	S	AZM, CLR, RXT	S	Moraxella catarrhal
 genus_species	is	Moraxella catarrhalis	ERY	I	AZM, CLR, RXT	I	Moraxella catarrhalis	Breakpoints	11	
 genus_species	is	Moraxella catarrhalis	ERY	R	AZM, CLR, RXT	R	Moraxella catarrhalis	Breakpoints	11	
 genus_species	is	Moraxella catarrhalis	TCY	S	DOX, MNO	S	Moraxella catarrhalis	Breakpoints	11	
-genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	S	AMP, AMX, PIP, TIC	S	Anaerobic Gram-positives	Breakpoints	11	
-genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	I	AMP, AMX, PIP, TIC	I	Anaerobic Gram-positives	Breakpoints	11	
-genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	R	AMP, AMX, PIP, TIC	R	Anaerobic Gram-positives	Breakpoints	11	
+genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Clostridioides, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	S	AMP, AMX, PIP, TIC	S	Anaerobic Gram-positives	Breakpoints	11	
+genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Clostridioides, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	I	AMP, AMX, PIP, TIC	I	Anaerobic Gram-positives	Breakpoints	11	
+genus	one_of	Actinomyces, Bifidobacterium, Clostridium, Clostridioides, Cutibacterium, Eggerthella, Eubacterium, Lactobacillus, Propionibacterium	PEN	R	AMP, AMX, PIP, TIC	R	Anaerobic Gram-positives	Breakpoints	11	
 genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	S	AMP, AMX, PIP, TIC	S	Anaerobic Gram-negatives	Breakpoints	11	
 genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	I	AMP, AMX, PIP, TIC	I	Anaerobic Gram-negatives	Breakpoints	11	
 genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	R	AMP, AMX, PIP, TIC	R	Anaerobic Gram-negatives	Breakpoints	11	

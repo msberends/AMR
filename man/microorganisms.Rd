@@ -20,7 +20,7 @@ A \link[tibble:tibble]{tibble} with 52,140 observations and 22 variables:
 \item \code{gbif_parent}\cr GBIF identifier of the parent taxon
 \item \code{gbif_renamed_to}\cr GBIF identifier of the currently valid taxon
 \item \code{source}\cr Either "GBIF", "LPSN" or "manually added" (see \emph{Source})
-\item \code{prevalence}\cr Prevalence of the microorganism, see \code{\link[=as.mo]{as.mo()}}
+\item \code{prevalence}\cr Prevalence of the microorganism according to Bartlett \emph{et al.} (2022, \doi{10.1099/mic.0.001269}), see \code{\link[=mo_matching_score]{mo_matching_score()}} for the full explanation
 \item \code{snomed}\cr Systematized Nomenclature of Medicine (SNOMED) code of the microorganism, version of 1 July, 2021 (see \emph{Source}). Use \code{\link[=mo_snomed]{mo_snomed()}} to retrieve it quickly, see \code{\link[=mo_property]{mo_property()}}.
 }
 }
@@ -29,7 +29,8 @@ A \link[tibble:tibble]{tibble} with 52,140 observations and 22 variables:
 \item Parte, AC \emph{et al.} (2020). \strong{List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.} International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \doi{10.1099/ijsem.0.004332}. Accessed from \url{https://lpsn.dsmz.de} on 11 December, 2022.
 \item GBIF Secretariat (2022). GBIF Backbone Taxonomy. Checklist dataset \doi{10.15468/39omei}. Accessed from \url{https://www.gbif.org} on 11 December, 2022.
 \item Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value Set Name 'Microoganism', OID 2.16.840.1.114222.4.11.1009 (v12). URL: \url{https://phinvads.cdc.gov}
-\item Grimont \emph{et al.}. Antigenic Formulae of the Salmonella Serovars, 2007, 9th Edition. WHO Collaborating Centre for Reference and Research on \emph{Salmonella} (WHOCC-SALM).
+\item Grimont \emph{et al.} (2007). Antigenic Formulae of the Salmonella Serovars, 9th Edition. WHO Collaborating Centre for Reference and Research on \emph{Salmonella} (WHOCC-SALM).
+\item Bartlett \emph{et al.} (2022). \strong{A comprehensive list of bacterial pathogens infecting humans} \emph{Microbiology} 168:001269; \doi{10.1099/mic.0.001269}
 }
 }
 \usage{

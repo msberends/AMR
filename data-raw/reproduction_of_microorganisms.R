@@ -36,20 +36,29 @@
 # 2. Go to https://lpsn.dsmz.de/downloads (register first) and download the latest
 #    CSV file (~12,5 MB) as "taxonomy.csv". Their API unfortunately does
 #    not include the full taxonomy and is currently (2022) pretty worthless.
-# 3. Set this folder_location to the path where these two files are:
+# 3. For data about human pathogens, we use Bartlett et al. (2022),
+#    https://doi.org/10.1099/mic.0.001269. Their latest supplementary material 
+#    can be found here: https://github.com/padpadpadpad/bartlett_et_al_2022_human_pathogens.
+#.   Download their latest xlsx file in the `data` folder and save it to our
+#.   `data-raw` folder.
+# 4. Set this folder_location to the path where these two files are:
 folder_location <- "~/Downloads/backbone/"
 file_gbif <- paste0(folder_location, "Taxon.tsv")
 file_lpsn <- paste0(folder_location, "taxonomy.csv")
+
+file_bartlett <- "data-raw/bartlett_et_al_2022_human_pathogens.xlsx"
 
 # 4. Run the rest of this script line by line and check everything :)
 
 if (!file.exists(file_gbif)) stop("GBIF file not found")
 if (!file.exists(file_lpsn)) stop("LPSN file not found")
+if (!file.exists(file_bartlett)) stop("Bartlett et al. Excel file not found")
 
 library(dplyr)
 library(vroom) # to import files
 library(rvest) # to scape LPSN website
 library(progress) # to show progress bars
+library(readxl) # for reading the Bartlett Excel file
 devtools::load_all(".") # load AMR package
 
 # Helper functions --------------------------------------------------------
@@ -776,32 +785,6 @@ taxonomy$gbif_parent[taxonomy$rank == "subspecies" & !is.na(taxonomy$gbif)] <- t
 all(taxonomy$lpsn_parent %in% taxonomy$lpsn)
 all(taxonomy$gbif_parent %in% taxonomy$gbif)
 
-
-# Add prevalence ----------------------------------------------------------
-
-# update prevalence based on taxonomy (our own JSS paper: Berends MS et al. (2022), DOI 10.18637/jss.v104.i03)
-taxonomy <- taxonomy %>%
-  mutate(prevalence = case_when(
-    class == "Gammaproteobacteria" |
-      genus %in% c("Enterococcus", "Staphylococcus", "Streptococcus")
-    ~ 1,
-    kingdom %in% c("Archaea", "Bacteria", "Chromista", "Fungi") &
-      (phylum %in% c(
-        "Sarcomastigophora",
-        "Firmicutes", # old, now Bacillota
-        "Bacillota",
-        "Proteobacteria", # old, now Pseudomonadota
-        "Pseudomonadota",
-        "Actinobacteria", # old, now Actinomycetota
-        "Actinomycetota"
-      ) |
-        genus %in% AMR:::MO_PREVALENT_GENERA)
-    ~ 2,
-    TRUE ~ 3
-  ))
-table(taxonomy$prevalence, useNA = "always")
-# (a lot will be removed further below)
-
 # fix rank
 taxonomy <- taxonomy %>%
   mutate(rank = case_when(
@@ -815,6 +798,71 @@ taxonomy <- taxonomy %>%
     kingdom != "" ~ "kingdom",
     TRUE ~ NA_character_
   ))
+
+
+# Add prevalence ----------------------------------------------------------
+
+pathogens <- read_excel(file_bartlett, sheet = "Tab 6 Full List")
+
+# get all established, both old and current taxonomic names
+established <- pathogens %>% 
+  filter(status == "established") %>% 
+  mutate(fullname = paste(genus, species)) %>%
+  pull(fullname) %>% 
+  c(unlist(mo_current(.)),
+    unlist(mo_synonyms(., keep_synonyms = FALSE))) %>% 
+  strsplit(" ", fixed = TRUE) %>% 
+  sapply(function(x) ifelse(length(x) == 1, x, paste(x[1], x[2]))) %>% 
+  sort() %>% 
+  unique()
+
+# get all putative, both old and current taxonomic names
+putative <- pathogens %>% 
+  filter(status == "putative") %>% 
+  mutate(fullname = paste(genus, species)) %>%
+  pull(fullname) %>% 
+  c(unlist(mo_current(.)),
+    unlist(mo_synonyms(., keep_synonyms = FALSE))) %>% 
+  strsplit(" ", fixed = TRUE) %>% 
+  sapply(function(x) ifelse(length(x) == 1, x, paste(x[1], x[2]))) %>% 
+  sort() %>% 
+  unique()
+
+established <- established[established %unlike% "unknown"]
+putative <- putative[putative %unlike% "unknown"]
+
+other_bacterial_genera <- c(established, putative) %>% 
+  strsplit(" ", fixed = TRUE) %>% 
+  sapply(function(x) x[1]) %>% 
+  sort() %>% 
+  unique()
+
+other_genera <- AMR:::MO_PREVALENT_GENERA %>% 
+  c(unlist(mo_current(.)),
+    unlist(mo_synonyms(., keep_synonyms = FALSE))) %>% 
+  strsplit(" ", fixed = TRUE) %>% 
+  sapply(function(x) x[1]) %>% 
+  sort() %>% 
+  unique()
+other_genera <- other_genera[other_genera %unlike% "unknown"]
+
+# update prevalence based on taxonomy (following the recent and thorough work of Bartlett et al., 2022)
+# see https://doi.org/10.1099/mic.0.001269
+taxonomy <- taxonomy %>% 
+  mutate(prevalence = case_when(
+    # 'established' gets a 1 and means 'have infected at least three persons in three or more references'
+    paste(genus, species) %in% established & rank %in% c("genus", "species", "subspecies") ~ 1.0,
+    # 'putative' gets a 2 and  means 'fewer than three known cases'
+    paste(genus, species) %in% putative & rank %in% c("genus", "species", "subspecies") ~ 2.0,
+    # other species from a genus in either group get a 2.5
+    genus %in% other_bacterial_genera & rank %in% c("genus", "species", "subspecies") ~ 2.5,
+    # we keep track of prevalent genera too of non-bacterial species
+    genus %in% AMR:::MO_PREVALENT_GENERA & kingdom != "Bacteria" & rank %in% c("genus", "species", "subspecies") ~ 2.5,
+    # all others get a 3
+    TRUE ~ 3.0))
+
+table(taxonomy$prevalence, useNA = "always")
+# (a lot will be removed further below)
 
 
 # Save intermediate results (2) -------------------------------------------

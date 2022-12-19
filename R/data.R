@@ -99,7 +99,7 @@
 #' - `gbif_parent`\cr GBIF identifier of the parent taxon
 #' - `gbif_renamed_to`\cr GBIF identifier of the currently valid taxon
 #' - `source`\cr Either `r vector_or(microorganisms$source)` (see *Source*)
-#' - `prevalence`\cr Prevalence of the microorganism, see [as.mo()]
+#' - `prevalence`\cr Prevalence of the microorganism according to Bartlett *et al.* (2022, \doi{10.1099/mic.0.001269}), see [mo_matching_score()] for the full explanation
 #' - `snomed`\cr Systematized Nomenclature of Medicine (SNOMED) code of the microorganism, version of `r documentation_date(TAXONOMY_VERSION$SNOMED$accessed_date)` (see *Source*). Use [mo_snomed()] to retrieve it quickly, see [mo_property()].
 #' @details
 #' Please note that entries are only based on the List of Prokaryotic names with Standing in Nomenclature (LPSN) and the Global Biodiversity Information Facility (GBIF) (see below). Since these sources incorporate entries based on (recent) publications in the International Journal of Systematic and Evolutionary Microbiology (IJSEM), it can happen that the year of publication is sometimes later than one might expect.
@@ -142,7 +142,9 @@
 #'
 #' * `r TAXONOMY_VERSION$SNOMED$citation` URL: <`r TAXONOMY_VERSION$SNOMED$url`>
 #' 
-#' * Grimont *et al.*. Antigenic Formulae of the Salmonella Serovars, 2007, 9th Edition. WHO Collaborating Centre for Reference and Research on *Salmonella* (WHOCC-SALM).
+#' * Grimont *et al.* (2007). Antigenic Formulae of the Salmonella Serovars, 9th Edition. WHO Collaborating Centre for Reference and Research on *Salmonella* (WHOCC-SALM).
+#' 
+#' * Bartlett *et al.* (2022). **A comprehensive list of bacterial pathogens infecting humans** *Microbiology* 168:001269; \doi{10.1099/mic.0.001269}
 #' @seealso [as.mo()], [mo_property()], [microorganisms.codes], [intrinsic_resistant]
 #' @examples
 #' microorganisms

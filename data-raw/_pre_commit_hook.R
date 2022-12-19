@@ -168,29 +168,21 @@ MO_STREP_ABCG <- AMR_env$MO_lookup$mo[which(AMR_env$MO_lookup$genus == "Streptoc
   ))]
 MO_FULLNAME_LOWER <- create_MO_fullname_lower()
 MO_PREVALENT_GENERA <- c(
-  "Absidia", "Acanthamoeba", "Acholeplasma", "Acremonium", "Actinotignum", "Aedes", "Alistipes", "Alloprevotella",
-  "Alternaria", "Amoeba", "Anaerosalibacter", "Ancylostoma", "Angiostrongylus", "Anisakis", "Anopheles",
-  "Apophysomyces", "Arachnia", "Aspergillus", "Aureobasidium", "Bacteroides", "Basidiobolus",
-  "Beauveria", "Bergeyella", "Blastocystis", "Blastomyces", "Borrelia", "Brachyspira", "Branhamella",
-  "Butyricimonas", "Candida", "Capillaria", "Capnocytophaga", "Catabacter", "Cetobacterium", "Chaetomium",
-  "Chlamydia", "Chlamydophila", "Christensenella", "Chryseobacterium", "Chrysonilia", "Cladophialophora", "Cladosporium",
-  "Conidiobolus", "Contracaecum", "Cordylobia", "Cryptococcus", "Curvularia", "Deinococcus", "Demodex",
-  "Dermatobia", "Dientamoeba", "Diphyllobothrium", "Dirofilaria", "Dysgonomonas", "Echinostoma", "Elizabethkingia",
-  "Empedobacter", "Entamoeba", "Enterobius", "Exophiala", "Exserohilum", "Fasciola", "Flavobacterium", "Fonsecaea",
-  "Fusarium", "Fusobacterium", "Giardia", "Haloarcula", "Halobacterium", "Halococcus", "Hendersonula",
-  "Heterophyes", "Histomonas", "Histoplasma", "Hymenolepis", "Hypomyces", "Hysterothylacium", "Leishmania", "Lelliottia",
-  "Leptosphaeria", "Leptotrichia", "Lucilia", "Lumbricus", "Malassezia", "Malbranchea", "Metagonimus", "Meyerozyma",
-  "Microsporidium", "Microsporum", "Mortierella", "Mucor", "Mycocentrospora", "Mycoplasma", "Myroides", "Necator",
-  "Nectria", "Ochroconis", "Odoribacter", "Oesophagostomum", "Oidiodendron", "Opisthorchis",
-  "Ornithobacterium", "Parabacteroides", "Pediculus", "Pedobacter", "Phlebotomus", "Phocaeicola",
-  "Phocanema", "Phoma", "Pichia", "Piedraia", "Pithomyces", "Pityrosporum", "Pneumocystis", "Porphyromonas", "Prevotella",
-  "Pseudallescheria", "Pseudoterranova", "Pulex", "Rhizomucor", "Rhizopus", "Rhodotorula", "Riemerella",
-  "Saccharomyces", "Sarcoptes", "Scolecobasidium", "Scopulariopsis", "Scytalidium", "Sphingobacterium",
-  "Spirometra", "Spiroplasma", "Sporobolomyces", "Stachybotrys", "Streptobacillus", "Strongyloides",
-  "Syngamus", "Taenia", "Tannerella", "Tenacibaculum", "Terrimonas", "Toxocara", "Treponema", "Trichinella",
-  "Trichobilharzia", "Trichoderma", "Trichomonas", "Trichophyton", "Trichosporon", "Trichostrongylus",
-  "Trichuris", "Tritirachium", "Trypanosoma", "Trombicula", "Tunga", "Ureaplasma", "Victivallis", "Wautersiella",
-  "Weeksella", "Wuchereria"
+  "Absidia", "Acanthamoeba", "Acremonium", "Aedes", "Alternaria", "Amoeba", "Ancylostoma", "Angiostrongylus",
+  "Anisakis", "Anopheles", "Apophysomyces", "Aspergillus", "Aureobasidium", "Basidiobolus", "Beauveria",
+  "Blastocystis", "Blastomyces", "Candida", "Capillaria", "Chaetomium", "Chrysonilia", "Cladophialophora",
+  "Cladosporium", "Conidiobolus", "Contracaecum", "Cordylobia", "Cryptococcus", "Curvularia", "Demodex",
+  "Dermatobia", "Dientamoeba", "Diphyllobothrium", "Dirofilaria", "Echinostoma", "Entamoeba", "Enterobius",
+  "Exophiala", "Exserohilum", "Fasciola", "Fonsecaea", "Fusarium", "Giardia", "Haloarcula", "Halobacterium",
+  "Halococcus", "Hendersonula", "Heterophyes", "Histomonas", "Histoplasma", "Hymenolepis", "Hypomyces",
+  "Hysterothylacium", "Leishmania", "Malassezia", "Malbranchea", "Metagonimus", "Meyerozyma", "Microsporidium",
+  "Microsporum", "Mortierella", "Mucor", "Mycocentrospora", "Necator", "Nectria", "Ochroconis", "Oesophagostomum",
+  "Oidiodendron", "Opisthorchis", "Pediculus", "Phlebotomus", "Phoma", "Pichia", "Piedraia", "Pithomyces",
+  "Pityrosporum", "Pneumocystis", "Pseudallescheria", "Pseudoterranova", "Pulex", "Rhizomucor", "Rhizopus",
+  "Rhodotorula", "Saccharomyces", "Sarcoptes", "Scolecobasidium", "Scopulariopsis", "Scytalidium", "Spirometra",
+  "Sporobolomyces", "Stachybotrys", "Strongyloides", "Syngamus", "Taenia", "Toxocara", "Trichinella", "Trichobilharzia",
+  "Trichoderma", "Trichomonas", "Trichophyton", "Trichosporon", "Trichostrongylus", "Trichuris", "Tritirachium",
+  "Trombicula", "Trypanosoma", "Tunga", "Wuchereria"
 )
 
 # antibiotic groups
