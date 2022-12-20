@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Fira_Code-0.4.4/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Fira_Code-0.4.4/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9065</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9066</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -375,19 +375,19 @@ names or codes, this would have worked exactly the same way:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">my_TB_data</span><span class="op">)</span></span>
 <span><span class="co">#   rifampicin isoniazid gatifloxacin ethambutol pyrazinamide moxifloxacin</span></span>
-<span><span class="co"># 1          I         R            R          I            R            R</span></span>
-<span><span class="co"># 2          I         I            I          R            S            R</span></span>
-<span><span class="co"># 3          I         R            S          I            I            R</span></span>
-<span><span class="co"># 4          I         R            R          R            S            R</span></span>
-<span><span class="co"># 5          S         R            S          R            I            S</span></span>
-<span><span class="co"># 6          R         R            S          S            R            S</span></span>
+<span><span class="co"># 1          R         R            R          S            R            S</span></span>
+<span><span class="co"># 2          R         I            I          S            S            I</span></span>
+<span><span class="co"># 3          S         S            S          S            S            S</span></span>
+<span><span class="co"># 4          I         I            R          R            R            R</span></span>
+<span><span class="co"># 5          R         S            S          I            R            S</span></span>
+<span><span class="co"># 6          S         R            S          R            R            I</span></span>
 <span><span class="co">#   kanamycin</span></span>
-<span><span class="co"># 1         R</span></span>
-<span><span class="co"># 2         R</span></span>
-<span><span class="co"># 3         S</span></span>
-<span><span class="co"># 4         I</span></span>
-<span><span class="co"># 5         R</span></span>
-<span><span class="co"># 6         R</span></span></code></pre></div>
+<span><span class="co"># 1         S</span></span>
+<span><span class="co"># 2         I</span></span>
+<span><span class="co"># 3         R</span></span>
+<span><span class="co"># 4         S</span></span>
+<span><span class="co"># 5         I</span></span>
+<span><span class="co"># 6         S</span></span></code></pre></div>
 <p>We can now add the interpretation of MDR-TB to our data set. You can
 use:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -428,40 +428,40 @@ Unique: 5</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">Mono-resistant</td>
-<td align="right">3234</td>
-<td align="right">64.68%</td>
-<td align="right">3234</td>
-<td align="right">64.68%</td>
+<td align="right">3190</td>
+<td align="right">63.80%</td>
+<td align="right">3190</td>
+<td align="right">63.80%</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">Negative</td>
-<td align="right">973</td>
-<td align="right">19.46%</td>
-<td align="right">4207</td>
-<td align="right">84.14%</td>
+<td align="right">1010</td>
+<td align="right">20.20%</td>
+<td align="right">4200</td>
+<td align="right">84.00%</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">Multi-drug-resistant</td>
-<td align="right">414</td>
-<td align="right">8.28%</td>
-<td align="right">4621</td>
-<td align="right">92.42%</td>
+<td align="right">446</td>
+<td align="right">8.92%</td>
+<td align="right">4646</td>
+<td align="right">92.92%</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">Poly-resistant</td>
-<td align="right">284</td>
-<td align="right">5.68%</td>
-<td align="right">4905</td>
-<td align="right">98.10%</td>
+<td align="right">267</td>
+<td align="right">5.34%</td>
+<td align="right">4913</td>
+<td align="right">98.26%</td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
 <td align="left">Extensively drug-resistant</td>
-<td align="right">95</td>
-<td align="right">1.90%</td>
+<td align="right">87</td>
+<td align="right">1.74%</td>
 <td align="right">5000</td>
 <td align="right">100.00%</td>
 </tr>
