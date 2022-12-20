@@ -114,7 +114,7 @@ expect_identical(
       "Paraburkholderia nodosa"
     ))
   ),
-  rep("B_PRBRK_NODS", 4)
+  rep("B_PRBRK_NODS", 2)
 )
 
 # empty values
@@ -197,9 +197,6 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   )
   expect_true(example_isolates %>% pull(mo) %>% is.mo())
 }
-
-# unknown results
-expect_warning(as.mo("INVALID"))
 
 # print
 expect_stdout(print(as.mo(c("B_ESCHR_COLI", NA))))

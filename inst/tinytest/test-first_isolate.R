@@ -67,8 +67,8 @@ expect_equal(
 
 
 # first non-ICU isolates
-expect_equal(
-  sum(
+expect_identical(
+  as.integer(sum(
     first_isolate(example_isolates,
       col_mo = "mo",
       col_date = "date",
@@ -78,8 +78,8 @@ expect_equal(
       icu_exclude = TRUE
     ),
     na.rm = TRUE
-  ),
-  942
+  )),
+  942L
 )
 
 # set 1500 random observations to be of specimen type 'Urine'
