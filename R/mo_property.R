@@ -840,7 +840,7 @@ mo_validate <- function(x, property, language, keep_synonyms = keep_synonyms, ..
   } else if (property == "snomed") {
     return(sort(as.character(eval(parse(text = x)))))
   } else {
-    # everything else is character
+    # everything else as character
     return(as.character(x))
   }
 }

@@ -831,35 +831,50 @@ putative <- pathogens %>%
 established <- established[established %unlike% "unknown"]
 putative <- putative[putative %unlike% "unknown"]
 
-other_bacterial_genera <- c(established, putative) %>% 
+established_genera <- established %>% 
   strsplit(" ", fixed = TRUE) %>% 
   sapply(function(x) x[1]) %>% 
   sort() %>% 
   unique()
 
-other_genera <- AMR:::MO_PREVALENT_GENERA %>% 
+putative_genera <- putative %>% 
+  strsplit(" ", fixed = TRUE) %>% 
+  sapply(function(x) x[1]) %>% 
+  sort() %>% 
+  unique()
+
+nonbacterial_genera <- AMR:::MO_PREVALENT_GENERA %>% 
   c(unlist(mo_current(.)),
     unlist(mo_synonyms(., keep_synonyms = FALSE))) %>% 
   strsplit(" ", fixed = TRUE) %>% 
   sapply(function(x) x[1]) %>% 
   sort() %>% 
   unique()
-other_genera <- other_genera[other_genera %unlike% "unknown"]
+nonbacterial_genera <- nonbacterial_genera[nonbacterial_genera %unlike% "unknown"]
 
 # update prevalence based on taxonomy (following the recent and thorough work of Bartlett et al., 2022)
 # see https://doi.org/10.1099/mic.0.001269
 taxonomy <- taxonomy %>% 
   mutate(prevalence = case_when(
-    # 'established' gets a 1 and means 'have infected at least three persons in three or more references'
-    paste(genus, species) %in% established & rank %in% c("genus", "species", "subspecies") ~ 1.0,
-    # 'putative' gets a 2 and  means 'fewer than three known cases'
-    paste(genus, species) %in% putative & rank %in% c("genus", "species", "subspecies") ~ 2.0,
-    # other species from a genus in either group get a 2.5
-    genus %in% other_bacterial_genera & rank %in% c("genus", "species", "subspecies") ~ 2.5,
+    # 'established' means 'have infected at least three persons in three or more references'
+    paste(genus, species) %in% established & rank %in% c("species", "subspecies") ~ 1.0,
+    # other genera in the 'established' group
+    genus %in% established_genera & rank == "genus" ~ 1.0,
+    
+    # 'putative' means 'fewer than three known cases'
+    paste(genus, species) %in% putative & rank %in% c("species", "subspecies") ~ 1.25,
+    # other genera in the 'putative' group
+    genus %in% putative_genera & rank == "genus" ~ 1.25,
+    
+    # species and subspecies in 'established' and 'putative' groups
+    genus %in% c(established_genera, putative_genera) & rank %in% c("species", "subspecies") ~ 1.5,
+    # other species from a genus in either group
+    genus %in% nonbacterial_genera & rank %in% c("genus", "species", "subspecies") ~ 1.5,
     # we keep track of prevalent genera too of non-bacterial species
-    genus %in% AMR:::MO_PREVALENT_GENERA & kingdom != "Bacteria" & rank %in% c("genus", "species", "subspecies") ~ 2.5,
-    # all others get a 3
-    TRUE ~ 3.0))
+    genus %in% AMR:::MO_PREVALENT_GENERA & kingdom != "Bacteria" & rank %in% c("genus", "species", "subspecies") ~ 1.5,
+    
+    # all others
+    TRUE ~ 2.0))
 
 table(taxonomy$prevalence, useNA = "always")
 # (a lot will be removed further below)

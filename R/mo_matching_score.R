@@ -52,14 +52,16 @@
 #'
 #' The grouping into human pathogenic prevalence (\eqn{p}) is based on recent work from Bartlett *et al.* (2022, \doi{10.1099/mic.0.001269}) who extensively studied medical-scientific literature to categorise all bacterial species into these groups:
 #' 
-#' - **Established**, if a taxonomic species has infected at least three persons in three or more references. These records have `prevalence = 1.0` in the [microorganisms] data set.
-#' - **Putative**, if a taxonomic species has fewer than three known cases. These records have `prevalence = 2.0` in the [microorganisms] data set.
+#' - **Established**, if a taxonomic species has infected at least three persons in three or more references. These records have `prevalence = 1.0` in the [microorganisms] data set;
+#' - **Putative**, if a taxonomic species has fewer than three known cases. These records have `prevalence = 1.25` in the [microorganisms] data set.
 #' 
 #' Furthermore,
 #' 
-#' - Any *other* bacterial genus, species or subspecies of which the genus is present in the two aforementioned groups, has `prevalence = 2.5` in the [microorganisms] data set. 
-#' - Any *non-bacterial* genus, species or subspecies of which the genus is present in the following list, also has `prevalence = 2.5` in the [microorganisms] data set: `r vector_or(MO_PREVALENT_GENERA, quotes = "*")`.
-#' - All other records have `prevalence = 3.0` in the [microorganisms] data set.
+#' - Any genus present in the **established** list also has `prevalence = 1.0` in the [microorganisms] data set;
+#' - Any other genus present in the **putative** list has `prevalence = 1.25` in the [microorganisms] data set;
+#' - Any other species or subspecies of which the genus is present in the two aforementioned groups, has `prevalence = 1.5` in the [microorganisms] data set;
+#' - Any *non-bacterial* genus, species or subspecies of which the genus is present in the following list, has `prevalence = 1.5` in the [microorganisms] data set: `r vector_or(MO_PREVALENT_GENERA, quotes = "*")`;
+#' - All other records have `prevalence = 2.0` in the [microorganisms] data set.
 #'
 #' When calculating the matching score, all characters in \eqn{x} and \eqn{n} are ignored that are other than A-Z, a-z, 0-9, spaces and parentheses.
 #'
