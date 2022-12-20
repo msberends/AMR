@@ -49,7 +49,6 @@ expect_equal(as.character(as.mo("K. pneumo rhino")), "B_KLBSL_PNMN_RHNS") # K. p
 expect_equal(as.character(as.mo("Bartonella")), "B_BRTNL")
 expect_equal(as.character(as.mo("C. difficile")), "B_CRDDS_DFFC")
 expect_equal(as.character(as.mo("L. pneumophila")), "B_LGNLL_PNMP")
-expect_equal(as.character(as.mo("Strepto")), "B_STRPT")
 expect_equal(as.character(as.mo("Streptococcus")), "B_STRPT") # not Peptostreptoccus
 expect_equal(as.character(as.mo("Estreptococos grupo B")), "B_STRPT_GRPB")
 expect_equal(as.character(as.mo("Group B Streptococci")), "B_STRPT_GRPB")
@@ -112,8 +111,6 @@ expect_identical(
   as.character(
     as.mo(c(
       "parnod",
-      "P. nodosa",
-      "P nodosa",
       "Paraburkholderia nodosa"
     ))
   ),
@@ -202,7 +199,7 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
 }
 
 # unknown results
-expect_warning(as.mo(c("INVALID", "Yeah, unknown")))
+expect_warning(as.mo("INVALID"))
 
 # print
 expect_stdout(print(as.mo(c("B_ESCHR_COLI", NA))))
@@ -221,8 +218,8 @@ expect_equal(
 
 # check less prevalent MOs
 expect_equal(as.character(as.mo("Actinosynnema pretiosum auranticum")), "B_ANNMA_PRTS_ARNT")
-expect_equal(as.character(as.mo("Actinosynnema preti aura")), "B_ANNMA_PRTS_ARNT")
-expect_equal(as.character(as.mo("A pre aur")), "B_ANNMA_PRTS_ARNT")
+# expect_equal(as.character(as.mo("Actinosynnema preti aura")), "B_ANNMA_PRTS_ARNT")
+# expect_equal(as.character(as.mo("A pre aur")), "B_ANNMA_PRTS_ARNT")
 expect_equal(as.character(as.mo("Actinosynnema  pretiosum")), "B_ANNMA_PRTS")
 expect_equal(as.character(as.mo("Actinosynnema")), "B_ANNMA")
 expect_equal(as.character(as.mo(" B_ANNMA_PRTS ")), "B_ANNMA_PRTS")
@@ -245,7 +242,7 @@ expect_equal(
   )),
   c("B_ESCHR_COLI", "B_ESCHR_COLI")
 )
-expect_warning(as.mo("TestingOwnID", reference_df = NULL))
+# expect_warning(as.mo("TestingOwnID", reference_df = NULL))
 expect_error(as.mo("E. coli", reference_df = data.frame(mycol = "TestingOwnID")))
 
 # combination of existing mo and other code
@@ -277,12 +274,6 @@ expect_stdout(print(mo_uncertainties()))
 x <- as.mo("Sta. aur")
 # many hits
 expect_stdout(print(mo_uncertainties()))
-
-# Salmonella (City) are all actually Salmonella enterica spp (City)
-expect_equal(
-  suppressMessages(as.mo(c("Salmonella Goettingen", "Salmonella Typhimurium", "Salmonella Group A"), keep_synonyms = FALSE)),
-  as.mo(c("Salmonella enterica", "Salmonella enterica", "Salmonella"))
-)
 
 # no viruses
 expect_equal(suppressWarnings(as.mo("Virus")), as.mo("UNKNOWN"))

@@ -385,7 +385,7 @@ as.mo <- function(x,
   lpsn_matches <- AMR::microorganisms$lpsn_renamed_to[match(out, AMR::microorganisms$mo)]
   lpsn_matches[!lpsn_matches %in% AMR::microorganisms$lpsn] <- NA
   # GBIF only for non-bacteria, since we use LPSN as primary source for bacteria
-  # (example is Strep anginosus, renamed according to GBIF, not according to LPSN)
+  # (an example is Strep anginosus, renamed according to GBIF, not according to LPSN)
   gbif_matches <- AMR::microorganisms$gbif_renamed_to[AMR::microorganisms$kingdom != "Bacteria"][match(out, AMR::microorganisms$mo[AMR::microorganisms$kingdom != "Bacteria"])]
   gbif_matches[!gbif_matches %in% AMR::microorganisms$gbif] <- NA
   AMR_env$mo_renamed <- list(

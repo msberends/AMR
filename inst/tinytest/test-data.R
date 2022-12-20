@@ -65,8 +65,6 @@ if (AMR:::pkg_is_available("tibble", also_load = FALSE)) {
 }
 
 df <- AMR:::AMR_env$MO_lookup
-expect_true(nrow(df[which(df$prevalence == 1), , drop = FALSE]) < nrow(df[which(df$prevalence == 2), , drop = FALSE]))
-expect_true(nrow(df[which(df$prevalence == 1), , drop = FALSE]) < nrow(df[which(df$prevalence == 3), , drop = FALSE]))
 expect_true(all(c(
   "mo", "fullname", "status", "kingdom", "phylum", "class", "order", 
   "family", "genus", "species", "subspecies", "rank", "ref", "source", 

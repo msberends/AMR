@@ -220,7 +220,7 @@ mo_shortname <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
   shortnames[shortnames == "S. coagulase-negative"] <- "CoNS"
   shortnames[shortnames == "S. coagulase-positive"] <- "CoPS"
   # exceptions for streptococci: Group A Streptococcus -> GAS
-  shortnames[shortnames %like% "S. group [ABCDFGHK]"] <- paste0("G", gsub("S. group ([ABCDFGHK])", "\\1", shortnames[shortnames %like% "S. group [ABCDFGHK]"], perl = TRUE), "S")
+  shortnames[shortnames %like_case% "S. Group [ABCDFGHK]"] <- paste0("G", gsub("S. Group ([ABCDFGHK])", "\\1", shortnames[shortnames %like_case% "S. Group [ABCDFGHK]"], perl = TRUE), "S")
   # unknown species etc.
   shortnames[shortnames %like% "unknown"] <- paste0("(", trimws2(gsub("[^a-zA-Z -]", "", shortnames[shortnames %like% "unknown"], perl = TRUE)), ")")
 
