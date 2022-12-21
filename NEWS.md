@@ -1,4 +1,4 @@
-# AMR 1.8.2.9068
+# AMR 1.8.2.9069
 
 *(this beta version will eventually become v2.0! We're happy to reach a new major milestone soon!)*
 
@@ -17,19 +17,19 @@ This is a new major release of the AMR package, with great new additions but als
 
 ## New
 
-#### Interpretation of MIC and disk diffusion values
+### Interpretation of MIC and disk diffusion values
 
 EUCAST 2022 and CLSI 2022 guidelines have been added for `as.rsi()`. EUCAST 2022 (v12.0) is now the new default guideline for all MIC and disks diffusion interpretations, and for `eucast_rules()` to apply EUCAST Expert Rules. The default guideline (EUCAST) can now be changed with the new `AMR_guideline` option, such as: `options(AMR_guideline = "CLSI 2020")`.
  
 Interpretation guidelines older than 10 years were removed, the oldest now included guidelines of EUCAST and CLSI are from 2013.
 
-#### Supported languages
+### Supported languages
 
 We added support for the following languages: Chinese, Greek, Japanese, Polish, Turkish and Ukrainian. All antibiotic names are now available in these languages, and the AMR package will automatically determine a supported language based on the user system language.
 
 We are very grateful for the valuable input by our colleagues from other countries. The `AMR` package is now available in 16 languages and according to download stats used in almost all countries in the world!
 
-#### Microbiological taxonomy
+### Microbiological taxonomy
 
 The `microorganisms` no longer relies on the Catalogue of Life, but on the List of Prokaryotic names with Standing in Nomenclature (LPSN) and is supplemented with the 'backbone taxonomy' from the Global Biodiversity Information Facility (GBIF). The structure of this data set has changed to include separate LPSN and GBIF identifiers. Almost all previous MO codes were retained. It contains over 1,400 taxonomic names from 2022.
 
@@ -51,7 +51,7 @@ We also made the following changes regarding the included taxonomy or microorgan
   * Chromista are almost never clinically relevant, thus lacking the secondary scope of this package
 * The `microorganisms.old` data set was removed, and all previously accepted names are now included in the `microorganisms` data set. A new column `status` contains `"accepted"` for currently accepted names and `"synonym"` for taxonomic synonyms; currently invalid names. All previously accepted names now have a microorganisms ID and - if available - an LPSN, GBIF and SNOMED CT identifier.
 
-#### Antibiotic agents and selectors
+### Antibiotic agents and selectors
 
 The new function `add_custom_antimicrobials()` allows users to add custom antimicrobial codes and names to the `AMR` package.
 
@@ -66,7 +66,7 @@ The `antibiotics` data set was greatly updated:
 
 Also, we added support for using antibiotic selectors in scoped `dplyr` verbs (with or without using `vars()`), such as in: `... %>% summarise_at(aminoglycosides(), resistance)`, please see `resistance()` for examples.
 
-#### Antiviral agents
+### Antiviral agents
 
 We now added extensive support for antiviral agents! For the first time, the `AMR` package has extensive support for antiviral drugs and to work with their names, codes and other data in any way.
 
@@ -74,7 +74,7 @@ We now added extensive support for antiviral agents! For the first time, the `AM
 * A new data type `av` (*antivirals*) has been added, which is functionally similar to `ab` for antibiotics
 * Functions `as.av()`, `av_name()`, `av_atc()`, `av_synonyms()`, `av_from_text()` have all been added as siblings to their `ab_*()` equivalents
 
-#### Other new functions
+### Other new functions
 
 * Function `rsi_confidence_interval()` to add confidence intervals in AMR calculation. This is now also included in `rsi_df()` and `proportion_df()`.
 * Function `mean_amr_distance()` to calculate the mean AMR distance. The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand.
@@ -121,7 +121,6 @@ We now added extensive support for antiviral agents! For the first time, the `AM
 * Set scalar conditional expressions (`&&` and `||`) where possible to comply with the upcoming R 4.3
 * An enormous lot of code cleaning, fixing some small bugs on the way
 
+----
 
-# AMR older versions
-
-For the changelog of versions prior to AMR v2.0, please see [our archive](https://github.com/msberends/AMR/blob/v1.8.2/NEWS.md).
+This changelog only contains changes from AMR v2.0 and later. For prior versions, please see [our archive](https://github.com/msberends/AMR/blob/v1.8.2/NEWS.md).

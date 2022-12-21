@@ -4,7 +4,7 @@
 * Applies all recent **CLSI and EUCAST clinical breakpoints** for MICs and disk zones
 * Corrects for duplicate isolates, **calculates and predicts AMR** per antibiotic class
 * Integrates with **WHONET**, ATC, **EARS-Net**, PubChem, **LOINC** and **SNOMED CT**
-* Works on Windows, macOS and Linux with **all versions of R** since R-3.0 and is ompletely **dependency-free**, highly suitable for places with **limited resources**
+* Works on Windows, macOS and Linux with **all versions of R** since R-3.0 and is completely **dependency-free**, highly suitable for places with **limited resources**
 
 <div style="display: flex;">
 <p style="text-align:left; width: 50%;"><small><a href="https://msberends.github.io/AMR/">https://msberends.github.io/AMR</a></small></p>
