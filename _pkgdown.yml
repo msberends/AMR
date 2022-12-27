@@ -130,6 +130,7 @@ reference:
     contents:
     - "`as.mo`"
     - "`mo_property`"
+    - "`add_custom_microorganisms`"
     - "`mo_source`"
 
   - title: "Preparing data: antibiotics"

@@ -1,4 +1,4 @@
-# AMR 1.8.2.9070
+# AMR 1.8.2.9071
 
 *(this beta version will eventually become v2.0! We're happy to reach a new major milestone soon!)*
 
@@ -12,7 +12,7 @@ This is a new major release of the AMR package, with great new additions but als
 * 20 new antibiotics added and updated all DDDs and ATC codes
 * Extended support for antiviral agents (`antivirals` data set), with many new functions
 * Now available in 16 languages
-* Many new interesting functions, such as `rsi_confidence_interval()` and `mean_amr_distance()`
+* Many new interesting functions, such as `rsi_confidence_interval()` and `mean_amr_distance()`, and `add_custom_microorganisms()` to add custom microorganisms to this package
 * Many small bug fixes
 
 ## New
@@ -34,6 +34,8 @@ We are very grateful for the valuable input by our colleagues from other countri
 The `microorganisms` no longer relies on the Catalogue of Life, but on the List of Prokaryotic names with Standing in Nomenclature (LPSN) and is supplemented with the 'backbone taxonomy' from the Global Biodiversity Information Facility (GBIF). The structure of this data set has changed to include separate LPSN and GBIF identifiers. Almost all previous MO codes were retained. It contains over 1,400 taxonomic names from 2022.
 
 We previously relied on our own experience to categorise species into pathogenic groups, but we were very happy to encounter the very recent work of Bartlett *et al.* (2022, DOI [10.1099/mic.0.001269](https://doi.org/10.1099/mic.0.001269)) who extensively studied medical-scientific literature to categorise all bacterial species into groups. See `mo_matching_score()` on how their work was incorporated into the `prevalence` column of the `microorganisms` data set. Using their results, the `as.mo()` and all `mo_*()` functions are now much better capable of converting user input to valid taxonomic records.
+
+The new function `add_custom_microorganisms()` allows users to add custom microorganisms to the `AMR` package.
 
 We also made the following changes regarding the included taxonomy or microorganisms functions:
 
