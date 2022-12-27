@@ -11,9 +11,9 @@
 # Data. Journal of Statistical Software, 104(3), 1-31.                 #
 # doi:10.18637/jss.v104.i03                                            #
 #                                                                      #
-# Developed at the University of Groningen, the Netherlands, in        #
-# collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       #
+# Developed at the University of Groningen and the University Medical  #
+# Center Groningen in The Netherlands, in collaboration with many      #
+# colleagues from around the world, see our website.                   #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -200,7 +200,7 @@ as.mo <- function(x,
     out[x %in% reference_df[[1]]] <- reference_df[[2]][match(x[x %in% reference_df[[1]]], reference_df[[1]])]
   }
   # From MO code ----
-  out[is.na(out) & x %in% AMR_env$MO_lookup$mo] <- x[is.na(out) & x %in% AMR_env$MO_lookup$mo]
+  out[is.na(out) & toupper(x) %in% AMR_env$MO_lookup$mo] <- toupper(x[is.na(out) & toupper(x) %in% AMR_env$MO_lookup$mo])
   # From full name ----
   out[is.na(out) & x_lower %in% AMR_env$MO_lookup$fullname_lower] <- AMR_env$MO_lookup$mo[match(x_lower[is.na(out) & x_lower %in% AMR_env$MO_lookup$fullname_lower], AMR_env$MO_lookup$fullname_lower)]
   # one exception: "Fungi" matches the kingdom, but instead it should return the 'unknown' code for fungi
@@ -210,7 +210,7 @@ as.mo <- function(x,
   # From SNOMED ----
   if (any(is.na(out) & !is.na(x)) && any(is.na(out) & x %in% unlist(microorganisms$snomed), na.rm = TRUE)) {
     # found this extremely fast gem here: https://stackoverflow.com/a/11002456/4575331
-    out[is.na(out) & x %in% unlist(AMR::microorganisms$snomed)] <- AMR::microorganisms$mo[rep(seq_along(AMR::microorganisms$snomed), vapply(FUN.VALUE = double(1), AMR::microorganisms$snomed, length))[match(x[is.na(out) & x %in% unlist(AMR::microorganisms$snomed)], unlist(AMR::microorganisms$snomed))]]
+    out[is.na(out) & x %in% unlist(AMR_env$MO_lookup$snomed)] <- AMR_env$MO_lookup$mo[rep(seq_along(AMR_env$MO_lookup$snomed), vapply(FUN.VALUE = double(1), AMR_env$MO_lookup$snomed, length))[match(x[is.na(out) & x %in% unlist(AMR_env$MO_lookup$snomed)], unlist(AMR_env$MO_lookup$snomed))]]
   }
   # From other familiar output ----
   # such as Salmonella groups, colloquial names, etc.
@@ -382,20 +382,20 @@ as.mo <- function(x,
   } # end of loop over all yet unknowns
 
   # Keep or replace synonyms ----
-  lpsn_matches <- AMR::microorganisms$lpsn_renamed_to[match(out, AMR::microorganisms$mo)]
-  lpsn_matches[!lpsn_matches %in% AMR::microorganisms$lpsn] <- NA
+  lpsn_matches <- AMR_env$MO_lookup$lpsn_renamed_to[match(out, AMR_env$MO_lookup$mo)]
+  lpsn_matches[!lpsn_matches %in% AMR_env$MO_lookup$lpsn] <- NA
   # GBIF only for non-bacteria, since we use LPSN as primary source for bacteria
   # (an example is Strep anginosus, renamed according to GBIF, not according to LPSN)
-  gbif_matches <- AMR::microorganisms$gbif_renamed_to[AMR::microorganisms$kingdom != "Bacteria"][match(out, AMR::microorganisms$mo[AMR::microorganisms$kingdom != "Bacteria"])]
-  gbif_matches[!gbif_matches %in% AMR::microorganisms$gbif] <- NA
+  gbif_matches <- AMR_env$MO_lookup$gbif_renamed_to[AMR_env$MO_lookup$kingdom != "Bacteria"][match(out, AMR_env$MO_lookup$mo[AMR_env$MO_lookup$kingdom != "Bacteria"])]
+  gbif_matches[!gbif_matches %in% AMR_env$MO_lookup$gbif] <- NA
   AMR_env$mo_renamed <- list(
     old = out[!is.na(gbif_matches) | !is.na(lpsn_matches)],
     gbif_matches = gbif_matches[!is.na(gbif_matches) | !is.na(lpsn_matches)],
     lpsn_matches = lpsn_matches[!is.na(gbif_matches) | !is.na(lpsn_matches)]
   )
   if (isFALSE(keep_synonyms)) {
-    out[which(!is.na(gbif_matches))] <- AMR::microorganisms$mo[match(gbif_matches[which(!is.na(gbif_matches))], AMR::microorganisms$gbif)]
-    out[which(!is.na(lpsn_matches))] <- AMR::microorganisms$mo[match(lpsn_matches[which(!is.na(lpsn_matches))], AMR::microorganisms$lpsn)]
+    out[which(!is.na(gbif_matches))] <- AMR_env$MO_lookup$mo[match(gbif_matches[which(!is.na(gbif_matches))], AMR_env$MO_lookup$gbif)]
+    out[which(!is.na(lpsn_matches))] <- AMR_env$MO_lookup$mo[match(lpsn_matches[which(!is.na(lpsn_matches))], AMR_env$MO_lookup$lpsn)]
     if (isTRUE(info) && length(AMR_env$mo_renamed$old) > 0) {
       print(mo_renamed(), extra_txt = " (use `keep_synonyms = TRUE` to leave uncorrected)")
     }
@@ -416,7 +416,7 @@ as.mo <- function(x,
       "Staphylococcus",
       c("caledonicus", "canis", "durrellii", "lloydii", "ratti", "roterodami", "singaporensis", "taiwanensis")
     )
-    if (any(out %in% AMR::microorganisms$mo[match(post_Becker, AMR::microorganisms$fullname)])) {
+    if (any(out %in% AMR_env$MO_lookup$mo[match(post_Becker, AMR_env$MO_lookup$fullname)])) {
       if (message_not_thrown_before("as.mo", "becker")) {
         warning_("in `as.mo()`: Becker ", font_italic("et al."), " (2014, 2019, 2020) does not contain these species named after their publication: ",
           vector_and(font_italic(gsub("Staphylococcus", "S.", post_Becker, fixed = TRUE), collapse = NULL), quotes = FALSE),
@@ -492,10 +492,10 @@ mo_renamed <- function() {
   x <- AMR_env$mo_renamed
 
   x$new <- synonym_mo_to_accepted_mo(x$old)
-  mo_old <- AMR::microorganisms$fullname[match(x$old, AMR::microorganisms$mo)]
-  mo_new <- AMR::microorganisms$fullname[match(x$new, AMR::microorganisms$mo)]
-  ref_old <- AMR::microorganisms$ref[match(x$old, AMR::microorganisms$mo)]
-  ref_new <- AMR::microorganisms$ref[match(x$new, AMR::microorganisms$mo)]
+  mo_old <- AMR_env$MO_lookup$fullname[match(x$old, AMR_env$MO_lookup$mo)]
+  mo_new <- AMR_env$MO_lookup$fullname[match(x$new, AMR_env$MO_lookup$mo)]
+  ref_old <- AMR_env$MO_lookup$ref[match(x$old, AMR_env$MO_lookup$mo)]
+  ref_new <- AMR_env$MO_lookup$ref[match(x$new, AMR_env$MO_lookup$mo)]
 
   df_renamed <- data.frame(
     old = mo_old,
@@ -553,6 +553,9 @@ pillar_shaft.mo <- function(x, ...) {
   # markup NA and UNKNOWN
   out[is.na(x)] <- font_na("  NA")
   out[x == "UNKNOWN"] <- font_na("  UNKNOWN")
+  
+  # markup manual codes
+  out[x %in% AMR_env$MO_lookup$mo & !x %in% AMR::microorganisms$mo] <- font_blue(out[x %in% AMR_env$MO_lookup$mo & !x %in% AMR::microorganisms$mo], collapse = NULL)
 
   df <- tryCatch(get_current_data(arg_name = "x", call = 0),
     error = function(e) NULL
@@ -563,7 +566,7 @@ pillar_shaft.mo <- function(x, ...) {
     mo_cols <- NULL
   }
 
-  all_mos <- c(AMR::microorganisms$mo, NA)
+  all_mos <- c(AMR_env$MO_lookup$mo, NA)
   if (!all(x %in% all_mos) ||
     (!is.null(df) && !all(unlist(df[, which(mo_cols), drop = FALSE]) %in% all_mos))) {
     # markup old mo codes
@@ -665,7 +668,7 @@ print.mo <- function(x, print.shortnames = FALSE, ...) {
   }
   x <- as.character(x)
   names(x) <- x_names
-  if (!all(x %in% c(AMR::microorganisms$mo, NA))) {
+  if (!all(x %in% c(AMR_env$MO_lookup$mo, NA))) {
     warning_(
       "Some MO codes are from a previous AMR package version. ",
       "Please update the MO codes with `as.mo()`.",
@@ -698,7 +701,7 @@ summary.mo <- function(object, ...) {
 #' @export
 #' @noRd
 as.data.frame.mo <- function(x, ...) {
-  if (!all(x %in% c(AMR::microorganisms$mo, NA))) {
+  if (!all(x %in% c(AMR_env$MO_lookup$mo, NA))) {
     warning_(
       "The data contains old MO codes (from a previous AMR package version). ",
       "Please update your MO codes with `as.mo()`."
@@ -735,7 +738,7 @@ as.data.frame.mo <- function(x, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
   # must only contain valid MOs
-  return_after_integrity_check(y, "microorganism code", as.character(AMR::microorganisms$mo))
+  return_after_integrity_check(y, "microorganism code", as.character(AMR_env$MO_lookup$mo))
 }
 #' @method [[<- mo
 #' @export
@@ -744,7 +747,7 @@ as.data.frame.mo <- function(x, ...) {
   y <- NextMethod()
   attributes(y) <- attributes(i)
   # must only contain valid MOs
-  return_after_integrity_check(y, "microorganism code", as.character(AMR::microorganisms$mo))
+  return_after_integrity_check(y, "microorganism code", as.character(AMR_env$MO_lookup$mo))
 }
 #' @method c mo
 #' @export
@@ -753,7 +756,7 @@ c.mo <- function(...) {
   x <- list(...)[[1L]]
   y <- NextMethod()
   attributes(y) <- attributes(x)
-  return_after_integrity_check(y, "microorganism code", as.character(AMR::microorganisms$mo))
+  return_after_integrity_check(y, "microorganism code", as.character(AMR_env$MO_lookup$mo))
 }
 
 #' @method unique mo
@@ -859,10 +862,10 @@ print.mo_uncertainties <- function(x, ...) {
       # Add "Based on {input}" text if it differs from the original input
       ifelse(x[i, ]$original_input != x[i, ]$input, paste0(strrep(" ", nchar(x[i, ]$original_input) + 6), "Based on input \"", x[i, ]$input, "\""), ""),
       # Add note if result was coerced to accepted taxonomic name
-      ifelse(x[i, ]$keep_synonyms == FALSE & x[i, ]$mo %in% AMR::microorganisms$mo[which(AMR::microorganisms$status == "synonym")],
+      ifelse(x[i, ]$keep_synonyms == FALSE & x[i, ]$mo %in% AMR_env$MO_lookup$mo[which(AMR_env$MO_lookup$status == "synonym")],
         paste0(
           strrep(" ", nchar(x[i, ]$original_input) + 6),
-          font_red(paste0("This old taxonomic name was converted to ", font_italic(AMR::microorganisms$fullname[match(synonym_mo_to_accepted_mo(x[i, ]$mo), AMR::microorganisms$mo)], collapse = NULL), " (", synonym_mo_to_accepted_mo(x[i, ]$mo), ")."), collapse = NULL)
+          font_red(paste0("This old taxonomic name was converted to ", font_italic(AMR_env$MO_lookup$fullname[match(synonym_mo_to_accepted_mo(x[i, ]$mo), AMR_env$MO_lookup$mo)], collapse = NULL), " (", synonym_mo_to_accepted_mo(x[i, ]$mo), ")."), collapse = NULL)
         ),
         ""
       ),
@@ -1030,7 +1033,7 @@ parse_and_convert <- function(x) {
 replace_old_mo_codes <- function(x, property) {
   # this function transform old MO codes to current codes, such as:
   # B_ESCH_COL (AMR v0.5.0) -> B_ESCHR_COLI
-  ind <- x %like_case% "^[A-Z]_[A-Z_]+$" & !x %in% AMR::microorganisms$mo
+  ind <- x %like_case% "^[A-Z]_[A-Z_]+$" & !x %in% AMR_env$MO_lookup$mo
   if (any(ind, na.rm = TRUE)) {
     # get the ones that match
     affected <- x[ind]
@@ -1144,17 +1147,17 @@ load_mo_uncertainties <- function(metadata) {
 }
 
 synonym_mo_to_accepted_mo <- function(x, fill_in_accepted = FALSE) {
-  x_gbif <- AMR::microorganisms$gbif_renamed_to[match(x, AMR::microorganisms$mo)]
-  x_lpsn <- AMR::microorganisms$lpsn_renamed_to[match(x, AMR::microorganisms$mo)]
-  x_gbif[!x_gbif %in% AMR::microorganisms$gbif] <- NA
-  x_lpsn[!x_lpsn %in% AMR::microorganisms$lpsn] <- NA
+  x_gbif <- AMR_env$MO_lookup$gbif_renamed_to[match(x, AMR_env$MO_lookup$mo)]
+  x_lpsn <- AMR_env$MO_lookup$lpsn_renamed_to[match(x, AMR_env$MO_lookup$mo)]
+  x_gbif[!x_gbif %in% AMR_env$MO_lookup$gbif] <- NA
+  x_lpsn[!x_lpsn %in% AMR_env$MO_lookup$lpsn] <- NA
 
   out <- ifelse(is.na(x_lpsn),
-    AMR::microorganisms$mo[match(x_gbif, AMR::microorganisms$gbif)],
-    AMR::microorganisms$mo[match(x_lpsn, AMR::microorganisms$lpsn)]
+    AMR_env$MO_lookup$mo[match(x_gbif, AMR_env$MO_lookup$gbif)],
+    AMR_env$MO_lookup$mo[match(x_lpsn, AMR_env$MO_lookup$lpsn)]
   )
   if (isTRUE(fill_in_accepted)) {
-    x_accepted <- which(AMR::microorganisms$status[match(x, AMR::microorganisms$mo)] == "accepted")
+    x_accepted <- which(AMR_env$MO_lookup$status[match(x, AMR_env$MO_lookup$mo)] == "accepted")
     out[x_accepted] <- x[x_accepted]
   }
   out

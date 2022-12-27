@@ -11,9 +11,9 @@
 # Data. Journal of Statistical Software, 104(3), 1-31.                 #
 # doi:10.18637/jss.v104.i03                                            #
 #                                                                      #
-# Developed at the University of Groningen, the Netherlands, in        #
-# collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       #
+# Developed at the University of Groningen and the University Medical  #
+# Center Groningen in The Netherlands, in collaboration with many      #
+# colleagues from around the world, see our website.                   #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -72,6 +72,7 @@ AMR_env$rsi_interpretation_history <- data.frame(
   stringsAsFactors = FALSE
 )
 AMR_env$custom_ab_codes <- character(0)
+AMR_env$custom_mo_codes <- character(0)
 AMR_env$is_dark_theme <- NULL
 
 # determine info icon for messages
@@ -171,12 +172,11 @@ if (utf8_supported && !is_latex) {
 
   # if mo source exists, fire it up (see mo_source())
   if (tryCatch(file.exists(getOption("AMR_mo_source", "~/mo_source.rds")), error = function(e) FALSE)) {
-    invisible(get_mo_source())
+    try(invisible(get_mo_source()), silent = TRUE)
   }
-
   # be sure to print tibbles as tibbles
   if (pkg_is_available("tibble", also_load = FALSE)) {
-    loadNamespace("tibble")
+    try(loadNamespace("tibble"), silent = TRUE)
   }
 
   # reference data - they have additional columns compared to `antibiotics` and `microorganisms` to improve speed
@@ -184,6 +184,25 @@ if (utf8_supported && !is_latex) {
   AMR_env$AB_lookup <- create_AB_lookup()
   AMR_env$AV_lookup <- create_AV_lookup()
   AMR_env$MO_lookup <- create_MO_lookup()
+  
+  # if custom ab option is available, load it
+  if (!is.null(getOption("AMR_custom_ab")) && file.exists(getOption("AMR_custom_ab", default = ""))) {
+    packageStartupMessage("Adding custom antimicrobials from '", getOption("AMR_custom_ab"), "'...", appendLF = FALSE)
+    x <- readRDS2(getOption("AMR_custom_ab"))
+    tryCatch({
+      suppressWarnings(suppressMessages(add_custom_antimicrobials(x)))
+      packageStartupMessage("OK.")
+    }, error = function(e) packageStartupMessage("Failed: ", e$message))
+  }
+  # if custom mo option is available, load it
+  if (!is.null(getOption("AMR_custom_mo")) && file.exists(getOption("AMR_custom_mo", default = ""))) {
+    packageStartupMessage("Adding custom microorganisms from '", getOption("AMR_custom_mo"), "'...", appendLF = FALSE)
+    x <- readRDS2(getOption("AMR_custom_mo"))
+    tryCatch({
+      suppressWarnings(suppressMessages(add_custom_microorganisms(x)))
+      packageStartupMessage("OK.")
+    }, error = function(e) packageStartupMessage("Failed: ", e$message))
+  }
 }
 
 # Helper functions --------------------------------------------------------

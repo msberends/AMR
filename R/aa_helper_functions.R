@@ -11,9 +11,9 @@
 # Data. Journal of Statistical Software, 104(3), 1-31.                 #
 # doi:10.18637/jss.v104.i03                                            #
 #                                                                      #
-# Developed at the University of Groningen, the Netherlands, in        #
-# collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       #
+# Developed at the University of Groningen and the University Medical  #
+# Center Groningen in The Netherlands, in collaboration with many      #
+# colleagues from around the world, see our website.                   #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -1373,6 +1373,13 @@ percentage <- function(x, digits = NULL, ...) {
 trimws2 <- function(..., whitespace = "[\u0009\u000A\u000B\u000C\u000D\u0020\u0085\u00A0\u1680\u180E\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u200C\u200D\u2028\u2029\u202F\u205F\u2060\u3000\uFEFF]") {
   # this is even faster than trimws() itself which sets " \t\n\r".
   trimws(..., whitespace = whitespace)
+}
+
+readRDS2 <- function(file, refhook = NULL) {
+  # this is readRDS with remote file support
+  con <- file(file)
+  on.exit(close(con))
+  readRDS(con, refhook = refhook)
 }
 
 # Faster data.table implementations ----

@@ -11,9 +11,9 @@
 # Data. Journal of Statistical Software, 104(3), 1-31.                 #
 # doi:10.18637/jss.v104.i03                                            #
 #                                                                      #
-# Developed at the University of Groningen, the Netherlands, in        #
-# collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       #
+# Developed at the University of Groningen and the University Medical  #
+# Center Groningen in The Netherlands, in collaboration with many      #
+# colleagues from around the world, see our website.                   #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -149,7 +149,7 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
 
   df <- NULL
   if (path %like% "[.]rds$") {
-    df <- readRDS(path)
+    df <- readRDS2(path)
   } else if (path %like% "[.]xlsx?$") {
     # is Excel file (old or new)
     stop_ifnot_installed("readxl")
@@ -248,7 +248,7 @@ get_mo_source <- function(destination = getOption("AMR_mo_source", "~/mo_source.
     return(NULL)
   }
   if (is.null(AMR_env$mo_source)) {
-    AMR_env$mo_source <- readRDS(path.expand(destination))
+    AMR_env$mo_source <- readRDS2(path.expand(destination))
   }
 
   old_time <- attributes(AMR_env$mo_source)$mo_source_timestamp

@@ -11,9 +11,9 @@
 # Data. Journal of Statistical Software, 104(3), 1-31.                 #
 # doi:10.18637/jss.v104.i03                                            #
 #                                                                      #
-# Developed at the University of Groningen, the Netherlands, in        #
-# collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       #
+# Developed at the University of Groningen and the University Medical  #
+# Center Groningen in The Netherlands, in collaboration with many      #
+# colleagues from around the world, see our website.                   #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -676,9 +676,9 @@ mo_synonyms <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
   metadata <- get_mo_uncertainties()
 
   syns <- lapply(x.mo, function(y) {
-    gbif <- AMR::microorganisms$gbif[match(y, AMR::microorganisms$mo)]
-    lpsn <- AMR::microorganisms$lpsn[match(y, AMR::microorganisms$mo)]
-    out <- AMR::microorganisms[which(AMR::microorganisms$lpsn_renamed_to == lpsn | AMR::microorganisms$gbif_renamed_to == gbif), "fullname", drop = TRUE]
+    gbif <- AMR_env$MO_lookup$gbif[match(y, AMR_env$MO_lookup$mo)]
+    lpsn <- AMR_env$MO_lookup$lpsn[match(y, AMR_env$MO_lookup$mo)]
+    out <- AMR_env$MO_lookup[which(AMR_env$MO_lookup$lpsn_renamed_to == lpsn | AMR_env$MO_lookup$gbif_renamed_to == gbif), "fullname", drop = TRUE]
     if (length(out) == 0) {
       NULL
     } else {
@@ -760,10 +760,10 @@ mo_url <- function(x, open = FALSE, language = get_AMR_locale(), keep_synonyms =
   x.mo <- as.mo(x = x, language = language, keep_synonyms = keep_synonyms, ... = ...)
   metadata <- get_mo_uncertainties()
 
-  x.rank <- AMR::microorganisms$rank[match(x.mo, AMR::microorganisms$mo)]
-  x.name <- AMR::microorganisms$fullname[match(x.mo, AMR::microorganisms$mo)]
-  x.lpsn <- AMR::microorganisms$lpsn[match(x.mo, AMR::microorganisms$mo)]
-  x.gbif <- AMR::microorganisms$gbif[match(x.mo, AMR::microorganisms$mo)]
+  x.rank <- AMR_env$MO_lookup$rank[match(x.mo, AMR_env$MO_lookup$mo)]
+  x.name <- AMR_env$MO_lookup$fullname[match(x.mo, AMR_env$MO_lookup$mo)]
+  x.lpsn <- AMR_env$MO_lookup$lpsn[match(x.mo, AMR_env$MO_lookup$mo)]
+  x.gbif <- AMR_env$MO_lookup$gbif[match(x.mo, AMR_env$MO_lookup$mo)]
 
   u <- character(length(x))
   u[!is.na(x.gbif)] <- paste0(TAXONOMY_VERSION$GBIF$url, "/species/", x.gbif[!is.na(x.gbif)])
@@ -792,7 +792,7 @@ mo_property <- function(x, property = "fullname", language = get_AMR_locale(), k
     x <- find_mo_col(fn = "mo_property")
   }
   meet_criteria(x, allow_NA = TRUE)
-  meet_criteria(property, allow_class = "character", has_length = 1, is_in = colnames(AMR::microorganisms))
+  meet_criteria(property, allow_class = "character", has_length = 1, is_in = colnames(AMR_env$MO_lookup))
   language <- validate_language(language)
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
@@ -803,7 +803,7 @@ mo_validate <- function(x, property, language, keep_synonyms = keep_synonyms, ..
 
   # try to catch an error when inputting an invalid argument
   # so the 'call.' can be set to FALSE
-  tryCatch(x[1L] %in% unlist(AMR::microorganisms[1, property, drop = TRUE]),
+  tryCatch(x[1L] %in% unlist(AMR_env$MO_lookup[1, property, drop = TRUE]),
     error = function(e) stop(e$message, call. = FALSE)
   )
 
@@ -819,7 +819,7 @@ mo_validate <- function(x, property, language, keep_synonyms = keep_synonyms, ..
   has_Becker_or_Lancefield <- Becker %in% c(TRUE, "all") || Lancefield %in% c(TRUE, "all")
 
   # get microorganisms data set, but remove synonyms if keep_synonyms is FALSE
-  mo_data_check <- AMR::microorganisms[which(AMR::microorganisms$status %in% if (isTRUE(keep_synonyms)) c("synonym", "accepted") else "accepted"), , drop = FALSE]
+  mo_data_check <- AMR_env$MO_lookup[which(AMR_env$MO_lookup$status %in% if (isTRUE(keep_synonyms)) c("synonym", "accepted") else "accepted"), , drop = FALSE]
 
   if (all(x %in% c(mo_data_check$mo, NA)) && !has_Becker_or_Lancefield) {
     # do nothing, just don't run the other if-else's
@@ -833,7 +833,7 @@ mo_validate <- function(x, property, language, keep_synonyms = keep_synonyms, ..
   }
 
   # get property reeaaally fast using match()
-  x <- AMR::microorganisms[[property]][match(x, AMR::microorganisms$mo)]
+  x <- AMR_env$MO_lookup[[property]][match(x, AMR_env$MO_lookup$mo)]
 
   if (property == "mo") {
     return(set_clean_class(x, new_class = c("mo", "character")))

@@ -11,9 +11,9 @@
 # Data. Journal of Statistical Software, 104(3), 1-31.                 #
 # doi:10.18637/jss.v104.i03                                            #
 #                                                                      #
-# Developed at the University of Groningen, the Netherlands, in        #
-# collaboration with non-profit organisations Certe Medical            #
-# Diagnostics & Advice, and University Medical Center Groningen.       #
+# Developed at the University of Groningen and the University Medical  #
+# Center Groningen in The Netherlands, in collaboration with many      #
+# colleagues from around the world, see our website.                   #
 #                                                                      #
 # This R package is free software; you can freely use and distribute   #
 # it for both personal and commercial purposes under the terms of the  #
@@ -95,7 +95,7 @@ vec_cast.character.mo <- function(x, to, ...) {
   as.character(x)
 }
 vec_cast.mo.character <- function(x, to, ...) {
-  return_after_integrity_check(x, "microorganism code", as.character(AMR::microorganisms$mo))
+  return_after_integrity_check(x, "microorganism code", as.character(AMR_env$MO_lookup$mo))
 }
 
 # S3: disk
