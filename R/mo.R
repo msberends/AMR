@@ -182,11 +182,11 @@ as.mo <- function(x,
 
   x_lower <- tolower(x)
   
-  complexes <- x[trimws2(x_lower) %like_case% "complex$"]
-  if (length(complexes) > 0) {
-    warning_("in `as.mo()`: translation of complexes is not supported at the moment - the input text 'complex' was ignored in ", length(complexes), " cases.", call = FALSE)
+  complexes <- x[trimws2(x_lower) %like_case% " (complex|group)$"]
+  if (length(complexes) > 0 && identical(remove_from_input, mo_cleaning_regex())) {
+    warning_("in `as.mo()`: 'complex' and 'group' were ignored from the input in ", length(complexes), " case", ifelse(length(complexes) > 1, "s", ""), ", as they are currently not supported.\nYou can add your own microorganism with `add_custom_microorganisms()`.", call = FALSE)
   }
-
+  
   # WHONET: xxx = no growth
   x[x_lower %in% c("", "xxx", "na", "nan")] <- NA_character_
 
@@ -536,7 +536,7 @@ mo_cleaning_regex <- function() {
     "|",
     "([({]|\\[).+([})]|\\])",
     "|",
-    "(^| )(e?spp|e?ssp|e?ss|e?sp|e?subsp|sube?species|biovar|biotype|serovar|serogr.?up|e?species|complex)[.]*( |$))"
+    "(^| )(e?spp|e?ssp|e?ss|e?sp|e?subsp|sube?species|biovar|biotype|serovar|serogr.?up|e?species|group|complex)[.]*( |$))"
   )
 }
 

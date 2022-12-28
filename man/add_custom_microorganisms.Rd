@@ -10,7 +10,7 @@ add_custom_microorganisms(x)
 clear_custom_microorganisms()
 }
 \arguments{
-\item{x}{a \link{data.frame} resembling the \link{microorganisms} data set, at least containing columns "mo", "genus" and "species"}
+\item{x}{a \link{data.frame} resembling the \link{microorganisms} data set, at least containing columns "genus" and "species"}
 }
 \description{
 With \code{\link[=add_custom_microorganisms]{add_custom_microorganisms()}} you can add your own custom antimicrobial drug codes to the \code{AMR} package.
@@ -24,7 +24,7 @@ There are two ways to automate this process:
 
 \strong{Method 1:} Save the microorganisms to a local or remote file (can even be the internet). To use this method:
 \enumerate{
-\item Create a data set in the structure of the \link{microorganisms} data set (containing at the very least columns "ab" and "name") and save it with \code{\link[=saveRDS]{saveRDS()}} to a location of choice, e.g. \code{"~/my_custom_mo.rds"}, or any remote location.
+\item Create a data set in the structure of the \link{microorganisms} data set (containing at the very least columns "genus" and "species") and save it with \code{\link[=saveRDS]{saveRDS()}} to a location of choice, e.g. \code{"~/my_custom_mo.rds"}, or any remote location.
 \item Set the file location to the \code{AMR_custom_mo} \R option: \code{options(AMR_custom_mo = "~/my_custom_mo.rds")}. This can even be a remote file location, such as an https URL. Since options are not saved between \R sessions, it is best to save this option to the \code{.Rprofile} file so that it will loaded on start-up of \R. To do this, open the \code{.Rprofile} file using e.g. \code{utils::file.edit("~/.Rprofile")}, add this text and save the file:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{# Add custom microorganism codes:
@@ -42,8 +42,7 @@ Upon package load, this file will be loaded and run through the \code{\link[=add
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{ # Add custom antibiotic drug codes:
  library(AMR)
  add_custom_microorganisms(
-   data.frame(mo = "ENT_ASB_CLO",
-              genus = "Enterobacter",
+   data.frame(genus = "Enterobacter",
               species = "asburiae/cloacae")
  )
 }\if{html}{\out{</div>}}
@@ -61,24 +60,23 @@ mo_name("Enterobacter asburiae/cloacae")
 # now add a custom entry - it will be considered by as.mo() and
 # all mo_*() functions
 add_custom_microorganisms(
-  data.frame(mo = "ENT_ASB_CLO",
-             genus = "Enterobacter",
+  data.frame(genus = "Enterobacter",
              species = "asburiae/cloacae"
   )
 )
 
-# "ENT_ASB_CLO" is now a new microorganism:
+# E. asburiae/cloacae is now a new microorganism:
 mo_name("Enterobacter asburiae/cloacae")
-as.mo("ent_asb_clo")
-mo_name("ent_asb_clo")
+# its code:
+as.mo("Enterobacter asburiae/cloacae")
 # all internal algorithms will work as well:
 mo_name("Ent asburia cloacae")
 
 # and even the taxonomy was added based on the genus!
-mo_family("ent_asb_clo")
+mo_family("E. asburiae/cloacae")
 mo_gramstain("Enterobacter asburiae/cloacae")
 
-mo_info("ent_asb_clo")
+mo_info("Enterobacter asburiae/cloacae")
 }
 }
 \seealso{
