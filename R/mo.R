@@ -371,7 +371,7 @@ as.mo <- function(x,
         }
         msg <- c(msg, paste0(
           "Microorganism translation was uncertain for ", examples,
-          ". Run `mo_uncertainties()` to review ", plural[2], "."
+          ". Run `mo_uncertainties()` to review ", plural[2], ", or use `add_custom_microorganisms()` to add own entries."
         ))
 
         for (m in msg) {

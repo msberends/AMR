@@ -13,7 +13,7 @@ clear_custom_microorganisms()
 \item{x}{a \link{data.frame} resembling the \link{microorganisms} data set, at least containing columns "genus" and "species"}
 }
 \description{
-With \code{\link[=add_custom_microorganisms]{add_custom_microorganisms()}} you can add your own custom antimicrobial drug codes to the \code{AMR} package.
+With \code{\link[=add_custom_microorganisms]{add_custom_microorganisms()}} you can add your own custom microorganisms to the \code{AMR} package, such the non-taxonomic outcome of laboratory analysis.
 }
 \details{
 This function will fill in missing taxonomy for you, if specific taxonomic columns are missing, see \emph{Examples}.
@@ -67,8 +67,10 @@ add_custom_microorganisms(
 
 # E. asburiae/cloacae is now a new microorganism:
 mo_name("Enterobacter asburiae/cloacae")
+
 # its code:
 as.mo("Enterobacter asburiae/cloacae")
+
 # all internal algorithms will work as well:
 mo_name("Ent asburia cloacae")
 

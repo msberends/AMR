@@ -29,7 +29,7 @@
 
 #' Add Custom Microorganisms to This Package
 #'
-#' With [add_custom_microorganisms()] you can add your own custom antimicrobial drug codes to the `AMR` package.
+#' With [add_custom_microorganisms()] you can add your own custom microorganisms to the `AMR` package, such the non-taxonomic outcome of laboratory analysis.
 #' @param x a [data.frame] resembling the [microorganisms] data set, at least containing columns "genus" and "species"
 #' @details This function will fill in missing taxonomy for you, if specific taxonomic columns are missing, see *Examples*.
 #' 
@@ -86,9 +86,10 @@
 #'
 #' # E. asburiae/cloacae is now a new microorganism:
 #' mo_name("Enterobacter asburiae/cloacae")
+#' 
 #' # its code:
 #' as.mo("Enterobacter asburiae/cloacae")
-
+#' 
 #' # all internal algorithms will work as well:
 #' mo_name("Ent asburia cloacae")
 #' 
