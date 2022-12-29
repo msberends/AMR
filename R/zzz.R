@@ -184,7 +184,9 @@ if (utf8_supported && !is_latex) {
   AMR_env$AB_lookup <- create_AB_lookup()
   AMR_env$AV_lookup <- create_AV_lookup()
   AMR_env$MO_lookup <- create_MO_lookup()
-  
+}
+
+.onAttach <- function(lib, pkg) {
   # if custom ab option is available, load it
   if (!is.null(getOption("AMR_custom_ab")) && file.exists(getOption("AMR_custom_ab", default = ""))) {
     packageStartupMessage("Adding custom antimicrobials from '", getOption("AMR_custom_ab"), "'...", appendLF = FALSE)
