@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9074</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9076</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,17 +75,17 @@
     <a class="dropdown-item" href="../reference/mo_property.html">
       <span class="fa fa-bug"></span>
        
-      Get properties of a microorganism
+      Get taxonomy of a microorganism
     </a>
     <a class="dropdown-item" href="../reference/ab_property.html">
       <span class="fa fa-capsules"></span>
        
-      Get properties of an antibiotic
+      Get properties of an antibiotic drug
     </a>
     <a class="dropdown-item" href="../reference/av_property.html">
       <span class="fa fa-capsules"></span>
        
-      Get properties of an antiviral agent
+      Get properties of an antiviral drug
     </a>
   </div>
 </li>
@@ -133,7 +133,7 @@
     <div class="section level2">
       <h2 id="preparing-data-microorganisms">Preparing data: microorganisms<a class="anchor" aria-label="anchor" href="#preparing-data-microorganisms"></a></h2>
       
-      <p class="section-desc"></p><p>These functions are meant to get taxonomically valid properties of microorganisms from any input. Use <code><a href="../reference/mo_source.html">mo_source()</a></code> to teach this package how to translate your own codes to valid microorganism codes.</p>
+      <p class="section-desc"></p><p>These functions are meant to get taxonomically valid properties of microorganisms from any input, but also properties derived from taxonomy, such as the Gram stain (<code><a href="../reference/mo_property.html">mo_gramstain()</a></code>) , or <code><a href="../reference/mo_property.html">mo_is_yeast()</a></code>. Use <code><a href="../reference/mo_source.html">mo_source()</a></code> to teach this package how to translate your own codes to valid microorganisms, and use `add_custom_microorganisms() to add your own custom microorganisms to this package.</p>
 
       
     </div><div id="" class="section level2">
@@ -298,7 +298,7 @@
           
           <code><a href="mean_amr_distance.html">mean_amr_distance()</a></code> <code><a href="mean_amr_distance.html">amr_distance_from_row()</a></code> 
         </dt>
-        <dd>Mean AMR Distance</dd>
+        <dd>Calculate the Mean AMR Distance</dd>
       </dl><dl><dt>
           
           <code><a href="resistance_predict.html">resistance_predict()</a></code> <code><a href="resistance_predict.html">rsi_predict()</a></code> <code><a href="resistance_predict.html">plot(<i>&lt;resistance_predict&gt;</i>)</a></code> <code><a href="resistance_predict.html">ggplot_rsi_predict()</a></code> <code><a href="resistance_predict.html">autoplot(<i>&lt;resistance_predict&gt;</i>)</a></code> 
