@@ -135,7 +135,7 @@ add_custom_antimicrobials <- function(x) {
   x$generalised_name <- generalise_antibiotic_name(x$name)
   x$generalised_all <- as.list(x$generalised_name)
   for (col in colnames(x)) {
-    if (is.list(AMR_env$AB_lookup[, col, drop = TRUE])) {
+    if (is.list(AMR_env$AB_lookup[, col, drop = TRUE]) & !is.list(x[, col, drop = TRUE])) {
       x[, col] <- as.list(x[, col, drop = TRUE])
     }
   }
@@ -155,7 +155,8 @@ add_custom_antimicrobials <- function(x) {
     new_df[, col] <- x[, col, drop = TRUE]
   }
   AMR_env$AB_lookup <- unique(rbind(AMR_env$AB_lookup, new_df))
-  AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[which(!AMR_env$ab_previously_coerced$ab %in% new_df$ab), , drop = FALSE]
+  
+  AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[which(!AMR_env$ab_previously_coerced$ab %in% x$ab), , drop = FALSE]
   class(AMR_env$AB_lookup$ab) <- c("ab", "character")
   message_("Added ", nr2char(nrow(x)), " record", ifelse(nrow(x) > 1, "s", ""), " to the internal `antibiotics` data set.")
 }
@@ -167,5 +168,6 @@ clear_custom_antimicrobials <- function() {
   AMR_env$AB_lookup <- create_AB_lookup()
   n2 <- nrow(AMR_env$AB_lookup)
   AMR_env$custom_ab_codes <- character(0)
+  AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[which(AMR_env$ab_previously_coerced$ab %in% AMR_env$AB_lookup$ab), , drop = FALSE]
   message_("Cleared ", nr2char(n - n2), " custom record", ifelse(n - n2 > 1, "s", ""), " from the internal `antibiotics` data set.")
 }

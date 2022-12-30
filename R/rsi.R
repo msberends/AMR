@@ -804,7 +804,7 @@ as_rsi_method <- function(method_short,
     for (i in seq_len(length(messages))) {
       messages[i] <- word_wrap(extra_indent = 5, messages[i])
     }
-    message(font_green(font_bold(" * NOTE *\n")),
+    message(font_green(font_bold(" Note:\n")),
             paste0("   ", font_black(AMR_env$bullet_icon)," ", font_black(messages, collapse = NULL) , collapse = "\n"))
   }
 

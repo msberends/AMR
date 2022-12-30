@@ -380,7 +380,7 @@ import_fn <- function(name, pkg, error_on_fail = TRUE) {
     error = function(e) {
       if (isTRUE(error_on_fail)) {
         stop_("function ", name, "() is not an exported object from package '", pkg,
-          "'. Please create an issue at https://github.com/msberends/AMR/issues. Many thanks!",
+          "'. Please create an issue at ", font_url("https://github.com/msberends/AMR/issues"), ". Many thanks!",
           call = FALSE
         )
       } else {
@@ -476,6 +476,7 @@ word_wrap <- function(...,
   # remove extra space that was introduced (e.g. "Smith et al., 2022")
   msg <- gsub(". ,", ".,", msg, fixed = TRUE)
   msg <- gsub("[ ,", "[,", msg, fixed = TRUE)
+  msg <- gsub("/ /", "//", msg, fixed = TRUE)
 
   msg
 }

@@ -96,13 +96,13 @@ navbar:
       - text: "Apply EUCAST rules"
         icon: "fa-exchange-alt"
         href: "articles/EUCAST.html"
-      - text: "Get properties of a microorganism"
+      - text: "Get taxonomy of a microorganism"
         icon: "fa-bug"
         href: "reference/mo_property.html" # reference instead of an article
-      - text: "Get properties of an antibiotic"
+      - text: "Get properties of an antibiotic drug"
         icon: "fa-capsules"
         href: "reference/ab_property.html" # reference instead of an article
-      - text: "Get properties of an antiviral agent"
+      - text: "Get properties of an antiviral drug"
         icon: "fa-capsules"
         href: "reference/av_property.html" # reference instead of an article
     - text: "Manual"
@@ -118,15 +118,14 @@ navbar:
     - text: "Source Code"
       icon: "fab fa-github"
       href: "https://github.com/msberends/AMR"
-    # - text: "Survey"
-    #   icon: "fa-clipboard-list"
-    #   href: "survey.html"
 
 reference:
   - title: "Preparing data: microorganisms"
     desc: >
-      These functions are meant to get taxonomically valid properties of microorganisms from any input.
-      Use `mo_source()` to teach this package how to translate your own codes to valid microorganism codes.
+      These functions are meant to get taxonomically valid properties of microorganisms from any input, but
+      also properties derived from taxonomy, such as the Gram stain (`mo_gramstain()`) , or `mo_is_yeast()`.
+      Use `mo_source()` to teach this package how to translate your own codes to valid microorganisms, and
+      use `add_custom_microorganisms() to add your own custom microorganisms to this package.
     contents:
     - "`as.mo`"
     - "`mo_property`"

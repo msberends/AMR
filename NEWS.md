@@ -1,4 +1,4 @@
-# AMR 1.8.2.9074
+#  1.8.2.9075
 
 *(this beta version will eventually become v2.0! We're happy to reach a new major milestone soon!)*
 
@@ -19,7 +19,7 @@ This is a new major release of the AMR package, with great new additions but als
 
 ### Interpretation of MIC and disk diffusion values
 
-EUCAST 2022 and CLSI 2022 guidelines have been added for `as.rsi()`. EUCAST 2022 (v12.0) is now the new default guideline for all MIC and disks diffusion interpretations, and for `eucast_rules()` to apply EUCAST Expert Rules. The default guideline (EUCAST) can now be changed with the new `AMR_guideline` option, such as: `options(AMR_guideline = "CLSI 2020")`.
+The clinical breakpoints and intrinsic resistance of EUCAST 2022 and CLSI 2022 have been added for `as.rsi()`. EUCAST 2022 (v12.0) is now the new default guideline for all MIC and disks diffusion interpretations, and for `eucast_rules()` to apply EUCAST Expert Rules. The default guideline (EUCAST) can now be changed with the new `AMR_guideline` option, such as: `options(AMR_guideline = "CLSI 2020")`.
  
 Interpretation guidelines older than 10 years were removed, the oldest now included guidelines of EUCAST and CLSI are from 2013.
 
@@ -31,7 +31,7 @@ We are very grateful for the valuable input by our colleagues from other countri
 
 ### Microbiological taxonomy
 
-The `microorganisms` no longer relies on the Catalogue of Life, but on the List of Prokaryotic names with Standing in Nomenclature (LPSN) and is supplemented with the 'backbone taxonomy' from the Global Biodiversity Information Facility (GBIF). The structure of this data set has changed to include separate LPSN and GBIF identifiers. Almost all previous MO codes were retained. It contains over 1,400 taxonomic names from 2022.
+The `microorganisms` data set no longer relies on the Catalogue of Life, but on the List of Prokaryotic names with Standing in Nomenclature (LPSN) and is supplemented with the 'backbone taxonomy' from the Global Biodiversity Information Facility (GBIF). The structure of this data set has changed to include separate LPSN and GBIF identifiers. Almost all previous MO codes were retained. It contains over 1,400 taxonomic names from 2022.
 
 We previously relied on our own experience to categorise species into pathogenic groups, but we were very happy to encounter the very recent work of Bartlett *et al.* (2022, DOI [10.1099/mic.0.001269](https://doi.org/10.1099/mic.0.001269)) who extensively studied medical-scientific literature to categorise all bacterial species into groups. See `mo_matching_score()` on how their work was incorporated into the `prevalence` column of the `microorganisms` data set. Using their results, the `as.mo()` and all `mo_*()` functions are now much better capable of converting user input to valid taxonomic records.
 
@@ -40,7 +40,7 @@ The new function `add_custom_microorganisms()` allows users to add custom microo
 We also made the following changes regarding the included taxonomy or microorganisms functions:
 
 * Updated full microbiological taxonomy according to the latest daily LPSN data set (December 2022) and latest yearly GBIF taxonomy backbone (November 2022)
-* Support for all 1,515 city-like serovars of *Salmonella*, such as *Salmonella* Goldcoast. Formally, these are serovars belonging to the *S. enterica* species, but they are reported with only the name of the genus and the city. For this reason, the serovars are in the `subspecies` column of the `microorganisms` data set and "enterica" is in the `species` column, but the full name does not contain the species name (*enterica*).
+* Support for all 1,516 city-like serovars of *Salmonella*, such as *Salmonella* Goldcoast. Formally, these are serovars belonging to the *S. enterica* species, but they are reported with only the name of the genus and the city. For this reason, the serovars are in the `subspecies` column of the `microorganisms` data set and "enterica" is in the `species` column, but the full name does not contain the species name (*enterica*).
 * All new algorithm for `as.mo()` (and thus all `mo_*()` functions) while still following our original set-up as described in our recently published JSS paper (DOI [10.18637/jss.v104.i03](https://doi.org/10.18637/jss.v104.i03)).
   * A new argument `keep_synonyms` allows to *not* correct for updated taxonomy, in favour of the now deleted argument `allow_uncertain`
   * It has increased tremendously in speed and returns generally more consequent results

@@ -185,11 +185,10 @@ add_custom_microorganisms <- function(x) {
   x$mo <- trimws2(x$mo)
   x$mo[x$mo == ""] <- NA_character_
   x$mo[is.na(x$mo)] <- paste0("CUSTOM_",
-                              toupper(abbreviate(gsub(" +", " _ ",
-                                                      gsub("[^A-Za-z0-9-]", " ",
-                                                                        trimws2(paste(x$genus, x$species, x$subspecies)))),
-                                                 minlength = 10,
-                                                 named = FALSE)))
+                              toupper(unname(abbreviate(gsub(" +", " _ ",
+                                                             gsub("[^A-Za-z0-9-]", " ",
+                                                                  trimws2(paste(x$genus, x$species, x$subspecies)))),
+                                                        minlength = 10))))
   
   # add to package ----
   
