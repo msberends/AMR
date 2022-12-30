@@ -27,11 +27,11 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Mean AMR Distance
+#' Calculate the Mean AMR Distance
 #'
-#' This function calculates a normalised mean for antimicrobial resistance between multiple observations.
+#' Calculates a normalised mean for antimicrobial resistance between multiple observations, to help to identify similar isolates without comparing antibiograms by hand.
 #' @param x a vector of class [rsi][as.rsi()], [rsi][as.rsi()] or [rsi][as.rsi()], or a [data.frame] containing columns of any of these classes
-#' @param ... variables to select (supports tidy selection such as `column1:column4` and [`where(is.mic)`][tidyselect::language]), and can thus also be [antibiotic selectors][ab_selector()]
+#' @param ... variables to select (supports [tidyselect language][tidyselect::language] such as `column1:column4` and `where(is.mic)`, and can thus also be [antibiotic selectors][ab_selector()]
 #' @param combine_SI 	a [logical] to indicate whether all values of S and I must be merged into one, so the input only consists of S+I vs. R (susceptible vs. resistant), defaults to `TRUE`
 #' @details The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand. For common numeric data this distance is equal to [Z scores](https://en.wikipedia.org/wiki/Standard_score) (the number of standard deviations from the mean).
 #'
@@ -83,20 +83,20 @@ mean_amr_distance <- function(x, ...) {
   UseMethod("mean_amr_distance")
 }
 
-#' @rdname mean_amr_distance
+#' @noRd
 #' @export
 mean_amr_distance.default <- function(x, ...) {
   x <- as.double(x)
   (x - mean(x, na.rm = TRUE)) / stats::sd(x, na.rm = TRUE)
 }
 
-#' @rdname mean_amr_distance
+#' @noRd
 #' @export
 mean_amr_distance.mic <- function(x, ...) {
   mean_amr_distance(log2(x))
 }
 
-#' @rdname mean_amr_distance
+#' @noRd
 #' @export
 mean_amr_distance.disk <- function(x, ...) {
   mean_amr_distance(as.double(x))

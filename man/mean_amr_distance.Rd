@@ -2,21 +2,12 @@
 % Please edit documentation in R/mean_amr_distance.R
 \name{mean_amr_distance}
 \alias{mean_amr_distance}
-\alias{mean_amr_distance.default}
-\alias{mean_amr_distance.mic}
-\alias{mean_amr_distance.disk}
 \alias{mean_amr_distance.rsi}
 \alias{mean_amr_distance.data.frame}
 \alias{amr_distance_from_row}
-\title{Mean AMR Distance}
+\title{Calculate the Mean AMR Distance}
 \usage{
 mean_amr_distance(x, ...)
-
-\method{mean_amr_distance}{default}(x, ...)
-
-\method{mean_amr_distance}{mic}(x, ...)
-
-\method{mean_amr_distance}{disk}(x, ...)
 
 \method{mean_amr_distance}{rsi}(x, ..., combine_SI = TRUE)
 
@@ -27,7 +18,7 @@ amr_distance_from_row(amr_distance, row)
 \arguments{
 \item{x}{a vector of class \link[=as.rsi]{rsi}, \link[=as.rsi]{rsi} or \link[=as.rsi]{rsi}, or a \link{data.frame} containing columns of any of these classes}
 
-\item{...}{variables to select (supports tidy selection such as \code{column1:column4} and \code{\link[tidyselect:language]{where(is.mic)}}), and can thus also be \link[=ab_selector]{antibiotic selectors}}
+\item{...}{variables to select (supports \link[tidyselect:language]{tidyselect language} such as \code{column1:column4} and \code{where(is.mic)}, and can thus also be \link[=ab_selector]{antibiotic selectors}}
 
 \item{combine_SI}{a \link{logical} to indicate whether all values of S and I must be merged into one, so the input only consists of S+I vs. R (susceptible vs. resistant), defaults to \code{TRUE}}
 
@@ -36,7 +27,7 @@ amr_distance_from_row(amr_distance, row)
 \item{row}{an index, such as a row number}
 }
 \description{
-This function calculates a normalised mean for antimicrobial resistance between multiple observations.
+Calculates a normalised mean for antimicrobial resistance between multiple observations, to help to identify similar isolates without comparing antibiograms by hand.
 }
 \details{
 The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand. For common numeric data this distance is equal to \href{https://en.wikipedia.org/wiki/Standard_score}{Z scores} (the number of standard deviations from the mean).

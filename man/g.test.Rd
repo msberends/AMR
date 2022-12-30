@@ -21,7 +21,7 @@ g.test(x, y = NULL, p = rep(1/length(x), length(x)), rescale.p = FALSE)
 \item{y}{a numeric vector; ignored if \code{x} is a matrix.  If
     \code{x} is a factor, \code{y} should be a factor of the same length.}
 
-\item{p}{a vector of probabilities of the same length as \code{x}.
+\item{p}{a vector of probabilities of the same length of \code{x}.
     An error is given if any entry of \code{p} is negative.}
 
 \item{rescale.p}{a logical scalar; if TRUE then \code{p} is rescaled
