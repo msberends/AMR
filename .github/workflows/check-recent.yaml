@@ -56,12 +56,12 @@ jobs:
           - {os: macOS-latest,   r: 'devel', allowfail: false}
           - {os: windows-latest, r: 'devel', allowfail: false}
           - {os: ubuntu-latest,  r: 'devel', allowfail: false}
-          
+
           # current 'release' version:
           - {os: macOS-latest,   r: '4.2', allowfail: false}
           - {os: windows-latest, r: '4.2', allowfail: false}
           - {os: ubuntu-latest,  r: '4.2', allowfail: false}
-          
+
           # older versions (see also check-old.yaml for even older versions):
           - {os: ubuntu-latest, r: '4.1', allowfail: false}
           - {os: ubuntu-latest, r: '4.0', allowfail: false}
@@ -96,3 +96,10 @@ jobs:
           # during 'R CMD check', R_LIBS_USER will be overwritten, so:
           R_LIBS_USER_GH_ACTIONS: ${{ env.R_LIBS_USER }}
           R_RUN_TINYTEST: true
+
+      - name: Show tinytest output
+        if: always()
+        run: |
+          cd ../AMR.Rcheck
+          find . -name 'tinytest.Rout*' -exec cat '{}' \; ||>
+        shell: bash
