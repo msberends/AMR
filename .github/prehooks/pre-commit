@@ -33,7 +33,7 @@ echo "Running pre-commit hook..."
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 if command -v Rscript > /dev/null; then
-  if [ "$(Rscript -e 'cat(all(c('"'pkgload'"', '"'devtools'"', '"'dplyr'"', '"'styler'"') %in% rownames(installed.packages())))')" = "TRUE" ]; then
+  if [ "$(Rscript -e 'cat(all(c('"'pkgload'"', '"'devtools'"', '"'dplyr'"') %in% rownames(installed.packages())))')" = "TRUE" ]; then
     Rscript -e "source('data-raw/_pre_commit_hook.R')"
     currentpkg=`Rscript -e "cat(pkgload::pkg_name())"`
     echo "-> Adding all files in 'data-raw' to this commit"

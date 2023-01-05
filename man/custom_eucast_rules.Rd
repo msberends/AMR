@@ -60,7 +60,7 @@ eucast_rules(df, rules = "custom", custom_rules = x, info = FALSE)
 
 \subsection{Using taxonomic properties in rules}{
 
-There is one exception in variables used for the rules: all column names of the \link{microorganisms} data set can also be used, but do not have to exist in the data set. These column names are: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence" and "snomed". Thus, this next example will work as well, despite the fact that the \code{df} data set does not contain a column \code{genus}:
+There is one exception in columns used for the rules: all column names of the \link{microorganisms} data set can also be used, but do not have to exist in the data set. These column names are: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence" and "snomed". Thus, this next example will work as well, despite the fact that the \code{df} data set does not contain a column \code{genus}:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- custom_eucast_rules(TZP == "S" & genus == "Klebsiella" ~ aminopenicillins == "S",
                          TZP == "R" & genus == "Klebsiella" ~ aminopenicillins == "R")

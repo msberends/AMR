@@ -16,7 +16,7 @@ mean_amr_distance(x, ...)
 amr_distance_from_row(amr_distance, row)
 }
 \arguments{
-\item{x}{a vector of class \link[=as.rsi]{rsi}, \link[=as.rsi]{rsi} or \link[=as.rsi]{rsi}, or a \link{data.frame} containing columns of any of these classes}
+\item{x}{a vector of class \link[=as.rsi]{rsi}, \link[=as.mic]{mic} or \link[=as.disk]{disk}, or a \link{data.frame} containing columns of any of these classes}
 
 \item{...}{variables to select (supports \link[tidyselect:language]{tidyselect language} such as \code{column1:column4} and \code{where(is.mic)}, and can thus also be \link[=ab_selector]{antibiotic selectors}}
 
@@ -30,13 +30,13 @@ amr_distance_from_row(amr_distance, row)
 Calculates a normalised mean for antimicrobial resistance between multiple observations, to help to identify similar isolates without comparing antibiograms by hand.
 }
 \details{
-The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand. For common numeric data this distance is equal to \href{https://en.wikipedia.org/wiki/Standard_score}{Z scores} (the number of standard deviations from the mean).
+The mean AMR distance is effectively \href{https://en.wikipedia.org/wiki/Standard_score}{the Z-score}; a normalised numeric value to compare AMR test results which can help to identify similar isolates, without comparing antibiograms by hand.
 
-MIC values (see \code{\link[=as.mic]{as.mic()}}) are transformed with \code{\link[=log2]{log2()}} first; their distance is calculated as \code{(log2(x) - mean(log2(x))) / sd(log2(x))}.
+MIC values (see \code{\link[=as.mic]{as.mic()}}) are transformed with \code{\link[=log2]{log2()}} first; their distance is thus calculated as \code{(log2(x) - mean(log2(x))) / sd(log2(x))}.
 
 R/SI values (see \code{\link[=as.rsi]{as.rsi()}}) are transformed using \code{"S"} = 1, \code{"I"} = 2, and \code{"R"} = 3. If \code{combine_SI} is \code{TRUE} (default), the \code{"I"} will be considered to be 1.
 
-For data sets, the mean AMR distance will be calculated per variable, after which the mean of all columns will returned per row (using \code{\link[=rowMeans]{rowMeans()}}), see \emph{Examples}.
+For data sets, the mean AMR distance will be calculated per column, after which the mean per row will be returned, see \emph{Examples}.
 
 Use \code{\link[=amr_distance_from_row]{amr_distance_from_row()}} to subtract distances from the distance of one row, see \emph{Examples}.
 }
@@ -46,14 +46,24 @@ Isolates with distances less than 0.01 difference from each other should be cons
 }
 
 \examples{
-x <- random_mic(10)
-x
-mean_amr_distance(x)
+rsi <- random_rsi(10)
+rsi
+mean_amr_distance(rsi)
+
+mic <- random_mic(10)
+mic
+mean_amr_distance(mic)
+# equal to the Z-score of their log2:
+(log2(mic) - mean(log2(mic))) / sd(log2(mic))
+
+disk <- random_disk(10)
+disk
+mean_amr_distance(disk)
 
 y <- data.frame(
   id = LETTERS[1:10],
-  amox = random_mic(10, ab = "amox", mo = "Escherichia coli"),
-  cipr = random_mic(10, ab = "cipr", mo = "Escherichia coli"),
+  amox = random_rsi(10, ab = "amox", mo = "Escherichia coli"),
+  cipr = random_disk(10, ab = "cipr", mo = "Escherichia coli"),
   gent = random_mic(10, ab = "gent", mo = "Escherichia coli"),
   tobr = random_mic(10, ab = "tobr", mo = "Escherichia coli")
 )
@@ -65,7 +75,7 @@ y[order(y$amr_distance), ]
 if (require("dplyr")) {
   y \%>\%
     mutate(
-      amr_distance = mean_amr_distance(., where(is.mic)),
+      amr_distance = mean_amr_distance(y),
       check_id_C = amr_distance_from_row(amr_distance, id == "C")
     ) \%>\%
     arrange(check_id_C)
@@ -76,7 +86,7 @@ if (require("dplyr")) {
     filter(mo_genus() == "Enterococcus" & mo_species() != "") \%>\%
     select(mo, TCY, carbapenems()) \%>\%
     group_by(mo) \%>\%
-    mutate(d = mean_amr_distance(., where(is.rsi))) \%>\%
-    arrange(mo, d)
+    mutate(dist = mean_amr_distance(.)) \%>\%
+    arrange(mo, dist)
 }
 }
