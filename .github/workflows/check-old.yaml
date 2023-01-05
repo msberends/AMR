@@ -29,12 +29,8 @@
 
 on:
   push:
-     # run after a git push on any branch in this repo
+     # only run after a git push on any branch in this repo
     branches: '**'
-  schedule:
-    # run a schedule everyday at 1 AM.
-    # this is to check that all dependencies are still available (see R/zzz.R)
-    - cron:  '0 1 * * *'
 
 name: check-old
 
@@ -51,12 +47,11 @@ jobs:
       matrix:
         config:
           # Test all old versions of R >= 3.0, we support them all!
-          # For recent R versions, see check-recent.yaml (r-lib supports the latest 5 major versions)
-          - {os: ubuntu-22.04,   r: '3.4',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
-          - {os: ubuntu-22.04,   r: '3.3',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
-          - {os: ubuntu-22.04,   r: '3.2',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
-          - {os: ubuntu-22.04,   r: '3.1',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
-          - {os: ubuntu-22.04,   r: '3.0',     allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
+          # For recent R versions, see check-recent.yaml (r-lib supports the latest 5 major R versions)
+          - {os: ubuntu-22.04,   r: '3.3', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
+          - {os: ubuntu-22.04,   r: '3.2', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
+          - {os: ubuntu-22.04,   r: '3.1', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
+          - {os: ubuntu-22.04,   r: '3.0', allowfail: false, rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
           
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
