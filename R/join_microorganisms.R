@@ -185,5 +185,5 @@ join_microorganisms <- function(type, x, by, suffix, ...) {
     warning_("in `", type, "_microorganisms()`: the newly joined data set contains ", nrow(joined) - nrow(x), " rows more than the number of rows of `x`.")
   }
 
-  as_original_data_class(joined, class(x.bak))
+  as_original_data_class(joined, class(x.bak))  # will remove tibble groups
 }

@@ -1035,7 +1035,7 @@ eucast_rules <- function(x,
 
   # Return data set ---------------------------------------------------------
   if (isTRUE(verbose)) {
-    as_original_data_class(verbose_info, old_attributes$class)
+    as_original_data_class(verbose_info, old_attributes$class) # will remove tibble groups
   } else {
     # x was analysed with only unique rows, so join everything together again
     x <- x[, c(cols_ab, ".rowid"), drop = FALSE]
@@ -1043,8 +1043,9 @@ eucast_rules <- function(x,
     x.bak <- x.bak %pm>%
       pm_left_join(x, by = ".rowid")
     x.bak <- x.bak[, old_cols, drop = FALSE]
-    # reset original attributes, no need for as_original_data_class() here
+    # reset original attributes
     attributes(x.bak) <- old_attributes
+    x.bak <- as_original_data_class(x.bak, old_class = class(x.bak)) # will remove tibble groups
     x.bak
   }
 }

@@ -36,7 +36,7 @@
 #' @param language language of the returned text, defaults to system language (see [get_AMR_locale()]) and can also be set with `getOption("AMR_locale")`. Use `language = NULL` or `language = ""` to prevent translation.
 #' @param administration way of administration, either `"oral"` or `"iv"`
 #' @param open browse the URL using [utils::browseURL()]
-#' @param ... in case of [set_ab_names()] and `data` is a [data.frame]: variables to select (supports tidy selection such as `column1:column4`), otherwise other arguments passed on to [as.ab()]
+#' @param ... in case of [set_ab_names()] and `data` is a [data.frame]: columns to select (supports tidy selection such as `column1:column4`), otherwise other arguments passed on to [as.ab()]
 #' @param data a [data.frame] of which the columns need to be renamed, or a [character] vector of column names
 #' @param snake_case a [logical] to indicate whether the names should be in so-called [snake case](https://en.wikipedia.org/wiki/Snake_case): in lower case and all spaces/slashes replaced with an underscore (`_`)
 #' @param only_first a [logical] to indicate whether only the first ATC code must be returned, with giving preference to J0-codes (i.e., the antimicrobial drug group)

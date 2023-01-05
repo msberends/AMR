@@ -58,6 +58,9 @@ jobs:
           - {os: ubuntu-latest,  r: 'release', allowfail: false}
           - {os: windows-latest, r: 'devel',   allowfail: false}
           - {os: windows-latest, r: 'release', allowfail: false}
+          - {os: macOS-latest,   r: '3.6',     allowfail: false}
+          - {os: ubuntu-latest,  r: '3.6',     allowfail: false}
+          - {os: windows-latest, r: '3.6',     allowfail: false}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}

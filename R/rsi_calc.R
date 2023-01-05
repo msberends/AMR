@@ -371,6 +371,6 @@ rsi_calc_df <- function(type, # "proportion", "count" or "both"
   }
 
   rownames(out) <- NULL
-  out <- as_original_data_class(out, class(data.bak))
+  out <- as_original_data_class(out, class(data.bak)) # will remove tibble groups
   structure(out, class = c("rsi_df", class(out)))
 }

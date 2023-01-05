@@ -30,30 +30,40 @@
 #' Calculate the Mean AMR Distance
 #'
 #' Calculates a normalised mean for antimicrobial resistance between multiple observations, to help to identify similar isolates without comparing antibiograms by hand.
-#' @param x a vector of class [rsi][as.rsi()], [rsi][as.rsi()] or [rsi][as.rsi()], or a [data.frame] containing columns of any of these classes
+#' @param x a vector of class [rsi][as.rsi()], [mic][as.mic()] or [disk][as.disk()], or a [data.frame] containing columns of any of these classes
 #' @param ... variables to select (supports [tidyselect language][tidyselect::language] such as `column1:column4` and `where(is.mic)`, and can thus also be [antibiotic selectors][ab_selector()]
 #' @param combine_SI 	a [logical] to indicate whether all values of S and I must be merged into one, so the input only consists of S+I vs. R (susceptible vs. resistant), defaults to `TRUE`
-#' @details The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand. For common numeric data this distance is equal to [Z scores](https://en.wikipedia.org/wiki/Standard_score) (the number of standard deviations from the mean).
+#' @details The mean AMR distance is effectively [the Z-score](https://en.wikipedia.org/wiki/Standard_score); a normalised numeric value to compare AMR test results which can help to identify similar isolates, without comparing antibiograms by hand.
 #'
-#' MIC values (see [as.mic()]) are transformed with [log2()] first; their distance is calculated as `(log2(x) - mean(log2(x))) / sd(log2(x))`.
+#' MIC values (see [as.mic()]) are transformed with [log2()] first; their distance is thus calculated as `(log2(x) - mean(log2(x))) / sd(log2(x))`.
 #'
 #' R/SI values (see [as.rsi()]) are transformed using `"S"` = 1, `"I"` = 2, and `"R"` = 3. If `combine_SI` is `TRUE` (default), the `"I"` will be considered to be 1.
 #'
-#' For data sets, the mean AMR distance will be calculated per variable, after which the mean of all columns will returned per row (using [rowMeans()]), see *Examples*.
+#' For data sets, the mean AMR distance will be calculated per column, after which the mean per row will be returned, see *Examples*.
 #'
 #' Use [amr_distance_from_row()] to subtract distances from the distance of one row, see *Examples*.
 #' @section Interpretation:
 #' Isolates with distances less than 0.01 difference from each other should be considered similar. Differences lower than 0.025 should be considered suspicious.
 #' @export
 #' @examples
-#' x <- random_mic(10)
-#' x
-#' mean_amr_distance(x)
+#' rsi <- random_rsi(10)
+#' rsi
+#' mean_amr_distance(rsi)
+#' 
+#' mic <- random_mic(10)
+#' mic
+#' mean_amr_distance(mic)
+#' # equal to the Z-score of their log2:
+#' (log2(mic) - mean(log2(mic))) / sd(log2(mic))
+#' 
+#' disk <- random_disk(10)
+#' disk
+#' mean_amr_distance(disk)
 #'
 #' y <- data.frame(
 #'   id = LETTERS[1:10],
-#'   amox = random_mic(10, ab = "amox", mo = "Escherichia coli"),
-#'   cipr = random_mic(10, ab = "cipr", mo = "Escherichia coli"),
+#'   amox = random_rsi(10, ab = "amox", mo = "Escherichia coli"),
+#'   cipr = random_disk(10, ab = "cipr", mo = "Escherichia coli"),
 #'   gent = random_mic(10, ab = "gent", mo = "Escherichia coli"),
 #'   tobr = random_mic(10, ab = "tobr", mo = "Escherichia coli")
 #' )
@@ -65,7 +75,7 @@
 #' if (require("dplyr")) {
 #'   y %>%
 #'     mutate(
-#'       amr_distance = mean_amr_distance(., where(is.mic)),
+#'       amr_distance = mean_amr_distance(y),
 #'       check_id_C = amr_distance_from_row(amr_distance, id == "C")
 #'     ) %>%
 #'     arrange(check_id_C)
@@ -76,8 +86,8 @@
 #'     filter(mo_genus() == "Enterococcus" & mo_species() != "") %>%
 #'     select(mo, TCY, carbapenems()) %>%
 #'     group_by(mo) %>%
-#'     mutate(d = mean_amr_distance(., where(is.rsi))) %>%
-#'     arrange(mo, d)
+#'     mutate(dist = mean_amr_distance(.)) %>%
+#'     arrange(mo, dist)
 #' }
 mean_amr_distance <- function(x, ...) {
   UseMethod("mean_amr_distance")
@@ -87,6 +97,7 @@ mean_amr_distance <- function(x, ...) {
 #' @export
 mean_amr_distance.default <- function(x, ...) {
   x <- as.double(x)
+  # calculate z-score
   (x - mean(x, na.rm = TRUE)) / stats::sd(x, na.rm = TRUE)
 }
 
@@ -120,6 +131,7 @@ mean_amr_distance.data.frame <- function(x, ..., combine_SI = TRUE) {
   if (is_null_or_grouped_tbl(df)) {
     df <- get_current_data("x", -2)
   }
+  df <- as.data.frame(df, stringsAsFactors = FALSE)
   if (tryCatch(length(list(...)) > 0, error = function(e) TRUE)) {
     out <- tryCatch(suppressWarnings(c(...)), error = function(e) NULL)
     if (!is.null(out)) {
@@ -128,13 +140,18 @@ mean_amr_distance.data.frame <- function(x, ..., combine_SI = TRUE) {
       df <- pm_select(df, ...)
     }
   }
+  df_classes <- colnames(df)[vapply(FUN.VALUE = logical(1), df, function(x) is.disk(x) | is.mic(x) | is.disk(x), USE.NAMES = FALSE)]
+  df_antibiotics <- unname(get_column_abx(df, info = FALSE))
+  df <- df[, colnames(df)[colnames(df) %in% union(df_classes, df_antibiotics)], drop = FALSE]
+  
   stop_if(ncol(df) < 2,
     "data set must contain at least two variables",
     call = -2
   )
   if (message_not_thrown_before("mean_amr_distance", "groups")) {
-    message_("Calculating mean AMR distance based on columns ", vector_and(colnames(df)))
+    message_("Calculating mean AMR distance based on columns ", vector_and(colnames(df), sort = FALSE))
   }
+  
   res <- vapply(
     FUN.VALUE = double(nrow(df)),
     df,
@@ -149,7 +166,7 @@ mean_amr_distance.data.frame <- function(x, ..., combine_SI = TRUE) {
     }
   }
   res <- rowMeans(res, na.rm = TRUE)
-  res[is.infinite(res)] <- 0
+  res[is.infinite(res) | is.nan(res)] <- 0
   res
 }
 

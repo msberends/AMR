@@ -966,7 +966,7 @@ unique_call_id <- function(entire_session = FALSE, match_fn = NULL) {
   # and relevant system call (where 'match_fn' is being called in)
   calls <- sys.calls()
   in_test <- any(as.character(calls[[1]]) %like_case% "run_test_dir|run_test_file|test_all|tinytest|test_package|testthat", na.rm = TRUE)
-  if (!isTRUE(in_test)) {
+  if (!isTRUE(in_test) && !is.null(match_fn)) {
     for (i in seq_len(length(calls))) {
       call_clean <- gsub("[^a-zA-Z0-9_().-]", "", as.character(calls[[i]]), perl = TRUE)
       if (match_fn %in% call_clean || any(call_clean %like% paste0(match_fn, "\\("), na.rm = TRUE)) {
@@ -1262,6 +1262,7 @@ create_pillar_column <- function(x, ...) {
 
 as_original_data_class <- function(df, old_class = NULL) {
   if ("tbl_df" %in% old_class && pkg_is_available("tibble", also_load = FALSE)) {
+    # this will then also remove groups
     fn <- import_fn("as_tibble", "tibble")
   } else if ("tbl_ts" %in% old_class && pkg_is_available("tsibble", also_load = FALSE)) {
     fn <- import_fn("as_tsibble", "tsibble")
@@ -1270,7 +1271,7 @@ as_original_data_class <- function(df, old_class = NULL) {
   } else if ("tabyl" %in% old_class && pkg_is_available("janitor", also_load = FALSE)) {
     fn <- import_fn("as_tabyl", "janitor")
   } else {
-    fn <- base::as.data.frame
+    fn <- function(x) base::as.data.frame(df, stringsAsFactors = FALSE)
   }
   fn(df)
 }
