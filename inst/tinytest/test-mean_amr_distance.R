@@ -51,13 +51,13 @@ expect_identical(
 )
 
 expect_equal(
-  mean_amr_distance(data.frame(vctr_mic, vctr_rsi, vctr_disk)),
+  mean_amr_distance(data.frame(AMX = vctr_mic, GEN = vctr_rsi, TOB = vctr_disk)),
   c(-1.10603655, -0.74968823, -0.39333990, -0.03699158, 0.96485397, 1.32120229),
   tolerance = 0.00001
 )
 
 expect_equal(
-  mean_amr_distance(data.frame(vctr_mic, vctr_rsi, vctr_disk), 2:3),
+  mean_amr_distance(data.frame(AMX = vctr_mic, GEN = vctr_rsi, TOB = vctr_disk), 2:3),
   c(-0.9909017, -0.7236405, -0.4563792, -0.1891180, 1.0463891, 1.3136503),
   tolerance = 0.00001
 )
