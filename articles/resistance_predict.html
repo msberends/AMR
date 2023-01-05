@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9076</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9078</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -228,7 +228,7 @@ number of observations, the actual observed resistance, the estimated
 resistance and the standard error below and above the estimation:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">predict_TZP</span></span>
-<span><span class="co"># <span style="color: #949494;"># A tibble: 31 × 7</span></span></span>
+<span><span class="co"># <span style="color: #949494;"># A tibble: 32 × 7</span></span></span>
 <span><span class="co">#     year  value se_min se_max observations observed estimated</span></span>
 <span><span class="co">#  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co"># <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>002 0.2        <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           15   0.2       0.056<span style="text-decoration: underline;">2</span></span></span>
@@ -241,7 +241,7 @@ resistance and the standard error below and above the estimation:</p>
 <span><span class="co"># <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>009 0.016<span style="text-decoration: underline;">4</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           61   0.016<span style="text-decoration: underline;">4</span>    0.106 </span></span>
 <span><span class="co"># <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>010 0.056<span style="text-decoration: underline;">6</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           53   0.056<span style="text-decoration: underline;">6</span>    0.116 </span></span>
 <span><span class="co"># <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>011 0.183      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           93   0.183     0.127 </span></span>
-<span><span class="co"># <span style="color: #949494;"># … with 21 more rows</span></span></span></code></pre></div>
+<span><span class="co"># <span style="color: #949494;"># … with 22 more rows</span></span></span></code></pre></div>
 <p>The function <code>plot</code> is available in base R, and can be
 extended by other packages to depend the output based on the type of
 input. We extended its function to cope with resistance predictions:</p>

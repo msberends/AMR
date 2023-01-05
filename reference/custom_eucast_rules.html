@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9076</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9078</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -197,7 +197,7 @@
 <h3 id="using-taxonomic-properties-in-rules">Using taxonomic properties in rules<a class="anchor" aria-label="anchor" href="#using-taxonomic-properties-in-rules"></a></h3>
 
 
-<p>There is one exception in variables used for the rules: all column names of the <a href="microorganisms.html">microorganisms</a> data set can also be used, but do not have to exist in the data set. These column names are: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence" and "snomed". Thus, this next example will work as well, despite the fact that the <code>df</code> data set does not contain a column <code>genus</code>:</p>
+<p>There is one exception in columns used for the rules: all column names of the <a href="microorganisms.html">microorganisms</a> data set can also be used, but do not have to exist in the data set. These column names are: "mo", "fullname", "status", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "rank", "ref", "source", "lpsn", "lpsn_parent", "lpsn_renamed_to", "gbif", "gbif_parent", "gbif_renamed_to", "prevalence" and "snomed". Thus, this next example will work as well, despite the fact that the <code>df</code> data set does not contain a column <code>genus</code>:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/custom_eucast_rules.html">custom_eucast_rules</a></span><span class="op">(</span><span class="va">TZP</span> <span class="op">==</span> <span class="st">"S"</span> <span class="op">&amp;</span> <span class="va">genus</span> <span class="op">==</span> <span class="st">"Klebsiella"</span> <span class="op">~</span> <span class="va">aminopenicillins</span> <span class="op">==</span> <span class="st">"S"</span>,</span>
 <span>                         <span class="va">TZP</span> <span class="op">==</span> <span class="st">"R"</span> <span class="op">&amp;</span> <span class="va">genus</span> <span class="op">==</span> <span class="st">"Klebsiella"</span> <span class="op">~</span> <span class="va">aminopenicillins</span> <span class="op">==</span> <span class="st">"R"</span><span class="op">)</span></span>
 <span></span>
