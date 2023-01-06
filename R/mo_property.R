@@ -45,17 +45,19 @@
 #'
 #' Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions [mo_kingdom()] and [mo_domain()] return the exact same results.
 #'
-#' Determination of the Gram stain - [mo_gramstain()] - will be based on the taxonomic kingdom and phylum. Originally, Cavalier-Smith defined the so-called subkingdoms Negibacteria and Posibacteria (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318/)), and only considered these phyla as Posibacteria: Actinobacteria, Chloroflexi, Firmicutes, and Tenericutes. These phyla were renamed to Actinomycetota, Chloroflexota, Bacillota, and Mycoplasmatota (2021, [PMID 34694987](https://pubmed.ncbi.nlm.nih.gov/34694987/)). Bacteria in these phyla are considered Gram-positive in this `AMR` package, except for members of the class Negativicutes (within phylum Bacillota) which are Gram-negative. All other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`. Functions [mo_is_gram_negative()] and [mo_is_gram_positive()] always return `TRUE` or `FALSE` (or `NA` when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
+#' Determination of human pathogenicity ([mo_pathogenicity()]) is strongly based on Bartlett *et al.* (2022, \doi{10.1099/mic.0.001269}). This function returns a [factor] with the levels *Pathogenic*, *Potentially pathogenic*, *Non-pathogenic*, and *Unknown*.
 #'
-#' Determination of yeasts - [mo_is_yeast()] - will be based on the taxonomic kingdom and class. *Budding yeasts* are fungi of the phylum Ascomycota, class Saccharomycetes (also called Hemiascomycetes). *True yeasts* are aggregated into the underlying order Saccharomycetales. Thus, for all microorganisms that are member of the taxonomic class Saccharomycetes, the function will return `TRUE`. It returns `FALSE` otherwise (or `NA` when the input is `NA` or the MO code is `UNKNOWN`).
+#' Determination of the Gram stain ([mo_gramstain()]) will be based on the taxonomic kingdom and phylum. Originally, Cavalier-Smith defined the so-called subkingdoms Negibacteria and Posibacteria (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318/)), and only considered these phyla as Posibacteria: Actinobacteria, Chloroflexi, Firmicutes, and Tenericutes. These phyla were renamed to Actinomycetota, Chloroflexota, Bacillota, and Mycoplasmatota (2021, [PMID 34694987](https://pubmed.ncbi.nlm.nih.gov/34694987/)). Bacteria in these phyla are considered Gram-positive in this `AMR` package, except for members of the class Negativicutes (within phylum Bacillota) which are Gram-negative. All other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`. Functions [mo_is_gram_negative()] and [mo_is_gram_positive()] always return `TRUE` or `FALSE` (or `NA` when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
 #'
-#' Determination of intrinsic resistance - [mo_is_intrinsic_resistant()] - will be based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(3.3)`. The [mo_is_intrinsic_resistant()] function can be vectorised over both argument `x` (input for microorganisms) and `ab` (input for antibiotics).
+#' Determination of yeasts ([mo_is_yeast()]) will be based on the taxonomic kingdom and class. *Budding yeasts* are fungi of the phylum Ascomycota, class Saccharomycetes (also called Hemiascomycetes). *True yeasts* are aggregated into the underlying order Saccharomycetales. Thus, for all microorganisms that are member of the taxonomic class Saccharomycetes, the function will return `TRUE`. It returns `FALSE` otherwise (or `NA` when the input is `NA` or the MO code is `UNKNOWN`).
+#'
+#' Determination of intrinsic resistance ([mo_is_intrinsic_resistant()]) will be based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(3.3)`. The [mo_is_intrinsic_resistant()] function can be vectorised over both argument `x` (input for microorganisms) and `ab` (input for antibiotics).
 #'
 #' All output [will be translated][translate] where possible.
 #'
 #' The function [mo_url()] will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
 #'
-#' SNOMED codes - [mo_snomed()] - are from the version of `r documentation_date(TAXONOMY_VERSION$SNOMED$accessed_date)`. See *Source* and the [microorganisms] data set for more info.
+#' SNOMED codes ([mo_snomed()]) are from the version of `r documentation_date(TAXONOMY_VERSION$SNOMED$accessed_date)`. See *Source* and the [microorganisms] data set for more info.
 #'
 #' Old taxonomic names (so-called 'synonyms') can be retrieved with [mo_synonyms()], the current taxonomic name can be retrieved with [mo_current()]. Both functions return full names.
 #' @inheritSection mo_matching_score Matching Score for Microorganisms
@@ -64,6 +66,7 @@
 #' @name mo_property
 #' @return
 #' - An [integer] in case of [mo_year()]
+#' - An [ordered factor][factor] in case of [mo_pathogenicity()]
 #' - A [list] in case of [mo_taxonomy()], [mo_synonyms()] and [mo_info()]
 #' - A named [character] in case of [mo_url()]
 #' - A [numeric] in case of [mo_snomed()]
@@ -73,6 +76,7 @@
 #' @inheritSection AMR Reference Data Publicly Available
 #' @examples
 #' # taxonomic tree -----------------------------------------------------------
+#'
 #' mo_kingdom("Klebsiella pneumoniae")
 #' mo_phylum("Klebsiella pneumoniae")
 #' mo_class("Klebsiella pneumoniae")
@@ -82,27 +86,37 @@
 #' mo_species("Klebsiella pneumoniae")
 #' mo_subspecies("Klebsiella pneumoniae")
 #'
-#' # colloquial properties ----------------------------------------------------
+#'
+#' # full names and short names -----------------------------------------------
+#'
 #' mo_name("Klebsiella pneumoniae")
 #' mo_fullname("Klebsiella pneumoniae")
 #' mo_shortname("Klebsiella pneumoniae")
 #'
+#'
 #' # other properties ---------------------------------------------------------
+#'
+#' mo_pathogenicity("Klebsiella pneumoniae")
 #' mo_gramstain("Klebsiella pneumoniae")
 #' mo_snomed("Klebsiella pneumoniae")
 #' mo_type("Klebsiella pneumoniae")
 #' mo_rank("Klebsiella pneumoniae")
 #' mo_url("Klebsiella pneumoniae")
-#' mo_synonyms("Klebsiella pneumoniae")
+#' mo_is_yeast(c("Candida", "Trichophyton", "Klebsiella"))
+#'
 #'
 #' # scientific reference -----------------------------------------------------
+#'
 #' mo_ref("Klebsiella pneumoniae")
 #' mo_authors("Klebsiella pneumoniae")
 #' mo_year("Klebsiella pneumoniae")
 #' mo_lpsn("Klebsiella pneumoniae")
 #' mo_gbif("Klebsiella pneumoniae")
+#' mo_synonyms("Klebsiella pneumoniae")
+#'
 #'
 #' # abbreviations known in the field -----------------------------------------
+#'
 #' mo_genus("MRSA")
 #' mo_species("MRSA")
 #' mo_shortname("VISA")
@@ -111,18 +125,24 @@
 #' mo_genus("EHEC")
 #' mo_species("EHEC")
 #'
+#'
 #' # known subspecies ---------------------------------------------------------
+#'
 #' mo_fullname("K. pneu rh")
 #' mo_shortname("K. pneu rh")
 #'
+#'
 #' \donttest{
 #' # Becker classification, see ?as.mo ----------------------------------------
+#'
 #' mo_fullname("Staph. epidermidis")
 #' mo_fullname("Staph. epidermidis", Becker = TRUE)
 #' mo_shortname("Staph. epidermidis")
 #' mo_shortname("Staph. epidermidis", Becker = TRUE)
 #'
+#'
 #' # Lancefield classification, see ?as.mo ------------------------------------
+#'
 #' mo_fullname("S. pyo")
 #' mo_fullname("S. pyo", Lancefield = TRUE)
 #' mo_shortname("S. pyo")
@@ -130,6 +150,7 @@
 #'
 #'
 #' # language support  --------------------------------------------------------
+#'
 #' mo_gramstain("Klebsiella pneumoniae", language = "de") # German
 #' mo_gramstain("Klebsiella pneumoniae", language = "nl") # Dutch
 #' mo_gramstain("Klebsiella pneumoniae", language = "es") # Spanish
@@ -148,8 +169,6 @@
 #'
 #' # other --------------------------------------------------------------------
 #'
-#' mo_is_yeast(c("Candida", "Trichophyton", "Klebsiella"))
-#'
 #' # gram stains and intrinsic resistance can be used as a filter in dplyr verbs
 #' if (require("dplyr")) {
 #'   example_isolates %>%
@@ -161,7 +180,6 @@
 #'     filter(mo_is_intrinsic_resistant(ab = "vanco")) %>%
 #'     count(mo_genus(), sort = TRUE)
 #' }
-#'
 #'
 #' # get a list with the complete taxonomy (from kingdom to subspecies)
 #' mo_taxonomy("Klebsiella pneumoniae")
@@ -384,6 +402,40 @@ mo_status <- function(x, language = get_AMR_locale(), keep_synonyms = getOption(
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
   translate_into_language(mo_validate(x = x, property = "status", language = language, keep_synonyms = keep_synonyms, ...), language = language, only_unknown = TRUE)
+}
+
+#' @rdname mo_property
+#' @export
+mo_pathogenicity <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
+  if (missing(x)) {
+    # this tries to find the data and an 'mo' column
+    x <- find_mo_col(fn = "mo_pathogenicity")
+  }
+  meet_criteria(x, allow_NA = TRUE)
+  language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
+
+  x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
+  metadata <- get_mo_uncertainties()
+
+  prev <- AMR_env$MO_lookup$prevalence[match(x.mo, AMR_env$MO_lookup$mo)]
+  kngd <- AMR_env$MO_lookup$kingdom[match(x.mo, AMR_env$MO_lookup$mo)]
+  rank <- AMR_env$MO_lookup$rank[match(x.mo, AMR_env$MO_lookup$mo)]
+
+  out <- factor(ifelse(prev == 1 & kngd == "Bacteria" & rank != "genus",
+                       "Pathogenic",
+                       ifelse(prev < 2 & kngd == "Fungi",
+                              "Potentially pathogenic",
+                              ifelse(prev == 2 & kngd == "Bacteria",
+                                     "Non-pathogenic",
+                                     ifelse(kngd == "Bacteria",
+                                            "Potentially pathogenic",
+                                            "Unknown")))),
+                levels = c("Pathogenic", "Potentially pathogenic", "Non-pathogenic", "Unknown"),
+                ordered = TRUE)
+
+  load_mo_uncertainties(metadata)
+  out
 }
 
 #' @rdname mo_property

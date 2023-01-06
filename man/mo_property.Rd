@@ -16,6 +16,7 @@
 \alias{mo_domain}
 \alias{mo_type}
 \alias{mo_status}
+\alias{mo_pathogenicity}
 \alias{mo_gramstain}
 \alias{mo_is_gram_negative}
 \alias{mo_is_gram_positive}
@@ -127,6 +128,13 @@ mo_type(
 )
 
 mo_status(
+  x,
+  language = get_AMR_locale(),
+  keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
+  ...
+)
+
+mo_pathogenicity(
   x,
   language = get_AMR_locale(),
   keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
@@ -275,6 +283,7 @@ mo_property(
 \value{
 \itemize{
 \item An \link{integer} in case of \code{\link[=mo_year]{mo_year()}}
+\item An \link[=factor]{ordered factor} in case of \code{\link[=mo_pathogenicity]{mo_pathogenicity()}}
 \item A \link{list} in case of \code{\link[=mo_taxonomy]{mo_taxonomy()}}, \code{\link[=mo_synonyms]{mo_synonyms()}} and \code{\link[=mo_info]{mo_info()}}
 \item A named \link{character} in case of \code{\link[=mo_url]{mo_url()}}
 \item A \link{numeric} in case of \code{\link[=mo_snomed]{mo_snomed()}}
@@ -296,17 +305,19 @@ The short name - \code{\link[=mo_shortname]{mo_shortname()}} - almost always ret
 
 Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions \code{\link[=mo_kingdom]{mo_kingdom()}} and \code{\link[=mo_domain]{mo_domain()}} return the exact same results.
 
-Determination of the Gram stain - \code{\link[=mo_gramstain]{mo_gramstain()}} - will be based on the taxonomic kingdom and phylum. Originally, Cavalier-Smith defined the so-called subkingdoms Negibacteria and Posibacteria (2002, \href{https://pubmed.ncbi.nlm.nih.gov/11837318/}{PMID 11837318}), and only considered these phyla as Posibacteria: Actinobacteria, Chloroflexi, Firmicutes, and Tenericutes. These phyla were renamed to Actinomycetota, Chloroflexota, Bacillota, and Mycoplasmatota (2021, \href{https://pubmed.ncbi.nlm.nih.gov/34694987/}{PMID 34694987}). Bacteria in these phyla are considered Gram-positive in this \code{AMR} package, except for members of the class Negativicutes (within phylum Bacillota) which are Gram-negative. All other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value \code{NA}. Functions \code{\link[=mo_is_gram_negative]{mo_is_gram_negative()}} and \code{\link[=mo_is_gram_positive]{mo_is_gram_positive()}} always return \code{TRUE} or \code{FALSE} (or \code{NA} when the input is \code{NA} or the MO code is \code{UNKNOWN}), thus always return \code{FALSE} for species outside the taxonomic kingdom of Bacteria.
+Determination of human pathogenicity (\code{\link[=mo_pathogenicity]{mo_pathogenicity()}}) is strongly based on Bartlett \emph{et al.} (2022, \doi{10.1099/mic.0.001269}). This function returns a \link{factor} with the levels \emph{Pathogenic}, \emph{Potentially pathogenic}, \emph{Non-pathogenic}, and \emph{Unknown}.
 
-Determination of yeasts - \code{\link[=mo_is_yeast]{mo_is_yeast()}} - will be based on the taxonomic kingdom and class. \emph{Budding yeasts} are fungi of the phylum Ascomycota, class Saccharomycetes (also called Hemiascomycetes). \emph{True yeasts} are aggregated into the underlying order Saccharomycetales. Thus, for all microorganisms that are member of the taxonomic class Saccharomycetes, the function will return \code{TRUE}. It returns \code{FALSE} otherwise (or \code{NA} when the input is \code{NA} or the MO code is \code{UNKNOWN}).
+Determination of the Gram stain (\code{\link[=mo_gramstain]{mo_gramstain()}}) will be based on the taxonomic kingdom and phylum. Originally, Cavalier-Smith defined the so-called subkingdoms Negibacteria and Posibacteria (2002, \href{https://pubmed.ncbi.nlm.nih.gov/11837318/}{PMID 11837318}), and only considered these phyla as Posibacteria: Actinobacteria, Chloroflexi, Firmicutes, and Tenericutes. These phyla were renamed to Actinomycetota, Chloroflexota, Bacillota, and Mycoplasmatota (2021, \href{https://pubmed.ncbi.nlm.nih.gov/34694987/}{PMID 34694987}). Bacteria in these phyla are considered Gram-positive in this \code{AMR} package, except for members of the class Negativicutes (within phylum Bacillota) which are Gram-negative. All other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value \code{NA}. Functions \code{\link[=mo_is_gram_negative]{mo_is_gram_negative()}} and \code{\link[=mo_is_gram_positive]{mo_is_gram_positive()}} always return \code{TRUE} or \code{FALSE} (or \code{NA} when the input is \code{NA} or the MO code is \code{UNKNOWN}), thus always return \code{FALSE} for species outside the taxonomic kingdom of Bacteria.
 
-Determination of intrinsic resistance - \code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}} - will be based on the \link{intrinsic_resistant} data set, which is based on \href{https://www.eucast.org/expert_rules_and_expected_phenotypes/}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3} (2021). The \code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}} function can be vectorised over both argument \code{x} (input for microorganisms) and \code{ab} (input for antibiotics).
+Determination of yeasts (\code{\link[=mo_is_yeast]{mo_is_yeast()}}) will be based on the taxonomic kingdom and class. \emph{Budding yeasts} are fungi of the phylum Ascomycota, class Saccharomycetes (also called Hemiascomycetes). \emph{True yeasts} are aggregated into the underlying order Saccharomycetales. Thus, for all microorganisms that are member of the taxonomic class Saccharomycetes, the function will return \code{TRUE}. It returns \code{FALSE} otherwise (or \code{NA} when the input is \code{NA} or the MO code is \code{UNKNOWN}).
+
+Determination of intrinsic resistance (\code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}}) will be based on the \link{intrinsic_resistant} data set, which is based on \href{https://www.eucast.org/expert_rules_and_expected_phenotypes/}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3} (2021). The \code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}} function can be vectorised over both argument \code{x} (input for microorganisms) and \code{ab} (input for antibiotics).
 
 All output \link[=translate]{will be translated} where possible.
 
 The function \code{\link[=mo_url]{mo_url()}} will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
 
-SNOMED codes - \code{\link[=mo_snomed]{mo_snomed()}} - are from the version of 1 July, 2021. See \emph{Source} and the \link{microorganisms} data set for more info.
+SNOMED codes (\code{\link[=mo_snomed]{mo_snomed()}}) are from the version of 1 July, 2021. See \emph{Source} and the \link{microorganisms} data set for more info.
 
 Old taxonomic names (so-called 'synonyms') can be retrieved with \code{\link[=mo_synonyms]{mo_synonyms()}}, the current taxonomic name can be retrieved with \code{\link[=mo_current]{mo_current()}}. Both functions return full names.
 }
@@ -369,6 +380,7 @@ All data sets in this \code{AMR} package (about microorganisms, antibiotics, R/S
 
 \examples{
 # taxonomic tree -----------------------------------------------------------
+
 mo_kingdom("Klebsiella pneumoniae")
 mo_phylum("Klebsiella pneumoniae")
 mo_class("Klebsiella pneumoniae")
@@ -378,27 +390,37 @@ mo_genus("Klebsiella pneumoniae")
 mo_species("Klebsiella pneumoniae")
 mo_subspecies("Klebsiella pneumoniae")
 
-# colloquial properties ----------------------------------------------------
+
+# full names and short names -----------------------------------------------
+
 mo_name("Klebsiella pneumoniae")
 mo_fullname("Klebsiella pneumoniae")
 mo_shortname("Klebsiella pneumoniae")
 
+
 # other properties ---------------------------------------------------------
+
+mo_pathogenicity("Klebsiella pneumoniae")
 mo_gramstain("Klebsiella pneumoniae")
 mo_snomed("Klebsiella pneumoniae")
 mo_type("Klebsiella pneumoniae")
 mo_rank("Klebsiella pneumoniae")
 mo_url("Klebsiella pneumoniae")
-mo_synonyms("Klebsiella pneumoniae")
+mo_is_yeast(c("Candida", "Trichophyton", "Klebsiella"))
+
 
 # scientific reference -----------------------------------------------------
+
 mo_ref("Klebsiella pneumoniae")
 mo_authors("Klebsiella pneumoniae")
 mo_year("Klebsiella pneumoniae")
 mo_lpsn("Klebsiella pneumoniae")
 mo_gbif("Klebsiella pneumoniae")
+mo_synonyms("Klebsiella pneumoniae")
+
 
 # abbreviations known in the field -----------------------------------------
+
 mo_genus("MRSA")
 mo_species("MRSA")
 mo_shortname("VISA")
@@ -407,18 +429,24 @@ mo_gramstain("VISA")
 mo_genus("EHEC")
 mo_species("EHEC")
 
+
 # known subspecies ---------------------------------------------------------
+
 mo_fullname("K. pneu rh")
 mo_shortname("K. pneu rh")
 
+
 \donttest{
 # Becker classification, see ?as.mo ----------------------------------------
+
 mo_fullname("Staph. epidermidis")
 mo_fullname("Staph. epidermidis", Becker = TRUE)
 mo_shortname("Staph. epidermidis")
 mo_shortname("Staph. epidermidis", Becker = TRUE)
 
+
 # Lancefield classification, see ?as.mo ------------------------------------
+
 mo_fullname("S. pyo")
 mo_fullname("S. pyo", Lancefield = TRUE)
 mo_shortname("S. pyo")
@@ -426,6 +454,7 @@ mo_shortname("S. pyo", Lancefield = TRUE)
 
 
 # language support  --------------------------------------------------------
+
 mo_gramstain("Klebsiella pneumoniae", language = "de") # German
 mo_gramstain("Klebsiella pneumoniae", language = "nl") # Dutch
 mo_gramstain("Klebsiella pneumoniae", language = "es") # Spanish
@@ -444,8 +473,6 @@ mo_fullname("S. pyogenes", Lancefield = TRUE, language = "uk")
 
 # other --------------------------------------------------------------------
 
-mo_is_yeast(c("Candida", "Trichophyton", "Klebsiella"))
-
 # gram stains and intrinsic resistance can be used as a filter in dplyr verbs
 if (require("dplyr")) {
   example_isolates \%>\%
@@ -457,7 +484,6 @@ if (require("dplyr")) {
     filter(mo_is_intrinsic_resistant(ab = "vanco")) \%>\%
     count(mo_genus(), sort = TRUE)
 }
-
 
 # get a list with the complete taxonomy (from kingdom to subspecies)
 mo_taxonomy("Klebsiella pneumoniae")

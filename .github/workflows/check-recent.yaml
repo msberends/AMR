@@ -99,6 +99,5 @@ jobs:
       - name: Show tinytest output
         if: always()
         run: |
-          ls -lh
           find . -name 'tinytest.Rout*' -exec cat '{}' \; || true
         shell: bash
