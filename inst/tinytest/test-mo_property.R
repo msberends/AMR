@@ -102,7 +102,7 @@ expect_equal(names(mo_info("Escherichia coli")), c(
 ))
 expect_inherits(mo_info(c("Escherichia coli", "Staphylococcus aureus")), "list")
 
-expect_equal(as.character(table(mo_pathogenicity(example_isolates$mo)))
+expect_equal(as.character(table(mo_pathogenicity(example_isolates$mo))),
              c("1561", "422", "1", "16"))
 
 expect_equal(mo_ref("Escherichia coli"), "Castellani et al., 1919")
