@@ -294,14 +294,15 @@ mo_property(
 Use these functions to return a specific property of a microorganism based on the latest accepted taxonomy. All input values will be evaluated internally with \code{\link[=as.mo]{as.mo()}}, which makes it possible to use microbial abbreviations, codes and names as input. See \emph{Examples}.
 }
 \details{
-All functions will, at default, keep old taxonomic properties. Please refer to this example, knowing that \emph{Escherichia blattae} was renamed to \emph{Shimwellia blattae} in 2010:
+All functions will, at default, \strong{not} keep old taxonomic properties, as synonyms are automatically replaced with the current taxonomy. Take for example \emph{Escherichia blattae}, which was renamed to \emph{Shimwellia blattae} in 2010:
 \itemize{
-\item \code{mo_name("Escherichia blattae")} will return \code{"Shimwellia blattae"} (with a note about the renaming)
-\item \code{mo_ref("Escherichia blattae", keep_synonyms = TRUE)} will return \code{"Burgess et al., 1973"} (without a note)
-\item \code{mo_ref("Shimwellia blattae", keep_synonyms = FALSE)} will return \code{"Priest et al., 2010"} (without a note)
+\item \code{mo_genus("Escherichia blattae")} will return \code{"Shemwellia"} (with a note about the renaming)
+\item \code{mo_genus("Escherichia blattae", keep_synonyms = TRUE)} will return \code{"Escherichia"} (with a warning that the name is outdated)
+\item \code{mo_ref("Escherichia blattae")} will return \code{"Priest et al., 2010"} (with a note)
+\item \code{mo_ref("Escherichia blattae", keep_synonyms = TRUE)} will return \code{"Burgess et al., 1973"} (with a warning)
 }
 
-The short name - \code{\link[=mo_shortname]{mo_shortname()}} - almost always returns the first character of the genus and the full species, like \code{"E. coli"}. Exceptions are abbreviations of staphylococci (such as \emph{"CoNS"}, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as \emph{"GBS"}, Group B Streptococci). Please bear in mind that e.g. \emph{E. coli} could mean \emph{Escherichia coli} (kingdom of Bacteria) as well as \emph{Entamoeba coli} (kingdom of Protozoa). Returning to the full name will be done using \code{\link[=as.mo]{as.mo()}} internally, giving priority to bacteria and human pathogens, i.e. \code{"E. coli"} will be considered \emph{Escherichia coli}. In other words, \code{mo_fullname(mo_shortname("Entamoeba coli"))} returns \code{"Escherichia coli"}.
+The short name (\code{\link[=mo_shortname]{mo_shortname()}}) returns the first character of the genus and the full species, such as \code{"E. coli"}, for species and subspecies. Exceptions are abbreviations of staphylococci (such as \emph{"CoNS"}, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as \emph{"GBS"}, Group B Streptococci). Please bear in mind that e.g. \emph{E. coli} could mean \emph{Escherichia coli} (kingdom of Bacteria) as well as \emph{Entamoeba coli} (kingdom of Protozoa). Returning to the full name will be done using \code{\link[=as.mo]{as.mo()}} internally, giving priority to bacteria and human pathogens, i.e. \code{"E. coli"} will be considered \emph{Escherichia coli}. In other words, \code{mo_fullname(mo_shortname("Entamoeba coli"))} returns \code{"Escherichia coli"}.
 
 Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions \code{\link[=mo_kingdom]{mo_kingdom()}} and \code{\link[=mo_domain]{mo_domain()}} return the exact same results.
 
@@ -323,38 +324,7 @@ Old taxonomic names (so-called 'synonyms') can be retrieved with \code{\link[=mo
 }
 \section{Matching Score for Microorganisms}{
 
-With ambiguous user input in \code{\link[=as.mo]{as.mo()}} and all the \code{\link[=mo_property]{mo_*}} functions, the returned results are chosen based on their matching score using \code{\link[=mo_matching_score]{mo_matching_score()}}. This matching score \eqn{m}, is calculated as:
-
-\ifelse{latex}{\deqn{m_{(x, n)} = \frac{l_{n} - 0.5 \cdot \min \begin{cases}l_{n} \\ \textrm{lev}(x, n)\end{cases}}{l_{n} \cdot p_{n} \cdot k_{n}}}}{\ifelse{html}{\figure{mo_matching_score.png}{options: width="300" alt="mo matching score"}}{m(x, n) = ( l_n * min(l_n, lev(x, n) ) ) / ( l_n * p_n * k_n )}}
-
-where:
-\itemize{
-\item \ifelse{html}{\out{<i>x</i> is the user input;}}{\eqn{x} is the user input;}
-\item \ifelse{html}{\out{<i>n</i> is a taxonomic name (genus, species, and subspecies);}}{\eqn{n} is a taxonomic name (genus, species, and subspecies);}
-\item \ifelse{html}{\out{<i>l<sub>n</sub></i> is the length of <i>n</i>;}}{l_n is the length of \eqn{n};}
-\item \ifelse{html}{\out{<i>lev</i> is the <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein distance function</a> (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change <i>x</i> into <i>n</i>;}}{lev is the Levenshtein distance function (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change \eqn{x} into \eqn{n};}
-\item \ifelse{html}{\out{<i>p<sub>n</sub></i> is the human pathogenic prevalence group of <i>n</i>, as described below;}}{p_n is the human pathogenic prevalence group of \eqn{n}, as described below;}
-\item \ifelse{html}{\out{<i>k<sub>n</sub></i> is the taxonomic kingdom of <i>n</i>, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.}}{l_n is the taxonomic kingdom of \eqn{n}, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.}
-}
-
-The grouping into human pathogenic prevalence (\eqn{p}) is based on recent work from Bartlett \emph{et al.} (2022, \doi{10.1099/mic.0.001269}) who extensively studied medical-scientific literature to categorise all bacterial species into these groups:
-\itemize{
-\item \strong{Established}, if a taxonomic species has infected at least three persons in three or more references. These records have \code{prevalence = 1.0} in the \link{microorganisms} data set;
-\item \strong{Putative}, if a taxonomic species has fewer than three known cases. These records have \code{prevalence = 1.25} in the \link{microorganisms} data set.
-}
-
-Furthermore,
-\itemize{
-\item Any genus present in the \strong{established} list also has \code{prevalence = 1.0} in the \link{microorganisms} data set;
-\item Any other genus present in the \strong{putative} list has \code{prevalence = 1.25} in the \link{microorganisms} data set;
-\item Any other species or subspecies of which the genus is present in the two aforementioned groups, has \code{prevalence = 1.5} in the \link{microorganisms} data set;
-\item Any \emph{non-bacterial} genus, species or subspecies of which the genus is present in the following list, has \code{prevalence = 1.5} in the \link{microorganisms} data set: \emph{Absidia}, \emph{Acanthamoeba}, \emph{Acremonium}, \emph{Aedes}, \emph{Alternaria}, \emph{Amoeba}, \emph{Ancylostoma}, \emph{Angiostrongylus}, \emph{Anisakis}, \emph{Anopheles}, \emph{Apophysomyces}, \emph{Aspergillus}, \emph{Aureobasidium}, \emph{Basidiobolus}, \emph{Beauveria}, \emph{Blastocystis}, \emph{Blastomyces}, \emph{Candida}, \emph{Capillaria}, \emph{Chaetomium}, \emph{Chrysonilia}, \emph{Cladophialophora}, \emph{Cladosporium}, \emph{Conidiobolus}, \emph{Contracaecum}, \emph{Cordylobia}, \emph{Cryptococcus}, \emph{Curvularia}, \emph{Demodex}, \emph{Dermatobia}, \emph{Dientamoeba}, \emph{Diphyllobothrium}, \emph{Dirofilaria}, \emph{Echinostoma}, \emph{Entamoeba}, \emph{Enterobius}, \emph{Exophiala}, \emph{Exserohilum}, \emph{Fasciola}, \emph{Fonsecaea}, \emph{Fusarium}, \emph{Giardia}, \emph{Haloarcula}, \emph{Halobacterium}, \emph{Halococcus}, \emph{Hendersonula}, \emph{Heterophyes}, \emph{Histomonas}, \emph{Histoplasma}, \emph{Hymenolepis}, \emph{Hypomyces}, \emph{Hysterothylacium}, \emph{Leishmania}, \emph{Malassezia}, \emph{Malbranchea}, \emph{Metagonimus}, \emph{Meyerozyma}, \emph{Microsporidium}, \emph{Microsporum}, \emph{Mortierella}, \emph{Mucor}, \emph{Mycocentrospora}, \emph{Necator}, \emph{Nectria}, \emph{Ochroconis}, \emph{Oesophagostomum}, \emph{Oidiodendron}, \emph{Opisthorchis}, \emph{Pediculus}, \emph{Phlebotomus}, \emph{Phoma}, \emph{Pichia}, \emph{Piedraia}, \emph{Pithomyces}, \emph{Pityrosporum}, \emph{Pneumocystis}, \emph{Pseudallescheria}, \emph{Pseudoterranova}, \emph{Pulex}, \emph{Rhizomucor}, \emph{Rhizopus}, \emph{Rhodotorula}, \emph{Saccharomyces}, \emph{Sarcoptes}, \emph{Scolecobasidium}, \emph{Scopulariopsis}, \emph{Scytalidium}, \emph{Spirometra}, \emph{Sporobolomyces}, \emph{Stachybotrys}, \emph{Strongyloides}, \emph{Syngamus}, \emph{Taenia}, \emph{Toxocara}, \emph{Trichinella}, \emph{Trichobilharzia}, \emph{Trichoderma}, \emph{Trichomonas}, \emph{Trichophyton}, \emph{Trichosporon}, \emph{Trichostrongylus}, \emph{Trichuris}, \emph{Tritirachium}, \emph{Trombicula}, \emph{Trypanosoma}, \emph{Tunga} or \emph{Wuchereria};
-\item All other records have \code{prevalence = 2.0} in the \link{microorganisms} data set.
-}
-
-When calculating the matching score, all characters in \eqn{x} and \eqn{n} are ignored that are other than A-Z, a-z, 0-9, spaces and parentheses.
-
-All matches are sorted descending on their matching score and for all user input values, the top match will be returned. This will lead to the effect that e.g., \code{"E. coli"} will return the microbial ID of \emph{Escherichia coli} (\eqn{m = 0.688}, a highly prevalent microorganism found in humans) and not \emph{Entamoeba coli} (\eqn{m = 0.159}, a less prevalent microorganism in humans), although the latter would alphabetically come first.
+This function uses \code{\link[=as.mo]{as.mo()}} internally, which uses an advanced algorithm to translate arbitrary user input to valid taxonomy using a so-called matching score. You can read about this public algorithm on the \link[=mo_matching_score]{MO matching score page}.
 }
 
 \section{Source}{

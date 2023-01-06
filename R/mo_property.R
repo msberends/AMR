@@ -36,12 +36,13 @@
 #' @param ... other arguments passed on to [as.mo()], such as 'minimum_matching_score', 'ignore_pattern', and 'remove_from_input'
 #' @param ab any (vector of) text that can be coerced to a valid antibiotic drug code with [as.ab()]
 #' @param open browse the URL using [`browseURL()`][utils::browseURL()]
-#' @details All functions will, at default, keep old taxonomic properties. Please refer to this example, knowing that *Escherichia blattae* was renamed to *Shimwellia blattae* in 2010:
-#' - `mo_name("Escherichia blattae")` will return `"Shimwellia blattae"` (with a note about the renaming)
-#' - `mo_ref("Escherichia blattae", keep_synonyms = TRUE)` will return `"Burgess et al., 1973"` (without a note)
-#' - `mo_ref("Shimwellia blattae", keep_synonyms = FALSE)` will return `"Priest et al., 2010"` (without a note)
+#' @details All functions will, at default, **not** keep old taxonomic properties, as synonyms are automatically replaced with the current taxonomy. Take for example *Escherichia blattae*, which was renamed to *Shimwellia blattae* in 2010:
+#' - `mo_genus("Escherichia blattae")` will return `"Shemwellia"` (with a note about the renaming)
+#' - `mo_genus("Escherichia blattae", keep_synonyms = TRUE)` will return `"Escherichia"` (with a warning that the name is outdated)
+#' - `mo_ref("Escherichia blattae")` will return `"Priest et al., 2010"` (with a note)
+#' - `mo_ref("Escherichia blattae", keep_synonyms = TRUE)` will return `"Burgess et al., 1973"` (with a warning)
 #'
-#' The short name - [mo_shortname()] - almost always returns the first character of the genus and the full species, like `"E. coli"`. Exceptions are abbreviations of staphylococci (such as *"CoNS"*, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as *"GBS"*, Group B Streptococci). Please bear in mind that e.g. *E. coli* could mean *Escherichia coli* (kingdom of Bacteria) as well as *Entamoeba coli* (kingdom of Protozoa). Returning to the full name will be done using [as.mo()] internally, giving priority to bacteria and human pathogens, i.e. `"E. coli"` will be considered *Escherichia coli*. In other words, `mo_fullname(mo_shortname("Entamoeba coli"))` returns `"Escherichia coli"`.
+#' The short name ([mo_shortname()]) returns the first character of the genus and the full species, such as `"E. coli"`, for species and subspecies. Exceptions are abbreviations of staphylococci (such as *"CoNS"*, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as *"GBS"*, Group B Streptococci). Please bear in mind that e.g. *E. coli* could mean *Escherichia coli* (kingdom of Bacteria) as well as *Entamoeba coli* (kingdom of Protozoa). Returning to the full name will be done using [as.mo()] internally, giving priority to bacteria and human pathogens, i.e. `"E. coli"` will be considered *Escherichia coli*. In other words, `mo_fullname(mo_shortname("Entamoeba coli"))` returns `"Escherichia coli"`.
 #'
 #' Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions [mo_kingdom()] and [mo_domain()] return the exact same results.
 #'
@@ -60,7 +61,8 @@
 #' SNOMED codes ([mo_snomed()]) are from the version of `r documentation_date(TAXONOMY_VERSION$SNOMED$accessed_date)`. See *Source* and the [microorganisms] data set for more info.
 #'
 #' Old taxonomic names (so-called 'synonyms') can be retrieved with [mo_synonyms()], the current taxonomic name can be retrieved with [mo_current()]. Both functions return full names.
-#' @inheritSection mo_matching_score Matching Score for Microorganisms
+#' @section Matching Score for Microorganisms:
+#' This function uses [as.mo()] internally, which uses an advanced algorithm to translate arbitrary user input to valid taxonomy using a so-called matching score. You can read about this public algorithm on the [MO matching score page][mo_matching_score()].
 #' @inheritSection as.mo Source
 #' @rdname mo_property
 #' @name mo_property

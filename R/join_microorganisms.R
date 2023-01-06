@@ -165,10 +165,11 @@ join_microorganisms <- function(type, x, by, suffix, ...) {
     # otherwise use poorman, see R/aa_helper_pm_functions.R
     join_fn <- get(paste0("pm_", type), envir = asNamespace("AMR"))
   }
+  MO_df <- AMR_env$MO_lookup[, colnames(AMR::microorganisms), drop = FALSE]
   if (type %like% "full|left|right|inner") {
-    joined <- join_fn(x = x, y = AMR::microorganisms, by = by, suffix = suffix, ...)
+    joined <- join_fn(x = x, y = MO_df, by = by, suffix = suffix, ...)
   } else {
-    joined <- join_fn(x = x, y = AMR::microorganisms, by = by, ...)
+    joined <- join_fn(x = x, y = MO_df, by = by, ...)
   }
 
   if ("join.mo" %in% colnames(joined)) {
@@ -185,5 +186,5 @@ join_microorganisms <- function(type, x, by, suffix, ...) {
     warning_("in `", type, "_microorganisms()`: the newly joined data set contains ", nrow(joined) - nrow(x), " rows more than the number of rows of `x`.")
   }
 
-  as_original_data_class(joined, class(x.bak))  # will remove tibble groups
+  as_original_data_class(joined, class(x.bak)) # will remove tibble groups
 }

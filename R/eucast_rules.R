@@ -1116,7 +1116,7 @@ edit_rsi <- function(x,
       error = function(e) {
         txt_error()
         stop(paste0(
-          "In row(s) ", paste(rows[1:min(length(rows), 10)], collapse = ","),
+          "In row(s) ", paste(rows[seq_len(min(length(rows), 10))], collapse = ","),
           ifelse(length(rows) > 10, "...", ""),
           " while writing value '", to,
           "' to column(s) `", paste(cols, collapse = "`, `"),

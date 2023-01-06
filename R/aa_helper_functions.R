@@ -229,7 +229,7 @@ search_type_in_df <- function(x, type, info = TRUE) {
       # take first 'mo' column
       found <- colnames(x)[vapply(FUN.VALUE = logical(1), x, is.mo)]
     } else if ("mo" %in% colnames_formatted &&
-      suppressWarnings(all(x$mo %in% c(NA, AMR::microorganisms$mo)))) {
+      suppressWarnings(all(x$mo %in% c(NA, AMR_env$MO_lookup$mo)))) {
       found <- "mo"
     } else if (any(colnames_formatted %like_case% "^(mo|microorganism|organism|bacteria|ba[ck]terie)s?$")) {
       found <- sort(colnames(x)[colnames_formatted %like_case% "^(mo|microorganism|organism|bacteria|ba[ck]terie)s?$"])

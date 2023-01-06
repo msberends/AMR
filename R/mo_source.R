@@ -288,9 +288,9 @@ check_validity_mo_source <- function(x, refer_to_name = "`reference_df`", stop_o
       return(FALSE)
     }
   }
-  if (!all(x$mo %in% c("", AMR::microorganisms$mo, AMR::microorganisms$fullname), na.rm = TRUE)) {
+  if (!all(x$mo %in% c("", AMR_env$MO_lookup$mo, AMR_env$MO_lookup$fullname), na.rm = TRUE)) {
     if (stop_on_error == TRUE) {
-      invalid <- x[which(!x$mo %in% c("", AMR::microorganisms$mo, AMR::microorganisms$fullname)), , drop = FALSE]
+      invalid <- x[which(!x$mo %in% c("", AMR_env$MO_lookup$mo, AMR_env$MO_lookup$fullname)), , drop = FALSE]
       if (nrow(invalid) > 1) {
         plural <- "s"
       } else {

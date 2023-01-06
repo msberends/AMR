@@ -27,7 +27,7 @@ With ambiguous user input in \code{\link[=as.mo]{as.mo()}} and all the \code{\li
 
 where:
 \itemize{
-\item \ifelse{html}{\out{<i>x</i> is the user input;}}{\eqn{x} is the user input;}
+\item \eqn{x} is the user input;
 \item \ifelse{html}{\out{<i>n</i> is a taxonomic name (genus, species, and subspecies);}}{\eqn{n} is a taxonomic name (genus, species, and subspecies);}
 \item \ifelse{html}{\out{<i>l<sub>n</sub></i> is the length of <i>n</i>;}}{l_n is the length of \eqn{n};}
 \item \ifelse{html}{\out{<i>lev</i> is the <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein distance function</a> (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change <i>x</i> into <i>n</i>;}}{lev is the Levenshtein distance function (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change \eqn{x} into \eqn{n};}
@@ -70,5 +70,5 @@ mo_matching_score(
 )
 }
 \author{
-Dr. Matthijs Berends
+Dr. Matthijs Berends, 2018
 }

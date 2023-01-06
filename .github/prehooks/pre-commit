@@ -35,8 +35,8 @@ echo "Running pre-commit hook..."
 if command -v Rscript > /dev/null; then
   if [ "$(Rscript -e 'cat(all(c('"'pkgload'"', '"'devtools'"', '"'dplyr'"') %in% rownames(installed.packages())))')" = "TRUE" ]; then
     Rscript -e "source('data-raw/_pre_commit_hook.R')"
-    currentpkg=`Rscript -e "cat(pkgload::pkg_name())"`
-    echo "-> Adding all files in 'data-raw' to this commit"
+    currentpkg=$(Rscript -e "cat(pkgload::pkg_name())")
+    echo "-> Adding files in 'data-raw' and 'man' to this commit"
     git add data-raw/*
     git add man/*
     git add R/sysdata.rda
@@ -57,18 +57,18 @@ echo "Updating semantic versioning and date..."
 
 # get tags from remote, and remove tags not on remote:
 git fetch origin --prune --prune-tags --quiet
-currenttagfull=`git describe --tags --abbrev=0`
-currenttag=`git describe --tags --abbrev=0 | sed 's/v//'`
+currenttagfull=$(git describe --tags --abbrev=0)
+currenttag=$(git describe --tags --abbrev=0 | sed 's/v//')
 # assume main branch to be 'main' or 'master', pick the right name:
-defaultbranch=`git branch | cut -c 3- | grep -E '^master$|^main$'`
+defaultbranch=$(git branch | cut -c 3- | grep -E '^master$|^main$')
 if [ "$currenttag" = "" ]; then
   # there is no tag, so set tag to 0.0.1 and commit index to current count
   currenttag="0.0.1"
-  currentcommit=`git rev-list --count ${defaultbranch}`
+  currentcommit=$(git rev-list --count ${defaultbranch})
   echo "- no git tags found, create one in format 'v(x).(y).(z)' - curently ${currentcommit} previous commits in ${defaultbranch}"
 else
   # there is a tag, so base version number on that
-  currentcommit=`git rev-list --count ${currenttagfull}..${defaultbranch}`
+  currentcommit=$(git rev-list --count ${currenttagfull}..${defaultbranch})
   if (( "$currentcommit" == 0 )); then
     # tag is new, so this must become the version number
     currentversion="$currenttag"
