@@ -66,8 +66,7 @@ jobs:
           - {os: ubuntu-latest, r: '4.1', allowfail: false}
           - {os: ubuntu-latest, r: '4.0', allowfail: false}
           - {os: ubuntu-latest, r: '3.6', allowfail: false}
-          - {os: ubuntu-latest, r: '3.5', allowfail: false}
-          - {os: ubuntu-latest, r: '3.4', allowfail: false} # when a new R releases, this one has to move to check-old.yaml
+          - {os: ubuntu-latest, r: '3.5', allowfail: false} # when a new R releases, this one has to move to check-old.yaml
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
