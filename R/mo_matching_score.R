@@ -46,7 +46,6 @@
 #' * \eqn{x} is the user input;
 #' * \eqn{n} is a taxonomic name (genus, species, and subspecies);
 #' * \eqn{l_n} is the length of \eqn{n};
-#' * \ifelse{html}{\out{<i>lev</i> is the 
 #' * \eqn{lev} is the [Levenshtein distance function](https://en.wikipedia.org/wiki/Levenshtein_distance) (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change \eqn{x} into \eqn{n};
 #' * \eqn{p_{n}} is the human pathogenic prevalence group of \eqn{n}, as described below;
 #' * \eqn{k_n} is the taxonomic kingdom of \eqn{n}, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.
