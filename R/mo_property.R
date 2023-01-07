@@ -36,31 +36,31 @@
 #' @param ... other arguments passed on to [as.mo()], such as 'minimum_matching_score', 'ignore_pattern', and 'remove_from_input'
 #' @param ab any (vector of) text that can be coerced to a valid antibiotic drug code with [as.ab()]
 #' @param open browse the URL using [`browseURL()`][utils::browseURL()]
-#' @details All functions will, at default, **not** keep old taxonomic properties, as synonyms are automatically replaced with the current taxonomy. Take for example *Escherichia blattae*, which was renamed to *Shimwellia blattae* in 2010:
-#' - `mo_genus("Escherichia blattae")` will return `"Shemwellia"` (with a note about the renaming)
-#' - `mo_genus("Escherichia blattae", keep_synonyms = TRUE)` will return `"Escherichia"` (with a warning that the name is outdated)
-#' - `mo_ref("Escherichia blattae")` will return `"Priest et al., 2010"` (with a note)
-#' - `mo_ref("Escherichia blattae", keep_synonyms = TRUE)` will return `"Burgess et al., 1973"` (with a warning)
+#' @details All functions will, at default, **not** keep old taxonomic properties, as synonyms are automatically replaced with the current taxonomy. Take for example *Enterobacter aerogenes*, which was initially named in 1960 but renamed to *Klebsiella aerogenes* in 2017:
+#' - `mo_genus("Enterobacter aerogenes")` will return `"Klebsiella"` (with a note about the renaming)
+#' - `mo_genus("Enterobacter aerogenes", keep_synonyms = TRUE)` will return `"Enterobacter"` (with a once-per-session warning that the name is outdated)
+#' - `mo_ref("Enterobacter aerogenes")` will return `"Tindall et al., 2017"` (with a note)
+#' - `mo_ref("Enterobacter aerogenes", keep_synonyms = TRUE)` will return `"Hormaeche et al., 1960"` (with a warning)
 #'
-#' The short name ([mo_shortname()]) returns the first character of the genus and the full species, such as `"E. coli"`, for species and subspecies. Exceptions are abbreviations of staphylococci (such as *"CoNS"*, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as *"GBS"*, Group B Streptococci). Please bear in mind that e.g. *E. coli* could mean *Escherichia coli* (kingdom of Bacteria) as well as *Entamoeba coli* (kingdom of Protozoa). Returning to the full name will be done using [as.mo()] internally, giving priority to bacteria and human pathogens, i.e. `"E. coli"` will be considered *Escherichia coli*. In other words, `mo_fullname(mo_shortname("Entamoeba coli"))` returns `"Escherichia coli"`.
+#' The short name ([mo_shortname()]) returns the first character of the genus and the full species, such as `"E. coli"`, for species and subspecies. Exceptions are abbreviations of staphylococci (such as *"CoNS"*, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as *"GBS"*, Group B Streptococci). Please bear in mind that e.g. *E. coli* could mean *Escherichia coli* (kingdom of Bacteria) as well as *Entamoeba coli* (kingdom of Protozoa). Returning to the full name will be done using [as.mo()] internally, giving priority to bacteria and human pathogens, i.e. `"E. coli"` will be considered *Escherichia coli*. As a result, `mo_fullname(mo_shortname("Entamoeba coli"))` returns `"Escherichia coli"`.
 #'
 #' Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions [mo_kingdom()] and [mo_domain()] return the exact same results.
 #'
 #' Determination of human pathogenicity ([mo_pathogenicity()]) is strongly based on Bartlett *et al.* (2022, \doi{10.1099/mic.0.001269}). This function returns a [factor] with the levels *Pathogenic*, *Potentially pathogenic*, *Non-pathogenic*, and *Unknown*.
 #'
-#' Determination of the Gram stain ([mo_gramstain()]) will be based on the taxonomic kingdom and phylum. Originally, Cavalier-Smith defined the so-called subkingdoms Negibacteria and Posibacteria (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318/)), and only considered these phyla as Posibacteria: Actinobacteria, Chloroflexi, Firmicutes, and Tenericutes. These phyla were renamed to Actinomycetota, Chloroflexota, Bacillota, and Mycoplasmatota (2021, [PMID 34694987](https://pubmed.ncbi.nlm.nih.gov/34694987/)). Bacteria in these phyla are considered Gram-positive in this `AMR` package, except for members of the class Negativicutes (within phylum Bacillota) which are Gram-negative. All other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`. Functions [mo_is_gram_negative()] and [mo_is_gram_positive()] always return `TRUE` or `FALSE` (or `NA` when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
+#' Determination of the Gram stain ([mo_gramstain()]) will be based on the taxonomic kingdom and phylum. Originally, Cavalier-Smith defined the so-called subkingdoms Negibacteria and Posibacteria (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318/)), and only considered these phyla as Posibacteria: Actinobacteria, Chloroflexi, Firmicutes, and Tenericutes. These phyla were later renamed to Actinomycetota, Chloroflexota, Bacillota, and Mycoplasmatota (2021, [PMID 34694987](https://pubmed.ncbi.nlm.nih.gov/34694987/)). Bacteria in these phyla are considered Gram-positive in this `AMR` package, except for members of the class Negativicutes (within phylum Bacillota) which are Gram-negative. All other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`. Functions [mo_is_gram_negative()] and [mo_is_gram_positive()] always return `TRUE` or `FALSE` (or `NA` when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
 #'
 #' Determination of yeasts ([mo_is_yeast()]) will be based on the taxonomic kingdom and class. *Budding yeasts* are fungi of the phylum Ascomycota, class Saccharomycetes (also called Hemiascomycetes). *True yeasts* are aggregated into the underlying order Saccharomycetales. Thus, for all microorganisms that are member of the taxonomic class Saccharomycetes, the function will return `TRUE`. It returns `FALSE` otherwise (or `NA` when the input is `NA` or the MO code is `UNKNOWN`).
 #'
 #' Determination of intrinsic resistance ([mo_is_intrinsic_resistant()]) will be based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(3.3)`. The [mo_is_intrinsic_resistant()] function can be vectorised over both argument `x` (input for microorganisms) and `ab` (input for antibiotics).
-#'
-#' All output [will be translated][translate] where possible.
 #'
 #' The function [mo_url()] will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
 #'
 #' SNOMED codes ([mo_snomed()]) are from the version of `r documentation_date(TAXONOMY_VERSION$SNOMED$accessed_date)`. See *Source* and the [microorganisms] data set for more info.
 #'
 #' Old taxonomic names (so-called 'synonyms') can be retrieved with [mo_synonyms()], the current taxonomic name can be retrieved with [mo_current()]. Both functions return full names.
+#'
+#' All output [will be translated][translate] where possible.
 #' @section Matching Score for Microorganisms:
 #' This function uses [as.mo()] internally, which uses an advanced algorithm to translate arbitrary user input to valid taxonomy using a so-called matching score. You can read about this public algorithm on the [MO matching score page][mo_matching_score()].
 #' @inheritSection as.mo Source
@@ -145,10 +145,10 @@
 #'
 #' # Lancefield classification, see ?as.mo ------------------------------------
 #'
-#' mo_fullname("S. pyo")
-#' mo_fullname("S. pyo", Lancefield = TRUE)
-#' mo_shortname("S. pyo")
-#' mo_shortname("S. pyo", Lancefield = TRUE)
+#' mo_fullname("Strep Group B")
+#' mo_fullname("Strep Group B", Lancefield = TRUE)
+#' mo_shortname("Strep Group B")
+#' mo_shortname("Strep Group B", Lancefield = TRUE)
 #'
 #'
 #' # language support  --------------------------------------------------------
@@ -158,8 +158,8 @@
 #' mo_gramstain("Klebsiella pneumoniae", language = "es") # Spanish
 #' mo_gramstain("Klebsiella pneumoniae", language = "el") # Greek
 #' mo_gramstain("Klebsiella pneumoniae", language = "uk") # Ukrainian
-#'
-#' # mo_type is equal to mo_kingdom, but mo_kingdom will remain official
+#' 
+#' # mo_type is equal to mo_kingdom, but mo_kingdom will remain untranslated
 #' mo_kingdom("Klebsiella pneumoniae")
 #' mo_type("Klebsiella pneumoniae")
 #' mo_kingdom("Klebsiella pneumoniae", language = "zh") # Chinese, no effect

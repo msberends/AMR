@@ -294,33 +294,33 @@ mo_property(
 Use these functions to return a specific property of a microorganism based on the latest accepted taxonomy. All input values will be evaluated internally with \code{\link[=as.mo]{as.mo()}}, which makes it possible to use microbial abbreviations, codes and names as input. See \emph{Examples}.
 }
 \details{
-All functions will, at default, \strong{not} keep old taxonomic properties, as synonyms are automatically replaced with the current taxonomy. Take for example \emph{Escherichia blattae}, which was renamed to \emph{Shimwellia blattae} in 2010:
+All functions will, at default, \strong{not} keep old taxonomic properties, as synonyms are automatically replaced with the current taxonomy. Take for example \emph{Enterobacter aerogenes}, which was initially named in 1960 but renamed to \emph{Klebsiella aerogenes} in 2017:
 \itemize{
-\item \code{mo_genus("Escherichia blattae")} will return \code{"Shemwellia"} (with a note about the renaming)
-\item \code{mo_genus("Escherichia blattae", keep_synonyms = TRUE)} will return \code{"Escherichia"} (with a warning that the name is outdated)
-\item \code{mo_ref("Escherichia blattae")} will return \code{"Priest et al., 2010"} (with a note)
-\item \code{mo_ref("Escherichia blattae", keep_synonyms = TRUE)} will return \code{"Burgess et al., 1973"} (with a warning)
+\item \code{mo_genus("Enterobacter aerogenes")} will return \code{"Klebsiella"} (with a note about the renaming)
+\item \code{mo_genus("Enterobacter aerogenes", keep_synonyms = TRUE)} will return \code{"Enterobacter"} (with a once-per-session warning that the name is outdated)
+\item \code{mo_ref("Enterobacter aerogenes")} will return \code{"Tindall et al., 2017"} (with a note)
+\item \code{mo_ref("Enterobacter aerogenes", keep_synonyms = TRUE)} will return \code{"Hormaeche et al., 1960"} (with a warning)
 }
 
-The short name (\code{\link[=mo_shortname]{mo_shortname()}}) returns the first character of the genus and the full species, such as \code{"E. coli"}, for species and subspecies. Exceptions are abbreviations of staphylococci (such as \emph{"CoNS"}, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as \emph{"GBS"}, Group B Streptococci). Please bear in mind that e.g. \emph{E. coli} could mean \emph{Escherichia coli} (kingdom of Bacteria) as well as \emph{Entamoeba coli} (kingdom of Protozoa). Returning to the full name will be done using \code{\link[=as.mo]{as.mo()}} internally, giving priority to bacteria and human pathogens, i.e. \code{"E. coli"} will be considered \emph{Escherichia coli}. In other words, \code{mo_fullname(mo_shortname("Entamoeba coli"))} returns \code{"Escherichia coli"}.
+The short name (\code{\link[=mo_shortname]{mo_shortname()}}) returns the first character of the genus and the full species, such as \code{"E. coli"}, for species and subspecies. Exceptions are abbreviations of staphylococci (such as \emph{"CoNS"}, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as \emph{"GBS"}, Group B Streptococci). Please bear in mind that e.g. \emph{E. coli} could mean \emph{Escherichia coli} (kingdom of Bacteria) as well as \emph{Entamoeba coli} (kingdom of Protozoa). Returning to the full name will be done using \code{\link[=as.mo]{as.mo()}} internally, giving priority to bacteria and human pathogens, i.e. \code{"E. coli"} will be considered \emph{Escherichia coli}. As a result, \code{mo_fullname(mo_shortname("Entamoeba coli"))} returns \code{"Escherichia coli"}.
 
 Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions \code{\link[=mo_kingdom]{mo_kingdom()}} and \code{\link[=mo_domain]{mo_domain()}} return the exact same results.
 
 Determination of human pathogenicity (\code{\link[=mo_pathogenicity]{mo_pathogenicity()}}) is strongly based on Bartlett \emph{et al.} (2022, \doi{10.1099/mic.0.001269}). This function returns a \link{factor} with the levels \emph{Pathogenic}, \emph{Potentially pathogenic}, \emph{Non-pathogenic}, and \emph{Unknown}.
 
-Determination of the Gram stain (\code{\link[=mo_gramstain]{mo_gramstain()}}) will be based on the taxonomic kingdom and phylum. Originally, Cavalier-Smith defined the so-called subkingdoms Negibacteria and Posibacteria (2002, \href{https://pubmed.ncbi.nlm.nih.gov/11837318/}{PMID 11837318}), and only considered these phyla as Posibacteria: Actinobacteria, Chloroflexi, Firmicutes, and Tenericutes. These phyla were renamed to Actinomycetota, Chloroflexota, Bacillota, and Mycoplasmatota (2021, \href{https://pubmed.ncbi.nlm.nih.gov/34694987/}{PMID 34694987}). Bacteria in these phyla are considered Gram-positive in this \code{AMR} package, except for members of the class Negativicutes (within phylum Bacillota) which are Gram-negative. All other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value \code{NA}. Functions \code{\link[=mo_is_gram_negative]{mo_is_gram_negative()}} and \code{\link[=mo_is_gram_positive]{mo_is_gram_positive()}} always return \code{TRUE} or \code{FALSE} (or \code{NA} when the input is \code{NA} or the MO code is \code{UNKNOWN}), thus always return \code{FALSE} for species outside the taxonomic kingdom of Bacteria.
+Determination of the Gram stain (\code{\link[=mo_gramstain]{mo_gramstain()}}) will be based on the taxonomic kingdom and phylum. Originally, Cavalier-Smith defined the so-called subkingdoms Negibacteria and Posibacteria (2002, \href{https://pubmed.ncbi.nlm.nih.gov/11837318/}{PMID 11837318}), and only considered these phyla as Posibacteria: Actinobacteria, Chloroflexi, Firmicutes, and Tenericutes. These phyla were later renamed to Actinomycetota, Chloroflexota, Bacillota, and Mycoplasmatota (2021, \href{https://pubmed.ncbi.nlm.nih.gov/34694987/}{PMID 34694987}). Bacteria in these phyla are considered Gram-positive in this \code{AMR} package, except for members of the class Negativicutes (within phylum Bacillota) which are Gram-negative. All other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value \code{NA}. Functions \code{\link[=mo_is_gram_negative]{mo_is_gram_negative()}} and \code{\link[=mo_is_gram_positive]{mo_is_gram_positive()}} always return \code{TRUE} or \code{FALSE} (or \code{NA} when the input is \code{NA} or the MO code is \code{UNKNOWN}), thus always return \code{FALSE} for species outside the taxonomic kingdom of Bacteria.
 
 Determination of yeasts (\code{\link[=mo_is_yeast]{mo_is_yeast()}}) will be based on the taxonomic kingdom and class. \emph{Budding yeasts} are fungi of the phylum Ascomycota, class Saccharomycetes (also called Hemiascomycetes). \emph{True yeasts} are aggregated into the underlying order Saccharomycetales. Thus, for all microorganisms that are member of the taxonomic class Saccharomycetes, the function will return \code{TRUE}. It returns \code{FALSE} otherwise (or \code{NA} when the input is \code{NA} or the MO code is \code{UNKNOWN}).
 
 Determination of intrinsic resistance (\code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}}) will be based on the \link{intrinsic_resistant} data set, which is based on \href{https://www.eucast.org/expert_rules_and_expected_phenotypes/}{'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes' v3.3} (2021). The \code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}} function can be vectorised over both argument \code{x} (input for microorganisms) and \code{ab} (input for antibiotics).
-
-All output \link[=translate]{will be translated} where possible.
 
 The function \code{\link[=mo_url]{mo_url()}} will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species.
 
 SNOMED codes (\code{\link[=mo_snomed]{mo_snomed()}}) are from the version of 1 July, 2021. See \emph{Source} and the \link{microorganisms} data set for more info.
 
 Old taxonomic names (so-called 'synonyms') can be retrieved with \code{\link[=mo_synonyms]{mo_synonyms()}}, the current taxonomic name can be retrieved with \code{\link[=mo_current]{mo_current()}}. Both functions return full names.
+
+All output \link[=translate]{will be translated} where possible.
 }
 \section{Matching Score for Microorganisms}{
 
@@ -417,10 +417,10 @@ mo_shortname("Staph. epidermidis", Becker = TRUE)
 
 # Lancefield classification, see ?as.mo ------------------------------------
 
-mo_fullname("S. pyo")
-mo_fullname("S. pyo", Lancefield = TRUE)
-mo_shortname("S. pyo")
-mo_shortname("S. pyo", Lancefield = TRUE)
+mo_fullname("Strep Group B")
+mo_fullname("Strep Group B", Lancefield = TRUE)
+mo_shortname("Strep Group B")
+mo_shortname("Strep Group B", Lancefield = TRUE)
 
 
 # language support  --------------------------------------------------------
@@ -431,7 +431,7 @@ mo_gramstain("Klebsiella pneumoniae", language = "es") # Spanish
 mo_gramstain("Klebsiella pneumoniae", language = "el") # Greek
 mo_gramstain("Klebsiella pneumoniae", language = "uk") # Ukrainian
 
-# mo_type is equal to mo_kingdom, but mo_kingdom will remain official
+# mo_type is equal to mo_kingdom, but mo_kingdom will remain untranslated
 mo_kingdom("Klebsiella pneumoniae")
 mo_type("Klebsiella pneumoniae")
 mo_kingdom("Klebsiella pneumoniae", language = "zh") # Chinese, no effect

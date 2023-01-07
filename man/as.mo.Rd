@@ -108,7 +108,7 @@ There are three helper functions that can be run after using the \code{\link[=as
 
 \subsection{Microbial Prevalence of Pathogens in Humans}{
 
-The coercion rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the \code{prevalence} columns in the \link{microorganisms} data set. The grouping into human pathogenic prevalence is explained in the section \emph{Matching Score for Microorganisms} below.
+The coercion rules consider the prevalence of microorganisms in humans, which is available as the \code{prevalence} column in the \link{microorganisms} data set. The grouping into human pathogenic prevalence is explained in the section \emph{Matching Score for Microorganisms} below.
 }
 }
 \section{Source}{
@@ -136,14 +136,15 @@ With ambiguous user input in \code{\link[=as.mo]{as.mo()}} and all the \code{\li
 where:
 \itemize{
 \item \eqn{x} is the user input;
-\item \ifelse{html}{\out{<i>n</i> is a taxonomic name (genus, species, and subspecies);}}{\eqn{n} is a taxonomic name (genus, species, and subspecies);}
-\item \ifelse{html}{\out{<i>l<sub>n</sub></i> is the length of <i>n</i>;}}{l_n is the length of \eqn{n};}
-\item \ifelse{html}{\out{<i>lev</i> is the <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein distance function</a> (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change <i>x</i> into <i>n</i>;}}{lev is the Levenshtein distance function (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change \eqn{x} into \eqn{n};}
-\item \ifelse{html}{\out{<i>p<sub>n</sub></i> is the human pathogenic prevalence group of <i>n</i>, as described below;}}{p_n is the human pathogenic prevalence group of \eqn{n}, as described below;}
-\item \ifelse{html}{\out{<i>k<sub>n</sub></i> is the taxonomic kingdom of <i>n</i>, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.}}{l_n is the taxonomic kingdom of \eqn{n}, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.}
+\item \eqn{n} is a taxonomic name (genus, species, and subspecies);
+\item \eqn{l_n} is the length of \eqn{n};
+\item \ifelse{html}{\out{\if{html}{\out{<i>}}lev\if{html}{\out{</i>}} is the
+\item \eqn{lev} is the \href{https://en.wikipedia.org/wiki/Levenshtein_distance}{Levenshtein distance function} (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change \eqn{x} into \eqn{n};
+\item \eqn{p_{n}} is the human pathogenic prevalence group of \eqn{n}, as described below;
+\item \eqn{k_n} is the taxonomic kingdom of \eqn{n}, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.
 }
 
-The grouping into human pathogenic prevalence (\eqn{p}) is based on recent work from Bartlett \emph{et al.} (2022, \doi{10.1099/mic.0.001269}) who extensively studied medical-scientific literature to categorise all bacterial species into these groups:
+The grouping into human pathogenic prevalence \eqn{p} is based on recent work from Bartlett \emph{et al.} (2022, \doi{10.1099/mic.0.001269}) who extensively studied medical-scientific literature to categorise all bacterial species into these groups:
 \itemize{
 \item \strong{Established}, if a taxonomic species has infected at least three persons in three or more references. These records have \code{prevalence = 1.0} in the \link{microorganisms} data set;
 \item \strong{Putative}, if a taxonomic species has fewer than three known cases. These records have \code{prevalence = 1.25} in the \link{microorganisms} data set.

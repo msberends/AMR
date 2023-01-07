@@ -83,7 +83,7 @@
 #'
 #' ### Microbial Prevalence of Pathogens in Humans
 #'
-#' The coercion rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the `prevalence` columns in the [microorganisms] data set. The grouping into human pathogenic prevalence is explained in the section *Matching Score for Microorganisms* below.
+#' The coercion rules consider the prevalence of microorganisms in humans, which is available as the `prevalence` column in the [microorganisms] data set. The grouping into human pathogenic prevalence is explained in the section *Matching Score for Microorganisms* below.
 #' @inheritSection mo_matching_score Matching Score for Microorganisms
 #'
 #  (source as a section here, so it can be inherited by other man pages)
@@ -536,7 +536,7 @@ mo_cleaning_regex <- function() {
     "|",
     "([({]|\\[).+([})]|\\])",
     "|",
-    "(^| )(e?spp|e?ssp|e?ss|e?sp|e?subsp|sube?species|biovar|biotype|serovar|serogr.?up|e?species|group|complex)[.]*( |$))"
+    "(^| )(e?spp|e?ssp|e?ss|e?sp|e?subsp|sube?species|biovar|biotype|serovar|serogr.?up|e?species)[.]*( |$|(complex|group)$))"
   )
 }
 
@@ -786,7 +786,7 @@ print.mo_uncertainties <- function(x, ...) {
     return(invisible(NULL))
   }
 
-  cat(word_wrap("Matching scores are based on the resemblance between the input and the full taxonomic name, and the pathogenicity in humans according to Bartlett ", font_italic("et al."), " (2022). See `?mo_matching_score`.\n\n", add_fn = font_blue))
+  cat(word_wrap("Matching scores are based on the resemblance between the input and the full taxonomic name, and the pathogenicity in humans. See `?mo_matching_score`.\n\n", add_fn = font_blue))
   if (has_colour()) {
     cat(word_wrap("Colour keys: ",
       font_red_bg(" 0.000-0.499 "),
