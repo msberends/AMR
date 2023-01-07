@@ -137,18 +137,18 @@
 #' \donttest{
 #' # Becker classification, see ?as.mo ----------------------------------------
 #'
-#' mo_fullname("Staph. epidermidis")
-#' mo_fullname("Staph. epidermidis", Becker = TRUE)
-#' mo_shortname("Staph. epidermidis")
-#' mo_shortname("Staph. epidermidis", Becker = TRUE)
+#' mo_fullname("Staph epidermidis")
+#' mo_fullname("Staph epidermidis", Becker = TRUE)
+#' mo_shortname("Staph epidermidis")
+#' mo_shortname("Staph epidermidis", Becker = TRUE)
 #'
 #'
 #' # Lancefield classification, see ?as.mo ------------------------------------
 #'
-#' mo_fullname("Strep Group B")
-#' mo_fullname("Strep Group B", Lancefield = TRUE)
-#' mo_shortname("Strep Group B")
-#' mo_shortname("Strep Group B", Lancefield = TRUE)
+#' mo_fullname("Strep agalactiae")
+#' mo_fullname("Strep agalactiae", Lancefield = TRUE)
+#' mo_shortname("Strep agalactiae")
+#' mo_shortname("Strep agalactiae", Lancefield = TRUE)
 #'
 #'
 #' # language support  --------------------------------------------------------

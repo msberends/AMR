@@ -236,6 +236,9 @@ as.mo <- function(x,
     x[trimws2(x) %like% translate_into_language("no .*growth", language = language)] <- NA_character_
     x[trimws2(x) %like% paste0("^(", translate_into_language("no|not", language = language), ") ")] <- NA_character_
 
+    # groups are in our taxonomic table with a capital G
+    x <- gsub(" group ", " Group ", x, fixed = TRUE)
+
     # run over all unique leftovers
     x_unique <- unique(x[is.na(out) & !is.na(x)])
 
@@ -782,7 +785,7 @@ rep.mo <- function(x, ...) {
 #' @noRd
 print.mo_uncertainties <- function(x, ...) {
   if (NROW(x) == 0) {
-    cat(word_wrap("No uncertainties to show. Only uncertainties of the last call of `as.mo()` or any `mo_*()` function are stored.\n", add_fn = font_blue))
+    cat(word_wrap("No uncertainties to show. Only uncertainties of the last call of `as.mo()` or any `mo_*()` function are stored.\n\n", add_fn = font_blue))
     return(invisible(NULL))
   }
 
@@ -923,6 +926,11 @@ convert_colloquial_input <- function(x) {
   out[x %like_case% "strepto[ck]o[ck].* [abcdfghkl]$"] <- gsub(".*e?strepto[ck]o[ck].* ([abcdfghkl])$",
     "B_STRPT_GRP\\U\\1",
     x[x %like_case% "strepto[ck]o[ck].* [abcdfghkl]$"],
+    perl = TRUE
+  )
+  out[x %like_case% "strep[a-z]* group [abcdfghkl]$"] <- gsub(".* ([abcdfghkl])$",
+    "B_STRPT_GRP\\U\\1",
+    x[x %like_case% "strep[a-z]* group [abcdfghkl]$"],
     perl = TRUE
   )
   out[x %like_case% "group [abcdfghkl] strepto[ck]o[ck]"] <- gsub(".*group ([abcdfghkl]) strepto[ck]o[ck].*",
