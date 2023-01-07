@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9086</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9088</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -165,12 +165,12 @@
 <p>With ambiguous user input in <code><a href="as.mo.html">as.mo()</a></code> and all the <code><a href="mo_property.html">mo_*</a></code> functions, the returned results are chosen based on their matching score using <code>mo_matching_score()</code>. This matching score \(m\), is calculated as:</p>
 <p><img src="figures/mo_matching_score.png" width="300" alt="mo matching score"></p>
 <p>where:</p><ul><li><p>\(x\) is the user input;</p></li>
-<li><p><i>n</i> is a taxonomic name (genus, species, and subspecies);</p></li>
-<li><p><i>l<sub>n</sub></i> is the length of <i>n</i>;</p></li>
-<li><p><i>lev</i> is the <a href="https://en.wikipedia.org/wiki/Levenshtein_distance" class="external-link">Levenshtein distance function</a> (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change <i>x</i> into <i>n</i>;</p></li>
-<li><p><i>p<sub>n</sub></i> is the human pathogenic prevalence group of <i>n</i>, as described below;</p></li>
-<li><p><i>k<sub>n</sub></i> is the taxonomic kingdom of <i>n</i>, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.</p></li>
-</ul><p>The grouping into human pathogenic prevalence (\(p\)) is based on recent work from Bartlett <em>et al.</em> (2022, <a href="https://doi.org/10.1099/mic.0.001269" class="external-link">doi:10.1099/mic.0.001269</a>
+<li><p>\(n\) is a taxonomic name (genus, species, and subspecies);</p></li>
+<li><p>\(l_n\) is the length of \(n\);</p></li>
+<li><p>\(lev\) is the <a href="https://en.wikipedia.org/wiki/Levenshtein_distance" class="external-link">Levenshtein distance function</a> (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change \(x\) into \(n\);</p></li>
+<li><p>\(p_{n}\) is the human pathogenic prevalence group of \(n\), as described below;</p></li>
+<li><p>\(k_n\) is the taxonomic kingdom of \(n\), set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.</p></li>
+</ul><p>The grouping into human pathogenic prevalence \(p\) is based on recent work from Bartlett <em>et al.</em> (2022, <a href="https://doi.org/10.1099/mic.0.001269" class="external-link">doi:10.1099/mic.0.001269</a>
 ) who extensively studied medical-scientific literature to categorise all bacterial species into these groups:</p><ul><li><p><strong>Established</strong>, if a taxonomic species has infected at least three persons in three or more references. These records have <code>prevalence = 1.0</code> in the <a href="microorganisms.html">microorganisms</a> data set;</p></li>
 <li><p><strong>Putative</strong>, if a taxonomic species has fewer than three known cases. These records have <code>prevalence = 1.25</code> in the <a href="microorganisms.html">microorganisms</a> data set.</p></li>
 </ul><p>Furthermore,</p><ul><li><p>Any genus present in the <strong>established</strong> list also has <code>prevalence = 1.0</code> in the <a href="microorganisms.html">microorganisms</a> data set;</p></li>
@@ -194,30 +194,32 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="as.mo.html">mo_reset_session</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Reset 17 previously matched input values.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'mo'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] B_ESCHR_COLI</span>
 <span class="r-in"><span><span class="fu"><a href="as.mo.html">mo_uncertainties</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Matching scores are based on the resemblance between the input and the full</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> taxonomic name, and the pathogenicity in humans according to Bartlett et</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> al. (2022). See ?mo_matching_score.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> taxonomic name, and the pathogenicity in humans. See ?mo_matching_score.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "K. pneumoniae" -&gt; Klebsiella pneumoniae (B_KLBSL_PNMN, 0.786)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    Based on input "K pneumoniae"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Also matched: Klebsiella pneumoniae ozaenae (0.707), Klebsiella</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               pneumoniae pneumoniae (0.688), Klebsiella pneumoniae rhinoscleromatis</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               (0.658), Klebsiella pasteurii (0.500), Klebsiella planticola (0.500),</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Kingella potus (0.400), Kosakonia pseudosacchari (0.361), Kaistella</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               palustris (0.333), Kocuria palustris (0.333), Kocuria pelophila</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               (0.333), Kocuria polaris (0.333), Kroppenstedtia pulmonis (0.304),</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Kibdelosporangium phytohabitans (0.282), Kitasatospora putterlickiae</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               (0.269), Kibdelosporangium philippinense (0.266), Kalamiella piersonii</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               (0.262), Kitasatospora psammotica (0.260), Kallotenue papyrolyticum</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               (0.250), Kangiella profundi (0.250), Kangsaoukella pontilimi (0.250),</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Katagnymene pelagic (0.250), Keratinibaculum paraultunense (0.250),</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Kibdelosporangium persicum (0.250), Kitasatoa purpurea (0.250) and</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Kitasatospora paracochleata (0.250) [showing first 25]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "E. coli" -&gt; Escherichia coli (B_ESCHR_COLI, 0.688)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              Based on input "E coli"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Also matched: Enterobacter cowanii (0.600), Eubacterium combesii</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               (0.600), Eggerthia catenaformis (0.591), Eubacterium callanderi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               (0.591), Enterocloster citroniae (0.587), Eubacterium cylindroides</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               (0.583), Enterococcus casseliflavus (0.577), Enterobacter cloacae</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               cloacae (0.571), Ehrlichia canis (0.567), Enterobacter cloacae</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               dissolvens (0.565), Eikenella corrodens (0.553), Erwinia cancerogena</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               (0.553), Enterobacter cloacae (0.550), Enterococcus cecorum (0.550),</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Ehrlichia chaffeensis (0.548), Enterobacter cancerogena (0.542),</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Enterobacter cancerogenus (0.540), Ezakiella coagulans (0.484),</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Effusibacillus consociatus (0.462), Enterococcus crotali (0.433),</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Erwinia coffeiphila (0.404), Eubacterium coprostanoligenes (0.402),</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Enterococcus columbae (0.397), Enterococcus camelliae (0.394) and</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Eubacterium cellulosolvens (0.385) [showing first 25]</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">mo_matching_score</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  x <span class="op">=</span> <span class="st">"E. coli"</span>,</span></span>

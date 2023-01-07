@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9086</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9088</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -255,7 +255,7 @@
 <h3 id="microbial-prevalence-of-pathogens-in-humans">Microbial Prevalence of Pathogens in Humans<a class="anchor" aria-label="anchor" href="#microbial-prevalence-of-pathogens-in-humans"></a></h3>
 
 
-<p>The coercion rules consider the prevalence of microorganisms in humans grouped into three groups, which is available as the <code>prevalence</code> columns in the <a href="microorganisms.html">microorganisms</a> data set. The grouping into human pathogenic prevalence is explained in the section <em>Matching Score for Microorganisms</em> below.</p>
+<p>The coercion rules consider the prevalence of microorganisms in humans, which is available as the <code>prevalence</code> column in the <a href="microorganisms.html">microorganisms</a> data set. The grouping into human pathogenic prevalence is explained in the section <em>Matching Score for Microorganisms</em> below.</p>
 </div>
 
     </div>
@@ -283,12 +283,12 @@
 <p>With ambiguous user input in <code>as.mo()</code> and all the <code><a href="mo_property.html">mo_*</a></code> functions, the returned results are chosen based on their matching score using <code><a href="mo_matching_score.html">mo_matching_score()</a></code>. This matching score \(m\), is calculated as:</p>
 <p><img src="figures/mo_matching_score.png" width="300" alt="mo matching score"></p>
 <p>where:</p><ul><li><p>\(x\) is the user input;</p></li>
-<li><p><i>n</i> is a taxonomic name (genus, species, and subspecies);</p></li>
-<li><p><i>l<sub>n</sub></i> is the length of <i>n</i>;</p></li>
-<li><p><i>lev</i> is the <a href="https://en.wikipedia.org/wiki/Levenshtein_distance" class="external-link">Levenshtein distance function</a> (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change <i>x</i> into <i>n</i>;</p></li>
-<li><p><i>p<sub>n</sub></i> is the human pathogenic prevalence group of <i>n</i>, as described below;</p></li>
-<li><p><i>k<sub>n</sub></i> is the taxonomic kingdom of <i>n</i>, set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.</p></li>
-</ul><p>The grouping into human pathogenic prevalence (\(p\)) is based on recent work from Bartlett <em>et al.</em> (2022, <a href="https://doi.org/10.1099/mic.0.001269" class="external-link">doi:10.1099/mic.0.001269</a>
+<li><p>\(n\) is a taxonomic name (genus, species, and subspecies);</p></li>
+<li><p>\(l_n\) is the length of \(n\);</p></li>
+<li><p>\(lev\) is the <a href="https://en.wikipedia.org/wiki/Levenshtein_distance" class="external-link">Levenshtein distance function</a> (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change \(x\) into \(n\);</p></li>
+<li><p>\(p_{n}\) is the human pathogenic prevalence group of \(n\), as described below;</p></li>
+<li><p>\(k_n\) is the taxonomic kingdom of \(n\), set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.</p></li>
+</ul><p>The grouping into human pathogenic prevalence \(p\) is based on recent work from Bartlett <em>et al.</em> (2022, <a href="https://doi.org/10.1099/mic.0.001269" class="external-link">doi:10.1099/mic.0.001269</a>
 ) who extensively studied medical-scientific literature to categorise all bacterial species into these groups:</p><ul><li><p><strong>Established</strong>, if a taxonomic species has infected at least three persons in three or more references. These records have <code>prevalence = 1.0</code> in the <a href="microorganisms.html">microorganisms</a> data set;</p></li>
 <li><p><strong>Putative</strong>, if a taxonomic species has fewer than three known cases. These records have <code>prevalence = 1.25</code> in the <a href="microorganisms.html">microorganisms</a> data set.</p></li>
 </ul><p>Furthermore,</p><ul><li><p>Any genus present in the <strong>established</strong> list also has <code>prevalence = 1.0</code> in the <a href="microorganisms.html">microorganisms</a> data set;</p></li>
