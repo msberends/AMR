@@ -1,4 +1,4 @@
-# AMR 1.8.2.9090
+# AMR 1.8.2.9091
 
 *(this beta version will eventually become v2.0! We're happy to reach a new major milestone soon!)*
 
@@ -117,8 +117,8 @@ We now added extensive support for antiviral agents! For the first time, the `AM
 
 ## Other
 
+* Added Peter Dutey-Magni, Dmytro Mykhailenko, Anton Mymrikov, Andrew Norgan, and Jonas Salm as contributors, to thank them for their valuable input
 * New website to make use of the new Bootstrap 5 and pkgdown 2.0. The website now contains results for all examples and will be automatically regenerated with every change to our repository, using GitHub Actions
-* Added Peter Dutey-Magni, Dmytro Mykhailenko, Anton Mymrikov, and Jonas Salm as contributors, to thank them for their valuable input
 * All R and Rmd files in this project are now styled using the `styler` package
 * Set scalar conditional expressions (`&&` and `||`) where possible to comply with the upcoming R 4.3
 * An enormous lot of code cleaning, fixing some small bugs on the way

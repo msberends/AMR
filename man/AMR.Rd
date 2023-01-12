@@ -93,6 +93,7 @@ Other contributors:
   \item Bart C. Meijer [contributor]
   \item Dmytro Mykhailenko [contributor]
   \item Anton Mymrikov [contributor]
+  \item Andrew P. Norgan (\href{https://orcid.org/0000-0002-2955-2066}{ORCID}) [contributor]
   \item Sofia Ny (\href{https://orcid.org/0000-0002-2017-1363}{ORCID}) [contributor]
   \item Jonas Salm [contributor]
   \item Rogier P. Schade [contributor]
