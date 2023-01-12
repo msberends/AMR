@@ -41,7 +41,7 @@ $(document).ready(function() {
     $("#ref-examples ~ div pre").html($("#ref-examples ~ div pre").html().replaceAll("# \\dontrun{", ""));
     $("#ref-examples ~ div pre").html($("#ref-examples ~ div pre").html().replaceAll("# }", ""));
   }
-  
+
   // remove leading newline in code examples on changelog
   if ($("body .template-news").length > 0) {
     $("body .template-news").html($("body .template-news").html().replaceAll('sourceCode R">\n<span', 'sourceCode R"><span'));
@@ -56,6 +56,7 @@ $(document).ready(function() {
       x = x.replace(/Thesis advisor/g, "(former) Doctoral advisor");
       // contributors
       x = x.replace("Alex", "Prof. Alex");
+      x = x.replace("Andrew", "Dr. Andrew");
       x = x.replace("Anthony", "Dr. Anthony");
       x = x.replace("Annick", "Dr. Annick");
       x = x.replace("Bart", "Dr. Bart");
