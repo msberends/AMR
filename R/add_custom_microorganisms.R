@@ -136,12 +136,13 @@ add_custom_microorganisms <- function(x) {
     stop_ifnot(all(x$rank %in% AMR_env$MO_lookup$rank),
                "the 'rank' column can only contain these values: ", vector_or(AMR_env$MO_lookup$rank))
   } else {
-    x$rank <- ifelse(!is.na(x$subspecies), "subspecies",
-                     ifelse(!is.na(x$species), "species",
-                            ifelse(!is.na(x$genus), "genus",
+    x$rank <- ifelse(x$subspecies != "", "subspecies",
+                     ifelse(x$species != "", "species",
+                            ifelse(x$genus != "", "genus",
                                    stop("in add_custom_microorganisms(): the 'genus' column cannot be empty",
                                         call. = FALSE))))
   }
+  x$source <- "Added by user"
   if (!"fullname" %in% colnames(x)) {
     x$fullname <- trimws2(paste(x$genus, x$species, x$subspecies))
   }
@@ -150,7 +151,12 @@ add_custom_microorganisms <- function(x) {
   if (!"class" %in% colnames(x)) x$class <- ""
   if (!"order" %in% colnames(x)) x$order <- ""
   if (!"family" %in% colnames(x)) x$family <- ""
-
+  x$kingdom[is.na(x$kingdom)] <- ""
+  x$phylum[is.na(x$phylum)] <- ""
+  x$class[is.na(x$class)] <- ""
+  x$order[is.na(x$order)] <- ""
+  x$family[is.na(x$family)] <- ""
+  
   for (col in colnames(x)) {
     if (is.list(AMR_env$MO_lookup[, col, drop = TRUE])) {
       x[, col] <- as.list(x[, col, drop = TRUE])
@@ -160,17 +166,12 @@ add_custom_microorganisms <- function(x) {
   # fill in other columns
   x$status <- "accepted"
   x$prevalence <- 1
-  x$kingdom <- AMR_env$MO_lookup$kingdom[match(x$genus, AMR_env$MO_lookup$genus)]
-  x$phylum <- AMR_env$MO_lookup$phylum[match(x$genus, AMR_env$MO_lookup$genus)]
-  x$class <- AMR_env$MO_lookup$class[match(x$genus, AMR_env$MO_lookup$genus)]
-  x$order <- AMR_env$MO_lookup$order[match(x$genus, AMR_env$MO_lookup$genus)]
-  x$family <- AMR_env$MO_lookup$family[match(x$genus, AMR_env$MO_lookup$genus)]
   
-  x$kingdom[is.na(x$kingdom)] <- ""
-  x$phylum[is.na(x$phylum)] <- ""
-  x$class[is.na(x$class)] <- ""
-  x$order[is.na(x$order)] <- ""
-  x$family[is.na(x$family)] <- ""
+  x$kingdom[which(x$kingdom == "" & x$genus != "")] <- AMR_env$MO_lookup$kingdom[match(x$genus[which(x$kingdom == "" & x$genus != "")], AMR_env$MO_lookup$genus)]
+  x$phylum[which(x$phylum == "" & x$genus != "")] <- AMR_env$MO_lookup$phylum[match(x$genus[which(x$phylum == "" & x$genus != "")], AMR_env$MO_lookup$genus)]
+  x$class[which(x$class == "" & x$genus != "")] <- AMR_env$MO_lookup$class[match(x$genus[which(x$class == "" & x$genus != "")], AMR_env$MO_lookup$genus)]
+  x$order[which(x$order == "" & x$genus != "")] <- AMR_env$MO_lookup$order[match(x$genus[which(x$order == "" & x$genus != "")], AMR_env$MO_lookup$genus)]
+  x$family[which(x$family == "" & x$genus != "")] <- AMR_env$MO_lookup$family[match(x$genus[which(x$family == "" & x$genus != "")], AMR_env$MO_lookup$genus)]
   
   x$kingdom_index <- AMR_env$MO_lookup$kingdom_index[match(x$genus, AMR_env$MO_lookup$genus)]
   x$fullname_lower <- tolower(x$fullname)
@@ -184,7 +185,9 @@ add_custom_microorganisms <- function(x) {
   }
   x$mo <- trimws2(x$mo)
   x$mo[x$mo == ""] <- NA_character_
-  x$mo[is.na(x$mo)] <- paste0("CUSTOM_",
+  x$mo[is.na(x$mo)] <- paste0("CUSTOM",
+                              seq(from = sum(AMR_env$MO_lookup$source == "Added by user", na.rm = TRUE) + 1, to = nrow(x), by = 1),
+                              "_",
                               toupper(unname(abbreviate(gsub(" +", " _ ",
                                                              gsub("[^A-Za-z0-9-]", " ",
                                                                   trimws2(paste(x$genus, x$species, x$subspecies)))),
