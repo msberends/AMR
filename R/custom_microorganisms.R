@@ -30,7 +30,7 @@
 #' Add Custom Microorganisms to This Package
 #'
 #' With [add_custom_microorganisms()] you can add your own custom microorganisms to the `AMR` package, such the non-taxonomic outcome of laboratory analysis.
-#' @param x a [data.frame] resembling the [microorganisms] data set, at least containing columns "genus" and "species"
+#' @param x a [data.frame] resembling the [microorganisms] data set, at least containing column "genus" (case-insensitive)
 #' @details This function will fill in missing taxonomy for you, if specific taxonomic columns are missing, see *Examples*.
 #' 
 #' **Important:** Due to how \R works, the [add_custom_microorganisms()] function has to be run in every \R session - added microorganisms are not stored between sessions and are thus lost when \R is exited. 
@@ -39,7 +39,7 @@
 #' 
 #' **Method 1:** Save the microorganisms to a local or remote file (can even be the internet). To use this method:
 #' 
-#'    1. Create a data set in the structure of the [microorganisms] data set (containing at the very least columns "genus" and "species") and save it with [saveRDS()] to a location of choice, e.g. `"~/my_custom_mo.rds"`, or any remote location.
+#'    1. Create a data set in the structure of the [microorganisms] data set (containing at the very least column "genus") and save it with [saveRDS()] to a location of choice, e.g. `"~/my_custom_mo.rds"`, or any remote location.
 #'    
 #'    2. Set the file location to the `AMR_custom_mo` \R option: `options(AMR_custom_mo = "~/my_custom_mo.rds")`. This can even be a remote file location, such as an https URL. Since options are not saved between \R sessions, it is best to save this option to the `.Rprofile` file so that it will loaded on start-up of \R. To do this, open the `.Rprofile` file using e.g. `utils::file.edit("~/.Rprofile")`, add this text and save the file:
 #'
@@ -98,16 +98,27 @@
 #' mo_gramstain("Enterobacter asburiae/cloacae")
 #'
 #' mo_info("Enterobacter asburiae/cloacae")
+#' 
+#' 
+#' # the function tries to be forgiving:
+#' add_custom_microorganisms(
+#'   data.frame(GENUS = "ESCHERICHIA / KLEBSIELLA",
+#'              SPECIES = "SPECIES"))
+#' mo_name("ESCHERICHIA / KLEBSIELLA")
+#' mo_family("Escherichia/Klebsiella")
+#' 
+#' add_custom_microorganisms(
+#'   data.frame(genus = "Citrobacter", species = "freundii complex"))
+#' mo_name("C. freundii complex")
+#' mo_gramstain("C. freundii complex")
 #' }
 add_custom_microorganisms <- function(x) {
   meet_criteria(x, allow_class = "data.frame")
-  stop_ifnot(
-    all(c("genus", "species") %in% colnames(x)),
-    paste0("`x` must contain columns ", vector_and(c("genus", "species"), sort = FALSE), ".")
-  )
+  stop_ifnot("genus" %in% tolower(colnames(x)), paste0("`x` must contain column 'genus'."))
   
   # remove any extra class/type, such as grouped tbl, or data.table:
   x <- as.data.frame(x, stringsAsFactors = FALSE)
+  colnames(x) <- tolower(colnames(x))
   # rename 'name' to 'fullname' if it's in the data set
   if ("name" %in% colnames(x) && !"fullname" %in% colnames(x)) {
     colnames(x)[colnames(x) == "name"] <- "fullname"
@@ -116,21 +127,30 @@ add_custom_microorganisms <- function(x) {
   x <- x[, colnames(AMR_env$MO_lookup)[colnames(AMR_env$MO_lookup) %in% colnames(x)], drop = FALSE]
   
   # clean the input ----
-  if (!"subspecies" %in% colnames(x)) {
-    x$subspecies <- NA_character_
+  for (col in c("genus", "species", "subspecies")) {
+    if (!col %in% colnames(x)) {
+      x[, col] <- ""
+    }
+    if (is.factor(x[, col, drop = TRUE])) {
+      x[, col] <- as.character(x[, col, drop = TRUE])
+    }
+    col_ <- x[, col, drop = TRUE]
+    col_ <- tolower(trimws2(col_))
+    col_[col_ %like% "(sub)?species"] <- ""
+    col_ <- gsub(" *([/-]) *", "\\1", col_, perl = TRUE)
+    # groups are in our taxonomic table with a capital G, and complexes might be added by the user
+    col_ <- gsub(" group( |$)", " Group\\1", col_, perl = TRUE)
+    col_ <- gsub(" complex( |$)", " Complex\\1", col_, perl = TRUE)
+    
+    col_[is.na(col_)] <- ""
+    if (col == "genus") {
+      substr(col_, 1, 1) <- toupper(substr(col_, 1, 1))
+      col_ <- gsub("/([a-z])", "/\\U\\1", col_, perl = TRUE)
+      stop_if(any(col_ == ""), "the 'genus' column cannot be empty")
+      stop_if(any(col_ %like% " "), "the 'genus' column must not contain spaces")
+    }
+    x[, col] <- col_
   }
-  x$genus <- trimws2(x$genus)
-  x$species <- trimws2(x$species)
-  x$subspecies <- trimws2(x$subspecies)
-  x$genus[is.na(x$genus)] <- ""
-  x$species[is.na(x$species)] <- ""
-  x$subspecies[is.na(x$subspecies)] <- ""
-  stop_if(any(x$genus %like% " "),
-          "the 'genus' column must not contain spaces")
-  stop_if(any(x$species %like% " "),
-          "the 'species' column must not contain spaces")
-  stop_if(any(x$subspecies %like% " "),
-          "the 'subspecies' column must not contain spaces")
   
   if ("rank" %in% colnames(x)) {
     stop_ifnot(all(x$rank %in% AMR_env$MO_lookup$rank),
@@ -139,7 +159,7 @@ add_custom_microorganisms <- function(x) {
     x$rank <- ifelse(x$subspecies != "", "subspecies",
                      ifelse(x$species != "", "species",
                             ifelse(x$genus != "", "genus",
-                                   stop("in add_custom_microorganisms(): the 'genus' column cannot be empty",
+                                   stop("in add_custom_microorganisms(): only microorganisms up to the genus level can be added",
                                         call. = FALSE))))
   }
   x$source <- "Added by user"
@@ -158,22 +178,29 @@ add_custom_microorganisms <- function(x) {
   x$family[is.na(x$family)] <- ""
   
   for (col in colnames(x)) {
+    if (is.factor(x[, col, drop = TRUE])) {
+      x[, col] <- as.character(x[, col, drop = TRUE])
+    }
     if (is.list(AMR_env$MO_lookup[, col, drop = TRUE])) {
       x[, col] <- as.list(x[, col, drop = TRUE])
     }
   }
   
-  # fill in other columns
+  # fill in taxonomy based on genus
+  genus_to_check <- gsub("^(.*)[^a-zA-Z].*", "\\1", x$genus, perl = TRUE)
+  x$kingdom[which(x$kingdom == "" & genus_to_check != "")] <- AMR_env$MO_lookup$kingdom[match(genus_to_check[which(x$kingdom == "" & genus_to_check != "")], AMR_env$MO_lookup$genus)]
+  x$phylum[which(x$phylum == "" & genus_to_check != "")] <- AMR_env$MO_lookup$phylum[match(genus_to_check[which(x$phylum == "" & genus_to_check != "")], AMR_env$MO_lookup$genus)]
+  x$class[which(x$class == "" & genus_to_check != "")] <- AMR_env$MO_lookup$class[match(genus_to_check[which(x$class == "" & genus_to_check != "")], AMR_env$MO_lookup$genus)]
+  x$order[which(x$order == "" & genus_to_check != "")] <- AMR_env$MO_lookup$order[match(genus_to_check[which(x$order == "" & genus_to_check != "")], AMR_env$MO_lookup$genus)]
+  x$family[which(x$family == "" & genus_to_check != "")] <- AMR_env$MO_lookup$family[match(genus_to_check[which(x$family == "" & genus_to_check != "")], AMR_env$MO_lookup$genus)]
+  
+  # fill in other columns that are used in internal algorithms
   x$status <- "accepted"
   x$prevalence <- 1
-  
-  x$kingdom[which(x$kingdom == "" & x$genus != "")] <- AMR_env$MO_lookup$kingdom[match(x$genus[which(x$kingdom == "" & x$genus != "")], AMR_env$MO_lookup$genus)]
-  x$phylum[which(x$phylum == "" & x$genus != "")] <- AMR_env$MO_lookup$phylum[match(x$genus[which(x$phylum == "" & x$genus != "")], AMR_env$MO_lookup$genus)]
-  x$class[which(x$class == "" & x$genus != "")] <- AMR_env$MO_lookup$class[match(x$genus[which(x$class == "" & x$genus != "")], AMR_env$MO_lookup$genus)]
-  x$order[which(x$order == "" & x$genus != "")] <- AMR_env$MO_lookup$order[match(x$genus[which(x$order == "" & x$genus != "")], AMR_env$MO_lookup$genus)]
-  x$family[which(x$family == "" & x$genus != "")] <- AMR_env$MO_lookup$family[match(x$genus[which(x$family == "" & x$genus != "")], AMR_env$MO_lookup$genus)]
-  
-  x$kingdom_index <- AMR_env$MO_lookup$kingdom_index[match(x$genus, AMR_env$MO_lookup$genus)]
+  x$ref <- paste("Self-added,", format(Sys.Date(), "%Y"))
+  x$kingdom_index <- AMR_env$MO_lookup$kingdom_index[match(genus_to_check, AMR_env$MO_lookup$genus)]
+  # complete missing kingdom index, so mo_matching_score() will not return NA
+  x$kingdom_index[is.na(x$kingdom_index)] <- 1
   x$fullname_lower <- tolower(x$fullname)
   x$full_first <- substr(x$fullname_lower, 1, 1)
   x$species_first <- tolower(substr(x$species, 1, 1))
@@ -183,18 +210,19 @@ add_custom_microorganisms <- function(x) {
     # create the mo code
     x$mo <- NA_character_
   }
-  x$mo <- trimws2(x$mo)
+  x$mo <- trimws2(as.character(x$mo))
   x$mo[x$mo == ""] <- NA_character_
+  current <- sum(AMR_env$MO_lookup$source == "Added by user", na.rm = TRUE)
   x$mo[is.na(x$mo)] <- paste0("CUSTOM",
-                              seq(from = sum(AMR_env$MO_lookup$source == "Added by user", na.rm = TRUE) + 1, to = nrow(x), by = 1),
+                              seq.int(from = current + 1, to = current + nrow(x), by = 1),
                               "_",
                               toupper(unname(abbreviate(gsub(" +", " _ ",
                                                              gsub("[^A-Za-z0-9-]", " ",
                                                                   trimws2(paste(x$genus, x$species, x$subspecies)))),
                                                         minlength = 10))))
+  stop_if(anyDuplicated(c(as.character(AMR_env$MO_lookup$mo), x$mo)), "MO codes must be unique and not match existing MO codes of the AMR package")
   
   # add to package ----
-  
   AMR_env$custom_mo_codes <- c(AMR_env$custom_mo_codes, x$mo)
   class(AMR_env$MO_lookup$mo) <- "character"
   
@@ -215,7 +243,11 @@ add_custom_microorganisms <- function(x) {
   
   AMR_env$MO_lookup <- unique(rbind(AMR_env$MO_lookup, new_df))
   class(AMR_env$MO_lookup$mo) <- c("mo", "character")
-  message_("Added ", nr2char(nrow(x)), " record", ifelse(nrow(x) > 1, "s", ""), " to the internal `microorganisms` data set.")
+  if (nrow(x) <= 3) {
+    message_("Added ", vector_and(italicise(x$fullname), quotes = FALSE), " to the internal `microorganisms` data set.")
+  } else {
+    message_("Added ", nr2char(nrow(x)), " records to the internal `microorganisms` data set.")
+  }
 }
 
 #' @rdname add_custom_microorganisms

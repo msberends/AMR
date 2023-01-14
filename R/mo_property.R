@@ -777,6 +777,7 @@ mo_info <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
 
   info <- lapply(x, function(y) {
     c(
+      list(identifier = x),
       mo_taxonomy(y, language = language, keep_synonyms = keep_synonyms),
       list(
         status = mo_status(y, language = language, keep_synonyms = keep_synonyms),

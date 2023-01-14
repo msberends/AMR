@@ -183,7 +183,7 @@ as.mo <- function(x,
   x_lower <- tolower(x)
   
   complexes <- x[trimws2(x_lower) %like_case% " (complex|group)$"]
-  if (length(complexes) > 0 && identical(remove_from_input, mo_cleaning_regex())) {
+  if (length(complexes) > 0 && identical(remove_from_input, mo_cleaning_regex()) && !any(AMR_env$MO_lookup$fullname[which(AMR_env$MO_lookup$source == "Added by user")] %like% "(group|complex)", na.rm = TRUE)) {
     warning_("in `as.mo()`: 'complex' and 'group' were ignored from the input in ", length(complexes), " case", ifelse(length(complexes) > 1, "s", ""), ", as they are currently not supported.\nYou can add your own microorganism with `add_custom_microorganisms()`.", call = FALSE)
   }
   
@@ -222,7 +222,7 @@ as.mo <- function(x,
   if (isTRUE(info) && message_not_thrown_before("as.mo", old, new, entire_session = TRUE) && any(is.na(old) & !is.na(new), na.rm = TRUE)) {
     message_(
       "Returning previously coerced value", ifelse(sum(is.na(old) & !is.na(new)) > 1, "s", ""),
-      " for ", vector_and(x[is.na(old) & !is.na(new)]), ". Run `mo_reset_session()` to reset this."
+      " for ", vector_and(x[is.na(old) & !is.na(new)]), ". Run `mo_reset_session()` to reset this. This note will be shown once per session for this input."
     )
   }
 
@@ -236,8 +236,9 @@ as.mo <- function(x,
     x[trimws2(x) %like% translate_into_language("no .*growth", language = language)] <- NA_character_
     x[trimws2(x) %like% paste0("^(", translate_into_language("no|not", language = language), ") ")] <- NA_character_
 
-    # groups are in our taxonomic table with a capital G
-    x <- gsub(" group ", " Group ", x, fixed = TRUE)
+    # groups are in our taxonomic table with a capital G, and complexes might be added by the user
+    x <- gsub(" group( |$)", " Group\\1", x, perl = TRUE)
+    x <- gsub(" complex( |$)", " Complex\\1", x, perl = TRUE)
 
     # run over all unique leftovers
     x_unique <- unique(x[is.na(out) & !is.na(x)])
@@ -281,11 +282,11 @@ as.mo <- function(x,
         first_chars <- paste0("(^| )", "[", paste(substr(x_parts, 1, 1), collapse = ""), "]")
         filtr <- which(AMR_env$MO_lookup$full_first %like_case% first_chars)
       } else if (nchar(x_out) == 4) {
-        # no space and 4 characters - probably a code such as STAU or ESCO!
+        # no space and 4 characters - probably a code such as STAU or ESCO
         msg <- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on ", vector_and(c(substr(x_out, 1, 2), substr(x_out, 3, 4)), sort = FALSE)))
         filtr <- which(AMR_env$MO_lookup$fullname_lower %like_case% paste0("(^| )", substr(x_out, 1, 2), ".* ", substr(x_out, 3, 4)))
       } else if (nchar(x_out) <= 6) {
-        # no space and 5-6 characters - probably a code such as STAAUR or ESCCOL!
+        # no space and 5-6 characters - probably a code such as STAAUR or ESCCOL
         first_part <- paste0(substr(x_out, 1, 2), "[a-z]*", substr(x_out, 3, 3))
         second_part <- substr(x_out, 4, nchar(x_out))
         msg <- c(msg, paste0("Input \"", x_search, "\" was assumed to be a microorganism code - tried to match on ", vector_and(c(gsub("[a-z]*", "(...)", first_part, fixed = TRUE), second_part), sort = FALSE)))
@@ -992,6 +993,9 @@ italicise <- function(x) {
                                                  gsub("Salmonella ", "", x[x %like_case% "Salmonella [A-Z]"]))
   out[x %like_case% "Streptococcus [A-Z]"] <- paste(font_italic("Streptococcus"), 
                                                     gsub("Streptococcus ", "", x[x %like_case% "Streptococcus [A-Z]"]))
+  if (has_colour()) {
+    out <- gsub("(Group|group|Complex|complex)(\033\\[23m)?", "\033[23m\\1", out, perl = TRUE)
+  }
   out
 }
 
@@ -1009,33 +1013,36 @@ nr2char <- function(x) {
 
 parse_and_convert <- function(x) {
   if (tryCatch(is.character(x) && all(Encoding(x) == "unknown", na.rm = TRUE), error = function(e) FALSE)) {
-    return(trimws2(x))
-  }
-  tryCatch(
-    {
-      if (!is.null(dim(x))) {
-        if (NCOL(x) > 2) {
-          stop("a maximum of two columns is allowed", call. = FALSE)
-        } else if (NCOL(x) == 2) {
-          # support Tidyverse selection like: df %>% select(colA, colB)
-          # paste these columns together
-          x <- as.data.frame(x, stringsAsFactors = FALSE)
-          colnames(x) <- c("A", "B")
-          x <- paste(x$A, x$B)
-        } else {
-          # support Tidyverse selection like: df %>% select(colA)
-          x <- as.data.frame(x, stringsAsFactors = FALSE)[[1]]
+    out <- x
+  } else {
+    out <- tryCatch(
+      {
+        if (!is.null(dim(x))) {
+          if (NCOL(x) > 2) {
+            stop("a maximum of two columns is allowed", call. = FALSE)
+          } else if (NCOL(x) == 2) {
+            # support Tidyverse selection like: df %>% select(colA, colB)
+            # paste these columns together
+            x <- as.data.frame(x, stringsAsFactors = FALSE)
+            colnames(x) <- c("A", "B")
+            x <- paste(x$A, x$B)
+          } else {
+            # support Tidyverse selection like: df %>% select(colA)
+            x <- as.data.frame(x, stringsAsFactors = FALSE)[[1]]
+          }
         }
-      }
-      parsed <- iconv(as.character(x), to = "UTF-8")
-      parsed[is.na(parsed) & !is.na(x)] <- iconv(x[is.na(parsed) & !is.na(x)], from = "Latin1", to = "ASCII//TRANSLIT")
-      parsed <- gsub('"', "", parsed, fixed = TRUE)
-      parsed <- gsub(" +", " ", parsed, perl = TRUE)
-      parsed
-    },
-    error = function(e) stop(e$message, call. = FALSE)
-  ) # this will also be thrown when running `as.mo(no_existing_object)`
-  trimws2(parsed)
+        parsed <- iconv(as.character(x), to = "UTF-8")
+        parsed[is.na(parsed) & !is.na(x)] <- iconv(x[is.na(parsed) & !is.na(x)], from = "Latin1", to = "ASCII//TRANSLIT")
+        parsed <- gsub('"', "", parsed, fixed = TRUE)
+        parsed
+      },
+      error = function(e) stop(e$message, call. = FALSE)
+    ) # this will also be thrown when running `as.mo(no_existing_object)`
+  }
+  out <- trimws2(out)
+  out <- gsub(" +", " ", out, perl = TRUE)
+  out <- gsub(" ?/ ? ", "/", out, perl = TRUE)
+  out
 }
 
 replace_old_mo_codes <- function(x, property) {
