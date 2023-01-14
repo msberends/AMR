@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9091</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9092</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -168,7 +168,7 @@
 <li><p>\(n\) is a taxonomic name (genus, species, and subspecies);</p></li>
 <li><p>\(l_n\) is the length of \(n\);</p></li>
 <li><p>\(lev\) is the <a href="https://en.wikipedia.org/wiki/Levenshtein_distance" class="external-link">Levenshtein distance function</a> (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change \(x\) into \(n\);</p></li>
-<li><p>\(p_{n}\) is the human pathogenic prevalence group of \(n\), as described below;</p></li>
+<li><p>\(p_n\) is the human pathogenic prevalence group of \(n\), as described below;</p></li>
 <li><p>\(k_n\) is the taxonomic kingdom of \(n\), set as Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5.</p></li>
 </ul><p>The grouping into human pathogenic prevalence \(p\) is based on recent work from Bartlett <em>et al.</em> (2022, <a href="https://doi.org/10.1099/mic.0.001269" class="external-link">doi:10.1099/mic.0.001269</a>
 ) who extensively studied medical-scientific literature to categorise all bacterial species into these groups:</p><ul><li><p><strong>Established</strong>, if a taxonomic species has infected at least three persons in three or more references. These records have <code>prevalence = 1.0</code> in the <a href="microorganisms.html">microorganisms</a> data set;</p></li>
@@ -195,7 +195,7 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="as.mo.html">mo_reset_session</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Reset 17 previously matched input values.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Reset 16 previously matched input values.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="as.mo.html">as.mo</a></span><span class="op">(</span><span class="st">"E. coli"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class 'mo'</span>
