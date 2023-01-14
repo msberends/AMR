@@ -236,9 +236,8 @@ as.mo <- function(x,
     x[trimws2(x) %like% translate_into_language("no .*growth", language = language)] <- NA_character_
     x[trimws2(x) %like% paste0("^(", translate_into_language("no|not", language = language), ") ")] <- NA_character_
 
-    # groups are in our taxonomic table with a capital G, and complexes might be added by the user
+    # groups are in our taxonomic table with a capital G
     x <- gsub(" group( |$)", " Group\\1", x, perl = TRUE)
-    x <- gsub(" complex( |$)", " Complex\\1", x, perl = TRUE)
 
     # run over all unique leftovers
     x_unique <- unique(x[is.na(out) & !is.na(x)])

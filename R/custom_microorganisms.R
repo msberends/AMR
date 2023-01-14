@@ -27,9 +27,9 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Add Custom Microorganisms to This Package
+#' Add Custom Microorganisms
 #'
-#' With [add_custom_microorganisms()] you can add your own custom microorganisms to the `AMR` package, such the non-taxonomic outcome of laboratory analysis.
+#' With [add_custom_microorganisms()] you can add your own custom microorganisms, such the non-taxonomic outcome of laboratory analysis.
 #' @param x a [data.frame] resembling the [microorganisms] data set, at least containing column "genus" (case-insensitive)
 #' @details This function will fill in missing taxonomy for you, if specific taxonomic columns are missing, see *Examples*.
 #' 
@@ -66,7 +66,7 @@
 #'       ```
 #'
 #' Use [clear_custom_microorganisms()] to clear the previously added antimicrobials.
-#' @seealso [add_custom_antimicrobials()] to add custom antimicrobials to this package.
+#' @seealso [add_custom_antimicrobials()] to add custom antimicrobials.
 #' @rdname add_custom_microorganisms
 #' @export
 #' @examples
@@ -102,15 +102,23 @@
 #' 
 #' # the function tries to be forgiving:
 #' add_custom_microorganisms(
-#'   data.frame(GENUS = "ESCHERICHIA / KLEBSIELLA",
-#'              SPECIES = "SPECIES"))
+#'   data.frame(GENUS = "ESCHERICHIA / KLEBSIELLA SLASHLINE",
+#'              SPECIES = "SPECIES")
+#' )
 #' mo_name("ESCHERICHIA / KLEBSIELLA")
+#' mo_rank("ESCHERICHIA / KLEBSIELLA")
+#' # taxonomy still works, although a slashline genus was given as input:
 #' mo_family("Escherichia/Klebsiella")
 #' 
+#' # for groups and complexes, set them as species or subspecies:
 #' add_custom_microorganisms(
-#'   data.frame(genus = "Citrobacter", species = "freundii complex"))
-#' mo_name("C. freundii complex")
-#' mo_gramstain("C. freundii complex")
+#'   data.frame(genus = "Citrobacter", 
+#'              species = c("freundii", "braakii complex"),
+#'              subspecies = c("complex", ""))
+#' )
+#' mo_name(c("C. freundii complex", "C. braakii complex"))
+#' mo_species(c("C. freundii complex", "C. braakii complex"))
+#' mo_gramstain(c("C. freundii complex", "C. braakii complex"))
 #' }
 add_custom_microorganisms <- function(x) {
   meet_criteria(x, allow_class = "data.frame")
@@ -135,12 +143,13 @@ add_custom_microorganisms <- function(x) {
       x[, col] <- as.character(x[, col, drop = TRUE])
     }
     col_ <- x[, col, drop = TRUE]
-    col_ <- tolower(trimws2(col_))
+    col_ <- tolower(col_)
+    col_ <- gsub("slashline", "", col_, fixed = TRUE)
+    col_ <- trimws2(col_)
     col_[col_ %like% "(sub)?species"] <- ""
     col_ <- gsub(" *([/-]) *", "\\1", col_, perl = TRUE)
-    # groups are in our taxonomic table with a capital G, and complexes might be added by the user
+    # groups are in our taxonomic table with a capital G
     col_ <- gsub(" group( |$)", " Group\\1", col_, perl = TRUE)
-    col_ <- gsub(" complex( |$)", " Complex\\1", col_, perl = TRUE)
     
     col_[is.na(col_)] <- ""
     if (col == "genus") {
@@ -151,6 +160,10 @@ add_custom_microorganisms <- function(x) {
     }
     x[, col] <- col_
   }
+  # if subspecies is a group or complex, add it to the species and empty the subspecies
+  x$species[which(x$subspecies %in% c("group", "Group", "complex"))] <- paste(x$species[which(x$subspecies %in% c("group", "Group", "complex"))],
+                                                                              x$subspecies[which(x$subspecies %in% c("group", "Group", "complex"))])
+  x$subspecies[which(x$subspecies %in% c("group", "Group", "complex"))] <- ""
   
   if ("rank" %in% colnames(x)) {
     stop_ifnot(all(x$rank %in% AMR_env$MO_lookup$rank),

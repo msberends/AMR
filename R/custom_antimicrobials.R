@@ -27,9 +27,9 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Add Custom Antimicrobials to This Package
+#' Add Custom Antimicrobials
 #'
-#' With [add_custom_antimicrobials()] you can add your own custom antimicrobial drug codes to the `AMR` package.
+#' With [add_custom_antimicrobials()] you can add your own custom antimicrobial drug names and codes.
 #' @param x a [data.frame] resembling the [antibiotics] data set, at least containing columns "ab" and "name"
 #' @details **Important:** Due to how \R works, the [add_custom_antimicrobials()] function has to be run in every \R session - added antimicrobials are not stored between sessions and are thus lost when \R is exited. 
 #' 
@@ -65,13 +65,13 @@
 #'       ```
 #'
 #' Use [clear_custom_antimicrobials()] to clear the previously added antimicrobials.
-#' @seealso [add_custom_microorganisms()] to add custom microorganisms to this package.
+#' @seealso [add_custom_microorganisms()] to add custom microorganisms.
 #' @rdname add_custom_antimicrobials
 #' @export
 #' @examples
 #' \donttest{
 #'
-#' # returns NA and throws a warning (which is now suppressed):
+#' # returns NA and throws a warning (which is suppressed here):
 #' suppressWarnings(
 #'   as.ab("testab")
 #' )

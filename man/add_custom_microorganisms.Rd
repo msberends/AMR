@@ -3,7 +3,7 @@
 \name{add_custom_microorganisms}
 \alias{add_custom_microorganisms}
 \alias{clear_custom_microorganisms}
-\title{Add Custom Microorganisms to This Package}
+\title{Add Custom Microorganisms}
 \usage{
 add_custom_microorganisms(x)
 
@@ -13,7 +13,7 @@ clear_custom_microorganisms()
 \item{x}{a \link{data.frame} resembling the \link{microorganisms} data set, at least containing column "genus" (case-insensitive)}
 }
 \description{
-With \code{\link[=add_custom_microorganisms]{add_custom_microorganisms()}} you can add your own custom microorganisms to the \code{AMR} package, such the non-taxonomic outcome of laboratory analysis.
+With \code{\link[=add_custom_microorganisms]{add_custom_microorganisms()}} you can add your own custom microorganisms, such the non-taxonomic outcome of laboratory analysis.
 }
 \details{
 This function will fill in missing taxonomy for you, if specific taxonomic columns are missing, see \emph{Examples}.
@@ -83,17 +83,25 @@ mo_info("Enterobacter asburiae/cloacae")
 
 # the function tries to be forgiving:
 add_custom_microorganisms(
-  data.frame(GENUS = "ESCHERICHIA / KLEBSIELLA",
-             SPECIES = "SPECIES"))
+  data.frame(GENUS = "ESCHERICHIA / KLEBSIELLA SLASHLINE",
+             SPECIES = "SPECIES")
+)
 mo_name("ESCHERICHIA / KLEBSIELLA")
+mo_rank("ESCHERICHIA / KLEBSIELLA")
+# taxonomy still works, although a slashline genus was given as input:
 mo_family("Escherichia/Klebsiella")
 
+# for groups and complexes, set them as species or subspecies:
 add_custom_microorganisms(
-  data.frame(genus = "Citrobacter", species = "freundii complex"))
-mo_name("C. freundii complex")
-mo_gramstain("C. freundii complex")
+  data.frame(genus = "Citrobacter", 
+             species = c("freundii", "braakii complex"),
+             subspecies = c("complex", ""))
+)
+mo_name(c("C. freundii complex", "C. braakii complex"))
+mo_species(c("C. freundii complex", "C. braakii complex"))
+mo_gramstain(c("C. freundii complex", "C. braakii complex"))
 }
 }
 \seealso{
-\code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} to add custom antimicrobials to this package.
+\code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} to add custom antimicrobials.
 }

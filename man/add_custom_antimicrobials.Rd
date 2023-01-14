@@ -3,7 +3,7 @@
 \name{add_custom_antimicrobials}
 \alias{add_custom_antimicrobials}
 \alias{clear_custom_antimicrobials}
-\title{Add Custom Antimicrobials to This Package}
+\title{Add Custom Antimicrobials}
 \usage{
 add_custom_antimicrobials(x)
 
@@ -13,7 +13,7 @@ clear_custom_antimicrobials()
 \item{x}{a \link{data.frame} resembling the \link{antibiotics} data set, at least containing columns "ab" and "name"}
 }
 \description{
-With \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} you can add your own custom antimicrobial drug codes to the \code{AMR} package.
+With \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} you can add your own custom antimicrobial drug names and codes.
 }
 \details{
 \strong{Important:} Due to how \R works, the \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} function has to be run in every \R session - added antimicrobials are not stored between sessions and are thus lost when \R is exited.
@@ -52,7 +52,7 @@ Use \code{\link[=clear_custom_antimicrobials]{clear_custom_antimicrobials()}} to
 \examples{
 \donttest{
 
-# returns NA and throws a warning (which is now suppressed):
+# returns NA and throws a warning (which is suppressed here):
 suppressWarnings(
   as.ab("testab")
 )
@@ -101,5 +101,5 @@ x[, betalactams()]
 }
 }
 \seealso{
-\code{\link[=add_custom_microorganisms]{add_custom_microorganisms()}} to add custom microorganisms to this package.
+\code{\link[=add_custom_microorganisms]{add_custom_microorganisms()}} to add custom microorganisms.
 }

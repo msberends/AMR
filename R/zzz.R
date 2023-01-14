@@ -239,10 +239,3 @@ create_MO_lookup <- function() {
   MO_lookup$subspecies_first <- tolower(substr(MO_lookup$subspecies, 1, 1)) # tolower for Salmonella serovars
   MO_lookup
 }
-
-add_intrinsic_resistance_to_AMR_env <- function() {
-  # for mo_is_intrinsic_resistant() - saves a lot of time when executed on this vector
-  if (is.null(AMR_env$intrinsic_resistant)) {
-    AMR_env$intrinsic_resistant <- paste(AMR::intrinsic_resistant$mo, AMR::intrinsic_resistant$ab)
-  }
-}

@@ -1372,6 +1372,13 @@ percentage <- function(x, digits = NULL, ...) {
   )
 }
 
+add_intrinsic_resistance_to_AMR_env <- function() {
+  # for mo_is_intrinsic_resistant() - saves a lot of time when executed on this vector
+  if (is.null(AMR_env$intrinsic_resistant)) {
+    AMR_env$intrinsic_resistant <- paste(AMR::intrinsic_resistant$mo, AMR::intrinsic_resistant$ab)
+  }
+}
+
 trimws2 <- function(..., whitespace = "[\u0009\u000A\u000B\u000C\u000D\u0020\u0085\u00A0\u1680\u180E\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u200C\u200D\u2028\u2029\u202F\u205F\u2060\u3000\uFEFF]") {
   # this is even faster than trimws() itself which sets " \t\n\r".
   trimws(..., whitespace = whitespace)
