@@ -33,15 +33,14 @@ $(document).ready(function() {
 
   // Replace 'Developers' with 'Maintainers' on the main page, and "Contributors" on the Authors page
   $(".developers h2").text("Maintainers");
-  $(".citation h2:first").text("All contributors");
-  $(".citation h2:second").text("How to Cite");
+  $(".citation h2:nth(0)").text("All contributors");
+  $(".citation h2:nth(1)").text("How to Cite");
 
   // remove \donttest and \dontrun texts in Examples
   if ($("#ref-examples ~ div pre").length > 0) {
-    const regex1 = /# \\dont(test|run)\{(\n|<br>)*/ig;
-    const regex2 = /(\n|<br>)*# \}/ig;
-    $("#ref-examples ~ div pre").html($("#ref-examples ~ div pre").html().replaceAll(regex1, ""));
-    $("#ref-examples ~ div pre").html($("#ref-examples ~ div pre").html().replaceAll(regex2, ""));
+    $("#ref-examples ~ div pre").html($("#ref-examples ~ div pre").html().replaceAll("# \\donttest{", ""));
+    $("#ref-examples ~ div pre").html($("#ref-examples ~ div pre").html().replaceAll("# \\dontrun{", ""));
+    $("#ref-examples ~ div pre").html($("#ref-examples ~ div pre").html().replaceAll("# }", ""));
   }
 
   // remove leading newline in code examples on changelog

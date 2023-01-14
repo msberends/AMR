@@ -78,6 +78,11 @@ pre .co, .co {
   color: #999999 !important;
   font-style: italic !important;
 }
+pre code .r-out,
+pre code .r-msg {
+  /* output of functions */
+  color: #555555 !important;
+}
 code a[href],
 a[href] code,
 pre a[href],
