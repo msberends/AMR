@@ -10,7 +10,7 @@
 \alias{count_SI}
 \alias{count_S}
 \alias{count_all}
-\alias{n_rsi}
+\alias{n_sir}
 \alias{count_df}
 \title{Count Available Isolates}
 \usage{
@@ -30,7 +30,7 @@ count_S(..., only_all_tested = FALSE)
 
 count_all(..., only_all_tested = FALSE)
 
-n_rsi(..., only_all_tested = FALSE)
+n_sir(..., only_all_tested = FALSE)
 
 count_df(
   data,
@@ -40,11 +40,11 @@ count_df(
 )
 }
 \arguments{
-\item{...}{one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link[=as.rsi]{as.rsi()}} if needed.}
+\item{...}{one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link[=as.sir]{as.sir()}} if needed.}
 
 \item{only_all_tested}{(for combination therapies, i.e. using more than one variable for \code{...}): a \link{logical} to indicate that isolates must be tested for all antibiotics, see section \emph{Combination Therapy} below}
 
-\item{data}{a \link{data.frame} containing columns with class \code{\link{rsi}} (see \code{\link[=as.rsi]{as.rsi()}})}
+\item{data}{a \link{data.frame} containing columns with class \code{\link{sir}} (see \code{\link[=as.sir]{as.sir()}})}
 
 \item{translate_ab}{a column name of the \link{antibiotics} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}}
 
@@ -65,9 +65,9 @@ These functions are meant to count isolates. Use the \code{\link[=resistance]{re
 
 The function \code{\link[=count_resistant]{count_resistant()}} is equal to the function \code{\link[=count_R]{count_R()}}. The function \code{\link[=count_susceptible]{count_susceptible()}} is equal to the function \code{\link[=count_SI]{count_SI()}}.
 
-The function \code{\link[=n_rsi]{n_rsi()}} is an alias of \code{\link[=count_all]{count_all()}}. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to \code{n_distinct()}. Their function is equal to \code{count_susceptible(...) + count_resistant(...)}.
+The function \code{\link[=n_sir]{n_sir()}} is an alias of \code{\link[=count_all]{count_all()}}. They can be used to count all available isolates, i.e. where all input antibiotics have an available result (S, I or R). Their use is equal to \code{n_distinct()}. Their function is equal to \code{count_susceptible(...) + count_resistant(...)}.
 
-The function \code{\link[=count_df]{count_df()}} takes any variable from \code{data} that has an \code{\link{rsi}} class (created with \code{\link[=as.rsi]{as.rsi()}}) and counts the number of S's, I's and R's. It also supports grouped variables. The function \code{\link[=rsi_df]{rsi_df()}} works exactly like \code{\link[=count_df]{count_df()}}, but adds the percentage of S, I and R.
+The function \code{\link[=count_df]{count_df()}} takes any variable from \code{data} that has an \code{\link{sir}} class (created with \code{\link[=as.sir]{as.sir()}}) and counts the number of S's, I's and R's. It also supports grouped variables. The function \code{\link[=sir_sf]{sir_sf()}} works exactly like \code{\link[=count_df]{count_df()}}, but adds the percentage of S, I and R.
 }
 \section{Interpretation of R and S/I}{
 
@@ -139,14 +139,14 @@ count_R(example_isolates$AMX)
 
 # Count all available isolates
 count_all(example_isolates$AMX)
-n_rsi(example_isolates$AMX)
+n_sir(example_isolates$AMX)
 
-# n_rsi() is an alias of count_all().
+# n_sir() is an alias of count_all().
 # Since it counts all available isolates, you can
 # calculate back to count e.g. susceptible isolates.
 # These results are the same:
 count_susceptible(example_isolates$AMX)
-susceptibility(example_isolates$AMX) * n_rsi(example_isolates$AMX)
+susceptibility(example_isolates$AMX) * n_sir(example_isolates$AMX)
 
 # dplyr -------------------------------------------------------------
 \donttest{
@@ -158,7 +158,7 @@ if (require("dplyr")) {
       I = count_I(CIP),
       S = count_S(CIP),
       n1 = count_all(CIP), # the actual total; sum of all three
-      n2 = n_rsi(CIP), # same - analogous to n_distinct
+      n2 = n_sir(CIP), # same - analogous to n_distinct
       total = n()
     ) # NOT the number of tested isolates!
 
@@ -166,7 +166,7 @@ if (require("dplyr")) {
   # (i.e., in this data set columns GEN, TOB, AMK, KAN)
   example_isolates \%>\%
     group_by(ward) \%>\%
-    summarise(across(aminoglycosides(), n_rsi))
+    summarise(across(aminoglycosides(), n_sir))
 
   # Count co-resistance between amoxicillin/clav acid and gentamicin,
   # so we can see that combination therapy does a lot more than mono therapy.

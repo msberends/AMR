@@ -515,7 +515,7 @@ stop_ <- function(..., call = TRUE) {
     if (isTRUE(call)) {
       call <- as.character(sys.call(-1)[1])
     } else {
-      # so you can go back more than 1 call, as used in rsi_calc(), that now throws a reference to e.g. n_rsi()
+      # so you can go back more than 1 call, as used in sir_calc(), that now throws a reference to e.g. n_sir()
       call <- as.character(sys.call(call)[1])
     }
     msg <- paste0("in ", call, "(): ", msg)
@@ -626,7 +626,7 @@ create_eucast_ab_documentation <- function() {
       # separate drugs, such as `AMX`
       val <- as.ab(val)
     } else {
-      val <- as.rsi(NA)
+      val <- as.sir(NA)
     }
     ab <- c(ab, val)
   }
@@ -666,7 +666,7 @@ vector_or <- function(v, quotes = TRUE, reverse = FALSE, sort = TRUE, initial_ca
     return(paste0(quotes, v, quotes))
   }
   if (identical(v, c("I", "R", "S"))) {
-    # class 'rsi' should be sorted like this
+    # class 'sir' should be sorted like this
     v <- c("R", "S", "I")
   }
   # all commas except for last item, so will become '"val1", "val2", "val3" or "val4"'
@@ -710,7 +710,7 @@ format_class <- function(class, plural = FALSE) {
   if ("custom_eucast_rules" %in% class) {
     class <- "input created with `custom_eucast_rules()`"
   }
-  if (any(c("mo", "ab", "rsi") %in% class)) {
+  if (any(c("mo", "ab", "sir") %in% class)) {
     class <- paste0("of class <", class[1L], ">")
   }
   class[class == class.bak] <- paste0("of class <", class[class == class.bak], ">")
@@ -1140,18 +1140,18 @@ font_grey_bg <- function(..., collapse = " ") {
   }
 }
 font_red_bg <- function(..., collapse = " ") {
-  # this is #ed553b (picked to be colourblind-safe with other RSI colours)
+  # this is #ed553b (picked to be colourblind-safe with other SIR colours)
   try_colour(font_black(..., collapse = collapse), before = "\033[48;5;203m", after = "\033[49m", collapse = collapse)
 }
 font_orange_bg <- function(..., collapse = " ") {
-  # this is #f6d55c (picked to be colourblind-safe with other RSI colours)
+  # this is #f6d55c (picked to be colourblind-safe with other SIR colours)
   try_colour(font_black(..., collapse = collapse), before = "\033[48;5;222m", after = "\033[49m", collapse = collapse)
 }
 font_yellow_bg <- function(..., collapse = " ") {
   try_colour(font_black(..., collapse = collapse), before = "\033[48;5;228m", after = "\033[49m", collapse = collapse)
 }
 font_green_bg <- function(..., collapse = " ") {
-  # this is #3caea3 (picked to be colourblind-safe with other RSI colours)
+  # this is #3caea3 (picked to be colourblind-safe with other SIR colours)
   try_colour(font_black(..., collapse = collapse), before = "\033[48;5;79m", after = "\033[49m", collapse = collapse)
 }
 font_purple_bg <- function(..., collapse = " ") {

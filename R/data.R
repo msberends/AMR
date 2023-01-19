@@ -173,7 +173,7 @@
 #' - `gender`\cr Gender of the patient, either `r vector_or(example_isolates$gender)`
 #' - `ward`\cr Ward type where the patient was admitted, either `r vector_or(example_isolates$ward)`
 #' - `mo`\cr ID of microorganism created with [as.mo()], see also the [microorganisms] data set
-#' - `PEN:RIF`\cr `r sum(vapply(FUN.VALUE = logical(1), example_isolates, is.rsi))` different antibiotics with class [`rsi`] (see [as.rsi()]); these column names occur in the [antibiotics] data set and can be translated with [set_ab_names()] or [ab_name()]
+#' - `PEN:RIF`\cr `r sum(vapply(FUN.VALUE = logical(1), example_isolates, is.sir))` different antibiotics with class [`sir`] (see [as.sir()]); these column names occur in the [antibiotics] data set and can be translated with [set_ab_names()] or [ab_name()]
 #' @details
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #' @examples
@@ -188,7 +188,7 @@
 #' - `date`\cr date of receipt at the laboratory
 #' - `hospital`\cr ID of the hospital, from A to C
 #' - `bacteria`\cr info about microorganism that can be transformed with [as.mo()], see also [microorganisms]
-#' - `AMX:GEN`\cr 4 different antibiotics that have to be transformed with [as.rsi()]
+#' - `AMX:GEN`\cr 4 different antibiotics that have to be transformed with [as.sir()]
 #' @details
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #' @examples
@@ -224,19 +224,19 @@
 #' - `Inducible clindamycin resistance`\cr Clindamycin can be induced?
 #' - `Comment`\cr Other comments
 #' - `Date of data entry`\cr [Date] this data was entered in WHONET
-#' - `AMP_ND10:CIP_EE`\cr `r sum(vapply(FUN.VALUE = logical(1), WHONET, is.rsi))` different antibiotics. You can lookup the abbreviations in the [antibiotics] data set, or use e.g. [`ab_name("AMP")`][ab_name()] to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using [as.rsi()].
+#' - `AMP_ND10:CIP_EE`\cr `r sum(vapply(FUN.VALUE = logical(1), WHONET, is.sir))` different antibiotics. You can lookup the abbreviations in the [antibiotics] data set, or use e.g. [`ab_name("AMP")`][ab_name()] to get the official name immediately. Before analysis, you should transform this to a valid antibiotic class, using [as.sir()].
 #' @details
 #' Like all data sets in this package, this data set is publicly available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. Please visit [our website for the download links](https://msberends.github.io/AMR/articles/datasets.html). The actual files are of course available on [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw).
 #' @examples
 #' WHONET
 "WHONET"
 
-#' Data Set for R/SI Interpretation
+#' Data Set with Clinical Breakpoints for SIR Interpretation
 #'
-#' Data set containing reference data to interpret MIC and disk diffusion to R/SI values, according to international guidelines. Currently implemented guidelines are EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`). Use [as.rsi()] to transform MICs or disks measurements to R/SI values.
-#' @format A [tibble][tibble::tibble] with `r format(nrow(rsi_translation), big.mark = ",")` observations and `r ncol(rsi_translation)` variables:
+#' Data set containing clinical breakpoints to interpret MIC and disk diffusion to SIR values, according to international guidelines. Currently implemented guidelines are EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`). Use [as.sir()] to transform MICs or disks measurements to SIR values.
+#' @format A [tibble][tibble::tibble] with `r format(nrow(clinical_breakpoints), big.mark = ",")` observations and `r ncol(clinical_breakpoints)` variables:
 #' - `guideline`\cr Name of the guideline
-#' - `method`\cr Either `r vector_or(rsi_translation$method)`
+#' - `method`\cr Either `r vector_or(clinical_breakpoints$method)`
 #' - `site`\cr Body site, e.g. "Oral" or "Respiratory"
 #' - `mo`\cr Microbial ID, see [as.mo()]
 #' - `rank_index`\cr Taxonomic rank index of `mo` from 1 (subspecies/infraspecies) to 5 (unknown microorganism)
@@ -252,8 +252,8 @@
 #' They **allow for machine reading EUCAST and CLSI guidelines**, which is almost impossible with the MS Excel and PDF files distributed by EUCAST and CLSI.
 #' @seealso [intrinsic_resistant]
 #' @examples
-#' rsi_translation
-"rsi_translation"
+#' clinical_breakpoints
+"clinical_breakpoints"
 
 #' Data Set with Bacterial Intrinsic Resistance
 #'

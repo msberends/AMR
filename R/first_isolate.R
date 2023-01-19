@@ -48,7 +48,7 @@
 #' @param points_threshold minimum number of points to require before differences in the antibiogram will lead to inclusion of an isolate when `type = "points"`, see *Details*
 #' @param info a [logical] to indicate info should be printed, defaults to `TRUE` only in interactive mode
 #' @param include_unknown a [logical] to indicate whether 'unknown' microorganisms should be included too, i.e. microbial code `"UNKNOWN"`, which defaults to `FALSE`. For WHONET users, this means that all records with organism code `"con"` (*contamination*) will be excluded at default. Isolates with a microbial ID of `NA` will always be excluded as first isolate.
-#' @param include_untested_rsi a [logical] to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use `include_untested_rsi = FALSE` to always return `FALSE` for such rows. This checks the data set for columns of class `rsi` and consequently requires transforming columns with antibiotic results using [as.rsi()] first.
+#' @param include_untested_sir a [logical] to indicate whether also rows without antibiotic results are still eligible for becoming a first isolate. Use `include_untested_sir = FALSE` to always return `FALSE` for such rows. This checks the data set for columns of class `sir` and consequently requires transforming columns with antibiotic results using [as.sir()] first.
 #' @param ... arguments passed on to [first_isolate()] when using [filter_first_isolate()], otherwise arguments passed on to [key_antimicrobials()] (such as `universal`, `gram_negative`, `gram_positive`)
 #' @details
 #' To conduct epidemiological analyses on antimicrobial resistance data, only so-called first isolates should be included to prevent overestimation and underestimation of antimicrobial resistance. Different methods can be used to do so, see below.
@@ -176,7 +176,7 @@ first_isolate <- function(x = NULL,
                           points_threshold = 2,
                           info = interactive(),
                           include_unknown = FALSE,
-                          include_untested_rsi = TRUE,
+                          include_untested_sir = TRUE,
                           ...) {
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
@@ -228,19 +228,19 @@ first_isolate <- function(x = NULL,
   meet_criteria(points_threshold, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(info, allow_class = "logical", has_length = 1)
   meet_criteria(include_unknown, allow_class = "logical", has_length = 1)
-  meet_criteria(include_untested_rsi, allow_class = "logical", has_length = 1)
+  meet_criteria(include_untested_sir, allow_class = "logical", has_length = 1)
 
   # remove data.table, grouping from tibbles, etc.
   x <- as.data.frame(x, stringsAsFactors = FALSE)
 
-  any_col_contains_rsi <- any(vapply(
+  any_col_contains_sir <- any(vapply(
     FUN.VALUE = logical(1),
     X = x,
     # check only first 10,000 rows
     FUN = function(x) any(as.character(x[1:10000]) %in% c("R", "S", "I"), na.rm = TRUE),
     USE.NAMES = FALSE
   ))
-  if (method == "phenotype-based" && !any_col_contains_rsi) {
+  if (method == "phenotype-based" && !any_col_contains_sir) {
     method <- "episode-based"
   }
   if (isTRUE(info) && message_not_thrown_before("first_isolate", "method")) {
@@ -285,13 +285,13 @@ first_isolate <- function(x = NULL,
       type <- "keyantimicrobials"
     }
     if (type == "points") {
-      x$keyantimicrobials <- all_antimicrobials(x, only_rsi_columns = FALSE)
+      x$keyantimicrobials <- all_antimicrobials(x, only_sir_columns = FALSE)
       col_keyantimicrobials <- "keyantimicrobials"
     } else if (type == "keyantimicrobials" && is.null(col_keyantimicrobials)) {
       col_keyantimicrobials <- search_type_in_df(x = x, type = "keyantimicrobials", info = info)
       if (is.null(col_keyantimicrobials)) {
         # still not found as a column, create it ourselves
-        x$keyantimicrobials <- key_antimicrobials(x, only_rsi_columns = FALSE, col_mo = col_mo, ...)
+        x$keyantimicrobials <- key_antimicrobials(x, only_sir_columns = FALSE, col_mo = col_mo, ...)
         col_keyantimicrobials <- "keyantimicrobials"
       }
     }
@@ -581,13 +581,13 @@ first_isolate <- function(x = NULL,
   x[which(is.na(x$newvar_mo)), "newvar_first_isolate"] <- FALSE
 
   # handle isolates without antibiogram
-  if (include_untested_rsi == FALSE && any(is.rsi(x))) {
-    rsi_all_NA <- which(unname(vapply(
+  if (include_untested_sir == FALSE && any(is.sir(x))) {
+    sir_all_NA <- which(unname(vapply(
       FUN.VALUE = logical(1),
-      as.data.frame(t(x[, is.rsi(x), drop = FALSE])),
-      function(rsi_values) all(is.na(rsi_values))
+      as.data.frame(t(x[, is.sir(x), drop = FALSE])),
+      function(sir_values) all(is.na(sir_values))
     )))
-    x[rsi_all_NA, "newvar_first_isolate"] <- FALSE
+    x[sir_all_NA, "newvar_first_isolate"] <- FALSE
   }
 
   # arrange back according to original sorting again

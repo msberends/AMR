@@ -369,20 +369,20 @@ changed_md5 <- function(object) {
 }
 
 # give official names to ABs and MOs
-rsi <- rsi_translation %>%
+rsi <- clinical_breakpoints %>%
   mutate(mo_name = mo_name(mo, language = NULL, keep_synonyms = TRUE, info = FALSE), .after = mo) %>%
   mutate(ab_name = ab_name(ab, language = NULL), .after = ab)
 if (changed_md5(rsi)) {
-  usethis::ui_info(paste0("Saving {usethis::ui_value('rsi_translation')} to {usethis::ui_value('data-raw/')}"))
+  usethis::ui_info(paste0("Saving {usethis::ui_value('clinical_breakpoints')} to {usethis::ui_value('data-raw/')}"))
   write_md5(rsi)
-  try(saveRDS(rsi, "data-raw/rsi_translation.rds", version = 2, compress = "xz"), silent = TRUE)
-  try(write.table(rsi, "data-raw/rsi_translation.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
-  try(haven::write_sas(rsi, "data-raw/rsi_translation.sas"), silent = TRUE)
-  try(haven::write_sav(rsi, "data-raw/rsi_translation.sav"), silent = TRUE)
-  try(haven::write_dta(rsi, "data-raw/rsi_translation.dta"), silent = TRUE)
-  try(openxlsx::write.xlsx(rsi, "data-raw/rsi_translation.xlsx"), silent = TRUE)
-  try(arrow::write_feather(rsi, "data-raw/rsi_translation.feather"), silent = TRUE)
-  try(arrow::write_parquet(rsi, "data-raw/rsi_translation.parquet"), silent = TRUE)
+  try(saveRDS(rsi, "data-raw/clinical_breakpoints.rds", version = 2, compress = "xz"), silent = TRUE)
+  try(write.table(rsi, "data-raw/clinical_breakpoints.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
+  try(haven::write_sas(rsi, "data-raw/clinical_breakpoints.sas"), silent = TRUE)
+  try(haven::write_sav(rsi, "data-raw/clinical_breakpoints.sav"), silent = TRUE)
+  try(haven::write_dta(rsi, "data-raw/clinical_breakpoints.dta"), silent = TRUE)
+  try(openxlsx::write.xlsx(rsi, "data-raw/clinical_breakpoints.xlsx"), silent = TRUE)
+  try(arrow::write_feather(rsi, "data-raw/clinical_breakpoints.feather"), silent = TRUE)
+  try(arrow::write_parquet(rsi, "data-raw/clinical_breakpoints.parquet"), silent = TRUE)
 }
 
 if (changed_md5(microorganisms)) {

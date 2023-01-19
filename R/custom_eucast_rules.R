@@ -61,9 +61,9 @@
 #'
 #' ```r
 #' df <- data.frame(mo = c("Escherichia coli", "Klebsiella pneumoniae"),
-#'                  TZP = as.rsi("R"),
-#'                  ampi = as.rsi("S"),
-#'                  cipro = as.rsi("S"))
+#'                  TZP = as.sir("R"),
+#'                  ampi = as.sir("S"),
+#'                  cipro = as.sir("S"))
 #' df
 #' #>                      mo TZP ampi cipro
 #' #> 1      Escherichia coli   R    S     S
@@ -184,7 +184,7 @@ custom_eucast_rules <- function(...) {
       result_value %in% c("R", "S", "I", NA),
       "the resulting value of rule ", i, " must be either \"R\", \"S\", \"I\" or NA"
     )
-    result_value <- as.rsi(result_value)
+    result_value <- as.sir(result_value)
 
     out[[i]]$result_group <- result_group
     out[[i]]$result_value <- result_value

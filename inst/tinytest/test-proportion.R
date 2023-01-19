@@ -32,8 +32,8 @@ expect_equal(proportion_SI(example_isolates$AMX), susceptibility(example_isolate
 # AMX resistance in `example_isolates`
 expect_equal(proportion_R(example_isolates$AMX), 0.5955556, tolerance = 0.0001)
 expect_equal(proportion_I(example_isolates$AMX), 0.002222222, tolerance = 0.0001)
-expect_equal(rsi_confidence_interval(example_isolates$AMX)[1], 0.5688204, tolerance = 0.0001)
-expect_equal(rsi_confidence_interval(example_isolates$AMX)[2], 0.6218738, tolerance = 0.0001)
+expect_equal(sir_confidence_interval(example_isolates$AMX)[1], 0.5688204, tolerance = 0.0001)
+expect_equal(sir_confidence_interval(example_isolates$AMX)[2], 0.6218738, tolerance = 0.0001)
 expect_equal(
   1 - proportion_R(example_isolates$AMX) - proportion_I(example_isolates$AMX),
   proportion_S(example_isolates$AMX)
@@ -69,7 +69,7 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
         R = proportion_R(CIP, as_percent = TRUE),
         I = proportion_I(CIP, as_percent = TRUE),
         S = proportion_S(CIP, as_percent = TRUE),
-        n = n_rsi(CIP),
+        n = n_sir(CIP),
         total = n()
       ) %>%
       pull(n) %>%
@@ -83,11 +83,11 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
       group_by(ward) %>%
       summarise(
         cipro_p = proportion_SI(CIP, as_percent = TRUE),
-        cipro_n = n_rsi(CIP),
+        cipro_n = n_sir(CIP),
         genta_p = proportion_SI(GEN, as_percent = TRUE),
-        genta_n = n_rsi(GEN),
+        genta_n = n_sir(GEN),
         combination_p = proportion_SI(CIP, GEN, as_percent = TRUE),
-        combination_n = n_rsi(CIP, GEN)
+        combination_n = n_sir(CIP, GEN)
       ) %>%
       pull(combination_n),
     c(1181, 577, 116)
@@ -110,7 +110,7 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
     )
   )
   
-  expect_warning(example_isolates %>% group_by(ward) %>% summarise(across(KAN, rsi_confidence_interval)))
+  expect_warning(example_isolates %>% group_by(ward) %>% summarise(across(KAN, sir_confidence_interval)))
 }
 
 expect_warning(proportion_R(as.character(example_isolates$AMC)))
@@ -120,12 +120,12 @@ expect_warning(proportion_S(as.character(
   example_isolates$GEN
 )))
 
-expect_warning(n_rsi(as.character(
+expect_warning(n_sir(as.character(
   example_isolates$AMC,
   example_isolates$GEN
 )))
 expect_equal(
-  suppressWarnings(n_rsi(as.character(
+  suppressWarnings(n_sir(as.character(
     example_isolates$AMC,
     example_isolates$GEN
   ))),

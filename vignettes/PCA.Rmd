@@ -44,7 +44,7 @@ resistance_data <- example_isolates %>%
     order = mo_order(mo), # group on anything, like order
     genus = mo_genus(mo)
   ) %>% #  and genus as we do here
-  summarise_if(is.rsi, resistance) %>% # then get resistance of all drugs
+  summarise_if(is.sir, resistance) %>% # then get resistance of all drugs
   select(
     order, genus, AMC, CXM, CTX,
     CAZ, GEN, TOB, TMP, SXT

@@ -230,7 +230,7 @@ read_EUCAST <- function(sheet, file, guideline_name) {
       mo = ifelse(mo == "", mo_sheet, mo)
     ) %>%
     filter(!(is.na(breakpoint_S) & is.na(breakpoint_R))) %>%
-    # comply with rsi_translation for now
+    # comply with clinical_breakpoints for now
     transmute(guideline,
       method,
       site = case_when(
@@ -285,7 +285,7 @@ for (i in 2:length(sheets_to_analyse)) {
 }
 
 # 2021-07-12 fix for Morganellaceae (check other lines too next time)
-morg <- rsi_translation %>%
+morg <- clinical_breakpoints %>%
   as_tibble() %>%
   filter(
     ab == "IPM",
@@ -298,7 +298,7 @@ morg[which(morg$method == "MIC"), "breakpoint_R"] <- 4
 morg[which(morg$method == "DISK"), "breakpoint_S"] <- 50
 morg[which(morg$method == "DISK"), "breakpoint_R"] <- 19
 
-rsi_translation <- rsi_translation %>%
+clinical_breakpoints <- clinical_breakpoints %>%
   bind_rows(morg) %>%
   bind_rows(morg %>%
     mutate(guideline = "EUCAST 2020")) %>%

@@ -37,7 +37,7 @@
 #' 
 #' There are two ways to automate this process:
 #' 
-#' **Method 1:** Using the [option `AMR_custom_mo`][AMR-options], which is the preferred method. To use this method:
+#' **Method 1:** Using the option [`AMR_custom_mo`][AMR-options], which is the preferred method. To use this method:
 #' 
 #'    1. Create a data set in the structure of the [microorganisms] data set (containing at the very least column "genus") and save it with [saveRDS()] to a location of choice, e.g. `"~/my_custom_mo.rds"`, or any remote location.
 #'    

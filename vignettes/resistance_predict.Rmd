@@ -80,13 +80,13 @@ plot(predict_TZP)
 
 This is the fastest way to plot the result. It automatically adds the right axes, error bars, titles, number of available observations and type of model.
 
-We also support the `ggplot2` package with our custom function `ggplot_rsi_predict()` to create more appealing plots:
+We also support the `ggplot2` package with our custom function `ggplot_sir_predict()` to create more appealing plots:
 
 ```{r}
-ggplot_rsi_predict(predict_TZP)
+ggplot_sir_predict(predict_TZP)
 
 # choose for error bars instead of a ribbon
-ggplot_rsi_predict(predict_TZP, ribbon = FALSE)
+ggplot_sir_predict(predict_TZP, ribbon = FALSE)
 ```
 
 ### Choosing the right model
@@ -97,7 +97,7 @@ Resistance is not easily predicted; if we look at vancomycin resistance in Gram-
 example_isolates %>%
   filter(mo_gramstain(mo, language = NULL) == "Gram-positive") %>%
   resistance_predict(col_ab = "VAN", year_min = 2010, info = FALSE, model = "binomial") %>%
-  ggplot_rsi_predict()
+  ggplot_sir_predict()
 ```
 
 Vancomycin resistance could be 100% in ten years, but might remain very low. 
@@ -118,7 +118,7 @@ For the vancomycin resistance in Gram-positive bacteria, a linear model might be
 example_isolates %>%
   filter(mo_gramstain(mo, language = NULL) == "Gram-positive") %>%
   resistance_predict(col_ab = "VAN", year_min = 2010, info = FALSE, model = "linear") %>%
-  ggplot_rsi_predict()
+  ggplot_sir_predict()
 ```
 
 The model itself is also available from the object, as an `attribute`:

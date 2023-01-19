@@ -37,7 +37,7 @@
 #' @param FUN the function to call on the `mo` column to transform the microorganism codes, defaults to [mo_shortname()]
 #' @param translate_ab a [character] of length 1 containing column names of the [antibiotics] data set
 #' @param ... arguments passed on to `FUN`
-#' @inheritParams rsi_df
+#' @inheritParams sir_sf
 #' @inheritParams base::formatC
 #' @details The function [format()] calculates the resistance per bug-drug combination. Use `combine_SI = TRUE` (default) to test R vs. S+I and `combine_SI = FALSE` to test R+I vs. S.
 #' @export
@@ -67,7 +67,7 @@ bug_drug_combinations <- function(x,
                                   col_mo = NULL,
                                   FUN = mo_shortname,
                                   ...) {
-  meet_criteria(x, allow_class = "data.frame", contains_column_class = "rsi")
+  meet_criteria(x, allow_class = "data.frame", contains_column_class = "sir")
   meet_criteria(col_mo, allow_class = "character", is_in = colnames(x), has_length = 1, allow_NULL = TRUE)
   meet_criteria(FUN, allow_class = "function", has_length = 1)
 
@@ -90,10 +90,10 @@ bug_drug_combinations <- function(x,
   if (is_null_or_grouped_tbl(x.bak)) {
     data_has_groups <- TRUE
     groups <- setdiff(names(attributes(x.bak)$groups), ".rows")
-    x <- x[, c(groups, col_mo, colnames(x)[vapply(FUN.VALUE = logical(1), x, is.rsi)]), drop = FALSE]
+    x <- x[, c(groups, col_mo, colnames(x)[vapply(FUN.VALUE = logical(1), x, is.sir)]), drop = FALSE]
   } else {
     data_has_groups <- FALSE
-    x <- x[, c(col_mo, names(which(vapply(FUN.VALUE = logical(1), x, is.rsi)))), drop = FALSE]
+    x <- x[, c(col_mo, names(which(vapply(FUN.VALUE = logical(1), x, is.sir)))), drop = FALSE]
   }
 
   run_it <- function(x) {
@@ -113,8 +113,8 @@ bug_drug_combinations <- function(x,
     }
 
     for (i in seq_len(length(unique_mo))) {
-      # filter on MO group and only select R/SI columns
-      x_mo_filter <- x[which(x[, col_mo, drop = TRUE] == unique_mo[i]), names(which(vapply(FUN.VALUE = logical(1), x, is.rsi))), drop = FALSE]
+      # filter on MO group and only select SIR columns
+      x_mo_filter <- x[which(x[, col_mo, drop = TRUE] == unique_mo[i]), names(which(vapply(FUN.VALUE = logical(1), x, is.sir))), drop = FALSE]
       # turn and merge everything
       pivot <- lapply(x_mo_filter, function(x) {
         m <- as.matrix(table(x))

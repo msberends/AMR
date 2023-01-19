@@ -127,7 +127,7 @@
 #' ```
 #'
 #' The rules set (the `custom` object in this case) could be exported to a shared file location using [saveRDS()] if you collaborate with multiple users. The custom rules set could then be imported using [readRDS()].
-#' @inheritSection as.rsi Interpretation of R and S/I
+#' @inheritSection as.sir Interpretation of R and S/I
 #' @return
 #' - CMI 2012 paper - function [mdr_cmi2012()] or [mdro()]:\cr
 #'   Ordered [factor] with levels `Negative` < `Multi-drug-resistant (MDR)` < `Extensively drug-resistant (XDR)` < `Pandrug-resistant (PDR)`
@@ -175,7 +175,7 @@ mdro <- function(x = NULL,
                  pct_required_classes = 0.5,
                  combine_SI = TRUE,
                  verbose = FALSE,
-                 only_rsi_columns = FALSE,
+                 only_sir_columns = FALSE,
                  ...) {
   if (is_null_or_grouped_tbl(x)) {
     # when `x` is left blank, auto determine it (get_current_data() also contains dplyr::cur_data_all())
@@ -192,10 +192,10 @@ mdro <- function(x = NULL,
   meet_criteria(pct_required_classes, allow_class = "numeric", has_length = 1)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(verbose, allow_class = "logical", has_length = 1)
-  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   
-  if (!any(is.rsi.eligible(x))) {
-    stop_("There were no possible R/SI columns found in the data set. Transform columns with `as.rsi()` for valid antimicrobial interpretations.")
+  if (!any(is_sir_eligible(x))) {
+    stop_("There were no possible SIR columns found in the data set. Transform columns with `as.sir()` for valid antimicrobial interpretations.")
   }
   
   info.bak <- info
@@ -499,7 +499,7 @@ mdro <- function(x = NULL,
       ),
       verbose = verbose,
       info = info,
-      only_rsi_columns = only_rsi_columns,
+      only_sir_columns = only_sir_columns,
       fn = "mdro",
       ...
     )
@@ -532,7 +532,7 @@ mdro <- function(x = NULL,
       ),
       verbose = verbose,
       info = info,
-      only_rsi_columns = only_rsi_columns,
+      only_sir_columns = only_sir_columns,
       fn = "mdro",
       ...
     )
@@ -565,7 +565,7 @@ mdro <- function(x = NULL,
       ),
       verbose = verbose,
       info = info,
-      only_rsi_columns = only_rsi_columns,
+      only_sir_columns = only_sir_columns,
       fn = "mdro",
       ...
     )
@@ -584,7 +584,7 @@ mdro <- function(x = NULL,
       ),
       verbose = verbose,
       info = info,
-      only_rsi_columns = only_rsi_columns,
+      only_sir_columns = only_sir_columns,
       fn = "mdro",
       ...
     )
@@ -601,7 +601,7 @@ mdro <- function(x = NULL,
       ),
       verbose = verbose,
       info = info,
-      only_rsi_columns = only_rsi_columns,
+      only_sir_columns = only_sir_columns,
       fn = "mdro",
       ...
     )
@@ -610,7 +610,7 @@ mdro <- function(x = NULL,
       x = x,
       verbose = verbose,
       info = info,
-      only_rsi_columns = only_rsi_columns,
+      only_sir_columns = only_sir_columns,
       fn = "mdro",
       ...
     )
@@ -823,7 +823,7 @@ mdro <- function(x = NULL,
     if (length(rows) > 0 && length(cols) > 0) {
       x[, cols] <- as.data.frame(lapply(
         x[, cols, drop = FALSE],
-        function(col) as.rsi(col)
+        function(col) as.sir(col)
       ),
       stringsAsFactors = FALSE
       )
@@ -883,7 +883,7 @@ mdro <- function(x = NULL,
       
       x[, lst_vector] <- as.data.frame(lapply(
         x[, lst_vector, drop = FALSE],
-        function(col) as.rsi(col)
+        function(col) as.sir(col)
       ),
       stringsAsFactors = FALSE
       )
@@ -1675,7 +1675,7 @@ mdro <- function(x = NULL,
           ab <- x[, ab, drop = TRUE]
         }
       }
-      ab <- as.character(as.rsi(ab))
+      ab <- as.character(as.sir(ab))
       ab[is.na(ab)] <- ""
       ab
     }
@@ -1998,7 +1998,7 @@ run_custom_mdro_guideline <- function(df, guideline, info) {
     out <- factor(out, levels = attributes(guideline)$values, ordered = TRUE)
   }
   
-  columns_nonsusceptible <- as.data.frame(t(df[, is.rsi(df), drop = FALSE] == "R"))
+  columns_nonsusceptible <- as.data.frame(t(df[, as.sir(df), drop = FALSE] == "R"))
   columns_nonsusceptible <- vapply(
     FUN.VALUE = character(1),
     columns_nonsusceptible,
@@ -2017,60 +2017,60 @@ run_custom_mdro_guideline <- function(df, guideline, info) {
 
 #' @rdname mdro
 #' @export
-brmo <- function(x = NULL, only_rsi_columns = FALSE, ...) {
+brmo <- function(x = NULL, only_sir_columns = FALSE, ...) {
   meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
-  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   stop_if(
     "guideline" %in% names(list(...)),
     "argument `guideline` must not be set since this is a guideline-specific function"
   )
-  mdro(x = x, only_rsi_columns = only_rsi_columns, guideline = "BRMO", ...)
+  mdro(x = x, only_sir_columns = only_sir_columns, guideline = "BRMO", ...)
 }
 
 #' @rdname mdro
 #' @export
-mrgn <- function(x = NULL, only_rsi_columns = FALSE, ...) {
+mrgn <- function(x = NULL, only_sir_columns = FALSE, ...) {
   meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
-  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   stop_if(
     "guideline" %in% names(list(...)),
     "argument `guideline` must not be set since this is a guideline-specific function"
   )
-  mdro(x = x, only_rsi_columns = only_rsi_columns, guideline = "MRGN", ...)
+  mdro(x = x, only_sir_columns = only_sir_columns, guideline = "MRGN", ...)
 }
 
 #' @rdname mdro
 #' @export
-mdr_tb <- function(x = NULL, only_rsi_columns = FALSE, ...) {
+mdr_tb <- function(x = NULL, only_sir_columns = FALSE, ...) {
   meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
-  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   stop_if(
     "guideline" %in% names(list(...)),
     "argument `guideline` must not be set since this is a guideline-specific function"
   )
-  mdro(x = x, only_rsi_columns = only_rsi_columns, guideline = "TB", ...)
+  mdro(x = x, only_sir_columns = only_sir_columns, guideline = "TB", ...)
 }
 
 #' @rdname mdro
 #' @export
-mdr_cmi2012 <- function(x = NULL, only_rsi_columns = FALSE, ...) {
+mdr_cmi2012 <- function(x = NULL, only_sir_columns = FALSE, ...) {
   meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
-  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   stop_if(
     "guideline" %in% names(list(...)),
     "argument `guideline` must not be set since this is a guideline-specific function"
   )
-  mdro(x = x, only_rsi_columns = only_rsi_columns, guideline = "CMI2012", ...)
+  mdro(x = x, only_sir_columns = only_sir_columns, guideline = "CMI2012", ...)
 }
 
 #' @rdname mdro
 #' @export
-eucast_exceptional_phenotypes <- function(x = NULL, only_rsi_columns = FALSE, ...) {
+eucast_exceptional_phenotypes <- function(x = NULL, only_sir_columns = FALSE, ...) {
   meet_criteria(x, allow_class = "data.frame", allow_NULL = TRUE)
-  meet_criteria(only_rsi_columns, allow_class = "logical", has_length = 1)
+  meet_criteria(only_sir_columns, allow_class = "logical", has_length = 1)
   stop_if(
     "guideline" %in% names(list(...)),
     "argument `guideline` must not be set since this is a guideline-specific function"
   )
-  mdro(x = x, only_rsi_columns = only_rsi_columns, guideline = "EUCAST", ...)
+  mdro(x = x, only_sir_columns = only_sir_columns, guideline = "EUCAST", ...)
 }

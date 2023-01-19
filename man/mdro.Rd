@@ -27,21 +27,21 @@ mdro(
   pct_required_classes = 0.5,
   combine_SI = TRUE,
   verbose = FALSE,
-  only_rsi_columns = FALSE,
+  only_sir_columns = FALSE,
   ...
 )
 
 custom_mdro_guideline(..., as_factor = TRUE)
 
-brmo(x = NULL, only_rsi_columns = FALSE, ...)
+brmo(x = NULL, only_sir_columns = FALSE, ...)
 
-mrgn(x = NULL, only_rsi_columns = FALSE, ...)
+mrgn(x = NULL, only_sir_columns = FALSE, ...)
 
-mdr_tb(x = NULL, only_rsi_columns = FALSE, ...)
+mdr_tb(x = NULL, only_sir_columns = FALSE, ...)
 
-mdr_cmi2012(x = NULL, only_rsi_columns = FALSE, ...)
+mdr_cmi2012(x = NULL, only_sir_columns = FALSE, ...)
 
-eucast_exceptional_phenotypes(x = NULL, only_rsi_columns = FALSE, ...)
+eucast_exceptional_phenotypes(x = NULL, only_sir_columns = FALSE, ...)
 }
 \arguments{
 \item{x}{a \link{data.frame} with antibiotics columns, like \code{AMX} or \code{amox}. Can be left blank for automatic determination.}
@@ -58,7 +58,7 @@ eucast_exceptional_phenotypes(x = NULL, only_rsi_columns = FALSE, ...)
 
 \item{verbose}{a \link{logical} to turn Verbose mode on and off (default is off). In Verbose mode, the function does not return the MDRO results, but instead returns a data set in logbook form with extensive info about which isolates would be MDRO-positive, or why they are not.}
 
-\item{only_rsi_columns}{a \link{logical} to indicate whether only antibiotic columns must be detected that were transformed to class \code{rsi} (see \code{\link[=as.rsi]{as.rsi()}}) on beforehand (defaults to \code{FALSE})}
+\item{only_sir_columns}{a \link{logical} to indicate whether only antibiotic columns must be detected that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (defaults to \code{FALSE})}
 
 \item{...}{in case of \code{\link[=custom_mdro_guideline]{custom_mdro_guideline()}}: a set of rules, see section \emph{Using Custom Guidelines} below. Otherwise: column name of an antibiotic, see section \emph{Antibiotics} below.}
 

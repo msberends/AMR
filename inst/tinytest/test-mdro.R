@@ -133,13 +133,13 @@ expect_equal(
 )
 
 x <- data.frame(
-  rifampicin = random_rsi(5000, prob_RSI = c(0.4, 0.1, 0.5)),
-  inh = random_rsi(5000, prob_RSI = c(0.4, 0.1, 0.5)),
-  gatifloxacin = random_rsi(5000, prob_RSI = c(0.4, 0.1, 0.5)),
-  eth = random_rsi(5000, prob_RSI = c(0.4, 0.1, 0.5)),
-  pza = random_rsi(5000, prob_RSI = c(0.4, 0.1, 0.5)),
-  MFX = random_rsi(5000, prob_RSI = c(0.4, 0.1, 0.5)),
-  KAN = random_rsi(5000, prob_RSI = c(0.4, 0.1, 0.5))
+  rifampicin = random_sir(5000, prob_sir = c(0.4, 0.1, 0.5)),
+  inh = random_sir(5000, prob_sir = c(0.4, 0.1, 0.5)),
+  gatifloxacin = random_sir(5000, prob_sir = c(0.4, 0.1, 0.5)),
+  eth = random_sir(5000, prob_sir = c(0.4, 0.1, 0.5)),
+  pza = random_sir(5000, prob_sir = c(0.4, 0.1, 0.5)),
+  MFX = random_sir(5000, prob_sir = c(0.4, 0.1, 0.5)),
+  KAN = random_sir(5000, prob_sir = c(0.4, 0.1, 0.5))
 )
 expect_true(length(unique(mdr_tb(x))) > 2)
 

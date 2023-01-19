@@ -88,9 +88,9 @@
 #' \donttest{
 #' if (require("dplyr")) {
 #'
-#'   # you can quickly rename 'rsi' columns using set_ab_names() with dplyr:
+#'   # you can quickly rename 'sir' columns using set_ab_names() with dplyr:
 #'   example_isolates %>%
-#'     set_ab_names(where(is.rsi), property = "atc")
+#'     set_ab_names(where(is.sir), property = "atc")
 #' }
 #' }
 as.ab <- function(x, flag_multiple_results = TRUE, info = interactive(), ...) {
@@ -632,7 +632,7 @@ rep.ab <- function(x, ...) {
 generalise_antibiotic_name <- function(x) {
   x <- toupper(x)
   # remove suffices
-  x <- gsub("_(MIC|RSI|DIS[CK])$", "", x, perl = TRUE)
+  x <- gsub("_(MIC|RSI|SIR|DIS[CK])$", "", x, perl = TRUE)
   # remove disk concentrations, like LVX_NM -> LVX
   x <- gsub("_[A-Z]{2}[0-9_.]{0,3}$", "", x, perl = TRUE)
   # remove part between brackets if that's followed by another string

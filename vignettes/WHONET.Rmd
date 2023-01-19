@@ -48,15 +48,15 @@ library(cleaner) # to create frequency tables
 We will have to transform some variables to simplify and automate the analysis:
 
 * Microorganisms should be transformed to our own microorganism codes (called an `mo`) using [our Catalogue of Life reference data set](https://msberends.github.io/AMR/reference/catalogue_of_life), which contains all ~70,000 microorganisms from the taxonomic kingdoms Bacteria, Fungi and Protozoa. We do the tranformation with `as.mo()`. This function also recognises almost all WHONET abbreviations of microorganisms.
-* Antimicrobial results or interpretations have to be clean and valid. In other words, they should only contain values `"S"`, `"I"` or `"R"`. That is exactly where the `as.rsi()` function is for.
+* Antimicrobial results or interpretations have to be clean and valid. In other words, they should only contain values `"S"`, `"I"` or `"R"`. That is exactly where the `as.sir()` function is for.
 
 ```{r}
 # transform variables
 data <- WHONET %>%
   # get microbial ID based on given organism
   mutate(mo = as.mo(Organism)) %>%
-  # transform everything from "AMP_ND10" to "CIP_EE" to the new `rsi` class
-  mutate_at(vars(AMP_ND10:CIP_EE), as.rsi)
+  # transform everything from "AMP_ND10" to "CIP_EE" to the new `sir` class
+  mutate_at(vars(AMP_ND10:CIP_EE), as.sir)
 ```
 
 No errors or warnings, so all values are transformed succesfully.
@@ -77,13 +77,13 @@ data %>% freq(AMC_ND2)
 
 ### A first glimpse at results
 
-An easy `ggplot` will already give a lot of information, using the included `ggplot_rsi()` function:
+An easy `ggplot` will already give a lot of information, using the included `ggplot_sir()` function:
 
 ```{r, eval = FALSE}
 data %>%
   group_by(Country) %>%
   select(Country, AMP_ND2, AMC_ED20, CAZ_ED10, CIP_ED5) %>%
-  ggplot_rsi(translate_ab = "ab", facet = "Country", datalabels = FALSE)
+  ggplot_sir(translate_ab = "ab", facet = "Country", datalabels = FALSE)
 ```
 
 ```{r, echo = FALSE}
@@ -91,7 +91,7 @@ data %>%
 tryCatch(data %>%
   group_by(Country) %>%
   select(Country, AMP_ND2, AMC_ED20, CAZ_ED10, CIP_ED5) %>%
-  ggplot_rsi(translate_ab = "ab", facet = "Country", datalabels = FALSE) %>%
+  ggplot_sir(translate_ab = "ab", facet = "Country", datalabels = FALSE) %>%
   print(),
 error = function(e) base::invisible()
 )

@@ -116,7 +116,7 @@
 #'     head()
 #'
 #'   example_isolates %>%
-#'     set_ab_names(where(is.rsi)) %>%
+#'     set_ab_names(where(is.sir)) %>%
 #'     colnames()
 #'
 #'   example_isolates %>%
@@ -372,7 +372,7 @@ set_ab_names <- function(data, ..., property = "name", language = get_AMR_locale
     } else {
       df <- data
     }
-    vars <- get_column_abx(df, info = FALSE, only_rsi_columns = FALSE, sort = FALSE, fn = "set_ab_names")
+    vars <- get_column_abx(df, info = FALSE, only_sir_columns = FALSE, sort = FALSE, fn = "set_ab_names")
     if (length(vars) == 0) {
       message_("No columns with antibiotic results found for `set_ab_names()`, leaving names unchanged.")
       return(data)

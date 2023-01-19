@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-# add new version numbers here, and add the rules themselves to "data-raw/eucast_rules.tsv" and rsi_translation
+# add new version numbers here, and add the rules themselves to "data-raw/eucast_rules.tsv" and clinical_breakpoints
 # (sourcing "data-raw/_pre_commit_hook.R" will process the TSV file)
 EUCAST_VERSION_BREAKPOINTS <- list(
   "12.0" = list(
@@ -148,8 +148,8 @@ globalVariables(c(
   "reference.rule_group",
   "reference.version",
   "rowid",
-  "rsi",
-  "rsi_translation",
+  "sir",
+  "clinical_breakpoints",
   "rule_group",
   "rule_name",
   "se_max",

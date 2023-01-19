@@ -216,7 +216,7 @@ expect_equal(
 
 # empty rsi results
 expect_equal(
-  sum(first_isolate(example_isolates, include_untested_rsi = FALSE)),
+  sum(first_isolate(example_isolates, include_untested_sir = FALSE)),
   1366
 )
 

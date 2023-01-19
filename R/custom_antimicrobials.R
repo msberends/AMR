@@ -112,8 +112,8 @@
 #' # even antibiotic selectors work
 #' x <- data.frame(
 #'   random_column = "some value",
-#'   coflu = as.rsi("S"),
-#'   ampicillin = as.rsi("R")
+#'   coflu = as.sir("S"),
+#'   ampicillin = as.sir("R")
 #' )
 #' x
 #' x[, betalactams()]

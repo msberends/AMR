@@ -77,7 +77,7 @@ valid_mic_levels <- c(
 #' @param x a [character] or [numeric] vector
 #' @param na.rm a [logical] indicating whether missing values should be removed
 #' @param ... arguments passed on to methods
-#' @details To interpret MIC values as RSI values, use [as.rsi()] on MIC values. It supports guidelines from EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "CLSI")$guideline)))`).
+#' @details To interpret MIC values as SIR values, use [as.sir()] on MIC values. It supports guidelines from EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "CLSI")$guideline)))`).
 #'
 #' This class for MIC values is a quite a special data type: formally it is an ordered [factor] with valid MIC values as [factor] levels (to make sure only valid MIC values are retained), but for any mathematical operation it acts as decimal numbers:
 #'
@@ -123,13 +123,13 @@ valid_mic_levels <- c(
 #' @return Ordered [factor] with additional class [`mic`], that in mathematical operations acts as decimal numbers. Bare in mind that the outcome of any mathematical operation on MICs will return a [numeric] value.
 #' @aliases mic
 #' @export
-#' @seealso [as.rsi()]
+#' @seealso [as.sir()]
 #' @examples
 #' mic_data <- as.mic(c(">=32", "1.0", "1", "1.00", 8, "<=0.128", "8", "16", "16"))
 #' mic_data
 #' is.mic(mic_data)
 #'
-#' # this can also coerce combined MIC/RSI values:
+#' # this can also coerce combined MIC/SIR values:
 #' as.mic("<=0.002; S")
 #'
 #' # mathematical processing treats MICs as numeric values
@@ -138,13 +138,13 @@ valid_mic_levels <- c(
 #' all(mic_data < 512)
 #'
 #' # interpret MIC values
-#' as.rsi(
+#' as.sir(
 #'   x = as.mic(2),
 #'   mo = as.mo("Streptococcus pneumoniae"),
 #'   ab = "AMX",
 #'   guideline = "EUCAST"
 #' )
-#' as.rsi(
+#' as.sir(
 #'   x = as.mic(c(0.01, 2, 4, 8)),
 #'   mo = as.mo("Streptococcus pneumoniae"),
 #'   ab = "AMX",

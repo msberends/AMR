@@ -142,15 +142,15 @@ vec_math.mic <- function(.fn, x, ...) {
 }
 
 # S3: rsi
-vec_ptype2.character.rsi <- function(x, y, ...) {
+vec_ptype2.character.sir <- function(x, y, ...) {
   x
 }
-vec_ptype2.rsi.character <- function(x, y, ...) {
+vec_ptype2.sir.character <- function(x, y, ...) {
   y
 }
-vec_cast.character.rsi <- function(x, to, ...) {
+vec_cast.character.sir <- function(x, to, ...) {
   as.character(x)
 }
-vec_cast.rsi.character <- function(x, to, ...) {
-  as.rsi(x)
+vec_cast.sir.character <- function(x, to, ...) {
+  as.sir(x)
 }

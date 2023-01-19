@@ -30,7 +30,7 @@
 if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
   expect_stdout(AMX_R <- example_isolates %>%
     filter(mo == "B_ESCHR_COLI") %>%
-    rsi_predict(
+    sir_predict(
       col_ab = "AMX",
       col_date = "date",
       model = "binomial",
@@ -51,25 +51,25 @@ expect_stdout(x <- suppressMessages(resistance_predict(example_isolates,
 pdf(NULL) # prevent Rplots.pdf being created
 expect_silent(plot(x))
 if (AMR:::pkg_is_available("ggplot2")) {
-  expect_silent(ggplot_rsi_predict(x))
+  expect_silent(ggplot_sir_predict(x))
   expect_silent(autoplot(x))
-  expect_error(ggplot_rsi_predict(example_isolates))
+  expect_error(ggplot_sir_predict(example_isolates))
 }
-expect_stdout(rsi_predict(
+expect_stdout(sir_predict(
   x = subset(example_isolates, mo == "B_ESCHR_COLI"),
   model = "binomial",
   col_ab = "AMX",
   col_date = "date",
   info = TRUE
 ))
-expect_stdout(rsi_predict(
+expect_stdout(sir_predict(
   x = subset(example_isolates, mo == "B_ESCHR_COLI"),
   model = "loglin",
   col_ab = "AMX",
   col_date = "date",
   info = TRUE
 ))
-expect_stdout(rsi_predict(
+expect_stdout(sir_predict(
   x = subset(example_isolates, mo == "B_ESCHR_COLI"),
   model = "lin",
   col_ab = "AMX",
@@ -77,34 +77,34 @@ expect_stdout(rsi_predict(
   info = TRUE
 ))
 
-expect_error(rsi_predict(
+expect_error(sir_predict(
   x = subset(example_isolates, mo == "B_ESCHR_COLI"),
   model = "INVALID MODEL",
   col_ab = "AMX",
   col_date = "date",
   info = TRUE
 ))
-expect_error(rsi_predict(
+expect_error(sir_predict(
   x = subset(example_isolates, mo == "B_ESCHR_COLI"),
   model = "binomial",
   col_ab = "NOT EXISTING COLUMN",
   col_date = "date",
   info = TRUE
 ))
-expect_error(rsi_predict(
+expect_error(sir_predict(
   x = subset(example_isolates, mo == "B_ESCHR_COLI"),
   model = "binomial",
   col_ab = "AMX",
   col_date = "NOT EXISTING COLUMN",
   info = TRUE
 ))
-expect_error(rsi_predict(
+expect_error(sir_predict(
   x = subset(example_isolates, mo == "B_ESCHR_COLI"),
   col_ab = "AMX",
   col_date = "NOT EXISTING COLUMN",
   info = TRUE
 ))
-expect_error(rsi_predict(
+expect_error(sir_predict(
   x = subset(example_isolates, mo == "B_ESCHR_COLI"),
   col_ab = "AMX",
   col_date = "date",

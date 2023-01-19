@@ -27,17 +27,17 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' Random MIC Values/Disk Zones/RSI Generation
+#' Random MIC Values/Disk Zones/SIR Generation
 #'
 #' These functions can be used for generating random MIC values and disk diffusion diameters, for AMR data analysis practice. By providing a microorganism and antimicrobial drug, the generated results will reflect reality as much as possible.
 #' @param size desired size of the returned vector. If used in a [data.frame] call or `dplyr` verb, will get the current (group) size if left blank.
 #' @param mo any [character] that can be coerced to a valid microorganism code with [as.mo()]
 #' @param ab any [character] that can be coerced to a valid antimicrobial drug code with [as.ab()]
-#' @param prob_RSI a vector of length 3: the probabilities for "R" (1st value), "S" (2nd value) and "I" (3rd value)
+#' @param prob_SIR a vector of length 3: the probabilities for "S" (1st value), "I" (2nd value) and "R" (3rd value)
 #' @param ... ignored, only in place to allow future extensions
 #' @details The base \R function [sample()] is used for generating values.
 #'
-#' Generated values are based on the EUCAST `r max(as.integer(gsub("[^0-9]", "", subset(rsi_translation, guideline %like% "EUCAST")$guideline)))` guideline as implemented in the [rsi_translation] data set. To create specific generated values per bug or drug, set the `mo` and/or `ab` argument.
+#' Generated values are based on the EUCAST `r max(as.integer(gsub("[^0-9]", "", subset(clinical_breakpoints, guideline %like% "EUCAST")$guideline)))` guideline as implemented in the [clinical_breakpoints] data set. To create specific generated values per bug or drug, set the `mo` and/or `ab` argument.
 #' @return class `mic` for [random_mic()] (see [as.mic()]) and class `disk` for [random_disk()] (see [as.disk()])
 #' @name random
 #' @rdname random
@@ -45,7 +45,7 @@
 #' @examples
 #' random_mic(25)
 #' random_disk(25)
-#' random_rsi(25)
+#' random_sir(25)
 #'
 #' \donttest{
 #' # make the random generation more realistic by setting a bug and/or drug:
@@ -81,17 +81,17 @@ random_disk <- function(size = NULL, mo = NULL, ab = NULL, ...) {
 
 #' @rdname random
 #' @export
-random_rsi <- function(size = NULL, prob_RSI = c(0.33, 0.33, 0.33), ...) {
+random_sir <- function(size = NULL, prob_SIR = c(0.33, 0.33, 0.33), ...) {
   meet_criteria(size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE, allow_NULL = TRUE)
-  meet_criteria(prob_RSI, allow_class = c("numeric", "integer"), has_length = 3)
+  meet_criteria(prob_SIR, allow_class = c("numeric", "integer"), has_length = 3)
   if (is.null(size)) {
     size <- NROW(get_current_data(arg_name = "size", call = -3))
   }
-  sample(as.rsi(c("R", "S", "I")), size = size, replace = TRUE, prob = prob_RSI)
+  sample(as.sir(c("S", "I", "R")), size = size, replace = TRUE, prob = prob_SIR)
 }
 
 random_exec <- function(type, size, mo = NULL, ab = NULL) {
-  df <- rsi_translation %pm>%
+  df <- clinical_breakpoints %pm>%
     pm_filter(guideline %like% "EUCAST") %pm>%
     pm_arrange(pm_desc(guideline)) %pm>%
     subset(guideline == max(guideline) &

@@ -34,66 +34,66 @@
 \alias{not_intrinsic_resistant}
 \title{Antibiotic Selectors}
 \usage{
-ab_class(ab_class, only_rsi_columns = FALSE, only_treatable = TRUE, ...)
+ab_class(ab_class, only_sir_columns = FALSE, only_treatable = TRUE, ...)
 
-ab_selector(filter, only_rsi_columns = FALSE, only_treatable = TRUE, ...)
+ab_selector(filter, only_sir_columns = FALSE, only_treatable = TRUE, ...)
 
-aminoglycosides(only_rsi_columns = FALSE, only_treatable = TRUE, ...)
+aminoglycosides(only_sir_columns = FALSE, only_treatable = TRUE, ...)
 
-aminopenicillins(only_rsi_columns = FALSE, ...)
+aminopenicillins(only_sir_columns = FALSE, ...)
 
-antifungals(only_rsi_columns = FALSE, ...)
+antifungals(only_sir_columns = FALSE, ...)
 
-antimycobacterials(only_rsi_columns = FALSE, ...)
+antimycobacterials(only_sir_columns = FALSE, ...)
 
-betalactams(only_rsi_columns = FALSE, only_treatable = TRUE, ...)
+betalactams(only_sir_columns = FALSE, only_treatable = TRUE, ...)
 
-carbapenems(only_rsi_columns = FALSE, only_treatable = TRUE, ...)
+carbapenems(only_sir_columns = FALSE, only_treatable = TRUE, ...)
 
-cephalosporins(only_rsi_columns = FALSE, ...)
+cephalosporins(only_sir_columns = FALSE, ...)
 
-cephalosporins_1st(only_rsi_columns = FALSE, ...)
+cephalosporins_1st(only_sir_columns = FALSE, ...)
 
-cephalosporins_2nd(only_rsi_columns = FALSE, ...)
+cephalosporins_2nd(only_sir_columns = FALSE, ...)
 
-cephalosporins_3rd(only_rsi_columns = FALSE, ...)
+cephalosporins_3rd(only_sir_columns = FALSE, ...)
 
-cephalosporins_4th(only_rsi_columns = FALSE, ...)
+cephalosporins_4th(only_sir_columns = FALSE, ...)
 
-cephalosporins_5th(only_rsi_columns = FALSE, ...)
+cephalosporins_5th(only_sir_columns = FALSE, ...)
 
-fluoroquinolones(only_rsi_columns = FALSE, ...)
+fluoroquinolones(only_sir_columns = FALSE, ...)
 
-glycopeptides(only_rsi_columns = FALSE, ...)
+glycopeptides(only_sir_columns = FALSE, ...)
 
-lincosamides(only_rsi_columns = FALSE, ...)
+lincosamides(only_sir_columns = FALSE, ...)
 
-lipoglycopeptides(only_rsi_columns = FALSE, ...)
+lipoglycopeptides(only_sir_columns = FALSE, ...)
 
-macrolides(only_rsi_columns = FALSE, ...)
+macrolides(only_sir_columns = FALSE, ...)
 
-oxazolidinones(only_rsi_columns = FALSE, ...)
+oxazolidinones(only_sir_columns = FALSE, ...)
 
-penicillins(only_rsi_columns = FALSE, ...)
+penicillins(only_sir_columns = FALSE, ...)
 
-polymyxins(only_rsi_columns = FALSE, only_treatable = TRUE, ...)
+polymyxins(only_sir_columns = FALSE, only_treatable = TRUE, ...)
 
-streptogramins(only_rsi_columns = FALSE, ...)
+streptogramins(only_sir_columns = FALSE, ...)
 
-quinolones(only_rsi_columns = FALSE, ...)
+quinolones(only_sir_columns = FALSE, ...)
 
-tetracyclines(only_rsi_columns = FALSE, ...)
+tetracyclines(only_sir_columns = FALSE, ...)
 
-trimethoprims(only_rsi_columns = FALSE, ...)
+trimethoprims(only_sir_columns = FALSE, ...)
 
-ureidopenicillins(only_rsi_columns = FALSE, ...)
+ureidopenicillins(only_sir_columns = FALSE, ...)
 
-administrable_per_os(only_rsi_columns = FALSE, ...)
+administrable_per_os(only_sir_columns = FALSE, ...)
 
-administrable_iv(only_rsi_columns = FALSE, ...)
+administrable_iv(only_sir_columns = FALSE, ...)
 
 not_intrinsic_resistant(
-  only_rsi_columns = FALSE,
+  only_sir_columns = FALSE,
   col_mo = NULL,
   version_expertrules = 3.3,
   ...
@@ -102,7 +102,7 @@ not_intrinsic_resistant(
 \arguments{
 \item{ab_class}{an antimicrobial class or a part of it, such as \code{"carba"} and \code{"carbapenems"}. The columns \code{group}, \code{atc_group1} and \code{atc_group2} of the \link{antibiotics} data set will be searched (case-insensitive) for this value.}
 
-\item{only_rsi_columns}{a \link{logical} to indicate whether only columns of class \code{rsi} must be selected (defaults to \code{FALSE}), see \code{\link[=as.rsi]{as.rsi()}}}
+\item{only_sir_columns}{a \link{logical} to indicate whether only columns of class \code{sir} must be selected (defaults to \code{FALSE}), see \code{\link[=as.sir]{as.sir()}}}
 
 \item{only_treatable}{a \link{logical} to indicate whether antimicrobial drugs should be excluded that are only for laboratory tests (defaults to \code{TRUE}), such as gentamicin-high (\code{GEH}) and imipenem/EDTA (\code{IPE})}
 
@@ -166,7 +166,7 @@ The \code{\link[=not_intrinsic_resistant]{not_intrinsic_resistant()}} function c
 
 \section{Reference Data Publicly Available}{
 
-All data sets in this \code{AMR} package (about microorganisms, antibiotics, R/SI interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
+All data sets in this \code{AMR} package (about microorganisms, antibiotics, SIR interpretation, EUCAST rules, etc.) are publicly and freely available for download in the following formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, SAS, and Stata. We also provide tab-separated plain text files that are machine-readable and suitable for input in any software program, such as laboratory information systems. Please visit \href{https://msberends.github.io/AMR/articles/datasets.html}{our website for the download links}. The actual files are of course available on \href{https://github.com/msberends/AMR/tree/main/data-raw}{our GitHub repository}.
 }
 
 \examples{

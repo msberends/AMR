@@ -1333,7 +1333,7 @@ rm(microorganisms)
 
 # and check: these codes should not be missing (will otherwise throw a unit test error):
 AMR::microorganisms.codes %>% filter(!mo %in% taxonomy$mo)
-AMR::rsi_translation %>% filter(!mo %in% taxonomy$mo)
+AMR::clinical_breakpoints %>% filter(!mo %in% taxonomy$mo)
 AMR::example_isolates %>% filter(!mo %in% taxonomy$mo)
 AMR::intrinsic_resistant %>% filter(!mo %in% taxonomy$mo)
 
@@ -1342,10 +1342,10 @@ devtools::load_all(".")
 
 
 # reset previously changed mo codes
-if (!identical(rsi_translation$mo, as.mo(rsi_translation$mo, language = NULL))) {
-  rsi_translation$mo <- as.mo(rsi_translation$mo, language = NULL)
-  usethis::use_data(rsi_translation, overwrite = TRUE, version = 2, compress = "xz")
-  rm(rsi_translation)
+if (!identical(clinical_breakpoints$mo, as.mo(clinical_breakpoints$mo, language = NULL))) {
+  clinical_breakpoints$mo <- as.mo(clinical_breakpoints$mo, language = NULL)
+  usethis::use_data(clinical_breakpoints, overwrite = TRUE, version = 2, compress = "xz")
+  rm(clinical_breakpoints)
 }
 
 if (!identical(microorganisms.codes$mo, as.mo(microorganisms.codes$mo, language = NULL))) {

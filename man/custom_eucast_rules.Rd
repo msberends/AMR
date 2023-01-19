@@ -43,9 +43,9 @@ These are two custom EUCAST rules: if TZP (piperacillin/tazobactam) is "S", all 
 The rules (the part \emph{before} the tilde, in above example \code{TZP == "S"} and \code{TZP == "R"}) must be evaluable in your data set: it should be able to run as a filter in your data set without errors. This means for the above example that the column \code{TZP} must exist. We will create a sample data set and test the rules set:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{df <- data.frame(mo = c("Escherichia coli", "Klebsiella pneumoniae"),
-                 TZP = as.rsi("R"),
-                 ampi = as.rsi("S"),
-                 cipro = as.rsi("S"))
+                 TZP = as.sir("R"),
+                 ampi = as.sir("S"),
+                 cipro = as.sir("S"))
 df
 #>                      mo TZP ampi cipro
 #> 1      Escherichia coli   R    S     S

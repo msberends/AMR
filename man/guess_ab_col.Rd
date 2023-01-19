@@ -8,7 +8,7 @@ guess_ab_col(
   x = NULL,
   search_string = NULL,
   verbose = FALSE,
-  only_rsi_columns = FALSE
+  only_sir_columns = FALSE
 )
 }
 \arguments{
@@ -18,7 +18,7 @@ guess_ab_col(
 
 \item{verbose}{a \link{logical} to indicate whether additional info should be printed}
 
-\item{only_rsi_columns}{a \link{logical} to indicate whether only antibiotic columns must be detected that were transformed to class \code{rsi} (see \code{\link[=as.rsi]{as.rsi()}}) on beforehand (defaults to \code{FALSE})}
+\item{only_sir_columns}{a \link{logical} to indicate whether only antibiotic columns must be detected that were transformed to class \code{sir} (see \code{\link[=as.sir]{as.sir()}}) on beforehand (defaults to \code{FALSE})}
 }
 \value{
 A column name of \code{x}, or \code{NULL} when no result is found.

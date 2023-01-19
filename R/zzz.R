@@ -55,7 +55,7 @@ AMR_env$av_previously_coerced <- data.frame(
   av = character(0),
   stringsAsFactors = FALSE
 )
-AMR_env$rsi_interpretation_history <- data.frame(
+AMR_env$sir_interpretation_history <- data.frame(
   datetime = Sys.time()[0],
   index = integer(0),
   ab_input = character(0),
@@ -97,32 +97,34 @@ if (utf8_supported && !is_latex) {
   s3_register("pillar::pillar_shaft", "ab")
   s3_register("pillar::pillar_shaft", "av")
   s3_register("pillar::pillar_shaft", "mo")
-  s3_register("pillar::pillar_shaft", "rsi")
+  s3_register("pillar::pillar_shaft", "sir")
+  s3_register("pillar::pillar_shaft", "rsi") # TODO deprecate in a later version
   s3_register("pillar::pillar_shaft", "mic")
   s3_register("pillar::pillar_shaft", "disk")
   s3_register("pillar::type_sum", "ab")
   s3_register("pillar::type_sum", "av")
   s3_register("pillar::type_sum", "mo")
+  s3_register("pillar::type_sum", "sir")
   s3_register("pillar::type_sum", "rsi")
   s3_register("pillar::type_sum", "mic")
   s3_register("pillar::type_sum", "disk")
   # Support for frequency tables from the cleaner package
   s3_register("cleaner::freq", "mo")
-  s3_register("cleaner::freq", "rsi")
+  s3_register("cleaner::freq", "sir")
   # Support for skim() from the skimr package
   if (pkg_is_available("skimr", also_load = FALSE, min_version = "2.0.0")) {
     s3_register("skimr::get_skimmers", "mo")
-    s3_register("skimr::get_skimmers", "rsi")
+    s3_register("skimr::get_skimmers", "sir")
     s3_register("skimr::get_skimmers", "mic")
     s3_register("skimr::get_skimmers", "disk")
   }
   # Support for autoplot() from the ggplot2 package
-  s3_register("ggplot2::autoplot", "rsi")
+  s3_register("ggplot2::autoplot", "sir")
   s3_register("ggplot2::autoplot", "mic")
   s3_register("ggplot2::autoplot", "disk")
   s3_register("ggplot2::autoplot", "resistance_predict")
   # Support for fortify from the ggplot2 package
-  s3_register("ggplot2::fortify", "rsi")
+  s3_register("ggplot2::fortify", "sir")
   s3_register("ggplot2::fortify", "mic")
   s3_register("ggplot2::fortify", "disk")
   # Support vctrs package for use in e.g. dplyr verbs
@@ -165,10 +167,10 @@ if (utf8_supported && !is_latex) {
   s3_register("vctrs::vec_cast", "mic.double")
   s3_register("vctrs::vec_math", "mic")
   # S3: rsi
-  s3_register("vctrs::vec_ptype2", "character.rsi")
-  s3_register("vctrs::vec_ptype2", "rsi.character")
-  s3_register("vctrs::vec_cast", "character.rsi")
-  s3_register("vctrs::vec_cast", "rsi.character")
+  s3_register("vctrs::vec_ptype2", "character.sir")
+  s3_register("vctrs::vec_ptype2", "sir.character")
+  s3_register("vctrs::vec_cast", "character.sir")
+  s3_register("vctrs::vec_cast", "sir.character")
 
   # if mo source exists, fire it up (see mo_source())
   if (tryCatch(file.exists(getOption("AMR_mo_source", "~/mo_source.rds")), error = function(e) FALSE)) {

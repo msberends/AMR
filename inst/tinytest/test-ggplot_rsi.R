@@ -34,7 +34,7 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0") & AMR:::pkg_is_availa
   expect_equal(
     (example_isolates %>%
       select(AMC, CIP) %>%
-      ggplot_rsi())$data %>%
+      ggplot_sir())$data %>%
       summarise_all(resistance) %>%
       as.double(),
     example_isolates %>%
@@ -45,15 +45,15 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0") & AMR:::pkg_is_availa
 
   expect_stdout(print(example_isolates %>%
     select(AMC, CIP) %>%
-    ggplot_rsi(x = "interpretation", facet = "antibiotic")))
+    ggplot_sir(x = "interpretation", facet = "antibiotic")))
   expect_stdout(print(example_isolates %>%
     select(AMC, CIP) %>%
-    ggplot_rsi(x = "antibiotic", facet = "interpretation")))
+    ggplot_sir(x = "antibiotic", facet = "interpretation")))
 
   expect_equal(
     (example_isolates %>%
       select(AMC, CIP) %>%
-      ggplot_rsi(x = "interpretation", facet = "antibiotic"))$data %>%
+      ggplot_sir(x = "interpretation", facet = "antibiotic"))$data %>%
       summarise_all(resistance) %>%
       as.double(),
     example_isolates %>%
@@ -65,7 +65,7 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0") & AMR:::pkg_is_availa
   expect_equal(
     (example_isolates %>%
       select(AMC, CIP) %>%
-      ggplot_rsi(x = "antibiotic", facet = "interpretation"))$data %>%
+      ggplot_sir(x = "antibiotic", facet = "interpretation"))$data %>%
       summarise_all(resistance) %>%
       as.double(),
     example_isolates %>%
@@ -77,7 +77,7 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0") & AMR:::pkg_is_availa
   expect_equal(
     (example_isolates %>%
       select(AMC, CIP) %>%
-      ggplot_rsi(x = "antibiotic", facet = "interpretation"))$data %>%
+      ggplot_sir(x = "antibiotic", facet = "interpretation"))$data %>%
       summarise_all(count_resistant) %>%
       as.double(),
     example_isolates %>%
@@ -124,7 +124,7 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0") & AMR:::pkg_is_availa
       z = c("Value4", "Value5", "Value6")
     )) +
       geom_col(aes(x = x, y = y, fill = z)) +
-      scale_rsi_colours(Value4 = "S", Value5 = "I", Value6 = "R"))$data,
+      scale_sir_colours(Value4 = "S", Value5 = "I", Value6 = "R"))$data,
     "data.frame"
   )
 }

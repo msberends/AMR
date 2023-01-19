@@ -2,9 +2,9 @@
 % Please edit documentation in R/resistance_predict.R
 \name{resistance_predict}
 \alias{resistance_predict}
-\alias{rsi_predict}
+\alias{sir_predict}
 \alias{plot.resistance_predict}
-\alias{ggplot_rsi_predict}
+\alias{ggplot_sir_predict}
 \alias{autoplot.resistance_predict}
 \title{Predict Antimicrobial Resistance}
 \usage{
@@ -23,7 +23,7 @@ resistance_predict(
   ...
 )
 
-rsi_predict(
+sir_predict(
   x,
   col_ab,
   col_date = NULL,
@@ -40,7 +40,7 @@ rsi_predict(
 
 \method{plot}{resistance_predict}(x, main = paste("Resistance Prediction of", x_name), ...)
 
-ggplot_rsi_predict(
+ggplot_sir_predict(
   x,
   main = paste("Resistance Prediction of", x_name),
   ribbon = TRUE,
@@ -134,7 +134,7 @@ x <- resistance_predict(example_isolates,
 plot(x)
 \donttest{
 if (require("ggplot2")) {
-  ggplot_rsi_predict(x)
+  ggplot_sir_predict(x)
 }
 
 # using dplyr:

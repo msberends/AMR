@@ -33,13 +33,13 @@
 #' @rdname as.disk
 #' @param x vector
 #' @param na.rm a [logical] indicating whether missing values should be removed
-#' @details Interpret disk values as RSI values with [as.rsi()]. It supports guidelines from EUCAST and CLSI.
+#' @details Interpret disk values as SIR values with [as.sir()]. It supports guidelines from EUCAST and CLSI.
 #'
 #' Disk diffusion growth zone sizes must be between 6 and 50 millimetres. Values higher than 50 but lower than 100 will be maximised to 50. All others input values outside the 6-50 range will return `NA`.
 #' @return An [integer] with additional class [`disk`]
 #' @aliases disk
 #' @export
-#' @seealso [as.rsi()]
+#' @seealso [as.sir()]
 #' @examples
 #' # transform existing disk zones to the `disk` class (using base R)
 #' df <- data.frame(
@@ -59,8 +59,8 @@
 #' }
 #' }
 #'
-#' # interpret disk values, see ?as.rsi
-#' as.rsi(
+#' # interpret disk values, see ?as.sir
+#' as.sir(
 #'   x = as.disk(18),
 #'   mo = "Strep pneu", # `mo` will be coerced with as.mo()
 #'   ab = "ampicillin", # and `ab` with as.ab()
@@ -68,7 +68,7 @@
 #' )
 #'
 #' # interpret whole data set, pretend to be all from urinary tract infections:
-#' as.rsi(df, uti = TRUE)
+#' as.sir(df, uti = TRUE)
 as.disk <- function(x, na.rm = FALSE) {
   meet_criteria(x, allow_class = c("disk", "character", "numeric", "integer"), allow_NA = TRUE)
   meet_criteria(na.rm, allow_class = "logical", has_length = 1)

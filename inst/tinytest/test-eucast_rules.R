@@ -104,8 +104,8 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
       example_isolates %>%
         filter(mo_family(mo) == "Enterobacteriaceae") %>%
         mutate(
-          TIC = as.rsi("R"),
-          PIP = as.rsi("S")
+          TIC = as.sir("R"),
+          PIP = as.sir("S")
         ) %>%
         eucast_rules(col_mo = "mo", version_expertrules = 3.1, info = FALSE) %>%
         pull(PIP) %>%
@@ -117,15 +117,15 @@ if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0")) {
 }
 
 # azithromycin and clarythromycin must be equal to Erythromycin
-a <- suppressWarnings(as.rsi(eucast_rules(data.frame(
+a <- suppressWarnings(as.sir(eucast_rules(data.frame(
   mo = example_isolates$mo,
   ERY = example_isolates$ERY,
-  AZM = as.rsi("R"),
+  AZM = as.sir("R"),
   CLR = factor("R"),
   stringsAsFactors = FALSE
 ),
 version_expertrules = 3.1,
-only_rsi_columns = FALSE
+only_sir_columns = FALSE
 )$CLR))
 b <- example_isolates$ERY
 expect_identical(
@@ -162,34 +162,34 @@ expect_stdout(suppressWarnings(eucast_rules(example_isolates, verbose = TRUE, ru
 expect_identical(
   eucast_rules(data.frame(
     mo = c("Escherichia coli", "Enterobacter cloacae"),
-    cefotax = as.rsi(c("S", "S"))
+    cefotax = as.sir(c("S", "S"))
   ),
   ampc_cephalosporin_resistance = TRUE,
   info = FALSE
   )$cefotax,
-  as.rsi(c("S", "R"))
+  as.sir(c("S", "R"))
 )
 
 expect_identical(
   eucast_rules(data.frame(
     mo = c("Escherichia coli", "Enterobacter cloacae"),
-    cefotax = as.rsi(c("S", "S"))
+    cefotax = as.sir(c("S", "S"))
   ),
   ampc_cephalosporin_resistance = NA,
   info = FALSE
   )$cefotax,
-  as.rsi(c("S", NA))
+  as.sir(c("S", NA))
 )
 
 expect_identical(
   eucast_rules(data.frame(
     mo = c("Escherichia coli", "Enterobacter cloacae"),
-    cefotax = as.rsi(c("S", "S"))
+    cefotax = as.sir(c("S", "S"))
   ),
   ampc_cephalosporin_resistance = NULL,
   info = FALSE
   )$cefotax,
-  as.rsi(c("S", "S"))
+  as.sir(c("S", "S"))
 )
 
 # EUCAST dosage -----------------------------------------------------------

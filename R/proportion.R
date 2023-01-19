@@ -32,28 +32,28 @@
 #' @description These functions can be used to calculate the (co-)resistance or susceptibility of microbial isolates (i.e. percentage of S, SI, I, IR or R). All functions support quasiquotation with pipes, can be used in `summarise()` from the `dplyr` package and also support grouped variables, see *Examples*.
 #'
 #' [resistance()] should be used to calculate resistance, [susceptibility()] should be used to calculate susceptibility.\cr
-#' @param ... one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with [as.rsi()] if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See *Examples*.
+#' @param ... one or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with [as.sir()] if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See *Examples*.
 #' @param minimum the minimum allowed number of available (tested) isolates. Any isolate count lower than `minimum` will return `NA` with a warning. The default number of `30` isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see *Source*.
 #' @param as_percent a [logical] to indicate whether the output must be returned as a hundred fold with % sign (a character). A value of `0.123456` will then be returned as `"12.3%"`.
 #' @param only_all_tested (for combination therapies, i.e. using more than one variable for `...`): a [logical] to indicate that isolates must be tested for all antibiotics, see section *Combination Therapy* below
-#' @param data a [data.frame] containing columns with class [`rsi`] (see [as.rsi()])
+#' @param data a [data.frame] containing columns with class [`sir`] (see [as.sir()])
 #' @param translate_ab a column name of the [antibiotics] data set to translate the antibiotic abbreviations to, using [ab_property()]
 #' @inheritParams ab_property
 #' @param combine_SI a [logical] to indicate whether all values of S and I must be merged into one, so the output only consists of S+I vs. R (susceptible vs. resistant), defaults to `TRUE`
 #' @param ab_result antibiotic results to test against, must be one of more values of "R", "S", "I"
 #' @param confidence_level the confidence level for the returned confidence interval. For the calculation, the number of S or SI isolates, and R isolates are compared with the total number of available isolates with R, S, or I by using [binom.test()], i.e., the Clopper-Pearson method.
 #' @param side the side of the confidence interval to return. Defaults to `"both"` for a length 2 vector, but can also be (abbreviated as) `"min"`/`"left"`/`"lower"`/`"less"` or `"max"`/`"right"`/`"higher"`/`"greater"`.
-#' @inheritSection as.rsi Interpretation of R and S/I
+#' @inheritSection as.sir Interpretation of R and S/I
 #' @details
 #' The function [resistance()] is equal to the function [proportion_R()]. The function [susceptibility()] is equal to the function [proportion_SI()].
 #'
-#' Use [rsi_confidence_interval()] to calculate the confidence interval, which relies on [binom.test()], i.e., the Clopper-Pearson method. This function returns a vector of length 2 at default for antimicrobial *resistance*. Change the `side` argument to "left"/"min" or "right"/"max" to return a single value, and change the `ab_result` argument to e.g. `c("S", "I")` to test for antimicrobial *susceptibility*, see Examples.
+#' Use [sir_confidence_interval()] to calculate the confidence interval, which relies on [binom.test()], i.e., the Clopper-Pearson method. This function returns a vector of length 2 at default for antimicrobial *resistance*. Change the `side` argument to "left"/"min" or "right"/"max" to return a single value, and change the `ab_result` argument to e.g. `c("S", "I")` to test for antimicrobial *susceptibility*, see Examples.
 #'
 #' **Remember that you should filter your data to let it contain only first isolates!** This is needed to exclude duplicates and to reduce selection bias. Use [first_isolate()] to determine them in your data set.
 #'
 #' These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the [`count()`][AMR::count()] functions to count isolates. The function [susceptibility()] is essentially equal to `count_susceptible() / count_all()`. *Low counts can influence the outcome - the `proportion` functions may camouflage this, since they only return the proportion (albeit being dependent on the `minimum` argument).*
 #'
-#' The function [proportion_df()] takes any variable from `data` that has an [`rsi`] class (created with [as.rsi()]) and calculates the proportions R, I and S. It also supports grouped variables. The function [rsi_df()] works exactly like [proportion_df()], but adds the number of isolates.
+#' The function [proportion_df()] takes any variable from `data` that has an [`sir`] class (created with [as.sir()]) and calculates the proportions S, I, and R. It also supports grouped variables. The function [sir_sf()] works exactly like [proportion_df()], but adds the number of isolates.
 #' @section Combination Therapy:
 #' When using more than one variable for `...` (= combination therapy), use `only_all_tested` to only count isolates that are tested for all antibiotics/variables that you test them for. See this example for two antibiotics, Drug A and Drug B, about how [susceptibility()] works to calculate the %SI:
 #'
@@ -102,14 +102,14 @@
 #' # base R ------------------------------------------------------------
 #' # determines %R
 #' resistance(example_isolates$AMX)
-#' rsi_confidence_interval(example_isolates$AMX)
-#' rsi_confidence_interval(example_isolates$AMX,
+#' sir_confidence_interval(example_isolates$AMX)
+#' sir_confidence_interval(example_isolates$AMX,
 #'   confidence_level = 0.975
 #' )
 #'
 #' # determines %S+I:
 #' susceptibility(example_isolates$AMX)
-#' rsi_confidence_interval(example_isolates$AMX,
+#' sir_confidence_interval(example_isolates$AMX,
 #'   ab_result = c("S", "I")
 #' )
 #'
@@ -127,16 +127,16 @@
 #'     group_by(ward) %>%
 #'     summarise(
 #'       r = resistance(CIP),
-#'       n = n_rsi(CIP)
-#'     ) # n_rsi works like n_distinct in dplyr, see ?n_rsi
+#'       n = n_sir(CIP)
+#'     ) # n_sir works like n_distinct in dplyr, see ?n_sir
 #' }
 #' if (require("dplyr")) {
 #'   example_isolates %>%
 #'     group_by(ward) %>%
 #'     summarise(
 #'       cipro_R = resistance(CIP),
-#'       ci_min = rsi_confidence_interval(CIP, side = "min"),
-#'       ci_max = rsi_confidence_interval(CIP, side = "max"),
+#'       ci_min = sir_confidence_interval(CIP, side = "min"),
+#'       ci_max = sir_confidence_interval(CIP, side = "max"),
 #'     )
 #' }
 #' if (require("dplyr")) {
@@ -157,7 +157,7 @@
 #'       R = resistance(CIP, as_percent = TRUE),
 #'       SI = susceptibility(CIP, as_percent = TRUE),
 #'       n1 = count_all(CIP), # the actual total; sum of all three
-#'       n2 = n_rsi(CIP), # same - analogous to n_distinct
+#'       n2 = n_sir(CIP), # same - analogous to n_distinct
 #'       total = n()
 #'     ) # NOT the number of tested isolates!
 #'
@@ -206,11 +206,11 @@
 #'     proportion_df(translate = FALSE)
 #'
 #'   # It also supports grouping variables
-#'   # (use rsi_df to also include the count)
+#'   # (use sir_sf to also include the count)
 #'   example_isolates %>%
 #'     select(ward, AMX, CIP) %>%
 #'     group_by(ward) %>%
-#'     rsi_df(translate = FALSE)
+#'     sir_sf(translate = FALSE)
 #' }
 #' }
 resistance <- function(...,
@@ -218,14 +218,14 @@ resistance <- function(...,
                        as_percent = FALSE,
                        only_all_tested = FALSE) {
   tryCatch(
-    rsi_calc(...,
+    sir_calc(...,
       ab_result = "R",
       minimum = minimum,
       as_percent = as_percent,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
@@ -236,50 +236,50 @@ susceptibility <- function(...,
                            as_percent = FALSE,
                            only_all_tested = FALSE) {
   tryCatch(
-    rsi_calc(...,
+    sir_calc(...,
       ab_result = c("S", "I"),
       minimum = minimum,
       as_percent = as_percent,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
 #' @rdname proportion
 #' @export
-rsi_confidence_interval <- function(...,
+sir_confidence_interval <- function(...,
                                     ab_result = "R",
                                     minimum = 30,
                                     as_percent = FALSE,
                                     only_all_tested = FALSE,
                                     confidence_level = 0.95,
                                     side = "both") {
-  meet_criteria(ab_result, allow_class = c("character", "rsi"), has_length = c(1, 2, 3), is_in = c("R", "S", "I"))
+  meet_criteria(ab_result, allow_class = c("character", "sir"), has_length = c(1, 2, 3), is_in = c("R", "S", "I"))
   meet_criteria(confidence_level, allow_class = "numeric", is_positive = TRUE, has_length = 1)
   meet_criteria(side, allow_class = "character", has_length = 1, is_in = c("both", "b", "left", "l", "lower", "lowest", "less", "min", "right", "r", "higher", "highest", "greater", "g", "max"))
   x <- tryCatch(
-    rsi_calc(...,
+    sir_calc(...,
       ab_result = ab_result,
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
-    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
   n <- tryCatch(
-    rsi_calc(...,
+    sir_calc(...,
       ab_result = c("S", "I", "R"),
       only_all_tested = only_all_tested,
       only_count = TRUE
     ),
-    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 
   if (n < minimum) {
     warning_("Introducing NA: ",
       ifelse(n == 0, "no", paste("only", n)),
-      " results available for `rsi_confidence_interval()` (`minimum` = ", minimum, ").",
+      " results available for `sir_confidence_interval()` (`minimum` = ", minimum, ").",
       call = FALSE
     )
     if (as_percent == TRUE) {
@@ -311,14 +311,14 @@ proportion_R <- function(...,
                          as_percent = FALSE,
                          only_all_tested = FALSE) {
   tryCatch(
-    rsi_calc(...,
+    sir_calc(...,
       ab_result = "R",
       minimum = minimum,
       as_percent = as_percent,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
@@ -329,14 +329,14 @@ proportion_IR <- function(...,
                           as_percent = FALSE,
                           only_all_tested = FALSE) {
   tryCatch(
-    rsi_calc(...,
+    sir_calc(...,
       ab_result = c("I", "R"),
       minimum = minimum,
       as_percent = as_percent,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
@@ -347,14 +347,14 @@ proportion_I <- function(...,
                          as_percent = FALSE,
                          only_all_tested = FALSE) {
   tryCatch(
-    rsi_calc(...,
+    sir_calc(...,
       ab_result = "I",
       minimum = minimum,
       as_percent = as_percent,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
@@ -365,14 +365,14 @@ proportion_SI <- function(...,
                           as_percent = FALSE,
                           only_all_tested = FALSE) {
   tryCatch(
-    rsi_calc(...,
+    sir_calc(...,
       ab_result = c("S", "I"),
       minimum = minimum,
       as_percent = as_percent,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
@@ -383,14 +383,14 @@ proportion_S <- function(...,
                          as_percent = FALSE,
                          only_all_tested = FALSE) {
   tryCatch(
-    rsi_calc(...,
+    sir_calc(...,
       ab_result = "S",
       minimum = minimum,
       as_percent = as_percent,
       only_all_tested = only_all_tested,
       only_count = FALSE
     ),
-    error = function(e) stop_(gsub("in rsi_calc(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }
 
@@ -404,7 +404,7 @@ proportion_df <- function(data,
                           combine_SI = TRUE,
                           confidence_level = 0.95) {
   tryCatch(
-    rsi_calc_df(
+    sir_calc_df(
       type = "proportion",
       data = data,
       translate_ab = translate_ab,
@@ -414,6 +414,6 @@ proportion_df <- function(data,
       combine_SI = combine_SI,
       confidence_level = confidence_level
     ),
-    error = function(e) stop_(gsub("in rsi_calc_df(): ", "", e$message, fixed = TRUE), call = -5)
+    error = function(e) stop_(gsub("in sir_calc_df(): ", "", e$message, fixed = TRUE), call = -5)
   )
 }

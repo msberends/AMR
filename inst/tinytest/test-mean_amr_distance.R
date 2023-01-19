@@ -29,7 +29,7 @@
 
 vctr_disk <- as.disk(c(20:25))
 vctr_mic <- as.mic(2^c(0:5))
-vctr_rsi <- as.rsi(c("S", "S", "I", "I", "R", "R"))
+vctr_sir <- as.sir(c("S", "S", "I", "I", "R", "R"))
 
 expect_identical(
   mean_amr_distance(vctr_disk),
@@ -42,22 +42,22 @@ expect_identical(
 )
 
 expect_identical(
-  mean_amr_distance(vctr_rsi, combine_SI = FALSE),
+  mean_amr_distance(vctr_sir, combine_SI = FALSE),
   (c(1, 1, 2, 2, 3, 3) - mean(c(1, 1, 2, 2, 3, 3))) / sd(c(1, 1, 2, 2, 3, 3))
 )
 expect_identical(
-  mean_amr_distance(vctr_rsi, combine_SI = TRUE),
+  mean_amr_distance(vctr_sir, combine_SI = TRUE),
   (c(1, 1, 1, 1, 3, 3) - mean(c(1, 1, 1, 1, 3, 3))) / sd(c(1, 1, 1, 1, 3, 3))
 )
 
 expect_equal(
-  mean_amr_distance(data.frame(AMX = vctr_mic, GEN = vctr_rsi, TOB = vctr_disk)),
+  mean_amr_distance(data.frame(AMX = vctr_mic, GEN = vctr_sir, TOB = vctr_disk)),
   c(-1.10603655, -0.74968823, -0.39333990, -0.03699158, 0.96485397, 1.32120229),
   tolerance = 0.00001
 )
 
 expect_equal(
-  mean_amr_distance(data.frame(AMX = vctr_mic, GEN = vctr_rsi, TOB = vctr_disk), 2:3),
+  mean_amr_distance(data.frame(AMX = vctr_mic, GEN = vctr_sir, TOB = vctr_disk), 2:3),
   c(-0.9909017, -0.7236405, -0.4563792, -0.1891180, 1.0463891, 1.3136503),
   tolerance = 0.00001
 )

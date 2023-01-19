@@ -41,7 +41,7 @@
 #' if (require("dplyr")) {
 #'   example_isolates %>%
 #'     filter(mo == as.mo("Escherichia coli")) %>%
-#'     select_if(is.rsi) %>%
+#'     select_if(is.sir) %>%
 #'     availability()
 #' }
 #' }
@@ -55,7 +55,7 @@ availability <- function(tbl, width = NULL) {
     1 - sum(is.na(x)) / length(x)
   })
   n <- vapply(FUN.VALUE = double(1), tbl, function(x) length(x[!is.na(x)]))
-  R <- vapply(FUN.VALUE = double(1), tbl, function(x) ifelse(is.rsi(x), resistance(x, minimum = 0), NA_real_))
+  R <- vapply(FUN.VALUE = double(1), tbl, function(x) ifelse(is.sir(x), resistance(x, minimum = 0), NA_real_))
   R_print <- character(length(R))
   R_print[!is.na(R)] <- percentage(R[!is.na(R)])
   R_print[is.na(R)] <- ""
