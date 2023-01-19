@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9093</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.8.2.9094</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -154,16 +154,15 @@
     <p>This function will fill in missing taxonomy for you, if specific taxonomic columns are missing, see <em>Examples</em>.</p>
 <p><strong>Important:</strong> Due to how <span style="R">R</span> works, the <code>add_custom_microorganisms()</code> function has to be run in every <span style="R">R</span> session - added microorganisms are not stored between sessions and are thus lost when <span style="R">R</span> is exited.</p>
 <p>There are two ways to automate this process:</p>
-<p><strong>Method 1:</strong> Save the microorganisms to a local or remote file (can even be the internet). To use this method:</p><ol><li><p>Create a data set in the structure of the <a href="microorganisms.html">microorganisms</a> data set (containing at the very least column "genus") and save it with <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS()</a></code> to a location of choice, e.g. <code>"~/my_custom_mo.rds"</code>, or any remote location.</p></li>
-<li><p>Set the file location to the <code>AMR_custom_mo</code> <span style="R">R</span> option: <code>options(AMR_custom_mo = "~/my_custom_mo.rds")</code>. This can even be a remote file location, such as an https URL. Since options are not saved between <span style="R">R</span> sessions, it is best to save this option to the <code>.Rprofile</code> file so that it will loaded on start-up of <span style="R">R</span>. To do this, open the <code>.Rprofile</code> file using e.g. <code>utils::file.edit("~/.Rprofile")</code>, add this text and save the file:</p>
+<p><strong>Method 1:</strong> Using the , which is the preferred method. To use this method:</p><ol><li><p>Create a data set in the structure of the <a href="microorganisms.html">microorganisms</a> data set (containing at the very least column "genus") and save it with <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS()</a></code> to a location of choice, e.g. <code>"~/my_custom_mo.rds"</code>, or any remote location.</p></li>
+<li><p>Set the file location to the <code>AMR_custom_mo</code> <span style="R">R</span> option: <code>options(AMR_custom_mo = "~/my_custom_mo.rds")</code>. This can even be a remote file location, such as an https URL. Since options are not saved between <span style="R">R</span> sessions, it is best to save this option to the <code>.Rprofile</code> file so that it will be loaded on start-up of <span style="R">R</span>. To do this, open the <code>.Rprofile</code> file using e.g. <code>utils::file.edit("~/.Rprofile")</code>, add this text and save the file:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="co"># Add custom microorganism codes:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>AMR_custom_mo <span class="op">=</span> <span class="st">"~/my_custom_mo.rds"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Upon package load, this file will be loaded and run through the <code>add_custom_microorganisms()</code> function.</p></li>
-</ol><p><strong>Method 2:</strong> Save the microorganism directly to your <code>.Rprofile</code> file. An important downside is that this requires to load the <code>AMR</code> package at every start-up. To use this method:</p><ol><li><p>Edit the <code>.Rprofile</code> file using e.g. <code>utils::file.edit("~/.Rprofile")</code>.</p></li>
+</ol><p><strong>Method 2:</strong> Loading the microorganism directly from your <code>.Rprofile</code> file. An important downside is that this requires the <code>AMR</code> package to be installed or else this method will fail. To use this method:</p><ol><li><p>Edit the <code>.Rprofile</code> file using e.g. <code>utils::file.edit("~/.Rprofile")</code>.</p></li>
 <li><p>Add a text like below and save the file:</p>
 <p></p><div class="sourceCode r"><pre><code><span> <span class="co"># Add custom antibiotic drug codes:</span></span>
-<span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msberends.github.io/AMR/">AMR</a></span><span class="op">)</span></span>
-<span> <span class="fu"><a href="../reference/add_custom_microorganisms.html">add_custom_microorganisms</a></span><span class="op">(</span></span>
+<span> <span class="fu">AMR</span><span class="fu">::</span><span class="fu"><a href="../reference/add_custom_microorganisms.html">add_custom_microorganisms</a></span><span class="op">(</span></span>
 <span>   <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>genus <span class="op">=</span> <span class="st">"Enterobacter"</span>,</span>
 <span>              species <span class="op">=</span> <span class="st">"asburiae/cloacae"</span><span class="op">)</span></span>
 <span> <span class="op">)</span></span></code></pre><p></p></div></li>
@@ -177,7 +176,6 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># a combination of species is not formal taxonomy, so</span></span></span>
 <span class="r-in"><span><span class="co"># this will result in only "Enterobacter asburiae":</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"Enterobacter asburiae/cloacae"</span><span class="op">)</span></span></span>
@@ -213,9 +211,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Gram-negative"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_info</a></span><span class="op">(</span><span class="st">"Enterobacter asburiae/cloacae"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $identifier</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Class 'mo'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] CUSTOM1_ENTRBC_A_C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $mo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "CUSTOM1_ENTRBC_A_C"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $kingdom</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Bacteria"</span>
@@ -263,17 +260,20 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># the function tries to be forgiving:</span></span></span>
 <span class="r-in"><span><span class="fu">add_custom_microorganisms</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>GENUS <span class="op">=</span> <span class="st">"ESCHERICHIA / KLEBSIELLA SLASHLINE"</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>GENUS <span class="op">=</span> <span class="st">"BACTEROIDES / PARABACTEROIDES SLASHLINE"</span>,</span></span>
 <span class="r-in"><span>             SPECIES <span class="op">=</span> <span class="st">"SPECIES"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Added Escherichia/Klebsiella to the internal microorganisms data set.</span>
-<span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"ESCHERICHIA / KLEBSIELLA"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Escherichia/Klebsiella"</span>
-<span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_rank</a></span><span class="op">(</span><span class="st">"ESCHERICHIA / KLEBSIELLA"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ℹ Added Bacteroides/Parabacteroides to the internal microorganisms data</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   set.</span>
+<span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_name</a></span><span class="op">(</span><span class="st">"BACTEROIDES / PARABACTEROIDES"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Bacteroides/Parabacteroides"</span>
+<span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_rank</a></span><span class="op">(</span><span class="st">"BACTEROIDES / PARABACTEROIDES"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "genus"</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># taxonomy still works, although a slashline genus was given as input:</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_family</a></span><span class="op">(</span><span class="st">"Escherichia/Klebsiella"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Enterobacteriaceae"</span>
+<span class="r-in"><span><span class="fu"><a href="mo_property.html">mo_family</a></span><span class="op">(</span><span class="st">"Bacteroides/Parabacteroides"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Bacteroidaceae"</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># for groups and complexes, set them as species or subspecies:</span></span></span>
 <span class="r-in"><span><span class="fu">add_custom_microorganisms</span><span class="op">(</span></span></span>
