@@ -37,11 +37,11 @@
 #' 
 #' There are two ways to automate this process:
 #' 
-#' **Method 1:** Save the microorganisms to a local or remote file (can even be the internet). To use this method:
+#' **Method 1:** Using the [option `AMR_custom_mo`][AMR-options], which is the preferred method. To use this method:
 #' 
 #'    1. Create a data set in the structure of the [microorganisms] data set (containing at the very least column "genus") and save it with [saveRDS()] to a location of choice, e.g. `"~/my_custom_mo.rds"`, or any remote location.
 #'    
-#'    2. Set the file location to the `AMR_custom_mo` \R option: `options(AMR_custom_mo = "~/my_custom_mo.rds")`. This can even be a remote file location, such as an https URL. Since options are not saved between \R sessions, it is best to save this option to the `.Rprofile` file so that it will loaded on start-up of \R. To do this, open the `.Rprofile` file using e.g. `utils::file.edit("~/.Rprofile")`, add this text and save the file:
+#'    2. Set the file location to the `AMR_custom_mo` \R option: `options(AMR_custom_mo = "~/my_custom_mo.rds")`. This can even be a remote file location, such as an https URL. Since options are not saved between \R sessions, it is best to save this option to the `.Rprofile` file so that it will be loaded on start-up of \R. To do this, open the `.Rprofile` file using e.g. `utils::file.edit("~/.Rprofile")`, add this text and save the file:
 #'
 #'       ```r
 #'       # Add custom microorganism codes:
@@ -50,7 +50,7 @@
 #'       
 #'       Upon package load, this file will be loaded and run through the [add_custom_microorganisms()] function.
 #' 
-#' **Method 2:** Save the microorganism directly to your `.Rprofile` file. An important downside is that this requires to load the `AMR` package at every start-up. To use this method:
+#' **Method 2:** Loading the microorganism directly from your `.Rprofile` file. An important downside is that this requires the `AMR` package to be installed or else this method will fail. To use this method:
 #' 
 #'    1. Edit the `.Rprofile` file using e.g. `utils::file.edit("~/.Rprofile")`.
 #'
@@ -58,8 +58,7 @@
 #'
 #'       ```r
 #'        # Add custom antibiotic drug codes:
-#'        library(AMR)
-#'        add_custom_microorganisms(
+#'        AMR::add_custom_microorganisms(
 #'          data.frame(genus = "Enterobacter",
 #'                     species = "asburiae/cloacae")
 #'        )
@@ -71,7 +70,6 @@
 #' @export
 #' @examples
 #' \donttest{
-#'
 #' # a combination of species is not formal taxonomy, so
 #' # this will result in only "Enterobacter asburiae":
 #' mo_name("Enterobacter asburiae/cloacae")
@@ -102,13 +100,15 @@
 #' 
 #' # the function tries to be forgiving:
 #' add_custom_microorganisms(
-#'   data.frame(GENUS = "ESCHERICHIA / KLEBSIELLA SLASHLINE",
+#'   data.frame(GENUS = "BACTEROIDES / PARABACTEROIDES SLASHLINE",
 #'              SPECIES = "SPECIES")
 #' )
-#' mo_name("ESCHERICHIA / KLEBSIELLA")
-#' mo_rank("ESCHERICHIA / KLEBSIELLA")
+#' mo_name("BACTEROIDES / PARABACTEROIDES")
+#' mo_rank("BACTEROIDES / PARABACTEROIDES")
+#' 
 #' # taxonomy still works, although a slashline genus was given as input:
-#' mo_family("Escherichia/Klebsiella")
+#' mo_family("Bacteroides/Parabacteroides")
+#' 
 #' 
 #' # for groups and complexes, set them as species or subspecies:
 #' add_custom_microorganisms(
@@ -208,8 +208,10 @@ add_custom_microorganisms <- function(x) {
   x$family[which(x$family == "" & genus_to_check != "")] <- AMR_env$MO_lookup$family[match(genus_to_check[which(x$family == "" & genus_to_check != "")], AMR_env$MO_lookup$genus)]
   
   # fill in other columns that are used in internal algorithms
+  x$prevalence <- NA_real_
+  x$prevalence[which(genus_to_check != "")] <- AMR_env$MO_lookup$prevalence[match(genus_to_check[which(genus_to_check != "")], AMR_env$MO_lookup$genus)]
+  x$prevalence[is.na(x$prevalence)] <- 1.25
   x$status <- "accepted"
-  x$prevalence <- 1
   x$ref <- paste("Self-added,", format(Sys.Date(), "%Y"))
   x$kingdom_index <- AMR_env$MO_lookup$kingdom_index[match(genus_to_check, AMR_env$MO_lookup$genus)]
   # complete missing kingdom index, so mo_matching_score() will not return NA

@@ -22,10 +22,10 @@ This function will fill in missing taxonomy for you, if specific taxonomic colum
 
 There are two ways to automate this process:
 
-\strong{Method 1:} Save the microorganisms to a local or remote file (can even be the internet). To use this method:
+\strong{Method 1:} Using the , which is the preferred method. To use this method:
 \enumerate{
 \item Create a data set in the structure of the \link{microorganisms} data set (containing at the very least column "genus") and save it with \code{\link[=saveRDS]{saveRDS()}} to a location of choice, e.g. \code{"~/my_custom_mo.rds"}, or any remote location.
-\item Set the file location to the \code{AMR_custom_mo} \R option: \code{options(AMR_custom_mo = "~/my_custom_mo.rds")}. This can even be a remote file location, such as an https URL. Since options are not saved between \R sessions, it is best to save this option to the \code{.Rprofile} file so that it will loaded on start-up of \R. To do this, open the \code{.Rprofile} file using e.g. \code{utils::file.edit("~/.Rprofile")}, add this text and save the file:
+\item Set the file location to the \code{AMR_custom_mo} \R option: \code{options(AMR_custom_mo = "~/my_custom_mo.rds")}. This can even be a remote file location, such as an https URL. Since options are not saved between \R sessions, it is best to save this option to the \code{.Rprofile} file so that it will be loaded on start-up of \R. To do this, open the \code{.Rprofile} file using e.g. \code{utils::file.edit("~/.Rprofile")}, add this text and save the file:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{# Add custom microorganism codes:
 options(AMR_custom_mo = "~/my_custom_mo.rds")
@@ -34,14 +34,13 @@ options(AMR_custom_mo = "~/my_custom_mo.rds")
 Upon package load, this file will be loaded and run through the \code{\link[=add_custom_microorganisms]{add_custom_microorganisms()}} function.
 }
 
-\strong{Method 2:} Save the microorganism directly to your \code{.Rprofile} file. An important downside is that this requires to load the \code{AMR} package at every start-up. To use this method:
+\strong{Method 2:} Loading the microorganism directly from your \code{.Rprofile} file. An important downside is that this requires the \code{AMR} package to be installed or else this method will fail. To use this method:
 \enumerate{
 \item Edit the \code{.Rprofile} file using e.g. \code{utils::file.edit("~/.Rprofile")}.
 \item Add a text like below and save the file:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{ # Add custom antibiotic drug codes:
- library(AMR)
- add_custom_microorganisms(
+ AMR::add_custom_microorganisms(
    data.frame(genus = "Enterobacter",
               species = "asburiae/cloacae")
  )
@@ -52,7 +51,6 @@ Use \code{\link[=clear_custom_microorganisms]{clear_custom_microorganisms()}} to
 }
 \examples{
 \donttest{
-
 # a combination of species is not formal taxonomy, so
 # this will result in only "Enterobacter asburiae":
 mo_name("Enterobacter asburiae/cloacae")
@@ -83,13 +81,15 @@ mo_info("Enterobacter asburiae/cloacae")
 
 # the function tries to be forgiving:
 add_custom_microorganisms(
-  data.frame(GENUS = "ESCHERICHIA / KLEBSIELLA SLASHLINE",
+  data.frame(GENUS = "BACTEROIDES / PARABACTEROIDES SLASHLINE",
              SPECIES = "SPECIES")
 )
-mo_name("ESCHERICHIA / KLEBSIELLA")
-mo_rank("ESCHERICHIA / KLEBSIELLA")
+mo_name("BACTEROIDES / PARABACTEROIDES")
+mo_rank("BACTEROIDES / PARABACTEROIDES")
+
 # taxonomy still works, although a slashline genus was given as input:
-mo_family("Escherichia/Klebsiella")
+mo_family("Bacteroides/Parabacteroides")
+
 
 # for groups and complexes, set them as species or subspecies:
 add_custom_microorganisms(

@@ -27,26 +27,13 @@
 # how to conduct AMR data analysis: https://msberends.github.io/AMR/   #
 # ==================================================================== #
 
-#' @rdname proportion
-#' @export
-rsi_df <- function(data,
-                   translate_ab = "name",
-                   language = get_AMR_locale(),
-                   minimum = 30,
-                   as_percent = FALSE,
-                   combine_SI = TRUE,
-                   confidence_level = 0.95) {
-  tryCatch(
-    rsi_calc_df(
-      type = "both",
-      data = data,
-      translate_ab = translate_ab,
-      language = language,
-      minimum = minimum,
-      as_percent = as_percent,
-      combine_SI = combine_SI,
-      confidence_level = confidence_level
-    ),
-    error = function(e) stop_(gsub("in rsi_calc_df(): ", "", e$message, fixed = TRUE), call = -5)
-  )
-}
+#' Options for the AMR package
+#'
+#' This is an overview of the package-specific [options()] you can set in the `AMR` package.
+#' @section Options:
+#' * `AMR_custom_ab`: allows to use custom antimicrobial drugs with this package. This is explained in [add_custom_antimicrobials()].
+#' * `AMR_custom_mo`: allows to use custom microorganisms with this package. This is explained in [add_custom_microorganisms()].
+#' @keywords internal
+#' @name AMR-options
+# @export
+NULL

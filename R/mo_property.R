@@ -777,7 +777,7 @@ mo_info <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
 
   info <- lapply(x, function(y) {
     c(
-      list(identifier = x),
+      list(mo = as.character(x)),
       mo_taxonomy(y, language = language, keep_synonyms = keep_synonyms),
       list(
         status = mo_status(y, language = language, keep_synonyms = keep_synonyms),
@@ -894,6 +894,8 @@ mo_validate <- function(x, property, language, keep_synonyms = keep_synonyms, ..
     return(set_clean_class(x, new_class = c("mo", "character")))
   } else if (property == "snomed") {
     return(sort(as.character(eval(parse(text = x)))))
+  } else if (property == "prevalence") {
+    return(as.double(x))
   } else {
     # everything else as character
     return(as.character(x))
