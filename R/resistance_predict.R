@@ -44,7 +44,7 @@
 #' @param main title of the plot
 #' @param ribbon a [logical] to indicate whether a ribbon should be shown (default) or error bars
 #' @param ... arguments passed on to functions
-#' @inheritSection as.sir Interpretation of R and S/I
+#' @inheritSection as.sir Interpretation of SIR
 #' @inheritParams first_isolate
 #' @inheritParams graphics::plot
 #' @details Valid options for the statistical model (argument `model`) are:

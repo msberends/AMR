@@ -127,7 +127,7 @@
 #' ```
 #'
 #' The rules set (the `custom` object in this case) could be exported to a shared file location using [saveRDS()] if you collaborate with multiple users. The custom rules set could then be imported using [readRDS()].
-#' @inheritSection as.sir Interpretation of R and S/I
+#' @inheritSection as.sir Interpretation of SIR
 #' @return
 #' - CMI 2012 paper - function [mdr_cmi2012()] or [mdro()]:\cr
 #'   Ordered [factor] with levels `Negative` < `Multi-drug-resistant (MDR)` < `Extensively drug-resistant (XDR)` < `Pandrug-resistant (PDR)`
@@ -1998,7 +1998,7 @@ run_custom_mdro_guideline <- function(df, guideline, info) {
     out <- factor(out, levels = attributes(guideline)$values, ordered = TRUE)
   }
   
-  columns_nonsusceptible <- as.data.frame(t(df[, as.sir(df), drop = FALSE] == "R"))
+  columns_nonsusceptible <- as.data.frame(t(df[, is.sir(df), drop = FALSE] == "R"))
   columns_nonsusceptible <- vapply(
     FUN.VALUE = character(1),
     columns_nonsusceptible,

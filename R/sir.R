@@ -95,15 +95,17 @@
 #' The function [is.sir()] detects if the input contains class `sir`. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
 #'
 #' The function [is_sir_eligible()] returns `TRUE` when a columns contains at most 5% invalid antimicrobial interpretations (not S and/or I and/or R), and `FALSE` otherwise. The threshold of 5% can be set with the `threshold` argument. If the input is a [data.frame], it iterates over all columns and returns a [logical] vector.
-#' @section Interpretation of R and S/I:
-#' In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories R and S/I as shown below (<https://www.eucast.org/newsiandr/>).
+#' @section Interpretation of SIR:
+#' In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R as shown below (<https://www.eucast.org/newsiandr/>):
 #'
+#' - **S - Susceptible, standard dosing regimen**\cr
+#'   A microorganism is categorised as "Susceptible, standard dosing regimen", when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.
+#' - **I - Susceptible, increased exposure** *\cr
+#'   A microorganism is categorised as "Susceptible, Increased exposure*" when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.
 #' - **R = Resistant**\cr
-#'   A microorganism is categorised as *Resistant* when there is a high likelihood of therapeutic failure even when there is increased exposure. Exposure is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
-#' - **S = Susceptible**\cr
-#'   A microorganism is categorised as *Susceptible, standard dosing regimen*, when there is a high likelihood of therapeutic success using a standard dosing regimen of the agent.
-#' - **I = Susceptible, Increased exposure**\cr
-#'   A microorganism is categorised as *Susceptible, Increased exposure* when there is a high likelihood of therapeutic success because exposure to the agent is increased by adjusting the dosing regimen or by its concentration at the site of infection.
+#'   A microorganism is categorised as "Resistant" when there is a high likelihood of therapeutic failure even when there is increased exposure.
+#'   
+#'   * *Exposure* is a function of how the mode of administration, dose, dosing interval, infusion time, as well as distribution and excretion of the antimicrobial agent will influence the infecting organism at the site of infection.
 #'
 #' This AMR package honours this insight. Use [susceptibility()] (equal to [proportion_SI()]) to determine antimicrobial susceptibility and [count_susceptible()] (equal to [count_SI()]) to count susceptible isolates.
 #' @return Ordered [factor] with new class `sir`
@@ -216,7 +218,7 @@ as.sir <- function(x, ...) {
 #' @rdname as.sir
 #' @details `NA_sir_` is a missing value of the new `sir` class, analogous to e.g. base \R's [`NA_character_`][base::NA].
 #' @export
-NA_sir_ <- set_clean_class(factor(NA, levels = c("S", "I", "R"), ordered = TRUE),
+NA_sir_ <- set_clean_class(factor(NA_character_, levels = c("S", "I", "R"), ordered = TRUE),
   new_class = c("sir", "ordered", "factor")
 )
 

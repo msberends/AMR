@@ -1,4 +1,4 @@
-# AMR 1.8.2.9095
+# AMR 1.8.2.9096
 
 *(this beta version will eventually become v2.0! We're happy to reach a new major milestone soon!)*
 
@@ -6,7 +6,7 @@ This is a new major release of the AMR package, with great new additions but als
 
 **[TL;DR](https://en.wikipedia.org/wiki/TL;DR)**
 
-* Interpretation of SIR values is now done using `as.sir()` instead of the now deprecated `as.sir()`
+* All functions and arguments with 'rsi' were replaced with 'sir', such as the interpretation of MIC values (now `as.sir()` instead of `as.rsi()`) - all old functions still work for now
 * Microbiological taxonomy (`microorganisms` data set) updated to 2022 and now based on LPSN and GBIF
 * Much increased algorithms to translate user input to valid taxonomy, e.g. by using [recent scientific work](https://doi.org/10.1099/mic.0.001269) about per-species human pathogenicity
 * Clinical breakpoints added for EUCAST 2022 and CLSI 2022
@@ -22,7 +22,7 @@ This is a new major release of the AMR package, with great new additions but als
 
 For this milestone version, we replaced all mentions of RSI with SIR, to comply with what is actually being commonly used in the field of clinical microbiology when it comes to this tri-form regarding AMR.
 
-While existing functions such as `as.sir()` and `sir_df()` still work, their replacements `as.sir()` and `sir_df()` are now the current functions for AMR data analysis. A warning will be thrown once a session to remind users about this. The data set `sir_translation` is now called `clinical_breakpoints` to better reflect its content.
+While existing functions such as `as.rsi()`, `rsi_df()` and `ggplot_rsi()` still work, but their replacements `as.sir()`,  `sir_df()`, `ggplot_sir()` are now the current functions for AMR data analysis. A warning will be thrown once a session to remind users about this. The data set `rsi_translation` is now called `clinical_breakpoints` to better reflect its content.
 
 The 'RSI functions' will be removed in a future version, but not before late 2023 / early 2024.
 
@@ -89,7 +89,7 @@ We now added extensive support for antiviral agents! For the first time, the `AM
 
 * Function `sir_confidence_interval()` to add confidence intervals in AMR calculation. This is now also included in `sir_sf()` and `proportion_df()`.
 * Function `mean_amr_distance()` to calculate the mean AMR distance. The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand.
-* Function `sir_interpretation_history()` to view the history of previous runs of `as.sir()`. This returns a 'logbook' with the selected guideline, reference table and specific interpretation of each row in a data set on which `as.sir()` was run.
+* Function `sir_interpretation_history()` to view the history of previous runs of `as.sir()` (previously `as.rsi()`). This returns a 'logbook' with the selected guideline, reference table and specific interpretation of each row in a data set on which `as.sir()` was run.
 * Function `mo_current()` to get the currently valid taxonomic name of a microorganism
 * Function `add_custom_antimicrobials()` to add custom antimicrobial codes and names to the `AMR` package
 

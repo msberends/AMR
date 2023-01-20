@@ -43,7 +43,7 @@
 #' @param ab_result antibiotic results to test against, must be one of more values of "R", "S", "I"
 #' @param confidence_level the confidence level for the returned confidence interval. For the calculation, the number of S or SI isolates, and R isolates are compared with the total number of available isolates with R, S, or I by using [binom.test()], i.e., the Clopper-Pearson method.
 #' @param side the side of the confidence interval to return. Defaults to `"both"` for a length 2 vector, but can also be (abbreviated as) `"min"`/`"left"`/`"lower"`/`"less"` or `"max"`/`"right"`/`"higher"`/`"greater"`.
-#' @inheritSection as.sir Interpretation of R and S/I
+#' @inheritSection as.sir Interpretation of SIR
 #' @details
 #' The function [resistance()] is equal to the function [proportion_R()]. The function [susceptibility()] is equal to the function [proportion_SI()].
 #'
