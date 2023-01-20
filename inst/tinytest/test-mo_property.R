@@ -95,7 +95,7 @@ expect_equal(mo_synonyms("Escherichia coli"), NULL)
 expect_true(length(mo_synonyms("Candida albicans")) > 1)
 expect_inherits(mo_synonyms(c("Candida albicans", "Escherichia coli")), "list")
 expect_equal(names(mo_info("Escherichia coli")), c(
-  "identifier",
+  "mo",
   "kingdom", "phylum", "class", "order",
   "family", "genus", "species", "subspecies",
   "status", "synonyms", "gramstain", "url", "ref",
