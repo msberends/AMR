@@ -22,7 +22,7 @@ This is a new major release of the AMR package, with great new additions but als
 
 For this milestone version, we replaced all mentions of RSI with SIR, to comply with what is actually being commonly used in the field of clinical microbiology when it comes to this tri-form regarding AMR.
 
-While existing functions such as `as.rsi()`, `rsi_df()` and `ggplot_rsi()` still work, but their replacements `as.sir()`,  `sir_df()`, `ggplot_sir()` are now the current functions for AMR data analysis. A warning will be thrown once a session to remind users about this. The data set `rsi_translation` is now called `clinical_breakpoints` to better reflect its content.
+While existing functions such as `as.rsi()`, `rsi_df()` and `ggplot_rsi()` still work, their replacements `as.sir()`,  `sir_df()`, `ggplot_sir()` are now the current functions for AMR data analysis. A warning will be thrown once a session to remind users about this. The data set `rsi_translation` is now called `clinical_breakpoints` to better reflect its content.
 
 The 'RSI functions' will be removed in a future version, but not before late 2023 / early 2024.
 
@@ -87,7 +87,7 @@ We now added extensive support for antiviral agents! For the first time, the `AM
 
 ### Other new functions
 
-* Function `sir_confidence_interval()` to add confidence intervals in AMR calculation. This is now also included in `sir_sf()` and `proportion_df()`.
+* Function `sir_confidence_interval()` to add confidence intervals in AMR calculation. This is now also included in `sir_df()` and `proportion_df()`.
 * Function `mean_amr_distance()` to calculate the mean AMR distance. The mean AMR distance is a normalised numeric value to compare AMR test results and can help to identify similar isolates, without comparing antibiograms by hand.
 * Function `sir_interpretation_history()` to view the history of previous runs of `as.sir()` (previously `as.rsi()`). This returns a 'logbook' with the selected guideline, reference table and specific interpretation of each row in a data set on which `as.sir()` was run.
 * Function `mo_current()` to get the currently valid taxonomic name of a microorganism
@@ -95,9 +95,9 @@ We now added extensive support for antiviral agents! For the first time, the `AM
 
 ## Changes
 
-* Argument `combine_IR` has been removed from this package (affecting functions `count_df()`, `proportion_df()`, and `sir_sf()` and some plotting functions), since it was replaced with `combine_SI` three years ago
+* Argument `combine_IR` has been removed from this package (affecting functions `count_df()`, `proportion_df()`, and `sir_df()` and some plotting functions), since it was replaced with `combine_SI` three years ago
 * Using `units` in `ab_ddd(..., units = "...")` had been deprecated for some time and is now not supported anymore. Use `ab_ddd_units()` instead.
-* Support for `data.frame`-enhancing R packages, more specifically: `data.table::data.table`, `janitor::tabyl`, `tibble::tibble`, and `tsibble::tsibble`. AMR package functions that have a data set as output (such as `sir_sf()` and `bug_drug_combinations()`), will now return the same data type as the input.
+* Support for `data.frame`-enhancing R packages, more specifically: `data.table::data.table`, `janitor::tabyl`, `tibble::tibble`, and `tsibble::tsibble`. AMR package functions that have a data set as output (such as `sir_df()` and `bug_drug_combinations()`), will now return the same data type as the input.
 * All data sets in this package are now a `tibble`, instead of base R `data.frame`s. Older R versions are still supported, even if they do not support `tibble`s.
 * Our data sets are now also continually exported to **Apache Feather and Apache Parquet formats**. You can find more info [in this article on our website](https://msberends.github.io/AMR/articles/datasets.html).
 * For `as.sir()`:
